@@ -238,6 +238,12 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     if params[:css]
       instance.find_elements( { css: params[:css] } )[0].click
+
+      # trigger also focus on input/select and textarea fields
+      #if params[:css] =~ /(input|select|textarea)/
+      #  instance.execute_script( "$('#{params[:css]}').trigger('focus')" )
+      #  sleep 0.2
+      #end
     else
       instance.find_elements( { partial_link_text: params[:text] } )[0].click
     end
@@ -305,6 +311,13 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements( { css: params[:css] } )[0]
     #element.click
+
+    # trigger also focus on input/select and textarea fields
+    #if params[:css] =~ /(input|select|textarea)/
+    #  instance.execute_script( "$('#{params[:css]}').trigger('focus')" )
+    #  sleep 0.2
+    #end
+
     element.clear
 
     if !params[:slow]
@@ -1032,15 +1045,11 @@ wait untill text in selector disabppears
 
       # workaround, sometimes focus is not triggered
       element.send_keys( data[:customer] )
-      sleep 4
+      sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium
-      res = instance.execute_script( "$('.active .newTicket .js-recipientDropdown').hasClass('open')" )
-      #puts "res #{res.inspect}"
-      if !res
-        #puts "IS NOT OPEN!, open it"
-        instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
-      end
+      instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
+      sleep 0.5
       element.send_keys( :arrow_down )
       sleep 0.3
       instance.find_elements( { css: '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
@@ -1156,15 +1165,11 @@ wait untill text in selector disabppears
 
       # workaround, sometimes focus is not triggered
       element.send_keys( data[:customer] )
-      sleep 4
+      sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium
-      res = instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').hasClass('open')" )
-      #puts "res #{res.inspect}"
-      if !res
-        #puts "IS NOT OPEN!, open it"
-        instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')" )
-      end
+      instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')" )
+      sleep 0.5
       element.send_keys( :arrow_down )
       sleep 0.3
       instance.find_elements( { css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active' } )[0].click
