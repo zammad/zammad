@@ -55,7 +55,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_instance_preferences(local_browser)
-    local_browser.manage.window.resize_to(1024, 760)
+    local_browser.manage.window.resize_to(1024, 800)
     if ENV['REMOTE_URL'] !~ /saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i
       if @browsers.size < 1
         local_browser.manage.window.move_to(0, 0)
@@ -1068,7 +1068,7 @@ wait untill text in selector disabppears
       assert( true, 'ticket created without submit' )
       return
     end
-    sleep 0.8
+    sleep 1.6
     #instance.execute_script( '$(".content.active .newTicket form").submit();' )
     instance.find_elements( { css: '.active .newTicket button.submit' } )[0].click
     sleep 1
