@@ -24,7 +24,7 @@ class AgentUserManageTest < TestCase
     click( css: '.active .newTicket [name="customer_id_completion"]' )
 
     # check if pulldown is open, it's not working stable via selenium
-    @browser.execute_script( "$('.active .newTicket .js-recipientDropdown').hasClass('open')" )
+    @browser.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
 
     sleep 1
     sendkey( value: :arrow_down )
@@ -93,7 +93,7 @@ class AgentUserManageTest < TestCase
     )
 
     # check if pulldown is open, it's not working stable via selenium
-    @browser.execute_script( "$('.active .newTicket .js-recipientDropdown').hasClass('open')" )
+    @browser.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
 
     sleep 3
     sendkey( value: :arrow_down )
