@@ -13,30 +13,7 @@ daemon_options = {
   backtrace: true
 }
 
-runner_count = 2
-
-(1..runner_count).each {|count|
-  name = 'scheduler_runner' + count.to_s
-  Daemons.run_proc(name, daemon_options) do
-    if ARGV.include?('--')
-      ARGV.slice! 0..ARGV.index('--')
-    else
-      ARGV.clear
-    end
-
-    Dir.chdir dir
-    RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
-
-    $stdout.reopen( dir + '/log/' + name + '_out.log', 'w')
-    $stderr.reopen( dir + '/log/' + name + '_err.log', 'w')
-    require File.join(dir, 'config', 'environment')
-    require 'scheduler'
-
-    Scheduler.run(count, runner_count)
-  end
-}
-
-name = 'scheduler_worker'
+name = 'scheduler'
 Daemons.run_proc(name, daemon_options) do
   if ARGV.include?('--')
     ARGV.slice! 0..ARGV.index('--')
@@ -52,5 +29,5 @@ Daemons.run_proc(name, daemon_options) do
   require File.join(dir, 'config', 'environment')
   require 'scheduler'
 
-  Scheduler.worker
+  Scheduler.threads
 end
