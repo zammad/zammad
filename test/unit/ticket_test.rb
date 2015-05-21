@@ -161,4 +161,28 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal( Ticket.latest_change.to_s, ticket2.updated_at.to_s )
 
   end
+
+  test 'ticket process_pending' do
+
+    ticket = Ticket.create(
+      title: "pending close test",
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'pending close' ),
+      pending_time: Time.zone.now - 60,
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    lookup_ticket = Ticket.find_by( 'pending_time <= ?', Time.zone.now )
+
+    assert_equal( lookup_ticket.id, ticket.id, 'ticket.pending_time verify' )
+
+    Ticket.process_pending()
+
+    lookup_ticket = Ticket.find_by( 'pending_time <= ?', Time.zone.now )
+
+    assert_nil( lookup_ticket, 'ticket.pending_time processed verify' )
+  end
 end

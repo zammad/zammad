@@ -111,6 +111,52 @@ returns
 
 =begin
 
+processes tickets which have reached their pending time and sets next state_id
+
+  processed_tickets = Ticket.process_pending()
+
+returns
+
+  processed_tickets = [<Ticket>, ...]
+
+=end
+
+  def self.process_pending
+
+    ticket_states = Ticket::State.where(
+      state_type_id: Ticket::StateType.find_by( name: 'pending action' ),
+    )
+    .where.not(next_state_id: nil) # rubocop:disable Style/MultilineOperationIndentation
+
+    return [] if !ticket_states
+
+    next_state_map = {}
+    ticket_states.each { |state|
+      next_state_map[state.id] = state.next_state_id
+    }
+
+    tickets = where(
+      state_id: next_state_map.keys,
+    )
+    .where( 'pending_time <= ?', Time.zone.now ) # rubocop:disable Style/MultilineOperationIndentation
+
+    return [] if !tickets
+
+    result = []
+    tickets.each { |ticket|
+      ticket.state_id      = next_state_map[ticket.state_id]
+      ticket.updated_at    = Time.zone.now
+      ticket.updated_by_id = 1
+      ticket.save!
+
+      result.push ticket
+    }
+
+    result
+  end
+
+=begin
+
 merge tickets
 
   ticket = Ticket.find(123)
