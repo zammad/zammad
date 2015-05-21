@@ -48,7 +48,7 @@ class Scheduler < ApplicationModel
 
     Thread.new {
 
-      logger.info "started job thread for '#{job.name}' (#{job.method})..."
+      logger.info "Started job thread for '#{job.name}' (#{job.method})..."
 
       # start loop for periods under 5 minutes
       if job.period && job.period <= 300
@@ -123,7 +123,7 @@ class Scheduler < ApplicationModel
     Thread.new {
       sleep wait
 
-      logger.info "*** Starting worker thread #{Delayed::Job}"
+      logger.info "Starting worker thread #{Delayed::Job}"
 
       loop do
         result = nil
