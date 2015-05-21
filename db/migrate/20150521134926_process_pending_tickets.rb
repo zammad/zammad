@@ -7,11 +7,14 @@ class ProcessPendingTickets < ActiveRecord::Migration
     pending_close_state = Ticket::State.find_by(
       name: 'pending close',
     )
-    closed_state = Ticket::State.find_by(
-      name: 'closed',
-    )
-    pending_close_state.next_state_id = closed_state.id
-    pending_close_state.save!
+
+    if pending_close_state
+      closed_state = Ticket::State.find_by(
+        name: 'closed',
+      )
+      pending_close_state.next_state_id = closed_state.id
+      pending_close_state.save!
+    end
 
     # add Ticket.process_pending
     Scheduler.create_or_update(
