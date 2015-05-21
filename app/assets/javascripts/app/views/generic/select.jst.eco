@@ -6,5 +6,5 @@
 <% end %>
 <% end %>
   </select>
-  <div class="select-arrow icon"></div>
+  <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
 </div>

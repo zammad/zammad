@@ -72,7 +72,7 @@
         <div class="horizontal article-meta-row">
           <div class="article-meta-key"><%- @T( 'Channel' ) %></div>
           <div class="article-meta-value">
-            <span class="white <%- @article.type.name %> channel icon"></span>
+            <svg class="article-meta-icon"><use xlink:href="#icon-<%- @article.type.name %>" /></svg>
             <%- @T(@article.type.name) %>
             <% if @article.type.name is 'email': %>
             <a class="text-muted" href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= @article.id %>"><%- @T( 'raw' ) %></a>

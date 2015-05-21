@@ -2,13 +2,12 @@
 
   <div class="ticketZoom">
     <div class="ticketZoom-controls">
-      <div class="btn btn--action btn--split--first js-highlight centered visibility-change">
-        <div class="marker icon active" data-visible="active"></div>
-        <div class="marker icon" data-visible="normal"></div>
+      <div class="btn btn--action btn--split--first js-highlight centered">
+        <svg class="marker-icon"><use xlink:href="#icon-marker" /></svg>
       </div>
       <div class="dropdown dropdown--actions">
         <div class="btn btn--action btn--split--last btn--slim centered" id="highlight" data-toggle="dropdown" aria-expanded="true">
-          <div class="arrow down icon"></div>
+          <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu">
           <% for entry, i in @colors: %>
@@ -30,12 +29,12 @@
         </div>
         <ul class="pagination">
           <li>
-            <a class="centered" href="#" data-from="0" data-type="page">
-              <span class="left arrow icon"></span>
+            <a class="btn btn--action btn--split--first" data-from="0" data-type="page">
+              <svg class="arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
             </a>
           <li>
-            <a class="centered" href="#" data-from="1" data-type="page">
-              <span class="right arrow icon"></span>
+            <a class="btn btn--action btn--split--last" href="#" data-from="1" data-type="page">
+              <svg class="arrow arrow--right"><use xlink:href="#icon-arrow-right" /></svg>
             </a>
         </ul>
       </li>
@@ -56,11 +55,11 @@
       <ul class="pagination">
         <li>
           <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-            <span class="left arrow icon"></span>
+            <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
           </a>
         <li>
           <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-            <span class="right arrow icon"></span>
+            <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
           </a>
       </ul>
     </div>
@@ -120,21 +119,24 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
               <div class="horizontal article-meta-row">
                 <div class="article-meta-key">Kanal</div>
                 <div class="article-meta-value">
-                  <span class="white phone channel icon"></span>
+                  <svg class="article-meta-icon"><use xlink:href="#icon-phone" /></svg>
                   phone
                 </div>
               </div>
             </div>
             <div class="article-actions horizontal stretch">
-                <a href="" data-type="internal" class="article-action u-clickable">
-                  <span class="internal action icon"></span>set to internal
-                </a>
-                <a href="#" data-type="reply" class="article-action u-clickable">
-                  <span class="reply action icon"></span>reply
-                </a>
-                <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                  <span class="split action icon"></span>split
-                </a>
+              <a href="" data-type="internal" class="article-action u-clickable">
+                <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                set to internal
+              </a>
+              <a href="#" data-type="reply" class="article-action u-clickable">
+                <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                reply
+              </a>
+              <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
+                <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                split
+              </a>
             </div>
           </div>
         </div>
@@ -165,14 +167,15 @@ The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad
               <div class="horizontal article-meta-row">
                 <div class="article-meta-key">Kanal</div>
                 <div class="article-meta-value">
-                  <span class="white note channel icon"></span>
+                  <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
                   note
                 </div>
               </div>
             </div>
             <div class="article-actions horizontal stretch">
               <a href="" data-type="internal" class="article-action u-clickable">
-                <span class="internal action icon"></span>set to internal
+                <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                set to internal
               </a>
             </div>
           </div>
@@ -211,15 +214,18 @@ Grüße, Peter</div></div>
               </div>
             </div>
             <div class="article-actions horizontal stretch">
-                <a href="" data-type="internal" class="article-action u-clickable">
-                  <span class="internal action icon"></span>set to internal
-                </a>
-                <a href="#" data-type="reply" class="article-action u-clickable">
-                  <span class="reply action icon"></span>reply
-                </a>
-                <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                  <span class="split action icon"></span>split
-                </a>
+              <a href="" data-type="internal" class="article-action u-clickable">
+                <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                set to internal
+              </a>
+              <a href="#" data-type="reply" class="article-action u-clickable">
+                <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                reply
+              </a>
+              <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
+                <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                split
+              </a>
             </div>
           </div>
         </div>
@@ -290,14 +296,15 @@ Oliver<br></div>
               <div class="horizontal article-meta-row">
                 <div class="article-meta-key">Kanal</div>
                 <div class="article-meta-value">
-                  <span class="white note channel icon"></span>
+                  <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
                   note
                 </div>
               </div>
             </div>
             <div class="article-actions horizontal stretch">
               <a href="" data-type="internal" class="article-action u-clickable">
-                <span class="internal action icon"></span>set to internal
+              <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                set to internal
               </a>
             </div>
           </div>

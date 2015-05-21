@@ -7,6 +7,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-svgmin": "^1.1.2",
     "gulp-svgstore": "^5.0.1",
-    "gulp-watch": "^4.2.4"
+    "gulp-util": "^3.0.4",
+    "gulp-watch": "^4.2.4",
+    "through2": "^0.6.5"
   }
 }

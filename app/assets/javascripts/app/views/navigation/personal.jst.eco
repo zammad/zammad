@@ -6,7 +6,7 @@
         <% if item.class is 'user': %>
           <span class="js-avatar"></span>
         <% else: %>
-          <svg class="plus icon"><use xlink:href="#icon-plus" /></svg>
+          <svg class="user-menu-icon icon-plus"><use xlink:href="#icon-plus" /></svg>
         <% end %>
       </a>
       <ul class="dropdown-menu" role="menu">
@@ -30,7 +30,7 @@
   <% else: %>
     <li class="settings <% if @active_tab[item.target] : %>active<% end %>">
       <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
-        <svg class="cog icon"><use xlink:href="#icon-cog" /></svg>
+        <svg class="user-menu-icon icon-cog"><use xlink:href="#icon-cog" /></svg>
       </a>
     </li>
   <% end %>

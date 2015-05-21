@@ -4,7 +4,7 @@
     <h2 class="u-textTruncate"><%- @T( item.head ) %></h2>
     <div class="js-actions flex"></div>
     <div class="tabsSidebar-close">
-      <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <svg class="icon"><use xlink:href="#icon-long-arrow-right" /></svg>
     </div>
   </div>
   <hr>

@@ -1,10 +1,10 @@
 <div class="dropdown dropdown--actions">
   <div class="dropdown-toggle horizontal center" id="userAction" data-toggle="dropdown">
     <% if @type isnt 'small': %>
-      <svg class="cog icon"><use xlink:href="#icon-cog" /></svg>
+      <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
       <label><%- @T('Action') %></label>
     <% end %>
-    <span class="select-arrow icon"></span>
+    <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
   </div>
   <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
     <% for item in @items: %>

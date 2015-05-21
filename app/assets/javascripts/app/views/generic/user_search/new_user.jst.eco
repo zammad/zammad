@@ -1,8 +1,8 @@
-<li class="recipientList-entry recipientList-new u-clickable horizontal center js-user-new" data-user-id="new">
-  <div class="recipientList-iconSpacer centered">
-    <div class="white plus icon"></div>
+<li class="recipientList-entry recipientList--new js-user-new" data-user-id="new">
+  <div class="recipientList-iconSpacer">
+    <svg class="recipientList-icon"><use xlink:href="#icon-plus" /></svg>
   </div>
-  <div class="recipientList-name flex u-textTruncat">
+  <div class="recipientList-name">
     <%- @T('Create new Customer') %>
   </div>
 </li>

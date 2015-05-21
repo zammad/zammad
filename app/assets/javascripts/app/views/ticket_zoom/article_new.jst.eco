@@ -1,29 +1,29 @@
-<form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>">
+<form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>" data-type="<%= @article.type %>">
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @article.form_id %>">
   <div class="editControls">
     <div class="js-avatar"></div>
-    <div class="dark pop-select zIndex-7 editControls-item">
-      <div class="pop-selected u-clickable centered">
-        <div class="gray <%- @article.type %> channel icon"></div>
+    <div class="editControls-item is-hidden pop-select">
+      <div class="editControls-iconHolder centered js-selectedArticleType">
+        <svg class="editControls-icon js-selectedType"><use xlink:href="#icon-<%= @article.type %>" /></svg>
       </div>
-      <div class="pop-selector hide">
-        <div class="horizontal">
-          <% for atricleType in @articleTypes: %>
-          <div class="pop-selectable u-clickable centered" data-value="<%= atricleType.name %>">
-            <div class="white <%= atricleType.icon %> channel icon"></div>
-          </div>
-          <% end %>
+      <div class="pop-selector is-hidden js-articleTypes">
+        <% for articleType in @articleTypes: %>
+        <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="<%= articleType.name %>">
+          <svg class="pop-selectable-icon icon-<%= articleType.icon %>"><use xlink:href="#icon-<%= articleType.icon %>" /></svg>
         </div>
+        <% end %>
       </div>
     </div>
-    <div class="visibility-toggle zIndex-7 u-clickable editControls-item">
-      <div class="internal-visibility centered" title="<%- @Ti("set to public") %>">
-        <div class="internal visibility icon"></div>
-      </div>
-      <div class="public-visibility centered" title="<%- @Ti("set to internal") %>">
-        <div class="public visibility icon"></div>
+    <div class="editControls-item is-hidden js-toggleVisibility">
+      <div class="editControls-iconHolder">
+        <svg class="editControls-icon icon-internal" title="<%- @Ti("set to public") %>">
+          <use xlink:href="#icon-lock" />
+        </svg>
+        <svg class="editControls-icon icon-public" title="<%- @Ti("set to internal") %>">
+          <use xlink:href="#icon-lock-open" />
+        </svg>
       </div>
     </div>
   </div>

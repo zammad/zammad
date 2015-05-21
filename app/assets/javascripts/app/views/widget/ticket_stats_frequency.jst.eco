@@ -11,6 +11,12 @@
   <% end %>
 </div>
 <div class="stat-legend">
-  <div class="stat-legendEntry primary"><span class="primary stat-circle"></span><%- @T('Closed') %></div>
-  <div class="stat-legendEntry secondary"><span class="secondary stat-circle"></span><%- @T('Created') %></div>
+  <div class="stat-legendEntry primary">
+    <span class="primary stat-circle"></span>
+    <span class="stat-legend-label"><%- @T('Closed') %></span>
+  </div>
+  <div class="stat-legendEntry secondary">
+    <span class="secondary stat-circle"></span>
+    <span class="stat-legend-label"><%- @T('Created') %></span>
+  </div>
 </div>

@@ -19,7 +19,7 @@
           </li>
 
          <li class="tab u-textTruncate" data-type="email-out">
-            <svg class="tab-icon"><use xlink:href="#icon-mail" /></svg>
+            <svg class="tab-icon"><use xlink:href="#icon-email" /></svg>
             <%- @T('Send Email') %>
           </li>
         </ul>
