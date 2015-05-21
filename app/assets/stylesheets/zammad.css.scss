@@ -2151,6 +2151,7 @@ footer {
   padding: 0;
   margin: 0;
   list-style: none;
+  flex-shrink: 0;
 }
 
   .main-navigation a {
@@ -2361,13 +2362,14 @@ footer {
 
     .closeTask:hover .icon {
       opacity: 1;
-    } 
+    }
 
 .search {
   padding: 14px 2px 10px 10px;
   border-bottom: 1px solid rgba(240, 250, 255, .05);
+  flex-shrink: 0;
 }
-  
+
   .search-holder {
     margin-right: 2px;
     position: relative;
@@ -2496,6 +2498,7 @@ footer {
     margin: 0;
     list-style: none;
     position: relative;
+    flex-shrink: 0;
   }
 
     .user-menu > li {
@@ -2508,7 +2511,7 @@ footer {
       text-decoration: none;
       @extend .u-clickable;
     }
-    
+
     .user-menu .list-button *:not(.dropdown-nose) {
       position: relative;
     }
@@ -2950,7 +2953,7 @@ footer {
     @extend .btn--subtle;
     @extend .align-right;
     padding: 5px 0 0;
-    
+
     &:hover {
       padding: 5px 0 0;
     }
@@ -2968,7 +2971,7 @@ footer {
   }
 
   .dashboard .stat-widget {
-    margin: 7px; 
+    margin: 7px;
     background: white;
     border: 1px solid #e5f0f5;
     border-radius: 1px;
@@ -3428,7 +3431,7 @@ footer {
     position: relative;
     overflow-wrap: break-word;
     word-wrap: break-word;
-    
+
     /* email css reset */
     p {
       margin: 0;
@@ -4127,7 +4130,8 @@ footer {
   height: 60px;
   background: white;
   transition: margin 250ms;
-  
+  flex-shrink: 0;
+
   &.is-closed {
     margin-bottom: -60px;
   }
