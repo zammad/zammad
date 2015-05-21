@@ -5,7 +5,7 @@
       <h2><%- @T('Setup Finished') %></h2>
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
-          <span class="loading icon"></span> Starting Zammad
+          <span class="loading icon"></span><%- @T('Starting Zammad') %>
         </p>
       </div>
     </div>
