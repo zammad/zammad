@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
     <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
-    <title>priority-modified-outer-circle</title>
+    <title>reply</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="priority-modified-outer-circle" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M8,14 C11.3137085,14 14,11.3137085 14,8 C14,4.6862915 11.3137085,2 8,2 C4.6862915,2 2,4.6862915 2,8 C2,11.3137085 4.6862915,14 8,14 Z M8,13 C10.7614237,13 13,10.7614237 13,8 C13,5.23857625 10.7614237,3 8,3 C5.23857625,3 3,5.23857625 3,8 C3,10.7614237 5.23857625,13 8,13 Z" id="Oval-2" sketch:type="MSShapeGroup"></path>
+        <g id="reply" sketch:type="MSArtboardGroup" fill="#50E3C2">
+            <path d="M8.13965741,6.67272727 C10.4842629,6.67272727 12.3861807,9.03232291 12.3861807,11.3434347 C12.3861807,13.6707074 10.4842629,15.5454546 8.13965741,15.5454546 C11.6483677,15.5454546 14,12.7494953 14,9.27474716 C14,5.81616194 11.6483677,3.50505019 8.13965741,3.50505019 L8.13965741,1 L1.87878788,5.12121212 L8.13965741,9.22626231 L8.13965741,6.67272727 Z" id="reply-path" sketch:type="MSShapeGroup"></path>
         </g>
     </g>
 </svg>

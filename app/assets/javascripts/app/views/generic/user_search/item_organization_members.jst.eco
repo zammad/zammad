@@ -1,10 +1,7 @@
 <ul class="recipientList-organizationMembers hide" id="<%- @organization.id %>">
-  <li class="recipientList-controls u-clickable js-back">
-    <div class="recipientList-backClickArea centered">
-      <div class="recipientList-backButton">
-        <div class="white arrow left icon"></div>
-        <%- @T('Back') %>
-      </div>
+  <li class="recipientList-controls js-back">
+    <div class="btn btn--action btn--onDark">
+      <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
+      <span class="btn-label"><%- @T('Back') %></span>
     </div>
-  </li>
 </ul>

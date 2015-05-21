@@ -1,8 +1,8 @@
-<li class="recipientList-entry u-clickable horizontal center js-user" data-user-id="<%= @user.id %>"">
-  <div class="recipientList-iconSpacer centered">
-    <div class="white user icon"></div>
+<li class="recipientList-entry js-user" data-user-id="<%= @user.id %>">
+  <div class="recipientList-iconSpacer">
+    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
   </div>
-  <div class="recipientList-name flex u-textTruncat">
+  <div class="recipientList-name">
     <%= @user.displayName() %>
     <% if @user.organization: %>
       <span class="recipientList-detail">- <%= @user.organization.displayName() %></span>

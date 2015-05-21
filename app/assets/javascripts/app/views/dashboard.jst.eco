@@ -24,7 +24,7 @@
       <div class="mood stat-widget vertical">
         <h3>Mood</h3>
         <div class="stat-graphic">
-          <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-super-happy" /></svg>
+          <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-supergood" /></svg>
         </div>
         <div class="stat-label">3% of my tickets escalated.</div>
         <div class="stat-detail">Average: 17%</div>
@@ -35,7 +35,7 @@
         <h3>Channel Distribution</h3>
         <div class="stat-graphic">
           <div class="stats-row email-channel">
-            <svg class="stat-channel-icon"><use xlink:href="#icon-mail" /></svg>
+            <svg class="stat-channel-icon"><use xlink:href="#icon-email" /></svg>
             <div class="stat-bars">
               <div class="stat-bar primary" style="height: 80%"></div>
               <div class="stat-bar secondary" style="height: 100%"></div>

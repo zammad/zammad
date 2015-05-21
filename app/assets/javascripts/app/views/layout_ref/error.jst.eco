@@ -1,3 +1,4 @@
 <div class="flex fullscreenMessage">
-  <div class="error icon"></div><h2><%- @T('Status Code') %>: 1234. may be not internet connection...</h2>
+  <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+  <h2><%- @T('Status Code') %>: 1234. Check your internet connection...</h2>
 </div>

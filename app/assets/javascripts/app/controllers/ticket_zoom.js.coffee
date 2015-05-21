@@ -954,7 +954,7 @@ class ArticleNew extends App.Controller
     '.attachmentUpload-progressBar':      'progressBar'
     '.js-percentage':                     'progressText'
     '.js-cancel':                         'cancelContainer'
-    '.textBubble':                       'textBubble'
+    '.textBubble':                        'textBubble'
     '.editControls-item':                 'editControlItem'
     #'.editControls':                     'editControls'
     #'.recipient-picker':                 'recipientPicker'
@@ -962,15 +962,15 @@ class ArticleNew extends App.Controller
     #'.recipient-list .list-arrow':       'recipientListArrow'
 
   events:
-    'click .visibility-toggle':    'toggleVisibility'
-    'click .pop-selectable':       'selectArticleType'
-    'click .pop-selected':         'showSelectableArticleType'
-    'click .recipient-picker':     'toggle_recipients'
-    'click .recipient-list':       'stopPropagation'
-    'click .list-entry-type div':  'change_type'
-    'submit .recipient-list form': 'add_recipient'
-    'focus .js-textarea':          'openTextarea'
-    'input .js-textarea':          'detectEmptyTextarea'
+    'click .js-toggleVisibility':     'toggleVisibility'
+    'click .js-articleTypeItem':      'selectArticleType'
+    'click .js-selectedArticleType':  'showSelectableArticleType'
+    'click .recipient-picker':        'toggle_recipients'
+    'click .recipient-list':          'stopPropagation'
+    'click .list-entry-type div':     'change_type'
+    'submit .recipient-list form':    'add_recipient'
+    'focus .js-textarea':             'openTextarea'
+    'input .js-textarea':             'detectEmptyTextarea'
     #'dragenter':                  'onDragenter'
     #'dragleave':                  'onDragleave'
     #'drop':                       'onFileDrop'
@@ -1231,18 +1231,22 @@ class ArticleNew extends App.Controller
     # store recipient
 
   toggleVisibility: ->
-    item = @$('.article-add')
-    if item.hasClass('is-public')
-      item.removeClass('is-public')
-      item.addClass('is-internal')
-      @$('[name="internal"]').val('true')
+    if @articleNewEdit.hasClass 'is-public'
+      @articleNewEdit
+        .removeClass 'is-public'
+        .addClass 'is-internal'
+
+      @$('[name="internal"]').val 'true'
     else
-      item.addClass('is-public')
-      item.removeClass('is-internal')
-      @$('[name="internal"]').val('')
+      @articleNewEdit
+        .addClass 'is-public'
+        .removeClass 'is-internal'
+
+
+      @$('[name="internal"]').val ''
 
   showSelectableArticleType: =>
-    @el.find('.pop-selector').removeClass('hide')
+    @el.find('.js-articleTypes').removeClass('is-hidden')
 
     @selectTypeCatcher = new App.clickCatcher
       holder:      @el.offsetParent()
@@ -1258,15 +1262,14 @@ class ArticleNew extends App.Controller
     @selectTypeCatcher = null
 
   hideSelectableArticleType: =>
-    @el.find('.pop-selector').addClass('hide')
+    @el.find('.js-articleTypes').addClass('is-hidden')
 
   setArticleType: (type) ->
-    typeIcon = @el.find('.pop-selected .icon')
-    if @type
-      typeIcon.removeClass @type
+    typeIcon = @$('.js-selectedType')
     @type = type
     @$('[name="type"]').val(type)
-    typeIcon.addClass @type
+    @articleNewEdit.attr('data-type', type)
+    typeIcon.find('use').attr 'xlink:href', '#icon-'+ @type
 
     # show/hide attributes
     for articleType in @articleTypes
@@ -1301,7 +1304,6 @@ class ArticleNew extends App.Controller
       @removeTextareaCatcher()
 
   openTextarea: (event, withoutAnimation) =>
-    console.log('articleNewEdit', @articleNewEdit.hasClass('is-open'))
     if !@articleNewEdit.hasClass('is-open')
       duration = 300
 
@@ -1333,10 +1335,17 @@ class ArticleNew extends App.Controller
         easing: 'easeOutQuad'
         queue: false
 
-      @editControlItem.velocity "transition.slideRightIn",
-         duration: 300
-         stagger: 50
-         drag: true
+      @editControlItem
+        .removeClass('is-hidden')
+        .velocity
+          properties:
+            opacity: [ 1, 0 ]
+            translateX: [ 0, 20 ]
+            translateZ: 0
+          options:
+            duration: 300
+            stagger: 50
+            drag: true
 
       # move attachment text to the left bottom (bottom happens automatically)
       @attachmentPlaceholder.velocity
@@ -1396,7 +1405,17 @@ class ArticleNew extends App.Controller
         options:
           duration: 300
 
-      @editControlItem.css('display', 'none')
+      @editControlItem
+        .velocity
+          properties:
+            opacity: [ 0, 1 ]
+            translateX: [ 20, 0 ]
+            translateZ: 0
+          options:
+            duration: 100
+            stagger: 50
+            drag: true
+            complete: (elements) => $(elements).addClass('is-hidden')
 
   onDragenter: (event) =>
     # on the first event,
@@ -1691,6 +1710,7 @@ class ArticleActions extends App.Controller
         {
           name: 'set to public'
           type: 'public'
+          icon: 'lock-open'
         }
       ]
     else
@@ -1698,6 +1718,7 @@ class ArticleActions extends App.Controller
         {
           name: 'set to internal'
           type: 'internal'
+          icon: 'lock'
         }
       ]
     #if @article.type.name is 'note'
@@ -1706,6 +1727,7 @@ class ArticleActions extends App.Controller
       actions.push {
         name: 'reply'
         type: 'reply'
+        icon: 'reply'
         href: '#'
       }
       recipients = []
@@ -1727,11 +1749,13 @@ class ArticleActions extends App.Controller
         actions.push {
           name: 'reply all'
           type: 'replyAll'
+          icon: 'reply-all'
           href: '#'
         }
     actions.push {
       name: 'split'
       type: 'split'
+      icon: 'split'
       href: '#ticket/create/' + article.ticket_id + '/' + article.id
     }
     actions

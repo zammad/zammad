@@ -4,7 +4,7 @@
     <div class="profile-section vertical centered">
       <div class="align-right profile-action dropdown dropdown--actions">
         <div class="dropdown-toggle horizontal center" id="profileAction" data-toggle="dropdown">
-          <svg class="cog icon"><use xlink:href="#icon-cog" /></svg>
+          <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
           <label>Aktion</label>
           <span class="select-arrow icon"></span>
         </div>
@@ -66,7 +66,7 @@
         <div class="profile-ticketList">
           <label>Offene Tickets (0)</label>
           <div class="profile-ticketsPlaceholder vertical centered">
-            <div class="mood icon supergood-state"></div>
+            <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-supergood" /></svg>
             Keine offenen Tickets
           </div>
           <a href="#">Alle Tickets von Doreen Kubiak …</a>
@@ -76,7 +76,7 @@
           <ol class="tasks tasks--standalone">
             <li class="task level-1">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Micro-SIM doesn't work</div>
@@ -84,7 +84,7 @@
               </div>
             <li class="task level-1">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Superb Service!</div>
@@ -92,7 +92,7 @@
               </div>
             <li class="task level-1">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Print sheets strip off</div>
@@ -100,7 +100,7 @@
               </div>
             <li class="task level-1">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Block not properly wrought</div>
@@ -116,14 +116,14 @@
         <h3>Status</h3>
         <div class="stat-graphic">
           <div class="stat-tickets vertical reverse end">
-            <div class="stat-ticket icon supergood-state"></div>
-            <div class="stat-ticket icon supergood-state"></div>
-            <div class="stat-ticket icon supergood-state"></div>
-            <div class="stat-ticket icon supergood-state"></div>
-            <div class="stat-ticket icon supergood-state"></div>
-            <div class="stat-ticket icon supergood-state"></div>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
           </div>
-          <div class="stat-all-tickets icon"></div>
+          <svg class="total-tickets"><use xlink:href="#icon-total-tickets" /></svg>
         </div>
         <!-- 
           Achtung: hier müssen wir schauen, dass wir das Widget genauso verwenden wie im Dashboard. Sonst gibt's Verwirrung.
@@ -134,7 +134,7 @@
       <div class="column mood stat-widget vertical">
         <h3>Stimmung</h3>
         <div class="stat-graphic">
-          <div class="mood icon supergood-state"></div>
+          <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-supergood" /></svg>
         </div>
         <div class="stat-label">3% of my tickets escalated.</div>
         <div class="stat-detail">Average: 17%</div>
@@ -230,8 +230,14 @@
           </div>
         </div>
         <div class="stat-legend">
-          <div class="stat-legendEntry primary"><span class="primary stat-circle"></span>Bearbeitet</div>
-          <div class="stat-legendEntry secondary"><span class="secondary stat-circle"></span>Offen</div>
+          <div class="stat-legendEntry">
+            <span class="primary stat-circle"></span>
+            <span class="stat-legend-label">Bearbeitet</span>
+          </div>
+          <div class="stat-legendEntry">
+            <span class="secondary stat-circle"></span>
+            <span class="stat-legend-label">Offen</span>
+          </div>
         </div>
       </div>
     </div>

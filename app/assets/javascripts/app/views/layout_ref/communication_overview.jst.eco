@@ -21,12 +21,12 @@
       </div>
       <ul class="pagination">
         <li>
-          <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-            <span class="left arrow icon"></span>
+          <a class="btn btn--action btn--split--first" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
+            <svg class="arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
           </a>
         <li>
-          <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-            <span class="right arrow icon"></span>
+          <a class="btn btn--action btn--split--last" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
+          <svg class="arrow arrow--right"><use xlink:href="#icon-arrow-right" /></svg>
           </a>
       </ul>
     </div>

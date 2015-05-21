@@ -31,7 +31,7 @@
           <option value="2">open</option>
           <option value="3">pending</option>
         </select>
-        <div class="select-arrow icon"></div>
+        <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
       </div>
       <div class="form-group is-changed">
         <label for="update_ticket_1_priority_id123" class="input-group-addon u-clickable">Priority</label>
@@ -40,7 +40,7 @@
           <option value="2" selected="">2 normal</option>
           <option value="3">3 high</option>
         </select>
-        <div class="select-arrow icon"></div>
+        <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
       </div>
       <div class="form-group">
         <label for="update_ticket_1_group_id123" class="input-group-addon u-clickable">Group</label>
@@ -50,7 +50,7 @@
           <option value="2">Twitter</option>
           <option value="1" selected="">Users</option>
         </select>
-        <div class="select-arrow icon"></div>
+        <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
       </div>
       <div class="form-group">
         <label for="update_ticket_1_owner_id123" class="input-group-addon u-clickable">Owner</label>
@@ -58,7 +58,7 @@
           <option value="">-</option>
           <option value="3">Felix Niklas</option>
         </select>
-        <div class="select-arrow icon"></div>
+        <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
       </div>
     </form>
     <form class="form-inline">
