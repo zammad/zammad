@@ -63,7 +63,7 @@ returns
       auto_wizard_hash['Users'].each { |user_data|
 
         # lookup organization
-        if user_data['organization']
+        if user_data['organization'] && !user_data['organization'].empty?
           organization = Organization.find_by(name: user_data['organization'])
           user_data.delete('organization')
           if organization
