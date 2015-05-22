@@ -2215,7 +2215,6 @@ footer {
   }
 
   .nav-tab-icon .inner-circle {
-    will-change: opacity;
     animation: fade 3s ease-in-out infinite;
   }
 
@@ -2223,6 +2222,11 @@ footer {
     50% { opacity: 1 }
     75% { opacity: 0 }
     to { opacity: 1 }
+  }
+
+  .nav-tab-icon.icon-loading {
+    animation: rotateplane 1.2s infinite ease-in-out;
+    fill: $supergood-color;
   }
 
   .nav-tab-close {
@@ -2290,7 +2294,7 @@ footer {
 }
 
 .search {
-  padding: 14px 2px 10px 10px;
+  padding: 9px 2px 10px 10px;
   border-bottom: 1px solid rgba(240, 250, 255, .05);
   flex-shrink: 0;
 }
