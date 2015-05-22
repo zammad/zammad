@@ -20,13 +20,12 @@ returns
 
   def self.setup
 
-    auto_wizard_file_name = 'auto_wizard.json'
-    auto_wizard_file_name = "#{Rails.root}/#{auto_wizard_file_name}"
+    auto_wizard_file_name     = 'auto_wizard.json'
+    auto_wizard_file_location = "#{Rails.root}/#{auto_wizard_file_name}"
 
-    return if !File.file?(auto_wizard_file_name)
+    return if !File.file?(auto_wizard_file_location)
 
-    auto_wizard_file = File.read(auto_wizard_file_name)
-
+    auto_wizard_file = File.read(auto_wizard_file_location)
     auto_wizard_hash = JSON.parse(auto_wizard_file)
 
     admin_user = User.find( 1 )
@@ -40,12 +39,9 @@ returns
 
     # create Organizations
     if auto_wizard_hash['Organizations']
-
       auto_wizard_hash['Organizations'].each { |organization_data|
 
-        organization_data_symbolized = organization_data.symbolize_keys
-
-        organization_data_symbolized = organization_data_symbolized.merge(
+        organization_data_symbolized = organization_data.symbolize_keys.merge(
           {
             updated_by_id: admin_user.id,
             created_by_id: admin_user.id
@@ -66,9 +62,16 @@ returns
 
       auto_wizard_hash['Users'].each { |user_data|
 
-        user_data_symbolized = user_data.symbolize_keys
+        # lookup organization
+        if user_data['organization']
+          organization = Organization.find_by(name: user_data['organization'])
+          user_data.delete('organization')
+          if organization
+            user_data['organization_id'] = organization.id
+          end
+        end
 
-        user_data_symbolized = user_data_symbolized.merge(
+        user_data_symbolized = user_data.symbolize_keys.merge(
           {
             active: true,
             roles: roles,
@@ -91,12 +94,9 @@ returns
 
     # create EmailAddresses
     if auto_wizard_hash['EmailAddresses']
-
       auto_wizard_hash['EmailAddresses'].each { |email_address_data|
 
-        email_address_data_symbolized = email_address_data.symbolize_keys
-
-        email_address_data_symbolized = email_address_data_symbolized.merge(
+        email_address_data_symbolized = email_address_data.symbolize_keys.merge(
           {
             updated_by_id: admin_user.id,
             created_by_id: admin_user.id

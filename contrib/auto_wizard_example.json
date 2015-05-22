@@ -5,6 +5,7 @@
       "firstname": "Hans",
       "lastname": "Atila",
       "email": "hans.atila@zammad.org",
+      "organization": "Demo Organization",
       "password": "Z4mm4dr0ckZ!"
     }
   ],
@@ -28,7 +29,7 @@
       "email": "zammad_demo@localhost"
     }
   ],
-  "Organization": [
+  "Organizations": [
     {
       "name": "Demo Organization"
     }

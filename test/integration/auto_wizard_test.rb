@@ -21,6 +21,18 @@ class AutoWizardTest < TestCase
       timeout: 20,
     )
 
+    organization_open_by_search(
+      value: 'Demo Organization',
+    )
+    watch_for(
+      css: '.active .profile-window',
+      value: 'Demo Organization',
+    )
+    watch_for(
+      css: '.active .profile-window',
+      value: 'Atila',
+    )
+
   end
 
 end
