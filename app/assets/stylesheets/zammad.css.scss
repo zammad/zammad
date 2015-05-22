@@ -397,11 +397,12 @@ span[data-tooltip]:hover:before {
   margin-top: 10px;
 }
 
-.btn--download .download.icon {
+.btn--download .icon-download {
   margin-right: 6px;
-  margin-top: 3px;
+  margin-top: 4px;
   margin-left: -10px;
   vertical-align: top;
+  fill: white;
 }
 
 .btn-label {
@@ -871,7 +872,6 @@ textarea,
 
   .icon {
     margin-right: 14px;
-    fill: #F35910;
   }
 
   h2 {
@@ -1319,6 +1319,16 @@ ol.tabs li {
 .arrow--left,
 .arrow--right {
   width: 7px;
+  height: 13px;
+}
+
+.icon-checkmark {
+  fill: #38AE6A;
+}
+
+.icon-error {
+  fill: #F35910;
+  width: 13px;
   height: 13px;
 }
 
@@ -1861,22 +1871,6 @@ ol.tabs li {
     background-position: -103px -345px;
   }
 
-  .download.icon {
-    width: 14px;
-    height: 13px;
-    background-position: -120px -349px;
-  }
-
-  .checkmark.icon {
-    width: 17px;
-    height: 15px;
-    background-position: -135px -348px;
-  }
-
-  .white.checkmark.icon {
-    background-position: -135px -364px;
-  }
-
   .error.icon {
     width: 13px;
     height: 13px;
@@ -1884,6 +1878,7 @@ ol.tabs li {
   }
 
   .loading.icon {
+    display: inline-block;
     width: 30px;
     height: 30px;
     background: hsl(145,51%,45%);
@@ -4949,8 +4944,8 @@ label + .wizard-buttonList {
 }
 
 .input-feedback[data-state=loading] .loading.icon,
-.input-feedback[data-state=error] .error.icon,
-.input-feedback[data-state=success] .checkmark.icon {
+.input-feedback[data-state=error] .icon-error,
+.input-feedback[data-state=success] .icon-checkmark {
   display: block;
 }
 
@@ -4979,12 +4974,12 @@ label + .wizard-buttonList {
   display: block;
 }
 
-.progressTable .checkmark {
+.progressTable .icon-checkmark {
   margin-left: 10px;
   opacity: 0;
 }
 
-.progressTable tr.is-done .checkmark {
+.progressTable tr.is-done .icon-checkmark {
   opacity: 1;
 }
 
