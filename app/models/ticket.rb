@@ -152,6 +152,10 @@ returns
       result.push ticket
     }
 
+    # we do not have an destructor at this point, so we need to
+    # execute ticket events manually
+    Observer::Ticket::Notification.transaction
+
     result
   end
 
