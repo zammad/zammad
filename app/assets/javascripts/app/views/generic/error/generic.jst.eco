@@ -1,3 +1,4 @@
-<div class="flex fullscreenMessage">
-  <div class="error icon"></div><h2><%- @T('Status Code') %>: <%= @status %>. <%= @detail %></h2>
+<div class="fullscreenMessage">
+  <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+  <h2><%- @T('Status Code') %>: <%= @status %>. <%= @detail %></h2>
 </div>

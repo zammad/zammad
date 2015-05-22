@@ -867,9 +867,10 @@ textarea,
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
 
   .icon {
-    margin: -5px 14px 0 0;
+    margin-right: 14px;
     fill: #F35910;
   }
 

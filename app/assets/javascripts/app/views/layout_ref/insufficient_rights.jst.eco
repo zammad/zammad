@@ -1,3 +1,4 @@
 <div class="flex fullscreenMessage">
-  <div class="error icon"></div><h2>Opps.. I'm sorry, but you have insufficient rights to open this ticket.</h2>
+  <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+  <h2>Opps.. I'm sorry, but you have insufficient rights to open this ticket.</h2>
 </div>
