@@ -27,5 +27,10 @@
       "realname": "Zammad Demo System",
       "email": "zammad_demo@localhost"
     }
+  ],
+  "Organization": [
+    {
+      "name": "Demo Organization"
+    }
   ]
 }

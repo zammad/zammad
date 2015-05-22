@@ -31,6 +31,33 @@ returns
 
     admin_user = User.find( 1 )
 
+    # set Settings
+    if auto_wizard_hash['Settings']
+      auto_wizard_hash['Settings'].each { |setting_data|
+        Setting.set( setting_data['name'], setting_data['value'] )
+      }
+    end
+
+    # create Organizations
+    if auto_wizard_hash['Organizations']
+
+      auto_wizard_hash['Organizations'].each { |organization_data|
+
+        organization_data_symbolized = organization_data.symbolize_keys
+
+        organization_data_symbolized = organization_data_symbolized.merge(
+          {
+            updated_by_id: admin_user.id,
+            created_by_id: admin_user.id
+          }
+        )
+
+        Organization.create_if_not_exists(
+          organization_data_symbolized
+        )
+      }
+    end
+
     # create Users
     if auto_wizard_hash['Users']
 
@@ -62,15 +89,7 @@ returns
       }
     end
 
-    # set Settings
-    if auto_wizard_hash['Settings']
-
-      auto_wizard_hash['Settings'].each { |setting_data|
-        Setting.set( setting_data['name'], setting_data['value'] )
-      }
-    end
-
-    # add EmailAddresses
+    # create EmailAddresses
     if auto_wizard_hash['EmailAddresses']
 
       auto_wizard_hash['EmailAddresses'].each { |email_address_data|
