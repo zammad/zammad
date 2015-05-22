@@ -1,5 +1,3 @@
-require 'scheduler'
-require 'ticket/state'
 class ProcessPendingTickets < ActiveRecord::Migration
   def up
 
