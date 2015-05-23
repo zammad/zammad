@@ -92,39 +92,33 @@ returns
       }
     end
 
-    # create EmailAddresses
-    if auto_wizard_hash['EmailAddresses']
-      auto_wizard_hash['EmailAddresses'].each { |email_address_data|
-
-        email_address_data_symbolized = email_address_data.symbolize_keys.merge(
+    # create EmailAddresses/Channels/Signatures
+    model_map = {
+      'EmailAddresses' => 'EmailAddress',
+      'Channels'       => 'Channel',
+      'Signatures'     => 'Signature',
+    }
+    model_map.each {|map_name, model|
+      next if !auto_wizard_hash[map_name]
+      auto_wizard_hash[map_name].each {|data|
+        data_symbolized = data.symbolize_keys.merge(
           {
             updated_by_id: admin_user.id,
             created_by_id: admin_user.id
           }
         )
 
-        EmailAddress.create_or_update(
-          email_address_data_symbolized
-        )
+        if data_symbolized[:id] || data_symbolized[:name]
+          Kernel.const_get(model).create_or_update(
+            data_symbolized
+          )
+        else
+          Kernel.const_get(model).create(
+            data_symbolized
+          )
+        end
       }
-    end
-
-    # create Channels
-    if auto_wizard_hash['Channels']
-      auto_wizard_hash['Channels'].each { |channel_data|
-
-        channel_data_symbolized = channel_data.symbolize_keys.merge(
-          {
-            updated_by_id: admin_user.id,
-            created_by_id: admin_user.id
-          }
-        )
-
-        Channel.create(
-          channel_data_symbolized
-        )
-      }
-    end
+    }
 
     # remove auto wizard file
     FileUtils.rm auto_wizard_file_location

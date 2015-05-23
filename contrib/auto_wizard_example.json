@@ -35,6 +35,13 @@
       "name": "Demo Organization"
     }
   ],
+  "Signatures": [
+    {
+      "id": 1,
+      "name": "default",
+      "body": "\n  #{user.firstname} #{user.lastname}\n\n--\n Demo Organization\n--"
+    }
+  ],
   "Channels": [
     {
       "area": "Email::Inbound",
