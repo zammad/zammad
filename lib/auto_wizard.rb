@@ -48,7 +48,7 @@ returns
           }
         )
 
-        Organization.create_if_not_exists(
+        Organization.create_or_update(
           organization_data_symbolized
         )
       }
@@ -103,11 +103,31 @@ returns
           }
         )
 
-        EmailAddress.create_if_not_exists(
+        EmailAddress.create_or_update(
           email_address_data_symbolized
         )
       }
     end
+
+    # create Channels
+    if auto_wizard_hash['Channels']
+      auto_wizard_hash['Channels'].each { |channel_data|
+
+        channel_data_symbolized = channel_data.symbolize_keys.merge(
+          {
+            updated_by_id: admin_user.id,
+            created_by_id: admin_user.id
+          }
+        )
+
+        Channel.create(
+          channel_data_symbolized
+        )
+      }
+    end
+
+    # remove auto wizard file
+    FileUtils.rm auto_wizard_file_location
 
     admin_user
   end

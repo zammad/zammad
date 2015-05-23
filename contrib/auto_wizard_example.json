@@ -25,6 +25,7 @@
   ],
   "EmailAddresses": [
     {
+      "id": 1,
       "realname": "Zammad Demo System",
       "email": "zammad_demo@localhost"
     }
@@ -32,6 +33,20 @@
   "Organizations": [
     {
       "name": "Demo Organization"
+    }
+  ],
+  "Channels": [
+    {
+      "area": "Email::Inbound",
+      "adapter": "IMAP",
+      "group_id": 1,
+      "options": {
+        "host": "mx1.example.com",
+        "user": "some user",
+        "password": "some pw",
+        "ssl": true
+      },
+      "active":false
     }
   ]
 }
