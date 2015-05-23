@@ -970,7 +970,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: 'SystemAddressName',
+  state: 'AgentNameSystemAddressName',
   frontend: false
 )
 
