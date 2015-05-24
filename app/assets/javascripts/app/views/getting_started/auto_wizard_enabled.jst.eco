@@ -1,0 +1,10 @@
+<div class="main flex vertical centered darkBackground">
+  <img class="zammad full logo" src="<%= @C('image_path') + '/' + 'full logo on dark.svg' %>" alt="Zammad">
+  <div class="setup wizard">
+    <div class="wizard-slide">
+      <div class="wizard-body vertical centered">
+        <%- @T('The auto wizard is enabled, please use the prodvided auto wizard url.') %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -35,24 +35,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     return if setup_done_response
 
     # check it auto wizard is already done
-    auto_wizard_admin = AutoWizard.setup
-    if auto_wizard_admin
-
-      # set current session user
-      current_user_set(auto_wizard_admin)
-
-      # set system init to done
-      Setting.set( 'system_init_done', true )
-
-      render json: {
-        auto_wizard: true,
-        setup_done: setup_done,
-        import_mode: Setting.get('import_mode'),
-        import_backend: Setting.get('import_backend'),
-        system_online_service: Setting.get('system_online_service'),
-      }
-      return
-    end
+    return if auto_wizard_enabled_response
 
     # if master user already exists, we need to be authenticated
     if setup_done
@@ -65,6 +48,62 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       import_mode: Setting.get('import_mode'),
       import_backend: Setting.get('import_backend'),
       system_online_service: Setting.get('system_online_service'),
+    }
+  end
+
+  def auto_wizard_admin
+
+    # check if system setup is already done
+    return if setup_done_response
+
+    # check it auto wizard is enabled
+    if !AutoWizard.enabled?
+      render json: {
+        auto_wizard: false,
+      }
+      return
+    end
+
+    # verify auto wizard file
+    auto_wizard_data = AutoWizard.data
+    if !auto_wizard_data || auto_wizard_data.empty?
+      render json: {
+        auto_wizard: true,
+        auto_wizard_success: false,
+        message: 'Invalid auto wizard file.',
+      }
+      return
+    end
+
+    # verify auto wizard token
+    if auto_wizard_data['Token'] && auto_wizard_data['Token'] != params[:token]
+      render json: {
+        auto_wizard: true,
+        auto_wizard_success: false,
+      }
+      return
+    end
+
+    # execute auto wizard
+    auto_wizard_admin = AutoWizard.setup
+    if !auto_wizard_admin
+      render json: {
+        auto_wizard: true,
+        auto_wizard_success: false,
+        message: 'Error during execution of auto wizard.',
+      }
+      return
+    end
+
+    # set current session user
+    current_user_set(auto_wizard_admin)
+
+    # set system init to done
+    Setting.set('system_init_done', true)
+
+    render json: {
+      auto_wizard: true,
+      auto_wizard_success: true,
     }
   end
 
@@ -903,6 +942,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     mxs
   end
 
+  def auto_wizard_enabled_response
+    return false if !AutoWizard.enabled?
+
+    render json: {
+      auto_wizard: true
+    }
+    true
+  end
+
   def setup_done
     #return false
     count = User.all.count()
@@ -914,9 +962,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   end
 
   def setup_done_response
-    if !setup_done
-      return false
-    end
+    return false if !setup_done
 
     # get all groups
     groups = Group.where( active: true )

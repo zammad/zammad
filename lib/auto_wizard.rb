@@ -2,6 +2,42 @@ module AutoWizard
 
 =begin
 
+check if auto wizard is enabled
+
+  AutoWizard.enabled?
+
+returns
+
+  true | false
+
+=end
+
+  def self.enabled?
+    auto_wizard_file_location = file_location
+    return false if !File.file?(auto_wizard_file_location)
+    true
+  end
+
+=begin
+
+get auto wizard data
+
+  AutoWizard.data
+
+returns
+
+  content of auto wizard file as object
+
+=end
+
+  def self.data
+    auto_wizard_file_location = file_location
+    fail "So such file #{auto_wizard_file_location}" if !File.file?(auto_wizard_file_location)
+    JSON.parse( File.read(auto_wizard_file_location) )
+  end
+
+=begin
+
 creates or updates Users, EmailAddresses and sets Settings based on the 'auto_wizard.json' file placed in the root directory.
 
 there is an example file 'contrib/auto_wizard_example.json'
@@ -19,16 +55,11 @@ returns
 =end
 
   def self.setup
+    auto_wizard_file_location = file_location
 
-    auto_wizard_file_name     = 'auto_wizard.json'
-    auto_wizard_file_location = "#{Rails.root}/#{auto_wizard_file_name}"
+    auto_wizard_hash = data
 
-    return if !File.file?(auto_wizard_file_location)
-
-    auto_wizard_file = File.read(auto_wizard_file_location)
-    auto_wizard_hash = JSON.parse(auto_wizard_file)
-
-    admin_user = User.find( 1 )
+    admin_user = User.find(1)
 
     # set Settings
     if auto_wizard_hash['Settings']
@@ -124,5 +155,13 @@ returns
     FileUtils.rm auto_wizard_file_location
 
     admin_user
+  end
+
+  private
+
+  def self.file_location
+    auto_wizard_file_name     = 'auto_wizard.json'
+    auto_wizard_file_location = "#{Rails.root}/#{auto_wizard_file_name}"
+    auto_wizard_file_location
   end
 end
