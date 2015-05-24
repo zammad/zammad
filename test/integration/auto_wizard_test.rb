@@ -8,11 +8,19 @@ class AutoWizardTest < TestCase
 
     watch_for(
       css: 'body',
-      value: 'Invite',
+      value: 'auto wizard is enabled',
       timeout: 10,
     )
 
-    click( css: '.content .btn--primary' )
+    location( url: "#{browser_url}/#getting_started/auto_wizard" )
+
+    watch_for(
+      css: 'body',
+      value: 'auto wizard is enabled',
+      timeout: 10,
+    )
+
+    location( url: "#{browser_url}/#getting_started/auto_wizard/secret_token" )
 
     watch_for(
       css: '.user-menu .user a',
@@ -33,6 +41,18 @@ class AutoWizardTest < TestCase
       value: 'Atila',
     )
 
+    logout
+
+    login(
+      username: 'hans.atila@zammad.org',
+      password: 'Z4mm4dr0ckZ!',
+    )
+    watch_for(
+      css: '.user-menu .user a',
+      attribute: 'title',
+      value: 'hans.atila@zammad.org',
+      timeout: 8,
+    )
   end
 
 end
