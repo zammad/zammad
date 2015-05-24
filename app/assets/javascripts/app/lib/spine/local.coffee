@@ -2,6 +2,13 @@ Spine = @Spine or require('spine')
 
 Spine.Model.Local =
   extended: ->
+    testLocalStorage = 'spine' + new Date().getTime()
+    try
+      localStorage.setItem(testLocalStorage, testLocalStorage)
+      localStorage.removeItem(testLocalStorage)
+    catch e
+      return
+
     @change @saveLocal
     @fetch @loadLocal
 
