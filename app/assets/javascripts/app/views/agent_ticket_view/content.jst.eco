@@ -6,8 +6,9 @@
       </div>
       <div class="page-header-meta">
         <% if @edit: %>
-        <div class="btn btn--action" data-type="settings"><%- @T('Options') %></div>
+          <div class="btn btn--action" data-type="settings"><%- @T('Options') %></div>
         <% end %>
+        <!--
         <ul class="pagination">
         <% for item in @view_modes: %>
           <li class="<%= item.class %>">
@@ -15,6 +16,7 @@
           </li>
         <% end %>
         </ul>
+        -->
       </div>
     </div>
 
