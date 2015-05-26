@@ -213,18 +213,18 @@ class App.Navigation extends App.Controller
     )
 
     # remove search result
-    @$('#global-search').bind( 'focusout', (e) =>
-      @delay(
-        =>
-          @$('.search').removeClass('focused')
+    # @$('#global-search').bind( 'focusout', (e) =>
+    #   @delay(
+    #     =>
+    #       @$('.search').removeClass('focused')
 
-          # remove not needed popovers
-          $('.popover').remove()
+    #       # remove not needed popovers
+    #       $('.popover').remove()
 
-          @renderResult()
-        320
-      )
-    )
+    #       @renderResult()
+    #     320
+    #   )
+    # )
 
     # prevent submit of search box
     @$('form.search').bind( 'submit', (e) =>

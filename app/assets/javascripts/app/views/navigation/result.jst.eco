@@ -3,7 +3,7 @@
   <% for item in area.result: %>
     <li>
       <a href="<%- item.url %>" class="nav-tab nav-tab--search <%= item.class %>" data-id="<%= item.id %>">
-        <svg class="nav-tab-icon tab-icon--search"><use xlink:href="#icon-<%= item.iconClass %>" /></svg>
+        <svg class="nav-tab-icon priority-icon icon-<%= item.iconClass %>"><use xlink:href="#icon-<%= item.iconClass %>" /></svg>
         <span class="nav-tab-name flex u-textTruncate"><%= item.display %></span>
       </a>
     </li>
