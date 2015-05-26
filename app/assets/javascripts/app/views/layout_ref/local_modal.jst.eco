@@ -211,8 +211,8 @@
                 
                 
                 
-                <div class="align-right help-message" title="Notes are visible to agents only, never to customers. ">
-                  <div class="help icon"></div>
+                <div class="help-message" title="Notes are visible to agents only, never to customers. ">
+                  <svg class="icon-help"><use xlink:href="#icon-help" /></svg>
                 </div>
                 
               </div>

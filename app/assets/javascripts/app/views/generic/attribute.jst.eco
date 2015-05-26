@@ -8,8 +8,8 @@
     </div>
     <% end %>
     <% if @attribute.note: %>
-    <div class="align-right help-message" title="<%- @Ti( @attribute.note ) + ' ' %>">
-      <div class="help icon"></div>
+    <div class="help-message" title="<%- @Ti( @attribute.note ) + ' ' %>">
+      <svg class="icon-help"><use xlink:href="#icon-help" /></svg>
     </div>
     <% end %>
   </div>

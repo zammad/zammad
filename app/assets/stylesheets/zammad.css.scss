@@ -727,8 +727,9 @@ fieldset > *:not(.form-group) .form-control {
   opacity: 0.2;
   top: -2px;
   position: relative;
+  margin-left: auto;
   
-  .icon {
+  .icon-help {
     display: block;
   }
 }
