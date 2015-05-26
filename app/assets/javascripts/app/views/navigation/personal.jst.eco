@@ -21,7 +21,7 @@
             <a href="<%= item.target %>" class="horizontal center">
               <span class="flex u-textTruncate"><%- @T( item.name ) %></span>
               <% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %>
-              <% if item.iconClass: %><svg class="<%= item.iconClass %> icon"><use xlink:href="#icon-<%= item.iconClass %>" /></svg><% end %>
+              <% if item.iconClass: %><svg class="icon-<%= item.iconClass %>"><use xlink:href="#icon-<%= item.iconClass %>" /></svg><% end %>
             </a>
           </li>
         <% end %>

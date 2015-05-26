@@ -1,9 +1,9 @@
-<form class="search horizontal">
-  <div class="search-holder flex">
+<form class="search">
+  <div class="search-holder">
     <input id="global-search" type="search" autocomplete="off">
-    <svg class="magnifier icon"><use xlink:href="#icon-magnifier" /></svg>
+    <svg class="icon-magnifier"><use xlink:href="#icon-magnifier" /></svg>
     <div class="empty-search">
-      <svg class="close icon"><use xlink:href="#icon-close" /></svg>
+      <svg class="icon-close"><use xlink:href="#icon-close" /></svg>
     </div>
   </div>
   <svg class="icon-logo js-toggleNavigation"><use xlink:href="#icon-logo" /></svg>
@@ -12,10 +12,10 @@
 
 <ul class="main-navigation"></ul>
 
-<div class="tasks tasks-navigation flex"></div>
+<div class="tasks tasks-navigation"></div>
 
 <% if !_.isEmpty(@user): %>
   <!--<a href="#bell" class="glyphicon glyphicon-bell"></a>-->
 
-  <ul class="user-menu horizontal stretch navbar-items-personal"></ul>
+  <ul class="user-menu navbar-items-personal"></ul>
 <% end %>

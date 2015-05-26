@@ -1299,11 +1299,6 @@ ol.tabs li {
 
 */
 
-.signout.icon {
-  width: 15px;
-  height: 19px;
-}
-
 .arrow {
   fill: black;
   opacity: 0.39;
@@ -1331,593 +1326,36 @@ ol.tabs li {
 
 .icon-error {
   fill: #F35910;
-  width: 13px;
-  height: 13px;
 }
 
-
-  .add.icon,
-  .remove.icon {
-    width: 21px;
-    height: 21px;
-    line-height: 20px;
-    vertical-align: bottom;
-  }
-
-  .add.icon:after,
-  .remove.icon:after {
-    display: block;
-    margin-top: 3px;
-  }
-
-  .add.icon:after {
-    content: "+";
-    font-size: 34px;
-    margin-left: 2px;
-  }
-
-  .remove.icon:after {
-    content: "-";
-    font-size: 36px;
-    margin-left: 3px;
-  }
-
-  .status.icon {
-    width: 10px;
-    height: 10px;
-    border-radius: 100%;
-    border: 1px solid;
-  }
-
-  .active.status.icon {
-    background: hsl(145,51%,45%);
-    border-color: hsl(145,51%,39%);
-  }
-
-  .inactive.status.icon {
-    background: hsl(4,82%,44%);
-    border-color: hsl(4,82%,38%);
-  }
-
-  .dashboard.icon,
-  .overviews.icon,
-  .group.icon,
-  .message.icon,
-  .tools.icon,
-  .person.icon {
-    width: 24px;
-    height: 25px;
-  }
-
-  .dashboard.icon {
-    background-position: 0 0;
-  }
-
-  .overviews.icon {
-    background-position: -24px 0;
-  }
-
-  .group.icon {
-    background-position: -48px 0;
-  }
-
-  .message.icon {
-    background-position: -72px 0;
-  }
-
-  .tools.icon {
-    background-position: -96px 0;
-  }
-
-  .person.icon {
-    background-position: -120px 0;
-  }
-
-  .light.cog.icon {
-    background-position: 0 -56px;
-  }
-
-  .dark.cog.icon {
-    background-position: 0 -77px;
-  }
-
-  .green.plus.icon {
-    background-position: -20px -56px;
-  }
-
-  .white.plus.icon {
-    background-position: -20px -77px;
-  }
-
-  .signout.icon {
-    width: 15px;
-    height: 19px;
-    background-position: 0 -98px;
-  }
-
-  .switchView.icon {
-    width: 19px;
-    height: 18px;
-    background-position: -15px -98px;
-  }
-
-  .organization.icon {
-    height: 13px;
-    width: 14px;
-    background-position: 0 -118px;
-  }
-
-  .icon-switch:hover .organization.icon,
-  .white.organization.icon {
-    background-position: 0 -132px;
-  }
-
-  .user.icon {
-    height: 13px;
-    width: 14px;
-    background-position: -15px -118px;
-  }
-
-  .icon-switch:hover .user.icon,
-  .white.user.icon {
-    background-position: -15px -132px;
-  }
-
-  .note.icon {
-    height: 13px;
-    width: 14px;
-    background-position: -30px -118px;
-  }
-
-  .icon-switch:hover .note.icon,
-  .white.note.icon {
-    background-position: -30px -132px;
-  }
-
-  .pen.icon {
-    height: 13px;
-    width: 14px;
-    background-position: -45px -118px;
-  }
-
-  .icon-switch:hover .pen.icon,
-  .white.pen.icon {
-    background-position: -45px -132px;
-  }
-
- .important.icon {
-    height: 13px;
-    width: 14px;
-    background-position: -60px -118px;
-  }
-  .icon-switch:hover .important.icon,
-  .white.important.icon {
-    background-position: -60px -132px;
-  }
-
-  .tools.icon {
-    height: 13px;
-    width: 14px;
-    background-position: -75px -118px;
-  }
-  .icon-switch:hover .tools.icon,
-  .white.tools.icon {
-    background-position: -75px -132px;
-  }
-
-  .clock.icon {
-    height: 13px;
-    width: 14px;
-    background-position: -90px -118px;
-  }
-  .icon-switch:hover .clock.icon,
-  .white.clock.icon {
-    background-position: -90px -132px;
-  }
-
-  .team.icon {
-    height: 13px;
-    width: 20px;
-    background-position: -104px -118px;
-  }
-  .icon-switch:hover .team.icon,
-  .white.team.icon {
-    background-position: -104px -132px;
-  }
-
-  .cloud.icon {
-    height: 12px;
-    width: 15px;
-    background-position: -125px -119px;
-  }
-  .white.cloud.icon {
-    background-position: -125px -133px;
-  }
-
-  .package.icon {
-    height: 16px;
-    width: 15px;
-    background-position: -141px -112px;
-  }
-  .white.package.icon {
-    background-position: -141px -129px;
-  }
-
-  .list.icon {
-    height: 14px;
-    width: 15px;
-    background-position: -157px -116px;
-  }
-  .white.list.icon {
-    background-position: -157px -131px;
-  }
-
-  .channel.icon {
-    width: 17px;
-    height: 16px;
-  }
-
-  .email.channel.icon {
-    background-position: 0 -146px;
-  }
-
-  .received-calls.channel.icon {
-    background-position: -18px -146px;
-  }
-
-  .outbound-calls.channel.icon {
-    background-position: -36px -146px;
-  }
-
-  .facebook.channel.icon {
-    background-position: -54px -146px;
-  }
-
-  .twitter.channel.icon {
-    background-position: -72px -146px;
-  }
-
-  .gray.email.channel.icon {
-    background-position: -90px -146px;
-  }
-
-  .gray.received-calls.channel.icon {
-    background-position: -108px -146px;
-  }
-
-  .gray.outbound-calls.channel.icon {
-    background-position: -126px -146px;
-  }
-
-  .gray.facebook.channel.icon {
-    background-position: -144px -146px;
-  }
-
-  .gray.twitter.channel.icon {
-    background-position: -162px -146px;
-  }
-
-  .gray.note.channel.icon {
-    background-position: -180px -146px;
-  }
-
-  .gray.phone.channel.icon {
-    background-position: -198px -146px;
-  }
-
-  .white.email.channel.icon {
-    background-position: -216px -146px;
-  }
-
-  .white.received-calls.channel.icon {
-    background-position: -234px -146px;
-  }
-
-  .white.outbound-calls.channel.icon {
-    background-position: -252px -146px;
-  }
-
-  .white.facebook.channel.icon {
-    background-position: -270px -146px;
-  }
-
-  .white.twitter.channel.icon {
-    background-position: -288px -146px;
-  }
-
-  .white.note.channel.icon {
-    background-position: -306px -146px;
-  }
-
-  .white.phone.channel.icon {
-    background-position: -324px -146px;
-  }
-
-  .mood.icon.superbad-state {
-    background-position: 0 -163px;
-  }
-
-  .mood.icon.bad-state {
-    background-position: -61px -163px;
-  }
-
-  .mood.icon.ok-state {
-    background-position: -122px -163px;
-  }
-
-  .mood.icon.good-state {
-    background-position: -183px -163px;
-  }
-
-  .mood.icon.supergood-state {
-    background-position: -244px -163px;
-  }
-
-  .stopwatch.icon {
-    width: 77px;
-    height: 83px;
-    background-position: 0 -223px;
-  }
-
-  .stat-all-tickets.icon {
-    width: 48px;
-    height: 83px;
-    background-position: -216px -224px;
-  }
-
-  .stat-ticket.supergood-state {
-    background-position: -265px -223px;
-  }
-
-  .stat-ticket.good-state {
-    background-position: -265px -235px;
-  }
-
-  .stat-ticket.ok-state {
-    background-position: -265px -246px;
-  }
-
-  .stat-ticket.bad-state {
-    background-position: -265px -257px;
-  }
-
-  .stat-ticket.superbad-state {
-    background-position: -265px -268px;
-  }
-
-  .left.arrow.icon,
-  .right.arrow.icon,
-  .down.arrow.icon,
-  .up.arrow.icon {
-    width: 8px;
-    height: 12px;
-    opacity: .39;
-  }
-
-  .down.arrow.icon,
-  .up.arrow.icon {
-    width: 12px;
-    height: 8px;
-  }
-
-  .disabled.left.arrow.icon,
-  .disabled.right.arrow.icon,
-  .disabled.up.arrow.icon,
-  .disabled.down.arrow.icon {
-    opacity: .23;
-  }
-
-  .left.arrow.icon {
-    background-position: 0 -307px;
-  }
-
-  .white.left.arrow.icon {
-    background-position: -18px -307px;
-  }
-
-  .right.arrow.icon {
-    background-position: -9px -307px;
-  }
-
-  .white.right.arrow.icon {
-    background-position: -27px -307px;
-  }
-
-  .up.arrow.icon {
-    background-position: -119px -307px;
-  }
-
-  .white.up.arrow.icon {
-    background-position: -132px -307px;
-  }
-
-  .down.arrow.icon {
-    background-position: -145px -307px;
-  }
-
-  .white.down.arrow.icon {
-    background-position: -158px -307px;
-  }
-
-  .checkbox.icon {
-    min-height: 0; /* overwriting bootstrap */
-    margin: 0; /* overwriting bootstrap */
-    width: 10px;
-    height: 10px;
-    background-position: -36px -307px;
-  }
-
-  .white.checkbox.icon {
-    background-color: white;
-  }
-
-  :checked + .checkbox.icon {
-    background-position: -47px -307px;
-  }
-
-  .radio.icon {
-    width: 12px;
-    height: 12px;
-    background-position: -171px -307px;
-  }
-
-  :checked + .radio.icon {
-    background-position: -184px -307px;
-  }
-
-  .arrow-right.icon {
-    width: 12px;
-    height: 11px;
-    background-position: -58px -307px;
-  }
-
-  .delete.icon {
-    width: 9px;
-    height: 9px;
-    background-position: -71px -308px;
-  }
-
-  .select-arrow.icon {
-    width: 12px;
-    height: 7px;
-    background-position: -81px -308px;
-    margin-top: -2px;
-  }
-
-  .bookmark.icon {
-    width: 12px;
-    height: 12px;
-    background-position: -94px -307px;
-  }
-
-  .filled.bookmark.icon {
-    background-position: -107px -307px;
-  }
-
-  .dark.group.icon {
-    width: 23px;
-    height: 24px;
-    background-position: 0 -320px;
-  }
-
-  .dark.message.icon {
-    width: 19px;
-    height: 19px;
-    background-position: -24px -320px;
-  }
-
-  .dark.person.icon {
-    width: 11px;
-    height: 24px;
-    background-position: -44px -320px;
-  }
-
-  .dark.templates.icon {
-    width: 19px;
-    height: 22px;
-    background-position: -56px -320px;
-  }
-
-  .split.action.icon {
-    width: 18px;
-    height: 15px;
-    background-position: 0 -346px;
-  }
-
-  .reply.action.icon {
-    width: 14px;
-    height: 15px;
-    background-position: -19px -346px;
-  }
-
-  .internal.action.icon,
-  .public.visibility.icon {
-    width: 11px;
-    height: 15px;
-    background-position: -34px -346px;
-  }
-
-  .public.action.icon,
-  .internal.visibility.icon {
-    width: 11px;
-    height: 15px;
-    background-position: -46px -346px;
-  }
-
-  .recipients.icon {
-    width: 16px;
-    height: 12px;
-    background-position: -58px -349px;
-  }
-
-  .white.close.icon {
-    width: 13px;
-    height: 13px;
-    background-position: -75px -348px;
-  }
-
-  .close.icon {
-    width: 13px;
-    height: 13px;
-    background-position: -89px -348px;
-  }
-
-  .help.icon {
-    width: 16px;
-    height: 16px;
-    background-position: -103px -345px;
-  }
-
-  .error.icon {
-    width: 13px;
-    height: 13px;
-    background-position: -153px -349px;
-  }
-
-  .loading.icon {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    background: hsl(145,51%,45%);
-    animation: rotateplane 1.2s infinite ease-in-out;
-  }
-
-  .small.loading.icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  @keyframes rotateplane {
-    0% { 
-      transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-    } 50% { 
-      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-    } 100% { 
-      transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-    }
-  }
-
-  .loading.dot.icon {
-    border-radius: 100%;
-  }
-
-  .marker.icon {
-    width: 17px;
-    height: 19px;
-    background-position: -167px -344px;
-  }
-
-  .marker.active.icon {
-    width: 17px;
-    height: 19px;
-    background-position: -167px -364px;
-  }
-
-  .color-swatch {
-    border-radius: 100%;
-    width: 11px;
-    height: 11px;
-  }
+.loading.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: hsl(145,51%,45%);
+  animation: rotateplane 1.2s infinite ease-in-out;
+}
+
+.small.loading.icon {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes rotateplane {
+  0% { 
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  } 50% { 
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  } 100% { 
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+.color-swatch {
+  border-radius: 100%;
+  width: 11px;
+  height: 11px;
+}
 
 
 /*
@@ -2120,6 +1558,7 @@ footer {
 .tasks {
   background: #2c2d36;
   overflow: auto;
+  flex: 1;
 }
 
   .tasks.tasks--standalone {
@@ -2294,9 +1733,11 @@ footer {
   padding: 9px 2px 10px 10px;
   border-bottom: 1px solid rgba(240, 250, 255, .05);
   flex-shrink: 0;
+  display: flex;
 }
   
   .search-holder {
+    flex: 1;
     margin-right: 2px;
     position: relative;
     transition: 240ms;
@@ -2315,11 +1756,9 @@ footer {
     justify-content: center;
   }
 
-  .empty-search .close.icon {
+  .empty-search .icon-close {
     fill: white;
     opacity: 0.5;
-    width: 13px;
-    height: 13px;
   }
 
     .filled.search .empty-search {
@@ -2340,12 +1779,10 @@ footer {
     z-index: 1;
   }
 
-  .search .magnifier.icon {
+  .search .icon-magnifier {
     position: absolute;
     top: 8px;
     left: 10px;
-    width: 15px;
-    height: 15px;
     z-index: 2;
     opacity: 0.5;
     fill: white;
@@ -2415,9 +1852,11 @@ footer {
     list-style: none;
     position: relative;
     flex-shrink: 0;
+    display: flex;
   }
 
     .user-menu > li {
+      flex: 1;
       background: #26272e;
     }
 
@@ -5277,7 +4716,6 @@ label + .wizard-buttonList {
   .tasks {
     display: flex;
     flex-direction: column;
-    flex: 1;
   }
 }
 

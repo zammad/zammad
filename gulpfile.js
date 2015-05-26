@@ -34,7 +34,7 @@ gulp.task('svgstore', function () {
       }).get();
       var cssFile = new gutil.File({
           path: '../../../app/assets/stylesheets/svg-dimensions.css',
-          contents: new Buffer(data.join(" "))
+          contents: new Buffer(data.join("\n"))
       });
       this.push(cssFile);
       this.push(file);
