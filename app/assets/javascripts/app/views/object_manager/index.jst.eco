@@ -1,11 +1,9 @@
 <div class="page-header-title">
-  <div class="horizontal">
-    <h1><%- @T( @head ) %> <small><%- @T( 'Object Manager' ) %></small></h1>
-    <div class="page-header-meta">
-      <a class="btn js-restore"><%- @T( 'Restore Attributes to default' ) %></a>
-      <a class="btn btn--danger js-sync"><%- @T( 'Sync Changes' ) %> <span class="glyphicon glyphicon-lock"></span></a>
-      <a class="btn btn--success js-new"><%- @T( 'New Attribute' ) %></a>
-    </div>
+  <h1><%- @T( @head ) %> <small><%- @T( 'Object Manager' ) %></small></h1>
+  <div class="page-header-meta">
+    <a class="btn js-restore"><%- @T( 'Restore Attributes to default' ) %></a>
+    <a class="btn btn--danger js-sync"><%- @T( 'Sync Changes' ) %> <span class="glyphicon glyphicon-lock"></span></a>
+    <a class="btn btn--success js-new"><%- @T( 'New Attribute' ) %></a>
   </div>
 </div>
 <table class="table table-striped table-hover">

@@ -4801,6 +4801,21 @@ label + .wizard-buttonList {
   display: inherit;
 }
 
+.empty-space {
+  padding: 50px;
+  
+  svg {
+    width: 200px;
+    height: auto;
+  }
+  
+  .empty-space-tagline {
+    color: hsl(198, 19%, 72%);
+    margin-top: 15px;
+    font-size: 18px;
+  }
+}
+
 /*
 
   ----------------

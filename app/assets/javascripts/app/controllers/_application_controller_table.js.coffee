@@ -104,7 +104,8 @@ class App.ControllerTable extends App.Controller
 
     # check if table is empty
     if _.isEmpty(data.objects)
-      table = '<p>-' + App.i18n.translateContent( 'none' ) + '-</p>'
+      table = App.view('generic/admin/empty')
+        explanation: data.explanation
       return $(table)
 
     # group by

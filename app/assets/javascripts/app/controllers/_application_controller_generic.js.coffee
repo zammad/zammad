@@ -161,6 +161,7 @@ class App.ControllerGenericIndex extends App.Controller
           events:
             'click': @edit
         container: @container
+        explanation: @pageData.explanation or 'none'
       },
       @pageData.tableExtend
     )
