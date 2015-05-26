@@ -43,6 +43,12 @@ blockquote {
   font-size: inherit;
 }
 
+#app {
+  display: flex;
+  min-width: 1024px;
+  height: 100%;
+}
+
 .u-unclickable {
   pointer-events: none;
 }
