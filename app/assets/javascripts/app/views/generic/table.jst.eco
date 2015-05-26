@@ -3,9 +3,10 @@
     <tr>
     <% if @checkbox: %>
       <th style="width: 40px" class="no-padding">
-        <label class="input-replacement centered">
+        <label class="input-replacement">
           <input type="checkbox" value="" name="bulk_all"/>
-          <span class="white checkbox icon"></span>
+          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
+          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
         </label>
       </th>
     <% end %>
@@ -41,7 +42,8 @@
       <td class="no-padding">
         <label class="input-replacement">
           <input type="checkbox" value="<%= object.id %>" name="bulk"/>
-          <span class="checkbox icon"></span>
+          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
+          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
         </label>
       </td>
     <% end %>
@@ -49,7 +51,8 @@
       <td class="no-padding">
         <label class="input-replacement">
           <input type="radio" value="<%= object.id %>" name="radio"/>
-          <span class="radio icon"></span>
+          <svg class="icon-radio icon-unchecked"><use xlink:href="#icon-radio" /></svg>
+          <svg class="icon-radio-checked icon-checked"><use xlink:href="#icon-radio-checked" /></svg>
         </label>
       </td>
     <% end %>

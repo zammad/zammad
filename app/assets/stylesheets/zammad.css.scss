@@ -507,7 +507,9 @@ table {
   justify-content: center;
 }
 
-.input-replacement input {
+.input-replacement input,
+.input-replacement input:not(:checked) ~ .icon-checked,
+.input-replacement input:checked ~ .icon-unchecked {
   display: none;
 }
 
