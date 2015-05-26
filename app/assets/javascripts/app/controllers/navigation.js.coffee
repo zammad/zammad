@@ -197,7 +197,15 @@ class App.Navigation extends App.Controller
           @renderResult(result)
       )
 
+    emptyAndClose = =>
+      @$('#global-search').val('').blur()
+      @$('.search').removeClass('filled').removeClass('open')
+
     # observer search box
+    @$('#global-search').bind( 'focusout', (e) =>
+      @$('.search').removeClass('focused')
+    )
+
     @$('#global-search').bind( 'focusin', (e) =>
 
       @$('.search').addClass('focused')
@@ -233,6 +241,13 @@ class App.Navigation extends App.Controller
 
     # start search
     @$('#global-search').bind( 'keyup', (e) =>
+
+      # close on esc
+      if e.which == 27
+        emptyAndClose()
+        return
+
+      # on other keys, show result
       term = @$('#global-search').val().trim()
       return if !term
       return if term is @term
@@ -245,8 +260,7 @@ class App.Navigation extends App.Controller
     @$('.empty-search').on(
       'click'
       =>
-        @$('#global-search').val('')
-        @$('.search').removeClass('filled')
+        emptyAndClose()
     )
 
     new App.OnlineNotificationWidget(
