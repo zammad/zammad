@@ -2953,14 +2953,9 @@ footer {
       width: 11px;
       height: 11px;
       background: white;
-      border: 1px solid hsl(240,4%,95%);
+      border: 1px solid hsl(240,4%,66%);
       box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
       transform: rotate(-45deg);
-    }
-
-    .article-add.is-internal .bubble-arrow:after {
-      background: #f2def2;
-      border: #eed3d7;
     }
 
     .customer.ticket-article-item .bubble-arrow {
