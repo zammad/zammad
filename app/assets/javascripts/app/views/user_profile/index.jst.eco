@@ -1,4 +1,4 @@
-<div class="flex profile">
+<div class="profile">
   <div class="profile-window">
     <div class="js-object-container"></div>
     <div class="profile-section js-ticket-stats"></div>

@@ -4620,6 +4620,7 @@ label + .wizard-buttonList {
 .profile {
   padding: 60px;
   overflow: auto;
+  flex: 1;
   
   h1 {
     margin: 18px 0 0;
@@ -4752,8 +4753,9 @@ label + .wizard-buttonList {
   border-radius: 100%;
   opacity: 0.4;
   
-  .icon {
-    transform: scale(1.6);
+  svg {
+    width: 32px;
+    height: 32px;
   }
 }
 
