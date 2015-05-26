@@ -12,22 +12,22 @@
         <li>
         <% if @items_from != 1: %>
           <a class="btn btn--action" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-            <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
+            <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
           </a>
         <% else: %>
           <a class="btn btn--action is-disabled" href="#" data-from="" data-type="page">
-            <svg class="icon arrow arrow--left arrow--disabled"><use xlink:href="#icon-arrow-left" /></svg>
+            <svg class="icon-arrow-left arrow--disabled"><use xlink:href="#icon-arrow-left" /></svg>
           </a>
         <% end %>
         </li>
         <li>
         <% if @items_till != @items_total: %>
           <a class="btn btn--action" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-            <svg class="icon arrow arrow--right"><use xlink:href="#icon-arrow-right" /></svg>
+            <svg class="icon-arrow-right"><use xlink:href="#icon-arrow-right" /></svg>
           </a>
         <% else: %>
           <a class="btn btn--action is-disabled" href="#" data-from="" data-type="page">
-            <svg class="icon arrow arrow--right arrow--disabled"><use xlink:href="#icon-arrow-right" /></svg>
+            <svg class="icon-arrow-right arrow--disabled"><use xlink:href="#icon-arrow-right" /></svg>
           </a>
         </li>
         <% end %>

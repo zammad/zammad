@@ -1,4 +1,6 @@
 <div class="avatar-holder">
   <span class="avatar size-50" data-avatar-id="<%- @avatar.id %>" style="background-image: url(<%- @src %>)"></span>
-  <div class="avatar-delete"><div class="delete icon"></div></div>
+  <div class="avatar-delete">
+    <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+  </div>
 </div>

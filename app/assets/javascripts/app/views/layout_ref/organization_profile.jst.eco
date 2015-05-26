@@ -1,4 +1,4 @@
-<div class="flex profile">
+<div class="profile">
 
   <div class="profile-window">
     <div class="profile-section vertical centered">
@@ -16,7 +16,7 @@
         </ul>
       </div>
       <div class="profile-organizationIcon">
-        <div class="organization icon"></div>
+        <svg class="icon-organization"><use xlink:href="#icon-organization" /></svg>
       </div>
       <h1>Steuerbüro C. Kaik</h1>
     </div>

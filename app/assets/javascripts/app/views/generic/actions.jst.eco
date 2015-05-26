@@ -4,7 +4,7 @@
       <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
       <label><%- @T('Action') %></label>
     <% end %>
-    <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
+    <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
   </div>
   <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
     <% for item in @items: %>

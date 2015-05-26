@@ -9,7 +9,7 @@
     </div>
   </div>
 </div>
-<div class="avatar-gallery horizontal wrap">
+<div class="avatar-gallery">
   <% for avatar in @avatars: %>
   <div class="avatar-holder">
     <% if avatar.initial: %>
@@ -17,11 +17,13 @@
       <% if avatar.default: %>
       <%  cssClass = 'is-active' %>
       <% end %>
-      <%- App.Session.get().avatar('50', '', cssClass, true, avatar) %>
+      <%- App.Session.get().avatar('80', '', cssClass, true, avatar) %>
     <% else: %>
-      <span class="avatar size-50 <% if avatar.default: %>is-active<% end %>" data-avatar-id="<%- avatar.id %>" style="background-image: url(<%- avatar.content %>)"></span>
+      <span class="avatar size-80 <% if avatar.default: %>is-active<% end %>" data-avatar-id="<%- avatar.id %>" style="background-image: url(<%- avatar.content %>)"></span>
       <% if avatar.deletable: %>
-        <div class="avatar-delete"><div class="delete icon"></div></div>
+        <div class="avatar-delete">
+          <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+        </div>
       <% end %>
     <% end %>
   </div>

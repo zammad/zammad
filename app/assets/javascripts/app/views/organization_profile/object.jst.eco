@@ -1,7 +1,7 @@
 <div class="profile-section vertical centered">
   <div class="align-right profile-action js-action"></div>
   <div class="profile-organizationIcon">
-    <div class="organization icon"></div>
+    <svg class="icon-organization"><use xlink:href="#icon-organization" /></svg>
   </div>
   <h1><%= @organization.displayName() %></h1>
 </div>

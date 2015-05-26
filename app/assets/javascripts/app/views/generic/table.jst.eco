@@ -80,7 +80,7 @@
       </td>
     <% end %>
     <% if @destroy: %>
-      <td><a href="#" class="glyphicon glyphicon-trash" data-type="destroy"></a></td>
+      <td><svg class="icon-trash" data-type="destroy"><use xlink:href="#icon-trash" /></svg></td>
     <% end %>
   </tr>
 <% end %>

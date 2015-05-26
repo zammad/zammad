@@ -4,7 +4,7 @@
   <div class="align-right horizontal center js-close u-clickable">
     <%- @T('Back to my view') %>
     <div class="switchBackToUser-close">
-      <svg class="icon"><use xlink:href="#icon-close" /></svg>
+      <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
     </div>
   </div>
 </div>
