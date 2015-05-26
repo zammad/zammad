@@ -3042,6 +3042,14 @@ footer {
     display: block;
   }
 
+.shortcut .dropdown-menu > .active > a {
+  background: none;
+}
+
+.shortcut .dropdown-menu > .active {
+  background: hsl(145,51%,45%);
+}
+
 .editControls {
   position: absolute;
   left: 0;
