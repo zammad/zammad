@@ -1607,10 +1607,11 @@ footer {
 
     .navigation .nav-tab-name {
       text-align: left;
+      padding-bottom: 2px;
     }
 
     .tasks-navigation .nav-tab-icon {
-      
+
       &.loading {
         width: 10px;
         height: 10px;
@@ -1630,7 +1631,7 @@ footer {
   .nav-tab.nav-tab--search:hover {
     background: #389ed9;
     color: white;
-    
+
     .nav-tab-icon {
       fill: white;
     }
@@ -1656,7 +1657,7 @@ footer {
     animation: fade 3s ease-in-out infinite;
   }
 
-  @keyframes fade { 
+  @keyframes fade {
     50% { opacity: 1 }
     75% { opacity: 0 }
     to { opacity: 1 }
@@ -1708,7 +1709,7 @@ footer {
 
     .nav-tab-close:hover svg {
       opacity: 1;
-    } 
+    }
 
 .level-1.is-active {
   background-color: #38ae6a;
@@ -4272,7 +4273,7 @@ footer {
   border-bottom: 1px solid rgba(0,0,0,.13);
   padding-bottom: 8px;
   margin-bottom: 16px;
-  
+
   & + p {
     margin-top: 0;
   }
@@ -4317,7 +4318,7 @@ label + .wizard-buttonList {
 
 .setup.wizard .wizard-body {
   min-height: 140px;
-  
+
   & > p:first-child {
     margin-top: 0;
   }
@@ -4343,7 +4344,7 @@ label + .wizard-buttonList {
 .setup.wizard .logo-preview:not([src=""]) {
   margin: 0 auto 15px;
   height: auto;
-  
+
   + .logo-preview-placeholder {
     display: none;
   }
@@ -4439,7 +4440,7 @@ label + .wizard-buttonList {
   display: flex;
   cursor: default;
   padding: 5px 8px;
-  
+
   &:not(:last-child) {
     border-bottom: 1px solid hsl(251,6%,90%);
   }
@@ -4449,7 +4450,7 @@ label + .wizard-buttonList {
   margin: 0 10px;
   flex: 1;
   & > * {
-    @extend .u-textTruncate; 
+    @extend .u-textTruncate;
   }
 }
 
