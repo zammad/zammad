@@ -3,7 +3,7 @@
 require 'net/ldap'
 
 module Auth::Ldap
-  def self.check( username, password, config, user )
+  def self.check(username, password, config, user)
 
     scope = Net::LDAP::SearchScope_WholeSubtree
 

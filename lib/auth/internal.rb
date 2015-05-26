@@ -1,10 +1,11 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
 module Auth::Internal
-  def self.check( _username, password, _config, user )
+  def self.check(username, password, _config, user)
 
     # return if no user exists
-    return nil if !user
+    return false if !username
+    return false if !user
 
     # sha auth check
     if user.password =~ /^\{sha2\}/

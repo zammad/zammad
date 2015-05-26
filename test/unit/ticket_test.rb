@@ -165,7 +165,7 @@ class TicketTest < ActiveSupport::TestCase
   test 'ticket process_pending' do
 
     ticket = Ticket.create(
-      title: "pending close test",
+      title: 'pending close test',
       group: Group.lookup( name: 'Users'),
       customer_id: 2,
       state: Ticket::State.lookup( name: 'pending close' ),
@@ -179,7 +179,7 @@ class TicketTest < ActiveSupport::TestCase
 
     assert_equal( lookup_ticket.id, ticket.id, 'ticket.pending_time verify' )
 
-    Ticket.process_pending()
+    Ticket.process_pending
 
     lookup_ticket = Ticket.find_by( 'pending_time <= ?', Time.zone.now )
 

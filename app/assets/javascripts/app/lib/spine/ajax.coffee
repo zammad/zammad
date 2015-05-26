@@ -212,7 +212,7 @@ class Singleton extends Base
     (data, status, xhr) =>
 
       Ajax.disable =>
-        unless Spine.isBlank(data) or @record.destroyed
+        unless data is undefined or Object.getOwnPropertyNames(data).length == 0 or @record.destroyed
           # Update with latest data
           @record.refresh(data)
 

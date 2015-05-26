@@ -39,13 +39,9 @@ class Index extends App.ControllerContent
         # check if auto wizard is executed
         if data.auto_wizard == true
 
-          # login check / get session user
-          App.Auth.loginCheck()
-
-          if App.Config.get('system_online_service')
-            @navigate 'getting_started/agents'
-          else
-            @navigate 'getting_started/channel'
+          # show message, auto wizard is enabled
+          @renderAutoWizard()
+          return
 
         # check if import is active
         if data.import_mode == true
@@ -57,10 +53,82 @@ class Index extends App.ControllerContent
     )
 
   render: ->
-
     @html App.view('getting_started/intro')()
 
+  renderAutoWizard: ->
+    @html App.view('getting_started/auto_wizard_enabled')()
+
 App.Config.set( 'getting_started', Index, 'Routes' )
+
+
+class AutoWizard extends App.ControllerContent
+  className: 'getstarted fit'
+
+  constructor: ->
+    super
+
+    # if already logged in, got to #
+    if @authenticate(true)
+      @navigate '#'
+      return
+
+    # set title
+    @title 'Auto Wizard'
+    @renderSplash()
+    @fetch()
+
+  release: =>
+    @el.removeClass('fit getstarted')
+
+  fetch: ->
+
+    url = "#{@apiPath}/getting_started/auto_wizard"
+    if @token
+      url += "/#{@token}"
+
+    # get data
+    @ajax(
+      id:          'auto_wizard'
+      type:        'GET'
+      url:         url
+      processData: true
+      success:     (data, status, xhr) =>
+        console.log('DDD', data)
+        # redirect to login if master user already exists
+        if @Config.get('system_init_done')
+          @navigate '#login'
+          return
+
+        # check if auto wizard enabled
+        if data.auto_wizard is false
+          @navigate '#'
+          return
+
+        if data.auto_wizard_success is false
+          if data.message
+            @renderFailed(data)
+          else
+            @renderToken()
+          return
+
+        # login check / get session user
+        App.Auth.loginCheck()
+        @navigate '#'
+        return
+    )
+
+  renderFailed: (data) ->
+    @html App.view('getting_started/auto_wizard_failed')(data)
+
+  renderSplash: ->
+    @html App.view('getting_started/auto_wizard_splash')()
+
+  renderToken: ->
+    @html App.view('getting_started/auto_wizard_enabled')()
+
+App.Config.set( 'getting_started/auto_wizard', AutoWizard, 'Routes' )
+App.Config.set( 'getting_started/auto_wizard/:token', AutoWizard, 'Routes' )
+
 
 class Admin extends App.ControllerContent
   className: 'getstarted fit'

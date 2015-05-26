@@ -970,7 +970,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: 'SystemAddressName',
+  state: 'AgentNameSystemAddressName',
   frontend: false
 )
 
@@ -1366,7 +1366,7 @@ Ticket::State.create_if_not_exists( id: 3, name: 'pending reminder', state_type_
 Ticket::State.create_if_not_exists( id: 4, name: 'closed', state_type_id: Ticket::StateType.where(name: 'closed').first.id  )
 Ticket::State.create_if_not_exists( id: 5, name: 'merged', state_type_id: Ticket::StateType.where(name: 'merged').first.id  )
 Ticket::State.create_if_not_exists( id: 6, name: 'removed', state_type_id: Ticket::StateType.where(name: 'removed').first.id, active: false )
-Ticket::State.create_if_not_exists( id: 7, name: 'pending close', state_type_id: Ticket::StateType.where(name: 'pending action').first.id, next_state_id: 5 )
+Ticket::State.create_if_not_exists( id: 7, name: 'pending close', state_type_id: Ticket::StateType.where(name: 'pending action').first.id, next_state_id: 4 )
 
 Ticket::Priority.create_if_not_exists( id: 1, name: '1 low' )
 Ticket::Priority.create_if_not_exists( id: 2, name: '2 normal' )

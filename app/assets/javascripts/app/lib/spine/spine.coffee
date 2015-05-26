@@ -160,19 +160,22 @@ class Model extends Module
 
   @exists: (id) -> Boolean @irecords[id]
 
-  @addRecord: (record) ->
+  @addRecord: (record,idx) ->
     if root = @irecords[record.id or record.cid]
       root.refresh(record)
     else
       record.id or= record.cid
       @irecords[record.id] = @irecords[record.cid] = record
-      @records.push(record)
+      if idx isnt undefined
+        @records.splice(idx,0,record)
+      else
+        @records.push(record)
     record
 
   @refresh: (values, options = {}) ->
     @deleteAll() if options.clear
     records = @fromJSON(values)
-    records = [records] unless isArray(records)
+    records = [records] unless Array.isArray(records)
     @addRecord(record) for record in records
     @sort()
 
@@ -256,7 +259,7 @@ class Model extends Module
     if typeof objects is 'string'
       objects = JSON.parse(objects)
     objects = @beforeFromJSON(objects)
-    if isArray(objects)
+    if Array.isArray(objects)
       for value in objects
         if value instanceof this
           value
@@ -464,7 +467,7 @@ class Model extends Module
     @id or= @cid
 
     record = @dup(false)
-    @constructor.addRecord(record)
+    @constructor.addRecord(record,options.idx)
     @constructor.sort()
 
     clone = record.clone()
@@ -610,14 +613,6 @@ createObject = Object.create or (o) ->
   Func.prototype = o
   new Func()
 
-isArray = (value) ->
-  Object::toString.call(value) is '[object Array]'
-
-isBlank = (value) ->
-  return true unless value
-  return false for key of value
-  true
-
 makeArray = (args) ->
   Array::slice.call(args, 0)
 
@@ -626,9 +621,7 @@ makeArray = (args) ->
 Spine = @Spine   = {}
 module?.exports  = Spine
 
-Spine.version    = '1.4.1'
-Spine.isArray    = isArray
-Spine.isBlank    = isBlank
+Spine.version    = '1.5.0'
 Spine.$          = $
 Spine.Events     = Events
 Spine.Log        = Log
