@@ -66,9 +66,6 @@ class App.TicketCreate extends App.Controller
     # set active tab
     selectedTab = @el.find(".type-tabs .tab[data-type='#{type}']")
     selectedTab.addClass('active')
-    selectedTabIcon = @el.find(".type-tabs .tab[data-type='#{type}'] .icon")
-    selectedTabIcon.removeClass('gray')
-    selectedTabIcon.addClass('white')
 
     # set form type attributes
     articleSenderTypeMap =
