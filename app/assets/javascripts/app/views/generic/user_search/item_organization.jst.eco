@@ -6,5 +6,5 @@
     <%= @organization.displayName() %>
     <span class="recipientList-detail">- <%= @organization.member_ids.length %> <%- @T('People') %></span>
   </div>
-  <svg class="recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+  <svg class="recipientList-arrow icon-arrow-right"><use xlink:href="#icon-arrow-right" /></svg>
 </li>

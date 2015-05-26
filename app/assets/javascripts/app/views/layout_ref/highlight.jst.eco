@@ -7,7 +7,7 @@
       </div>
       <div class="dropdown dropdown--actions">
         <div class="btn btn--action btn--split--last btn--slim centered" id="highlight" data-toggle="dropdown" aria-expanded="true">
-          <svg class="arrow arrow--down"><use xlink:href="#icon-arrow-down" /></svg>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu">
           <% for entry, i in @colors: %>
@@ -30,11 +30,11 @@
         <ul class="pagination">
           <li>
             <a class="btn btn--action btn--split--first" data-from="0" data-type="page">
-              <svg class="arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
+              <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
             </a>
           <li>
             <a class="btn btn--action btn--split--last" href="#" data-from="1" data-type="page">
-              <svg class="arrow arrow--right"><use xlink:href="#icon-arrow-right" /></svg>
+              <svg class="icon-arrow-right"><use xlink:href="#icon-arrow-right" /></svg>
             </a>
         </ul>
       </li>
@@ -55,11 +55,11 @@
       <ul class="pagination">
         <li>
           <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-            <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
+            <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
           </a>
         <li>
           <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-            <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
+            <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
           </a>
       </ul>
     </div>

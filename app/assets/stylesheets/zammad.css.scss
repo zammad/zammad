@@ -808,7 +808,7 @@ textarea,
     padding-right: 34px;
   }
 
-  .form-control + .arrow  {
+  .form-control + .icon-arrow-down  {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -1305,25 +1305,16 @@ ol.tabs li {
 
 */
 
-.arrow {
+.icon-arrow-down,
+.icon-arrow-up,
+.icon-arrow-left,
+.icon-arrow-right {
   fill: black;
   opacity: 0.39;
 }
 
 .arrow--disabled {
   opacity: 0.23;
-}
-
-.arrow--down,
-.arrow--up {
-  width: 13px;
-  height: 7px;
-}
-
-.arrow--left,
-.arrow--right {
-  width: 7px;
-  height: 13px;
 }
 
 .icon-checkmark {
@@ -3453,8 +3444,6 @@ footer {
     justify-content: center;
     
     .icon {
-      width: 13px;
-      height: 13px;
       fill: black;
     }
   }
@@ -4061,8 +4050,6 @@ footer {
   }
 
   .recipientList-arrow {
-    width: 7px;
-    height: 13px;
     fill: white;
     opacity: 0.39;
   }
@@ -4506,19 +4493,23 @@ label + .wizard-buttonList {
   }
 }
 
+.avatar-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .avatar-holder {
   display: inline-block;
   position: relative;
-  margin: 0 15px 15px 0;
+  margin: 0 32px 32px 0;
   border-radius: 100%;
+  box-shadow: 0 0 0 4px white;
   
   .avatar {
     @extend .u-clickable;
-    opacity: .33;
     
     &.is-active {
-      opacity: 1;
-      box-shadow: 0 0 0 3px hsl(200,71%,59%);
+      box-shadow: 0 0 0 4px hsl(200,71%,59%);
     }
   }
 }
@@ -4530,23 +4521,28 @@ label + .wizard-buttonList {
 
   .avatar-holder .avatar-delete {
     position: absolute;
-    right: -18px;
-    top: -18px;
-    width: 30px;
-    height: 30px;
+    right: -15px;
+    top: -15px;
+    width: 40px;
+    height: 40px;
     pointer-events: none;
     visibility: hidden;
-    opacity: 0.5;
-    @extend .u-clickable;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    box-shadow: 0 1px 5px rgba(0,0,0,.05);
     
-    &:hover {
-      opacity: 1;
-    }
+    @extend .u-clickable;
 
-    .icon {
-      position: absolute;
-      left: 8px;
-      bottom: 8px;
+    svg {
+      opacity: 0.5;
+      fill: hsl(234,10%,19%);
+    }
+    
+    &:hover svg {
+      opacity: 1;
     }
   }
 
