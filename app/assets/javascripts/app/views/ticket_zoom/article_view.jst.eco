@@ -51,7 +51,7 @@
           </div>
           <% if !_.isEmpty( @article.attachments ): %>
             <div class="attachments">
-              <div class="paperclip icon"></div>
+              <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
               <h3><%- @article.attachments.length %> <%- @T('Attached Files') %></h3>
               <% for attachment in @article.attachments: %>
                 <div class="attachment horizontal">
