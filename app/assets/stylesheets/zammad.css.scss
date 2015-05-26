@@ -1698,7 +1698,7 @@ footer {
       background-color: #972e29;
     }
 
-    .nav-tab-close .icon {
+    .nav-tab-close svg {
       width: 13px;
       height: 13px;
       fill: white;
@@ -1706,7 +1706,7 @@ footer {
       transform: scale(0.7);
     }
 
-    .nav-tab-close:hover .icon {
+    .nav-tab-close:hover svg {
       opacity: 1;
     } 
 
@@ -1758,7 +1758,7 @@ footer {
     justify-content: center;
   }
 
-  .empty-search .icon-close {
+  .empty-search .icon-diagonal-cross {
     fill: white;
     opacity: 0.5;
   }
@@ -3819,10 +3819,8 @@ footer {
     align-items: center;
     justify-content: center;
     
-    .icon {
+    svg {
       fill: white;
-      width: 13px;
-      height: 13px;
     }
   }
 
@@ -3869,10 +3867,8 @@ footer {
     @extend .u-clickable;
   }
 
-  .modal-close .close-icon {
+  .modal-close .icon-diagonal-cross {
     opacity: 0.18;
-    width: 13px;
-    height: 13px;
   }
 
   .modal-body {

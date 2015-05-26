@@ -11,7 +11,7 @@
     <div class="nav-tab-name u-textTruncate flex"><%= item.data.head %></div>
     <div class="nav-tab-close js-close" title="<%- @Ti('close') %>">
       <div class="nav-tab-close-inner">
-        <svg class="icon"><use xlink:href="#icon-close" /></svg>
+        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
       </div>
     </div>
   </a>

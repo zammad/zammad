@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <div class="modal-close js-close">
-              <svg class="close-icon"><use xlink:href="#icon-close" /></svg>
+              <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
             </div>
             <h1 class="modal-title">Edit Customer</h1>
           </div>
