@@ -2046,10 +2046,6 @@ footer {
   overflow: auto;
 }
 
-  .sidebar h2 {
-    margin-top: 5px;
-  }
-
   .sidebar h3 {
     margin: 0;
     color: rgba(0,8,14,.73);
@@ -3421,19 +3417,11 @@ footer {
   .tabsSidebar .sidebar-header {
     display: flex;
     align-items: center;
-    margin: 20px 20px 0;
-    padding: 0 0 5px;
     position: relative;
-    
-    h2 {
-      margin: 0 0 -1px;
-      line-height: 1;
-      padding-right: 8px;
-      @extend .u-clickable;
-    }
+    margin: 0 20px;
     
     + hr {
-      margin-top: 15px;
+      margin-top: 0;
     }
     
     .dropdown {
@@ -3441,9 +3429,27 @@ footer {
     }
   }
 
+  .sidebar-header-headline {
+    padding: 25px 0 15px 25px;
+    margin: 0 0 0 -20px;
+    line-height: 1;
+    padding-right: 8px;
+    @extend .u-clickable, .u-textTruncate;
+  }
+
+  .sidebar-header-actions {
+    flex: 1;
+    margin-top: 10px;
+    margin-right: 20px;
+    
+    .dropdown-toggle {
+      height: 30px;
+    }
+  }
+
   .tabsSidebar-close {
-    padding: 20px;
-    margin: -15px;
+    padding: 28px 35px 20px 0;
+    margin: 0 -20px 0 0;
     @extend .u-clickable;
     display: flex;
     align-items: center;

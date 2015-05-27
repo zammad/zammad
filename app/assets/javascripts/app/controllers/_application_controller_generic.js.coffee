@@ -488,7 +488,7 @@ class App.Sidebar extends App.Controller
   events:
     'click .tabsSidebar-tab':   'toggleTab'
     'click .tabsSidebar-close': 'toggleSidebar'
-    'click .sidebar-header h2': 'toggleDropdown'
+    'click .sidebar-header .js-headline': 'toggleDropdown'
 
   constructor: ->
     super
