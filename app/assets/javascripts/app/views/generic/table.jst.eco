@@ -73,7 +73,9 @@
 
       <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %>>
         <% if item.name is 'icon': %>
-          <%- item.class %>
+          <svg class="<%- item.class %>">
+            <use xlink:href="#icon-priority" />
+          </svg>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
