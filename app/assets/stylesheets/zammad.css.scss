@@ -1694,8 +1694,8 @@ footer {
     }
 
     .nav-tab-close-inner {
-      width: 21px;
-      height: 21px;
+      width: 19px;
+      height: 19px;
       background-color: #2c2d36;
       border-radius: 100%;
       display: flex;
@@ -1708,11 +1708,10 @@ footer {
     }
 
     .nav-tab-close svg {
-      width: 13px;
-      height: 13px;
+      width: 9px;
+      height: 9px;
       fill: white;
       opacity: 0.3;
-      transform: scale(0.7);
     }
 
     .nav-tab-close:hover svg {
