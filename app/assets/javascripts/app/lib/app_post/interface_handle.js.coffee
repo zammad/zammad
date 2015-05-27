@@ -54,7 +54,7 @@ class App.Content extends App.Controller
       do (route, callback) =>
         @route(route, (params) ->
 
-          @log 'notice', 'execute page controller', route, params
+          @log 'debug', 'execute page controller', route, params
 
           # remove events for page
           App.Event.unbindLevel('page')

@@ -21,7 +21,7 @@ class App.Auth
     )
 
   @loginCheck: ->
-    App.Log.notice 'Auth', 'loginCheck'
+    App.Log.debug 'Auth', 'loginCheck'
     App.Ajax.request(
       id:    'login_check'
       async: false
@@ -37,7 +37,7 @@ class App.Auth
     )
 
   @logout: ->
-    App.Log.notice 'Auth', 'logout'
+    App.Log.debug 'Auth', 'logout'
     App.Ajax.request(
       id:   'logout'
       type: 'DELETE'
@@ -52,7 +52,7 @@ class App.Auth
     )
 
   @_login: (data, type) ->
-    App.Log.notice 'Auth', '_login:success', data
+    App.Log.debug 'Auth', '_login:success', data
 
     # if session is not valid
     if data.error
@@ -129,7 +129,7 @@ class App.Auth
 
 
   @_logout: (data) ->
-    App.Log.notice 'Auth', '_logout'
+    App.Log.debug 'Auth', '_logout', data
 
     # empty session
     App.Session.init()
@@ -139,8 +139,8 @@ class App.Auth
     App.Event.trigger( 'ui:rerender' )
     App.Event.trigger( 'clearStore' )
 
-  @_loginError: (xhr, statusText, error) ->
-    App.Log.notice 'Auth', '_loginError:error'
+  @_loginError: ->
+    App.Log.error 'Auth', '_loginError:error'
 
     # empty session
     App.Session.init()

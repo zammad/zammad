@@ -102,6 +102,7 @@ class _trackSingleton
     )
 
   log: ( facility, level, args ) ->
+    return if !App.Config.get('developer_mode')
     return if !App.Config.get('ui_send_client_stats')
     info =
       time:     Math.round( new Date().getTime() / 1000 )
@@ -112,6 +113,7 @@ class _trackSingleton
     @data.push info
 
   send: (async = true) =>
+    return if !App.Config.get('developer_mode')
     return if !App.Config.get('ui_send_client_stats')
     return if _.isEmpty @data
     newData = _.clone( @data )

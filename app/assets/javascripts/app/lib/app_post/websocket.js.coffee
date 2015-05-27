@@ -159,7 +159,7 @@ class _webSocketSingleton extends App.Controller
     # check if ping is back within 2 min
     App.Delay.clear 'websocket-ping-check', 'ws'
     check = =>
-      @log 'notice', 'no websocket ping response, reconnect...'
+      @log 'debug', 'no websocket ping response, reconnect...'
       @close()
     App.Delay.set check, 90000, 'websocket-ping-check', 'ws'
 
@@ -175,7 +175,7 @@ class _webSocketSingleton extends App.Controller
 
     if !window.WebSocket
       @backend = 'ajax'
-      @log 'notice', 'no support of websocket, use ajax long polling'
+      @log 'debug', 'no support of websocket, use ajax long polling'
       @_ajaxInit()
       return
 
@@ -195,7 +195,7 @@ class _webSocketSingleton extends App.Controller
     @ws.onopen = =>
       if @backend_port
         port = ":#{@backend_port}"
-      @log 'notice', "new websocket (#{@channel()}#{port}) connection open"
+      @log 'debug', "new websocket (#{@channel()}#{port}) connection open"
 
       @connectionEstablished    = true
       @connectionWasEstablished = true
@@ -224,7 +224,7 @@ class _webSocketSingleton extends App.Controller
       @_receiveMessage(pipe)
 
     @ws.onclose = (e) =>
-      @log 'notice', 'close websocket connection'
+      @log 'debug', 'close websocket connection'
 
       # take connection down and keep it down
       return if @connectionKeepDown
@@ -237,7 +237,7 @@ class _webSocketSingleton extends App.Controller
 
         # use ws dedicated port fallback if no connection was possible
         if @backend is 'websocket'
-          @log 'notice', 'no websocket connection on /ws, use :port/'
+          @log 'debug', 'no websocket connection on /ws, use :port/'
           @backend = 'websocketPort'
           @connect()
           return
@@ -246,7 +246,7 @@ class _webSocketSingleton extends App.Controller
         if @backend is 'websocketPort'
           if @backend_port
             port = ":#{@backend_port}"
-          @log 'notice', "no websocket connection on port #{port}, use ajax long polling as fallback"
+          @log 'debug', "no websocket connection on port #{port}, use ajax long polling as fallback"
           @backend = 'ajax'
           @connect()
           return
@@ -317,7 +317,7 @@ class _webSocketSingleton extends App.Controller
       queue: false
       success: (data) =>
         if data.client_id
-          @log 'notice', 'ajax:new client_id', data.client_id
+          @log 'debug', 'ajax:new client_id', data.client_id
           @client_id = data.client_id
           @_ajaxReceive()
           @_ajaxSendQueue()
@@ -369,7 +369,7 @@ class _webSocketSingleton extends App.Controller
       data:  JSON.stringify({ client_id: @client_id })
       processData: false
       success: (data) =>
-        @log 'notice', 'ajax:onmessage', data
+        @log 'debug', 'ajax:onmessage', data
         @_receiveMessage(data)
         if data && data.error
           @client_id = undefined
