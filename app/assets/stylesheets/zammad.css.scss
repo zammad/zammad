@@ -1637,6 +1637,10 @@ footer {
     }
   }
 
+  .nav-tab.ui-sortable-helper {
+    border-bottom-color: transparent;
+  }
+
   .nav-tab.nav-tab--search {
     height: 30px;
   }
