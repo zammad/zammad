@@ -2,6 +2,8 @@ class App.ChannelTwitter extends App.Controller
   constructor: ->
     super
 
+    @title 'Twitter'
+
     # render page
     @render()
 

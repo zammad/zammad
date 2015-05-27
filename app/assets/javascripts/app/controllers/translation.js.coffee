@@ -5,7 +5,7 @@ class Index extends App.ControllerContent
     # check authentication
     return if !@authenticate()
 
-    @title 'Translations'
+    @title 'Translations', true
 
     @render()
 

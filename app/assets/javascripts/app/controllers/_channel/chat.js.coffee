@@ -2,6 +2,8 @@ class App.ChannelChat extends App.ControllerTabs
   constructor: ->
     super
 
+    @title 'Chat', true
+
     @tabs = [
       {
         name:       'Settings',
@@ -10,4 +12,4 @@ class App.ChannelChat extends App.ControllerTabs
       },
     ]
 
-    @render()    
+    @render()

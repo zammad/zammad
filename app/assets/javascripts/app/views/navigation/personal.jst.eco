@@ -1,7 +1,7 @@
 <% for item in @items: %>
   <% if item.child: %>
     <li class="<% if item.class: %><%- item.class %><% end %> dropup <% if @open_tab[item.target] : %>open<% end %>">
-      <a class="list-button dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
+      <a class="list-button dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<% if item.translate: %><%- @Ti( item.name ) %><% else: %><%= item.name %><% end %>">
         <span class="dropdown-nose"></span>
         <% if item.class is 'user': %>
           <span class="js-avatar"></span>
@@ -19,7 +19,7 @@
           <% end %>
           <li class="<% if @active_tab[item.target] : %>active<% end %>">
             <a href="<%= item.target %>" class="horizontal center">
-              <span class="flex u-textTruncate"><%- @T( item.name ) %></span>
+              <span class="flex u-textTruncate"><% if item.translate: %><%- @T( item.name ) %><% else: %><%= item.name %><% end %></span>
               <% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %>
               <% if item.iconClass: %><svg class="icon-<%= item.iconClass %>"><use xlink:href="#icon-<%= item.iconClass %>" /></svg><% end %>
             </a>

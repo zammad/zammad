@@ -4,6 +4,8 @@ class System extends App.ControllerTabs
 
     return if !@authenticate()
 
+    @title 'System', true
+
     @tabs = [
       { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Base' } },
   #    { name: 'Language', 'target': 'language',  controller: App.SettingsSystem, params: { area: 'System::Language' } },
@@ -22,6 +24,8 @@ class Security extends App.ControllerTabs
 
     return if !@authenticate()
 
+    @title 'Security', true
+
     @tabs = [
       { name: 'Base',                     'target': 'base',             controller: App.SettingsArea, params: { area: 'Security::Base' } },
 #       { name: 'Authentication',           'target': 'auth',             controller: App.SettingsArea, params: { area: 'Security::Authentication' } },
@@ -38,6 +42,8 @@ class Import extends App.ControllerTabs
 
     return if !@authenticate()
 
+    @title 'Import', true
+
     # import
     @tabs = [
       { name: 'Base',           'target': 'base',          controller: App.SettingsArea, params: { area: 'Import::Base' } },
@@ -51,6 +57,8 @@ class Ticket extends App.ControllerTabs
     super
 
     return if !@authenticate()
+
+    @title 'Ticket', true
 
     # ticket
     @tabs = [

@@ -10,6 +10,9 @@ class Index extends App.Controller
     # check authentication
     return if !@authenticate()
 
+    # set title
+    @title 'Users', true
+
     @render()
 
   render: ->

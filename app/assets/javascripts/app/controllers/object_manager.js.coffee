@@ -5,6 +5,8 @@ class Index extends App.ControllerTabs
     # check authentication
     return if !@authenticate()
 
+    @title 'Objects', true
+
     # get data
     @ajax(
       id:    'object_manager_attributes_list'

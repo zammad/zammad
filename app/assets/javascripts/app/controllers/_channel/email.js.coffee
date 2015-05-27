@@ -2,6 +2,8 @@ class App.ChannelEmail extends App.ControllerTabs
   constructor: ->
     super
 
+    @title 'Email', true
+
     @tabs = [
       {
         name:       'Inbound',

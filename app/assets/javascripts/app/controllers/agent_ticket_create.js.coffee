@@ -602,4 +602,4 @@ App.Config.set( 'ticket/create/:ticket_id/:article_id', Router, 'Routes' )
 App.Config.set( 'ticket/create/id/:id/:ticket_id/:article_id', Router, 'Routes' )
 
 # set new actions
-App.Config.set( 'TicketCreate', { prio: 8003, parent: '#new', name: 'New Ticket', target: '#ticket/create', role: ['Agent'], divider: true }, 'NavBarRight' )
+App.Config.set( 'TicketCreate', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#ticket/create', role: ['Agent'], divider: true }, 'NavBarRight' )

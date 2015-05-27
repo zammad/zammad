@@ -928,4 +928,4 @@ class highlightRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
 
-App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
+App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

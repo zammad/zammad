@@ -2,6 +2,8 @@ class App.ChannelWeb extends App.ControllerTabs
   constructor: ->
     super
 
+    @title 'Web', true
+
     @tabs = [
       {
         name:       'Settings',

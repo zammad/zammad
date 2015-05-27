@@ -12,7 +12,7 @@ App.Config.set( 'User', {
   role:   [ 'Agent', 'Customer' ]
 }, 'NavBarRight' )
 
-App.Config.set( 'Admin', { prio: 9000, parent: '', name: 'Admin', target: '#manage', role: ['Admin'] }, 'NavBarRight' )
-App.Config.set( 'New', { prio: 20000, parent: '', name: 'New', target: '#new', class: 'add' }, 'NavBarRight' )
+App.Config.set( 'Admin', { prio: 9000, parent: '', name: 'Admin', translate: true, target: '#manage', role: ['Admin'] }, 'NavBarRight' )
+App.Config.set( 'New', { prio: 20000, parent: '', name: 'New', translate: true, target: '#new', class: 'add' }, 'NavBarRight' )
 
-App.Config.set( 'Misc', { prio: 90000, parent: '', name: 'Tools', target: '#tools', child: true, class: 'tools' }, 'NavBar' )
+App.Config.set( 'Misc', { prio: 90000, parent: '', name: 'Tools', translate: true, target: '#tools', child: true, class: 'tools' }, 'NavBar' )

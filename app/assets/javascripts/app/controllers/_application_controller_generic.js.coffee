@@ -105,7 +105,7 @@ class App.ControllerGenericIndex extends App.Controller
     super
 
     # set title
-    @title @pageData.title
+    @title @pageData.title, true
 
     # set nav bar
     @navupdate @pageData.navupdate

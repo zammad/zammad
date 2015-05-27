@@ -71,9 +71,12 @@ class App.Controller extends Spine.Controller
     # release custom bindings after it got removed from dom
 
   # add @title methode to set title
-  title: (name) ->
+  title: (name, translate = false) ->
 #    $('html head title').html( @Config.get(product_name) + ' - ' + App.i18n.translateInline(name) )
-    document.title = @Config.get('product_name') + ' - ' + App.i18n.translatePlain(name)
+    title = name
+    if translate
+      title = App.i18n.translatePlain(name)
+    document.title = @Config.get('product_name') + ' - ' + title
 
   copyToClipboard: (text) ->
     if window.clipboardData # IE
@@ -132,8 +135,8 @@ class App.Controller extends Spine.Controller
 
     position = [ 15, 30, 15, 0, -15, -30, -15, 0 ]
     position = position.concat( position.concat( position ) )
-    element.css( 'position', 'relative' ) 
-    shakeMe( element, position, 20 ) 
+    element.css( 'position', 'relative' )
+    shakeMe( element, position, 20 )
 
   isRole: (name) ->
     roles = @Session.get( 'roles' )

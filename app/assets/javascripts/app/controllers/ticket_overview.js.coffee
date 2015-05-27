@@ -775,7 +775,7 @@ class Navbar extends App.Controller
         for item in @cache
           if item.link is @view
             meta.title = item.name
-      @title meta.title
+      @title meta.title, true
 
   render: =>
     #console.log('RENDER NAV')

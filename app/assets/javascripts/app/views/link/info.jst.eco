@@ -9,4 +9,4 @@
   </ul>
 <% end %>
 </p>
-<a href="" data-type="add" class="glyphicon glyphicon-plus" title="<%- @Ti('add') %>"></a>
+<a href="" data-type="add" class="glyphicon glyphicon-plus" title="<%- @Ti('Add') %>"></a>
