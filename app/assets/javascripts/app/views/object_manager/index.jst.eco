@@ -1,34 +1,42 @@
-<div class="page-header-title">
-  <h1><%- @T( @head ) %> <small><%- @T( 'Object Manager' ) %></small></h1>
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T( @head ) %> <small><%- @T( 'Object Manager' ) %></small></h1>
+  </div>
   <div class="page-header-meta">
-    <a class="btn js-restore"><%- @T( 'Restore Attributes to default' ) %></a>
-    <a class="btn btn--danger js-sync"><%- @T( 'Sync Changes' ) %> <span class="glyphicon glyphicon-lock"></span></a>
+    <a class="btn js-restore"><%- @T( 'Restore Defaults' ) %></a>
     <a class="btn btn--success js-new"><%- @T( 'New Attribute' ) %></a>
   </div>
 </div>
-<table class="table table-striped table-hover">
+<div class="box box--message">
+  <h2>Database Update required</h2>
+  <p><%- @T( 'Changes were made that require a database update. This might take some time.' ) %></p>
+  <div class="box-controls">
+    <div class="subtle-link standalone js-discard">Discard Changes</div>
+    <div class="btn btn--primary js-sync align-right"><%- @T( 'Update Database' ) %></div>
+  </div>
+</div>
+<div class="box box--message">
+  <div class="box-progress">
+    <div class="box-progress-title"><%- @T('Updating Database') %></div>
+    <div class="box-progress-body">
+      <progress max="100" value="50"></progress>
+    </div>
+  </div>
+</div>
+<table class="table table-striped table-hover is-disabled">
   <thead>
     <tr>
-      <th class=""><%- @T('State') %></th>
       <th class=""><%- @T('Display') %></th>
       <th class=""><%- @T('Name') %></th>
       <th class=""><%- @T('Type') %></th>
-      <th class=""><%- @T('Actions') %></th>
     </tr>
   </thead>
   <tbody>
     <% for item in @items: %>
-    <tr class="<% if item.active is false: %>not-active<% end %> js-edit u-clickable" data-id="<%- item.id %>">
-      <td><span class="glyphicon <% if item.pending_migration: %>glyphicon-flash<% end %> <% if item.active: %>glyphicon-ok<% else: %>glyphicon-remove<% end %>"></span></td>
+    <tr class="<% if item.active is false: %>is-inactive<% end %> js-edit u-clickable" data-id="<%- item.id %>">
       <td><%= item.display %></td>
       <td><%= item.name %></td>
       <td><%= item.data_type %></td>
-      <td>
-        <a href="#" class="glyphicon glyphicon-chevron-up js-up"></a><a href="#" class="glyphicon glyphicon-chevron-down js-down"></a>
-        <% if item.editable: %>
-          <a href="#" data-id="<%- item.id %>" data-type="delete" class="glyphicon glyphicon-trash" title="<%- @Ti('Delete') %>"></a>
-        <% end %>
-      </td>
     </tr>
     <% end %>
   </tbody>

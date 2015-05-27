@@ -1,5 +1,5 @@
 <div>
-  <div class="horizontal">
+  <div class="page-header">
     <div class="page-header-title">
       <h1 class="can-move"><%- @T( @overview.name ) %></h1>
     </div>

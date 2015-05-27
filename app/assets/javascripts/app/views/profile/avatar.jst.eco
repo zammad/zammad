@@ -1,12 +1,12 @@
-<div class="page-header-title">
-  <div class="horizontal">
+<div class="page-header">
+  <div class="page-header-title">
     <h1><%- @T( 'Avatar' ) %></h1>
-    <div class="page-header-meta">
-    <% if @webcamSupport: %>
-      <div class="btn btn--success js-openCamera"><%- @T('Camera') %></div>
-    <% end %>
-      <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" accept="image/*"></div>
-    </div>
+  </div>
+  <div class="page-header-meta">
+  <% if @webcamSupport: %>
+    <div class="btn btn--success js-openCamera"><%- @T('Camera') %></div>
+  <% end %>
+    <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" accept="image/*"></div>
   </div>
 </div>
 <div class="avatar-gallery">

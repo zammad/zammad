@@ -14,6 +14,7 @@ body {
   font-weight: normal;
   background: hsl(210,17%,98%);
   height: 100%;
+  color: hsl(198,19%,72%);
 }
 
 p {
@@ -457,7 +458,6 @@ table {
 
 .table {
   display: table;
-  color: hsl(198,19%,72%);
 }
 
 .table .table-row {
@@ -501,6 +501,15 @@ table {
 .table > thead > tr > th.no-padding,
 .table > tbody > tr > td.no-padding {
   padding: 0;
+}
+
+.table tr.is-inactive {
+  opacity: 0.5;
+  text-decoration: line-through;
+  
+  a {
+    color: #bbb;
+  }
 }
 
 .table .icon-trash {
@@ -935,11 +944,12 @@ textarea,
 }
 
 .page-header {
+  margin: 0 0 15px;
+  padding: 0;
   border: none;
-}
-
-.page-header-title {
-  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .page-header-title h1 {
@@ -947,13 +957,12 @@ textarea,
 }
 
 .page-header-meta {
-  margin-top: 6px;
   margin-left: auto;
+  padding-left: 9px;
   display: flex;
-  align-self: flex-start;
-  
-  .btn {
-    margin: 0 0 2px 9px;
+
+  .btn + .btn {
+    margin-left: 9px;
   }
 }
 
@@ -1459,13 +1468,6 @@ footer {
 
 .merged, .merge:hover {
   text-decoration: line-through;
-}
-
-.not-active {
-  text-decoration: line-through;
-}
-.not-active a {
-  color: #bbb;
 }
 
 .translation {
@@ -2087,10 +2089,6 @@ footer {
 }
   .NavBarAdmin h2 {
     margin: 21px 0 12px;
-  }
-
-  .NavBarAdmin + .main p {
-    color: hsl(198,19%,72%);
   }
 
   .nav-stacked > li + li {
@@ -2741,7 +2739,6 @@ footer {
 
 .ticketZoom .page-header {
   margin-top: 24px;
-  margin-bottom: 0;
   padding: 0;
 }
 
@@ -3620,7 +3617,7 @@ footer {
 }
 
 .newTicket {
-  padding: 34px;
+  padding: 14px 34px;
 }
 
   .newTicket .sidebar {
@@ -3638,20 +3635,29 @@ footer {
 
 .box {
   background: white;
-  margin: 0 auto;
+  margin: 20px 0;
   border: 1px solid #e6e6e6;
-  padding: 12px 24px 20px;
-  max-width: 658px;
+  padding: 20px 24px;
 }
+
+  .box.box--newTicket {
+    max-width: 658px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .box .page-header {
     text-align: center;
-    margin: 0;
-    padding-bottom: 12px;
+    margin-bottom: 12px;
   }
 
   .box h1 {
+    margin-top: 12px;
     color: hsl(60,1%,34%);
+  }
+
+  .box h2 {
+    margin-top: 12px;
   }
 
   .box .two-columns {
@@ -3663,6 +3669,44 @@ footer {
     margin-left: 4px;
     margin-right: 4px;
     width: calc(50% - 8px);
+  }
+
+  .box-controls {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .box--yellow {
+    background: hsl(47,100%,93%);
+    border-color: hsl(47,100%,75%);
+    color: hsl(47,20%,67%);
+    
+    h1, h2 {
+      color: hsl(47,3%,28%);
+    }
+  }
+
+  .box-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .box-progress-title {
+    color: hsl(47,3%,28%);
+  }
+
+  .box-progress-body {
+    flex: 1;
+    margin-left: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    progress {
+      width: 100%;
+    }
   }
 
 .formset-inset {

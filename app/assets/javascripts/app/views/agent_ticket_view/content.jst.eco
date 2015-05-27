@@ -1,6 +1,6 @@
 <div class="fit vertical">
   <div class="tableOverview flex scrollable">
-    <div class="horizontal">
+    <div class="page-header">
       <div class="page-header-title">
         <h1><%- @T( @overview.name ) %></h1>
       </div>
