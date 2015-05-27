@@ -1654,6 +1654,8 @@ footer {
   }
 
   .nav-tab-icon .inner-circle {
+    will-change: opacity;
+    transform: translateZ(0);
     animation: fade 3s ease-in-out infinite;
   }
 
