@@ -29,6 +29,10 @@
     box-sizing: border-box;
     display: flex;
     justify-content: center;
+    background: hsl(210,14%,98%);
+  }
+  .icon.is-light {
+    background: hsl(210,14%,88%);
   }
   .icon svg {
     width: 128px;
@@ -52,7 +56,7 @@
     outline: none;
     border-color: hsl(205,74%,61%);
   }
-  .icon:before {
+  /*.icon:before {
     content: "";
     position: absolute;
     left: 0;
@@ -64,9 +68,8 @@
       linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
     background-size: 20px 20px;
     background-position: 10px 10px, 40px 40px;
-    background: hsl(210,14%,94%);
     opacity: 0.3;
-  }
+  }*/
 </style>
 
 <?
@@ -142,4 +145,48 @@ if ($sortByImageName) {
 
     $.post('store.php', { list: iconList })
   })
+
+  $('svg').each(function(i, svg){
+    var areas = []
+    var svgBoundingBox = svg.getBoundingClientRect()
+    var svgArea = svgBoundingBox.width * svgBoundingBox.height
+
+    $(svg).find('*').each(function(i, el){
+      var fill = $(el).attr('fill')
+      if(fill && fill != 'none'){
+        var childBoundingBox = el.getBoundingClientRect()
+        areas.push({
+          luminance: getLuminance(fill),
+          areaPercentage: (childBoundingBox.width * childBoundingBox.height)/svgArea
+        })
+      }
+    })
+
+    if(!areas.length)
+      return
+
+    var averageLuminance = areas.reduce(function(previousValue, currentValue, index, array){
+      if(array.length == 1)
+        return currentValue.luminance
+      else
+        return previousValue + currentValue.luminance * currentValue.areaPercentage
+    }, 0)
+    
+    if(averageLuminance > 220){
+      $(svg).parent().addClass('is-light')
+    }
+  })
+
+  //
+  // from http://stackoverflow.com/questions/12043187/how-to-check-if-hex-color-is-too-black
+  //
+  function getLuminance(hex){
+    var c = hex.substring(1);      // strip #
+    var rgb = parseInt(c, 16);   // convert rrggbb to decimal
+    var r = (rgb >> 16) & 0xff;  // extract red
+    var g = (rgb >>  8) & 0xff;  // extract green
+    var b = (rgb >>  0) & 0xff;  // extract blue
+
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+  }
 </script>
