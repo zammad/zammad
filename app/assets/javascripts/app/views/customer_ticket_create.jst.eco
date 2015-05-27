@@ -1,7 +1,7 @@
 <div class="horizontal flex">
   <div class="main no-padding flex">
     <div class="newTicket">
-      <div class="box">
+      <div class="box box--newTicket">
         <div class="page-header">
           <h1><%- @T( 'New Ticket' ) %></h1>
         </div>

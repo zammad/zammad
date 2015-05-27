@@ -1,4 +1,4 @@
-<div class="horizontal">
+<div class="page-header">
   <div class="page-header-title">
     <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
   </div>
