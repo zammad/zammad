@@ -17,8 +17,8 @@ class App.Organization extends App.Model
   uiUrl: ->
     '#organization/profile/' + @id
 
-  icon: (user) ->
-    "organization"
+  icon: ->
+    '<svg class="icon-organization"><use xlink:href="#icon-organization" /></svg>'
 
   @_fillUp: (data) ->
 

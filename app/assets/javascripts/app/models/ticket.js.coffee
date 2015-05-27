@@ -28,7 +28,7 @@ class App.Ticket extends App.Model
   uiUrl: ->
     '#ticket/zoom/' + @id
 
-  level: (user) ->
+  level: ->
     state = App.TicketState.find( @state_id )
     stateType = App.TicketStateType.find( state.state_type_id )
     level = 1
@@ -38,13 +38,13 @@ class App.Ticket extends App.Model
       level = 3
     level
 
-  icon: (user) ->
-    "priority"
+  icon: ->
+    "icon-priority level-#{ @level() }"
 
-  iconTitle: (user) ->
+  iconTitle: ->
     App.TicketState.find( @state_id ).displayName()
 
-  iconTextClass: (user) ->
+  iconTextClass: ->
     "level-#{ @level() }"
 
   iconActivity: (user) ->

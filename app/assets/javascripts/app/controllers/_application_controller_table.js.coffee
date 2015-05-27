@@ -158,6 +158,8 @@ class App.ControllerTable extends App.Controller
             headerFound = true
             header.push attribute
 
+    console.log(header)
+
     # execute header callback
     if data.callbackHeader
       header = data.callbackHeader(header)

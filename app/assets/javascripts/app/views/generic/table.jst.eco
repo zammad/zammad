@@ -37,7 +37,7 @@
   <%   end %>
   <% end %>
   <% position++ %>
-  <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
+  <tr class="item<% if object.active is false: %> is-inactive<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
       <td class="no-padding">
         <label class="input-replacement">
@@ -72,11 +72,19 @@
       <% end %>
 
       <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %>>
+        <% if item.name is 'icon': %>
+          <%- item.class %>
+        <% else: %>
+          <% if item.link: %>
+            <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
+          <% end %>
+          
+          <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
+            <%- value %>
+          </span>
 
-      <% if item.link: %><a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>><% end %>
-      <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>><%- value %></span>
-      <% if item.link: %></a><% end %>
-
+          <% if item.link: %></a><% end %>
+        <% end %>
       </td>
     <% end %>
     <% if @destroy: %>

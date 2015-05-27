@@ -33,8 +33,8 @@ class App.User extends App.Model
   uiUrl: ->
     '#user/profile/' + @id
 
-  icon: (user) ->
-    "user"
+  icon: ->
+    '<svg class="icon-user"><use xlink:href="#icon-user" /></svg>'
 
   initials: ->
     if @firstname && @lastname && @firstname[0] && @lastname[0]

@@ -169,7 +169,7 @@ class App.Navigation extends App.Controller
                   id:         ticket.id
                   class:      "level-1 ticket-popover"
                   url:        ticket.uiUrl()
-                  iconClass:  ticket.icon()
+                  iconClass:  "priority"
                 area.result.push data
             else if area.name is 'User'
               area.result = []
