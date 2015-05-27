@@ -1,7 +1,7 @@
 <% for item in @items: %>
   <% if item.child: %>
   <li class="dropdown <%= item.class %> <% if @open_tab[item.target] : %>open<% end %>">
-    <a href="<%= item.target %>" class="dropdown-toggle horizontal center" data-toggle="dropdown">
+    <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown">
         <svg class="nav-icon"><use xlink:href="#icon-<%= item.class %>" /></svg>
         <span class="nav-item-name flex">
           <%- @T( item.name ) %>

@@ -1,5 +1,5 @@
 <div class="dropdown dropdown--actions">
-  <div class="dropdown-toggle horizontal center" id="userAction" data-toggle="dropdown">
+  <div class="dropdown-toggle" id="userAction" data-toggle="dropdown">
     <% if @type isnt 'small': %>
       <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
       <label><%- @T('Action') %></label>

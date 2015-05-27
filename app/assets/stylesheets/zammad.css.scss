@@ -3416,21 +3416,17 @@ footer {
 
   .tabsSidebar .sidebar-header {
     display: flex;
-    align-items: center;
+    align-content: stretch;
     position: relative;
     margin: 0 20px;
     
     + hr {
       margin-top: 0;
     }
-    
-    .dropdown {
-      position: static;
-    }
   }
 
   .sidebar-header-headline {
-    padding: 25px 0 15px 25px;
+    padding: 33px 0 17px 25px;
     margin: 0 0 0 -20px;
     line-height: 1;
     padding-right: 8px;
@@ -3439,16 +3435,23 @@ footer {
 
   .sidebar-header-actions {
     flex: 1;
-    margin-top: 10px;
-    margin-right: 20px;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+    
+    .dropdown {
+      flex: 1;
+      position: static;
+    }
     
     .dropdown-toggle {
-      height: 30px;
+      padding-top: 38px;
+      padding-bottom: 24px;
     }
   }
 
   .tabsSidebar-close {
-    padding: 28px 35px 20px 0;
+    padding: 27px 35px 12px 0;
     margin: 0 -20px 0 0;
     @extend .u-clickable;
     display: flex;
@@ -3513,20 +3516,18 @@ footer {
     justify-content: center;
   }
 
-  .tabs
-
-    .tabsSidebar-tab.is-changed:before {
-      position: absolute;
-      content: '';
-      left: -3px;
-      width: 6px;
-      height: 6px;
-      top: 50%;
-      margin-top: -3px;
-      border-radius: 100%;
-      background: hsl(198,19%,72%);
-      box-shadow: 0 0 0 2px hsl(210,17%,98%);
-    }
+  .tabsSidebar-tab.is-changed:before {
+    position: absolute;
+    content: '';
+    left: -3px;
+    width: 6px;
+    height: 6px;
+    top: 50%;
+    margin-top: -3px;
+    border-radius: 100%;
+    background: hsl(198,19%,72%);
+    box-shadow: 0 0 0 2px hsl(210,17%,98%);
+  }
 
   .tabsSidebar-tab:first-child {
     border-top-left-radius: 8px;
@@ -3939,6 +3940,8 @@ footer {
 }
 
   .dropdown-toggle {
+    display: flex;
+    align-items: center;
     @extend .u-clickable;
   }
 
