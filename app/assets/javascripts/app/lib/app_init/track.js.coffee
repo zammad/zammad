@@ -119,10 +119,11 @@ class _trackSingleton
     newDataNew = []
     for item in newData
       try
-        itemNew = _.clone( item )
+
+        # check if strigify is possibe, prevent ajax errors
         JSON.stringify(item)
 
-        newDataNew.push itemNew
+        newDataNew.push item
       catch e
         # nothing
 
