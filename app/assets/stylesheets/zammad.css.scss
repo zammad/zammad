@@ -517,6 +517,11 @@ table {
   fill: hsl(240,1%,77%);
 }
 
+.table .icon-priority {
+  vertical-align: middle;
+  margin-top: -3px;
+}
+
 .input-replacement {
   padding: 0;
   margin: 0;
@@ -1721,21 +1726,24 @@ footer {
 .level-1.is-active {
   background-color: #38ae6a;
 }
-.level-1 .priority-icon {
+.level-1 .priority-icon,
+.level-1.icon-priority {
   fill: #38ae6a;
 }
 
 .level-2.is-active {
   background-color: #f35910;
 }
-.level-2 .priority-icon {
+.level-2 .priority-icon,
+.level-2.icon-priority {
   fill: #f35910;
 }
 
 .level-3.is-active {
   background-color: #faab00;
 }
-.level-3 .priority-icon {
+.level-3 .priority-icon,
+.level-3.icon-priority {
   fill: #faab00;
 }
 
@@ -2182,6 +2190,7 @@ footer {
   border-radius: 0;
   border: none;
   z-index: 1110;
+  color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
   word-wrap: break-word;
 }
@@ -2804,6 +2813,7 @@ footer {
   }
 
   .article-content {
+    color: hsl(60,1%,34%);
     position: relative;
     padding: 0 55px;
   }
