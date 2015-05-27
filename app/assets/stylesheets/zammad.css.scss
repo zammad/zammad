@@ -3682,13 +3682,15 @@ footer {
 
 .tokenfield .token {
   padding: 0 0 0 10px;
-  margin: -1px 5px 8px 0;
+  margin: 0 5px 8px 0;
   height: 26px;
   line-height: 27px;
   color: white;
   background: hsl(198,19%,72%);
   border: none;
   float: none;
+  display: inline-flex;
+  align-items: center;
 }
 
   .tokenfield .token-input {
@@ -3707,7 +3709,7 @@ footer {
 
   .tokenfield .token .close {
     margin: 0;
-    padding: 0 10px 0 5px;
+    padding: 0 9px 0 5px;
     font-family: inherit;
     font-weight: 300;
     font-size: 30px;
@@ -3716,6 +3718,7 @@ footer {
     text-shadow: none;
     opacity: .3;
     outline: none;
+    height: auto;
   }
 
   .tokenfield .token .close:hover {
