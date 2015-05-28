@@ -1,7 +1,7 @@
-<div class="attachment horizontal">
-  <div class="attachment-name u-highlight"><%= @fileName %></div>
+<div class="attachment">
+  <div class="attachment-name"><%= @fileName %></div>
   <div class="attachment-size"><%= @fileSize %></div>
-  <div class="attachment-delete js-delete align-right u-clickable" data-id="<%= @store_id %>">
-    <div class="delete icon"></div><%- @T('Delete File') %>
+  <div class="attachment-delete js-delete" data-id="<%= @store_id %>">
+    <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Delete File') %>
   </div>
 </div>

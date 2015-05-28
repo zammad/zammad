@@ -3047,10 +3047,18 @@ footer {
     font-size: 20px;
     margin: 5px;
     display: none;
+    @extend .fit;
   }
 
   .is-dropTarget .dropArea {
     display: block;
+  }
+
+  .dropArea-inner {
+    @extend .fit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
 .shortcut .dropdown-menu > .active > a {
@@ -3312,6 +3320,7 @@ footer {
     padding: 10px 0;
     color: #b3b3b3;
     overflow: hidden;
+    @extend .u-unclickable, .u-textTruncate;
   }
 
     .attachments:not(:empty) {
@@ -3325,6 +3334,7 @@ footer {
       padding: 1px 10px 1px 7px;
       cursor: default;
       position: relative;
+      display: flex;
     }
 
     .attachment:hover {
@@ -3334,6 +3344,7 @@ footer {
       .attachment-name {
         margin-right: 5px;
         word-break: break-all;
+        @extend .u-highlight;
       }
 
       .attachment-size {
@@ -3347,6 +3358,8 @@ footer {
         text-decoration: underline;
         display: none;
         white-space: nowrap;
+        margin-left: auto;
+        @extend .u-clickable;
       }
 
       .attachment:hover .attachment-delete {
@@ -3359,7 +3372,9 @@ footer {
       }
 
         .attachment-delete .icon {
-          opacity: 0.2;
+          fill: hsl(198,18%,72%);
+          width: 9px;
+          height: 9px;
           margin-right: 5px;
         }
 
@@ -3368,6 +3383,7 @@ footer {
       display: inline-block;
       overflow: hidden;
       vertical-align: bottom;
+      @extend .u-highlight, .u-clickable;
     }
 
     .attachmentUpload {
@@ -3375,11 +3391,15 @@ footer {
     }
 
     .attachmentUpload-cancel {
+      @extend .u-clickable;
+      margin-left: auto;
       text-decoration: underline;
     }
 
-    .attachmentUpload .delete.icon {
-      opacity: 0.33;
+    .attachmentUpload .icon {
+      fill: hsl(198,18%,72%);
+      width: 9px;
+      height: 9px;
       margin-right: 5px;
     }
 
