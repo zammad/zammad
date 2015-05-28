@@ -3599,20 +3599,35 @@ footer {
   margin-bottom: 5px;
 }
 
-  .tagList li {
+  .tagList .tag {
+    display: flex;
+    align-items: center;
+    color: hsl(206,7%,28%);
     border-bottom: 1px solid hsl(240,4%,95%);
+  }
+
+  .tagList .tag-name {
+    flex: 1;
   }
 
   .tagList .tag-delete {
     height: 29px;
     padding: 0 10px;
     margin-right: -4px;
-    display: block;
-    opacity: 0.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @extend .u-clickable;
+    
+    .icon {
+      width: 9px;
+      height: 9px;
+      fill: hsl(0,0%,82%);
+    }
   }
 
-    .tagList .tag-delete:hover {
-      opacity: 0.5;
+    .tagList .tag-delete:hover .icon {
+      fill: hsl(1,77%,47%);
     }
 
 .attributeBar {

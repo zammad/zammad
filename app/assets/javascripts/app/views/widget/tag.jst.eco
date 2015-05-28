@@ -2,12 +2,12 @@
   <label><%- @T( 'Tags' ) %></label>
   <ul class="tagList">
     <% for tag in @tags: %>
-    <li class="horizontal center">
-      <span class="flex tag"><%= tag %></span>
+    <li class="tag">
+      <div class="tag-name"><%= tag %></div>
       <!--<span>3</span>-->
-      <span class="tag-delete js-delete centered u-clickable">
-        <span class="delete icon"></span>
-      </span>
+      <div class="tag-delete js-delete ">
+        <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
     <% end %>
   </ul>
   <div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
