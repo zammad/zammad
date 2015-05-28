@@ -688,6 +688,7 @@ class TicketSidebar extends App.Controller
           object_type: 'Ticket'
           object:      ticket
           links:       @links
+          container:   @el.closest('.content')
         )
 
     showTicketHistory = =>

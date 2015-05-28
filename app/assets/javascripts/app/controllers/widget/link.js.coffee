@@ -83,6 +83,7 @@ class App.WidgetLink extends App.Controller
       link_object_id: @object.id
       object:         @object
       parent:         @
+      container:      @container
     )
 
 class App.LinkAdd extends App.ControllerModal
