@@ -6,9 +6,9 @@
         <span class="nav-item-name flex">
           <%- @T( item.name ) %>
         </span>
-        <b class="caret"></b>
+        <svg class="dropdown-icon icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
     </a>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu dropdown-menu--light">
       <% for item in item.child: %>
         <% if item.divider: %>
           <li class="divider"></li>

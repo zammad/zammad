@@ -9,7 +9,7 @@
           <svg class="user-menu-icon icon-plus"><use xlink:href="#icon-plus" /></svg>
         <% end %>
       </a>
-      <ul class="dropdown-menu" role="menu">
+      <ul class="dropdown-menu dropdown-menu--light" role="menu">
         <% for item, id in item.child: %>
           <% if item.divider and id > 0: %>
             <li class="divider"></li>

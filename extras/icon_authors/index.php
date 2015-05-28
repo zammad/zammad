@@ -1,3 +1,12 @@
+<?
+
+// check for ajax request
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+  file_put_contents('list.json', json_encode($_POST['list'], JSON_PRETTY_PRINT));
+  exit();
+}
+
+?>
 <!doctype html>
 <title>Zammad Icons</title>
 <style>
@@ -136,15 +145,17 @@ if ($sortByImageName) {
 
 <script src="../../app/assets/javascripts/app/lib/core/jquery-2.1.1.min.js"></script>
 <script>
-  $('input').on('blur', function(){
+  $('input').on('input', storeAuthors)
+
+  function storeAuthors(){
     var iconList = {}
 
     $('.icon-author').each(function(){
       iconList[$(this).attr('data-filename')] = $(this).val()
     })
 
-    $.post('store.php', { list: iconList })
-  })
+    $.post('index.php', { list: iconList }, function(data){ console.log(data) })
+  }
 
   $('svg').each(function(i, svg){
     var areas = []

@@ -1532,7 +1532,7 @@ footer {
   flex-shrink: 0;
 }
 
-  .main-navigation a {
+  .main-navigation > li > a {
     padding: 0 15px;
     height: 48px;
     color: rgba(240, 250, 255, .25);
@@ -1550,7 +1550,8 @@ footer {
     color: white;
   }
 
-  .main-navigation > li.active .nav-icon {
+  .main-navigation > li.active .nav-icon,
+  .main-navigation > li.active .dropdown-icon {
     fill: currentColor;
   }
 
@@ -1558,11 +1559,21 @@ footer {
     background: #389ed9;
   }
 
-  .nav-icon {
+  .main-navigation .dropdown-menu {
+    left: 10px;
+    right: 15px;
+    min-width: 0;
+  }
+
+  .main-navigation .nav-icon {
     margin-right: 15px;
     vertical-align: bottom;
     width: 24px;
     height: 24px;
+    fill: hsl(206,7%,37%);
+  }
+
+  .main-navigation .dropdown-icon {
     fill: hsl(206,7%,37%);
   }
 
@@ -1960,15 +1971,10 @@ footer {
     left: 10px;
     right: 15px;
     width: auto;
-    background: white;
   }
 
     .user-menu li.add .dropdown-menu {
       background-color: #38af6e;
-    }
-
-    .user-menu li.add .dropdown-menu > li > a {
-      color: white;
     }
 
     .user-menu li.add .dropdown-menu .divider {
@@ -1980,14 +1986,7 @@ footer {
   }
 
   .user-menu .dropdown-menu > li > a {
-    height: 40px;
-    color: #2594d4;
     display: flex;
-  }
-
-  .user-menu .dropdown-menu > li > a:hover {
-    color: #2594d4;
-    background: rgba(0,0,0,.05);
   }
 
 .avatar {
@@ -4013,6 +4012,24 @@ footer {
     opacity: 0.39;
   }
 
+  .dropdown-menu.dropdown-menu--light {
+    background: white;
+  }
+
+  .dropdown-menu.dropdown-menu--light > li > a {
+    color: hsl(202,70%,49%);
+  }
+
+  .dropdown-menu.dropdown-menu--light > li > a:hover {
+    color: #2594d4;
+    background: rgba(0,0,0,.05);
+  }
+
+  .dropdown-menu.dropdown-menu--light li:hover,
+  .dropdown-menu.dropdown-menu--light li.is-active {
+    background: none;
+  }
+
   .dropdown ul {
     margin: 0;
   }
@@ -4042,6 +4059,7 @@ footer {
     color: white;
     padding: 0 15px;
     margin: 0 -15px;
+    line-height: inherit;
   }
 
   .dropdown-menu > li > a:hover {
