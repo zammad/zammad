@@ -307,11 +307,14 @@ span[data-tooltip]:hover:before {
     }
   }
 
+  // used in .recipientList-controls
   &.btn--onDark {
     background: none;
+    color: white;
     
-    .icon {
-      fill: white;
+    svg {
+      fill: currentColor;
+      opacity: 1;
     }
   }
 
@@ -413,7 +416,7 @@ span[data-tooltip]:hover:before {
 }
 
 .btn-label {
-  margin-left: 4px;
+  margin-left: 7px;
 }
 
 .visibility-change {
@@ -643,19 +646,18 @@ table {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
+  color: hsl(202,8%,28%);
 }
 
 h1 {
   font-size: 23px;
   line-height: 29px;
-  color: rgba(0,8,14,.73);
 }
 
 h2,
 h2.popover-title {
   font-size: 19px;
   line-height: 25px;
-  color: rgba(0,8,14,.73);
 }
 
 h3 {
@@ -898,7 +900,7 @@ textarea,
   justify-content: center;
   flex: 1;
 
-  .icon {
+  svg {
     margin-right: 14px;
   }
 
@@ -2963,7 +2965,7 @@ footer {
       width: 11px;
       height: 11px;
       background: white;
-      border: 1px solid hsl(240,4%,66%);
+      border: 1px solid hsl(240,4%,95%);
       box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
       transform: rotate(-45deg);
     }
@@ -3297,7 +3299,7 @@ footer {
       min-height: 38px;
     }
 
-    .ticket-edit .bubble-arrow:after {
+    .article-new .bubble-arrow:after {
       border-color: #b3b3b3;
       box-shadow: none;
     }
@@ -3566,6 +3568,7 @@ footer {
 .alert {
   padding: 10px 15px;
   border-radius: 3px;
+  color: hsl(202,5%,18%);
   
   &.alert--info {
     border-color: hsl(188,50%,72%);
@@ -4122,7 +4125,6 @@ footer {
   .recipientList-name {
     color: white;
     margin-left: 10px;
-    margin-top: 2px;
     flex: 1;
     @extend .u-textTruncate;
   }
@@ -4155,7 +4157,7 @@ footer {
   .recipientList-controls,
   .recipientList-controls:hover {
     @extend .u-clickable;
-    padding: 5px 10px !important;
+    padding: 0 10px !important;
     background: hsl(206,7%,28%) !important;
   }
 

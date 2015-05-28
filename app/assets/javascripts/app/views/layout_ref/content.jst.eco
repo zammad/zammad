@@ -81,7 +81,7 @@
 
             <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
               <input id="customer_id_autocompletion2" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organization/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-              <svg class="arrow arrow--right"><use xlink:href="#icon-arrow-right" /></svg>
+              <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
             </div>
 
             <div class="dropdown-menu" aria-labelledby="customer_id">
@@ -95,7 +95,7 @@
                     Albrecht &amp; Bertschler GmbH
                     <span class="recipientList-detail">- 4 Personen</span>
                   </div>
-                  <svg class="recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
                     <li class="recipientList-entry js-organization" data-organization-id="BENCHMARKhumanresources">
                   <div class="recipientList-iconSpacer">
                     <svg class="recipientList-icon"><use xlink:href="#icon-organization" /></svg>
@@ -104,7 +104,7 @@
                     BENCHMARK human resources
                     <span class="recipientList-detail">- 2 Personen</span>
                   </div>
-                  <svg class="recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
@@ -150,7 +150,7 @@
                     Support Team Berlin
                     <span class="recipientList-detail">- 5 Personen</span>
                   </div>
-                  <svg class="recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
 
                 <li class="recipientList-entry js-organization">
                   <div class="recipientList-iconSpacer">
@@ -160,7 +160,7 @@
                     Bernecker + Rainer Industrie-Elektronik Ges.m.b.H.
                     <span class="recipientList-detail">- 3 Personen</span>
                   </div>
-                  <svg class="recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
 
                 <li class="recipientList-entry js-organization">
                   <div class="recipientList-iconSpacer">
@@ -170,7 +170,7 @@
                     Bertsch Ecopower GmbH
                     <span class="recipientList-detail">- 1 Person</span>
                   </div>
-                  <svg class="recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
 
                 <li class="recipientList-entry recipientList--new u-clickable horizontal center">
                   <div class="recipientList-iconSpacer">
@@ -184,7 +184,7 @@
               <ul class="recipientList-organizationMembers hide" id="AlbrechtBertschlerGmbG">
                 <li class="recipientList-controls js-back">
                   <div class="btn btn--action btn--onDark">
-                    <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
+                    <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
                     <span class="btn-label"><%- @T('Back') %></span>
                   </div>
 
@@ -228,7 +228,7 @@
               <ul class="recipientList-organizationMembers hide" id="BENCHMARKhumanresources">
                 <li class="recipientList-controls js-back">
                   <div class="btn btn--action btn--onDark">
-                    <svg class="icon arrow arrow--left"><use xlink:href="#icon-arrow-left" /></svg>
+                    <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
                     <span class="btn-label"><%- @T('Back') %></span>
                   </div>
 
