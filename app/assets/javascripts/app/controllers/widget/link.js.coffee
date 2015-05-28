@@ -1,7 +1,7 @@
 class App.WidgetLink extends App.Controller
   events:
-    'click [data-type=add]': 'add',
-    'click [data-type=remove]': 'remove',
+    'click .js-add': 'add',
+    'click .js-remove': 'remove',
 
   constructor: ->
     super

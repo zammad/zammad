@@ -1,17 +1,15 @@
-<div class="">
-  <label><%- @T( 'Tags' ) %></label>
-  <ul class="tagList">
-    <% for tag in @tags: %>
-    <li class="tag">
-      <div class="tag-name"><%= tag %></div>
-      <!--<span>3</span>-->
-      <div class="tag-delete js-delete ">
-        <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
-      </div>
-    <% end %>
-  </ul>
-  <div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
-  <form>
-    <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
-  </form>
-</div>
+<label><%- @T( 'Tags' ) %></label>
+<ul class="sidebar-list">
+  <% for tag in @tags: %>
+  <li class="sidebar-list-item">
+    <div class="sidebar-list-item-name"><%= tag %></div>
+    <!--<span>3</span>-->
+    <div class="sidebar-list-item-delete js-delete">
+      <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+    </div>
+  <% end %>
+</ul>
+<div class="text-muted js-newTagLabel u-clickable">+ <%- @T('Add Tag') %></div>
+<form>
+  <input type="text" name="new_tag" class="hide js-newTagInput" autocomplete="off">
+</form>

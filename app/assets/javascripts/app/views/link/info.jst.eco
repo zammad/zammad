@@ -1,10 +1,19 @@
 <label><%- @T('Links') %></label>
 <% for type of @links: %>
-  <label><%- @T( type ) %></label>
-  <ul>
+<div class="ticketLinks">
+  <div class="sidebar-list-title"><%- @T( type ) %></div>
+  <ul class="sidebar-list">
     <% for item in @links[type]: %>
-    <li><a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>" class="<%= item.css %>">T:<%= item.number %> <%= item.title %></a> <a href="" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove" class="glyphicon glyphicon-remove" title="<%- @Ti('remove') %>"></a></li>
+    <li class="sidebar-list-item">
+      <div class="sidebar-list-item-name">
+        <a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>" class="<%= item.css %>"><span class="ticket-id">T:<%= item.number %></span> <%= item.title %></a>
+      </div>
+      <!--<span>3</span>-->
+      <div class="sidebar-list-item-delete js-delete" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove">
+        <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
     <% end %>
   </ul>
+</div>
 <% end %>
-<div class="text-muted js-newTagLabel u-clickable" data-type="add">+ <%- @T('Add Link') %></div>
+<div class="text-muted u-clickable js-add">+ <%- @T('Add Link') %></div>

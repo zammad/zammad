@@ -718,7 +718,7 @@ fieldset > *:not(.form-group) .form-control {
 
 .formGroup-label {
   padding: 0 2px;
-  margin-bottom: 3px;
+  margin-bottom: 6px;
   position: relative;
   display: flex;
   align-items: center;
@@ -3590,28 +3590,36 @@ footer {
   }
 }
 
-.tags {
-  margin: 15px 0 20px;
+.tags,
+.links {
+  margin: 20px 0;
 }
 
-.tagList {
+.sidebar-list {
   padding: 0;
   margin-bottom: 5px;
 }
 
-  .tagList .tag {
+  .sidebar-list-title {
+    color: hsl(206,7%,28%);
+    text-transform: capitalize;
+    margin-top: 7px;
+  }
+
+  .sidebar-list-item {
+    padding: 4px 1px;
     display: flex;
     align-items: center;
     color: hsl(206,7%,28%);
     border-bottom: 1px solid hsl(240,4%,95%);
   }
 
-  .tagList .tag-name {
+  .sidebar-list-item-name {
     flex: 1;
   }
 
-  .tagList .tag-delete {
-    height: 29px;
+  .sidebar-list-item-delete {
+    height: 100%;
     padding: 0 10px;
     margin-right: -4px;
     display: flex;
@@ -3626,9 +3634,18 @@ footer {
     }
   }
 
-    .tagList .tag-delete:hover .icon {
+    .sidebar-list-item-delete:hover .icon {
       fill: hsl(1,77%,47%);
     }
+
+.ticket-id {
+  color: white;
+  background: hsl(198,19%,72%);
+  font-size: 11px;
+  border-radius: 7px;
+  padding: 0 5px;
+  margin-right: 2px;
+}
 
 .attributeBar {
   height: 60px;
