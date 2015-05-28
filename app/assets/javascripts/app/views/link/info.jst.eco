@@ -1,5 +1,4 @@
 <label><%- @T('Links') %></label>
-<p>
 <% for type of @links: %>
   <label><%- @T( type ) %></label>
   <ul>
@@ -8,5 +7,4 @@
     <% end %>
   </ul>
 <% end %>
-</p>
-<a href="" data-type="add" class="glyphicon glyphicon-plus" title="<%- @Ti('Add') %>"></a>
+<div class="text-muted js-newTagLabel u-clickable" data-type="add">+ <%- @T('Add Link') %></div>
