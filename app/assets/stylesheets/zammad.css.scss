@@ -1979,7 +1979,6 @@ footer {
 
   .user-menu .dropdown-menu > li > a {
     height: 40px;
-    padding: 0 15px;
     color: #2594d4;
     display: flex;
   }
@@ -3988,7 +3987,7 @@ footer {
   margin: 0;
   padding: 0;
   min-width: 100%;
-  color: white;
+  color: hsl(198,19%,72%);
   text-transform: initial;
   letter-spacing: 0;
   background: hsl(234,10%,19%);
@@ -4014,8 +4013,10 @@ footer {
     margin: 0;
   }
 
-  .dropdown li {
-    height: 40px;
+  .dropdown li,
+  .dropup li {
+    height: 39px;
+    line-height: 38px;
     padding: 0 15px;
   }
 
@@ -4034,9 +4035,9 @@ footer {
     }
 
   .dropdown-menu > li > a {
-    height: 40px;
-    line-height: 39px;
     color: white;
+    padding: 0 15px;
+    margin: 0 -15px;
   }
 
   .dropdown-menu > li > a:hover {
@@ -4050,7 +4051,6 @@ footer {
 
   .dropdown.dropdown--actions {
     li {
-      padding: 0;
       display: flex;
       align-items: center;
     }
@@ -4077,6 +4077,11 @@ footer {
       min-width: 100%;
       padding: 3px 18px;
     }
+  }
+
+  li.dropdown-header {
+    line-height: 36px;
+    height: 32px;
   }
 
 .recipientList,

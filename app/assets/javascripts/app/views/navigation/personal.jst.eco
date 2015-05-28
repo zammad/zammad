@@ -10,8 +10,8 @@
         <% end %>
       </a>
       <ul class="dropdown-menu" role="menu">
-        <% for item in item.child: %>
-          <% if item.divider: %>
+        <% for item, id in item.child: %>
+          <% if item.divider and id > 0: %>
             <li class="divider"></li>
           <% end %>
           <% if item.navheader: %>
