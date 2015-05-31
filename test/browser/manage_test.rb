@@ -73,7 +73,7 @@ class ManageTest < TestCase
     )
     sleep 4
 
-    click( css: 'a[data-type="destroy"]:last-child' )
+    click( css: '[data-type="destroy"]:last-child' )
     sleep 2
 
     click( css: '.modal button.js-submit' )
