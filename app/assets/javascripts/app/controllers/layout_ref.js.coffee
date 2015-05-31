@@ -672,7 +672,7 @@ class ReferenceSetupWizard extends App.ControllerWizard
     @agentEmail.add(@agentFirstName).add(@agentLastName).val('')
     @agentFirstName.focus()
 
-App.Config.set( 'layout_ref/richtext', ReferenceSetupWizard, 'Routes' )
+App.Config.set( 'layout_ref/setup', ReferenceSetupWizard, 'Routes' )
 
 class RichText extends App.ControllerContent
   constructor: ->
