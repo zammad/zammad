@@ -230,7 +230,7 @@ class AgentTicketActionLevel0Test < TestCase
     )
     click(
       browser: browser2,
-      css: '.active div[data-tab="ticket"] .js-actions .select-arrow',
+      css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down',
     )
     click(
       browser: browser2,

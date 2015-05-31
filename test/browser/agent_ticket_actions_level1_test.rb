@@ -56,7 +56,7 @@ class AgentTicketActionLevel1Test < TestCase
     )
 
     # merge tickets
-    click( css: '.active div[data-tab="ticket"] .js-actions .select-arrow' )
+    click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
     click( css: '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
     watch_for(
       css: '.modal',
@@ -113,7 +113,7 @@ class AgentTicketActionLevel1Test < TestCase
     )
 
     # merge tickets
-    click( css: '.active div[data-tab="ticket"] .js-actions .select-arrow' )
+    click( css: '.active div[data-tab="ticket"] .js-actions .icon-arrow-down' )
     click( css: '.active div[data-tab="ticket"] .js-actions a[data-type="ticket-merge"]' )
     watch_for(
       css: '.modal',

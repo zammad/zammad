@@ -36,7 +36,7 @@ class AgentUserProfileTest < TestCase
     sleep 2
 
     # check and change note again in edit screen
-    click( css: '.active .js-action .select-arrow' )
+    click( css: '.active .js-action .icon-arrow-down' )
     click( css: '.active .js-action a[data-type="edit"]' )
 
     watch_for(

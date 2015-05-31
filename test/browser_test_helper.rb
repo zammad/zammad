@@ -1053,7 +1053,7 @@ wait untill text in selector disabppears
       element.send_keys( :arrow_down )
       sleep 0.3
       instance.find_elements( { css: '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
-      sleep 0.3
+      sleep 0.6
     end
 
     if data[:attachment]
@@ -1068,7 +1068,7 @@ wait untill text in selector disabppears
       assert( true, 'ticket created without submit' )
       return
     end
-    sleep 1.6
+    sleep 0.8
     #instance.execute_script( '$(".content.active .newTicket form").submit();' )
     instance.find_elements( { css: '.active .newTicket button.submit' } )[0].click
     sleep 1
@@ -1151,7 +1151,7 @@ wait untill text in selector disabppears
       # select tab
       click( browser: instance, css: '.active .tabsSidebar-tab[data-tab="customer"]')
 
-      click( browser: instance, css: '.active div[data-tab="customer"] .js-actions .select-arrow' )
+      click( browser: instance, css: '.active div[data-tab="customer"] .js-actions .icon-arrow-down' )
       click( browser: instance, css: '.active div[data-tab="customer"] .js-actions a[data-type="customer-change"]' )
       watch_for(
         browser: instance,
