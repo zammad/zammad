@@ -29,12 +29,14 @@ class App.Log
 
 class _Singleton
   constructor: ->
-    @moduleColorsMap = {}
-    @currentConfig = {}
+    @moduleColorsMap    = {}
+    @currentConfig      = {}
+    @currentConfigReady = {}
     if window.localStorage
       raw = window.localStorage.getItem('log_config')
       if raw
         @currentConfig = JSON.parse(raw)
+        @configReady()
 
     # example config to enable debugging
     #@config('module', 'i18n|websocket')
@@ -46,6 +48,13 @@ class _Singleton
     if data && (data.browser is 'Chrome' || ( data.browser is 'Firefox' && data.version >= 31.0 ) )
       @colorSupport = true
 
+  configReady: ->
+    for type, value of @currentConfig
+      if type is 'module' || type is 'content'
+        @currentConfigReady[type] = new RegExp(value, 'i')
+      else
+        @currentConfigReady[type] = value
+
   config: (type = undefined, value = undefined) ->
 
     # get
@@ -54,23 +63,22 @@ class _Singleton
         return @currentConfig[type]
       return @currentConfig
 
-    # set
-    if type is 'module' || type is 'content'
-      @currentConfig[type] = new RegExp(value, 'i')
-    else
-      @currentConfig[type] = value
+    # set runtime config
+    @currentConfig[type] = value
+    @configReady()
+
     if window.localStorage
       window.localStorage.setItem('log_config', JSON.stringify(@currentConfig))
 
   log: ( module, level, args ) ->
     if level is 'debug'
-      return if !@currentConfig.module && !@currentConfig.content
-      return if @currentConfig.module && !module.match(@currentConfig.module)
-      return if @currentConfig.content && !args.toString().match(@currentConfig.content)
+      return if !@currentConfigReady.module && !@currentConfigReady.content
+      return if @currentConfigReady.module && !module.match(@currentConfigReady.module)
+      return if @currentConfigReady.content && !args.toString().match(@currentConfigReady.content)
     @_log( module, level, args )
 
   _log: ( module, level, args ) ->
-    prefixLength = 28
+    prefixLength = 32
     prefix       = "App.#{module}(#{level})"
     if prefix.length < prefixLength
       prefix += Array(prefixLength - prefix.length).join(' ')
