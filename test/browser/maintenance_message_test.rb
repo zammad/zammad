@@ -69,7 +69,7 @@ class MaintenanceMessageTest < TestCase
 
     click(
       browser: browser2,
-      css: 'div.modal-header .close',
+      css: 'div.modal-header .js-close',
     )
 
     # check #2
@@ -117,7 +117,7 @@ class MaintenanceMessageTest < TestCase
 
     click(
       browser: browser2,
-      css: 'div.modal-header .close',
+      css: 'div.modal-header .js-close',
     )
 
     # check #3
