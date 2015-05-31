@@ -6,7 +6,7 @@
         <div class="dropdown-toggle" id="organizationProfile" data-toggle="dropdown">
           <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
           <label>Aktion</label>
-          <span class="select-arrow icon"></span>
+          <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="organizationProfile">
           <li role="presentation"><a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
@@ -87,7 +87,7 @@
                 <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
-                <div class="name">Superb Service!</div>
+                <div class="name">Superb Service here_with_some_extrem_example_sting_witch_can_really_be!</div>
                 <div class="time">43 minutes ago</div>
               </div>
             <li class="task level-2">

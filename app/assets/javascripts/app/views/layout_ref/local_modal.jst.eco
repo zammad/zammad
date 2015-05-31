@@ -120,7 +120,7 @@
 
 
               </select>
-              <div class="select-arrow icon"></div>
+              <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
             </div>
               
               
@@ -279,7 +279,7 @@
 
 
               </select>
-              <div class="select-arrow icon"></div>
+              <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
             </div>
               
               
@@ -304,7 +304,7 @@
         <div class="dropdown-toggle" id="profileAction" data-toggle="dropdown">
           <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
           <label>Aktion</label>
-          <span class="select-arrow icon"></span>
+          <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="profileAction">
           <li role="presentation"><a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
