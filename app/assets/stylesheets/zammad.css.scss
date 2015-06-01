@@ -4,6 +4,10 @@ $ok-color:        hsl(41,100%,49%);
 $bad-color:       hsl(30,93%,50%);
 $superbad-color:  hsl(19,90%,51%);
 
+$minWidth: 1024px;
+$sidebarWidth: 280px;
+$navigationWidth: 260px;
+
 html {
   height: 100%;
 }
@@ -46,7 +50,7 @@ blockquote {
 
 #app {
   display: flex;
-  min-width: 1024px;
+  min-width: $minWidth;
   height: 100%;
 }
 
@@ -1516,7 +1520,7 @@ footer {
 }
 
 .navigation {
-  width: 260px;
+  width: $navigationWidth;
   background: hsl(232,10%,16%);
   position: relative;
 }
@@ -2096,7 +2100,7 @@ footer {
 
 .NavBarAdmin.sidebar {
   padding-top: 1px;
-  width: 280px;
+  width: $sidebarWidth;
 }
   .NavBarAdmin h2 {
     margin: 21px 0 12px;
@@ -3420,7 +3424,7 @@ footer {
 }
 
 .tabsSidebar-sidebarSpacer {
-  margin-right: 280px;
+  margin-right: $sidebarWidth;
   transition: margin 500ms;
 }
 
@@ -3429,7 +3433,7 @@ footer {
 }
 
 .tabsSidebar-sidebarSpacer.is-closed .scrollPageHeader {
-  @extend .tabsSidebar-sidebarSpacer.is-closed;
+  margin-right: 0;
 }
 
 .tabsSidebar-holder {
@@ -3441,7 +3445,7 @@ footer {
 }
 
 .tabsSidebar .sidebar {
-  width: 280px;
+  width: $sidebarWidth;
   border-left: 1px solid #e6e6e6;
   padding: 0;
 }
@@ -3524,7 +3528,7 @@ footer {
   }
 
   .tabsSidebar.is-closed {
-    transform: translateX(280px);
+    transform: translateX($sidebarWidth);
   }
 
   .tabsSidebar-tabs {
@@ -4381,17 +4385,18 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .tabsSidebar-sidebarSpacer, .zIndex-6;
+  @extend .zIndex-6;
   display: flex;
   align-items: center;
   background: white;
   border-bottom: 1px solid hsl(0,0%,78%);
   height: 64px;
-  left: 260px;
+  top: 0;
+  left: $navigationWidth;
+  right: $sidebarWidth;
   padding: 0 22px;
   position: fixed;
-  right: 0;
-  top: 0;
+  min-width: $minWidth - $navigationWidth - $sidebarWidth;
   transform: translateY(-64px);
 }
 
