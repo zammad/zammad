@@ -6,7 +6,10 @@
       <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
     </div>
   </div>
-  <svg class="icon-logo js-toggleNavigation"><use xlink:href="#icon-logo" /></svg>
+  <div class="logo js-toggleNavigation">
+    <svg class="icon-logo"><use xlink:href="#icon-logo" /></svg>
+    <div class="activity-counter js-counter"></div>
+  </div>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
 </form>
 
