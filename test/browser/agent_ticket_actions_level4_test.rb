@@ -87,7 +87,7 @@ class AgentTicketActionLevel4Test < TestCase
       css: ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"]",
     )
     exists_not(
-      css: ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"] .modified",
+      css: ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"].is-modified",
     )
 
     # reload
