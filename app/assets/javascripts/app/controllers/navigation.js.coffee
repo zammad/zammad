@@ -100,14 +100,14 @@ class App.Navigation extends App.Controller
     # remove result if not result exists
     if _.isEmpty( result )
       @$('.search').removeClass('open')
-      el.html( '' )
+      el.html('')
       return
 
     # build markup
     html = App.view('navigation/result')(
       result: result
     )
-    el.html( html )
+    el.html(html)
 
     # show result list
     @$('.search').addClass('open')
@@ -195,11 +195,29 @@ class App.Navigation extends App.Controller
                 area.result.push data
 
           @renderResult(result)
+
+          @$('#global-search-result').on('click', 'a', =>
+            close()
+          )
       )
+
+    removePopovers = ->
+      $('.popover').remove()
+
+    close = =>
+      @$('#global-search').blur()
+      @$('.search').removeClass('open')
+
+      # remove not needed popovers
+      @delay( removePopovers, 280, 'removePopovers' )
 
     emptyAndClose = =>
       @$('#global-search').val('').blur()
       @$('.search').removeClass('filled').removeClass('open')
+
+      # remove not needed popovers
+      @delay( removePopovers, 280, 'removePopovers' )
+
 
     # observer search box
     @$('#global-search').bind( 'focusout', (e) =>
@@ -211,7 +229,7 @@ class App.Navigation extends App.Controller
       @$('.search').addClass('focused')
 
       # remove not needed popovers
-      $('.popover').remove()
+      removePopovers()
 
       # check if search is needed
       term = @$('#global-search').val().trim()
@@ -220,27 +238,13 @@ class App.Navigation extends App.Controller
       @delay( searchFunction, 220, 'search' )
     )
 
-    # remove search result
-    # @$('#global-search').bind( 'focusout', (e) =>
-    #   @delay(
-    #     =>
-    #       @$('.search').removeClass('focused')
-
-    #       # remove not needed popovers
-    #       $('.popover').remove()
-
-    #       @renderResult()
-    #     320
-    #   )
-    # )
-
     # prevent submit of search box
-    @$('form.search').bind( 'submit', (e) =>
+    @$('form.search').on( 'submit', (e) =>
       e.preventDefault()
     )
 
     # start search
-    @$('#global-search').bind( 'keyup', (e) =>
+    @$('#global-search').on( 'keyup', (e) =>
 
       # close on esc
       if e.which == 27
