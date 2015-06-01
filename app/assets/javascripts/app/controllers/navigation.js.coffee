@@ -167,7 +167,7 @@ class App.Navigation extends App.Controller
                 data =
                   display:    "##{ticket.number} - #{ticket.title}"
                   id:         ticket.id
-                  class:      "level-1 ticket-popover"
+                  class:      "level-#{ticket.level()} ticket-popover"
                   url:        ticket.uiUrl()
                   iconClass:  "priority"
                 area.result.push data
