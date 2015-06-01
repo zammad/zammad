@@ -649,7 +649,7 @@ class TestCase < Test::Unit::TestCase
 
       # verify title
       if data[:title]
-        title = instance.find_elements( { css: '.tasks .active' } )[0].text.strip
+        title = instance.find_elements( { css: '.tasks .is-active' } )[0].text.strip
         if title =~ /#{data[:title]}/i
           assert( true, "matching '#{data[:title]}' in title '#{title}'" )
         else
@@ -659,8 +659,8 @@ class TestCase < Test::Unit::TestCase
       puts "tv #{params.inspect}"
       # verify modified
       if data.key?(:modified)
-        exists      = instance.find_elements( { css: '.tasks .active .icon' } )[0]
-        is_modified = instance.find_elements( { css: '.tasks .active .icon.modified' } )[0]
+        exists      = instance.find_elements( { css: '.tasks .is-active .icon' } )[0]
+        is_modified = instance.find_elements( { css: '.tasks .is-active .icon.modified' } )[0]
         puts "m #{data[:modified].inspect}"
         if exists
           puts ' ecists'
