@@ -255,20 +255,6 @@ span[data-tooltip]:hover:before {
 .form-control:-ms-input-placeholder,
 .token-input:-ms-input-placeholder {         color: hsl(0,0%,80%); }
 
-.glyphicon {
-  font-size: 13px;
-}
-
-.spinner {
-  float: left;
-  background: url("/assets/images/spinner.gif") no-repeat;
-  background-position: center center;
-  padding: 44px 10px 0 10px;
-  width: 10px;
-  height: 14px;
-  display: none;
-}
-
 .btn,
 .btn:hover,
 .btn:focus {
@@ -1022,12 +1008,6 @@ textarea,
     margin-top: 0;
   }
 
-.zammad.full.logo {
-  height: 50px;
-  margin-left: -25px;
-  margin-bottom: 5px;
-}
-
 .getstarted,
 .reset_password,
 .signup,
@@ -1116,7 +1096,6 @@ textarea,
   right: 0;
   
   .logo {
-    height: 40px;
     margin-right: 8px;
     margin-top: -11px;
   }
@@ -1124,6 +1103,7 @@ textarea,
   .logotype {
     margin-left: 8px;
     margin-top: -5px;
+    fill: hsl(225,9%,27%);
   }
 }
 
@@ -1839,18 +1819,18 @@ footer {
     z-index: -1;
   }
 
-  .logo {
+  .search .logo {
     position: relative;
     @extend .u-clickable, .zIndex-5;
     margin: 0 10px;
     transition: 240ms;
   }
 
-  .logo .icon-logo {
+  .search .logo .icon-logo {
     position: relative;
   }
 
-    .logo .activity-counter {
+    .search .logo .activity-counter {
       height: 20px;
       min-width: 21px;
       position: absolute;
@@ -1868,7 +1848,7 @@ footer {
       border: 2px solid hsl(233,10%,16%);
     }
 
-    .logo .activity-counter:empty {
+    .search .logo .activity-counter:empty {
       display: none;
     }
 
@@ -4432,6 +4412,13 @@ footer {
     margin: 0 15px;
     @extend .u-textTruncate;
   }
+
+
+.wizard-logo {
+  fill: white;
+  margin-left: -25px;
+  margin-bottom: 5px;
+}
 
 .wizard-slide {
   @extend .hero-unit;

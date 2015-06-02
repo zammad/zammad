@@ -1,5 +1,5 @@
 <div class="main flex vertical centered darkBackground">
-  <img class="zammad full logo" src="<%= @C('image_path') + '/' + 'full logo on dark.svg' %>" alt="Zammad">
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
   <form class="setup wizard js-channel">
     <div class="wizard-slide">
       <h2><%- @T('Connect Channels') %></h2>
