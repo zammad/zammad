@@ -1656,7 +1656,7 @@ footer {
     background: #389ed9;
     color: white;
 
-    .nav-tab-icon {
+    .nav-tab-icon .icon {
       fill: white;
     }
   }
@@ -1673,27 +1673,34 @@ footer {
     margin-right: 7px;
     margin-left: 7px;
     margin-top: -3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
   }
 
-  .priority-icon {
+  .nav-tab-icon .icon {
     width: 16px;
     height: 16px;
     fill: #808080;
   }
 
-  .nav-tab-icon .inner-circle {
+  .nav-tab-icon .modified-inner-circle {
+    position: absolute;
+    left: 0;
+    top: 0;
     will-change: opacity;
     transform: translateZ(0);
-    animation: fade 3s ease-in-out infinite;
+    animation: fade 1.8s ease-in-out infinite;
   }
 
   @keyframes fade {
-    50% { opacity: 1 }
-    75% { opacity: 0 }
+    54% { opacity: 1 }
+    90% { opacity: 0 }
     to { opacity: 1 }
   }
 
-  .nav-tab-icon.icon-loading {
+  .nav-tab-icon .icon.icon-loading {
     animation: rotateplane 1.2s infinite ease-in-out;
     fill: $supergood-color;
   }
@@ -1743,7 +1750,7 @@ footer {
 .level-1.is-active {
   background-color: #38ae6a;
 }
-.level-1 .priority-icon,
+.level-1 .icon-priority,
 .level-1.icon-priority {
   fill: #38ae6a;
 }
@@ -1751,7 +1758,7 @@ footer {
 .level-2.is-active {
   background-color: #f35910;
 }
-.level-2 .priority-icon,
+.level-2 .icon-priority,
 .level-2.icon-priority {
   fill: #f35910;
 }
@@ -1759,7 +1766,7 @@ footer {
 .level-3.is-active {
   background-color: #faab00;
 }
-.level-3 .priority-icon,
+.level-3 .icon-priority,
 .level-3.icon-priority {
   fill: #faab00;
 }

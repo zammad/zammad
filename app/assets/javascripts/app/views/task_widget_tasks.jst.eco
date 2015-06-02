@@ -1,13 +1,19 @@
 <% for item in @item_list: %>
   <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="nav-tab task <%= item.data.class %><% if item.task.active: %> is-active<% end %>" data-key="<%- item.task.key %>">
-    <svg class="nav-tab-icon priority-icon icon-<%= item.data.iconClass %>">
+    <div class="nav-tab-icon">
+      <svg class="icon icon-<%= item.data.iconClass %>">
+        <% if item.task.notify && item.data.iconClass is 'priority': %>
+        <use xlink:href="#icon-priority-modified-outer-circle" />
+        <% else: %>
+        <use xlink:href="#icon-<%= item.data.iconClass %>" />
+        <% end %>
+      </svg>
       <% if item.task.notify && item.data.iconClass is 'priority': %>
-      <use class="inner-circle" xlink:href="#icon-priority-modified-inner-circle" />
-      <use class="outer-circle" xlink:href="#icon-priority-modified-outer-circle" />
-      <% else: %>
-      <use xlink:href="#icon-<%= item.data.iconClass %>" />
+      <svg class="icon modified-inner-circle icon-<%= item.data.iconClass %>">
+        <use xlink:href="#icon-priority-modified-inner-circle" />
+      </svg>
       <% end %>
-    </svg>
+    </div>
     <div class="nav-tab-name u-textTruncate flex"><%= item.data.head %></div>
     <div class="nav-tab-close js-close" title="<%- @Ti('close') %>">
       <div class="nav-tab-close-inner">
