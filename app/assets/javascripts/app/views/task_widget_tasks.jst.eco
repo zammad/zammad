@@ -1,5 +1,5 @@
 <% for item in @item_list: %>
-  <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="nav-tab task <%= item.data.class %><% if item.task.active: %> is-active<% end %>" data-key="<%- item.task.key %>">
+  <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="nav-tab task <%= item.data.class %><% if item.task.active: %> is-active<% end %><% if item.task.notify: %> is-modified<% end %>" data-key="<%- item.task.key %>">
     <svg class="nav-tab-icon priority-icon icon-<%= item.data.iconClass %>">
       <% if item.task.notify && item.data.iconClass is 'priority': %>
       <use class="inner-circle" xlink:href="#icon-priority-modified-inner-circle" />
