@@ -1752,7 +1752,7 @@ footer {
 }
 
 .search {
-  padding: 8px 5px 4px 10px;
+  padding: 7px 5px 4px 10px;
   border-bottom: 1px solid rgba(240, 250, 255, .05);
   flex-shrink: 0;
   display: flex;
@@ -1761,6 +1761,7 @@ footer {
   .search-holder {
     flex: 1;
     margin-right: 2px;
+    margin-top: 4px;
     position: relative;
     transition: 240ms;
   }
