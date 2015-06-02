@@ -4165,8 +4165,8 @@ footer {
     a {
       @extend .u-clickable;
       display: flex;
-      min-width: 100%;
-      padding: 3px 18px;
+      flex: 1;
+      padding: 0 18px;
     }
   }
 
