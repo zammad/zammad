@@ -5,6 +5,7 @@
 .icon-checkbox-checked { width: 10px; height: 10px; }
 .icon-checkbox { width: 10px; height: 10px; }
 .icon-checkmark { width: 16px; height: 14px; }
+.icon-clipboard { width: 16px; height: 16px; }
 .icon-clock { width: 16px; height: 16px; }
 .icon-cloud { width: 16px; height: 16px; }
 .icon-cog { width: 20px; height: 20px; }
@@ -51,7 +52,7 @@
 .icon-radio-checked { width: 11px; height: 11px; }
 .icon-radio { width: 11px; height: 11px; }
 .icon-received-calls { width: 17px; height: 17px; }
-.icon-reload { width: 20px; height: 20px; }
+.icon-reload { width: 16px; height: 16px; }
 .icon-reopening { width: 68px; height: 47px; }
 .icon-reply-all { width: 16px; height: 16px; }
 .icon-reply { width: 16px; height: 16px; }
