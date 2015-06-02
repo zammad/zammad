@@ -793,6 +793,7 @@ App.Config.set( 'layout_ref/error', errorRef, 'Routes' )
 class highlightRef extends App.ControllerContent
   elements:
     '.article-text': 'articles'
+    '.js-highlight-icon': 'highlightIcon'
 
   events:
     'click .js-highlight': 'toggleHighlight'
@@ -871,7 +872,7 @@ class highlightRef extends App.ControllerContent
 
   toggleHighlight: (e) =>
     if @isActive
-      $(e.currentTarget).removeClass('active')
+      @highlightIcon.css('fill', '')
       @isActive = false
       @articles.off('mouseup', @onMouseUp)
       @articles.removeAttr('data-highlightcolor')
@@ -883,8 +884,8 @@ class highlightRef extends App.ControllerContent
       if !selection.isCollapsed
         @toggleHighlightAtSelection $(selection.anchorNode).closest @articles.selector
       else
-        # toggle ui
-        $(e.currentTarget).addClass('active')
+        # show color
+        @highlightIcon.css('fill', @colors[@activeColorIndex].color)
 
         # activate selection background
         @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
@@ -893,9 +894,13 @@ class highlightRef extends App.ControllerContent
         @articles.on('mouseup', @onMouseUp) #future: touchend
 
   pickColor: (e) =>
-    @$('.js-highlightColor .visibility-change.active').removeClass('active')
-    $(e.currentTarget).find('.visibility-change').addClass('active')
+    @$('.js-highlightColor .visibility-change.is-active').removeClass('is-active')
+    $(e.currentTarget).find('.visibility-change').addClass('is-active')
     @activeColorIndex =  $(e.currentTarget).attr('data-key')
+
+    if @isActive
+      @highlightIcon.css('fill', @colors[@activeColorIndex].color)
+
     @setColor() 
 
   onMouseUp: (e) =>

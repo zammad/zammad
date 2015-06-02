@@ -415,8 +415,7 @@ span[data-tooltip]:hover:before {
   Interactive Visibility Change Classes:
   
     <div class="visibility-change">
-      <div class="icon marker active" data-visible="active"></div>
-      <div class="icon marker" data-visible="hover"></div>
+      <svg class="icon-marker" data-visible="active"><use xlink:href="#icon-marker" /></svg>
     </div>
     
     Important: HTML Order active > hover > normal
@@ -428,7 +427,7 @@ span[data-tooltip]:hover:before {
     display: none;
   }
 
-  &.active [data-visible=active] {
+  &.is-active [data-visible=active] {
     display: block;
     
     & ~ [data-visible=normal] {
@@ -2743,9 +2742,8 @@ footer {
   align-items: center;
 }
 
-.marker-icon {
-  fill: black;
-  opacity: .39;
+.icon-marker {
+  fill: hsl(0,0%,61%);
   width: 17px;
   height: 19px;
 }
@@ -4924,24 +4922,19 @@ label + .wizard-buttonList {
   }
 }
 
-[data-highlightcolor=Yellow]::selection {      background: #f7e7b2; }
-[data-highlightcolor=Yellow]::-moz-selection { background: #f7e7b2; }
+[data-highlightcolor=Yellow]::selection { background: #f7e7b2; }
 .highlight-Yellow { background: #f7e7b2; }
 
-[data-highlightcolor=Green]::selection {      background: #bce7b6; }
-[data-highlightcolor=Green]::-moz-selection { background: #bce7b6; }
+[data-highlightcolor=Green]::selection { background: #bce7b6; }
 .highlight-Green { background: #bce7b6; }
 
-[data-highlightcolor=Blue]::selection {      background: #b3ddf9; }
-[data-highlightcolor=Blue]::-moz-selection { background: #b3ddf9; }
+[data-highlightcolor=Blue]::selection { background: #b3ddf9; }
 .highlight-Blue { background: #b3ddf9; }
 
-[data-highlightcolor=Pink]::selection {      background: #fea9c5; }
-[data-highlightcolor=Pink]::-moz-selection { background: #fea9c5; }
+[data-highlightcolor=Pink]::selection { background: #fea9c5; }
 .highlight-Pink { background: #fea9c5; }
 
-[data-highlightcolor=Purple]::selection {      background: #eac5ee; }
-[data-highlightcolor=Purple]::-moz-selection { background: #eac5ee; }
+[data-highlightcolor=Purple]::selection { background: #eac5ee; }
 .highlight-Purple { background: #eac5ee; }
 
 
