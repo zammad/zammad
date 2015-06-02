@@ -1080,7 +1080,7 @@ wait untill text in selector disabppears
         id.gsub!(//, )
         id.gsub!(%r{^.+?/(\d+)$}, '\\1')
 
-        element = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0]
+        element = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0]
         if element
           number = element.text
           ticket = {
@@ -1121,28 +1121,28 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      #element = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0]
+      #element = instance.find_elements( { :css => '.content.active .ticketZoom-header .ticket-title-update' } )[0]
       #element.clear
       #sleep 0.5
-      #element = instance.find_elements( { :css => '.content.active .page-header .ticket-title-update' } )[0]
+      #element = instance.find_elements( { :css => '.content.active .ticketZoom-header .ticket-title-update' } )[0]
       #element.send_keys( data[:title] )
       #sleep 0.5
       #element.send_keys( :tab )
 
-      instance.execute_script( '$(".content.active .page-header .ticket-title-update").focus()' )
-      instance.execute_script( '$(".content.active .page-header .ticket-title-update").text("' + data[:title] + '")' )
-      instance.execute_script( '$(".content.active .page-header .ticket-title-update").blur()' )
-      instance.execute_script( '$(".content.active .page-header .ticket-title-update").trigger("blur")' )
+      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").focus()' )
+      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").text("' + data[:title] + '")' )
+      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").blur()' )
+      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").trigger("blur")' )
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
-      #   :css          => '.content.active .page-header .ticket-title-update',
+      #   :css          => '.content.active .ticketZoom-header .ticket-title-update',
       #   :value        => 'TTT',
       # },
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
-      #   :css          => '.content.active .page-header .ticket-title-update',
+      #   :css          => '.content.active .ticketZoom-header .ticket-title-update',
       #   :value        => :tab,
       # },
     end
@@ -1288,7 +1288,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      title = instance.find_elements( { css: '.content.active .page-header .ticket-title-update' } )[0].text.strip
+      title = instance.find_elements( { css: '.content.active .ticketZoom-header .ticket-title-update' } )[0].text.strip
       if title =~ /#{data[:title]}/i
         assert( true, "matching '#{data[:title]}' in title '#{title}'" )
       else
@@ -1328,7 +1328,7 @@ wait untill text in selector disabppears
     sleep 1
     instance.find_elements( { partial_link_text: params[:number] } )[0].click
     sleep 1
-    number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
+    number = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
       screenshot( browser: instance, comment: 'ticket_open_by_overview_failed' )
       fail "unable to search/find ticket #{params[:number]}!"
@@ -1376,7 +1376,7 @@ wait untill text in selector disabppears
 
     # open ticket
     instance.find_element( { partial_link_text: params[:number] } ).click
-    number = instance.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
+    number = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
     if number !~ /#{params[:number]}/
       screenshot( browser: instance, comment: 'ticket_open_by_search_failed' )
       fail "unable to search/find ticket #{params[:number]}!"

@@ -51,7 +51,7 @@ class AgentTicketActionLevel6Test < TestCase
     # check if ticket is shown
     location_check( url: '#ticket/zoom/' )
     sleep 2
-    ticket_number = @browser.find_elements( { css: '.active .page-header .ticket-number' } )[0].text
+    ticket_number = @browser.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
 
     #
     # attachment checks - update ticket

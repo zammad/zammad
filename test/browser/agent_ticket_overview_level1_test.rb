@@ -87,7 +87,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     match(
       browser: browser2,
-      css: '.active .page-header .ticket-number',
+      css: '.active .ticketZoom-header .ticket-number',
       value: ticket3[:number],
     )
 
@@ -102,7 +102,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     match(
       browser: browser2,
-      css: '.active .page-header .ticket-number',
+      css: '.active .ticketZoom-header .ticket-number',
       value: ticket2[:number],
     )
 
@@ -117,7 +117,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     match(
       browser: browser2,
-      css: '.active .page-header .ticket-number',
+      css: '.active .ticketZoom-header .ticket-number',
       value: ticket1[:number],
     )
 
@@ -138,7 +138,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     match(
       browser: browser2,
-      css: '.active .page-header .ticket-number',
+      css: '.active .ticketZoom-header .ticket-number',
       value: ticket1[:number],
     )
     click(
@@ -153,7 +153,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     match(
       browser: browser2,
-      css: '.active .page-header .ticket-number',
+      css: '.active .ticketZoom-header .ticket-number',
       value: ticket2[:number],
     )
   end

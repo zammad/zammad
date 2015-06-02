@@ -1835,7 +1835,7 @@ footer {
     @extend .u-clickable, .zIndex-5;
   }
 
-    .logo .activity-counter {
+    .icon-logo .activity-counter {
       height: 19px;
       min-width: 19px;
       position: absolute;
@@ -2740,6 +2740,7 @@ footer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding: 28px 0 0 0;
 }
 
 .marker-icon {
@@ -2749,8 +2750,8 @@ footer {
   height: 19px;
 }
 
-.ticketZoom .page-header {
-  margin-top: 24px;
+.ticketZoom .ticketZoom-header {
+  margin-top: 6px;
   padding: 0;
 }
 
@@ -4914,6 +4915,10 @@ label + .wizard-buttonList {
   }
 }
 
+.highlighter {
+  @extend .horizontal;
+}
+
 [data-highlightcolor=Yellow]::selection {      background: #f7e7b2; }
 [data-highlightcolor=Yellow]::-moz-selection { background: #f7e7b2; }
 .highlight-Yellow { background: #f7e7b2; }
@@ -4957,7 +4962,11 @@ label + .wizard-buttonList {
 }
 
 .overview-navigator {
-  display: inherit;
+  @extend .horizontal;
+}
+
+.overview-navigator .pagination {
+  margin: 0 0 0 10px;
 }
 
 .empty-space {

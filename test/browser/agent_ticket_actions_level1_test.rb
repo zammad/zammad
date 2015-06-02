@@ -72,7 +72,7 @@ class AgentTicketActionLevel1Test < TestCase
 
     # check if merged to ticket is shown now
     watch_for(
-      css: '.active .page-header .ticket-number',
+      css: '.active .ticketZoom-header .ticket-number',
       value: ticket1[:number],
     )
     watch_for(
@@ -128,7 +128,7 @@ class AgentTicketActionLevel1Test < TestCase
 
     # check if merged to ticket is shown now
     watch_for(
-      css: '.active .page-header .ticket-number',
+      css: '.active .ticketZoom-header .ticket-number',
       value: ticket3[:number],
     )
     watch_for(
