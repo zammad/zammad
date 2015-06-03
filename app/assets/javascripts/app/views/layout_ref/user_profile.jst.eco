@@ -76,7 +76,7 @@
           <ol class="tasks tasks--standalone">
             <li class="task level-1">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Micro-SIM doesn't work</div>
@@ -84,7 +84,7 @@
               </div>
             <li class="task level-1">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Superb Service!</div>
@@ -92,7 +92,7 @@
               </div>
             <li class="task level-1">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Print sheets strip off</div>
@@ -100,7 +100,7 @@
               </div>
             <li class="task level-1">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Block not properly wrought</div>
