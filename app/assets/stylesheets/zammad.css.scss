@@ -898,6 +898,75 @@ textarea,
   }
 }
 
+.selected-clue {
+  @extend .zIndex-9;
+}
+
+.clue {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  @extend .zIndex-8;
+}
+
+.clue-backdrop {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.clue-window {
+  position: absolute;
+  opacity: 1;
+  padding: 18px;
+  
+  &.is-visible {
+    opacity: 1;
+  }
+}
+
+.clue-inner {
+  min-width: 260px;
+  padding: 24px 24px 14px;
+  background: white;
+  color: hsl(60,1%,34%);
+  box-shadow:
+    0 8px 17px 0 rgba(0, 0, 0, 0.1),
+    0 6px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+.clue-controls {
+  background: hsl(210,5%,97%);
+  margin: 24px -24px -14px;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clue-control {
+  padding-left: 14px;
+  padding-right: 14px;
+  
+  .btn.is-disabled {
+    opacity: 1;
+    color: hsl(240,5%,83%);
+  }
+}
+
+.clue-header {
+  margin-bottom: 7px;
+  font-size: 18px;
+}
+
+.clue-body {
+  max-width: 340px;
+}
+
 .form-stacked .checkbox label {
   color: inherit;
   font-size: 13px;
@@ -1755,6 +1824,7 @@ footer {
   border-bottom: 1px solid rgba(240, 250, 255, .05);
   flex-shrink: 0;
   display: flex;
+  background-color: inherit;
 }
   
   .search-holder {
