@@ -818,6 +818,14 @@ textarea,
     padding-right: 34px;
   }
 
+  .form-control[disabled],
+  .form-control[readonly] {
+    cursor: not-allowed;
+    background-color: #fff;
+    color: #d5d5d5;
+    opacity: 1;
+  }
+
   .form-control + .icon-arrow-down  {
     position: absolute;
     right: 12px;
@@ -844,7 +852,7 @@ textarea,
 
   */
 
-  html.ff-lt-35 .form-control + .arrow {
+  html.ff-lt-35 .form-control + .icon-arrow-down {
     display: none;
   }
 
