@@ -80,22 +80,49 @@ function difference(object1, object2) {
 
 // clone, just data, no instances of objects
 function clone(item, full) {
+
+  // just return/clone false conditions
   if (!item) { return item }
+
+  var itemType = item.constructor.name
+
+  // IE behavior // doesn't know item.constructor.name, detect it by underscore
+  if (itemType === undefined) {
+    if (_.isArray(item)) {
+      itemType = 'Array'
+    }
+    else if (_.isNumber(item)) {
+      itemType = 'Number'
+    }
+    else if (_.isString(item)) {
+      itemType = 'String'
+    }
+    else if (_.isBoolean(item)) {
+      itemType = 'Boolean'
+    }
+    else if (_.isFunction(item)) {
+      itemType = 'Function'
+    }
+    else if (_.isObject(item)) {
+      itemType = 'Object'
+    }
+  }
 
   // ignore certain objects
   var acceptedInstances = [ 'Object', 'Number', 'String', 'Boolean', 'Array' ]
   if (full) {
     acceptedInstances.push( 'Function' )
   }
-  if (item && item.constructor) {
-    if (!_.contains(acceptedInstances, item.constructor.name)) {
-      return
-    }
+
+  // check if item is accepted to get cloned
+  if (itemType && !_.contains(acceptedInstances, itemType)) {
+    console.log('no acceptedInstances', itemType)
+    return
   }
 
   // copy array
   var result;
-  if ( _.isArray(item) )  {
+  if (itemType == 'Array')  {
     result = []
     item.forEach(function(child, index, array) {
       result[index] = clone( child, full )
@@ -103,12 +130,12 @@ function clone(item, full) {
   }
 
   // copy function
-  else if ( _.isFunction(item) ) {
+  else if (itemType == 'Function') {
     result = item.bind({})
   }
 
   // copy object
-  else if ( _.isObject(item) ) {
+  else if (itemType == 'Object') {
     result = {}
     for(var key in item) {
       if (item.hasOwnProperty(key)) {
@@ -116,7 +143,6 @@ function clone(item, full) {
       }
     }
   }
-
   // copy others
   else {
     result = item
