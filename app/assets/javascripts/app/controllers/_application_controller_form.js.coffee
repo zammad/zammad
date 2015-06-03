@@ -2479,12 +2479,16 @@ class App.ControllerForm extends App.Controller
     lookupForm = @findForm(form)
 
     if lookupForm
-      App.Log.notice 'ControllerForm', 'disable...', lookupForm
-      lookupForm.find('button').attr('disabled', true)
-      lookupForm.find('[type="submit"]').attr('disabled', true)
-      lookupForm.find('[type="reset"]').attr('disabled', true)
+      App.Log.debug 'ControllerForm', 'disable form...', lookupForm
+
+      # set forms to read only during communication with backend
+      lookupForm.find('button, input, select').attr('readonly', true)
+
+      # disable additionals submits
+      lookupForm.find('button.btn').attr('disabled', true)
     else
       App.Log.notice 'ControllerForm', 'disable item...', form
+      form.attr('readonly', true)
       form.attr('disabled', true)
 
   @enable: (form) ->
@@ -2492,12 +2496,16 @@ class App.ControllerForm extends App.Controller
     lookupForm = @findForm(form)
 
     if lookupForm
-      App.Log.notice 'ControllerForm', 'enable...', lookupForm
-      lookupForm.find('button').attr('disabled', false)
-      lookupForm.find('[type="submit"]').attr('disabled', false)
-      lookupForm.find('[type="reset"]').attr('disabled', false)
+      App.Log.debug 'ControllerForm', 'enable form...', lookupForm
+
+      # enable fields again
+      lookupForm.find('button, input, select').attr('readonly', false)
+
+      # enable submits again
+      lookupForm.find('button.btn').attr('disabled', false)
     else
       App.Log.notice 'ControllerForm', 'enable item...', form
+      form.attr('readonly', false)
       form.attr('disabled', false)
 
   @validate: (data) ->
