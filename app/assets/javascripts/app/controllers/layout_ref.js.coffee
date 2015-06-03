@@ -991,7 +991,9 @@ class cluesRef extends App.ControllerContent
     container = $(clue.container)
     container.removeClass('selected-clue')
 
-    # maybe undo perform
+    # undo click perform by doing it again
+    if clue.action
+      @perform clue.action, container
 
     @el.find('.clue').remove()
 
