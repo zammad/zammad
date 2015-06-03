@@ -36,7 +36,7 @@ class Content extends App.ControllerContent
 
     holder.addClass 'unique'
 
-    rng = new Math.seedrandom(id);
+    rng = new Math.seedrandom(id)
     x = rng() * (width - size)
     y = rng() * (height - size)
     holder.css('background-position', "-#{ x }px -#{ y }px")
@@ -133,7 +133,7 @@ class CommunicationOverview extends App.ControllerContent
         height: container.attr('data-height')
       options:
         duration: 300
-        complete: -> overflowContainer.addClass('hide');
+        complete: -> overflowContainer.addClass('hide')
 
   render: ->
     @html App.view('layout_ref/communication_overview')()
@@ -369,7 +369,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     @attachmentPlaceholder.addClass('hide')
     @attachmentUpload.removeClass('hide')
 
-    progress = 0;
+    progress = 0
     duration = fileSize / 1024
 
     for i in [0..100]
@@ -712,7 +712,7 @@ class RichText extends App.ControllerContent
 
         # add marker for cursor
         getFirstRange = ->
-          sel = rangy.getSelection();
+          sel = rangy.getSelection()
           if sel.rangeCount
             sel.getRangeAt(0)
           else
@@ -735,8 +735,8 @@ class RichText extends App.ControllerContent
 
       return
     )
-    #editable.style.borderColor = '#54c8eb';
-    #aloha(editable);
+    #editable.style.borderColor = '#54c8eb'
+    #aloha(editable)
     return
 
   render: ->
@@ -932,5 +932,127 @@ class highlightRef extends App.ControllerContent
 
 
 App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
+
+
+class cluesRef extends App.ControllerContent
+
+  clues: [
+    {
+      container: '.search'
+      headline: 'Suche'
+      text: 'Hier finden sie alles!'
+    },
+    {
+      container: '.user-menu'
+      headline: 'Erstellen'
+      text: 'Hier können sie Tickets, Kunden und Organisationen anlegen.'
+      action: 'click .add .js-action'
+    }
+  ]
+
+  events:
+    'click .js-next': 'next'
+    'click .js-previous': 'previous'
+
+  constructor: ->
+    super
+
+    ###
+
+    options
+      clues: list of clues
+      onComplete: a callback for when the user is done
+
+    ###
+
+    @options.onComplete = ->
+    @position = 0
+    @render()
+
+  next: (event) =>
+    event.stopPropagation()
+    @navigate 1
+
+  previous: (event) =>
+    event.stopPropagation()
+    @navigate -1
+
+  navigate: (direction) ->
+    @cleanUp()
+    @position += direction
+
+    if @position < @clues.length
+      @render()
+    else
+      @onComplete()
+
+  cleanUp: ->
+    clue = @clues[@position]
+    container = $(clue.container)
+    container.removeClass('selected-clue')
+
+    # maybe undo perform
+
+    @el.find('.clue').remove()
+
+  render: ->
+    clue = @clues[@position]
+    container = $(clue.container)
+    container.addClass('selected-clue')
+
+    center =
+      x: container.offset().left + container.width()/2
+      y: container.offset().top + container.height()/2
+
+    @html App.view('layout_ref/clues')
+      headline: clue.headline
+      text: clue.text
+      width: container.outerWidth()
+      height: container.outerHeight()
+      center: center
+      position: @position
+      max: @clues.length
+
+    if clue.action
+      @perform clue.action, container
+
+    @placeWindow(container)
+
+  placeWindow: (container) ->
+    clueWindow = @el.find('.clue-window')
+
+    # see if we can place it above or below target
+    if clueWindow.outerHeight() + container.outerHeight() < $(window).outerHeight()
+      clueWindow.css('left', container.offset().left)
+
+      # below or above ?
+      if container.offset().top + container.outerHeight() + clueWindow.outerHeight() < $(window).outerHeight()
+        # place below
+        clueWindow.css('top', container.offset().top + container.outerHeight())
+      else
+        # place above
+        clueWindow.css('top', container.offset().top - container.outerHeight() - clueWindow.outerHeight())
+    else
+      clueWindow.css('top', container.offset().top)
+      # okay, let's try right or left then
+      if container.offset().left + container.outerWidth() + clueWindow.outerWidth() < $(window).outerWidth()
+        # place right
+        clueWindow.css('left', container.offset().left + container.outerWidth())
+      else
+        # place left
+        clueWindow.css('left', container.offset().left - container.outerWidth() - clueWindow.outerWidth())
+
+    # show window
+    clueWindow.addClass('is-visible')
+
+
+  perform: (action, container) ->
+    eventName = action.substr 0, action.indexOf(' ')
+    selector = action.substr action.indexOf(' ') + 1
+    container.find(selector)[0][eventName]()
+
+App.Config.set( 'layout_ref/clues', cluesRef, 'Routes' )
+
+
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

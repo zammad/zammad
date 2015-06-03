@@ -1,7 +1,7 @@
 <% for item in @items: %>
   <% if item.child: %>
     <li class="<% if item.class: %><%- item.class %><% end %> dropup <% if @open_tab[item.target] : %>open<% end %>">
-      <a class="list-button dropdown-toggle" data-toggle="dropdown" href="<%= item.target %>" title="<% if item.translate: %><%- @Ti( item.name ) %><% else: %><%= item.name %><% end %>">
+      <a class="list-button dropdown-toggle js-action" data-toggle="dropdown" href="<%= item.target %>" title="<% if item.translate: %><%- @Ti( item.name ) %><% else: %><%= item.name %><% end %>">
         <span class="dropdown-nose"></span>
         <% if item.class is 'user': %>
           <span class="js-avatar"></span>
