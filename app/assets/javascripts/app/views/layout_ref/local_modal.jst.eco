@@ -360,7 +360,7 @@
         <div class="tab js-organizationTickets">Tickets von Steuerbüro C. Kaik</div>
       </div>
       <!-- endif -->
-      <div class="profile-ticketLists horizontal">
+      <div class="profile-ticketLists">
         <div class="profile-ticketList">
           <label>Offene Tickets (0)</label>
           <div class="profile-ticketsPlaceholder vertical centered">

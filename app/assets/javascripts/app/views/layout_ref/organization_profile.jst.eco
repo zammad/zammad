@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="profile-section">
-      <div class="profile-ticketLists horizontal">
+      <div class="profile-ticketLists">
         <div class="profile-ticketList">
           <label>Offene Tickets (23)</label>
           <ol class="tasks tasks--standalone">

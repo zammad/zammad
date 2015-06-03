@@ -62,14 +62,44 @@
         <div class="tab js-organizationTickets">Tickets von Steuerbüro C. Kaik</div>
       </div>
       <!-- endif -->
-      <div class="profile-ticketLists horizontal">
+      <div class="profile-ticketLists">
         <div class="profile-ticketList">
-          <label>Offene Tickets (0)</label>
-          <div class="profile-ticketsPlaceholder vertical centered">
-            <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-supergood" /></svg>
-            Keine offenen Tickets
-          </div>
-          <a href="#">Alle Tickets von Doreen Kubiak …</a>
+          <label>Bearbeitete Tickets (12)</label>
+          <ol class="tasks tasks--standalone">
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="flex">
+                <div class="name">Micro-SIM doesn't work</div>
+                <div class="time">23 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="flex">
+                <div class="name">Superb Service!</div>
+                <div class="time">43 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="flex">
+                <div class="name">Print sheets strip off with a lot of text in the headline</div>
+                <div class="time">1 hour ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="flex">
+                <div class="name">Block not properly wrought</div>
+                <div class="time">2 hour ago</div>
+              </div>
+          </ol>
+          <a href="#">Alle Tickets von Steuerbüro C. Kaik …</a>
         </div>
         <div class="profile-ticketList">
           <label>Bearbeitete Tickets (12)</label>
@@ -95,7 +125,7 @@
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
-                <div class="name">Print sheets strip off</div>
+                <div class="name">Print sheets strip off with a lot of text in the headline</div>
                 <div class="time">1 hour ago</div>
               </div>
             <li class="task level-1">

@@ -4874,14 +4874,16 @@ label + .wizard-buttonList {
   }
 }
 
+.profile-ticketLists {
+  display: flex;
+  margin: 0 -25px;
+}
+
 .profile-ticketList {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  
-  &:not(:last-child) {
-    margin-right: 50px;
-  }
+  flex: 1 1 50%;
+  padding: 0 25px;
 
   .tasks {
     display: flex;

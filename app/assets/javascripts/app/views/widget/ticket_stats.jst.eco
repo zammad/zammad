@@ -6,7 +6,7 @@
 <% end %>
 
 <div class="js-user <% if !@user && @organization: %>hide<% end %>">
-  <div class="profile-ticketLists horizontal">
+  <div class="profile-ticketLists">
     <div class="profile-ticketList js-user-open-tickets"></div>
     <div class="profile-ticketList js-user-closed-tickets"></div>
   </div>
