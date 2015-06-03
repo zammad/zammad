@@ -2,11 +2,11 @@
 
   <div class="ticketZoom">
     <div class="ticketZoom-controls">
-      <div class="btn btn--action btn--split--first js-highlight centered">
-        <svg class="marker-icon"><use xlink:href="#icon-marker" /></svg>
+      <div class="btn btn--action btn--split--first js-highlight">
+        <svg class="icon icon-marker js-highlight-icon"><use xlink:href="#icon-marker" /></svg>
       </div>
       <div class="dropdown dropdown--actions">
-        <div class="btn btn--action btn--split--last btn--slim centered" id="highlight" data-toggle="dropdown" aria-expanded="true">
+        <div class="btn btn--action btn--split--last btn--slim" id="highlight" data-toggle="dropdown" aria-expanded="true">
           <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -17,8 +17,8 @@
                 <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
               </span>
               <%= entry.name %>
-              <span class="dropdown-activeSpacer visibility-change<%= ' active' if i is @activeColorIndex %>">
-                <span class="white checkmark icon" data-visible="active"></span>
+              <span class="dropdown-activeSpacer visibility-change<%= ' is-active' if i is @activeColorIndex %>">
+                <svg class="icon-checkmark" data-visible="active"><use xlink:href="#icon-checkmark" fill="white" /></svg>
               </span>
             </a>
           <% end %>

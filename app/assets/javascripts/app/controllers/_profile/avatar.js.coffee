@@ -149,6 +149,7 @@ App.Config.set( 'Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', targ
 class ImageCropper extends App.ControllerModal
   elements:
     '.imageCropper-image': 'image'
+    '.imageCropper-holder': 'holder'
 
   constructor: (options) ->
     super
@@ -169,6 +170,9 @@ class ImageCropper extends App.ControllerModal
 
     @angle = orientationTransform[ @options.orientation ]
 
+    if @angle == undefined
+      @angle = 0
+
     if @angle != 0
       @isOrientating = true
       image = new Image()
@@ -181,14 +185,6 @@ class ImageCropper extends App.ControllerModal
     image  = e.currentTarget
     canvas = document.createElement('canvas')
     ctx    = canvas.getContext('2d')
-
-    # fit image into options.max bounding box
-    # if image.width > @options.max
-    #   image.height = @options.max * image.height/image.width
-    #   image.width = @options.max
-    # else if image.height > @options.max
-    #   image.width = @options.max * image.width/image.height
-    #   image.height = @options.max
 
     if @angle is 180
       canvas.width  = image.width
@@ -212,7 +208,9 @@ class ImageCropper extends App.ControllerModal
   initializeCropper: =>
     @image.cropper
       aspectRatio: 1,
-      dashed: false,
+      guides: false,
+      autoCrop: true,
+      autoCropArea: 1,
       preview: ".imageCropper-preview"
 
   onSubmit: (e) =>

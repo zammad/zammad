@@ -15,10 +15,10 @@ class App.OnlineNotificationWidget extends App.Controller
     # rebuild widget on auth
     @bind 'auth', (user) =>
       if !user
-        @el.find('activity-counter').html('')
+        @el.find('.js-counter').text('')
       else
         if !@access()
-          @el.find('activity-counter').html('')
+          @el.find('.js-counter').text('')
           return
         @createContainer()
 
@@ -38,13 +38,10 @@ class App.OnlineNotificationWidget extends App.Controller
 
   counterUpdate: (count) =>
     if !count
-      @el.find('.activity-counter').remove()
+      @el.find('.js-counter').text('')
       return
-
-    if @el.find('.js-toggleNavigation .activity-counter')[0]
-      @el.find('.js-toggleNavigation .activity-counter').html(count)
-    else
-      @toggle.append('<div class="activity-counter">' + count.toString() + '</div>')
+    
+    @el.find('.js-counter').text(count)
 
   markAllAsRead: =>
     @counterUpdate(0)

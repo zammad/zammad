@@ -74,33 +74,33 @@
         <div class="profile-ticketList">
           <label>Offene Tickets (23)</label>
           <ol class="tasks tasks--standalone">
-            <li class="task level-2">
+            <li class="task">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Micro-SIM doesn't work</div>
                 <div class="time">23 minutes ago</div>
               </div>
-            <li class="task level-2">
+            <li class="task">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Superb Service here_with_some_extrem_example_sting_witch_can_really_be!</div>
                 <div class="time">43 minutes ago</div>
               </div>
-            <li class="task level-2">
+            <li class="task">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Print sheets strip off</div>
                 <div class="time">1 hour ago</div>
               </div>
-            <li class="task level-2">
+            <li class="task">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Block not properly wrought</div>
@@ -112,17 +112,17 @@
         <div class="profile-ticketList">
           <label>Bearbeitete Tickets (12)</label>
           <ol class="tasks tasks--standalone">
-            <li class="task level-1">
+            <li class="task">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority level-1"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Micro-SIM doesn't work</div>
                 <div class="time">23 minutes ago</div>
               </div>
-            <li class="task level-1">
+            <li class="task">
               <div class="icon-holder">
-                <svg class="priority-icon"><use xlink:href="#icon-priority" /></svg>
+                <svg class="icon-priority level-1"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
                 <div class="name">Superb Service!</div>
