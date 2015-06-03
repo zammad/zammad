@@ -4967,6 +4967,7 @@ label + .wizard-buttonList {
   }
 
   .name {
+    word-break: break-all;
     @extend .u-highlight;
   }
 }

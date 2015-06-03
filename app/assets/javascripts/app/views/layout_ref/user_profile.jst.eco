@@ -87,7 +87,7 @@
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
               <div class="flex">
-                <div class="name">Print sheets strip off with a lot of text in the headline</div>
+                <div class="name">Print sheets strip_off_with_a_lot_of_text_in_the_headline</div>
                 <div class="time">1 hour ago</div>
               </div>
             <li class="task level-1">
