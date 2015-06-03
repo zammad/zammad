@@ -45,8 +45,15 @@ class _Singleton
     # detect color support
     @colorSupport = false
     data = App.Browser.detection()
-    if data && (data.browser is 'Chrome' || ( data.browser is 'Firefox' && data.version >= 31.0 ) )
-      @colorSupport = true
+    if data
+      if data.browser is 'Chrome'
+        @colorSupport = true
+      else if data.browser is 'Firefox'
+        if data.version >= 31.0
+          @colorSupport = true
+      else if data.browser is 'Safari'
+        @colorSupport = true
+
 
   configReady: ->
     for type, value of @currentConfig
@@ -83,9 +90,9 @@ class _Singleton
     if prefix.length < prefixLength
       prefix += Array(prefixLength - prefix.length).join(' ')
     prefix += '|'
-    prefix = '%c' + prefix
 
     if @colorSupport
+      prefix = '%c' + prefix
       if !@moduleColorsMap[module]
         @moduleColorsMap[module]= @yieldColor()
       color       = @moduleColorsMap[module]
