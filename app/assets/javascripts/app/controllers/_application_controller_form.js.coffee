@@ -2482,7 +2482,7 @@ class App.ControllerForm extends App.Controller
       App.Log.debug 'ControllerForm', 'disable form...', lookupForm
 
       # set forms to read only during communication with backend
-      lookupForm.find('button, input, select').attr('readonly', true)
+      lookupForm.find('button, input, select, textarea').attr('readonly', true)
 
       # disable additionals submits
       lookupForm.find('button.btn').attr('disabled', true)
@@ -2499,7 +2499,7 @@ class App.ControllerForm extends App.Controller
       App.Log.debug 'ControllerForm', 'enable form...', lookupForm
 
       # enable fields again
-      lookupForm.find('button, input, select').attr('readonly', false)
+      lookupForm.find('button, input, select, textarea').attr('readonly', false)
 
       # enable submits again
       lookupForm.find('button.btn').attr('disabled', false)
