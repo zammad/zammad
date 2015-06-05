@@ -7,7 +7,7 @@ require 'daemons'
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
 daemon_options = {
-  multiple: true,
+  multiple: false,
   dir_mode: :normal,
   dir: File.join(dir, 'tmp', 'pids'),
   backtrace: true
