@@ -297,17 +297,17 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 200
     result = UserAgent.request(
-      'ftp://ftp.gwdg.de/msgs/banner.msg',
+      'ftp://root.cern.ch/pub/README-root-build.txt',
     )
     assert(result)
     assert_equal(true, result.success?)
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
-    assert(result.body =~ /Gesellschaft/i)
+    assert(result.body =~ /instructions/i)
 
     # ftp / 401
     result = UserAgent.request(
-      'ftp://ftp.gwdg.de/msgs/not_existing.msg',
+      'ftp://root.cern.ch/pub/not_existing.msg',
     )
     assert(result)
     assert_equal(false, result.success?)
