@@ -896,12 +896,12 @@ class highlightRef extends App.ControllerContent
   pickColor: (e) =>
     @$('.js-highlightColor .visibility-change.is-active').removeClass('is-active')
     $(e.currentTarget).find('.visibility-change').addClass('is-active')
-    @activeColorIndex =  $(e.currentTarget).attr('data-key')
+    @activeColorIndex = $(e.currentTarget).attr('data-key')
 
     if @isActive
       @highlightIcon.css('fill', @colors[@activeColorIndex].color)
 
-    @setColor() 
+    @setColor()
 
   onMouseUp: (e) =>
     @toggleHighlightAtSelection $(e.currentTarget).closest @articles.selector
