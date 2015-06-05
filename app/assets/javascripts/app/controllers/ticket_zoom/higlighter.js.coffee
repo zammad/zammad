@@ -1,32 +1,32 @@
 class App.TicketZoomHighlighter extends App.Controller
   elements:
     '.textBubble-content': 'articles'
-    '.js-highlight .marker-icon': 'highlighterControl'
+    '.js-highlight-icon':  'highlighterControl'
 
   events:
-    'click .js-highlight': 'toggleHighlight'
+    'click .js-highlight':      'toggleHighlight'
     'click .js-highlightColor': 'pickColor'
 
   colors: [
     {
       name: 'Yellow'
-      color: "#f7e7b2"
+      color: '#f7e7b2'
     },
     {
       name: 'Green'
-      color: "#bce7b6"
+      color: '#bce7b6'
     },
     {
       name: 'Blue'
-      color: "#b3ddf9"
+      color: '#b3ddf9'
     },
     {
       name: 'Pink'
-      color: "#fea9c5"
+      color: '#fea9c5'
     },
     {
       name: 'Purple'
-      color: "#eac5ee"
+      color: '#eac5ee'
     }
   ]
 
@@ -41,7 +41,6 @@ class App.TicketZoomHighlighter extends App.Controller
     rangy.init()
 
     @highlighter = rangy.createHighlighter(document, 'TextRange')
-
     @addClassApplier entry for entry in @colors
 
     @setColor()
@@ -50,12 +49,18 @@ class App.TicketZoomHighlighter extends App.Controller
     # store original highlight css data
     @storeOriginalHighlight()
 
-    @loadHighlights()
+    update = =>
+      @loadHighlights()
+      @refreshObserver()
+    App.Delay.set( update, 800 )
 
   render: ->
     @html App.view('ticket_zoom/highlighter')
       colors: @colors
       activeColorIndex: @activeColorIndex
+
+  highlighterInstance: =>
+    @highlighter
 
   storeOriginalHighlight: =>
     @originalHighlight =
@@ -70,19 +75,33 @@ class App.TicketZoomHighlighter extends App.Controller
   highlightEnable: =>
     @isActive = true
     @highlighterControl.css('opacity', 1)
+    @highlighterControl.css('fill', @activeColor)
+
+    @refreshObserver()
 
   highlightDisable: =>
     @isActive = false
     @restoreOriginalHighlight()
-    #@highlighterControl.css('opacity', @originalHighlight.opacity)
 
-  active: =>
-    @isActive
+    articles = @el.closest('.content').find('.textBubble')
+    articles.removeAttr('data-highlightcolor')
+    @refreshObserver()
+
+  refreshObserver: =>
+    articles = @el.closest('.content').find('.textBubble-content')
+    console.log('refreshObserver', articles)
+    articles.off('mouseup', @onMouseUp)
+    articles.on('mouseup', @onMouseUp) #future: touchend
 
   # for testing purposes the highlights get stored in localStorage
   loadHighlights: ->
-    if highlights = localStorage['highlights']
-      @highlighter.deserialize localStorage['highlights']
+    @el.closest('.content').find('.textBubble-content').each( (index, element) =>
+      article_id = $(element).data('id')
+      article    = App.TicketArticle.find(article_id)
+      if article.preferences && article.preferences['highlight']
+        console.log('highlight', article.preferences['highlight'])
+        @highlighter.deserialize(article.preferences['highlight'])
+    )
 
   # the serialization creates one string for the entiery ticket
   # containing the offsets and the highlight classes
@@ -91,8 +110,12 @@ class App.TicketZoomHighlighter extends App.Controller
   #
   # if classes can be changed in the admin interface
   # we have to watch out to not end up with empty highlight classes
-  storeHighlights: ->
-    localStorage['highlights'] = @highlighter.serialize()
+  storeHighlights: (article_id) ->
+    article                          = App.TicketArticle.find(article_id)
+    data                             = @highlighter.serialize()
+    console.log('HI', article_id, data)
+    article.preferences['highlight'] = data
+    article.save()
 
   # the colors is set via css classes (can't do it inline with rangy)
   # thus we have to create a stylesheet if the colors
@@ -102,54 +125,60 @@ class App.TicketZoomHighlighter extends App.Controller
 
   setColor: ->
     @highlightClass = @highlightClassPrefix + @colors[@activeColorIndex].name
+    @activeColor    = @colors[@activeColorIndex].color
 
     if @isActive
-      @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
+      articles = @el.closest('.content').find('.textBubble')
+      articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
   toggleHighlight: (e) =>
-    if @isActive
-      @restoreOriginalHighlight()
-    else
-      @highlightEnable()
-    return
+    console.log('toggleHighlight', @isActive)
 
-    console.log('toggleHighlight', @isActive, @articles)
     if @isActive
       $(e.currentTarget).removeClass('active')
-      @isActive = false
-      @articles.off('mouseup', @onMouseUp)
-      @articles.removeAttr('data-highlightcolor')
+
+      @highlightDisable()
     else
+      @highlightEnable()
       selection = rangy.getSelection()
       # if there's already something selected,
       # don't go into highlight mode
       # just toggle the selected
       if !selection.isCollapsed
-        @toggleHighlightAtSelection $(selection.anchorNode).closest @articles.selector
-      else
+        @toggleHighlightAtSelection(@content, @article_id)
+      #else
         # toggle ui
-        $(e.currentTarget).addClass('active')
+        #$(e.currentTarget).addClass('active')
 
         # activate selection background
-        @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
-
-        @isActive = true
-        @articles.on('mouseup', @onMouseUp) #future: touchend
+        #@articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
   pickColor: (e) =>
-    @$('.js-highlightColor .visibility-change.active').removeClass('active')
-    $(e.currentTarget).find('.visibility-change').addClass('active')
-    @activeColorIndex =  $(e.currentTarget).attr('data-key')
+    # TODO: @mrflix - still needed?
+    #@$('.js-highlightColor .visibility-change.active').removeClass('active')
+    #$(e.currentTarget).find('.visibility-change').addClass('active')
 
-
-    @isActive = true
-    console.log('ooo', @activeColorIndex, @colors[@activeColorIndex].color, @colors[@activeColorIndex])
-    @highlighterControl.css('fill', @colors[@activeColorIndex].color)
-    @highlighterControl.css('opacity', 1)
+    @activeColorIndex = $(e.currentTarget).attr('data-key')
     @setColor()
 
+    @highlightEnable()
+
+    # check if selection exists - highlight it or remove highlight
+    @toggleHighlightAtSelection(@content, @article_id)
+
   onMouseUp: (e) =>
-    #@toggleHighlightAtSelection $(e.currentTarget).closest('.textBubble-content')# @articles.selector
+    @updateSelectedArticle(e)
+
+    console.log('onMouseUp', @isActive, @content, @article_id)
+    if @isActive
+      @toggleHighlightAtSelection(@content, @article_id) # @articles.selector
+
+  updateSelectedArticle: (e) =>
+    @content    = $(e.currentTarget).closest('.textBubble-content')
+    @article_id = @content.data('id')
+    if !@article_id
+      @content    = $(e.currentTarget)
+      @article_id = @content.data('id')
 
   #
   # toggle Highlight
@@ -160,12 +189,17 @@ class App.TicketZoomHighlighter extends App.Controller
   # - or highlights the selection
   # - clears the selection
 
-  toggleHighlightAtSelection: (article) =>
+  toggleHighlightAtSelection: (article, article_id) =>
     selection = rangy.getSelection()
 
+    # activate selection background
+    article.attr('data-highlightcolor', @colors[@activeColorIndex].name)
+
     if @highlighter.selectionOverlapsHighlight selection
+      console.log('SELECTION EXISTS, REMOVED IT')
       @highlighter.unhighlightSelection()
     else
+      console.log('NEW SELECTION')
       @highlighter.highlightSelection @highlightClass,
         selection: selection
         containerElementId: article.get(0).id
@@ -175,5 +209,5 @@ class App.TicketZoomHighlighter extends App.Controller
 
     @highlightDisable()
 
-
-    #@storeHighlights()
+    # save new selections
+    @storeHighlights(article_id)

@@ -1,5 +1,5 @@
 <div class="btn btn--action btn--split--first js-highlight centered">
-  <svg class="marker-icon"><use xlink:href="#icon-marker" /></svg>
+  <svg class="icon icon-marker js-highlight-icon"><use xlink:href="#icon-marker" /></svg>
 </div>
 <div class="dropdown dropdown--actions">
   <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown" aria-expanded="true">
@@ -12,7 +12,7 @@
         <span class="dropdown-iconSpacer">
           <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
         </span>
-        <%= entry.name %>
+        <%- @Ti(entry.name) %>
         <span class="dropdown-activeSpacer visibility-change<%= ' active' if i is @activeColorIndex %>">
           <span class="white checkmark icon" data-visible="active"></span>
         </span>

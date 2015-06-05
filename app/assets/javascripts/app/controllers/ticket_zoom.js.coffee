@@ -91,7 +91,11 @@ class App.TicketZoom extends App.Controller
     return if @activeState
     @activeState = true
 
-    App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket.id } )
+    App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
+
+    if !@highlighed
+      @highlighed = true
+      @highligher.loadHighlights()
 
     App.OnlineNotification.seen( 'Ticket', @ticket_id )
     @navupdate '#'
@@ -292,10 +296,15 @@ class App.TicketZoom extends App.Controller
         ui:     @
       )
 
+      @highligher = new App.TicketZoomHighlighter(
+        el:        @$('.highlighter')
+        ticket_id: @ticket.id
+      )
+
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
       new App.WidgetAvatar(
-        el:       @$('.page-header .js-avatar')
+        el:       @$('.ticketZoom-header .js-avatar')
         user_id:  @ticket.customer_id
         size:     50
       )
@@ -313,9 +322,10 @@ class App.TicketZoom extends App.Controller
     # show article
     if !@article_view
       @article_view = new App.TicketZoomArticleView(
-        ticket: @ticket
-        el:     @el.find('.ticket-article')
-        ui:     @
+        ticket:      @ticket
+        el:          @el.find('.ticket-article')
+        ui:          @
+        highlighter: @highlighter
       )
 
     @article_view.execute(

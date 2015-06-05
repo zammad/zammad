@@ -5,6 +5,7 @@ class App.TicketZoomArticleView extends App.Controller
     @article_controller = {}
 
   execute: (params) ->
+    all = []
     for ticket_article_id in params.ticket_article_ids
       if !@article_controller[ticket_article_id]
         el = $('<div></div>')
@@ -14,14 +15,21 @@ class App.TicketZoomArticleView extends App.Controller
           el:                el
           ui:                @ui
         )
-        @el.append( el )
+        all.push el
+    @el.append( all )
 
 class ArticleViewItem extends App.Controller
+  hasChangedAttributes: ['from', 'to', 'cc', 'subject', 'body', 'internal']
+
+  elements:
+    '.textBubble-content':           'textBubbleContent'
+    '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
+
   events:
-    'click .show_toogle':  'show_toogle'
-    'click .textBubble':   'toggle_meta_with_delay'
-    'click .textBubble a': 'stopPropagation'
-    'click .js-unfold':    'unfold'
+    'click .show_toogle':          'show_toogle'
+    'click .textBubble':           'toggle_meta_with_delay'
+    'click .textBubble a':         'stopPropagation'
+    'click .js-unfold':            'unfold'
 
   constructor: ->
     super
@@ -34,21 +42,43 @@ class ArticleViewItem extends App.Controller
     @bind(
       'ui::ticket::shown'
       (data) =>
-        if data.ticket_id is @ticket.id
+        if data.ticket_id.toString() is @ticket.id.toString()
           @setSeeMore()
     )
 
     # subscribe to changes
-    @subscribeId = App.TicketArticle.full( @ticket_article_id, @render, false, true )
+    @subscribeId = App.TicketArticle.full(@ticket_article_id, @render, false, true)
 
   release: =>
-    App.User.TicketArticle(@subscribeId)
+    App.TicketArticle.unsubscribe(@subscribeId)
+
+  hasChanged: (article) =>
+
+    # if no last article exists, remember it and return true
+    if !@article_last_updated
+      @article_last_updated = {}
+      for item in @hasChangedAttributes
+        @article_last_updated[item] = article[item]
+      return true
+
+    # compare last and current article attributes
+    article_last_updated_check = {}
+    for item in @hasChangedAttributes
+      article_last_updated_check[item] = article[item]
+    diff = difference(@article_last_updated, article_last_updated_check)
+    return false if !diff || _.isEmpty( diff )
+    @article_last_updated = article_last_updated_check
+    true
 
   render: (article) =>
 
     # get articles
     @article = App.TicketArticle.fullLocal( @ticket_article_id )
 
+    # check if rerender is needed
+    return if !@hasChanged(@article)
+
+    console.log('RERENDER', @ticket_article_id)
     # prepare html body
     if @article.content_type is 'text/html'
       @article['html'] = @article.body
@@ -82,34 +112,35 @@ class ArticleViewItem extends App.Controller
 
   # set see more options
   setSeeMore: =>
-    maxHeight = 560
-    bubble    = @$('.textBubble-content')
+    maxHeight               = 560
+    bubbleContent           = @textBubbleContent
+    bubbleOvervlowContainer = @textBubbleOverflowContainer
 
     # expand if see more is already clicked
     if @seeMore
-      bubble.css('height', 'auto')
-      bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
+      bubbleContent.css('height', 'auto')
+      bubbleOvervlowContainer.addClass('hide')
       return
 
     # reset bubble heigth and "see more" opacity
-    bubble.css('height', '')
-    bubble.parent().find('.textBubble-overflowContainer').css('opacity', '')
+    bubbleContent.css('height', '')
+    bubbleOvervlowContainer.css('opacity', '')
 
     # remember offset of "see more"
-    offsetTop = bubble.find('.js-signatureMarker').position()
+    offsetTop = bubbleContent.find('.js-signatureMarker').position()
 
     # remember bubble heigth
-    heigth = bubble.height()
-    if offsetTop
-      bubble.attr('data-height', heigth)
-      bubble.css('height', "#{offsetTop.top + 30}px")
-      bubble.parent().find('.textBubble-overflowContainer').removeClass('hide')
+    heigth = bubbleContent.height()
+    if offsetTop && heigth
+      bubbleContent.attr('data-height', heigth)
+      bubbleContent.css('height', "#{offsetTop.top + 30}px")
+      bubbleOvervlowContainer.removeClass('hide')
     else if heigth > maxHeight
-      bubble.attr('data-height', heigth)
-      bubble.css('height', "#{maxHeight}px")
-      bubble.parent().find('.textBubble-overflowContainer').removeClass('hide')
+      bubbleContent.attr('data-height', heigth)
+      bubbleContent.css('height', "#{maxHeight}px")
+      bubbleOvervlowContainer.removeClass('hide')
     else
-      bubble.parent().find('.textBubble-overflowContainer').addClass('hide')
+      bubbleOvervlowContainer.addClass('hide')
 
   show_toogle: (e) ->
     e.stopPropagation()
@@ -218,21 +249,21 @@ class ArticleViewItem extends App.Controller
 
     @seeMore = true
 
-    container         = $(e.currentTarget).parents('.textBubble-content')
-    overflowContainer = container.find('.textBubble-overflowContainer')
+    bubbleContent           = @textBubbleContent
+    bubbleOvervlowContainer = @textBubbleOverflowContainer
 
-    overflowContainer.velocity
+    bubbleOvervlowContainer.velocity
       properties:
         opacity: 0
       options:
         duration: 300
 
-    container.velocity
+    bubbleContent.velocity
       properties:
-        height: container.attr('data-height')
+        height: bubbleContent.attr('data-height')
       options:
         duration: 300
-        complete: -> overflowContainer.addClass('hide');
+        complete: -> bubbleOvervlowContainer.addClass('hide');
 
   isOrContains: (node, container) ->
     while node

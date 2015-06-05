@@ -13,6 +13,7 @@ class Ticket::Article < ApplicationModel
   belongs_to    :sender,      class_name: 'Ticket::Article::Sender'
   belongs_to    :created_by,  class_name: 'User'
   belongs_to    :updated_by,  class_name: 'User'
+  store         :preferences
   before_create :check_subject
   before_update :check_subject
   notify_clients_support
@@ -20,11 +21,13 @@ class Ticket::Article < ApplicationModel
   activity_stream_support ignore_attributes: {
     type_id: true,
     sender_id: true,
+    preferences: true,
   }
 
   history_support ignore_attributes: {
     type_id: true,
     sender_id: true,
+    preferences: true,
   }
 
   private
