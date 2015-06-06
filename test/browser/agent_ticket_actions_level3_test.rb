@@ -206,7 +206,7 @@ class AgentTicketActionsLevel3Test < TestCase
       css: '.content.active .js-reset',
       browser: browser2,
     )
-    sleep 1
+    sleep 2
     ticket_verify(
       browser: browser2,
       data: {
