@@ -82,8 +82,8 @@ class AgentTicketOverviewLevel1Test < TestCase
     # use overview navigation to got to #2 & #3
     match(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
-      value: '1/',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value: '1',
     )
     match(
       browser: browser2,
@@ -93,12 +93,12 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     click(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .next',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
-      value: '2/',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value: '2',
     )
     match(
       browser: browser2,
@@ -108,12 +108,12 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     click(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .next',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
     )
     match(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
-      value: '3/',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value: '3',
     )
     match(
       browser: browser2,
@@ -133,8 +133,8 @@ class AgentTicketOverviewLevel1Test < TestCase
 
     match(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
-      value: '3/',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value: '3',
     )
     match(
       browser: browser2,
@@ -143,13 +143,13 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     click(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .previous',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .previous',
     )
 
     match(
       browser: browser2,
-      css: '.active .ticketZoom .overview-navigator.horizontal .pagination-counter',
-      value: '2/',
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value: '2',
     )
     match(
       browser: browser2,
