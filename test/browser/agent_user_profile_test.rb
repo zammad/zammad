@@ -32,7 +32,7 @@ class AgentUserProfileTest < TestCase
       contenteditable: true,
 
     )
-    click( css: '#global-search' )
+    click( css: '.empty-search' )
     sleep 2
 
     # check and change note again in edit screen
@@ -112,7 +112,7 @@ class AgentUserProfileTest < TestCase
     )
     click(
       browser: browser1,
-      css: '#global-search',
+      css:     '.empty-search',
     )
 
     watch_for(
