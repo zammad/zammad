@@ -37,18 +37,18 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # select both via bulk action
     click(
-      css: '.active table tr td input[value="' + ticket1[:id] + '"] + .checkbox',
+      css: '.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
     click(
-      css: '.active table tr td input[value="' + ticket2[:id] + '"] + .checkbox',
+      css: '.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
     exists(
-      css: '.active table tr td input[value="' + ticket1[:id] + '"]:checked',
+      css: '.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
     )
     exists(
-      css: '.active table tr td input[value="' + ticket2[:id] + '"]:checked',
+      css: '.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
     )
 
     # select close state & submit
