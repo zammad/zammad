@@ -34,7 +34,7 @@ class AgentOrganizationProfileTest < TestCase
       value: note,
       contenteditable: true,
     )
-    click( css: '#global-search' )
+    click( css: '.empty-search' )
     sleep 2
 
     # check and change note again in edit screen
@@ -116,7 +116,7 @@ class AgentOrganizationProfileTest < TestCase
     )
     click(
       browser: browser1,
-      css: '#global-search',
+      css:     '.empty-search',
     )
 
     # verify
