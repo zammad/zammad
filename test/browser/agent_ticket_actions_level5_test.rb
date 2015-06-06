@@ -279,6 +279,7 @@ class AgentTicketActionLevel5Test < TestCase
 =end
 
     # discard changes
+    sleep 2
     click(
       css: '.active .js-reset',
     )
