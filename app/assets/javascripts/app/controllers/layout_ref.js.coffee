@@ -938,21 +938,34 @@ class cluesRef extends App.ControllerContent
 
   clues: [
     {
-      container: '.search'
+      container: '.user-menu'
+      headline: 'Persönliches Menü'
+      text: 'Hier findest du den Logout, den Weg zu deinen Einstellungen und deinen Verlauf.'
+      actions: [
+        'click .user .js-action',
+        'hover .user'
+      ]
+    }
+    {
+      container: '.search-holder'
       headline: 'Suche'
-      text: 'Hier finden sie alles!'
+      text: 'Um alles zu finden nutze den <kbd>*</kbd>-Platzhalter'
     },
     {
       container: '.user-menu'
       headline: 'Erstellen'
-      text: 'Hier können sie Tickets, Kunden und Organisationen anlegen.'
-      action: 'click .add .js-action'
+      text: 'Hier kannst du Tickets, Kunden und Organisationen anlegen.'
+      actions: [
+        'click .add .js-action',
+        'hover .add'
+      ]
     }
   ]
 
   events:
     'click .js-next': 'next'
     'click .js-previous': 'previous'
+    'click .js-close': 'close'
 
   constructor: ->
     super
@@ -965,7 +978,7 @@ class cluesRef extends App.ControllerContent
 
     ###
 
-    @options.onComplete = ->
+    @options.onComplete = -> null
     @position = 0
     @render()
 
@@ -977,6 +990,10 @@ class cluesRef extends App.ControllerContent
     event.stopPropagation()
     @navigate -1
 
+  close: =>
+    @cleanUp()
+    @options.onComplete()
+
   navigate: (direction) ->
     @cleanUp()
     @position += direction
@@ -984,7 +1001,7 @@ class cluesRef extends App.ControllerContent
     if @position < @clues.length
       @render()
     else
-      @onComplete()
+      @options.onComplete()
 
   cleanUp: ->
     clue = @clues[@position]
@@ -992,66 +1009,147 @@ class cluesRef extends App.ControllerContent
     container.removeClass('selected-clue')
 
     # undo click perform by doing it again
-    if clue.action
-      @perform clue.action, container
+    if clue.actions
+      @perform clue.actions, container
 
-    @el.find('.clue').remove()
+    @$('.modal').remove()
 
   render: ->
     clue = @clues[@position]
     container = $(clue.container)
     container.addClass('selected-clue')
 
+    if clue.actions
+      @perform clue.actions, container
+
+    # calculate bounding box after actions
+    # to take toggled child nodes into account
+    boundingBox = @getVisibleBoundingBox(container.get(0))
+
     center =
-      x: container.offset().left + container.width()/2
-      y: container.offset().top + container.height()/2
+      x: boundingBox.left + boundingBox.width/2
+      y: boundingBox.top + boundingBox.height/2
 
     @html App.view('layout_ref/clues')
       headline: clue.headline
       text: clue.text
-      width: container.outerWidth()
-      height: container.outerHeight()
+      width: boundingBox.width
+      height: boundingBox.height
       center: center
       position: @position
       max: @clues.length
 
-    if clue.action
-      @perform clue.action, container
+    @placeWindow(boundingBox)
 
-    @placeWindow(container)
+  placeWindow: (target) ->
+    modalElement = @$('.js-positionOrigin')
+    modal = modalElement.get(0).getBoundingClientRect()
+    position = ''
+    left = 0
+    top = 0
+    maxWidth = $(window).width()
+    maxHeight = $(window).height()
 
-  placeWindow: (container) ->
-    clueWindow = @el.find('.clue-window')
-
-    # see if we can place it above or below target
-    if clueWindow.outerHeight() + container.outerHeight() < $(window).outerHeight()
-      clueWindow.css('left', container.offset().left)
-
-      # below or above ?
-      if container.offset().top + container.outerHeight() + clueWindow.outerHeight() < $(window).outerHeight()
-        # place below
-        clueWindow.css('top', container.offset().top + container.outerHeight())
-      else
-        # place above
-        clueWindow.css('top', container.offset().top - container.outerHeight() - clueWindow.outerHeight())
-    else
-      clueWindow.css('top', container.offset().top)
-      # okay, let's try right or left then
-      if container.offset().left + container.outerWidth() + clueWindow.outerWidth() < $(window).outerWidth()
-        # place right
-        clueWindow.css('left', container.offset().left + container.outerWidth())
-      else
+    # try to place it parallel to the larger side
+    if target.height > target.width
+      # try to place it aside
+      # prefer right
+      if target.right + modal.width <= maxWidth
+        left = target.right
+        position = 'right'
+      else 
         # place left
-        clueWindow.css('left', container.offset().left - container.outerWidth() - clueWindow.outerWidth())
+        left = target.left - modal.width
+        position = 'left'
+
+      if position
+        top = target.top + target.height/2 - modal.height/2
+    else if target.height <= target.width or !position
+      # try to place it above or below
+      # prefer above
+      if target.top - modal.height >= 0
+        top = target.top - modal.height
+        position = 'above'
+      else
+        top = target.bottom
+        position = 'below'
+
+      if position
+        left = target.left + target.width/2 - modal.width/2
+
+    # keep it inside the window
+    # horizontal
+    if left < 0
+      moveArrow = modal.width/2 + left
+      left = 0
+    else if left + modal.width > maxWidth
+      moveArrow = modal.width/2 + maxWidth - (left + modal.width)
+      left = maxWidth - modal.width
+
+    if top < 0
+      moveArrow = modal.height/2 + height
+      top = 0
+    else if top + modal.height > maxHeight
+      moveArrow = modal.height/2 + maxHeight - (top + modal.height)
+      top = maxHeight - modal.height
 
     # show window
-    clueWindow.addClass('is-visible')
+    modalElement
+      .addClass "is-visible is-#{ position }"
+      .css
+        'left': left
+        'top': top
 
+    if moveArrow
+      parameter = if position is 'above' or position is 'below' then 'left' else 'top'
+      console.log("move arrow", position, parameter, moveArrow)
+      modalElement.find('.js-arrow').css(parameter, moveArrow)
 
-  perform: (action, container) ->
-    eventName = action.substr 0, action.indexOf(' ')
-    selector = action.substr action.indexOf(' ') + 1
-    container.find(selector)[0][eventName]()
+  getVisibleBoundingBox: (el) ->
+    ###
+
+      getBoundingClientRect doesn't take 
+      absolute-positioned child nodes into account
+
+    ###
+    children = el.querySelectorAll('*')
+    bb = el.getBoundingClientRect()
+    dimensions =
+      left: bb.left,
+      right: bb.right,
+      top: bb.top,
+      bottom: bb.bottom
+
+    for child in children
+
+      continue if getComputedStyle(child).position is not 'absolute'
+
+      bb = child.getBoundingClientRect()
+
+      continue if bb.width is 0 or bb.height is 0
+
+      if bb.left < dimensions.left
+        dimensions.left = bb.left
+      if bb.top < dimensions.top
+        dimensions.top = bb.top
+      if bb.right > dimensions.right
+        dimensions.right = bb.right
+      if bb.bottom > dimensions.bottom
+        dimensions.bottom = bb.bottom
+
+    dimensions.width = dimensions.right - dimensions.left
+    dimensions.height = dimensions.bottom - dimensions.top
+
+    dimensions
+
+  perform: (actions, container) ->
+    for action in actions
+      eventName = action.substr 0, action.indexOf(' ')
+      selector = action.substr action.indexOf(' ') + 1
+
+      switch eventName
+        when 'click' then container.find(selector).trigger('click')
+        when 'hover' then container.find(selector).toggleClass('is-hovered')
 
 App.Config.set( 'layout_ref/clues', cluesRef, 'Routes' )
 
