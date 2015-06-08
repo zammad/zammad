@@ -5043,7 +5043,7 @@ label + .wizard-buttonList {
 }
 
 .highlighter {
-  @extend .horizontal;
+  display: flex;
 }
 
 [data-highlightcolor=Yellow]::selection { background: #f7e7b2; }
