@@ -221,7 +221,10 @@ class App.Navigation extends App.Controller
 
     # observer search box
     @$('#global-search').bind( 'focusout', (e) =>
-      @$('.search').removeClass('focused')
+      # delay to be able to click x
+      update = =>
+        @$('.search').removeClass('focused')
+      @delay( update, 180, 'removeFocused' )
     )
 
     @$('#global-search').bind( 'focusin', (e) =>
