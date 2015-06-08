@@ -25,6 +25,9 @@ body {
 
 p {
   margin: 14px 0;
+  word-break: normal;
+  color: hsl(60,1%,34%);
+  max-width: 500px;
 }
 
 .u-highlight {
@@ -899,7 +902,8 @@ textarea,
   justify-content: center;
   flex: 1;
 
-  svg {
+  svg,
+  .icon {
     margin-right: 14px;
   }
 
@@ -1691,7 +1695,7 @@ footer {
       display: flex;
     }
 
-    .tasks-standalone .name {
+    .tasks--standalone .name {
       @extend .u-highlight, .u-textTruncate;
     }
 

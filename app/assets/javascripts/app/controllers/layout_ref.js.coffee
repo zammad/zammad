@@ -1183,5 +1183,16 @@ class cluesRef extends App.ControllerContent
 App.Config.set( 'layout_ref/clues', cluesRef, 'Routes' )
 
 
+class adminPlaceholderRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/admin_placeholder')()
+
+App.Config.set( 'layout_ref/admin_placeholder', adminPlaceholderRef, 'Routes' )
+
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

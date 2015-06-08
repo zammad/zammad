@@ -4,6 +4,7 @@
 
 
   <ul>
+    <li><a href="#layout_ref/admin_placeholder">Admin Placeholder (Inline Tutorials)</a></li>
     <li><a href="#layout_ref/clues">First Steps (Clues)</a></li>
     <li><a href="#layout_ref/highlight">Highlight</a></li>
     <li>Content <a href="#layout_ref/content">Example</a></li>
