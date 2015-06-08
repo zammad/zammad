@@ -47,7 +47,7 @@ class Index extends App.ControllerContent
 
   destroy: (e) ->
     e.preventDefault()
-    sessionId = $( e.target ).data('session-id')
+    sessionId = $( e.target ).closest('a').data('session-id')
     @ajax(
       id:    'sessions/' + sessionId
       type:  'DELETE'
