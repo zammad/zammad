@@ -1695,7 +1695,7 @@ footer {
       display: flex;
     }
 
-    .tasks-standalone .name {
+    .tasks--standalone .name {
       @extend .u-highlight, .u-textTruncate;
     }
 
