@@ -671,7 +671,7 @@ h5 {
 label,
 .checkbox.form-group label {
   text-transform: uppercase;
-  color: hsl(0,0%,60%);
+  color: hsl(198,19%,72%);
   display: block;
   font-size: 12px;
   font-weight: normal;
@@ -1681,7 +1681,8 @@ footer {
 
   .tasks.tasks--standalone {
     background: none;
-    margin-top: 8px;
+    margin: 8px 0 0;
+    padding: 0;
   }
 
     .tasks--standalone .task {
@@ -2177,6 +2178,7 @@ footer {
   width: 32%;
   max-width: 300px;
   padding: 20px;
+  color: hsl(60,1%,34%);
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
@@ -3701,7 +3703,7 @@ footer {
   }
 
   .sidebar .text-muted {
-    color: hsl(204,3%,72%);
+    color: hsl(198,19%,72%);
   }
 
 .alert {
@@ -3741,13 +3743,17 @@ footer {
 }
 
   .sidebar-list-title {
-    color: hsl(206,7%,28%);
-    text-transform: capitalize;
     margin-top: 7px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    color: hsl(198,19%,84%);
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: 0.1em;
   }
 
   .sidebar-list-item {
-    padding: 4px 1px;
     display: flex;
     align-items: center;
     color: hsl(206,7%,28%);
@@ -3756,15 +3762,16 @@ footer {
 
   .sidebar-list-item-name {
     flex: 1;
+    padding: 4px 1px;
   }
 
   .sidebar-list-item-delete {
-    height: 100%;
     padding: 0 10px;
-    margin-right: -4px;
+    margin-right: -3px;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: stretch;
     @extend .u-clickable;
     
     .icon {
@@ -5003,18 +5010,9 @@ label + .wizard-buttonList {
   padding: 0 25px;
 
   .tasks {
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-  }
-}
-
-.profile-ticketList {
-  ol {
-    padding: 0;
-  }
-
-  .name {
-    @extend .u-highlight;
   }
 }
 
