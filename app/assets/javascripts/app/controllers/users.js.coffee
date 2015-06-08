@@ -54,8 +54,8 @@ class Index extends App.Controller
       header
 
     callbackAttributes = (value, object, attribute, header, refObject) ->
-      value = ' '
-      attribute.class  = 'glyphicon glyphicon-user'
+      value = ' <svg class="icon-user"><use xlink:href="#icon-user"></use></svg>'
+      attribute.class  = ''
       attribute.link   = '#'
       attribute.title  = App.i18n.translateInline('Switch to')
       value
