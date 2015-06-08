@@ -872,33 +872,41 @@ class highlightRef extends App.ControllerContent
 
   toggleHighlight: (e) =>
     if @isActive
-      @highlightIcon.css('fill', '')
-      @isActive = false
-      @articles.off('mouseup', @onMouseUp)
-      @articles.removeAttr('data-highlightcolor')
+      @deactivate()
     else
-      selection = rangy.getSelection()
-      # if there's already something selected, 
-      # don't go into highlight mode
-      # just toggle the selected
-      if !selection.isCollapsed
-        @toggleHighlightAtSelection $(selection.anchorNode).closest @articles.selector
-      else
-        # show color
-        @highlightIcon.css('fill', @colors[@activeColorIndex].color)
+      @activate()
 
-        # activate selection background
-        @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
+  deactivate: ->
+    @highlightIcon.css('fill', '')
+    @isActive = false
+    @articles.off('mouseup', @onMouseUp)
+    @articles.removeAttr('data-highlightcolor')
 
-        @isActive = true
-        @articles.on('mouseup', @onMouseUp) #future: touchend
+  activate: ->
+    selection = rangy.getSelection()
+    # if there's already something selected, 
+    # don't go into highlight mode
+    # just toggle the selected
+    if !selection.isCollapsed
+      @toggleHighlightAtSelection $(selection.anchorNode).closest @articles.selector
+    else
+      # show color
+      @highlightIcon.css('fill', @colors[@activeColorIndex].color)
+
+      # activate selection background
+      @articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
+
+      @isActive = true
+      @articles.on('mouseup', @onMouseUp) #future: touchend
 
   pickColor: (e) =>
     @$('.js-highlightColor .visibility-change.is-active').removeClass('is-active')
     $(e.currentTarget).find('.visibility-change').addClass('is-active')
     @activeColorIndex = $(e.currentTarget).attr('data-key')
 
-    if @isActive
+    if not @isActive
+      @activate()
+    else
       @highlightIcon.css('fill', @colors[@activeColorIndex].color)
 
     @setColor()
