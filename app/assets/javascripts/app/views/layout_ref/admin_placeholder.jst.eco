@@ -1,0 +1,90 @@
+<div class="sidebar NavBarAdmin">
+  <h2>Manage</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li class="">
+      <a href="#manage/users">Users</a>
+    <li>
+      <a href="#manage/groups">Groups</a>
+    <li>
+      <a href="#manage/organizations">Organizations</a>
+    <li>
+      <a href="#manage/overviews">Overviews</a>
+    <li>
+      <a href="#manage/text_modules">TextModules</a>
+
+    <li class="active">
+      <a href="#manage/slas">SLAs</a>
+    <li>
+      <a href="#manage/schedulers">Schedulers</a>
+    <li>
+      <a href="#manage/triggers">Triggers</a>
+  </ul>
+
+  <h2>Channels</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#channels/web">Web</a>
+    <li>
+      <a href="#channels/email">Email</a>
+    <li>
+      <a href="#channels/chat">Chat</a>
+    <li>
+      <a href="#channels/twitter">Twitter</a>
+    <li>
+      <a href="#channels/facebook">Facebook</a>
+  </ul>
+
+  <h2>Settings</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#settings/system">System</a>
+    <li>
+      <a href="#settings/security">Security</a>
+    <li>
+      <a href="#settings/import">Import</a>
+    <li>
+      <a href="#settings/ticket">Ticket</a>
+  </ul>
+
+  <h2>System</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#system/package">Packages</a>
+    <li>
+      <a href="#system/object_manager">Objects</a>
+    <li>
+      <a href="#system/translation">Translations</a>
+    <li>
+      <a href="#system/maintenance">Maintenance</a>
+    <li>
+      <a href="#system/sessions">Sessions</a>
+  </ul>
+</div>
+
+<div class="main flex">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1>SLAs <small>Management</small></h1>
+    </div>
+
+    <div class="page-header-meta">
+      <a class="btn btn--success" data-type="new">New SLA</a>
+    </div>
+  </div>
+
+  <div class="table-overview">
+    <p>
+      <strong>Service-Level-Agreements</strong>, abgekürzt <b>SLAs</b>, unterstützen Sie gegenüber Kunden gewisse zeitliche Reaktionen einzuhalten. Somit können Sie z. B. sagen Kunden sollen immer nach spätestens 8 Stunden eine Reaktion von Ihnen bekommen. Falls es zu einer drohenden Unterschreitung oder einer Unterschreitung kommt, weißt Zammad Sie auf solche Ereignisse hin.
+    </p>
+    <p>
+      Es können <strong>Reaktionszeit</strong> (Zeit zwischen Erstellung eines Tickets und erster Reaktion eines Agenten), <strong>Aktualisierungszeit</strong> (Zeit zwischen Nachfrage eines Kunden und Reaktion eines Agenten) und <strong>Lösungszeit</strong> (Zeit zwischen Erstellung und schließen eines Tickets) definiert werden.
+    </p>
+    <p>
+      Drohenden Unterschreitungen oder Unterschreitungen werden in einer eigenen Ansicht in den Übersichten angezeigt. Zudem können <strong>E-Mail Benachrichtigungen</strong> konfiguriert werden.
+    </p>
+  </div>
+</div>
