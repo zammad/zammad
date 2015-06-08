@@ -19,6 +19,7 @@ body {
   background: hsl(210,17%,98%);
   height: 100%;
   color: hsl(198,19%,72%);
+  word-break: break-all;
 }
 
 p {
@@ -910,69 +911,100 @@ textarea,
   @extend .zIndex-9;
 }
 
-.clue {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  @extend .zIndex-8;
-}
-
-.clue-backdrop {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.clue-window {
-  position: absolute;
-  opacity: 1;
-  padding: 18px;
-  
-  &.is-visible {
-    opacity: 1;
-  }
-}
-
-.clue-inner {
-  min-width: 260px;
-  padding: 24px 24px 14px;
-  background: white;
-  color: hsl(60,1%,34%);
-  box-shadow:
-    0 8px 17px 0 rgba(0, 0, 0, 0.1),
-    0 6px 20px 0 rgba(0, 0, 0, 0.05);
-}
-
-.clue-controls {
-  background: hsl(210,5%,97%);
-  margin: 24px -24px -14px;
-  padding: 7px 10px;
+.modal--clue {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.clue-control {
-  padding-left: 14px;
-  padding-right: 14px;
+  justify-content: center;
+  @extend .zIndex-8;
   
-  .btn.is-disabled {
-    opacity: 1;
-    color: hsl(240,5%,83%);
+  .modal-backdrop {
+    bottom: 0;
+  }
+
+  .modal-spacer {
+    position: absolute;
+    opacity: 0;
+    padding: 18px;
+    
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+
+  .modal-arrow {
+    background: inherit;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    margin: -10px 0 53px -10px;
+    left: 0;
+    top: 50%;
+    transform: rotate(45deg);
+  }
+
+  .modal-spacer.is-above .modal-arrow {
+    left: 50%;
+    top: 100%;
+    background: hsl(210,5%,97%);
+  }
+
+  .modal-spacer.is-below .modal-arrow {
+    left: 50%;
+    top: 0;
+  }
+
+  .modal-spacer.is-left .modal-arrow {
+    left: 100%;
+    top: 50%;
+  }
+
+  .modal-content {
+    border: none;
+    width: 300px;
+    box-shadow:
+      0 8px 17px 0 rgba(0, 0, 0, 0.1),
+      0 6px 20px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .modal-controls {
+    background: hsl(210,5%,97%);
+    margin: 23px 0 0;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-control {
+    padding-left: 14px;
+    padding-right: 14px;
+    
+    .btn.is-disabled {
+      opacity: 1;
+      color: hsl(240,5%,83%);
+    }
+  }
+
+  .modal-header {
+    padding-bottom: 7px;
+    font-size: 18px;
+  }
+
+  .modal-body {
+    max-width: 340px;
   }
 }
 
-.clue-header {
-  margin-bottom: 7px;
-  font-size: 18px;
-}
-
-.clue-body {
-  max-width: 340px;
+kbd {
+  background: hsl(200,8%,21%);
+  border-radius: 3px;
+  box-shadow: 0 1px 1px black;
+  color: white;
+  display: inline-block;
+  font-size: 12px;
+  margin: 0 1px;
+  padding: 0 4px;
+  vertical-align: top;
 }
 
 .form-stacked .checkbox label {
@@ -1828,7 +1860,7 @@ footer {
 }
 
 .search {
-  padding: 7px 5px 4px 10px;
+  padding: 11px 5px 4px 10px;
   border-bottom: 1px solid rgba(240, 250, 255, .05);
   flex-shrink: 0;
   display: flex;
@@ -1837,8 +1869,7 @@ footer {
   
   .search-holder {
     flex: 1;
-    margin-right: 2px;
-    margin-top: 4px;
+    border-radius: 15px;
     position: relative;
     transition: 240ms;
   }
@@ -1867,7 +1898,7 @@ footer {
 
   .search input {
     width: 100%;
-    padding: 5px 10px 5px 33px;
+    padding: 5px 33px 5px 33px;
     height: 30px;
     color: #ECECEC;
     background: #31373b;
@@ -1900,7 +1931,7 @@ footer {
   .search .logo {
     position: relative;
     @extend .u-clickable, .zIndex-5;
-    margin: 0 10px;
+    margin: -4px 10px 0 12px;
     transition: 240ms;
   }
 
@@ -1931,7 +1962,7 @@ footer {
     }
 
   .search .custom-dropdown-menu {
-    margin: -2px 0 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
     background: #26272e;
@@ -1939,7 +1970,7 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    top: 56px;
+    top: 53px;
     z-index: 1002;
     display: none;
     overflow: scroll;
@@ -1983,7 +2014,8 @@ footer {
       position: relative;
     }
 
-    .user-menu > li:hover .list-button:before {
+    .user-menu > li:hover .list-button:before,
+    .user-menu > li.is-hovered .list-button:before {
       content: '';
       position: absolute;
       top: 4px;
@@ -1993,7 +2025,8 @@ footer {
       background: white;
     }
 
-    .user-menu li.add:hover .list-button:before {
+    .user-menu li.add:hover .list-button:before,
+    .user-menu li.add.is-hovered .list-button:before {
       background: #38ae6a;
     }
 
@@ -2013,6 +2046,7 @@ footer {
     }
 
     .user-menu > li.add:hover .user-menu-icon.icon-plus,
+    .user-menu > li.add.is-hovered .user-menu-icon.icon-plus,
     .user-menu > li.add.active .user-menu-icon.icon-plus {
       fill: white;
     }
@@ -3425,7 +3459,6 @@ footer {
 
       .attachment-name {
         margin-right: 5px;
-        word-break: break-all;
         @extend .u-highlight;
       }
 
@@ -4052,7 +4085,7 @@ footer {
   border-radius: 0;
   border: 1px solid hsl(0,0%,90%);
   box-shadow: none;
-  color: hsl(206,7%,28%);
+  color: hsl(60,1%,34%);
   word-wrap: break-word;
 }
 
@@ -4079,6 +4112,7 @@ footer {
 
   .modal-body {
     padding: 0 23px;
+    word-break: normal;
   }
 
   .modal-footer {
@@ -4975,7 +5009,6 @@ label + .wizard-buttonList {
   }
 
   .name {
-    word-break: break-all;
     @extend .u-highlight;
   }
 }
