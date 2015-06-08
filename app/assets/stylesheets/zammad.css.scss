@@ -20,6 +20,7 @@ body {
   height: 100%;
   color: hsl(198,19%,72%);
   word-break: break-all;
+  display: flex;
 }
 
 p {
@@ -51,8 +52,8 @@ blockquote {
 
 #app {
   display: flex;
+  flex: 1;
   min-width: $minWidth;
-  height: 100%;
 }
 
 .u-unclickable {
@@ -4067,7 +4068,7 @@ footer {
   }
 
 #app.switchBackToUserSpace {
-  top: 45px;
+  margin-top: 45px;
 }
 
 .modal {
