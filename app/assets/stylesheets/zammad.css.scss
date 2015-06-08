@@ -1637,17 +1637,20 @@ footer {
     border-bottom-color: rgba(240, 250, 255, .08);
   }
 
-  .main-navigation > li.active > a {
+  .main-navigation > li.active > a,
+  .main-navigation > li.is-hovered > a {
     background: none;
     color: white;
   }
 
   .main-navigation > li.active .nav-icon,
-  .main-navigation > li.active .dropdown-icon {
+  .main-navigation > li.active .dropdown-icon,
+  .main-navigation > li.is-hovered .nav-icon {
     fill: currentColor;
   }
 
-  .main-navigation li.active > a {
+  .main-navigation li.active > a,
+  .main-navigation li.is-hovered > a {
     background: #389ed9;
   }
 

@@ -938,6 +938,20 @@ class cluesRef extends App.ControllerContent
 
   clues: [
     {
+      container: '.search-holder'
+      headline: 'Suche'
+      text: 'Um alles zu finden nutze den <kbd>*</kbd>-Platzhalter'
+    }
+    {
+      container: '.user-menu'
+      headline: 'Erstellen'
+      text: 'Hier kannst du Tickets, Kunden und Organisationen anlegen.'
+      actions: [
+        'click .add .js-action',
+        'hover .add'
+      ]
+    }
+    {
       container: '.user-menu'
       headline: 'Persönliches Menü'
       text: 'Hier findest du den Logout, den Weg zu deinen Einstellungen und deinen Verlauf.'
@@ -947,17 +961,19 @@ class cluesRef extends App.ControllerContent
       ]
     }
     {
-      container: '.search-holder'
-      headline: 'Suche'
-      text: 'Um alles zu finden nutze den <kbd>*</kbd>-Platzhalter'
-    },
-    {
-      container: '.user-menu'
-      headline: 'Erstellen'
-      text: 'Hier kannst du Tickets, Kunden und Organisationen anlegen.'
+      container: '.main-navigation .overviews'
+      headline: 'Übersichten'
+      text: 'Hier findest du eine Liste aller Tickets.'
       actions: [
-        'click .add .js-action',
-        'hover .add'
+        'hover'
+      ]
+    }
+    {
+      container: '.main-navigation .dashboard'
+      headline: 'Dashboard'
+      text: 'Hier siehst du auf einem Blick ob sich alle Agenten an die Spielregeln halten.'
+      actions: [
+        'hover'
       ]
     }
   ]
@@ -1102,7 +1118,6 @@ class cluesRef extends App.ControllerContent
 
     if moveArrow
       parameter = if position is 'above' or position is 'below' then 'left' else 'top'
-      console.log("move arrow", position, parameter, moveArrow)
       modalElement.find('.js-arrow').css(parameter, moveArrow)
 
   getVisibleBoundingBox: (el) ->
@@ -1144,12 +1159,18 @@ class cluesRef extends App.ControllerContent
 
   perform: (actions, container) ->
     for action in actions
-      eventName = action.substr 0, action.indexOf(' ')
-      selector = action.substr action.indexOf(' ') + 1
+      if action.indexOf(" ") < 0
+        # 'click'
+        eventName = action
+        target = container
+      else
+        # 'click .target'
+        eventName = action.substr 0, action.indexOf(' ')
+        target = container.find( action.substr action.indexOf(' ') + 1 )
 
       switch eventName
-        when 'click' then container.find(selector).trigger('click')
-        when 'hover' then container.find(selector).toggleClass('is-hovered')
+        when 'click' then target.trigger('click')
+        when 'hover' then target.toggleClass('is-hovered')
 
 App.Config.set( 'layout_ref/clues', cluesRef, 'Routes' )
 
