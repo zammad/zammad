@@ -28,10 +28,14 @@ class SwitchToUserTest < TestCase
       :css     => '#app',
       :value   => 'zammad looks like',
     )
+    watch_for(
+      :css     => '#app .switchBackToUser',
+      :value   => 'Nicole',
+    )
     login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     assert_equal(login, 'nicole.braun@zammad.org')
 
-    click( css: '#app .js-close' )
+    click( css: '#app .switchBackToUser .js-close' )
 
     login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     assert_equal(login, 'master@example.com')
