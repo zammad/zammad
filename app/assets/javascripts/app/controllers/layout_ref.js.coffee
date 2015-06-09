@@ -943,7 +943,7 @@ App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
 
 
 class cluesRef extends App.ControllerContent
-  
+
   clues: [
     {
       container: '.search-holder'
@@ -1270,6 +1270,17 @@ class adminPlaceholderRef extends App.ControllerContent
     @html App.view('layout_ref/admin_placeholder')()
 
 App.Config.set( 'layout_ref/admin_placeholder', adminPlaceholderRef, 'Routes' )
+
+class userListRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/user_list')()
+
+App.Config.set( 'layout_ref/user_list', userListRef, 'Routes' )
 
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

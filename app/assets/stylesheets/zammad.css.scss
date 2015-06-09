@@ -279,6 +279,18 @@ span[data-tooltip]:hover:before {
     padding-left: 12px;
     padding-right: 12px;
   }
+
+  &.btn--table {
+    padding: 4px 9px;
+    font-weight: 300;
+    border: none;
+    margin: 6px 6px 0;
+    
+    .icon {
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
   
   &.is-disabled {
     pointer-events: none;
@@ -455,7 +467,6 @@ span[data-tooltip]:hover:before {
 }
 
 table {
-  table-layout: fixed;
 }
 
 .table {
@@ -484,7 +495,7 @@ table {
 }
 
 .table > tbody > tr > td {
-  padding: 10px 9px 9px;
+  padding: 9px;
   border: none;
   box-shadow: 0 1px rgba(0,0,0,.02);
 }

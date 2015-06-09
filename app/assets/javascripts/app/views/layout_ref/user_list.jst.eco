@@ -1,0 +1,207 @@
+<div class="sidebar NavBarAdmin">
+  <h2>Manage</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li class="active">
+      <a href="#manage/users">Users</a>
+    </li>
+
+    <li>
+      <a href="#manage/groups">Groups</a>
+    </li>
+
+    <li>
+      <a href="#manage/organizations">Organizations</a>
+    </li>
+
+    <li>
+      <a href="#manage/overviews">Overviews</a>
+    </li>
+
+    <li>
+      <a href="#manage/text_modules">TextModules</a>
+    </li>
+
+    <li>
+      <a href="#manage/slas">SLAs</a>
+    </li>
+
+    <li>
+      <a href="#manage/schedulers">Schedulers</a>
+    </li>
+
+    <li>
+      <a href="#manage/triggers">Triggers</a>
+    </li>
+  </ul>
+
+  <h2>Channels</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#channels/web">Web</a>
+    </li>
+
+    <li>
+      <a href="#channels/email">Email</a>
+    </li>
+
+    <li>
+      <a href="#channels/chat">Chat</a>
+    </li>
+
+    <li>
+      <a href="#channels/twitter">Twitter</a>
+    </li>
+
+    <li>
+      <a href="#channels/facebook">Facebook</a>
+    </li>
+  </ul>
+
+  <h2>Settings</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#settings/system">System</a>
+    </li>
+
+    <li>
+      <a href="#settings/security">Security</a>
+    </li>
+
+    <li>
+      <a href="#settings/import">Import</a>
+    </li>
+
+    <li>
+      <a href="#settings/ticket">Ticket</a>
+    </li>
+  </ul>
+
+  <h2>System</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#system/package">Packages</a>
+    </li>
+
+    <li>
+      <a href="#system/object_manager">Objects</a>
+    </li>
+
+    <li>
+      <a href="#system/translation">Translations</a>
+    </li>
+
+    <li>
+      <a href="#system/maintenance">Maintenance</a>
+    </li>
+
+    <li>
+      <a href="#system/sessions">Sessions</a>
+    </li>
+  </ul>
+</div>
+
+<div class="main flex">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1>Users <small>Management</small></h1>
+    </div>
+
+    <div class="page-header-meta">
+      <a class="btn btn--success" data-type="new">New User</a>
+    </div>
+  </div>
+
+  <div class="userSearch vertical center">
+    <input class="js-search form-control flex" name="search" placeholder="Search for users" type="search">
+  </div>
+
+  <div class="userSearch horizontal">
+    <div class="userSearch-label">
+      Roles:
+    </div>
+
+    <div class="tabs tabs-wide horizontal">
+      <div class="tab active" data-id="1">
+        Admin
+      </div>
+
+      <div class="tab active" data-id="2">
+        Agent
+      </div>
+
+      <div class="tab active" data-id="3">
+        Customer
+      </div>
+    </div>
+  </div>
+
+  <div class="table-overview">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Login</th>
+
+          <th>Firstname</th>
+
+          <th>Lastname</th>
+
+          <th>Switch to</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="item" data-id="3" data-position="1" style="cursor: pointer;">
+          <td><span>mail@felixniklas.de</span></td>
+
+          <td><span>Felix</span></td>
+
+          <td><span>Niklas</span></td>
+
+          <td class="no-padding">
+            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+          </td>
+        </tr>
+
+        <tr class="item" data-id="6" data-position="3" style="cursor: pointer;">
+          <td><span>hans@huber.com</span></td>
+
+          <td><span>Hans</span></td>
+
+          <td><span>Huber2</span></td>
+
+          <td class="no-padding">
+            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+          </td>
+        </tr>
+
+        <tr class="item" data-id="2" data-position="4" style="cursor: pointer;">
+          <td><span>nicole.braun@zammad.org</span></td>
+
+          <td><span>Nicole</span></td>
+
+          <td><span>Braun</span></td>
+
+          <td class="no-padding">
+            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+          </td>
+        </tr>
+
+        <tr class="item" data-id="7" data-position="6" style="cursor: pointer;">
+          <td><span>roberto@blanko.org</span></td>
+
+          <td><span>Roberto</span></td>
+
+          <td><span>Blanko</span></td>
+
+          <td class="no-padding">
+            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
