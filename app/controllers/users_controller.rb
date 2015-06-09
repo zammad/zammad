@@ -308,6 +308,68 @@ class UsersController < ApplicationController
     }
   end
 
+  # @path       [GET] /users/recent
+  #
+  # @tag Search
+  # @tag User
+  #
+  # @summary          Recent creates Users.
+  # @notes            Recent creates Users.
+  #
+  # @parameter        limit           [Integer]       The limit of search results.
+  # @parameter        role_ids(multi) [Array<String>] A list of Role identifiers to which the Users have to be allocated to.
+  # @parameter        full            [Boolean]       Defines if the result should be
+  #                                                   true: { user_ids => [1,2,...], assets => {...} }
+  #                                                   or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
+  #
+  # @response_message 200 [Array<User>] A list of User records matching the search term.
+  # @response_message 401               Invalid session.
+  def recent
+
+    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN)
+      response_access_deny
+      return
+    end
+
+    # do query
+    if params[:role_ids] && !params[:role_ids].empty?
+      user_all = User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
+    else
+      user_all = User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
+    end
+
+
+    # build result list
+    if !params[:full]
+      users = []
+      user_all.each { |user|
+        realname = user.firstname.to_s + ' ' + user.lastname.to_s
+        if user.email && user.email.to_s != ''
+          realname = realname + ' <' + user.email.to_s + '>'
+        end
+        a = { id: user.id, label: realname, value: realname }
+        users.push a
+      }
+
+      # return result
+      render json: users
+      return
+    end
+
+    user_ids = []
+    assets   = {}
+    user_all.each { |user|
+      assets = user.assets(assets)
+      user_ids.push user.id
+    }
+
+    # return result
+    render json: {
+      assets: assets,
+      user_ids: user_ids.uniq,
+    }
+  end
+
   # @path       [GET] /users/history/{id}
   #
   # @tag History

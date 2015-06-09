@@ -30,8 +30,10 @@ class Index extends App.Controller
         e.preventDefault()
         $(e.target).toggleClass('active')
         term = @searchInput.val().trim()
-        return if !term
-        @delay( @search, 220, 'search' )
+        if term
+          @delay( @search, 220, 'search' )
+          return
+        @recent()
     )
 
     # start search
@@ -42,6 +44,9 @@ class Index extends App.Controller
       @term = term
       @delay( @search, 220, 'search' )
     )
+
+    # show last 20 users
+    @recent()
 
   renderResult: (user_ids = []) ->
 
@@ -126,6 +131,28 @@ class Index extends App.Controller
       data:
         term:  @term
         limit: 140
+        role_ids: role_ids
+        full:  1
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # load assets
+        App.Collection.loadAssets( data.assets )
+
+        @renderResult(data.user_ids)
+    )
+
+  recent: =>
+    role_ids = []
+    @$('.tab.active').each( (i,d) ->
+      role_ids.push $(d).data('id')
+    )
+    App.Ajax.request(
+      id:    'search'
+      type:  'GET'
+      url:   @apiPath + '/users/recent'
+      data:
+        limit: 40
         role_ids: role_ids
         full:  1
       processData: true,
