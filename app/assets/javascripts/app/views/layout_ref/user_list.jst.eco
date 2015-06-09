@@ -115,8 +115,9 @@
     </div>
   </div>
 
-  <div class="userSearch vertical center">
-    <input class="js-search form-control flex" name="search" placeholder="Search for users" type="search">
+  <div class="searchfield">
+    <svg class="icon icon-magnifier"><use xlink:href="#icon-magnifier" /></svg>
+    <input class="js-search form-control" name="search" placeholder="Search for users" type="search">
   </div>
 
   <div class="userSearch horizontal">

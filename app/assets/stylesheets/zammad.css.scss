@@ -254,15 +254,12 @@ span[data-tooltip]:hover:before {
   transition: transform 300ms 1.5s cubic-bezier(0.34,1.6,0.71,1), opacity 300ms 1.5s;
 }
 
-.textarea::-webkit-input-placeholder,
-.form-control::-webkit-input-placeholder,
-.token-input::-webkit-input-placeholder {    color: hsl(0,0%,80%); }
-.textarea::-moz-placeholder,
-.form-control::-moz-placeholder,
-.token-input::-moz-placeholder { opacity: 1; color: hsl(0,0%,80%); }
-.textarea:-ms-input-placeholder,
-.form-control:-ms-input-placeholder,
-.token-input:-ms-input-placeholder {         color: hsl(0,0%,80%); }
+.textarea::placeholder,
+.form-control::placeholder,
+.token-input::placeholder {
+  color: hsl(0,0%,80%);
+  opacity: 1;
+}
 
 .btn,
 .btn:hover,
@@ -898,6 +895,33 @@ textarea,
     padding: 2px;
     font-size: 13px;
   }
+
+.searchfield {
+  position: relative;
+  margin-bottom: 20px;
+  
+  .icon {
+    left: 9px;
+    top: 6px;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    fill: hsl(60,1%,61%);
+  }
+
+  input[type=search] {
+    appearance: textfield;
+    line-height: 30px;
+    height: 30px;
+    border-radius: 19px;
+    padding: 0 17px 0 34px;
+  }
+
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+}
 
 .content {
   overflow: auto;
@@ -4452,10 +4476,6 @@ footer {
 .checkbox.form-group input[type=checkbox] {
   margin-top: 3px;
   vertical-align: bottom;
-}
-
-.userSearch {
-  margin-bottom: 20px;
 }
 
 .userSearch-label {
