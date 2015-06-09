@@ -943,7 +943,7 @@ App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
 
 
 class cluesRef extends App.ControllerContent
-
+  
   clues: [
     {
       container: '.search-holder'
@@ -986,7 +986,12 @@ class cluesRef extends App.ControllerContent
     }
   ]
 
+  elements:
+    '.js-positionOrigin': 'modalWindow'
+    '.js-backdrop':       'backdrop'
+
   events:
+    'click': 'stopPropagation'
     'click .js-next': 'next'
     'click .js-previous': 'previous'
     'click .js-close': 'close'
@@ -1006,6 +1011,9 @@ class cluesRef extends App.ControllerContent
     @position = 0
     @render()
 
+  stopPropagation: (event) ->
+    event.stopPropagation()
+
   next: (event) =>
     event.stopPropagation()
     @navigate 1
@@ -1017,28 +1025,43 @@ class cluesRef extends App.ControllerContent
   close: =>
     @cleanUp()
     @options.onComplete()
+    @remove()
 
-  navigate: (direction) ->
-    @cleanUp()
-    @position += direction
-
-    if @position < @clues.length
-      @render()
-    else
-      @options.onComplete()
-
-  cleanUp: ->
-    clue = @clues[@position]
-    container = $(clue.container)
-    container.removeClass('selected-clue')
-
-    # undo click perform by doing it again
-    if clue.actions
-      @perform clue.actions, container
-
+  remove: ->
     @$('.modal').remove()
 
+  navigate: (direction) ->
+    @cleanUp =>
+      @position += direction
+
+      if @position < @clues.length
+        @showClue()
+      else
+        @options.onComplete()
+        @remove()
+
+  cleanUp: (callback) ->
+    @hideWindow =>
+      clue = @clues[@position]
+      container = $(clue.container)
+      container.removeClass('selected-clue')
+
+      # undo click perform by doing it again
+      if clue.actions
+        @perform clue.actions, container
+
+      callback()
+
   render: ->
+    @html App.view('layout_ref/clues')
+    @backdrop.velocity
+      properties:
+        opacity: [1, 0]
+      options:
+        duration: 300
+        complete: @showClue
+
+  showClue: =>
     clue = @clues[@position]
     container = $(clue.container)
     container.addClass('selected-clue')
@@ -1054,20 +1077,47 @@ class cluesRef extends App.ControllerContent
       x: boundingBox.left + boundingBox.width/2
       y: boundingBox.top + boundingBox.height/2
 
-    @html App.view('layout_ref/clues')
+    @modalWindow.html App.view('layout_ref/clue_content')
       headline: clue.headline
       text: clue.text
-      width: boundingBox.width
-      height: boundingBox.height
-      center: center
       position: @position
       max: @clues.length
 
     @placeWindow(boundingBox)
 
+    @backdrop.velocity
+      properties:
+        translateX: center.x
+        translateY: center.y
+        translateZ: 0
+      options:
+        duration: 300
+        complete: @showWindow
+
+  showWindow: =>
+    @modalWindow.velocity
+      properties: 
+        scale: [1, 0.2]
+        opacity: [1, 0]
+      options:
+        duration: 300
+        easing: [0.34,1.61,0.7,1]
+
+  hideWindow: (callback) =>
+    @modalWindow.velocity
+      properties: 
+        scale: [0.2, 1]
+        opacity: 0
+      options:
+        duration: 200
+        complete: callback
+
+
   placeWindow: (target) ->
-    modalElement = @$('.js-positionOrigin')
-    modal = modalElement.get(0).getBoundingClientRect()
+    # reset scale in order to get correct measurements
+    $.Velocity.hook(@modalWindow, 'scale', 1)
+
+    modal = @modalWindow.get(0).getBoundingClientRect()
     position = ''
     left = 0
     top = 0
@@ -1117,16 +1167,43 @@ class cluesRef extends App.ControllerContent
       moveArrow = modal.height/2 + maxHeight - (top + modal.height)
       top = maxHeight - modal.height
 
-    # show window
-    modalElement
-      .addClass "is-visible is-#{ position }"
-      .css
-        'left': left
-        'top': top
+    transformOrigin = @getTransformOrigin(modal, position)
 
     if moveArrow
       parameter = if position is 'above' or position is 'below' then 'left' else 'top'
-      modalElement.find('.js-arrow').css(parameter, moveArrow)
+      # move arrow
+      @modalWindow.find('.js-arrow').css(parameter, moveArrow)
+
+      # adjust transform origin
+      if position is 'above' or position is 'below'
+        transformOrigin.x = moveArrow
+      else
+        transformOrigin.y = moveArrow
+
+    # place window
+    @modalWindow
+      .attr 'data-position', position
+      .css
+        left: left
+        top: top
+        transformOrigin: "#{transformOrigin.x}px #{transformOrigin.y}px"
+
+  getTransformOrigin: (modal, position) ->
+    positionDictionary =
+      above:
+        x: modal.width/2
+        y: modal.height + @transformOriginPadding
+      below:
+        x: modal.width/2
+        y: -@transformOriginPadding
+      left:
+        x: modal.width + @transformOriginPadding
+        y: modal.height/2
+      right:
+        x: -@transformOriginPadding
+        y: modal.height/2
+
+    return positionDictionary[position]
 
   getVisibleBoundingBox: (el) ->
     ###

@@ -930,16 +930,17 @@ textarea,
   
   .modal-backdrop {
     bottom: 0;
+    width: 200%;
+    height: 200%;
+    left: -100%;
+    top: -100%;
+    background: radial-gradient(hsla(202,68%,54%,0.1), hsla(202,68%,54%,.9));
   }
 
   .modal-spacer {
     position: absolute;
     opacity: 0;
     padding: 18px;
-    
-    &.is-visible {
-      opacity: 1;
-    }
   }
 
   .modal-arrow {
@@ -953,18 +954,18 @@ textarea,
     transform: rotate(45deg);
   }
 
-  .modal-spacer.is-above .modal-arrow {
+  .modal-spacer[data-position="above"] .modal-arrow {
     left: 50%;
     top: 100%;
     background: hsl(210,5%,97%);
   }
 
-  .modal-spacer.is-below .modal-arrow {
+  .modal-spacer[data-position="below"] .modal-arrow {
     left: 50%;
     top: 0;
   }
 
-  .modal-spacer.is-left .modal-arrow {
+  .modal-spacer[data-position="left"] .modal-arrow {
     left: 100%;
     top: 50%;
   }
@@ -1007,10 +1008,11 @@ textarea,
 }
 
 kbd {
-  background: hsl(200,8%,21%);
+  background: hsl(200,8%,90%);
   border-radius: 3px;
-  box-shadow: 0 1px 1px black;
-  color: white;
+  border: 1px solid hsl(240,7%,77%);
+  box-shadow: 0 1px rgba(0,0,0,.08);
+  color: hsl(240,7%,37%);
   display: inline-block;
   font-size: 12px;
   margin: 0 1px;
