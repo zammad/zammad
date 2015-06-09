@@ -669,3 +669,26 @@ class App.UpdateTastbar extends App.Controller
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
+
+class App.ControllerWidgetPermanent extends App.Controller
+  constructor: (params) ->
+    if params.el
+      params.el.append('<div id="' + params.key + '"></div>')
+      params.el = ("##{params.key}")
+
+    super(params)
+
+class App.ControllerWidgetOnDemand extends App.Controller
+  constructor: (params) ->
+    params.el = $("##{params.key}")
+    super
+
+  element: =>
+    $("##{@key}")
+
+  html: (raw) =>
+
+    # check if parent exists
+    if !$("##{@key}").get(0)
+      $('#app').before("<div id=\"#{@key}\" class=\"#{@className}\"></div>")
+    $("##{@key}").html raw

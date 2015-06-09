@@ -1,4 +1,4 @@
-class App.Navigation extends App.Controller
+class App.Navigation extends App.ControllerWidgetPermanent
   className: 'navigation vertical'
 
   constructor: ->

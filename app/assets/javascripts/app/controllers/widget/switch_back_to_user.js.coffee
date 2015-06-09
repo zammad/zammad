@@ -1,13 +1,14 @@
-class Widget extends App.Controller
+class Widget extends App.ControllerWidgetOnDemand
   className: 'switchBackToUser'
-  events:
-    'click    .js-close':    'switchBack'
-
   constructor: ->
     super
 
     # start widget
     @bind 'app:ready', =>
+      @render()
+
+    # e. g. if language has chnaged
+    @bind 'ui:rerender', =>
       @render()
 
     # remove widget
@@ -19,13 +20,15 @@ class Widget extends App.Controller
 
     # if no switch to user is active
     if !App.Config.get('switch_back_to_possible') || !App.Session.get()
-      @el.html('')
-      $('#app').removeClass('switchBackToUserSpace')
+      @element().remove()
       return
 
     # show switch back widget
     @html App.view('widget/switch_back_to_user')()
-    $('#app').addClass('switchBackToUserSpace')
+    console.log('@el', @element())
+    @element().on('click', '.js-close', (e) =>
+      @switchBack(e)
+    )
 
   switchBack: (e) =>
     e.preventDefault()
@@ -33,6 +36,5 @@ class Widget extends App.Controller
     $('#app').hide().attr('style', 'display: none!important')
     App.Auth._logout()
     window.location = App.Config.get('api_path') + '/sessions/switch_back'
-
 
 App.Config.set( 'switch_back_to_user', Widget, 'Widgets' )

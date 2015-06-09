@@ -1,6 +1,5 @@
-class Widget extends App.Controller
+class Widget
   constructor: ->
-    super
 
     # bind on key down
     # if ctrl+shift+t is pressed, enable translation_inline and fire ui:rerender

@@ -35,21 +35,23 @@ class App.Run extends App.Controller
   setupWidget: (config, event, el) ->
 
     # start widgets
-    App.Event.trigger( event + ':init')
-    widgets = App.Config.get( config )
+    App.Event.trigger(event + ':init')
+    widgets = App.Config.get(config)
     if widgets
       for key, widget of widgets
-        el.append('<div id="' + key + '"></div>')
-        new widget( el: el.find("##{key}") )
-    App.Event.trigger( event + ':ready')
+        new widget(
+          el:  el
+          key: key
+        )
+    App.Event.trigger(event + ':ready')
 
-class App.Content extends App.Controller
+class App.Content extends App.ControllerWidgetPermanent
   className: 'content flex horizontal'
 
   constructor: ->
     super
 
-    Routes = @Config.get( 'Routes' )
+    Routes = @Config.get('Routes')
     for route, callback of Routes
       do (route, callback) =>
         @route(route, (params) ->
@@ -88,11 +90,11 @@ class App.Content extends App.Controller
           # execute controller
           controller = (params) =>
             params.el = @el
-            new callback( params )
-          controller( params )
+            new callback(params)
+          controller(params)
 
           # scroll to top / remember last screen position
-#          @scrollTo( 0, 0, 100 )
+#          @scrollTo(0, 0, 100)
         )
 
     Spine.Route.setup()

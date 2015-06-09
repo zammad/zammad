@@ -1,4 +1,4 @@
-class Widget extends App.Controller
+class Widget extends App.ControllerWidgetPermanent
   events:
     'submit   #chat_form':          'submitMessage'
     'focusin  [name=chat_message]': 'focusIn'

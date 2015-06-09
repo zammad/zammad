@@ -1,32 +1,30 @@
-class App.Notify extends Spine.Controller
+class App.Notify extends App.ControllerWidgetPermanent
   events:
     'click .alert': 'destroy'
 
   constructor: ->
     super
 
-    App.Event.bind 'notify', (data) =>
+    @bind 'notify', (data) =>
       @render(data)
 
-    App.Event.bind 'notify:removeall', =>
+    @bind 'notify:removeall', =>
       @log 'notify:removeall', @
       @destroyAll()
 
-    App.Event.bind 'notifyDesktop', (data) =>
+    @bind 'notifyDesktop', (data) =>
       if !data['icon']
         data['icon'] = 'unknown'
       notify.createNotification( data.msg, data )
 
     # request desktop notification after login
-    App.Event.bind 'auth', (data) ->
+    @bind 'auth', (data) ->
       if !_.isEmpty(data)
         notify.requestPermission()
 
     notify.config( pageVisibility: false )
 
   render: (data) ->
-#    notify = App.view('notify')(data: data)
-#    @append( notify )
 
     # map noty naming
     if data['type'] is 'info'
@@ -62,10 +60,8 @@ class App.Notify extends Spine.Controller
 
   destroy: (e) ->
     e.preventDefault()
-#    $(e.target).parents('.alert').remove();
 
   destroyAll: ->
     $.noty.closeAll()
-#    $(@el).find('.alert').remove();
 
 App.Config.set( 'notify', App.Notify, 'Widgets' )
