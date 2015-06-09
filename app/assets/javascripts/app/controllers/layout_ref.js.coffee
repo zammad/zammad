@@ -1192,10 +1192,10 @@ class cluesRef extends App.ControllerContent
     positionDictionary =
       above:
         x: modal.width/2
-        y: modal.height + @transformOriginPadding
+        y: modal.height
       below:
         x: modal.width/2
-        y: -@transformOriginPadding
+        y: 0
       left:
         x: modal.width + @transformOriginPadding
         y: modal.height/2
