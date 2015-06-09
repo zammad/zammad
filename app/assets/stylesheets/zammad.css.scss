@@ -2429,6 +2429,7 @@ footer {
     min-height: 100px;
     width: auto;
     min-width: 372px;
+    position: absolute;
     @extend .zIndex-5;
 
     &.fade {
