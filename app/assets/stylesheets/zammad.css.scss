@@ -471,7 +471,6 @@ table {
   @extend .u-textTruncate;
 }
 
-.table > thead:first-child > tr:first-child > th,
 .table > thead > tr > th {
   padding: 12px 9px 10px;
   border-bottom: none;
@@ -487,14 +486,16 @@ table {
 .table > tbody > tr > td {
   padding: 10px 9px 9px;
   border: none;
-  box-shadow: 0 1px rgba(0,0,0,.02) inset;
+  box-shadow: 0 1px rgba(0,0,0,.02);
 }
 
-.table > tbody > tr:first-child > td {
-  box-shadow: none;
+.table-hover > tbody > tr:hover > td {
+  background: white;
+  box-shadow: 
+    0 1px rgba(0,0,0,.02),
+    0 -1px rgba(0,0,0,.02);
 }
-
-.table-hover > tbody > tr:hover > td, 
+ 
 .table-hover > tbody > tr:hover > th {
   background: rgba(0,8,14,.015);
 }
