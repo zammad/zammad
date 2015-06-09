@@ -284,7 +284,7 @@ span[data-tooltip]:hover:before {
     padding: 4px 9px;
     font-weight: 300;
     border: none;
-    margin: 6px 6px 0;
+    margin: 5px 6px 0;
     
     .icon {
       vertical-align: middle;
@@ -4065,6 +4065,16 @@ footer {
   margin-top: 5px;
   margin-bottom: 20px;
   display: block;
+}
+
+.user-list {
+  tr:hover .switchView {
+    visibility: visible;
+  }
+  
+  .switchView {
+    visibility: hidden;
+  }
 }
 
 .switchBackToUser {

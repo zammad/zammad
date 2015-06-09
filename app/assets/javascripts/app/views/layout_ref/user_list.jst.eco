@@ -140,7 +140,7 @@
   </div>
 
   <div class="table-overview">
-    <table class="table table-hover">
+    <table class="user-list table table-hover">
       <thead>
         <tr>
           <th>Login</th>
@@ -149,7 +149,7 @@
 
           <th>Lastname</th>
 
-          <th>Switch to</th>
+          <th></th>
         </tr>
       </thead>
 
@@ -162,7 +162,7 @@
           <td><span>Niklas</span></td>
 
           <td class="no-padding">
-            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
 
@@ -174,7 +174,7 @@
           <td><span>Huber2</span></td>
 
           <td class="no-padding">
-            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
 
@@ -186,7 +186,7 @@
           <td><span>Braun</span></td>
 
           <td class="no-padding">
-            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
 
@@ -198,7 +198,7 @@
           <td><span>Blanko</span></td>
 
           <td class="no-padding">
-            <div class="btn btn--primary btn--table"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
       </tbody>
