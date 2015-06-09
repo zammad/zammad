@@ -2453,7 +2453,8 @@ footer {
   .popover--notifications {
     min-height: 100px;
     width: auto;
-    min-width: 372px;
+    max-width: 400px;
+    min-width: 350px;
     position: absolute;
     @extend .zIndex-5;
 
@@ -2479,9 +2480,9 @@ footer {
 
   .popover-notificationsHeader {
     display: flex;
-    align-items: flex-end;
-    padding-bottom: 22px;
+    padding-bottom: 8px;
     margin: 21px 17px 0;
+    @extend .vertical;
 
     .popover-title {
       @extend h1;
@@ -2498,11 +2499,10 @@ footer {
   .popover-notificationsMarkRead {
     @extend .btn;
     @extend .btn--subtle;
-    margin-left: auto;
-    padding: 5px 0 0 10px;
+    padding: 7px 0 0;
     
     &:hover {
-      padding: 5px 0 0 10px;
+      padding: 7px 0 0;
     }
   }
 
