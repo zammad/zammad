@@ -150,7 +150,7 @@
 
           <th>Lastname</th>
 
-          <th></th>
+          <th>Aktionen</th>
         </tr>
       </thead>
 
@@ -168,11 +168,11 @@
         </tr>
 
         <tr class="item" data-id="6" data-position="3" style="cursor: pointer;">
-          <td><span>hans@huber.com</span></td>
+          <td><span>hans.sebastian.hubermeyerschmidt@huber.com</span></td>
 
-          <td><span>Hans</span></td>
+          <td><span>Hans Sebastian</span></td>
 
-          <td><span>Huber2</span></td>
+          <td><span>Hubermeyerschmidt</span></td>
 
           <td class="no-padding">
             <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>

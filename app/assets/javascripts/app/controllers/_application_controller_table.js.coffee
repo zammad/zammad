@@ -55,6 +55,7 @@ class App.ControllerTable extends App.Controller
       groupBy:  'group'
       checkbox: false
       radio:    false
+      class:    'some-css-class'
       bindRow:
         events:
           'click':      rowClick
@@ -170,6 +171,7 @@ class App.ControllerTable extends App.Controller
       checkbox: data.checkbox
       radio:    data.radio
       groupBy:  data.groupBy
+      class:    data.class
       destroy:  destroy
       callbacks: data.callbackAttributes
     )

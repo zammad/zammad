@@ -1,4 +1,4 @@
-<table class="table table-hover">
+<table class="table table-hover <% if @class: %><%- @class %><% end %>">
   <thead>
     <tr>
     <% if @checkbox: %>
@@ -80,11 +80,13 @@
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
           <% end %>
-          
+          <% if item.raw: %>
+            <%- item.raw %>
+          <% else: %>
           <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
             <%- value %>
           </span>
-
+          <% end %>
           <% if item.link: %></a><% end %>
         <% end %>
       </td>

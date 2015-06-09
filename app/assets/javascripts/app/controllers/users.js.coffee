@@ -48,16 +48,19 @@ class Index extends App.Controller
     callbackHeader = (header) ->
       attribute =
         name:       'switch_to'
-        display:    'Switch to'
+        display:    'Action'
         translation: true
       header.push attribute
       header
 
     callbackAttributes = (value, object, attribute, header, refObject) ->
-      value = ' <svg class="icon-user"><use xlink:href="#icon-user"></use></svg>'
-      attribute.class  = ''
-      attribute.link   = '#'
-      attribute.title  = App.i18n.translateInline('Switch to')
+      text                  = App.i18n.translateInline('Show as user')
+      value                 = ' '
+      attribute.raw         = ' <span class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> ' + text + '</span>'
+      attribute.class       = ''
+      attribute.parentClass = 'no-padding'
+      attribute.link        = ''
+      attribute.title       = App.i18n.translateInline('Switch to')
       value
 
     switchTo = (id,e) =>
@@ -75,7 +78,7 @@ class Index extends App.Controller
         @renderResult(user_ids)
 
       new App.ControllerGenericEdit(
-        id:            item.id
+        id:       item.id
         pageData:
           title:     'Users'
           home:      'users'
@@ -96,6 +99,7 @@ class Index extends App.Controller
       el:       @$('.table-overview')
       model:    App.User
       objects:  users
+      class:    'user-list'
       callbackHeader:   callbackHeader
       callbackAttributes:
         switch_to: [
