@@ -69,7 +69,6 @@ blockquote {
 }
 
 .u-clickable {
-  pointer-events: auto;
   cursor: pointer;
   user-select: none;
 }
@@ -931,6 +930,7 @@ textarea,
 
 .selected-clue {
   @extend .zIndex-9;
+  pointer-events: none;
 }
 
 .modal--clue {
@@ -3689,6 +3689,7 @@ footer {
     position: relative;
     border-top: 1px solid hsl(202,12%,87%);
     @extend .u-clickable;
+    pointer-events: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4849,7 +4850,6 @@ label + .wizard-buttonList {
     justify-content: center;
     border-radius: 100%;
     box-shadow: 0 1px 5px rgba(0,0,0,.05);
-    
     @extend .u-clickable;
 
     svg {
