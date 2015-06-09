@@ -463,6 +463,7 @@ span[data-tooltip]:hover:before {
 }
 
 table {
+  table-layout: fixed;
 }
 
 .table {
@@ -4093,6 +4094,8 @@ footer {
 }
 
 .user-list {
+  table-layout: auto;
+
   tr:hover .switchView {
     visibility: visible;
   }
@@ -4484,6 +4487,10 @@ footer {
 
 .userSearch .tab:not(.active) {
   background: white;
+}
+
+.userSearch {
+  margin: 0 0 20px;
 }
 
 .userSearch .tabs {
