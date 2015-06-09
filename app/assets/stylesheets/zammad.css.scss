@@ -21,6 +21,7 @@ body {
   color: hsl(198,19%,72%);
   word-break: break-all;
   display: flex;
+  flex-direction: column;
 }
 
 p {
@@ -32,6 +33,10 @@ p {
 
 .u-highlight {
   color: #0F94D6;
+}
+
+.u-dontfold {
+  flex-shrink: 0;
 }
 
 a {
@@ -4048,7 +4053,6 @@ footer {
 }
 
 .switchBackToUser {
-  @extend .fit, .zIndex-7;
   display: flex;
   align-items: center;
   background: hsl(200,87%,45%);
@@ -4077,10 +4081,6 @@ footer {
       fill: white;
     }
   }
-
-#app.switchBackToUserSpace {
-  margin-top: 45px;
-}
 
 .modal {
   position: fixed;

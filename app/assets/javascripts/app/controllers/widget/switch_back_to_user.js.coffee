@@ -1,4 +1,5 @@
 class Widget extends App.Controller
+  className: 'switchBackToUser'
   events:
     'click    .js-close':    'switchBack'
 
