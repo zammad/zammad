@@ -19,14 +19,14 @@ body {
   background: hsl(210,17%,98%);
   height: 100%;
   color: hsl(198,19%,72%);
-  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   display: flex;
   flex-direction: column;
 }
 
 p {
   margin: 14px 0;
-  word-break: normal;
   color: hsl(60,1%,34%);
   max-width: 500px;
 }
@@ -2366,7 +2366,6 @@ footer {
   z-index: 1110;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
-  word-wrap: break-word;
 }
 
   .popover-body {
@@ -2768,7 +2767,6 @@ footer {
 
   .activity-message {
     padding-right: 0;
-    word-wrap: break-word;
   }
 
   .activity-time {
@@ -3058,8 +3056,6 @@ footer {
     border: 1px solid hsl(240,4%,95%);
     box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
     position: relative;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
     
     /* email css reset */
     p {
@@ -4154,7 +4150,6 @@ footer {
   border: 1px solid hsl(0,0%,90%);
   box-shadow: none;
   color: hsl(60,1%,34%);
-  word-wrap: break-word;
 }
 
   .modal-header {
@@ -4180,7 +4175,6 @@ footer {
 
   .modal-body {
     padding: 0 23px;
-    word-break: normal;
   }
 
   .modal-footer {
@@ -4561,7 +4555,7 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .zIndex-6, .tabsSidebar-sidebarSpacer;
+  @extend .zIndex-6;
   display: flex;
   align-items: center;
   background: white;
@@ -5018,7 +5012,6 @@ label + .wizard-buttonList {
 
 .profile-details {
   margin-left: -50px;
-  word-wrap: break-word;
 }
 
 .profile-ticketsPlaceholder {
