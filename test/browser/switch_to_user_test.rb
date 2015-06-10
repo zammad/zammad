@@ -20,26 +20,26 @@ class SwitchToUserTest < TestCase
     )
     sleep 3
 
+    @browser.mouse.move_to( @browser.find_elements( { css: '#content .table-overview tbody tr:first-child' } )[0] )
     click(
-      css: '#content .icon-user',
+      css: '#content .icon-switchView',
     )
 
     watch_for(
-      :css     => '#app',
+      :css     => '.switchBackToUser',
       :value   => 'zammad looks like',
     )
     watch_for(
-      :css     => '#app .switchBackToUser',
+      :css     => '.switchBackToUser',
       :value   => 'Nicole',
     )
     login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     assert_equal(login, 'nicole.braun@zammad.org')
 
-    click( css: '#app .switchBackToUser .js-close' )
+    click( css: '.switchBackToUser .js-close' )
 
     login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     assert_equal(login, 'master@example.com')
 
   end
-
 end
