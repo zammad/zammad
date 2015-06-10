@@ -59,7 +59,7 @@ class Index extends App.Controller
       header
 
     callbackAttributes = (value, object, attribute, header, refObject) ->
-      text                  = App.i18n.translateInline('Show as user')
+      text                  = App.i18n.translateInline("View from user's perspective")
       value                 = ' '
       attribute.raw         = ' <span class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> ' + text + '</span>'
       attribute.class       = ''
