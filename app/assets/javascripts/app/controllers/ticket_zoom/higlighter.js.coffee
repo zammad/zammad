@@ -89,7 +89,6 @@ class App.TicketZoomHighlighter extends App.Controller
 
   refreshObserver: =>
     articles = @el.closest('.content').find('.textBubble-content')
-    console.log('refreshObserver', articles)
     articles.off('mouseup', @onMouseUp)
     articles.on('mouseup', @onMouseUp) #future: touchend
 
@@ -99,21 +98,30 @@ class App.TicketZoomHighlighter extends App.Controller
       article_id = $(element).data('id')
       article    = App.TicketArticle.find(article_id)
       if article.preferences && article.preferences['highlight']
-        console.log('highlight', article.preferences['highlight'])
         @highlighter.deserialize(article.preferences['highlight'])
     )
 
   # the serialization creates one string for the entiery ticket
   # containing the offsets and the highlight classes
   #
-  # we have to check how it works with having open several tickets – it might break
+  # we have to check how it works with having open several tickets - it might break
   #
   # if classes can be changed in the admin interface
   # we have to watch out to not end up with empty highlight classes
   storeHighlights: (article_id) ->
+
+    # cleanup marker
+    data         = @highlighter.serialize()
+    marker       = "$article-content-#{article_id}"
+    items        = data.split('|')
+    newDataArray = [ items.shift() ]
+    for item in items
+      if item.substr(item.length-marker.length, item.length) is marker
+        newDataArray.push item
+    data = newDataArray.join('|')
+
+    # store
     article                          = App.TicketArticle.find(article_id)
-    data                             = @highlighter.serialize()
-    console.log('HI', article_id, data)
     article.preferences['highlight'] = data
     article.save()
 
@@ -132,7 +140,6 @@ class App.TicketZoomHighlighter extends App.Controller
       articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
   toggleHighlight: (e) =>
-    console.log('toggleHighlight', @isActive)
 
     if @isActive
       $(e.currentTarget).removeClass('active')
@@ -198,16 +205,16 @@ class App.TicketZoomHighlighter extends App.Controller
     if @highlighter.selectionOverlapsHighlight selection
       console.log('SELECTION EXISTS, REMOVED IT')
       @highlighter.unhighlightSelection()
-    else
-      console.log('NEW SELECTION')
+      selection.removeAllRanges()
+      @highlightDisable()
+      @storeHighlights(article_id)
+      return
+
+    if selection && selection.rangeCount > 0
+      console.log('NEW SELECTION', selection)
       @highlighter.highlightSelection @highlightClass,
         selection: selection
         containerElementId: article.get(0).id
-
-    # remove selection
-    selection.removeAllRanges()
-
-    @highlightDisable()
-
-    # save new selections
-    @storeHighlights(article_id)
+      selection.removeAllRanges()
+      @highlightDisable()
+      @storeHighlights(article_id)
