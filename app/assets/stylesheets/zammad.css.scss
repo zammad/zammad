@@ -2499,10 +2499,10 @@ footer {
   .popover-notificationsMarkRead {
     @extend .btn;
     @extend .btn--subtle;
-    padding: 7px 0 0;
-    
+    padding: 7px 0 0 2px;
+
     &:hover {
-      padding: 7px 0 0;
+      padding: 7px 0 0 2px;
     }
   }
 
