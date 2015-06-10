@@ -23,7 +23,7 @@ group :assets do
   gem 'eco'
 end
 
-gem 'autoprefixer-rails'
+gem 'autoprefixer-rails', '>=5.2'
 
 gem 'omniauth'
 gem 'omniauth-twitter'
