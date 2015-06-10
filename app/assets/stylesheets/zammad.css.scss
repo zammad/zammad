@@ -259,7 +259,6 @@ span[data-tooltip]:hover:before {
 .form-control::placeholder,
 .token-input::placeholder {
   color: hsl(0,0%,80%);
-  opacity: 1;
 }
 
 .btn,
@@ -1774,16 +1773,8 @@ footer {
       padding-bottom: 2px;
     }
 
-    .tasks-navigation .nav-tab-icon {
-
-      &.loading {
-        width: 10px;
-        height: 10px;
-      }
-
-      &.error {
-        transform: scale(0.85);
-      }
+    .tasks-navigation .nav-tab-icon .error {
+      transform: scale(0.85);
     }
 
   .nav-tab:hover {
@@ -2474,11 +2465,6 @@ footer {
     .popover-content {
       flex: 1;
       overflow-y: scroll;
-    }
-
-    .label {
-      height: 2000px;
-      display: block;
     }
 
     &.is-overflowing .popover-notificationsHeader {
@@ -3459,9 +3445,9 @@ footer {
       visibility: hidden;
     }
 
-    .recipient-list input::-webkit-input-placeholder {    color: #666; }
-    .recipient-list input::-moz-placeholder { opacity: 1; color: #666;  }
-    .recipient-list input:-ms-input-placeholder {         color: #666; }
+    .recipient-list input::placeholder { 
+      color: #666;
+    }
 
   .article-new .textBubble {
     border-color: #b3b3b3;
