@@ -7,7 +7,7 @@
   <h2>Ticket Article</h2>
 
   <div class="ticketZoom">
-    <div class="scrollPageHeader zIndex-9 horizontal center" 
+    <div class="scrollPageHeader tabsSidebar-sidebarSpacer" 
       data-anchor-target=".ticketZoom .page-header"
       data-128-top-bottom="transform: translateY(-64px);"
       data-64-top-bottom="transform: translateY(0px);"

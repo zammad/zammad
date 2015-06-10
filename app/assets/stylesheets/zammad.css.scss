@@ -3598,10 +3598,6 @@ footer {
   margin-right: 0;
 }
 
-.tabsSidebar-sidebarSpacer.is-closed .scrollPageHeader {
-  margin-right: 0;
-}
-
 .tabsSidebar-holder {
   overflow: hidden;
   position: relative;
@@ -4565,7 +4561,7 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .zIndex-6;
+  @extend .zIndex-6, .tabsSidebar-sidebarSpacer;
   display: flex;
   align-items: center;
   background: white;
@@ -4573,7 +4569,7 @@ footer {
   height: 64px;
   top: 0;
   left: $navigationWidth;
-  right: $sidebarWidth;
+  right: 0;
   padding: 0 22px;
   position: fixed;
   min-width: $minWidth - $navigationWidth - $sidebarWidth;
