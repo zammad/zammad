@@ -4088,8 +4088,7 @@ footer {
   display: block;
 }
 
-.user-list {
-  table-layout: auto;
+.table.user-list {
 
   tr:hover .switchView {
     visibility: visible;
@@ -4097,6 +4096,15 @@ footer {
   
   .switchView {
     visibility: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  // lame hardcoded width of this "View from users' perspective" button td
+  // i can't find another way to do it. It's not flexible. It sucks
+  .actionCell {
+    width: 250px;
   }
 }
 

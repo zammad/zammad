@@ -54,6 +54,7 @@ class Index extends App.Controller
       attribute =
         name:       'switch_to'
         display:    'Action'
+        className:  'actionCell'
         translation: true
       header.push attribute
       header
@@ -61,9 +62,9 @@ class Index extends App.Controller
     callbackAttributes = (value, object, attribute, header, refObject) ->
       text                  = App.i18n.translateInline("View from user's perspective")
       value                 = ' '
-      attribute.raw         = ' <span class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> ' + text + '</span>'
+      attribute.raw         = ' <span class="btn btn--primary btn--table switchView" title="' + text + '"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> ' + text + '</span>'
       attribute.class       = ''
-      attribute.parentClass = 'no-padding'
+      attribute.parentClass = 'actionCell no-padding'
       attribute.link        = ''
       attribute.title       = App.i18n.translateInline('Switch to')
       value

@@ -14,7 +14,7 @@
       <th style="width: 22px"></th>
     <% end %>
 <% for item in @header: %>
-      <th <% if item.style: %>style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
+      <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
 <% end %>
 <% if @destroy: %>
       <th><%- @T('Delete') %></th>
