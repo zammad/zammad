@@ -1,4 +1,4 @@
 <div class="flex fullscreenMessage">
-  <svg class="icon icon-error"><use xlink:href="#icon-diagonal-cross" /></svg>
+  <svg class="icon-error icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
   <h2><%- @T('Opps.. I\'m sorry, but you have insufficient rights to open this %s.', @objectName ) %></h2>
 </div>

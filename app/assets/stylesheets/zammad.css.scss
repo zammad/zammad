@@ -1808,12 +1808,19 @@ footer {
     align-items: center;
     justify-content: center;
     position: relative;
+    width: 16px;
   }
 
   .nav-tab-icon .icon {
     width: 16px;
     height: 16px;
     fill: #808080;
+  }
+
+  .nav-tab-icon .icon-diagonal-cross {
+    fill: #F35910;
+    width: 12px;
+    height: 12px;
   }
 
   .nav-tab-icon .modified-inner-circle {
