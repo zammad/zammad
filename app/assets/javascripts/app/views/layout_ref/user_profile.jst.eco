@@ -70,7 +70,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Micro-SIM doesn't work</div>
                 <div class="time">23 minutes ago</div>
               </div>
@@ -78,7 +78,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Superb Service!</div>
                 <div class="time">43 minutes ago</div>
               </div>
@@ -86,7 +86,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Print sheets strip_off_with_a_lot_of_text_in_the_headline</div>
                 <div class="time">1 hour ago</div>
               </div>
@@ -94,7 +94,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Block not properly wrought</div>
                 <div class="time">2 hour ago</div>
               </div>
@@ -108,7 +108,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Micro-SIM doesn't work</div>
                 <div class="time">23 minutes ago</div>
               </div>
@@ -116,7 +116,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Superb Service!</div>
                 <div class="time">43 minutes ago</div>
               </div>
@@ -124,7 +124,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Print sheets strip off with a lot of text in the headline</div>
                 <div class="time">1 hour ago</div>
               </div>
@@ -132,7 +132,7 @@
               <div class="icon-holder">
                 <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
               </div>
-              <div class="flex">
+              <div class="task-text">
                 <div class="name">Block not properly wrought</div>
                 <div class="time">2 hour ago</div>
               </div>
