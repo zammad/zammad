@@ -2744,7 +2744,7 @@ footer {
     position: relative;
     display: flex;
     flex: 1;
-    min-width: 0;
+    min-width: 0; /* Firefox workaround */
   }
 
   .activity-entry:not(:last-child) .activity-body:after {
@@ -2767,7 +2767,7 @@ footer {
 
   .activity-message {
     flex: 1;
-    min-width: 0;
+    min-width: 0; /* Firefox workaround */
   }
 
   .activity-time {
