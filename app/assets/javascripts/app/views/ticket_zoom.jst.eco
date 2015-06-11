@@ -1,12 +1,12 @@
 <div class="tabsSidebar-holder">
+  <div class="scrollPageHeader tabsSidebar-sidebarSpacer">
+    <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
+    <div class="ticket-title"></div>
+    <div class="highlighter"></div>
+    <div class="overview-navigator"></div>
+  </div>
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="ticketZoom">
-      <div class="scrollPageHeader tabsSidebar-sidebarSpacer">
-        <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
-        <div class="ticket-title"></div>
-        <div class="highlighter"></div>
-        <div class="overview-navigator"></div>
-      </div>
       <div class="ticketZoom-controls">
         <div class="highlighter"></div>
         <div class="overview-navigator"></div>
