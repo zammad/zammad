@@ -1,7 +1,7 @@
-<div class="activity-entry horizontal">
+<div class="activity-entry">
   <div class="activity-avatar js-avatar"></div>
-  <a href="<%- @item.link %>" class="activity-body flex horizontal">
-    <span class="activity-message flex">
+  <a href="<%- @item.link %>" class="activity-body">
+    <span class="activity-message">
       <span class="activity-text">
         <%= @item.created_by.displayName() %> <%- @T( @item.type ) %> <%- @T( @item.object_name ) %><% if @item.title: %> (<%= @item.title %>)<% end %>
       </span>

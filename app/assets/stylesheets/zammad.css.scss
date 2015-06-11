@@ -642,10 +642,6 @@ table {
   overflow-y: scroll;
 }
 
-.inactive {
-  color: #ddd !important;
-}
-
 /*
 #content > *:not(.active) {
   display: none !important;
@@ -2481,10 +2477,8 @@ footer {
   }
 
   .popover-notificationsHeader {
-    display: flex;
     padding-bottom: 8px;
     margin: 21px 17px 0;
-    @extend .vertical;
 
     .popover-title {
       @extend h1;
@@ -2500,8 +2494,11 @@ footer {
 
   .popover-notificationsMarkRead {
     @extend .btn;
-    @extend .btn--subtle;
+    cursor: pointer;
     padding: 7px 0 0 2px;
+    text-decoration: underline;
+    color: hsl(0,0%,77%);
+    display: block;
 
     &:hover {
       padding: 7px 0 0 2px;
@@ -2727,34 +2724,37 @@ footer {
     margin-right: 26px;
   }
 
-  .activity-entry.state--read {
-    opacity: 0.5;
+  .activity-entry {
+    display: flex;
+    
+    &.is-inactive {
+      opacity: 0.5;
+    }
   }
 
   .activity-avatar {
-    padding-top: 16px;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding: 16px 2px 0;
     margin-right: 10px;
+    flex-shrink: 0;
   }
-
-    .activity-avatar:hover .avatar {
-    }
 
   .activity-body {
     color: #444a4f;
     padding: 16px 0 16px 2px;
     position: relative;
+    display: flex;
+    flex: 1;
+    min-width: 0;
   }
 
-    .activity-body:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      right: 30px;
-      left: 8px;
-      border-bottom: 1px solid #f2f2f3;
-    }
+  .activity-entry:not(:last-child) .activity-body:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 30px;
+    left: 0;
+    border-bottom: 1px solid #f2f2f3;
+  }
 
   .activity-body:hover {
     color: #444a4f;
@@ -2766,7 +2766,8 @@ footer {
     }
 
   .activity-message {
-    padding-right: 0;
+    flex: 1;
+    min-width: 0;
   }
 
   .activity-time {
