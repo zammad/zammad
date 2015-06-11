@@ -2026,7 +2026,7 @@ footer {
     right: 0;
     bottom: 0;
     top: 53px;
-    z-index: 1002;
+    z-index: 900;
     display: none;
     overflow: scroll;
   }
@@ -2363,7 +2363,7 @@ footer {
   border: none;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
-  @extend .zIndex-9;
+  z-index: 900;
 }
 
   .popover-body {
@@ -4143,7 +4143,7 @@ footer {
 
 .modal {
   position: fixed;
-  @extend .zIndex-10;
+  z-index: 1000;
 }
 
 .modal-dialog {
