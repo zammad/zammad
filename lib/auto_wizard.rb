@@ -96,11 +96,11 @@ returns
         # lookup organization
         if user_data['organization'] && !user_data['organization'].empty?
           organization = Organization.find_by(name: user_data['organization'])
-          user_data.delete('organization')
           if organization
             user_data['organization_id'] = organization.id
           end
         end
+        user_data.delete('organization')
 
         user_data_symbolized = user_data.symbolize_keys.merge(
           {
