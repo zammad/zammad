@@ -1719,12 +1719,14 @@ footer {
 .tasks {
   background: #2c2d36;
   flex: 1;
+  overflow: auto;
 }
 
   .tasks.tasks--standalone {
     background: none;
     margin: 8px 0 0;
     padding: 0;
+    overflow: visible;
   }
 
     .tasks--standalone .task {
