@@ -2359,9 +2359,9 @@ footer {
   max-width: 9999px;
   border-radius: 0;
   border: none;
-  z-index: 1110;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
+  @extend .zIndex-9;
 }
 
   .popover-body {
@@ -4141,6 +4141,7 @@ footer {
 
 .modal {
   position: fixed;
+  @extend .zIndex-10;
 }
 
 .modal-dialog {
