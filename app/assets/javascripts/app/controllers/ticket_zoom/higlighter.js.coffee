@@ -36,7 +36,7 @@ class App.TicketZoomHighlighter extends App.Controller
   constructor: ->
     super
 
-    #@articles = @el.closest('.content').find('.textBubble-content')
+    return if !@isRole('Agent')
 
     rangy.init()
 
