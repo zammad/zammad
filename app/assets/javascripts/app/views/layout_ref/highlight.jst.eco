@@ -63,7 +63,7 @@
           </a>
       </ul>
     </div>
-    <div class="page-header horizontal">
+    <div class="page-header">
       <div class="flex vertical center">
         <span class="avatar unique user-popover size-50" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
         <div class="ticket-title">
@@ -274,15 +274,15 @@ Oliver<br></div>
               <div class="attachments">
                 <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
                 <h3>2 <%- @T('Attached Files') %></h3>
-                <div class="attachment horizontal">
+                <div class="attachment">
                   <div class="attachment-name u-highlight">midinotes_view.jpg</div>
                   <div class="attachment-size">35.5 kb</div>
                 </div>
-                <div class="attachment horizontal">
+                <div class="attachment">
                   <div class="attachment-name u-highlight">lyrics_I_Like_it_Loud.txt</div>
                   <div class="attachment-size">17.1 kb</div>
                 </div>
-                <div class="attachment horizontal">
+                <div class="attachment">
                   <div class="attachment-name u-highlight">something with very long line which is slonger as the container arount it if you can see it I wish you a very happy day.txt</div>
                   <div class="attachment-size">17.1 kb</div>
                 </div>

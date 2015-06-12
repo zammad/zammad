@@ -3522,6 +3522,7 @@ footer {
 
       .attachment-name {
         margin-right: 5px;
+        min-width: 0;
         @extend .u-highlight;
       }
 

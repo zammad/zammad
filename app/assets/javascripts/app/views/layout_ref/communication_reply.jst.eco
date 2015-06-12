@@ -16,14 +16,14 @@
           <div class="attachments"></div>
           
           <!-- <div>
-            <div class="attachment horizontal">
+            <div class="attachment">
               <div class="attachment-name u-highlight">sega-genesis-box.gif</div>
               <div class="attachment-size">2.4mb</div>
               <div class="attachment-delete js-delete align-right u-clickable">
                 <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Delete File') %>
               </div>
             </div>
-            <div class="attachment horizontal">
+            <div class="attachment">
               <div class="attachment-name u-highlight">license-key.txt</div>
               <div class="attachment-size">7kb</div>
               <div class="attachment-delete js-delete align-right u-clickable">
