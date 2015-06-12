@@ -93,7 +93,8 @@ class App.TicketZoom extends App.Controller
 
     App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
 
-    if !@highlighed
+    # inital load of highlights
+    if @highligher && !@highlighed
       @highlighed = true
       @highligher.loadHighlights()
 

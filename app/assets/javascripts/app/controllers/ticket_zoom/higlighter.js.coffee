@@ -94,6 +94,7 @@ class App.TicketZoomHighlighter extends App.Controller
 
   # for testing purposes the highlights get stored in localStorage
   loadHighlights: ->
+    return if !@isRole('Agent')
     @el.closest('.content').find('.textBubble-content').each( (index, element) =>
       article_id = $(element).data('id')
       article    = App.TicketArticle.find(article_id)
