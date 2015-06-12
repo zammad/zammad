@@ -3537,7 +3537,8 @@ footer {
         display: none;
         white-space: nowrap;
         margin-left: auto;
-        @extend .u-clickable;
+        cursor: pointer;
+        user-select: none;
       }
 
       .attachment:hover .attachment-delete {
@@ -3561,7 +3562,8 @@ footer {
       display: inline-block;
       overflow: hidden;
       vertical-align: bottom;
-      @extend .u-highlight, .u-clickable;
+      pointer-events: auto;
+      @extend .u-highlight;
     }
 
     .attachmentUpload {
