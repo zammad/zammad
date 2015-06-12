@@ -1735,8 +1735,14 @@ footer {
       display: flex;
     }
 
+    .tasks--standalone .task-text {
+      flex: 1;
+      min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
+    }
+
     .tasks--standalone .name {
       @extend .u-highlight, .u-textTruncate;
+      display: block;
     }
 
     .tasks--standalone .time {
@@ -2746,7 +2752,7 @@ footer {
     position: relative;
     display: flex;
     flex: 1;
-    min-width: 0; /* Firefox workaround */
+    min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
   }
 
   .activity-entry:not(:last-child) .activity-body:after {
@@ -2769,7 +2775,7 @@ footer {
 
   .activity-message {
     flex: 1;
-    min-width: 0; /* Firefox workaround */
+    min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
   }
 
   .activity-time {
@@ -5067,6 +5073,7 @@ label + .wizard-buttonList {
   flex-direction: column;
   flex: 1 1 50%;
   padding: 0 25px;
+  min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
 
   .tasks {
     margin-bottom: 10px;

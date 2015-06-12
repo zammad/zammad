@@ -8,7 +8,7 @@
       <div class="icon-holder">
         <svg class="<%- item.icon() %>"><use xlink:href="#icon-priority" /></svg>
       </div>
-      <div class="flex">
+      <div class="task-text">
         <a class="name ticket-popover" data-id="<%- item.id %>" href="#ticket/zoom/<%= item.id %>"><%= item.title %></a>
         <div class="time humanTimeFromNow" data-time="<%- item.created_at %>"></div>
       </div>
