@@ -26,12 +26,12 @@ class TaskbarSessionTest < TestCase
     match(
       browser: browser1,
       css: 'body',
-      value: 'Reload application',
+      value: 'Continue session',
     )
     match_not(
       browser: browser2,
       css: 'body',
-      value: 'Reload application',
+      value: 'Continue session',
     )
 
   end
@@ -60,12 +60,12 @@ class TaskbarSessionTest < TestCase
     match_not(
       browser: browser1,
       css: 'body',
-      value: 'Reload application',
+      value: 'Continue session',
     )
     match_not(
       browser: browser2,
       css: 'body',
-      value: 'Reload application',
+      value: 'Continue session',
     )
   end
 
