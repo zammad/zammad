@@ -40,11 +40,11 @@ class Widget extends App.Controller
           if data.taskbar_id isnt App.TaskManager.TaskbarId()
             @error = new App.SessionMessage(
               head:        'Session'
-              message:     'Session taken over... please reload page or work with other browser window.'
+              message:     App.i18n.translateInline('A new session with your account was created. This session will be stopped to prevent a conflict.')
               keyboard:    false
               backdrop:    true
               close:       false
-              button:      'Reload application'
+              button:      'Continue session'
               forceReload: true
             )
             @disconnectClient()

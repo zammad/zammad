@@ -162,7 +162,7 @@ class MaintenanceMessageTest < TestCase
     watch_for(
       browser: browser2,
       css: '.modal',
-      value: 'Reload application',
+      value: 'Continue session',
     )
 
     match_not(

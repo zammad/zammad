@@ -14,7 +14,7 @@ class Widget extends App.Controller
   showMessage: (message = {}) =>
     if message.reload
       @disconnectClient()
-      button = 'Reload application'
+      button = 'Continue session'
 
     # convert to html and linkify
     message.message = App.Utils.textCleanup( message.message )
