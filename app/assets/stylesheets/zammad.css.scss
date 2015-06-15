@@ -28,7 +28,6 @@ body {
 p {
   margin: 14px 0;
   color: hsl(60,1%,34%);
-  max-width: 500px;
 }
 
 .u-highlight {
@@ -3523,6 +3522,7 @@ footer {
 
       .attachment-name {
         margin-right: 5px;
+        min-width: 0;
         @extend .u-highlight;
       }
 
@@ -3538,7 +3538,8 @@ footer {
         display: none;
         white-space: nowrap;
         margin-left: auto;
-        @extend .u-clickable;
+        cursor: pointer;
+        user-select: none;
       }
 
       .attachment:hover .attachment-delete {
@@ -3562,7 +3563,8 @@ footer {
       display: inline-block;
       overflow: hidden;
       vertical-align: bottom;
-      @extend .u-highlight, .u-clickable;
+      pointer-events: auto;
+      @extend .u-highlight;
     }
 
     .attachmentUpload {
