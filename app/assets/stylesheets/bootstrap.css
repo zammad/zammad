@@ -233,9 +233,6 @@ th {
   .dropup > .btn > .caret {
     border-top-color: #000 !important;
   }
-  .label {
-    border: 1px solid #000;
-  }
   .table {
     border-collapse: collapse !important;
   }
@@ -1657,12 +1654,6 @@ legend {
   color: #333;
   border: 0;
   border-bottom: 1px solid #e5e5e5;
-}
-label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: bold;
 }
 input[type="search"] {
   -webkit-box-sizing: border-box;

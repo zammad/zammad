@@ -4,6 +4,7 @@
 
 
   <ul>
+    <li><a href="#layout_ref/sla">Sla Modal</a></li>
     <li><a href="#layout_ref/user_list">User List</a></li>
     <li><a href="#layout_ref/admin_placeholder">Admin Placeholder (Inline Tutorials)</a></li>
     <li><a href="#layout_ref/clues">First Steps (Clues)</a></li>

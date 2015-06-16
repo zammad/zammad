@@ -350,11 +350,12 @@ span[data-tooltip]:hover:before {
   }
 
   &.btn--text {
-    padding-left: 0;
-    padding-right: 0;
+    font-size: inherit;
+    padding: 0;
     color: hsl(203,65%,55%);
     border: none;
     background: none;
+    vertical-align: baseline;
     &:active {
       color: hsl(203,65%,45%);
     }
@@ -670,6 +671,13 @@ h3 {
   font-weight: 200;
   text-transform: uppercase;
   letter-spacing: 0.07em;
+  
+  .subtitle {
+    font-size: 12px;
+    text-transform: none;
+    color: hsl(0,0%,60%);
+    letter-spacing: initial;
+  }
 }
 
 h4 {
@@ -691,6 +699,18 @@ label,
   margin-bottom: 4px;
   text-align: left;
   padding: 0;
+}
+
+/* circumventing the label:not(.inline-label) selector because it's too strong */
+.inline-label {
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: inherit;
+  color: inherit;
+  letter-spacing: 0;
+  margin: 0;
+  text-transform: none;
+  display: inline;
 }
 
 fieldset {
@@ -785,6 +805,7 @@ input[type="checkbox"] {
 input[type=text],
 input[type=password],
 input[type=email],
+input[type=time],
 textarea,
 .form-control,
 .checkbox.form-group .checkbox {
@@ -803,6 +824,12 @@ textarea,
   box-shadow: none;
   outline: none;
   appearance: none;
+}
+
+input[type=time] {
+  width: auto;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
   .form-control:focus,
@@ -5168,6 +5195,157 @@ label + .wizard-buttonList {
     color: hsl(198, 19%, 72%);
     margin-top: 15px;
     font-size: 18px;
+  }
+}
+
+.horizontal-filters {
+  margin-bottom: 20px;
+}
+
+.horizontal-filter {
+  display: flex;
+  align-items: center;
+  background: hsl(197,20%,93%);
+  padding: 14px 10px;
+  border: 1px solid hsl(198,19%,86%);
+  
+  &:first-child {
+    border-radius: 5px 5px 0 0;
+  }
+  
+  &:last-child {
+    border-radius: 0 0 5px 5px;
+  }
+
+  &:only-child {
+    border-radius: 5px;
+  }
+  
+  & + .horizontal-filter {
+    border-top: 1px solid hsl(198,19%,87%);
+  }
+  
+  .horizontal-filter-body {
+    display: flex;
+    align-items: center;
+  }
+  
+  .controls,
+  input {
+    margin-right: 5px;
+  }
+
+  select, 
+  input {
+    border-color: hsl(198,19%,86%);
+  }
+  
+  input[type=text] {
+    width: auto;
+  }
+}
+
+.horizontal-filter-text {
+  margin-right: 5px;
+}
+
+.filter-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.filter-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid hsl(198,19%,86%);
+  border-radius: 100%;
+  background: white;
+  cursor: pointer;
+  
+  &:hover:not(.is-disabled) {
+    border-color: hsl(198,19%,83%);
+    
+    .icon {
+      fill: black;
+    }
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  &:not(:last-child) {
+    margin-right: 7px;
+  }
+  
+  .icon {
+    width: 13px;
+    height: 13px;
+    fill: hsl(0,0%,61%);
+  }
+}
+
+.filter-preview {
+  margin: 20px 0;
+}
+
+.week {
+  display: flex;
+  margin: 0 0 20px;
+}
+
+.day {
+  text-align: center;
+  border: 1px solid hsl(198,19%,86%);
+  
+  &:not(:last-child) {
+    border-right: none;
+  }
+
+  &:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+
+  &:last-child {
+    border-radius: 0 5px 5px 0;
+  }
+  
+  label {
+    text-align: center;
+  }
+}
+
+.day-name {
+  color: hsl(0,0%,33%);
+  text-transform: none;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.day-checkbox:not(:checked) + .day-times * {
+  visibility: hidden;
+}
+
+.day-times {
+  margin-top: 5px;
+  background: hsl(197,20%,93%);
+  
+  label {
+    color: hsl(0,0%,60%);
+  }
+  
+  .form-group {
+    padding: 7px;
+    margin: 0;
+    
+    &:not(:last-child) {
+      padding-bottom: 0;
+    }
   }
 }
 

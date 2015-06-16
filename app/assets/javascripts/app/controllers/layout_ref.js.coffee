@@ -1282,5 +1282,16 @@ class userListRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/user_list', userListRef, 'Routes' )
 
+class slaRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/sla')()
+
+App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
+
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
