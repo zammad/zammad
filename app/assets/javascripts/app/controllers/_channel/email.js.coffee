@@ -411,8 +411,8 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
 
 class App.ChannelEmailOutbound extends App.Controller
   events:
-    'change #_adapter':     'toggle'
-    'submit #mail_adapter': 'update'
+    'change [name="adapter"]': 'toggle'
+    'submit #mail_adapter':    'update'
 
   constructor: ->
     super
