@@ -78,7 +78,6 @@ class ArticleViewItem extends App.Controller
     # check if rerender is needed
     return if !@hasChanged(@article)
 
-    console.log('RERENDER', @ticket_article_id)
     # prepare html body
     if @article.content_type is 'text/html'
       @article['html'] = @article.body
