@@ -10,8 +10,9 @@
           <h1 class="modal-title">New Service Level Agreement (SLA)</h1>
         </div>
         <div class="modal-body">
-          <h2>Define Selector</h2>
-          <p>Create rules that single out the tickets for the Service Level Agreement.</p>
+          <h2>Selector</h2>
+          <p class="subtle">Create rules that single out the tickets for the Service Level Agreement.</p>
+          <h3>Filters</h3>
           <div class="horizontal-filters">
             <div class="horizontal-filter">
               <div class="horizontal-filter-body">
@@ -19,12 +20,13 @@
                   <div class="u-positionOrigin">
                     <select class="form-control" name="filter_attribute_1">
                       <optgroup label="Ticket">
+                        <option>Customer</option>
+                        <option>Owner</option>
                         <option>Number</option>
                         <option>Title</option>
                         <option>Group</option>
                         <option>State</option>
                         <option>Priority</option>
-                        <option>Owner</option>
                       </optgroup>
                       <optgroup label="Customer">
                         <option>Email</option>
@@ -68,7 +70,8 @@
             </div>
           </div>
           <div class="filter-preview">
-            <table class="table table-hover ">
+            <h3>Preview <span class="subtitle">matches <span class="u-highlight">5</span></span></h3>
+            <table class="table table-hover">
               <thead>
                 <tr>
                   <th style="width: 28px"></th>
@@ -188,7 +191,7 @@
             </table>
           </div>
 
-          <h2>Auto Attributes</h2>
+          <!--<h2>Auto Attributes</h2>
           <div class="horizontal-filters">
             <div class="horizontal-filter">
               <div class="horizontal-filter-body">
@@ -277,127 +280,119 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div>-->
 
           <h2>Schedule</h2>
           <h3>Business Hours <span class="subtitle">in European Central Time <a class="btn btn--text btn--subtle" href="#">(change)</a></span></h3>
-          <div class="week">
-            <div class="day">
-              <label class="day-name" for="day-monday">Mo</label>
-              <input class="day-checkbox" type="checkbox" id="day-monday" checked>
-              <div class="day-times">
-                <div class="form-group">
+          <table class="settings-list settings-list--toggleColumn">
+            <col  class="is-active">
+            <col  class="is-active">
+            <col data-colum="wednesday" class="is-active">
+            <col data-colum="thursday" class="is-active">
+            <col data-colum="friday" class="is-active">
+            <col data-colum="saturday">
+            <col data-colum="sunday">
+            <thead>
+              <tr>
+                <th style="text-align: center">
+                  <label class="day-name"><input class="js-activateColumn" data-target="monday" type="checkbox" checked> Mo</label>
+                <th style="text-align: center">
+                  <label class="day-name"><input class="js-activateColumn" data-target="tuesday" type="checkbox" checked> Tu</label>
+                <th style="text-align: center">
+                  <label class="day-name"><input class="js-activateColumn" data-target="wednesday" type="checkbox" checked> We</label>
+                <th style="text-align: center">
+                  <label class="day-name"><input class="js-activateColumn" data-target="thursday" type="checkbox" checked> Th</label>
+                <th style="text-align: center">
+                  <label class="day-name"><input class="js-activateColumn" data-target="friday" type="checkbox" checked> Fr</label>
+                <th style="text-align: center">
+                  <label class="day-name"><input class="js-activateColumn" data-target="saturday" type="checkbox"> Sa</label>
+                <th style="text-align: center">
+                  <label class="day-name"><input class="js-activateColumn" data-target="sunday" type="checkbox"> Su</label>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-column="monday" class="form-group day-time is-active">
                   <label for="monday_start_time">from</label>
-                  <input type="time" id="monday_start_time" value="07:00">
-                </div>
-                <div class="form-group">
-                  <label for="monday_end_time">till</label>
-                  <input type="time" id="monday_end_time" value="18:00">
-                </div>
-              </div>
-            </div>
-            <div class="day">
-              <label class="day-name" for="day-tuesday">Tu</label>
-              <input class="day-checkbox" type="checkbox" id="day-tuesday" checked>
-              <div class="day-times">
-                <div class="form-group">
+                  <input type="time" id="monday_start_time" value="07:00" step="600">
+                <td data-column="tuesday" class="form-group day-time is-active">
                   <label for="tuesday_start_time">from</label>
-                  <input type="time" id="tuesday_start_time" value="07:00">
-                </div>
-                <div class="form-group">
-                  <label for="tuesday_end_time">till</label>
-                  <input type="time" id="tuesday_end_time" value="18:00">
-                </div>
-              </div>
-            </div>
-            <div class="day">
-              <label class="day-name" for="day-wednesday">We</label>
-              <input class="day-checkbox" type="checkbox" id="day-wednesday" checked>
-              <div class="day-times">
-                <div class="form-group">
+                  <input type="time" id="tuesday_start_time" value="07:00" step="600">
+                <td data-column="wednesday" class="form-group day-time is-active">
                   <label for="wednesday_start_time">from</label>
-                  <input type="time" id="wednesday_start_time" value="07:00">
-                </div>
-                <div class="form-group">
-                  <label for="wednesday_end_time">till</label>
-                  <input type="time" id="wednesday_end_time" value="18:00">
-                </div>
-              </div>
-            </div>
-            <div class="day">
-              <label class="day-name" for="day-thursday">Th</label>
-              <input class="day-checkbox" type="checkbox" id="day-thursday" checked>
-              <div class="day-times">
-                <div class="form-group">
+                  <input type="time" id="wednesday_start_time" value="07:00" step="600">
+                <td data-column="thursday" class="form-group day-time is-active">
                   <label for="thursday_start_time">from</label>
-                  <input type="time" id="thursday_start_time" value="07:00">
-                </div>
-                <div class="form-group">
-                  <label for="thursday_end_time">till</label>
-                  <input type="time" id="thursday_end_time" value="18:00">
-                </div>
-              </div>
-            </div>
-            <div class="day">
-              <label class="day-name" for="day-friday">Fr</label>
-              <input class="day-checkbox" type="checkbox" id="day-friday" checked>
-              <div class="day-times">
-                <div class="form-group">
+                  <input type="time" id="thursday_start_time" value="07:00" step="600">
+                <td data-column="friday" class="form-group day-time is-active">
                   <label for="friday_start_time">from</label>
-                  <input type="time" id="friday_start_time" value="07:00">
-                </div>
-                <div class="form-group">
-                  <label for="friday_end_time">till</label>
-                  <input type="time" id="friday_end_time" value="13:00">
-                </div>
-              </div>
-            </div>
-            <div class="day">
-              <label class="day-name" for="day-saturday">Sa</label>
-              <input class="day-checkbox" type="checkbox" id="day-saturday">
-              <div class="day-times">
-                <div class="form-group">
+                  <input type="time" id="friday_start_time" value="07:00" step="600">
+                <td data-column="saturday" class="form-group day-time">
                   <label for="saturday_start_time">from</label>
-                  <input type="time" id="saturday_start_time" value="09:00">
-                </div>
-                <div class="form-group">
-                  <label for="saturday_end_time">till</label>
-                  <input type="time" id="saturday_end_time" value="16:00">
-                </div>
-              </div>
-            </div>
-            <div class="day">
-              <label class="day-name" for="day-sunday">Su</label>
-              <input class="day-checkbox" type="checkbox" id="day-sunday">
-              <div class="day-times">
-                <div class="form-group">
+                  <input type="time" id="saturday_start_time" value="09:00" step="600">
+                <td data-column="sunday" class="form-group day-time">
                   <label for="sunday_start_time">from</label>
-                  <input type="time" id="sunday_start_time">
-                </div>
-                <div class="form-group">
+                  <input type="time" id="sunday_start_time" step="600">
+              </tr>
+              <tr>
+                <td data-column="monday" class="form-group day-time is-active">
+                  <label for="monday_end_time">till</label>
+                  <input type="time" id="monday_end_time" value="18:00" step="600">
+                <td data-column="tuesday" class="form-group day-time is-active">
+                  <label for="tuesday_end_time">till</label>
+                  <input type="time" id="tuesday_end_time" value="18:00" step="600">
+                <td data-column="wednesday" class="form-group day-time is-active">
+                  <label for="wednesday_end_time">till</label>
+                  <input type="time" id="wednesday_end_time" value="18:00" step="600">
+                <td data-column="thursday" class="form-group day-time is-active">
+                  <label for="thursday_end_time">till</label>
+                  <input type="time" id="thursday_end_time" value="18:00" step="600">
+                <td data-column="friday" class="form-group day-time is-active">
+                  <label for="friday_end_time">till</label>
+                  <input type="time" id="friday_end_time" value="13:00" step="600">
+                <td data-column="saturday" class="form-group day-time">
+                  <label for="saturday_end_time">till</label>
+                  <input type="time" id="saturday_end_time" value="16:00" step="600">
+                <td data-column="sunday" class="form-group day-time">
                   <label for="sunday_end_time">till</label>
-                  <input type="time" id="sunday_end_time">
-                </div>
-              </div>
-            </div>
-          </div>
+                  <input type="time" id="sunday_end_time" step="600">
+              </tr>
+            </tbody>
+          </table>
 
           <h3>Response Times <span class="subtitle">in Business Hours</span></h3>
-          <div>
-            <input type="checkbox" checked id="first_response_time"> 
-            <label class="inline-label" for="first_response_time">First Response Time</label> 
-            <input type="time">
-          </div>
-          <div>
-            <input type="checkbox" checked id="update_time"> 
-            <label class="inline-label" for="update_time">Update Time</label> 
-            <input type="time">
-          </div>
-          <div>
-            <input type="checkbox" id="solution_time"> <label 
-            class="inline-label" for="solution_time">Solution Time</label> 
-            <input type="time">
-          </div>
+          <table class="settings-list settings-list--toggleRow">
+            <thead>
+              <tr>
+                <th>Active
+                <th>Type
+                <th>Time <span class="text-muted">in hours</span>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="is-active">
+                <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="first_response_time"> 
+                <td>
+                  <label class="inline-label" for="first_response_time">First Response Time</label>
+                  <p class="subtle">Timeframe for the first response.</p>
+                <td><input type="time" step="600" max="259200">
+              </tr>
+              <tr class="is-active">
+                <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="update_time">
+                <td>
+                  <label class="inline-label" for="update_time">Update Time</label>
+                  <p class="subtle">Timeframe for every following response.</p>
+                <td><input type="time" step="600" max="259200">
+              </tr>
+              <tr>
+                <td style="text-align: center"><input type="checkbox" id="solution_time" class="js-activateRow">
+                <td>
+                  <label class="inline-label" for="solution_time">Solution Time</label>
+                  <p class="subtle">Timeframe for solving the problem.</p>
+                <td><input type="time" step="600" max="259200">
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer horizontal">
           <a class="subtle-link standalone js-cancel" href="#/">Cancel & Go Back</a>

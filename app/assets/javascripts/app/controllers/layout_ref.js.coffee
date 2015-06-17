@@ -1284,12 +1284,25 @@ App.Config.set( 'layout_ref/user_list', userListRef, 'Routes' )
 
 class slaRef extends App.ControllerContent
 
+  events:
+    'click .js-activateColumn': 'activateColumn'
+    'click .js-activateRow': 'activateRow'
+
   constructor: ->
     super
     @render()
 
   render: ->
     @html App.view('layout_ref/sla')()
+
+  activateColumn: (event) =>
+    checkbox = @$(event.currentTarget)
+    columnName = checkbox.attr('data-target')
+    @$("[data-column=#{columnName}]").toggleClass('is-active', checkbox.prop('checked'))
+
+  activateRow: (event) =>
+    checkbox = @$(event.currentTarget)
+    checkbox.closest('tr').toggleClass('is-active', checkbox.prop('checked'))
 
 App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
 
