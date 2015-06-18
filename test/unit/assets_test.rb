@@ -55,7 +55,9 @@ class AssetsTest < ActiveSupport::TestCase
     assets = user3.assets({})
 
     org = Organization.find(org.id)
-    assert( diff(org.attributes_with_associations, assets[:Organization][org.id]), 'check assets')
+    attributes = org.attributes_with_associations
+    attributes.delete('user_ids')
+    assert( diff(attributes, assets[:Organization][org.id]), 'check assets')
 
     user1 = User.find(user1.id)
     attributes = user1.attributes_with_associations
@@ -88,6 +90,7 @@ class AssetsTest < ActiveSupport::TestCase
     org2.save
 
     attributes = org2.attributes_with_associations
+    attributes.delete('user_ids')
     assert( !diff(attributes, assets[:Organization][org2.id]), 'check assets' )
 
     user1_new = User.find(user1.id)
@@ -100,7 +103,9 @@ class AssetsTest < ActiveSupport::TestCase
 
     # check new assets lookup
     assets = user3.assets({})
-    assert( diff(org2.attributes_with_associations, assets[:Organization][org.id]), 'check assets')
+    attributes = org2.attributes_with_associations
+    attributes.delete('user_ids')
+    assert( diff(attributes, assets[:Organization][org.id]), 'check assets')
 
     user1 = User.find(user1.id)
     attributes = user1.attributes_with_associations
@@ -191,6 +196,7 @@ class AssetsTest < ActiveSupport::TestCase
     org = Organization.find(org.id)
     assets = org.assets({})
     attributes = org.attributes_with_associations
+    attributes.delete('user_ids')
     assert( diff(attributes, assets[:Organization][org.id]), 'check assets' )
 
     admin1 = User.find(admin1.id)
@@ -233,6 +239,7 @@ class AssetsTest < ActiveSupport::TestCase
 
     org_new = Organization.find(org.id)
     attributes = org_new.attributes_with_associations
+    attributes.delete('user_ids')
     assert( !diff(attributes, assets[:Organization][org_new.id]), 'check assets' )
 
     attributes = user_new_2.attributes_with_associations
@@ -245,6 +252,7 @@ class AssetsTest < ActiveSupport::TestCase
     # check new assets lookup
     assets = org_new.assets({})
     attributes = org_new.attributes_with_associations
+    attributes.delete('user_ids')
     assert( diff(attributes, assets[:Organization][org_new.id]), 'check assets' )
 
     attributes = user_new_2.attributes_with_associations
@@ -265,7 +273,7 @@ class AssetsTest < ActiveSupport::TestCase
       o2['updated_at'] = o2['updated_at'].to_s
     end
     return true if (o1.to_a - o2.to_a).empty?
-    #puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
+    puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
     false
   end
 end
