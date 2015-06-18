@@ -5402,6 +5402,70 @@ output {
   }
 }
 
+
+.select-boxes {
+  display: flex;
+  align-items: flex-start;
+}
+
+.select-box {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 14px;
+  border-left: 1px solid hsl(0,0%,94%);
+  border-top: 1px solid hsl(0,0%,94%);
+  
+  &.select-box--vertical .select-value {
+    flex-basis: 100%;
+  }
+
+  &.select-box--four .select-value {
+    flex-basis: 25%;
+  }
+
+  &.select-box--six .select-value {
+    flex-basis: calc(100%/6);
+  }
+  
+  .select-box-header {
+    @extend label;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    flex-basis: 100%;
+    white-space: nowrap;
+    background: hsl(200,20%,97%);
+    border-right: 1px solid hsl(0,0%,94%);
+    border-bottom: 1px solid hsl(0,0%,91%);
+  }
+
+  .select-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    border-right: 1px solid hsl(0,0%,94%);
+    border-bottom: 1px solid hsl(0,0%,94%);
+    cursor: pointer;
+    
+    &.is-selected {
+      background: hsl(203,65%,55%);
+      color: white;
+      border-bottom-color: hsl(202,68%,48%);
+      border-right-color: hsl(202,68%,48%);
+    }
+  }
+  
+  &:first-child {
+    margin-left: 0; 
+  }
+  
+  &:last-child {
+    margin-right: 0; 
+  }
+}
+
 /*
 
   ----------------

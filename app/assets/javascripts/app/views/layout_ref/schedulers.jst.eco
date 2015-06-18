@@ -166,80 +166,61 @@
           <p>
             When should the job run?<br>
             <output class="timer-output js-timerResult">
-              Run every Monday, Tuesday, Wednesday, Thursday and Friday at 07:30 o'clock.
+              Run every Monday, Tuesday, Wednesday, Thursday and Friday at 7:30 am and 1:30 pm.
             </output>
           </p>
-          <table class="settings-list">
-            <thead>
-              <tr>
-                <th>Day
-                <th colspan="3">Hour
-                <th>Minute
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><label><input type="checkbox" checked> Monday</label>
-                <td><label><input type="checkbox"> 00:00</label>
-                <td><label><input type="checkbox"> 08:00</label>
-                <td><label><input type="checkbox"> 16:00</label>
-                <td><label><input type="checkbox"> 00</label>
-              </tr>
-              <tr>
-                <td><label><input type="checkbox" checked> Tuesday</label>
-                <td><label><input type="checkbox"> 01:00</label>
-                <td><label><input type="checkbox"> 09:00</label>
-                <td><label><input type="checkbox"> 17:00</label>
-                <td><label><input type="checkbox"> 10</label>
-              </tr>
-              <tr>
-                <td><label><input type="checkbox" checked> Wednesday</label>
-                <td><label><input type="checkbox"> 02:00</label>
-                <td><label><input type="checkbox"> 10:00</label>
-                <td><label><input type="checkbox"> 18:00</label>
-                <td><label><input type="checkbox"> 20</label>
-              </tr>
-              <tr>
-                <td><label><input type="checkbox" checked> Thursday</label>
-                <td><label><input type="checkbox"> 03:00</label>
-                <td><label><input type="checkbox"> 11:00</label>
-                <td><label><input type="checkbox"> 19:00</label>
-                <td><label><input type="checkbox" checked> 30</label>
-              </tr>
-              <tr>
-                <td><label><input type="checkbox" checked> Friday</label>
-                <td><label><input type="checkbox"> 04:00</label>
-                <td><label><input type="checkbox"> 12:00</label>
-                <td><label><input type="checkbox"> 20:00</label>
-                <td><label><input type="checkbox"> 40</label>
-              </tr>
-              <tr>
-                <td><label><input type="checkbox"> Saturday</label>
-                <td><label><input type="checkbox"> 05:00</label>
-                <td><label><input type="checkbox"> 13:00</label>
-                <td><label><input type="checkbox"> 21:00</label>
-                <td><label><input type="checkbox"> 50</label>
-              </tr>
-              <tr>
-                <td><label><input type="checkbox"> Sunday</label>
-                <td><label><input type="checkbox"> 05:00</label>
-                <td><label><input type="checkbox"> 14:00</label>
-                <td><label><input type="checkbox"> 22:00</label>
-                <td>
-              </tr>
-              <tr>
-                <td>
-                <td><label><input type="checkbox" checked> 07:00</label>
-                <td><label><input type="checkbox"> 15:00</label>
-                <td><label><input type="checkbox"> 23:00</label>
-                <td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="select-boxes">
+            <div class="select-box select-box--vertical">
+              <div class="select-box-header">Day</div>
+              <div data-type="day" class="select-value is-selected">Monday</div>
+              <div data-type="day" class="select-value is-selected">Tuesday</div>
+              <div data-type="day" class="select-value is-selected">Wednesday</div>
+              <div data-type="day" class="select-value is-selected">Thursday</div>
+              <div data-type="day" class="select-value is-selected">Friday</div>
+              <div data-type="day" class="select-value">Saturday</div>
+              <div data-type="day" class="select-value">Sunday</div>
+            </div>
+            <div class="select-box select-box--four">
+              <div data-type="hour" class="select-box-header">Hour</div>
+              <div data-type="hour" class="select-value">12 am</div><!-- 0 Uhr -->
+              <div data-type="hour" class="select-value">1 am</div>
+              <div data-type="hour" class="select-value">2 am</div>
+              <div data-type="hour" class="select-value">3 am</div>
+              <div data-type="hour" class="select-value">4 am</div>
+              <div data-type="hour" class="select-value">5 am</div>
+              <div data-type="hour" class="select-value">6 am</div>
+              <div data-type="hour" class="select-value is-selected">7 am</div>
+              <div data-type="hour" class="select-value">8 am</div>
+              <div data-type="hour" class="select-value">9 am</div>
+              <div data-type="hour" class="select-value">10 am</div>
+              <div data-type="hour" class="select-value">11 am</div>
+              <div data-type="hour" class="select-value">12 am</div><!-- 12 Uhr -->
+              <div data-type="hour" class="select-value is-selected">1 pm</div>
+              <div data-type="hour" class="select-value">2 pm</div>
+              <div data-type="hour" class="select-value">3 pm</div>
+              <div data-type="hour" class="select-value">4 pm</div>
+              <div data-type="hour" class="select-value">5 pm</div>
+              <div data-type="hour" class="select-value">6 pm</div>
+              <div data-type="hour" class="select-value">7 pm</div>
+              <div data-type="hour" class="select-value">8 pm</div>
+              <div data-type="hour" class="select-value">9 pm</div>
+              <div data-type="hour" class="select-value">10 pm</div>
+              <div data-type="hour" class="select-value">11 pm</div><!-- 23 Uhr -->
+            </div>
+            <div class="select-box select-box--vertical">
+              <div data-type="minute" class="select-box-header">Minute</div>
+              <div data-type="minute" class="select-value">00</div>
+              <div data-type="minute" class="select-value">10</div>
+              <div data-type="minute" class="select-value">20</div>
+              <div data-type="minute" class="select-value is-selected">30</div>
+              <div data-type="minute" class="select-value">40</div>
+              <div data-type="minute" class="select-value">50</div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <a class="subtle-link standalone js-cancel" href="#/">Cancel & Go Back</a>
-          <button type="submit" class="btn btn--success js-submit align-right">Create SLA</button>
+          <button type="submit" class="btn btn--success js-submit align-right">Create Schedule</button>
         </div>
       </div>
     </form>
