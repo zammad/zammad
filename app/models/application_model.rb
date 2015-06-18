@@ -261,7 +261,7 @@ returns
     end
 
     # delete login caches
-    if !self[:login]
+    if self[:login]
       key = "#{self.class}::#{login}"
       Cache.delete(key)
     end
