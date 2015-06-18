@@ -1310,12 +1310,61 @@ App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
 
 class schedulersRef extends App.ControllerContent
 
+  events:
+    'click .select-value': 'select'
+
   constructor: ->
     super
     @render()
 
   render: ->
     @html App.view('layout_ref/schedulers')()
+
+  select: (event) =>
+    target = $(event.currentTarget)
+
+    if target.hasClass('is-selected')
+      # prevent zero selections
+      if target.siblings('.is-selected').size() > 0
+        target.removeClass('is-selected')
+    else
+      target.addClass('is-selected')
+
+    @createOutputString()
+
+  createOutputString: ->
+    days = $.map(@$('[data-type=day]').filter('.is-selected'), (el) -> return $(el).text() )
+    hours = $.map(@$('[data-type=hour]').filter('.is-selected'), (el) -> return $(el).text() )
+    minutes = $.map(@$('[data-type=minute]').filter('.is-selected'), (el) -> return $(el).text() )
+
+    hours = @injectMinutes(hours, minutes)
+
+    days = @joinItems days
+    hours = @joinItems hours
+
+    @$('.js-timerResult').text("Run every #{ days } at #{ hours }")
+
+  injectMinutes: (hours, minutes) ->
+    newHours = [] # hours.length x minutes.length long
+
+    for hour in hours
+      # split off am/pm
+      [hour, suffix] = hour.split(" ")
+
+      for minute in minutes
+        combined = "#{ hour }:#{ minute }"
+        combined += " #{suffix}" if suffix
+
+        newHours.push combined
+
+    return newHours
+
+  joinItems: (items) ->
+    switch items.length
+      when 1 then return items[0]
+      when 2 then return "#{ items[0] } and #{ items[1] }"
+      else 
+        return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
 App.Config.set( 'layout_ref/schedulers', schedulersRef, 'Routes' )
 
