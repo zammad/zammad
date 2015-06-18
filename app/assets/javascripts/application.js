@@ -116,7 +116,7 @@ function clone(item, full) {
 
   // check if item is accepted to get cloned
   if (itemType && !_.contains(acceptedInstances, itemType)) {
-    console.log('no acceptedInstances', itemType)
+    console.log('no acceptedInstances', itemType, item)
     return
   }
 
