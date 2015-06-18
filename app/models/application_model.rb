@@ -239,8 +239,6 @@ returns
     # delete id caches
     key = self.class.to_s + '::' + id.to_s
     Cache.delete( key.to_s )
-    key = self.class.to_s + ':f:' + id.to_s
-    Cache.delete( key.to_s )
 
     # delete old name / login caches
     if self.changed?
@@ -248,49 +246,34 @@ returns
         name = changes['name'][0].to_s
         key = self.class.to_s + '::' + name
         Cache.delete( key.to_s )
-        key = self.class.to_s + ':f:' + name
-        Cache.delete( key.to_s )
       end
       if changes.key?('login')
         name = changes['login'][0].to_s
         key = self.class.to_s + '::' + name
         Cache.delete( key.to_s )
-        key = self.class.to_s + ':f:' + name
-        Cache.delete( key.to_s )
       end
     end
 
-    # delete name / login caches
+    # delete name caches
     if self[:name]
       key = self.class.to_s + '::' + self.name.to_s
-      Cache.delete( key.to_s )
-      key = self.class.to_s + ':f:' + self.name.to_s
       Cache.delete( key.to_s )
     end
 
     return if !self[:login]
 
+    # delete login caches
     key = self.class.to_s + '::' + login.to_s
-    Cache.delete( key.to_s )
-    key = self.class.to_s + ':f:' + login.to_s
     Cache.delete( key.to_s )
   end
 
-  def self.cache_set(data_id, data, full = false)
-    if !full
-      key = to_s + '::' + data_id.to_s
-    else
-      key = to_s + ':f:' + data_id.to_s
-    end
+  def self.cache_set(data_id, data)
+    key = to_s + '::' + data_id.to_s
     Cache.write( key.to_s, data )
   end
 
-  def self.cache_get(data_id, full = false)
-    if !full
-      key = to_s + '::' + data_id.to_s
-    else
-      key = to_s + ':f:' + data_id.to_s
-    end
+  def self.cache_get(data_id)
+    key = to_s + '::' + data_id.to_s
     Cache.get( key.to_s )
   end
 
