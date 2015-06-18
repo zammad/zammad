@@ -30,15 +30,26 @@ returns
         data[ User.to_app_model ] = {}
       end
       if !data[ Organization.to_app_model ][ id ]
-        data[ Organization.to_app_model ][ id ] = attributes_with_associations
-        if data[ Organization.to_app_model ][ id ]['member_ids']
-          data[ Organization.to_app_model ][ id ]['member_ids'].each {|local_user_id|
+        local_attributes = attributes
+
+        # get organizations
+        key = "Organization::member_ids::#{id}"
+        local_member_ids = Cache.get(key)
+        if !local_member_ids
+          local_member_ids = member_ids
+          Cache.write(key, local_member_ids)
+        end
+        local_attributes['member_ids'] = local_member_ids
+        if local_member_ids
+          local_member_ids.each {|local_user_id|
             if !data[ User.to_app_model ][ local_user_id ]
               user = User.lookup( id: local_user_id )
               data = user.assets( data )
             end
           }
         end
+
+        data[ Organization.to_app_model ][ id ] = local_attributes
       end
       %w(created_by_id updated_by_id).each {|local_user_id|
         next if !self[ local_user_id ]
