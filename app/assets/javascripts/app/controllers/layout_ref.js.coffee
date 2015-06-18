@@ -1282,6 +1282,7 @@ class userListRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/user_list', userListRef, 'Routes' )
 
+
 class slaRef extends App.ControllerContent
 
   events:
@@ -1305,6 +1306,18 @@ class slaRef extends App.ControllerContent
     checkbox.closest('tr').toggleClass('is-active', checkbox.prop('checked'))
 
 App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
+
+
+class schedulersRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/schedulers')()
+
+App.Config.set( 'layout_ref/schedulers', schedulersRef, 'Routes' )
 
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

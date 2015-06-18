@@ -8,7 +8,7 @@
       <h1 class="modal-title"><%- @T( @head ) %></h1>
     </div>
     <div class="modal-body" id="form-user"></div>
-    <div class="modal-footer horizontal">
+    <div class="modal-footer">
       <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
       <button type="submit" class="btn btn--success js-submit align-right"><%- @T( 'Create' ) %></button>
     </div>

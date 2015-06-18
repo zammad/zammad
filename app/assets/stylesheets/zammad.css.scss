@@ -4226,11 +4226,16 @@ footer {
 
   .modal-body {
     padding: 0 23px;
+    
+    h2:first-child {
+      margin-top: 0;
+    }
   }
 
   .modal-footer {
     padding: 23px 23px 20px;
     border: none;
+    display: flex;
   }
 
   .modal-leftFooter,
@@ -5210,7 +5215,7 @@ label + .wizard-buttonList {
   display: flex;
   align-items: center;
   background: hsl(197,20%,93%);
-  padding: 14px 10px;
+  padding: 7px;
   border: 1px solid hsl(198,19%,86%);
   
   &:first-child {
@@ -5226,7 +5231,7 @@ label + .wizard-buttonList {
   }
   
   & + .horizontal-filter {
-    border-top: 1px solid hsl(198,19%,87%);
+    border-top: none;
   }
   
   .horizontal-filter-body {
@@ -5251,6 +5256,14 @@ label + .wizard-buttonList {
   }
 }
 
+output {
+  border-bottom: 1px solid hsl(200,71%,59%);
+  margin: 14px 0 0;
+  display: inline-block;
+  padding: 10px 20px;
+  background: hsl(201,62%,93%);
+}
+
 .horizontal-filter-text {
   margin-right: 5px;
 }
@@ -5264,8 +5277,8 @@ label + .wizard-buttonList {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border: 1px solid hsl(198,19%,86%);
   border-radius: 100%;
   background: white;

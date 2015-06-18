@@ -20,7 +20,7 @@
           <%- @content %>
       <% end %>
       </div>
-      <div class="modal-footer horizontal">
+      <div class="modal-footer">
   <% if @cancel: %>
         <div class="modal-leftFooter">
           <a class="subtle-link standalone js-cancel align-left" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>

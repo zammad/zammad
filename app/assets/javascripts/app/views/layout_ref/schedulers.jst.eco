@@ -1,0 +1,338 @@
+<div class="modal modal--local">
+  <div class="modal-backdrop"></div>
+  <div class="modal-dialog">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-close js-close">
+            <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+          </div>
+          <h1 class="modal-title">New Scheduler</h1>
+        </div>
+        <div class="modal-body">
+          <h2>Selector</h2>
+          <p>Create rules that single out the tickets for automated processing.</p>
+          <h3>Filters</h3>
+          <div class="horizontal-filters">
+            <div class="horizontal-filter">
+              <div class="horizontal-filter-body">
+                <div class="controls">
+                  <div class="u-positionOrigin">
+                    <select class="form-control" name="filter_attribute_1">
+                      <optgroup label="Ticket">
+                        <option>Customer</option>
+                        <option>Owner</option>
+                        <option>Number</option>
+                        <option>Title</option>
+                        <option>Group</option>
+                        <option>State</option>
+                        <option>Priority</option>
+                        <option selected>Spam</option>
+                      </optgroup>
+                      <optgroup label="Customer">
+                        <option>Email</option>
+                        <option>Country</option>
+                        <option>Group</option>
+                        <option>Organization</option>
+                        <option>Department</option>
+                        <option>VIP</option>
+                      </optgroup>
+                      <optgroup label="Organization">
+                        <option>Country</option>
+                        <option>VIP</option>
+                      </optgroup>
+                    </select>
+                    <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+                  </div>
+                </div>
+                <div class="controls">
+                  <div class="u-positionOrigin">
+                    <select class="form-control" name="filter_operator_1">
+                      <option>equals to</option>
+                      <option>contains</option>
+                      <option>begins with</option>
+                      <option>ends with</option>
+                      <option selected>is</option>
+                      <option>is not</option>
+                    </select>
+                    <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+                  </div>
+                </div>
+                <div class="controls">
+                  <div class="u-positionOrigin">
+                    <select class="form-control" name="filter_operator_1">
+                      <option selected>true</option>
+                      <option>false</option>
+                    </select>
+                    <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-controls">
+                <div class="filter-control filter-control-remove js-remove is-disabled" title="Remove rule">
+                  <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+                </div>
+                <div class="filter-control filter-control-add js-add" title="Add new rule">
+                  <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="filter-preview">
+            <h3>Preview <span class="subtitle"><span class="u-highlight">2</span> matches</span></h3>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th style="width: 28px"></th>
+                  <th>Customer</th>
+                  <th style="width: 42%">Title</th>
+                  <th>Group</th>
+                  <th style="width: 25%">Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="item" data-id="1" data-position="1" style="cursor: pointer;">
+                  <td>
+                    <svg class="icon-priority level-1">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+                    </svg>
+                  </td>
+                  <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+                      Nicole Braun (Zammad Foundation)
+                    </span> </td>
+                  <td>
+                    <a href="#ticket/zoom/1"> <span title="Welcome to our little planet with flowers and forests&nbsp;asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf">
+                        Welcome to our little planet with flowers and forests&nbsp;asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf
+                      </span> </a>
+                  </td>
+                  <td> <span>
+                      Users
+                    </span> </td>
+                  <td class="noTruncate"> <span>
+                      <span class="humanTimeFromNow undefined" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</span> </span>
+                  </td>
+                </tr>
+                <tr class="item" data-id="6" data-position="6" style="cursor: pointer;">
+                  <td>
+                    <svg class="icon-priority level-2">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+                    </svg>
+                  </td>
+                  <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+                      Nicole Braun (Zammad Foundation)
+                    </span> </td>
+                  <td>
+                    <a href="#ticket/zoom/6"> <span title="script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler">
+                        script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler
+                      </span> </a>
+                  </td>
+                  <td> <span>
+                      Users
+                    </span> </td>
+                  <td class="noTruncate"> <span>
+                      <span class="humanTimeFromNow undefined" data-time="2015-06-11T07:26:31.000Z" data-tooltip="06/11/2015 09:26">5 days 3 hours ago</span> </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Actions</h2>
+          <div class="horizontal-filters">
+            <div class="horizontal-filter">
+              <div class="horizontal-filter-body">
+                <div class="controls">
+                  <div class="u-positionOrigin">
+                    <select class="form-control" name="filter_attribute_2">
+                      <option selected>Move to trash</option>
+                      <option>Set to escalated</option>
+                    </select>
+                    <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="filter-controls">
+                <div class="filter-control filter-control-remove is-disabled js-remove" title="Remove rule">
+                  <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+                </div>
+                <div class="filter-control filter-control-add js-add" title="Add new rule">
+                  <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2>Timer</h2>
+          <p>
+            When should the job run?<br>
+            <output class="timer-output js-timerResult">
+              Run every Monday, Tuesday, Wednesday, Thursday and Friday at 07:30 o'clock.
+            </output>
+          </p>
+          <table class="settings-list">
+            <thead>
+              <tr>
+                <th>Day
+                <th colspan="3">Hour
+                <th>Minute
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><label><input type="checkbox" checked> Monday</label>
+                <td><label><input type="checkbox"> 00:00</label>
+                <td><label><input type="checkbox"> 08:00</label>
+                <td><label><input type="checkbox"> 16:00</label>
+                <td><label><input type="checkbox"> 00</label>
+              </tr>
+              <tr>
+                <td><label><input type="checkbox" checked> Tuesday</label>
+                <td><label><input type="checkbox"> 01:00</label>
+                <td><label><input type="checkbox"> 09:00</label>
+                <td><label><input type="checkbox"> 17:00</label>
+                <td><label><input type="checkbox"> 10</label>
+              </tr>
+              <tr>
+                <td><label><input type="checkbox" checked> Wednesday</label>
+                <td><label><input type="checkbox"> 02:00</label>
+                <td><label><input type="checkbox"> 10:00</label>
+                <td><label><input type="checkbox"> 18:00</label>
+                <td><label><input type="checkbox"> 20</label>
+              </tr>
+              <tr>
+                <td><label><input type="checkbox" checked> Thursday</label>
+                <td><label><input type="checkbox"> 03:00</label>
+                <td><label><input type="checkbox"> 11:00</label>
+                <td><label><input type="checkbox"> 19:00</label>
+                <td><label><input type="checkbox" checked> 30</label>
+              </tr>
+              <tr>
+                <td><label><input type="checkbox" checked> Friday</label>
+                <td><label><input type="checkbox"> 04:00</label>
+                <td><label><input type="checkbox"> 12:00</label>
+                <td><label><input type="checkbox"> 20:00</label>
+                <td><label><input type="checkbox"> 40</label>
+              </tr>
+              <tr>
+                <td><label><input type="checkbox"> Saturday</label>
+                <td><label><input type="checkbox"> 05:00</label>
+                <td><label><input type="checkbox"> 13:00</label>
+                <td><label><input type="checkbox"> 21:00</label>
+                <td><label><input type="checkbox"> 50</label>
+              </tr>
+              <tr>
+                <td><label><input type="checkbox"> Sunday</label>
+                <td><label><input type="checkbox"> 05:00</label>
+                <td><label><input type="checkbox"> 14:00</label>
+                <td><label><input type="checkbox"> 22:00</label>
+                <td>
+              </tr>
+              <tr>
+                <td>
+                <td><label><input type="checkbox" checked> 07:00</label>
+                <td><label><input type="checkbox"> 15:00</label>
+                <td><label><input type="checkbox"> 23:00</label>
+                <td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <a class="subtle-link standalone js-cancel" href="#/">Cancel & Go Back</a>
+          <button type="submit" class="btn btn--success js-submit align-right">Create SLA</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="sidebar NavBarAdmin">
+  <h2>Manage</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li class="">
+      <a href="#manage/users">Users</a>
+    <li>
+      <a href="#manage/groups">Groups</a>
+    <li>
+      <a href="#manage/organizations">Organizations</a>
+    <li>
+      <a href="#manage/overviews">Overviews</a>
+    <li>
+      <a href="#manage/text_modules">TextModules</a>
+
+    <li class="active">
+      <a href="#manage/slas">SLAs</a>
+    <li>
+      <a href="#manage/schedulers">Schedulers</a>
+    <li>
+      <a href="#manage/triggers">Triggers</a>
+  </ul>
+
+  <h2>Channels</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#channels/web">Web</a>
+    <li>
+      <a href="#channels/email">Email</a>
+    <li>
+      <a href="#channels/chat">Chat</a>
+    <li>
+      <a href="#channels/twitter">Twitter</a>
+    <li>
+      <a href="#channels/facebook">Facebook</a>
+  </ul>
+
+  <h2>Settings</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#settings/system">System</a>
+    <li>
+      <a href="#settings/security">Security</a>
+    <li>
+      <a href="#settings/import">Import</a>
+    <li>
+      <a href="#settings/ticket">Ticket</a>
+  </ul>
+
+  <h2>System</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#system/package">Packages</a>
+    <li>
+      <a href="#system/object_manager">Objects</a>
+    <li>
+      <a href="#system/translation">Translations</a>
+    <li>
+      <a href="#system/maintenance">Maintenance</a>
+    <li>
+      <a href="#system/sessions">Sessions</a>
+  </ul>
+</div>
+
+<div class="main flex">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1>SLAs <small>Management</small></h1>
+    </div>
+
+    <div class="page-header-meta">
+      <a class="btn btn--success" data-type="new">New SLA</a>
+    </div>
+  </div>
+
+  <div class="table-overview">
+    <p>
+      <strong>Service-Level-Agreements</strong>, abgekürzt <b>SLAs</b>, unterstützen Sie gegenüber Kunden gewisse zeitliche Reaktionen einzuhalten. Somit können Sie z. B. sagen Kunden sollen immer nach spätestens 8 Stunden eine Reaktion von Ihnen bekommen. Falls es zu einer drohenden Unterschreitung oder einer Unterschreitung kommt, weißt Zammad Sie auf solche Ereignisse hin.
+    </p>
+    <p>
+      Es können <strong>Reaktionszeit</strong> (Zeit zwischen Erstellung eines Tickets und erster Reaktion eines Agenten), <strong>Aktualisierungszeit</strong> (Zeit zwischen Nachfrage eines Kunden und Reaktion eines Agenten) und <strong>Lösungszeit</strong> (Zeit zwischen Erstellung und schließen eines Tickets) definiert werden.
+    </p>
+    <p>
+      Drohenden Unterschreitungen oder Unterschreitungen werden in einer eigenen Ansicht in den Übersichten angezeigt. Zudem können <strong>E-Mail Benachrichtigungen</strong> konfiguriert werden.
+    </p>
+  </div>
+</div>

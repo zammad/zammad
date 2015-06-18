@@ -11,7 +11,7 @@
         </div>
         <div class="modal-body">
           <h2>Selector</h2>
-          <p class="subtle">Create rules that single out the tickets for the Service Level Agreement.</p>
+          <p>Create rules that single out the tickets for the Service Level Agreement.</p>
           <h3>Filters</h3>
           <div class="horizontal-filters">
             <div class="horizontal-filter">
@@ -70,7 +70,7 @@
             </div>
           </div>
           <div class="filter-preview">
-            <h3>Preview <span class="subtitle">matches <span class="u-highlight">5</span></span></h3>
+            <h3>Preview <span class="subtitle"><span class="u-highlight">5</span> matches</span></h3>
             <table class="table table-hover">
               <thead>
                 <tr>
@@ -285,13 +285,6 @@
           <h2>Schedule</h2>
           <h3>Business Hours <span class="subtitle">in European Central Time <a class="btn btn--text btn--subtle" href="#">(change)</a></span></h3>
           <table class="settings-list settings-list--toggleColumn">
-            <col  class="is-active">
-            <col  class="is-active">
-            <col data-colum="wednesday" class="is-active">
-            <col data-colum="thursday" class="is-active">
-            <col data-colum="friday" class="is-active">
-            <col data-colum="saturday">
-            <col data-colum="sunday">
             <thead>
               <tr>
                 <th style="text-align: center">
@@ -394,7 +387,7 @@
             </tbody>
           </table>
         </div>
-        <div class="modal-footer horizontal">
+        <div class="modal-footer">
           <a class="subtle-link standalone js-cancel" href="#/">Cancel & Go Back</a>
           <button type="submit" class="btn btn--success js-submit align-right">Create SLA</button>
         </div>
