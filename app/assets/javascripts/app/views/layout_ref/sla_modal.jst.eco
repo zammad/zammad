@@ -1,0 +1,285 @@
+<h2>Selector</h2>
+<p>Create rules that single out the tickets for the Service Level Agreement.</p>
+<h3>Filters</h3>
+<div class="horizontal-filters">
+  <div class="horizontal-filter">
+    <div class="horizontal-filter-body">
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_attribute_1">
+            <optgroup label="Ticket">
+              <option>Customer</option>
+              <option>Owner</option>
+              <option>Number</option>
+              <option>Title</option>
+              <option>Group</option>
+              <option>State</option>
+              <option>Priority</option>
+            </optgroup>
+            <optgroup label="Customer">
+              <option>Email</option>
+              <option>Country</option>
+              <option>Group</option>
+              <option>Organization</option>
+              <option>Department</option>
+              <option>VIP</option>
+            </optgroup>
+            <optgroup label="Organization">
+              <option>Country</option>
+              <option>VIP</option>
+            </optgroup>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option>equals to</option>
+            <option>contains</option>
+            <option>begins with</option>
+            <option>ends with</option>
+            <option>is</option>
+            <option>is not</option>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+      <input id="filter_value_1" type="text" class="form-control">
+    </div>
+    <div class="filter-controls">
+      <div class="filter-control filter-control-remove js-remove is-disabled" title="Remove rule">
+        <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+      </div>
+      <div class="filter-control filter-control-add js-add" title="Add new rule">
+        <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="filter-preview">
+  <h3>Preview <span class="subtitle"><span class="u-highlight">5</span> matches</span></h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th style="width: 28px"></th>
+        <th>Customer</th>
+        <th style="width: 42%">Title</th>
+        <th>Group</th>
+        <th style="width: 25%">Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="item" data-id="1" data-position="1" style="cursor: pointer;">
+        <td>
+          <svg class="icon-priority level-1">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+          </svg>
+        </td>
+        <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+            Nicole Braun (Zammad Foundation)
+          </span> </td>
+        <td>
+          <a href="#ticket/zoom/1"> <span title="Welcome to our little planet with flowers and forests&nbsp;asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf">
+              Welcome to our little planet with flowers and forests&nbsp;asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf
+            </span> </a>
+        </td>
+        <td> <span>
+            Users
+          </span> </td>
+        <td class="noTruncate"> <span>
+            <span class="humanTimeFromNow undefined" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</span> </span>
+        </td>
+      </tr>
+      <tr class="item" data-id="3" data-position="3" style="cursor: pointer;">
+        <td>
+          <svg class="icon-priority level-2">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+          </svg>
+        </td>
+        <td> <span class="user-popover" data-id="4" data-original-title="" title="">
+            Hans Huber
+          </span> </td>
+        <td>
+          <a href="#ticket/zoom/3"> <span title="Noch mehr Tickets bitte">
+              Noch mehr Tickets bitte
+            </span> </a>
+        </td>
+        <td> <span>
+            Users
+          </span> </td>
+        <td class="noTruncate"> <span>
+            <span class="humanTimeFromNow undefined" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">01/20/2015</span> </span>
+        </td>
+      </tr>
+      <tr class="item" data-id="4" data-position="4" style="cursor: pointer;">
+        <td>
+          <svg class="icon-priority level-3">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+          </svg>
+        </td>
+        <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+            Nicole Braun (Zammad Foundation)
+          </span> </td>
+        <td>
+          <a href="#ticket/zoom/4"> <span title="Welcome to Zammad!">
+              Welcome to Zammad!
+            </span> </a>
+        </td>
+        <td> <span>
+            Users
+          </span> </td>
+        <td class="noTruncate"> <span>
+            <span class="humanTimeFromNow undefined" data-time="2015-05-04T14:26:51.000Z" data-tooltip="05/04/2015 16:26">05/04/2015</span> </span>
+        </td>
+      </tr>
+      <tr class="item" data-id="5" data-position="5" style="cursor: pointer;">
+        <td>
+          <svg class="icon-priority level-3">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+          </svg>
+        </td>
+        <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+            Nicole Braun (Zammad Foundation)
+          </span> </td>
+        <td>
+          <a href="#ticket/zoom/5"> <span title="das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debugge">
+              das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debuggen, da ich mir nicht das ist für mich schwer zu debugge
+            </span> </a>
+        </td>
+        <td> <span>
+            Users
+          </span> </td>
+        <td class="noTruncate"> <span>
+            <span class="humanTimeFromNow undefined" data-time="2015-06-10T13:41:29.000Z" data-tooltip="06/10/2015 15:41">5 days 21 hours ago</span> </span>
+        </td>
+      </tr>
+      <tr class="item" data-id="6" data-position="6" style="cursor: pointer;">
+        <td>
+          <svg class="icon-priority level-2">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+          </svg>
+        </td>
+        <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+            Nicole Braun (Zammad Foundation)
+          </span> </td>
+        <td>
+          <a href="#ticket/zoom/6"> <span title="script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler">
+              script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler
+            </span> </a>
+        </td>
+        <td> <span>
+            Users
+          </span> </td>
+        <td class="noTruncate"> <span>
+            <span class="humanTimeFromNow undefined" data-time="2015-06-11T07:26:31.000Z" data-tooltip="06/11/2015 09:26">5 days 3 hours ago</span> </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Schedule</h2>
+<h3>Business Hours <span class="subtitle">in European Central Time <a class="btn btn--text btn--subtle" href="#">(change)</a></span></h3>
+<table class="settings-list settings-list--toggleColumn">
+  <thead>
+    <tr>
+      <th style="text-align: center">
+        <label class="day-name"><input class="js-activateColumn" data-target="monday" type="checkbox" checked> Mo</label>
+      <th style="text-align: center">
+        <label class="day-name"><input class="js-activateColumn" data-target="tuesday" type="checkbox" checked> Tu</label>
+      <th style="text-align: center">
+        <label class="day-name"><input class="js-activateColumn" data-target="wednesday" type="checkbox" checked> We</label>
+      <th style="text-align: center">
+        <label class="day-name"><input class="js-activateColumn" data-target="thursday" type="checkbox" checked> Th</label>
+      <th style="text-align: center">
+        <label class="day-name"><input class="js-activateColumn" data-target="friday" type="checkbox" checked> Fr</label>
+      <th style="text-align: center">
+        <label class="day-name"><input class="js-activateColumn" data-target="saturday" type="checkbox"> Sa</label>
+      <th style="text-align: center">
+        <label class="day-name"><input class="js-activateColumn" data-target="sunday" type="checkbox"> Su</label>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-column="monday" class="form-group day-time is-active">
+        <label for="monday_start_time">from</label>
+        <input type="time" id="monday_start_time" value="07:00" step="600">
+      <td data-column="tuesday" class="form-group day-time is-active">
+        <label for="tuesday_start_time">from</label>
+        <input type="time" id="tuesday_start_time" value="07:00" step="600">
+      <td data-column="wednesday" class="form-group day-time is-active">
+        <label for="wednesday_start_time">from</label>
+        <input type="time" id="wednesday_start_time" value="07:00" step="600">
+      <td data-column="thursday" class="form-group day-time is-active">
+        <label for="thursday_start_time">from</label>
+        <input type="time" id="thursday_start_time" value="07:00" step="600">
+      <td data-column="friday" class="form-group day-time is-active">
+        <label for="friday_start_time">from</label>
+        <input type="time" id="friday_start_time" value="07:00" step="600">
+      <td data-column="saturday" class="form-group day-time">
+        <label for="saturday_start_time">from</label>
+        <input type="time" id="saturday_start_time" value="09:00" step="600">
+      <td data-column="sunday" class="form-group day-time">
+        <label for="sunday_start_time">from</label>
+        <input type="time" id="sunday_start_time" step="600">
+    </tr>
+    <tr>
+      <td data-column="monday" class="form-group day-time is-active">
+        <label for="monday_end_time">till</label>
+        <input type="time" id="monday_end_time" value="18:00" step="600">
+      <td data-column="tuesday" class="form-group day-time is-active">
+        <label for="tuesday_end_time">till</label>
+        <input type="time" id="tuesday_end_time" value="18:00" step="600">
+      <td data-column="wednesday" class="form-group day-time is-active">
+        <label for="wednesday_end_time">till</label>
+        <input type="time" id="wednesday_end_time" value="18:00" step="600">
+      <td data-column="thursday" class="form-group day-time is-active">
+        <label for="thursday_end_time">till</label>
+        <input type="time" id="thursday_end_time" value="18:00" step="600">
+      <td data-column="friday" class="form-group day-time is-active">
+        <label for="friday_end_time">till</label>
+        <input type="time" id="friday_end_time" value="13:00" step="600">
+      <td data-column="saturday" class="form-group day-time">
+        <label for="saturday_end_time">till</label>
+        <input type="time" id="saturday_end_time" value="16:00" step="600">
+      <td data-column="sunday" class="form-group day-time">
+        <label for="sunday_end_time">till</label>
+        <input type="time" id="sunday_end_time" step="600">
+    </tr>
+  </tbody>
+</table>
+
+<h3>Response Times <span class="subtitle">in Business Hours</span></h3>
+<table class="settings-list settings-list--toggleRow">
+  <thead>
+    <tr>
+      <th>Active
+      <th>Type
+      <th>Time <span class="text-muted">in hours</span>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="is-active">
+      <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="first_response_time"> 
+      <td>
+        <label class="inline-label" for="first_response_time">First Response Time</label>
+        <p class="subtle">Timeframe for the first response.</p>
+      <td><input type="time" step="600" max="259200">
+    </tr>
+    <tr class="is-active">
+      <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="update_time">
+      <td>
+        <label class="inline-label" for="update_time">Update Time</label>
+        <p class="subtle">Timeframe for every following response.</p>
+      <td><input type="time" step="600" max="259200">
+    </tr>
+    <tr>
+      <td style="text-align: center"><input type="checkbox" id="solution_time" class="js-activateRow">
+      <td>
+        <label class="inline-label" for="solution_time">Solution Time</label>
+        <p class="subtle">Timeframe for solving the problem.</p>
+      <td><input type="time" step="600" max="259200">
+    </tr>
+  </tbody>
+</table>

@@ -1288,6 +1288,7 @@ class slaRef extends App.ControllerContent
   events:
     'click .js-activateColumn': 'activateColumn'
     'click .js-activateRow': 'activateRow'
+    'click [data-type=new]': 'createNew'
 
   constructor: ->
     super
@@ -1305,6 +1306,15 @@ class slaRef extends App.ControllerContent
     checkbox = @$(event.currentTarget)
     checkbox.closest('tr').toggleClass('is-active', checkbox.prop('checked'))
 
+  createNew: =>
+    new App.ControllerModal
+      head: 'New Service Level Agreement (SLA)'
+      content: App.view('layout_ref/sla_modal')()
+      button: 'Create SLA'
+      shown: true
+      cancel: true
+      container: @el
+
 App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
 
 
@@ -1312,6 +1322,7 @@ class schedulersRef extends App.ControllerContent
 
   events:
     'click .select-value': 'select'
+    'click [data-type=new]': 'createNew'
 
   constructor: ->
     super
@@ -1319,6 +1330,15 @@ class schedulersRef extends App.ControllerContent
 
   render: ->
     @html App.view('layout_ref/schedulers')()
+
+  createNew: =>
+    new App.ControllerModal
+      head: 'New Scheduler'
+      content: App.view('layout_ref/scheduler_modal')()
+      button: 'Create Schedule'
+      shown: true
+      cancel: true
+      container: @el
 
   select: (event) =>
     target = $(event.currentTarget)
