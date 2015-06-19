@@ -16,4 +16,15 @@ class Organization < ApplicationModel
   search_index_support
   notify_clients_support
   latest_change_support
+
+
+  private
+
+  def cache_delete
+    super
+
+    # delete asset caches
+    key = "Organization::member_ids::#{id}"
+    Cache.delete(key)
+  end
 end

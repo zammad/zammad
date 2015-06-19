@@ -412,6 +412,20 @@ returns
 
   private
 
+  def cache_delete
+    super
+
+    # delete asset caches
+    key = "User::authorizations::#{id}"
+    Cache.delete(key)
+    key = "User::role_ids::#{id}"
+    Cache.delete(key)
+    key = "User::group_ids::#{id}"
+    Cache.delete(key)
+    key = "User::organization_ids::#{id}"
+    Cache.delete(key)
+  end
+
   def check_name
 
     if ( firstname && !firstname.empty? ) && ( !lastname || lastname.empty? )
