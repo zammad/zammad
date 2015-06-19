@@ -1400,7 +1400,7 @@ class searchableSelectRef extends App.ControllerContent
         name: 'project-name'
         id: 'project-name-123'
         placeholder: 'Enter Project Name'
-        options: [{"value":0,"name":"Apple"},{"value":1,"name":"Microsoft","selected":true},{"value":2,"name":"Google"},{"value":3,"name":"Deutsche Bahn"},{"value":4,"name":"Sparkasse"},{"value":5,"name":"Deutsche Post"},{"value":6,"name":"Mitfahrzentrale"},{"value":7,"name":"Starbucks"},{"value":8,"name":"Mac Donalds"},{"value":9,"name":"Flixbus"},{"value":10,"name":"Betahaus"},{"value":11,"name":"Bruno Banani"},{"value":12,"name":"Alpina"},{"value":13,"name":"Samsung"},{"value":14,"name":"ChariTea"},{"value":15,"name":"fritz-kola"},{"value":16,"name":"Vitamin Water"},{"value":17,"name":"Znuny"}]
+        options: [{"value":0,"name":"Appleasdfasdfasdjflkajhsdlfkjahsdlfkjahsdlkfjahsdlkfjahsldkfjahsldkjfahsldkjfh asdf lkajshdfl kajshdfl kajhsdflk ajhsdlfk jahsdlfk jahsdlfk jahsdlkfj ahsdlkfj ahsldkjfahskdjfh aslkdjfhal skdjfha lksdjfhalksdjhfal ksjdal kjsdhfakl sjdhafl jsdhf laskdjhfal ksjdhfal ksdjhfal kjsdhal kjsdhfl akjsdhf lhkj"},{"value":1,"name":"Microsoft","selected":true},{"value":2,"name":"Google"},{"value":3,"name":"Deutsche Bahn"},{"value":4,"name":"Sparkasse"},{"value":5,"name":"Deutsche Post"},{"value":6,"name":"Mitfahrzentrale"},{"value":7,"name":"Starbucks"},{"value":8,"name":"Mac Donalds"},{"value":9,"name":"Flixbus"},{"value":10,"name":"Betahaus"},{"value":11,"name":"Bruno Banani"},{"value":12,"name":"Alpina"},{"value":13,"name":"Samsung"},{"value":14,"name":"ChariTea"},{"value":15,"name":"fritz-kola"},{"value":16,"name":"Vitamin Water"},{"value":17,"name":"Znuny"}]
 
     @html App.view('layout_ref/search_select')
 

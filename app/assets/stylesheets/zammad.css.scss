@@ -4369,8 +4369,12 @@ footer {
     }
 
     li {
+      line-height: initial;
+      height: auto;
+      padding: 9px 15px;
       display: flex;
       align-items: center;
+      word-break: break-all;
     }
 
     .dropdown-iconSpacer,
