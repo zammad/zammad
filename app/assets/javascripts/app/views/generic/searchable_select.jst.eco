@@ -1,6 +1,6 @@
 <div class="dropdown-toggle" data-toggle="dropdown">
-  <input 
-    class="form-control js-input<%= " #{ @class }" if @class %>" 
+  <input
+    class="form-control js-input<%= " #{ @class }" if @class %>"
     placeholder="<%= @placeholder %>"
     value="<%= @valueName %>"
   >
@@ -16,6 +16,6 @@
 </div>
 <ul class="dropdown-menu dropdown-menu-left" role="menu">
 <% for row in @options: %>
-  <li role="presentation" class="js-value" data-value="<%= row.value %>"><%= row.name %>
+  <li role="presentation" class="js-value" data-value="<%= row.value %>"><%- row.name %>
 <% end %>
-</ul> 
+</ul>
