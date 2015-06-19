@@ -52,8 +52,9 @@ class App.SearchableSelect extends Spine.Controller
     switch event.keyCode
       when 40 then @nudge event, 1 # down
       when 38 then @nudge event, -1 # up
-      when 13 then @selectHighlightedItem() # enter
+      when 13 then @onEnter event
       when 27 then @onEscape()
+      when 9 then @onTab event
 
   onEscape: ->
     @toggle() if @isOpen
@@ -78,9 +79,18 @@ class App.SearchableSelect extends Spine.Controller
     @input.val event.currentTarget.textContent.trim()
     @shadowInput.val event.currentTarget.getAttribute('data-value')
 
-  selectHighlightedItem: ->
+  onTab: (event) ->
+    return if not @isOpen
+    event.preventDefault()
+
+  onEnter: (event) ->
     if not @isOpen
-      return @toggle()
+      if @shadowInput.val() is ''
+        event.preventDefault()
+        @toggle()
+      return
+
+    event.preventDefault()
 
     @input.val @values.filter('.is-active').text().trim()
     @shadowInput.val @values.filter('.is-active').attr('data-value')
@@ -88,7 +98,7 @@ class App.SearchableSelect extends Spine.Controller
 
   filterList: (event) =>
     @toggle() if not @isOpen
-    
+
     query = @input.val()
     @filterByQuery query
 
