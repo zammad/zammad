@@ -4030,6 +4030,7 @@ footer {
     vertical-align: top;
     margin: 2px 0 0 5px;
     height: 25px;
+    display: inline-block;
   }
 
   .tokenfield .token .token-label {
@@ -4329,6 +4330,7 @@ footer {
     height: 39px;
     line-height: 39px;
     padding: 0 15px;
+    cursor: pointer;
   }
 
   .dropdown li:not(:first-child) {
@@ -4340,7 +4342,7 @@ footer {
     background: hsl(205,90%,60%);
   }
 
-    .dropdown li:not(.recipientList-controls):hover + li,
+    .dropdown li:hover + li,
     .dropdown li.is-active + li {
       box-shadow: none;
     }
@@ -4362,6 +4364,10 @@ footer {
   }
 
   .dropdown.dropdown--actions {
+    .dropdown-menu {
+      color: white;  
+    }
+
     li {
       display: flex;
       align-items: center;
@@ -4468,6 +4474,10 @@ footer {
     @extend .u-clickable;
     padding: 0 10px !important;
     background: hsl(206,7%,28%) !important;
+    
+    & + li {
+      box-shadow: 0 1px rgba(255,255,255,.13) inset;
+    }
   }
 
   .recipientList-organizationMembers {
@@ -5467,6 +5477,26 @@ output {
   
   &:last-child {
     margin-right: 0; 
+  }
+}
+
+.searchableSelect {
+  position: relative;
+  
+  .searchableSelect-shadow {
+    display: none;
+  }
+  
+  &.dropdown li:hover:not(.is-active) {
+    background: none;
+  }
+
+  &.dropdown li.is-hidden {
+    display: none;
+  }
+
+  li:not(.is-active):hover + li {
+    box-shadow: 0 1px rgba(255,255,255,.13) inset;
   }
 }
 

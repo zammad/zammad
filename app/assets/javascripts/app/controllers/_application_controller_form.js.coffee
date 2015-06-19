@@ -1097,6 +1097,11 @@ class App.ControllerForm extends App.Controller
       completion = new App.UserOrganizationAutocompletion( attribute: attribute )
       item = completion.element()
 
+    # searchable select
+    else if attribute.tag is 'searchable_select'
+      select = new App.SearchableSelect( attribute: attribute )
+      item = select.element()
+
     # autocompletion
     else if attribute.tag is 'autocompletion'
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )

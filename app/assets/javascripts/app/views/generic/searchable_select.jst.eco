@@ -1,0 +1,21 @@
+<div class="dropdown-toggle" data-toggle="dropdown">
+  <input 
+    class="form-control js-input<%= " #{ @class }" if @class %>" 
+    placeholder="<%= @placeholder %>"
+    value="<%= @valueName %>"
+  >
+  <input
+    class="searchableSelect-shadow form-control js-shadow"
+    id="<%= @id %>"
+    name="<%= @name %>"
+    <%= @required %>
+    <%= @autofocus %>
+    value="<%= @value %>"
+  >
+  <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+</div>
+<ul class="dropdown-menu dropdown-menu-left" role="menu">
+<% for row in @options: %>
+  <li role="presentation" class="js-value" data-value="<%= row.value %>"><%= row.name %>
+<% end %>
+</ul> 

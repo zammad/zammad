@@ -4,6 +4,7 @@
 
 
   <ul>
+    <li><a href="#layout_ref/search_select">Searchable Select</a></li>
     <li><a href="#layout_ref/schedulers">Schedulers</a></li>
     <li><a href="#layout_ref/sla">Service Level Agreements</a></li>
     <li><a href="#layout_ref/user_list">User List</a></li>
