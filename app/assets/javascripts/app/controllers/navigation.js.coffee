@@ -131,6 +131,8 @@ class App.Navigation extends App.ControllerWidgetPermanent
       user: user
     )
 
+    @taskbar = new App.TaskbarWidget( el: @$('.tasks') )
+
     # renderMenu
     @renderMenu()
 
@@ -273,8 +275,6 @@ class App.Navigation extends App.ControllerWidgetPermanent
     new App.OnlineNotificationWidget(
       el: @el
     )
-
-    @taskbar = new App.TaskbarWidget( el: @$('.tasks') )
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)

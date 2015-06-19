@@ -132,6 +132,11 @@ class _taskManagerSingleton extends Spine.Module
     # input validation
     params.key = App.Utils.htmlAttributeCleanup(params.key)
 
+    # in case an init execute arrives later but is aleady executed, ignore it
+    if params.init && @tasksStarted[params.key]
+      #console.log('IGNORE LATER INIT', params)
+      return
+
     # remember started task / prevent to open task twice
     createNewTask = true
     if @tasksStarted[params.key]
@@ -141,11 +146,6 @@ class _taskManagerSingleton extends Spine.Module
     # if we have init task startups, let the controller know this
     if params.init
       params.params.init = true
-
-    # in case an init execute arrives later but is aleady executed, ignore it
-    if params.init && @workers[ params.key ]
-      #console.log('IGNORE LATER INIT', params)
-      return
 
     # remember latest active controller
     if params.show
