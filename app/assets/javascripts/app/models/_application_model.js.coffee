@@ -564,7 +564,8 @@ class App.Model extends Spine.Model
       all_complied = @_filterExtended( all_complied, params.filterExtended )
 
     # sort by
-    all_complied = @_sortBy( all_complied, params.sortBy )
+    if params.sortBy != null
+      all_complied = @_sortBy( all_complied, params.sortBy )
 
     # order
     if params.order
