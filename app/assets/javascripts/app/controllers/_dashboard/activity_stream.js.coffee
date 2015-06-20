@@ -38,6 +38,10 @@ class App.DashboardActivityStream extends App.Controller
     @render(items)
 
   render: (items) ->
+    if _.isEmpty(items)
+      @$('.activity-description').removeClass('hidden')
+      return
+
     items = @prepareForObjectList(items)
 
     html = $('<div></div>')

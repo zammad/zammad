@@ -1,6 +1,7 @@
 class App.Dashboard extends App.Controller
   events:
     'click .tabs .tab': 'toggle'
+    'click .intro': 'clues'
   constructor: ->
     super
 
@@ -28,6 +29,11 @@ class App.Dashboard extends App.Controller
     )
 
     @renderWidgetClockFace 25
+
+  clues: =>
+    new App.FirstStepsClues(
+      el: @el
+    )
 
   renderWidgetClockFace: (time) =>
     canvas = @el.find 'canvas'
