@@ -1,4 +1,6 @@
 class App.Dashboard extends App.Controller
+  events:
+    'click .tabs .tab': 'toggle'
   constructor: ->
     super
 
@@ -6,54 +8,10 @@ class App.Dashboard extends App.Controller
       @navigate '#'
       return
 
-    @plugins = {
-      main: {
-        my_assigned: {
-          controller: App.DashboardTicket,
-          params: {
-            view: 'my_assigned',
-          },
-        },
-        all_unassigned: {
-          controller: App.DashboardTicket,
-          params: {
-            view: 'all_unassigned',
-          },
-        },
-      },
-      side: {
-        activity_stream: {
-          controller: App.DashboardActivityStream,
-          params: {
-            limit: 20,
-          },
-        },
-#        rss_atom: {
-#          controller: App.DashboardRss,
-#          params: {
-#            head:  'Heise ATOM',
-#            url:   'http://www.heise.de/newsticker/heise-atom.xml',
-#            limit: 5,
-#          },
-#        },
-#        rss_rdf: {
-#          controller: App.DashboardRss,
-#          params: {
-#            head:  'Heise RDF',
-#            url:   'http://www.heise.de/newsticker/heise.rdf',
-#            limit: 5,
-#          },
-#        },
-#        recent_viewed: {
-#          controller: App.DashboardRecentViewed,
-#        }
-      }
-    }
-
     # render page
     @render()
 
-    # rerender view, e. g. on langauge change
+    # rerender view, e. g. on language change
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
       @render()
@@ -64,27 +22,12 @@ class App.Dashboard extends App.Controller
       head: 'Dashboard'
     )
 
-    for area, plugins of @plugins
-      for name, plugin of plugins
-        target = area + '_' + name
-        @el.find('.' + area + '-overviews').append('<div class="" id="' + target + '"></div>')
-        if plugin.controller
-          params = plugin.params || {}
-          params.el = @el.find( '#' + target )
-          new plugin.controller( params )
-
-    dndOptions =
-      handle:               'h2.can-move'
-      placeholder:          'can-move-plcaeholder'
-      tolerance:            'pointer'
-      distance:             15
-      opacity:              0.6
-      forcePlaceholderSize: true
+    new App.DashboardActivityStream(
+      el:    @$('.sidebar')
+      limit: 25
+    )
 
     @renderWidgetClockFace 25
-
-    @el.find( '#sortable' ).sortable( dndOptions )
-    @el.find( '#sortable-sidebar' ).sortable( dndOptions )
 
   renderWidgetClockFace: (time) =>
     canvas = @el.find 'canvas'
@@ -154,6 +97,13 @@ class App.Dashboard extends App.Controller
 
   release: =>
     # no
+
+  toggle: (e) =>
+    @$('.tabs .tab').removeClass('active')
+    $(e.target).addClass('active')
+    target = $(e.target).data('area')
+    @$('.tab-content').addClass('hidden')
+    @$(".tab-content.#{target}").removeClass('hidden')
 
 class DashboardRouter extends App.ControllerPermanent
   constructor: (params) ->

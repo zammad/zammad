@@ -40,18 +40,18 @@ class App.DashboardActivityStream extends App.Controller
   render: (items) ->
     items = @prepareForObjectList(items)
 
-    @html App.view('dashboard/activity_stream')(
-      head: 'Activity Stream',
-    )
+    html = $('<div></div>')
     for item in items
-      @el.append( @renderItem(item) )
+      html.append( @renderItem(item) )
+
+    @el.append html
 
     # update time
     @frontendTimeUpdate()
 
   renderItem: (item) ->
-    html = $(App.view('dashboard/activity_stream_item')(
-      item: item,
+    html = $(App.view('dashboard/activity_stream')(
+      item: item
     ))
     new App.WidgetAvatar(
       el:       html.find('.js-avatar')
