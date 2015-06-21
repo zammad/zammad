@@ -2,13 +2,17 @@ class App.FirstStepsClues extends App.Controller
   clues: [
     {
       container: '.search-holder'
-      headline: 'Suche'
-      text: 'Um alles zu finden nutze den <kbd>*</kbd>-Platzhalter'
+      headline: 'Search'
+      text: 'Here you can search for ticket, customers and organizations. To find everything use the <kbd>*</kbd>-Placeholder'
+      #headline: 'Suche'
+      #text: 'Um alles zu finden nutze den <kbd>*</kbd>-Platzhalter'
     }
     {
       container: '.user-menu'
-      headline: 'Erstellen'
-      text: 'Hier kannst du Tickets, Kunden und Organisationen anlegen.'
+      headline: 'Create'
+      text: 'Here you can create new tickets. Also if you have the permissions you can create new customers and organizations.'
+      #headline: 'Erstellen'
+      #text: 'Hier kannst du Tickets, Kunden und Organisationen anlegen.'
       actions: [
         'click .add .js-action',
         'hover .add'
@@ -16,8 +20,10 @@ class App.FirstStepsClues extends App.Controller
     }
     {
       container: '.user-menu'
-      headline: 'Persönliches Menü'
-      text: 'Hier findest du den Logout, den Weg zu deinen Einstellungen und deinen Verlauf.'
+      headline: 'Personal Settings'
+      text: 'Here you can sign out, change the frontend language or see your latest views items.'
+      #headline: 'Persönliches Menü'
+      #text: 'Hier findest du den Logout, den Weg zu deinen Einstellungen und deinen Verlauf.'
       actions: [
         'click .user .js-action',
         'hover .user'
@@ -25,8 +31,10 @@ class App.FirstStepsClues extends App.Controller
     }
     {
       container: '.main-navigation .overviews'
-      headline: 'Übersichten'
-      text: 'Hier findest du eine Liste aller Tickets.'
+      headline: 'Overviews'
+      text: 'Here you find your ticket overviews for open, my assigned or escalated tickets.'
+      #headline: 'Übersichten'
+      #text: 'Hier findest du eine Liste aller Tickets.'
       actions: [
         'hover'
       ]
@@ -34,7 +42,9 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.main-navigation .dashboard'
       headline: 'Dashboard'
-      text: 'Hier siehst du auf einem Blick ob sich alle Agenten an die Spielregeln halten.'
+      text: 'Here you see a quick overview about your and other agents performance.'
+      #headline: 'Dashboard'
+      #text: 'Hier siehst du auf einem Blick ob sich alle Agenten an die Spielregeln halten.'
       actions: [
         'hover'
       ]
@@ -51,8 +61,15 @@ class App.FirstStepsClues extends App.Controller
     'click .js-previous': 'previous'
     'click .js-close': 'close'
 
-  constructor: ->
-    super
+  constructor: (params) ->
+
+    # disable active navbar elements
+    $('.main-navigation .active').removeClass('active')
+
+    $('#app').append('<div class="js-modal--clue"></div>')
+    params.el = $('#app .js-modal--clue')
+
+    super params
 
     ###
 
@@ -61,7 +78,7 @@ class App.FirstStepsClues extends App.Controller
       onComplete: a callback for when the user is done
 
     ###
-    @el = $('body')
+
     @options.onComplete = -> null
     @position = 0
     @render()
@@ -83,7 +100,7 @@ class App.FirstStepsClues extends App.Controller
     @remove()
 
   remove: ->
-    @$('.modal').remove()
+    @el.remove()
 
   navigate: (direction) ->
     @cleanUp =>
@@ -105,14 +122,12 @@ class App.FirstStepsClues extends App.Controller
       if clue.actions
         @perform clue.actions, container
 
-      callback()
+      if callback
+        callback()
 
   render: =>
-    html = App.view('layout_ref/clues')
-    console.log('HH', html)
-    @el.append(html)
-    #@modalWindow = $('.js-positionOrigin')
-    #@backdrop = $('.js-backdrop')
+    @el.addClass('modal modal--clue')
+    @html App.view('dashboard/first_steps_clues')
     @backdrop.velocity
       properties:
         opacity: [1, 0]
@@ -124,7 +139,7 @@ class App.FirstStepsClues extends App.Controller
     clue = @clues[@position]
     container = $(clue.container)
     container.addClass('selected-clue')
-    console.log('showClue', clue, clue.container)
+
     if clue.actions
       @perform clue.actions, container
 
@@ -136,7 +151,7 @@ class App.FirstStepsClues extends App.Controller
       x: boundingBox.left + boundingBox.width/2
       y: boundingBox.top + boundingBox.height/2
 
-    @modalWindow.html App.view('layout_ref/clue_content')
+    @modalWindow.html App.view('dashboard/first_steps_clues_content')
       headline: clue.headline
       text: clue.text
       position: @position
@@ -155,7 +170,7 @@ class App.FirstStepsClues extends App.Controller
 
   showWindow: =>
     @modalWindow.velocity
-      properties: 
+      properties:
         scale: [1, 0.2]
         opacity: [1, 0]
       options:
@@ -164,7 +179,7 @@ class App.FirstStepsClues extends App.Controller
 
   hideWindow: (callback) =>
     @modalWindow.velocity
-      properties: 
+      properties:
         scale: [0.2, 1]
         opacity: 0
       options:
@@ -267,7 +282,7 @@ class App.FirstStepsClues extends App.Controller
   getVisibleBoundingBox: (el) ->
     ###
 
-      getBoundingClientRect doesn't take 
+      getBoundingClientRect doesn't take
       absolute-positioned child nodes into account
 
     ###

@@ -5,27 +5,31 @@
   </div>
 
   <div class="tab-content first-steps-widgets hidden">
-    Configuration
+    <% if @isAdmin: %>
+    <%- @T('Configuration') %>
     <ul>
-      <li>Branding</li>
-      <li>Your Email Configuration</li>
-      <li>Invite Agents/Colliges</li>
+      <li><%- @T('Branding') %></li>
+      <li><%- @T('Your Email Configuration') %></li>
+      <li><%- @T('Invite Agents/Colliges') %></li>
     </ul>
-    How to use it
+    <% end %>
+    <%- @T('How to use it') %>
     <ul>
-      <li>Intro</li>
-      <li>Create a Test Ticket</li>
-      <li>Create new Overviews</li>
-      <li>Create Text Modues</li>
-      <li>Create Macros</li>
+      <li><a href="#" class="intro"><%- @T('Intro') %></a></li>
+      <li><%- @T('Create a Test Ticket') %></li>
+      <li><%- @T('Create new Overviews') %></li>
+      <li><%- @T('Create Text Modues') %></li>
+      <li><%- @T('Create Macros') %></li>
     </ul>
-    Aditionals Channels
+    <% if @isAdmin: %>
+    <%- @T('Additionals Channels') %>
     <ul>
-      <li>Twitter</li>
-      <li>Facebook</li>
-      <li>Chat</li>
-      <li>Widget</li>
+      <li><%- @T('Twitter') %></li>
+      <li><%- @T('Facebook') %></li>
+      <li><%- @T('Chat') %></li>
+      <li><%- @T('Widget') %></li>
     </ul>
+    <% end %>
 
   </div>
 
@@ -144,4 +148,8 @@
 </div>
 <div class="sidebar optional">
   <h2><%- @T('Activity Stream') %></h2>
+  <div class="activity-description hidden">
+    <p><%- @T('Here you will find latest activities in your system.') %></p>
+    <p><%- @T('E. g. recent changed tickets, users or organizations.') %></p>
+  </div>
 </div>

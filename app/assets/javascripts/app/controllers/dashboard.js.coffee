@@ -2,6 +2,7 @@ class App.Dashboard extends App.Controller
   events:
     'click .tabs .tab': 'toggle'
     'click .intro': 'clues'
+
   constructor: ->
     super
 
@@ -20,7 +21,8 @@ class App.Dashboard extends App.Controller
   render: ->
 
     @html App.view('dashboard')(
-      head: 'Dashboard'
+      head:    'Dashboard'
+      isAdmin: @isRole('Admin')
     )
 
     new App.DashboardActivityStream(
@@ -30,7 +32,8 @@ class App.Dashboard extends App.Controller
 
     @renderWidgetClockFace 25
 
-  clues: =>
+  clues: (e) =>
+    e.preventDefault()
     new App.FirstStepsClues(
       el: @el
     )
