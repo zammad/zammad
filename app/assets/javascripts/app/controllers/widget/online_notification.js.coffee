@@ -40,7 +40,7 @@ class App.OnlineNotificationWidget extends App.Controller
     if !count
       @el.find('.js-counter').text('')
       return
-    
+
     @el.find('.js-counter').text(count)
 
   markAllAsRead: =>
@@ -73,7 +73,7 @@ class App.OnlineNotificationWidget extends App.Controller
       notificationsContainer.addClass('is-overflowing')
     else
       notificationsContainer.removeClass('is-overflowing')
-    
+
     notificationsContainer.find('.popover-content').css('height', "#{heightPopoverContentNew}px")
 
     # close notification list on click
@@ -117,6 +117,12 @@ class App.OnlineNotificationWidget extends App.Controller
     $('.js-notificationsContainer .popover-title').html(
       App.i18n.translateInline( 'Notifications' ) + " <span class='popover-notificationsCounter'>#{counter}</span>"
     )
+
+    # show mark all as read if needed
+    if counter is 0
+      $('.js-notificationsContainer .js-markAllAsRead').addClass('hidden')
+    else
+      $('.js-notificationsContainer .js-markAllAsRead').removeClass('hidden')
 
     # update content
     items = @prepareForObjectList(items)
