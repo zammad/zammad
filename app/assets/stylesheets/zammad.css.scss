@@ -4737,6 +4737,10 @@ label + .wizard-buttonList {
   height: 0;
   max-width: 200px;
   max-height: 100px;
+  
+  &[src=""] {
+    visibility: hidden;
+  }
 
   + .logo-preview-placeholder {
     height: 100px;
