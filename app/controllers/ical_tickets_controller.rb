@@ -9,8 +9,6 @@ class IcalTicketsController < ApplicationController
   #
   # @summary          Returns an iCal file with all tickets (open, new, pending, esclation) as events.
   #
-  # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
-  #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def all
@@ -27,8 +25,6 @@ class IcalTicketsController < ApplicationController
   #
   # @summary          Returns an iCal file with all new and open tickets as events.
   #
-  # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
-  #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def new_open
@@ -41,8 +37,6 @@ class IcalTicketsController < ApplicationController
   #
   # @summary          Returns an iCal file with all pending tickets as events.
   #
-  # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
-  #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def pending
@@ -54,8 +48,6 @@ class IcalTicketsController < ApplicationController
   # @path       [GET] /ical/ticket_escalation
   #
   # @summary          Returns an iCal file with all escalation times for tickets as events.
-  #
-  # @parameter        action_token(required) [String] The action_token identifying the requested User privileged for 'iCal' action.
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
