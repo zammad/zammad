@@ -329,7 +329,6 @@ class TicketsController < ApplicationController
       query: params[:term],
       condition: params[:condition],
       current_user: current_user,
-      detail: params[:detail]
     )
     assets = {}
     ticket_result = []
@@ -372,10 +371,8 @@ class TicketsController < ApplicationController
       }
       user_tickets_open = Ticket.search(
         limit: limit,
-        #:query        => params[:term],
         condition: condition,
         current_user: current_user,
-        detail: true,
       )
       user_tickets_open_ids = assets_of_tickets(user_tickets_open, assets)
 
@@ -386,10 +383,8 @@ class TicketsController < ApplicationController
       }
       user_tickets_closed = Ticket.search(
         limit: limit,
-        #:query        => params[:term],
         condition: condition,
         current_user: current_user,
-        detail: true,
       )
       user_tickets_closed_ids = assets_of_tickets(user_tickets_closed, assets)
 
@@ -438,10 +433,8 @@ class TicketsController < ApplicationController
       }
       org_tickets_open = Ticket.search(
         limit: limit,
-        #:query        => params[:term],
         condition: condition,
         current_user: current_user,
-        detail: true,
       )
       org_tickets_open_ids = assets_of_tickets(org_tickets_open, assets)
 
@@ -452,10 +445,8 @@ class TicketsController < ApplicationController
       }
       org_tickets_closed = Ticket.search(
         limit: limit,
-        #:query        => params[:term],
         condition: condition,
         current_user: current_user,
-        detail: true,
       )
       org_tickets_closed_ids = assets_of_tickets(org_tickets_closed, assets)
 

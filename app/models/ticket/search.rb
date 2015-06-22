@@ -22,7 +22,7 @@ search tickets via search index
     :current_user => User.find(123),
     :query        => 'search something',
     :limit        => 15,
-    :full         => 0
+    :full         => false,
   )
 
 returns
@@ -33,10 +33,19 @@ search tickets via database
 
   result = Ticket.search(
     :current_user => User.find(123),
-    :condition    => '',
-    :detail       => true,
+    :condition    => {
+      'tickets.owner_id' => user.id,
+      'tickets.state_id' => Ticket::State.where(
+        state_type_id: Ticket::StateType.where(
+          name: [
+            'pending reminder',
+            'pending action',
+          ],
+        ),
+      ),
+    },
     :limit        => 15,
-    :full         => 0
+    :full         => false,
   )
 
 returns
@@ -57,7 +66,7 @@ returns
     end
 
     # try search index backend
-    if !params[:detail] && SearchIndexBackend.enabled?
+    if !params[:condition] && SearchIndexBackend.enabled?
       query_extention = {}
       query_extention['bool'] = {}
       query_extention['bool']['must'] = []
