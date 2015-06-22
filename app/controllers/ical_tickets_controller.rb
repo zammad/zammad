@@ -3,7 +3,7 @@
 require 'icalendar'
 
 class IcalTicketsController < ApplicationController
-  before_action { authentication_check( { basic_auth_promt: true } ) }
+  before_action { authentication_check( { basic_auth_promt: true, token_action: 'iCal' } ) }
 
   # @path       [GET] /ical/tickets/:action_token
   #

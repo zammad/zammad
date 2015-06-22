@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user,
                 :authentication_check,
-                :authentication_check_action_token,
                 :config_frontend,
                 :role?,
                 :model_create_render,
@@ -96,7 +95,7 @@ class ApplicationController < ActionController::Base
     session[:user_agent] = request.env['HTTP_USER_AGENT']
   end
 
-  def authentication_check_only
+  def authentication_check_only(auth_param)
 
     logger.debug 'authentication_check'
     session[:request_type] = 1
@@ -162,6 +161,43 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # check token
+    if auth_param[:token_action]
+      authenticate_with_http_token do |token, options|
+        logger.debug 'token auth check'
+        session[:request_type] = 4
+
+        userdata = Token.check(
+          action: auth_param[:token_action],
+          name: token,
+        )
+
+        message = ''
+        if !userdata
+          message = 'authentication failed'
+        end
+
+        # return auth ok
+        if message == ''
+
+          # remember user
+          session[:user_id] = userdata.id
+
+          # set token user to current user
+          current_user_set(userdata)
+          return {
+            auth: true
+          }
+        end
+
+        # return auth not ok
+        return {
+          auth: false,
+          message: message,
+        }
+      end
+    end
+
     # return auth not ok (no session exists)
     if !session[:user_id]
       logger.debug 'no valid session, user_id'
@@ -177,11 +213,11 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def authentication_check( params = { basic_auth_promt: false } )
-    result = authentication_check_only
+  def authentication_check( auth_param = { basic_auth_promt: false } )
+    result = authentication_check_only(auth_param)
 
     # check if basic_auth fallback is possible
-    if params[:basic_auth_promt] && result[:auth] == false
+    if auth_param[:basic_auth_promt] && result[:auth] == false
 
       return request_http_basic_authentication
     end
@@ -198,24 +234,6 @@ class ApplicationController < ActionController::Base
     end
 
     # return auth ok
-    true
-  end
-
-  def authentication_check_action_token(action)
-
-    user = Token.check(
-      action: action,
-      name: params[:action_token],
-    )
-
-    if !user
-      logger.debug params.inspect
-      response_access_deny
-      return
-    end
-
-    current_user_set( user )
-
     true
   end
 
