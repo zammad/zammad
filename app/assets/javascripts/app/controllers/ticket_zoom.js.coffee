@@ -365,15 +365,16 @@ class App.TicketZoom extends App.Controller
       @autosaveLast = @taskGet()
     update = =>
       #console.log('AR', @formParam( @el.find('.article-add') ) )
+      currentStoreTicket = @ticket.attributes()
+      delete currentStoreTicket.article
       currentStore  =
-        ticket:  @ticket.attributes()
-        article: {
+        ticket:  currentStoreTicket
+        article:
           to:       ''
           cc:       ''
           type:     'note'
           body:     ''
           internal: ''
-        }
       currentParams =
         ticket:  @formParam( @el.find('.edit') )
         article: @formParam( @el.find('.article-add') )
@@ -390,13 +391,13 @@ class App.TicketZoom extends App.Controller
       # get diff of last save
       changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast )
       if !changedBetweenLastSave
-        console.log('model DIFF ', modelDiff)
+        #console.log('model DIFF ', modelDiff)
 
         @autosaveLast = clone(currentParams)
         @markFormDiff( modelDiff )
 
         @taskUpdateAll( modelDiff )
-    @interval( update, 3000, 'autosave' )
+    @interval( update, 4000, 'autosave' )
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
@@ -407,7 +408,7 @@ class App.TicketZoom extends App.Controller
     params         = {}
     params.ticket  = @formParam( ticketForm )
     params.article = @formParam( articleForm )
-    console.log('markFormDiff', diff, params)
+    #console.log('markFormDiff', diff, params)
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)
