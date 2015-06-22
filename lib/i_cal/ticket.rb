@@ -16,6 +16,7 @@ module ICal::Ticket
     tickets = Ticket.search(
       current_user: user,
       condition: condition,
+      detail: true,
     )
 
     events_data = []
@@ -51,6 +52,7 @@ module ICal::Ticket
     tickets = Ticket.search(
       current_user: user,
       condition: condition,
+      detail: true,
     )
 
     events_data = []
@@ -81,6 +83,7 @@ module ICal::Ticket
     tickets = Ticket.search(
       current_user: user,
       condition: condition,
+      detail: true,
     )
 
     events_data = []
