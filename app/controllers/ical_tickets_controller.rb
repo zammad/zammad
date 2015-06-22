@@ -3,9 +3,9 @@
 require 'icalendar'
 
 class IcalTicketsController < ApplicationController
-  before_action  { authentication_check_action_token 'iCal' }
+  before_action { authentication_check( { basic_auth_promt: true } ) }
 
-  # @path       [GET] /ical/tickets_all/:action_token
+  # @path       [GET] /ical/tickets/:action_token
   #
   # @summary          Returns an iCal file with all tickets (open, new, pending, esclation) as events.
   #
