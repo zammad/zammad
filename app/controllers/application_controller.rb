@@ -177,8 +177,14 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def authentication_check
+  def authentication_check( params = { basic_auth_promt: false } )
     result = authentication_check_only
+
+    # check if basic_auth fallback is possible
+    if params[:basic_auth_promt] && result[:auth] == false
+
+      return request_http_basic_authentication
+    end
 
     # return auth not ok
     if result[:auth] == false
