@@ -5,7 +5,7 @@ require 'icalendar'
 class IcalTicketsController < ApplicationController
   before_action { authentication_check( { basic_auth_promt: true, token_action: 'iCal' } ) }
 
-  # @path       [GET] /ical/tickets/:action_token
+  # @path       [GET] /ical/tickets
   #
   # @summary          Returns an iCal file with all tickets (open, new, pending, esclation) as events.
   #
@@ -14,7 +14,6 @@ class IcalTicketsController < ApplicationController
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def all
-
     new_open_events_data   = new_open_events_data_get
     pending_events_data    = pending_events_data_get
     escalation_events_data = escalation_events_data_get
@@ -24,7 +23,7 @@ class IcalTicketsController < ApplicationController
     events_data_to_ical( events_data )
   end
 
-  # @path       [GET] /ical/tickets_new_open/:action_token
+  # @path       [GET] /ical/tickets_new_open
   #
   # @summary          Returns an iCal file with all new and open tickets as events.
   #
@@ -33,13 +32,12 @@ class IcalTicketsController < ApplicationController
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def new_open
-
     events_data = new_open_events_data_get
 
     events_data_to_ical( events_data )
   end
 
-  # @path       [GET] /ical/tickets_pending/:action_token
+  # @path       [GET] /ical/tickets_pending
   #
   # @summary          Returns an iCal file with all pending tickets as events.
   #
@@ -53,7 +51,7 @@ class IcalTicketsController < ApplicationController
     events_data_to_ical( events_data )
   end
 
-  # @path       [GET] /ical/ticket_escalation/:action_token
+  # @path       [GET] /ical/ticket_escalation
   #
   # @summary          Returns an iCal file with all escalation times for tickets as events.
   #
