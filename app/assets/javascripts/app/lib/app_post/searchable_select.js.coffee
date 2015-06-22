@@ -77,7 +77,9 @@ class App.SearchableSelect extends Spine.Controller
 
   selectItem: (event) ->
     @input.val event.currentTarget.textContent.trim()
+    @input.trigger('change')
     @shadowInput.val event.currentTarget.getAttribute('data-value')
+    @shadowInput.trigger('change')
 
   onTab: (event) ->
     return if not @isOpen
@@ -93,7 +95,9 @@ class App.SearchableSelect extends Spine.Controller
     event.preventDefault()
 
     @input.val @values.filter('.is-active').text().trim()
+    @input.trigger('change')
     @shadowInput.val @values.filter('.is-active').attr('data-value')
+    @shadowInput.trigger('change')
     @toggle()
 
   filterList: (event) =>
