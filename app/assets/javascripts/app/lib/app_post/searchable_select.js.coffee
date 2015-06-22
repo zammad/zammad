@@ -103,7 +103,7 @@ class App.SearchableSelect extends Spine.Controller
     @filterByQuery query
 
   filterByQuery: (query) ->
-    regex = new RegExp(query.split('').join('.*'), 'i')
+    regex = new RegExp(query.split(' ').join('.*'), 'i')
 
     @values
       .addClass 'is-hidden'
