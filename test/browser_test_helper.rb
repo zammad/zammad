@@ -1225,7 +1225,7 @@ wait untill text in selector disabppears
 
     if data[:state] || data[:group] || data[:body]
       found = nil
-      (1..7).each {
+      (1..10).each {
         if !found
           begin
             text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
