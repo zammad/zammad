@@ -21,7 +21,7 @@ class Token < ActiveRecord::Base
       return
     end
 
-    # return token if valid
+    # return token user
     token.user
   end
 
