@@ -65,7 +65,7 @@ class PreferencesTest < TestCase
     click( css: '#navigation a[href="#dashboard"]' )
     watch_for(
       css: '.content.active',
-      value: 'Meine zugewiesenen'
+      value: 'Meine Statistik'
     )
 
     # check language in overview
@@ -179,7 +179,7 @@ class PreferencesTest < TestCase
     click( css: '#navigation a[href="#dashboard"]' )
     watch_for(
       css: '.content.active',
-      value: 'My assig'
+      value: 'My Stats'
     )
 
     # check language in overview
@@ -305,7 +305,7 @@ class PreferencesTest < TestCase
     click( css: '#navigation a[href="#dashboard"]' )
     watch_for(
       css: '.content.active',
-      value: 'Meine'
+      value: 'Meine Statistik'
     )
 
     # check language in overview
