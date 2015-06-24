@@ -16,6 +16,6 @@
 </div>
 <ul class="dropdown-menu dropdown-menu-left" role="menu">
 <% for row in @options: %>
-  <li role="presentation" class="js-value" data-value="<%= row.value %>"><%- row.name %>
+  <li role="presentation" class="js-value" data-value="<%= row.value %>"><%= row.name %>
 <% end %>
 </ul>
