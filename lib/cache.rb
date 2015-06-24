@@ -4,7 +4,7 @@ module Cache
 
 delete a cache
 
-  Cache.delete( 'some_key' )
+  Cache.delete('some_key')
 
 =end
 
@@ -18,9 +18,9 @@ write a cache
 
   Cache.write(
     'some_key',
-    { :some => { :data => { 'structure' } } },
+    { some: { data: { 'structure' } } },
     {
-      :expires_in => 24.hours, # optional
+      :expires_in => 24.hours, # optional, default 7 days
     }
   )
 
@@ -28,10 +28,10 @@ write a cache
 
   def self.write( key, data, params = {} )
     if !params[:expires_in]
-      params[:expires_in] = 24.hours
+      params[:expires_in] = 7.days
     end
     begin
-      Rails.cache.write( key.to_s, data, params)
+      Rails.cache.write(key.to_s, data, params)
     rescue => e
       Rails.logger.error "NOTICE: #{e.message}"
     end
@@ -41,12 +41,12 @@ write a cache
 
 get a cache
 
-  value = Cache.write( 'some_key' )
+  value = Cache.write('some_key')
 
 =end
 
   def self.get( key )
-    Rails.cache.read( key.to_s )
+    Rails.cache.read(key.to_s)
   end
 
 =begin
@@ -59,7 +59,7 @@ clear whole cache store
 
   def self.clear
     # workaround, set test cache before clear whole cache, Rails.cache.clear complains about not existing cache dir
-    Cache.write( 'test', 1 )
+    Cache.write('test', 1)
 
     Rails.cache.clear
   end
