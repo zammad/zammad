@@ -2,6 +2,22 @@
 
 module ICal
 
+  def self.preferenced(user)
+
+    events_data = []
+
+    user.preferences[:ical].each { |sub_class, _sub_structure|
+
+      sub_class_name = sub_class.to_s.capitalize
+      class_name     = "ICal::#{sub_class_name}"
+
+      object       = Kernel.const_get( class_name )
+      events_data += object.preferenced( user )
+    }
+
+    to_ical( events_data )
+  end
+
   def self.to_ical(events_data)
 
     cal = Icalendar::Calendar.new
