@@ -16,7 +16,7 @@ body {
   font-family: "Fira Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.45;
   font-weight: normal;
-  background: hsl(210,17%,98%);
+  background: hsl(210,14%,97%);
   height: 100%;
   color: hsl(198,19%,72%);
   word-wrap: break-word;
@@ -5505,6 +5505,81 @@ output {
 
   li:not(.is-active):hover + li {
     box-shadow: 0 1px rgba(255,255,255,.13) inset;
+  }
+}
+
+.sla {
+  background: white;
+  border: 1px solid hsl(199,44%,93%);
+  color: hsl(206,7%,28%);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  box-shadow: 0 2px hsl(210,7%,94%);
+  
+  & + .sla {
+    margin-top: 17px;
+  }
+
+  &.is-inactive {
+    box-shadow: none;
+    position: relative;
+    top: 2px;
+
+    & > *:not(.sla-controls) {
+      opacity: 0.33;
+    }
+  }
+  
+  h3 {
+    color: hsl(0,0%,60%);
+    margin-top: 0;
+  }
+  
+  .arrow {
+    align-self: center;
+    margin: 25px 50px 0;
+    
+    .icon {
+      width: 15px;
+      height: 24px;
+      fill: hsl(198,17%,89%);
+    }
+  }
+
+  .response-times-entry {
+    display: flex;
+    
+    .icon {
+      display: none;
+      vertical-align: middle;
+      margin-right: 3px;
+
+      &:not(.icon-checkmark) {
+      }
+    }
+    
+    .response-time {
+      margin-right: 5px;
+    }
+  }
+
+  .response-times-entry:not(:last-child) {
+    margin: 0 0 2px;
+  }
+
+  .sla-businessHours {
+    flex-basis: 100%;
+    margin: 20px 0;
+  }
+
+  .sla-controls {
+    flex-basis: 100%;
+    display: flex;
+    
+    .sla-edit {
+      margin-left: auto;
+    }
   }
 }
 

@@ -76,15 +76,93 @@
     </div>
   </div>
 
-  <div class="table-overview">
-    <p>
-      <strong>Service-Level-Agreements</strong>, abgekürzt <b>SLAs</b>, unterstützen Sie gegenüber Kunden gewisse zeitliche Reaktionen einzuhalten. Somit können Sie z. B. sagen Kunden sollen immer nach spätestens 8 Stunden eine Reaktion von Ihnen bekommen. Falls es zu einer drohenden Unterschreitung oder einer Unterschreitung kommt, weißt Zammad Sie auf solche Ereignisse hin.
-    </p>
-    <p>
-      Es können <strong>Reaktionszeit</strong> (Zeit zwischen Erstellung eines Tickets und erster Reaktion eines Agenten), <strong>Aktualisierungszeit</strong> (Zeit zwischen Nachfrage eines Kunden und Reaktion eines Agenten) und <strong>Lösungszeit</strong> (Zeit zwischen Erstellung und schließen eines Tickets) definiert werden.
-    </p>
-    <p>
-      Drohenden Unterschreitungen oder Unterschreitungen werden in einer eigenen Ansicht in den Übersichten angezeigt. Zudem können <strong>E-Mail Benachrichtigungen</strong> konfiguriert werden.
-    </p>
+  <div class="sla">
+    <div class="sla-filters">
+      <h3>Filters</h3>
+      Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
+      Where <b>Priority</b> is <b>high</b>.
+    </div>
+    <div class="arrow">
+      <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
+    </div>
+    <div class="sla-times">
+      <h3>Repsonse Times</h3>
+      <div class="response-times">
+        <div class="response-times-entry">
+          <div class="response-time">00:30 Stunden</div>
+          <div class="response-name">
+            <svg class="icon icon-reply"><use xlink:href="#icon-reply" /></svg>
+            First Response Time
+          </div>
+        </div>
+        <div class="response-times-entry">
+          <div class="response-time">01:00 Stunden</div>
+          <div class="response-name">
+            <svg class="icon icon-reply-all"><use xlink:href="#icon-reply-all" /></svg>
+            Update Time
+          </div>
+        </div>
+        <div class="response-times-entry">
+          <div class="response-time">48:00 Stunden</div>
+          <div class="response-name">
+            <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+            Solution Time
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sla-businessHours">
+      <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
+      Mo-Tu 7am - 5pm, Fr 7am - 1pm
+    </div>
+    <div class="sla-controls">
+      <div class="sla-toggle btn js-toggle">Disable</div>
+      <div class="sla-edit btn js-edit">Edit</div>
+    </div>
+  </div>
+
+  <div class="sla is-inactive">
+    <div class="sla-filters">
+      <h3>Filters</h3>
+      Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
+      Where <b>Priority</b> is <b>high</b>.
+    </div>
+    <div class="arrow">
+      <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
+    </div>
+    <div class="sla-times">
+      <h3>Repsonse Times</h3>
+      <div class="response-times">
+        <div class="response-times-entry">
+          <div class="response-time">00:30 Stunden</div>
+          <div class="response-name">
+            <svg class="icon icon-reply"><use xlink:href="#icon-reply" /></svg>
+            First Response Time
+          </div>
+        </div>
+        <div class="response-times-entry">
+          <div class="response-time">01:00 Stunden</div>
+          <div class="response-name">
+            <svg class="icon icon-reply-all"><use xlink:href="#icon-reply-all" /></svg>
+            Update Time
+          </div>
+        </div>
+        <div class="response-times-entry">
+          <div class="response-time">48:00 Stunden</div>
+          <div class="response-name">
+            <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+            Solution Time
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sla-businessHours">
+      <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
+      Mo-Tu 7am - 5pm, Fr 7am - 1pm
+    </div>
+    <div class="sla-controls">
+      <div class="sla-toggle btn js-toggle">Enable</div>
+      <div class="sla-edit btn js-edit">Edit</div>
+    </div>
   </div>
 </div>
