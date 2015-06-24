@@ -5525,28 +5525,37 @@ output {
   background: white;
   border: 1px solid hsl(199,44%,93%);
   color: hsl(206,7%,28%);
+  box-shadow: 0 2px hsl(210,7%,94%);
   display: flex;
   flex-wrap: wrap;
-  padding: 20px;
-  box-shadow: 0 2px hsl(210,7%,94%);
+  padding: 10px;
   
   & + .sla {
     margin-top: 17px;
   }
 
   &.is-inactive {
+    background: none;
     box-shadow: none;
     position: relative;
     top: 2px;
-    background: none;
+    border-color: hsl(199,44%,94%);
 
     & > *:not(.sla-controls) {
       opacity: 0.33;
     }
+  }
 
-    .sla-controls .btn {
-      background: none;
-    }
+  .sla-flow {
+    display: flex;
+  }
+
+  .sla-filters,
+  .sla-arrow,
+  .sla-times,
+  .sla-businessHours,
+  .sla-controls {
+    padding: 10px;
   }
   
   h3 {
@@ -5554,9 +5563,9 @@ output {
     margin-top: 0;
   }
   
-  .arrow {
+  .sla-arrow {
     align-self: center;
-    margin: 22px 50px 0;
+    margin: 22px 20px 0;
     
     .icon {
       width: 15px;
@@ -5565,18 +5574,10 @@ output {
     }
   }
 
-  .sla-businessHours {
-    flex-basis: 100%;
-    margin: 20px 0;
-  }
-
   .sla-controls {
-    flex-basis: 100%;
     display: flex;
-    
-    .sla-edit {
-      margin-left: auto;
-    }
+    margin-left: auto;
+    align-items: flex-end;
   }
 }
 

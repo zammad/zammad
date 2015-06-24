@@ -77,19 +77,21 @@
   </div>
 
   <div class="sla">
-    <div class="sla-filters">
-      <h3>Filters</h3>
-      Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
-      Where <b>Priority</b> is <b>high</b>.
-    </div>
-    <div class="arrow">
-      <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
-    </div>
-    <div class="sla-times">
-      <h3>Repsonse Times</h3>
-      00:30 Stunden First Response Time<br>
-      02:00 Stunden Update Time<br>
-      48:00 Stunden Solution Time
+    <div class="sla-flow">
+      <div class="sla-filters">
+        <h3>Filters</h3>
+        Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
+        Where <b>Priority</b> is <b>high</b>.
+      </div>
+      <div class="sla-arrow">
+        <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
+      </div>
+      <div class="sla-times">
+        <h3>Repsonse Times</h3>
+        00:30 hours First Response Time<br>
+        02:00 hours Update Time<br>
+        48:00 hours Solution Time
+      </div>
     </div>
     <div class="sla-businessHours">
       <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
@@ -102,18 +104,20 @@
   </div>
 
   <div class="sla is-inactive">
-    <div class="sla-filters">
-      <h3>Filters</h3>
-      Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
-      Where <b>Priority</b> is <b>high</b>.
-    </div>
-    <div class="arrow">
-      <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
-    </div>
-    <div class="sla-times">
-      <h3>Repsonse Times</h3>
-      00:30 Stunden First Response Time<br>
-      01:00 Stunden Update Time
+    <div class="sla-flow">
+      <div class="sla-filters">
+        <h3>Filters</h3>
+        Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
+        Where <b>Priority</b> is <b>high</b>.
+      </div>
+      <div class="sla-arrow">
+        <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
+      </div>
+      <div class="sla-times">
+        <h3>Repsonse Times</h3>
+        00:30 hours First Response Time<br>
+        01:00 hours Update Time
+      </div>
     </div>
     <div class="sla-businessHours">
       <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
