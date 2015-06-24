@@ -13,15 +13,17 @@ class Observer::Session < ActiveRecord::Observer
     check(record)
   end
 
+  # move the persistent attribute from the sub structure
+  # to the first level so it gets stored in the database
+  # column to make the cleanup lookup more performant
   def check(record)
     return if !record.data
-    return if record[:request_type]
+    return if record[:persistent]
 
-    # remember request type
-    return if !record.data['request_type']
+    return if !record.data['persistent']
 
-    record[:request_type] = record.data['request_type']
-    record.data.delete('request_type')
+    record[:persistent] = record.data['persistent']
+    record.data.delete('persistent')
   end
 
 end
