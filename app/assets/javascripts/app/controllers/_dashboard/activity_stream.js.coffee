@@ -44,10 +44,11 @@ class App.DashboardActivityStream extends App.Controller
 
     items = @prepareForObjectList(items)
 
-    html = $('<div></div>')
+    html = $('<div class="activity-entries"></div>')
     for item in items
       html.append( @renderItem(item) )
 
+    @$('.activity-entries').remove()
     @el.append html
 
     # update time
