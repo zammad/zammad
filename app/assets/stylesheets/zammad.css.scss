@@ -264,15 +264,26 @@ span[data-tooltip]:hover:before {
   color: hsl(0,0%,80%);
 }
 
-.btn,
-.btn:hover,
-.btn:focus {
+.btn {
+  display: inline-block;
   font-size: 14px;
   padding: 10px 24px 9px;
   color: hsl(202,68%,54%);
   background: white;
   border-color: rgba(0,0,0,.1);
   outline: none !important;
+  touch-action: manipulation;
+  user-select: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  
+  &:focus {
+    box-shadow: 0 0 0 3px hsl(201,62%,90%);
+  }
   
   &.btn--slim {
     padding-left: 12px;
