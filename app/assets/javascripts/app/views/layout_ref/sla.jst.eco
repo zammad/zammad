@@ -76,54 +76,50 @@
     </div>
   </div>
 
-  <div class="sla">
-    <div class="sla-flow">
-      <div class="sla-filters">
+  <div class="action">
+    <div class="action-flow">
+      <div class="action-block">
         <h3>Filters</h3>
         Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
         Where <b>Priority</b> is <b>high</b>.
       </div>
-      <div class="sla-arrow">
-        <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
-      </div>
-      <div class="sla-times">
+      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <div class="action-block">
         <h3>Repsonse Times</h3>
         00:30 hours First Response Time<br>
         02:00 hours Update Time<br>
         48:00 hours Solution Time
       </div>
     </div>
-    <div class="sla-businessHours">
+    <div class="action-block">
       <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
       Mo-Tu 7am - 5pm, Fr 7am - 1pm
     </div>
-    <div class="sla-controls">
+    <div class="action-controls">
       <div class="sla-toggle btn btn--danger btn--secondary js-toggle">Disable</div>
       <div class="sla-edit btn js-edit">Edit</div>
     </div>
   </div>
 
-  <div class="sla is-inactive">
-    <div class="sla-flow">
-      <div class="sla-filters">
+  <div class="action is-inactive">
+    <div class="action-flow">
+      <div class="action-block">
         <h3>Filters</h3>
         Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
         Where <b>Priority</b> is <b>high</b>.
       </div>
-      <div class="sla-arrow">
-        <svg class="icon"><use xlink:href="#icon-arrow-right" /></svg>
-      </div>
-      <div class="sla-times">
+      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <div class="action-block">
         <h3>Repsonse Times</h3>
         00:30 hours First Response Time<br>
         01:00 hours Update Time
       </div>
     </div>
-    <div class="sla-businessHours">
+    <div class="action-block">
       <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
       Mo-Fr 8 Uhr - 18 Uhr
     </div>
-    <div class="sla-controls">
+    <div class="action-controls">
       <div class="sla-toggle btn js-toggle">Enable</div>
       <div class="sla-edit btn js-edit">Edit</div>
     </div>

@@ -195,8 +195,8 @@
               <option>Owner</option>
               <option>Number</option>
               <option>Title</option>
-              <option selected>Group</option>
-              <option>State</option>
+              <option>Group</option>
+              <option selected>State</option>
               <option>Priority</option>
             </optgroup>
             <optgroup label="Customer">

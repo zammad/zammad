@@ -5521,7 +5521,7 @@ output {
   }
 }
 
-.sla {
+.action {
   background: white;
   border: 1px solid hsl(199,44%,93%);
   color: hsl(206,7%,28%);
@@ -5530,7 +5530,7 @@ output {
   flex-wrap: wrap;
   padding: 10px;
   
-  & + .sla {
+  & + .action {
     margin-top: 17px;
   }
 
@@ -5541,20 +5541,17 @@ output {
     top: 2px;
     border-color: hsl(199,44%,94%);
 
-    & > *:not(.sla-controls) {
+    & > *:not(.action-controls) {
       opacity: 0.33;
     }
   }
 
-  .sla-flow {
+  .action-flow {
     display: flex;
   }
 
-  .sla-filters,
-  .sla-arrow,
-  .sla-times,
-  .sla-businessHours,
-  .sla-controls {
+  .action-block,
+  .action-controls {
     padding: 10px;
   }
   
@@ -5562,19 +5559,18 @@ output {
     color: hsl(0,0%,60%);
     margin-top: 0;
   }
-  
-  .sla-arrow {
-    align-self: center;
-    margin: 22px 20px 0;
     
-    .icon {
-      width: 15px;
-      height: 24px;
-      fill: hsl(198,17%,89%);
-    }
+  .action-flow-icon {
+    align-self: center;
+    width: 15px;
+    height: 24px;
+    margin-top: 20px; /* compensate for h3 height */
+    margin-left: 20px;
+    margin-right: 20px;
+    fill: hsl(198,17%,89%);
   }
 
-  .sla-controls {
+  .action-controls {
     display: flex;
     margin-left: auto;
     align-items: flex-end;

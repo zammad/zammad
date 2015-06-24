@@ -1289,7 +1289,7 @@ class slaRef extends App.ControllerContent
     'click .js-activateColumn': 'activateColumn'
     'click .js-activateRow': 'activateRow'
     'click [data-type=new]': 'createNew'
-    'click .js-toggle': 'toggleSla'
+    'click .js-toggle': 'toggle'
 
   constructor: ->
     super
@@ -1298,12 +1298,12 @@ class slaRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/sla')()
 
-  toggleSla: (e) =>
-    sla = $(e.currentTarget).closest('.sla')
-    isInactive = sla.hasClass('is-inactive')
-    sla.toggleClass('is-inactive')
+  toggle: (e) =>
+    entry = $(e.currentTarget).closest('.action')
+    isInactive = entry.hasClass('is-inactive')
+    entry.toggleClass('is-inactive')
     isInactive = !isInactive
-    sla.find('.js-toggle')
+    entry.find('.js-toggle')
       .toggleClass('btn--danger btn--secondary')
       .text(if isInactive then 'Enable' else 'Disable')
 
@@ -1333,6 +1333,7 @@ class schedulersRef extends App.ControllerContent
   events:
     'click .select-value': 'select'
     'click [data-type=new]': 'createNew'
+    'click .js-toggle': 'toggle'
 
   constructor: ->
     super
@@ -1340,6 +1341,15 @@ class schedulersRef extends App.ControllerContent
 
   render: ->
     @html App.view('layout_ref/schedulers')()
+
+  toggle: (e) =>
+    entry = $(e.currentTarget).closest('.action')
+    isInactive = entry.hasClass('is-inactive')
+    entry.toggleClass('is-inactive')
+    isInactive = !isInactive
+    entry.find('.js-toggle')
+      .toggleClass('btn--danger btn--secondary')
+      .text(if isInactive then 'Enable' else 'Disable')
 
   createNew: =>
     new App.ControllerModal

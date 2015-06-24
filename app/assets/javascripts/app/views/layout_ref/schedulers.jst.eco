@@ -76,8 +76,49 @@
     </div>
   </div>
 
-  <div class="scheduler-list">
-    <div class="scheduler">
+  <div class="action">
+    <div class="action-flow">
+      <div class="action-block">
+        <h3>Filters</h3>
+        Where <b>State</b> is <b>open</b>.<br>
+        In <b>Folder</b> <b>Spam</b>.
+      </div>
+      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <div class="action-block">
+        <h3>Actions</h3>
+        Set <b>State</b> to <b>closed</b>.
+      </div>
+    </div>
+    <div class="action-block">
+      <h3>Timer</h3>
+      Run every Monday, Tuesday, Wednesday, Thursday and Friday at 7:30 am and 1:30 pm.
+    </div>
+    <div class="action-controls">
+      <div class="sla-toggle btn btn--danger btn--secondary js-toggle">Disable</div>
+      <div class="sla-edit btn js-edit">Edit</div>
+    </div>
+  </div>
+
+  <div class="action is-inactive">
+    <div class="action-flow">
+      <div class="action-block">
+        <h3>Filters</h3>
+        Where <b>State</b> is <b>open</b>.<br>
+        In <b>Folder</b> <b>Spam</b>.
+      </div>
+      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <div class="action-block">
+        <h3>Actions</h3>
+        Set <b>State</b> to <b>closed</b>.
+      </div>
+    </div>
+    <div class="action-block">
+      <h3>Timer</h3>
+      Run every Monday, Tuesday, Wednesday, Thursday and Friday at 7:30 am and 1:30 pm.
+    </div>
+    <div class="action-controls">
+      <div class="sla-toggle btn js-toggle">Enable</div>
+      <div class="sla-edit btn js-edit">Edit</div>
     </div>
   </div>
 </div>
