@@ -56,6 +56,8 @@ module ICal::Ticket
     events_data = []
     tickets.each do |ticket|
 
+      next if !ticket.pending_time
+
       event_data = {}
 
       # rubocop:disable Rails/TimeZone
@@ -85,6 +87,8 @@ module ICal::Ticket
 
     events_data = []
     tickets.each do |ticket|
+
+      next if !ticket.escalation_time
 
       event_data = {}
 

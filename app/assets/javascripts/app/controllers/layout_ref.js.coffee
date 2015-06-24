@@ -1289,6 +1289,7 @@ class slaRef extends App.ControllerContent
     'click .js-activateColumn': 'activateColumn'
     'click .js-activateRow': 'activateRow'
     'click [data-type=new]': 'createNew'
+    'click .js-toggle': 'toggleSla'
 
   constructor: ->
     super
@@ -1296,6 +1297,13 @@ class slaRef extends App.ControllerContent
 
   render: ->
     @html App.view('layout_ref/sla')()
+
+  toggleSla: (e) =>
+    sla = $(e.currentTarget).closest('.sla')
+    isInactive = sla.hasClass('is-inactive')
+    sla.toggleClass('is-inactive')
+    isInactive = !isInactive
+    sla.find('.js-toggle').text(if isInactive then 'Enable' else 'Disable')
 
   activateColumn: (event) =>
     checkbox = @$(event.currentTarget)

@@ -98,122 +98,98 @@ class ApplicationController < ActionController::Base
   def authentication_check_only(auth_param)
 
     logger.debug 'authentication_check'
-    session[:request_type] = 1
     #logger.debug params.inspect
     #logger.debug session.inspect
     #logger.debug cookies.inspect
 
-    # check http basic auth
-    authenticate_with_http_basic do |username, password|
-      logger.debug 'http basic auth check'
-      session[:request_type] = 2
+    # already logged in, early exit
+    if session.id && session[:user_id]
+      userdata = User.find( session[:user_id] )
+      current_user_set(userdata)
 
-      userdata = User.authenticate( username, password )
-      message = ''
-      if !userdata
-        message = 'authentication failed'
-      end
+      return {
+        auth: true
+      }
+    end
 
-      # return auth ok
-      if message == ''
+    error_message = 'authentication failed'
 
-        # remember user
-        session[:user_id] = userdata.id
+    # check logon session
+    if params['logon_session']
+      logon_session = ActiveRecord::SessionStore::Session.where( session_id: params['logon_session'] ).first
 
-        # set basic auth user to current user
+      # set logon session user to current user
+      if logon_session
+        userdata = User.find( logon_session.data[:user_id] )
         current_user_set(userdata)
+
+        session[:persistent] = true
+
         return {
           auth: true
         }
       end
 
-      # return auth not ok
+      error_message = 'no valid session, user_id'
+    end
+
+    # check sso
+    sso_userdata = User.sso(params)
+    if sso_userdata
+
+      current_user_set(sso_userdata)
+
+      session[:persistent] = true
+
       return {
-        auth: false,
-        message: message,
+        auth: true
       }
     end
 
-    # check logon session
-    if params['logon_session']
-      logon_session = ActiveRecord::SessionStore::Session.where( session_id: params['logon_session'] ).first
-      if logon_session
-        userdata = User.find( logon_session.data[:user_id] )
-      end
+    # check http basic auth
+    authenticate_with_http_basic do |username, password|
+      logger.debug "http basic auth check '#{username}'"
 
-      session[:request_type] = 3
+      userdata = User.authenticate( username, password )
 
-      # set logon session user to current user
+      next if !userdata
+
+      # set basic auth user to current user
       current_user_set(userdata)
       return {
         auth: true
       }
     end
 
-    # check sso
-    if !session[:user_id]
-
-      user = User.sso(params)
-
-      # Log the authorizing user in.
-      if user
-        session[:user_id] = user.id
-      end
-    end
-
     # check token
     if auth_param[:token_action]
-      authenticate_with_http_token do |token, options|
-        logger.debug 'token auth check'
-        session[:request_type] = 4
+      authenticate_with_http_token do |token, _options|
+        logger.debug "token auth check #{token}"
 
         userdata = Token.check(
           action: auth_param[:token_action],
           name: token,
         )
 
-        message = ''
-        if !userdata
-          message = 'authentication failed'
-        end
+        next if !userdata
 
-        # return auth ok
-        if message == ''
+        # set token user to current user
+        current_user_set(userdata)
 
-          # remember user
-          session[:user_id] = userdata.id
-
-          # set token user to current user
-          current_user_set(userdata)
-          return {
-            auth: true
-          }
-        end
-
-        # return auth not ok
         return {
-          auth: false,
-          message: message,
+          auth: true
         }
       end
     end
 
-    # return auth not ok (no session exists)
-    if !session[:user_id]
-      logger.debug 'no valid session, user_id'
-      message = 'no valid session, user_id'
-      return {
-        auth: false,
-        message: message,
-      }
-    end
-
+    logger.debug error_message
     {
-      auth: true
+      auth: false,
+      message: error_message,
     }
   end
 
-  def authentication_check( auth_param = { basic_auth_promt: false } )
+  def authentication_check( auth_param = {} )
     result = authentication_check_only(auth_param)
 
     # check if basic_auth fallback is possible
@@ -232,6 +208,9 @@ class ApplicationController < ActionController::Base
       )
       return false
     end
+
+    # store current user id into the session
+    session[:user_id] = current_user.id
 
     # return auth ok
     true
