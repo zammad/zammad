@@ -1303,7 +1303,9 @@ class slaRef extends App.ControllerContent
     isInactive = sla.hasClass('is-inactive')
     sla.toggleClass('is-inactive')
     isInactive = !isInactive
-    sla.find('.js-toggle').text(if isInactive then 'Enable' else 'Disable')
+    sla.find('.js-toggle')
+      .toggleClass('btn--danger btn--secondary')
+      .text(if isInactive then 'Enable' else 'Disable')
 
   activateColumn: (event) =>
     checkbox = @$(event.currentTarget)

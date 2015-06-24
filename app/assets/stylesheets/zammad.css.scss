@@ -337,11 +337,18 @@ span[data-tooltip]:hover:before {
     }
   }
 
+  &.btn--positive,
   &.btn--success {
     color: white;
     background: hsl(145,51%,45%);
     &:active {
       background: hsl(145,51%,35%);
+    }
+
+    &.btn--secondary,
+    &.btn--secondary:active {
+      background: white;
+      color: hsl(145,51%,45%);
     }
   }
 
@@ -350,6 +357,12 @@ span[data-tooltip]:hover:before {
     background: hsl(0,65%,55%);
     &:active {
       background: hsl(0,65%,45%);
+    }
+
+    &.btn--secondary,
+    &.btn--secondary:active {
+      background: white;
+      color: hsl(0,65%,55%);
     }
   }
 
@@ -5525,9 +5538,14 @@ output {
     box-shadow: none;
     position: relative;
     top: 2px;
+    background: none;
 
     & > *:not(.sla-controls) {
       opacity: 0.33;
+    }
+
+    .sla-controls .btn {
+      background: none;
     }
   }
   
@@ -5538,34 +5556,13 @@ output {
   
   .arrow {
     align-self: center;
-    margin: 25px 50px 0;
+    margin: 22px 50px 0;
     
     .icon {
       width: 15px;
       height: 24px;
       fill: hsl(198,17%,89%);
     }
-  }
-
-  .response-times-entry {
-    display: flex;
-    
-    .icon {
-      display: none;
-      vertical-align: middle;
-      margin-right: 3px;
-
-      &:not(.icon-checkmark) {
-      }
-    }
-    
-    .response-time {
-      margin-right: 5px;
-    }
-  }
-
-  .response-times-entry:not(:last-child) {
-    margin: 0 0 2px;
   }
 
   .sla-businessHours {
