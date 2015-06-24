@@ -5447,8 +5447,8 @@ output {
   display: flex;
   flex-wrap: wrap;
   margin: 0 14px;
-  border-left: 1px solid hsl(0,0%,94%);
-  border-top: 1px solid hsl(0,0%,94%);
+  background: hsl(234,10%,19%);
+  color: white;
   
   &.select-box--vertical .select-value {
     flex-basis: 100%;
@@ -5465,14 +5465,12 @@ output {
   .select-box-header {
     @extend label;
     margin: 0;
+    color: hsl(240,2%,60%);
     display: flex;
     align-items: center;
     padding: 8px 10px;
     flex-basis: 100%;
     white-space: nowrap;
-    background: hsl(200,20%,97%);
-    border-right: 1px solid hsl(0,0%,94%);
-    border-bottom: 1px solid hsl(0,0%,91%);
   }
 
   .select-value {
@@ -5480,15 +5478,15 @@ output {
     align-items: center;
     justify-content: center;
     min-height: 34px;
-    border-right: 1px solid hsl(0,0%,94%);
-    border-bottom: 1px solid hsl(0,0%,94%);
+    background-clip: content-box;
+    box-shadow: 
+      1px 0 hsl(240,5%,27%) inset,
+      0 1px hsl(240,5%,27%) inset;
     cursor: pointer;
     
     &.is-selected {
-      background: hsl(203,65%,55%);
-      color: white;
-      border-bottom-color: hsl(202,68%,48%);
-      border-right-color: hsl(202,68%,48%);
+      background-color: hsl(203,65%,55%);
+      box-shadow: none;
     }
   }
   
@@ -5573,7 +5571,6 @@ output {
   .action-controls {
     display: flex;
     margin-left: auto;
-    align-items: flex-end;
   }
 }
 
