@@ -54,6 +54,10 @@ class SessionsController < ApplicationController
       #      )
     end
 
+    # sessions created via this
+    # controller are persistent
+    session[:persistent] = true
+
     # return new session data
     render  status: :created,
             json: {
