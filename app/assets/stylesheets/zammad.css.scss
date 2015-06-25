@@ -270,12 +270,11 @@ span[data-tooltip]:hover:before {
   padding: 10px 24px 9px;
   color: hsl(202,68%,54%);
   background: white;
-  border-color: rgba(0,0,0,.1);
+  border: 1px solid rgba(0,0,0,.1);
   outline: none !important;
   touch-action: manipulation;
   user-select: none;
   cursor: pointer;
-  border: 1px solid transparent;
   border-radius: 4px;
   text-align: center;
   white-space: nowrap;
