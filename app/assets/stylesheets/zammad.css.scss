@@ -5513,6 +5513,10 @@ output {
 .searchableSelect {
   position: relative;
   
+  .form-control {
+    padding-right: 37px;
+  }
+  
   .searchableSelect-shadow {
     display: none;
   }
