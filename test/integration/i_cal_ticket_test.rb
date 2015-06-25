@@ -244,11 +244,13 @@ class ICalTicketTest < ActiveSupport::TestCase
       user.preferences[:ical]          = {}
       user.preferences[:ical][:ticket] = test_data[:preferences]
 
-      event_data = ICal::Ticket.new_open( user, test_data[:owner_ids] )
+      ical_ticket = ICal::ICalTicket.new( user, test_data[:preferences] )
+      event_data  = ical_ticket.new_open
 
       assert_equal( test_data[:count], event_data.length, "#{test_data[:name]} event count" )
 
-      ical = ICal.preferenced( user )
+      ical_object = ICal.new( user )
+      ical        = ical_object.all
 
       event_data.each { |event|
 
@@ -316,11 +318,13 @@ class ICalTicketTest < ActiveSupport::TestCase
       user.preferences[:ical]          = {}
       user.preferences[:ical][:ticket] = test_data[:preferences]
 
-      event_data = ICal::Ticket.pending( user, test_data[:owner_ids] )
+      ical_ticket = ICal::ICalTicket.new( user, test_data[:preferences] )
+      event_data  = ical_ticket.pending
 
       assert_equal( test_data[:count], event_data.length, "#{test_data[:name]} event count" )
 
-      ical = ICal.preferenced( user )
+      ical_object = ICal.new( user )
+      ical        = ical_object.all
 
       event_data.each { |event|
 
@@ -388,11 +392,13 @@ class ICalTicketTest < ActiveSupport::TestCase
       user.preferences[:ical]          = {}
       user.preferences[:ical][:ticket] = test_data[:preferences]
 
-      event_data = ICal::Ticket.escalation( user, test_data[:owner_ids] )
+      ical_ticket = ICal::ICalTicket.new( user, test_data[:preferences] )
+      event_data  = ical_ticket.escalation
 
       assert_equal( test_data[:count], event_data.length, "#{test_data[:name]} event count" )
 
-      ical = ICal.preferenced( user )
+      ical_object = ICal.new( user )
+      ical        = ical_object.all
 
       event_data.each { |event|
 

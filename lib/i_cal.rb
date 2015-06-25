@@ -1,24 +1,48 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-module ICal
+class ICal
 
-  def self.preferenced(user)
+  def initialize(user)
+    @user        = user
+    @preferences = {}
 
+
+    if @user.preferences[:ical] && !@user.preferences[:ical].empty?
+      @preferences = @user.preferences[:ical]
+    end
+  end
+
+  def all
     events_data = []
-
-    user.preferences[:ical].each { |sub_class, _sub_structure|
-
-      sub_class_name = sub_class.to_s.capitalize
-      class_name     = "ICal::#{sub_class_name}"
-
-      object       = Kernel.const_get( class_name )
-      events_data += object.preferenced( user )
+    @preferences.each { |object_name, _sub_structure|
+      result      = generic_call( object_name )
+      events_data = events_data + result
     }
-
     to_ical( events_data )
   end
 
-  def self.to_ical(events_data)
+  def generic(object_name, method_name = 'all')
+
+    events_data = generic_call( object_name, method_name )
+    to_ical( events_data )
+  end
+
+  def generic_call(object_name, method_name = 'all')
+
+    method_name ||= 'all'
+
+    events_data = []
+    if @preferences[ object_name ] && !@preferences[ object_name ].empty?
+      sub_class_name = object_name.to_s.capitalize
+      object         = Object.const_get('ICal').const_get("ICal#{sub_class_name}")
+      instance       = object.new( @user, @preferences[ object_name ] )
+      method         = instance.method( method_name )
+      events_data   += method.call
+    end
+    events_data
+  end
+
+  def to_ical(events_data)
 
     cal = Icalendar::Calendar.new
 
