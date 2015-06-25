@@ -951,8 +951,8 @@ input[type=time] {
   margin-bottom: 20px;
 
   .icon {
-    left: 9px;
-    top: 7px;
+    left: 15px;
+    top: 12px;
     width: 17px;
     height: 17px;
     position: absolute;
@@ -961,10 +961,8 @@ input[type=time] {
 
   input[type=search] {
     appearance: textfield;
-    line-height: 30px;
-    height: 30px;
     border-radius: 19px;
-    padding: 0 17px 0 34px;
+    padding: 0 17px 0 42px;
   }
 
   input[type="search"]::-webkit-search-cancel-button,
