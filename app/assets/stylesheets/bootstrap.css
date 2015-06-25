@@ -1726,7 +1726,6 @@ output {
   color: #999;
 }
 .form-control[disabled],
-.form-control[readonly],
 fieldset[disabled] .form-control {
   cursor: not-allowed;
   background-color: #eee;

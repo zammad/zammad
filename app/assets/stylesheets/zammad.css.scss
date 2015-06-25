@@ -886,12 +886,22 @@ input[type=time] {
     padding-right: 34px;
   }
 
-  .form-control[disabled],
-  .form-control[readonly] {
+  .form-control[disabled] {
     cursor: not-allowed;
     background-color: #fff;
     color: #d5d5d5;
     opacity: 1;
+  }
+
+  .form-control.form-control--borderless {
+    border: none;
+    padding: 0;
+    line-height: inherit;
+    height: auto;
+    
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   .form-control + .icon-arrow-down  {
@@ -5305,12 +5315,41 @@ label + .wizard-buttonList {
   }
 }
 
+.output-input {
+  display: flex;
+  margin: 0 0 14px;
+  
+  output {
+    margin: 0;
+    border-radius: 3px 0 0 3px;
+    border: 1px solid hsl(200,71%,59%);
+    border-right: none;
+  }
+  
+  input {
+    flex: 1;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: none;
+    
+    &:focus {
+      border-color: hsl(0,0%,90%);
+      box-shadow: none;
+    }
+  }
+}
+
 output {
   border-bottom: 1px solid hsl(200,71%,59%);
   margin: 14px 0 0;
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 12px 8px;
   background: hsl(201,62%,93%);
+  
+  &[disabled] {
+    border-color: hsl(358,53%,56%);
+    background: hsl(358,53%,76%);
+  }
 }
 
 .horizontal-filter-text {
@@ -5382,6 +5421,8 @@ output {
 
 .settings-list {
   border-collapse: separate;
+  color: hsl(60,1%,34%);
+  background: white;
   
   &:not(:last-child) {
     margin-bottom: 34px;

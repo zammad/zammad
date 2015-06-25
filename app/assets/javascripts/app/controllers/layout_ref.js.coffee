@@ -1428,4 +1428,77 @@ class searchableSelectRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/search_select', searchableSelectRef, 'Routes' )
 
+
+class calendarSubscriptionsRef extends App.ControllerContent
+
+  elements:
+    'input[type=checkbox]': 'options'
+    'output': 'output'
+
+  events:
+    'change input[type=checkbox]': 'onOptionsChange'
+    'click .js-select': 'selectAll'
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/calendar_subscription')
+
+  selectAll: (e) ->
+    e.currentTarget.focus()
+    e.currentTarget.select()
+
+  onOptionsChange: =>
+    optionCount = 3
+    data = @options.serializeArray()
+    modules = []
+    translationTable =
+      own: 'my'
+      not_assigned: 'not assigned'
+      new_open: 'new & open'
+      pending: 'pending'
+      escalating: 'escalating'
+
+    # check if there is any data
+    if data.length is 0
+      @output
+        .attr 'disabled', true
+        .text "No subscriptions active"
+      return
+
+    # check if all my tickets got selected
+    own = data.filter((entry) -> entry.name.indexOf('own') >= 0)
+    not_assigned = data.filter((entry) -> entry.name.indexOf('not_assigned') >= 0)
+
+    if own.length is optionCount
+      modules.push "all my"
+    else
+      modules.push.apply modules, own.map (entry) -> 
+        [option, value] = entry.name.split('/')
+        return "#{ translationTable[value] } #{ translationTable[option] }"
+
+    if not_assigned.length is optionCount
+      modules.push "all not assigned"
+    else
+      modules.push.apply modules, not_assigned.map (entry) -> 
+        [option, value] = entry.name.split('/')
+        return "#{ translationTable[value] } #{ translationTable[option] }"
+
+    @output
+      .attr 'disabled', false
+      .text "Subscription to #{ @joinItems modules } tickets:"
+
+  joinItems: (items) ->
+    switch items.length
+      when 1 then return items[0]
+      when 2 then return "#{ items[0] } and #{ items[1] }"
+      else 
+        return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
+
+
+App.Config.set( 'layout_ref/calendar_subscription', calendarSubscriptionsRef, 'Routes' )
+
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
