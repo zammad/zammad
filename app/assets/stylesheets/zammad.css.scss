@@ -2320,13 +2320,18 @@ footer {
     border-left: 1px solid #e6e6e6;
   }
 
-.NavBarAdmin.sidebar {
-  padding-top: 1px;
+.NavBarAdmin.sidebar,
+.NavBarProfile.sidebar, {
   width: $sidebarWidth;
-}
-  .NavBarAdmin h2 {
+
+  h2 {
     margin: 21px 0 12px;
   }
+
+  h2:first-child {
+    margin-top: 0;
+  }
+}
 
   .nav-stacked > li + li {
     margin-top: 0;
