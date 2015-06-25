@@ -738,6 +738,7 @@ label,
   margin: 0;
   text-transform: none;
   display: inline;
+  white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
 }
 
 fieldset {
