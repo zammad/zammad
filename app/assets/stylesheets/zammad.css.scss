@@ -294,6 +294,7 @@ span[data-tooltip]:hover:before {
     font-weight: 300;
     border: none;
     margin: 5px 6px 0;
+    vertical-align: baseline; /* calendar_subscriptions.jst.eco */
     
     .icon {
       vertical-align: middle;
@@ -693,7 +694,7 @@ h2.popover-title {
 
 h3 {
   font-size: 13px;
-  margin: 14px 0 6px;
+  margin: 20px 0 8px;
   color: #a9bcc4;
   font-weight: 200;
   text-transform: uppercase;
@@ -884,6 +885,10 @@ input[type=time] {
   select.form-control {
     padding-left: 10px;
     padding-right: 34px;
+  }
+
+  .form-control.is-hidden {
+    display: none;
   }
 
   .form-control[disabled] {
@@ -5460,6 +5465,10 @@ output {
     font-size: 10px;
     letter-spacing: 0;
     color: hsl(198,18%,72%);
+  }
+
+  .btn--table {
+    margin: 0;
   }
 
   th:not(:last-child),

@@ -1444,7 +1444,7 @@ class calendarSubscriptionsRef extends App.ControllerContent
     @render()
 
   render: ->
-    @html App.view('layout_ref/calendar_subscription')
+    @html App.view('layout_ref/calendar_subscriptions')
 
   selectAll: (e) ->
     e.currentTarget.focus()
@@ -1498,7 +1498,7 @@ class calendarSubscriptionsRef extends App.ControllerContent
         return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
 
-App.Config.set( 'layout_ref/calendar_subscription', calendarSubscriptionsRef, 'Routes' )
+App.Config.set( 'layout_ref/calendar_subscriptions', calendarSubscriptionsRef, 'Routes' )
 
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

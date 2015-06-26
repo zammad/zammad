@@ -1,0 +1,32 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%= @T('Calendar') %></h1>
+  </div>
+</div>
+<h2><%= @T('Ticket Subscriptions') %></h2>
+
+<p><%= @T('See your tickets from within your favorite calendar by adding the following url to your calendar app.') %></p>
+
+<h3><%= @T('Combined Url') %></h3>
+<input class="form-control js-select" readonly value="<%= @baseurl %>/ical/tickets">
+
+<h3><%= @T('Subscription Settings') %></h3>
+<table class="settings-list">
+  <thead>
+    <tr>
+      <th style="white-space: nowrap;"><%= @T('Status Type') %>
+      <th colspan="2"><%= @T('Options') %>
+      <th width="100%"><%= @T('Direct URL') %>
+    </tr>
+  </thead>
+  <tbody>
+    <% for stateType, options of @preferences: %>
+    <tr>
+      <td style="text-transform: capitalize"><%= @translationTable[stateType] %>
+      <td><label class="inline-label"><input type="checkbox" name="<%= stateType %>/own"<%= if options.own then ' checked' %>> <%= @T('own tickets') %></label>
+      <td><label class="inline-label"><input type="checkbox" name="<%= stateType %>/not_assigned"<%= if options.not_assigned then ' checked' %>> <%= @T('not assigned tickets') %></label>
+      <td><div class="btn btn--table btn--text js-showLink"><%= @T('Show') %></div><input class="form-control form-control--borderless js-select is-hidden" readonly value="<%= @baseurl %>/ical/tickets/<%= stateType %>">
+    </tr>
+    <% end %>
+  </tbody>
+</table>
