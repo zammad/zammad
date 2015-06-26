@@ -32,7 +32,7 @@
 
   <h3>Default</h3>
   <div class="btn btn--text">Text Button</div>
-  <div class="btn btn--secondary btn--text">Secondary Text Button</div>
+  <div class="btn btn--text btn--secondary">Secondary Text Button</div>
 
   <h3>Positive</h3>
   <div class="btn btn--positive btn--text">Positive Text Button</div>
@@ -41,7 +41,7 @@
   <div class="btn btn--danger btn--text">Dangerous Text Button</div>
 
   <h3>Subtle</h3>
-  <div class="btn btn--text btn--secondary">Subtle Button</div>
+  <div class="btn btn--text btn--subtle">Subtle Button</div>
 
   <h2>Action Buttons</h2>
 
