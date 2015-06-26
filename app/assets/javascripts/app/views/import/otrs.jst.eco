@@ -9,7 +9,7 @@
         </p>
       </div>
       <div class="wizard-controls horizontal center">
-        <a class="subtle-link" href="#import"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
       </div>
     </div>
     <div class="wizard-slide vertical hide" data-slide="otrs-plugin">
@@ -21,7 +21,7 @@
         <a class="btn btn--primary btn--download js-download" download><svg class="icon-download"><use xlink:href="#icon-download" /></svg> <%- @T('Personal Migration Plugin') %></a>
       </div>
       <div class="wizard-controls horizontal center">
-        <a class="subtle-link" href="#import"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
         <div class="btn btn--primary align-right hide js-otrs-link"><%- @T('Next') %></div>
       </div>
     </div>
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="wizard-controls horizontal center">
-        <a class="subtle-link" href="#import"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
         <div class="btn btn--primary align-right hide js-migration-start" data-target="otrs-start-migration"><%- @T('Migrate OTRS Data') %></div>
       </div>
     </div>

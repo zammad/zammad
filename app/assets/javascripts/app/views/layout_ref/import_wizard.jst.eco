@@ -16,7 +16,7 @@
         </p>
       </div>
       <div class="wizard-controls horizontal center">
-        <a class="subtle-link" data-target="home">Go Back</a>
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
       </div>
     </div>
     <div class="wizard-slide hide" data-slide="otrs-plugin">
@@ -29,7 +29,7 @@
           <svg class="icon-download"><use xlink:href="#icon-download" /></svg>  Personal Migration Plugin</a>
       </div>
       <div class="wizard-controls horizontal center">
-        <a class="subtle-link" data-target="home">Go Back</a>
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
         <div class="btn btn--primary align-right hide" data-target="otrs-link">Next</div>
       </div>
     </div>
@@ -52,7 +52,7 @@
         </div>
       </div>
       <div class="wizard-controls horizontal center">
-        <a class="subtle-link" data-target="otrs-plugin">Go Back</a>
+        <a class="btn btn--text btn--secondary" data-target="otrs-plugin">Go Back</a>
         <div class="btn btn--primary align-right hide" data-target="otrs-export">Migrate OTRS Data</div>
       </div>
     </div>

@@ -17,8 +17,8 @@
           </div>
 
 
-          <div class="form-actions horizontal">
-            <a class="subtle-link standalone cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+          <div class="form-controls">
+            <a class="btn btn--text btn--subtle cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
             <button type="submit" class="btn btn--success submit align-right"><%- @T( 'Create' ) %></button>
           </div>
         </form>

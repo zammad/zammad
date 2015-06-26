@@ -1501,4 +1501,16 @@ class calendarSubscriptionsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/calendar_subscriptions', calendarSubscriptionsRef, 'Routes' )
 
 
+class ButtonsRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/buttons')
+
+App.Config.set( 'layout_ref/buttons', ButtonsRef, 'Routes' )
+
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

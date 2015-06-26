@@ -9,7 +9,7 @@
     </div>
     <div class="modal-body" id="form-user"></div>
     <div class="modal-footer">
-      <a class="subtle-link standalone js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+      <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
       <button type="submit" class="btn btn--success js-submit align-right"><%- @T( 'Create' ) %></button>
     </div>
   </div>

@@ -180,7 +180,7 @@
 </div>
 
 <h2>Schedule</h2>
-<h3>Business Hours <span class="subtitle">in European Central Time <a class="btn btn--text btn--subtle" href="#">(change)</a></span></h3>
+<h3>Business Hours <span class="subtitle">in European Central Time (<a class="btn btn--text btn--subtle" href="#">change</a>)</span></h3>
 <table class="settings-list settings-list--toggleColumn">
   <thead>
     <tr>

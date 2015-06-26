@@ -5,7 +5,7 @@
       <h2><%- @T('Administrator Account') %></h2>
       <div class="wizard-body vertical justified js-admin-form"></div>
       <div class="wizard-controls center">
-        <a class="subtle-link" href="#getting_started"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary" href="#getting_started"><%- @T('Go Back') %></a>
         <button class="btn btn--success align-right"><%- @T( 'Create' ) %></button>
       </div>
     </div>

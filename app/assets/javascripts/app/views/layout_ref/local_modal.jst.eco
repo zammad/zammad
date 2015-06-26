@@ -290,7 +290,7 @@
             </fieldset>
           </div>
           <div class="modal-footer">
-            <a class="subtle-link standalone js-cancel" href="#/">Cancel & Go Back</a>
+            <a class="btn btn--text btn--subtle js-cancel" href="#/">Cancel & Go Back</a>
             <button type="submit" class="btn btn--success js-submit align-right">Update & Back</button>
           </div>
         </div>

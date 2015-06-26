@@ -10,8 +10,8 @@
         <form class="form-password">
           <div class="form-password-item"></div>
           <div class="form-controls">
-            <a class="subtle-link standalone pull-left cancel" href="#login"><%- @T( 'Cancel & Go Back' ) %></a>
-            <button class="btn btn--primary submit pull-right"><%- @T( 'Submit' ) %></button>
+            <a class="btn btn--text btn--subtle cancel" href="#login"><%- @T( 'Cancel & Go Back' ) %></a>
+            <button class="btn btn--primary submit align-right"><%- @T( 'Submit' ) %></button>
           </div>
         </form>
       <% end %>

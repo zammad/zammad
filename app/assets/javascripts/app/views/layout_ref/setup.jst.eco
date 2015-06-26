@@ -41,7 +41,7 @@
         </fieldset>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" data-target="home">Go Back</a>
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
         <div class="btn btn--success align-right" data-target="company">Create</div>
       </div>
     </div>
@@ -67,7 +67,7 @@
         </fieldset>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" data-target="home">Go Back</a>
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
         <div class="btn btn--primary align-right" data-target="channels">Next</div>
       </div>
     </div>
@@ -91,7 +91,7 @@
         </div>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" data-target="company">Go Back</a>
+        <a class="btn btn--text btn--secondary" data-target="company">Go Back</a>
         <div class="btn align-right" data-target="agent">Skip</div>
       </div>
     </div>
@@ -115,7 +115,7 @@
       </div>
       <div class="wizard-controls center">
         <div class="btn" data-target="channels">Cancel</div>
-        <a class="subtle-link align-right" data-target="channels">Go Back</a>
+        <a class="btn btn--text btn--secondary align-right" data-target="channels">Go Back</a>
         <div class="btn btn--primary" data-target="emailCheck">Connect</div>
       </div>
     </div>
@@ -161,7 +161,7 @@
       </div>
       <div class="wizard-controls center">
         <div class="btn js-cancelChannelSetup" data-target="channels">Cancel</div>
-        <a class="subtle-link align-right" data-target="emailStart">Go Back</a>
+        <a class="btn btn--text btn--secondary align-right" data-target="emailStart">Go Back</a>
         <div class="btn btn--primary" data-target="inboundCheck">Connect</div>
       </div>
     </div>
@@ -195,8 +195,8 @@
         </fieldset>
       </div>
       <div class="wizard-controls center">
-        <div class="btn btn--subtle js-cancelChannelSetup" data-target="channels">Cancel</div>
-        <div class="btn btn--subtle align-right" data-target="emailStart">Go Back</div>
+        <div class="btn btn--text btn--secondary js-cancelChannelSetup" data-target="channels">Cancel</div>
+        <div class="btn btn--text btn--secondary align-right" data-target="emailStart">Go Back</div>
         <div class="btn btn--primary" data-target="outboundCheck">Connect</div>
       </div>
     </div>
@@ -263,7 +263,7 @@
         </fieldset>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" data-target="moreChannels">Go Back</a>
+        <a class="btn btn--text btn--secondary" data-target="moreChannels">Go Back</a>
         <div class="btn btn--primary align-right" data-target="setupFinished">Continue</div>
         <div class="btn btn--success js-inviteAgent">Invite</div>
       </div>

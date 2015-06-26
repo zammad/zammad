@@ -13,7 +13,7 @@
         <p class="help-block help-block--center"><%- @T('If you want to use more email adresses, you can configure them later.') %></p>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" href="#getting_started/base"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary" href="#getting_started/base"><%- @T('Go Back') %></a>
         <a class="btn align-right" href="#getting_started/finish"><%- @T( 'Finish' ) %></a>
       </div>
     </div>

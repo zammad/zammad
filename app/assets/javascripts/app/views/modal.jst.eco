@@ -23,7 +23,7 @@
       <div class="modal-footer">
   <% if @cancel: %>
         <div class="modal-leftFooter">
-          <a class="subtle-link standalone js-cancel align-left" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+          <a class="btn btn--text btn--subtle js-cancel align-left" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
         </div>
   <% end %>
   <% for button in @centerButtons: %>

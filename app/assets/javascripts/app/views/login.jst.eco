@@ -24,11 +24,11 @@
             <label><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></label>
           </div>
 
-          <div class="form-controls">
+          <div class="form-controls horizontal">
             <button class="btn btn--primary" type="submit"><%- @T( 'Sign in' ) %></button>
 
             <% if @C('user_lost_password'): %>
-              <a href="#password_reset" class="subtle-link standalone pull-right"><%- @T( 'Forgot password?' ) %></a>
+              <a href="#password_reset" class="btn btn--text btn--secondary align-right"><%- @T( 'Forgot password?' ) %></a>
             <% end %>
           </div>
 

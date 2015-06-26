@@ -5,8 +5,7 @@ class App.TicketCreate extends App.Controller
   events:
     'click .type-tabs .tab': 'changeFormType'
     'submit form':           'submit'
-    'click .submit':         'submit'
-    'click .cancel':         'cancel'
+    'click .js-cancel':      'cancel'
 
   constructor: (params) ->
     super

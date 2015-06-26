@@ -11,7 +11,7 @@
   <h2>Database Update required</h2>
   <p><%- @T( 'Changes were made that require a database update. This might take some time.' ) %></p>
   <div class="box-controls">
-    <div class="subtle-link standalone js-discard">Discard Changes</div>
+    <div class="btn btn--text btn--secondary js-discard">Discard Changes</div>
     <div class="btn btn--primary js-sync align-right"><%- @T( 'Update Database' ) %></div>
   </div>
 </div>

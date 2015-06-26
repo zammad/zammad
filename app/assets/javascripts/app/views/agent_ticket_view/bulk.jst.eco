@@ -8,7 +8,7 @@
     <div class="horizontal">
       <div id="form-ticket-bulk-typeVisibility" class="form-inline"></div>
       <div class="bulkAction-controls align-right">
-        <a class="subtle-link standalone js-cancel"><%- @T( 'Go Back' ) %></a>
+        <a class="btn btn--text btn--secondary js-cancel"><%- @T( 'Go Back' ) %></a>
         <input type="submit" class="btn btn--primary js-submit" value="<%- @T('Update') %>">
       </div>
     </div>

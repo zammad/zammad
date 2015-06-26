@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="wizard-controls horizontal center">
-        <a class="subtle-link" href="#getting_started"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary" href="#getting_started"><%- @T('Go Back') %></a>
       </div>
     </div>
   </div>

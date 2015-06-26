@@ -22,7 +22,7 @@
         </fieldset>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link" href="#getting_started/channel"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary" href="#getting_started/channel"><%- @T('Go Back') %></a>
         <button class="btn btn--primary align-right"><%- @T( 'Connect' ) %></button>
       </div>
     </div>
@@ -70,7 +70,7 @@
         <div class="base-inbound-settings"></div>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link js-back" data-slide="js-intro"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary js-back" data-slide="js-intro"><%- @T('Go Back') %></a>
         <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
       </div>
     </div>
@@ -85,7 +85,7 @@
         <div class="base-outbound-settings"></div>
       </div>
       <div class="wizard-controls center">
-        <a class="subtle-link js-back" data-slide="js-inbound"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary js-back" data-slide="js-inbound"><%- @T('Go Back') %></a>
         <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
       </div>
     </div>

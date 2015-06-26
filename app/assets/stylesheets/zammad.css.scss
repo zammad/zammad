@@ -317,7 +317,7 @@ span[data-tooltip]:hover:before {
     text-transform: uppercase;
     color: hsl(0,0%,60%);
     font-size: 12px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     height: 31px;
     padding: 6px 11px !important;
     display: inline-flex;
@@ -356,10 +356,13 @@ span[data-tooltip]:hover:before {
       background: hsl(145,51%,35%);
     }
 
-    &.btn--secondary,
-    &.btn--secondary:active {
+    &.btn--secondary {
       background: white;
       color: hsl(145,51%,45%);
+      
+      &:active {
+        background: hsl(0,0%,98%);
+      }
     }
   }
 
@@ -370,10 +373,13 @@ span[data-tooltip]:hover:before {
       background: hsl(0,65%,45%);
     }
 
-    &.btn--secondary,
-    &.btn--secondary:active {
+    &.btn--secondary {
       background: white;
       color: hsl(0,65%,55%);
+      
+      &:active {
+        background: hsl(0,0%,98%);
+      }
     }
   }
 
@@ -385,29 +391,44 @@ span[data-tooltip]:hover:before {
     background: none;
     vertical-align: baseline;
     &:active {
-      color: hsl(203,65%,45%);
-    }
-  }
-
-  &.btn--subtle {
-    padding-left: 0;
-    padding-right: 0;
-    border: none;
-    color: rgba(0,0,0,.32);
-    text-decoration: underline;
-    background: none;
-    @extend .u-clickable;
-    
-    &:active {
-      color: rgba(0,0,0,.42);
-    }
-    
-    &:hover {
-      color: rgba(0,0,0,.5);
+      color: hsl(203,65%,40%);
     }
 
-    + .btn:not(.align-right) {
-      margin-left: 20px;
+    &.btn--secondary {
+      color: hsl(0,0%,68%);
+      text-decoration: underline;
+      
+      &:active {
+        color: hsl(0,0%,53%);
+      }
+    }
+
+    &.btn--positive {
+      color: hsl(145,51%,45%);
+      
+      &:active {
+        color: hsl(145,51%,30%);
+        background: none;
+      }
+    }
+
+    &.btn--danger {
+      color: hsl(0,65%,55%);
+      
+      &:active {
+        color: hsl(0,65%,40%);
+        background: none;
+      }
+    }
+
+    &.btn--subtle {
+      text-decoration: underline;
+      letter-spacing: 0.04em;
+      color: hsl(0,0%,85%);
+      
+      &:active {
+        color: hsl(0,0%,75%);
+      }
     }
   }
 
@@ -418,7 +439,7 @@ span[data-tooltip]:hover:before {
   &.btn--split--last {
     border-radius: 0;
     border-left: none;
-    margin-left: 0;
+    margin-left: 0 !important;
   }
   &.btn--split--last {
     border-radius: 0 3px 3px 0;
@@ -433,7 +454,6 @@ span[data-tooltip]:hover:before {
   margin-left: auto;
 }
 
-.subtle-link.align-right ~ .btn,
 .btn.align-right ~ .btn {
   margin-left: 15px;
 }
@@ -1345,16 +1365,6 @@ kbd {
   display: inline-block;
 }
 
-.subtle-link {
-  color: rgba(0,0,0,.32);
-  text-decoration: underline;
-  @extend .u-clickable;
-}
-
-.subtle-link:hover {
-  color: rgba(0,0,0,.5);
-}
-
 ol.tabs {
   list-style: decimal inside;
 }
@@ -1588,7 +1598,13 @@ form {
 
 .form-controls {
   @extend .clearfix;
+  display: flex;
+  align-items: center;
   margin-top: 10px;
+  
+  .btn + .btn:not(.align-right) {
+    margin-left: 20px;
+  }
 }
 
 form a.standalone {
@@ -3943,9 +3959,6 @@ footer {
   }
   .newTicket .form-control:not(:focus):not(.focus) {
     border-color: hsl(0,0%,90%);
-  }
-  .newTicket .subtle-link {
-    color: hsl(0,0%,89%);
   }
   .newTicket .article-form-top {
     margin-top: 15px;
