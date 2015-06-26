@@ -1,12 +1,12 @@
 ## encoding: utf-8
 require 'integration_test_helper'
 
-class ICalTicketTest < ActiveSupport::TestCase
+class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
 
   user = User.create(
-    firstname: 'iCal',
+    firstname: 'CalendarSubscriptions',
     lastname: 'Testuser',
-    email: 'ical_testuser@example.com',
+    email: 'calendar_subscriptions_testuser@example.com',
     updated_by_id: 1,
     created_by_id: 1,
   )
@@ -190,6 +190,21 @@ class ICalTicketTest < ActiveSupport::TestCase
     Ticket.create( ticket )
   }
 
+  defaults_disabled = {
+    escalation: {
+      own: false,
+      not_assigned: false,
+    },
+    new_open: {
+      own: false,
+      not_assigned: false,
+    },
+    pending: {
+      own: false,
+      not_assigned: false,
+    }
+  }
+
   test 'new_open' do
 
     tests = [
@@ -241,16 +256,18 @@ class ICalTicketTest < ActiveSupport::TestCase
 
     tests.each { |test_data|
 
-      user.preferences[:ical]          = {}
-      user.preferences[:ical][:ticket] = test_data[:preferences]
+      preferences = defaults_disabled.merge( test_data[:preferences] )
 
-      ical_ticket = ICal::ICalTicket.new( user, test_data[:preferences] )
-      event_data  = ical_ticket.new_open
+      user.preferences[:calendar_subscriptions]           = {}
+      user.preferences[:calendar_subscriptions][:tickets] = preferences
+
+      calendar_subscriptions_ticket = CalendarSubscriptions::Tickets.new( user, preferences )
+      event_data                    = calendar_subscriptions_ticket.new_open
 
       assert_equal( test_data[:count], event_data.length, "#{test_data[:name]} event count" )
 
-      ical_object = ICal.new( user )
-      ical        = ical_object.all
+      calendar_subscriptions = CalendarSubscriptions.new( user )
+      ical                   = calendar_subscriptions.all
 
       event_data.each { |event|
 
@@ -315,16 +332,18 @@ class ICalTicketTest < ActiveSupport::TestCase
 
     tests.each { |test_data|
 
-      user.preferences[:ical]          = {}
-      user.preferences[:ical][:ticket] = test_data[:preferences]
+      preferences = defaults_disabled.merge( test_data[:preferences] )
 
-      ical_ticket = ICal::ICalTicket.new( user, test_data[:preferences] )
-      event_data  = ical_ticket.pending
+      user.preferences[:calendar_subscriptions]           = {}
+      user.preferences[:calendar_subscriptions][:tickets] = preferences
+
+      calendar_subscriptions_ticket = CalendarSubscriptions::Tickets.new( user, preferences )
+      event_data                    = calendar_subscriptions_ticket.pending
 
       assert_equal( test_data[:count], event_data.length, "#{test_data[:name]} event count" )
 
-      ical_object = ICal.new( user )
-      ical        = ical_object.all
+      calendar_subscriptions = CalendarSubscriptions.new( user )
+      ical                   = calendar_subscriptions.all
 
       event_data.each { |event|
 
@@ -389,16 +408,18 @@ class ICalTicketTest < ActiveSupport::TestCase
 
     tests.each { |test_data|
 
-      user.preferences[:ical]          = {}
-      user.preferences[:ical][:ticket] = test_data[:preferences]
+      preferences = defaults_disabled.merge( test_data[:preferences] )
 
-      ical_ticket = ICal::ICalTicket.new( user, test_data[:preferences] )
-      event_data  = ical_ticket.escalation
+      user.preferences[:calendar_subscriptions]           = {}
+      user.preferences[:calendar_subscriptions][:tickets] = preferences
+
+      calendar_subscriptions_ticket = CalendarSubscriptions::Tickets.new( user, preferences )
+      event_data                    = calendar_subscriptions_ticket.escalation
 
       assert_equal( test_data[:count], event_data.length, "#{test_data[:name]} event count" )
 
-      ical_object = ICal.new( user )
-      ical        = ical_object.all
+      calendar_subscriptions = CalendarSubscriptions.new( user )
+      ical                   = calendar_subscriptions.all
 
       event_data.each { |event|
 

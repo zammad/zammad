@@ -2,18 +2,18 @@
 
 require 'icalendar'
 
-class ICalController < ApplicationController
-  before_action { authentication_check( { basic_auth_promt: true, token_action: 'iCal' } ) }
+class CalendarSubscriptionsController < ApplicationController
+  before_action { authentication_check( { basic_auth_promt: true, token_action: 'CalendarSubscriptions' } ) }
 
-  # @path       [GET] /ical
+  # @path       [GET] /calendar_subscriptions
   #
-  # @summary          Returns an iCal file with all objects matching the iCal preferences of the current user as events.
+  # @summary          Returns an iCal file with all objects matching the calendar subscriptions preferences of the current user as events.
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def all
-    ical_object = ICal.new( current_user )
-    ical        = ical_object.all
+    calendar_subscriptions = CalendarSubscriptions.new( current_user )
+    ical                   = calendar_subscriptions.all
 
     send_data(
       ical,
@@ -27,20 +27,16 @@ class ICalController < ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-  # @path       [GET] /ical/:object
-  # @path       [GET] /ical/:object/:method
+  # @path       [GET] /calendar_subscriptions/:object
+  # @path       [GET] /calendar_subscriptions/:object/:method
   #
-  # @summary          Returns an iCal file of the given object (and method) matching the iCal preferences of the current user as events.
+  # @summary          Returns an iCal file of the given object (and method) matching the calendar subscriptions preferences of the current user as events.
   #
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def object
-    ical_object = ICal.new( current_user )
-
-    # remove the last char (s/plural) from the object name
-    object_name = params[:object].to_s[0...-1].to_sym
-
-    ical = ical_object.generic( object_name, params[:method] )
+    calendar_subscriptions = CalendarSubscriptions.new( current_user )
+    ical                   = calendar_subscriptions.generic( params[:object], params[:method] )
 
     send_data(
       ical,

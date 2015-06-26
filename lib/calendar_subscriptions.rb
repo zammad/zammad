@@ -1,15 +1,23 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-class ICal
+class CalendarSubscriptions
 
   def initialize(user)
     @user        = user
     @preferences = {}
 
+    default_preferences = Setting.where( area: 'Defaults::CalendarSubscriptions' )
+    default_preferences.each { |calendar_subscription|
 
-    if @user.preferences[:ical] && !@user.preferences[:ical].empty?
-      @preferences = @user.preferences[:ical]
-    end
+      next if calendar_subscription.name !~ /\Adefaults_calendar_subscriptions_(.*)\z/
+
+      object_name                 = $1
+      @preferences[ object_name ] = calendar_subscription.state[:value]
+    }
+
+    return if !@user.preferences[:calendar_subscriptions]
+    return if @user.preferences[:calendar_subscriptions].empty?
+    @preferences = @preferences.merge( @user.preferences[:calendar_subscriptions] )
   end
 
   def all
@@ -34,10 +42,10 @@ class ICal
     events_data = []
     if @preferences[ object_name ] && !@preferences[ object_name ].empty?
       sub_class_name = object_name.to_s.capitalize
-      object         = Object.const_get('ICal').const_get("ICal#{sub_class_name}")
+      object         = Object.const_get("CalendarSubscriptions::#{sub_class_name}")
       instance       = object.new( @user, @preferences[ object_name ] )
       method         = instance.method( method_name )
-      events_data   += method.call
+      events_data += method.call
     end
     events_data
   end

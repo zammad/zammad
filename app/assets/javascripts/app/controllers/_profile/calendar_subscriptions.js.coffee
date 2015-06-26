@@ -21,20 +21,11 @@ class CalendarSubscriptions extends App.Controller
 
   render: =>
     userPreferences = @Session.get('preferences')
-    @preferences =
-      new_open:
-        own: true
-        not_assigned: false
-      pending:
-        own: true
-        not_assigned: false
-      escalation:
-        own: true
-        not_assigned: false
+    @preferences    = App.Config.get('defaults_calendar_subscriptions_tickets')
 
-    if userPreferences.ical
-      if userPreferences.ical.ticket
-        _.extend(@preferences, userPreferences.ical.ticket)
+    if userPreferences.calendar_subscriptions
+      if userPreferences.calendar_subscriptions.tickets
+        _.extend(@preferences, userPreferences.calendar_subscriptions.tickets)
 
     @html App.view('profile/calendar_subscriptions')
       baseurl: window.location.origin
@@ -67,8 +58,8 @@ class CalendarSubscriptions extends App.Controller
     # get data
     data =
       user:
-        ical:
-          ticket: @preferences
+        calendar_subscriptions:
+          tickets: @preferences
 
     @ajax(
       id:          'preferences'
