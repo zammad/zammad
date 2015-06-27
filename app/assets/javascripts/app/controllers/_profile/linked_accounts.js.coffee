@@ -76,5 +76,5 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent( data.message )
     )
 
-App.Config.set( 'LinkedAccounts', { prio: 3000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile' )
+App.Config.set( 'LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile' )
 

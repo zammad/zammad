@@ -74,8 +74,6 @@ class CalendarSubscriptions extends App.Controller
     App.User.full(
       App.Session.get( 'id' ),
       =>
-        App.i18n.set( @locale )
-        App.Event.trigger( 'ui:rerender' )
         @notify(
           type: 'success'
           msg:  App.i18n.translateContent( 'Successfully!' )
@@ -92,4 +90,4 @@ class CalendarSubscriptions extends App.Controller
       msg:  App.i18n.translateContent( data.message )
     )
 
-App.Config.set( 'CalendarSubscriptions', { prio: 4000, name: 'Calendar Subscriptions', parent: '#profile', target: '#profile/calendar_subscriptions', controller: CalendarSubscriptions }, 'NavBarProfile' )
+App.Config.set( 'CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', controller: CalendarSubscriptions }, 'NavBarProfile' )
