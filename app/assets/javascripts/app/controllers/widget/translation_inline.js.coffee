@@ -2,7 +2,7 @@ class Widget
   constructor: ->
 
     # bind on key down
-    # if ctrl+shift+t is pressed, enable translation_inline and fire ui:rerender
+    # if ctrl+alt+t is pressed, enable translation_inline and fire ui:rerender
     $(document).on('keydown', (e) =>
       if e.altKey && e.ctrlKey && e.keyCode is 84
         if @active
