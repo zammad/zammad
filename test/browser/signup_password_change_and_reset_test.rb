@@ -30,7 +30,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       css: 'input[name="password_confirm"]',
       value: 'some-pass',
     )
-    click( css: 'button.submit' )
+    click( css: 'button.js-submit' )
     sleep 5
 
     exists_not( css: '.signup' )

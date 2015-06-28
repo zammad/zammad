@@ -1070,7 +1070,7 @@ wait untill text in selector disabppears
     end
     sleep 0.8
     #instance.execute_script( '$(".content.active .newTicket form").submit();' )
-    instance.find_elements( { css: '.active .newTicket button.submit' } )[0].click
+    instance.find_elements( { css: '.active .newTicket button.js-submit' } )[0].click
     sleep 1
     (1..10).each {
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/

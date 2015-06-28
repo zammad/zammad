@@ -28,7 +28,7 @@ class CustomerTicketCreateTest < TestCase
       css: '.newTicket [data-name="body"]',
       value: 'some body 123äöü',
     )
-    click( css: '.newTicket button.submit' )
+    click( css: '.newTicket button.js-submit' )
     sleep 5
 
     # check if ticket is shown

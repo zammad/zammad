@@ -52,7 +52,7 @@ class AgentTicketActionLevel4Test < TestCase
     )
 
     # finally create ticket
-    click( css: '.content.active button.submit' )
+    click( css: '.content.active button.js-submit' )
     sleep 5
 
     location_check(
