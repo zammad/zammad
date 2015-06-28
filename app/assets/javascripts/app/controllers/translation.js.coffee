@@ -46,6 +46,9 @@ class Index extends App.ControllerContent
     if @translationToDo.changes() || @translationList.changes()
       App.Delay.set(rerender, 400)
 
+  hideAction: =>
+    @el.closest('.content').find('.js-changes').addClass('hidden')
+
   pushChanges: =>
     locale = @$('[name="locale"]').val()
 
@@ -89,6 +92,7 @@ class Index extends App.ControllerContent
       data:        JSON.stringify(locale: locale)
       processData: false
       success: (data, status, xhr) =>
+        @hideAction()
         App.Event.trigger('i18n:translation_todo_reload')
         App.Event.trigger('i18n:translation_list_reload')
         @modal.hide()
@@ -115,6 +119,7 @@ class Index extends App.ControllerContent
       data:        JSON.stringify(locale: locale)
       processData: false
       success: (data, status, xhr) =>
+        @hideAction()
         App.Event.trigger('i18n:translation_todo_reload')
         App.Event.trigger('i18n:translation_list_reload')
         @modal.hide()
@@ -266,13 +271,12 @@ class TranslationList extends App.Controller
       strings: @strings
     )
     ui = @
-    changesAvailable = false
+    @changesAvailable = false
     @$('.js-Item').each( (e) ->
       id = $(this).data('id')
       ui.updateRow(id)
-      changesAvailable = true
     )
-    if changesAvailable
+    if @changesAvailable
       @showAction()
 
   showAction: =>
@@ -371,6 +375,7 @@ class TranslationList extends App.Controller
     initial = field.data('initial')
     reset   = field.closest('tr').find('.js-Reset')
     if current isnt initial
+      @changesAvailable = true
       reset.show()
       reset.closest('tr').addClass('warning')
     else
