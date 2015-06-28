@@ -4,6 +4,9 @@ class TranslationSupport extends App.Controller
 
     check = =>
 
+      # only show if system is already up and running
+      return if !@Config.get('system_init_done')
+
       # to not translate en
       return if App.i18n.notTranslatedFeatureEnabled(App.i18n.get())
 
