@@ -92,9 +92,9 @@ class Index extends App.ControllerContent
       data:        JSON.stringify(locale: locale)
       processData: false
       success: (data, status, xhr) =>
-        @hideAction()
         App.Event.trigger('i18n:translation_todo_reload')
         App.Event.trigger('i18n:translation_list_reload')
+        @hideAction()
         @modal.hide()
       error: =>
         @modal.hide()
@@ -119,9 +119,9 @@ class Index extends App.ControllerContent
       data:        JSON.stringify(locale: locale)
       processData: false
       success: (data, status, xhr) =>
-        @hideAction()
         App.Event.trigger('i18n:translation_todo_reload')
         App.Event.trigger('i18n:translation_list_reload')
+        @hideAction()
         @modal.hide()
       error: =>
         @modal.hide()
@@ -346,11 +346,10 @@ class TranslationList extends App.Controller
 
   update: (e) ->
     e.preventDefault()
-    @hasChanges = true
-    id          = $( e.target ).data('id')
-    source      = $( e.target ).data('source')
-    format      = $( e.target ).data('format')
-    target      = $( e.target ).val()
+    id     = $( e.target ).data('id')
+    source = $( e.target ).data('source')
+    format = $( e.target ).data('format')
+    target = $( e.target ).val()
 
     # local update
     @updateRow(id)
@@ -379,6 +378,7 @@ class TranslationList extends App.Controller
     reset   = field.closest('tr').find('.js-Reset')
     if current isnt initial
       @changesAvailable = true
+      @showAction()
       reset.show()
       reset.closest('tr').addClass('warning')
     else
