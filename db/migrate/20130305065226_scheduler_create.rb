@@ -47,7 +47,7 @@ class SchedulerCreate < ActiveRecord::Migration
     Scheduler.create_or_update(
       name: 'Cleanup expired sessions',
       method: 'SessionHelper.cleanup_expired',
-      period: 60 * 60 * 24,
+      period: 60 * 60 * 12,
       prio: 2,
       active: true,
       updated_by_id: 1,

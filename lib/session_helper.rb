@@ -29,7 +29,7 @@ module SessionHelper
   def self.cleanup_expired
 
     # delete temp. sessions
-    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', Time.zone.now - 1.days ).delete_all
+    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', Time.zone.now - 2.hours ).delete_all
 
     # web sessions older the x days
     ActiveRecord::SessionStore::Session.where('updated_at < ?', Time.zone.now - 90.days ).delete_all
