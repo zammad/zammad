@@ -607,6 +607,8 @@ class App.ControllerModal extends App.Controller
 
   onSubmit: (e) =>
     e.preventDefault()
+    if @onSubmitCallback
+      @onSubmitCallback()
     @log 'error', 'You need to implement your own "onSubmit" method!'
 
 class App.ErrorModal extends App.ControllerModal
