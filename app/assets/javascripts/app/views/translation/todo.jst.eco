@@ -13,7 +13,7 @@
       <tr>
         <td title="<%= item[1] %>"><%= item[1] %></td>
         <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= item[2] %>" data-source="<%= item[1] %>"></td>
-        <td><a href="#" class="js-Create"><%- @T('Create') %></a> / <a href="#" class="js-TheSame"><%- @T('is the same') %></a></td>
+        <td><a href="#" class="js-create"><%- @T('Create') %></a> / <a href="#" class="js-theSame"><%- @T('is the same') %></a></td>
       </tr>
       <% end %>
     <% end %>

@@ -72,8 +72,10 @@ push translations to online
     }
 
     return true if translations_to_push.empty?
-    #return translations_to_push
+
     url = 'https://i18n.zammad.com/api/v1/thanks_for_your_support'
+
+    translator_key = Setting.get('translator_key')
 
     result = UserAgent.post(
       url,
@@ -81,13 +83,43 @@ push translations to online
         locale: locale,
         translations: translations_to_push,
         fqdn: Setting.get('fqdn'),
-        translator_key: '',
+        translator_key: translator_key,
       },
       {
         json: true,
       }
     )
     fail "Can't push translations to #{url}: #{result.error}" if !result.success?
+
+    # set new translator_key if given
+    if result.data['translator_key']
+      translator_key = Setting.set('translator_key', result.data['translator_key'])
+    end
+
+    true
+  end
+
+=begin
+
+reset translations to origin
+
+  Translation.reset(locale)
+
+=end
+
+  def self.reset(locale)
+
+    # only push changed translations
+    translations = Translation.where(locale: locale)
+    translations.each {|translation|
+      if !translation.target_initial || translation.target_initial.empty?
+        translation.destroy
+      elsif translation.target != translation.target_initial
+        translation.target = translation.target_initial
+        translation.save
+      end
+    }
+
     true
   end
 
@@ -101,43 +133,47 @@ get list of translations
 
   def self.list(locale, admin = false)
 
-    # check cache
+    # use cache if not admin page is requested
     if !admin
-      list = cache_get( locale )
+      data = cache_get(locale)
     end
-    if !list
+    if !data
+
+      # show total translations as reference count
+      data = {
+        'total' => Translation.where(locale: 'de-de').count,
+      }
       list = []
-      translations = Translation.where( locale: locale.downcase ).order( :source )
+      translations = Translation.where(locale: locale.downcase).order(:source)
       translations.each { |item|
         if admin
-          data = [
+          translation_item = [
             item.id,
             item.source,
             item.target,
             item.target_initial,
             item.format,
           ]
-          list.push data
+          list.push translation_item
         else
-          data = [
+          translation_item = [
             item.id,
             item.source,
             item.target,
             item.format,
           ]
-          list.push data
+          list.push translation_item
         end
+        data['list'] = list
       }
 
       # set cache
       if !admin
-        cache_set( locale, list )
+        cache_set(locale, data)
       end
     end
 
-    {
-      list: list,
-    }
+    data
   end
 
 =begin
@@ -174,12 +210,12 @@ translate strings in ruby context, e. g. for notifications
   end
 
   def cache_clear
-    Cache.delete( 'Translation::' + locale.downcase )
+    Cache.delete( 'TranslationMap::' + locale.downcase )
   end
   def self.cache_set(locale, data)
-    Cache.write( 'Translation::' + locale.downcase, data )
+    Cache.write( 'TranslationMap::' + locale.downcase, data )
   end
   def self.cache_get(locale)
-    Cache.get( 'Translation::' + locale.downcase )
+    Cache.get( 'TranslationMap::' + locale.downcase )
   end
 end

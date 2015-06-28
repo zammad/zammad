@@ -8,6 +8,31 @@ class TranslationsController < ApplicationController
     render json: Translation.list( params[:locale] )
   end
 
+  # PUT /translations/push
+  def push
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    start = Time.zone.now
+    Translation.push(params[:locale])
+    if start > Time.zone.now - 5.seconds
+      sleep 4
+    end
+    render json: { message: 'ok' }, status: :ok
+  end
+
+  # POST /translations/sync
+  def sync
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    Translation.load
+    render json: { message: 'ok' }, status: :ok
+  end
+
+  # POST /translations/reset
+  def reset
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    Translation.reset(params[:locale])
+    render json: { message: 'ok' }, status: :ok
+  end
+
   # GET /translations/admin/lang/:locale
   def admin
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
@@ -16,11 +41,13 @@ class TranslationsController < ApplicationController
 
   # GET /translations
   def index
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_index_render(Translation, params)
   end
 
   # GET /translations/1
   def show
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(Translation, params)
   end
 

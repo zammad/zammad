@@ -1,4 +1,9 @@
 class Index extends App.ControllerContent
+  events:
+    'click .js-pushChanges': 'pushChanges'
+    'click .js-resetChanges': 'resetChanges'
+    'click .js-syncChanges': 'syncChanges'
+
   constructor: ->
     super
 
@@ -19,11 +24,11 @@ class Index extends App.ControllerContent
       { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: options, default: App.i18n.get()  },
     ]
     load = (params) =>
-      new TranslationToDo(
+      @translationToDo = new TranslationToDo(
         el:     @$('.js-ToDo')
         locale: params.locale
       )
-      new TranslationList(
+      @translationList = new TranslationList(
         el:     @$('.js-List')
         locale: params.locale
       )
@@ -38,12 +43,90 @@ class Index extends App.ControllerContent
   release: =>
     rerender = ->
       App.Event.trigger('ui:rerender')
-    App.Delay.set(rerender, 400)
+    if @translationToDo.changes() || @translationList.changes()
+      App.Delay.set(rerender, 400)
+
+  pushChanges: =>
+    locale = @$('[name="locale"]').val()
+
+    @modal = new App.ControllerModal(
+      head:      'Pushing own translations...'
+      message:   'Pushing own translations to i18n.zammad.com, Thanks for contributing!'
+      cancel:    false
+      close:     false
+      shown:     true
+      container: @el.closest('.content')
+    )
+
+    @ajax(
+      id:          'translations'
+      type:        'PUT'
+      url:         @apiPath + '/translations/push'
+      data:        JSON.stringify(locale: locale)
+      processData: false
+      success: (data, status, xhr) =>
+        @modal.hide()
+      error: =>
+        @modal.hide()
+    )
+
+  resetChanges: =>
+    locale = @$('[name="locale"]').val()
+
+    @modal = new App.ControllerModal(
+      head:      'Reseting changes...'
+      message:   'Reseting changes own translation changes...'
+      cancel:    false
+      close:     false
+      shown:     true
+      container: @el.closest('.content')
+    )
+
+    @ajax(
+      id:          'translations'
+      type:        'POST'
+      url:         @apiPath + '/translations/reset'
+      data:        JSON.stringify(locale: locale)
+      processData: false
+      success: (data, status, xhr) =>
+        App.Event.trigger('i18n:translation_todo_reload')
+        App.Event.trigger('i18n:translation_list_reload')
+        @modal.hide()
+      error: =>
+        @modal.hide()
+    )
+
+  syncChanges: =>
+    locale = @$('[name="locale"]').val()
+
+    @modal = new App.ControllerModal(
+      head:      'Syncing with latest translations...'
+      message:   'Syncing with latest translations!'
+      cancel:    false
+      close:     false
+      shown:     true
+      container: @el.closest('.content')
+    )
+
+    @ajax(
+      id:          'translations'
+      type:        'POST'
+      url:         @apiPath + '/translations/sync'
+      data:        JSON.stringify(locale: locale)
+      processData: false
+      success: (data, status, xhr) =>
+        App.Event.trigger('i18n:translation_todo_reload')
+        App.Event.trigger('i18n:translation_list_reload')
+        @modal.hide()
+      error: =>
+        @modal.hide()
+    )
 
 class TranslationToDo extends App.Controller
+  hasChanges: false
   events:
-    'click .js-Create':  'create'
-    'click .js-TheSame': 'same'
+    'click .js-create':  'create'
+    'click .js-theSame': 'same'
 
   constructor: ->
     super
@@ -69,8 +152,16 @@ class TranslationToDo extends App.Controller
       list: listNotTranslated
     )
 
+  showAction: =>
+    @el.closest('.content').find('.js-changes').removeClass('hidden')
+
+  changes: =>
+    @hasChanges
+
   create: (e) =>
     e.preventDefault()
+    @hasChanges = true
+    @showAction()
     field  = $(e.target).closest('tr').find('.js-Item')
     source = field.data('source')
     target = field.val()
@@ -104,6 +195,8 @@ class TranslationToDo extends App.Controller
 
   same: (e) =>
     e.preventDefault()
+    @hasChanges = true
+    @showAction()
     field  = $(e.target).closest('tr').find('.js-Item')
     source = field.data('source')
 
@@ -135,6 +228,7 @@ class TranslationToDo extends App.Controller
     )
 
 class TranslationList extends App.Controller
+  hasChanges: false
   events:
     'blur .js-translated input':          'update'
     'click .js-translated .js-Reset':     'reset'
@@ -159,12 +253,8 @@ class TranslationList extends App.Controller
     )
 
   render: (data = {}) =>
-
-    #if !App.i18n.notTranslatedFeatureEnabled(@locale)
-    #  return
-
     @strings = []
-    @times = []
+    @times   = []
     for item in data.list
       if item[4] is 'time'
         @times.push item
@@ -176,18 +266,29 @@ class TranslationList extends App.Controller
       strings: @strings
     )
     ui = @
+    changesAvailable = false
     @$('.js-Item').each( (e) ->
       id = $(this).data('id')
       ui.updateRow(id)
+      changesAvailable = true
     )
+    if changesAvailable
+      @showAction()
+
+  showAction: =>
+    @el.closest('.content').find('.js-changes').removeClass('hidden')
+
+  changes: =>
+    @hasChanges
 
   reset: (e) ->
     e.preventDefault()
-    field   = $(e.target).closest('tr').find('.js-Item')
-    id      = field.data('id')
-    source  = field.data('source')
-    initial = field.data('initial')
-    format  = field.data('format')
+    @hasChanges = true
+    field       = $(e.target).closest('tr').find('.js-Item')
+    id          = field.data('id')
+    source      = field.data('source')
+    initial     = field.data('initial')
+    format      = field.data('format')
 
     # if it's translated by user it self, delete it
     if !initial || initial is ''
@@ -238,10 +339,11 @@ class TranslationList extends App.Controller
 
   update: (e) ->
     e.preventDefault()
-    id     = $( e.target ).data('id')
-    source = $( e.target ).data('source')
-    format = $( e.target ).data('format')
-    target = $( e.target ).val()
+    @hasChanges = true
+    id          = $( e.target ).data('id')
+    source      = $( e.target ).data('source')
+    format      = $( e.target ).data('format')
+    target      = $( e.target ).val()
 
     # local update
     @updateRow(id)
