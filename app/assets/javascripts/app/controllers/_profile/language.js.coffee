@@ -48,13 +48,13 @@ class Index extends App.Controller
 
   success: (data, status, xhr) =>
     App.User.full(
-      App.Session.get( 'id' ),
+      App.Session.get('id'),
       =>
-        App.i18n.set( @locale )
-        App.Event.trigger( 'ui:rerender' )
+        App.i18n.set(@locale)
+        App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent( 'Successfully!' )
+          msg:  App.i18n.translateContent('Successfully!')
         )
       ,
       true
@@ -62,10 +62,10 @@ class Index extends App.Controller
 
   error: (xhr, status, error) =>
     @render()
-    data = JSON.parse( xhr.responseText )
+    data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent( data.message )
+      msg:  App.i18n.translateContent(data.message)
     )
 
 App.Config.set( 'Language', { prio: 1000, name: 'Language', parent: '#profile', target: '#profile/language', controller: Index }, 'NavBarProfile' )
