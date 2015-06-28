@@ -8,10 +8,13 @@ class TranslationSupport extends App.Controller
       return if !@Config.get('system_init_done')
 
       # to not translate en
-      return if App.i18n.notTranslatedFeatureEnabled(App.i18n.get())
+      return if !App.i18n.notTranslatedFeatureEnabled(App.i18n.get())
 
       # only show for admins
       return if !@isRole('Admin')
+
+      # do not show in setup screens
+      return if window.location.hash.toString().match(/getting/)
 
       # verify current state of translation
       meta    = App.i18n.meta()
