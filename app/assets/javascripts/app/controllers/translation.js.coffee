@@ -148,6 +148,9 @@ class TranslationToDo extends App.Controller
       @html App.view('translation/english')()
       return
 
+    if !App.i18n.getNotTranslated(@locale)
+      return
+
     listNotTranslated = []
     for key, value of App.i18n.getNotTranslated(@locale)
       item = [ '', key, '', '']
