@@ -44,6 +44,11 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.setMap( source, target, format )
 
+  @meta: (source, target, format) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.meta()
+
   @notTranslatedFeatureEnabled: (locale) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
@@ -70,6 +75,9 @@ class _i18nSingleton extends Spine.Module
   constructor: ( locale ) ->
     @mapTime           = {}
     @mapString         = {}
+    @mapMeta           =
+      total: 0
+      translated: 0
     @_notTranslatedLog = false
     @_notTranslated    = {}
     @dateFormat        = 'yyyy-mm-dd'
@@ -178,7 +186,11 @@ class _i18nSingleton extends Spine.Module
       async:  false,
       success: (data, status, xhr) =>
 
+        # total count of translations as ref.
+        @mapMeta.total = data.total
+
         # load translation collection
+        mapToLoad = []
         for object in data.list
 
           # set date/timestamp format
@@ -190,8 +202,16 @@ class _i18nSingleton extends Spine.Module
             # set runtime lookup table
             @mapString[ object[1] ] = object[2]
 
-            # load in collection if needed
-            App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale } )
+            item = { id: object[0], source: object[1], target: object[2], locale: @locale }
+            mapToLoad.push item
+
+        @mapMeta.translated = mapToLoad.length
+
+        # load in collection if needed
+        if !_.isEmpty(mapToLoad)
+          App.Translation.refresh( mapToLoad, {clear: true} )
+
+        App.Event.trigger('i18n:language:change')
     )
 
   translateInline: ( string, args... ) =>
@@ -229,11 +249,14 @@ class _i18nSingleton extends Spine.Module
     else
       @_translated = false
       translated   = string
+
+      # log not translated strings in developer mode
       if @_notTranslatedLog && App.Config.get('developer_mode') is true
         if !@_notTranslated[@locale]
           @_notTranslated[@locale] = {}
+        if !@_notTranslated[@locale][string]
+          @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
         @_notTranslated[@locale][string] = true
-        @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
 
     # search %s
     for arg in args
@@ -243,6 +266,9 @@ class _i18nSingleton extends Spine.Module
 
     # return translated string
     return translated
+
+  meta: =>
+    @mapMeta
 
   setMap: ( source, target, format = 'string' ) =>
     if format is 'time'
