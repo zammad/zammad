@@ -5,6 +5,7 @@ class Index extends App.Controller
   constructor: ->
     super
     return if !@authenticate()
+    @title 'Linked Accounts', true
     @render()
 
   render: =>

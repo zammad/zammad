@@ -12,6 +12,7 @@ class Index extends App.Controller
   constructor: ->
     super
     return if !@authenticate()
+    @title 'Avatar', true
     @avatars = []
     @loadAvatarList()
 

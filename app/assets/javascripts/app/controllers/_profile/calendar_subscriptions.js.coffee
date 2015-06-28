@@ -11,6 +11,7 @@ class CalendarSubscriptions extends App.Controller
   constructor: ->
     super
     return if !@authenticate()
+    @title 'Calendar', true
 
     @translationTable =
       new_open: App.i18n.translatePlain('new & open')
