@@ -5,7 +5,7 @@ class TranslationSupport extends App.Controller
     check = =>
 
       # to not translate en
-      return if App.i18n.get().substr(0,2) is 'en'
+      return if App.i18n.notTranslatedFeatureEnabled(App.i18n.get())
 
       # only show for admins
       return if !@isRole('Admin')
