@@ -6,6 +6,7 @@
   <div class="btn">Default Button</div>
   <div class="btn btn--slim">Slim Button</div>
   <div class="btn is-disabled">Disabled Button</div>
+  <div class="btn" disabled>Disabled Button</div>
 
   <h3>Primary</h3>
   <div class="btn btn--primary">Primary Button</div>
