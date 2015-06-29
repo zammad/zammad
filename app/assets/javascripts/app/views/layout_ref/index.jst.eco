@@ -4,8 +4,8 @@
 
 
   <ul>
-    <li><a href="#layout_ref/buttons">👇👉👈👆 All the Buttons</a></li>
-    <li><a href="#layout_ref/calendar_subscription">Calendar Subscription</a></li>
+    <li><a href="#layout_ref/buttons">👇 All the Buttons</a></li>
+    <li><a href="#layout_ref/calendar_subscriptions">Calendar Subscriptions</a></li>
     <li><a href="#layout_ref/search_select">Searchable Select</a></li>
     <li><a href="#layout_ref/schedulers">Schedulers</a></li>
     <li><a href="#layout_ref/sla">Service Level Agreements</a></li>
