@@ -2094,7 +2094,14 @@ class App.ControllerForm extends App.Controller
   _sortOptions: (attribute) ->
 
     return if !attribute.options
-    return if _.isArray( attribute.options )
+
+    if _.isArray( attribute.options )
+      # reverse if we have to exit early, if configured
+      if attribute.order
+        if attribute.order == 'DESC'
+          attribute.options = attribute.options.reverse()
+        return
+
     options_by_name = []
     for i in attribute.options
       options_by_name.push i['name'].toString().toLowerCase()
@@ -2108,6 +2115,11 @@ class App.ControllerForm extends App.Controller
           options_new_used[ ii['value'] ] = 1
           options_new.push ii
     attribute.options = options_new
+
+    # do a final reverse, if configured
+    if attribute.order
+      if attribute.order == 'DESC'
+        attribute.options = attribute.options.reverse()
 
   _addNullOption: (attribute) ->
     return if !attribute.options
