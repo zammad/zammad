@@ -1472,23 +1472,27 @@ class calendarSubscriptionsRef extends App.ControllerContent
     own = data.filter((entry) -> entry.name.indexOf('own') >= 0)
     not_assigned = data.filter((entry) -> entry.name.indexOf('not_assigned') >= 0)
 
-    if own.length is optionCount
-      modules.push "all my"
-    else
-      modules.push.apply modules, own.map (entry) -> 
-        [option, value] = entry.name.split('/')
-        return "#{ translationTable[value] } #{ translationTable[option] }"
+    if own.length > 0
+      if own.length is optionCount
+        modules.push "all my tickets"
+      else
+        modules.push.apply modules, own.map (entry) ->
+          [option, value] = entry.name.split('/')
+          return "#{ translationTable[value] } #{ translationTable[option] }"
+        modules[modules.length-1] += " tickets"
 
-    if not_assigned.length is optionCount
-      modules.push "all not assigned"
-    else
-      modules.push.apply modules, not_assigned.map (entry) -> 
-        [option, value] = entry.name.split('/')
-        return "#{ translationTable[value] } #{ translationTable[option] }"
+    if not_assigned.length > 0
+      if not_assigned.length is optionCount
+        modules.push "all not assigned tickets"
+      else
+        modules.push.apply modules, not_assigned.map (entry) ->
+          [option, value] = entry.name.split('/')
+          return "#{ translationTable[value] } #{ translationTable[option] }"
+        modules[modules.length-1] += " tickets"
 
     @output
       .attr 'disabled', false
-      .text "Subscription to #{ @joinItems modules } tickets:"
+      .text "Subscription to #{ @joinItems modules }:"
 
   joinItems: (items) ->
     switch items.length

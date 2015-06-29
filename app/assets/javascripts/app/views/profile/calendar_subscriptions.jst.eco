@@ -8,7 +8,10 @@
 <p><%= @T('See your tickets from within your favorite calendar by adding the following url to your calendar app.') %></p>
 
 <h3><%= @T('URL') %></h3>
-<input class="form-control js-select" readonly value="<%= @baseurl %>/calendar_subscriptions/tickets">
+<div class="output-input">
+  <output class="js-output"></output>
+  <input class="form-control js-select" readonly value="<%= @baseurl %>/calendar_subscriptions/tickets">
+</div>
 
 <h3><%= @T('Subscription Settings') %></h3>
 <table class="settings-list">
