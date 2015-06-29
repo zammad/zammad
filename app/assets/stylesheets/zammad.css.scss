@@ -4303,7 +4303,7 @@ footer {
   .modal-centerFooter,
   .modal-rightFooter {
     display: flex;
-    align-items: start;
+    align-items: center; /* because of btn--text btn--subtle being thinner than the rest */
     flex: 1;
   }
 
