@@ -34,6 +34,7 @@
 //= require ./app/lib/bootstrap/transition.js
 //= require ./app/lib/bootstrap/button.js
 //= require ./app/lib/bootstrap/collapse.js
+//= require ./app/lib/bootstrap/bootstrap-timepicker.js
 
 //= require ./app/lib/rangy/rangy-core.js
 //= require ./app/lib/rangy/rangy-classapplier.js

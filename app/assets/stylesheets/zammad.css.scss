@@ -882,6 +882,18 @@ input[type=time] {
   padding-right: 6px;
 }
 
+input.timeframe,
+input.time {
+  width: 4.5ch;
+  box-sizing: content-box;
+  padding: 0 6px;
+  line-height: 42px;
+}
+
+input.time.time--12 {
+  width: 7.5ch;
+}
+
   .form-control:focus,
   .form-control.focus,
   .tokenfield.focus {
@@ -5427,16 +5439,7 @@ output {
 }
 
 .form-group.day-time {
-  padding: 10px 10px 0;
-
-  input {
-    width: auto;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-    margin: 0 -10px;
-    border-bottom: 0;
-  }
+  padding: 5px;
 }
 
 .settings-list {

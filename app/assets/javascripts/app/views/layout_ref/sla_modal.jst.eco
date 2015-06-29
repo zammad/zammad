@@ -204,48 +204,48 @@
     <tr>
       <td data-column="monday" class="form-group day-time is-active">
         <label for="monday_start_time">from</label>
-        <input type="time" id="monday_start_time" value="07:00" step="600">
+        <input type="text" id="monday_start_time" value="07:00" class="time time--12 js-time">
       <td data-column="tuesday" class="form-group day-time is-active">
         <label for="tuesday_start_time">from</label>
-        <input type="time" id="tuesday_start_time" value="07:00" step="600">
+        <input type="text" id="tuesday_start_time" value="07:00" class="time time--12 js-time">
       <td data-column="wednesday" class="form-group day-time is-active">
         <label for="wednesday_start_time">from</label>
-        <input type="time" id="wednesday_start_time" value="07:00" step="600">
+        <input type="text" id="wednesday_start_time" value="07:00" class="time time--12 js-time">
       <td data-column="thursday" class="form-group day-time is-active">
         <label for="thursday_start_time">from</label>
-        <input type="time" id="thursday_start_time" value="07:00" step="600">
+        <input type="text" id="thursday_start_time" value="07:00" class="time time--12 js-time">
       <td data-column="friday" class="form-group day-time is-active">
         <label for="friday_start_time">from</label>
-        <input type="time" id="friday_start_time" value="07:00" step="600">
+        <input type="text" id="friday_start_time" value="07:00" class="time time--12 js-time">
       <td data-column="saturday" class="form-group day-time">
         <label for="saturday_start_time">from</label>
-        <input type="time" id="saturday_start_time" value="09:00" step="600">
+        <input type="text" id="saturday_start_time" value="07:00" class="time time--12 js-time">
       <td data-column="sunday" class="form-group day-time">
         <label for="sunday_start_time">from</label>
-        <input type="time" id="sunday_start_time" step="600">
+        <input type="text" id="sunday_start_time" value="07:00" class="time time--12 js-time">
     </tr>
     <tr>
       <td data-column="monday" class="form-group day-time is-active">
         <label for="monday_end_time">till</label>
-        <input type="time" id="monday_end_time" value="18:00" step="600">
+        <input type="text" id="monday_end_time" value="18:00" class="time time--12 js-time">
       <td data-column="tuesday" class="form-group day-time is-active">
         <label for="tuesday_end_time">till</label>
-        <input type="time" id="tuesday_end_time" value="18:00" step="600">
+        <input type="text" id="tuesday_end_time" value="18:00" class="time time--12 js-time">
       <td data-column="wednesday" class="form-group day-time is-active">
         <label for="wednesday_end_time">till</label>
-        <input type="time" id="wednesday_end_time" value="18:00" step="600">
+        <input type="text" id="wednesday_end_time" value="18:00" class="time time--12 js-time">
       <td data-column="thursday" class="form-group day-time is-active">
         <label for="thursday_end_time">till</label>
-        <input type="time" id="thursday_end_time" value="18:00" step="600">
+        <input type="text" id="thursday_end_time" value="18:00" class="time time--12 js-time">
       <td data-column="friday" class="form-group day-time is-active">
         <label for="friday_end_time">till</label>
-        <input type="time" id="friday_end_time" value="13:00" step="600">
+        <input type="text" id="friday_end_time" value="13:00" class="time time--12 js-time">
       <td data-column="saturday" class="form-group day-time">
         <label for="saturday_end_time">till</label>
-        <input type="time" id="saturday_end_time" value="16:00" step="600">
+        <input type="text" id="saturday_end_time" value="18:00" class="time time--12 js-time">
       <td data-column="sunday" class="form-group day-time">
         <label for="sunday_end_time">till</label>
-        <input type="time" id="sunday_end_time" step="600">
+        <input type="text" id="sunday_end_time" value="18:00" class="time time--12 js-time">
     </tr>
   </tbody>
 </table>
@@ -261,25 +261,25 @@
   </thead>
   <tbody>
     <tr class="is-active">
-      <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="first_response_time"> 
+      <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="first_response_time">
       <td>
         <label class="inline-label" for="first_response_time">First Response Time</label>
         <p class="subtle">Timeframe for the first response.</p>
-      <td><input type="time" step="600" max="259200">
+      <td><input type="text" value="02:00" class="timeframe js-responseTime">
     </tr>
     <tr class="is-active">
       <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="update_time">
       <td>
         <label class="inline-label" for="update_time">Update Time</label>
         <p class="subtle">Timeframe for every following response.</p>
-      <td><input type="time" step="600" max="259200">
+      <td><input type="text" value="04:00" class="timeframe js-responseTime">
     </tr>
     <tr>
       <td style="text-align: center"><input type="checkbox" id="solution_time" class="js-activateRow">
       <td>
         <label class="inline-label" for="solution_time">Solution Time</label>
         <p class="subtle">Timeframe for solving the problem.</p>
-      <td><input type="time" step="600" max="259200">
+      <td><input type="text" value="16:00" class="timeframe js-responseTime">
     </tr>
   </tbody>
 </table>

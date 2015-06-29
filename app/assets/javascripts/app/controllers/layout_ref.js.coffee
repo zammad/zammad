@@ -1317,13 +1317,18 @@ class slaRef extends App.ControllerContent
     checkbox.closest('tr').toggleClass('is-active', checkbox.prop('checked'))
 
   createNew: =>
-    new App.ControllerModal
+    @newItemModal = new App.ControllerModal
       head: 'New Service Level Agreement (SLA)'
       content: App.view('layout_ref/sla_modal')()
       button: 'Create SLA'
       shown: true
       cancel: true
       container: @el
+      onComplete: =>
+        @$('.js-responseTime').timepicker
+          maxHours: 99
+        @$('.js-time').timepicker
+          showMeridian: true # show am/pm
 
 App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
 
