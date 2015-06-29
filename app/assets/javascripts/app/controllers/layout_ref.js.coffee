@@ -1290,6 +1290,7 @@ class slaRef extends App.ControllerContent
     'click .js-activateRow': 'activateRow'
     'click [data-type=new]': 'createNew'
     'click .js-toggle': 'toggle'
+    'change .js-selectTimezone': 'selectTimezone'
 
   constructor: ->
     super
@@ -1297,6 +1298,10 @@ class slaRef extends App.ControllerContent
 
   render: ->
     @html App.view('layout_ref/sla')()
+    @createNew()
+
+  selectTimezone: (e) =>
+    @$('.js-timezone').text e.currentTarget.value
 
   toggle: (e) =>
     entry = $(e.currentTarget).closest('.action')
@@ -1334,7 +1339,6 @@ App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
 
 
 class schedulersRef extends App.ControllerContent
-
   events:
     'click .select-value': 'select'
     'click [data-type=new]': 'createNew'
