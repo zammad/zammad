@@ -24,7 +24,7 @@
             <label><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></label>
           </div>
 
-          <div class="form-controls horizontal">
+          <div class="form-controls">
             <button class="btn btn--primary" type="submit"><%- @T( 'Sign in' ) %></button>
 
             <% if @C('user_lost_password'): %>
