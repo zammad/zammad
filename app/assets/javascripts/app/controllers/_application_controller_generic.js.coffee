@@ -144,6 +144,10 @@ class App.ControllerGenericIndex extends App.Controller
         return item
       )
 
+    if @defaultOrder
+      if @defaultOrder == 'DESC'
+        objects = objects.reverse()
+
     @html App.view('generic/admin/index')(
       head:    @pageData.objects
       notes:   @pageData.notes
