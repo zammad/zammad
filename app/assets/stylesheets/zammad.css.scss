@@ -5335,22 +5335,22 @@ label + .wizard-buttonList {
 }
 
 .output-input {
-  display: flex;
   margin: 0 0 14px;
-  
+
   output {
     margin: 0;
-    border-radius: 3px 0 0 3px;
+    border-radius: 3px 3px 0 0;
     border: 1px solid hsl(200,71%,59%);
-    border-right: none;
+    border-bottom: none;
+    display: block;
   }
-  
+
   input {
     flex: 1;
     border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left: none;
-    
+    border-top-right-radius: 0;
+    border-top: none;
+
     &:focus {
       border-color: hsl(0,0%,90%);
       box-shadow: none;
