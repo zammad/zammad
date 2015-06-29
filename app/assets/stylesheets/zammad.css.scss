@@ -445,6 +445,20 @@ span[data-tooltip]:hover:before {
   &.btn--split--last {
     border-radius: 0 3px 3px 0;
   }
+
+  &.btn--dropdown {
+    position: relative;
+    
+    select {
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      position: absolute;
+      cursor: pointer;
+    }
+  }
 }
 
 .btn + .btn {
@@ -722,6 +736,7 @@ h3 {
   letter-spacing: 0.07em;
   
   .subtitle {
+    display: inline;
     font-size: 12px;
     text-transform: none;
     color: hsl(0,0%,60%);
