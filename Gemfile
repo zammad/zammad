@@ -86,7 +86,3 @@ group :development, :test do
 end
 
 gem 'puma'
-gem 'kramdown'
-
-gem 'prawn'
-gem 'prawn-table'
