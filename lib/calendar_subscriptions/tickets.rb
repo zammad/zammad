@@ -59,14 +59,19 @@ class CalendarSubscriptions::Tickets
       condition: condition,
     )
 
+    user_locale       = @user.preferences['locale'] || 'en'
+    translated_ticket = Translation.translate(user_locale, 'ticket')
+
     events_data = []
     tickets.each do |ticket|
 
       event_data = {}
 
+      translated_state = Translation.translate(user_locale, ticket.state.name)
+
       event_data[:dtstart]     = Icalendar::Values::Date.new( Time.zone.today )
       event_data[:dtend]       = Icalendar::Values::Date.new( Time.zone.today )
-      event_data[:summary]     = "#{ticket.state.name} ticket: '#{ticket.title}'"
+      event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
 
       events_data.push event_data
@@ -98,6 +103,9 @@ class CalendarSubscriptions::Tickets
       condition: condition,
     )
 
+    user_locale       = @user.preferences['locale'] || 'en'
+    translated_ticket = Translation.translate(user_locale, 'ticket')
+
     events_data = []
     tickets.each do |ticket|
 
@@ -110,11 +118,13 @@ class CalendarSubscriptions::Tickets
         pending_time = Time.zone.today
       end
 
+      translated_state = Translation.translate(user_locale, ticket.state.name)
+
       # rubocop:disable Rails/TimeZone
       event_data[:dtstart]     = Icalendar::Values::DateTime.new( pending_time )
       event_data[:dtend]       = Icalendar::Values::DateTime.new( pending_time )
       # rubocop:enable Rails/TimeZone
-      event_data[:summary]     = "#{ticket.state.name} ticket: '#{ticket.title}'"
+      event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
 
       events_data.push event_data
@@ -138,6 +148,9 @@ class CalendarSubscriptions::Tickets
       condition: condition,
     )
 
+    user_locale                  = @user.preferences['locale'] || 'en'
+    translated_ticket_escalation = Translation.translate(user_locale, 'ticket escalation')
+
     tickets.each do |ticket|
 
       next if !ticket.escalation_time
@@ -153,7 +166,7 @@ class CalendarSubscriptions::Tickets
       event_data[:dtstart]     = Icalendar::Values::DateTime.new( escalation_time )
       event_data[:dtend]       = Icalendar::Values::DateTime.new( escalation_time )
       # rubocop:enable Rails/TimeZone
-      event_data[:summary]     = "ticket escalation: '#{ticket.title}'"
+      event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
 
       events_data.push event_data
