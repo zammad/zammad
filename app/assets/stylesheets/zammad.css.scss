@@ -301,8 +301,9 @@ span[data-tooltip]:hover:before {
       margin-right: 5px;
     }
   }
-  
-  &.is-disabled {
+
+  &.is-disabled,
+  [disabled] {
     pointer-events: none;
     cursor: not-allowed;
     opacity: .33;
