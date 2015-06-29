@@ -546,6 +546,7 @@ class App.ControllerModal extends App.Controller
       buttonClass: 'btn--success'
       centerButtons: []
       container: null
+      onComplete: (->)
 
     options = _.extend( defaults, options )
 
@@ -582,7 +583,7 @@ class App.ControllerModal extends App.Controller
       container: @container
     .on
       'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onShown
+      'shown.bs.modal':  @onComplete
       'hidden.bs.modal': =>
         @onHide()
         # remove modal from dom
@@ -593,7 +594,8 @@ class App.ControllerModal extends App.Controller
       e.preventDefault()
     @el.modal('hide')
 
-  onShown: ->
+  onShown: =>
+    @onComplete()
     console.log('modal shown: do nothing')
     # do nothing
 
