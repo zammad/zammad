@@ -543,6 +543,31 @@ class App.Model extends Spine.Model
                   console.log("ERROR, cant find #{ attribute.name } App.#{ attribute.relation }.find(#{ data[attribute.name] }) for '#{ data.constructor.className }' #{ data.displayName() }")
     data
 
+  ###
+
+    result = App.Model.search(
+      sortBy: 'name'
+      order:  'DESC' # default is ASC
+
+      # just show this values in result, all filters need to match to get shown
+      filter:
+        some_attribute1: ['only_this_value1', 'only_that_value1']
+        some_attribute2: ['only_this_value2', 'only_that_value2']
+
+      # just show this values in result, all filters need to match to get shown
+      filterExtended:
+        [
+          some_attribute1: 'regex_to_match1'
+          some_attribute2: 'regex_to_match2'
+        ]
+    )
+
+    returns:
+
+      [ array of objects ]
+
+  ###
+
   @search: (params) ->
     all = @all()
     all_complied = []
@@ -605,7 +630,7 @@ class App.Model extends Spine.Model
   @_filter: ( collection, filter ) ->
     for key, value of filter
       collection = _.filter( collection, (item) ->
-        if item[ key ] is value
+        if item[key] is value
           return item
       )
     collection

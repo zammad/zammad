@@ -135,7 +135,10 @@ class App.ControllerGenericIndex extends App.Controller
 
   render: =>
 
-    objects = App[@genericObject].search( sortBy: @defaultSortBy || 'name' )
+    objects = App[@genericObject].search(
+      sortBy: @defaultSortBy || 'name'
+      order:  @defaultOrder
+    )
 
     # remove ignored items from collection
     if @ignoreObjectIDs
@@ -143,10 +146,6 @@ class App.ControllerGenericIndex extends App.Controller
         return if item.id is 1
         return item
       )
-
-    if @defaultOrder
-      if @defaultOrder == 'DESC'
-        objects = objects.reverse()
 
     @html App.view('generic/admin/index')(
       head:    @pageData.objects
