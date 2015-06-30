@@ -26,7 +26,7 @@ class Scheduler < ApplicationModel
       end
 
       # read/load jobs and check if it is alredy started
-      jobs = Scheduler.where( 'active = ?', true )
+      jobs = Scheduler.where( 'active = ?', true ).order('prio ASC')
       jobs.each {|job|
 
         # ignore job is still running
@@ -37,14 +37,14 @@ class Scheduler < ApplicationModel
 
         # run job as own thread
         @@jobs_started[ job.id ] = true
-        start_job( job )
+        start_job(job)
+        sleep 10
       }
       sleep 60
     end
   end
 
   def self.start_job( job )
-    sleep 4
 
     Thread.new {
 
@@ -53,8 +53,8 @@ class Scheduler < ApplicationModel
       # start loop for periods under 5 minutes
       if job.period && job.period <= 300
         loop do
-          _start_job( job )
-          job = Scheduler.lookup( id: job.id )
+          _start_job(job)
+          job = Scheduler.lookup(id: job.id)
 
           # exit is job got deleted
           break if !job
@@ -69,7 +69,7 @@ class Scheduler < ApplicationModel
           sleep job.period
         end
       else
-        _start_job( job )
+        _start_job(job)
       end
       job.pid = ''
       job.save
@@ -82,7 +82,6 @@ class Scheduler < ApplicationModel
   end
 
   def self._start_job( job, try_count = 0, try_run_time = Time.zone.now )
-    sleep 5
     begin
       job.last_run = Time.zone.now
       job.pid      = Thread.current.object_id
