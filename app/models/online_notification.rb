@@ -3,6 +3,7 @@
 class OnlineNotification < ApplicationModel
   belongs_to :type_lookup,     class_name: 'TypeLookup'
   belongs_to :object_lookup,   class_name: 'ObjectLookup'
+  belongs_to :user
 
   after_create    :notify_clients_after_change
   after_update    :notify_clients_after_change
@@ -186,6 +187,33 @@ returns:
         data: {}
       }
     )
+  end
+
+=begin
+
+cleanup old online notifications
+
+  OnlineNotification.cleanup
+
+=end
+
+  def self.cleanup
+    OnlineNotification.where('created_at < ?', Time.zone.now - 12.months).delete_all
+    OnlineNotification.where('seen = ? AND created_at < ?', true, Time.zone.now - 4.months).delete_all
+
+    # notify all agents
+    users = Ticket::ScreenOptions.agents
+    users.each {|user|
+      Sessions.send_to(
+        user.id,
+        {
+          event: 'OnlineNotification::changed',
+          data: {}
+        }
+      )
+    }
+
+    true
   end
 
 end

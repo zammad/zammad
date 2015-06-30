@@ -118,4 +118,21 @@ return all activity entries of an user
     list
   end
 
+=begin
+
+cleanup old stream messages
+
+  ActivityStream.cleanup
+
+optional you can parse the max oldest stream entries
+
+  ActivityStream.cleanup(4.months)
+
+=end
+
+  def self.cleanup(diff = 4.months)
+    ActivityStream.where('created_at < ?', Time.zone.now - diff).delete_all
+    true
+  end
+
 end
