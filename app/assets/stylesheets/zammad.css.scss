@@ -2349,9 +2349,12 @@ footer {
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
-}
+  
+  h2 {
+    margin-top: 0;
+  }
 
-  .sidebar h3 {
+  h3 {
     margin: 0;
     color: rgba(0,8,14,.73);
     font-weight: normal;
@@ -2359,6 +2362,7 @@ footer {
     text-transform: initial;
     letter-spacing: 0;
   }
+}
 
   .sidebar-block {
     margin: 20px 0;
