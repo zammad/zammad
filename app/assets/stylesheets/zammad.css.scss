@@ -391,6 +391,8 @@ span[data-tooltip]:hover:before {
     border: none;
     background: none;
     vertical-align: baseline;
+    text-align: left;
+    
     &:active {
       color: hsl(203,65%,40%);
     }
@@ -424,7 +426,6 @@ span[data-tooltip]:hover:before {
 
     &.btn--subtle {
       text-decoration: underline;
-      letter-spacing: 0.04em;
       color: hsl(0,0%,85%);
       
       &:active {
