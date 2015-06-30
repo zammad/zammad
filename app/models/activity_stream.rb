@@ -126,11 +126,11 @@ cleanup old stream messages
 
 optional you can parse the max oldest stream entries
 
-  ActivityStream.cleanup(4.months)
+  ActivityStream.cleanup(3.months)
 
 =end
 
-  def self.cleanup(diff = 4.months)
+  def self.cleanup(diff = 3.months)
     ActivityStream.where('created_at < ?', Time.zone.now - diff).delete_all
     true
   end
