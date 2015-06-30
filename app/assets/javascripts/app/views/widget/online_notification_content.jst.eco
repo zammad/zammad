@@ -15,7 +15,7 @@
   </div>
   <% end %>
 <% else: %>
-  <div class="label u-textTruncate" title="<%- @Ti( 'Name') %>">
+  <div class="u-textTruncate">
     <%- @T("No unread Notifications for you. :) ") %>
   </div>
 <% end %>
