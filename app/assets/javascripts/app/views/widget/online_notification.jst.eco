@@ -2,7 +2,7 @@
   <div class="arrow"></div>
   <div class="popover-notificationsHeader">
     <div class="popover-title"></div>
-    <a class="popover-notificationsMarkRead js-markAllAsRead"><%- @T( 'Mark all as read' ) %></a>
+    <a class="btn btn--text btn--subtle js-markAllAsRead"><%- @T( 'Mark all as read' ) %></a>
   </div>
   <div class="popover-content"></div>
 </div>
