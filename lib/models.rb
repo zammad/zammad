@@ -83,8 +83,10 @@ returns
       next if !model_attributes[:attributes]
       ['created_by_id', 'updated_by_id'].each {|item|
         if model_attributes[:attributes].include?(item)
-          Rails.logger.info "FOUND (by id) #{model_class}->#{item}!"
-          references[:model][model_class.to_s] += model_class.where("#{item} = ?", object_id).count
+          count = model_class.where("#{item} = ?", object_id).count
+          next if count == 0
+          Rails.logger.debug "FOUND (by id) #{model_class}->#{item} #{count}!"
+          references[:model][model_class.to_s] += count
         end
       }
     }
@@ -95,12 +97,16 @@ returns
       model_attributes[:reflections].each{|reflection_key, reflection_value|
         next if reflection_value.macro != :belongs_to
         if reflection_value.options[:class_name] == object_name
-          Rails.logger.info "FOUND (by ref without class) #{model_class}->#{reflection_value.name}!"
-          references[:model][model_class.to_s] += model_class.where("#{reflection_value.name}_id = ?", object_id).count
+          count = model_class.where("#{reflection_value.name}_id = ?", object_id).count
+          next if count == 0
+          Rails.logger.debug "FOUND (by ref without class) #{model_class}->#{reflection_value.name} #{count}!"
+          references[:model][model_class.to_s] += count
         end
         if !reflection_value.options[:class_name] && reflection_value.name ==  object_name.downcase.to_sym
-          Rails.logger.info "FOUND (by ref with class) #{model_class}->#{reflection_value.name}!"
-          references[:model][model_class.to_s] += model_class.where("#{reflection_value.name}_id = ?", object_id).count
+          count = model_class.where("#{reflection_value.name}_id = ?", object_id).count
+          next if count == 0
+          Rails.logger.debug "FOUND (by ref with class) #{model_class}->#{reflection_value.name} #{count}!"
+          references[:model][model_class.to_s] += count
         end
       }
     }
@@ -108,7 +114,6 @@ returns
     references[:model].each {|k, v|
       next if v == 0
       references[:total] += v
-puts "#{k}: #{v}"
     }
     references
   end
