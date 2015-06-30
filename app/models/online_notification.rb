@@ -199,7 +199,7 @@ cleanup old online notifications
 
   def self.cleanup
     OnlineNotification.where('created_at < ?', Time.zone.now - 12.months).delete_all
-    OnlineNotification.where('seen = ? AND created_at < ?', true, Time.zone.now - 4.months).delete_all
+    OnlineNotification.where('seen = ? AND created_at < ?', true, Time.zone.now - 2.days).delete_all
 
     # notify all agents
     users = Ticket::ScreenOptions.agents
@@ -211,6 +211,7 @@ cleanup old online notifications
           data: {}
         }
       )
+      sleep 2 # slow down client requests
     }
 
     true
