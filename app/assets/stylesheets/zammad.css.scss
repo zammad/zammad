@@ -5673,6 +5673,10 @@ output {
   .action-controls {
     display: flex;
     margin-left: auto;
+    
+    .btn {
+      align-self: center;
+    }
   }
 }
 
