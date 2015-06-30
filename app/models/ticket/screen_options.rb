@@ -6,7 +6,7 @@ module Ticket::ScreenOptions
 
 list of active agents
 
-  result = Ticket::ScreenOptions.agents()
+  result = Ticket::ScreenOptions.agents
 
 returns
 
@@ -23,21 +23,21 @@ returns
 list attributes
 
   result = Ticket::ScreenOptions.attributes_to_change(
-    :ticket_id  => 123,
-    :article_id => 123,
+    ticket_id: 123,
+    article_id: 123,
 
-    :ticket => ticket_model,
+    ticket: ticket_model,
   )
 
 returns
 
   result = {
-    :type_id            => type_ids,
-    :state_id           => state_ids,
-    :priority_id        => priority_ids,
-    :owner_id           => owner_ids,
-    :group_id           => group_ids,
-    :group_id__owner_id => groups_users,
+    type_id:            type_ids,
+    state_id:           state_ids,
+    priority_id:        priority_ids,
+    owner_id:           owner_ids,
+    group_id:           group_ids,
+    group_id__owner_id: groups_users,
   }
 
 =end
@@ -126,16 +126,16 @@ returns
 list tickets by customer groupd in state categroie open and closed
 
   result = Ticket::ScreenOptions.list_by_customer(
-    :customer_id => 123,
-    :limit       => 15, # optional, default 15
+    customer_id: 123,
+    limit:       15, # optional, default 15
   )
 
 returns
 
   result = {
-    :ticket_ids_open   => tickets_open,
-    :ticket_ids_closed => tickets_closed,
-    :assets            => { ...list of assets... },
+    ticket_ids_open:   tickets_open,
+    ticket_ids_closed: tickets_closed,
+    assets:            { ...list of assets... },
   }
 
 =end
