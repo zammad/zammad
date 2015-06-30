@@ -41,6 +41,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :users, [:login], unique: true
     add_index :users, [:email]
     #add_index :users, [:email], unique: => true
+    add_index :users, [:organization_id]
     add_index :users, [:image]
     add_index :users, [:department]
     add_index :users, [:phone]
@@ -111,16 +112,22 @@ class CreateBase < ActiveRecord::Migration
       t.integer :user_id
       t.integer :role_id
     end
+    add_index :roles_users, [:user_id]
+    add_index :roles_users, [:role_id]
 
     create_table :groups_users, id: false do |t|
       t.integer :user_id
       t.integer :group_id
     end
+    add_index :groups_users, [:user_id]
+    add_index :groups_users, [:group_id]
 
     create_table :organizations_users, id: false do |t|
       t.integer :user_id
       t.integer :organization_id
     end
+    add_index :organizations_users, [:user_id]
+    add_index :organizations_users, [:organization_id]
 
     create_table :authorizations do |t|
       t.string :provider, limit: 250, null: false
