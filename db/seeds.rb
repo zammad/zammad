@@ -1780,6 +1780,11 @@ Network::Item::Comment.create(
 )
 
 # install locales and translations
+Locale.create(
+  locale: 'en-us',
+  alias: 'en',
+  name: 'English (United States)',
+)
 Locale.load
 Translation.load
 
