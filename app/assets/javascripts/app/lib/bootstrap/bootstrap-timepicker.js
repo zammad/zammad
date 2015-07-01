@@ -11,6 +11,7 @@
  *    - maxHours
  *    - automatically jump from hours to minutes when typing in a number
  *    - continue stepping from manually input value
+ *    - activate meridian on class 'time--12'
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -46,6 +47,10 @@
     constructor: Timepicker,
     _init: function() {
       var self = this;
+
+      if (this.$element.hasClass('time--12')) {
+        this.showMeridian = true
+      }
 
       if (this.showWidgetOnAddonClick && (this.$element.parent().hasClass('input-append') || this.$element.parent().hasClass('input-prepend'))) {
         this.$element.parent('.input-append, .input-prepend').find('.add-on').on({
