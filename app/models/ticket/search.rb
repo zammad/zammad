@@ -7,9 +7,9 @@ module Ticket::Search
 search tickets via search index
 
   result = Ticket.search(
-    :current_user => User.find(123),
-    :query        => 'search something',
-    :limit        => 15,
+    current_user: User.find(123),
+    query:        'search something',
+    limit:        15,
   )
 
 returns
@@ -19,10 +19,10 @@ returns
 search tickets via search index
 
   result = Ticket.search(
-    :current_user => User.find(123),
-    :query        => 'search something',
-    :limit        => 15,
-    :full         => false,
+    current_user: User.find(123),
+    query:        'search something',
+    limit:        15,
+    full:         false,
   )
 
 returns
@@ -32,8 +32,8 @@ returns
 search tickets via database
 
   result = Ticket.search(
-    :current_user => User.find(123),
-    :condition    => {
+    current_user: User.find(123),
+    condition: {
       'tickets.owner_id' => user.id,
       'tickets.state_id' => Ticket::State.where(
         state_type_id: Ticket::StateType.where(
@@ -44,8 +44,8 @@ search tickets via database
         ),
       ),
     },
-    :limit        => 15,
-    :full         => false,
+    limit: 15,
+    full: false,
   )
 
 returns

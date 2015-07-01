@@ -145,6 +145,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :message_id,           :string, limit: 3000,    null: true
       t.column :message_id_md5,       :string, limit: 32,      null: true
       t.column :in_reply_to,          :string, limit: 3000,    null: true
+      t.column :content_type,         :string, limit: 20,      null: false, default: 'text/plain'
       t.column :references,           :string, limit: 3200,    null: true
       t.column :body,                 :text,   limit: 4.megabytes + 1
       t.column :internal,             :boolean,                   null: false, default: false
@@ -248,9 +249,67 @@ class CreateTicket < ActiveRecord::Migration
       t.timestamps
     end
     add_index :links, [:link_object_source_id, :link_object_source_value, :link_object_target_id, :link_object_target_value, :link_type_id], unique: true, name: 'links_uniq_total'
+
+    create_table :postmaster_filters do |t|
+      t.column :name,           :string, limit: 250,  null: false
+      t.column :channel,        :string, limit: 250,  null: false
+      t.column :match,          :string, limit: 5000, null: false
+      t.column :perform,        :string, limit: 5000, null: false
+      t.column :active,         :boolean,                null: false, default: true
+      t.column :note,           :string, limit: 250,  null: true
+      t.column :updated_by_id,  :integer,                null: false
+      t.column :created_by_id,  :integer,                null: false
+      t.timestamps
+    end
+    add_index :postmaster_filters, [:channel]
+
+    create_table :text_modules do |t|
+      t.references :user,                                       null: true
+      t.column :name,                 :string,  limit: 250,  null: false
+      t.column :keywords,             :string,  limit: 500,  null: true
+      t.column :content,              :string,  limit: 5000, null: false
+      t.column :note,                 :string,  limit: 250,  null: true
+      t.column :active,               :boolean,                 null: false, default: true
+      t.column :updated_by_id,        :integer,                 null: false
+      t.column :created_by_id,        :integer,                 null: false
+      t.timestamps
+    end
+    add_index :text_modules, [:user_id]
+    add_index :text_modules, [:name]
+
+    create_table :text_modules_groups, id: false do |t|
+      t.integer :text_module_id
+      t.integer :group_id
+    end
+    add_index :text_modules_groups, [:text_module_id]
+    add_index :text_modules_groups, [:group_id]
+
+    create_table :templates do |t|
+      t.references :user,                                       null: true
+      t.column :name,                 :string,  limit: 250,  null: false
+      t.column :options,              :string,  limit: 2500, null: false
+      t.column :updated_by_id,        :integer,                 null: false
+      t.column :created_by_id,        :integer,                 null: false
+      t.timestamps
+    end
+    add_index :templates, [:user_id]
+    add_index :templates, [:name]
+
+    create_table :templates_groups, id: false do |t|
+      t.integer :template_id
+      t.integer :group_id
+    end
+    add_index :templates_groups, [:template_id]
+    add_index :templates_groups, [:group_id]
+
   end
 
   def self.down
+    drop_table :templates_groups
+    drop_table :templates
+    drop_table :text_modules_groups
+    drop_table :text_modules
+    drop_table :postmaster_filters
     drop_table :notifications
     drop_table :triggers
     drop_table :links

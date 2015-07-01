@@ -5,7 +5,7 @@ class CreateAvatar < ActiveRecord::Migration
       t.column :object_lookup_id,   :integer,                 null: false
       t.column :default,            :boolean,                 null: false, default: false
       t.column :deletable,          :boolean,                 null: false, default: true
-      t.column :inital,             :boolean,                 null: false, default: false
+      t.column :initial,            :boolean,                 null: false, default: false
       t.column :store_full_id,      :integer,                 null: true
       t.column :store_resize_id,    :integer,                 null: true
       t.column :store_hash,         :string, limit: 32,    null: true

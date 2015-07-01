@@ -98,4 +98,22 @@ class RecentView < ApplicationModel
     return if !record.respond_to?(:permission)
     record.permission( current_user: user )
   end
+
+=begin
+
+cleanup old entries
+
+  RecentView.cleanup
+
+optional you can parse the max oldest entries
+
+  RecentView.cleanup(1.month)
+
+=end
+
+  def self.cleanup(diff = 1.month)
+    RecentView.where('created_at < ?', Time.zone.now - diff).delete_all
+    true
+  end
+
 end

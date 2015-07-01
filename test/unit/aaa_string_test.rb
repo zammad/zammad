@@ -25,6 +25,36 @@ class AaaStringTest < ActiveSupport::TestCase
     assert_equal( result,  modul.to_filename )
   end
 
+  test 'to_classname ref' do
+    modul  = 'test'
+    result = 'test'
+    modul.to_filename
+    assert_equal( result,  modul )
+
+    modul  = 'some/file'
+    result = 'some/file'
+    modul.to_filename
+    assert_equal( result,  modul )
+  end
+
+  test 'to_classname function' do
+    modul  = 'test'
+    result = 'Test'
+    assert_equal( result,  modul.to_classname )
+
+    modul  = 'some/file'
+    result = 'Some::File'
+    assert_equal( result,  modul.to_classname )
+
+    modul  = 'some/files'
+    result = 'Some::Files'
+    assert_equal( result,  modul.to_classname )
+
+    modul  = 'some_test/files'
+    result = 'SomeTest::Files'
+    assert_equal( result,  modul.to_classname )
+  end
+
   test 'html2text ref' do
     html   = 'test'
     result = 'test'

@@ -35,6 +35,21 @@ class String
     camel_cased_word.gsub(/::/, '/').downcase
   end
 
+=begin
+
+  filename = 'some/module.rb'.to_classname
+
+  returns
+    'Some::Module'
+
+=end
+
+  def to_classname
+    camel_cased_word = "#{self}"
+    camel_cased_word.gsub!(/\.rb$/, '')
+    camel_cased_word.split('/').map(&:camelize).join('::')
+  end
+
   # because of mysql inno_db limitations, strip 4 bytes utf8 chars (e. g. emojis)
   # unfortunaly UTF8mb4 will raise other limitaions of max varchar and lower index sizes
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
