@@ -27,6 +27,7 @@ class CreateBase < ActiveRecord::Migration
       t.column :zip,            :string, limit: 100, null: true, default: ''
       t.column :city,           :string, limit: 100, null: true, default: ''
       t.column :country,        :string, limit: 100, null: true, default: ''
+      t.column :vip,            :boolean,                            default: false
       t.column :verified,       :boolean,               null: false, default: false
       t.column :active,         :boolean,               null: false, default: true
       t.column :note,           :string, limit: 250, null: true, default: ''
@@ -315,6 +316,40 @@ class CreateBase < ActiveRecord::Migration
     add_index :settings, [:name], unique: true
     add_index :settings, [:area]
     add_index :settings, [:frontend]
+
+    create_table :stores do |t|
+      t.references :store_object,               null: false
+      t.references :store_file,                 null: false
+      t.column :o_id,           :integer,       limit: 8,    null: false
+      t.column :preferences,    :string,        limit: 2500, null: true
+      t.column :size,           :string,        limit: 50,   null: true
+      t.column :filename,       :string,        limit: 250,  null: false
+      t.column :created_by_id,  :integer,       null: false
+      t.timestamps
+    end
+    add_index :stores, [:store_object_id, :o_id]
+
+    create_table :store_objects do |t|
+      t.column :name,         :string, limit: 250,   null: false
+      t.column :note,         :string, limit: 250,   null: true
+      t.timestamps
+    end
+    add_index :store_objects, [:name],   unique: true
+
+    create_table :store_files do |t|
+      t.column :sha,          :string,  limit: 128, null: false
+      t.column :provider,     :string,  limit: 20,  null: true
+      t.timestamps
+    end
+    add_index :store_files, [:sha],  unique: true
+    add_index :store_files, [:provider]
+
+    create_table :store_provider_dbs do |t|
+      t.column :sha,      :string,        limit: 128,            null: false
+      t.column :data,     :binary,        limit: 200.megabytes,  null: true
+      t.timestamps
+    end
+    add_index :store_provider_dbs, [:sha],  unique: true
 
   end
 end
