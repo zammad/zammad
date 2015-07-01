@@ -302,9 +302,39 @@ class CreateTicket < ActiveRecord::Migration
     add_index :templates_groups, [:template_id]
     add_index :templates_groups, [:group_id]
 
+    create_table :channels do |t|
+      t.references :group,                                null: true
+      t.column :adapter,        :string, limit: 100,   null: false
+      t.column :area,           :string, limit: 100,   null: false
+      t.column :options,        :string, limit: 2000,  null: true
+      t.column :active,         :boolean,                 null: false, default: true
+      t.column :updated_by_id,  :integer,                 null: false
+      t.column :created_by_id,  :integer,                 null: false
+      t.timestamps
+    end
+    add_index :channels, [:area]
+    add_index :channels, [:adapter]
+
+    create_table :slas do |t|
+      t.column :name,                 :string, limit: 150,   null: true
+      t.column :first_response_time,  :integer,                 null: true
+      t.column :update_time,          :integer,                 null: true
+      t.column :close_time,           :integer,                 null: true
+      t.column :condition,            :string, limit: 5000,  null: true
+      t.column :data,                 :string, limit: 5000,  null: true
+      t.column :timezone,             :string, limit: 50,    null: true
+      t.column :active,               :boolean,                 null: false, default: true
+      t.column :updated_by_id,        :integer,                 null: false
+      t.column :created_by_id,        :integer,                 null: false
+      t.timestamps
+    end
+    add_index :slas, [:name], unique: true
+
   end
 
   def self.down
+    drop_table :slas
+    drop_table :channels
     drop_table :templates_groups
     drop_table :templates
     drop_table :text_modules_groups
