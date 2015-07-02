@@ -18,11 +18,9 @@ module Channel::EmailSend
 
       channel_instance.disconnect
     rescue => e
-      logger.error "Can't use Channel::#{channel[:adapter]}"
-      logger.error e.inspect
-      logger.error e.backtrace
+      Rails.logger.error "Can't use Channel::#{channel[:adapter]}"
+      Rails.logger.error e.inspect
+      Rails.logger.error e.backtrace
     end
-
-
   end
 end
