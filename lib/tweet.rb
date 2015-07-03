@@ -195,7 +195,6 @@ class Tweet
 
   def from_article(article)
 
-
     tweet = nil
     if article[:type] == 'twitter direct-message'
 
@@ -206,7 +205,6 @@ class Tweet
         article[:body],
         {}
       )
-
     elsif article[:type] == 'twitter status'
 
       Rails.logger.debug "Create tweet from article..."
@@ -217,6 +215,8 @@ class Tweet
           in_reply_to_status_id: article[:in_reply_to]
         }
       )
+    else
+      fail "Can't handle unknown twitter article type 'article[:type]'."
     end
 
     Rails.logger.debug tweet.inspect
