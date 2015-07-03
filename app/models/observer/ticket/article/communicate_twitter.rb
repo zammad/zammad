@@ -23,9 +23,9 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     twitter = Channel::Twitter.new
     tweet   = twitter.send({
                              type:        type['name'],
-      to:          record.to,
-      body:        record.body,
-      in_reply_to: record.in_reply_to
+                             to:          record.to,
+                             body:        record.body,
+                             in_reply_to: record.in_reply_to
                            })
     record.message_id = tweet.id
     record.save
