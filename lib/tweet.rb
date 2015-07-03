@@ -40,7 +40,7 @@ class Tweet
 
     Rails.logger.error "Twitter (#{tweet.id}): unknown user source"
 
-      end
+  end
 
   def to_user(tweet)
 
