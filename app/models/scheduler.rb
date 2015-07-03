@@ -82,37 +82,35 @@ class Scheduler < ApplicationModel
   end
 
   def self._start_job( job, try_count = 0, try_run_time = Time.zone.now )
+    job.last_run = Time.zone.now
+    job.pid      = Thread.current.object_id
+    job.save
+    logger.info "execute #{job.method} (try_count #{try_count})..."
+    eval job.method() # rubocop:disable Lint/Eval
+  rescue => e
+    logger.error "execute #{job.method} (try_count #{try_count}) exited with error #{e.inspect}"
+
+    # reconnect in case db connection is lost
     begin
-      job.last_run = Time.zone.now
-      job.pid      = Thread.current.object_id
-      job.save
-      logger.info "execute #{job.method} (try_count #{try_count})..."
-      eval job.method() # rubocop:disable Lint/Eval
+      ActiveRecord::Base.connection.reconnect!
     rescue => e
-      logger.error "execute #{job.method} (try_count #{try_count}) exited with error #{e.inspect}"
+      logger.error "Can't reconnect to database #{e.inspect}"
+    end
 
-      # reconnect in case db connection is lost
-      begin
-        ActiveRecord::Base.connection.reconnect!
-      rescue => e
-        logger.error "Can't reconnect to database #{e.inspect}"
-      end
+    try_run_max = 10
+    try_count += 1
 
-      try_run_max = 10
-      try_count += 1
+    # reset error counter if to old
+    if try_run_time + ( 60 * 5 ) < Time.zone.now
+      try_count = 0
+    end
+    try_run_time = Time.zone.now
 
-      # reset error counter if to old
-      if try_run_time + ( 60 * 5 ) < Time.zone.now
-        try_count = 0
-      end
-      try_run_time = Time.zone.now
-
-      # restart job again
-      if try_run_max > try_count
-        _start_job( job, try_count, try_run_time)
-      else
-        raise "STOP thread for #{job.method} after #{try_count} tries"
-      end
+    # restart job again
+    if try_run_max > try_count
+      _start_job( job, try_count, try_run_time)
+    else
+      raise "STOP thread for #{job.method} after #{try_count} tries"
     end
   end
 
