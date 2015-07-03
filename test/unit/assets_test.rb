@@ -86,7 +86,7 @@ class AssetsTest < ActiveSupport::TestCase
     # touch org, check if user1 has changed
     sleep 2
     org2 = Organization.find(org.id)
-    org2.note = "some note...#{rand(9999999999999)}"
+    org2.note = "some note...#{rand(9_999_999_999_999)}"
     org2.save
 
     attributes = org2.attributes_with_associations
