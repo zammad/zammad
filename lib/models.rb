@@ -94,7 +94,7 @@ returns
     # find relations via reflections
     list.each {|model_class, model_attributes|
       next if !model_attributes[:reflections]
-      model_attributes[:reflections].each{|reflection_key, reflection_value|
+      model_attributes[:reflections].each {|reflection_key, reflection_value|
         next if reflection_value.macro != :belongs_to
         if reflection_value.options[:class_name] == object_name
           count = model_class.where("#{reflection_value.name}_id = ?", object_id).count

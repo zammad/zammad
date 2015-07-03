@@ -50,7 +50,7 @@ class Channel::Twitter
       Rails.logger.debug " - searching for '#{search[:term]}'"
 
       counter = 0
-      @tweet.client.search( search[:term], result_type: result_type ).collect{ |tweet|
+      @tweet.client.search( search[:term], result_type: result_type ).collect { |tweet|
 
         break if search[:limit] && search[:limit] <= counter
         break if Ticket::Article.find_by( message_id: tweet.id.to_s )
