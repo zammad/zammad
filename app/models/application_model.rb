@@ -261,11 +261,9 @@ returns
     end
 
     # delete login caches
-    if self[:login]
-      key = "#{self.class}::#{login}"
-      Cache.delete(key)
-    end
+    return if !self[:login]
 
+    Cache.delete("#{self.class}::#{login}")
   end
 
   def self.cache_set(data_id, data)
