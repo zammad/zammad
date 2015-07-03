@@ -95,7 +95,7 @@ returns
     # find relations via reflections
     list.each {|model_class, model_attributes|
       next if !model_attributes[:reflections]
-      model_attributes[:reflections].each {|reflection_key, reflection_value|
+      model_attributes[:reflections].each {|_reflection_key, reflection_value|
 
         next if reflection_value.macro != :belongs_to
 
@@ -117,7 +117,7 @@ returns
       }
     }
 
-    references[:model].each {|k, v|
+    references[:model].each {|_k, v|
       next if v == 0
       references[:total] += v
     }
