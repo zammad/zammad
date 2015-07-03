@@ -81,7 +81,7 @@ returns
     list.each {|model_class, model_attributes|
       references[:model][model_class.to_s] = 0
       next if !model_attributes[:attributes]
-      ['created_by_id', 'updated_by_id'].each {|item|
+      %w(created_by_id updated_by_id).each {|item|
         if model_attributes[:attributes].include?(item)
           count = model_class.where("#{item} = ?", object_id).count
           next if count == 0

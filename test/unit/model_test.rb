@@ -6,7 +6,7 @@ class ModelTest < ActiveSupport::TestCase
 
       # create base
       groups = Group.where( name: 'Users' )
-      roles  = Role.where( name: ['Agent', 'Admin'] )
+      roles  = Role.where( name: %w(Agent Admin) )
       agent1 = User.create_or_update(
         login: 'model-agent1@example.com',
         firstname: 'Model',
