@@ -4,7 +4,7 @@ require 'test_helper'
 class ModelTest < ActiveSupport::TestCase
   test 'references test' do
 
-      # create base
+    # create base
     groups = Group.where( name: 'Users' )
     roles  = Role.where( name: %w(Agent Admin) )
     agent1 = User.create_or_update(
