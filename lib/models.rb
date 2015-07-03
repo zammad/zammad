@@ -27,9 +27,9 @@ returns
     dir = "#{Rails.root}/app/models/"
     Dir.glob( "#{dir}**/*.rb" ) do |entry|
       next if entry =~ /application_model/i
-      next if entry =~ /channel\//i
-      next if entry =~ /observer\//i
-      next if entry =~ /store\/provider\//i
+      next if entry =~ %r{channel/}i
+      next if entry =~ %r{observer/}i
+      next if entry =~ %r{store/provider/}i
       entry.gsub!(dir, '')
       entry = entry.to_classname
       model_class = load_adapter(entry)
