@@ -1,5 +1,4 @@
 # encoding: utf-8
-# rubocop:disable Next, CyclomaticComplexity
 require 'test_helper'
 
 class SessionCollectionsTest < ActiveSupport::TestCase
@@ -139,22 +138,22 @@ class SessionCollectionsTest < ActiveSupport::TestCase
   def check_if_collection_exists(results, collection, attributes = nil)
     results.each {|result|
       next if !result
-      if result[:collection] && result[:collection][collection]
+      next if !result[:collection]
+      next if !result[:collection][collection]
 
-        # check just if collection exists
-        return true if !attributes
+      # check just if collection exists
+      return true if !attributes
 
-        # check if objetc with attributes in collection exists
-        result[:collection][collection].each {|item|
-          match_all = true
-          attributes.each {|key, value|
-            if item[ key.to_s ] != value
-              match_all = false
-            end
-          }
-          return true if match_all
+      # check if objetc with attributes in collection exists
+      result[:collection][collection].each {|item|
+        match_all = true
+        attributes.each {|key, value|
+          if item[ key.to_s ] != value
+            match_all = false
+          end
         }
-      end
+        return true if match_all
+      }
     }
     nil
   end
