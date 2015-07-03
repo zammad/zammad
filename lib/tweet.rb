@@ -45,7 +45,7 @@ class Tweet
 
   def to_user(tweet)
 
-    Rails.logger.debug "Create user from tweet..."
+    Rails.logger.debug 'Create user from tweet...'
     Rails.logger.debug tweet.inspect
 
     # do tweet_user lookup
@@ -92,7 +92,7 @@ class Tweet
 
   def to_ticket(tweet, user, group_id)
 
-    Rails.logger.debug "Create ticket from tweet..."
+    Rails.logger.debug 'Create ticket from tweet...'
     Rails.logger.debug tweet.inspect
     Rails.logger.debug user.inspect
     Rails.logger.debug group_id.inspect
@@ -120,7 +120,7 @@ class Tweet
 
   def to_article(tweet, user, ticket)
 
-    Rails.logger.debug "Create article from tweet..."
+    Rails.logger.debug 'Create article from tweet...'
     Rails.logger.debug tweet.inspect
     Rails.logger.debug user.inspect
     Rails.logger.debug ticket.inspect
@@ -207,7 +207,7 @@ class Tweet
       )
     elsif article[:type] == 'twitter status'
 
-      Rails.logger.debug "Create tweet from article..."
+      Rails.logger.debug 'Create tweet from article...'
 
       tweet = @client.update(
         article[:body],

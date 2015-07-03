@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def inline_svg(path)
-    File.open("public/assets/images/#{path}", "rb") do |file|
+    File.open("public/assets/images/#{path}", 'rb') do |file|
       raw file.read
     end
   end
