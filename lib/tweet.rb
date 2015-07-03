@@ -90,12 +90,12 @@ class Tweet
     user
   end
 
-  def to_ticket(tweet, user, group)
+  def to_ticket(tweet, user, group_id)
 
     Rails.logger.debug "Create ticket from tweet..."
     Rails.logger.debug tweet.inspect
     Rails.logger.debug user.inspect
-    Rails.logger.debug group.inspect
+    Rails.logger.debug group_id.inspect
 
     if tweet.class.to_s == 'Twitter::DirectMessage'
       ticket = Ticket.find_by(
@@ -112,7 +112,7 @@ class Tweet
     Ticket.create(
       customer_id: user.id,
       title:       "#{tweet.text[0, 37]}...",
-      group:       Group.find_by( name: group ),
+      group_id:    group_id,
       state:       Ticket::State.find_by( name: 'new' ),
       priority:    Ticket::Priority.find_by( name: '2 normal' ),
     )
@@ -154,7 +154,7 @@ class Tweet
     )
   end
 
-  def to_group(tweet, group)
+  def to_group(tweet, group_id)
 
     Rails.logger.debug 'import tweet'
 
@@ -178,10 +178,10 @@ class Tweet
           Rails.logger.debug 'import in_reply_tweet ' + tweet.in_reply_to_status_id.to_s
 
           parent_tweet = @client.status( tweet.in_reply_to_status_id )
-          ticket       = to_group( parent_tweet, group )
+          ticket       = to_group( parent_tweet, group_id )
         end
       else
-        ticket = to_ticket(tweet, user, group)
+        ticket = to_ticket(tweet, user, group_id)
       end
 
       to_article(tweet, user, ticket)

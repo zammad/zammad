@@ -8,7 +8,7 @@ class Channel::Twitter
     @tweet   = Tweet.new( @channel[:options][:auth] )
     @sync    = @channel[:options][:sync]
 
-    Rails.logger.debug "twitter fetch started"
+    Rails.logger.debug 'twitter fetch started'
 
     fetch_search
     fetch_mentions
@@ -55,7 +55,7 @@ class Channel::Twitter
         break if search[:limit] && search[:limit] <= counter
         break if Ticket::Article.find_by( message_id: tweet.id.to_s )
 
-        @tweet.to_group( tweet, search[:group] )
+        @tweet.to_group( tweet, search[:group_id] )
 
         counter += 1
       }
@@ -75,7 +75,7 @@ class Channel::Twitter
       break if @sync[:mentions][:limit] && @sync[:mentions][:limit] <= counter
       break if Ticket::Article.find_by( message_id: tweet.id.to_s )
 
-      @tweet.to_group( tweet, @sync[:mentions][:group] )
+      @tweet.to_group( tweet, @sync[:mentions][:group_id] )
 
       counter += 1
     }
@@ -94,7 +94,7 @@ class Channel::Twitter
       break if @sync[:direct_messages][:limit] && @sync[:direct_messages][:limit] <= counter
       break if Ticket::Article.find_by( message_id: tweet.id.to_s )
 
-      @tweet.to_group( tweet, @sync[:direct_messages][:group] )
+      @tweet.to_group( tweet, @sync[:direct_messages][:group_id] )
 
       counter += 1
     }
