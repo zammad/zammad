@@ -338,7 +338,6 @@ class UsersController < ApplicationController
       user_all = User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
     end
 
-
     # build result list
     if !params[:full]
       users = []
