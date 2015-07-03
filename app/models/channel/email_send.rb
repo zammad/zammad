@@ -15,7 +15,7 @@ module Channel::EmailSend
       channel_object   = Object.const_get("Channel::#{channel[:adapter]}")
       channel_instance = channel_object.new
 
-      channel_instance.send(article, channel, notification)
+      result = channel_instance.send(article, channel, notification)
 
       channel_instance.disconnect
     rescue => e
@@ -23,5 +23,6 @@ module Channel::EmailSend
       Rails.logger.error e.inspect
       Rails.logger.error e.backtrace
     end
+    result
   end
 end
