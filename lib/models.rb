@@ -82,12 +82,13 @@ returns
       references[:model][model_class.to_s] = 0
       next if !model_attributes[:attributes]
       %w(created_by_id updated_by_id).each {|item|
-        if model_attributes[:attributes].include?(item)
-          count = model_class.where("#{item} = ?", object_id).count
-          next if count == 0
-          Rails.logger.debug "FOUND (by id) #{model_class}->#{item} #{count}!"
-          references[:model][model_class.to_s] += count
-        end
+
+        next if !model_attributes[:attributes].include?(item)
+
+        count = model_class.where("#{item} = ?", object_id).count
+        next if count == 0
+        Rails.logger.debug "FOUND (by id) #{model_class}->#{item} #{count}!"
+        references[:model][model_class.to_s] += count
       }
     }
 
@@ -95,19 +96,24 @@ returns
     list.each {|model_class, model_attributes|
       next if !model_attributes[:reflections]
       model_attributes[:reflections].each {|reflection_key, reflection_value|
+
         next if reflection_value.macro != :belongs_to
+
         if reflection_value.options[:class_name] == object_name
           count = model_class.where("#{reflection_value.name}_id = ?", object_id).count
           next if count == 0
           Rails.logger.debug "FOUND (by ref without class) #{model_class}->#{reflection_value.name} #{count}!"
           references[:model][model_class.to_s] += count
         end
-        if !reflection_value.options[:class_name] && reflection_value.name == object_name.downcase.to_sym
-          count = model_class.where("#{reflection_value.name}_id = ?", object_id).count
-          next if count == 0
-          Rails.logger.debug "FOUND (by ref with class) #{model_class}->#{reflection_value.name} #{count}!"
-          references[:model][model_class.to_s] += count
-        end
+
+        next if reflection_value.options[:class_name]
+        next if reflection_value.name != object_name.downcase.to_sym
+
+        count = model_class.where("#{reflection_value.name}_id = ?", object_id).count
+        next if count == 0
+
+        Rails.logger.debug "FOUND (by ref with class) #{model_class}->#{reflection_value.name} #{count}!"
+        references[:model][model_class.to_s] += count
       }
     }
 
