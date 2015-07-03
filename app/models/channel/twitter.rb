@@ -40,7 +40,7 @@ class Channel::Twitter
   def fetch_search
 
     return if !@sync[:search]
-    return if @sync[:search].length == 0
+    return if @sync[:search].empty?
 
     # search results
     @sync[:search].each { |search|
@@ -65,6 +65,7 @@ class Channel::Twitter
   def fetch_mentions
 
     return if !@sync[:mentions]
+    return if @sync[:mentions].empty?
 
     Rails.logger.debug ' - searching for mentions'
 
@@ -83,6 +84,7 @@ class Channel::Twitter
   def fetch_direct_messages
 
     return if !@sync[:direct_messages]
+    return if @sync[:direct_messages].empty?
 
     Rails.logger.debug ' - searching for direct_messages'
 
