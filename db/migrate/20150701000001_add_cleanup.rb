@@ -14,7 +14,7 @@ class AddCleanup < ActiveRecord::Migration
     Scheduler.create_or_update(
       name: 'Delete old online notification entries.',
       method: 'OnlineNotification.cleanup',
-      period: 1.day,
+      period: 12.hours,
       prio: 2,
       active: true,
       updated_by_id: 1,
