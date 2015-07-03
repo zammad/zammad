@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] = 'test'
-# rubocop:disable Next, CyclomaticComplexity, PerceivedComplexity, HandleExceptions, ClassVars, NonLocalExitFromIterator
+# rubocop:disable HandleExceptions, ClassVars, NonLocalExitFromIterator
 require File.expand_path('../../config/environment', __FILE__)
 require 'selenium-webdriver'
 
@@ -152,11 +152,11 @@ class TestCase < Test::Unit::TestCase
     (1..6).each {
       sleep 1
       login = instance.find_elements( { css: '#login' } )[0]
-      if login
-        screenshot( browser: instance, comment: 'logout_ok' )
-        assert( true, 'logout ok' )
-        return
-      end
+
+      next if !login
+      screenshot( browser: instance, comment: 'logout_ok' )
+      assert( true, 'logout ok' )
+      return
     }
     screenshot( browser: instance, comment: 'logout_failed' )
     fail 'no login box found, seems logout was not successfully!'
@@ -578,23 +578,22 @@ class TestCase < Test::Unit::TestCase
     cookies.each {|cookie|
       #puts "CCC #{cookie.inspect}"
       # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
-      if cookie[:name] =~ /#{params[:name]}/i
-        if params.key?( :value ) && cookie[:value].to_s =~ /#{params[:value]}/i
-          assert( true, "matching value '#{params[:value]}' in cookie '#{cookie}'" )
-        else
-          fail "not matching value '#{params[:value]}' in cookie '#{cookie}'"
-        end
-        if params.key?( :expires ) && cookie[:expires].to_s =~ /#{params[:expires]}/i
-          assert( true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie}'" )
-        else
-          fail "not matching expires '#{params[:expires]}' in cookie '#{cookie}'"
-        end
+      next if cookie[:name] !~ /#{params[:name]}/i
 
-        if params[:should_not_exist]
-          fail "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies}'"
-        end
-        return
+      if params.key?( :value ) && cookie[:value].to_s =~ /#{params[:value]}/i
+        assert( true, "matching value '#{params[:value]}' in cookie '#{cookie}'" )
+      else
+        fail "not matching value '#{params[:value]}' in cookie '#{cookie}'"
       end
+      if params.key?( :expires ) && cookie[:expires].to_s =~ /#{params[:expires]}/i
+        assert( true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie}'" )
+      else
+        fail "not matching expires '#{params[:expires]}' in cookie '#{cookie}'"
+      end
+
+      return if !params[:should_not_exist]
+
+      fail "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies}'"
     }
     if params[:should_not_exist]
       assert( true, "cookie with name '#{params[:name]}' is not existing" )
@@ -1226,17 +1225,18 @@ wait untill text in selector disabppears
     if data[:state] || data[:group] || data[:body]
       found = nil
       (1..10).each {
-        if !found
-          begin
-            text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
-            if text =~ /(Discard your unsaved changes.|Verwerfen der)/
-              found = true
-            end
-          rescue
-            # try again
+
+        next if found
+
+        begin
+          text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
+          if text =~ /(Discard your unsaved changes.|Verwerfen der)/
+            found = true
           end
-          sleep 1
+        rescue
+          # try again
         end
+        sleep 1
       }
       if !found
         screenshot( browser: instance, comment: 'ticket_update_discard_message_failed' )
