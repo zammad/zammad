@@ -21,7 +21,7 @@ curl http://localhost/api/v1/rss_fetch.json -v -u #{login}:#{password} -H "Conte
   def fetch
     items = Rss.fetch(params[:url], params[:limit])
     if items.nil?
-      render json: { message: "failed to fetch #{ params[:url] }", status: :unprocessable_entity }
+      render json: { message: "failed to fetch #{params[:url]}", status: :unprocessable_entity }
       return
     end
     render json: { items: items }

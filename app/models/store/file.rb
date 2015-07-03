@@ -17,7 +17,7 @@ class Store
         if !adapter_name
           fail 'Missing storage_provider setting option'
         end
-        adapter = load_adapter( "Store::Provider::#{ adapter_name }" )
+        adapter = load_adapter( "Store::Provider::#{adapter_name}" )
         adapter.add( data, sha )
         file = Store::File.create(
           provider: adapter_name,
@@ -29,7 +29,7 @@ class Store
 
     # read content
     def content
-      adapter = self.class.load_adapter("Store::Provider::#{ provider }")
+      adapter = self.class.load_adapter("Store::Provider::#{provider}")
       if sha
         c = adapter.get( sha )
       else
@@ -62,8 +62,8 @@ class Store
     # e. g. Store::File.move('File', 'DB')
     # e. g. Store::File.move('DB', 'File')
     def self.move(source, target)
-      adapter_source = load_adapter("Store::Provider::#{ source }")
-      adapter_target = load_adapter("Store::Provider::#{ target }")
+      adapter_source = load_adapter("Store::Provider::#{source}")
+      adapter_target = load_adapter("Store::Provider::#{target}")
 
       Store::File.all.each {|item|
         next if item.provider == target
@@ -86,7 +86,7 @@ class Store
     private
 
     def destroy_provider
-      adapter = self.class.load_adapter("Store::Provider::#{ provider }")
+      adapter = self.class.load_adapter("Store::Provider::#{provider}")
       adapter.delete( sha )
     end
   end

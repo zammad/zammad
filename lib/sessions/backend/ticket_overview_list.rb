@@ -38,7 +38,7 @@ class Sessions::Backend::TicketOverviewList
   end
 
   def client_key
-    "as::load::#{ self.class }::#{ @user.id }::#{ @client_id }"
+    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
   end
 
   def push
@@ -102,7 +102,7 @@ class Sessions::Backend::TicketOverviewList
         results.push result
       else
 
-        @client.log "push overview_list for user #{ @user.id }"
+        @client.log "push overview_list for user #{@user.id}"
 
         # send update to browser
         @client.send(

@@ -106,9 +106,9 @@ class TagTest < ActiveSupport::TestCase
       list = Tag.tag_list( tags )
       test[:verify][:items].each {|key, value|
         if value == true
-          assert( list.include?( key ), "Tag verify - should exists but exists #{ key }")
+          assert( list.include?( key ), "Tag verify - should exists but exists #{key}")
         else
-          assert( !list.include?( key ), "Tag verify - exists but should not #{ key }")
+          assert( !list.include?( key ), "Tag verify - exists but should not #{key}")
         end
       }
     }

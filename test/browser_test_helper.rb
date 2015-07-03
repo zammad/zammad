@@ -1095,7 +1095,7 @@ wait untill text in selector disabppears
       sleep 1
     }
     screenshot( browser: instance, comment: 'ticket_create_failed' )
-    fail "ticket creation failed, can't get zoom url (current url is '#{ instance.current_url }')"
+    fail "ticket creation failed, can't get zoom url (current url is '#{instance.current_url}')"
   end
 
 =begin

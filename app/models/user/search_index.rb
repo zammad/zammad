@@ -17,7 +17,7 @@ returns
 =end
 
     def search_index_data
-      attributes = { 'fullname' => "#{ self['firstname'] } #{ self['lastname'] }" }
+      attributes = { 'fullname' => "#{self['firstname']} #{self['lastname']}" }
       %w(login firstname lastname phone email address city country note created_at).each { |key|
         if self[key] && (!self.respond_to?('empty?') || !self[key].empty?)
           attributes[key] = self[key]

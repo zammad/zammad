@@ -22,7 +22,7 @@ class Scheduler < ApplicationModel
       begin
         ActiveRecord::Base.connection.reconnect!
       rescue => e
-        logger.error "Can't reconnect to database #{ e.inspect }"
+        logger.error "Can't reconnect to database #{e.inspect}"
       end
 
       # read/load jobs and check if it is alredy started
@@ -89,13 +89,13 @@ class Scheduler < ApplicationModel
       logger.info "execute #{job.method} (try_count #{try_count})..."
       eval job.method() # rubocop:disable Lint/Eval
     rescue => e
-      logger.error "execute #{job.method} (try_count #{try_count}) exited with error #{ e.inspect }"
+      logger.error "execute #{job.method} (try_count #{try_count}) exited with error #{e.inspect}"
 
       # reconnect in case db connection is lost
       begin
         ActiveRecord::Base.connection.reconnect!
       rescue => e
-        logger.error "Can't reconnect to database #{ e.inspect }"
+        logger.error "Can't reconnect to database #{e.inspect}"
       end
 
       try_run_max = 10

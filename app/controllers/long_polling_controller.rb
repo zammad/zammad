@@ -38,7 +38,7 @@ class LongPollingController < ApplicationController
         spool = Sessions.spool_list( params['data']['timestamp'], current_user.id )
         spool.each { |item|
           if item[:type] == 'direct'
-            log "send spool to (user_id=#{ current_user.id })", client_id
+            log "send spool to (user_id=#{current_user.id})", client_id
             Sessions.send( client_id, item[:message] )
           else
             log 'send spool', client_id
@@ -159,6 +159,6 @@ class LongPollingController < ApplicationController
   end
 
   def log( data, client_id = '-' )
-    logger.info "client(#{ client_id }) #{ data }"
+    logger.info "client(#{client_id}) #{data}"
   end
 end

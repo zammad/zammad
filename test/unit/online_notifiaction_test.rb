@@ -337,7 +337,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
         end
       }
       #puts "--- #{onine_notifications.inspect}"
-      assert( hit, "online notification exists not #{ check_item.inspect }" )
+      assert( hit, "online notification exists not #{check_item.inspect}" )
     }
   end
 

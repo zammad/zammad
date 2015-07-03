@@ -59,7 +59,7 @@ if ARGV[0] != 'start' && ARGV[0] != 'stop'
   exit
 end
 
-puts "Starting websocket server on #{ @options[:b] }:#{ @options[:p] } (secure:#{ @options[:s] },pid:#{@options[:i]})"
+puts "Starting websocket server on #{@options[:b]}:#{@options[:p]} (secure:#{@options[:s]},pid:#{@options[:i]})"
 #puts options.inspect
 
 if ARGV[0] == 'stop'
@@ -119,11 +119,11 @@ EventMachine.run {
     ws.onmessage { |msg|
 
       client_id = ws.object_id.to_s
-      log 'debug', "received: #{ msg } ", client_id
+      log 'debug', "received: #{msg} ", client_id
       begin
         data = JSON.parse(msg)
       rescue => e
-        log 'error', "can't parse message: #{ msg }, #{ e.inspect }", client_id
+        log 'error', "can't parse message: #{msg}, #{e.inspect}", client_id
         next
       end
 
@@ -151,7 +151,7 @@ EventMachine.run {
 
             # create new msg to push to client
             if item[:type] == 'direct'
-              log 'notice', "send spool to (user_id=#{ @clients[client_id][:session]['id'] })", client_id
+              log 'notice', "send spool to (user_id=#{@clients[client_id][:session]['id']})", client_id
               websocket_send(client_id, item[:message])
             else
               log 'notice', 'send spool', client_id
@@ -198,13 +198,13 @@ EventMachine.run {
             # broadcast to recipient list
             if data['recipient']
               if data['recipient'].class != Hash
-                log 'error', "recipient attribute isn't a hash '#{ data['recipient'].inspect }'"
+                log 'error', "recipient attribute isn't a hash '#{data['recipient'].inspect}'"
               else
                 if !data['recipient'].key?('user_id')
-                  log 'error', "need recipient.user_id attribute '#{ data['recipient'].inspect }'"
+                  log 'error', "need recipient.user_id attribute '#{data['recipient'].inspect}'"
                 else
                   if data['recipient']['user_id'].class != Array
-                    log 'error', "recipient.user_id attribute isn't an array '#{ data['recipient']['user_id'].inspect }'"
+                    log 'error', "recipient.user_id attribute isn't an array '#{data['recipient']['user_id'].inspect}'"
                   else
                     data['recipient']['user_id'].each { |user_id|
 
@@ -251,7 +251,7 @@ EventMachine.run {
   EventMachine.add_periodic_timer(20) {
 
     # websocket
-    log 'notice', "Status: websocket clients: #{ @clients.size }"
+    log 'notice', "Status: websocket clients: #{@clients.size}"
     @clients.each { |client_id, _client|
       log 'notice', 'working...', client_id
     }
@@ -263,7 +263,7 @@ EventMachine.run {
       next if client[:meta][:type] == 'websocket'
       clients = clients + 1
     }
-    log 'notice', "Status: ajax clients: #{ clients }"
+    log 'notice', "Status: ajax clients: #{clients}"
     client_list.each {|client_id, client|
       next if client[:meta][:type] == 'websocket'
       log 'notice', 'working...', client_id
@@ -346,7 +346,7 @@ EventMachine.run {
     if !@options[:v]
       return if level == 'debug'
     end
-    puts "#{Time.now.utc.iso8601}:client(#{ client_id }) #{ data }"
+    puts "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}"
     #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
   end
 

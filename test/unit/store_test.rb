@@ -49,7 +49,7 @@ class StoreTest < ActiveSupport::TestCase
 
       # sha check
       sha_new = Digest::SHA256.hexdigest( attachments[0].content )
-      assert_equal( sha, sha_new,  "check file #{ file[:filename] }")
+      assert_equal( sha, sha_new,  "check file #{file[:filename]}")
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
@@ -75,7 +75,7 @@ class StoreTest < ActiveSupport::TestCase
 
       # sha check
       sha_new = Digest::SHA256.hexdigest( attachments[0].content )
-      assert_equal( sha, sha_new,  "check file #{ file[:filename] }")
+      assert_equal( sha, sha_new,  "check file #{file[:filename]}")
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
@@ -101,7 +101,7 @@ class StoreTest < ActiveSupport::TestCase
 
       # sha check
       sha_new = Digest::SHA256.hexdigest( attachments[0].content )
-      assert_equal( sha, sha_new,  "check file #{ file[:filename] }")
+      assert_equal( sha, sha_new,  "check file #{file[:filename]}")
 
       # filename check
       assert_equal( file[:filename], attachments[0].filename )
