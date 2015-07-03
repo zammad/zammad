@@ -4,6 +4,7 @@ require 'net/imap'
 
 module Channel::EmailSend
   def self.send(article, notification = false)
+    channel = Channel.find_by( area: 'Email::Outbound', active: true )
     begin
       # we need to require the channel backend individually otherwise we get a
       # 'warning: toplevel constant Twitter referenced by Channel::Twitter' error e.g.
