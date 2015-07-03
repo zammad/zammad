@@ -1,5 +1,4 @@
 # encoding: utf-8
-# rubocop:disable Next, UselessAssignment
 require 'test_helper'
 
 class SessionEnhancedTest < ActiveSupport::TestCase
@@ -297,15 +296,14 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     messages.each {|message|
       #puts ""
       #puts "message: #{message.inspect}"
-      if message['event'] == 'resetCollection'
-        #puts "rc: "
-        if message['data']
-          message['data'].each {|key, _value|
-            #puts "rc: #{key}"
-            collections_result[key] = true
-          }
-        end
-      end
+      next if message['event'] != 'resetCollection'
+      #puts "rc: "
+      next if !message['data']
+
+      message['data'].each {|key, _value|
+        #puts "rc: #{key}"
+        collections_result[key] = true
+      }
     }
     #puts "c: #{collections_result.inspect}"
     collections_orig.each {|key, _value|
