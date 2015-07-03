@@ -1,5 +1,4 @@
 # encoding: utf-8
-# rubocop:disable UselessAssignment
 require 'integration_test_helper'
 
 class ElasticsearchTest < ActiveSupport::TestCase

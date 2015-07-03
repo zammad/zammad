@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-# rubocop:disable ClassAndModuleChildren
 class Ticket::State < ApplicationModel
-  belongs_to    :state_type,        class_name: 'Ticket::StateType'
+  belongs_to    :state_type, class_name: 'Ticket::StateType'
   validates     :name, presence: true
 
   latest_change_support

@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-# rubocop:disable ClassAndModuleChildren
 class Ticket::Article < ApplicationModel
   load 'ticket/article/assets.rb'
   include Ticket::Article::Assets
