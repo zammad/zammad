@@ -102,7 +102,7 @@ returns
           Rails.logger.debug "FOUND (by ref without class) #{model_class}->#{reflection_value.name} #{count}!"
           references[:model][model_class.to_s] += count
         end
-        if !reflection_value.options[:class_name] && reflection_value.name ==  object_name.downcase.to_sym
+        if !reflection_value.options[:class_name] && reflection_value.name == object_name.downcase.to_sym
           count = model_class.where("#{reflection_value.name}_id = ?", object_id).count
           next if count == 0
           Rails.logger.debug "FOUND (by ref with class) #{model_class}->#{reflection_value.name} #{count}!"
