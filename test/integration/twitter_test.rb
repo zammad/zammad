@@ -128,6 +128,54 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal( reply_text.utf8_to_3bytesutf8, ticket.articles.last.body, 'ticket article inbound body' )
   end
 
+  test 'new inbound and reply' do
+
+    # new tweet by me_bauer
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = me_bauer_token
+      config.access_token_secret = me_bauer_token_secret
+    end
+
+    hash  = '#citheo24 #' + rand(9999).to_s
+    text  = "Today... #{hash}"
+    tweet = client.update(
+      text,
+    )
+    sleep 20
+
+    # fetch check system account
+    Channel.fetch
+
+    # check if follow up article has been created
+    article = Ticket::Article.find_by( message_id: tweet.id )
+    assert(article)
+    ticket = article.ticket
+
+    # send reply
+    reply_text = '@armin_theo on my side #weather' + rand(9999).to_s
+    article = Ticket::Article.create(
+      ticket_id:     ticket.id,
+      body:          reply_text,
+      type:          Ticket::Article::Type.find_by( name: 'twitter status' ),
+      sender:        Ticket::Article::Sender.find_by( name: 'Agent' ),
+      internal:      false,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert( article, "outbound article created, text: #{reply_text}" )
+
+    tweet_found = false
+    client.user_timeline('armin_theo').each { |tweet|
+
+      next if tweet.id != article.message_id
+      tweet_found = true
+      break
+    }
+    assert( tweet_found, "found outbound '#{reply_text}' tweet '#{article.message_id}'" )
+  end
+
   test 'new by direct message inbound' do
 
     # cleanup direct messages of system
