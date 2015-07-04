@@ -295,7 +295,7 @@ returns
 
   def self.send( client_id, data )
     path     = "#{@path}/#{client_id}/"
-    filename = "send-#{ Time.now.utc.to_f }"
+    filename = "send-#{Time.now.utc.to_f}"
     check    = true
     count    = 0
     while check
@@ -458,7 +458,7 @@ returns
         begin
           message_parsed = JSON.parse( spool['msg'] )
         rescue => e
-          log('error', "can't parse spool message: #{ message }, #{ e.inspect }")
+          log('error', "can't parse spool message: #{message}, #{e.inspect}")
           next
         end
 
@@ -579,13 +579,13 @@ returns
     begin
       Sessions::Client.new(client_id)
     rescue => e
-      log('error', "thread_client #{client_id} exited with error #{ e.inspect }")
+      log('error', "thread_client #{client_id} exited with error #{e.inspect}")
       log('error', e.backtrace.join("\n  ") )
       sleep 10
       begin
         ActiveRecord::Base.connection_pool.release_connection
       rescue => e
-        log('error', "Can't reconnect to database #{ e.inspect }")
+        log('error', "Can't reconnect to database #{e.inspect}")
       end
 
       try_run_max = 10

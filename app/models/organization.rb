@@ -17,7 +17,6 @@ class Organization < ApplicationModel
   notify_clients_support
   latest_change_support
 
-
   private
 
   def cache_delete

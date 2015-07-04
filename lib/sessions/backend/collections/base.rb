@@ -16,7 +16,7 @@ class Sessions::Backend::Collections::Base
   end
 
   def client_key
-    "collections::load::#{ self.class }::#{ @user.id }::#{ @client_id }"
+    "collections::load::#{self.class}::#{@user.id}::#{@client_id}"
   end
 
   def push
@@ -77,13 +77,13 @@ class Sessions::Backend::Collections::Base
         assets: assets,
       }
     end
-    @client.log "push assets for push_collection #{ items.first.class } for user #{ @user.id }"
+    @client.log "push assets for push_collection #{items.first.class} for user #{@user.id}"
     @client.send(
       data: assets,
       event: [ 'loadAssets' ],
     )
 
-    @client.log "push push_collection #{ items.first.class } for user #{ @user.id }"
+    @client.log "push push_collection #{items.first.class} for user #{@user.id}"
     @client.send(
       event: 'resetCollection',
       data: {

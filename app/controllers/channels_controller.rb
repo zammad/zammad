@@ -44,24 +44,24 @@ Example:
         {
           "item":"#otrs",
           "type": "mixed", # optional, possible 'mixed' (default), 'recent', 'popular'
-          "group": "OTRS",
+          "group_id:": 1,
           "limit": 1, # optional
         },
         {
           "item":"#zombie23",
-          "group": "Zombie Apocalypse Early Warning System",
+          "group_id:": 2,
         },
         {
           "item":"#otterhub",
-          "group": "Community",
+          "group_id:": 3,
         }
       ],
       "mentions" {
-        "group": "Twitter",
+        "group_id:": 4,
         "limit": 100, # optional
       },
       "direct_messages": {
-        "group": "Twitter",
+        "group_id:": 4,
         "limit": 1, # optional
       }
     }

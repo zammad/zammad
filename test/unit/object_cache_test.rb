@@ -54,7 +54,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
     # update group
     group1 = groups.first
-    group1.note = "some note #{rand(9999999999)}"
+    group1.note = "some note #{rand(9_999_999_999)}"
     group1.save
 
     assets = user1.assets({})

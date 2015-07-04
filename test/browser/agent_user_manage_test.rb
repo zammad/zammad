@@ -6,7 +6,7 @@ class AgentUserManageTest < TestCase
     customer_user_email = 'customer-test-' + rand(999_999).to_s + '@example.com'
     firstname           = 'Customer Firstname'
     lastname            = 'Customer Lastname'
-    fullname            = "#{ firstname } #{ lastname } <#{ customer_user_email }>"
+    fullname            = "#{firstname} #{lastname} <#{customer_user_email}>"
 
     @browser = browser_instance
     login(

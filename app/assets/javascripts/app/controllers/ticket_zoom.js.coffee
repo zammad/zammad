@@ -25,7 +25,7 @@ class App.TicketZoom extends App.Controller
     @sidebarState         = {}
     @ticketLastAttributes = {}
 
-    # if we are in init task startup, ognore overview_dd
+    # if we are in init task startup, ignore overview_id
     if !params.init
       @overview_id = params.overview_id
     else

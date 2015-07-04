@@ -1,5 +1,4 @@
 ENV['RAILS_ENV'] = 'test'
-# rubocop:disable ClassAndModuleChildren
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'cache'

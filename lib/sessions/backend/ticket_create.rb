@@ -27,7 +27,7 @@ class Sessions::Backend::TicketCreate
   end
 
   def client_key
-    "as::load::#{ self.class }::#{ @user.id }::#{ @client_id }"
+    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
   end
 
   def push
@@ -58,7 +58,7 @@ class Sessions::Backend::TicketCreate
       }
     end
 
-    @client.log "push ticket_create for user #{ @user.id }"
+    @client.log "push ticket_create for user #{@user.id}"
     @client.send(
       collection: 'ticket_create_attributes',
       data: data,

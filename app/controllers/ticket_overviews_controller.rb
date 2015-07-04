@@ -44,7 +44,7 @@ class TicketOverviewsController < ApplicationController
       array: true,
     )
     if !overview
-      render json: { error: "No such view #{ params[:view] }!" }, status: :unprocessable_entity
+      render json: { error: "No such view #{params[:view]}!" }, status: :unprocessable_entity
       return
     end
 

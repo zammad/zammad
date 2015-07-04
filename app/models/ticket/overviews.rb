@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-# rubocop:disable ClassAndModuleChildren
 module Ticket::Overviews
 
 =begin
@@ -88,7 +87,7 @@ returns
     }
 
     if data[:view] && !overview_selected
-      fail "No such view '#{ data[:view] }'"
+      fail "No such view '#{data[:view]}'"
     end
 
     # sortby

@@ -184,6 +184,10 @@ Metrics/BlockNesting:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count'
   Enabled: false
 
+Metrics/ModuleLength:
+  Description: 'Avoid modules longer than 100 lines of code.'
+  Enabled: false
+
 # TODO
 
 Style/Documentation:

@@ -1,5 +1,4 @@
 # encoding: utf-8
-# rubocop:disable PerceivedComplexity, CyclomaticComplexity
 require 'test_helper'
 
 class HistoryTest < ActiveSupport::TestCase

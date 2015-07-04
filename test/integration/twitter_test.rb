@@ -1,5 +1,4 @@
 # encoding: utf-8
-# rubocop:disable UselessAssignment
 require 'integration_test_helper'
 
 class TwitterTest < ActiveSupport::TestCase
@@ -45,18 +44,18 @@ class TwitterTest < ActiveSupport::TestCase
         search: [
           {
             term: '#citheo42',
-            group: 'Twitter',
+            group_id: 2,
           },
           {
             term: '#citheo24',
-            group: 'Users',
+            group_id: 1,
           },
         ],
         mentions: {
-          group: 'Twitter',
+          group_id: 2,
         },
         direct_messages: {
-          group: 'Twitter',
+          group_id: 2,
         }
       }
     },
@@ -73,7 +72,7 @@ class TwitterTest < ActiveSupport::TestCase
     ticket = Ticket.create(
       title:         text[0, 40],
       customer_id:   user.id,
-      group:         Group.find_by( name: 'Twitter' ),
+      group_id:      2,
       state:         Ticket::State.find_by( name: 'new' ),
       priority:      Ticket::Priority.find_by( name: '2 normal' ),
       updated_by_id: 1,

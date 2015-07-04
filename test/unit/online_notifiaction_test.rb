@@ -1,5 +1,4 @@
 # encoding: utf-8
-# rubocop:disable Next, UselessAssignment, BlockNesting
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
@@ -283,14 +282,14 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       notification_check( OnlineNotification.list(agent_user2, 10), test[:check] )
 
       # check online notifications
-      if test[:update][:online_notification]
-        if test[:update][:online_notification][:seen_only_exists]
-          notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
-          assert( notification_seen_only_exists_exists( notifications ), 'not seen notifications for ticket available')
-        else
-          notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
-          assert( !notification_seen_only_exists_exists( notifications ), 'seen notifications for ticket available')
-        end
+      next if !test[:update][:online_notification]
+
+      if test[:update][:online_notification][:seen_only_exists]
+        notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
+        assert( notification_seen_only_exists_exists( notifications ), 'not seen notifications for ticket available')
+      else
+        notifications = OnlineNotification.list_by_object( 'Ticket', ticket.id )
+        assert( !notification_seen_only_exists_exists( notifications ), 'seen notifications for ticket available')
       end
     }
 
@@ -322,27 +321,27 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     }
   end
 
-  def notification_check( onine_notifications, checks )
+  def notification_check( online_notifications, checks )
     checks.each { |check_item|
       hit = false
-      onine_notifications.each {|onine_notification|
-        if onine_notification['o_id'] == check_item[:o_id]
-          if onine_notification['object'] == check_item[:object]
-            if onine_notification['type'] == check_item[:type]
-              if onine_notification['created_by_id'] == check_item[:created_by_id]
-                hit = true
-              end
-            end
-          end
-        end
+      online_notifications.each {|onine_notification|
+
+        next if onine_notification['o_id'] != check_item[:o_id]
+        next if onine_notification['object'] != check_item[:object]
+        next if onine_notification['type'] != check_item[:type]
+        next if onine_notification['created_by_id'] != check_item[:created_by_id]
+
+        hit = true
+
+        break
       }
-      #puts "--- #{onine_notifications.inspect}"
-      assert( hit, "online notification exists not #{ check_item.inspect }" )
+      #puts "--- #{online_notifications.inspect}"
+      assert( hit, "online notification exists not #{check_item.inspect}" )
     }
   end
 
-  def notification_seen_only_exists_exists( onine_notifications )
-    onine_notifications.each {|onine_notification|
+  def notification_seen_only_exists_exists( online_notifications )
+    online_notifications.each {|onine_notification|
       return false if !onine_notification['seen']
     }
     true

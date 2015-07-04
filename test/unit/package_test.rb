@@ -1,5 +1,4 @@
 # encoding: utf-8
-# rubocop:disable Next, UselessAssignment
 require 'test_helper'
 
 class PackageTest < ActiveSupport::TestCase
@@ -281,16 +280,17 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
         exists = Package.where( name: test[:verify][:package][:name], version: test[:verify][:package][:version] ).first
         assert( exists, "package '#{test[:verify][:package][:name]}' is not installed" )
       end
-      if test[:verify] && test[:verify][:check_files]
-        test[:verify][:check_files].each {|item|
-          exists = File.exist?( item[:location] )
-          if item[:result]
-            assert( exists, "'#{item[:location]}' exists" )
-          else
-            assert( !exists, "'#{item[:location]}' doesn't exists" )
-          end
-        }
-      end
+      next if !test[:verify]
+      next if !test[:verify][:check_files]
+
+      test[:verify][:check_files].each {|item|
+        exists = File.exist?( item[:location] )
+        if item[:result]
+          assert( exists, "'#{item[:location]}' exists" )
+        else
+          assert( !exists, "'#{item[:location]}' doesn't exists" )
+        end
+      }
     }
 
   end

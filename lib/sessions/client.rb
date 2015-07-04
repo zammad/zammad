@@ -71,6 +71,6 @@ class Sessions::Client
   end
 
   def log( msg )
-    Rails.logger.debug "client(#{ @client_id }) #{ msg }"
+    Rails.logger.debug "client(#{@client_id}) #{msg}"
   end
 end

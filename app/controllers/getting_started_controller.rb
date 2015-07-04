@@ -673,7 +673,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
           message: e.to_s,
           subject: subject,
         }
-        return # rubocop:disable Lint/NonLocalExitFromIterator
+        return
       end
 
       next if !found
@@ -735,7 +735,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       render json: {
         result: 'ok',
       }
-      return # rubocop:disable Lint/NonLocalExitFromIterator
+      return
     }
 
     # check delivery for 30 sek.

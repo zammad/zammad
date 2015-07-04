@@ -261,11 +261,9 @@ returns
     end
 
     # delete login caches
-    if self[:login]
-      key = "#{self.class}::#{login}"
-      Cache.delete(key)
-    end
+    return if !self[:login]
 
+    Cache.delete("#{self.class}::#{login}")
   end
 
   def self.cache_set(data_id, data)
@@ -524,7 +522,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ id }) notify created " + created_at.to_s
+    logger.debug "#{self.class.name}.find(#{id}) notify created " + created_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -553,7 +551,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ id }) notify UPDATED " + updated_at.to_s
+    logger.debug "#{self.class.name}.find(#{id}) notify UPDATED " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -582,7 +580,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ id }) notify TOUCH " + updated_at.to_s
+    logger.debug "#{self.class.name}.find(#{id}) notify TOUCH " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(
@@ -610,7 +608,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    logger.debug "#{ self.class.name }.find(#{ id }) notify DESTOY " + updated_at.to_s
+    logger.debug "#{self.class.name}.find(#{id}) notify DESTOY " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
     Sessions.broadcast(

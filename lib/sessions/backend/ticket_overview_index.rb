@@ -28,7 +28,7 @@ class Sessions::Backend::TicketOverviewIndex
   end
 
   def client_key
-    "as::load::#{ self.class }::#{ @user.id }::#{ @client_id }"
+    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
   end
 
   def push
@@ -56,7 +56,7 @@ class Sessions::Backend::TicketOverviewIndex
       }
     end
 
-    @client.log "push overview_index for user #{ @user.id }"
+    @client.log "push overview_index for user #{@user.id}"
     @client.send(
       event: ['ticket_overview_index'],
       data: data,

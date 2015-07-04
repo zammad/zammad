@@ -19,10 +19,10 @@ module Channel::Filter::Database
             scan = mail[ key.downcase.to_sym ].scan(/#{value}/i)
           end
           if match && scan[0]
-            Rails.logger.info "  matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
+            Rails.logger.info "  matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{value}"
             match = true
           else
-            Rails.logger.info "  is not matching #{ key.downcase }:'#{ mail[ key.downcase.to_sym ] }' on #{value}"
+            Rails.logger.info "  is not matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{value}"
             match = false
           end
         rescue => e
@@ -36,7 +36,7 @@ module Channel::Filter::Database
       next if !match
 
       filter[:perform].each {|key, value|
-        Rails.logger.info "  perform '#{ key.downcase }' = '#{value}'"
+        Rails.logger.info "  perform '#{key.downcase}' = '#{value}'"
         mail[ key.downcase.to_sym ] = value
       }
     }

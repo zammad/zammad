@@ -288,7 +288,7 @@ return all avatars of an user
       data = avatar.attributes
       if avatar.store_resize_id
         file            = Store.find(avatar.store_resize_id)
-        data['content'] = "data:#{ file.preferences['Mime-Type'] };base64,#{ Base64.strict_encode64( file.content ) }"
+        data['content'] = "data:#{file.preferences['Mime-Type']};base64,#{Base64.strict_encode64( file.content )}"
       end
       avatar_list.push data
     end
