@@ -32,6 +32,10 @@ returns
       if !data[ Organization.to_app_model ][ id ]
         local_attributes = attributes
 
+        # set temp. current attributes to assets pool to prevent
+        # loops, will be updated with lookup attributes later
+        data[ Organization.to_app_model ][ id ] = local_attributes
+
         # get organizations
         key = "Organization::member_ids::#{id}"
         local_member_ids = Cache.get(key)

@@ -32,6 +32,10 @@ returns
         # do not transfer crypted pw
         local_attributes['password'] = ''
 
+        # set temp. current attributes to assets pool to prevent
+        # loops, will be updated with lookup attributes later
+        data[ User.to_app_model ][ id ] = local_attributes
+
         # get linked accounts
         local_attributes['accounts'] = {}
         key = "User::authorizations::#{id}"
