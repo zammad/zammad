@@ -166,9 +166,9 @@ class TwitterTest < ActiveSupport::TestCase
     assert( article, "outbound article created, text: #{reply_text}" )
 
     tweet_found = false
-    client.user_timeline('armin_theo').each { |tweet|
+    client.user_timeline('armin_theo').each { |local_tweet|
 
-      next if tweet.id != article.message_id
+      next if local_tweet.id != article.message_id
       tweet_found = true
       break
     }
@@ -221,7 +221,7 @@ class TwitterTest < ActiveSupport::TestCase
     }
 
     assert( article, 'inbound article created' )
-    ticket  = article.ticket
+    ticket = article.ticket
     assert( ticket, 'ticket of inbound article exists' )
     assert( ticket.articles, 'ticket.articles exists' )
     assert_equal( ticket.articles.count, 1, 'ticket article inbound count' )
