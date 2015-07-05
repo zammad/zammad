@@ -25,16 +25,11 @@ add an avatar based on auto detection (email address)
     return if !data[:url]
     return if data[:url].empty?
 
-    # dry gravatar lookup
-    hash = Digest::MD5.hexdigest(data[:url])
-    url  = "http://www.gravatar.com/avatar/#{hash}.jpg?s=160&d=404"
-    logger.info "Avatar.auto_detection found #{data[:url]}: #{url}"
-
     Avatar.add(
       object: data[:object],
       o_id: data[:o_id],
-      url: url,
-      source: 'gravatar.com',
+      url: data[:url],
+      source: 'zammad.com',
       deletable: false,
       updated_by_id: 1,
       created_by_id: 1,
@@ -96,16 +91,12 @@ add a avatar
       )
     end
 
-    # fetch image
+    # fetch image based on http url
     if data[:url] && data[:url] =~ /^http/
 
       # check if source ist already updated within last 2 minutes
-      if avatar_already_exists
-        if avatar_already_exists.source_url == data[:url]
-          if avatar_already_exists.updated_at > 2.minutes.ago
-            return
-          end
-        end
+      if avatar_already_exists && avatar_already_exists.source_url == data[:url]
+        return if avatar_already_exists.updated_at > 2.minutes.ago
       end
 
       # twitter workaround to get bigger avatar images
@@ -127,14 +118,50 @@ add a avatar
         logger.info "Can't fetch '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
         return
       end
-      logger.info "Fetch '#{data[:url]}', http code: #{response.code}"
+      logger.info "Fetchd image '#{data[:url]}', http code: #{response.code}"
       mime_type = 'image'
       if data[:url] =~ /\.png/i
         mime_type = 'image/png'
       end
       if data[:url] =~ /\.(jpg|jpeg)/i
-        mime_type = 'image/png'
+        mime_type = 'image/jpeg'
       end
+      if !data[:resize]
+        data[:resize] = {}
+      end
+      data[:resize][:content] = response.body
+      data[:resize][:mime_type] = mime_type
+      if !data[:full]
+        data[:full] = {}
+      end
+      data[:full][:content] = response.body
+      data[:full][:mime_type] = mime_type
+
+    # try zammad backend to find image based on email
+    elsif data[:url] && data[:url] =~ /@/
+
+      # check if source ist already updated within last 3 minutes
+      if avatar_already_exists && avatar_already_exists.source_url == data[:url]
+        return if avatar_already_exists.updated_at > 2.minutes.ago
+      end
+
+      # fetch image
+      response = UserAgent.post(
+        'https://bigdata.zammad.com/api/v1/person/image',
+        {
+          email: data[:url]
+        },
+        {
+          open_timeout: 4,
+          read_timeout: 6,
+        },
+      )
+      if !response.success?
+        logger.info "Can't fetch image for '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
+        return
+      end
+      logger.info "Fetched image for '#{data[:url]}', http code: #{response.code}"
+      mime_type = 'image/jpeg'
       if !data[:resize]
         data[:resize] = {}
       end
@@ -149,8 +176,9 @@ add a avatar
 
     # check if avatar need to be updated
     record[:store_hash] = Digest::MD5.hexdigest( data[:resize][:content] )
-    if avatar_already_exists
-      return if avatar_already_exists.store_hash == record[:store_hash]
+    if avatar_already_exists && avatar_already_exists.store_hash == record[:store_hash]
+      avatar_already_exists.touch
+      return
     end
 
     # store images
@@ -186,7 +214,7 @@ add a avatar
 
     # update existing
     if avatar_already_exists
-      avatar_already_exists.update_attributes( record )
+      avatar_already_exists.update_attributes(record)
       avatar = avatar_already_exists
 
     # add new one and set it as default
