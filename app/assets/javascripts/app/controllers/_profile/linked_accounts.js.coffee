@@ -1,6 +1,6 @@
 class Index extends App.Controller
   events:
-    'click [data-type="remove"]': 'remove'
+    'click .js-remove': 'remove'
 
   constructor: ->
     super
@@ -37,7 +37,7 @@ class Index extends App.Controller
     }
     auth_providers = []
     for key, provider of auth_provider_all
-      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is "true"
+      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is 'true'
         auth_providers.push provider
 
     @html App.view('profile/linked_accounts')(
@@ -62,12 +62,13 @@ class Index extends App.Controller
     )
 
   success: (data, status, xhr) =>
-    App.Auth.loginCheck()
-    @render()
     @notify(
       type: 'success'
       msg:  App.i18n.translateContent( 'Successfully!' )
     )
+    update = =>
+      @render()
+    App.User.full(@Session.get('id'), update, true)
 
   error: (xhr, status, error) =>
     @render()
@@ -78,4 +79,3 @@ class Index extends App.Controller
     )
 
 App.Config.set( 'LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile' )
-
