@@ -173,7 +173,7 @@ returns
 
 merge model references to other model
 
-  result = Models.merge('User', 2, 4711)
+  result = Models.merge('User', 2, 4711) # Object, object_id_of_primary, object_id_which_should_be_merged
 
 returns
 
@@ -209,9 +209,11 @@ returns
       }
 
       # update items
-      items_to_update.each {|_id, item|
-        item.save
-      }
+      ActiveRecord::Base.transaction do
+        items_to_update.each {|_id, item|
+          item.save
+        }
+      end
     }
     true
   end
