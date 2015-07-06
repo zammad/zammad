@@ -159,7 +159,7 @@ returns
 =end
 
   def self.references_total(object_name, object_id)
-    references = self.references(object_name, object_id)
+    references = references(object_name, object_id)
     total = 0
     references.each {|_model, model_references|
       model_references.each {|_col, count|
@@ -185,18 +185,21 @@ returns
 
     # if lower x references to update, do it right now
     if force
-      total = Models.references_total(object_name, object_id_to_merge)
+      total = references_total(object_name, object_id_to_merge)
       if total > 1000
         fail "Can't merge object because object has more then 1000 (#{total}) references, please contact your system administrator."
       end
     end
 
-    references = Models.references(object_name, object_id_to_merge)
+    # update references
+    references = references(object_name, object_id_to_merge)
     references.each {|model, attributes|
       model_object = Object.const_get(model)
+
+      # collect items and attributes to update
       items_to_update = {}
       attributes.each {|attribute, _count|
-        #puts "-> #{model}: #{attribute}->#{object_id_to_merge}->#{object_id_primary}"
+        Rails.logger.debug "#{object_name}: #{model}.#{attribute}->#{object_id_to_merge}->#{object_id_primary}"
         model_object.where("#{attribute} = ?", object_id_to_merge).each {|item|
           if !items_to_update[item.id]
             items_to_update[item.id] = item
@@ -204,6 +207,8 @@ returns
           items_to_update[item.id][attribute.to_sym] = object_id_primary
         }
       }
+
+      # update items
       items_to_update.each {|_id, item|
         item.save
       }
