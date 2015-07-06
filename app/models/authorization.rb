@@ -42,8 +42,9 @@ class Authorization < ApplicationModel
         )
 
         # update user link
-        if avatar
-          user.update_column( :image, avatar.store_hash )
+        if avatar && user.image != avatar.store_hash
+          user.image = avatar.store_hash
+          user.save
         end
       end
     end
@@ -51,9 +52,13 @@ class Authorization < ApplicationModel
   end
 
   def self.create_from_hash(hash, user = nil)
-    if user
 
-      # save/update avatar
+    if !user
+      user = User.create_from_hash!(hash)
+    end
+
+    # save/update avatar
+    if hash['info']['image']
       avatar = Avatar.add(
         object: 'User',
         o_id: user.id,
@@ -65,15 +70,10 @@ class Authorization < ApplicationModel
       )
 
       # update user link
-      if avatar
-        user.update_column( :image, avatar.store_hash )
+      if avatar && user.image != avatar.store_hash
+        user.image = avatar.store_hash
+        user.save
       end
-
-      # fillup empty attributes
-      # TODO
-
-    else
-      user = User.create_from_hash!(hash)
     end
 
     Authorization.create(
@@ -89,6 +89,7 @@ class Authorization < ApplicationModel
   private
 
   def delete_user_cache
+    return if !user
     user.touch
   end
 
