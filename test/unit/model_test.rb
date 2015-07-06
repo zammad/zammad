@@ -20,6 +20,19 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    agent2 = User.create_or_update(
+      login: 'model-agent2@example.com',
+      firstname: 'Model',
+      lastname: 'Agent2',
+      email: 'model-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_at: '2015-02-05 17:37:00',
+      updated_by_id: agent1.id,
+      created_by_id: 1,
+    )
     organization1 = Organization.create_if_not_exists(
       name: 'Model Org 1',
       updated_at: '2015-02-05 16:37:00',
@@ -73,12 +86,94 @@ class ModelTest < ActiveSupport::TestCase
       created_by_id: agent1.id,
     )
 
-    references = Models.references('User', agent1.id)
+    # user
 
-    assert_equal(references[:model]['User'], 3)
-    assert_equal(references[:model]['Organization'], 1)
-    assert_equal(references[:model]['Group'], 0)
-    assert_equal(references[:total],  6)
+    # verify agent1
+    references1 = Models.references('User', agent1.id)
+
+    assert_equal(references1['User']['updated_by_id'], 3)
+    assert_equal(references1['User']['created_by_id'], 1)
+    assert_equal(references1['Organization']['updated_by_id'], 1)
+    assert(!references1['Group'])
+
+    references_total1 = Models.references_total('User', agent1.id)
+    assert_equal(references_total1, 7)
+
+    # verify agent2
+    references2 = Models.references('User', agent2.id)
+
+    assert(!references2['User'])
+    assert(!references2['Organization'])
+    assert(!references2['Group'])
+    assert(references2.empty?)
+
+    references_total2 = Models.references_total('User', agent2.id)
+    assert_equal(references_total2, 0)
+
+    Models.merge('User', agent2.id, agent1.id)
+
+    # verify agent1
+    references1 = Models.references('User', agent1.id)
+
+    assert(!references1['User'])
+    assert(!references1['Organization'])
+    assert(!references1['Group'])
+    assert(references1.empty?)
+
+    references_total1 = Models.references_total('User', agent1.id)
+    assert_equal(references_total1, 0)
+
+    # verify agent2
+    references2 = Models.references('User', agent2.id)
+
+    assert_equal(references2['User']['updated_by_id'], 3)
+    assert_equal(references2['User']['created_by_id'], 1)
+    assert_equal(references2['Organization']['updated_by_id'], 1)
+    assert(!references2['Group'])
+
+    references_total2 = Models.references_total('User', agent2.id)
+    assert_equal(references_total2, 7)
+
+    # org
+
+    # verify agent1
+    references1 = Models.references('Organization', organization1.id)
+
+    assert_equal(references1['User']['organization_id'], 1)
+    assert(!references1['Organization'])
+    assert(!references1['Group'])
+
+    references_total1 = Models.references_total('Organization', organization1.id)
+    assert_equal(references_total1, 1)
+
+    # verify agent2
+    references2 = Models.references('Organization', organization2.id)
+
+    assert(references2.empty?)
+
+    references_total2 = Models.references_total('Organization', organization2.id)
+    assert_equal(references_total2, 0)
+
+    Models.merge('Organization', organization2.id, organization1.id)
+
+    # verify agent1
+    references1 = Models.references('Organization', organization1.id)
+
+    assert(references1.empty?)
+
+    references_total1 = Models.references_total('Organization', organization1.id)
+    assert_equal(references_total1, 0)
+
+    # verify agent2
+    references2 = Models.references('Organization', organization2.id)
+
+    assert_equal(references2['User']['organization_id'], 1)
+    assert(!references2['Organization'])
+    assert(!references2['Group'])
+
+    references_total2 = Models.references_total('Organization', organization2.id)
+    assert_equal(references_total2, 1)
+
   end
 
 end
