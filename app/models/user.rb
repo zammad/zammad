@@ -32,8 +32,8 @@ class User < ApplicationModel
 
   before_create   :check_name, :check_email, :check_login, :check_password
   before_update   :check_password, :check_email, :check_login
-  after_create    :avatar_check
-  after_update    :avatar_check
+  after_create    :avatar_for_email_check
+  after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
   notify_clients_support
 
@@ -249,17 +249,23 @@ returns
 =end
 
   def self.create_from_hash!(hash)
+
+    roles = Role.where( name: 'Customer' )
     url = ''
     if hash['info']['urls']
-      url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
+      hash['info']['urls'].each {|_name, local_url|
+        next if !local_url
+        next if local_url.empty?
+        url = local_url
+      }
     end
-    roles = Role.where( name: 'Customer' )
     create(
       login: hash['info']['nickname'] || hash['uid'],
       firstname: hash['info']['name'],
       email: hash['info']['email'],
-      image: hash['info']['image'],
-      #      :url        => url.to_s,
+      image_source: hash['info']['image'],
+      web: url,
+      address: hash['info']['location'],
       note: hash['info']['description'],
       source: hash['provider'],
       roles: roles,
@@ -503,7 +509,7 @@ returns
     end
   end
 
-  def avatar_check
+  def avatar_for_email_check
 
     return if !email
     return if email.empty?
