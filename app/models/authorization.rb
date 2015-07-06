@@ -79,7 +79,7 @@ class Authorization < ApplicationModel
     Authorization.create(
       user: user,
       uid: hash['uid'],
-      username: hash['info']['nickname'] || hash['username'],
+      username: hash['info']['nickname'] || hash['info']['username'] || hash['info']['name'] || hash['info']['email'] || hash['username'],
       provider: hash['provider'],
       token: hash['credentials']['token'],
       secret: hash['credentials']['secret']
@@ -89,7 +89,7 @@ class Authorization < ApplicationModel
   private
 
   def delete_user_cache
-    user.cache_delete
+    user.touch
   end
 
 end
