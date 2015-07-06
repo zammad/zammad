@@ -61,6 +61,8 @@ returns
 
     admin_user = User.find(1)
 
+    UserInfo.current_user_id = admin_user.id
+
     # set Settings
     if auto_wizard_hash['Settings']
       auto_wizard_hash['Settings'].each { |setting_data|
@@ -71,17 +73,7 @@ returns
     # create Organizations
     if auto_wizard_hash['Organizations']
       auto_wizard_hash['Organizations'].each { |organization_data|
-
-        organization_data_symbolized = organization_data.symbolize_keys.merge(
-          {
-            updated_by_id: admin_user.id,
-            created_by_id: admin_user.id
-          }
-        )
-
-        Organization.create_or_update(
-          organization_data_symbolized
-        )
+        Organization.create_or_update(organization_data.symbolize_keys)
       }
     end
 
@@ -107,19 +99,15 @@ returns
             active: true,
             roles: roles,
             groups: groups,
-            updated_by_id: admin_user.id,
-            created_by_id: admin_user.id
           }
         )
-
-        created_user = User.create_or_update(
-          user_data_symbolized
-        )
+        created_user = User.create_or_update(user_data_symbolized)
 
         # use first created user as admin
         next if admin_user.id != 1
 
         admin_user = created_user
+        UserInfo.current_user_id = admin_user.id
       }
     end
 
@@ -132,21 +120,10 @@ returns
     model_map.each {|map_name, model|
       next if !auto_wizard_hash[map_name]
       auto_wizard_hash[map_name].each {|data|
-        data_symbolized = data.symbolize_keys.merge(
-          {
-            updated_by_id: admin_user.id,
-            created_by_id: admin_user.id
-          }
-        )
-
-        if data_symbolized[:id] || data_symbolized[:name]
-          Kernel.const_get(model).create_or_update(
-            data_symbolized
-          )
+        if data['id'] || data['name']
+          Kernel.const_get(model).create_or_update(data.symbolize_keys)
         else
-          Kernel.const_get(model).create(
-            data_symbolized
-          )
+          Kernel.const_get(model).create(data.symbolize_keys)
         end
       }
     }
