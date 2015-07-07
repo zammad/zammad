@@ -33,7 +33,7 @@ Example:
   "adapter":"Twitter",
   "group_id:": 1,
   "options":{
-    auth: {
+    "auth": {
       "consumer_key":"PJ4c3dYYRtSZZZdOKo8ow",
       "consumer_secret":"ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk",
       "oauth_token":"293437546-xxRa9g74CercnU5AvY1uQwLLGIYrV1ezYtpX8oKW",
