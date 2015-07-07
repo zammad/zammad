@@ -15,10 +15,7 @@ class Channel < ApplicationModel
 
         channel_object   = Object.const_get("Channel::#{channel[:adapter]}")
         channel_instance = channel_object.new
-
         channel_instance.fetch(channel)
-
-        channel_instance.disconnect
       rescue => e
         logger.error "Can't use Channel::#{channel[:adapter]}"
         logger.error e.inspect
