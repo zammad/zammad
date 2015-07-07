@@ -108,6 +108,11 @@ returns
 
         admin_user = created_user
         UserInfo.current_user_id = admin_user.id
+
+        # fetch org logo
+        if admin_user.email
+          Zammad::BigData::Organization.suggest_system_image(admin_user.email)
+        end
       }
     end
 

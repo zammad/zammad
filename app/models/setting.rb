@@ -51,6 +51,18 @@ class Setting < ApplicationModel
     @@current[:settings_config][name]
   end
 
+  def self.reset(name)
+    setting = Setting.find_by( name: name )
+    if !setting
+      fail "Can't find config setting '#{name}'"
+    end
+    setting.state = setting.state_initial
+    setting.save
+    logger.info "Setting.reset() name:#{name}, value:#{setting.state.inspect}"
+    load
+    @@current[:settings_config][name]
+  end
+
   private
 
   def delete_cache

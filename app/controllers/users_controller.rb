@@ -99,7 +99,7 @@ class UsersController < ApplicationController
         user.role_ids  = role_ids
         user.group_ids = group_ids
 
-        # else do assignment as defined
+      # else do assignment as defined
       else
 
         # permission check by role
@@ -127,6 +127,11 @@ class UsersController < ApplicationController
       # if first user was added, set system init done
       if count <= 2
         Setting.set( 'system_init_done', true )
+
+        # fetch org logo
+        if user.email
+          Zammad::BigData::Organization.suggest_system_image(user.email)
+        end
       end
 
       # send inviteation if needed / only if session exists

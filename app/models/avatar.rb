@@ -146,32 +146,16 @@ add a avatar
       end
 
       # fetch image
-      response = UserAgent.post(
-        'https://bigdata.zammad.com/api/v1/person/image',
-        {
-          email: data[:url]
-        },
-        {
-          open_timeout: 4,
-          read_timeout: 6,
-        },
-      )
-      if !response.success?
-        logger.info "Can't fetch image for '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
-        return
-      end
-      logger.info "Fetched image for '#{data[:url]}', http code: #{response.code}"
-      mime_type = 'image/jpeg'
+      image = Zammad::BigData::User.image(data[:url])
+      return if !image
       if !data[:resize]
         data[:resize] = {}
       end
-      data[:resize][:content] = response.body
-      data[:resize][:mime_type] = mime_type
+      data[:resize] = image
       if !data[:full]
         data[:full] = {}
       end
-      data[:full][:content] = response.body
-      data[:full][:mime_type] = mime_type
+      data[:full] = image
     end
 
     # check if avatar need to be updated
