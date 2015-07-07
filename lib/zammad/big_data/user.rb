@@ -29,10 +29,10 @@ returns
           },
         )
         if !response.success?
-          Rails.logger.info "Can't fetch image for '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
+          Rails.logger.info "Can't fetch image for '#{email}' (maybe no avatar available), http code: #{response.code}"
           return
         end
-        Rails.logger.info "Fetched image for '#{data[:url]}', http code: #{response.code}"
+        Rails.logger.info "Fetched image for '#{email}', http code: #{response.code}"
         mime_type = 'image/jpeg'
         {
           content: response.body,
