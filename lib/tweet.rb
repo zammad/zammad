@@ -141,15 +141,21 @@ class Tweet
       article_type = 'twitter direct-message'
     end
 
+    in_reply_to = nil
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
+      in_reply_to = tweet.in_reply_to_status_id
+    end
+
     Ticket::Article.create(
-      from:       user.login,
-      to:         to,
-      body:       tweet.text,
-      message_id: tweet.id,
-      ticket_id:  ticket.id,
-      type:       Ticket::Article::Type.find_by( name: article_type ),
-      sender:     Ticket::Article::Sender.find_by( name: 'Customer' ),
-      internal:   false,
+      from:        user.login,
+      to:          to,
+      body:        tweet.text,
+      message_id:  tweet.id,
+      ticket_id:   ticket.id,
+      in_reply_to: in_reply_to,
+      type:        Ticket::Article::Type.find_by( name: article_type ),
+      sender:      Ticket::Article::Sender.find_by( name: 'Customer' ),
+      internal:    false,
     )
   end
 
