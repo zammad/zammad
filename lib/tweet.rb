@@ -221,7 +221,7 @@ class Tweet
         }
       )
     else
-      fail "Can't handle unknown twitter article type 'article[:type]'."
+      fail "Can't handle unknown twitter article type '#{article[:type]}'."
     end
 
     Rails.logger.debug tweet.inspect
