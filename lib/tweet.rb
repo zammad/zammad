@@ -99,7 +99,7 @@ class Tweet
     if tweet.class.to_s == 'Twitter::DirectMessage'
       ticket = Ticket.find_by(
         customer_id: user.id,
-        state:       Ticket::State.where(
+        state:       Ticket::State.where.not(
           state_type_id: Ticket::StateType.where(
             name: 'closed',
           )
