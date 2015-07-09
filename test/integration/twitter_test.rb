@@ -35,9 +35,9 @@ class TwitterTest < ActiveSupport::TestCase
     area: 'Twitter::Inbound',
     options: {
       auth: {
-        consumer_key: consumer_key,
-        consumer_secret: consumer_secret,
-        oauth_token: armin_theo_token,
+        consumer_key:       consumer_key,
+        consumer_secret:    consumer_secret,
+        oauth_token:        armin_theo_token,
         oauth_token_secret: armin_theo_token_secret,
       },
       sync: {
@@ -189,9 +189,9 @@ class TwitterTest < ActiveSupport::TestCase
       client.destroy_direct_message(dm.id)
     }
     client = Twitter::REST::Client.new(
-      consumer_key: consumer_key,
-      consumer_secret: consumer_secret,
-      access_token: me_bauer_token,
+      consumer_key:        consumer_key,
+      consumer_secret:     consumer_secret,
+      access_token:        me_bauer_token,
       access_token_secret: me_bauer_token_secret
     )
     dms = client.direct_messages( count: 200 )
