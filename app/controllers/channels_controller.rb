@@ -42,17 +42,17 @@ Example:
     "sync":{
       "search":[
         {
-          "item":"#otrs",
+          "term":"#otrs",
           "type": "mixed", # optional, possible 'mixed' (default), 'recent', 'popular'
           "group_id:": 1,
           "limit": 1, # optional
         },
         {
-          "item":"#zombie23",
+          "term":"#zombie23",
           "group_id:": 2,
         },
         {
-          "item":"#otterhub",
+          "term":"#otterhub",
           "group_id:": 3,
         }
       ],
