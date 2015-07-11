@@ -23,7 +23,6 @@ class Channel::Twitter
 
     @channel = Channel.find_by( area: 'Twitter::Inbound', active: true )
     @tweet   = Tweet.new( @channel[:options][:auth] )
-    @sync    = @channel[:options][:sync]
 
     tweet = @tweet.from_article(article)
     disconnect

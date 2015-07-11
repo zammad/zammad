@@ -99,7 +99,7 @@ class Tweet
     if tweet.class.to_s == 'Twitter::DirectMessage'
       ticket = Ticket.find_by(
         customer_id: user.id,
-        state:       Ticket::State.where(
+        state:       Ticket::State.where.not(
           state_type_id: Ticket::StateType.where(
             name: 'closed',
           )
@@ -141,15 +141,21 @@ class Tweet
       article_type = 'twitter direct-message'
     end
 
+    in_reply_to = nil
+    if tweet.respond_to?('in_reply_to_status_id') && tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
+      in_reply_to = tweet.in_reply_to_status_id
+    end
+
     Ticket::Article.create(
-      from:       user.login,
-      to:         to,
-      body:       tweet.text,
-      message_id: tweet.id,
-      ticket_id:  ticket.id,
-      type:       Ticket::Article::Type.find_by( name: article_type ),
-      sender:     Ticket::Article::Sender.find_by( name: 'Customer' ),
-      internal:   false,
+      from:        user.login,
+      to:          to,
+      body:        tweet.text,
+      message_id:  tweet.id,
+      ticket_id:   ticket.id,
+      in_reply_to: in_reply_to,
+      type:        Ticket::Article::Type.find_by( name: article_type ),
+      sender:      Ticket::Article::Sender.find_by( name: 'Customer' ),
+      internal:    false,
     )
   end
 
@@ -215,7 +221,7 @@ class Tweet
         }
       )
     else
-      fail "Can't handle unknown twitter article type 'article[:type]'."
+      fail "Can't handle unknown twitter article type '#{article[:type]}'."
     end
 
     Rails.logger.debug tweet.inspect

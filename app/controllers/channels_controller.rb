@@ -33,7 +33,7 @@ Example:
   "adapter":"Twitter",
   "group_id:": 1,
   "options":{
-    auth: {
+    "auth": {
       "consumer_key":"PJ4c3dYYRtSZZZdOKo8ow",
       "consumer_secret":"ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk",
       "oauth_token":"293437546-xxRa9g74CercnU5AvY1uQwLLGIYrV1ezYtpX8oKW",
@@ -42,17 +42,17 @@ Example:
     "sync":{
       "search":[
         {
-          "item":"#otrs",
+          "term":"#otrs",
           "type": "mixed", # optional, possible 'mixed' (default), 'recent', 'popular'
           "group_id:": 1,
           "limit": 1, # optional
         },
         {
-          "item":"#zombie23",
+          "term":"#zombie23",
           "group_id:": 2,
         },
         {
-          "item":"#otterhub",
+          "term":"#otterhub",
           "group_id:": 3,
         }
       ],
