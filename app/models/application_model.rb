@@ -1059,6 +1059,7 @@ check string/varchar size and cut them if needed
       next if self[ attribute[0] ].class != String
       next if self[ attribute[0] ].empty?
       column = self.class.columns_hash[ attribute[0] ]
+      next if !column
       limit = column.limit
       if column && limit
         current_length = attribute[1].to_s.length
