@@ -1,4 +1,9 @@
-<ul class="nav nav-tabs" role="tablist">
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T( @header ) %> <small><%- @T( @subHeader ) %></small></h1>
+  </div>
+</div>
+<ul class="nav nav-tabs <% if @tabs.length <= 1: %>hide<% end %>" role="tablist">
   <% for tab in @tabs: %>
     <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
   <% end %>

@@ -1,4 +1,5 @@
 class App.ChannelEmail extends App.ControllerTabs
+  header: 'Email'
   constructor: ->
     super
 

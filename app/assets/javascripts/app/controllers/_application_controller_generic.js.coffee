@@ -281,6 +281,8 @@ class App.ControllerTabs extends App.Controller
   render: ->
 
     @html App.view('generic/tabs')(
+      header: @header
+      subHeader: @subHeader
       tabs: @tabs
     )
 

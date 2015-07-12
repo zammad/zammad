@@ -1,4 +1,5 @@
 class App.ChannelChat extends App.ControllerTabs
+  header: 'Chat'
   constructor: ->
     super
 

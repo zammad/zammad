@@ -1,4 +1,5 @@
 class Index extends App.ControllerTabs
+  header: 'Object Manager'
   constructor: ->
     super
 

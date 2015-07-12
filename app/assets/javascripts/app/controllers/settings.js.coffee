@@ -1,4 +1,5 @@
 class Branding extends App.ControllerTabs
+  header: 'Branding'
   constructor: ->
     super
     return if !@authenticate()
@@ -9,6 +10,7 @@ class Branding extends App.ControllerTabs
     @render()
 
 class System extends App.ControllerTabs
+  header: 'System'
   constructor: ->
     super
     return if !@authenticate()
@@ -22,6 +24,7 @@ class System extends App.ControllerTabs
     @render()
 
 class Security extends App.ControllerTabs
+  header: 'Security'
   constructor: ->
     super
     return if !@authenticate()
@@ -36,6 +39,7 @@ class Security extends App.ControllerTabs
     @render()
 
 class Import extends App.ControllerTabs
+  header: 'Import'
   constructor: ->
     super
     return if !@authenticate()
@@ -47,6 +51,7 @@ class Import extends App.ControllerTabs
     @render()
 
 class Ticket extends App.ControllerTabs
+  header: 'Ticket'
   constructor: ->
     super
     return if !@authenticate()
