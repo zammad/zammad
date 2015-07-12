@@ -48,25 +48,8 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: { render: true, session_check: true, prio: 1 },
   state: 'Zammad',
-  frontend: true
-)
-Setting.create_if_not_exists(
-  title: 'Organization',
-  name: 'organization',
-  area: 'System::Branding',
-  description: 'Will also be included in emails as an X-Header.',
-  options: {
-    form: [
-      {
-        display: '',
-        null: false,
-        name: 'organization',
-        tag: 'input',
-      },
-    ],
-  },
-  state: '',
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -84,7 +67,27 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: { prio: 3 },
   state: 'logo.svg',
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Organization',
+  name: 'organization',
+  area: 'System::Branding',
+  description: 'Will be shown in the app and is included in email headers.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'organization',
+        tag: 'input',
+      },
+    ],
+  },
+  state: '',
+  preferences: { prio: 2 },
   frontend: true
 )
 
@@ -686,6 +689,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: { render: true },
   state: 'Ticket#',
   frontend: true
 )
@@ -1115,6 +1119,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: { render: true },
   state: false,
   frontend: true
 )

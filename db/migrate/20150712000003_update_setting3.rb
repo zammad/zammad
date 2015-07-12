@@ -15,13 +15,19 @@ class UpdateSetting3 < ActiveRecord::Migration
       setting.save
     }
     setting = Setting.find_by(name: 'product_name')
-    setting.preferences[:prio] = 1
-    setting.save
+    if setting
+      setting.preferences[:prio] = 1
+      setting.save
+    end
     setting = Setting.find_by(name: 'organization')
-    setting.preferences[:prio] = 2
-    setting.save
+    if setting
+      setting.preferences[:prio] = 2
+      setting.save
+    end
     setting = Setting.find_by(name: 'product_logo')
-    setting.preferences[:prio] = 3
-    setting.save
+    if setting
+      setting.preferences[:prio] = 3
+      setting.save
+    end
   end
 end
