@@ -369,7 +369,7 @@ class Base extends App.ControllerContent
       )
 
     # add resized image
-    App.ImageService.resizeForAvatar( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
+    App.ImageService.resizeForApp( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
 
   hideAlerts: =>
     @$('.form-group').removeClass('has-error')

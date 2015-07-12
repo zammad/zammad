@@ -157,7 +157,11 @@ class App.SettingsAreaLogo extends App.Controller
 
     maxSiteInMb = 8
     if file.size && file.size > 1024 * 1024 * maxSiteInMb
-      #@showAlert( 'logo', App.i18n.translateInline( 'File too big, max. %s MB allowed.', maxSiteInMb ) )
+      App.Event.trigger 'notify', {
+        type:    'error'
+        msg:     App.i18n.translateContent('File too big, max. %s MB allowed.', maxSiteInMb )
+        timeout: 2000
+      }
       @logoPreview.attr( 'src', '' )
       return
 
@@ -206,4 +210,4 @@ class App.SettingsAreaLogo extends App.Controller
       )
 
     # add resized image
-    App.ImageService.resizeForAvatar( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
+    App.ImageService.resizeForApp( @params.logo, @logoPreview.width(), @logoPreview.height(), store )

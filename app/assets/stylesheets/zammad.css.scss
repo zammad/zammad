@@ -4832,7 +4832,7 @@ label + .wizard-buttonList {
   }
 }
 
-.setup.wizard .logo-preview:not([src=""]), .branding .logo-preview:not([src=""]) {
+.setup.wizard .logo-preview:not([src=""]) {
   margin: 0 auto 15px;
   height: auto;
 
@@ -4843,6 +4843,15 @@ label + .wizard-buttonList {
 
 .setup.wizard .base-outbound-settings {
   margin-top: 15px;
+}
+
+.branding .logo-preview:not([src=""]) {
+  margin: 20px auto 12px;
+  height: auto;
+
+  + .logo-preview-placeholder {
+    display: none;
+  }
 }
 
 .branding.login {

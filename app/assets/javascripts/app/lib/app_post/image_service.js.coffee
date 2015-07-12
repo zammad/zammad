@@ -6,7 +6,7 @@ class App.ImageService
     else
       @resize( dataURL, x, y, 2, 'image/jpeg', 0.7, callback )
 
-  @toDataURLForApp: (dataURL, x, y, callback) =>
+  @resizeForApp: (dataURL, x, y, callback) =>
     if @checkUrl(dataURL)
       callback(dataURL)
     else
