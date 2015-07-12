@@ -5,17 +5,32 @@ class App.SettingsArea extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    App.Setting.bind 'refresh change', @render
-    App.Setting.fetch()
+    @load()
+
+  load: ->
+    @ajax(
+      id:    "setting_area_#{@area}"
+      type:  'GET'
+      url:   "#{@apiPath}/settings/area/#{@area}"
+      processData: true
+      success: (data, status, xhr) =>
+        App.Collection.load( localStorage: false, type: 'Setting', data: data )
+        @render()
+    )
 
   render: =>
-    settings = App.Setting.all()
+    settings = App.Setting.search(
+      filter:
+        area: @area
+    )
 
     html = $('<div></div>')
     for setting in settings
-      if setting.area is @area
+      if setting.name is 'product_logo'
+        item = new App.SettingsAreaLogo( setting: setting )
+      else
         item = new App.SettingsAreaItem( setting: setting )
-        html.append( item.el )
+      html.append( item.el )
 
     @html html
 
@@ -55,6 +70,7 @@ class App.SettingsAreaItem extends App.Controller
 
   update: (e) =>
     e.preventDefault()
+    @formDisable(e)
     params = @formParam(e.target)
 
     directValue = 0
@@ -78,6 +94,7 @@ class App.SettingsAreaItem extends App.Controller
     ui = @
     @setting.save(
       done: =>
+        ui.formEnable(e)
 
         App.Event.trigger 'notify', {
           type:    'success'
@@ -90,4 +107,95 @@ class App.SettingsAreaItem extends App.Controller
 
         # login check
         App.Auth.loginCheck()
+      fail: =>
+        ui.formEnable(e)
     )
+
+class App.SettingsAreaLogo extends App.Controller
+  elements:
+    '.logo-preview': 'logoPreview'
+
+  events:
+    'submit form':       'submit'
+    'change .js-upload': 'onLogoPick'
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    logoFile = App.Config.get('product_logo')
+    logoUrl  = App.Config.get('image_path') + "/#{logoFile}"
+    @html App.view('settings/logo')(
+      setting: @setting
+      logoUrl: logoUrl
+    )
+
+  onLogoPick: (event) =>
+    reader = new FileReader()
+
+    reader.onload = (e) =>
+      @logoPreview.attr('src', e.target.result)
+
+    file = event.target.files[0]
+
+    # if no file is given, about in file upload was used
+    if !file
+      return
+
+    maxSiteInMb = 8
+    if file.size && file.size > 1024 * 1024 * maxSiteInMb
+      #@showAlert( 'logo', App.i18n.translateInline( 'File too big, max. %s MB allowed.', maxSiteInMb ) )
+      @logoPreview.attr( 'src', '' )
+      return
+
+    reader.readAsDataURL(file)
+
+  submit: (e) =>
+    e.preventDefault()
+    @formDisable(e)
+
+    # get params
+    @params = @formParam(e.target)
+
+    # add logo
+    @params.logo = @logoPreview.attr('src')
+
+    store = (logoResizeDataUrl) =>
+
+      # store image
+      @params.logo_resize = logoResizeDataUrl
+      @ajax(
+        id:          "setting_image_#{@setting.id}"
+        type:        'PUT'
+        url:         "#{@apiPath}/settings/image/#{@setting.id}"
+        data:        JSON.stringify(@params)
+        processData: true
+        success:     (data, status, xhr) =>
+          @formEnable(e)
+          if data.result is 'ok'
+            @formEnable(e)
+
+            App.Event.trigger 'notify', {
+              type:    'success'
+              msg:     App.i18n.translateContent('Update successful!')
+              timeout: 2000
+            }
+            @render()
+
+            App.Event.trigger( 'ui:rerender' )
+            for key, value of data.settings
+              App.Config.set( key, value )
+          else
+            App.Event.trigger 'notify', {
+              type:    'error'
+              msg:     App.i18n.translateContent(data.message)
+              timeout: 2000
+            }
+
+        fail: =>
+          @formEnable(e)
+      )
+
+    # add resized image
+    App.ImageService.resizeForAvatar( @params.logo, @logoPreview.width(), @logoPreview.height(), store )

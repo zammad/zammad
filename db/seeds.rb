@@ -36,7 +36,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Product Name',
   name: 'product_name',
-  area: 'System::Base',
+  area: 'System::Branding',
   description: 'Defines the name of the application, shown in the web interface, tabs and title bar of the web browser.',
   options: {
     form: [
@@ -52,28 +52,9 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
-  title: 'Logo',
-  name: 'product_logo',
-  area: 'System::CI',
-  description: 'Defines the logo of the application, shown in the web interface.',
-  options: {
-    form: [
-      {
-        display: '',
-        null: false,
-        name: 'product_logo',
-        tag: 'input',
-      },
-    ],
-  },
-  state: 'logo.svg',
-  frontend: true
-)
-
-Setting.create_if_not_exists(
   title: 'Organization',
   name: 'organization',
-  area: 'System::Base',
+  area: 'System::Branding',
   description: 'Will also be included in emails as an X-Header.',
   options: {
     form: [
@@ -86,6 +67,24 @@ Setting.create_if_not_exists(
     ],
   },
   state: '',
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Logo',
+  name: 'product_logo',
+  area: 'System::Branding',
+  description: 'Defines the logo of the application, shown in the web interface.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'product_logo',
+        tag: 'input',
+      },
+    ],
+  },
+  state: 'logo.svg',
   frontend: true
 )
 

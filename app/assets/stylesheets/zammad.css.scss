@@ -4811,12 +4811,12 @@ label + .wizard-buttonList {
   }
 }
 
-.setup.wizard .logo-preview {
+.setup.wizard .logo-preview, .branding .logo-preview {
   display: block;
   height: 0;
   max-width: 200px;
   max-height: 100px;
-  
+
   &[src=""] {
     visibility: hidden;
   }
@@ -4832,7 +4832,7 @@ label + .wizard-buttonList {
   }
 }
 
-.setup.wizard .logo-preview:not([src=""]) {
+.setup.wizard .logo-preview:not([src=""]), .branding .logo-preview:not([src=""]) {
   margin: 0 auto 15px;
   height: auto;
 
@@ -4843,6 +4843,10 @@ label + .wizard-buttonList {
 
 .setup.wizard .base-outbound-settings {
   margin-top: 15px;
+}
+
+.branding.login {
+  padding: 24px 24px 0px;
 }
 
 .import.wizard .wizard-slide {
