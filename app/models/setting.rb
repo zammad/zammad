@@ -4,6 +4,7 @@ class Setting < ApplicationModel
   store         :options
   store         :state
   store         :state_initial
+  store         :preferences
   before_create :state_check, :set_initial
   before_update :state_check
   after_create  :delete_cache

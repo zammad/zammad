@@ -19,9 +19,17 @@ class App.SettingsArea extends App.Controller
     )
 
   render: =>
+
+    # serach area settings
     settings = App.Setting.search(
       filter:
         area: @area
+    )
+
+    # sort by prio
+    settings = _.sortBy( settings, (setting) ->
+      return if !setting.preferences
+      setting.preferences.prio
     )
 
     html = $('<div></div>')
@@ -101,12 +109,16 @@ class App.SettingsAreaItem extends App.Controller
           msg:     App.i18n.translateContent('Update successful!')
           timeout: 2000
         }
-        ui.render()
 
-        App.Event.trigger( 'ui:rerender' )
+        # rerender ui || get new collections and session data
+        if @setting.preferences
 
-        # login check
-        App.Auth.loginCheck()
+          if @setting.preferences.render
+            ui.render()
+            App.Event.trigger( 'ui:rerender' )
+
+          if @setting.preferences.session_check
+            App.Auth.loginCheck()
       fail: =>
         ui.formEnable(e)
     )
@@ -174,16 +186,12 @@ class App.SettingsAreaLogo extends App.Controller
         success:     (data, status, xhr) =>
           @formEnable(e)
           if data.result is 'ok'
-            @formEnable(e)
-
             App.Event.trigger 'notify', {
               type:    'success'
               msg:     App.i18n.translateContent('Update successful!')
               timeout: 2000
             }
-            @render()
 
-            App.Event.trigger( 'ui:rerender' )
             for key, value of data.settings
               App.Config.set( key, value )
           else
