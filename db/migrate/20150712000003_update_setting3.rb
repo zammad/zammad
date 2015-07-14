@@ -25,9 +25,8 @@ class UpdateSetting3 < ActiveRecord::Migration
       setting.save
     end
     setting = Setting.find_by(name: 'product_logo')
-    if setting
-      setting.preferences[:prio] = 3
-      setting.save
-    end
+    return if !setting
+    setting.preferences[:prio] = 3
+    setting.save
   end
 end
