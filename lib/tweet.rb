@@ -97,15 +97,24 @@ class Tweet
     Rails.logger.debug group_id.inspect
 
     if tweet.class.to_s == 'Twitter::DirectMessage'
-      ticket = Ticket.find_by(
-        customer_id: user.id,
-        state:       Ticket::State.where.not(
-          state_type_id: Ticket::StateType.where(
-            name: 'closed',
+
+      article = Ticket::Article.find_by(
+        from:    'me_bauer',
+        type_id: Ticket::Article::Type.find_by( name: 'twitter direct-message' ).id,
+      )
+
+      if article
+        ticket = Ticket.find_by(
+          id:          article.ticket_id,
+          customer_id: user.id,
+          state:       Ticket::State.where.not(
+            state_type_id: Ticket::StateType.where(
+              name: 'closed',
+            )
           )
         )
-      )
-      return ticket if ticket
+        return ticket if ticket
+      end
     end
 
     Ticket.create(
