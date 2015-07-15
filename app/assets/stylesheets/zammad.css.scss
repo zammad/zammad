@@ -1475,7 +1475,6 @@ ol.tabs li {
     height: 1px;
     top: 50%;
     left: 0;
-    margin-top: -1px;
     background: #e6e6e6;
   }
 
@@ -1490,75 +1489,61 @@ ol.tabs li {
     position: relative;
   }
 
-.auth_provider,
-.auth_provider:hover {
-  padding: 9px 10px 9px 7px;
-  color: white;
+.auth-providers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: -10px;
+}
+
+.auth-provider {
+  height: 40px;
+  padding: 0 10px 0 7px;
+  margin-bottom: 10px;
+  color: white !important;
   line-height: 22px;
   text-align: center;
   border-radius: 4px;
   display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: calc(33.33% - 6px);
   
-  &.auth_provider--wide {
+  &.auth-provider--wide {
     padding-right: 25px;
   }
-}
 
-  .auth_providers .auth_provider:not(:last-child) {
-    margin-right: 8px;
-  }
-
-  .auth_provider:hover {
-    color: white;
-    text-decoration: none;
-    @extend .u-clickable;
-  }
-
-  .auth_provider.facebook,
-  .btn.facebook:hover {
+  &.auth-provider--facebook {
     background: #4f699c;
   }
 
-  .auth_provider.google,
-  .btn.google:hover {
+  &.auth-provider--google {
     background: #d8543c;
   }
 
-  .auth_provider.twitter,
-  .btn.twitter:hover {
-    background: hsl(197, 75%, 53%);
+  &.auth-provider--twitter {
+    background: #2daee1;
   }
 
-  .auth_provider.email,
-  .btn.email:hover {
-    background: hsl(47, 100%, 59%);
+  &.auth-provider--email {
+    background: #ffd22e;
   }
 
-  .provider_name {
+  &.auth-provider--linkedin {
+    background: #006087;
+  }
+
+  .provider-name {
     flex: 1;
   }
 
-.provider_icon {
-  width: 29px;
-  height: 22px;
-  background: image_url("/assets/images/provider.svg") no-repeat;
+  .provider-icon {
+    width: 29px;
+    height: 22px;
+    margin-right: 10px;
+    margin-top: 1px;
+  }
 }
-
-  .facebook.provider_icon {
-    background-position: 0 0;
-  }
-
-  .google.provider_icon {
-    background-position: -30px 0;
-  }
-
-  .twitter.provider_icon {
-    background-position: -60px 0;
-  }
-
-  .email.provider_icon {
-    background-position: -90px 0;
-  }
 
 /*
 

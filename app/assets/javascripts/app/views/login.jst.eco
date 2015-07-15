@@ -37,11 +37,11 @@
             <span class="separator-text"><%- @T( 'or sign in using' ) %></span>
           </div>
 
-          <div class="auth_providers horizontal stretch">
+          <div class="auth-providers">
             <% for auth_provider in @auth_providers: %>
-              <a class="auth_provider <%= auth_provider.class %>" href="<%= auth_provider.url %>">
-                <span class="<%= auth_provider.class %> provider_icon"></span>
-                <span class="provider_name flex"><%- @T( auth_provider.name ) %></span>
+              <a class="auth-provider auth-provider--<%= auth_provider.class %>" href="<%= auth_provider.url %>">
+                <svg class="provider-icon"><use xlink:href="#icon-<%= auth_provider.class %>-button" /></svg>
+                <span class="provider-name"><%- @T( auth_provider.name ) %></span>
               </a>
             <% end %>
           </div>
