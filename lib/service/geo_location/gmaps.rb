@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-class GeoLocation::Gmaps
+class Service::GeoLocation::Gmaps
 
   def self.geocode(address)
     url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape address}&sensor=true"

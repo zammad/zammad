@@ -49,7 +49,7 @@ Setting.create_if_not_exists(
     ],
   },
   preferences: { render: true, session_check: true, prio: 1 },
-  state: 'Zammad',
+  state: 'Zammad Helpdesk',
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -196,33 +196,36 @@ Setting.create_if_not_exists(
   state: 'DB',
   frontend: false
 )
+
 Setting.create_if_not_exists(
-  title: 'Geo Location Backend',
-  name: 'geo_location_backend',
-  area: 'System::Geo',
-  description: 'Defines the backend for geo location lookups.',
+  title: 'Image Service',
+  name: 'image_backend',
+  area: 'System::Services',
+  description: 'Defines the backend for user and organization image lookups.',
   options: {
     form: [
       {
         display: '',
         null: true,
-        name: 'geo_location_backend',
+        name: 'image_backend',
         tag: 'select',
         options: {
           '' => '-',
-          'GeoLocation::Gmaps' => 'Google Maps',
+          'Service::Image::Zammad' => 'Zammad Image Service',
         },
       },
     ],
   },
-  state: 'GeoLocation::Gmaps',
+  state: 'Service::Image::Zammad',
+  preferences: { prio: 1 },
   frontend: false
 )
+
 Setting.create_if_not_exists(
-  title: 'Geo IP Backend',
+  title: 'Geo IP Service',
   name: 'geo_ip_backend',
-  area: 'System::Geo',
-  description: 'Defines the backend for geo ip lookups.',
+  area: 'System::Services',
+  description: 'Defines the backend for geo IP lookups. Show also location of an IP address if an IP address is shown.',
   options: {
     form: [
       {
@@ -232,12 +235,37 @@ Setting.create_if_not_exists(
         tag: 'select',
         options: {
           '' => '-',
-          'GeoIp::ZammadGeoIp' => 'Zammad GeoIP Service',
+          'Service::GeoIp::Zammad' => 'Zammad GeoIP Service',
         },
       },
     ],
   },
-  state: 'GeoIp::ZammadGeoIp',
+  state: 'Service::GeoIp::Zammad',
+  preferences: { prio: 2 },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Geo Location Service',
+  name: 'geo_location_backend',
+  area: 'System::Services',
+  description: 'Defines the backend for geo location lookups to store geo locations for addresses.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'geo_location_backend',
+        tag: 'select',
+        options: {
+          '' => '-',
+          'Service::GeoLocation::Gmaps' => 'Google Maps',
+        },
+      },
+    ],
+  },
+  state: 'Service::GeoLocation::Gmaps',
+  preferences: { prio: 3 },
   frontend: false
 )
 

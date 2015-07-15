@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
     # check if remote ip need to be updated
     if !session[:remote_id] || session[:remote_id] != request.remote_ip
       session[:remote_id]  = request.remote_ip
-      session[:geo]        = GeoIp.location( request.remote_ip )
+      session[:geo]        = Service::GeoIp.location( request.remote_ip )
     end
 
     # fill user agent

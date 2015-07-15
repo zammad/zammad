@@ -16,10 +16,10 @@ class System extends App.ControllerTabs
     return if !@authenticate()
     @title 'System', true
     @tabs = [
-      { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Base' } },
-      { name: 'Storage',      'target': 'storage',  controller: App.SettingsArea, params: { area: 'System::Storage' } },
-      { name: 'Geo Services', 'target': 'geo',      controller: App.SettingsArea, params: { area: 'System::Geo' } },
-      { name: 'Frontend',     'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } },
+      { name: 'Base',       'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Base' } },
+      { name: 'Services',   'target': 'services', controller: App.SettingsArea, params: { area: 'System::Services' } },
+      { name: 'Storage',    'target': 'storage',  controller: App.SettingsArea, params: { area: 'System::Storage' } },
+      { name: 'Frontend',   'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } },
     ]
     @render()
 
@@ -64,8 +64,8 @@ class Ticket extends App.ControllerTabs
     @render()
 
 App.Config.set( 'SettingBranding',  { prio: 1200, parent: '#settings', name: 'Branding', target: '#settings/branding', controller: Branding, role: ['Admin'] }, 'NavBarAdmin' )
-App.Config.set( 'SettingSystem',    { prio: 1400, parent: '#settings', name: 'System',   target: '#settings/system', controller: System, role: ['Admin'] }, 'NavBarAdmin' )
-App.Config.set( 'SettingSecurity',  { prio: 1500, parent: '#settings', name: 'Security', target: '#settings/security', controller: Security, role: ['Admin'] }, 'NavBarAdmin' )
-App.Config.set( 'SettingTicket',    { prio: 1600, parent: '#settings', name: 'Ticket',   target: '#settings/ticket', controller: Ticket, role: ['Admin'] }, 'NavBarAdmin' )
-App.Config.set( 'SettingImport',    { prio: 1700, parent: '#settings', name: 'Import',   target: '#settings/import', controller: Import, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'SettingSystem',    { prio: 1400, parent: '#settings', name: 'System',   target: '#settings/system',   controller: System,   role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'SettingSecurity',  { prio: 1600, parent: '#settings', name: 'Security', target: '#settings/security', controller: Security, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'SettingTicket',    { prio: 1700, parent: '#settings', name: 'Ticket',   target: '#settings/ticket',   controller: Ticket,   role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'SettingImport',    { prio: 1800, parent: '#settings', name: 'Import',   target: '#settings/import',   controller: Import,   role: ['Admin'] }, 'NavBarAdmin' )
 
