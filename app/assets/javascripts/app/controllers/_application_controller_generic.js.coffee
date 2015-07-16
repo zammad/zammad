@@ -280,7 +280,7 @@ class App.ControllerTabs extends App.Controller
 
   render: ->
 
-    @el = @html App.view('generic/tabs')(
+    @html App.view('generic/tabs')(
       header: @header
       subHeader: @subHeader
       tabs: @tabs
