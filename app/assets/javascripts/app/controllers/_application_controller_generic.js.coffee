@@ -280,22 +280,30 @@ class App.ControllerTabs extends App.Controller
 
   render: ->
 
-    @html App.view('generic/tabs')(
+    @el = @html App.view('generic/tabs')(
       header: @header
       subHeader: @subHeader
       tabs: @tabs
     )
 
+    # insert content
     for tab in @tabs
-      @el.find('.tab-content').append('<div class="tab-pane" id="' + tab.target + '"></div>')
+      @el.find('.tab-content').append("<div class=\"tab-pane\" id=\"#{tab.target}\"></div>")
       if tab.controller
         params = tab.params || {}
-        params.el = @el.find( '#' + tab.target )
+        params.name = tab.name
+        params.target = tab.target
+        params.el = @el.find( "##{tab.target}" )
         new tab.controller( params )
 
+    # check if tabs need to be hidden
+    if @tabs.length <= 1
+      @el.find('.nav-tabs').addClass('hide')
+
+    # set last or first tab to active
     @lastActiveTab = @Config.get('lastTab')
-    if @lastActiveTab &&  @el.find('.nav-tabs li a[href="' + @lastActiveTab + '"]')[0]
-      @el.find('.nav-tabs li a[href="' + @lastActiveTab + '"]').tab('show')
+    if @lastActiveTab &&  @el.find(".nav-tabs li a[href=#{@lastActiveTab}]")[0]
+      @el.find(".nav-tabs li a[href=#{@lastActiveTab}]").tab('show')
     else
       @el.find('.nav-tabs li:first a').tab('show')
 

@@ -32,11 +32,13 @@ class SettingsController < ApplicationController
   # PUT /settings/1
   def update
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if !check_access
     model_update_render(Setting, params)
   end
 
   # PUT /settings/image/:id
   def update_image
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     if !params[:logo]
       render json: {
@@ -90,5 +92,17 @@ class SettingsController < ApplicationController
   def destroy
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Setting, params)
+  end
+
+  private
+
+  def check_access
+    return true if !Setting.get('system_online_service')
+
+    setting = Setting.find(params[:id])
+    return true if setting.preferences && !setting.preferences[:online_service_disable]
+
+    response_access_deny
+    return
   end
 end

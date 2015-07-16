@@ -5,7 +5,7 @@ class Branding extends App.ControllerTabs
     return if !@authenticate()
     @title 'Branding', true
     @tabs = [
-      { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Branding' } },
+      { name: 'Base',       'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Branding' } }
     ]
     @render()
 
@@ -15,12 +15,13 @@ class System extends App.ControllerTabs
     super
     return if !@authenticate()
     @title 'System', true
-    @tabs = [
-      { name: 'Base',       'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Base' } },
-      { name: 'Services',   'target': 'services', controller: App.SettingsArea, params: { area: 'System::Services' } },
-      { name: 'Storage',    'target': 'storage',  controller: App.SettingsArea, params: { area: 'System::Storage' } },
-      { name: 'Frontend',   'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } },
-    ]
+    @tabs = []
+    if !App.Config.get('system_online_service')
+      @tabs.push { name: 'Base',       'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Base' } }
+    @tabs.push { name: 'Services',   'target': 'services', controller: App.SettingsArea, params: { area: 'System::Services' } }
+    if !App.Config.get('system_online_service')
+      @tabs.push { name: 'Storage',    'target': 'storage',  controller: App.SettingsArea, params: { area: 'System::Storage' } }
+    @tabs.push { name: 'Frontend',   'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } }
     @render()
 
 class Security extends App.ControllerTabs
@@ -30,11 +31,10 @@ class Security extends App.ControllerTabs
     return if !@authenticate()
     @title 'Security', true
     @tabs = [
-      { name: 'Base',                     'target': 'base',             controller: App.SettingsArea, params: { area: 'Security::Base' } },
-#       { name: 'Authentication',           'target': 'auth',             controller: App.SettingsArea, params: { area: 'Security::Authentication' } },
-      { name: 'Password',                 'target': 'password',         controller: App.SettingsArea, params: { area: 'Security::Password' } },
-      { name: 'Third-Party Applications', 'target': 'third_party_auth', controller: App.SettingsArea, params: { area: 'Security::ThirdPartyAuthentication' } },
-#       { name: 'Session',        'target': 'session',   controller: '' },
+      { name: 'Base',                     'target': 'base',             controller: App.SettingsArea, params: { area: 'Security::Base' } }
+#       { name: 'Authentication',           'target': 'auth',             controller: App.SettingsArea, params: { area: 'Security::Authentication' } }
+      { name: 'Password',                 'target': 'password',         controller: App.SettingsArea, params: { area: 'Security::Password' } }
+      { name: 'Third-Party Applications', 'target': 'third_party_auth', controller: App.SettingsArea, params: { area: 'Security::ThirdPartyAuthentication' } }
     ]
     @render()
 
@@ -45,8 +45,8 @@ class Import extends App.ControllerTabs
     return if !@authenticate()
     @title 'Import', true
     @tabs = [
-      { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'Import::Base' } },
-      { name: 'OTRS',         'target': 'otrs',     controller: App.SettingsArea, params: { area: 'Import::OTRS' } },
+      { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'Import::Base' } }
+      { name: 'OTRS',         'target': 'otrs',     controller: App.SettingsArea, params: { area: 'Import::OTRS' } }
     ]
     @render()
 
@@ -57,9 +57,8 @@ class Ticket extends App.ControllerTabs
     return if !@authenticate()
     @title 'Ticket', true
     @tabs = [
-      { name: 'Base',           'target': 'base',          controller: App.SettingsArea, params: { area: 'Ticket::Base' } },
-      { name: 'Number',         'target': 'number',        controller: App.SettingsArea, params: { area: 'Ticket::Number' } },
-#      { name: 'Sender Format',  'target': 'sender-format', controller: App.SettingsArea, params: { area: 'Ticket::SenderFormat' } },
+      { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'Ticket::Base' } }
+      { name: 'Number',       'target': 'number',   controller: App.SettingsArea, params: { area: 'Ticket::Number' } }
     ]
     @render()
 

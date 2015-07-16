@@ -26,21 +26,30 @@ class App.SettingsArea extends App.Controller
         area: @area
     )
 
+    # filter online service settings
+    if App.Config.get('system_online_service')
+      settings = _.filter(settings, (setting) ->
+        return if setting.online_service
+        return if setting.preferences && setting.preferences.online_service_disable
+        setting
+      )
+      return if _.isEmpty(settings)
+
     # sort by prio
     settings = _.sortBy( settings, (setting) ->
       return if !setting.preferences
       setting.preferences.prio
     )
 
-    html = $('<div></div>')
+    elements = []
     for setting in settings
       if setting.name is 'product_logo'
         item = new App.SettingsAreaLogo( setting: setting )
       else
         item = new App.SettingsAreaItem( setting: setting )
-      html.append( item.el )
+      elements.push item.el
 
-    @html html
+    @html elements
 
 class App.SettingsAreaItem extends App.Controller
   events:
@@ -67,13 +76,13 @@ class App.SettingsAreaItem extends App.Controller
 
     # item
     @html App.view('settings/item')(
-      setting: @setting,
+      setting: @setting
     )
 
     new App.ControllerForm(
       el: @el.find('.form-item'),
-      model: { configure_attributes: @configure_attributes, className: '' },
-      autofocus: false,
+      model: { configure_attributes: @configure_attributes, className: '' }
+      autofocus: false
     )
 
   update: (e) =>
@@ -103,7 +112,6 @@ class App.SettingsAreaItem extends App.Controller
     @setting.save(
       done: =>
         ui.formEnable(e)
-
         App.Event.trigger 'notify', {
           type:    'success'
           msg:     App.i18n.translateContent('Update successful!')
@@ -112,7 +120,6 @@ class App.SettingsAreaItem extends App.Controller
 
         # rerender ui || get new collections and session data
         if @setting.preferences
-
           if @setting.preferences.render
             ui.render()
             App.Event.trigger( 'ui:rerender' )
@@ -121,6 +128,11 @@ class App.SettingsAreaItem extends App.Controller
             App.Auth.loginCheck()
       fail: =>
         ui.formEnable(e)
+        App.Event.trigger 'notify', {
+          type:    'error'
+          msg:     App.i18n.translateContent('Can\'t update item!')
+          timeout: 2000
+        }
     )
 
 class App.SettingsAreaLogo extends App.Controller

@@ -13,6 +13,7 @@ Setting.create_if_not_exists(
   description: 'Defines if application is in init mode.',
   options: {},
   state: false,
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -22,6 +23,7 @@ Setting.create_if_not_exists(
   description: 'Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery).',
   options: {},
   state: false,
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -31,6 +33,7 @@ Setting.create_if_not_exists(
   description: 'Defines if application is used as online service.',
   options: {},
   state: false,
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -113,6 +116,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: '10',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -131,6 +135,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'zammad.example.com',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -149,6 +154,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: '6042',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -171,6 +177,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'http',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 
@@ -194,6 +201,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'DB',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 
@@ -1064,6 +1072,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 10,
+  preferences: { online_service_disable: true },
   frontend: false
 )
 
@@ -1108,6 +1117,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Notification Master <noreply@#{config.fqdn}>',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 
@@ -1170,6 +1180,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define endpoint of Elastic Search.',
   state: '',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1178,6 +1189,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define http basic auth user of Elasticsearch.',
   state: '',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1186,6 +1198,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define http basic auth password of Elasticsearch.',
   state: '',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1194,6 +1207,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define Elasticsearch index name.',
   state: 'zammad',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1202,6 +1216,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define attachment extentions which are ignored for Elasticsearch.',
   state: [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe', '.box', '.mbox' ],
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1210,6 +1225,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define max. attachment size for Elasticsearch.',
   state: 50,
+  preferences: { online_service_disable: true },
   frontend: false
 )
 
