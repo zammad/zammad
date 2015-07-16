@@ -62,7 +62,7 @@ class Service::Image::Zammad
   end
 
   def self.organization_suggest(domain)
-    image = self.organization(domain)
+    image = organization(domain)
     return false if !image
 
     # store image 1:1
