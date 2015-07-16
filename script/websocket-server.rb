@@ -62,7 +62,6 @@ end
 if ARGV[0] == 'stop'
 
   puts "Stopping websocket server (pid:#{@options[:i]})"
-  #puts options.inspect
 
   # read pid
   pid = File.open( @options[:i].to_s  ).read
@@ -75,7 +74,6 @@ end
 if ARGV[0] == 'start' && @options[:d]
 
   puts "Starting websocket server on #{@options[:b]}:#{@options[:p]} (secure:#{@options[:s]},pid:#{@options[:i]})"
-  #puts options.inspect
 
   Daemons.daemonize
 
