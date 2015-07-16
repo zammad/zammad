@@ -75,7 +75,7 @@ Setting.create_if_not_exists(
   title: 'Organization',
   name: 'organization',
   area: 'System::Branding',
-  description: 'Will be shown in the app and is included in email headers.',
+  description: 'Will be shown in the app and is included in email footers.',
   options: {
     form: [
       {
@@ -273,7 +273,7 @@ Setting.create_if_not_exists(
   title: 'Send client stats',
   name: 'ui_send_client_stats',
   area: 'System::UI',
-  description: 'Send client stats to central server.',
+  description: 'Send client stats/error message to central server to improve the usability.',
   options: {
     form: [
       {
@@ -289,6 +289,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: { prio: 1 },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -311,6 +312,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
+  preferences: { prio: 2 },
   frontend: true
 )
 
