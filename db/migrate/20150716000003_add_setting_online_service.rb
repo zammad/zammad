@@ -1,13 +1,16 @@
 class AddSettingOnlineService < ActiveRecord::Migration
   def up
 
+    # return if it's a new setup
+    return if !Setting.find_by(name:'system_init_done')
+
     Setting.create_or_update(
       title: 'System Init Done',
       name: 'system_init_done',
       area: 'Core',
       description: 'Defines if application is in init mode.',
       options: {},
-      state: false,
+      state: Setting.get('system_init_done'),
       preferences: { online_service_disable: true },
       frontend: true
     )
@@ -17,7 +20,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       area: 'Core::Develop',
       description: 'Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery).',
       options: {},
-      state: false,
+      state: Setting.get('developer_mode'),
       preferences: { online_service_disable: true },
       frontend: true
     )
@@ -27,7 +30,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       area: 'Core',
       description: 'Defines if application is used as online service.',
       options: {},
-      state: false,
+      state: Setting.get('system_online_service'),
       preferences: { online_service_disable: true },
       frontend: true
     )
@@ -71,7 +74,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
           },
         ],
       },
-      state: 'zammad.example.com',
+      state: Setting.get('fqdn'),
       preferences: { online_service_disable: true },
       frontend: true
     )
@@ -90,7 +93,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
           },
         ],
       },
-      state: '6042',
+      state: Setting.get('websocket_port'),
       preferences: { online_service_disable: true },
       frontend: true
     )
@@ -113,7 +116,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
           },
         ],
       },
-      state: 'http',
+      state: Setting.get('http_type'),
       preferences: { online_service_disable: true },
       frontend: true
     )
@@ -137,7 +140,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
           },
         ],
       },
-      state: 'DB',
+      state: Setting.get('storage'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -178,7 +181,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
           },
         ],
       },
-      state: 10,
+      state: Setting.get('postmaster_max_size'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -197,7 +200,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
           },
         ],
       },
-      state: 'Notification Master <noreply@#{config.fqdn}>',
+      state: Setting.get('notification_sender'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -207,7 +210,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       name: 'es_url',
       area: 'SearchIndex::Elasticsearch',
       description: 'Define endpoint of Elastic Search.',
-      state: '',
+      state: Setting.get('es_url'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -216,7 +219,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       name: 'es_user',
       area: 'SearchIndex::Elasticsearch',
       description: 'Define http basic auth user of Elasticsearch.',
-      state: '',
+      state: Setting.get('es_user'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -225,7 +228,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       name: 'es_password',
       area: 'SearchIndex::Elasticsearch',
       description: 'Define http basic auth password of Elasticsearch.',
-      state: '',
+      state: Setting.get('es_password'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -234,7 +237,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       name: 'es_index',
       area: 'SearchIndex::Elasticsearch',
       description: 'Define Elasticsearch index name.',
-      state: 'zammad',
+      state: Setting.get('es_index'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -243,7 +246,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       name: 'es_attachment_ignore',
       area: 'SearchIndex::Elasticsearch',
       description: 'Define attachment extentions which are ignored for Elasticsearch.',
-      state: [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe', '.box', '.mbox' ],
+      state: Setting.get('es_attachment_ignore'),
       preferences: { online_service_disable: true },
       frontend: false
     )
@@ -252,7 +255,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
       name: 'es_attachment_max_size_in_mb',
       area: 'SearchIndex::Elasticsearch',
       description: 'Define max. attachment size for Elasticsearch.',
-      state: 50,
+      state: Setting.get('es_attachment_max_size_in_mb'),
       preferences: { online_service_disable: true },
       frontend: false
     )
