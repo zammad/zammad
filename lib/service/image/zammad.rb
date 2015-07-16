@@ -3,7 +3,7 @@
 class Service::Image::Zammad
 
   # rubocop:disable Style/ClassVars
-  @@api_host = 'https://bigdata.zammad.com'
+  @@api_host = 'https://images.zammad.com'
   @@open_timeout = 4
   @@read_timeout = 6
 
