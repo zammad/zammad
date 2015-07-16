@@ -2,7 +2,7 @@ class AddSettingOnlineService < ActiveRecord::Migration
   def up
 
     # return if it's a new setup
-    return if !Setting.find_by(name:'system_init_done')
+    return if !Setting.find_by(name: 'system_init_done')
 
     Setting.create_or_update(
       title: 'System Init Done',
