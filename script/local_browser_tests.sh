@@ -1,7 +1,7 @@
 #!/bin/bash
 
 while true; do
-  read -p "Do you wish to drop database ane execute all browser tests?" yn
+  read -p "Do you wish to drop the database and execute all browser tests?" yn
   case $yn in
     [Yy]* ) echo "Start tests..."; break;;
     [Nn]* ) exit;;
