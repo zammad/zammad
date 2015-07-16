@@ -20,7 +20,7 @@ class TestCase < Test::Unit::TestCase
     elsif browser == 'chrome'
       browser_profile = Selenium::WebDriver::Chrome::Profile.new
 
-      browser_profile["intl.accept_languages"] = "en"
+      browser_profile['intl.accept_languages'] = 'en'
     end
     browser_profile
   end
@@ -1242,7 +1242,7 @@ wait untill text in selector disabppears
       found = nil
       (1..10).each {
 
-        next if found
+        break if found
 
         begin
           text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
@@ -1256,6 +1256,7 @@ wait untill text in selector disabppears
       }
       if !found
         screenshot( browser: instance, comment: 'ticket_update_discard_message_failed' )
+
         fail 'no discard message found'
       end
     end
