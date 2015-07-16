@@ -50,6 +50,15 @@ sleep 15
 #export REMOTE_URL='http://192.168.178.32:4444/wd/hub'
 #export REMOTE_URL='http://192.168.178.45:4444/wd/hub'
 
+export RAILS_ENV=test
+
+echo "rake db:drop"
+time rake db:drop
+echo "rake db:create"
+time rake db:create
+echo "rake db:migrate"
+time rake db:migrate
+
 rake test:browser["BROWSER_URL=http://localhost:4444"]
 #rake test:browser["BROWSER_URL=http://localhost:4444 BROWSER=chrome"]
 #rake test:browser["BROWSER_URL=http://192.168.178.28:4444"]
