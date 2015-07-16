@@ -103,6 +103,6 @@ class SettingsController < ApplicationController
     return true if setting.preferences && !setting.preferences[:online_service_disable]
 
     response_access_deny
-    return
+    false
   end
 end
