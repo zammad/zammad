@@ -147,8 +147,18 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     Channel.fetch
 
-    # check if follow up article has been created
-    article = Ticket::Article.find_by( message_id: tweet.id )
+    # fetch check system account
+    article = nil
+    (1..4).each {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by( message_id: tweet.id )
+
+      break if article
+
+      sleep 5
+    }
     assert(article)
     ticket = article.ticket
 
