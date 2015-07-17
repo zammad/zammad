@@ -130,37 +130,41 @@ class Facebook
       ticket.save
     end
 
-    user = to_user(comment)
+    user = to_user(post)
     return if !user
 
     feed_post = {
-      from:       user.name,
+      from:       "#{user.firstname} #{user.lastname}",
       body:       post['message'],
       message_id: post['id'],
-      type:       Ticket::Article::Type.find_by( name: 'facebook feed post' ),
+      type_id:    Ticket::Article::Type.find_by( name: 'facebook feed post' ).id,
     }
     articles = []
     articles.push( feed_post )
 
-    post['comments']['data'].each { |comment|
+    if post['comments']
+      post['comments']['data'].each { |comment|
 
-      user = to_user(comment)
+        user = to_user(comment)
 
-      next if !user
+        next if !user
 
-      post_comment = {
-        from:       user.name,
-        body:       comment['message'],
-        message_id: comment['id'],
-        type:       Ticket::Article::Type.find_by( name: 'facebook feed comment' ),
+        post_comment = {
+          from:         "#{user.firstname} #{user.lastname}",
+          body:       comment['message'],
+          message_id: comment['id'],
+          type_id:    Ticket::Article::Type.find_by( name: 'facebook feed comment' ).id,
+        }
+        articles.push( post_comment )
+
+        # TODO: sub-comments
+        # comment_data = @client.get_object( comment['id'] )
       }
-      articles.push( post_comment )
+    end
 
-      # TODO: sub-comments
-      # comment_data = @client.get_object( comment['id'] )
-    }
+    inverted_articles = articles.reverse
 
-    articles.invert.each { |article|
+    inverted_articles.each { |article|
 
       break if Ticket::Article.find_by( message_id: article[:message_id] )
 
@@ -168,6 +172,9 @@ class Facebook
         to:        @account['name'],
         ticket_id: ticket.id,
         internal:  false,
+        sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
+        created_by_id: 1,
+        updated_by_id: 1,
       }.merge( article )
 
       Ticket::Article.create( article )
@@ -204,12 +211,11 @@ class Facebook
   def from_article(article)
 
     post = nil
-    # TODO: article[:type] == 'facebook feed post'
     if article[:type] == 'facebook feed comment'
 
       Rails.logger.debug 'Create feed comment from article...'
 
-      post = @client.put_wall_post(article[:body], {}, article[:in_reply_to])
+      post = @client.put_comment(article[:in_reply_to], article[:body])
     else
       fail "Can't handle unknown facebook article type '#{article[:type]}'."
     end
