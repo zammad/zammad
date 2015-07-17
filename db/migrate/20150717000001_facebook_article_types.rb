@@ -1,6 +1,9 @@
 class FacebookArticleTypes < ActiveRecord::Migration
   def up
-    facebook_at      = Ticket::Article::Type.find_by( name: 'facebook' )
+    facebook_at = Ticket::Article::Type.find_by( name: 'facebook' )
+
+    return if !facebook_at
+
     facebook_at.name = 'facebook feed post'
     facebook_at.save
 
