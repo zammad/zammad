@@ -1501,9 +1501,10 @@ Ticket::Article::Type.create_if_not_exists( id: 4, name: 'fax', communication: t
 Ticket::Article::Type.create_if_not_exists( id: 5, name: 'phone', communication: true )
 Ticket::Article::Type.create_if_not_exists( id: 6, name: 'twitter status', communication: true )
 Ticket::Article::Type.create_if_not_exists( id: 7, name: 'twitter direct-message', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 8, name: 'facebook', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 9, name: 'note', communication: false )
-Ticket::Article::Type.create_if_not_exists( id: 10, name: 'web', communication: true )
+Ticket::Article::Type.create_if_not_exists( id: 8, name: 'facebook feed post', communication: true )
+Ticket::Article::Type.create_if_not_exists( id: 9, name: 'facebook feed comment', communication: true )
+Ticket::Article::Type.create_if_not_exists( id: 10, name: 'note', communication: false )
+Ticket::Article::Type.create_if_not_exists( id: 11, name: 'web', communication: true )
 
 Ticket::Article::Sender.create_if_not_exists( id: 1, name: 'Agent' )
 Ticket::Article::Sender.create_if_not_exists( id: 2, name: 'Customer' )
