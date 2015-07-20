@@ -5387,6 +5387,69 @@ output {
   }
 }
 
+.zammad-switch label {
+  position: relative;
+  width: 48px;
+  height: 30px;
+  border-radius: 15px;
+  outline: none;
+  cursor: pointer;
+  background: hsl(0,0%,90%);
+  transition: background 400ms;
+}
+
+.zammad-switch input {
+  display: none;
+}
+
+.zammad-switch input:checked + label {
+  background: hsl(200,71%,59%);
+}
+
+.zammad-switch input:focus + label {
+  transition: none;
+  background: hsl(200,71%,59%);
+  box-shadow: 0 0 0 3px hsl(201,62%,90%);
+}
+
+.zammad-switch label:after,
+.zammad-switch label:before {
+  content: "";
+  position: absolute;
+  transition: 200ms;
+}
+
+.zammad-switch label:before {
+  width: 46px;
+  height: 28px;
+  left: 1px;
+  top: 1px;
+  border-radius: inherit;
+  background: hsl(210,17%,99%);
+  transform-origin: right;
+}
+
+.zammad-switch input:checked + label:before {
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+.zammad-switch label:after {
+  width: 28px;
+  height: 28px;
+  border-radius: 100%;
+  left: 1px;
+  top: 1px;
+  box-shadow: 
+    0 0 0 1px rgba(0,0,0,.05),
+    0 1px 3px rgba(0,0,0,.2);
+  background: white;
+}
+
+.zammad-switch input:checked + label:after {
+  transform: translateX(18px);
+}
+
 .horizontal-filter-text {
   margin-right: 5px;
 }

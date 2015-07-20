@@ -81,5 +81,31 @@
         </label>
       </div>
     </div>
+
+
+    <h2>Multiselect</h2>
+    <div class="radio form-group">
+      <div class="controls">
+        <label>
+          <input type="radio" name="options"> Option A
+        </label>
+        <label>
+          <input type="radio" name="options" checked> Option B
+        </label>
+        <label>
+          <input type="radio" name="options"> Option C
+        </label>
+      </div>
+    </div>
+
+    <h2>Switch</h2>
+    <div class="switch form-group">
+      <div class="controls">
+        <div class="zammad-switch">
+           <input type="checkbox" id="c">
+           <label for="c"></label>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
