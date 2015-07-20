@@ -22,6 +22,7 @@ class TranslationsController < ApplicationController
   # POST /translations/sync
   def sync
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    Locale.load
     Translation.load
     render json: { message: 'ok' }, status: :ok
   end

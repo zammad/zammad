@@ -7,7 +7,7 @@ class Channel::Facebook
   def fetch (channel)
 
     @channel  = channel
-    @facebook = Facebook.new( @channel[:options][:auth] )
+    @facebook = Facebook.new( @channel[:options] )
     @sync     = @channel[:options][:sync]
 
     Rails.logger.debug 'facebook fetch started'
@@ -22,7 +22,7 @@ class Channel::Facebook
   def send(article, _notification = false)
 
     @channel  = Channel.find_by( area: 'Facebook::Inbound', active: true )
-    @facebook = Facebook.new( @channel[:options][:auth] )
+    @facebook = Facebook.new( @channel[:options] )
 
     tweet = @facebook.from_article(article)
     disconnect

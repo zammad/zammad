@@ -111,7 +111,7 @@ returns
 
         # fetch org logo
         if admin_user.email
-          Zammad::BigData::Organization.suggest_system_image(admin_user.email)
+          Service::Image.organization_suggest(admin_user.email)
         end
       }
     end

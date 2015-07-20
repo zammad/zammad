@@ -146,7 +146,7 @@ add a avatar
       end
 
       # fetch image
-      image = Zammad::BigData::User.image(data[:url])
+      image = Service::Image.user(data[:url])
       return if !image
       if !data[:resize]
         data[:resize] = {}

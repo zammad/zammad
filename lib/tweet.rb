@@ -97,23 +97,32 @@ class Tweet
     Rails.logger.debug group_id.inspect
 
     if tweet.class.to_s == 'Twitter::DirectMessage'
-      ticket = Ticket.find_by(
-        customer_id: user.id,
-        state:       Ticket::State.where.not(
-          state_type_id: Ticket::StateType.where(
-            name: 'closed',
+
+      article = Ticket::Article.find_by(
+        from:    'me_bauer',
+        type_id: Ticket::Article::Type.find_by( name: 'twitter direct-message' ).id,
+      )
+
+      if article
+        ticket = Ticket.find_by(
+          id:          article.ticket_id,
+          customer_id: user.id,
+          state:       Ticket::State.where.not(
+            state_type_id: Ticket::StateType.where(
+              name: 'closed',
+            )
           )
         )
-      )
-      return ticket if ticket
+        return ticket if ticket
+      end
     end
 
     Ticket.create(
       customer_id: user.id,
       title:       "#{tweet.text[0, 37]}...",
       group_id:    group_id,
-      state:       Ticket::State.find_by( name: 'new' ),
-      priority:    Ticket::Priority.find_by( name: '2 normal' ),
+      state_id:    Ticket::State.find_by( name: 'new' ).id,
+      priority_id: Ticket::Priority.find_by( name: '2 normal' ).id,
     )
   end
 
@@ -153,8 +162,8 @@ class Tweet
       message_id:  tweet.id,
       ticket_id:   ticket.id,
       in_reply_to: in_reply_to,
-      type:        Ticket::Article::Type.find_by( name: article_type ),
-      sender:      Ticket::Article::Sender.find_by( name: 'Customer' ),
+      type_id:     Ticket::Article::Type.find_by( name: article_type ).id,
+      sender_id:   Ticket::Article::Sender.find_by( name: 'Customer' ).id,
       internal:    false,
     )
   end

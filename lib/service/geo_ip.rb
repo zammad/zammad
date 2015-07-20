@@ -1,13 +1,14 @@
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
 
-class GeoIp
-  include ApplicationLib
+module Service
+  class GeoIp
+    include ApplicationLib
 
 =begin
 
 lookup location based on ip or hostname
 
-  result = GeoIp.location( '172.0.0.1' )
+  result = Service::GeoIp.location( '172.0.0.1' )
 
 returns
 
@@ -27,13 +28,14 @@ returns
 
 =end
 
-  def self.location(address)
+    def self.location(address)
 
-    # load backend
-    backend = load_adapter_by_setting( 'geo_ip_backend' )
-    return if !backend
+      # load backend
+      backend = load_adapter_by_setting( 'geo_ip_backend' )
+      return if !backend
 
-    # db lookup
-    backend.location(address)
+      # db lookup
+      backend.location(address)
+    end
   end
 end

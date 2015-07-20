@@ -45,15 +45,14 @@ class _Singleton
     # detect color support
     @colorSupport = false
     data = App.Browser.detection()
-    if data
-      if data.browser is 'Chrome'
+    if data.browser
+      if data.browser.name is 'Chrome'
         @colorSupport = true
-      else if data.browser is 'Firefox'
-        if data.version >= 31.0
+      else if data.browser.anem is 'Firefox'
+        if data.browser.major >= 31.0
           @colorSupport = true
-      else if data.browser is 'Safari'
+      else if data.browser.name is 'Safari'
         @colorSupport = true
-
 
   configReady: ->
     for type, value of @currentConfig

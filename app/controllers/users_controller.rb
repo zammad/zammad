@@ -130,7 +130,7 @@ class UsersController < ApplicationController
 
         # fetch org logo
         if user.email
-          Zammad::BigData::Organization.suggest_system_image(user.email)
+          Service::Image.organization_suggest(user.email)
         end
       end
 

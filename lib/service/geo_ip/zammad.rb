@@ -2,7 +2,7 @@
 
 require 'cache'
 
-class GeoIp::ZammadGeoIp
+class Service::GeoIp::Zammad
   def self.location(address)
 
     # check cache

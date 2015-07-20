@@ -147,8 +147,18 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     Channel.fetch
 
-    # check if follow up article has been created
-    article = Ticket::Article.find_by( message_id: tweet.id )
+    # fetch check system account
+    article = nil
+    (1..4).each {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by( message_id: tweet.id )
+
+      break if article
+
+      sleep 5
+    }
     assert(article)
     ticket = article.ticket
 
@@ -220,25 +230,86 @@ class TwitterTest < ActiveSupport::TestCase
       sleep 5
     }
 
-    assert( article, 'inbound article created' )
+    assert( article, "inbound article '#{text}' created" )
     ticket = article.ticket
     assert( ticket, 'ticket of inbound article exists' )
     assert( ticket.articles, 'ticket.articles exists' )
-    assert_equal( ticket.articles.count, 1, 'ticket article inbound count' )
+    assert_equal( 1, ticket.articles.count, 'ticket article inbound count' )
     assert_equal( ticket.state.name, 'new' )
 
     # reply via ticket
     outbound_article = Ticket::Article.create(
       ticket_id:     ticket.id,
       to:            'me_bauer',
-      body:          text,
+      body:          'Will call you later!',
       type:          Ticket::Article::Type.find_by( name: 'twitter direct-message' ),
       sender:        Ticket::Article::Sender.find_by( name: 'Agent' ),
       internal:      false,
       updated_by_id: 1,
       created_by_id: 1,
     )
+    ticket.state = Ticket::State.find_by( name: 'pending reminder' )
+    ticket.save
+
     assert( outbound_article, 'outbound article created' )
-    assert_equal( outbound_article.ticket.articles.count, 2, 'ticket article outbound count' )
+    assert_equal( 2, outbound_article.ticket.articles.count, 'ticket article outbound count' )
+
+    text  = 'Ok. ' + hash
+    dm = client.create_direct_message(
+      'armin_theo',
+      text,
+    )
+    assert( dm, "second dm with ##{hash} created" )
+
+    # fetch check system account
+    article = nil
+    (1..4).each {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by( message_id: dm.id )
+
+      break if article
+
+      sleep 5
+    }
+
+    assert( article, "inbound article '#{text}' created" )
+    ticket = article.ticket
+    assert( ticket, 'ticket of inbound article exists' )
+    assert( ticket.articles, 'ticket.articles exists' )
+    assert_equal( 3, ticket.articles.count, 'ticket article inbound count' )
+    assert_equal( ticket.state.name, 'open' )
+
+    # close dm ticket, next dm should open a new
+    ticket.state = Ticket::State.find_by( name: 'closed' )
+    ticket.save
+
+    text = 'Thanks for your call . I just have one question. ' + hash
+    dm   = client.create_direct_message(
+      'armin_theo',
+      text,
+    )
+    assert( dm, "third dm with ##{hash} created" )
+
+    # fetch check system account
+    article = nil
+    (1..4).each {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by( message_id: dm.id )
+
+      break if article
+
+      sleep 5
+    }
+
+    assert( article, "inbound article '#{text}' created" )
+    ticket = article.ticket
+    assert( ticket, 'ticket of inbound article exists' )
+    assert( ticket.articles, 'ticket.articles exists' )
+    assert_equal( 1, ticket.articles.count, 'ticket article inbound count' )
+    assert_equal( ticket.state.name, 'new' )
   end
 end

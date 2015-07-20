@@ -9,6 +9,22 @@ class TestCase < Test::Unit::TestCase
     ENV['BROWSER'] || 'firefox'
   end
 
+  def profile
+    browser_profile = nil
+    if browser == 'firefox'
+      browser_profile = Selenium::WebDriver::Firefox::Profile.new
+
+      browser_profile['intl.locale.matchOS']      = false
+      browser_profile['intl.accept_languages']    = 'en-US'
+      browser_profile['general.useragent.locale'] = 'en-US'
+    elsif browser == 'chrome'
+      browser_profile = Selenium::WebDriver::Chrome::Profile.new
+
+      browser_profile['intl.accept_languages'] = 'en'
+    end
+    browser_profile
+  end
+
   def browser_support_cookies
     if browser =~ /(internet_explorer|ie)/i
       return false
@@ -25,7 +41,7 @@ class TestCase < Test::Unit::TestCase
       @browsers = {}
     end
     if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
-      local_browser = Selenium::WebDriver.for( browser.to_sym )
+      local_browser = Selenium::WebDriver.for( browser.to_sym, profile: profile )
       browser_instance_preferences(local_browser)
       @browsers[local_browser.hash] = local_browser
       return local_browser
@@ -1226,7 +1242,7 @@ wait untill text in selector disabppears
       found = nil
       (1..10).each {
 
-        next if found
+        break if found
 
         begin
           text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
@@ -1240,6 +1256,7 @@ wait untill text in selector disabppears
       }
       if !found
         screenshot( browser: instance, comment: 'ticket_update_discard_message_failed' )
+
         fail 'no discard message found'
       end
     end

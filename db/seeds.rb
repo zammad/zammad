@@ -13,6 +13,7 @@ Setting.create_if_not_exists(
   description: 'Defines if application is in init mode.',
   options: {},
   state: false,
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -22,6 +23,7 @@ Setting.create_if_not_exists(
   description: 'Defines if application is in developer mode (useful for developer, all users have the same password, password reset will work without email delivery).',
   options: {},
   state: false,
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -31,6 +33,7 @@ Setting.create_if_not_exists(
   description: 'Defines if application is used as online service.',
   options: {},
   state: false,
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -49,7 +52,7 @@ Setting.create_if_not_exists(
     ],
   },
   preferences: { render: true, session_check: true, prio: 1 },
-  state: 'Zammad',
+  state: 'Zammad Helpdesk',
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -75,7 +78,7 @@ Setting.create_if_not_exists(
   title: 'Organization',
   name: 'organization',
   area: 'System::Branding',
-  description: 'Will be shown in the app and is included in email headers.',
+  description: 'Will be shown in the app and is included in email footers.',
   options: {
     form: [
       {
@@ -113,6 +116,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: '10',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -131,6 +135,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'zammad.example.com',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -149,6 +154,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: '6042',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -171,6 +177,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'http',
+  preferences: { online_service_disable: true },
   frontend: true
 )
 
@@ -194,35 +201,39 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'DB',
+  preferences: { online_service_disable: true },
   frontend: false
 )
+
 Setting.create_if_not_exists(
-  title: 'Geo Location Backend',
-  name: 'geo_location_backend',
-  area: 'System::Geo',
-  description: 'Defines the backend for geo location lookups.',
+  title: 'Image Service',
+  name: 'image_backend',
+  area: 'System::Services',
+  description: 'Defines the backend for user and organization image lookups.',
   options: {
     form: [
       {
         display: '',
         null: true,
-        name: 'geo_location_backend',
+        name: 'image_backend',
         tag: 'select',
         options: {
           '' => '-',
-          'GeoLocation::Gmaps' => 'Google Maps',
+          'Service::Image::Zammad' => 'Zammad Image Service',
         },
       },
     ],
   },
-  state: 'GeoLocation::Gmaps',
+  state: 'Service::Image::Zammad',
+  preferences: { prio: 1 },
   frontend: false
 )
+
 Setting.create_if_not_exists(
-  title: 'Geo IP Backend',
+  title: 'Geo IP Service',
   name: 'geo_ip_backend',
-  area: 'System::Geo',
-  description: 'Defines the backend for geo ip lookups.',
+  area: 'System::Services',
+  description: 'Defines the backend for geo IP lookups. Show also location of an IP address if an IP address is shown.',
   options: {
     form: [
       {
@@ -232,12 +243,37 @@ Setting.create_if_not_exists(
         tag: 'select',
         options: {
           '' => '-',
-          'GeoIp::ZammadGeoIp' => 'Zammad GeoIP Service',
+          'Service::GeoIp::Zammad' => 'Zammad GeoIP Service',
         },
       },
     ],
   },
-  state: 'GeoIp::ZammadGeoIp',
+  state: 'Service::GeoIp::Zammad',
+  preferences: { prio: 2 },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Geo Location Service',
+  name: 'geo_location_backend',
+  area: 'System::Services',
+  description: 'Defines the backend for geo location lookups to store geo locations for addresses.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'geo_location_backend',
+        tag: 'select',
+        options: {
+          '' => '-',
+          'Service::GeoLocation::Gmaps' => 'Google Maps',
+        },
+      },
+    ],
+  },
+  state: 'Service::GeoLocation::Gmaps',
+  preferences: { prio: 3 },
   frontend: false
 )
 
@@ -245,7 +281,7 @@ Setting.create_if_not_exists(
   title: 'Send client stats',
   name: 'ui_send_client_stats',
   area: 'System::UI',
-  description: 'Send client stats to central server.',
+  description: 'Send client stats/error message to central server to improve the usability.',
   options: {
     form: [
       {
@@ -261,6 +297,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: { prio: 1 },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -283,6 +320,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
+  preferences: { prio: 2 },
   frontend: true
 )
 
@@ -1034,6 +1072,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 10,
+  preferences: { online_service_disable: true },
   frontend: false
 )
 
@@ -1078,6 +1117,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Notification Master <noreply@#{config.fqdn}>',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 
@@ -1140,6 +1180,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define endpoint of Elastic Search.',
   state: '',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1148,6 +1189,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define http basic auth user of Elasticsearch.',
   state: '',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1156,6 +1198,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define http basic auth password of Elasticsearch.',
   state: '',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1164,6 +1207,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define Elasticsearch index name.',
   state: 'zammad',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1172,6 +1216,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define attachment extentions which are ignored for Elasticsearch.',
   state: [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe', '.box', '.mbox' ],
+  preferences: { online_service_disable: true },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1180,6 +1225,7 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define max. attachment size for Elasticsearch.',
   state: 50,
+  preferences: { online_service_disable: true },
   frontend: false
 )
 
@@ -1455,9 +1501,10 @@ Ticket::Article::Type.create_if_not_exists( id: 4, name: 'fax', communication: t
 Ticket::Article::Type.create_if_not_exists( id: 5, name: 'phone', communication: true )
 Ticket::Article::Type.create_if_not_exists( id: 6, name: 'twitter status', communication: true )
 Ticket::Article::Type.create_if_not_exists( id: 7, name: 'twitter direct-message', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 8, name: 'facebook', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 9, name: 'note', communication: false )
-Ticket::Article::Type.create_if_not_exists( id: 10, name: 'web', communication: true )
+Ticket::Article::Type.create_if_not_exists( id: 8, name: 'facebook feed post', communication: true )
+Ticket::Article::Type.create_if_not_exists( id: 9, name: 'facebook feed comment', communication: true )
+Ticket::Article::Type.create_if_not_exists( id: 10, name: 'note', communication: false )
+Ticket::Article::Type.create_if_not_exists( id: 11, name: 'web', communication: true )
 
 Ticket::Article::Sender.create_if_not_exists( id: 1, name: 'Agent' )
 Ticket::Article::Sender.create_if_not_exists( id: 2, name: 'Customer' )

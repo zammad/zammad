@@ -54,7 +54,7 @@ class Observer::User::Geo < ActiveRecord::Observer
     return if address == ''
 
     # lookup
-    latlng = GeoLocation.geocode( address )
+    latlng = Service::GeoLocation.geocode( address )
     return if !latlng
 
     # store data
