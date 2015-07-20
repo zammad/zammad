@@ -9,6 +9,7 @@
  /*
   modified by Felix Jan-2014
   - add this.$body = $(options.container || document.body)
+  - adjustBackdrop: also adopt left, top and width from $body
 */
 
 
@@ -233,6 +234,9 @@
 
   Modal.prototype.adjustBackdrop = function () {
     this.$backdrop
+      .css('left', this.$body.offset().left)
+      .css('top', this.$body.offset().top)
+      .css('width', this.$body.width())
       .css('height', 0)
       .css('height', this.$element[0].scrollHeight)
   }
@@ -241,6 +245,9 @@
     var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
 
     this.$element.css({
+      left: this.$body.offset().left,
+      top: this.$body.offset().top,
+      width: this.$body.width(),
       paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
       paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
     })

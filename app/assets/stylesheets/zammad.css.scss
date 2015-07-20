@@ -4318,14 +4318,9 @@ footer {
 .modal.modal--local {
   display: block;
   padding-left: 40px;
-  position: absolute;
-  bottom: auto;
-  min-height: 100vh;
   
   .modal-backdrop {
-    position: absolute;
     background: hsla(210,17%,93%,.55);
-    height: 100% !important;
     opacity: 1;
   }
 
