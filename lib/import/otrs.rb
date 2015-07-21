@@ -634,7 +634,7 @@ module Import::OTRS
             article_new[:type_id] = 9
           end
           article_new.delete( :type )
-          article_old = Ticket::Article.where( id: article_new[:id] ).first
+          article_old = Ticket::Article.find_by( id: article_new[:id] )
 
           # set state types
           if article_old
