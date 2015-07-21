@@ -37,6 +37,7 @@ class OtrsImportTest < ActiveSupport::TestCase
   test 'check counts' do
     assert_equal( 603, Ticket.count, 'tickets' )
     assert_equal( 3182, Ticket::Article.count, 'ticket articles' )
+    assert_equal( 274, Store.count, 'ticket article attachments' )
     assert_equal( 10, Ticket::State.count, 'ticket states' )
     assert_equal( 24, Group.count, 'groups' )
   end
@@ -208,4 +209,22 @@ class OtrsImportTest < ActiveSupport::TestCase
     #  - create entry
     #  - state change entry
   end
+
+  test 'check article attachments' do
+
+    article = Ticket::Article.find(149)
+    assert_equal( 5, article.attachments.count )
+
+    attachment = article.attachments.first
+    assert_equal( 'image/jpeg', attachment[:preferences]['content_type'] )
+    assert_equal( 'Cursor_und_Banners_and_Alerts_und_Paket-Verwaltung_-_Admin_-_otrs336_und_otrs336.jpg', attachment.filename )
+
+    article = Ticket::Article.find(156)
+    assert_equal( 2, article.attachments.count )
+
+    attachment = article.attachments.second
+    assert_equal( 'application/pdf; name="=?UTF-8?B?5ZSQ6K+X5LiJ55m+6aaWLnBkZg==?="', attachment[:preferences]['content_type'] )
+    assert_equal( '唐诗三百首.pdf', attachment.filename )
+  end
+
 end
