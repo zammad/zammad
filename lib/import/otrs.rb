@@ -1,3 +1,5 @@
+require 'base64'
+
 module Import
 end
 module Import::OTRS
@@ -634,18 +636,49 @@ module Import::OTRS
             article_new[:type_id] = 9
           end
           article_new.delete( :type )
-          article_old = Ticket::Article.find_by( id: article_new[:id] )
+          article_object = Ticket::Article.find_by( id: article_new[:id] )
 
           # set state types
-          if article_old
+          if article_object
             log "update Ticket::Article.find(#{article_new[:id]})"
-            article_old.update_attributes(article_new)
+            article_object.update_attributes(article_new)
           else
             log "add Ticket::Article.find(#{article_new[:id]})"
-            article = Ticket::Article.new(article_new)
-            article.id = article_new[:id]
-            article.save
+            article_object = Ticket::Article.new(article_new)
+            article_object.id = article_new[:id]
+            article_object.save
           end
+
+          next if !article['Attachments']
+          next if article['Attachments'].empty?
+
+          # TODO: refactor
+          # check if there are attachments present
+          if !article_object.attachments.empty?
+
+            # skip attachments if count is equal
+            next if article_object.attachments.count == article['Attachments'].count
+
+            # if the count differs delete all so we
+            # can have a fresh start
+            article_object.attachments.each(&:delete)
+          end
+
+          # import article attachments
+          article['Attachments'].each { |attachment|
+            Store.add(
+              object:      'Ticket::Article',
+              o_id:        article_object.id,
+              filename:    Base64.decode64(attachment['Filename']),
+              data:        Base64.decode64(attachment['Content']),
+              preferences: {
+                content_type:        attachment['ContentType'],
+                content_id:          attachment['ContentID'],
+                :'content-alternative' => attachment['ContentAlternative'],
+              },
+              created_by_id: 1,
+            )
+          }
         }
       end
 
