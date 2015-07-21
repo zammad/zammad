@@ -672,9 +672,9 @@ module Import::OTRS
               filename:    Base64.decode64(attachment['Filename']),
               data:        Base64.decode64(attachment['Content']),
               preferences: {
-                content_type:        attachment['ContentType'],
-                content_id:          attachment['ContentID'],
-                :'content-alternative' => attachment['ContentAlternative'],
+                'Mime-Type'           => attachment['ContentType'],
+                'Content-ID'          => attachment['ContentID'],
+                'content-alternative' => attachment['ContentAlternative'],
               },
               created_by_id: 1,
             )
