@@ -42,34 +42,34 @@ class Facebook
     pages
   end
 
-  def user(post)
+  def user(item)
 
-    return if !post['from']
-    return if !post['from']['id']
-    return if !post['from']['name']
+    return if !item['from']
+    return if !item['from']['id']
+    return if !item['from']['name']
 
-    return if !post['from']['id'] == @account['id']
+    return if item['from']['id'] == @account['id']
 
-    @client.get_object( post['from']['id'] )
+    @client.get_object( item['from']['id'] )
   end
 
-  def to_user(post)
+  def to_user(item)
 
-    Rails.logger.debug 'Create user from post...'
-    Rails.logger.debug post.inspect
+    Rails.logger.debug 'Create user from item...'
+    Rails.logger.debug item.inspect
 
-    # do post_user lookup
-    post_user = user(post)
+    # do item_user lookup
+    item_user = user(item)
 
-    return if !post_user
+    return if !item_user
 
-    auth = Authorization.find_by( uid: post_user['id'], provider: 'facebook' )
+    auth = Authorization.find_by( uid: item_user['id'], provider: 'facebook' )
 
     # create or update user
     user_data = {
-      login:        post_user['id'], # TODO
-      firstname:    post_user['first_name'] || post_user['name'],
-      lastname:     post_user['last_name'] || '',
+      login:        item_user['id'], # TODO
+      firstname:    item_user['first_name'] || item_user['name'],
+      lastname:     item_user['last_name'] || '',
       email:        '',
       password:     '',
       # TODO: image_source: '',
@@ -84,8 +84,8 @@ class Facebook
 
     # create or update authorization
     auth_data = {
-      uid:      post_user['id'],
-      username: post_user['id'], # TODO
+      uid:      item_user['id'],
+      username: item_user['id'], # TODO
       user_id:  user.id,
       provider: 'facebook'
     }
@@ -142,31 +142,13 @@ class Facebook
     articles = []
     articles.push( feed_post )
 
-    if post['comments']
-      post['comments']['data'].each { |comment|
-
-        user = to_user(comment)
-
-        next if !user
-
-        post_comment = {
-          from:         "#{user.firstname} #{user.lastname}",
-          body:       comment['message'],
-          message_id: comment['id'],
-          type_id:    Ticket::Article::Type.find_by( name: 'facebook feed comment' ).id,
-        }
-        articles.push( post_comment )
-
-        # TODO: sub-comments
-        # comment_data = @client.get_object( comment['id'] )
-      }
+    if post['comments'] && post['comments']['data']
+      articles += nested_comments( post['comments']['data'], post['id'] )
     end
 
-    inverted_articles = articles.reverse
+    articles.each { |article|
 
-    inverted_articles.each { |article|
-
-      break if Ticket::Article.find_by( message_id: article[:message_id] )
+      next if Ticket::Article.find_by( message_id: article[:message_id] )
 
       article = {
         to:        @account['name'],
@@ -241,5 +223,38 @@ class Facebook
     }
 
     access_token
+  end
+
+  def nested_comments(comments, in_reply_to)
+
+    Rails.logger.debug 'Fetching nested comments...'
+    Rails.logger.debug comments.inspect
+
+    result = []
+    return result if comments.empty?
+
+    comments.each { |comment|
+
+      user = to_user(comment)
+
+      next if !user
+
+      article_data = {
+        from:         "#{user.firstname} #{user.lastname}",
+        body:       comment['message'],
+        message_id: comment['id'],
+        type_id:    Ticket::Article::Type.find_by( name: 'facebook feed comment' ).id,
+        in_reply_to: in_reply_to
+      }
+      result.push( article_data )
+
+      sub_comments = @client.get_object( "#{comment['id']}/comments" )
+
+      sub_articles = nested_comments(sub_comments, comment['id'])
+
+      result += sub_articles
+    }
+
+    result
   end
 end
