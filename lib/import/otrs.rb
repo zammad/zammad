@@ -382,9 +382,8 @@ module Import::OTRS
         Thread.current[:thread_no] = thread
         sleep thread * 3
         log "Started import thread# #{thread} ..."
-        run = true
         steps = 20
-        while run
+        loop do
           count += steps
           log "loading... thread# #{thread} ..."
           offset = count - steps
@@ -394,8 +393,7 @@ module Import::OTRS
           records = load( 'Ticket', steps, count - steps)
           if !records || !records[0]
             log "... thread# #{thread}, no more work."
-            run = false
-            next
+            break
           end
           _ticket_result(records, locks, thread)
         end
