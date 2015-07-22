@@ -216,14 +216,14 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 5, article.attachments.count )
 
     attachment = article.attachments.first
-    assert_equal( 'image/jpeg', attachment[:preferences]['content_type'] )
+    assert_equal( 'image/jpeg', attachment[:preferences]['Mime-Type'] )
     assert_equal( 'Cursor_und_Banners_and_Alerts_und_Paket-Verwaltung_-_Admin_-_otrs336_und_otrs336.jpg', attachment.filename )
 
     article = Ticket::Article.find(156)
     assert_equal( 2, article.attachments.count )
 
     attachment = article.attachments.second
-    assert_equal( 'application/pdf; name="=?UTF-8?B?5ZSQ6K+X5LiJ55m+6aaWLnBkZg==?="', attachment[:preferences]['content_type'] )
+    assert_equal( 'application/pdf; name="=?UTF-8?B?5ZSQ6K+X5LiJ55m+6aaWLnBkZg==?="', attachment[:preferences]['Mime-Type'] )
     assert_equal( '唐诗三百首.pdf', attachment.filename )
   end
 
