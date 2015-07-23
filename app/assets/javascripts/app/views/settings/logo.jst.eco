@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="horizontal end">
+  <div class="setting-controls">
     <button type="submit" class="btn btn--primary"><%- @T( 'Submit' ) %></button>
   </div>
 </form>

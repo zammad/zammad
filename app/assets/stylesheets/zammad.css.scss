@@ -4675,6 +4675,12 @@ footer {
   max-width: 700px;
 }
 
+.setting-controls {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .form-item .form-group {
   margin-bottom: 0;
 }
