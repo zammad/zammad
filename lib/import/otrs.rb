@@ -589,8 +589,8 @@ module Import::OTRS
         _article_based_customers(article)
       }
 
-      ActiveRecord::Base.transaction do
-        record['Articles'].each { |article|
+      record['Articles'].each do |article|
+        ActiveRecord::Base.transaction do
 
           # get article values
           article_new = {
@@ -681,7 +681,7 @@ module Import::OTRS
               created_by_id: 1,
             )
           }
-        }
+        end
       end
 
       #puts "HS: #{record['History'].inspect}"
