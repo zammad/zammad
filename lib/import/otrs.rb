@@ -378,7 +378,7 @@ module Import::OTRS
     thread_count              = 8
     threads                   = {}
     steps                     = 20
-    (1..thread_count).each {|thread|
+    (1..thread_count).each { |thread|
 
       threads[thread] = Thread.new {
 
@@ -561,7 +561,7 @@ module Import::OTRS
         if user
           ticket_new[:customer_id] = user.id
         else
-          ticket_new[:customer_id] =  1
+          ticket_new[:customer_id] = 1
         end
         ticket_new.delete(:customer)
       else
