@@ -378,7 +378,6 @@ module Import::OTRS
     thread_count              = 8
     threads                   = {}
     steps                     = 20
-    locks                     = { User: {} }
     (1..thread_count).each {|thread|
 
       threads[thread] = Thread.new {
@@ -399,7 +398,7 @@ module Import::OTRS
             log "... thread# #{thread}, no more work."
             break
           end
-          _ticket_result(records, locks, thread)
+          _ticket_result(records, thread)
 
           Thread.current[:loop_count] += 1
         end
@@ -465,7 +464,6 @@ module Import::OTRS
     count = 0
     run   = true
     steps = 20
-    locks = { User: {} }
     while run
       count += steps
       log 'loading... diff ...'
@@ -479,12 +477,12 @@ module Import::OTRS
         run = false
         next
       end
-      _ticket_result(records, locks)
+      _ticket_result(records)
     end
 
   end
 
-  def self._ticket_result(result, locks, _thread = '-')
+  def self._ticket_result(result, _thread = '-')
     map = {
       Ticket: {
         Changed: :updated_at,
@@ -588,7 +586,7 @@ module Import::OTRS
 
       # lookup customers to create first
       record['Articles'].each { |article|
-        _article_based_customers(article, locks)
+        _article_based_customers(article)
       }
 
       ActiveRecord::Base.transaction do
@@ -1270,7 +1268,7 @@ module Import::OTRS
   end
 
   # create customers for article
-  def self._article_based_customers(article, locks)
+  def self._article_based_customers(article)
 
     # create customer/sender if needed
     return if article['sender'] != 'customer'
@@ -1286,15 +1284,6 @@ module Import::OTRS
         email = $1
       end
     end
-
-    # create article user if not exists
-    while locks[:User][ email ]
-      log "user #{email} is locked"
-      sleep 1
-    end
-
-    # lock user
-    locks[:User][ email ] = true
 
     user = User.where( email: email ).first
     if !user
@@ -1325,9 +1314,6 @@ module Import::OTRS
       )
     end
     article['created_by_id'] = user.id
-
-    # unlock user
-    locks[:User][ email ] = false
 
     true
   end
