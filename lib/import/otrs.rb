@@ -686,113 +686,112 @@ module Import::OTRS
 
       #puts "HS: #{record['History'].inspect}"
       record['History'].each { |history|
-        if history['HistoryType'] == 'NewTicket'
-          #puts "HS.add( #{history.inspect} )"
-          res = History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'created',
-            history_object: 'Ticket',
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-          #puts "res #{res.inspect}"
-        end
-        if history['HistoryType'] == 'StateUpdate'
-          data = history['Name']
-          # "%%new%%open%%"
-          from = nil
-          to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%/
-            from    = $1
-            to      = $2
-            state_from = Ticket::State.lookup( name: from )
-            state_to   = Ticket::State.lookup( name: to )
-            if state_from
-              from_id = state_from.id
-            end
-            if state_to
-              to_id = state_to.id
-            end
-          end
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
-            history_attribute: 'state',
-            value_from: from,
-            id_from: from_id,
-            value_to: to,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
-        if history['HistoryType'] == 'Move'
-          data = history['Name']
-          # "%%Queue1%%5%%Postmaster%%1"
-          from = nil
-          to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-            from    = $1
-            from_id = $2
-            to      = $3
-            to_id   = $4
-          end
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
-            history_attribute: 'group',
-            value_from: from,
-            value_to: to,
-            id_from: from_id,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
-        if history['HistoryType'] == 'PriorityUpdate'
-          data = history['Name']
-          # "%%3 normal%%3%%5 very high%%5"
-          from = nil
-          to   = nil
-          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-            from    = $1
-            from_id = $2
-            to      = $3
-            to_id   = $4
-          end
-          History.add(
-            id: history['HistoryID'],
-            o_id: history['TicketID'],
-            history_type: 'updated',
-            history_object: 'Ticket',
-            history_attribute: 'priority',
-            value_from: from,
-            value_to: to,
-            id_from: from_id,
-            id_to: to_id,
-            created_at: history['CreateTime'],
-            created_by_id: history['CreateBy']
-          )
-        end
 
-        next if !history['ArticleID']
-        next if history['ArticleID'] == 0
+        begin
+          if history['HistoryType'] == 'NewTicket'
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'created',
+              history_object: 'Ticket',
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          elsif history['HistoryType'] == 'StateUpdate'
+            data = history['Name']
+            # "%%new%%open%%"
+            from = nil
+            to   = nil
+            if data =~ /%%(.+?)%%(.+?)%%/
+              from    = $1
+              to      = $2
+              state_from = Ticket::State.lookup( name: from )
+              state_to   = Ticket::State.lookup( name: to )
+              if state_from
+                from_id = state_from.id
+              end
+              if state_to
+                to_id = state_to.id
+              end
+            end
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'updated',
+              history_object: 'Ticket',
+              history_attribute: 'state',
+              value_from: from,
+              id_from: from_id,
+              value_to: to,
+              id_to: to_id,
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          elsif history['HistoryType'] == 'Move'
+            data = history['Name']
+            # "%%Queue1%%5%%Postmaster%%1"
+            from = nil
+            to   = nil
+            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+              from    = $1
+              from_id = $2
+              to      = $3
+              to_id   = $4
+            end
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'updated',
+              history_object: 'Ticket',
+              history_attribute: 'group',
+              value_from: from,
+              value_to: to,
+              id_from: from_id,
+              id_to: to_id,
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          elsif history['HistoryType'] == 'PriorityUpdate'
+            data = history['Name']
+            # "%%3 normal%%3%%5 very high%%5"
+            from = nil
+            to   = nil
+            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+              from    = $1
+              from_id = $2
+              to      = $3
+              to_id   = $4
+            end
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['TicketID'],
+              history_type: 'updated',
+              history_object: 'Ticket',
+              history_attribute: 'priority',
+              value_from: from,
+              value_to: to,
+              id_from: from_id,
+              id_to: to_id,
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          elsif history['ArticleID'] && !history['ArticleID'].zero?
+            History.add(
+              id: history['HistoryID'],
+              o_id: history['ArticleID'],
+              history_type: 'created',
+              history_object: 'Ticket::Article',
+              related_o_id: history['TicketID'],
+              related_history_object: 'Ticket',
+              created_at: history['CreateTime'],
+              created_by_id: history['CreateBy']
+            )
+          end
 
-        History.add(
-          id: history['HistoryID'],
-          o_id: history['ArticleID'],
-          history_type: 'created',
-          history_object: 'Ticket::Article',
-          related_o_id: history['TicketID'],
-          related_history_object: 'Ticket',
-          created_at: history['CreateTime'],
-          created_by_id: history['CreateBy']
-        )
+        rescue ActiveRecord::RecordNotUnique
+          log "Ticket #{ticket_new[:id]} (history #{history['HistoryID']}) is handled by another thead, skipping."
+          next
+        end
       }
     }
   end
