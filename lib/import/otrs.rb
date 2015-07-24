@@ -467,10 +467,6 @@ module Import::OTRS
     while run
       count += steps
       log 'loading... diff ...'
-      offset = count - steps
-      if offset != 0
-        offset = count - steps + 1
-      end
       records = load( 'Ticket', steps, count - steps, 1 )
       if !records || !records[0]
         log '... no more work.'
