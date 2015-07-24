@@ -1300,17 +1300,27 @@ module Import::OTRS
       display_name = Mail::Field.new( 'X-From', display_name ).to_s
 
       roles = Role.lookup( name: 'Customer' )
-      user = User.create(
-        login: email,
-        firstname: display_name,
-        lastname: '',
-        email: email,
-        password: '',
-        active: true,
-        role_ids: [roles.id],
-        updated_by_id: 1,
-        created_by_id: 1,
-      )
+      begin
+        user = User.create(
+          login: email,
+          firstname: display_name,
+          lastname: '',
+          email: email,
+          password: '',
+          active: true,
+          role_ids: [roles.id],
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+      rescue ActiveRecord::RecordNotUnique
+        log "User #{email} was handled by another thread, taking this."
+        user = User.find_by( login: email )
+        if !user
+          log "User #{email} wasn't created sleep and retry."
+          sleep rand 3
+          retry
+        end
+      end
     end
     article['created_by_id'] = user.id
 
