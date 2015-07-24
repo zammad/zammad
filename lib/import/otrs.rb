@@ -542,7 +542,6 @@ module Import::OTRS
         next if !record.key?(key.to_s)
         ticket_new[value] = record[key.to_s]
       }
-      ticket_old = Ticket.where( id: ticket_new[:id] ).first
 
       # find owner
       if ticket_new[:owner]
@@ -568,15 +567,22 @@ module Import::OTRS
         ticket_new[:customer_id] = 1
       end
 
-      # set state types
+      # update or create ticket
+      ticket_old = Ticket.find(ticket_new[:id])
       if ticket_old
         log "update Ticket.find(#{ticket_new[:id]})"
         ticket_old.update_attributes(ticket_new)
       else
         log "add Ticket.find(#{ticket_new[:id]})"
-        ticket = Ticket.new(ticket_new)
-        ticket.id = ticket_new[:id]
-        ticket.save
+
+        begin
+          ticket    = Ticket.new(ticket_new)
+          ticket.id = ticket_new[:id]
+          ticket.save
+        rescue ActiveRecord::RecordNotUnique
+          log "Ticket #{ticket_new[:id]} is handled by another thead, skipping."
+          next
+        end
       end
 
       # utf8 encode
