@@ -652,9 +652,14 @@ module Import::OTRS
             article_object.update_attributes(article_new)
           else
             log "add Ticket::Article.find(#{article_new[:id]})"
-            article_object = Ticket::Article.new(article_new)
-            article_object.id = article_new[:id]
-            article_object.save
+            begin
+              article_object    = Ticket::Article.new(article_new)
+              article_object.id = article_new[:id]
+              article_object.save
+            rescue ActiveRecord::RecordNotUnique
+              log "Ticket #{ticket_new[:id]} (article #{article_new[:id]}) is handled by another thead, skipping."
+              next
+            end
           end
 
           next if !article['Attachments']
