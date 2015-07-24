@@ -377,27 +377,31 @@ module Import::OTRS
     Thread.abort_on_exception = true
     thread_count              = 8
     threads                   = {}
-    count                     = 0
+    steps                     = 20
     locks                     = { User: {} }
     (1..thread_count).each {|thread|
+
       threads[thread] = Thread.new {
-        Thread.current[:thread_no] = thread
-        sleep thread * 3
+
         log "Started import thread# #{thread} ..."
-        steps = 20
+        Thread.current[:thread_no]  = thread
+        Thread.current[:loop_count] = 0
+
         loop do
-          count += steps
+          # get the offset for the current thread and loop count
+          thread_offset_base = (Thread.current[:thread_no] - 1) * steps
+          thread_step        = thread_count * steps
+          offset             = Thread.current[:loop_count] * thread_step + thread_offset_base
+
           log "loading... thread# #{thread} ..."
-          offset = count - steps
-          if offset != 0
-            offset = count - steps + 1
-          end
-          records = load( 'Ticket', steps, count - steps)
+          records = load( 'Ticket', steps, offset)
           if !records || !records[0]
             log "... thread# #{thread}, no more work."
             break
           end
           _ticket_result(records, locks, thread)
+
+          Thread.current[:loop_count] += 1
         end
         ActiveRecord::Base.connection.close
       }
