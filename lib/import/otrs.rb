@@ -564,7 +564,7 @@ module Import::OTRS
       end
 
       # update or create ticket
-      ticket_old = Ticket.find(ticket_new[:id])
+      ticket_old = Ticket.find_by(id: ticket_new[:id])
       if ticket_old
         log "update Ticket.find(#{ticket_new[:id]})"
         ticket_old.update_attributes(ticket_new)
@@ -787,7 +787,7 @@ module Import::OTRS
               created_at: history['CreateTime'],
               created_by_id: history['CreateBy']
             )
-          elsif history['ArticleID'] && !history['ArticleID'].zero?
+          elsif history['ArticleID'] && !history['ArticleID'].to_i.zero?
             History.add(
               id: history['HistoryID'],
               o_id: history['ArticleID'],
