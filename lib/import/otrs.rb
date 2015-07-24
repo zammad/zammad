@@ -378,6 +378,7 @@ module Import::OTRS
     thread_count              = 8
     threads                   = {}
     count                     = 0
+    locks                     = { User: {} }
     (1..thread_count).each {|thread|
       threads[thread] = Thread.new {
         Thread.current[:thread_no] = thread
@@ -396,7 +397,7 @@ module Import::OTRS
             log "... thread# #{thread}, no more work."
             break
           end
-          _ticket_result(records, thread)
+          _ticket_result(records, locks, thread)
         end
         ActiveRecord::Base.connection.close
       }
@@ -460,6 +461,7 @@ module Import::OTRS
     count = 0
     run   = true
     steps = 20
+    locks = { User: {} }
     while run
       count += steps
       log 'loading... diff ...'
@@ -473,12 +475,12 @@ module Import::OTRS
         run = false
         next
       end
-      _ticket_result(records)
+      _ticket_result(records, locks)
     end
 
   end
 
-  def self._ticket_result(result, _thread = '-')
+  def self._ticket_result(result, locks, _thread = '-')
     map = {
       Ticket: {
         Changed: :updated_at,
@@ -570,15 +572,9 @@ module Import::OTRS
         ticket_old.update_attributes(ticket_new)
       else
         log "add Ticket.find(#{ticket_new[:id]})"
-
-        begin
-          ticket    = Ticket.new(ticket_new)
-          ticket.id = ticket_new[:id]
-          ticket.save
-        rescue ActiveRecord::RecordNotUnique
-          log "Ticket #{ticket_new[:id]} is handled by another thead, skipping."
-          next
-        end
+        ticket = Ticket.new(ticket_new)
+        ticket.id = ticket_new[:id]
+        ticket.save
       end
 
       # utf8 encode
@@ -588,7 +584,7 @@ module Import::OTRS
 
       # lookup customers to create first
       record['Articles'].each { |article|
-        _article_based_customers(article)
+        _article_based_customers(article, locks)
       }
 
       ActiveRecord::Base.transaction do
@@ -648,14 +644,9 @@ module Import::OTRS
             article_object.update_attributes(article_new)
           else
             log "add Ticket::Article.find(#{article_new[:id]})"
-            begin
-              article_object    = Ticket::Article.new(article_new)
-              article_object.id = article_new[:id]
-              article_object.save
-            rescue ActiveRecord::RecordNotUnique
-              log "Ticket #{ticket_new[:id]} (article #{article_new[:id]}) is handled by another thead, skipping."
-              next
-            end
+            article_object = Ticket::Article.new(article_new)
+            article_object.id = article_new[:id]
+            article_object.save
           end
 
           next if !article['Attachments']
@@ -675,140 +666,131 @@ module Import::OTRS
 
           # import article attachments
           article['Attachments'].each { |attachment|
-            begin
-              Store.add(
-                object:      'Ticket::Article',
-                o_id:        article_object.id,
-                filename:    Base64.decode64(attachment['Filename']),
-                data:        Base64.decode64(attachment['Content']),
-                preferences: {
-                  'Mime-Type'           => attachment['ContentType'],
-                  'Content-ID'          => attachment['ContentID'],
-                  'content-alternative' => attachment['ContentAlternative'],
-                },
-                created_by_id: 1,
-              )
-            rescue ActiveRecord::RecordNotUnique
-              log "Ticket #{ticket_new[:id]} (article #{article_object.id}) is handled by another thead, skipping."
-              next
-            end
+            Store.add(
+              object:      'Ticket::Article',
+              o_id:        article_object.id,
+              filename:    Base64.decode64(attachment['Filename']),
+              data:        Base64.decode64(attachment['Content']),
+              preferences: {
+                'Mime-Type'           => attachment['ContentType'],
+                'Content-ID'          => attachment['ContentID'],
+                'content-alternative' => attachment['ContentAlternative'],
+              },
+              created_by_id: 1,
+            )
           }
         }
       end
 
       #puts "HS: #{record['History'].inspect}"
       record['History'].each { |history|
-
-        begin
-          if history['HistoryType'] == 'NewTicket'
-            #puts "HS.add( #{history.inspect} )"
-            res = History.add(
-              id: history['HistoryID'],
-              o_id: history['TicketID'],
-              history_type: 'created',
-              history_object: 'Ticket',
-              created_at: history['CreateTime'],
-              created_by_id: history['CreateBy']
-            )
-            #puts "res #{res.inspect}"
-          elsif history['HistoryType'] == 'StateUpdate'
-            data = history['Name']
-            # "%%new%%open%%"
-            from = nil
-            to   = nil
-            if data =~ /%%(.+?)%%(.+?)%%/
-              from    = $1
-              to      = $2
-              state_from = Ticket::State.lookup( name: from )
-              state_to   = Ticket::State.lookup( name: to )
-              if state_from
-                from_id = state_from.id
-              end
-              if state_to
-                to_id = state_to.id
-              end
-            end
-            History.add(
-              id: history['HistoryID'],
-              o_id: history['TicketID'],
-              history_type: 'updated',
-              history_object: 'Ticket',
-              history_attribute: 'state',
-              value_from: from,
-              id_from: from_id,
-              value_to: to,
-              id_to: to_id,
-              created_at: history['CreateTime'],
-              created_by_id: history['CreateBy']
-            )
-          elsif history['HistoryType'] == 'Move'
-            data = history['Name']
-            # "%%Queue1%%5%%Postmaster%%1"
-            from = nil
-            to   = nil
-            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-              from    = $1
-              from_id = $2
-              to      = $3
-              to_id   = $4
-            end
-            History.add(
-              id: history['HistoryID'],
-              o_id: history['TicketID'],
-              history_type: 'updated',
-              history_object: 'Ticket',
-              history_attribute: 'group',
-              value_from: from,
-              value_to: to,
-              id_from: from_id,
-              id_to: to_id,
-              created_at: history['CreateTime'],
-              created_by_id: history['CreateBy']
-            )
-          elsif history['HistoryType'] == 'PriorityUpdate'
-            data = history['Name']
-            # "%%3 normal%%3%%5 very high%%5"
-            from = nil
-            to   = nil
-            if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
-              from    = $1
-              from_id = $2
-              to      = $3
-              to_id   = $4
-            end
-            History.add(
-              id: history['HistoryID'],
-              o_id: history['TicketID'],
-              history_type: 'updated',
-              history_object: 'Ticket',
-              history_attribute: 'priority',
-              value_from: from,
-              value_to: to,
-              id_from: from_id,
-              id_to: to_id,
-              created_at: history['CreateTime'],
-              created_by_id: history['CreateBy']
-            )
-          end
-
-          next if !history['ArticleID']
-          next if history['ArticleID'] == 0
-
-          History.add(
+        if history['HistoryType'] == 'NewTicket'
+          #puts "HS.add( #{history.inspect} )"
+          res = History.add(
             id: history['HistoryID'],
-            o_id: history['ArticleID'],
+            o_id: history['TicketID'],
             history_type: 'created',
-            history_object: 'Ticket::Article',
-            related_o_id: history['TicketID'],
-            related_history_object: 'Ticket',
+            history_object: 'Ticket',
             created_at: history['CreateTime'],
             created_by_id: history['CreateBy']
           )
-
-        rescue ActiveRecord::RecordNotUnique
-          log "Ticket #{ticket_new[:id]} (history #{history['HistoryID']}) is handled by another thead, skipping."
-          next
+          #puts "res #{res.inspect}"
         end
+        if history['HistoryType'] == 'StateUpdate'
+          data = history['Name']
+          # "%%new%%open%%"
+          from = nil
+          to   = nil
+          if data =~ /%%(.+?)%%(.+?)%%/
+            from    = $1
+            to      = $2
+            state_from = Ticket::State.lookup( name: from )
+            state_to   = Ticket::State.lookup( name: to )
+            if state_from
+              from_id = state_from.id
+            end
+            if state_to
+              to_id = state_to.id
+            end
+          end
+          History.add(
+            id: history['HistoryID'],
+            o_id: history['TicketID'],
+            history_type: 'updated',
+            history_object: 'Ticket',
+            history_attribute: 'state',
+            value_from: from,
+            id_from: from_id,
+            value_to: to,
+            id_to: to_id,
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
+          )
+        end
+        if history['HistoryType'] == 'Move'
+          data = history['Name']
+          # "%%Queue1%%5%%Postmaster%%1"
+          from = nil
+          to   = nil
+          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+            from    = $1
+            from_id = $2
+            to      = $3
+            to_id   = $4
+          end
+          History.add(
+            id: history['HistoryID'],
+            o_id: history['TicketID'],
+            history_type: 'updated',
+            history_object: 'Ticket',
+            history_attribute: 'group',
+            value_from: from,
+            value_to: to,
+            id_from: from_id,
+            id_to: to_id,
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
+          )
+        end
+        if history['HistoryType'] == 'PriorityUpdate'
+          data = history['Name']
+          # "%%3 normal%%3%%5 very high%%5"
+          from = nil
+          to   = nil
+          if data =~ /%%(.+?)%%(.+?)%%(.+?)%%(.+?)$/
+            from    = $1
+            from_id = $2
+            to      = $3
+            to_id   = $4
+          end
+          History.add(
+            id: history['HistoryID'],
+            o_id: history['TicketID'],
+            history_type: 'updated',
+            history_object: 'Ticket',
+            history_attribute: 'priority',
+            value_from: from,
+            value_to: to,
+            id_from: from_id,
+            id_to: to_id,
+            created_at: history['CreateTime'],
+            created_by_id: history['CreateBy']
+          )
+        end
+
+        next if !history['ArticleID']
+        next if history['ArticleID'] == 0
+
+        History.add(
+          id: history['HistoryID'],
+          o_id: history['ArticleID'],
+          history_type: 'created',
+          history_object: 'Ticket::Article',
+          related_o_id: history['TicketID'],
+          related_history_object: 'Ticket',
+          created_at: history['CreateTime'],
+          created_by_id: history['CreateBy']
+        )
       }
     }
   end
@@ -1238,7 +1220,7 @@ module Import::OTRS
   # log
   def self.log(message)
     thread_no = Thread.current[:thread_no] || '-'
-    Rails.logger.error "thread##{thread_no}: #{message}"
+    Rails.logger.info "thread##{thread_no}: #{message}"
   end
 
   # set translate valid ids to active = true|false
@@ -1284,7 +1266,7 @@ module Import::OTRS
   end
 
   # create customers for article
-  def self._article_based_customers(article)
+  def self._article_based_customers(article, locks)
 
     # create customer/sender if needed
     return if article['sender'] != 'customer'
@@ -1300,6 +1282,15 @@ module Import::OTRS
         email = $1
       end
     end
+
+    # create article user if not exists
+    while locks[:User][ email ]
+      log "user #{email} is locked"
+      sleep 1
+    end
+
+    # lock user
+    locks[:User][ email ] = true
 
     user = User.where( email: email ).first
     if !user
@@ -1330,6 +1321,9 @@ module Import::OTRS
       )
     end
     article['created_by_id'] = user.id
+
+    # unlock user
+    locks[:User][ email ] = false
 
     true
   end
