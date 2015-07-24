@@ -675,11 +675,14 @@ module Import::OTRS
 
           # import article attachments
           article['Attachments'].each { |attachment|
+
+            filename = Base64.decode64(attachment['Filename'])
+
             begin
               Store.add(
                 object:      'Ticket::Article',
                 o_id:        article_object.id,
-                filename:    Base64.decode64(attachment['Filename']),
+                filename:    filename,
                 data:        Base64.decode64(attachment['Content']),
                 preferences: {
                   'Mime-Type'           => attachment['ContentType'],
@@ -689,7 +692,7 @@ module Import::OTRS
                 created_by_id: 1,
               )
             rescue ActiveRecord::RecordNotUnique
-              log "Ticket #{ticket_new[:id]} (article #{article_object.id}, Content-ID #{attachment['ContentID']}) is handled by another thead, skipping."
+              log "Ticket #{ticket_new[:id]} (article #{article_object.id}, filename #{filename}) is handled by another thead, skipping."
               next
             end
           }
