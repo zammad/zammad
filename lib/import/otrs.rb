@@ -668,18 +668,23 @@ module Import::OTRS
 
           # import article attachments
           article['Attachments'].each { |attachment|
-            Store.add(
-              object:      'Ticket::Article',
-              o_id:        article_object.id,
-              filename:    Base64.decode64(attachment['Filename']),
-              data:        Base64.decode64(attachment['Content']),
-              preferences: {
-                'Mime-Type'           => attachment['ContentType'],
-                'Content-ID'          => attachment['ContentID'],
-                'content-alternative' => attachment['ContentAlternative'],
-              },
-              created_by_id: 1,
-            )
+            begin
+              Store.add(
+                object:      'Ticket::Article',
+                o_id:        article_object.id,
+                filename:    Base64.decode64(attachment['Filename']),
+                data:        Base64.decode64(attachment['Content']),
+                preferences: {
+                  'Mime-Type'           => attachment['ContentType'],
+                  'Content-ID'          => attachment['ContentID'],
+                  'content-alternative' => attachment['ContentAlternative'],
+                },
+                created_by_id: 1,
+              )
+            rescue ActiveRecord::RecordNotUnique
+              log "Ticket #{ticket_new[:id]} (article #{article_object.id}, Content-ID #{attachment['ContentID']}) is handled by another thead, skipping."
+              next
+            end
           }
         end
       end
