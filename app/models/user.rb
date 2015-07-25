@@ -416,6 +416,22 @@ returns
     save
   end
 
+=begin
+
+list of active users in role
+
+  result = User.of_role('Agent')
+
+returns
+
+  result = [user1, user2]
+
+=end
+
+  def self.of_role(role)
+    User.where(active: true).joins(:roles).where( 'roles.name' => role, 'roles.active' => true ).uniq()
+  end
+
   private
 
   def cache_delete

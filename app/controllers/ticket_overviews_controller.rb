@@ -61,7 +61,7 @@ class TicketOverviewsController < ApplicationController
       group_ids.push group.id
     }
     agents = {}
-    Ticket::ScreenOptions.agents.each { |user|
+    User.of_role('Agent').each { |user|
       agents[ user.id ] = 1
     }
     groups_users = {}

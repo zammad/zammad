@@ -72,11 +72,11 @@ class Sessions::Backend::TicketOverviewList
 
       # get groups
       group_ids = []
-      Group.where( active: true ).each { |group|
+      Group.where(active: true).each { |group|
         group_ids.push group.id
       }
       agents = {}
-      Ticket::ScreenOptions.agents.each { |user|
+      User.of_role('Agent').each { |user|
         agents[ user.id ] = 1
       }
       users = {}

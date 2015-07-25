@@ -3,22 +3,6 @@ module Ticket::ScreenOptions
 
 =begin
 
-list of active agents
-
-  result = Ticket::ScreenOptions.agents
-
-returns
-
-  result = [user1, user2]
-
-=end
-
-  def self.agents
-    User.where( active: true ).joins(:roles).where( 'roles.name' => 'Agent', 'roles.active' => true ).uniq()
-  end
-
-=begin
-
 list attributes
 
   result = Ticket::ScreenOptions.attributes_to_change(
@@ -98,7 +82,7 @@ returns
 
     # get group / user relations
     agents = {}
-    Ticket::ScreenOptions.agents.each { |user|
+    User.of_role('Agent').each { |user|
       agents[ user.id ] = 1
     }
 

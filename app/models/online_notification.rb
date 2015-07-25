@@ -202,8 +202,7 @@ cleanup old online notifications
     OnlineNotification.where('seen = ? AND created_at < ?', true, Time.zone.now - 1.days).delete_all
 
     # notify all agents
-    users = Ticket::ScreenOptions.agents
-    users.each {|user|
+    User.of_role('Agent').each {|user|
       Sessions.send_to(
         user.id,
         {
