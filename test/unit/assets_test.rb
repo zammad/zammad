@@ -273,7 +273,7 @@ class AssetsTest < ActiveSupport::TestCase
       o2['updated_at'] = o2['updated_at'].to_s
     end
     return true if (o1.to_a - o2.to_a).empty?
-    puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
+    #puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
     false
   end
 end

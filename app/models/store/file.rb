@@ -5,7 +5,14 @@ class Store
     include ApplicationLib
     after_destroy :destroy_provider
 
-    # add new file
+=beging
+
+add new file to store
+
+    store_file_id = Store::File.add(binary_data)
+
+=end
+
     def self.add(data)
       sha = Digest::SHA256.hexdigest( data )
 
@@ -27,7 +34,16 @@ class Store
       file
     end
 
-    # read content
+=begin
+
+read content of a file
+
+    store = Store::File.find(123)
+
+    store.content # returns binary
+
+=end
+
     def content
       adapter = self.class.load_adapter("Store::Provider::#{provider}")
       if sha
@@ -39,7 +55,21 @@ class Store
       c
     end
 
-    # check data and sha, in case fix it
+=begin
+
+file system check of store, check data and sha (in case fix it)
+
+    Store::File.verify
+
+read each file which should be in backend and verify agsinst sha hash
+
+in case of fixing sha hash use:
+
+
+    Store::File.verify(true)
+
+=end
+
     def self.verify(fix_it = nil)
       success = true
       Store::File.all.each {|item|
@@ -58,9 +88,20 @@ class Store
       success
     end
 
-    # move file from one to other provider
-    # e. g. Store::File.move('File', 'DB')
-    # e. g. Store::File.move('DB', 'File')
+=begin
+
+move file from one to other provider
+
+move files from file backend to db
+
+  Store::File.move('File', 'DB')
+
+move files from db backend to fs
+
+  Store::File.move('DB', 'File')
+
+=end
+
     def self.move(source, target)
       adapter_source = load_adapter("Store::Provider::#{source}")
       adapter_target = load_adapter("Store::Provider::#{target}")
