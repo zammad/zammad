@@ -262,6 +262,18 @@ test( "i18n", function() {
   var translated = App.i18n.translateContent('yes');
   equal( translated, 'ja', 'de-de - yes / ja translated correctly' );
 
+  translated = App.i18n.translatePlain('yes');
+  equal( translated, 'ja', 'de-de - yes / ja translated correctly' );
+
+  translated = App.i18n.translateInline('yes');
+  equal( translated, 'ja', 'de-de - yes / ja translated correctly' );
+
+  translated = App.i18n.translateContent('%s ago', 123);
+  equal( translated, 'vor 123', 'de-de - %s' );
+
+  translated = App.i18n.translateContent('%s %s test', 123, 'xxx');
+  equal( translated, '123 xxx test', 'de-de - %s %s' );
+
   translated = App.i18n.translateContent('<test&now>//*äöüß');
   equal( translated, '&lt;test&amp;now&gt;//*äöüß', 'de - <test&now>//*äöüß' );
 
@@ -274,6 +286,18 @@ test( "i18n", function() {
   App.i18n.set('en-us');
   translated = App.i18n.translateContent('yes');
   equal( translated, 'yes', 'en-us - yes translated correctly' );
+
+  translated = App.i18n.translatePlain('yes');
+  equal( translated, 'yes', 'en-us - yes translated correctly' );
+
+  translated = App.i18n.translateInline('yes');
+  equal( translated, 'yes', 'en-us - yes translated correctly' );
+
+  translated = App.i18n.translateContent('%s ago', 123);
+  equal( translated, '123 ago', 'en-us - %s' );
+
+  translated = App.i18n.translateContent('%s %s test', 123, 'xxx');
+  equal( translated, '123 xxx test', 'en-us - %s %s' );
 
   translated = App.i18n.translateContent('<test&now>');
   equal( translated, '&lt;test&amp;now&gt;', 'en-us - <test&now>' );

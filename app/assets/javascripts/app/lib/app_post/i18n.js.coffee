@@ -214,11 +214,11 @@ class _i18nSingleton extends Spine.Module
         App.Event.trigger('i18n:language:change')
     )
 
-  translateInline: ( string, args... ) =>
-    App.Utils.htmlEscape( @translate( string, args... ) )
+  translateInline: ( string, args ) =>
+    App.Utils.htmlEscape( @translate( string, args ) )
 
-  translateContent: ( string, args... ) =>
-    translated = App.Utils.htmlEscape( @translate( string, args... ) )
+  translateContent: ( string, args ) =>
+    translated = App.Utils.htmlEscape( @translate( string, args ) )
 #    replace = '<span class="translation" contenteditable="true" data-text="' + App.Utils.htmlEscape(string) + '">' + translated + '<span class="icon-edit"></span>'
     if App.Config.get( 'translation_inline' )
       replace = '<span class="translation" contenteditable="true" data-text="' + App.Utils.htmlEscape(string) + '">' + translated + ''
@@ -228,10 +228,10 @@ class _i18nSingleton extends Spine.Module
     else
       translated
 
-  translatePlain: ( string, args... ) =>
-    @translate( string, args... )
+  translatePlain: ( string, args ) =>
+    @translate( string, args )
 
-  translate: ( string, args... ) =>
+  translate: ( string, args ) =>
 
     # type convertation
     if typeof string isnt 'string'
