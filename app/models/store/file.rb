@@ -5,7 +5,7 @@ class Store
     include ApplicationLib
     after_destroy :destroy_provider
 
-=beging
+=begin
 
 add new file to store
 
@@ -64,7 +64,6 @@ file system check of store, check data and sha (in case fix it)
 read each file which should be in backend and verify agsinst sha hash
 
 in case of fixing sha hash use:
-
 
     Store::File.verify(true)
 
