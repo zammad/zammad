@@ -239,7 +239,7 @@ returns
 
     # set all to seen if pending action state is a closed or merged state
     if state_type.name == 'pending action' && state.next_state_id
-      state      = Ticket::State.lookup( id: next_state_id )
+      state      = Ticket::State.lookup( id: state.next_state_id )
       state_type = Ticket::StateType.lookup( id: state.state_type_id )
     end
 
