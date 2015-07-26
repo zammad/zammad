@@ -1,89 +1,85 @@
-<div class="ticket-article-item <%= @article.sender.name.toLowerCase() %> <%= @article.type.name %><%= ' is-internal' if @article.internal is true %>" data-id="<%= @article.id %>" id="article-<%= @article.id %>">
+<div class="article-meta-clip top">
+  <div class="article-content-meta top hide">
+    <div class="article-meta top">
+    <% if @article.from: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key u-textTruncate"><%- @T( 'From' ) %></div>
+        <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.from) %></div>
+      </div>
+    <% end %>
+    <% if @article.to: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key u-textTruncate"><%- @T( 'To' ) %></div>
+        <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.to) %></div>
+      </div>
+    <% end %>
+    <% if @article.cc: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key u-textTruncate"><%- @T( 'Cc' ) %></div>
+        <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.cc) %></div>
+      </div>
+    <% end %>
+    <% if @article.subject: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key u-textTruncate"><%- @T( 'Subject' ) %></div>
+        <div class="article-meta-value flex contain-text"><%= @article.subject %></div>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
 
-
-  <div class="article-meta-clip top">
-    <div class="article-content-meta top hide">
-      <div class="article-meta top">
-      <% if @article.from: %>
-        <div class="horizontal article-meta-row">
-          <div class="article-meta-key u-textTruncate"><%- @T( 'From' ) %></div>
-          <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.from) %></div>
+<div class="article-content zIndex-1">
+  <% if @article.sender.name isnt 'Agent': %>
+  <%    position = 'left' %>
+  <% else: %>
+  <%    position = 'right' %>
+  <% end %>
+  <div class="js-avatar"></div>
+  <div class="bubble-gap">
+    <div class="internal-border">
+      <div class="textBubble">
+        <div class="bubble-arrow"></div>
+        <div class="textBubble-content" id="article-content-<%= @article.id %>" data-id="<%= @article.id %>">
+        <%- App.Utils.signatureIdentify( @article.html ) %>
+          <div class="textBubble-overflowContainer">
+            <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+          </div>
         </div>
-      <% end %>
-      <% if @article.to: %>
-        <div class="horizontal article-meta-row">
-          <div class="article-meta-key u-textTruncate"><%- @T( 'To' ) %></div>
-          <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.to) %></div>
-        </div>
-      <% end %>
-      <% if @article.cc: %>
-        <div class="horizontal article-meta-row">
-          <div class="article-meta-key u-textTruncate"><%- @T( 'Cc' ) %></div>
-          <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.cc) %></div>
-        </div>
-      <% end %>
-      <% if @article.subject: %>
-        <div class="horizontal article-meta-row">
-          <div class="article-meta-key u-textTruncate"><%- @T( 'Subject' ) %></div>
-          <div class="article-meta-value flex contain-text"><%= @article.subject %></div>
-        </div>
-      <% end %>
+        <% if !_.isEmpty( @article.attachments ): %>
+          <div class="attachments">
+            <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
+            <h3><%- @article.attachments.length %> <%- @T('Attached Files') %></h3>
+            <% for attachment in @article.attachments: %>
+              <div class="attachment">
+                <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment"><%= attachment.filename %></a>
+                <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="article-content zIndex-1">
-    <% if @article.sender.name isnt 'Agent': %>
-    <%    position = 'left' %>
-    <% else: %>
-    <%    position = 'right' %>
-    <% end %>
-    <div class="js-avatar"></div>
-    <div class="bubble-gap">
-      <div class="internal-border">
-        <div class="textBubble">
-          <div class="bubble-arrow"></div>
-          <div class="textBubble-content" id="article-content-<%= @article.id %>" data-id="<%= @article.id %>">
-          <%- App.Utils.signatureIdentify( @article.html ) %>
-            <div class="textBubble-overflowContainer">
-              <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
-            </div>
-          </div>
-          <% if !_.isEmpty( @article.attachments ): %>
-            <div class="attachments">
-              <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
-              <h3><%- @article.attachments.length %> <%- @T('Attached Files') %></h3>
-              <% for attachment in @article.attachments: %>
-                <div class="attachment">
-                  <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment"><%= attachment.filename %></a>
-                  <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
-                </div>
-              <% end %>
-            </div>
+<div class="article-meta-clip bottom">
+  <div class="article-content-meta bottom hide">
+    <div class="article-meta bottom">
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key"><%- @T( 'Channel' ) %></div>
+        <div class="article-meta-value">
+          <svg class="article-meta-icon"><use xlink:href="#icon-<%- @article.type.name %>" /></svg>
+          <%- @T(@article.type.name) %>
+          <% if @article.type.name is 'email': %>
+          <a class="text-muted" href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= @article.id %>"><%- @T( 'raw' ) %></a>
           <% end %>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="article-meta-clip bottom">
-    <div class="article-content-meta bottom hide">
-      <div class="article-meta bottom">
-        <div class="horizontal article-meta-row">
-          <div class="article-meta-key"><%- @T( 'Channel' ) %></div>
-          <div class="article-meta-value">
-            <svg class="article-meta-icon"><use xlink:href="#icon-<%- @article.type.name %>" /></svg>
-            <%- @T(@article.type.name) %>
-            <% if @article.type.name is 'email': %>
-            <a class="text-muted" href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= @article.id %>"><%- @T( 'raw' ) %></a>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="js-article-actions"></div>
-
-  <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="<%- @article.created_at %>">?</time></small>
 </div>
+
+<div class="js-article-actions"></div>
+
+<small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="<%- @article.created_at %>">?</time></small>

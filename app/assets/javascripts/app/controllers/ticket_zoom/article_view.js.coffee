@@ -75,6 +75,15 @@ class ArticleViewItem extends App.Controller
     # get articles
     @article = App.TicketArticle.fullLocal( @ticket_article_id )
 
+    # set @el attributes
+    @el.addClass("ticket-article-item #{@article.sender.name.toLowerCase()}")
+    if @article.internal is true
+      @el.addClass('is-internal')
+    else
+      @el.removeClass('is-internal')
+    @el.attr('data-id',  @article.id)
+    @el.attr('id', "article-#{@article.id}")
+
     # check if rerender is needed
     return if !@hasChanged(@article)
 
