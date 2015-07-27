@@ -592,93 +592,96 @@ module Import::OTRS
       }
 
       record['Articles'].each do |article|
-        ActiveRecord::Base.transaction do
 
-          # get article values
-          article_new = {
-            created_by_id: 1,
-            updated_by_id: 1,
-          }
+        retries = 3
+        begin
 
-          map[:Article].each { |key, value|
-            next if !article.key?(key.to_s)
-            article_new[value] = article[key.to_s]
-          }
+          ActiveRecord::Base.transaction do
 
-          if article_new[:sender] == 'customer'
-            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
-            article_new.delete( :sender )
-          end
-          if article_new[:sender] == 'agent'
-            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
-            article_new.delete( :sender )
-          end
-          if article_new[:sender] == 'system'
-            article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
-            article_new.delete( :sender )
-          end
+            # get article values
+            article_new = {
+              created_by_id: 1,
+              updated_by_id: 1,
+            }
 
-          if article_new[:type] == 'email-external'
-            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
-            article_new[:internal] = false
-          elsif article_new[:type] == 'email-internal'
-            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
-            article_new[:internal] = true
-          elsif article_new[:type] == 'note-external'
-            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
-            article_new[:internal] = false
-          elsif article_new[:type] == 'note-internal'
-            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
-            article_new[:internal] = true
-          elsif article_new[:type] == 'phone'
-            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
-            article_new[:internal] = false
-          elsif article_new[:type] == 'webrequest'
-            article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
-            article_new[:internal] = false
-          else
-            article_new[:type_id] = 9
-          end
-          article_new.delete( :type )
-          article_object = Ticket::Article.find_by( id: article_new[:id] )
+            map[:Article].each { |key, value|
+              next if !article.key?(key.to_s)
+              article_new[value] = article[key.to_s]
+            }
 
-          # set state types
-          if article_object
-            log "update Ticket::Article.find(#{article_new[:id]})"
-            article_object.update_attributes(article_new)
-          else
-            log "add Ticket::Article.find(#{article_new[:id]})"
-            begin
-              article_object    = Ticket::Article.new(article_new)
-              article_object.id = article_new[:id]
-              article_object.save
-            rescue ActiveRecord::RecordNotUnique
-              log "Ticket #{ticket_new[:id]} (article #{article_new[:id]}) is handled by another thead, skipping."
-              next
+            if article_new[:sender] == 'customer'
+              article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
+              article_new.delete( :sender )
             end
-          end
+            if article_new[:sender] == 'agent'
+              article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
+              article_new.delete( :sender )
+            end
+            if article_new[:sender] == 'system'
+              article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
+              article_new.delete( :sender )
+            end
 
-          next if !article['Attachments']
-          next if article['Attachments'].empty?
+            if article_new[:type] == 'email-external'
+              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+              article_new[:internal] = false
+            elsif article_new[:type] == 'email-internal'
+              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+              article_new[:internal] = true
+            elsif article_new[:type] == 'note-external'
+              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+              article_new[:internal] = false
+            elsif article_new[:type] == 'note-internal'
+              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+              article_new[:internal] = true
+            elsif article_new[:type] == 'phone'
+              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
+              article_new[:internal] = false
+            elsif article_new[:type] == 'webrequest'
+              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
+              article_new[:internal] = false
+            else
+              article_new[:type_id] = 9
+            end
+            article_new.delete( :type )
+            article_object = Ticket::Article.find_by( id: article_new[:id] )
 
-          # TODO: refactor
-          # check if there are attachments present
-          if !article_object.attachments.empty?
+            # set state types
+            if article_object
+              log "update Ticket::Article.find(#{article_new[:id]})"
+              article_object.update_attributes(article_new)
+            else
+              log "add Ticket::Article.find(#{article_new[:id]})"
+              begin
+                article_object    = Ticket::Article.new(article_new)
+                article_object.id = article_new[:id]
+                article_object.save
+              rescue ActiveRecord::RecordNotUnique
+                log "Ticket #{ticket_new[:id]} (article #{article_new[:id]}) is handled by another thead, skipping."
+                next
+              end
+            end
 
-            # skip attachments if count is equal
-            next if article_object.attachments.count == article['Attachments'].count
+            next if !article['Attachments']
+            next if article['Attachments'].empty?
 
-            # if the count differs delete all so we
-            # can have a fresh start
-            article_object.attachments.each(&:delete)
-          end
+            # TODO: refactor
+            # check if there are attachments present
+            if !article_object.attachments.empty?
 
-          # import article attachments
-          article['Attachments'].each { |attachment|
+              # skip attachments if count is equal
+              next if article_object.attachments.count == article['Attachments'].count
 
-            filename = Base64.decode64(attachment['Filename'])
+              # if the count differs delete all so we
+              # can have a fresh start
+              article_object.attachments.each(&:delete)
+            end
 
-            begin
+            # import article attachments
+            article['Attachments'].each { |attachment|
+
+              filename = Base64.decode64(attachment['Filename'])
+
               Store.add(
                 object:      'Ticket::Article',
                 o_id:        article_object.id,
@@ -691,11 +694,13 @@ module Import::OTRS
                 },
                 created_by_id: 1,
               )
-            rescue ActiveRecord::RecordNotUnique
-              log "Ticket #{ticket_new[:id]} (article #{article_object.id}, filename #{filename}) is handled by another thead, skipping."
-              next
-            end
-          }
+            }
+          end
+        rescue ActiveRecord::RecordNotUnique => e
+          log "Ticket #{ticket_new[:id]} - RecordNotUnique: #{e}"
+          sleep rand 3
+          retry if !(retries -= 1).zero?
+          raise
         end
       end
 
