@@ -340,17 +340,25 @@ returns
 =end
 
   def self.create_if_not_exists(data)
-    record = nil
     if data[:id]
       record = find_by( id: data[:id] )
+      return record if record
     elsif data[:name]
-      record = find_by( name: data[:name] )
+      records = where( name: data[:name] )
+      records.each {|loop_record|
+        return loop_record if loop_record.name == data[:name]
+      }
     elsif data[:login]
-      record = find_by( login: data[:login] )
+      records = where( login: data[:login] )
+      records.each {|loop_record|
+        return loop_record if loop_record.login == data[:login]
+      }
     elsif data[:locale] && data[:source]
-      record = find_by( locale: data[:locale], source: data[:source] )
+      records = where( locale: data[:locale], source: data[:source] )
+      records.each {|loop_record|
+        return loop_record if loop_record.source == data[:source]
+      }
     end
-    return record if record
     create(data)
   end
 
