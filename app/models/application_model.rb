@@ -302,6 +302,7 @@ returns
       cache = cache_get( data[:name] )
       return cache if cache
 
+      # do lookup with == to handle case insensitive databases
       records = where( name: data[:name] )
       records.each {|loop_record|
         if loop_record.name == data[:name]
@@ -314,6 +315,7 @@ returns
       cache = cache_get( data[:login] )
       return cache if cache
 
+      # do lookup with == to handle case insensitive databases
       records = where( login: data[:login] )
       records.each {|loop_record|
         if loop_record.login == data[:login]
@@ -344,16 +346,22 @@ returns
       record = find_by( id: data[:id] )
       return record if record
     elsif data[:name]
+
+      # do lookup with == to handle case insensitive databases
       records = where( name: data[:name] )
       records.each {|loop_record|
         return loop_record if loop_record.name == data[:name]
       }
     elsif data[:login]
+
+      # do lookup with == to handle case insensitive databases
       records = where( login: data[:login] )
       records.each {|loop_record|
         return loop_record if loop_record.login == data[:login]
       }
     elsif data[:locale] && data[:source]
+
+      # do lookup with == to handle case insensitive databases
       records = where( locale: data[:locale], source: data[:source] )
       records.each {|loop_record|
         return loop_record if loop_record.source == data[:source]
@@ -376,15 +384,17 @@ returns
 
   def self.create_or_update(data)
     if data[:id]
-      records = where( id: data[:id] )
-      records.each {|loop_record|
-        loop_record.update_attributes( data )
-        return loop_record
-      }
+      record = find_by( id: data[:id] )
+      if record
+        record.update_attributes( data )
+        return record
+      end
       record = new( data )
       record.save
       return record
     elsif data[:name]
+
+      # do lookup with == to handle case insensitive databases
       records = where( name: data[:name] )
       records.each {|loop_record|
         if loop_record.name == data[:name]
@@ -396,6 +406,8 @@ returns
       record.save
       return record
     elsif data[:login]
+
+      # do lookup with == to handle case insensitive databases
       records = where( login: data[:login] )
       records.each {|loop_record|
         if loop_record.login.downcase == data[:login].downcase
@@ -407,6 +419,8 @@ returns
       record.save
       return record
     elsif data[:locale]
+
+      # do lookup with == to handle case insensitive databases
       records = where( locale: data[:locale] )
       records.each {|loop_record|
         if loop_record.locale.downcase == data[:locale].downcase

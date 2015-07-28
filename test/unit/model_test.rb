@@ -2,6 +2,65 @@
 require 'test_helper'
 
 class ModelTest < ActiveSupport::TestCase
+
+  test 'create_if_not_exists test' do
+    group1 = Group.create_if_not_exists(
+      name: 'model1-create_if_not_exists',
+      active: true,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_raises( ActiveRecord::RecordNotUnique ) {
+      Group.create_if_not_exists(
+        name: 'model1-Create_If_Not_Exists',
+        active: true,
+        updated_at: '2015-02-05 16:37:00',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    }
+
+    group2 = Group.create_if_not_exists(
+      name: 'model1-create_if_not_exists',
+      active: true,
+      updated_at: '2015-02-05 16:39:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(group1.id, group2.id)
+    assert_equal(group2.updated_at.to_s, '2015-02-05 16:37:00 UTC')
+  end
+
+  test 'create_or_update test' do
+    group1 = Group.create_or_update(
+      name: 'model1-create_or_update',
+      active: true,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_raises( ActiveRecord::RecordNotUnique ) {
+      Group.create_or_update(
+        name: 'model1-Create_Or_Update',
+        active: true,
+        updated_at: '2015-02-05 16:37:00',
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    }
+
+    group2 = Group.create_or_update(
+      name: 'model1-create_or_update',
+      active: true,
+      updated_at: '2015-02-05 16:39:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(group1.id, group2.id)
+    assert_equal(group2.updated_at.to_s, '2015-02-05 16:39:00 UTC')
+  end
+
   test 'references test' do
 
     # create base
