@@ -256,7 +256,7 @@ test( "htmlRemoveTags", function() {
 // htmlRemoveRichtext
 test( "htmlRemoveRichtext", function() {
 
-  var source = "<div><a href=\"test\">test</a></div>"
+  var source = "<div><!--test comment--><a href=\"test\">test</a></div>"
   var should = "test"
   var result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
@@ -330,7 +330,7 @@ test( "htmlRemoveRichtext", function() {
 // htmlCleanup
 test( "htmlCleanup", function() {
 
-  var source = "<div><a href=\"test\">test</a></div>"
+  var source = "<div><!--test comment--><a href=\"test\">test</a></div>"
   var should = "test"
   var result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )

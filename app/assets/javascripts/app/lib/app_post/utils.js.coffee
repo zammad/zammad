@@ -114,6 +114,9 @@ class App.Utils
   # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext( html )
   @htmlRemoveRichtext: (html) ->
 
+    # remove comments
+    @_removeComments( html )
+
     # remove style and class
     @_removeAttributes( html )
 
@@ -129,6 +132,9 @@ class App.Utils
 
   # cleanHtmlWithRichText = App.Utils.htmlCleanup( html )
   @htmlCleanup: (html) ->
+
+    # remove comments
+    @_removeComments( html )
 
     # remove style and class
     @_removeAttributes( html )
@@ -167,6 +173,13 @@ class App.Utils
       .removeAttr( 'style' )
       .removeAttr( 'class' )
       .removeAttr( 'title' )
+    html
+
+  @_removeComments: (html) ->
+    html.contents().each( ->
+      if @nodeType == 8
+        $(@).remove()
+    )
     html
 
   # signatureNeeded = App.Utils.signatureCheck( message, signature )
