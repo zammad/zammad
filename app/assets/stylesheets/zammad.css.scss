@@ -5676,6 +5676,22 @@ output {
   li:not(.is-active):hover + li {
     box-shadow: 0 1px rgba(255,255,255,.13) inset;
   }
+
+  .loading.icon {
+    position: absolute;
+    right: 11px;
+    top: 11px;
+    display: none;
+  }
+
+  &.is-loading {
+    .loading.icon {
+      display: block;
+    }
+    .icon-arrow-down {
+      display: none;
+    }
+  }
 }
 
 .action {

@@ -13,6 +13,7 @@
     value="<%= @value %>"
   >
   <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+  <div class="small loading icon"></div>
 </div>
 <ul class="dropdown-menu dropdown-menu-left js-optionsList" role="menu">
   <%- @renderedOptions %>
