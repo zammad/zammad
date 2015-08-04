@@ -1,16 +1,17 @@
 class App.SearchableSelect extends Spine.Controller
 
   events:
-    'input .js-input':                 'filterList'
-    'click .js-value':                 'selectItem'
-    'mouseenter .js-value':            'highlightItem'
+    'input .js-input':                  'onInput'
+    'click .js-option':                 'selectItem'
+    'mouseenter .js-option':            'highlightItem'
     'shown.bs.dropdown':  'onDropdownShown'
     'hidden.bs.dropdown': 'onDropdownHidden'
 
   elements:
-    '.js-value': 'values'
+    '.js-option': 'option_items'
     '.js-input': 'input'
     '.js-shadow': 'shadowInput'
+    '.js-optionsList': 'optionsList'
 
   className: 'searchableSelect dropdown dropdown--actions'
 
@@ -22,11 +23,15 @@ class App.SearchableSelect extends Spine.Controller
     @render()
 
   render: ->
+    console.log "options", @options
     firstSelected = _.find @options.attribute.options, (option) -> option.selected
 
     if firstSelected
       @options.attribute.valueName = firstSelected.name
       @options.attribute.value = firstSelected.value
+
+    @options.attribute.renderedOptions = App.view('generic/searchable_select_options')
+      options: @options.attribute.options
 
     @html App.view('generic/searchable_select')( @options.attribute )
 
@@ -39,7 +44,7 @@ class App.SearchableSelect extends Spine.Controller
 
   onDropdownHidden: =>
     @input.off 'click', @stopPropagation
-    @values.removeClass '.is-active'
+    @option_items.removeClass '.is-active'
     @isOpen = false
 
   toggle: =>
@@ -63,17 +68,17 @@ class App.SearchableSelect extends Spine.Controller
     return @toggle() if not @isOpen
 
     event.preventDefault()
-    visibleValues = @values.not('.is-hidden')
-    highlightedItem = @values.filter('.is-active')
-    currentPosition = visibleValues.index(highlightedItem)
+    visibleOptions = @option_items.not('.is-hidden')
+    highlightedItem = @option_items.filter('.is-active')
+    currentPosition = visibleOptions.index(highlightedItem)
 
     currentPosition += direction
 
     return if currentPosition < 0
-    return if currentPosition > visibleValues.size() - 1
+    return if currentPosition > visibleOptions.size() - 1
 
-    @values.removeClass('is-active')
-    visibleValues.eq(currentPosition).addClass('is-active')
+    @option_items.removeClass('is-active')
+    visibleOptions.eq(currentPosition).addClass('is-active')
 
   selectItem: (event) ->
     @input.val event.currentTarget.textContent.trim()
@@ -94,22 +99,22 @@ class App.SearchableSelect extends Spine.Controller
 
     event.preventDefault()
 
-    @input.val @values.filter('.is-active').text().trim()
+    @input.val @option_items.filter('.is-active').text().trim()
     @input.trigger('change')
-    @shadowInput.val @values.filter('.is-active').attr('data-value')
+    @shadowInput.val @option_items.filter('.is-active').attr('data-value')
     @shadowInput.trigger('change')
     @toggle()
 
-  filterList: (event) =>
+  onInput: (event) =>
     @toggle() if not @isOpen
 
-    query = @input.val()
-    @filterByQuery query
+    @query = @input.val()
+    @filterByQuery @query
 
   filterByQuery: (query) ->
     regex = new RegExp(query.split(' ').join('.*'), 'i')
 
-    @values
+    @option_items
       .addClass 'is-hidden'
       .filter ->
         this.textContent.match(regex)
@@ -118,8 +123,8 @@ class App.SearchableSelect extends Spine.Controller
     @highlightFirst()
 
   highlightFirst: ->
-    @values.removeClass('is-active').not('.is-hidden').first().addClass 'is-active'
+    @option_items.removeClass('is-active').not('.is-hidden').first().addClass 'is-active'
 
   highlightItem: (event) =>
-    @values.removeClass('is-active')
+    @option_items.removeClass('is-active')
     $(event.currentTarget).addClass('is-active')
