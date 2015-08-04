@@ -5660,9 +5660,20 @@ output {
   .form-control {
     padding-right: 37px;
   }
+
+  .searchableSelect-main {
+    background: none;
+    position: relative;
+  }
   
   .searchableSelect-shadow {
-    display: none;
+    pointer-events: none;
+    color: transparent;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    border: none;
   }
   
   &.dropdown li:hover:not(.is-active) {
@@ -5675,6 +5686,41 @@ output {
 
   li:not(.is-active):hover + li {
     box-shadow: 0 1px rgba(255,255,255,.13) inset;
+  }
+
+  .searchableSelect-autocomplete {
+    position: absolute;
+    left: 13px;
+    top: 11px;
+    right: 37px;
+    white-space: nowrap;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .searchableSelect-autocomplete-invisible {
+    color: transparent;
+  }
+
+  .searchableSelect-autocomplete-visible {
+    color: hsl(0,0%,33%);
+    background: hsl(201,61%,90%);
+  }
+
+  .loading.icon {
+    position: absolute;
+    right: 11px;
+    top: 11px;
+    display: none;
+  }
+
+  &.is-loading {
+    .loading.icon {
+      display: block;
+    }
+    .icon-arrow-down {
+      display: none;
+    }
   }
 }
 

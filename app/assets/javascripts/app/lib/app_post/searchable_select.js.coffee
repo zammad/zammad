@@ -2,6 +2,7 @@ class App.SearchableSelect extends Spine.Controller
 
   events:
     'input .js-input':                  'onInput'
+    'blur .js-input':                   'onBlur'
     'click .js-option':                 'selectItem'
     'mouseenter .js-option':            'highlightItem'
     'shown.bs.dropdown':  'onDropdownShown'
@@ -12,6 +13,8 @@ class App.SearchableSelect extends Spine.Controller
     '.js-input': 'input'
     '.js-shadow': 'shadowInput'
     '.js-optionsList': 'optionsList'
+    '.js-autocomplete-invisible': 'invisiblePart'
+    '.js-autocomplete-visible': 'visiblePart'
 
   className: 'searchableSelect dropdown dropdown--actions'
 
@@ -79,6 +82,22 @@ class App.SearchableSelect extends Spine.Controller
 
     @option_items.removeClass('is-active')
     visibleOptions.eq(currentPosition).addClass('is-active')
+    @clearAutocomplete()
+
+  autocomplete: (text) ->
+    startIndex = text.indexOf(@query)
+
+    if !@query or startIndex != 0
+      return @clearAutocomplete()
+
+    console.log "startIndex", startIndex
+
+    @invisiblePart.text(@query)
+    @visiblePart.text(text.slice(@query.length))
+
+  clearAutocomplete: ->
+    @visiblePart.text('')
+    @invisiblePart.text('')
 
   selectItem: (event) ->
     @input.val event.currentTarget.textContent.trim()
@@ -91,6 +110,8 @@ class App.SearchableSelect extends Spine.Controller
     event.preventDefault()
 
   onEnter: (event) ->
+    @clearAutocomplete()
+
     if not @isOpen
       if @shadowInput.val() is ''
         event.preventDefault()
@@ -104,6 +125,9 @@ class App.SearchableSelect extends Spine.Controller
     @shadowInput.val @option_items.filter('.is-active').attr('data-value')
     @shadowInput.trigger('change')
     @toggle()
+
+  onBlur: =>
+    @clearAutocomplete()
 
   onInput: (event) =>
     @toggle() if not @isOpen
@@ -123,7 +147,9 @@ class App.SearchableSelect extends Spine.Controller
     @highlightFirst()
 
   highlightFirst: ->
-    @option_items.removeClass('is-active').not('.is-hidden').first().addClass 'is-active'
+    first = @option_items.removeClass('is-active').not('.is-hidden').first()
+    first.addClass 'is-active'
+    @autocomplete first.text()
 
   highlightItem: (event) =>
     @option_items.removeClass('is-active')
