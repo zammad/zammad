@@ -15,40 +15,42 @@ load translations from online
 =end
 
   def self.load
-    url = 'https://i18n.zammad.com/api/v1/translations'
-    if !UserInfo.current_user_id
-      UserInfo.current_user_id = 1
-    end
-    result = UserAgent.get(
-      url,
-      {},
-      {
-        json: true,
-      }
-    )
-    fail "Can't load translations from #{url}: #{result.error}" if !result.success?
+    Locale.where(active: true).each {|locale|
+      url = "https://i18n.zammad.com/api/v1/translations/#{locale.locale}"
+      if !UserInfo.current_user_id
+        UserInfo.current_user_id = 1
+      end
+      result = UserAgent.get(
+        url,
+        {},
+        {
+          json: true,
+        }
+      )
+      fail "Can't load translations from #{url}: #{result.error}" if !result.success?
 
-    ActiveRecord::Base.transaction do
-      result.data.each {|translation|
+      ActiveRecord::Base.transaction do
+        result.data.each {|translation|
 
-        # handle case insensitive sql
-        exists     = Translation.where(locale: translation['locale'], format: translation['format'], source: translation['source'])
-        translaten = nil
-        exists.each {|item|
-          if item.source == translation['source']
-            translaten = item
+          # handle case insensitive sql
+          exists     = Translation.where(locale: translation['locale'], format: translation['format'], source: translation['source'])
+          translaten = nil
+          exists.each {|item|
+            if item.source == translation['source']
+              translaten = item
+            end
+          }
+          if translaten
+
+            # verify if update is needed
+            translaten.update_attributes(translation.symbolize_keys!)
+            translaten.save
+          else
+            Translation.create(translation.symbolize_keys!)
           end
         }
-        if translaten
-
-          # verify if update is needed
-          translaten.update_attributes(translation.symbolize_keys!)
-          translaten.save
-        else
-          Translation.create(translation.symbolize_keys!)
-        end
-      }
-    end
+      end
+    }
     true
   end
 
