@@ -304,7 +304,7 @@ module Import::OTRS
 
     result = request_json({})
     if !result['Success']
-      'API key not valid!'
+      fail 'API key not valid!'
     end
 
     # set settings

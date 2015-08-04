@@ -1051,7 +1051,7 @@ class App.ControllerForm extends App.Controller
         $( item[0] ).on('focus', ->
           visible = $( item[0] ).is(":visible")
           if visible && !$( item[0] ).expanding('active')
-            $( item[0] ).expanding()
+            $( item[0] ).expanding().focus()
         )
       App.Delay.set( a, 80 )
 

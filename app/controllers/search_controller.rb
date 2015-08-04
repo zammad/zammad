@@ -34,7 +34,6 @@ class SearchController < ApplicationController
         limit: limit,
         current_user: current_user,
       )
-      user_result = []
       users.each do |user|
         item = {
           id: user.id,
@@ -50,7 +49,6 @@ class SearchController < ApplicationController
         current_user: current_user,
       )
 
-      organization_result = []
       organizations.each do |organization|
         item = {
           id: organization.id,
