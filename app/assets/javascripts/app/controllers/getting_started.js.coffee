@@ -287,6 +287,11 @@ class Base extends App.ControllerContent
           @navigate '#import/' + data.import_backend
           return
 
+        # import config options
+        if data.config
+          for key, value of data.config
+            App.Config.set(key, value)
+
         # render page
         @render()
     )

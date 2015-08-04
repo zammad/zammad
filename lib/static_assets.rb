@@ -45,6 +45,7 @@ returns
       preferences: {
         'Content-Type' => content_type
       },
+      created_by_id: 1,
     )
     filename(file)
   end
@@ -91,6 +92,7 @@ returns
       preferences: {
         'Content-Type' => content_type
       },
+      created_by_id: 1,
     )
     StaticAssets.sync
     filename(file)
@@ -142,6 +144,10 @@ generate filename based on Store model
       extention = '.jpg'
     elsif file.preferences['Content-Type'] =~ /png/i
       extention = '.png'
+    elsif file.preferences['Content-Type'] =~ /gif/i
+      extention = '.gif'
+    elsif file.preferences['Content-Type'] =~ /svg/i
+      extention = '.svg'
     end
     "#{hash}#{extention}"
   end

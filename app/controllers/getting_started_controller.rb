@@ -977,8 +977,15 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       system_online_service: Setting.get('system_online_service'),
       addresses: addresses,
       groups: groups,
+      config: config,
     }
     true
+  end
+
+  def config
+    {
+      product_logo: Setting.get('product_logo')
+    }
   end
 
 end
