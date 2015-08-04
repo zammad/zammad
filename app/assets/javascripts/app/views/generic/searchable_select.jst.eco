@@ -14,8 +14,6 @@
   >
   <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
 </div>
-<ul class="dropdown-menu dropdown-menu-left" role="menu">
-<% for row in @options: %>
-  <li role="presentation" class="js-value" data-value="<%= row.value %>"><%= row.name %>
-<% end %>
+<ul class="dropdown-menu dropdown-menu-left js-optionsList" role="menu">
+  <%- @renderedOptions %>
 </ul>
