@@ -26,7 +26,6 @@ class App.SearchableSelect extends Spine.Controller
     @render()
 
   render: ->
-    console.log "options", @options
     firstSelected = _.find @options.attribute.options, (option) -> option.selected
 
     if firstSelected
