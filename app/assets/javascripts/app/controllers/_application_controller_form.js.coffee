@@ -2093,6 +2093,9 @@ class App.ControllerForm extends App.Controller
   # sort attribute.options
   _sortOptions: (attribute) ->
 
+    # skip sorting if it is disabled by config
+    return if attribute.sortBy == null
+
     return if !attribute.options
 
     if _.isArray( attribute.options )

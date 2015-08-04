@@ -56,7 +56,7 @@ returns
 
 =begin
 
-find organization image suggestion
+find organization image suggestion and store it as app logo
 
   result = Service::Image.organization_suggest('edenhofer.de')
 
@@ -72,7 +72,14 @@ returns
       backend = load_adapter_by_setting( 'image_backend' )
       return if !backend
 
-      backend.organization_suggest(domain)
+      result = backend.organization_suggest(domain)
+
+      # sync logo to assets folder
+      if result
+        StaticAssets.sync
+      end
+
+      result
     end
 
   end
