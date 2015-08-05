@@ -114,6 +114,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
           item = ''
           @close()
 
+        # if tab / close recipientList
+        if e.keyCode is 9
+          @close()
+
         # ignore arrow keys
         if e.keyCode is 37
           return
