@@ -14,7 +14,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @key = Math.floor( Math.random() * 999999 ).toString()
 
     if !@attribute.source
-      @attribute.source = @apiPath + '/search_user_org'
+      @attribute.source = @apiPath + '/search/user-organization'
     @build()
 
   element: =>

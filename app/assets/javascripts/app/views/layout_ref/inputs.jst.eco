@@ -66,6 +66,10 @@
       <div class="searchableSelectPlaceholder"></div>
     </div>
 
+    <div class="select form-group">
+      <label for="b">Users (searchable ajax)</label>
+      <div class="searchableAjaxSelectPlaceholder"></div>
+    </div>
 
     <h2>Checkbox</h2>
     <div class="checkbox form-group">
