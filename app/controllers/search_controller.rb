@@ -87,12 +87,15 @@ class SearchController < ApplicationController
 
     assets  = {}
     result  = []
-    search_index_objects = %w( User Organization )
+    objects = %w( Ticket User Organization )
     if SearchIndexBackend.enabled?
+
+      # to ticket search in serparate call
+      objects.delete('Ticket')
 
       # to query search index backend (excluse tickets here, see below)
       found_objects = {}
-      items = SearchIndexBackend.search( query, limit, search_index_objects )
+      items = SearchIndexBackend.search( query, limit, objects )
       items.each { |item|
         require item[:type].to_filename
         record = Kernel.const_get( item[:type] ).find( item[:id] )
