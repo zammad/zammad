@@ -19,9 +19,7 @@ class SearchController < ApplicationController
 
     # convert objects string into array of class names
     # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
-    objects = params[:objects].split('-').map { |object|
-      object.camelize
-    }
+    objects = params[:objects].split('-').map(&:camelize)
 
     # try search index backend
     assets = {}
