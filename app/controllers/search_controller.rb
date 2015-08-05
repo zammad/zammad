@@ -20,6 +20,7 @@ class SearchController < ApplicationController
     # convert objects string into array of class names
     # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
     objects = params[:objects].split('-').map(&:camelize)
+    search_tickets = objects.delete('Ticket')
 
     # try search index backend
     assets = {}
@@ -32,7 +33,25 @@ class SearchController < ApplicationController
         assets = record.assets(assets)
         result.push item
       }
+
+      # do ticket query by Ticket class to handle ticket permissions
+      if search_tickets
+        tickets = Ticket.search(
+          query: query,
+          limit: limit,
+          current_user: current_user,
+        )
+        tickets.each do |ticket|
+          assets = ticket.assets(assets)
+          item = {
+            id: ticket.id,
+            type: 'Ticket',
+          }
+          result.push item
+        end
+      end
     else
+
       # do query
       objects.each { |object|
 
@@ -62,13 +81,18 @@ class SearchController < ApplicationController
   # GET /api/v1/search
   def search
 
+    # get params
+    query = params[:term]
+    limit = params[:limit] || 10
+
     assets  = {}
     result  = []
-    objects = %w( Ticket User Organization )
+    search_index_objects = %w( User Organization )
     if SearchIndexBackend.enabled?
 
+      # to query search index backend (excluse tickets here, see below)
       found_objects = {}
-      items = SearchIndexBackend.search( params[:term], params[:limit], objects )
+      items = SearchIndexBackend.search( query, limit, search_index_objects )
       items.each { |item|
         require item[:type].to_filename
         record = Kernel.const_get( item[:type] ).find( item[:id] )
@@ -78,6 +102,18 @@ class SearchController < ApplicationController
         found_objects[ item[:type] ].push item[:id]
       }
 
+      # do ticket query by Ticket class to handle ticket permissions
+      tickets = Ticket.search(
+        query: query,
+        limit: limit,
+        current_user: current_user,
+      )
+      tickets.each do |ticket|
+        found_objects[ 'Ticket' ] ||= []
+        found_objects[ 'Ticket' ].push ticket.id
+      end
+
+      # generate whole result
       found_objects.each { |object, object_ids|
 
         data = {
@@ -91,8 +127,8 @@ class SearchController < ApplicationController
       objects.each { |object|
 
         found_objects = object.constantize.search(
-          query:        params[:term],
-          limit:        params[:limit],
+          query:        query,
+          limit:        limit,
           current_user: current_user,
         )
 
