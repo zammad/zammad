@@ -119,3 +119,10 @@ class App.User extends App.Model
           data['groups'].push group
 
     data
+
+  searchResultAttributes: ->
+    display:    "#{@displayName()}"
+    id:         @id
+    class:      "user user-popover"
+    url:        @uiUrl()
+    iconClass:  "user"

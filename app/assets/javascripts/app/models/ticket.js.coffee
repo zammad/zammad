@@ -51,3 +51,9 @@ class App.Ticket extends App.Model
     if @owner_id == user.id
       return 'important'
     ''
+  searchResultAttributes: ->
+    display:    "##{@number} - #{@title}"
+    id:         @id
+    class:      "level-#{@level()} ticket-popover"
+    url:        @uiUrl()
+    iconClass:  "priority"
