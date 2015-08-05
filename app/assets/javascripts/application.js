@@ -155,7 +155,7 @@ function clone(item, full) {
 function clone2(item) {
     if (!item) { return item; } // null, undefined values check
 
-    var types = [ Number, String, Boolean ], 
+    var types = [ Number, String, Boolean ],
         result;
 
     // normalizing primitives if someone did new String('aaa'), or new Number('444');
@@ -168,13 +168,13 @@ function clone2(item) {
     if (typeof result == "undefined") {
         if (Object.prototype.toString.call( item ) === "[object Array]") {
             result = [];
-            item.forEach(function(child, index, array) { 
+            item.forEach(function(child, index, array) {
                 result[index] = clone( child );
             });
         } else if (typeof item == "object") {
             // testing that this is DOM
             if (item.nodeType && typeof item.cloneNode == "function") {
-                var result = item.cloneNode( true );    
+                var result = item.cloneNode( true );
             } else if (!item.prototype) { // check that this is a literal
                 if (item instanceof Date) {
                     result = new Date(item);
@@ -201,6 +201,11 @@ function clone2(item) {
     }
 
     return result;
+}
+
+// taken from https://github.com/epeli/underscore.string/blob/master/underscored.js
+function underscored (str) {
+  return str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
 }
 
 jQuery.event.special.remove = {
