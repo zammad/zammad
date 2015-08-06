@@ -14,7 +14,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @key = Math.floor( Math.random() * 999999 ).toString()
 
     if !@attribute.source
-      @attribute.source = @apiPath + '/search_user_org'
+      @attribute.source = @apiPath + '/search/user-organization'
     @build()
 
   element: =>
@@ -112,6 +112,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
           # empty user selection and close
           $(e.target).val('')
           item = ''
+          @close()
+
+        # if tab / close recipientList
+        if e.keyCode is 9
           @close()
 
         # ignore arrow keys

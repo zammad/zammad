@@ -30,3 +30,10 @@ class App.Organization extends App.Model
           user = App.User.find( user_id )
           data['members'].push user
     data
+
+  searchResultAttributes: ->
+    display:    "#{@displayName()}"
+    id:         @id
+    class:      "organization organization-popover"
+    url:        @uiUrl()
+    iconClass:  "organization"

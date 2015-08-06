@@ -375,7 +375,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     for i in [0..100]
       setTimeout @updateUploadProgress, i*duration/100 , i
 
-    setTimeout (=> 
+    setTimeout (=>
       callback()
       @renderAttachment(fileName, fileSize)
     ), duration
@@ -584,7 +584,7 @@ class ImportWizard extends App.ControllerWizard
     @render()
 
     # wait 500 ms after the last user input before we check the link
-    @otrsLink.on 'input', _.debounce(@checkOtrsLink, 600) 
+    @otrsLink.on 'input', _.debounce(@checkOtrsLink, 600)
 
   checkOtrsLink: (e) =>
     if @otrsLink.val() is ""
@@ -852,14 +852,14 @@ class highlightRef extends App.ControllerContent
   # containing the offsets and the highlight classes
   #
   # we have to check how it works with having open several tickets – it might break
-  # 
+  #
   # if classes can be changed in the admin interface
   # we have to watch out to not end up with empty highlight classes
   storeHighlights: ->
     localStorage['highlights'] = @highlighter.serialize()
 
   # the colors is set via css classes (can't do it inline with rangy)
-  # thus we have to create a stylesheet if the colors 
+  # thus we have to create a stylesheet if the colors
   # can be changed in the admin interface
   addClassApplier: (entry) ->
     @highlighter.addClassApplier rangy.createCssClassApplier(@highlightClassPrefix + entry.name)
@@ -884,7 +884,7 @@ class highlightRef extends App.ControllerContent
 
   activate: ->
     selection = rangy.getSelection()
-    # if there's already something selected, 
+    # if there's already something selected,
     # don't go into highlight mode
     # just toggle the selected
     if !selection.isCollapsed
@@ -914,10 +914,10 @@ class highlightRef extends App.ControllerContent
   onMouseUp: (e) =>
     @toggleHighlightAtSelection $(e.currentTarget).closest @articles.selector
 
-  # 
+  #
   # toggle Highlight
   # ================
-  # 
+  #
   # - only works when the selection starts and ends inside an article
   # - clears highlights in selection
   # - or highlights the selection
@@ -931,7 +931,7 @@ class highlightRef extends App.ControllerContent
     else
       @highlighter.highlightSelection @highlightClass,
         selection: selection
-        containerElementId: article.get(0).id    
+        containerElementId: article.get(0).id
 
       # remove selection
       selection.removeAllRanges()
@@ -1096,7 +1096,7 @@ class cluesRef extends App.ControllerContent
 
   showWindow: =>
     @modalWindow.velocity
-      properties: 
+      properties:
         scale: [1, 0.2]
         opacity: [1, 0]
       options:
@@ -1105,7 +1105,7 @@ class cluesRef extends App.ControllerContent
 
   hideWindow: (callback) =>
     @modalWindow.velocity
-      properties: 
+      properties:
         scale: [0.2, 1]
         opacity: 0
       options:
@@ -1131,7 +1131,7 @@ class cluesRef extends App.ControllerContent
       if target.right + modal.width <= maxWidth
         left = target.right
         position = 'right'
-      else 
+      else
         # place left
         left = target.left - modal.width
         position = 'left'
@@ -1208,7 +1208,7 @@ class cluesRef extends App.ControllerContent
   getVisibleBoundingBox: (el) ->
     ###
 
-      getBoundingClientRect doesn't take 
+      getBoundingClientRect doesn't take
       absolute-positioned child nodes into account
 
     ###
@@ -1412,7 +1412,7 @@ class schedulersRef extends App.ControllerContent
     switch items.length
       when 1 then return items[0]
       when 2 then return "#{ items[0] } and #{ items[1] }"
-      else 
+      else
         return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
 App.Config.set( 'layout_ref/schedulers', schedulersRef, 'Routes' )
@@ -1431,11 +1431,22 @@ class InputsRef extends App.ControllerContent
     # selectable search
     searchableSelectObject = new App.SearchableSelect
       attribute:
-        name: 'project-name'
-        id: 'project-name-123'
+        name:        'project-name'
+        id:          'project-name-123'
         placeholder: 'Enter Project Name'
-        options: [{"value":0,"name":"Apple"},{"value":1,"name":"Microsoft","selected":true},{"value":2,"name":"Google"},{"value":3,"name":"Deutsche Bahn"},{"value":4,"name":"Sparkasse"},{"value":5,"name":"Deutsche Post"},{"value":6,"name":"Mitfahrzentrale"},{"value":7,"name":"Starbucks"},{"value":8,"name":"Mac Donalds"},{"value":9,"name":"Flixbus"},{"value":10,"name":"Betahaus"},{"value":11,"name":"Bruno Banani"},{"value":12,"name":"Alpina"},{"value":13,"name":"Samsung"},{"value":14,"name":"ChariTea"},{"value":15,"name":"fritz-kola"},{"value":16,"name":"Vitamin Water"},{"value":17,"name":"Znuny"},{"value":18,"name":"Max & Moritz"}]
-    @$('.searchableSelectPlaceholder').replaceWith( searchableSelectObject.el )
+        options:     [{"value":0,"name":"Apple"},{"value":1,"name":"Microsoft","selected":true},{"value":2,"name":"Google"},{"value":3,"name":"Deutsche Bahn"},{"value":4,"name":"Sparkasse"},{"value":5,"name":"Deutsche Post"},{"value":6,"name":"Mitfahrzentrale"},{"value":7,"name":"Starbucks"},{"value":8,"name":"Mac Donalds"},{"value":9,"name":"Flixbus"},{"value":10,"name":"Betahaus"},{"value":11,"name":"Bruno Banani"},{"value":12,"name":"Alpina"},{"value":13,"name":"Samsung"},{"value":14,"name":"ChariTea"},{"value":15,"name":"fritz-kola"},{"value":16,"name":"Vitamin Water"},{"value":17,"name":"Znuny"},{"value":18,"name":"Max & Moritz"}]
+    @$('.searchableSelectPlaceholder').replaceWith( searchableSelectObject.element() )
+
+    # selectable search
+    searchableAjaxSelectObject = new App.SearchableAjaxSelect
+      attribute:
+        name:        'user'
+        id:          'user-123'
+        placeholder: 'Enter User'
+        limt:        10
+        object:      'User'
+
+    @$('.searchableAjaxSelectPlaceholder').replaceWith( searchableAjaxSelectObject.element() )
 
     # time and timeframe
     @$('.time').timepicker()
@@ -1515,7 +1526,7 @@ class calendarSubscriptionsRef extends App.ControllerContent
     switch items.length
       when 1 then return items[0]
       when 2 then return "#{ items[0] } and #{ items[1] }"
-      else 
+      else
         return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
 

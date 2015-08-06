@@ -166,35 +166,17 @@ class App.Navigation extends App.ControllerWidgetPermanent
               area.result = []
               for id in area.ids
                 ticket = App.Ticket.find( id )
-                data =
-                  display:    "##{ticket.number} - #{ticket.title}"
-                  id:         ticket.id
-                  class:      "level-#{ticket.level()} ticket-popover"
-                  url:        ticket.uiUrl()
-                  iconClass:  "priority"
-                area.result.push data
+                area.result.push ticket.searchResultAttributes()
             else if area.name is 'User'
               area.result = []
               for id in area.ids
                 user = App.User.find( id )
-                data =
-                  display:    "#{user.displayName()}"
-                  id:         user.id
-                  class:      "user user-popover"
-                  url:        user.uiUrl()
-                  iconClass:  "user"
-                area.result.push data
+                area.result.push user.searchResultAttributes()
             else if area.name is 'Organization'
               area.result = []
               for id in area.ids
                 organization = App.Organization.find( id )
-                data =
-                  display:    "#{organization.displayName()}"
-                  id:         organization.id
-                  class:      "organization organization-popover"
-                  url:        organization.uiUrl()
-                  iconClass:  "organization"
-                area.result.push data
+                area.result.push organization.searchResultAttributes()
 
           @renderResult(result)
 

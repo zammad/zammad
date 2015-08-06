@@ -1116,7 +1116,7 @@ module Import::OTRS
       }
 
       # check if customer already exists
-      user_old = User.where( login: user_new[:login] ).first
+      user_old = User.where( login: user_new[:login].downcase ).first
 
       # create / update agent
       if user_old
@@ -1304,9 +1304,9 @@ module Import::OTRS
       end
     end
 
-    user = User.where( email: email ).first
+    user = User.where( email: email.downcase ).first
     if !user
-      user = User.where( login: email ).first
+      user = User.where( login: email.downcase ).first
     end
     if !user
       begin
@@ -1334,7 +1334,7 @@ module Import::OTRS
         )
       rescue ActiveRecord::RecordNotUnique
         log "User #{email} was handled by another thread, taking this."
-        user = User.find_by( login: email )
+        user = User.find_by( login: email.downcase )
         if !user
           log "User #{email} wasn't created sleep and retry."
           sleep rand 3
