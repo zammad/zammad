@@ -1533,5 +1533,53 @@ class ButtonsRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/buttons', ButtonsRef, 'Routes' )
 
+class mergeCustomerRef extends App.ControllerContent
+
+  mergeTarget:
+    firstname: 'Nicole',
+    lastname: 'Braun',
+    email: [
+      {
+        address: 'nicole.braun@zammad.com'
+        main: true
+      }
+    ]
+
+  mergeSource:
+    firstname: 'Nicole',
+    lastname: 'Müller',
+    email: [
+      {
+        address: 'nicole.mueller@zammad.com'
+        main: true
+      },
+      {
+        address: 'nicole@mueller.de'
+      }
+    ]
+
+  events:
+    'change .merge-control select': 'onChange'
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/merge_customer_view')
+
+    new App.ControllerModal
+      head: "Merge #{@mergeSource.firstname} #{@mergeSource.lastname}"
+      content: App.view('layout_ref/merge_customer')()
+      button: 'Merge'
+      shown: true
+      cancel: true
+      container: @el
+
+  onChange: ->
+
+
+App.Config.set( 'layout_ref/merge_customer', mergeCustomerRef, 'Routes' )
+
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

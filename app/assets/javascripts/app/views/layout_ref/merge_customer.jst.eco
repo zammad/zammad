@@ -1,0 +1,118 @@
+<div class="merge-group merge-group--header">
+  <div class="merge-source">
+    <h2>Nicole Müller</h2>
+  </div>
+  <div class="merge-control"></div>
+  <div class="merge-target">
+    <h2>Nicole Braun</h2>
+  </div>
+</div>
+
+<div class="merge-group merge-group--inactive">
+  <div class="merge-source">
+    <label>Firstname</label>
+    <div class="merge-value">Nicole</div>
+  </div>
+
+  <div class="merge-control">
+    <div class="merge-arrow">
+      <svg class="line-arrow icon-line-left-arrow"><use xlink:href="#icon-line-left-arrow" /></svg>
+    </div>
+    <div class="merge-control-input">is equal</div>
+    <div class="merge-arrow">
+      <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+    </div>
+  </div>
+
+  <div class="merge-target">
+    <label>Firstname</label>
+    <div class="merge-value">Nicole</div>
+  </div>
+</div>
+
+<div class="merge-group">
+  <div class="merge-source">
+    <label>Lastname</label>
+    <div class="merge-value">Müller</div>
+  </div>
+
+  <div class="merge-control">
+    <div class="merge-arrow">
+      <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+    </div>
+    <div class="merge-control-input u-positionOrigin">
+      <select id="a" class="form-control form-control--small">
+        <option>replace</option>
+        <option>ignore</option>
+      </select>
+      <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+    </div>
+    <div class="merge-arrow">
+      <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+    </div>
+  </div>
+
+  <div class="merge-target">
+    <label>Lastname</label>
+    <div class="merge-value">Müller</div>
+  </div>
+</div>
+
+<div class="merge-group merge-group--multi">
+  <div class="merge-source">
+    <label>Email</label>
+    <div class="merge-value">nicole.mueller@zammad.org</div>
+    <div class="merge-value">nicole@mueller.de</div>
+  </div>
+
+  <div class="merge-controls">
+    <div class="merge-control">
+      <div class="merge-arrow">
+        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+      </div>
+      <div class="merge-control-input u-positionOrigin">
+        <select id="a" class="form-control form-control--small">
+          <option>replace</option>
+          <option selected>add</option>
+          <option>ignore</option>
+        </select>
+        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      </div>
+      <div class="merge-arrow">
+        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+      </div>
+    </div>
+    <div class="merge-control">
+      <div class="merge-arrow">
+        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+      </div>
+      <div class="merge-control-input u-positionOrigin">
+        <select id="a" class="form-control form-control--small">
+          <option>replace</option>
+          <option selected>add</option>
+          <option>ignore</option>
+        </select>
+        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      </div>
+      <div class="merge-arrow">
+        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="merge-target">
+    <label>Email</label>
+    <div class="merge-value">
+      <div class="primary-email-switch-holder">
+        <span class="primary-email-switch-label">nicole.braun@zammad.org</span>
+        <input class="primary-email-switch" type="radio" name="merge-primary-email" id="input-1" checked><label for="input-1">main</label>
+      </div>
+    </div>
+    <div class="merge-value">
+      <div class="primary-email-switch-holder">
+        <span class="primary-email-switch-label">nicole.mueller@zammad.org</span>
+        <input class="primary-email-switch" type="radio" name="merge-primary-email" id="input-2"><label for="input-2">main</label>
+      </div>
+    </div>
+  </div>
+</div>

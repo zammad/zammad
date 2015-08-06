@@ -4,6 +4,7 @@
 
 
   <ul>
+    <li><a href="#layout_ref/merge_customer">Merge Customer</a></li>
     <li><a href="#layout_ref/inputs">✏ Inputs</a></li>
     <li><a href="#layout_ref/buttons">👇 All the Buttons</a></li>
     <li><a href="#layout_ref/calendar_subscriptions">Calendar Subscriptions</a></li>
