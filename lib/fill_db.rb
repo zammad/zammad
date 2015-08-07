@@ -38,6 +38,7 @@ e. g.
       end
     else
       organization_pool = Organization.where(active: true)
+      puts " take #{organization_pool.length} organizations"
     end
 
     # create agents
@@ -99,6 +100,7 @@ e. g.
       end
     else
       customer_pool = Role.where(name: 'Customer').first.users.where(active: true)
+      puts " take #{customer_pool.length} customers"
     end
 
     # create groups
@@ -122,6 +124,7 @@ e. g.
       end
     else
       group_pool = Group.where(active: true)
+      puts " take #{group_pool.length} groups"
     end
 
     # create tickets
