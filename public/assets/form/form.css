@@ -1,0 +1,19 @@
+.zammad-form {
+  width: 300px;
+}
+
+.zammad-form .form-group {
+  margin-bottom: 15px;
+}
+
+.zammad-form .form-control {
+  display: block;
+  width: 100%;
+}
+
+.zammad-form .has-error .form-control {
+  border-color: #a94442;
+}
+.zammad-form .has-error label {
+  color: #a94442;
+}

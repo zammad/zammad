@@ -1,0 +1,42 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Form') %> <small></small></h1>
+  </div>
+</div>
+<div>
+  <p><%- @T('With form you can add a formular to your web page witch directly generates a Ticket for you.') %></p>
+
+  <div class="js-settings"></div>
+
+  <h2><%- @T('Settings') %></h2>
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th style="white-space: nowrap;"><%- @T('Option') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><label><input type="checkbox" name="debug"/> <%- @T('Debug') %></label></td>
+      </tr>
+      <tr>
+        <td><label><input type="checkbox" name="modal"/> <%- @T('Modal Dialog') %></label></td>
+      </tr>
+      <tr>
+        <td><label><input type="checkbox"/> <%- @T('Debug') %></label></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
+
+  <pre>
+&lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+$('#feedback-form').zammad_form({
+  lang: 'de-de',
+  debug: true,
+  modal: false,
+});
+&lt;/script&gt;</pre>
+</div>

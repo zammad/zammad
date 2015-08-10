@@ -993,6 +993,29 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Enable Ticket creation',
+  name: 'form_ticket_create',
+  area: 'Form::Base',
+  description: 'Defines if ticket can get created via web form.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'form_ticket_create',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  frontend: false,
+)
+
+Setting.create_if_not_exists(
   title: 'Sender Format',
   name: 'ticket_define_email_from',
   area: 'Email::Base',
