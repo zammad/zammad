@@ -22,8 +22,6 @@ class UpdateForm < ActiveRecord::Migration
       },
       state: false,
       frontend: false,
-      updated_by_id: 1,
-      created_by_id: 1,
     )
 
   end
