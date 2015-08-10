@@ -55,6 +55,7 @@
         name: 'body',
         tag: 'textarea',
         placeholder: 'Your Message...',
+        rows: 7,
       },
     ]
 
@@ -189,7 +190,7 @@
         item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + value.placeholder + '">')
       }
       else if (value.tag == 'textarea') {
-        item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + value.placeholder + '"></textarea>')
+        item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + value.placeholder + '" rows="' + value.rows + '"></textarea>')
       }
       $form.append(item)
     })
