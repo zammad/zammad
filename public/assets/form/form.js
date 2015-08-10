@@ -8,10 +8,10 @@
   defaults = {
     debug: false,
     noCSS: false,
-    title: 'Zammad Form',
-    messageHeadline: '',
+    showTitle: false,
+    messageTitle: 'Zammad Form',
     messageSubmit: 'Submit',
-    messageThankYou: 'Thank you for your inquiry!',
+    messageThankYou: 'Thank you for your inquiry! We\'ll contact you soon as possible.',
   };
 
   function Plugin( element, options ) {
@@ -149,7 +149,7 @@
     })
 
     if (!params.title) {
-      params.title = this.options.title
+      params.title = this.options.messageTitle
     }
 
     _this.log('params', params)
@@ -181,8 +181,8 @@
 
     var $element = $(element)
     var $form = $element.find('form')
-    if (this.options.messageHeadline && this.options.messageHeadline != '') {
-      $form.append('<h2>' + this.options.messageHeadline + '</h2>')
+    if (this.options.showTitle && this.options.messageTitle != '') {
+      $form.append('<h2>' + this.options.messageTitle + '</h2>')
     }
     $.each(this.attributes, function( index, value ) {
       var item = $('<div class="form-group"><label>' + value.display + '</label></div>')

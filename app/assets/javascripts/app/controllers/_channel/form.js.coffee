@@ -19,6 +19,8 @@ class App.ChannelForm extends App.Controller
     )
 
   updateParams: ->
+    quote = (string) ->
+      string.replace('\'', '\\\'')
     params = @formParam(@$('.js-params'))
     paramString = ''
     for key, value of params
@@ -27,5 +29,5 @@ class App.ChannelForm extends App.Controller
       if value == 'true' || value == 'false'
         paramString += "  #{key}: #{value}"
       else
-        paramString += "  #{key}: '#{value}'"
+        paramString += "  #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)

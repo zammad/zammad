@@ -10,6 +10,36 @@
 
   <h2><%- @T('Settings') %></h2>
   <form class="js-params">
+
+    <fieldset>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-message-title"><%- @T('Title of the form') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-message-title" name="messageTitle" value="<%- @T('Feedback Form') %>">
+        </div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-message-submit"><%- @T('Name of form submit button') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-message-submit" name="messageSubmit" value="<%- @T('Submit') %>">
+        </div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-message-thank-you"><%- @T('Message after sending form') %></label>
+        </div>
+        <div class="controls">
+          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @T('Thank you for your inquiry! We\'ll contact you soon as possible.') %></textarea>
+        </div>
+      </div>
+    </fieldset>
+
+    <br>
+
     <table class="settings-list">
       <thead>
         <tr>
@@ -18,19 +48,10 @@
       </thead>
       <tbody>
         <tr>
-          <td><label><input type="text" name="title" value="<%- @T('Feedback Form') %>" style="display: inline; width: auto;"/> <%- @T('Title of the form.') %></label></td>
-        </tr>
-        <tr>
-          <td><label><input type="text" name="messageTitle" value="" style="display: inline; width: auto;"/> <%- @T('Form headline.') %></label></td>
-        </tr>
-        <tr>
-          <td><label><input type="text" name="messageSubmit" value="<%- @T('Submit') %>" style="display: inline; width: auto;"/> <%- @T('Name of form submit button.') %></label></td>
-        </tr>
-        <tr>
-          <td><label><input type="text" name="messageThankYou" value="<%- @T('Thank you for your inquiry!') %>" style="display: inline; width: auto;"/> <%- @T('Message after sending form.') %></label></td>
-        </tr>
-        <tr>
           <td><label><input type="checkbox" name="debug" value="true"/> <%- @T('Enable debugging for implementation.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" name="showTitle" value="true"/> <%- @T('Show title in form.') %></label></td>
         </tr>
         <tr>
           <td><label><input type="checkbox" name="modal" value="true" checked/> <%- @T('Start modal dialog for form.') %></label></td>

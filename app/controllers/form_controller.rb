@@ -33,6 +33,9 @@ class FormController < ApplicationController
     if params[:email] !~ /@/
       errors['email'] = 'invalid'
     end
+    if params[:email] =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?)/
+      errors['email'] = 'invalid'
+    end
     if !params[:title] || params[:title].empty?
       errors['title'] = 'required'
     end
