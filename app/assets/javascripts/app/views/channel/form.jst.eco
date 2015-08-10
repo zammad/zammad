@@ -21,10 +21,13 @@
           <td><label><input type="text" name="title" value="<%- @T('Feedback Form') %>" style="display: inline; width: auto;"/> <%- @T('Title of the form.') %></label></td>
         </tr>
         <tr>
-          <td><label><input type="text" name="submit" value="<%- @T('Submit') %>" style="display: inline; width: auto;"/> <%- @T('Name of submit button.') %></label></td>
+          <td><label><input type="text" name="messageTitle" value="" style="display: inline; width: auto;"/> <%- @T('Form headline.') %></label></td>
         </tr>
         <tr>
-          <td><label><input type="text" name="thank_you" value="<%- @T('Thank you for your inquiry!') %>" style="display: inline; width: auto;"/> <%- @T('Message after sending form.') %></label></td>
+          <td><label><input type="text" name="messageSubmit" value="<%- @T('Submit') %>" style="display: inline; width: auto;"/> <%- @T('Name of form submit button.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="text" name="messageThankYou" value="<%- @T('Thank you for your inquiry!') %>" style="display: inline; width: auto;"/> <%- @T('Message after sending form.') %></label></td>
         </tr>
         <tr>
           <td><label><input type="checkbox" name="debug" value="true"/> <%- @T('Enable debugging for implementation.') %></label></td>

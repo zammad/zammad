@@ -22,6 +22,10 @@
   color: #a94442;
 }
 
+.zammad-form .js-thankyou {
+  text-align: center;
+}
+
 .modal {
     position: fixed;
     left: 0;

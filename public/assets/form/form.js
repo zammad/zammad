@@ -9,8 +9,9 @@
     debug: false,
     noCSS: false,
     title: 'Zammad Form',
-    submit: 'Submit',
-    thank_you: 'Thank you for your inquiry!',
+    messageHeadline: '',
+    messageSubmit: 'Submit',
+    messageThankYou: 'Thank you for your inquiry!',
   };
 
   function Plugin( element, options ) {
@@ -132,9 +133,6 @@
       // ticket has been created
       _this.thanks()
 
-      // rerender after 6 seconds
-      _this.render()
-
     }).fail(function() {
       alert('Faild to submit form!')
     });
@@ -182,7 +180,9 @@
 
     var $element = $(element)
     var $form = $element.find('form')
-    $form.append('<h2>' + this.options.title + '</h2>')
+    if (this.options.messageHeadline && this.options.messageHeadline != '') {
+      $form.append('<h2>' + this.options.messageHeadline + '</h2>')
+    }
     $.each(this.attributes, function( index, value ) {
       var item = $('<div class="form-group"><label>' + value.display + '</label></div>')
       if (value.tag == 'input') {
@@ -193,7 +193,7 @@
       }
       $form.append(item)
     })
-    $form.append('<button type="submit" class="btn">' + this.options.submit + '</button')
+    $form.append('<button type="submit" class="btn">' + this.options.messageSubmit + '</button')
 
     this.$modal = $element
     this.$form  = $form
@@ -226,7 +226,7 @@
 
   // thanks
   Plugin.prototype.thanks = function(e) {
-    var thanks = $('<div>Thank you for your inquery!</div>')
+    var thanks = $('<div class="js-thankyou">' + this.options.messageThankYou + '</div>')
     this.$form.html(thanks)
   }
 
