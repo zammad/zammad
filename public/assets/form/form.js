@@ -7,7 +7,10 @@
   var pluginName = 'zammad_form',
   defaults = {
     debug: false,
-    loadCss: true,
+    noCSS: false,
+    title: 'Zammad Form',
+    submit: 'Submit',
+    thank_you: 'Thank you for your inquiry!',
   };
 
   function Plugin( element, options ) {
@@ -20,7 +23,14 @@
     this._name     = pluginName;
 
     this._endpoint_config = '/api/v1/form_config'
+    this._endpoint_submit = '/api/v1/form_submit'
     this._script_location = '/assets/form/form.js'
+    this._css_location    = '/assets/form/form.css'
+
+    src = document.getElementById('zammad_form_script').src
+    this.css_location = src.replace(this._script_location, this._css_location)
+    this.endpoint_config = src.replace(this._script_location, this._endpoint_config)
+    this.endpoint_submit = src.replace(this._script_location, this._endpoint_submit)
 
     this._config  = {}
 
@@ -52,35 +62,40 @@
 
 
   Plugin.prototype.init = function () {
-    var _this = this,
-      src = document.getElementById("zammad_form_script").src,
-      endpoint_config = src.replace(this._script_location, this._endpoint_config)
+    var _this = this
 
     _this.log('init')
 
-    if (_this.options.loadCss) {
-      _this.loadCss('form.css')
+    if (!_this.options.noCSS) {
+      _this.loadCss(_this.css_location)
     }
 
-    _this.log('endpoint_config: ' + endpoint_config)
+    _this.log('endpoint_config: ' + _this.endpoint_config)
+    _this.log('endpoint_submit: ' + _this.endpoint_submit)
 
     // load config
     $.ajax({
-      url: endpoint_config,
+      url: _this.endpoint_config,
     }).done(function(data) {
       _this.log('config:', data)
       _this._config = data
-      _this.render()
     }).fail(function() {
       alert('Faild to load form config!')
     });
 
-    // bind form submit
-    this.$element.on('submit', function (e) {
-      e.preventDefault()
-      _this.submit()
-      return true
-    })
+    // show form
+    if (!this.options.modal) {
+      _this.render()
+    }
+
+    // bind form on call
+    else {
+      this.$element.on('click', function (e) {
+        e.preventDefault()
+        _this.render()
+        return true
+      })
+    }
   }
 
   // load css
@@ -97,28 +112,29 @@
   Plugin.prototype.submit = function() {
     var _this = this
 
-    _this.log('submit form', _this.getParams())
-
     $.ajax({
       method: 'post',
-      url: _this._config.endpoint,
+      url: _this.endpoint_submit,
       data: _this.getParams(),
     }).done(function(data) {
-      _this.log('ok done', _this._config.endpoint)
 
       // removed errors
-      _this.$element.find('.has-error').removeClass('has-error')
+      _this.$form.find('.has-error').removeClass('has-error')
 
       // set errors
       if (data.errors) {
         $.each(data.errors, function( key, value ) {
-          _this.$element.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
+          _this.$form.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
         })
         return
       }
 
       // ticket has been created
       _this.thanks()
+
+      // rerender after 6 seconds
+      _this.render()
+
     }).fail(function() {
       alert('Faild to submit form!')
     });
@@ -129,15 +145,44 @@
     var _this = this,
       params = {}
 
-    $.each( _this.$element.find('form').serializeArray(), function( index, item ) {
+    $.each( _this.$form.serializeArray(), function( index, item ) {
       params[item.name] = item.value
     })
+
+    if (!params.title) {
+      params.title = this.options.title
+    }
+
+    _this.log('params', params)
+
     return params
+  }
+
+  Plugin.prototype.closeModal = function() {
+    if (this.$modal) {
+      this.$modal.remove()
+    }
   }
 
   // render form
   Plugin.prototype.render = function(e) {
-    var form = $('<form class="zammad-form"></form>')
+    var _this = this
+    _this.closeModal()
+
+    var element = '<div class="modal">\
+      <div class="modal-backdrop js-close"></div>\
+      <div class="modal-body">\
+        <form class="zammad-form"></form>\
+      </div>\
+    </div>'
+
+    if (!this.options.modal) {
+      element = '<div><form class="zammad-form"></form></div>'
+    }
+
+    var $element = $(element)
+    var $form = $element.find('form')
+    $form.append('<h2>' + this.options.title + '</h2>')
     $.each(this.attributes, function( index, value ) {
       var item = $('<div class="form-group"><label>' + value.display + '</label></div>')
       if (value.tag == 'input') {
@@ -146,18 +191,43 @@
       else if (value.tag == 'textarea') {
         item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + value.placeholder + '"></textarea>')
       }
-      form.append(item)
+      $form.append(item)
     })
-    form.append('<button type="submit">' + 'Submit' + '</button')
-    this.$element.html(form)
-    return form
+    $form.append('<button type="submit" class="btn">' + this.options.submit + '</button')
+
+    this.$modal = $element
+    this.$form  = $form
+
+    // bind on close
+    $element.find('.js-close').on('click', function (e) {
+      e.preventDefault()
+      _this.closeModal()
+      return true
+    })
+
+    // bind form submit
+    $element.on('submit', function (e) {
+      e.preventDefault()
+      _this.submit()
+      return true
+    })
+
+    // show form
+    if (!this.options.modal) {
+      _this.$element.html($element)
+    }
+
+    // append modal to body
+    else {
+      $('body').append($element)
+    }
+
   }
 
   // thanks
   Plugin.prototype.thanks = function(e) {
-    var form = $('<div>Thank you for your inquery!</div>')
-    this.$element.html(form)
-    return form
+    var thanks = $('<div>Thank you for your inquery!</div>')
+    this.$form.html(thanks)
   }
 
   // log method

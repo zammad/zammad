@@ -1,5 +1,9 @@
 .zammad-form {
-  width: 300px;
+  width: 100%;
+}
+
+.zammad-form h1, .zammad-form h2 {
+  margin-top: 0;
 }
 
 .zammad-form .form-group {
@@ -16,4 +20,46 @@
 }
 .zammad-form .has-error label {
   color: #a94442;
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.modal:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em;
+}
+
+.modal-backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    background-color: gray;
+}
+
+.modal-body {
+    text-align: left;
+    background: white;
+    border-radius: 5px;
+    padding: 24px 24px 22px;
+    width: 26em;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    box-shadow: 0 0 50px rgba(0,0,0,.3);
+    color: #949494;
 }

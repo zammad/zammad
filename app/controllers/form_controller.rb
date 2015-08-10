@@ -33,6 +33,9 @@ class FormController < ApplicationController
     if params[:email] !~ /@/
       errors['email'] = 'invalid'
     end
+    if !params[:title] || params[:title].empty?
+      errors['title'] = 'required'
+    end
     if !params[:body] || params[:body].empty?
       errors['body'] = 'required'
     end
@@ -65,7 +68,7 @@ class FormController < ApplicationController
     ticket = Ticket.create(
       group_id: 1,
       customer_id: customer.id,
-      title: '',
+      title: params[:title],
       state_id: Ticket::State.find_by( name: 'new' ).id,
       priority_id: Ticket::Priority.find_by( name: '2 normal' ).id,
       updated_by_id: customer.id,
@@ -78,7 +81,7 @@ class FormController < ApplicationController
       sender_id: Ticket::Article::Sender.find_by( name: 'Customer' ).id,
       body: params[:body],
       from: email,
-      subject: '',
+      subject: params[:title],
       internal: false,
       updated_by_id: customer.id,
       created_by_id: customer.id,

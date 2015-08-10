@@ -9,34 +9,45 @@
   <div class="js-settings"></div>
 
   <h2><%- @T('Settings') %></h2>
-  <table class="settings-list">
-    <thead>
-      <tr>
-        <th style="white-space: nowrap;"><%- @T('Option') %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><label><input type="checkbox" name="debug"/> <%- @T('Debug') %></label></td>
-      </tr>
-      <tr>
-        <td><label><input type="checkbox" name="modal"/> <%- @T('Modal Dialog') %></label></td>
-      </tr>
-      <tr>
-        <td><label><input type="checkbox"/> <%- @T('Debug') %></label></td>
-      </tr>
-    </tbody>
-  </table>
+  <form class="js-params">
+    <table class="settings-list">
+      <thead>
+        <tr>
+          <th style="white-space: nowrap;"><%- @T('Option') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><label><input type="text" name="title" value="<%- @T('Feedback Form') %>" style="display: inline; width: auto;"/> <%- @T('Title of the form.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="text" name="submit" value="<%- @T('Submit') %>" style="display: inline; width: auto;"/> <%- @T('Name of submit button.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="text" name="thank_you" value="<%- @T('Thank you for your inquiry!') %>" style="display: inline; width: auto;"/> <%- @T('Message after sending form.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" name="debug" value="true"/> <%- @T('Enable debugging for implementation.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" name="modal" value="true" checked/> <%- @T('Start modal dialog for form.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" name="noCSS" value="true"/> <%- @T('Load no CSS for form. You need to generate your own CSS for the form.') %></label></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
 
   <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
 
   <pre>
+&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
+
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
 &lt;script&gt;
 $('#feedback-form').zammad_form({
-  lang: 'de-de',
-  debug: true,
-  modal: false,
+<span class="js-modal-params"></span>
 });
 &lt;/script&gt;</pre>
 </div>
