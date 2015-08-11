@@ -1,0 +1,77 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Form') %> <small></small></h1>
+  </div>
+</div>
+<div>
+  <p><%- @T('With form you can add a formular to your web page witch directly generates a Ticket for you.') %></p>
+
+  <div class="js-settings"></div>
+
+  <h2><%- @T('Settings') %></h2>
+  <form class="js-params">
+
+    <fieldset>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-message-title"><%- @T('Title of the form') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-message-title" name="messageTitle" value="<%- @T('Feedback Form') %>">
+        </div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-message-submit"><%- @T('Name of form submit button') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-message-submit" name="messageSubmit" value="<%- @T('Submit') %>">
+        </div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-message-thank-you"><%- @T('Message after sending form') %></label>
+        </div>
+        <div class="controls">
+          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @T('Thank you for your inquiry! We\'ll contact you soon as possible.') %></textarea>
+        </div>
+      </div>
+    </fieldset>
+
+    <br>
+
+    <table class="settings-list">
+      <thead>
+        <tr>
+          <th style="white-space: nowrap;"><%- @T('Option') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><label><input type="checkbox" name="debug" value="true"/> <%- @T('Enable debugging for implementation.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" name="showTitle" value="true"/> <%- @T('Show title in form.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" name="modal" value="true" checked/> <%- @T('Start modal dialog for form.') %></label></td>
+        </tr>
+        <tr>
+          <td><label><input type="checkbox" name="noCSS" value="true"/> <%- @T('Load no CSS for form. You need to generate your own CSS for the form.') %></label></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+
+  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
+
+  <pre>
+&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
+
+&lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+$('#feedback-form').zammad_form({
+<span class="js-modal-params"></span>
+});
+&lt;/script&gt;</pre>
+</div>

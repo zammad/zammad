@@ -1,25 +1,27 @@
 class Sessions::Backend::TicketOverviewList
-  def initialize( user, client = nil, client_id = nil )
-    @user         = user
-    @client       = client
-    @client_id    = client_id
-    @last_change  = nil
+  def initialize( user, client = nil, client_id = nil, ttl = 6 )
+    @user               = user
+    @client             = client
+    @client_id          = client_id
+    @ttl                = ttl
+    @last_change        = nil
+    @last_ticket_change = nil
   end
 
   def load
 
     # get whole collection
     overviews = Ticket::Overviews.all(
-      :current_user => @user,
+      current_user: @user,
     )
     result = []
     overviews.each { |overview|
       overview_data = Ticket::Overviews.list(
-        :view         => overview.link,
-        :current_user => @user,
-        :array        => true,
+        view: overview.link,
+        current_user: @user,
+        array: true,
       )
-      data = { :list => overview_data, :index => overview }
+      data = { list: overview_data, index: overview }
       result.push data
     }
 
@@ -36,20 +38,24 @@ class Sessions::Backend::TicketOverviewList
   end
 
   def client_key
-    "as::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
   end
 
   def push
 
-    # check timeout
-    timeout = Sessions::CacheIn.get( self.client_key )
-    return if timeout
+    # check interval
+    return if Sessions::CacheIn.get( client_key )
 
-    # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 6.seconds } )
+    # reset check interval
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
-    items = self.load
+    # check if min one ticket has changed
+    last_ticket_change = Ticket.latest_change
+    return if last_ticket_change == @last_ticket_change
+    @last_ticket_change = last_ticket_change
 
+    # load current data
+    items = load
     return if !items
 
     # push overviews
@@ -66,11 +72,11 @@ class Sessions::Backend::TicketOverviewList
 
       # get groups
       group_ids = []
-      Group.where( :active => true ).each { |group|
+      Group.where(active: true).each { |group|
         group_ids.push group.id
       }
       agents = {}
-      Ticket::ScreenOptions.agents.each { |user|
+      User.of_role('Agent').each { |user|
         agents[ user.id ] = 1
       }
       users = {}
@@ -90,32 +96,32 @@ class Sessions::Backend::TicketOverviewList
 
       if !@client
         result = {
-          :event  => 'navupdate_ticket_overview',
-          :data   => item[:index],
+          event: 'navupdate_ticket_overview',
+          data: item[:index],
         }
         results.push result
       else
 
-        @client.log 'notify', "push overview_list for user #{ @user.id }"
+        @client.log "push overview_list for user #{@user.id}"
 
         # send update to browser
-        @client.send({
-          :data   => assets,
-          :event  => [ 'loadAssets' ]
-        })
-        @client.send({
-          :data   => {
-            :overview      => overview_data[:overview],
-            :ticket_ids    => overview_data[:ticket_ids],
-            :tickets_count => overview_data[:tickets_count],
-            :bulk => {
-              :group_id__owner_id => groups_users,
-              :owner_id           => [],
+        @client.send(
+          data: assets,
+          event: [ 'loadAssets' ]
+        )
+        @client.send(
+          data: {
+            view: item[:index].link.to_s,
+            overview: overview_data[:overview],
+            ticket_ids: overview_data[:ticket_ids],
+            tickets_count: overview_data[:tickets_count],
+            bulk: {
+              group_id__owner_id: groups_users,
+              owner_id: [],
             },
           },
-          :event      => [ 'ticket_overview_rebuild' ],
-          :collection => 'ticket_overview_' + item[:index].link.to_s,
-        })
+          event: [ 'ticket_overview_rebuild' ],
+        )
       end
     }
     return results if !@client

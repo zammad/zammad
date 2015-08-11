@@ -1,33 +1,75 @@
-<div class="content-two">
-  <div class="sidebar">
-    <div class="widgets"></div>
-    <div class="action"></div>
+<div class="tabsSidebar-holder">
+  <div class="scrollPageHeader tabsSidebar-sidebarSpacer">
+    <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
+    <div class="ticket-title"></div>
+    <div class="highlighter"></div>
+    <div class="overview-navigator"></div>
   </div>
-  <div class="main">
-
-    <div class="page-header ticket-zoom clearfix">
-      <div class="page-header-title">
-        <div class="ticket-title"></div>
+  <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
+    <div class="ticketZoom">
+      <div class="ticketZoom-controls">
+        <div class="highlighter"></div>
+        <div class="overview-navigator"></div>
       </div>
-      <div class="page-header-meta">
-        <% if @C( 'LastOverview' ) && @nav: %>
-          <div class="pull-right">
-            <span class="pagination-count"><%= @C( 'LastOverviewPosition' ) %>/<%= @C( 'LastOverviewTotal' ) %></span>
-            <% base_url ="#ticket/view/#{ @C('LastOverview') }/#{ @C('LastOverviewPosition') }/" %>
-            <ul class="pagination pagination-sm">
-              <li class="<% if @C('LastOverviewPosition') <= 1: %>disabled<% end %>"><a href="<%- base_url %>previous" title="<%- @Ti( 'previous Ticket in Overview' ) %>">«</a></li>
-              <li class="<% if @C('LastOverviewPosition') is @C('LastOverviewTotal'): %>disabled<% end %>"><a href="<%- base_url %>next" title="<%- @Ti( 'next Ticket in Overview' ) %>">»</a></li>
-            </ul>
-          </div>
-        <% end %>
+      <div class="ticketZoom-header">
+        <div class="flex vertical center">
+          <div class="js-avatar"></div>
+          <div class="ticket-title"></div>
+          <div class="ticket-meta"></div>
+        </div>
       </div>
+      <div class="ticket-article"></div>
+      <div class="article-new"></div>
     </div>
+  </div>
 
-    <div class="ticket-answer">
-      <div class="article-view"></div>
-      <div class="edit"></div>
+  <div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical"></div>
+
+  <div class="attributeBar">
+    <form class="form-inline is-closed hide" role="form">
+      <div class="form-group">
+        <label for="update_ticket_1_state_id123" class="input-group-addon u-clickable">State</label>
+        <select id="update_ticket_1_state_id123" class="form-control level-1" name="state_id">
+          <option value="4">closed</option>
+          <option value="1" selected="">new</option>
+          <option value="2">open</option>
+          <option value="3">pending</option>
+        </select>
+        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      </div>
+      <div class="form-group is-changed">
+        <label for="update_ticket_1_priority_id123" class="input-group-addon u-clickable">Priority</label>
+        <select id="update_ticket_1_priority_id123" class="form-control" name="priority_id">
+          <option value="1">1 low</option>
+          <option value="2" selected="">2 normal</option>
+          <option value="3">3 high</option>
+        </select>
+        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      </div>
+      <div class="form-group">
+        <label for="update_ticket_1_group_id123" class="input-group-addon u-clickable">Group</label>
+        <select id="update_ticket_1_group_id123" class="form-control" name="group_id">
+          <option value="4">FillGroup::450863</option>
+          <option value="3">FillGroup::918672</option>
+          <option value="2">Twitter</option>
+          <option value="1" selected="">Users</option>
+        </select>
+        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      </div>
+      <div class="form-group">
+        <label for="update_ticket_1_owner_id123" class="input-group-addon u-clickable">Owner</label>
+        <select id="update_ticket_1_owner_id123" class="form-control" name="owner_id">
+          <option value="">-</option>
+          <option value="3">Felix Niklas</option>
+        </select>
+        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      </div>
+    </form>
+    <form class="form-inline">
+    <div class="form-group">
+      <button type="submit" class="btn btn--primary js-submit pull-right"><%- @T('Update') %></button>
+      <button type="submit" class="btn js-reset pull-right hide"><%- @T('Discard your unsaved changes.') %></button>
     </div>
-
+    </form>
   </div>
 </div>
-

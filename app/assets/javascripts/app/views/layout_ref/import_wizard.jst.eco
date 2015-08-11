@@ -1,0 +1,97 @@
+<div class="main flex centered darkBackground">
+  <div class="import wizard">
+    <div class="wizard-slide" data-slide="home">
+      <h2>Import Tickets</h2>
+      <div class="wizard-body vertical justified">
+        <div class="import-source centered" data-source="otrs" data-target="otrs-prepare-plugin">
+          <img class="logo" src="<%= @C('image_path') + '/' + 'otrs-logo.png' %>" alt="OTRS" height="37">
+        </div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="otrs-prepare-plugin" data-hide="2330">
+      <h2>Create OTRS Migration Plugin</h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Personalise Migration Plugin ..
+        </p>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="otrs-plugin">
+      <h2>Download OTRS Migration Plugin</h2>
+      <div class="wizard-body vertical justified">
+        <p>
+          Download and install this personalised OTRS Migration Plugin on your OTRS System:
+        </p>
+        <a class="btn btn--primary btn--download" download data-action="reveal">
+          <svg class="icon-download"><use xlink:href="#icon-download" /></svg>  Personal Migration Plugin</a>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
+        <div class="btn btn--primary align-right hide" data-target="otrs-link">Next</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="otrs-link">
+      <h2>Link OTRS</h2>
+      <div class="wizard-body vertical justified">
+        <p>
+          Enter the link provided by the plugin at the end of the installation to link the two systems:
+        </p>
+        <div class="form-group fromGroup--standalone">
+          <label for="otrs-link">OTRS Link</label>
+          <div class="u-positionOrigin">
+            <input type="url" id="otrs-link" class="form-control" placeholder="http://otrs.company.de/otrs">
+            <div class="input-feedback centered">
+              <div class="small loading icon"></div>
+              <svg class="icon icon-error"><use xlink:href="#icon-diagonal-cross" /></svg>
+              <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" data-target="otrs-plugin">Go Back</a>
+        <div class="btn btn--primary align-right hide" data-target="otrs-export">Migrate OTRS Data</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="otrs-export">
+      <h2>OTRS Migration</h2>
+      <div class="wizard-body vertical justified">
+        <table class="progressTable">
+          <tr class="is-done">
+            <td><span class="js-count">42</span>/<span class="js-max">42</span>
+            <td><span>Users</span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="42" value="42"></progress></div>
+                <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+              </div>
+          </tr>
+          <tr class="is-done">
+            <td><span class="js-count">134318</span>/<span class="js-max">134318</span>
+            <td><span>Tickets</span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress max="134318" value="134318"></progress></div>
+                <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+              </div>
+          </tr>
+          <tr>
+            <td>
+            <td><span>Configuration</span>
+            <td class="progressTable-progressCell">
+              <div class="horizontal center">
+                <div class="flex"><progress value="0.3"></progress></div><!-- if there is no max, the value is between 0..1 -->
+                <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+              </div>
+          </tr>
+        </table>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a href="#dashboard" class="btn btn--primary align-center hide js-finished">Done</a>
+      </div>
+    </div>
+  </div>
+</div>

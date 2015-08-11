@@ -1,137 +1,113 @@
 class Sessions::Backend::Collections::Base
-  class << self; attr_accessor :model, :is_role, :is_not_role end
+  class << self; attr_accessor :model, :roles, :not_roles end
 
-  def initialize( user, client = nil, client_id = nil )
-    @user         = user
-    @client       = client
-    @client_id    = client_id
-    @last_change  = nil
-  end
-
-  def collection_key
-    "collections::load::#{ self.class.to_s }::#{ @user.id }"
+  def initialize( user, client = nil, client_id = nil, ttl )
+    @user        = user
+    @client      = client
+    @client_id   = client_id
+    @ttl         = ttl
+    @last_change = nil
   end
 
   def load
-#puts "-LOAD--------#{self.collection_key}"
-    # check timeout
-    cache = Sessions::CacheIn.get( self.collection_key )
-    return cache if @last_change && cache
-#puts "---REAL FETCH #{@user.id}"
-    # update last changed
-    last = self.class.model.constantize.select('updated_at').order('updated_at DESC').first
-    if last
-      @last_change = last.updated_at
-    end
-
-    # if no entry exists, remember last check
-    if !@last_change
-      @last_change = Time.now
-    end
 
     # get whole collection
-    all = self.class.model.constantize.all
-
-    # set new timeout
-    Sessions::CacheIn.set( self.collection_key, all, { :expires_in => 10.minutes } )
-
-    all
-  end
-
-  def changed?
-    # if no data has been delivered till now
-    return true if !@last_change
-
-    # check if update has been done
-    last = self.class.model.constantize.select('updated_at').order('updated_at DESC').first
-    return false if !last
-    return false if last.updated_at == @last_change
-
-    # delete collection cache
-    Sessions::CacheIn.delete( self.collection_key )
-
-    # collection has changed
-    true
+    self.class.model.constantize.all
   end
 
   def client_key
-    "collections::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+    "collections::load::#{self.class}::#{@user.id}::#{@client_id}"
   end
 
   def push
 
     # check role based access
-    if self.class.is_role
-      access = nil
-      self.class.is_role.each {|role|
-        if @user.is_role(role)
-          access = true
-        end
+    if self.class.roles
+      access = false
+      self.class.roles.each {|role|
+        next if !@user.role?(role)
+        access = true
+        break
       }
       return if !access
     end
-    if self.class.is_not_role
-      self.class.is_not_role.each {|role|
-        return if @user.is_role(role)
+    if self.class.not_roles
+      access = false
+      self.class.not_roles.each {|role|
+        next if @user.role?(role)
+        access = true
+        break
       }
+      return if !access
     end
 
     # check timeout
-    timeout = Sessions::CacheIn.get( self.client_key )
+    timeout = Sessions::CacheIn.get( client_key )
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 10.seconds } )
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
-    return if !self.changed?
-    data = self.load
+    # check if update has been done
+    last_change = self.class.model.constantize.latest_change
+    return if last_change == @last_change
+    @last_change = last_change
 
-    return if !data||data.empty?
+    # load current data
+    items = load
+
+    return if !items || items.empty?
+
+    # get relations of data
+    all = []
+    items.each {|item|
+      all.push item.attributes_with_associations
+    }
 
     # collect assets
     assets = {}
-    data.each {|item|
+    items.each {|item|
       assets = item.assets(assets)
     }
     if !@client
       return {
-        :collection => {
-          data.first.class.to_app_model => data,
+        collection: {
+          items.first.class.to_app_model => all,
         },
-        :assets => assets,
+        assets: assets,
       }
     end
-    @client.log 'notify', "push assets for push_collection #{ data.first.class.to_s } for user #{ @user.id }"
-    @client.send({
-      :data   => assets,
-      :event  => [ 'loadAssets' ],
-    })
+    @client.log "push assets for push_collection #{items.first.class} for user #{@user.id}"
+    @client.send(
+      data: assets,
+      event: [ 'loadAssets' ],
+    )
 
-    @client.log 'notify', "push push_collection #{ data.first.class.to_s } for user #{ @user.id }"
-    @client.send({
-      :event  => 'resetCollection',
-      :data   => {
-        data.first.class.to_app_model => data,
+    @client.log "push push_collection #{items.first.class} for user #{@user.id}"
+    @client.send(
+      event: 'resetCollection',
+      data: {
+        items.first.class.to_app_model => all,
       },
-    })
+    )
   end
 
   def self.model_set(model)
     @model = model
   end
 
-  def self.is_role_set(role)
-    if !@is_role
-      @is_role = []
+  def self.add_if_role(role)
+    if !@roles
+      @roles = []
     end
-    @is_role.push role
+    @roles.push role
   end
 
-  def self.is_not_role_set(role)
-    if !@is_not_role
-      @is_not_role = []
+  def self.add_if_not_role(role)
+    if !@not_roles
+      @not_roles = []
     end
-    @is_not_role.push role
+    @not_roles.push role
   end
 
 end

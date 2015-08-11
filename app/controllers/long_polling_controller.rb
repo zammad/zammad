@@ -12,7 +12,7 @@ class LongPollingController < ApplicationController
     if !client_id
       new_connection = true
       client_id = client_id_gen
-      log 'notice', "new client connection", client_id
+      log 'new client connection', client_id
     end
     if !params['data']
       params['data'] = {}
@@ -29,19 +29,19 @@ class LongPollingController < ApplicationController
 
       # error handling
       if params['data']['timestamp']
-        log 'notice', "request spool data > '#{Time.at( params['data']['timestamp'] ).to_s}'", client_id
+        log "request spool data > '#{Time.zone.at( params['data']['timestamp'] )}'", client_id
       else
-        log 'notice', "request spool init data", client_id
+        log 'request spool init data', client_id
       end
 
       if current_user
         spool = Sessions.spool_list( params['data']['timestamp'], current_user.id )
         spool.each { |item|
           if item[:type] == 'direct'
-            log 'notice', "send spool to (user_id=#{ current_user.id })", client_id
+            log "send spool to (user_id=#{current_user.id})", client_id
             Sessions.send( client_id, item[:message] )
           else
-            log 'notice', "send spool", client_id
+            log 'send spool', client_id
             Sessions.send( client_id, item[:message] )
           end
         }
@@ -49,20 +49,19 @@ class LongPollingController < ApplicationController
 
       # send spool:sent event to client
       sleep 0.2
-      log 'notice', "send spool:sent event", client_id
-      Sessions.send( client_id, { :event => 'spool:sent', :data => { :timestamp => Time.now.utc.to_i } } )
+      log 'send spool:sent event', client_id
+      Sessions.send( client_id, { event: 'spool:sent', data: { timestamp: Time.zone.now.utc.to_i } } )
     end
-
 
     # receive message
     if params['data']['action'] == 'login'
       user_id = session[:user_id]
       user = {}
       if user_id
-        user = User.find( user_id )
+        user = User.find( user_id ).attributes
       end
-      log 'notice', "send auth login (user_id #{user_id})", client_id
-      Sessions.create( client_id, user, { :type => 'ajax' } )
+      log "send auth login (user_id #{user_id})", client_id
+      Sessions.create( client_id, user, { type: 'ajax' } )
 
       # broadcast
     elsif params['data']['action'] == 'broadcast'
@@ -74,28 +73,28 @@ class LongPollingController < ApplicationController
 
           # broadcast to recipient list
           if params['data']['recipient'] && params['data']['recipient']['user_id']
-            params['data']['recipient']['user_id'].each { |user_id|
-              if local_client[:user][:id] == user_id
-                log 'notice', "send broadcast from (#{client_id.to_s}) to (user_id #{user_id})", local_client_id
+            params['data']['recipient']['user_id'].each { |loop_user_id|
+              if local_client[:user]['id'].to_s == loop_user_id.to_s
+                log "send broadcast from (#{client_id}) to (user_id #{loop_user_id})", local_client_id
                 Sessions.send( local_client_id, params['data'] )
               end
             }
             # broadcast every client
           else
-            log 'notice', "send broadcast from (#{client_id.to_s})", local_client_id
+            log "send broadcast from (#{client_id})", local_client_id
             Sessions.send( local_client_id, params['data'] )
           end
         else
-          log 'notice', "do not send broadcast to it self", client_id
+          log 'do not send broadcast to it self', client_id
         end
       }
     end
 
     if new_connection
-      result = { :client_id => client_id }
-      render :json => result
+      result = { client_id: client_id }
+      render json: result
     else
-      render :json => {}
+      render json: {}
     end
   end
 
@@ -105,7 +104,7 @@ class LongPollingController < ApplicationController
     # check client id
     client_id = client_id_verify
     if !client_id
-      render :json => { :error => 'Invalid client_id receive!' }, :status => :unprocessable_entity
+      render json: { error: 'Invalid client_id receive!' }, status: :unprocessable_entity
       return
     end
 
@@ -113,7 +112,7 @@ class LongPollingController < ApplicationController
     begin
 
       # update last ping
-      4.times {|loop|
+      4.times {
         sleep 0.25
       }
       #sleep 1
@@ -121,27 +120,27 @@ class LongPollingController < ApplicationController
 
       # set max loop time to 24 sec. because of 30 sec. timeout of mod_proxy
       count = 12
-      while true
+      loop do
         count = count - 1
         queue = Sessions.queue( client_id )
         if queue && queue[0]
-          #          puts "send " + queue.inspect + client_id.to_s
-          render :json => queue
+          logger.debug "send #{queue.inspect} to #{client_id}"
+          render json: queue
           return
         end
-        8.times {|loop|
+        8.times {
           sleep 0.25
         }
         #sleep 2
         if count == 0
-          render :json => { :action => 'pong' }
+          render json: { action: 'pong' }
           return
         end
       end
-    rescue Exception => e
-      puts e.inspect
-      puts e.backtrace
-      render :json => { :error => 'Invalid client_id in receive loop!' }, :status => :unprocessable_entity
+    rescue => e
+      logger.error e.inspect
+      logger.error e.backtrace
+      render json: { error: 'Invalid client_id in receive loop!' }, status: :unprocessable_entity
       return
     end
   end
@@ -149,21 +148,17 @@ class LongPollingController < ApplicationController
   private
 
   def client_id_gen
-    rand(9999999999).to_s
+    rand(9_999_999_999).to_s
   end
 
   def client_id_verify
     return if !params[:client_id]
     sessions = Sessions.sessions
     return if !sessions.include?( params[:client_id].to_s )
-    return params[:client_id].to_s
+    params[:client_id].to_s
   end
 
-  def log( level, data, client_id = '-' )
-    if false
-      return if level == 'debug'
-    end
-    puts "#{Time.now}:client(#{ client_id }) #{ data }"
-    #      puts "#{Time.now}:#{ level }:client(#{ client_id }) #{ data }"
+  def log( data, client_id = '-' )
+    logger.info "client(#{client_id}) #{data}"
   end
 end

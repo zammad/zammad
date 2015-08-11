@@ -6,7 +6,7 @@ Released under the MIT License
 Events =
   bind: (ev, callback) ->
     evs   = ev.split(' ')
-    @_callbacks = {} unless @hasOwnProperty('_callbacks') and @_callbacks
+    @_callbacks or= {} unless @hasOwnProperty('_callbacks')
     for name in evs
       @_callbacks[name] or= []
       @_callbacks[name].push(callback)
@@ -18,12 +18,11 @@ Events =
       callback.apply(this, arguments)
 
   trigger: (args...) ->
-    ev = args.shift()
-    list = @hasOwnProperty('_callbacks') and @_callbacks?[ev]
+    ev   = args.shift()
+    list = @_callbacks?[ev]
     return unless list
     for callback in list
-      if callback.apply(this, args) is false
-        break
+      break if callback.apply(this, args) is false
     true
 
   listenTo: (obj, ev, callback) ->
@@ -37,11 +36,11 @@ Events =
     obj.bind ev, handler = ->
       idx = -1
       for lt, i in listeningToOnce when lt.obj is obj
-        idx = i if lt.ev is ev and lt.callback is callback
+        idx = i if lt.ev is ev and lt.callback is handler
       obj.unbind(ev, handler)
       listeningToOnce.splice(idx, 1) unless idx is -1
       callback.apply(this, arguments)
-    listeningToOnce.push {obj, ev, callback, handler}
+    listeningToOnce.push {obj, ev, callback: handler}
     this
 
   stopListening: (obj, events, callback) ->
@@ -49,7 +48,7 @@ Events =
       for listeningTo in [@listeningTo, @listeningToOnce]
         continue unless listeningTo
         for lt in listeningTo
-          lt.obj.unbind(lt.ev, lt.handler or lt.callback)
+          lt.obj.unbind(lt.ev, lt.callback)
       @listeningTo = undefined
       @listeningToOnce = undefined
 
@@ -60,16 +59,18 @@ Events =
         for ev in events
           for idx in [listeningTo.length-1..0]
             lt = listeningTo[idx]
-            continue if callback and (lt.handler or lt.callback) isnt callback
+            continue unless lt.obj is obj
+            continue if callback and lt.callback isnt callback
             if (not ev) or (ev is lt.ev)
-              lt.obj.unbind(lt.ev, lt.handler or lt.callback)
+              lt.obj.unbind(lt.ev, lt.callback)
               listeningTo.splice(idx, 1) unless idx is -1
             else if ev
               evts = lt.ev.split(' ')
               if ev in evts
                 evts = (e for e in evts when e isnt ev)
                 lt.ev = $.trim(evts.join(' '))
-                lt.obj.unbind(ev, lt.handler or lt.callback)
+                lt.obj.unbind(ev, lt.callback)
+    this
 
   unbind: (ev, callback) ->
     if arguments.length is 0
@@ -90,7 +91,7 @@ Events =
         break
     this
 
-Events.on = Events.bind
+Events.on  = Events.bind
 Events.off = Events.unbind
 
 Log =
@@ -132,6 +133,7 @@ class Module
 
 class Model extends Module
   @extend Events
+  @include Events
 
   @records    : []
   @irecords   : {}
@@ -158,21 +160,23 @@ class Model extends Module
 
   @exists: (id) -> Boolean @irecords[id]
 
-  @addRecord: (record, options = {}) ->
-    if record.id and @irecords[record.id]
-      @irecords[record.id].remove(options)
-      record = @irecords[record.id].load(record) unless options.clear
-    record.id or= record.cid
-    @irecords[record.id]  ?= record
-    @irecords[record.cid] ?= record
-    @records.push(record)
+  @addRecord: (record,idx) ->
+    if root = @irecords[record.id or record.cid]
+      root.refresh(record)
+    else
+      record.id or= record.cid
+      @irecords[record.id] = @irecords[record.cid] = record
+      if idx isnt undefined
+        @records.splice(idx,0,record)
+      else
+        @records.push(record)
+    record
 
   @refresh: (values, options = {}) ->
     @deleteAll() if options.clear
-
     records = @fromJSON(values)
-    records = [records] unless isArray(records)
-    @addRecord(record, options) for record in records
+    records = [records] unless Array.isArray(records)
+    @addRecord(record) for record in records
     @sort()
 
     result = @cloneArray(records)
@@ -248,11 +252,14 @@ class Model extends Module
   @toJSON: ->
     @records
 
+  @beforeFromJSON: (objects) -> objects
+
   @fromJSON: (objects) ->
     return unless objects
     if typeof objects is 'string'
       objects = JSON.parse(objects)
-    if isArray(objects)
+    objects = @beforeFromJSON(objects)
+    if Array.isArray(objects)
       for value in objects
         if value instanceof this
           value
@@ -288,7 +295,7 @@ class Model extends Module
     super
     if @constructor.uuid? and typeof @constructor.uuid is 'function'
       @cid = @constructor.uuid()
-      @id = @cid unless @id
+      @id  = @cid unless @id
     else
       @cid = atts?.cid or @constructor.uid('c-')
     @load atts if atts
@@ -329,13 +336,13 @@ class Model extends Module
     unless options.validate is false
       error = @validate()
       if error
-        @trigger('error', error)
+        @trigger('error', this, error)
         return false
 
-    @trigger('beforeSave', options)
+    @trigger('beforeSave', this, options)
     record = if @isNew() then @create(options) else @update(options)
     @stripCloneAttrs()
-    @trigger('save', options)
+    @trigger('save', record, options)
     record
 
   stripCloneAttrs: ->
@@ -375,14 +382,13 @@ class Model extends Module
 
   destroy: (options = {}) ->
     options.clear ?= true
-    @trigger('beforeDestroy', options)
+    @trigger('beforeDestroy', this, options)
     @remove(options)
     @destroyed = true
     # handle events
-    @trigger('destroy', options)
-    @trigger('change', 'destroy', options)
-    if @listeningTo
-      @stopListening()
+    @trigger('destroy', this, options)
+    @trigger('change', this, 'destroy', options)
+    @stopListening() if @listeningTo
     @unbind()
     this
 
@@ -392,7 +398,9 @@ class Model extends Module
       delete atts.id
     else
       atts.cid = @cid
-    new @constructor(atts)
+    record = new @constructor(atts)
+    @_callbacks and record._callbacks = @_callbacks unless newRecord
+    record
 
   clone: ->
     createObject(this)
@@ -403,12 +411,16 @@ class Model extends Module
     @load(original.attributes())
     original
 
-  refresh: (data) ->
+  refresh: (atts) ->
+    atts = @constructor.fromJSON(atts)
+    # ID change, need to do some shifting
+    if atts.id and @id isnt atts.id
+      @changeID(atts.id)
     # go to the source and load attributes
-    root = @constructor.irecords[@id]
-    root.load(data)
-    @trigger('refresh')
-    @
+    @constructor.irecords[@id].load(atts)
+    @trigger('refresh', this)
+    #@trigger('change', this, 'refresh') # do not trigger change on refresh, compat. to spine 1.3.x and lower
+    this
 
   toJSON: ->
     @attributes()
@@ -438,7 +450,7 @@ class Model extends Module
   # Private
 
   update: (options) ->
-    @trigger('beforeUpdate', options)
+    @trigger('beforeUpdate', this, options)
 
     records = @constructor.irecords
     records[@id].load @attributes()
@@ -446,60 +458,43 @@ class Model extends Module
     @constructor.sort()
 
     clone = records[@id].clone()
-    clone.trigger('update', options)
-    clone.trigger('change', 'update', options)
+    clone.trigger('update', clone, options)
+    clone.trigger('change', clone, 'update', options)
     clone
 
   create: (options) ->
-    @trigger('beforeCreate', options)
+    @trigger('beforeCreate', this, options)
     @id or= @cid
 
     record = @dup(false)
-    @constructor.addRecord(record)
+    @constructor.addRecord(record,options.idx)
     @constructor.sort()
 
-    clone        = record.clone()
-    clone.trigger('create', options)
-    clone.trigger('change', 'create', options)
+    clone = record.clone()
+    clone.trigger('create', clone, options)
+    clone.trigger('change', clone, 'create', options)
     clone
 
-  bind: (events, callback) ->
-    @constructor.bind events, binder = (record) =>
-      if record && @eql(record)
-        callback.apply(this, arguments)
-    # create a wrapper function to be called with 'unbind' for each event
-    for singleEvent in events.split(' ')
-      do (singleEvent) =>
-        @constructor.bind "unbind", unbinder = (record, event, cb) =>
-          if record && @eql(record)
-            return if event and event isnt singleEvent
-            return if cb and cb isnt callback
-            @constructor.unbind(singleEvent, binder)
-            @constructor.unbind("unbind", unbinder)
-    this
+  bind: ->
+    record = @constructor.irecords[@id] or this
+    Events.bind.apply record, arguments
 
-  one: (events, callback) ->
-    @bind events, handler = =>
-      @unbind(events, handler)
-      callback.apply(this, arguments)
+  one: ->
+    record = @constructor.irecords[@id] or this
+    Events.one.apply record, arguments
 
-  trigger: (args...) ->
-    args.splice(1, 0, this)
-    @constructor.trigger(args...)
+  unbind: ->
+    record = @constructor.irecords[@id] or this
+    Events.unbind.apply record, arguments
 
-  listenTo: -> Events.listenTo.apply @, arguments
-  listenToOnce: -> Events.listenToOnce.apply @, arguments
-  stopListening: -> Events.stopListening.apply @, arguments
+  trigger: ->
+    Events.trigger.apply this, arguments # fire off the instance event
+    return true if arguments[0] is 'refresh' # Don't trigger refresh events, because ... ?
+    @constructor.trigger arguments... # fire off the class event
 
-  unbind: (events, callback) ->
-    if arguments.length is 0
-      @trigger('unbind')
-    else if events
-      for event in events.split(' ')
-        @trigger('unbind', event, callback)
-
-Model::on = Model::bind
+Model::on  = Model::bind
 Model::off = Model::unbind
+
 
 class Controller extends Module
   @include Events
@@ -514,9 +509,8 @@ class Controller extends Module
     for key, value of @options
       @[key] = value
 
-    @el  = document.createElement(@tag) unless @el
-    @el  = $(@el)
-    @$el = @el
+    @el = document.createElement(@tag) unless @el
+    @el = $(@el)
 
     @el.addClass(@className) if @className
     @el.attr(@attributes) if @attributes
@@ -542,7 +536,7 @@ class Controller extends Module
     @unbind()
     @stopListening()
 
-  $: (selector) -> $(selector, @el)
+  $: (selector) -> @el.find(selector)
 
   delegateEvents: (events) ->
     for key, method of events
@@ -619,14 +613,6 @@ createObject = Object.create or (o) ->
   Func.prototype = o
   new Func()
 
-isArray = (value) ->
-  Object::toString.call(value) is '[object Array]'
-
-isBlank = (value) ->
-  return true unless value
-  return false for key of value
-  true
-
 makeArray = (args) ->
   Array::slice.call(args, 0)
 
@@ -635,9 +621,7 @@ makeArray = (args) ->
 Spine = @Spine   = {}
 module?.exports  = Spine
 
-Spine.version    = '1.3.2'
-Spine.isArray    = isArray
-Spine.isBlank    = isBlank
+Spine.version    = '1.5.0'
 Spine.$          = $
 Spine.Events     = Events
 Spine.Log        = Log

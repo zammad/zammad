@@ -1,75 +1,160 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class SearchController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
+
+  # GET|POST /api/v1/search/:objects
+
+  def search_generic
+
+    # enable search only for agents and admins
+    if !current_user.role?(Z_ROLENAME_AGENT) && !current_user.role?(Z_ROLENAME_ADMIN)
+      response_access_deny
+      return true
+    end
+
+    # get params
+    query = params[:query]
+    limit = params[:limit] || 10
+
+    # convert objects string into array of class names
+    # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
+    objects = params[:objects].split('-').map(&:camelize)
+    search_tickets = objects.delete('Ticket')
+
+    # try search index backend
+    assets = {}
+    result = []
+    if SearchIndexBackend.enabled?
+      items = SearchIndexBackend.search( query, limit, objects )
+      items.each { |item|
+        require item[:type].to_filename
+        record = Kernel.const_get( item[:type] ).find( item[:id] )
+        assets = record.assets(assets)
+        result.push item
+      }
+
+      # do ticket query by Ticket class to handle ticket permissions
+      if search_tickets
+        tickets = Ticket.search(
+          query: query,
+          limit: limit,
+          current_user: current_user,
+        )
+        tickets.each do |ticket|
+          assets = ticket.assets(assets)
+          item = {
+            id: ticket.id,
+            type: 'Ticket',
+          }
+          result.push item
+        end
+      end
+    else
+
+      # do query
+      objects.each { |object|
+
+        found_objects = object.constantize.search(
+          query:        query,
+          limit:        limit,
+          current_user: current_user,
+        )
+
+        found_objects.each do |found_object|
+          item = {
+            id:   found_object.id,
+            type: found_object.class.to_s
+          }
+          result.push item
+          assets = found_object.assets(assets)
+        end
+      }
+    end
+
+    render json: {
+      assets: assets,
+      result: result,
+    }
+  end
 
   # GET /api/v1/search
   def search
 
-    # build result list
-    tickets = Ticket.search(
-      :limit        => params[:limit],
-      :query        => params[:term],
-      :current_user => current_user,
-    )
-    assets = {}
-    ticket_result = []
-    tickets.each do |ticket|
-      assets = ticket.assets(assets)
-      ticket_result.push ticket.id
-    end
+    # get params
+    query = params[:term]
+    limit = params[:limit] || 10
 
-    # do query
-    users = User.search(
-      :query        => params[:term],
-      :limit        => params[:limit],
-      :current_user => current_user,
-    )
-    user_result = []
-    users.each do |user|
-      user_result.push user.id
-      assets = user.assets(assets)
-    end
+    assets  = {}
+    result  = []
+    objects = %w( Ticket User Organization )
+    if SearchIndexBackend.enabled?
 
-    organizations = Organization.search(
-      :query        => params[:term],
-      :limit        => params[:limit],
-      :current_user => current_user,
-    )
+      # to ticket search in serparate call
+      objects.delete('Ticket')
 
-    organization_result = []
-    organizations.each do |organization|
-      organization_result.push organization.id
-      assets = organization.assets(assets)
-    end
+      # to query search index backend (excluse tickets here, see below)
+      found_objects = {}
+      items = SearchIndexBackend.search( query, limit, objects )
+      items.each { |item|
+        require item[:type].to_filename
+        record = Kernel.const_get( item[:type] ).find( item[:id] )
+        assets = record.assets(assets)
 
-    result = []
-    if ticket_result[0]
-      data = {
-        :name => 'Ticket',
-        :ids  => ticket_result,
+        found_objects[ item[:type] ] ||= []
+        found_objects[ item[:type] ].push item[:id]
       }
-      result.push data
-    end
-    if user_result[0]
-      data = {
-        :name => 'User',
-        :ids  => user_result,
+
+      # do ticket query by Ticket class to handle ticket permissions
+      tickets = Ticket.search(
+        query: query,
+        limit: limit,
+        current_user: current_user,
+      )
+      tickets.each do |ticket|
+        found_objects[ 'Ticket' ] ||= []
+        found_objects[ 'Ticket' ].push ticket.id
+      end
+
+      # generate whole result
+      found_objects.each { |object, object_ids|
+
+        data = {
+          name: object,
+          ids:  object_ids,
+        }
+        result.push data
       }
-      result.push data
-    end
-    if organization_result[0]
-      data = {
-        :name => 'Organization',
-        :ids  => organization_result,
+    else
+
+      objects.each { |object|
+
+        found_objects = object.constantize.search(
+          query:        query,
+          limit:        limit,
+          current_user: current_user,
+        )
+
+        object_ids = []
+        found_objects.each do |found_object|
+          object_ids.push found_object.id
+          assets = found_object.assets(assets)
+        end
+
+        next if object_ids.empty?
+
+        data = {
+          name: object,
+          ids:  object_ids,
+        }
+        result.push data
       }
-      result.push data
     end
 
     # return result
-    render :json => {
-      :assets => assets,
-      :result => result,
+    render json: {
+      assets: assets,
+      result: result,
     }
   end
 

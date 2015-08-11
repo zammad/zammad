@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 module Ticket::Overviews
 
 =begin
@@ -19,20 +18,20 @@ returns
   def self.all (data)
 
     # get customer overviews
-    if data[:current_user].is_role('Customer')
-      role = data[:current_user].is_role( 'Customer' )
+    if data[:current_user].role?('Customer')
+      role = Role.find_by( name: 'Customer' )
       if data[:current_user].organization_id && data[:current_user].organization.shared
-        overviews = Overview.where( :role_id => role.id, :active => true )
+        overviews = Overview.where( role_id: role.id, active: true )
       else
-        overviews = Overview.where( :role_id => role.id, :organization_shared => false, :active => true )
+        overviews = Overview.where( role_id: role.id, organization_shared: false, active: true )
       end
       return overviews
     end
 
     # get agent overviews
-    role = data[:current_user].is_role( 'Agent' )
-    return if !role
-    Overview.where( :role_id => role.id, :active => true )
+    return if !data[:current_user].role?( 'Agent' )
+    role = Role.find_by( name: 'Agent' )
+    Overview.where( role_id: role.id, active: true )
   end
 
 =begin
@@ -56,7 +55,7 @@ returns
 
   def self.list (data)
 
-    overviews = self.all(data)
+    overviews = all(data)
     return if !overviews
 
     # build up attributes hash
@@ -72,18 +71,23 @@ returns
       end
 
       # replace e.g. 'current_user.id' with current_user.id
-      overview.condition.each { |item, value |
-        if value && value.class.to_s == 'String'
-          parts = value.split( '.', 2 )
-          if parts[0] && parts[1] && parts[0] == 'current_user'
-            overview.condition[item] = data[:current_user][parts[1].to_sym]
-          end
-        end
+      overview.condition.each { |item, value|
+
+        next if !value
+        next if value.class.to_s != 'String'
+
+        parts = value.split( '.', 2 )
+
+        next if !parts[0]
+        next if !parts[1]
+        next if parts[0] != 'current_user'
+
+        overview.condition[item] = data[:current_user][parts[1].to_sym]
       }
     }
 
     if data[:view] && !overview_selected
-      raise "No such view '#{ data[:view] }'"
+      fail "No such view '#{data[:view]}'"
     end
 
     # sortby
@@ -107,15 +111,15 @@ returns
 
     #    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
     # get only tickets with permissions
-    if data[:current_user].is_role('Customer')
-      group_ids = Group.select( 'groups.id' ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
+    if data[:current_user].role?('Customer')
+      group_ids = Group.select( 'groups.id' )
+                  .where( 'groups.active = ?', true )
+                  .map( &:id )
     else
-      group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', [ data[:current_user].id ] ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
+      group_ids = Group.select( 'groups.id' ).joins(:users)
+                  .where( 'groups_users.user_id = ?', [ data[:current_user].id ] )
+                  .where( 'groups.active = ?', true )
+                  .map( &:id )
     end
 
     # overview meta for navbar
@@ -126,17 +130,17 @@ returns
       overviews.each { |overview|
 
         # get count
-        count = Ticket.where( :group_id => group_ids ).where( _condition( overview.condition ) ).count()
+        count = Ticket.where( group_id: group_ids ).where( _condition( overview.condition ) ).count()
 
         # get meta info
         all = {
-          :name => overview.name,
-          :prio => overview.prio,
-          :link => overview.link,
+          name: overview.name,
+          prio: overview.prio,
+          link: overview.link,
         }
 
         # push to result data
-        result.push all.merge( { :count => count } )
+        result.push all.merge( { count: count } )
       }
       return result
     end
@@ -147,48 +151,49 @@ returns
       if overview_selected.group_by && !overview_selected.group_by.empty?
         order_by = overview_selected.group_by + '_id, ' + order_by
       end
-      tickets = Ticket.select( 'id' ).
-      where( :group_id => group_ids ).
-      where( _condition( overview_selected.condition ) ).
-      order( order_by ).
-      limit( 500 )
+      tickets = Ticket.select( 'id' )
+                .where( group_id: group_ids )
+                .where( _condition( overview_selected.condition ) )
+                .order( order_by )
+                .limit( 500 )
 
       ticket_ids = []
       tickets.each { |ticket|
         ticket_ids.push ticket.id
       }
 
-      tickets_count = Ticket.where( :group_id => group_ids ).
-      where( _condition( overview_selected.condition ) ).
-      count()
+      tickets_count = Ticket.where( group_id: group_ids )
+                      .where( _condition( overview_selected.condition ) )
+                      .count()
 
       return {
-        :ticket_ids    => ticket_ids,
-        :tickets_count => tickets_count,
-        :overview      => overview_selected_raw,
+        ticket_ids: ticket_ids,
+        tickets_count: tickets_count,
+        overview: overview_selected_raw,
       }
     end
 
     # get tickets for overview
     data[:start_page] ||= 1
-    tickets = Ticket.where( :group_id => group_ids ).
-    where( _condition( overview_selected.condition ) ).
-    order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )#.
-    #      limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] ).
-    #      offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
+    tickets = Ticket.where( group_id: group_ids )
+              .where( _condition( overview_selected.condition ) )
+              .order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )
+    #          .limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] )
+    #          .offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
 
-    tickets_count = Ticket.where( :group_id => group_ids ).
-    where( _condition( overview_selected.condition ) ).
-    count()
+    tickets_count = Ticket.where( group_id: group_ids )
+                    .where( _condition( overview_selected.condition ) )
+                    .count()
 
-    return {
-      :tickets       => tickets,
-      :tickets_count => tickets_count,
-      :overview      => overview_selected_raw,
+    {
+      tickets: tickets,
+      tickets_count: tickets_count,
+      overview: overview_selected_raw,
     }
   end
 
   private
+
   def self._condition(condition)
     sql  = ''
     bind = [nil]
@@ -200,7 +205,7 @@ returns
         sql += " #{key} IN (?)"
         bind.push value
       elsif value.class == Hash || value.class == ActiveSupport::HashWithIndifferentAccess
-        time = Time.now
+        time = Time.zone.now
         if value['area'] == 'minute'
           if value['direction'] == 'last'
             time -= value['count'].to_i * 60
@@ -245,6 +250,6 @@ returns
       end
     }
     bind[0] = sql
-    return bind
+    bind
   end
 end

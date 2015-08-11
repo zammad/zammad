@@ -21,7 +21,7 @@ class App.Auth
     )
 
   @loginCheck: ->
-    App.Log.notice 'Auth', 'loginCheck'
+    App.Log.debug 'Auth', 'loginCheck'
     App.Ajax.request(
       id:    'login_check'
       async: false
@@ -37,7 +37,7 @@ class App.Auth
     )
 
   @logout: ->
-    App.Log.notice 'Auth', 'logout'
+    App.Log.debug 'Auth', 'logout'
     App.Ajax.request(
       id:   'logout'
       type: 'DELETE'
@@ -52,7 +52,7 @@ class App.Auth
     )
 
   @_login: (data, type) ->
-    App.Log.notice 'Auth', '_login:success', data
+    App.Log.debug 'Auth', '_login:success', data
 
     # if session is not valid
     if data.error
@@ -61,13 +61,12 @@ class App.Auth
       for key, value of data.config
         App.Config.set( key, value )
 
+      # refresh default collections
+      if data.collections
+        App.Collection.resetCollections( data.collections )
+
       # empty session
       App.Session.init()
-
-      # rebuild navbar with new navbar items
-      App.Event.trigger( 'auth' )
-      App.Event.trigger( 'auth:logout' )
-      App.Event.trigger( 'ui:rerender' )
 
       # update model definition
       if data.models
@@ -75,6 +74,15 @@ class App.Auth
           for attribute in attributes
             App[model].attributes.push attribute.name
             App[model].configure_attributes.push attribute
+
+      # set locale
+      locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
+      App.i18n.set( locale )
+
+      # rebuild navbar with new navbar items
+      App.Event.trigger( 'auth' )
+      App.Event.trigger( 'auth:logout' )
+      App.Event.trigger( 'ui:rerender' )
 
       return false;
 
@@ -102,9 +110,8 @@ class App.Auth
       App.Collection.loadAssets( data.assets )
 
     # store user data
-    session = App.User.fullLocal(data.session.id)
-    for key, value of session
-      App.Session.set( key, value )
+    sessionUser = App.User.fullLocal(data.session.id)
+    App.Session.set( sessionUser )
 
     # trigger auth ok with new session data
     App.Event.trigger( 'auth', data.session )
@@ -114,7 +121,7 @@ class App.Auth
     if preferences && preferences.locale
       locale = preferences.locale
     if !locale
-      locale = window.navigator.userLanguage || window.navigator.language || 'en'
+      locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
     App.i18n.set( locale )
 
     App.Event.trigger( 'auth:login', data.session )
@@ -122,7 +129,7 @@ class App.Auth
 
 
   @_logout: (data) ->
-    App.Log.notice 'Auth', '_logout'
+    App.Log.debug 'Auth', '_logout', data
 
     # empty session
     App.Session.init()
@@ -132,8 +139,8 @@ class App.Auth
     App.Event.trigger( 'ui:rerender' )
     App.Event.trigger( 'clearStore' )
 
-  @_loginError: (xhr, statusText, error) ->
-    App.Log.notice 'Auth', '_loginError:error'
+  @_loginError: ->
+    App.Log.error 'Auth', '_loginError:error'
 
     # empty session
     App.Session.init()

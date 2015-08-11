@@ -1,0 +1,10 @@
+<div class="main flex vertical centered darkBackground">
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <div class="setup wizard">
+    <div class="wizard-slide">
+      <div class="wizard-body vertical centered">
+        <%- @T(@message) %>
+      </div>
+    </div>
+  </div>
+</div>

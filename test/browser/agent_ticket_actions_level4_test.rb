@@ -3,66 +3,130 @@ require 'browser_test_helper'
 
 class AgentTicketActionLevel4Test < TestCase
   def test_agent_ticket_create_with_reload
-    tests = [
-      {
-        :name     => 'agent ticket create with reload',
-        :action   => [
-          {
-            :execute => 'close_all_tasks',
-          },
 
-          # create ticket
-          {
-            :execute       => 'create_ticket',
-            :group         => 'Users',
-            :subject       => 'some subject 4 -  123äöü',
-            :body          => 'some body 4 -  123äöü',
-            :do_not_submit => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
 
-          # reload instances, verify autosave
-          {
-            :execute      => 'reload',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-
-          {
-            :execute => 'click',
-            :css     => '.active .form-actions button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 5,
-          },
-          {
-            :execute => 'check',
-            :element => :url,
-            :result  => '#ticket/zoom/',
-          },
-
-          # check ticket
-          {
-            :execute      => 'match',
-            :css          => '.active div.ticket-article',
-            :value        => 'some body 4 -  123äöü',
-            :match_result => true,
-          },
-
-          # close task/cleanup
-          {
-            :execute => 'click',
-            :css     => '#task [data-type="close"]',
-          },
-        ],
+    # create ticket
+    ticket_create(
+      data: {
+        customer: 'nicole',
+        group: 'Users',
+        title: 'some subject 4 - 123äöü',
+        body: 'some body 4 - 123äöü',
       },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
+      do_not_submit: true,
+    )
+    sleep 8
+
+    # check if customer is shown in sidebar
+    match(
+      css: '.active .sidebar[data-tab="customer"]',
+      value: 'nicole',
+    )
+
+    # check task title
+    verify_task(
+      data: {
+        title: 'some subject 4 - 123äöü',
+      }
+    )
+
+    # check page title
+    verify_title(
+      value: 'some subject 4 - 123äöü',
+    )
+
+    # reload instances, verify autosave
+    reload()
+
+    # check if customer is still shown in sidebar
+    watch_for(
+      css: '.active .sidebar[data-tab="customer"]',
+      value: 'nicole',
+    )
+
+    # finally create ticket
+    click( css: '.content.active button.js-submit' )
+    sleep 5
+
+    location_check(
+      url: '#ticket/zoom/',
+    )
+
+    # check ticket
+    match(
+      css: '.active div.ticket-article',
+      value: 'some body 4 - 123äöü',
+    )
+
+    ticket_id = nil
+    if @browser.current_url =~ %r{ticket/zoom/(.+?)$}i
+      ticket_id = $1
+    end
+
+    # check task title
+    verify_task(
+      data: {
+        title: 'some subject 4 - 123äöü',
+      }
+    )
+
+    # check page title
+    verify_title(
+      value: 'some subject 4 - 123äöü',
+    )
+
+    # check if task is not marked as modified
+    exists(
+      css: ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"]",
+    )
+    exists_not(
+      css: ".tasks a[href=\"#ticket/zoom/#{ticket_id}\"].is-modified",
+    )
+
+    # reload
+    reload()
+    sleep 5
+
+    # check task title
+    verify_task(
+      data: {
+        title: 'some subject 4 - 123äöü',
+      }
+    )
+
+    # check page title
+    verify_title(
+      value: 'some subject 4 - 123äöü',
+    )
+
+    # go to dashboard
+    location(
+      url: browser_url
+    )
+    sleep 5
+
+    # check page title
+    verify_title(
+      value: 'Dashboard',
+    )
+
+    # reload
+    reload()
+    sleep 5
+
+    # check page title
+    verify_title(
+      value: 'Dashboard',
+    )
+
+    # cleanup
+    tasks_close_all()
   end
 end

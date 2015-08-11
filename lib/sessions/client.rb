@@ -2,9 +2,9 @@ class Sessions::Client
 
   def initialize( client_id )
     @client_id = client_id
-    self.log 'notify', "---client start ws connection---"
-    self.fetch
-    self.log 'notify', "---client exiting ws connection---"
+    log '---client start ws connection---'
+    fetch
+    log '---client exiting ws connection---'
   end
 
   def fetch
@@ -21,14 +21,14 @@ class Sessions::Client
     backend_pool = []
     user_id_last_run = nil
     loop_count = 0
-    while true
+    loop do
 
       # get connection user
       session_data = Sessions.get( @client_id )
       return if !session_data
       return if !session_data[:user]
-      return if !session_data[:user][:id]
-      user = User.lookup( :id => session_data[:user][:id] )
+      return if !session_data[:user]['id']
+      user = User.lookup( id: session_data[:user]['id'] )
       return if !user
 
       # init new backends
@@ -36,8 +36,8 @@ class Sessions::Client
         user_id_last_run = user.id
 
         # release old objects
-        backend_pool.each {|pool|
-          pool = nil
+        backend_pool.collect! {
+          nil
         }
 
         # create new pool
@@ -49,14 +49,12 @@ class Sessions::Client
       end
 
       loop_count += 1
-      self.log 'notice', "---client - looking for data of user #{user.id}"
+      log "---client - looking for data of user #{user.id}"
 
       # push messages from backends
-      backend_pool.each {|pool|
-        pool.push
-      }
+      backend_pool.each(&:push)
 
-      self.log 'notice', "---/client-"
+      log '---/client-'
 
       # start faster in the beginnig
       if loop_count < 20
@@ -72,8 +70,7 @@ class Sessions::Client
     Sessions.send( @client_id, data )
   end
 
-  def log( level, data )
-    return if level == 'notice'
-    puts "#{Time.now}:client(#{ @client_id }) #{ data }"
+  def log( msg )
+    Rails.logger.debug "client(#{@client_id}) #{msg}"
   end
 end

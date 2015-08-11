@@ -12,7 +12,7 @@ create/update/delete index
       :mappings => {
         :Ticket => {
           :properties => {
-            :articles_all => {
+            :articles => {
               :type       => 'nested',
               :properties => {
                 'attachments' => { :type => 'attachment' }
@@ -43,18 +43,23 @@ create/update/delete index
       return SearchIndexBackend.remove( data[:name] )
     end
 
-    puts "# curl -X PUT \"#{url}\" -d '#{data[:data].to_json}'"
+    Rails.logger.info "# curl -X PUT \"#{url}\" \\"
+    #Rails.logger.info "-d '#{data[:data].to_json}'"
 
-    conn     = connection( url )
-    response = conn.put do |req|
-      req.url url
-      req.headers['Content-Type'] = 'application/json'
-      req.body = data[:data].to_json
-    end
-    puts "# #{response.status.to_s}"
+    response = UserAgent.put(
+      url,
+      data[:data],
+      {
+        json: true,
+        open_timeout: 5,
+        read_timeout: 20,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
+      }
+    )
+    Rails.logger.info "# #{response.code}"
     return true if response.success?
-    data = JSON.parse( response.body )
-    raise data.inspect
+    fail response.inspect
   end
 
 =begin
@@ -70,18 +75,23 @@ add new object to search index
     url = build_url( type, data['id'] )
     return if !url
 
-    puts "# curl -X POST \"#{url}\" -d '#{data.to_json}'"
+    Rails.logger.info "# curl -X POST \"#{url}\" \\"
+    #Rails.logger.info "-d '#{data.to_json}'"
 
-    conn     = connection( url )
-    response = conn.post do |req|
-      req.url url
-      req.headers['Content-Type'] = 'application/json'
-      req.body = data.to_json
-    end
-    puts "# #{response.status.to_s}"
+    response = UserAgent.post(
+      url,
+      data,
+      {
+        json: true,
+        open_timeout: 5,
+        read_timeout: 20,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
+      }
+    )
+    Rails.logger.info "# #{response.code}"
     return true if response.success?
-    data = JSON.parse( response.body )
-    raise data.inspect
+    fail response.inspect
   end
 
 =begin
@@ -98,32 +108,59 @@ remove whole data from index
     url = build_url( type, o_id )
     return if !url
 
-    puts "# curl -X DELETE \"#{url}\""
+    Rails.logger.info "# curl -X DELETE \"#{url}\""
 
-    conn     = connection( url )
-    response = conn.delete( url )
-    puts "# #{response.status.to_s}"
-    return false if !response.success?
-    data = JSON.parse( response.body )
-#    raise data.inspect
-    return { :data => data, :response => response }
+    response = UserAgent.delete(
+      url,
+      {
+        open_timeout: 5,
+        read_timeout: 14,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
+      }
+    )
+    #Rails.logger.info "# #{response.code.to_s}"
+    return true if response.success?
+    #Rails.logger.info "NOTICE: can't drop index: " + response.inspect
+    false
   end
 
 =begin
 
 return search result
 
+  result = SearchIndexBackend.search( 'search query', limit, ['User', 'Organization'] )
+
   result = SearchIndexBackend.search( 'search query', limit, 'User' )
+
+  result = [
+    {
+      :id   => 123,
+      :type => 'User',
+    },
+    {
+      :id   => 125,
+      :type => 'User',
+    },
+    {
+      :id   => 15,
+      :type => 'Organization',
+    }
+  ]
 
 =end
 
-  def self.search( query, limit = 10, index = nil, query_extention = {} )
+  def self.search( query, _limit = 10, index = nil, query_extention = {} )
     return [] if !query
 
     url = build_url()
     return if !url
     if index
-      url += "/#{index}/_search"
+      if index.class == Array
+        url += "/#{index.join(',')}/_search"
+      else
+        url += "/#{index}/_search"
+      end
     else
       url += '/_search'
     end
@@ -133,11 +170,11 @@ return search result
     data['sort'] =
     [
       {
-        :updated_at => {
-          :order => 'desc'
+        updated_at: {
+          order: 'desc'
         }
       },
-      "_score"
+      '_score'
     ]
 
     data['query'] = query_extention || {}
@@ -156,27 +193,39 @@ return search result
     }
     data['query']['bool']['must'].push condition
 
-    puts "# curl -X POST \"#{url}\" -d '#{data.to_json}'"
+    Rails.logger.info "# curl -X POST \"#{url}\" \\"
+    #Rails.logger.info " -d'#{data.to_json}'"
 
-    conn     = connection( url )
-    response = conn.get do |req|
-      req.headers['Content-Type'] = 'application/json'
-      req.body = data.to_json
-    end
-    puts "# #{response.status.to_s}"
-    data = JSON.parse( response.body )
+    response = UserAgent.get(
+      url,
+      data,
+      {
+        json: true,
+        open_timeout: 5,
+        read_timeout: 14,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
+      }
+    )
+
+    Rails.logger.info "# #{response.code}"
     if !response.success?
+      Rails.logger.error "ERROR: #{response.inspect}"
       return []
-#      raise data.inspect
     end
+    data = response.data
 
     ids = []
     return ids if !data
     return ids if !data['hits']
     return ids if !data['hits']['hits']
     data['hits']['hits'].each { |item|
-      puts "... #{item['_type'].to_s} #{item['_id'].to_s}"
-      ids.push item['_id']
+      Rails.logger.info "... #{item['_type']} #{item['_id']}"
+      data = {
+        id: item['_id'],
+        type: item['_type'],
+      }
+      ids.push data
     }
     ids
   end
@@ -195,9 +244,6 @@ return true if backend is configured
     true
   end
 
-
-  private
-
   def self.build_url( type = nil, o_id = nil )
     return if !SearchIndexBackend.enabled?
     index = Setting.get('es_index').to_s + "_#{Rails.env}"
@@ -212,16 +258,6 @@ return true if backend is configured
       url = "#{url}/#{index}"
     end
     url
-  end
-
-  def self.connection( url )
-    conn = Faraday.new( :url => url )
-    user = Setting.get('es_user')
-    pw   = Setting.get('es_password')
-    if user && !user.empty? && pw && !pw.empty?
-      conn.basic_auth( user, pw )
-    end
-    conn
   end
 
 end

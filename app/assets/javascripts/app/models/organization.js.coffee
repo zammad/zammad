@@ -3,11 +3,11 @@ class App.Organization extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/organizations'
   @configure_attributes = [
-    { name: 'name',       display: 'Name',                tag: 'input',     type: 'text', limit: 100, 'null': false, info: true, 'class': 'span4' },
-    { name: 'shared',     display: 'Shared organization', tag: 'boolean',   note: 'Customers in the organization can view each other items.', type: 'boolean', 'default': true, 'null': false, info: false, 'class': 'span4' },
-    { name: 'note',       display: 'Note',                tag: 'textarea',  note: 'Notes are visible to agents only, never to customers.', limit: 250, 'null': true, info: true, 'class': 'span4' },
-    { name: 'updated_at', display: 'Updated',             type: 'time', readonly: 1, info: false },
-    { name: 'active',     display: 'Active',              tag: 'boolean',   note: 'boolean', 'default': true, 'null': false, info: false, 'class': 'span4' },
+    { name: 'name',       display: 'Name',                tag: 'input',     type: 'text', limit: 100, null: false, info: true },
+    { name: 'shared',     display: 'Shared organization', tag: 'boolean',   note: 'Customers in the organization can view each other items.', type: 'boolean', default: true, null: false, info: false },
+    { name: 'note',       display: 'Note',                tag: 'textarea',  note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
+    { name: 'updated_at', display: 'Updated',             tag: 'datetime',  readonly: 1, info: false },
+    { name: 'active',     display: 'Active',              tag: 'active',    default: true, info: false },
   ]
   @configure_overview = [
     'name',
@@ -15,7 +15,10 @@ class App.Organization extends App.Model
   ]
 
   uiUrl: ->
-    '#organization/zoom/' + @id
+    '#organization/profile/' + @id
+
+  icon: ->
+    'organization'
 
   @_fillUp: (data) ->
 
@@ -27,3 +30,10 @@ class App.Organization extends App.Model
           user = App.User.find( user_id )
           data['members'].push user
     data
+
+  searchResultAttributes: ->
+    display:    "#{@displayName()}"
+    id:         @id
+    class:      "organization organization-popover"
+    url:        @uiUrl()
+    iconClass:  "organization"

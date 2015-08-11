@@ -1,0 +1,9 @@
+<div class="reset_password fullscreen">
+  <div class="fullscreen-center">
+    <div class="hero-unit fullscreen-body">
+      <h2><%- @T( @head ) %><small></small></h2>
+      <p><%- @message %></p>
+      <a href="#password_reset" class="btn btn--text btn--secondary retry">&raquo; <%- @T('try again') %> &laquo;</a>
+    </div>
+  </div>
+</div>

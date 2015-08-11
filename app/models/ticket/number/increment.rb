@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Ticket::Number::Increment
-  extend self
+  module_function
 
   def generate
 
@@ -9,12 +9,12 @@ module Ticket::Number::Increment
     config = Setting.get('ticket_number_increment')
 
     # read counter
-    min_digs  = config[:min_size] || 4;
+    min_digs  = config[:min_size] || 4
     counter_increment = nil
     Ticket::Counter.transaction do
-      counter = Ticket::Counter.where( :generator => 'Increment' ).lock(true).first
+      counter = Ticket::Counter.where( generator: 'Increment' ).lock(true).first
       if !counter
-        counter = Ticket::Counter.new( :generator => 'Increment', :content => '0' )
+        counter = Ticket::Counter.new( generator: 'Increment', content: '0' )
       end
       counter_increment = counter.content.to_i
 
@@ -30,12 +30,13 @@ module Ticket::Number::Increment
     if config[:checksum]
       min_digs = min_digs.to_i - 1
     end
-    fillup = Setting.get('system_id') || '1'
-    ( 1..100 ).each do |i|
-      if ( fillup.length.to_i + counter_increment.to_s.length.to_i ) < min_digs.to_i
-        fillup = fillup + '0'
-      end
-    end
+    fillup = Setting.get('system_id').to_s || '1'
+    ( 1..100 ).each {
+
+      next if ( fillup.length.to_i + counter_increment.to_s.length.to_i ) >= min_digs.to_i
+
+      fillup = fillup + '0'
+    }
     number = fillup.to_s + counter_increment.to_s
 
     # calculate a checksum
@@ -65,7 +66,7 @@ module Ticket::Number::Increment
       end
       number += chksum.to_s
     end
-    return number
+    number
   end
 
   def check(string)
@@ -77,11 +78,11 @@ module Ticket::Number::Increment
     ticket              = nil
 
     # probe format
-    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,48})/i then
-      ticket = Ticket.where( :number => $1 ).first
-    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i then
-      ticket = Ticket.where( :number => $1 ).first
+    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,48})/i
+      ticket = Ticket.find_by( number: $1 )
+    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i
+      ticket = Ticket.find_by( number: $1 )
     end
-    return ticket
+    ticket
   end
 end

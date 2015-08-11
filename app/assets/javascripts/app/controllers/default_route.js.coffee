@@ -7,6 +7,11 @@ class Index extends App.Controller
     if window.location.pathname.substr(0,5) is '/test'
       return
 
+    # check if import is active
+    if !@Config.get('system_init_done') && @Config.get('import_mode')
+      @navigate '#import'
+      return
+
     # route to getting started screen
     if !@Config.get('system_init_done')
       @navigate '#getting_started'

@@ -1,7 +1,19 @@
-<div class="form-group <%= @attribute.item_class %>">
-  <label for="<%= @attribute.id %>"><%- @T( @attribute.display ) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+<div class="<%= @attribute.tag %> form-group<%= " #{ @attribute.item_class }" if @attribute.item_class %>">
+  <div class="formGroup-label">
+    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T( @attribute.display ) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+    <%- @item %>
+    <% if @bookmarkable: %>
+    <div class="align-right js-bookmark formGroup-bookmark">
+      <div class="filled bookmark icon"></div>
+    </div>
+    <% end %>
+    <% if @attribute.note: %>
+    <div class="help-message" title="<%- @Ti( @attribute.note ) + ' ' %>">
+      <svg class="icon-help"><use xlink:href="#icon-help" /></svg>
+    </div>
+    <% end %>
+  </div>
   <div class="controls">
-    <%- @item %><% if @attribute.note: %><span class="glyphicon glyphicon-question-sign help-message" title="<%- @Ti( @attribute.note ) + ' ' %>"></span><% end %>
 	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>
 	<% if @attribute.add: %><span><a href="#" class="glyphicon glyphicon-plus"></a></span><% end %>
     <span class="help-inline"></span>

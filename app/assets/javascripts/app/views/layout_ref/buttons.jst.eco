@@ -1,0 +1,58 @@
+<div class="main flex">
+  <h1>Buttons</h1>
+
+  <h2>Normal Buttons</h2>
+  <h3>Default</h3>
+  <div class="btn">Default Button</div>
+  <div class="btn btn--slim">Slim Button</div>
+  <div class="btn is-disabled">Disabled Button (via .is-disabled)</div>
+  <div class="btn" disabled>Disabled Button (via [disabled])</div>
+
+  <h3>Primary</h3>
+  <div class="btn btn--primary">Primary Button</div>
+  <div class="btn btn--secondary">Secondary Button</div>
+
+  <h3>Positive</h3>
+  <div class="btn btn--positive">Positive Button</div>
+  <div class="btn btn--positive btn--secondary">Positive Secondary Button</div>
+
+  <h3>Dangerous</h3>
+  <div class="btn btn--danger">Dangerous Button</div>
+  <div class="btn btn--danger btn--secondary">Dangerous Secondary Button</div>
+
+  <h3>Split</h3>
+  <div class="horizontal">
+    <div class="btn btn--split--first">Split First Button</div>
+    <div class="btn btn--split">Split Button</div>
+    <div class="btn btn--split--last">Split Last Button</div>
+  </div>
+
+
+
+  <h2>Text Buttons</h2>
+
+  <h3>Default</h3>
+  <div class="btn btn--text">Text Button</div>
+  <div class="btn btn--text btn--secondary">Secondary Text Button</div>
+
+  <h3>Positive</h3>
+  <div class="btn btn--positive btn--text">Positive Text Button</div>
+
+  <h3>Dangerous</h3>
+  <div class="btn btn--danger btn--text">Dangerous Text Button</div>
+
+  <h3>Subtle</h3>
+  <div class="btn btn--text btn--subtle">Subtle Button</div>
+
+  <h2>Action Buttons</h2>
+
+  <h3>Default</h3>
+  <div class="btn btn--action">Action Button</div>
+
+  <h3>Split</h3>
+  <div class="horizontal">
+    <div class="btn btn--action btn--split--first">Split First</div>
+    <div class="btn btn--action btn--split">Split</div>
+    <div class="btn btn--action btn--split--last">Split Last</div>
+  </div>
+</div>

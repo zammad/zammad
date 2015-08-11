@@ -34,7 +34,7 @@ class App.WebSocket
 class _webSocketSingleton extends App.Controller
   @include App.LogInclude
 
-  queue: []
+  queue:                    []
   supported:                true
   lastSpoolMessage:         undefined
   sentSpoolFinished:        true
@@ -43,6 +43,7 @@ class _webSocketSingleton extends App.Controller
   connectionWasEstablished: false
   tryToConnect:             false
   backend:                  'websocket'
+  backend_port:             ''
   client_id:                undefined
   error:                    false
 
@@ -87,7 +88,7 @@ class _webSocketSingleton extends App.Controller
       'ws'
     )
 
-    # inital connect
+    # initial connect
     @connect()
 
   channel: ->
@@ -114,7 +115,8 @@ class _webSocketSingleton extends App.Controller
     # logon websocket
     data =
       action: 'login'
-      session: App.Session.all()
+      session:
+        id: App.Session.get('id')
     @send(data)
 
   spool: =>
@@ -157,7 +159,7 @@ class _webSocketSingleton extends App.Controller
     # check if ping is back within 2 min
     App.Delay.clear 'websocket-ping-check', 'ws'
     check = =>
-      @log 'notice', 'no websocket ping response, reconnect...'
+      @log 'debug', 'no websocket ping response, reconnect...'
       @close()
     App.Delay.set check, 90000, 'websocket-ping-check', 'ws'
 
@@ -170,11 +172,10 @@ class _webSocketSingleton extends App.Controller
     App.Delay.set @ping, 60000, 'websocket-pong', 'ws'
 
   connect: =>
-    return if @backend is 'ajax'
 
     if !window.WebSocket
       @backend = 'ajax'
-      @log 'notice', 'no support of websocket, use ajax long polling'
+      @log 'debug', 'no support of websocket, use ajax long polling'
       @_ajaxInit()
       return
 
@@ -182,20 +183,28 @@ class _webSocketSingleton extends App.Controller
     if window.location.protocol is 'https:'
       protocol = 'wss://'
 
-    @ws = new window.WebSocket( protocol + window.location.hostname + ":6042/" )
+    if @backend is 'websocket'
+      @ws = new window.WebSocket( protocol + window.location.hostname + '/ws' )
+    else if @backend is 'websocketPort'
+      @backend_port = App.Config.get('websocket_port') || '6042'
+      @ws           = new window.WebSocket( protocol + window.location.hostname + ':' + @backend_port + '/' )
+    else
+      @_ajaxInit()
 
     # Set event handlers.
     @ws.onopen = =>
-      @log 'notice', 'new websocket connection open'
+      if @backend_port
+        port = ":#{@backend_port}"
+      @log 'debug', "new websocket (#{@channel()}#{port}) connection open"
 
-      @connectionEstablished = true
+      @connectionEstablished    = true
       @connectionWasEstablished = true
 
       # close error message show up (because try so connect again) if exists
       App.Delay.clear('websocket-no-connection-try-reconnect-message', 'ws')
       if @error
-        @error.modalHide()
-        @error = false
+        @error.hide()
+        @error        = false
         @tryToConnect = false
 
       @auth()
@@ -215,7 +224,7 @@ class _webSocketSingleton extends App.Controller
       @_receiveMessage(pipe)
 
     @ws.onclose = (e) =>
-      @log 'notice', 'close websocket connection'
+      @log 'debug', 'close websocket connection'
 
       # take connection down and keep it down
       return if @connectionKeepDown
@@ -223,26 +232,37 @@ class _webSocketSingleton extends App.Controller
       if @connectionEstablished
         @connectionEstablished = false
 
-      return if @backend is 'ajax'
+      # if connection was not possible
+      if !@connectionWasEstablished
+
+        # use ws dedicated port fallback if no connection was possible
+        if @backend is 'websocket'
+          @log 'debug', 'no websocket connection on /ws, use :port/'
+          @backend = 'websocketPort'
+          @connect()
+          return
+
+        # use ajax fallback if no connection was possible
+        if @backend is 'websocketPort'
+          if @backend_port
+            port = ":#{@backend_port}"
+          @log 'debug', "no websocket connection on port #{port}, use ajax long polling as fallback"
+          @backend = 'ajax'
+          @connect()
+          return
 
       # show error message, first try to reconnect
       if !@error
         message = =>
 
-          # use fallback if no connection was possible
-          if !@connectionWasEstablished
-            @backend = 'ajax'
-            @log 'notice', 'No connection to websocket, use ajax long polling as fallback'
-            @_ajaxInit()
-            return
-
           # show reconnect message
           @error = new App.ControllerModal(
-            title:   'Lost network connection!'
-            message: 'Lost network connection to system, trying to reconnect...'
+            head:    'Lost network connection!'
+            message: 'Trying to reconnect...'
             backdrop: false
             keyboard: false
-            show:     true
+            close:    false
+            shown:    true
           )
         if !@tryToConnect
           App.Delay.set message, 7000, 'websocket-no-connection-try-reconnect-message', 'ws'
@@ -297,7 +317,7 @@ class _webSocketSingleton extends App.Controller
       queue: false
       success: (data) =>
         if data.client_id
-          @log 'notice', 'ajax:new client_id', data.client_id
+          @log 'debug', 'ajax:new client_id', data.client_id
           @client_id = data.client_id
           @_ajaxReceive()
           @_ajaxSendQueue()
@@ -349,7 +369,7 @@ class _webSocketSingleton extends App.Controller
       data:  JSON.stringify({ client_id: @client_id })
       processData: false
       success: (data) =>
-        @log 'notice', 'ajax:onmessage', data
+        @log 'debug', 'ajax:onmessage', data
         @_receiveMessage(data)
         if data && data.error
           @client_id = undefined

@@ -6,6 +6,7 @@ class Observer::User::Geo < ActiveRecord::Observer
   def before_create(record)
     check_geo(record)
   end
+
   def before_update(record)
     check_geo(record)
   end
@@ -13,11 +14,11 @@ class Observer::User::Geo < ActiveRecord::Observer
   # check if geo need to be updated
   def check_geo(record)
 
-    location = ['street', 'zip', 'city', 'country']
+    location = %w(address street zip city country)
 
     # check if geo update is needed based on old/new location
     if record.id
-      current = User.where( :id => record.id ).first
+      current = User.find_by( id: record.id )
       return if !current
 
       current_location = {}
@@ -36,14 +37,13 @@ class Observer::User::Geo < ActiveRecord::Observer
     return if ( current_location == next_location ) && record.preferences['lat'] && record.preferences['lng']
 
     # geo update
-    self.geo_update(record)
+    geo_update(record)
   end
-
 
   # update geo data of user
   def geo_update(record)
     address = ''
-    location = ['street', 'zip', 'city', 'country']
+    location = %w(address street zip city country)
     location.each { |item|
       if record[item] && record[item] != ''
         address = address + ',' + record[item]
@@ -54,7 +54,7 @@ class Observer::User::Geo < ActiveRecord::Observer
     return if address == ''
 
     # lookup
-    latlng = GeoLocation.geocode( address )
+    latlng = Service::GeoLocation.geocode( address )
     return if !latlng
 
     # store data

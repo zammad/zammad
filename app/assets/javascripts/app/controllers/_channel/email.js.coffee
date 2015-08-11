@@ -1,6 +1,9 @@
 class App.ChannelEmail extends App.ControllerTabs
+  header: 'Email'
   constructor: ->
     super
+
+    @title 'Email', true
 
     @tabs = [
       {
@@ -50,7 +53,7 @@ class App.ChannelEmailFilter extends App.Controller
   render: =>
     data = App.PostmasterFilter.search( sortBy: 'name' )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
       el:       template.find('.overview')
@@ -64,40 +67,42 @@ class App.ChannelEmailFilter extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailFilterEdit( {} )
+    new App.ChannelEmailFilterEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
-    new App.ChannelEmailFilterEdit( object: App.PostmasterFilter.find(id) )
+    new App.ChannelEmailFilterEdit(
+      object:    App.PostmasterFilter.find(id)
+      container: @el.closest('.content')
+    )
 
 class App.ChannelEmailFilterEdit extends App.ControllerModal
   constructor: ->
     super
-    @render(@object)
 
-  render: (data = {}) ->
+    @head   = 'Postmaster Filter'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
-      @html App.view('generic/admin/edit')(
-        head: 'Postmaster Filter'
-      )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_edit'),
         model:     App.PostmasterFilter,
         params:    @object,
         autofocus: true,
       )
     else
-      @html App.view('generic/admin/new')(
-        head: 'Postmaster Filter'
-      )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_new'),
         model:     App.PostmasterFilter,
         autofocus: true,
       )
-    @modalShow()
 
-  submit: (e) =>
+    @content = @form.form
+    @show()
+
+  onSubmit: (e) =>
     e.preventDefault()
 
     # get params
@@ -122,9 +127,9 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     # save object
     object.save(
       done: =>
-        @modalHide()
+        @hide()
       fail: =>
-        @modalHide()
+        @hide()
     )
 
 
@@ -140,7 +145,7 @@ class App.ChannelEmailAddress extends App.Controller
   render: =>
     data = App.EmailAddress.search( sortBy: 'realname' )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
       el:       template.find('.overview')
@@ -155,41 +160,44 @@ class App.ChannelEmailAddress extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailAddressEdit( {} )
+    new App.ChannelEmailAddressEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
     item = App.EmailAddress.find(id)
-    new App.ChannelEmailAddressEdit( object: item )
+    new App.ChannelEmailAddressEdit(
+      object:    item
+      container: @el.closest('.content')
+    )
 
 class App.ChannelEmailAddressEdit extends App.ControllerModal
   constructor: ->
     super
-    @render(@object)
 
-  render: (data = {}) ->
+    @head   = 'Email-Address'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
-      @html App.view('generic/admin/edit')(
-        head: 'Email-Address'
-      )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_edit')
         model:     App.EmailAddress
         params:    @object
         autofocus: true
       )
     else
-      @html App.view('generic/admin/new')(
-        head: 'Email-Address'
-      )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_new'),
         model:     App.EmailAddress,
         autofocus: true,
       )
-    @modalShow()
 
-  submit: (e) =>
+    @content = @form.form
+
+    @show()
+
+  onSubmit: (e) =>
     e.preventDefault()
 
     # get params
@@ -213,9 +221,9 @@ class App.ChannelEmailAddressEdit extends App.ControllerModal
     # save object
     object.save(
       done: =>
-        @modalHide()
+        @hide()
       fail: =>
-        @modalHide()
+        @hide()
     )
 
 class App.ChannelEmailSignature extends App.Controller
@@ -230,7 +238,7 @@ class App.ChannelEmailSignature extends App.Controller
   render: =>
     data = App.Signature.search( sortBy: 'name' )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
     new App.ControllerTable(
       el:       template.find('.overview')
       model:    App.Signature
@@ -243,41 +251,44 @@ class App.ChannelEmailSignature extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailSignatureEdit( {} )
+    new App.ChannelEmailSignatureEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
     item = App.Signature.find(id)
-    new App.ChannelEmailSignatureEdit( object: item )
+    new App.ChannelEmailSignatureEdit(
+      object:    item
+      container: @el.closest('.content')
+    )
 
 class App.ChannelEmailSignatureEdit extends App.ControllerModal
   constructor: ->
     super
-    @render(@object)
 
-  render: (data = {}) ->
+    @head   = 'Signature'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
-      @html App.view('generic/admin/edit')(
-        head: 'Signature'
-      )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_edit')
         model:     App.Signature
         params:    @object
         autofocus: true
       )
     else
-      @html App.view('generic/admin/new')(
-        head: 'Signature'
-      )
       @form = new App.ControllerForm(
-        el:        @el.find('#object_new')
         model:     App.Signature
         autofocus: true
       )
-    @modalShow()
 
-  submit: (e) =>
+    @content = @form.form
+
+    @show()
+
+  onSubmit: (e) =>
     e.preventDefault()
 
     # get params
@@ -301,9 +312,9 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
     # save object
     object.save(
       done: =>
-        @modalHide()
+        @hide()
       fail: =>
-        @modalHide()
+        @hide()
     )
 
 class App.ChannelEmailInbound extends App.Controller
@@ -317,7 +328,7 @@ class App.ChannelEmailInbound extends App.Controller
   render: =>
     channels = App.Channel.search( filter: { area: 'Email::Inbound' } )
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn-default">' + App.i18n.translateContent('New') + '</a></div>' )
+    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
     new App.ControllerTable(
       el:       template.find('.overview')
@@ -331,41 +342,45 @@ class App.ChannelEmailInbound extends App.Controller
 
   new: (e) =>
     e.preventDefault()
-    new App.ChannelEmailInboundEdit( {} )
+    new App.ChannelEmailInboundEdit(
+      container: @el.closest('.content')
+    )
 
   edit: (id, e) =>
     e.preventDefault()
     item = App.Channel.find(id)
-    new App.ChannelEmailInboundEdit( object: item )
+    new App.ChannelEmailInboundEdit(
+      object:    item
+      container: @el.closest('.content')
+    )
 
 
 class App.ChannelEmailInboundEdit extends App.ControllerModal
   constructor: ->
     super
-    @render(@object)
 
-  render: (data = {}) ->
+    @head   = 'Email Channel'
+    @button = true
+    @close  = true
+    @cancel = true
+
     if @object
-      @html App.view('generic/admin/edit')(
-        head: 'Email Channel'
-      )
       @form = new App.ControllerForm(
-        el: @el.find('#object_edit')
-        model: App.Channel
+        model:     App.Channel
+        params:    @object
         autofocus: true
       )
     else
-      @html App.view('generic/admin/new')(
-        head: 'Email Channel'
-      )
       @form = new App.ControllerForm(
-        el: @el.find('#object_new')
-        model: App.Channel
+        model:     App.Channel
         autofocus: true
       )
-    @modalShow()
 
-  submit: (e) =>
+    @content = @form.form
+
+    @show()
+
+  onSubmit: (e) =>
     e.preventDefault()
 
     # get params
@@ -390,15 +405,15 @@ class App.ChannelEmailInboundEdit extends App.ControllerModal
     # save object
     object.save(
       done: =>
-        @modalHide()
+        @hide()
       fail: =>
-        @modalHide()
+        @hide()
     )
 
 class App.ChannelEmailOutbound extends App.Controller
   events:
-    'change #_adapter':     'toggle'
-    'submit #mail_adapter': 'update'
+    'change [name="adapter"]': 'toggle'
+    'submit #mail_adapter':    'update'
 
   constructor: ->
     super

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class RolesController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
 =begin
 
@@ -95,7 +95,7 @@ curl http://localhost/api/v1/roles.json -v -u #{login}:#{password} -H "Content-T
 =end
 
   def create
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Role, params)
   end
 
@@ -124,7 +124,7 @@ curl http://localhost/api/v1/roles.json -v -u #{login}:#{password} -H "Content-T
 =end
 
   def update
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Role, params)
   end
 
@@ -139,7 +139,7 @@ Test:
 =end
 
   def destroy
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Role, params)
   end
 end

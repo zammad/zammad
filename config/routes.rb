@@ -1,22 +1,22 @@
 Zammad::Application.routes.draw do
 
   # app init
-  match '/init', :to => 'init#index', :via => :get
-  match '/app',  :to => 'init#index', :via => :get
+  match '/init', to: 'init#index', via: :get
+  match '/app',  to: 'init#index', via: :get
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'init#index', :via => :get
+  root to: 'init#index', via: :get
 
   # load routes from external files
   dir = File.expand_path('../', __FILE__)
   files = Dir.glob( "#{dir}/routes/*.rb" )
-  for file in files
+  files.each { |file|
     if Rails.configuration.cache_classes
       require file
     else
       load file
     end
-  end
+  }
 
 end

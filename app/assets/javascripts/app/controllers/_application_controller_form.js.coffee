@@ -8,8 +8,15 @@ class App.ControllerForm extends App.Controller
     @handlers.push @_showHideToggle
     @handlers.push @_requiredMandantoryToggle
 
+    # set empty class attributes if needed
     if !@form
       @form = @formGen()
+    if !@model
+      @model = {}
+    if !@attributes
+      @attributes = []
+
+    # if element is given, prepend form to it
     if @el
       @el.prepend( @form )
 
@@ -19,13 +26,20 @@ class App.ControllerForm extends App.Controller
       @form.find('textarea').trigger('change')
       @form.find('select').trigger('change')
 
+    @finishForm = true
+    @form
+
   html: =>
     @form.html()
 
   formGen: ->
     App.Log.debug 'ControllerForm', 'formGen', @model.configure_attributes
 
-    fieldset = $('<fieldset></fieldset>')
+    # check if own fieldset should be generated
+    if @noFieldset
+      fieldset = @el
+    else
+      fieldset = $('<fieldset></fieldset>')
 
     # collect form attributes
     @attributes = []
@@ -81,7 +95,7 @@ class App.ControllerForm extends App.Controller
       for eventSelector, callback of @events
         do (eventSelector, callback) =>
           evs = eventSelector.split(' ')
-          fieldset.find( evs[1] ).bind(evs[0], (e) => callback(e) )
+          fieldset.find( evs[1] ).bind( evs[0], (e) => callback(e) )
 
     # return form
     return fieldset
@@ -161,10 +175,13 @@ class App.ControllerForm extends App.Controller
   ###
 
   formGenItem: (attribute_config, classname, form, attribute_count ) ->
-    attribute = clone( attribute_config )
+    attribute = clone( attribute_config, true )
 
     # create item id
     attribute.id = classname + '_' + attribute.name
+
+    # set label class name
+    attribute.label_class = @model.labelClass
 
     # set autofocus
     if @autofocus && attribute_count is 1
@@ -243,17 +260,40 @@ class App.ControllerForm extends App.Controller
       # build options list
       if _.isEmpty(attribute.options)
         attribute.options = [
-          { name: 'active', value: true }
-          { name: 'inactive', value: false }
+          { name: 'yes', value: true }
+          { name: 'no', value: false }
         ]
 
-      # update boolean types
-      for record in attribute.options
-        record.value = '{boolean}::' + record.value
+      # set data type
+      if attribute.name
+        attribute.name = '{boolean}' + attribute.name
 
       # finde selected item of list
       for record in attribute.options
-        if record.value is '{boolean}::' + attribute.value
+        if record.value is attribute.value
+          record.selected = 'selected'
+
+      # return item
+      item = $( App.view('generic/select')( attribute: attribute ) )
+
+    else if attribute.tag is 'active'
+
+      # active attribute is always required
+      attribute.null = false
+
+      # build options list
+      attribute.options = [
+        { name: 'active', value: true }
+        { name: 'inactive', value: false }
+      ]
+
+      # set data type
+      if attribute.name
+        attribute.name = '{boolean}' + attribute.name
+
+      # finde selected item of list
+      for record in attribute.options
+        if record.value is attribute.value
           record.selected = 'selected'
 
       # return item
@@ -265,19 +305,313 @@ class App.ControllerForm extends App.Controller
 
     # date
     else if attribute.tag is 'date'
-      attribute.type = 'text'
-      item = $( App.view('generic/date')( attribute: attribute ) )
-      #item.datetimepicker({
-      #  format: 'Y.m.d'
-      #});
+
+      # set data type
+      if attribute.name
+        attribute.nameRaw = attribute.name
+        attribute.name    = '{date}' + attribute.name
+      if attribute.value
+        if typeof( attribute.value ) is 'string'
+          unixtime = new Date( Date.parse( "#{attribute.value}T00:00:00Z" ) )
+        else
+          unixtime = new Date( attribute.value )
+        year     = unixtime.getUTCFullYear()
+        month    = unixtime.getUTCMonth() + 1
+        day      = unixtime.getUTCDate()
+        hour     = unixtime.getUTCHours()
+        minute   = unixtime.getUTCMinutes()
+      item = $( App.view('generic/date')(
+        attribute: attribute
+        year:      year
+        month:     month
+        day:       day
+      ) )
+
+      setNewTime = (diff, el, reset) ->
+        name = $(el).closest('.form-group').find('[data-name]').attr('data-name')
+
+        # remove old validation
+        item.find('.has-error').removeClass('has-error')
+        item.closest('.form-group').find('.help-inline').html('')
+
+        day    = item.closest('.form-group').find("[name=\"{date}#{name}___day\"]").val()
+        month  = item.closest('.form-group').find("[name=\"{date}#{name}___month\"]").val()
+        year   = item.closest('.form-group').find("[name=\"{date}#{name}___year\"]").val()
+        format = (number) ->
+          if parseInt(number) < 10
+            number = "0#{number}"
+          number
+        if !reset && (year isnt '' && month isnt '' && day isnt '')
+          time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T00:00:00Z" ) )
+          time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
+        else
+          time = new Date()
+          time.setMinutes( time.getMinutes() + diff )
+        item.closest('.form-group').find("[name=\"{date}#{name}___day\"]").val( time.getDate() )
+        item.closest('.form-group').find("[name=\"{date}#{name}___month\"]").val( time.getMonth()+1 )
+        item.closest('.form-group').find("[name=\"{date}#{name}___year\"]").val( time.getFullYear() )
+
+      item.find('.js-today').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(0, @, true)
+      )
+      item.find('.js-plus-day').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60 * 24, @)
+      )
+      item.find('.js-minus-day').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60 * 24, @)
+      )
+      item.find('.js-plus-week').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60 * 24 * 7, @)
+      )
+      item.find('.js-minus-week').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60 * 24 * 7, @)
+      )
+
+      item.find('input').bind('keyup blur focus change', (e) ->
+
+        # do validation
+        name = $(@).attr('name')
+        if name
+          fieldPrefix = name.split('___')[0]
+
+        # remove old validation
+        item.find('.has-error').removeClass('has-error')
+        item.closest('.form-group').find('.help-inline').html('')
+
+        day    = item.closest('.form-group').find("[name=\"#{fieldPrefix}___day\"]").val()
+        month  = item.closest('.form-group').find("[name=\"#{fieldPrefix}___month\"]").val()
+        year   = item.closest('.form-group').find("[name=\"#{fieldPrefix}___year\"]").val()
+
+        # validate exists
+        errors = {}
+        if !day
+          errors.day = 'missing'
+        if !month
+          errors.month = 'missing'
+        if !year
+          errors.year = 'missing'
+
+        # ranges
+        if day
+          daysInMonth = 31
+          if month && year
+            daysInMonth = new Date(year, month, 0).getDate();
+
+          if parseInt(day).toString() is 'NaN'
+            errors.day = 'invalid'
+          else if parseInt(day) > daysInMonth || parseInt(day) < 1
+            errors.day = 'invalid'
+
+        if month
+          if parseInt(month).toString() is 'NaN'
+            errors.month = 'invalid'
+          else if parseInt(month) > 12 || parseInt(month) < 1
+            errors.month = 'invalid'
+
+        if year
+          if parseInt(year).toString() is 'NaN'
+            errors.year = 'invalid'
+          else if parseInt(year) > 2100 || parseInt(year) < 2001
+            errors.year = 'invalid'
+
+        if !_.isEmpty(errors)
+
+          # if field is required, if not do not show error
+          if year is '' && day is '' && month
+            if attribute.null
+              e.preventDefault()
+              e.stopPropagation()
+              return
+            else
+              item.closest('.form-group').find('.help-inline').text( 'is required' )
+
+          # show invalid options
+          for key, value of errors
+            item.closest('.form-group').addClass('has-error')
+            item.closest('.form-group').find("[name=\"#{fieldPrefix}___#{key}\"]").addClass('has-error')
+            #item.closest('.form-group').find('.help-inline').text( value )
+
+          e.preventDefault()
+          e.stopPropagation()
+          return
+      )
+
 
     # date
     else if attribute.tag is 'datetime'
-      attribute.type = 'text'
-      item = $( App.view('generic/date')( attribute: attribute ) )
-      #item.datetimepicker({
-      #  format: 'Y.m.d H:i'
-      #});
+
+      # set data type
+      if attribute.name
+        attribute.nameRaw = attribute.name
+        attribute.name    = '{datetime}' + attribute.name
+      if attribute.value
+        if typeof( attribute.value ) is 'string'
+          unixtime = new Date( Date.parse( attribute.value ) )
+        else
+          unixtime = new Date( attribute.value )
+        year     = unixtime.getFullYear()
+        month    = unixtime.getMonth() + 1
+        day      = unixtime.getDate()
+        hour     = unixtime.getHours()
+        minute   = unixtime.getMinutes()
+      item = $( App.view('generic/datetime')(
+        attribute: attribute
+        year:      year
+        month:     month
+        day:       day
+        hour:      hour
+        minute:    minute
+      ) )
+
+      setNewTime = (diff, el, reset) ->
+        name = $(el).closest('.form-group').find('[data-name]').attr('data-name')
+
+        # remove old validation
+        item.find('.has-error').removeClass('has-error')
+        item.closest('.form-group').find('.help-inline').html('')
+
+        day    = item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val()
+        month  = item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val()
+        year   = item.closest('.form-group').find("[name=\"{datetime}#{name}___year\"]").val()
+        hour   = item.closest('.form-group').find("[name=\"{datetime}#{name}___hour\"]").val()
+        minute = item.closest('.form-group').find("[name=\"{datetime}#{name}___minute\"]").val()
+        format = (number) ->
+          if parseInt(number) < 10
+            number = "0#{number}"
+          number
+        if !reset && (year isnt '' && month isnt '' && day isnt '' && hour isnt '' && day isnt '')
+          time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
+          time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
+        else
+          time = new Date()
+          time.setMinutes( time.getMinutes() + diff )
+        #console.log('T', time, time.getHours(), time.getMinutes())
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val( time.getDate() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val( time.getMonth()+1 )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___year\"]").val( time.getFullYear() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___hour\"]").val( time.getHours() )
+        item.closest('.form-group').find("[name=\"{datetime}#{name}___minute\"]").val( time.getMinutes() )
+
+      item.find('.js-today').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(0, @, true)
+      )
+      item.find('.js-plus-hour').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60, @)
+      )
+      item.find('.js-minus-hour').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60, @)
+      )
+      item.find('.js-plus-day').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60 * 24, @)
+      )
+      item.find('.js-minus-day').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60 * 24, @)
+      )
+      item.find('.js-plus-week').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(60 * 24 * 7, @)
+      )
+      item.find('.js-minus-week').bind('click', (e) ->
+        e.preventDefault()
+        setNewTime(-60 * 24 * 7, @)
+      )
+
+      item.find('input').bind('keyup blur focus change', (e) ->
+
+        # do validation
+        name = $(@).attr('name')
+        if name
+          fieldPrefix = name.split('___')[0]
+
+        # remove old validation
+        item.find('.has-error').removeClass('has-error')
+        item.closest('.form-group').find('.help-inline').html('')
+
+        day    = item.closest('.form-group').find("[name=\"#{fieldPrefix}___day\"]").val()
+        month  = item.closest('.form-group').find("[name=\"#{fieldPrefix}___month\"]").val()
+        year   = item.closest('.form-group').find("[name=\"#{fieldPrefix}___year\"]").val()
+        hour   = item.closest('.form-group').find("[name=\"#{fieldPrefix}___hour\"]").val()
+        minute = item.closest('.form-group').find("[name=\"#{fieldPrefix}___minute\"]").val()
+
+        # validate exists
+        errors = {}
+        if !day
+          errors.day = 'missing'
+        if !month
+          errors.month = 'missing'
+        if !year
+          errors.year = 'missing'
+        if !hour
+          errors.hour = 'missing'
+        if !minute
+          errors.minute = 'missing'
+
+        # ranges
+        if day
+          daysInMonth = 31
+          if month && year
+            daysInMonth = new Date(year, month, 0).getDate();
+
+          if parseInt(day).toString() is 'NaN'
+            errors.day = 'invalid'
+          else if parseInt(day) > daysInMonth || parseInt(day) < 1
+            errors.day = 'invalid'
+
+        if month
+          if parseInt(month).toString() is 'NaN'
+            errors.month = 'invalid'
+          else if parseInt(month) > 12 || parseInt(month) < 1
+            errors.month = 'invalid'
+
+        if year
+          if parseInt(year).toString() is 'NaN'
+            errors.year = 'invalid'
+          else if parseInt(year) > 2100 || parseInt(year) < 2001
+            errors.year = 'invalid'
+
+        if hour
+          if parseInt(hour).toString() is 'NaN'
+            errors.hour = 'invalid'
+          else if parseInt(hour) > 23 || parseInt(hour) < 0
+            errors.hour = 'invalid'
+
+        if minute
+          if parseInt(minute).toString() is 'NaN'
+            errors.minute = 'invalid'
+          else if parseInt(minute) > 59
+            errors.minute = 'invalid'
+
+        if !_.isEmpty(errors)
+
+          # if field is required, if not do not show error
+          if year is '' && day is '' && month is '' && hour is '' && minute is ''
+            if attribute.null
+              e.preventDefault()
+              e.stopPropagation()
+              return
+            else
+              item.closest('.form-group').find('.help-inline').text( 'is required' )
+
+          # show invalid options
+          for key, value of errors
+            item.closest('.form-group').addClass('has-error')
+            item.closest('.form-group').find("[name=\"#{fieldPrefix}___#{key}\"]").addClass('has-error')
+            #item.closest('.form-group').find('.help-inline').text( value )
+
+          e.preventDefault()
+          e.stopPropagation()
+          return
+      )
 
     # timezone
     else if attribute.tag is 'timezone'
@@ -309,18 +643,19 @@ class App.ControllerForm extends App.Controller
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
           e.preventDefault()
-          key = $(e.target).parent().find('select, input').attr('name')
+          key = $(e.target).closest('.form-group').find('select, input').attr('name')
           return if !key
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
-          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).closest('.form-group').remove()
         )
 
         # add new item
-        el.parent().parent().parent().find('.list').append(itemInput)
-        el.parent().parent().parent().find('.addSelection select').val('')
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+        control = el.closest('.postmaster_match')
+        control.find('.list').append(itemInput)
+        control.find('.addSelection select').val('')
+        control.find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
+        control.find('.addSelection select option[value="' + key + '"]').hide()
 
       # scaffold of match elements
       item = $('
@@ -459,8 +794,8 @@ class App.ControllerForm extends App.Controller
       # bind add click
       item.find('.add').bind('click', (e) ->
         e.preventDefault()
-        name        = $(@).parent().parent().find('.addSelection').find('select').val()
-        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        name        = $(@).closest('.controls').find('.addSelection').find('select').val()
+        displayName = $(@).closest('.controls').find('.addSelection').find('select option:selected').html()
         return if !name
         addItem( name, displayName, $(@) )
       )
@@ -492,18 +827,19 @@ class App.ControllerForm extends App.Controller
         # remove on click
         itemInput.find('.remove').bind('click', (e) ->
           e.preventDefault()
-          key = $(e.target).parent().find('select, input').attr('name')
+          key = $(e.target).closest('.form-group').find('select, input').attr('name')
           return if !key
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').show()
-          $(e.target).parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
-          $(e.target).parent().parent().parent().find('.list [name="' + key + '"]').parent().parent().remove()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').show()
+          $(e.target).closest('.controls').find('.addSelection select option[value="' + key + '"]').prop('disabled', false)
+          $(e.target).closest('.form-group').remove()
         )
 
         # add new item
-        el.parent().parent().parent().find('.list').append(itemInput)
-        el.parent().parent().parent().find('.addSelection select').val('')
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
-        el.parent().parent().parent().find('.addSelection select option[value="' + key + '"]').hide()
+        control = el.closest('.perform_set')
+        control.find('.list').append(itemInput)
+        control.find('.addSelection select').val('')
+        control.find('.addSelection select option[value="' + key + '"]').prop('disabled', true)
+        control.find('.addSelection select option[value="' + key + '"]').hide()
 
       # scaffold of perform elements
       item = $('
@@ -581,8 +917,8 @@ class App.ControllerForm extends App.Controller
 
       item.find('.add').bind('click', (e) ->
         e.preventDefault()
-        name        = $(@).parent().parent().find('.addSelection').find('select').val()
-        displayName = $(@).parent().parent().find('.addSelection').find('select option:selected').html()
+        name        = $(@).closest('.controls').find('.addSelection').find('select').val()
+        displayName = $(@).closest('.controls').find('.addSelection').find('select option:selected').html()
         return if !name
         addItem( name, displayName, $(@) )
       )
@@ -596,95 +932,6 @@ class App.ControllerForm extends App.Controller
             if listItem.value is "#{ attribute.name }::#{key}"
               addItem( "#{ attribute.name }::#{key}", listItem.name, item.find('.add a'), value )
 
-    # select
-    else if attribute.tag is 'input_select'
-      item = $('<div class="input_select"></div>')
-
-      # select shown attributes
-      loopData = {}
-      if @params && @params[ attribute.name ]
-        loopData = @params[ attribute.name ]
-      loopData[''] = ''
-
-      # show each attribote
-      counter = 0
-      for key of loopData
-        counter =+ 1
-
-        # clone to keep it untouched for next loop
-        select = _.clone( attribute )
-        input  = _.clone( attribute )
-
-        # set field ids - not needed in this case
-        select.id = ''
-        input.id  = ''
-
-        # rename to be able to identify this option later
-        select.name = '{input_select}::' + select.name
-        input.name  = '{input_select}::' + input.name
-
-        # set sub attributes
-        for keysub of attribute.select
-          select[keysub] = attribute.select[keysub]
-        for keysub of attribute.input
-          input[keysub] = attribute.input[keysub]
-
-        # set hide for + options
-        itemClass = ''
-        if key is ''
-          itemClass = 'hide'
-          select['nulloption'] = true
-
-        # set selected value
-        select.value = key
-        input.value  = loopData[ key ]
-
-        # build options list based on config
-        @_getConfigOptionList( select )
-
-        # build options list based on relation
-        @_getRelationOptionList( select )
-
-        # add null selection if needed
-        @_addNullOption( select )
-
-        # sort attribute.options
-        @_sortOptions( select )
-
-        # finde selected/checked item of list
-        @_selectedOptions( select )
-
-        pearItem = $("<div class=" + itemClass + "></div>")
-        pearItem.append $( App.view('generic/select')( attribute: select ) )
-        pearItem.append $( App.view('generic/input')( attribute: input ) )
-        itemRemote = $('<a href="#" class="input_select_remove icon-minus"></a>')
-        itemRemote.bind('click', (e) ->
-          e.preventDefault()
-          $(@).parent().remove()
-        )
-        pearItem.append( itemRemote )
-        item.append( pearItem )
-
-        if key is ''
-          itemAdd = $('<div class="add"><a href="#" class="icon-plus"></a></div>')
-          itemAdd.bind('click', (e) ->
-            e.preventDefault()
-
-            # copy
-            newElement = $(@).prev().clone()
-            newElement.removeClass('hide')
-
-            # bind on remove
-            newElement.find('.input_select_remove').bind('click', (e) ->
-              e.preventDefault()
-              $(@).parent().remove()
-            )
-
-            # prepend
-            $(@).parent().find('.add').before( newElement )
-          )
-          item.append( itemAdd )
-
     # checkbox
     else if attribute.tag is 'checkbox'
       item = $( App.view('generic/checkbox')( attribute: attribute ) )
@@ -692,6 +939,105 @@ class App.ControllerForm extends App.Controller
     # radio
     else if attribute.tag is 'radio'
       item = $( App.view('generic/radio')( attribute: attribute ) )
+
+    # richtext
+    else if attribute.tag is 'richtext'
+      item = $( App.view('generic/richtext')( attribute: attribute ) )
+      item.find('[contenteditable]').ce(
+        mode:      attribute.type
+        maxlength: attribute.maxlength
+      )
+      if attribute.upload
+        item.append( $( App.view('generic/attachment')( attribute: attribute ) ) )
+
+        renderAttachment = (file) =>
+          item.find('.attachments').append( App.view('generic/attachment_item')(
+            fileName: file.filename
+            fileSize: @humanFileSize( file.size )
+            store_id: file.store_id
+          ))
+          item.on(
+            'click'
+            "[data-id=#{file.store_id}]", (e) =>
+              @attachments = _.filter(
+                @attachments,
+                (item) ->
+                  return if item.id isnt file.store_id
+                  item
+              )
+              store_id = $(e.currentTarget).data('id')
+
+              # delete attachment from storage
+              App.Ajax.request(
+                type:        'DELETE'
+                url:         App.Config.get('api_path') + '/ticket_attachment_upload'
+                data:        JSON.stringify( { store_id: store_id } ),
+                processData: false
+                success:     (data, status, xhr) =>
+              )
+
+              # remove attachment from dom
+              element = $(e.currentTarget).closest('.attachments')
+              $(e.currentTarget).closest('.attachment').remove()
+              # empty .attachment (remove spaces) to keep css working, thanks @mrflix :-o
+              if element.find('.attachment').length == 0
+                element.empty()
+          )
+
+        @attachments           = []
+        @progressBar           = item.find('.attachmentUpload-progressBar')
+        @progressText          = item.find('.js-percentage')
+        @attachmentPlaceholder = item.find('.attachmentPlaceholder')
+        @attachmentUpload      = item.find('.attachmentUpload')
+        @attachmentsHolder     = item.find('.attachments')
+        @cancelContainer       = item.find('.js-cancel')
+
+        u = => html5Upload.initialize(
+          uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload',
+          dropContainer:          item.closest('form').get(0),
+          cancelContainer:        @cancelContainer,
+          inputField:             item.find( 'input' ).get(0),
+          key:                    'File',
+          data:                   { form_id: @form_id },
+          maxSimultaneousUploads: 1,
+          onFileAdded:            (file) =>
+
+            file.on(
+
+              onStart: =>
+                @attachmentPlaceholder.addClass('hide')
+                @attachmentUpload.removeClass('hide')
+                @cancelContainer.removeClass('hide')
+                console.log('upload start')
+
+              onAborted: =>
+                @attachmentPlaceholder.removeClass('hide')
+                @attachmentUpload.addClass('hide')
+
+              # Called after received response from the server
+              onCompleted: (response) =>
+
+                response = JSON.parse(response)
+                @attachments.push response.data
+
+                @attachmentPlaceholder.removeClass('hide')
+                @attachmentUpload.addClass('hide')
+
+                renderAttachment(response.data)
+                console.log('upload complete', response.data )
+
+              # Called during upload progress, first parameter
+              # is decimal value from 0 to 100.
+              onProgress: (progress, fileSize, uploadedBytes) =>
+                @progressBar.width(parseInt(progress) + "%")
+                @progressText.text(parseInt(progress))
+                # hide cancel on 90%
+                if parseInt(progress) >= 90
+                  @cancelContainer.addClass('hide')
+                console.log('uploadProgress ', parseInt(progress))
+            )
+        )
+        App.Delay.set( u, 100, undefined, 'form_upload' )
 
     # textarea
     else if attribute.tag is 'textarea'
@@ -705,7 +1051,7 @@ class App.ControllerForm extends App.Controller
         $( item[0] ).on('focus', ->
           visible = $( item[0] ).is(":visible")
           if visible && !$( item[0] ).expanding('active')
-            $( item[0] ).expanding()
+            $( item[0] ).expanding().focus()
         )
       App.Delay.set( a, 80 )
 
@@ -717,7 +1063,7 @@ class App.ControllerForm extends App.Controller
           if @el.find('#' + fileUploaderId )[0]
             @el.find('#' + fileUploaderId ).fineUploader(
               request:
-                endpoint: App.Config.get('api_path') + '/ticket_attachment_new'
+                endpoint: App.Config.get('api_path') + '/ticket_attachment_upload'
                 params:
                   form_id: @form_id
               text:
@@ -738,7 +1084,6 @@ class App.ControllerForm extends App.Controller
     else if attribute.tag is 'article'
       item = $( App.view('generic/article')( attribute: attribute ) )
 
-
     # tag
     else if attribute.tag is 'tag'
       item = $( App.view('generic/input')( attribute: attribute ) )
@@ -747,14 +1092,24 @@ class App.ControllerForm extends App.Controller
         $('#' + attribute.id ).parent().css('height', 'auto')
       App.Delay.set( a, 120, undefined, 'tags' )
 
+    # user
+    else if attribute.tag is 'user_autocompletion'
+      completion = new App.UserOrganizationAutocompletion( attribute: attribute )
+      item = completion.element()
+
+    # searchable select
+    else if attribute.tag is 'searchable_select'
+      select = new App.SearchableSelect( attribute: attribute )
+      item = select.element()
+
     # autocompletion
     else if attribute.tag is 'autocompletion'
       item = $( App.view('generic/autocompletion')( attribute: attribute ) )
 
       a = =>
-        local_attribute = '#' + attribute.id
+        local_attribute      = '#' + attribute.id
         local_attribute_full = '#' + attribute.id + '_autocompletion'
-        @callback = attribute.callback
+        @callback            = attribute.callback
 
         # call calback on init
         if @callback && attribute.value && @params
@@ -809,18 +1164,286 @@ class App.ControllerForm extends App.Controller
       item.find( "[name=\"#{attribute.name}::count\"]").find("option[value=\"#{attribute.value.count}\"]").attr( 'selected', 'selected' )
       item.find( "[name=\"#{attribute.name}::area\"]").find("option[value=\"#{attribute.value.area}\"]").attr( 'selected', 'selected' )
 
-    # ticket attribute selection
-    else if attribute.tag is 'ticket_attribute_selection'
+    # ticket attribute set
+    else if attribute.tag is 'ticket_attribute_set'
 
       # list of possible attributes
       item = $(
-        App.view('generic/ticket_attribute_selection')(
+        App.view('generic/ticket_attribute_manage')(
           attribute: attribute
         )
       )
 
       addShownAttribute = ( key, value ) =>
-        console.log( 'addShownAttribute', key, value )
+        parts = key.split(/::/)
+        key   = parts[0]
+        type  = parts[1]
+        if key is 'tickets.title'
+          attribute_config = {
+            name:    attribute.name + '::tickets.title'
+            display: 'Title'
+            tag:     'input'
+            type:    'text'
+            null:    false
+            value:   value
+            remove:  true
+          }
+        else if key is 'tickets.group_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.group_id'
+            display:    'Group'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'Group'
+            value:      value
+            remove:     true
+          }
+        else if key is 'tickets.owner_id' || key is 'tickets.customer_id'
+          display = 'Owner'
+          name    = 'owner_id'
+          if key is 'customer_id'
+            display = 'Customer'
+            name    = 'customer_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.' + name
+            display:    display
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'User'
+            value:      value || null
+            remove:     true
+            filter:     ( all, type ) ->
+              return all if type isnt 'collection'
+              all = _.filter( all, (item) ->
+                return if item.id is 1
+                return item
+              )
+              all.unshift( {
+                id: ''
+                name:  '--'
+              } )
+              all.unshift( {
+                id: 1
+                name:  '*** not set ***'
+              } )
+              all.unshift( {
+                id: 'current_user.id'
+                name:  '*** current user ***'
+              } )
+              all
+          }
+        else if key is 'tickets.organization_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.organization_id'
+            display:    'Organization'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'Organization'
+            value:      value || null
+            remove:     true
+            filter:     ( all, type ) ->
+              return all if type isnt 'collection'
+              all.unshift( {
+                id: ''
+                name:  '--'
+              } )
+              all.unshift( {
+                id: 'current_user.organization_id'
+                name:  '*** organization of current user ***'
+              } )
+              all
+          }
+        else if key is 'tickets.state_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.state_id'
+            display:    'State'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'TicketState'
+            value:      value
+            translate:  true
+            remove:     true
+          }
+        else if key is 'tickets.priority_id'
+          attribute_config = {
+            name:       attribute.name + '::tickets.priority_id'
+            display:    'Priority'
+            tag:        'select'
+            multiple:   false
+            null:       false
+            nulloption: false
+            relation:   'TicketPriority'
+            value:      value
+            translate:  true
+            remove:     true
+          }
+        else
+          attribute_config = {
+            name:       attribute.name + '::' + key
+            display:    'FIXME!'
+            tag:        'input'
+            type:       'text'
+            value:      value
+            remove:     true
+          }
+        item.find('select[name=ticket_attribute_list] option[value="' + key + '"]').hide().prop('disabled', true)
+
+        itemSub = @formGenItem( attribute_config )
+        itemSub.find('.glyphicon-minus').bind('click', (e) ->
+          e.preventDefault()
+          value = $(e.target).closest('.controls').find('[name]').attr('name')
+          if value
+            value = value.replace("#{attribute.name}::", '')
+            $(e.target).closest('.sub_attribute').find('select[name=ticket_attribute_list] option[value="' + value + '"]').show().prop('disabled', false)
+          $(@).parent().parent().parent().remove()
+        )
+#        itemSub.append('<a href=\"#\" class=\"icon-minus\"></a>')
+        item.find('.ticket_attribute_item').append( itemSub )
+
+      # list of existing attributes
+      attribute_config = {
+        name:       'ticket_attribute_list'
+        display:    'Add Attribute'
+        tag:        'select'
+        multiple:   false
+        null:       false
+#        nulloption: true
+        options: [
+          {
+            value:    ''
+            name:     '-- Ticket --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'tickets.title'
+            name:     'Title'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.group_id'
+            name:     'Group'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.state_id'
+            name:     'State'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.priority_id'
+            name:     'Priority'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'tickets.owner_id'
+            name:     'Owner'
+            selected: true
+            disable:  false
+          },
+#         # {
+#            value:    'tag'
+#            name:     'Tag'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    '-a'
+#            name:     '-- ' + App.i18n.translateInline('Article') + ' --'
+#            selected: false
+#            disable:  true
+#          },
+#          {
+#            value:    'ticket_articles.from'
+#            name:     'From'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.to'
+#            name:     'To'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.cc'
+#            name:     'Cc'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.subject'
+#            name:     'Subject'
+#            selected: true
+#            disable:  false
+#          },
+#          {
+#            value:    'ticket_articles.body'
+#            name:     'Text'
+#            selected: true
+#            disable:  false
+#          },
+          {
+            value:    '-c'
+            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
+            selected: false
+            disable:  true
+          },
+          {
+            value:    'customers.id'
+            name:     'Customer'
+            selected: true
+            disable:  false
+          },
+          {
+            value:    'organization.id'
+            name:     'Organization'
+            selected: true
+            disable:  false
+          },
+        ]
+        default:    ''
+        translate:  true
+        class:      'medium'
+        add:        true
+      }
+      list = @formGenItem( attribute_config )
+      list.find('.glyphicon-plus').bind('click', (e) ->
+        e.preventDefault()
+        value = $(e.target).closest('.controls').find('[name=ticket_attribute_list]').val()
+        addShownAttribute( value, '' )
+      )
+      item.find('.ticket_attribute_list').prepend( list )
+
+      # list of shown attributes
+      show = []
+      if attribute.value
+        for key, value of attribute.value
+          addShownAttribute( key, value )
+
+    # ticket attribute selection
+    else if attribute.tag is 'ticket_attribute_selection'
+
+      # list of possible attributes
+      item = $(
+        App.view('generic/ticket_attribute_manage')(
+          attribute: attribute
+        )
+      )
+
+      addShownAttribute = ( key, value ) =>
         parts = key.split(/::/)
         key   = parts[0]
         type  = parts[1]
@@ -832,7 +1455,6 @@ class App.ControllerForm extends App.Controller
             type:       'text'
             null:       false
             value:      value
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.title'
@@ -843,7 +1465,6 @@ class App.ControllerForm extends App.Controller
             type:       'text'
             null:       false
             value:      value
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.group_id'
@@ -856,7 +1477,6 @@ class App.ControllerForm extends App.Controller
             nulloption: false
             relation:   'Group'
             value:      value
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.owner_id' || key is 'tickets.customer_id'
@@ -874,7 +1494,6 @@ class App.ControllerForm extends App.Controller
             nulloption: false
             relation:   'User'
             value:      value || null
-            class:      'medium'
             remove:     true
             filter:     ( all, type ) ->
               return all if type isnt 'collection'
@@ -906,7 +1525,6 @@ class App.ControllerForm extends App.Controller
             nulloption: false
             relation:   'Organization'
             value:      value || null
-            class:      'medium'
             remove:     true
             filter:     ( all, type ) ->
               return all if type isnt 'collection'
@@ -931,7 +1549,6 @@ class App.ControllerForm extends App.Controller
             relation:   'TicketState'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.priority_id'
@@ -945,7 +1562,6 @@ class App.ControllerForm extends App.Controller
             relation:   'TicketPriority'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.created_at' && ( type is '<>' || value.count )
@@ -955,7 +1571,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.created_at' && ( type is '><' || 0 )
@@ -965,7 +1580,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.close_time' && ( type is '<>' || value.count )
@@ -975,7 +1589,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.close_time' && ( type is '><' || 0 )
@@ -985,7 +1598,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.updated_at' && ( type is '<>' || value.count )
@@ -995,7 +1607,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.updated_at' && ( type is '><' || 0 )
@@ -1005,7 +1616,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.escalation_time' && ( type is '<>' || value.count )
@@ -1015,7 +1625,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_before_last'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else if key is 'tickets.escalation_time' && ( type is '><' || 0 )
@@ -1025,7 +1634,6 @@ class App.ControllerForm extends App.Controller
             tag:        'time_range'
             value:      value
             translate:  true
-            class:      'medium'
             remove:     true
           }
         else
@@ -1035,23 +1643,22 @@ class App.ControllerForm extends App.Controller
             tag:        'input'
             type:       'text'
             value:      value
-            class:      'medium'
             remove:     true
           }
+
+        item.find('select[name=ticket_attribute_list] option[value="' + key + '"]').hide().prop('disabled', true)
+
         itemSub = @formGenItem( attribute_config )
         itemSub.find('.glyphicon-minus').bind('click', (e) ->
           e.preventDefault()
+          value = $(e.target).closest('.controls').find('[name]').attr('name')
+          if value
+            value = value.replace("#{attribute.name}::", '')
+            $(e.target).closest('.sub_attribute').find('select[name=ticket_attribute_list] option[value="' + value + '"]').show().prop('disabled', false)
           $(@).parent().parent().parent().remove()
         )
 #        itemSub.append('<a href=\"#\" class=\"icon-minus\"></a>')
         item.find('.ticket_attribute_item').append( itemSub )
-
-
-      # list of shown attributes
-      show = []
-      if attribute.value
-        for key, value of attribute.value
-          addShownAttribute( key, value )
 
       # list of existing attributes
       attribute_config = {
@@ -1068,19 +1675,18 @@ class App.ControllerForm extends App.Controller
             selected: false
             disable:  true
           },
-          #
-          #{
-          #  value:    'tickets.number'
-          #  name:     'Number'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.title'
-          #  name:     'Title'
-          #  selected: true
-          #  disable:  false
-          #},
+          {
+            value:    'tickets.number'
+            name:     'Number'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tickets.title'
+            name:     'Title'
+            selected: false
+            disable:  false
+          },
           {
             value:    'tickets.group_id'
             name:     'Group'
@@ -1259,11 +1865,99 @@ class App.ControllerForm extends App.Controller
 
       list.find('.glyphicon-plus').bind('click', (e) ->
         e.preventDefault()
-
-        value = $(e.target).parents().find('[name=ticket_attribute_list]').val()
+        value = $(e.target).closest('.controls').find('[name=ticket_attribute_list]').val()
         addShownAttribute( value, '' )
       )
       item.find('.ticket_attribute_list').prepend( list )
+
+      # list of shown attributes
+      show = []
+      if attribute.value
+        for key, value of attribute.value
+          addShownAttribute( key, value )
+
+    # timeplan
+    else if attribute.tag is 'timeplan'
+      item = $( App.view('generic/timeplan')( attribute: attribute ) )
+      attribute_config = {
+        name:     "#{attribute.name}::days"
+        tag:      'select'
+        multiple: true
+        null:     false
+        options:  [
+          {
+            value:    'mon'
+            name:     'Monday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'tue'
+            name:     'Tuesday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'wed'
+            name:     'Wednesday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'thu'
+            name:     'Thursday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'fri'
+            name:     'Friday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'sat'
+            name:     'Saturday'
+            selected: false
+            disable:  false
+          },
+          {
+            value:    'sun'
+            name:     'Sunday'
+            selected: false
+            disable:  false
+          },
+        ]
+        default:  attribute.default?.days
+      }
+      item.find('.days').append( @formGenItem( attribute_config ) )
+
+      hours = {}
+      for hour in [0..23]
+        localHour = "0#{hour}"
+        hours[hour] = localHour.substr(localHour.length-2,2)
+      attribute_config = {
+        name:     "#{attribute.name}::hours"
+        tag:      'select'
+        multiple: true
+        null:     false
+        options:  hours
+        default:  attribute.default?.hours
+      }
+      item.find('.hours').append( @formGenItem( attribute_config ) )
+
+      minutes = {}
+      for minute in [0..5]
+        minutes["#{minute}0"] = "#{minute}0"
+      attribute_config = {
+        name:     "#{attribute.name}::minutes"
+        tag:      'select'
+        multiple: true
+        null:     false
+        options:  minutes
+        default:  attribute.default?.miuntes
+      }
+      item.find('.minutes').append( @formGenItem( attribute_config ) )
 
     # input
     else
@@ -1286,6 +1980,8 @@ class App.ControllerForm extends App.Controller
           do (action, attribute) ->
             item.bind('change', ->
               value = $(@).val()
+              if !value
+                value = $(@).find('select, input').val()
 
               # lookup relation if needed
               if action.bind.relation
@@ -1312,6 +2008,7 @@ class App.ControllerForm extends App.Controller
         App.view('generic/attribute')(
           attribute: attribute,
           item:      '',
+          bookmarkable: @bookmarkable
         )
       )
       fullItem.find('.controls').prepend( item )
@@ -1326,15 +2023,24 @@ class App.ControllerForm extends App.Controller
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.form-group').removeClass('hide')
+      el.find('[name="' + key + '"]').closest('.form-group').removeClass('hide')
       el.find('[name="' + key + '"]').removeClass('is-hidden')
+      el.find('[data-name="' + key + '"]').closest('.form-group').removeClass('hide')
+      el.find('[data-name="' + key + '"]').removeClass('is-hidden')
+
+    # hide old validation states
+    if el
+      el.find('.has-error').removeClass('has-error')
+      el.find('.help-inline').html('')
 
   _hide: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
-      el.find('[name="' + key + '"]').parents('.form-group').addClass('hide')
+      el.find('[name="' + key + '"]').closest('.form-group').addClass('hide')
       el.find('[name="' + key + '"]').addClass('is-hidden')
+      el.find('[data-name="' + key + '"]').closest('.form-group').addClass('hide')
+      el.find('[data-name="' + key + '"]').addClass('is-hidden')
 
   _mandantory: (name, el = @el) ->
     if !_.isArray(name)
@@ -1355,8 +2061,13 @@ class App.ControllerForm extends App.Controller
       if attribute.shown_if
         hit = false
         for refAttribute, refValue of attribute.shown_if
-          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
-            hit = true
+          if params[refAttribute]
+            if _.isArray( refValue )
+              for item in refValue
+                if params[refAttribute].toString() is item.toString()
+                  hit = true
+            else if params[refAttribute].toString() is refValue.toString()
+              hit = true
         if hit
           ui._show(attribute.name)
         else
@@ -1367,8 +2078,13 @@ class App.ControllerForm extends App.Controller
       if attribute.required_if
         hit = false
         for refAttribute, refValue of attribute.required_if
-          if params[refAttribute] && params[refAttribute].toString() is refValue.toString()
-            hit = true
+          if params[refAttribute]
+            if _.isArray( refValue )
+              for item in refValue
+                if params[refAttribute].toString() is item.toString()
+                  hit = true
+            else if params[refAttribute].toString() is refValue.toString()
+              hit = true
         if hit
           ui._mandantory(attribute.name)
         else
@@ -1377,8 +2093,18 @@ class App.ControllerForm extends App.Controller
   # sort attribute.options
   _sortOptions: (attribute) ->
 
+    # skip sorting if it is disabled by config
+    return if attribute.sortBy == null
+
     return if !attribute.options
-    return if _.isArray( attribute.options )
+
+    if _.isArray( attribute.options )
+      # reverse if we have to exit early, if configured
+      if attribute.order
+        if attribute.order == 'DESC'
+          attribute.options = attribute.options.reverse()
+        return
+
     options_by_name = []
     for i in attribute.options
       options_by_name.push i['name'].toString().toLowerCase()
@@ -1392,6 +2118,11 @@ class App.ControllerForm extends App.Controller
           options_new_used[ ii['value'] ] = 1
           options_new.push ii
     attribute.options = options_new
+
+    # do a final reverse, if configured
+    if attribute.order
+      if attribute.order == 'DESC'
+        attribute.options = attribute.options.reverse()
 
   _addNullOption: (attribute) ->
     return if !attribute.options
@@ -1431,8 +2162,7 @@ class App.ControllerForm extends App.Controller
     return if !App[attribute.relation]
 
     attribute.options = []
-
-    list = []
+    list              = []
     if attribute.filter
 
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter', attribute.filter
@@ -1443,7 +2173,7 @@ class App.ControllerForm extends App.Controller
 
         all = App[ attribute.relation ].search( sortBy: attribute.sortBy )
 
-        list = attribute.filter( all, 'collection' )
+        list = attribute.filter( all, 'collection', @params )
 
       # data based filter
       else if attribute.filter[ attribute.name ]
@@ -1477,6 +2207,16 @@ class App.ControllerForm extends App.Controller
             # if it's matching, use it for selection
             if record['id'] is key || ( record['id'] && key && record['id'].toString() is key.toString() )
               list.push record
+
+        # check if current value need to be added
+        if @params[ attribute.name ]
+          hit = false
+          for value in list
+            if value['id'].toString() is @params[ attribute.name ].toString()
+              hit = true
+          if !hit
+            currentRecord = App[ attribute.relation ].find( @params[ attribute.name ] )
+            list.push currentRecord
 
       # no data filter matched
       else
@@ -1575,63 +2315,129 @@ class App.ControllerForm extends App.Controller
       model:  @model
       params: params
       screen: @screen
-    )
+  )
 
   # get all params of the form
   @params: (form) ->
     param = {}
 
-    # create jquery object if not already exists
-    if form instanceof jQuery
-      # do nothing
-    else
-      form = $(form)
+    lookupForm = @findForm(form)
 
-    # find form if current is <form>
-    if form.is('form')
-      form = form
-
-    # find form based on sub elements
-    else if form.find('form')[0]
-      form = $( form.find('form')[0] )
-
-    # find form based on parents next <form>
-    else if form.parents('form')[0]
-      form = $( form.parents('form')[0] )
-
-    else
-      App.Log.error 'ControllerForm', 'no form found!', form
+    # get contenteditable
+    for element in lookupForm.find('[contenteditable]')
+      name = $(element).data('name')
+      if name
+        param[name] = $(element).ceg()
 
     # get form elements
-    array = form.serializeArray()
+    array = lookupForm.serializeArray()
 
-    # 1:1 and boolean params
+    # array to names
     for key in array
 
       # check if item is-hidden and should not be used
-      if form.find('[name="' + key.name + '"]').hasClass('is-hidden')
+      if lookupForm.find('[name="' + key.name + '"]').hasClass('is-hidden')
+        param[key.name] = undefined
         continue
 
-      # collect all other params
+      # collect all params, push it to an array if already exists
       if param[key.name]
         if typeof param[key.name] is 'string'
           param[key.name] = [ param[key.name], key.value]
         else
           param[key.name].push key.value
       else
-
-        # check boolean
-        attributeType = key.value.split '::'
-        if attributeType[0] is '{boolean}'
-          if attributeType[1] is 'true'
-            key.value = true
-          else
-            key.value = false
-#        else if attributeType[0] is '{boolean}'
-
         param[key.name] = key.value
 
-    # check :: fields
+    # data type conversion
+    for key of param
+
+      # get boolean
+      if key.substr(0,9) is '{boolean}'
+        newKey          = key.substr( 9, key.length )
+        param[ newKey ] = param[ key ]
+        delete param[ key ]
+        if param[ newKey ] && param[ newKey ].toString() is 'true'
+          param[ newKey ] = true
+        else
+          param[ newKey ] = false
+
+      # get {date}
+      else if key.substr(0,6) is '{date}'
+        newKey    = key.substr( 6, key.length )
+        namespace = newKey.split '___'
+
+        if !param[ namespace[0] ]
+          dateKey = "{date}#{namespace[0]}___"
+          year    = param[ "#{dateKey}year" ]
+          month   = param[ "#{dateKey}month" ]
+          day     = param[ "#{dateKey}day" ]
+
+          if lookupForm.find('[data-name = "' + namespace[0] + '"]').hasClass('is-hidden')
+            param[ namespace[0] ] = null
+          else if year && month && day && day
+            format = (number) ->
+              if parseInt(number) < 10
+                number = "0#{number}"
+              number
+            try
+              time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T00:00:00Z" ) )
+              if time && time.toString() is 'Invalid Date'
+                throw "Invalid Date #{year}-#{format(month)}-#{format(day)}"
+              param[ namespace[0] ] = "#{time.getUTCFullYear()}-#{format(time.getUTCMonth()+1)}-#{format(time.getUTCDate())}"
+            catch err
+              param[ namespace[0] ] = 'invalid'
+              console.log('ERR', err)
+          else
+            param[ namespace[0] ] = undefined
+
+        #console.log('T', time, time.getHours(), time.getMinutes())
+
+          delete param[ "#{dateKey}year" ]
+          delete param[ "#{dateKey}month" ]
+          delete param[ "#{dateKey}day" ]
+
+      # get {datetime}
+      else if key.substr(0,10) is '{datetime}'
+        newKey    = key.substr( 10, key.length )
+        namespace = newKey.split '___'
+
+        if !param[ namespace[0] ]
+          datetimeKey = "{datetime}#{namespace[0]}___"
+          year        = param[ "#{datetimeKey}year" ]
+          month       = param[ "#{datetimeKey}month" ]
+          day         = param[ "#{datetimeKey}day" ]
+          hour        = param[ "#{datetimeKey}hour" ]
+          minute      = param[ "#{datetimeKey}minute" ]
+
+          if lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
+            param[ namespace[0] ] = null
+          else if year && month && day && hour && minute
+            format = (number) ->
+              if parseInt(number) < 10
+                number = "0#{number}"
+              number
+            try
+              time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
+              if time && time.toString() is 'Invalid Date'
+                throw "Invalid Date #{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z"
+              time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
+              param[ namespace[0] ] = time.toISOString()
+            catch err
+              param[ namespace[0] ] = 'invalid'
+              console.log('ERR', err)
+          else
+            param[ namespace[0] ] = undefined
+
+        #console.log('T', time, time.getHours(), time.getMinutes())
+
+          delete param[ "#{datetimeKey}year" ]
+          delete param[ "#{datetimeKey}month" ]
+          delete param[ "#{datetimeKey}day" ]
+          delete param[ "#{datetimeKey}hour" ]
+          delete param[ "#{datetimeKey}minute" ]
+
+    # split :: fields, build objects
     inputSelectObject = {}
     for key of param
       parts = key.split '::'
@@ -1648,25 +2454,7 @@ class App.ControllerForm extends App.Controller
         inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ] = param[ key ]
         delete param[ key ]
 
-    # check {input_select}
-    for key of param
-      attributeType = key.split '::'
-      name = attributeType[1]
-#      console.log 'split', key, attributeType, param[ name ]
-      if attributeType[0] is '{input_select}' && !param[ name ]
-
-        # array need to be converted
-        inputSelectData = param[ key ]
-        inputSelectObject[ name ] = {}
-        for x in [0..inputSelectData.length] by 2
-#          console.log 'for by 111', x, inputSelectData, inputSelectData[x], inputSelectData[ x + 1 ]
-          if inputSelectData[ x ]
-            inputSelectObject[ name ][ inputSelectData[x] ] = inputSelectData[ x + 1 ]
-
-        # remove {input_select} items
-        delete param[ key ]
-
-    # set new {input_select} items
+    # set new object params
     for key of inputSelectObject
       param[ key ] = inputSelectObject[ key ]
 
@@ -1677,29 +2465,94 @@ class App.ControllerForm extends App.Controller
     formId = new Date().getTime() + Math.floor( Math.random() * 99999 )
     formId.toString().substr formId.toString().length-9, 9
 
-  @disable: (form) ->
-    App.Log.notice 'ControllerForm', 'disable...', $(form.target).parent()
-    $(form.target).parent().find('button').attr('disabled', true)
-    $(form.target).parent().find('[type="submit"]').attr('disabled', true)
-    $(form.target).parent().find('[type="reset"]').attr('disabled', true)
+  @findForm: (form) ->
+    # check jquery event
+    if form && form.target
+      form = form.target
 
+    # create jquery object if not already exists
+    if form instanceof jQuery
+      # do nothing
+    else
+      form = $(form)
+
+    #console.log('FF', form)
+    # get form
+    if form.is('form') is true
+      #console.log('direct from')
+      return form
+    else if form.find('form').is('form') is true
+      #console.log('child from')
+      return form.find('form')
+    else if $(form).closest('form').is('form') is true
+      #console.log('closest from')
+      return form.closest('form')
+    # use current content as form if form isn't already finished
+    else if !@finishForm
+      #console.log('finishForm')
+      return form
+    else
+      App.Log.error 'ControllerForm', 'no form found!', form
+    form
+
+  @disable: (form) ->
+    lookupForm = @findForm(form)
+
+    if lookupForm
+      App.Log.debug 'ControllerForm', 'disable form...', lookupForm
+
+      # set forms to read only during communication with backend
+      lookupForm.find('button, input, select, textarea').attr('readonly', true)
+
+      # disable additionals submits
+      lookupForm.find('button.btn').attr('disabled', true)
+    else
+      App.Log.notice 'ControllerForm', 'disable item...', form
+      form.attr('readonly', true)
+      form.attr('disabled', true)
 
   @enable: (form) ->
-    App.Log.notice 'ControllerForm', 'enable...', $(form.target).parent()
-    $(form.target).parent().find('button').attr('disabled', false)
-    $(form.target).parent().find('[type="submit"]').attr('disabled', false)
-    $(form.target).parent().find('[type="reset"]').attr('disabled', false)
+
+    lookupForm = @findForm(form)
+
+    if lookupForm
+      App.Log.debug 'ControllerForm', 'enable form...', lookupForm
+
+      # enable fields again
+      lookupForm.find('button, input, select, textarea').attr('readonly', false)
+
+      # enable submits again
+      lookupForm.find('button.btn').attr('disabled', false)
+    else
+      App.Log.notice 'ControllerForm', 'enable item...', form
+      form.attr('readonly', false)
+      form.attr('disabled', false)
 
   @validate: (data) ->
 
+    lookupForm = @findForm(data.form)
+
     # remove all errors
-    $(data.form).parents().find('.has-error').removeClass('has-error')
-    $(data.form).parents().find('.help-inline').html('')
+    lookupForm.find('.has-error').removeClass('has-error')
+    lookupForm.find('.help-inline').html('')
 
     # show new errors
     for key, msg of data.errors
-      $(data.form).parents().find('[name="' + key + '"]').parents('div .form-group').addClass('has-error')
-      $(data.form).parents().find('[name="' + key + '"]').parent().find('.help-inline').html(msg)
 
-    # set autofocus
-    $(data.form).parents().find('.has-error').find('input, textarea').first().focus()
+      # use native fields
+      item = lookupForm.find('[name="' + key + '"]').closest('.form-group')
+      item.addClass('has-error')
+      item.find('.help-inline').html(msg)
+
+      # use meta fields
+      item = lookupForm.find('[data-name="' + key + '"]').closest('.form-group')
+      item.addClass('has-error')
+      item.find('.help-inline').html(msg)
+
+    # set autofocus by delay to make validation testable
+    App.Delay.set(
+      ->
+        lookupForm.find('.has-error').find('input, textarea, select').first().focus()
+      200
+      'validate'
+    )

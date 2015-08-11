@@ -22,7 +22,7 @@ returns
       return if !adapter
 
       # load backend
-      self.load_adapter(adapter)
+      load_adapter(adapter)
     end
 
 =begin
@@ -42,18 +42,18 @@ returns
       # load adapter
 
       # will only work on ruby 2.0
-#      Object.const_get(adapter)
+      #Object.const_get(adapter)
 
       # will work on ruby 1.9 and 2.0
-#      adapter.split('::').inject(Object) do |mod, class_name|
-#        mod.const_get(class_name)
-#      end
+      #adapter.split('::').inject(Object) do |mod, class_name|
+      #    mod.const_get(class_name)
+      #end
 
       # will work with active_support
       adapter = adapter.constantize
 
       if !adapter
-        raise "Can't load adapter '#{adapter_name}'"
+        fail "Can't load adapter '#{adapter_name}'"
       end
 
       adapter

@@ -13,6 +13,8 @@ class Index extends App.ControllerContent
     # set title
     @title 'New Ticket'
     @form_id = App.ControllerForm.formId()
+    @form_meta = undefined
+
     @fetch(params)
     @navupdate '#customer_ticket_new'
 
@@ -23,6 +25,9 @@ class Index extends App.ControllerContent
     cache = App.Store.get( 'ticket_create_attributes' )
 
     if cache
+
+      # get edit form attributes
+      @form_meta = cache.form_meta
 
       # load assets
       App.Collection.loadAssets( cache.assets )
@@ -39,6 +44,9 @@ class Index extends App.ControllerContent
           # cache request
           App.Store.write( 'ticket_create_attributes', data )
 
+          # get edit form attributes
+          @form_meta = data.form_meta
+
           # load assets
           App.Collection.loadAssets( data.assets )
 
@@ -50,32 +58,57 @@ class Index extends App.ControllerContent
     # set defaults
     defaults = template['options'] || {}
 
-    filter = {}
     groupFilter = App.Config.get('customer_ticket_create_group_ids')
     if groupFilter
       if !_.isArray(groupFilter)
         groupFilter = [groupFilter]
-      filter.group_id = groupFilter
+      @form_meta.filter.group_id = groupFilter
 
     @html App.view('customer_ticket_create')( head: 'New Ticket' )
 
     new App.ControllerForm(
-      el:       @el.find('.ticket-form')
+      el:       @el.find('.ticket-form-top')
       form_id:  @form_id
       model:    App.Ticket
-      screen:   'create_web'
+      screen:   'create_top'
+      handlers: [
+        @ticketFormChanges
+      ]
+      filter:    @form_meta.filter
       autofocus: true
-      filter:   filter
       params:    defaults
     )
 
     new App.ControllerForm(
-      el:       @el.find('.article-form')
+      el:       @el.find('.article-form-top')
       form_id:  @form_id
       model:    App.TicketArticle
-      screen:   'create_web'
+      screen:   'create_top'
       params:   defaults
     )
+    new App.ControllerForm(
+      el:       @el.find('.ticket-form-middle')
+      form_id:  @form_id
+      model:    App.Ticket
+      screen:   'create_middle'
+      handlers: [
+        @ticketFormChanges
+      ]
+      filter:     @form_meta.filter
+      params:     defaults
+      noFieldset: true
+    )
+    #new App.ControllerForm(
+    #  el:       @el.find('.ticket-form-bottom')
+    #  form_id:  @form_id
+    #  model:    App.Ticket
+    #  screen:   'create_bottom'#@article_attributes['screen']
+    #  handlers: [
+    #    formChanges
+    #  ]
+    #  filter:     @form_meta.filter
+    #  params:    defaults
+    #)
 
     new App.ControllerDrox(
       el:   @el.find('.sidebar')
@@ -122,36 +155,45 @@ class Index extends App.ControllerContent
 
     # create article
     params['article'] = {
-      from:       "#{ @Session.get('firstname') } #{ @Session.get('lastname') }"
-      to:         (group && group.name) || ''
-      subject:    params.subject
-      body:       params.body
-      type_id:    type.id
-      sender_id:  sender.id
-      form_id:    @form_id
+      from:         "#{ @Session.get().displayName() }"
+      to:           (group && group.name) || ''
+      subject:      params.subject
+      body:         params.body
+      type_id:      type.id
+      sender_id:    sender.id
+      form_id:      @form_id
+      content_type: 'text/html'
     }
 
     ticket.load(params)
 
     # validate form
-    ticketErrors = ticket.validate(
-      screen: 'create_web'
+    ticketErrorsTop = ticket.validate(
+      screen: 'create_top'
+    )
+    ticketErrorsMiddle = ticket.validate(
+      screen: 'create_middle'
     )
     article = new App.TicketArticle
     article.load(params['article'])
     articleErrors = article.validate(
-      screen: 'create_web'
+      screen: 'create_top'
     )
-    for key, value of articleErrors
-      if !ticketErrors
-        ticketErrors = {}
-      ticketErrors[key] = value
+
+    # collect whole validation
+    errors = {}
+    errors = _.extend( errors, ticketErrorsTop )
+    errors = _.extend( errors, ticketErrorsMiddle )
+    errors = _.extend( errors, articleErrors )
 
     # show errors in form
-    if ticketErrors
-      @log 'CustomerTicketCreate', 'error', 'can not create', ticketErrors
+    if !_.isEmpty(errors)
+      @log 'CustomerTicketCreate', 'error', 'can not create', errors
 
-      @formValidate( form: e.target, errors: ticketErrors )
+      @formValidate(
+        form:   e.target
+        errors: errors
+      )
 
     # save ticket, create article
     else
@@ -171,4 +213,4 @@ class Index extends App.ControllerContent
       )
 
 App.Config.set( 'customer_ticket_new', Index, 'Routes' )
-App.Config.set( 'CustomerTicketNew', { prio: 8000, parent: '', name: 'New', target: '#customer_ticket_new', role: ['Customer'] }, 'NavBarRight' )
+App.Config.set( 'CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#customer_ticket_new', role: ['Customer'], divider: true }, 'NavBarRight' )

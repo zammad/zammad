@@ -22,34 +22,38 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     time_diff = 0
     if timezone
       begin
-         time_diff = Time.parse(start_time.to_s).in_time_zone(timezone).utc_offset
-      rescue Exception => e
-        puts "ERROR: Can't fine tomezone #{timezone}"
-        puts e.inspect
-        puts e.backtrace
+        time_diff = Time.zone.parse(start_time.to_s).in_time_zone(timezone).utc_offset
+     rescue => e
+       Rails.logger.error "Can't fine tomezone #{timezone}"
+       Rails.logger.error e.inspect
+       Rails.logger.error e.backtrace
       end
     end
-    beginning_of_workday = Time.parse("1977-10-27 #{config['beginning_of_workday']}")
-    end_of_workday       = Time.parse("1977-10-27 #{config['end_of_workday']}") - 3600
+    beginning_of_workday = Time.zone.parse("1977-10-27 #{config['beginning_of_workday']}")
+    end_of_workday       = Time.zone.parse("1977-10-27 #{config['end_of_workday']}") - 3600
     config_ok = false
     working_hours = {}
     [:Mon, :Tue, :Wed, :Thu, :Fri, :Sat, :Sun].each {|day|
       working_hours[day] = []
-      if config[day.to_s] == true || config[day.to_s] == day.to_s
-        config_ok = true
-        (0..23).each {|hour|
-          time = Time.parse("1977-10-27 #{hour}:00:00")
-          if time >= beginning_of_workday && time <= end_of_workday
-            working_hours[day].push true
-          else
-            working_hours[day].push nil
-          end
-        }
+
+      next if !config[day.to_s]
+      if config[day.to_s] != true && config[day.to_s] != day.to_s
+        next
       end
+
+      config_ok = true
+      (0..23).each {|hour|
+        time = Time.zone.parse("1977-10-27 #{hour}:00:00")
+        if time >= beginning_of_workday && time <= end_of_workday
+          working_hours[day].push true
+        else
+          working_hours[day].push nil
+        end
+      }
     }
 
     if !config_ok
-      raise "sla config is invalid! " + config.inspect
+      fail 'sla config is invalid! ' + config.inspect
     end
 
     # shift working hours / if needed
@@ -57,33 +61,34 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
       hours_to_shift = (time_diff / 3600 ).round
       move_items = {
-        :Mon => [],
-        :Tue => [],
-        :Wed => [],
-        :Thu => [],
-        :Fri => [],
-        :Sat => [],
-        :Sun => [],
+        Mon: [],
+        Tue: [],
+        Wed: [],
+        Thu: [],
+        Fri: [],
+        Sat: [],
+        Sun: [],
       }
-      (1..hours_to_shift).each {|count|
+      (1..hours_to_shift).each {
         working_hours.each {|day, value|
-          if working_hours[day]
-            to_move = working_hours[day].shift
-            if day == :Mon
-              move_items[:Tue].push to_move
-            elsif day == :Tue
-              move_items[:Wed].push to_move
-            elsif day == :Wed
-              move_items[:Thu].push to_move
-            elsif day == :Thu
-              move_items[:Fri].push to_move
-            elsif day == :Fri
-              move_items[:Sat].push to_move
-            elsif day == :Sat
-              move_items[:Sun].push to_move
-            elsif day == :Sun
-              move_items[:Mon].push to_move
-            end
+
+          next if !value
+
+          to_move = working_hours[day].shift
+          if day == :Mon
+            move_items[:Tue].push to_move
+          elsif day == :Tue
+            move_items[:Wed].push to_move
+          elsif day == :Wed
+            move_items[:Thu].push to_move
+          elsif day == :Thu
+            move_items[:Fri].push to_move
+          elsif day == :Fri
+            move_items[:Sat].push to_move
+          elsif day == :Sat
+            move_items[:Sun].push to_move
+          elsif day == :Sun
+            move_items[:Mon].push to_move
           end
         }
       }
@@ -93,7 +98,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
         }
       }
     end
-    return working_hours
+    working_hours
   end
 
 =begin
@@ -111,17 +116,16 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
   def self.business_time_diff(start_time, end_time, config = nil, timezone = '')
     if start_time.class == String
-      start_time  = Time.parse( start_time.to_s + 'UTC' )
+      start_time  = Time.zone.parse( start_time.to_s + 'UTC' )
     end
     if end_time.class == String
-      end_time = Time.parse( end_time.to_s + 'UTC' )
+      end_time = Time.zone.parse( end_time.to_s + 'UTC' )
     end
 
     # if no config is given, just return calculation directly
     if !config
       return ((end_time - start_time) / 60 ).round
     end
-
 
     working_hours = self.working_hours(start_time, config, timezone)
 
@@ -138,13 +142,12 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     count = 0
     calculation = true
     first_loop  = true
-    while calculation do
+    while calculation
       week_day = start_time.wday
       day      = start_time.day
       month    = start_time.month
       year     = start_time.year
       hour     = start_time.hour
-
 
       # check if it's vacation day
       if config
@@ -152,7 +155,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
           if config['holidays'].include?("#{year}-#{month}-#{day}")
 
             # jump to next day
-            start_time = start_time.beginning_of_day + 86400
+            start_time = start_time.beginning_of_day + 86_400
             next
           end
         end
@@ -162,7 +165,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       if working_hours[ week_day_map[week_day] ].empty?
 
         # jump to next day
-        start_time = start_time.beginning_of_day + 86400
+        start_time = start_time.beginning_of_day + 86_400
         next
       end
 
@@ -171,7 +174,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
         diff = end_time - start_time
 
         if diff > 59 * 60
-            diff = start_time - start_time.beginning_of_hour
+          diff = start_time - start_time.beginning_of_hour
         end
         start_time += diff
 
@@ -199,7 +202,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
         # keep it in current day
         if next_hour == 23
-          start_time += diff-1
+          start_time += diff - 1
         else
           start_time += diff
         end
@@ -211,7 +214,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       }
 
       # loop to next day
-      start_time = start_time.beginning_of_day + 86400
+      start_time = start_time.beginning_of_day + 86_400
     end
 
     diff = count / 60
@@ -233,7 +236,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
   def self.dest_time(start_time, diff_in_min, config = nil, timezone = '')
     if start_time.class == String
-      start_time = Time.parse( start_time.to_s + ' UTC' )
+      start_time = Time.zone.parse( start_time.to_s + ' UTC' )
     end
 
     return start_time if diff_in_min == 0
@@ -259,13 +262,13 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     count       = diff_in_min * 60
     calculation = true
     first_loop  = true
-    while calculation do
+    while calculation
       week_day = start_time.wday
       day      = start_time.day
       month    = start_time.month
       year     = start_time.year
       hour     = start_time.hour
-#puts "start outer loop #{start_time}-#{week_day}-#{year}-#{month}-#{day}-#{hour}|c#{count}"
+      #puts "start outer loop #{start_time}-#{week_day}-#{year}-#{month}-#{day}-#{hour}|c#{count}"
 
       # check if it's vacation day
       if config
@@ -273,7 +276,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
           if config['holidays'].include?("#{year}-#{month}-#{day}")
 
             # jump to next day
-            start_time = start_time.beginning_of_day + 86400
+            start_time = start_time.beginning_of_day + 86_400
             next
           end
         end
@@ -283,7 +286,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       if working_hours[ week_day_map[week_day] ].empty?
 
         # jump to next day
-        start_time = start_time.beginning_of_day + 86400
+        start_time = start_time.beginning_of_day + 86_400
         next
       end
 
@@ -336,7 +339,7 @@ put working hours matrix and timezone in function, returns UTC working hours mat
 
         # keep it in current day
         if next_hour == 23
-          start_time += diff-1
+          start_time += diff - 1
         else
           start_time += diff
         end
@@ -349,10 +352,10 @@ put working hours matrix and timezone in function, returns UTC working hours mat
       end
 
       # loop to next day
-      start_time = start_time.beginning_of_day + 86400
+      start_time = start_time.beginning_of_day + 86_400
     end
 
-    return start_time
+    start_time
   end
 
 end

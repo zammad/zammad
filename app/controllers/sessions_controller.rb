@@ -5,12 +5,15 @@ class SessionsController < ApplicationController
   # "Create" a login, aka "log the user in"
   def create
 
+    # in case, remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
     # authenticate user
     user = User.authenticate( params[:username], params[:password] )
 
     # auth failed
     if !user
-      render :json => { :error => 'login failed' }, :status => :unauthorized
+      render json: { error: 'login failed' }, status: :unauthorized
       return
     end
 
@@ -31,18 +34,18 @@ class SessionsController < ApplicationController
     user.activity_stream_log( 'session started', user.id, true )
 
     # auto population of default collections
-    collections, assets = SessionHelper::default_collections(user)
+    collections, assets = SessionHelper.default_collections(user)
 
     # add session user assets
     assets = user.assets(assets)
 
     # get models
-    models = SessionHelper::models(user)
+    models = SessionHelper.models(user)
 
     # check logon session
     logon_session_key = nil
     if params['logon_session']
-      logon_session_key = Digest::MD5.hexdigest( rand(999999).to_s + Time.new.to_s )
+      logon_session_key = Digest::MD5.hexdigest( rand(999_999).to_s + Time.zone.now.to_s )
       #      session = ActiveRecord::SessionStore::Session.create(
       #        :session_id => logon_session_key,
       #        :data => {
@@ -51,15 +54,19 @@ class SessionsController < ApplicationController
       #      )
     end
 
+    # sessions created via this
+    # controller are persistent
+    session[:persistent] = true
+
     # return new session data
-    render :json => {
-      :session       => user,
-      :models        => models,
-      :collections   => collections,
-      :assets        => assets,
-      :logon_session => logon_session_key,
-    },
-    :status => :created
+    render  status: :created,
+            json: {
+              session: user,
+              models: models,
+              collections: collections,
+              assets: assets,
+              logon_session: logon_session_key,
+            }
   end
 
   def show
@@ -73,7 +80,7 @@ class SessionsController < ApplicationController
 
     # check logon session
     if params['logon_session']
-      session = SessionHelper::get( params['logon_session'] )
+      session = SessionHelper.get( params['logon_session'] )
       if session
         user_id = session.data[:user_id]
       end
@@ -81,12 +88,15 @@ class SessionsController < ApplicationController
 
     if !user_id
       # get models
-      models = SessionHelper::models()
+      models = SessionHelper.models()
 
-      render :json => {
-        :error  => 'no valid session',
-        :config => config_frontend,
-        :models => models,
+      render json: {
+        error: 'no valid session',
+        config: config_frontend,
+        models: models,
+        collections: {
+          Locale.to_app_model => Locale.where( active: true )
+        }
       }
       return
     end
@@ -96,21 +106,21 @@ class SessionsController < ApplicationController
     user = User.find( user_id )
 
     # auto population of default collections
-    collections, assets = SessionHelper::default_collections(user)
+    collections, assets = SessionHelper.default_collections(user)
 
     # add session user assets
     assets = user.assets(assets)
 
     # get models
-    models = SessionHelper::models(user)
+    models = SessionHelper.models(user)
 
     # return current session
-    render :json => {
-      :session      => user,
-      :models       => models,
-      :collections  => collections,
-      :assets       => assets,
-      :config       => config_frontend,
+    render json: {
+      session: user,
+      models: models,
+      collections: collections,
+      assets: assets,
+      config: config_frontend,
     }
   end
 
@@ -124,14 +134,18 @@ class SessionsController < ApplicationController
     request.env['rack.session.options'][:expire_after] = -1.year
     request.env['rack.session.options'][:renew] = true
 
-    render :json => { }
+    render json: {}
   end
 
   def create_omniauth
+
+    # in case, remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
     auth = request.env['omniauth.auth']
 
     if !auth
-      logger.info("AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT")
+      logger.info('AUTH IS NULL, SERVICE NOT LINKED TO ACCOUNT')
 
       # redirect to app
       redirect_to '/'
@@ -148,7 +162,7 @@ class SessionsController < ApplicationController
     current_user_set(authorization.user)
 
     # log new session
-    user.activity_stream_log( 'session started', authorization.user.id, true )
+    authorization.user.activity_stream_log( 'session started', authorization.user.id, true )
 
     # remember last login date
     authorization.user.update_last_login
@@ -158,6 +172,10 @@ class SessionsController < ApplicationController
   end
 
   def create_sso
+
+    # in case, remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
     user = User.sso(params)
 
     # Log the authorizing user in.
@@ -179,25 +197,28 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # check user
     if !params[:id]
       render(
-        :json   => { :message => 'no user given' },
-        :status => :not_found
+        json: { message: 'no user given' },
+        status: :not_found
       )
       return false
     end
 
-    user = User.lookup( :id => params[:id] )
+    user = User.lookup( id: params[:id] )
     if !user
       render(
-        :json   => {},
-        :status => :not_found
+        json: {},
+        status: :not_found
       )
       return false
     end
+
+    # remember old user
+    session[:switched_from_user_id] = current_user.id
 
     # log new session
     user.activity_stream_log( 'switch to', current_user.id, true )
@@ -208,27 +229,61 @@ class SessionsController < ApplicationController
     redirect_to '/#'
   end
 
+  # "switch" back to user
+  def switch_back_to_user
+
+    # check if it's a swich back
+    if !session[:switched_from_user_id]
+      response_access_deny
+      return false
+    end
+
+    user = User.lookup( id: session[:switched_from_user_id] )
+    if !user
+      render(
+        json: {},
+        status: :not_found
+      )
+      return false
+    end
+
+    # rememeber current user
+    current_session_user = current_user
+
+    # remove switched_from_user_id
+    session[:switched_from_user_id] = nil
+
+    # set old session user again
+    current_user_set(user)
+
+    # log end session
+    current_session_user.activity_stream_log( 'ended switch to', user.id, true )
+
+    redirect_to '/#'
+  end
+
   def list
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     assets = {}
     sessions_clean = []
     SessionHelper.list.each {|session|
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']
-        user = User.lookup( :id => session.data['user_id'] )
+        user = User.lookup( id: session.data['user_id'] )
         assets = user.assets( assets )
       end
     }
-    render :json => {
-      :sessions => sessions_clean,
-      :assets   => assets,
+    render json: {
+      sessions: sessions_clean,
+      assets: assets,
     }
   end
 
   def delete
-    return if deny_if_not_role('Admin')
-    SessionHelper::destroy( params[:id] )
-    render :json => {}
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    SessionHelper.destroy( params[:id] )
+    render json: {}
   end
+
 end

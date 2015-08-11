@@ -1,4 +1,0 @@
-<div>
-  <p class="pull-right"><a href="javascript:window.scrollTo(0,0);"><%- @T('Back to top') %></a></p>
-  <p><%- @T('Designed and built with all the love in the world') %> <a href="http://twitter.com/zammad_org">@zammad_org</a></p>
-</div>

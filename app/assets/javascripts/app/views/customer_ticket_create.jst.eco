@@ -1,26 +1,31 @@
-<div class="content-two">
-  <div class="sidebar">
-  </div>
-  <div class="main">
-
-    <div class="ticket-create">
-      <div class="page-header clearfix">
-        <div class="page-header-title">
-          <h1 class="pull-left"><%- @T( 'New Ticket' ) %></h1>
+<div class="horizontal flex">
+  <div class="main no-padding flex">
+    <div class="newTicket">
+      <div class="box box--newTicket">
+        <div class="page-header">
+          <h1><%- @T( 'New Ticket' ) %></h1>
         </div>
-      </div>
-      <div class="page-content">
-        <form class="form-horizontal form-large">
-          <div class="ticket-form"></div>
-          <div class="article-form"></div>
-          <div class="form-actions">
-            <button type="reset" class="btn btn-default cancel"><%- @T( 'Cancel' ) %></button>
-            <button type="submit" class="btn btn-primary submit"><%- @T( 'Create' ) %></button>
+
+        <form role="form" class="ticket-create">
+
+          <div class="ticket-form-top"></div>
+          <div class="article-form-top"></div>
+
+          <div class="formset-inset">
+            <div class="ticket-form-middle horizontal two-columns"></div>
+            <div class="ticket-form-bottom"></div>
+          </div>
+
+
+          <div class="form-controls">
+            <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+            <button type="submit" class="btn btn--success js-submit align-right"><%- @T( 'Create' ) %></button>
           </div>
         </form>
+
       </div>
     </div>
-
   </div>
 </div>
 
+<div class="sidebar"></div>

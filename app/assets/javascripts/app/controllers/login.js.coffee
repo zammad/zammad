@@ -5,10 +5,17 @@ class Index extends App.ControllerContent
   constructor: ->
     super
 
+    # redirect to getting started if setup is not done
+    if !@Config.get('system_init_done')
+      @navigate '#getting_started'
+      return
+
     # navigate to # if session if exists
-    if @Session.get( 'id' )
+    if @Session.get()
       @navigate '#'
       return
+
+    @navHide()
 
     @title 'Sign in'
     @render()
@@ -20,30 +27,38 @@ class Index extends App.ControllerContent
         url:    '/auth/facebook',
         name:   'Facebook',
         config: 'auth_facebook',
+        class:  'facebook',
       },
       twitter: {
         url:    '/auth/twitter',
         name:   'Twitter',
         config: 'auth_twitter',
+        class:  'twitter',
       },
       linkedin: {
         url:    '/auth/linkedin',
         name:   'LinkedIn',
         config: 'auth_linkedin',
+        class:  'linkedin',
       },
       google_oauth2: {
         url:    '/auth/google_oauth2',
         name:   'Google',
         config: 'auth_google_oauth2',
+        class:  'google',
       },
     }
     auth_providers = []
     for key, provider of auth_provider_all
-      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is "true"
+      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is 'true'
         auth_providers.push provider
+
+    logoFile = App.Config.get('product_logo')
+    logoUrl  = App.Config.get('image_path') + "/#{logoFile}"
 
     @html App.view('login')(
       item:           data
+      logoUrl:        logoUrl
       auth_providers: auth_providers
     )
 
@@ -75,18 +90,9 @@ class Index extends App.ControllerContent
 
   success: (data, status, xhr) =>
 
-    # rebuild navbar with ticket overview counter
-    App.WebSocket.send( event: 'navupdate_ticket_overview' )
-
-    # add notify
-    @notify
-      type:      'success'
-      msg:       App.i18n.translateContent('Login successfully! Have a nice day!')
-      removeAll: true
-
     # redirect to #
     requested_url = @Config.get( 'requested_url' )
-    if requested_url && requested_url isnt '#login'
+    if requested_url && requested_url isnt '#login' && requested_url isnt '#logout'
       @log 'notice', "REDIRECT to '#{requested_url}'"
       @navigate requested_url
 
@@ -111,7 +117,7 @@ class Index extends App.ControllerContent
 
     # login shake
     @delay(
-      => @shake( @el.find('#login') ),
+      => @shake( @el.find('.hero-unit') ),
       600
     )
 

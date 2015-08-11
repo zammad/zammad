@@ -25,8 +25,7 @@ class _trackSingleton
     @browser = App.Browser.detection()
     @data    = []
 #    @url     = 'http://localhost:3005/api/v1/ui'
-#    @url     = 'https://log.znuny.com/api/ui'
-    @url     = 'https://portal.znuny.com/api/v1/ui'
+    @url     = 'https://log.zammad.com/api/v1/ui'
 
     @log( 'start', 'notice', {} )
 
@@ -103,6 +102,7 @@ class _trackSingleton
     )
 
   log: ( facility, level, args ) ->
+    return if App.Config.get('developer_mode')
     return if !App.Config.get('ui_send_client_stats')
     info =
       time:     Math.round( new Date().getTime() / 1000 )
@@ -113,6 +113,7 @@ class _trackSingleton
     @data.push info
 
   send: (async = true) =>
+    return if App.Config.get('developer_mode')
     return if !App.Config.get('ui_send_client_stats')
     return if _.isEmpty @data
     newData = _.clone( @data )
@@ -120,10 +121,11 @@ class _trackSingleton
     newDataNew = []
     for item in newData
       try
-        itemNew = _.clone( item )
+
+        # check if strigify is possibe, prevent ajax errors
         JSON.stringify(item)
 
-        newDataNew.push itemNew
+        newDataNew.push item
       catch e
         # nothing
 

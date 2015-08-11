@@ -1,93 +1,93 @@
 # encoding: utf-8
 require 'test_helper'
- 
+
 class CacheTest < ActiveSupport::TestCase
   test 'cache' do
     tests = [
 
       # test 1
       {
-        :set => {
-          :key  => '123',
-          :data => {
-            :key => 'some value',
+        set: {
+          key: '123',
+          data: {
+            key: 'some value',
           }
         },
-        :verify => {
-          :key  => '123',
-          :data => {
-            :key => 'some value',
+        verify: {
+          key: '123',
+          data: {
+            key: 'some value',
           }
         },
       },
 
       # test 2
       {
-        :set => {
-          :key  => '123',
-          :data => {
-            :key => 'some valueöäüß',
+        set: {
+          key: '123',
+          data: {
+            key: 'some valueöäüß',
           }
         },
-        :verify => {
-          :key  => '123',
-          :data => {
-            :key => 'some valueöäüß',
+        verify: {
+          key: '123',
+          data: {
+            key: 'some valueöäüß',
           }
         },
       },
 
       # test 3
       {
-        :delete => {
-          :key  => '123',
+        delete: {
+          key: '123',
         },
-        :verify => {
-          :key  => '123',
-          :data => nil
+        verify: {
+          key: '123',
+          data: nil
         },
       },
 
       # test 4
       {
-        :set => {
-          :key  => '123',
-          :data => {
-            :key => 'some valueöäüß2',
+        set: {
+          key: '123',
+          data: {
+            key: 'some valueöäüß2',
           }
         },
-        :verify => {
-          :key  => '123',
-          :data => {
-            :key => 'some valueöäüß2',
+        verify: {
+          key: '123',
+          data: {
+            key: 'some valueöäüß2',
           }
         },
       },
 
       # test 5
       {
-        :cleanup => true,
-        :verify => {
-          :key  => '123',
-          :data => nil
+        cleanup: true,
+        verify: {
+          key: '123',
+          data: nil
         },
       },
 
       # test 6
       {
-        :set => {
-          :key  => '123',
-          :data => {
-            :key => 'some valueöäüß2',
+        set: {
+          key: '123',
+          data: {
+            key: 'some valueöäüß2',
           },
-          :param => {
-            :expires_in => 5.seconds,
+          param: {
+            expires_in: 5.seconds,
           }
         },
-        :sleep => 10,
-        :verify => {
-          :key  => '123',
-          :data => nil
+        sleep: 10,
+        verify: {
+          key: '123',
+          data: nil
         },
       },
     ]
@@ -109,5 +109,13 @@ class CacheTest < ActiveSupport::TestCase
         assert_equal( cache, test[:verify][:data], 'verify' )
       end
     }
+  end
+
+  # verify if second cache write overwrite first one
+  test 'cache reset' do
+    Cache.write( 'some_reset_key', 123 )
+    Cache.write( 'some_reset_key', 12_356 )
+    cache = Cache.get( 'some_reset_key' )
+    assert_equal( cache, 12_356, 'verify' )
   end
 end

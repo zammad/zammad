@@ -20,26 +20,26 @@ returns
     # use std. auth backends
     config = [
       {
-        :adapter => 'Sso::Env',
+        adapter: 'Sso::Env',
       },
       {
-        :adapter           => 'Sso::Otrs',
-        :required_group_ro => 'stats',
-        :group_rw_role_map => {
+        adapter: 'Sso::Otrs',
+        required_group_ro: 'stats',
+        group_rw_role_map: {
           'admin' => 'Admin',
           'stats' => 'Report',
         },
-        :group_ro_role_map => {
+        group_ro_role_map: {
           'stats' => 'Report',
         },
-        :always_role => {
+        always_role: {
           'Agent' => true,
         },
       },
     ]
 
     # added configured backends
-    Setting.where( :area => 'Security::SSO' ).each {|setting|
+    Setting.where( area: 'Security::SSO' ).each {|setting|
       if setting.state[:value]
         config.push setting.state[:value]
       end
@@ -51,21 +51,21 @@ returns
       next if !config_item[:adapter]
 
       # load backend
-      backend = self.load_adapter( config_item[:adapter] )
-      return if !backend
+      backend = load_adapter( config_item[:adapter] )
+      next if !backend
 
       user_auth = backend.check( params, config_item )
 
-      # auth ok
-      if user_auth
+      # auth not ok
+      next if !user_auth
 
-        # remember last login date
-        user_auth.update_last_login
+      Rails.logger.info "Authentication against #{config_item[:adapter]} for user #{user.login} ok."
 
-        return user_auth
-      end
+      # remember last login date
+      user_auth.update_last_login
+
+      return user_auth
     }
-    return
-
+    nil
   end
 end

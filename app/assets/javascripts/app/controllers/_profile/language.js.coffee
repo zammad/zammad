@@ -5,14 +5,17 @@ class Index extends App.Controller
   constructor: ->
     super
     return if !@authenticate()
+    @title 'Language', true
     @render()
 
   render: =>
-
-    html = $( App.view('profile/language')() )
-
+    html    = $( App.view('profile/language')() )
+    options = {}
+    locales = App.Locale.all()
+    for locale in locales
+      options[locale.locale] = locale.name
     configure_attributes = [
-      { name: 'locale', display: '', tag: 'select', null: false, class: 'input span4', options: { de: 'Deutsch', en: 'English (United States)', 'en-CA': 'English (Canada)', 'en-GB': 'English (United Kingdom)' }, default: App.i18n.get()  },
+      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: options, default: App.i18n.get() },
     ]
 
     @form = new App.ControllerForm(
@@ -25,7 +28,7 @@ class Index extends App.Controller
   update: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
-    error = @form.validate(params)
+    error  = @form.validate(params)
     if error
       @formValidate( form: e.target, errors: error )
       return false
@@ -35,25 +38,24 @@ class Index extends App.Controller
     # get data
     @locale = params['locale']
     @ajax(
-      id:   'preferences'
-      type: 'PUT'
-      url:  @apiPath + '/users/preferences'
-      data: JSON.stringify(params)
+      id:          'preferences'
+      type:        'PUT'
+      url:         @apiPath + '/users/preferences'
+      data:        JSON.stringify({user:params})
       processData: true
-      success: @success
-      error:   @error
+      success:     @success
+      error:       @error
     )
 
   success: (data, status, xhr) =>
     App.User.full(
-      App.Session.get( 'id' ),
+      App.Session.get('id'),
       =>
-        App.i18n.set( @locale )
-        App.Event.trigger( 'ui:rerender' )
-        App.Event.trigger( 'ui:page:rerender' )
+        App.i18n.set(@locale)
+        App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent( 'Successfully!' )
+          msg:  App.i18n.translateContent('Successfully!')
         )
       ,
       true
@@ -61,11 +63,10 @@ class Index extends App.Controller
 
   error: (xhr, status, error) =>
     @render()
-    data = JSON.parse( xhr.responseText )
+    data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent( data.message )
+      msg:  App.i18n.translateContent(data.message)
     )
 
 App.Config.set( 'Language', { prio: 1000, name: 'Language', parent: '#profile', target: '#profile/language', controller: Index }, 'NavBarProfile' )
-

@@ -1,4 +1,4 @@
 class Sessions::Backend::Collections::EmailAddress < Sessions::Backend::Collections::Base
   model_set 'EmailAddress'
-  is_not_role_set 'Customer'
+  add_if_not_role 'Customer'
 end

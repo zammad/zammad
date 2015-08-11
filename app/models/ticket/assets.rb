@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 module Ticket::Assets
 
 =begin
@@ -26,18 +25,15 @@ returns
     if !data[ Ticket.to_app_model ]
       data[ Ticket.to_app_model ] = {}
     end
-    if !data[ Ticket.to_app_model ][ self.id ]
-      data[ Ticket.to_app_model ][ self.id ] = self.attributes_with_associations
+    if !data[ Ticket.to_app_model ][ id ]
+      data[ Ticket.to_app_model ][ id ] = attributes_with_associations
     end
-    ['created_by_id', 'updated_by_id', 'owner_id', 'customer_id'].each {|item|
-      if self[ item ]
-        if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self[ item ] ]
-          user = User.lookup( :id => self[ item ] )
-          data = user.assets( data )
-        end
-      end
+    %w(created_by_id updated_by_id owner_id customer_id).each {|local_user_id|
+      next if !self[ local_user_id ]
+      next if data[ User.to_app_model ] && data[ User.to_app_model ][ self[ local_user_id ] ]
+      user = User.lookup( id: self[ local_user_id ] )
+      data = user.assets( data )
     }
     data
   end
-
 end

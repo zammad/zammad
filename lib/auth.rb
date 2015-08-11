@@ -20,15 +20,15 @@ returns
     # use std. auth backends
     config = [
       {
-        :adapter => 'Auth::Internal',
+        adapter: 'Auth::Internal',
       },
       {
-        :adapter => 'Auth::Test',
+        adapter: 'Auth::Developer',
       },
     ]
 
     # added configured backends
-    Setting.where( :area => 'Security::Authentication' ).each {|setting|
+    Setting.where( area: 'Security::Authentication' ).each {|setting|
       if setting.state[:value]
         config.push setting.state[:value]
       end
@@ -40,21 +40,21 @@ returns
       next if !config_item[:adapter]
 
       # load backend
-      backend = self.load_adapter( config_item[:adapter] )
-      return if !backend
+      backend = load_adapter( config_item[:adapter] )
+      next if !backend
 
       user_auth = backend.check( username, password, config_item, user )
 
-      # auth ok
-      if user_auth
+      # auth not ok
+      next if !user_auth
 
-        # remember last login date
-        user_auth.update_last_login
+      Rails.logger.info "Authentication against #{config_item[:adapter]} for user #{user_auth.login} ok."
 
-        return user_auth
-      end
+      # remember last login date
+      user_auth.update_last_login
+
+      return user_auth
     }
-    return
-
+    nil
   end
 end

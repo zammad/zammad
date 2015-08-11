@@ -13,7 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp/websocket/*
-/tmp/cache/*
+/tmp/cache*
 /tmp/pids/*
 /public/assets/*.*
 /public/assets/app/*
@@ -39,3 +39,6 @@ Gemfile.lock
 # Ignore local changes to schema.rb (e. g. through extentions)
 db/schema.rb
 
+# Ignore Rubymine config
+/.idea
+node_modules

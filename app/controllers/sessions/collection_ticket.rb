@@ -24,7 +24,7 @@ module ExtraCollection
     Ticket::Article::Sender.all.each {|item|
       assets = item.assets(assets)
     }
-    if !user.is_role('Customer')
+    if !user.role?(Z_ROLENAME_CUSTOMER)
 
       # all signatures
       collections[ Signature.to_app_model ] = []
@@ -38,6 +38,7 @@ module ExtraCollection
         assets = item.assets(assets)
       }
     end
+    [collections, assets]
   end
   module_function :session
 end

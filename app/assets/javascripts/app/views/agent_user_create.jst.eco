@@ -1,14 +1,16 @@
-<form class="form-horizontal">
+<form>
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <a href="#" class="close">&times;</a>
-      <h2 class="modal-title"><%- @T( @head ) %></h2>
+      <div class="modal-close js-close">
+        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
+      <h1 class="modal-title"><%- @T( @head ) %></h1>
     </div>
     <div class="modal-body" id="form-user"></div>
     <div class="modal-footer">
-      <button class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-      <button class="btn secondary cancel"><%- @T( 'Cancel' ) %></button>
+      <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+      <button type="submit" class="btn btn--success js-submit align-right"><%- @T( 'Create' ) %></button>
     </div>
   </div>
 </div>

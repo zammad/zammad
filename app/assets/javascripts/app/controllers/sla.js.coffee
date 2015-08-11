@@ -6,22 +6,22 @@ class Index extends App.ControllerContent
     return if !@authenticate()
 
     new App.ControllerGenericIndex(
-      el: @el,
-      id: @id,
-      genericObject: 'Sla',
-      pageData: {
-        title: 'SLA',
-        home: 'slas',
-        object: 'SLA',
-        objects: 'SLAs',
-        navupdate: '#slas',
+      el: @el
+      id: @id
+      genericObject: 'Sla'
+      pageData:
+        title: 'SLA'
+        home: 'slas'
+        object: 'SLA'
+        objects: 'SLAs'
+        navupdate: '#slas'
         notes: [
 #          'SLA are ...'
-        ],
+        ]
         buttons: [
-          { name: 'New SLA', 'data-type': 'new', class: 'primary' },
-        ],
-      },
+          { name: 'New SLA', 'data-type': 'new', class: 'btn--success' }
+        ]
+      container: @el.closest('.content')
     )
 
 App.Config.set( 'Sla', { prio: 2900, name: 'SLAs', parent: '#manage', target: '#manage/slas', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

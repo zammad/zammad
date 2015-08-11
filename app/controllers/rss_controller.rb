@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class RssController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
 =begin
 
@@ -20,11 +20,11 @@ curl http://localhost/api/v1/rss_fetch.json -v -u #{login}:#{password} -H "Conte
 
   def fetch
     items = Rss.fetch(params[:url], params[:limit])
-    if items == nil
-      render :json => { :message => "failed to fetch #{ params[:url] }", :status => :unprocessable_entity }
+    if items.nil?
+      render json: { message: "failed to fetch #{params[:url]}", status: :unprocessable_entity }
       return
     end
-    render :json => { :items => items }
+    render json: { items: items }
   end
 
 end

@@ -63,6 +63,15 @@ class App.Model extends Spine.Model
       return @title
     return '???'
 
+  icon: (user) ->
+    ''
+
+  iconTitle: (user) ->
+    ''
+
+  iconActivity: (user) ->
+    ''
+
   @validate: ( data = {} ) ->
 
     # based on model attrbutes
@@ -129,6 +138,20 @@ class App.Model extends Spine.Model
             errors[attributeName] = 'didn\'t match'
             errors["#{attributeName}_confirm"] = ''
 
+        # check datetime
+        if attribute.tag is 'datetime'
+          if data['params'][attributeName] is 'invalid'
+            errors[attributeName] = 'invalid'
+
+          # validate value
+
+        # check date
+        if attribute.tag is 'date'
+          if data['params'][attributeName] is 'invalid'
+            errors[attributeName] = 'invalid'
+
+          # validate value
+
     # return error object
     if !_.isEmpty(errors)
       console.log 'error', 'validation failed', errors
@@ -141,16 +164,36 @@ class App.Model extends Spine.Model
 
   attributes = App.Model.attributesGet(optionalScreen, optionalAttributesList)
 
+  returns
+    {
+      'name': {
+        name:    'name'
+        display: 'Name'
+        tag:     'input'
+        type:    'text'
+        limit:   100
+        null:    false
+      },
+      'assignment_timeout': {
+        name:    'assignment_timeout'
+        display: 'Assignment Timeout'
+        tag:     'input'
+        type:    'text'
+        limit:   100
+        null:    false
+      },
+    }
+
   ###
 
   @attributesGet: (screen = undefined, attributes = false) ->
     if !attributes
-      attributes = clone( App[ @.className ].configure_attributes )
+      attributes = clone( App[ @.className ].configure_attributes, true )
     else
-      attributes = clone( attributes )
+      attributes = clone( attributes, true )
 
     # in case if no configure_attributes exist
-    return if !attributes
+    return {} if !attributes
     attributesNew = {}
 
     # check params of screen if screen is requested
@@ -164,10 +207,10 @@ class App.Model extends Spine.Model
 
     # if no screen is given or no attribute has this screen - use default attributes
     if !screen || _.isEmpty( attributesNew )
-     #console.log(attributesNew)
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
+    #console.log(attributesNew)
     attributesNew
 
   validate: (params = {}) ->
@@ -183,9 +226,11 @@ class App.Model extends Spine.Model
     return true if @id[0] isnt 'c'
     return false
 
+  # App.Model.fullLocal(id)
   @fullLocal: (id) ->
     @_fillUp( App[ @className ].find( id ) )
 
+  # App.Model.full(id, callback, force, bind)
   @full: (id, callback = false, force = false, bind = false) ->
     url = "#{@url}/#{id}?full=true"
 
@@ -199,7 +244,7 @@ class App.Model extends Spine.Model
       data = App[ @className ].find( id )
       data = @_fillUp( data )
       if callback
-        callback( data )
+        callback( data, 'full' )
       return subscribeId
 
     # store callback and requested id
@@ -294,7 +339,7 @@ class App.Model extends Spine.Model
     console.log("Collection has changed", changedItems, localOrServer)
 
   params =
-    initFetch: true # fetch inital collection
+    initFetch: true # fetch initial collection
 
   @subscribeId = App.Model.subscribe( methodWhichIsCalledAtLocalOrServerSiteChange )
 
@@ -313,7 +358,7 @@ class App.Model extends Spine.Model
       )
 
       # fetch() all on network notify
-      events = "#{@className}:create #{@className}:update #{@className}:destroy"
+      events = "#{@className}:create #{@className}:update #{@className}:touch #{@className}:destroy"
       App.Event.bind(
         events
         =>
@@ -394,7 +439,7 @@ class App.Model extends Spine.Model
       )
 
       # subscribe and render data after server change
-      events = "#{@className}:create #{@className}:update #{@className}:destroy"
+      events = "#{@className}:create #{@className}:update #{@className}:touch #{@className}:destroy"
       App.Event.bind(
         events
         (item) =>
@@ -439,6 +484,37 @@ class App.Model extends Spine.Model
       if @SUBSCRIPTION_COLLECTION[subscribeId]
         delete @SUBSCRIPTION_COLLECTION[subscribeId]
 
+  ###
+
+  fetch full collection (with assets)
+
+  App.Model.fetchFull( @callback )
+
+  ###
+  @fetchFull: (callback) ->
+    url = "#{@url}/?full=true"
+
+    App.Ajax.request(
+      type:  'GET'
+      url:   url
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # full / load assets
+        if data.assets
+          App.Collection.loadAssets( data.assets )
+
+        # find / load object
+        else
+          App[ @className ].refresh( data )
+
+        # execute callbacks
+        callback(data.stream)
+
+      error: (xhr, statusText, error) =>
+        console.log(statusText, error)
+    )
+
   @_bindsEmpty: ->
     if @SUBSCRIPTION_ITEM
       for id, keys of @SUBSCRIPTION_ITEM
@@ -467,6 +543,31 @@ class App.Model extends Spine.Model
                   console.log("ERROR, cant find #{ attribute.name } App.#{ attribute.relation }.find(#{ data[attribute.name] }) for '#{ data.constructor.className }' #{ data.displayName() }")
     data
 
+  ###
+
+    result = App.Model.search(
+      sortBy: 'name'
+      order:  'DESC' # default is ASC
+
+      # just show this values in result, all filters need to match to get shown
+      filter:
+        some_attribute1: ['only_this_value1', 'only_that_value1']
+        some_attribute2: ['only_this_value2', 'only_that_value2']
+
+      # just show this values in result, all filters need to match to get shown
+      filterExtended:
+        [
+          some_attribute1: 'regex_to_match1'
+          some_attribute2: 'regex_to_match2'
+        ]
+    )
+
+    returns:
+
+      [ array of objects ]
+
+  ###
+
   @search: (params) ->
     all = @all()
     all_complied = []
@@ -488,7 +589,8 @@ class App.Model extends Spine.Model
       all_complied = @_filterExtended( all_complied, params.filterExtended )
 
     # sort by
-    all_complied = @_sortBy( all_complied, params.sortBy )
+    if params.sortBy != null
+      all_complied = @_sortBy( all_complied, params.sortBy )
 
     # order
     if params.order
@@ -513,8 +615,11 @@ class App.Model extends Spine.Model
       return '' if item[ attribute ] is undefined
       return '' if item[ attribute ] is null
 
-      # return value
-      item[ attribute ].toLowerCase()
+      # return value if string
+      if item[ attribute ].toLowerCase
+        return item[ attribute ].toLowerCase()
+
+      item[ attribute ]
     )
 
   @_order: ( collection, attribute ) ->
@@ -525,7 +630,7 @@ class App.Model extends Spine.Model
   @_filter: ( collection, filter ) ->
     for key, value of filter
       collection = _.filter( collection, (item) ->
-        if item[ key ] is value
+        if item[key] is value
           return item
       )
     collection

@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-module User::Assets
+class User
+  module Assets
 
 =begin
 
@@ -20,68 +21,100 @@ returns
 
 =end
 
-  def assets (data)
+    def assets (data)
 
-    if !data[ User.to_app_model ]
-      data[ User.to_app_model ] = {}
-    end
-    if !data[ User.to_app_model ][ self.id ]
-      attributes = self.attributes_with_associations
+      if !data[ User.to_app_model ]
+        data[ User.to_app_model ] = {}
+      end
+      if !data[ User.to_app_model ][ id ]
+        local_attributes = attributes
 
-      # do not transfer crypted pw
-      attributes['password'] = ''
+        # do not transfer crypted pw
+        local_attributes['password'] = ''
 
-      # get linked accounts
-      attributes['accounts'] = {}
-      authorizations = self.authorizations()
-      authorizations.each do | authorization |
-        attributes['accounts'][authorization.provider] = {
-          :uid      => authorization[:uid],
-          :username => authorization[:username]
-        }
+        # set temp. current attributes to assets pool to prevent
+        # loops, will be updated with lookup attributes later
+        data[ User.to_app_model ][ id ] = local_attributes
+
+        # get linked accounts
+        local_attributes['accounts'] = {}
+        key = "User::authorizations::#{id}"
+        local_accounts = Cache.get(key)
+        if !local_accounts
+          local_accounts = {}
+          authorizations = self.authorizations()
+          authorizations.each do |authorization|
+            local_accounts[authorization.provider] = {
+              uid: authorization[:uid],
+              username: authorization[:username]
+            }
+          end
+          Cache.write(key, local_accounts)
+        end
+        local_attributes['accounts'] = local_accounts
+
+        # get roles
+        key = "User::role_ids::#{id}"
+        local_role_ids = Cache.get(key)
+        if !local_role_ids
+          local_role_ids = role_ids
+          Cache.write(key, local_role_ids)
+        end
+        local_attributes['role_ids'] = local_role_ids
+        if local_role_ids
+          local_role_ids.each {|role_id|
+            role = Role.lookup( id: role_id )
+            data = role.assets( data )
+          }
+        end
+
+        # get groups
+        key = "User::group_ids::#{id}"
+        local_group_ids = Cache.get(key)
+        if !local_group_ids
+          local_group_ids = group_ids
+          Cache.write(key, local_group_ids)
+        end
+        local_attributes['group_ids'] = local_group_ids
+        if local_group_ids
+          local_group_ids.each {|group_id|
+            group = Group.lookup( id: group_id )
+            data = group.assets( data )
+          }
+        end
+
+        # get organizations
+        key = "User::organization_ids::#{id}"
+        local_organization_ids = Cache.get(key)
+        if !local_organization_ids
+          local_organization_ids = organization_ids
+          Cache.write(key, local_organization_ids)
+        end
+        local_attributes['organization_ids'] = local_organization_ids
+        if local_organization_ids
+          local_organization_ids.each {|organization_id|
+            organization = Organization.lookup( id: organization_id )
+            data = organization.assets( data )
+          }
+        end
+
+        data[ User.to_app_model ][ id ] = local_attributes
       end
 
-      data[ User.to_app_model ][ self.id ] = attributes
-
-      # get roles
-      if attributes['role_ids']
-        attributes['role_ids'].each {|role_id|
-          role = Role.lookup( :id => role_id )
-          data = role.assets( data )
-        }
-      end
-
-      # get groups
-      if attributes['group_ids']
-        attributes['group_ids'].each {|group_id|
-          group = Group.lookup( :id => group_id )
-          data = group.assets( data )
-        }
-      end
-
-      # get groups
-      if attributes['organization_ids']
-        attributes['organization_ids'].each {|organization_id|
-          organization = Organization.lookup( :id => organization_id )
+      # add organization
+      if self.organization_id
+        if !data[ Organization.to_app_model ] || !data[ Organization.to_app_model ][ self.organization_id ]
+          organization = Organization.lookup( id: self.organization_id )
           data = organization.assets( data )
-        }
-      end
-    end
-    if self.organization_id
-      if !data[ Organization.to_app_model ] || !data[ Organization.to_app_model ][ self.organization_id ]
-        organization = Organization.lookup( :id => self.organization_id )
-        data = organization.assets( data )
-      end
-    end
-    ['created_by_id', 'updated_by_id'].each {|item|
-      if self[ item ]
-        if !data[ User.to_app_model ][ self[ item ] ]
-          user = User.lookup( :id => self[ item ] )
-          data = user.assets( data )
         end
       end
-    }
-    data
+      %w(created_by_id updated_by_id).each {|local_user_id|
+        next if !self[ local_user_id ]
+        next if data[ User.to_app_model ][ self[ local_user_id ] ]
+        user = User.lookup( id: self[ local_user_id ] )
+        data = user.assets( data )
+      }
+      data
+    end
   end
-
 end

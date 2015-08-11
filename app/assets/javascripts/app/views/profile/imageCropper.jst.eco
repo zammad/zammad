@@ -1,0 +1,10 @@
+<div class="imageCropper vertical center">
+  <div class="horizontal justified center">
+    <p><%- @T('Avatar') %></p>
+    <div class="imageCropper-preview"></div>
+    <p><%- @T('Preview') %></p>
+  </div>
+  <div class="imageCropper-holder">
+    <img class="imageCropper-image">
+  </div>
+</div>

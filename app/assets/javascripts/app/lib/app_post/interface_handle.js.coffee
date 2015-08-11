@@ -15,20 +15,17 @@ class App.Run extends App.Controller
     # init collections
     App.Collection.init()
 
-    # create web socket connection
-    App.WebSocket.connect()
-
     # check if session already exists/try to get session data from server
     App.Auth.loginCheck()
 
+    # create web socket connection
+    App.WebSocket.connect()
+
     # start navbars
-    @setupWidget( 'Navigations', 'nav', @el.find('nav') )
+    @setupWidget( 'Navigations', 'nav', @el )
 
     # start widgets
-    @setupWidget( 'Widgets', 'widget', @el.find('section') )
-
-    # start widgets
-    @setupWidget( 'Footers', 'footer', @el.find('footer') )
+    @setupWidget( 'Widgets', 'widget', @el )
 
     # bind to fill selected text into
     App.ClipBoard.bind( @el )
@@ -38,26 +35,28 @@ class App.Run extends App.Controller
   setupWidget: (config, event, el) ->
 
     # start widgets
-    App.Event.trigger( event + ':init')
-    widgets = App.Config.get( config )
+    App.Event.trigger(event + ':init')
+    widgets = App.Config.get(config)
     if widgets
       for key, widget of widgets
-        el.append('<div id="' + key + '"></div>')
-        new widget( el: el.find("##{key}") )
-    App.Event.trigger( event + ':ready')
+        new widget(
+          el:  el
+          key: key
+        )
+    App.Event.trigger(event + ':ready')
 
-class App.Content extends App.Controller
-  className: 'content'
+class App.Content extends App.ControllerWidgetPermanent
+  className: 'content flex horizontal'
 
   constructor: ->
     super
 
-    Routes = @Config.get( 'Routes' )
+    Routes = @Config.get('Routes')
     for route, callback of Routes
       do (route, callback) =>
         @route(route, (params) ->
 
-          @log 'notice', 'execute page controller', route, params
+          @log 'debug', 'execute page controller', route, params
 
           # remove events for page
           App.Event.unbindLevel('page')
@@ -91,18 +90,11 @@ class App.Content extends App.Controller
           # execute controller
           controller = (params) =>
             params.el = @el
-            new callback( params )
-          controller( params )
-
-          # rerender view on ui:rerender event
-          App.Event.bind(
-            'ui:page:rerender', =>
-              controller( params )
-            'page'
-          )
+            new callback(params)
+          controller(params)
 
           # scroll to top / remember last screen position
-#          @scrollTo( 0, 0, 100 )
+#          @scrollTo(0, 0, 100)
         )
 
     Spine.Route.setup()

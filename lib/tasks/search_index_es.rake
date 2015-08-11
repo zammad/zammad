@@ -2,32 +2,32 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 
 namespace :searchindex do
-  task :drop, [:opts] => :environment do |t, args|
+  task :drop, [:opts] => :environment do |_t, _args|
 
     # drop indexes
-    puts "drop indexes..."
+    puts 'drop indexes...'
     SearchIndexBackend.index(
-      :action => 'delete',
+      action: 'delete',
     )
 
   end
 
-  task :create, [:opts] => :environment do |t, args|
+  task :create, [:opts] => :environment do |_t, _args|
 
     # create indexes
-    puts "create indexes..."
+    puts 'create indexes...'
     SearchIndexBackend.index(
-      :action => 'create',
-      :data   => {
-        :mappings => {
-          :Ticket => {
-            :_source => { :excludes => [ 'articles_all.attachments', 'articles_external.attachments' ] },
-            :properties => {
-              :articles_all => {
-                :type       => 'nested',
-                :properties => {
-                  :attachments => {
-                    :type   => 'attachment',
+      action: 'create',
+      data: {
+        mappings: {
+          Ticket: {
+            _source: { excludes: [ 'articles.attachments' ] },
+            properties: {
+              articles: {
+                type: 'nested',
+                properties: {
+                  attachments: {
+                    type: 'attachment',
                   }
                 }
               }
@@ -39,20 +39,20 @@ namespace :searchindex do
 
   end
 
-  task :reload, [:opts] => :environment do |t, args|
+  task :reload, [:opts] => :environment do |_t, _args|
 
-    puts "reload data..."
+    puts 'reload data...'
     User.search_index_reload
     Organization.search_index_reload
     Ticket.search_index_reload
 
   end
 
-  task :rebuild, [:opts] => :environment do |t, args|
+  task :rebuild, [:opts] => :environment do |_t, _args|
 
-    Rake::Task["searchindex:drop"].execute
-    Rake::Task["searchindex:create"].execute
-    Rake::Task["searchindex:reload"].execute
+    Rake::Task['searchindex:drop'].execute
+    Rake::Task['searchindex:create'].execute
+    Rake::Task['searchindex:reload'].execute
 
   end
 end

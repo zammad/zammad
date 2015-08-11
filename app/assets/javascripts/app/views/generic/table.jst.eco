@@ -1,17 +1,23 @@
-<table class="table table-striped table-hover">
+<table class="table table-hover <% if @class: %><%- @class %><% end %>">
   <thead>
     <tr>
     <% if @checkbox: %>
-      <th style="width: 22px"><input type="checkbox" value="" name="bulk_all"/></th>
+      <th style="width: 40px" class="no-padding">
+        <label class="input-replacement">
+          <input type="checkbox" value="" name="bulk_all"/>
+          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
+          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
+        </label>
+      </th>
     <% end %>
     <% if @radio: %>
       <th style="width: 22px"></th>
     <% end %>
 <% for item in @header: %>
-      <th <% if item.style: %>style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
+      <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
 <% end %>
 <% if @destroy: %>
-      <th class="span2"><%- @T('Delete') %></th>
+      <th><%- @T('Delete') %></th>
 <% end %>
     </tr>
   </thead>
@@ -24,73 +30,69 @@
 <% groupLast = '' %>
 <% for object in @objects: %>
   <% if @groupBy: %>
-  <%   if object[@groupBy] && object[@groupBy].displayName: %>
-  <%     groupByName = object[@groupBy].displayName() %>
-  <%     if object[@groupBy].translate(): %>
-  <%       groupByName = @T(groupByName) %>
-  <%     end %>
-  <%   else: %>
-  <%     groupByName = object[@groupBy] || '-' %>
-  <%   end %>
+  <%   groupByName = @P( object, @groupBy ) %>
   <%   if groupLast isnt groupByName: %>
-  <tr class=""><td colspan="<%= length %>"><b><%- @P( groupByName ) %></b></td></tr>
+  <tr class=""><td colspan="<%= length %>"><b><%= groupByName %></b></td></tr>
   <%     groupLast = groupByName %>
   <%   end %>
   <% end %>
   <% position++ %>
-  <tr class="item <% if object.active is false: %>not-active<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
+  <tr class="item<% if object.active is false: %> is-inactive<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
-      <td><input type="checkbox" value="<%= object.id %>" name="bulk"/></td>
+      <td class="no-padding">
+        <label class="input-replacement">
+          <input type="checkbox" value="<%= object.id %>" name="bulk"/>
+          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
+          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
+        </label>
+      </td>
     <% end %>
     <% if @radio: %>
-      <td><input type="radio" value="<%= object.id %>" name="radio"/></td>
+      <td class="no-padding">
+        <label class="input-replacement">
+          <input type="radio" value="<%= object.id %>" name="radio"/>
+          <svg class="icon-radio icon-unchecked"><use xlink:href="#icon-radio" /></svg>
+          <svg class="icon-radio-checked icon-checked"><use xlink:href="#icon-radio-checked" /></svg>
+        </label>
+      </td>
     <% end %>
     <% for item in @header: %>
-      <% translation = false %>
-      <% value = object[item.name] %>
-      <% item_id = item.name.substr(item.name.length-3, item.name.length) %>
-      <% if item_id is '_id' && object[ item.name.substr(0, item.name.length-3) ]: %>
-      <%   value     = object[ item.name.substr(0, item.name.length-3) ] %>
-      <%   refObject = object[ item.name.substr(0, item.name.length-3) ] %>
-      <% end %>
-      <% if !value: %>
-      <%   parts = item.name.split '::' %>
-      <%   if parts[0] && parts[1] && object[ parts[0] ]: %>
-      <%     value = object[ parts[0] ][ parts[1] ] %>
-      <%   end %>
-      <% end %>
-      <% if value && value.displayNameLong : %>
-      <%   translation = true %>
-      <%   value = value.displayNameLong() %>
-      <% else if value && value.displayName : %>
-      <%   translation = true %>
-      <%   value = value.displayName() %>
-      <% end %>
-      <% item_clone = item %>
+      <% value = @P( object, item.name ) %>
       <% if @callbacks: %>
+      <%   if item.name.substr(item.name.length-3, item.name.length) is '_id' && object[ item.name.substr(0, item.name.length-3) ]: %>
+      <%     refObject = object[ item.name.substr(0, item.name.length-3) ] %>
+      <%   end %>
       <%   for attribute, callbacksAll of @callbacks: %>
-      <%     if attribute is item.name || attribute is item_id: %>
+      <%     if attribute is item.name: %>
       <%       for callback in callbacksAll: %>
-      <%         value = callback( value, object, item_clone, @header, refObject ) %>
+      <%         value = callback( value, object, item, @header, refObject ) %>
       <%       end %>
       <%     end %>
       <%   end %>
       <% end %>
-      <% #console.log('HH', item_clone.name, item_clone.type, item_clone.translate, item_clone, object.translate(), refObject, translation) %>
-      <td>
-      <% if item_clone.link: %><a href="<%- item_clone.link %>" <% if item_clone.target: %>target="<%= item_clone.target %>"<% end %>><% end %>
-      <% if item_clone.translate || ( translation && !refObject && object.translate && object.translate() ) || ( translation && refObject && refObject.translate && refObject.translate() ) : %>
-        <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %>><%- @T( @P( value, item_clone ) ) %></span>
-      <% else if item_clone.type is 'time': %>
-        <span class="humanTimeFromNow <% if item_clone.class: %><%= item_clone.class %><% end %>" data-time="<%- object[item_clone.name] %>">?</span>
-      <% else: %>
-        <span <% if item_clone.class: %>class="<%= item_clone.class %>"<% end %> <% if item_clone.title: %>title="<%= item_clone.title %>"<% end %> <% if item_clone.data: %><% for data_key, data_item of item_clone.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>><%= @P(value) %></span>
-      <% end %>
-      <% if item_clone.link: %></a><% end %>
+
+      <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %>>
+        <% if item.name is 'icon': %>
+          <svg class="<%- item.class %>">
+            <use xlink:href="#icon-priority" />
+          </svg>
+        <% else: %>
+          <% if item.link: %>
+            <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
+          <% end %>
+          <% if item.raw: %>
+            <%- item.raw %>
+          <% else: %>
+          <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
+            <%- value %>
+          </span>
+          <% end %>
+          <% if item.link: %></a><% end %>
+        <% end %>
       </td>
     <% end %>
     <% if @destroy: %>
-      <td><a href="#" class="glyphicon glyphicon-trash" data-type="destroy"></a></td>
+      <td><svg class="icon-trash" data-type="destroy"><use xlink:href="#icon-trash" /></svg></td>
     <% end %>
   </tr>
 <% end %>

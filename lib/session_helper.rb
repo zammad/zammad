@@ -8,17 +8,17 @@ module SessionHelper
     # load collections to deliver from external files
     dir = File.expand_path('../../', __FILE__)
     files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb" )
-    for file in files
+    files.each { |file|
       load file
-      ExtraCollection.session( default_collection, assets, user )
-    end
+      (default_collection, assets ) = ExtraCollection.session( default_collection, assets, user )
+    }
 
-    return default_collection, assets
+    [default_collection, assets]
   end
 
   def self.models(user = nil)
     models = {}
-    objects = ObjectManager.listObjects
+    objects = ObjectManager.list_objects
     objects.each {|object|
       attributes = ObjectManager::Attribute.by_object(object, user)
       models[object] = attributes
@@ -28,23 +28,24 @@ module SessionHelper
 
   def self.cleanup_expired
 
-    # web sessions
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 1, Time.now - 90.days ).delete_all
+    # delete temp. sessions
+    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', Time.zone.now - 2.hours ).delete_all
 
-    # http basic auth calls
-    ActiveRecord::SessionStore::Session.where('request_type = ? AND updated_at < ?', 2, Time.now - 2.days ).delete_all
+    # web sessions older the x days
+    ActiveRecord::SessionStore::Session.where('updated_at < ?', Time.zone.now - 90.days ).delete_all
+
   end
 
   def self.get(id)
-    ActiveRecord::SessionStore::Session.where( :id => id ).first
+    ActiveRecord::SessionStore::Session.where( id: id ).first
   end
 
-  def self.list(limit = 10000)
+  def self.list(limit = 10_000)
     ActiveRecord::SessionStore::Session.order('updated_at DESC').limit(limit)
   end
 
   def self.destroy(id)
-    session = ActiveRecord::SessionStore::Session.where( :id => id ).first
+    session = ActiveRecord::SessionStore::Session.where( id: id ).first
     return if !session
     session.destroy
   end

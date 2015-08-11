@@ -3,245 +3,124 @@ require 'browser_test_helper'
 
 class TaskbarTaskTest < TestCase
   def test_persistant_task_a
-    tests = [
-      {
-        :name     => 'persistant task',
-        :action   => [
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'close_all_tasks',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_inbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute => 'check',
-            :css     => '.active .ticket-create',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket-create input[name="title"]',
-            :value   => 'some test AAA',
-          },
-          {
-            :execute => 'wait',
-            :value   => 12,
-          },
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # persistant task
+    click( css: 'a[href="#new"]' )
+    click( css: 'a[href="#ticket/create"]' )
+    set(
+      css: '.active .newTicket input[name="title"]',
+      value: 'some test AAA',
+    )
+    sleep 10
   end
+
   def test_persistant_task_b
-    tests = [
-      {
-        :name     => 'persistant task',
-        :action   => [
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'click',
-            :css     => '.task',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some test AAA',
-            :match_result => true,
-          },
-          {
-            :execute => 'click',
-            :css     => '.taskbar [data-type="close"]',
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'some test AAA',
-            :match_result => false,
-          },
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    sleep 3
+
+    # check if task still exists
+    click( css: '.task' )
+
+    match(
+      css: '.active .newTicket input[name="title"]',
+      value: 'some test AAA',
+    )
+
+    tasks_close_all()
+
+    exists_not( css: '.active .newTicket input[name="title"]' )
   end
+
   def test_persistant_task_with_relogin
-    tests = [
-      {
-        :name     => 'agent1 - create persistant task',
-        :action   => [
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'close_all_tasks',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_inbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket-create input[name="title"]',
-            :value   => 'INBOUND TEST#1',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket-create textarea[name="body"]',
-            :value   => 'INBOUND BODY TEST#1',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_outbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket-create input[name="title"]',
-            :value   => 'OUTBOUND TEST#1',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active .ticket-create textarea[name="body"]',
-            :value   => 'OUTBOUND BODY TEST#1',
-          },
-          {
-            :execute => 'wait',
-            :value   => 12,
-          },
-          {
-            :execute => 'logout',
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 10,
-          },
-        ],
-      },
-      {
-        :name     => 'relogin with master - task are not viewable',
-        :action   => [
-          {
-            :execute  => 'login',
-            :username => 'master@example.com',
-            :password => 'test',
-          },
-          {
-            :execute => 'wait',
-            :value   => 6,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'INBOUND TEST#1',
-            :match_result => false,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'OUTBOUND TEST#1',
-            :match_result => false,
-          },
-          {
-            :execute => 'logout',
-          },
-          {
-            :execute => 'check',
-            :css     => '#login',
-            :result  => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'INBOUND TEST#1',
-            :match_result => false,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'OUTBOUND TEST#1',
-            :match_result => false,
-          },
-        ],
-      },
-      {
-        :name     => 'relogin with agent - task are viewable',
-        :action   => [
-          {
-            :execute  => 'login',
-            :username => 'agent1@example.com',
-            :password => 'test',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'INBOUND TEST#1',
-            :match_result => true,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => 'OUTBOUND TEST#1',
-            :match_result => true,
-          },
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'agent1@example.com' })
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    click( css: 'a[href="#new"]' )
+    click( css: 'a[href="#ticket/create"]' )
+    set(
+      css: '.active .newTicket input[name="title"]',
+      value: 'INBOUND TEST#1',
+    )
+    set(
+      css: '.active .newTicket [data-name="body"]',
+      value: 'INBOUND BODY TEST#1',
+    )
+
+    click( css: 'a[href="#new"]' )
+    click( css: 'a[href="#ticket/create"]' )
+    set(
+      css: '.active .newTicket input[name="title"]',
+      value: 'OUTBOUND TEST#1',
+    )
+    set(
+      css: '.active .newTicket [data-name="body"]',
+      value: 'OUTBOUND BODY TEST#1',
+    )
+    sleep 10
+
+    logout()
+    sleep 4
+
+    # relogin with master - task are not viewable
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    sleep 3
+
+    match_not(
+      css: 'body',
+      value: 'INBOUND TEST#1',
+    )
+    match_not(
+      css: 'body',
+      value: 'OUTBOUND TEST#1',
+    )
+    logout()
+    sleep 2
+
+    match_not(
+      css: 'body',
+      value: 'INBOUND TEST#1',
+    )
+    match_not(
+      css: 'body',
+      value: 'OUTBOUND TEST#1',
+    )
+
+    # relogin with agent - task are viewable
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    sleep 3
+
+    match(
+      css: 'body',
+      value: 'INBOUND TEST#1',
+    )
+    match(
+      css: 'body',
+      value: 'OUTBOUND TEST#1',
+    )
   end
 end

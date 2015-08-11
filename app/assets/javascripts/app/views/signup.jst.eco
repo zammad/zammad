@@ -1,8 +1,13 @@
-<div class="hero-unit">
-  <h1><%- @T( 'Join' ) %> <%= @C( 'product_name' ) %><small></small></h1>
-    <form class="form-group form-normal">
-      <p id="form-signup"></p>
-      <a href="#/" class="btn btn-default cancel"><%- @T( 'Cancel' ) %></a>
-      <button class="btn btn-primary submit"><%- @T( 'Create my account' ) %></button>
-    </form>
+<div class="signup fullscreen">
+  <div class="fullscreen-center">
+    <div class="hero-unit fullscreen-body">
+      <h1><%- @T( 'Join' ) %> <%= @C( 'product_name' ) %></h1>
+      <form>
+        <div class="form-controls">
+          <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T( 'Cancel & Go Back' ) %></a>
+          <button class="btn btn--primary js-submit align-right"><%- @T( 'Create my account' ) %></button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

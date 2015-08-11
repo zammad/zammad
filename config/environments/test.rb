@@ -14,7 +14,7 @@ Zammad::Application.configure do
 
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets  = true
-  config.static_cache_control = "public, max-age=3600"
+  config.static_cache_control = 'public, max-age=3600'
 
   # Disable assert compression for relyable error code lines
   config.assets.compress = false
@@ -46,4 +46,9 @@ Zammad::Application.configure do
   # Enable autoload
   config.dependency_loading = true
 
+  # define cache store
+  config.cache_store = :file_store, 'tmp/cache_file_store_test'
+
+  # format log
+  config.log_formatter = Logger::Formatter.new
 end

@@ -1,6 +1,4 @@
 class Index extends App.ControllerContent
-  className: 'container signup'
-
   events:
     'submit form': 'submit'
     'click .submit': 'submit'
@@ -14,6 +12,8 @@ class Index extends App.ControllerContent
       @navigate '#'
       return
 
+    @navHide()
+
     # set title
     @title 'Sign up'
     @navupdate '#signup'
@@ -22,15 +22,10 @@ class Index extends App.ControllerContent
 
   render: ->
 
-    # set password as required
-    for item in App.User.configure_attributes
-      if item.name is 'password'
-        item.null = false
-
     @html App.view('signup')()
 
     new App.ControllerForm(
-      el:        @el.find('#form-signup')
+      el:        @el.find('form')
       model:     App.User
       screen:    'signup'
       autofocus: true
@@ -53,7 +48,9 @@ class Index extends App.ControllerContent
     user = new App.User
     user.load(@params)
 
-    errors = user.validate()
+    errors = user.validate(
+      screen: 'signup'
+    )
     if errors
       @log 'error new', errors
       @formValidate( form: e.target, errors: errors )
@@ -70,8 +67,6 @@ class Index extends App.ControllerContent
           success: @success
           error: @error
         )
-#      fail: =>
-#        @modalHide()
     )
 
   success: (data, status, xhr) =>

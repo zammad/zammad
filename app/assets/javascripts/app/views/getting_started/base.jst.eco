@@ -1,0 +1,35 @@
+<div class="main flex vertical centered darkBackground">
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <form class="setup wizard js-base">
+    <div class="wizard-slide">
+      <h2><%- @T('Organization') %></h2>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group">
+            <label><%- @T('Organization Name') %></label>
+            <div class="alert alert--danger hide" role="alert"></div>
+            <input class="form-control" name="organization" placeholder="<%- @Ti('Company Inc.') %>" value="<%= @organization %>" required>
+          </div>
+          <div class="form-group">
+            <label><%- @T('Logo') %></label>
+            <div class="alert alert--danger hide" role="alert"></div>
+            <img class="logo-preview" src="<%= @logoUrl %>">
+            <div class="logo-preview-placeholder"><%- @T('Your Logo') %></div>
+            <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" name="logo" accept="image/*"></div>
+          </div>
+          <% if !@C('system_online_service'): %>
+          <div class="form-group">
+            <label><%- @T('System URL') %></label>
+            <div class="alert alert--danger hide" role="alert"></div>
+            <input type="text" class="form-control" name="url" value="<%= @url %>" placeholder="http://zammad.example.com" required>
+            <p class="help-block">The URL to this installation of Zammad.</p>
+          </div>
+          <% end %>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <button class="btn btn--primary align-right"><%- @T( 'Next' ) %></button>
+      </div>
+    </div>
+  </form>
+</div>

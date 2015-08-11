@@ -1,22 +1,22 @@
 // form
 test( "table test", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table simple I</h1><div id="table1"></div>')
   var el = $('#table1')
   App.TicketPriority.refresh( [
     {
-      id:   1,
-      name: '1 low',
-      note: 'some note 1',
-      active: true,
+      id:         1,
+      name:       '1 low',
+      note:       'some note 1',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   2,
-      name: '2 normal',
-      note: 'some note 2',
-      active: false,
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
       created_at: '2014-06-10T10:17:34.000Z',
     },
   ] )
@@ -62,25 +62,25 @@ test( "table test", function() {
     radio:    false,
     bindRow: {
       events: {
-        'click':      rowClick,
-        'mouseover':  rowMouseover,
-        'mouseout':   rowMouseout,
-        'dblclick':   rowDblClick,
+        'click':     rowClick,
+        'mouseover': rowMouseover,
+        'mouseout':  rowMouseout,
+        'dblclick':  rowDblClick,
       }
     },
     bindCol: {
       name: {
         events: {
-          'click':      colClick,
-          'mouseover':  colMouseover,
-          'mouseout':   colMouseout,
-          'dblclick':   colDblClick,
+          'click':     colClick,
+          'mouseover': colMouseover,
+          'mouseout':  colMouseout,
+          'dblclick':  colDblClick,
         }
       },
       created_at: {
         events: {
-          'mouseover':  colMouseover,
-          'mouseout':   colMouseout,
+          'mouseover': colMouseover,
+          'mouseout':  colMouseout,
         }
       }
     },
@@ -112,14 +112,14 @@ test( "table test", function() {
   equal( el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
   equal( el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
   equal( el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
-  equal( el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '1 niedrig', 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '?', 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'true', 'check row 2')
   equal( el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '2 normal', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '?', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'false', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '1 niedrig', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '?', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'true', 'check row 2')
 
   $('#table').append('<hr><h1>table simple III</h1><div id="table3"></div>')
   el = $('#table3')
@@ -147,84 +147,84 @@ test( "table test", function() {
 
   App.Group.refresh( [
     {
-      id:   1,
-      name: 'group 1',
-      active: true,
+      id:         1,
+      name:       'group 1',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   2,
-      name: 'group 2',
-      active: true,
+      id:         2,
+      name:       'group 2',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
   App.User.refresh( [
     {
-      id:   55,
-      login: 'login55',
-      firstname: 'firstname55',
-      lastname: 'lastname55',
-      email: 'email55',
-      active: true,
+      id:         55,
+      login:      'login55',
+      firstname:  'firstname55',
+      lastname:   'lastname55',
+      email:      'email55',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   56,
-      login: 'login56',
-      firstname: 'firstname56',
-      lastname: 'lastname56',
-      email: 'email56',
-      active: true,
+      id:         56,
+      login:      'login56',
+      firstname:  'firstname56',
+      lastname:   'lastname56',
+      email:      'email56',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
 
   App.TicketState.refresh( [
     {
-      id:   1,
-      name: 'new',
-      active: true,
+      id:         1,
+      name:       'new',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   2,
-      name: 'open',
-      note: 'some note 2',
-      active: false,
+      id:         2,
+      name:       'open',
+      note:       'some note 2',
+      active:     false,
       created_at: '2014-06-10T10:17:34.000Z',
     },
   ])
   App.Ticket.refresh( [
     {
-      id:   1,
-      title:  'some title 1',
-      number: '4711',
+      id:          1,
+      title:       'some title 1',
+      number:      '4711',
       priority_id: 1,
-      owner_id: 55,
+      owner_id:    55,
       customer_id: 56,
-      state_id: 1,
-      group_id: 2,
-      created_at: '2014-06-10T11:17:34.000Z',
+      state_id:    1,
+      group_id:    2,
+      created_at:  '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   3,
-      title:  'some title 3',
-      number: '4713',
+      id:          3,
+      title:       'some title 3',
+      number:      '4713',
       priority_id: 2,
-      owner_id: 56,
-      state_id: 1,
-      group_id: 2,
-      created_at: '2014-07-11T11:19:34.000Z',
+      owner_id:    56,
+      state_id:    1,
+      group_id:    2,
+      created_at:  '2014-07-11T11:19:34.000Z',
     },
     {
-      id:   2,
-      title:  'some title 2',
-      number: '4712',
+      id:          2,
+      title:       'some title 2',
+      number:      '4712',
       priority_id: 1,
-      state_id: 2,
-      group_id: 1,
-      created_at: '2014-06-10T11:19:34.000Z',
+      state_id:    2,
+      group_id:    1,
+      created_at:  '2014-06-10T11:19:34.000Z',
     },
   ])
   $('#table').append('<hr><h1>table complex I</h1><div id="table4"></div>')
@@ -247,7 +247,7 @@ test( "table test", function() {
   equal( el.find('table > thead > tr > th:nth-child(8)').text().trim(), 'Status', 'check header')
   equal( el.find('table > thead > tr > th:nth-child(9)').text().trim(), 'Erstellt', 'check header')
   equal( el.find('tbody > tr:nth-child(1) > td').length, 9, 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1) > input').val(), '3', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1) input').val(), '3', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1) input').prop('checked'), '', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), '', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '4713', 'check row 1')
@@ -259,7 +259,7 @@ test( "table test", function() {
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(8)').text().trim(), 'neu', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(9)').text().trim(), '?', 'check row 1')
   equal( el.find('tbody > tr:nth-child(2) > td').length, 9, 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1) > input').val(), '2', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1) input').val(), '2', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1) input').prop('checked'), '', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1)').text().trim(), '', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '4712', 'check row 2')
@@ -271,7 +271,7 @@ test( "table test", function() {
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(8)').text().trim(), 'offen', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(9)').text().trim(), '?', 'check row 2')
   equal( el.find('tbody > tr:nth-child(3) > td').length, 9, 'check row 3')
-  equal( el.find('tbody > tr:nth-child(3) > td:nth-child(1) > input').val(), '1', 'check row 3')
+  equal( el.find('tbody > tr:nth-child(3) > td:nth-child(1) input').val(), '1', 'check row 3')
   equal( el.find('tbody > tr:nth-child(3) > td:nth-child(1) input').prop('checked'), '', 'check row 3')
   equal( el.find('tbody > tr:nth-child(3) > td:nth-child(1)').text().trim(), '', 'check row 3')
   equal( el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '4711', 'check row 3')
@@ -285,11 +285,11 @@ test( "table test", function() {
 
   el.find('input[name="bulk_all"]').click()
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1) input').prop('checked'), true, 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1) > input').val(), '3', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1) input').val(), '3', 'check row 1')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1) input').prop('checked'), true, 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1) > input').val(), '2', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1) input').val(), '2', 'check row 2')
   equal( el.find('tbody > tr:nth-child(3) > td:nth-child(1) input').prop('checked'), true, 'check row 3')
-  equal( el.find('tbody > tr:nth-child(3) > td:nth-child(1) > input').val(), '1', 'check row 3')
+  equal( el.find('tbody > tr:nth-child(3) > td:nth-child(1) input').val(), '1', 'check row 3')
 
   $('#table').append('<hr><h1>table complex II</h1><div id="table5"></div>')
   el = $('#table5')
@@ -297,12 +297,12 @@ test( "table test", function() {
     console.log('clickCheckbox', id, checked, e.target)
   };
   new App.ControllerTable({
-    el:       el,
-    overview: ['number', 'title', 'owner', 'customer', 'priority', 'group', 'state', 'created_at'],
-    model:    App.Ticket,
-    objects:  App.Ticket.search({sortBy:'created_at', order: 'DESC'}),
-    checkbox: true,
-    groupBy:  'group',
+    el:           el,
+    overview:     ['number', 'title', 'owner', 'customer', 'priority', 'group', 'state', 'created_at'],
+    model:        App.Ticket,
+    objects:      App.Ticket.search({sortBy:'created_at', order: 'DESC'}),
+    checkbox:     true,
+    groupBy:      'group',
     bindCheckbox: {
       events: {
         'click':  clickCheckbox,
@@ -352,21 +352,21 @@ test( "table test", function() {
   equal( el.find('tbody > tr:nth-child(4) > td:nth-child(1) input').val(), '3', 'check row 4')
   equal( el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').prop('checked'), '', 'check row 5')
   equal( el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').val(), '1', 'check row 5')
-  el.find('tbody > tr:nth-child(5) > td:nth-child(1)').click()
+  el.find('tbody > tr:nth-child(5) > td:nth-child(1) label').click()
   equal( el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').prop('checked'), true, 'check row 5')
   equal( el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').val(), '1', 'check row 5')
 });
 
 test( "table test 2", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with hash</h1><div id="table-hash1"></div>')
   var el = $('#table-hash1')
   App.Group.refresh( [
     {
-      id:   5,
-      name: 'group 5',
-      active: true,
+      id:         5,
+      name:       'group 5',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
@@ -378,8 +378,8 @@ test( "table test 2", function() {
         host: 'host1',
         user: 'user1',
       },
-      group_id: 5,
-      active: true,
+      group_id:   5,
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
@@ -389,8 +389,8 @@ test( "table test 2", function() {
         host: 'host2',
         user: 'user2',
       },
-      group_id: 5,
-      active: true,
+      group_id:   5,
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ] )
@@ -410,35 +410,34 @@ test( "table test 2", function() {
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), 'adapter1', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'host1', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'user1', 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'true', 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'true', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'ja', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(5)').text().trim(), '', 'check row 1')
   equal( el.find('tbody > tr:nth-child(2) > td').length, 5, 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(1)').text().trim(), 'adapter2', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'host2', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'user2', 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), 'true', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), 'ja', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(5)').text().trim(), '', 'check row 2')
 });
 
 test( "table test 3", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with link</h1><div id="table-link1"></div>')
   var el = $('#table-link1')
   App.EmailAddress.refresh( [
     {
-      id:   55,
-      realname: 'realname 55',
-      email:    'email 55',
-      active: true,
+      id:         55,
+      realname:   'realname 55',
+      email:      'email 55',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
     {
-      id:   56,
-      realname: 'realname 56',
-      email:    'email 56',
-      active: true,
+      id:         56,
+      realname:   'realname 56',
+      email:      'email 56',
+      active:     true,
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
@@ -446,7 +445,7 @@ test( "table test 3", function() {
     console.log('current header is', header);
     // add new header item
     var attribute = {
-      name: 'some name',
+      name:    'some name',
       display: 'Some Name',
     };
     header.push(attribute);
@@ -455,20 +454,20 @@ test( "table test 3", function() {
   }
   var callbackAttributes = function(value, object, attribute, header, refObject) {
     console.log('data of item col', value, object, attribute, header, refObject)
-    value = ' '
+    value           = ' '
     attribute.class = 'glyphicon glyphicon-user'
     attribute.link  = '#'
-    attribute.title  = App.i18n.translateInline('Switch to')
+    attribute.title = App.i18n.translateInline('Switch to')
     if (object.id == 55) {
       attribute.data = {
         some: 'value55',
-        xxx: 55,
+        xxx:  55,
       }
     }
     else {
       attribute.data = {
         some: 'value56',
-        xxx: 56,
+        xxx:  56,
       }
     }
     return value
@@ -481,10 +480,10 @@ test( "table test 3", function() {
     //window.location = App.Config.get('api_path') + '/sessions/switch/' + id
   }
   new App.ControllerTable({
-    el:       el,
-    model:    App.EmailAddress,
-    objects:  App.EmailAddress.search({sortBy:'realname', order: 'ASC'}),
-    callbackHeader: callbackHeader,
+    el:                 el,
+    model:              App.EmailAddress,
+    objects:            App.EmailAddress.search({sortBy:'realname', order: 'ASC'}),
+    callbackHeader:     callbackHeader,
     callbackAttributes: {
       'some name': [ callbackAttributes ]
     },
@@ -497,7 +496,7 @@ test( "table test 3", function() {
     },
   })
   equal( el.find('table > thead > tr').length, 1, 'row count')
-  equal( el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Realname', 'check header')
+  equal( el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'richtiger Name', 'check header')
   equal( el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Some Name', 'check header')
   equal( el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), 'realname 55', 'check row 1')
@@ -505,7 +504,7 @@ test( "table test 3", function() {
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), '', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').attr('title'), 'Switch to', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').attr('title'), 'Umschalten zu', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('some'), 'value55', 'check row 2')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('xxx'), '55', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
@@ -514,14 +513,14 @@ test( "table test 3", function() {
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), '', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').attr('title'), 'Switch to', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').attr('title'), 'Umschalten zu', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('some'), 'value56', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('xxx'), '56', 'check row 2')
 
 });
 
 test( "table test 4", function() {
-  App.i18n.set('de')
+  App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with data</h1><div id="table-data1"></div>')
   var el = $('#table-data1')

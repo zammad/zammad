@@ -4,53 +4,76 @@ require 'net/pop'
 
 class Channel::POP3 < Channel::EmailParser
 
-  def fetch (channel)
-    ssl  = false
-    port = 110
-    if channel[:options][:ssl].to_s == 'true'
-      ssl  = true
-      port = 995
+  def fetch (channel, check_type = '', verify_string = '')
+    ssl  = true
+    port = 995
+    if channel[:options].key?(:ssl) && channel[:options][:ssl].to_s == 'false'
+      ssl  = false
+      port = 110
     end
 
-    puts "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
+    Rails.logger.info "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
 
     @pop = Net::POP3.new( channel[:options][:host], port )
+
+    # on check, reduce open_timeout to have faster probing
+    if check_type == 'check'
+      @pop.open_timeout = 4
+      @pop.read_timeout = 6
+    end
+
     if ssl
-      @pop.enable_ssl
+      @pop.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
     end
     @pop.start( channel[:options][:user], channel[:options][:password] )
-    count     = 0
-    count_all = @pop.mails.size
-    @pop.each_mail do |m|
-      count += 1
-      puts " - message #{count.to_s}/#{count_all.to_s}"
+    if check_type == 'check'
+      Rails.logger.info 'check only mode, fetch no emails'
+      disconnect
+      return
+    elsif check_type == 'verify'
+      Rails.logger.info 'verify mode, fetch no emails'
+    end
 
-      # delete email from server after article was created
-      if process(channel, m.pop)
-        m.delete
+    mails     = @pop.mails
+    count     = 0
+    count_all = mails.size
+
+    # reverse message order to increase performance
+    if check_type == 'verify'
+      mails.reverse!
+    end
+
+    mails.each do |m|
+      count += 1
+      Rails.logger.info " - message #{count}/#{count_all}"
+
+      # check for verify message
+      if check_type == 'verify'
+        mail = m.pop
+        if mail && mail =~ /#{verify_string}/
+          Rails.logger.info " - verify email #{verify_string} found"
+          m.delete
+          disconnect
+          return 'verify ok'
+        end
+      else
+
+        # delete email from server after article was created
+        if process(channel, m.pop)
+          m.delete
+        end
       end
     end
     disconnect
     if count == 0
-      puts " - no message"
+      Rails.logger.info ' - no message'
     end
-    puts "done"
+    Rails.logger.info 'done'
   end
 
   def disconnect
-    if @pop
-      @pop.finish
-    end
+    return if !@pop
+    @pop.finish
   end
 
-  def send(attr, notification = false)
-    channel = Channel.where( :area => 'Email::Outbound', :active => true ).first
-    begin
-      c = eval 'Channel::' + channel[:adapter] + '.new'
-      c.send(attr, channel, notification)
-    rescue Exception => e
-      puts "can't use " + 'Channel::' + channel[:adapter]
-      puts e.inspect
-    end
-  end
 end

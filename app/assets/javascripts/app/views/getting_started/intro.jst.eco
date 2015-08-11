@@ -1,0 +1,13 @@
+<div class="main flex vertical centered darkBackground">
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <div class="setup wizard js-start">
+    <div class="wizard-slide">
+      <div class="wizard-body vertical centered">
+        <a class="btn btn--primary" href="#getting_started/admin"><%- @T('Setup new System') %></a>
+      </div>
+      <div class="wizard-aside">
+        <%- @T('Or') %> <span class="u-clickable u-highlight"><a href="#import"><%- @T('migrate from another system') %></a></span>.
+      </div>
+    </div>
+  </div>
+</div>

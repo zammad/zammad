@@ -1,0 +1,38 @@
+<div class="main flex">
+
+  <h1>Layout Reference</h1>
+
+
+  <ul>
+    <li><a href="#layout_ref/merge_customer">Merge Customer</a></li>
+    <li><a href="#layout_ref/inputs">✏ Inputs</a></li>
+    <li><a href="#layout_ref/buttons">👇 All the Buttons</a></li>
+    <li><a href="#layout_ref/calendar_subscriptions">Calendar Subscriptions</a></li>
+    <li><a href="#layout_ref/schedulers">Schedulers</a></li>
+    <li><a href="#layout_ref/sla">Service Level Agreements</a></li>
+    <li><a href="#layout_ref/user_list">User List</a></li>
+    <li><a href="#layout_ref/admin_placeholder">Admin Placeholder (Inline Tutorials)</a></li>
+    <li><a href="#layout_ref/clues">First Steps (Clues)</a></li>
+    <li><a href="#layout_ref/highlight">Highlight</a></li>
+    <li>Content <a href="#layout_ref/content">Example</a></li>
+    <li>Content + Sidebar Right <a href="#layout_ref/content_sidebar_right">Example</a></li>
+    <li>Content + Sidebar Right not shown if screen resulution is lower then 1280px <a href="#layout_ref/content_sidebar_right_sidebar_optional">Example</a></li>
+    <li>Content + Sidebar Left <a href="#layout_ref/content_sidebar_left">Example</a></li>
+    <li>Content + Sidebar Tabs Right <a href="#layout_ref/content_sidebar_tabs_right">Example</a></li>
+    <li>Modal Dialog <a href="#layout_ref/modal_form">Example with From</a> / <a href="#layout_ref/modal_text">Example with Text</a></li>
+    <li>Communication Overview <a href="#layout_ref/communication_overview">Example</a></li>
+    <li>Communication Reply - no content <a href="#layout_ref/communication_reply/no_content">Example</a></li>
+    <li>Communication Reply - with content <a href="#layout_ref/communication_reply/content">Example</a></li>
+    <li>Communication Reply - with multiline content <a href="#layout_ref/communication_reply/mulit_line_content">Example</a></li>
+    <li><a href="#layout_ref/import_wizard">Import Wizard</a></li>
+    <li><a href="#layout_ref/user_profile">User Profile</a></li>
+    <li><a href="#layout_ref/organization_profile">Organization Profile</a></li>
+    <li><a href="#layout_ref/setup">Setup Wizard</a></li>
+    <li><a href="#layout_ref/richtext">Richtext</a></li>
+    <li><a href="#layout_ref/local_modal">Local Modal</a></li>
+    <li><a href="#layout_ref/loading_placeholder">Loading Placeholder</a></li>
+    <li><a href="#layout_ref/insufficient_rights">Insufficient Rights Warning</a></li>
+    <li><a href="#layout_ref/error">Error</a></li>
+  </ul>
+
+</div>

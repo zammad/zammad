@@ -1,0 +1,1001 @@
+<div class="tabsSidebar-holder">
+  <div class="scrollPageHeader tabsSidebar-sidebarSpacer" style="transform: translateY(-64px);">
+    <small>Ticket# <span class="ticket-number">10001</span></small>
+
+    <div class="ticket-title">
+      <div class="ticket-title-update" contenteditable="true" data-placeholder="Enter Title...">
+        Welcome to our little planet
+      </div>
+    </div>
+
+    <div class="highlighter">
+      <div class="btn btn--action btn--split--first js-highlight centered"></div>
+
+      <div class="dropdown dropdown--actions">
+        <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown"></div>
+
+        <ul class="dropdown-menu dropdown-menu-right">
+          <li>
+            <a class="js-highlightColor" data-key="0" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #f7e7b2"></span></span> Yellow <span class="dropdown-activeSpacer visibility-change is-active"></span></a>
+          </li>
+
+          <li>
+            <a class="js-highlightColor" data-key="1" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #bce7b6"></span></span> Green <span class="dropdown-activeSpacer visibility-change"></span></a>
+          </li>
+
+          <li>
+            <a class="js-highlightColor" data-key="2" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #b3ddf9"></span></span> Blue <span class="dropdown-activeSpacer visibility-change"></span></a>
+          </li>
+
+          <li>
+            <a class="js-highlightColor" data-key="3" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #fea9c5"></span></span> Pink <span class="dropdown-activeSpacer visibility-change"></span></a>
+          </li>
+
+          <li>
+            <a class="js-highlightColor" data-key="4" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #eac5ee"></span></span> Purple <span class="dropdown-activeSpacer visibility-change"></span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="overview-navigator"></div>
+  </div>
+
+  <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
+    <div class="ticketZoom">
+      <div class="ticketZoom-controls">
+        <div class="highlighter">
+          <div class="btn btn--action btn--split--first js-highlight centered"></div>
+
+          <div class="dropdown dropdown--actions">
+            <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown"></div>
+
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li>
+                <a class="js-highlightColor" data-key="0" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #f7e7b2"></span></span> Yellow <span class="dropdown-activeSpacer visibility-change is-active"></span></a>
+              </li>
+
+              <li>
+                <a class="js-highlightColor" data-key="1" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #bce7b6"></span></span> Green <span class="dropdown-activeSpacer visibility-change"></span></a>
+              </li>
+
+              <li>
+                <a class="js-highlightColor" data-key="2" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #b3ddf9"></span></span> Blue <span class="dropdown-activeSpacer visibility-change"></span></a>
+              </li>
+
+              <li>
+                <a class="js-highlightColor" data-key="3" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #fea9c5"></span></span> Pink <span class="dropdown-activeSpacer visibility-change"></span></a>
+              </li>
+
+              <li>
+                <a class="js-highlightColor" data-key="4" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #eac5ee"></span></span> Purple <span class="dropdown-activeSpacer visibility-change"></span></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="overview-navigator"></div>
+      </div>
+
+      <div class="ticketZoom-header">
+        <div class="flex vertical center">
+          <div class="js-avatar">
+            <span class="avatar unique size-50 user-popover" data-id="2" data-original-title="" style="background-position: -92.79607555375712px -106.24902447601627px;" title="">NB</span>
+          </div>
+
+          <div class="ticket-title">
+            <div class="ticket-title-update" contenteditable="true" data-placeholder="Enter Title...">
+              Welcome to our little planet
+            </div>
+          </div>
+
+          <div class="ticket-meta">
+            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - created <span class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</span></small>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-article">
+        <div class="ticket-article-item customer" data-id="1" id="article-1">
+          <div class="article-meta-clip top">
+            <div class="article-content-meta top hide">
+              <div class="article-meta top">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key u-textTruncate">
+                    From
+                  </div>
+
+                  <div class="article-meta-value flex contain-text">
+                    Zammad Feedback <span class="text-muted">&lt;feedback@zammad.org&gt;</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="article-content zIndex-1">
+            <div class="js-avatar">
+              <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span>
+            </div>
+
+            <div class="bubble-gap">
+              <div class="internal-border">
+                <div class="textBubble">
+                  <div class="bubble-arrow"></div>
+
+                  <div class="textBubble-content" data-id="1" id="article-content-1">
+                    <div>
+                      Welcome!
+                    </div>
+
+                    <div>
+                      <br>
+                    </div>
+
+                    <div>
+                      Thank you for installing Zammad.
+                    </div>
+
+                    <div>
+                      <br>
+                    </div>
+
+                    <div>
+                      You will find updates and patches at <a href="http://zammad.org/" target="_blank" title="http://zammad.org/">http://zammad.org/</a>. Online
+                    </div>
+
+                    <div>
+                      documentation is available at <a href="http://guides.zammad.org/" target="_blank" title="http://guides.zammad.org/">http://guides.zammad.org/</a>. You can also
+                    </div>
+
+                    <div>
+                      use our forums at <a href="http://forums.zammad.org/" target="_blank" title="http://forums.zammad.org/">http://forums.zammad.org/</a>
+                    </div>
+
+                    <div>
+                      <br>
+                    </div>
+
+                    <div>
+                      Regards,
+                    </div>
+
+                    <div>
+                      <br>
+                    </div>
+
+                    <div>
+                      The <a href="http://Zammad.org" target="_blank" title="http://Zammad.org">Zammad.org</a> Project
+                    </div>
+
+                    <div class="textBubble-overflowContainer hide">
+                      <div class="btn btn--text js-unfold">
+                        See more
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="article-meta-clip bottom">
+            <div class="article-content-meta bottom hide">
+              <div class="article-meta bottom">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key">
+                    Channel
+                  </div>
+
+                  <div class="article-meta-value">
+                    phone
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="js-article-actions">
+            <div class="article-content article-actions horizontal stretch">
+              <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="reply" href="#">reply</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/1">split</a>
+            </div>
+          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</time></small>
+        </div>
+
+        <div class="ticket-article-item agent" data-id="2" id="article-2">
+          <div class="article-meta-clip top">
+            <div class="article-content-meta top hide">
+              <div class="article-meta top">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key u-textTruncate">
+                    From
+                  </div>
+
+                  <div class="article-meta-value flex contain-text">
+                    Felix Niklas
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="article-content zIndex-1">
+            <div class="js-avatar">
+              <span class="avatar user-popover size-40" data-id="3" data-original-title="" style="background-image: url(api/v1/users/image/f8729042ca563c5a0161d232f045728a)" title=""></span>
+            </div>
+
+            <div class="bubble-gap">
+              <div class="internal-border">
+                <div class="textBubble">
+                  <div class="bubble-arrow"></div>
+
+                  <div class="textBubble-content" data-id="2" id="article-content-2">
+                    Test Antwort:
+
+                    <div>
+                      <br>
+                    </div>
+
+                    <div>
+                      <div>
+                        .pagination {
+                      </div>
+
+                      <div>
+                        &nbsp; margin: 0;
+                      </div>
+
+                      <div>
+                        }
+                      </div>
+
+                      <div>
+                        <br>
+                      </div>
+
+                      <div>
+                        .pagination &gt; li &gt; a,&nbsp;
+                      </div>
+
+                      <div>
+                        .pagination &gt; li &gt; span {
+                      </div>
+
+                      <div>
+                        &nbsp; padding: 0;
+                      </div>
+
+                      <div>
+                        &nbsp; width: 31px;
+                      </div>
+
+                      <div>
+                        &nbsp; height: 28px;
+                      </div>
+
+                      <div>
+                        &nbsp; border-color: #ececec;
+                      </div>
+
+                      <div>
+                        }
+                      </div>
+
+                      <div>
+                        <br>
+                      </div>
+
+                      <div>
+                        .pagination &gt; .active &gt; a,&nbsp;
+                      </div>
+
+                      <div>
+                        .pagination &gt; .active &gt; span,&nbsp;
+                      </div>
+
+                      <div>
+                        .pagination &gt; .active &gt; a:hover,&nbsp;
+                      </div>
+
+                      <div>
+                        .pagination &gt; .active &gt; span:hover,&nbsp;
+                      </div>
+
+                      <div>
+                        .pagination &gt; .active &gt; a:focus,&nbsp;
+                      </div>
+
+                      <div>
+                        .pagination &gt; .active &gt; span:focus {
+                      </div>
+
+                      <div>
+                        &nbsp; background: #0F94D6;
+                      </div>
+
+                      <div>
+                        &nbsp; border-color: #0F94D6;
+                      </div>
+
+                      <div>
+                        }
+                      </div>
+
+                      <div>
+                        <br>
+                      </div>
+
+                      <div>
+                        .pagination-counter {
+                      </div>
+
+                      <div>
+                        &nbsp; margin-right: 19px;
+                      </div>
+
+                      <div>
+                        &nbsp; line-height: 28px;
+                      </div>
+
+                      <div>
+                        &nbsp; color: #9c9c9b;
+                      </div>
+                    </div>
+
+                    <div class="textBubble-overflowContainer hide">
+                      <div class="btn btn--text js-unfold">
+                        See more
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="article-meta-clip bottom">
+            <div class="article-content-meta bottom hide">
+              <div class="article-meta bottom">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key">
+                    Channel
+                  </div>
+
+                  <div class="article-meta-value">
+                    note
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="js-article-actions">
+            <div class="article-content article-actions horizontal stretch">
+              <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/2">split</a>
+            </div>
+          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T14:02:35.000Z" data-tooltip="01/12/2015 15:02">01/12/2015</time></small>
+        </div>
+
+        <div class="ticket-article-item agent" data-id="6" id="article-6">
+          <div class="article-meta-clip top">
+            <div class="article-content-meta top hide">
+              <div class="article-meta top">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key u-textTruncate">
+                    From
+                  </div>
+
+                  <div class="article-meta-value flex contain-text">
+                    Hans Huber
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="article-content zIndex-1">
+            <div class="js-avatar">
+              <span class="avatar user-popover size-40" data-id="4" data-original-title="" style="background-image: url(api/v1/users/image/f7d0245ed93f0ea29edc32252f6729c6)" title=""></span>
+            </div>
+
+            <div class="bubble-gap">
+              <div class="internal-border">
+                <div class="textBubble">
+                  <div class="bubble-arrow"></div>
+
+                  <div class="textBubble-content" data-id="6" id="article-content-6">
+                    Note
+
+                    <div class="textBubble-overflowContainer hide">
+                      <div class="btn btn--text js-unfold">
+                        See more
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="article-meta-clip bottom">
+            <div class="article-content-meta bottom hide">
+              <div class="article-meta bottom">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key">
+                    Channel
+                  </div>
+
+                  <div class="article-meta-value">
+                    note
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="js-article-actions">
+            <div class="article-content article-actions horizontal stretch">
+              <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/6">split</a>
+            </div>
+          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-05-05T10:25:01.000Z" data-tooltip="05/05/2015 12:25">05/05/2015</time></small>
+        </div>
+      </div>
+
+      <div class="article-new">
+        <form class="article-add is-public" data-type="note">
+          <input name="type" type="hidden" value="note"> <input name="internal" type="hidden" value=""> <input name="form_id" type="hidden" value="">
+
+          <div class="editControls">
+            <div class="js-avatar">
+              <span class="avatar user-popover size-40" data-id="3" data-original-title="" data-placement="right" style="background-image: url(api/v1/users/image/f8729042ca563c5a0161d232f045728a)" title=""></span>
+            </div>
+
+            <div class="editControls-item is-hidden pop-select">
+              <div class="editControls-iconHolder centered js-selectedArticleType"></div>
+
+              <div class="pop-selector is-hidden js-articleTypes">
+                <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="note"></div>
+
+                <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="email"></div>
+
+                <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="facebook"></div>
+
+                <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="twitter"></div>
+
+                <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="phone"></div>
+              </div>
+            </div>
+
+            <div class="editControls-item is-hidden js-toggleVisibility">
+              <div class="editControls-iconHolder"></div>
+            </div>
+          </div>
+
+          <div class="article-content zIndex-5 bubble-gap">
+
+            <div class="internal-border">
+              <div class="input form-group hide">
+                <div class="formGroup-label">
+                  <label for="">To</label>
+                </div>
+
+                <div class="controls">
+                  <input class="form-control" id="" name="to" required="required" type="text" value="">
+                </div>
+              </div>
+
+              <div class="input form-group hide">
+                <div class="formGroup-label">
+                  <label for="">Cc</label>
+                </div>
+
+                <div class="controls">
+                  <input class="form-control" id="" name="cc" type="text" value="">
+                </div>
+              </div>
+
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+
+                <div class="js-textarea articleNewEdit-body" contenteditable="true" data-name="body"></div>
+
+                <div class="shortcut dropdown">
+                  <ul class="dropdown-menu" style="width: 360px; max-height: 200px;">
+                    <li>
+                      <a>-</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="attachments"></div>
+
+                <div class="article-attachment">
+                  <div class="attachmentPlaceholder">
+                    <span class="attachmentPlaceholder-hint">Enter Answer or</span> <span class="attachmentPlaceholder-inputHolder">select attachment.. <input multiple="multiple" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;" type="file"></span>
+                  </div>
+
+                  <div class="attachmentUpload hide">
+                    <div class="horizontal">
+                      <div class="u-highlight">
+                        Uploading (<span class="js-percentage">0</span>%) ...
+                      </div>
+
+                      <div class="attachmentUpload-cancel js-cancel">
+                        Cancel Upload
+                      </div>
+                    </div>
+
+                    <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+                  </div>
+                </div>
+
+                <div class="dropArea">
+                  <div class="dropArea-inner">
+                    Drop Files here
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical">
+    <div class="sidebar bottom-form-shadow flex hide" data-tab="ticket">
+      <div class="sidebar-header">
+        <h2 class="sidebar-header-headline js-headline">Ticket</h2>
+
+        <div class="sidebar-header-actions js-actions">
+          <div class="dropdown dropdown--actions">
+            <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li>
+                <a data-type="ticket-history" href="#" tabindex="-1">History</a>
+              </li>
+
+              <li>
+                <a data-type="ticket-merge" href="#" tabindex="-1">Merge</a>
+              </li>
+
+              <li>
+                <a data-type="customer-change" href="#" tabindex="-1">Change Customer</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tabsSidebar-close"></div>
+      </div>
+      <hr>
+
+      <div class="sidebar-content">
+        <form class="edit form-changed">
+          <fieldset>
+            <div class="select form-group">
+              <div class="formGroup-label">
+                <label for="Ticket_619674_group_id">Group <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_619674_group_id" name="group_id" required="">
+                    <option value="">
+                      -
+                    </option>
+
+                    <option value="15">
+                      FillGroup::124782
+                    </option>
+
+                    <option value="6">
+                      FillGroup::180684
+                    </option>
+
+                    <option value="2">
+                      FillGroup::206709
+                    </option>
+
+                    <option value="16">
+                      FillGroup::240252
+                    </option>
+
+                    <option value="19">
+                      FillGroup::316438
+                    </option>
+
+                    <option value="3">
+                      FillGroup::331147
+                    </option>
+
+                    <option value="4">
+                      FillGroup::370967
+                    </option>
+
+                    <option value="9">
+                      FillGroup::371994
+                    </option>
+
+                    <option value="5">
+                      FillGroup::387404
+                    </option>
+
+                    <option value="7">
+                      FillGroup::505241
+                    </option>
+
+                    <option value="21">
+                      FillGroup::596513
+                    </option>
+
+                    <option value="12">
+                      FillGroup::661322
+                    </option>
+
+                    <option value="11">
+                      FillGroup::707393
+                    </option>
+
+                    <option value="17">
+                      FillGroup::808471
+                    </option>
+
+                    <option value="18">
+                      FillGroup::854423
+                    </option>
+
+                    <option value="8">
+                      FillGroup::894121
+                    </option>
+
+                    <option value="14">
+                      FillGroup::907762
+                    </option>
+
+                    <option value="20">
+                      FillGroup::927450
+                    </option>
+
+                    <option value="10">
+                      FillGroup::957248
+                    </option>
+
+                    <option value="13">
+                      FillGroup::975373
+                    </option>
+
+                    <option selected value="1">
+                      Users
+                    </option>
+                  </select> 
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="select form-group">
+              <div class="formGroup-label">
+                <label for="Ticket_619674_owner_id">Owner <span></span></label>
+              </div>
+
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_619674_owner_id" name="owner_id">
+                    <option value="">
+                      -
+                    </option>
+
+                    <option value="3">
+                      Felix Niklas
+                    </option>
+
+                    <option selected value="4">
+                      Hans Huber
+                    </option>
+                  </select> 
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="select form-group is-changed">
+              <div class="formGroup-label">
+                <label for="Ticket_619674_state_id">State <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_619674_state_id" name="state_id" required="">
+                    <option value="4">
+                      closed
+                    </option>
+
+                    <option selected value="2">
+                      open
+                    </option>
+
+                    <option value="7">
+                      pending close
+                    </option>
+
+                    <option value="3">
+                      pending reminder
+                    </option>
+                  </select> 
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="datetime form-group hide is-changed">
+              <div class="formGroup-label">
+                <label for="Ticket_619674_pending_time">Pending till <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <div class="horizontal is-hidden" data-name="pending_time">
+                  <input maxlength="2" name="{datetime}pending_time___day" placeholder="dd" style="width: 44px;" type="text" value="3"> . <input maxlength="2" name="{datetime}pending_time___month" placeholder="mm" style="width: 44px;" type="text" value="7"> . <input maxlength="4" name="{datetime}pending_time___year" placeholder="yyyy" style="width: 70px;" type="text" value="2015"> <input maxlength="2" name="{datetime}pending_time___hour" placeholder="00" style="width: 44px;" type="text" value="14"> : <input maxlength="2" name="{datetime}pending_time___minute" placeholder="00" style="width: 44px;" type="text" value="37">
+                </div>
+
+                <div>
+                  <a class="js-today">now</a> | <a class="js-minus-hour">-1</a> <a class="js-plus-hour">+1</a> hour | <a class="js-minus-day">-1</a> <a class="js-plus-day">+1</a> day | <a class="js-minus-week">-7</a> <a class="js-plus-week">+7</a> days
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="select form-group">
+              <div class="formGroup-label">
+                <label for="Ticket_619674_priority_id">Priority <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_619674_priority_id" name="priority_id" required="">
+                    <option selected value="1">
+                      1 low
+                    </option>
+
+                    <option value="2">
+                      2 normal
+                    </option>
+
+                    <option value="3">
+                      3 high
+                    </option>
+                  </select> 
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="tags">
+          <label>Tags</label>
+
+          <ul class="sidebar-list"></ul>
+
+          <div class="text-muted js-newTagLabel u-clickable">
+            + Add Tag
+          </div>
+
+          <form>
+            <input autocomplete="off" class="hide js-newTagInput" name="new_tag" type="text">
+          </form>
+        </div>
+
+        <div class="links">
+          <label>Links</label>
+
+          <div class="ticketLinks">
+            <div class="sidebar-list-title">
+              child
+            </div>
+
+            <ol class="tasks tasks--standalone">
+              <li class="task">
+                <div class="icon-holder"></div>
+
+                <div class="task-text">
+                  <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a>
+
+                  <div class="time humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">
+                    01/20/2015
+                  </div>
+                </div>
+
+                <div class="sidebar-list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="text-muted u-clickable js-add">
+            + Add Link
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar bottom-form-shadow flex" data-tab="customer">
+      <div class="sidebar-header">
+        <h2 class="sidebar-header-headline js-headline">Customer</h2>
+
+        <div class="sidebar-header-actions js-actions">
+          <div class="dropdown dropdown--actions">
+            <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li>
+                <a data-type="customer-change" href="#" tabindex="-1">Change Customer</a>
+              </li>
+
+              <li>
+                <a data-type="customer-edit" href="#" tabindex="-1">Edit Customer</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tabsSidebar-close"></div>
+      </div>
+      <hr>
+
+      <div class="sidebar-content">
+        <div class="sidebar-block">
+          <span class="avatar unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
+
+          <h3 title="Name">Nicole Braun</h3>
+        </div>
+
+        <div class="sidebar-block">
+          <label>Email</label> nicole.braun@zammad.org
+        </div>
+
+        <div class="sidebar-block">
+          <label>Note</label>
+
+          <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update"></div>
+        </div>
+
+        <div class="sidebar-block">
+          <label>Tickets</label> <span class="user-tickets" data-original-title="Open Tickets" data-type="open" style="" title="">open <span class="count">(5)</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar bottom-form-shadow flex hide" data-tab="organization">
+      <div class="sidebar-header">
+        <h2 class="sidebar-header-headline js-headline">Organization</h2>
+
+        <div class="sidebar-header-actions js-actions">
+          <div class="dropdown dropdown--actions">
+            <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li>
+                <a data-type="organization-edit" href="#" tabindex="-1">Edit Organization</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tabsSidebar-close"></div>
+      </div>
+      <hr>
+
+      <div class="sidebar-content">
+        <div class="sidebar-block">
+          <div class="avatar organizationInfo-avatar size-50">
+            <a href="#organization/profile/1"></a>
+          </div>
+
+          <h3 title="Name">Zammad Foundation</h3>
+        </div>
+
+        <div class="sidebar-block">
+          <label>Shared organization</label> Yes
+        </div>
+
+        <div class="sidebar-block">
+          <label>Note</label>
+
+          <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update-org">
+            Wir sand ausm Woid!
+          </div>
+        </div>
+        <hr>
+        <label>Members</label>
+
+        <ul class="userList">
+          <li>
+            <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tabsSidebar-tabs vertical justified">
+      <div class="tabsSidebar-tab is-changed" data-tab="ticket"></div>
+
+      <div class="tabsSidebar-tab active" data-tab="customer"></div>
+
+      <div class="tabsSidebar-tab" data-tab="organization"></div>
+    </div>
+  </div>
+
+  <div class="attributeBar">
+    <form class="form-inline is-closed hide">
+      <div class="form-group">
+        <label class="input-group-addon u-clickable" for="update_ticket_1_state_id123">State</label> <select class="form-control level-1" id="update_ticket_1_state_id123" name="state_id">
+          <option value="4">
+            closed
+          </option>
+
+          <option selected value="1">
+            new
+          </option>
+
+          <option value="2">
+            open
+          </option>
+
+          <option value="3">
+            pending
+          </option>
+        </select> 
+      </div>
+
+      <div class="form-group is-changed">
+        <label class="input-group-addon u-clickable" for="update_ticket_1_priority_id123">Priority</label> <select class="form-control" id="update_ticket_1_priority_id123" name="priority_id">
+          <option value="1">
+            1 low
+          </option>
+
+          <option selected value="2">
+            2 normal
+          </option>
+
+          <option value="3">
+            3 high
+          </option>
+        </select> 
+      </div>
+
+      <div class="form-group">
+        <label class="input-group-addon u-clickable" for="update_ticket_1_group_id123">Group</label> <select class="form-control" id="update_ticket_1_group_id123" name="group_id">
+          <option value="4">
+            FillGroup::450863
+          </option>
+
+          <option value="3">
+            FillGroup::918672
+          </option>
+
+          <option value="2">
+            Twitter
+          </option>
+
+          <option selected value="1">
+            Users
+          </option>
+        </select> 
+      </div>
+
+      <div class="form-group">
+        <label class="input-group-addon u-clickable" for="update_ticket_1_owner_id123">Owner</label> <select class="form-control" id="update_ticket_1_owner_id123" name="owner_id">
+          <option value="">
+            -
+          </option>
+
+          <option value="3">
+            Felix Niklas
+          </option>
+        </select> 
+      </div>
+    </form>
+
+    <form class="form-inline">
+      <div class="form-group">
+        <button class="btn btn--primary js-submit pull-right" type="submit">Update</button> <button class="btn js-reset pull-right" type="submit">Discard your unsaved changes.</button>
+      </div>
+    </form>
+  </div>
+</div>

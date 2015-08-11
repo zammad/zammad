@@ -1,5 +1,7 @@
 <div class="page-header">
-  <h1>Trigger <small>Management</small></h1>
+  <div class="page-header-title">
+    <h1>Trigger <small>Management</small></h1>
+  </div>
 </div>
 
 <div class="row">
@@ -9,7 +11,7 @@
       <li><a href="#">Actions</a></li>
     </ul>
   </div>
-  <div class="span9 table-overview">
+  <div class="table-overview">
   
     <div class="tabbable">
       <ul class="nav nav-tabs">

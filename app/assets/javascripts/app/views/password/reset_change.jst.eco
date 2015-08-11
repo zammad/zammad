@@ -1,7 +1,12 @@
-<div class="hero-unit">
-  <h2><%- @T( 'Choose your new password.' ) %><small></small></h2>
-  <form class="form-normal">
-    <p id="form-password-change"></p>
-    <button class="btn btn-primary submit"><%- @T( 'Submit' ) %></button>
-  </form>
+<div class="fullHeight vertical center justified reset_password fit">
+  <div class="hero-unit">
+    <h2><%- @T( 'Choose your new password.' ) %><small></small></h2>
+    <form>
+      <div class="form-password-change"></div>
+      <div class="form-controls">
+        <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+        <button class="btn btn--primary js-submit align-right"><%- @T( 'Submit' ) %></button>
+      </div>
+    </form>
+  </div>
 </div>

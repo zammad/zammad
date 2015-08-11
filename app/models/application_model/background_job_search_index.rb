@@ -1,4 +1,4 @@
-# perform background job
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 class ApplicationModel::BackgroundJobSearchIndex
   def initialize(object, o_id)
     @object = object

@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 class Ticket::Article < ApplicationModel
   load 'ticket/article/assets.rb'
   include Ticket::Article::Assets
@@ -9,31 +8,46 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::ActivityStreamLog
 
   belongs_to    :ticket
-  belongs_to    :type,        :class_name => 'Ticket::Article::Type'
-  belongs_to    :sender,      :class_name => 'Ticket::Article::Sender'
-  belongs_to    :created_by,  :class_name => 'User'
-  after_create  :notify_clients_after_create
-  after_update  :notify_clients_after_update
-  after_destroy :notify_clients_after_destroy
+  belongs_to    :type,        class_name: 'Ticket::Article::Type'
+  belongs_to    :sender,      class_name: 'Ticket::Article::Sender'
+  belongs_to    :created_by,  class_name: 'User'
+  belongs_to    :updated_by,  class_name: 'User'
+  store         :preferences
+  before_create :check_subject
+  before_update :check_subject
+  notify_clients_support
 
-  activity_stream_support :ignore_attributes => {
-    :type_id   => true,
-    :sender_id => true,
+  activity_stream_support ignore_attributes: {
+    type_id: true,
+    sender_id: true,
+    preferences: true,
   }
 
-  history_support :ignore_attributes => {
-    :type_id   => true,
-    :sender_id => true,
+  history_support ignore_attributes: {
+    type_id: true,
+    sender_id: true,
+    preferences: true,
   }
+
+  private
+
+  def check_subject
+
+    return if !subject
+
+    subject.gsub!(/\s|\t|\r/, ' ')
+  end
 
   class Flag < ApplicationModel
   end
 
   class Sender < ApplicationModel
-    validates   :name, :presence => true
+    validates   :name, presence: true
+    latest_change_support
   end
 
   class Type < ApplicationModel
-    validates   :name, :presence => true
+    validates   :name, presence: true
+    latest_change_support
   end
 end

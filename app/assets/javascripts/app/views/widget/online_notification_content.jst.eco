@@ -1,0 +1,21 @@
+<% if @items.length: %>
+  <% for item in @items: %>
+  <div class="activity-entry<% if item.seen: %> is-inactive<% end %>">
+    <a class="activity-avatar user-popover" data-id="<%= item.created_by_id %>" href="<%- item.created_by.uiUrl() %>">
+      <%- item.created_by.avatar() %>
+    </a>
+    <a href="<%- item.link %>" class="activity-body">
+      <span class="activity-message">
+        <span class="activity-text">
+          <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> (<%= item.title %>)<% end %>
+        </span>
+        <span class="activity-time humanTimeFromNow" data-time="<%- item.created_at %>">?</span>
+      </span>
+    </a>
+  </div>
+  <% end %>
+<% else: %>
+  <div class="u-textTruncate">
+    <%- @T("No unread Notifications for you. :) ") %>
+  </div>
+<% end %>

@@ -1,16 +1,17 @@
 class Index extends App.Controller
   events:
-    'click [data-type="remove"]': 'remove'
+    'click .js-remove': 'remove'
 
   constructor: ->
     super
     return if !@authenticate()
+    @title 'Linked Accounts', true
     @render()
 
   render: =>
     auth_provider_all = {
       facebook: {
-        key:    'facebook' 
+        key:    'facebook'
         url:    '/auth/facebook',
         name:   'Facebook',
         config: 'auth_facebook',
@@ -36,11 +37,11 @@ class Index extends App.Controller
     }
     auth_providers = []
     for key, provider of auth_provider_all
-      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is "true"
+      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is 'true'
         auth_providers.push provider
 
     @html App.view('profile/linked_accounts')(
-      user:           App.Session.all()
+      user:           App.Session.get()
       auth_providers: auth_providers
     )
 
@@ -61,12 +62,13 @@ class Index extends App.Controller
     )
 
   success: (data, status, xhr) =>
-    App.Auth.loginCheck()
-    @render()
     @notify(
       type: 'success'
       msg:  App.i18n.translateContent( 'Successfully!' )
     )
+    update = =>
+      @render()
+    App.User.full(@Session.get('id'), update, true)
 
   error: (xhr, status, error) =>
     @render()
@@ -76,5 +78,4 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent( data.message )
     )
 
-App.Config.set( 'LinkedAccounts', { prio: 3000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile' )
-
+App.Config.set( 'LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile' )

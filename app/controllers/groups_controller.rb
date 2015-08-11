@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class GroupsController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
 =begin
 
@@ -101,7 +101,7 @@ curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-
 =end
 
   def create
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Group, params)
   end
 
@@ -133,7 +133,7 @@ curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-
 =end
 
   def update
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Group, params)
   end
 
@@ -148,7 +148,7 @@ Test:
 =end
 
   def destroy
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Group, params)
   end
 end

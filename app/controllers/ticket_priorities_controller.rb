@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TicketPrioritiesController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
   # GET /ticket_priorities
   def index
@@ -15,19 +15,19 @@ class TicketPrioritiesController < ApplicationController
 
   # POST /ticket_priorities
   def create
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Ticket::Priority, params)
   end
 
   # PUT /ticket_priorities/1
   def update
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Ticket::Priority, params)
   end
 
   # DELETE /ticket_priorities/1
   def destroy
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Ticket::Priority, params)
   end
 end

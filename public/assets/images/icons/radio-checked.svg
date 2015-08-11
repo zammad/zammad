@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>radio-checked</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="radio-checked" sketch:type="MSArtboardGroup" fill="#000000">
+            <path d="M11,5.5 C11,2.46243387 8.53756613,0 5.5,0 C2.46243387,0 0,2.46243387 0,5.5 C0,8.53756613 2.46243387,11 5.5,11 C8.53756613,11 11,8.53756613 11,5.5 L11,5.5 Z M0.932708535,5.51604187 C0.932708535,2.98473676 2.98473676,0.932708535 5.51604187,0.932708535 C8.04734697,0.932708535 10.0993752,2.98473676 10.0993752,5.51604187 C10.0993752,8.04734697 8.04734697,10.0993752 5.51604187,10.0993752 C2.98473676,10.0993752 0.932708535,8.04734697 0.932708535,5.51604187 L0.932708535,5.51604187 Z M5.49188096,7.33333333 C6.50440301,7.33333333 7.3252143,6.51252204 7.3252143,5.5 C7.3252143,4.48747796 6.50440301,3.66666667 5.49188096,3.66666667 C4.47935893,3.66666667 3.65854763,4.48747796 3.65854763,5.5 C3.65854763,6.51252204 4.47935893,7.33333333 5.49188096,7.33333333 L5.49188096,7.33333333 Z" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

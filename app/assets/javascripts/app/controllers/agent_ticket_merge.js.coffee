@@ -1,15 +1,18 @@
 class App.TicketMerge extends App.ControllerModal
   constructor: ->
     super
+    @head = 'Merge'
+    @button = true
+    @cancel = true
     @fetch()
 
   fetch: ->
 
     # merge tickets
     @ajax(
-      id:    'ticket_merge_list'
+      id:    'ticket_related'
       type:  'GET'
-      url:   @apiPath + '/ticket_merge_list/' + @ticket.id
+      url:   @apiPath + '/ticket_related/' + @ticket.id
       processData: true,
       success: (data, status, xhr) =>
 
@@ -18,13 +21,12 @@ class App.TicketMerge extends App.ControllerModal
 
         @ticket_ids_by_customer    = data.ticket_ids_by_customer
         @ticket_ids_recent_viewed  = data.ticket_ids_recent_viewed
-
         @render()
     )
 
   render: ->
 
-    @html App.view('agent_ticket_merge')()
+    @content = $ App.view('agent_ticket_merge')()
 
     list = []
     for ticket_id in @ticket_ids_by_customer
@@ -32,7 +34,7 @@ class App.TicketMerge extends App.ControllerModal
         ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:       @el.find('#ticket-merge-customer-tickets'),
+      el:       @content.find('#ticket-merge-customer-tickets'),
       overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
       model:    App.Ticket,
       objects:  list,
@@ -45,27 +47,27 @@ class App.TicketMerge extends App.ControllerModal
         ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:       @el.find('#ticket-merge-recent-tickets'),
+      el:       @content.find('#ticket-merge-recent-tickets'),
       overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
       model:    App.Ticket,
       objects:  list,
       radio:    true,
     )
 
-    @el.delegate('[name="master_ticket_number"]', 'focus', (e) ->
+    @content.delegate('[name="master_ticket_number"]', 'focus', (e) ->
       $(e.target).parents().find('[name="radio"]').prop( 'checked', false )
     )
 
-    @el.delegate('[name="radio"]', 'click', (e) ->
+    @content.delegate('[name="radio"]', 'click', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal( ticket_id )
         $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
     )
 
-    @modalShow()
+    @show()
 
-  submit: (e) =>
+  onSubmit: (e) =>
     e.preventDefault()
 
     # disable form
@@ -91,7 +93,7 @@ class App.TicketMerge extends App.ControllerModal
           App.Collection.load( type: 'Ticket', data: [data.slave_ticket] )
 
           # hide dialog
-          @modalHide()
+          @hide()
 
           # view ticket
           @log 'notice', 'nav...', App.Ticket.find( data.master_ticket['id'] )

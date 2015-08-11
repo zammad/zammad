@@ -3,12 +3,12 @@
 require 'net/ldap'
 
 module Auth::Ldap
-  def self.check( username, password, config, user )
+  def self.check(username, password, config, user)
 
     scope = Net::LDAP::SearchScope_WholeSubtree
 
     # ldap connect
-    ldap = Net::LDAP.new( :host => config[:host], :port => config[:port] )
+    ldap = Net::LDAP.new( host: config[:host], port: config[:port] )
 
     # set auth data if needed
     if config[:bind_dn] && config[:bind_pw]
@@ -18,11 +18,11 @@ module Auth::Ldap
     # ldap bind
     begin
       if !ldap.bind
-        puts "NOTICE: Can't bind to '#{config[:host]}', #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
+        Rails.logger.info "Can't bind to '#{config[:host]}', #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
         return
       end
-    rescue Exception => e
-      puts "NOTICE: Can't connect to '#{config[:host]}', #{e.to_s}"
+    rescue => e
+      Rails.logger.info "Can't connect to '#{config[:host]}', #{e}"
       return
     end
 
@@ -33,7 +33,7 @@ module Auth::Ldap
     end
     user_dn = nil
     user_data = {}
-    ldap.search( :base => config[:base], :filter => filter, :scope => scope ) do |entry|
+    ldap.search( base: config[:base], filter: filter, scope: scope ) do |entry|
       user_data = {}
       user_dn = entry.dn
 
@@ -46,25 +46,25 @@ module Auth::Ldap
       end
     end
 
-    if user_dn == nil
-      puts "NOTICE: ldap entry found for user '#{username}' with filter #{filter} failed!"
+    if user_dn.nil?
+      Rails.logger.info "ldap entry found for user '#{username}' with filter #{filter} failed!"
       return nil
     end
 
     # try ldap bind with user credentals
     auth = ldap.authenticate user_dn, password
     if !ldap.bind( auth )
-      puts "NOTICE: ldap bind with '#{user_dn}' failed!"
+      Rails.logger.info "ldap bind with '#{user_dn}' failed!"
       return false
     end
 
     # create/update user
     if config[:sync_params]
       user_attributes = {
-        :source        => 'ldap',
-        :updated_by_id => 1,
+        source: 'ldap',
+        updated_by_id: 1,
       }
-      config[:sync_params].each {| local_data, ldap_data |
+      config[:sync_params].each {|local_data, ldap_data|
         if user_data[ ldap_data.downcase.to_sym ]
           user_attributes[ local_data.downcase.to_sym] = user_data[ ldap_data.downcase.to_sym ]
         end
@@ -72,11 +72,11 @@ module Auth::Ldap
       if !user
         user_attributes[:created_by_id] = 1
         user = User.create( user_attributes )
-        puts "NOTICE: user created '#{user.login}'"
+        Rails.logger.debug "user created '#{user.login}'"
       else
         user.update_attributes( user_attributes )
-        puts "NOTICE: user updated '#{user.login}'"
-      end    
+        Rails.logger.debug "user updated '#{user.login}'"
+      end
     end
 
     # return if it was not possible to create user
@@ -92,7 +92,7 @@ module Auth::Ldap
     if config[:always_roles]
       role_ids = user.role_ids
       config[:always_roles].each {|role_name|
-        role = Role.where( :name => role_name ).first
+        role = Role.where( name: role_name ).first
         next if !role
         if !role_ids.include?( role.id )
           role_ids.push role.id
@@ -106,7 +106,7 @@ module Auth::Ldap
     if config[:always_groups]
       group_ids = user.group_ids
       config[:always_groups].each {|group_name|
-        group = Group.where( :name => group_name ).first
+        group = Group.where( name: group_name ).first
         next if !group
         if !group_ids.include?( group.id )
           group_ids.push group.id
@@ -119,6 +119,6 @@ module Auth::Ldap
     # take session down
     # - not needed, done by Net::LDAP -
 
-    return user
+    user
   end
 end

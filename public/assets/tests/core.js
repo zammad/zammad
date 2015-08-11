@@ -258,9 +258,21 @@ App.Delay.set( function() {
 test( "i18n", function() {
 
   // de
-  App.i18n.set('de');
+  App.i18n.set('de-de');
   var translated = App.i18n.translateContent('yes');
-  equal( translated, 'ja', 'de - yes / ja translated correctly' );
+  equal( translated, 'ja', 'de-de - yes / ja translated correctly' );
+
+  translated = App.i18n.translatePlain('yes');
+  equal( translated, 'ja', 'de-de - yes / ja translated correctly' );
+
+  translated = App.i18n.translateInline('yes');
+  equal( translated, 'ja', 'de-de - yes / ja translated correctly' );
+
+  translated = App.i18n.translateContent('%s ago', 123);
+  equal( translated, 'vor 123', 'de-de - %s' );
+
+  translated = App.i18n.translateContent('%s %s test', 123, 'xxx');
+  equal( translated, '123 xxx test', 'de-de - %s %s' );
 
   translated = App.i18n.translateContent('<test&now>//*äöüß');
   equal( translated, '&lt;test&amp;now&gt;//*äöüß', 'de - <test&now>//*äöüß' );
@@ -268,18 +280,42 @@ test( "i18n", function() {
   var time_local = new Date();
   var offset = time_local.getTimezoneOffset();
   var timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
-  equal( timestamp, '06.11.2012 21:07', 'de - timestamp translated correctly' );
+  equal( timestamp, '06.11.2012 21:07', 'de-de - timestamp translated correctly' );
 
   // en
-  App.i18n.set('en');
+  App.i18n.set('en-us');
   translated = App.i18n.translateContent('yes');
-  equal( translated, 'yes', 'en - yes translated correctly' );
+  equal( translated, 'yes', 'en-us - yes translated correctly' );
+
+  translated = App.i18n.translatePlain('yes');
+  equal( translated, 'yes', 'en-us - yes translated correctly' );
+
+  translated = App.i18n.translateInline('yes');
+  equal( translated, 'yes', 'en-us - yes translated correctly' );
+
+  translated = App.i18n.translateContent('%s ago', 123);
+  equal( translated, '123 ago', 'en-us - %s' );
+
+  translated = App.i18n.translateContent('%s %s test', 123, 'xxx');
+  equal( translated, '123 xxx test', 'en-us - %s %s' );
 
   translated = App.i18n.translateContent('<test&now>');
-  equal( translated, '&lt;test&amp;now&gt;', 'en - <test&now>' );
+  equal( translated, '&lt;test&amp;now&gt;', 'en-us - <test&now>' );
 
   timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
-  equal( timestamp, '2012-11-06 21:07', 'en - timestamp translated correctly' );
+  equal( timestamp, '11/06/2012 21:07', 'en - timestamp translated correctly' );
+
+  // locale alias test
+  // de
+  App.i18n.set('de');
+  var translated = App.i18n.translateContent('yes');
+  equal( translated, 'ja', 'de - yes / ja translated correctly' );
+
+  // locale detection test
+  // de-ch
+  App.i18n.set('de-ch');
+  var translated = App.i18n.translateContent('yes');
+  equal( translated, 'ja', 'de - yes / ja translated correctly' );
 });
 
 // events
@@ -427,20 +463,205 @@ test( "config", function() {
 });
 
 
+// clone
+test( "clone", function() {
+
+  // simple
+  var tests = [
+    {
+      key1: 123,
+      key2: 1234
+    },
+    {
+      key1: 123,
+      key2: '1234'
+    },
+    [1,2,4,5,6],
+    'some string äöü',
+    {
+      key1: 123,
+      key2: null,
+    },
+    {
+      key1: 123,
+      key2: undefined,
+    },
+    {
+      key1: 123,
+      key2: undefined,
+      key3: {
+        keya: 'some',
+        keyb: undefined,
+      },
+      key4: ['a', 'b', null, false, true, undefined],
+    },
+    undefined,
+    false,
+    true,
+    null,
+    {
+      key1: 123,
+      key2: undefined,
+      key3: {
+        keya: 'some',
+        keyb: undefined,
+      },
+      key4: ['a', 'b', {
+        a: 123,
+        b: [1,5,7,8,1213,1231321]
+      }],
+    },
+  ];
+
+  _.each(tests, function(test) {
+    var item = clone( test )
+    deepEqual( item, test, 'clone' );
+  });
+
+  // complex test
+  var source = [
+    { name: 'some name' },
+    { name: 'some name2' },
+    { fn: function() { return 'test' } },
+  ]
+  var reference = [
+    { name: 'some name' },
+    { name: 'some name2' },
+    { fn: undefined },
+  ]
+  var result = clone( source )
+
+  // modify source later, should not have any result
+  source[0].name = 'some new name'
+
+  deepEqual( result, reference, 'clone' );
+
+
+  // full test
+  var source = [
+    { name: 'some name' },
+    { name: 'some name2' },
+    { fn: function a() { return 'test' } },
+  ]
+  var reference = [
+    { name: 'some name' },
+    { name: 'some name2' },
+    { fn: function a() { return 'test' } },
+  ]
+  var result = clone( source, true )
+
+  // modify source later, should not have any result
+  source[0].name = 'some new name'
+  source[2].fn   = 'some new name'
+
+  deepEqual( result[0], reference[0], 'clone full' );
+  deepEqual( result[1], reference[1], 'clone full' );
+
+  equal( typeof reference[2].fn, 'function')
+  equal( typeof result[2].fn, 'function')
+
+  equal( reference[2].fn(), 'test')
+  equal( result[2].fn(), 'test')
+
+});
+
+// diff
+test( "diff", function() {
+
+  // simple
+  var tests = [
+    {
+      object1: {
+        key1: 123,
+        key2: 1234
+      },
+      object2: {
+        key1: 123,
+        key2: 1235
+      },
+      result: {
+        key2: 1235
+      }
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: 123
+      },
+      object2: {
+        key1: 123,
+        key2: 123
+      },
+      result: {}
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: 123
+      },
+      object2: {
+        key1: 123,
+        key2: 123
+      },
+      result: {}
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: [1,3,5]
+      },
+      object2: {
+        key1: 123,
+        key2: 123
+      },
+      result: {
+        key2: 123
+      }
+    },
+    {
+      object1: {
+        key1: 123,
+        key2: [1,3,5]
+      },
+      object2: {
+        key1: 123,
+      },
+      result: {}
+    },
+    {
+      object1: {
+        key1: 123,
+      },
+      object2: {
+        key1: 123,
+        key2: 124
+      },
+      result: {}
+    },
+  ];
+
+  _.each(tests, function(test) {
+    var item = difference( test.object1, test.object2 )
+    deepEqual( item, test.result, 'tests simple' );
+  });
+
+
+});
+
 // auth
 App.Auth.login({
   data: {
     username: 'not_existing',
-    password: 'not_existing'
+    password: 'not_existing',
   },
   success: function(data) {
     test( "auth - not existing user", function() {
-      ok( false, 'ok')
+      ok( false, 'ok' )
     })
   },
   error: function() {
     test( "auth - not existing user", function() {
-      ok( true, 'ok')
+      ok( true, 'ok' )
       authWithSession();
     })
   }
@@ -450,18 +671,18 @@ var authWithSession = function() {
   App.Auth.login({
     data: {
       username: 'nicole.braun@zammad.org',
-      password: 'test'
+      password: 'test',
     },
     success: function(data) {
       test( "auth - existing user", function() {
         ok( true, 'authenticated')
         var user = App.Session.get('login');
-        equal( 'nicole.braun@zammad.org', user, 'session login')
+        equal( 'nicole.braun@zammad.org', user, 'session login' )
       })
     },
     error: function() {
       test( "auth - existing user", function() {
-        ok( false, 'not authenticated')
+        ok( false, 'not authenticated' )
       })
     }
   });

@@ -5,8 +5,11 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
+
     # check authentication
     return if !@authenticate()
+
+    @title 'Sessions', true
 
     @load()
     @interval(
@@ -44,7 +47,7 @@ class Index extends App.ControllerContent
 
   destroy: (e) ->
     e.preventDefault()
-    sessionId = $( e.target ).data('session-id')
+    sessionId = $( e.target ).closest('a').data('session-id')
     @ajax(
       id:    'sessions/' + sessionId
       type:  'DELETE'

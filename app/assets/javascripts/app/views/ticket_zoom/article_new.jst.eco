@@ -1,0 +1,85 @@
+<form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>" data-type="<%= @article.type %>">
+  <input type="hidden" name="type" value="<%= @article.type %>">
+  <input type="hidden" name="internal" value="<%= @article.internal %>">
+  <input type="hidden" name="form_id" value="<%= @article.form_id %>">
+  <div class="editControls">
+    <div class="js-avatar"></div>
+    <div class="editControls-item is-hidden pop-select">
+      <div class="editControls-iconHolder centered js-selectedArticleType">
+        <svg class="editControls-icon js-selectedType"><use xlink:href="#icon-<%= @article.type %>" /></svg>
+      </div>
+      <div class="pop-selector is-hidden js-articleTypes">
+        <% for articleType in @articleTypes: %>
+        <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="<%= articleType.name %>">
+          <svg class="pop-selectable-icon icon-<%= articleType.icon %>"><use xlink:href="#icon-<%= articleType.icon %>" /></svg>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="editControls-item is-hidden js-toggleVisibility">
+      <div class="editControls-iconHolder">
+        <svg class="editControls-icon icon-internal" title="<%- @Ti("set to public") %>">
+          <use xlink:href="#icon-lock" />
+        </svg>
+        <svg class="editControls-icon icon-public" title="<%- @Ti("set to internal") %>">
+          <use xlink:href="#icon-lock-open" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="article-content zIndex-5 bubble-gap">
+<!--
+    <label class="recipients"><%- @T('Recipients') %>
+      <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_normal.jpg)"></div>
+      <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"></div>
+    </label>
+-->
+    <div class="internal-border">
+
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for=""><%- @T('To') %></label>
+        </div>
+        <div class="controls"><input id="" type="text" name="to" value="<%= @article.to %>" class="form-control" required="required"></div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for=""><%- @T('Cc') %></label>
+        </div>
+        <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control"></div>
+      </div>
+
+      <div class="textBubble">
+        <div class="bubble-arrow"></div>
+        <div class="js-textarea articleNewEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
+        <!-- .textBubble grows with textarea (and expanding clone) -->
+        <div class="attachments"></div>
+        <div class="article-attachment">
+          <div class="attachmentPlaceholder">
+            <span class="attachmentPlaceholder-hint"><%- @T('Enter Answer or') %></span>
+            <span class="attachmentPlaceholder-inputHolder">
+              <%- @T('select attachment..') %>
+              <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+            </span>
+          </div>
+          <div class="attachmentUpload hide">
+            <div class="horizontal">
+              <div class="u-highlight">
+                <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
+              </div>
+              <div class="attachmentUpload-cancel js-cancel">
+                <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Cancel Upload') %>
+              </div>
+            </div>
+            <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="dropArea">
+          <div class="dropArea-inner">
+            <%- @T('Drop Files here') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

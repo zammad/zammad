@@ -1,0 +1,275 @@
+<div class="profile">
+
+  <div class="profile-window">
+    <div class="profile-section vertical centered">
+      <div class="align-right profile-action dropdown dropdown--actions">
+        <div class="dropdown-toggle" id="profileAction" data-toggle="dropdown">
+          <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
+          <label>Aktion</label>
+          <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="profileAction">
+          <li role="presentation"><a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Änderungsprotokoll</a>
+          <li role="presentation"><a role="menuitem" tabindex="-1">Benutzer zusammenführen</a>
+          <li role="presentation"><a role="menuitem" tabindex="-1">Benutzer löschen</a>
+        </ul>
+      </div>
+      <div class="avatar size-80" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"></div>
+      <h1>Doreen Kubiak</h1>
+      <div class="profile-subtitle">Steuerbüro C. Kaik</div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-details  horizontal wrap">
+        <div class="profile-detailsEntry">
+          <label>Email</label>
+          <a href="mailto:doreen.kubiak@gmail.com">doreen.kubiak@gmail.com</a>
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Organization</label>
+          Steuerbüro C. Kaik
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Web</label>
+          <a href="http://ckaik.com" target="_blank">chaik.com</a>
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Strasse</label>
+          Johannitergasse 2/2
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Telefon</label>
+          +43 5522 36346
+        </div>
+        <div class="profile-detailsEntry">
+          <label>PLZ, ORT</label>
+          6800 Feldkirch
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Mobile-Nr.</label>
+          +43 699 4565789
+        </div>
+        <div class="profile-detailsEntry">
+          <label>Land</label>
+          Österreich
+        </div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <!-- if user has organization -->
+      <div class="tabs wide-tabs horizontal">
+        <div class="tab js-userTickets active">Tickets von Doreen Kubiak</div>
+        <div class="tab js-organizationTickets">Tickets von Steuerbüro C. Kaik</div>
+      </div>
+      <!-- endif -->
+      <div class="profile-ticketLists">
+        <div class="profile-ticketList">
+          <label>Bearbeitete Tickets (12)</label>
+          <ol class="tasks tasks--standalone">
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Micro-SIM doesn't work</div>
+                <div class="time">23 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Superb Service!</div>
+                <div class="time">43 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Print sheets strip_off_with_a_lot_of_text_in_the_headline</div>
+                <div class="time">1 hour ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Block not properly wrought</div>
+                <div class="time">2 hour ago</div>
+              </div>
+          </ol>
+          <a href="#">Alle Tickets von Steuerbüro C. Kaik …</a>
+        </div>
+        <div class="profile-ticketList">
+          <label>Bearbeitete Tickets (12)</label>
+          <ol class="tasks tasks--standalone">
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Micro-SIM doesn't work</div>
+                <div class="time">23 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Superb Service!</div>
+                <div class="time">43 minutes ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Print sheets strip off with a lot of text in the headline</div>
+                <div class="time">1 hour ago</div>
+              </div>
+            <li class="task level-1">
+              <div class="icon-holder">
+                <svg class="icon-priority"><use xlink:href="#icon-priority" /></svg>
+              </div>
+              <div class="task-text">
+                <div class="name">Block not properly wrought</div>
+                <div class="time">2 hour ago</div>
+              </div>
+          </ol>
+          <a href="#">Alle Tickets von Steuerbüro C. Kaik …</a>
+        </div>
+      </div>
+    </div>
+    <div class="profile-section horizontal two-columns">
+      <div class="column status stat-widget vertical">
+        <h3>Status</h3>
+        <div class="stat-graphic">
+          <div class="stat-tickets vertical reverse end">
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+          </div>
+          <svg class="total-tickets"><use xlink:href="#icon-total-tickets" /></svg>
+        </div>
+        <!-- 
+          Achtung: hier müssen wir schauen, dass wir das Widget genauso verwenden wie im Dashboard. Sonst gibt's Verwirrung.
+        -->
+        <div class="stat-label">Tickets of my Group: 78 of 234</div>
+        <div class="stat-detail">Average: 22%</div>
+      </div>
+      <div class="column mood stat-widget vertical">
+        <h3>Stimmung</h3>
+        <div class="stat-graphic">
+          <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-supergood" /></svg>
+        </div>
+        <div class="stat-label">3% of my tickets escalated.</div>
+        <div class="stat-detail">Average: 17%</div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <div class="frequency stat-widget vertical">
+        <h3>Frequency</h3>
+        <div class="stat-graphic">
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 80%"></div>
+              <div class="stat-bar secondary" style="height: 34%"></div>
+            </div>
+            <div class="stat-label">Jan</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 53%"></div>
+              <div class="stat-bar secondary" style="height: 47%"></div>
+            </div>
+            <div class="stat-label">Feb</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 46%"></div>
+              <div class="stat-bar secondary" style="height: 21%"></div>
+            </div>
+            <div class="stat-label">Mär</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 24%"></div>
+              <div class="stat-bar secondary" style="height: 18%"></div>
+            </div>
+            <div class="stat-label">Apr</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 13%"></div>
+              <div class="stat-bar secondary" style="height: 5%"></div>
+            </div>
+            <div class="stat-label">Mai</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 18%"></div>
+              <div class="stat-bar secondary" style="height: 10%"></div>
+            </div>
+            <div class="stat-label">Jun</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 50%"></div>
+              <div class="stat-bar secondary" style="height: 8%"></div>
+            </div>
+            <div class="stat-label">Jul</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 67%"></div>
+              <div class="stat-bar secondary" style="height: 13%"></div>
+            </div>
+            <div class="stat-label">Aug</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 34%"></div>
+              <div class="stat-bar secondary" style="height: 2%"></div>
+            </div>
+            <div class="stat-label">Sep</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 5%"></div>
+              <div class="stat-bar secondary" style="height: 0%"></div>
+            </div>
+            <div class="stat-label">Okt</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 25%"></div>
+              <div class="stat-bar secondary" style="height: 0%"></div>
+            </div>
+            <div class="stat-label">Nov</div>
+          </div>
+          <div class="stats-row">
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 80%"></div>
+              <div class="stat-bar secondary" style="height: 5%"></div>
+            </div>
+            <div class="stat-label">Dez</div>
+          </div>
+        </div>
+        <div class="stat-legend">
+          <div class="stat-legendEntry">
+            <span class="primary stat-circle"></span>
+            <span class="stat-legend-label">Bearbeitet</span>
+          </div>
+          <div class="stat-legendEntry">
+            <span class="secondary stat-circle"></span>
+            <span class="stat-legend-label">Offen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

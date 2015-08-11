@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class ChannelsController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
 =begin
 
@@ -30,32 +30,40 @@ Example:
 {
   "id":1,
   "area":"Twitter::Inbound",
-  "adapter":"Twitter2",
+  "adapter":"Twitter",
   "group_id:": 1,
   "options":{
-    "consumer_key":"PJ4c3dYYRtSZZZdOKo8ow",
-    "consumer_secret":"ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk",
-    "oauth_token":"293437546-xxRa9g74CercnU5AvY1uQwLLGIYrV1ezYtpX8oKW",
-    "oauth_token_secret":"ju0E4l9OdY2Lh1iTKMymAu6XVfOaU2oGxmcbIMRZQK4",
-    "search":[
-      {
-        "item":"#otrs",
-        "group_id":1,
-      },
-      {
-        "item":"#zombie42",
-        "group_id":1,
-      },
-      {
-        "item":"#otterhub",
-        "group_id":1,
-      }
-    ],
-    "mentions" {
-      "group_id":1,
+    "auth": {
+      "consumer_key":"PJ4c3dYYRtSZZZdOKo8ow",
+      "consumer_secret":"ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk",
+      "oauth_token":"293437546-xxRa9g74CercnU5AvY1uQwLLGIYrV1ezYtpX8oKW",
+      "oauth_token_secret":"ju0E4l9OdY2Lh1iTKMymAu6XVfOaU2oGxmcbIMRZQK4",
     },
-    "direct_messages": {
-      "group_id":1,
+    "sync":{
+      "search":[
+        {
+          "term":"#otrs",
+          "type": "mixed", # optional, possible 'mixed' (default), 'recent', 'popular'
+          "group_id:": 1,
+          "limit": 1, # optional
+        },
+        {
+          "term":"#zombie23",
+          "group_id:": 2,
+        },
+        {
+          "term":"#otterhub",
+          "group_id:": 3,
+        }
+      ],
+      "mentions" {
+        "group_id:": 4,
+        "limit": 100, # optional
+      },
+      "direct_messages": {
+        "group_id:": 4,
+        "limit": 1, # optional
+      }
     }
   },
   "active":true,
@@ -94,7 +102,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password}
 =end
 
   def index
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_index_render(Channel, params)
   end
 
@@ -117,7 +125,7 @@ curl http://localhost/api/v1/channels/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(Channel, params)
   end
 
@@ -153,7 +161,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 =end
 
   def create
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Channel, params)
   end
 
@@ -190,7 +198,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 =end
 
   def update
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Channel, params)
   end
 
@@ -208,7 +216,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 =end
 
   def destroy
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Channel, params)
   end
 end

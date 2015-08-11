@@ -1,4 +1,6 @@
-[![Build Status develop](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop)](http://ci.zammad.org/job/Zammad%20Unittest%20Develop/) [![Build Status master](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Master)](http://ci.zammad.org/job/Zammad%20Unittest%20Master/)
+[![Build Status](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop (MySQL))](http://ci.zammad.org/job/Zammad%20Unittest%20Develop%20(MySQL)/)
+[![Build Status](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop (MariaDB Cluster))](http://ci.zammad.org/job/Zammad%20Unittest%20Develop%20(MariaDB%20Cluster)/)
+
 Welcome to Zammad
 =================
 
@@ -25,9 +27,9 @@ Getting Started
 
 ```
      zammad@shell> cd zammad
-     zammad@shell> gem install rails 
+     zammad@shell> gem install rails
      zammad@shell> vi Gemfile # enable libv8, execjs and therubyracer if needed!
-     zammad@shell> sudo bundle install
+     zammad@shell> bundle install
 ```
 
 3. Configure your databases

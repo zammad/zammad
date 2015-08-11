@@ -1,0 +1,127 @@
+<div class="sidebar NavBarAdmin">
+  <h2>Manage</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li class="">
+      <a href="#manage/users">Users</a>
+    <li>
+      <a href="#manage/groups">Groups</a>
+    <li>
+      <a href="#manage/organizations">Organizations</a>
+    <li>
+      <a href="#manage/overviews">Overviews</a>
+    <li>
+      <a href="#manage/text_modules">TextModules</a>
+
+    <li class="active">
+      <a href="#manage/slas">SLAs</a>
+    <li>
+      <a href="#manage/schedulers">Schedulers</a>
+    <li>
+      <a href="#manage/triggers">Triggers</a>
+  </ul>
+
+  <h2>Channels</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#channels/web">Web</a>
+    <li>
+      <a href="#channels/email">Email</a>
+    <li>
+      <a href="#channels/chat">Chat</a>
+    <li>
+      <a href="#channels/twitter">Twitter</a>
+    <li>
+      <a href="#channels/facebook">Facebook</a>
+  </ul>
+
+  <h2>Settings</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#settings/system">System</a>
+    <li>
+      <a href="#settings/security">Security</a>
+    <li>
+      <a href="#settings/import">Import</a>
+    <li>
+      <a href="#settings/ticket">Ticket</a>
+  </ul>
+
+  <h2>System</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#system/package">Packages</a>
+    <li>
+      <a href="#system/object_manager">Objects</a>
+    <li>
+      <a href="#system/translation">Translations</a>
+    <li>
+      <a href="#system/maintenance">Maintenance</a>
+    <li>
+      <a href="#system/sessions">Sessions</a>
+  </ul>
+</div>
+
+<div class="main flex">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1>SLAs <small>Management</small></h1>
+    </div>
+
+    <div class="page-header-meta">
+      <a class="btn btn--success" data-type="new">New SLA</a>
+    </div>
+  </div>
+
+  <div class="action">
+    <div class="action-flow">
+      <div class="action-block">
+        <h3>Filters</h3>
+        Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
+        Where <b>Priority</b> is <b>high</b>.
+      </div>
+      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <div class="action-block">
+        <h3>Repsonse Times</h3>
+        00:30 hours First Response Time<br>
+        02:00 hours Update Time<br>
+        48:00 hours Solution Time
+      </div>
+    </div>
+    <div class="action-block">
+      <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
+      Mo-Tu 7am - 5pm, Fr 7am - 1pm
+    </div>
+    <div class="action-controls">
+      <div class="sla-toggle btn btn--danger btn--secondary js-toggle">Disable</div>
+      <div class="sla-edit btn js-edit">Edit</div>
+    </div>
+  </div>
+
+  <div class="action is-inactive">
+    <div class="action-flow">
+      <div class="action-block">
+        <h3>Filters</h3>
+        Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
+        Where <b>Priority</b> is <b>high</b>.
+      </div>
+      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <div class="action-block">
+        <h3>Repsonse Times</h3>
+        00:30 hours First Response Time<br>
+        01:00 hours Update Time
+      </div>
+    </div>
+    <div class="action-block">
+      <h3>Business Hours <span class="subtitle">in European Central Time</span></h3>
+      Mo-Fr 8 Uhr - 18 Uhr
+    </div>
+    <div class="action-controls">
+      <div class="sla-toggle btn js-toggle">Enable</div>
+      <div class="sla-edit btn js-edit">Edit</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,336 @@
+<div class="main flex vertical centered darkBackground">
+  <aside class="director">
+    <div data-slide="admin">
+
+    </div>
+  </aside>
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <div class="setup wizard">
+    <div class="wizard-slide" data-slide="home">
+      <div class="wizard-body vertical centered">
+        <a class="btn btn--primary" data-target="admin"><%- @T('Setup new System') %></a>
+      </div>
+      <div class="wizard-aside">
+        Or <span class="u-clickable u-highlight" data-target="migrate"><%- @T('migrate from another system') %></a>.
+      </div>
+    </div>
+    <div class="wizard-slide hide"  data-slide="admin">
+      <h2>Administrator Account</h2>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group formGroup--halfSize">
+            <label for="first_name">Firstname</label>
+            <input id="first_name" class="form-control" value="Hans">
+          </div>
+          <div class="form-group formGroup--halfSize">
+            <label for="last_name">Lastname</label>
+            <input id="last_name" class="form-control" value="Huber">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" class="form-control" value="hanshuber@web.de">
+          </div>
+          <div class="form-group formGroup--halfSize">
+            <label for="email">Password</label>
+            <input type="password" id="email" class="form-control" value="123456">
+          </div>
+          <div class="form-group formGroup--halfSize">
+            <label for="email">Password (Confirm)</label>
+            <input type="password" id="email" class="form-control" value="123456">
+          </div>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
+        <div class="btn btn--success align-right" data-target="company">Create</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide"  data-slide="company">
+      <h2>Company</h2>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group">
+            <label>Company Name</label>
+            <input class="form-control" value="Company LLT">
+          </div>
+          <div class="form-group">
+            <label>Logo</label>
+            <img class="logo-preview" src="">
+            <div class="logo-preview-placeholder"><%- @T('Your Logo') %></div>
+            <div class="btn btn--success fileUpload">Upload<input type="file" class="js-upload" accept="image/*"></div>
+          </div>
+          <div class="form-group">
+            <label>System Url</label>
+            <input type="url" class="form-control" placeholder="support.company.com">
+            <p class="help-block">The url to this installation of Zammad.</p>
+          </div>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <a class="btn btn--text btn--secondary" data-target="home">Go Back</a>
+        <div class="btn btn--primary align-right" data-target="channels">Next</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="channels">
+      <h2>Connect Channels</h2>
+      <div class="wizard-body vertical center">
+        <p class="help-block help-block--center">Setup the communication channels you want to sync with your Zammad inbox</p>
+        <div class="wizard-buttonList vertical">
+          <div class="btn auth_provider auth_provider--wide email" data-target="emailStart">
+            <div class="email provider_icon"></div>
+            <div class="provider_name">Email</div>
+          </div>
+          <div class="btn auth_provider auth_provider--wide twitter" data-target="twitter">
+            <div class="twitter provider_icon"></div>
+            <div class="provider_name">Twitter</div>
+          </div>
+          <div class="btn auth_provider auth_provider--wide facebook" data-target="facebook">
+            <div class="facebook provider_icon"></div>
+            <div class="provider_name">Facebook</div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-controls center">
+        <a class="btn btn--text btn--secondary" data-target="company">Go Back</a>
+        <div class="btn align-right" data-target="agent">Skip</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="emailStart">
+      <h2>Email</h2>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input class="form-control" value="Company Support">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" value="support@company.com">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" value="123456">
+          </div>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn" data-target="channels">Cancel</div>
+        <a class="btn btn--text btn--secondary align-right" data-target="channels">Go Back</a>
+        <div class="btn btn--primary" data-target="emailCheck">Connect</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="emailCheck" data-hide="1000">
+      <h2>Email</h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Testing support@company.com
+        </p>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn js-cancelEmailCheck" data-target="emailStart">Cancel</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="inboundEmail">
+      <h2>Incoming Email Server</h2>
+      <div class="alert alert--info" role="alert">Account must be manually configured</div>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group">
+            <label>Account Type</label>
+            <div class="u-positionOrigin">
+              <select class="form-control">
+                <option selected>IMAP</option>
+                <option>POP3</option>
+              </select>
+              <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mail Server</label>
+            <input type="url" class="form-control" value="imap.company.com" placeholder="imap.example.com">
+          </div>
+          <div class="form-group">
+            <label>User Name</label><!-- (prefilled - taken from the email) -->
+            <input class="form-control" value="support">
+          </div>
+          <div class="form-group">
+            <label>Password (prefilled)</label>
+            <input type="password" class="form-control" value="123456">
+          </div>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn js-cancelChannelSetup" data-target="channels">Cancel</div>
+        <a class="btn btn--text btn--secondary align-right" data-target="emailStart">Go Back</a>
+        <div class="btn btn--primary" data-target="inboundCheck">Connect</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="inboundCheck" data-hide="2000">
+      <h2>Incoming Email Server</h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Connection to imap.company.com
+        </p>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn js-cancelInboundCheck" data-target="inboundEmail">Cancel</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="outboundEmail">
+      <h2>Outgoing Email Server</h2>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group">
+            <label>SMTP Server</label>
+            <input type="url" class="form-control" value="smtp.company.com" placeholder="smtp.company.com">
+          </div>
+          <div class="form-group">
+            <label>User Name</label>
+            <input class="form-control" placeholder="Optional">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" placeholder="Optional">
+          </div>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn btn--text btn--secondary js-cancelChannelSetup" data-target="channels">Cancel</div>
+        <div class="btn btn--text btn--secondary align-right" data-target="emailStart">Go Back</div>
+        <div class="btn btn--primary" data-target="outboundCheck">Connect</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="outboundCheck" data-hide="2330">
+      <h2>Outgoing Email Server</h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Connecting to smtp.company.com
+        </p>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn js-cancelOutboundCheck" data-target="outboundEmail">Cancel</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="moreChannels">
+      <h2>Connect Channels</h2>
+      <div class="wizard-body vertical center">
+        <label>Connected Channels</label>
+        <div class="channelList">
+          <div class="channelList-entry center">
+            <div class="email channel icon"></div>
+            <div class="channelList-label">
+              <div class="channelList-name">support@company.com</div>
+              <div class="channelList-status">Email</div>
+            </div>
+          </div>
+        </div>
+        <label>Connect Another</label>
+        <div class="wizard-buttonList vertical">
+          <div class="btn auth_provider auth_provider--wide email" data-target="emailStart">
+            <div class="email provider_icon"></div>
+            <div class="provider_name">Email</div>
+          </div>
+          <div class="btn auth_provider auth_provider--wide twitter" data-target="twitter">
+            <div class="twitter provider_icon"></div>
+            <div class="provider_name">Twitter</div>
+          </div>
+          <div class="btn auth_provider auth_provider--wide facebook" data-target="facebook">
+            <div class="facebook provider_icon"></div>
+            <div class="provider_name">Facebook</div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn btn--primary align-right" data-target="agents">Continue</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="agents">
+      <h2>Invite Colleagues</h2>
+      <div class="wizard-body vertical justified">
+        <fieldset>
+          <div class="form-group formGroup--halfSize">
+            <label for="agent_first_name">Firstname</label>
+            <input id="agent_first_name" class="form-control" value="Eric">
+          </div>
+          <div class="form-group formGroup--halfSize">
+            <label for="agent_last_name">Lastname</label>
+            <input id="agent_last_name" class="form-control" value="Dassner">
+          </div>
+          <div class="form-group">
+            <label for="agent_email">Email</label>
+            <input type="email" id="agent_email" class="form-control" value="ericdassner@web.de">
+          </div>
+        </fieldset>
+      </div>
+      <div class="wizard-controls center">
+        <a class="btn btn--text btn--secondary" data-target="moreChannels">Go Back</a>
+        <div class="btn btn--primary align-right" data-target="setupFinished">Continue</div>
+        <div class="btn btn--success js-inviteAgent">Invite</div>
+      </div>
+    </div>
+    <div class="wizard-slide hide" data-slide="setupFinished" data-hide="2330">
+      <h2>Setup Finished</h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> Starting Zammad
+        </p>
+      </div>
+    </div>
+    <!-- <div class="wizard-slide" data-slide="channels">
+      <h2>Channel List</h2>
+      <div class="wizard-body vertical">
+        <div class="channelList">
+          <!--<div class="channelList-entry center">
+            <div class="email channel icon"></div>
+            <div class="channelList-label">
+              <div class="channelList-name">support@company.com</div>
+              <div class="channelList-status">Email</div>
+            </div>
+          </div>
+          <div class="channelList-entry center">
+            <div class="email channel icon"></div>
+            <div class="channelList-label">
+              <div class="channelList-name">contact@company.com</div>
+              <div class="channelList-status">Email</div>
+            </div>
+          </div>
+          <div class="channelList-entry center">
+            <div class="twitter channel icon"></div>
+            <div class="channelList-label">
+              <div class="channelList-name">@company</div>
+              <div class="channelList-status">Twitter</div>
+            </div>
+          </div>
+          <div class="channelList-placeholder">
+            No Channels Configured
+          </div>
+          <div class="channelList-controls">
+            <div class="channelList-controlEntry dropup dropdown--actions" title="Add Channel">
+              <div class="flex centered" data-toggle="dropdown" id="channelActions" aria-expanded="true">
+                <div class="add icon"></div>
+              </div>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="channelActions">
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="#">Änderungsprotokoll</a>
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1">Benutzer zusammenführen</a>
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1">Benutzer löschen</a>
+              </ul>
+            </div>
+            <div class="channelList-controlEntry js-remove" title="Remove Channel">
+              <div class="flex centered">
+                <div class="remove icon"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wizard-controls center">
+        <div class="btn btn--primary align-right" data-target="agent">Next</div>
+      </div>
+    </div> -->
+  </div>
+</div>

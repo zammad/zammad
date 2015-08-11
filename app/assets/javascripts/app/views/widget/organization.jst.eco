@@ -1,35 +1,38 @@
-<div class="drox">
-  <div class="drox-header">
-    <h3>
-      <%- @T( 'Organization' ) %>
-      <a href="#" data-type="edit-org" data-id="<%- @organization.id %>" class="pull-right glyphicon glyphicon-edit"></a>
-    </h3>
-  </div>
-  <div class="drox-body">
-
-  <%= @organization.displayName() %>
-
-  <% for row in @organizationData: %>
-    <% if @organization[row.name] || row.name is 'note': %>
-      <% if row.tag isnt 'textarea': %>
-        <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @organization[row.name] ) ) %></div>
-      <% else: %>
-        <div class="customer-info" title="<%- @Ti( row.display ) %>">
-          <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update-org" placeholder="<%- @T( row.display ) %>"><%= @organization[row.name] %></textarea>
-        </div>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <% if @organization.members: %>
-    <h4><%- @T('Member') %></h4>
-    <ul>
-    <% for user in @organization.members: %>
-      <li><a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a></li>
-    <% end %>
-    </ul>
-  <% end %>
-
-  </div>
+<div class="sidebar-block">
+    <div class="avatar organizationInfo-avatar size-50">
+      <a href="<%- @organization.uiUrl() %>">
+        <svg class="icon-organization"><use xlink:href="#icon-organization" /></svg>
+      </a>
+    </div>
+    <h3 title="<%- @Ti( 'Name') %>"><%= @organization.displayName() %></h3>
 </div>
 
+<% for row in @organizationData: %>
+  <% if @organization[row.name] || row.name is 'note': %>
+    <div class="sidebar-block">
+    <% if row.tag isnt 'richtext': %>
+      <label><%- @T( row.display ) %></label>
+      <%- @P( @organization, row.name ) %>
+    <% else: %>
+      <label><%- @T( row.display ) %></label>
+      <div contenteditable="true" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @Ti('Add a Note') %>"><%- @organization[row.name] %></div>
+    <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if @organization.members: %>
+<hr>
+<user class="sidebar-block">
+  <label><%- @T('Members') %></label>
+  <ul class="userList">
+<% for user in @organization.members: %>
+    <li>
+      <%- user.avatar("40") %>
+      <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>">
+        <%= user.displayName() %>
+      </a>
+<% end %>
+  </ul>
+</div>
+<% end %>

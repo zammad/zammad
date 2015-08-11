@@ -1,0 +1,47 @@
+<h2><%- @T('Date & Datetime') %></h2>
+<table class="translationOverview js-translated table table-striped table-hover">
+  <thead>
+    <tr>
+      <th class="translationOverview-source"><%- @T('Type') %></th>
+      <th class="translationOverview-target"><%- @T('Target') %></th>
+      <th class="translationOverview-initial"><%- @T('Original') %></th>
+      <th class="translationOverview-action"><%- @T('Action') %></th>
+    </tr>
+  </thead>
+  <tbody>
+   <% if @times: %>
+    <% for time in @times: %>
+      <tr>
+        <td title="<%= time[1] %>"><%= time[1] %></td>
+        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= time[2] %>" data-source="<%= time[1] %>" data-initial="<%= time[3] %>" data-id="<%= time[0] %>" data-format="<%= time[4] %>"></td>
+        <td title="<%= time[3] %>"><%= time[3]%></td>
+        <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%- @T('Words') %></h2>
+<table class="translationOverview js-translated table table-striped table-hover">
+  <thead>
+    <tr>
+      <th class="translationOverview-source"><%- @T('Source') %></th>
+      <th class="translationOverview-target"><%- @T('Target') %></th>
+      <th class="translationOverview-initial"><%- @T('Original') %></th>
+      <th class="translationOverview-action"><%- @T('Action') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @strings: %>
+      <% for item in @strings: %>
+      <tr>
+        <td title="<%= item[1] %>"><%= item[1] %></td>
+        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= item[2] %>" data-source="<%= item[1] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>" data-format="<%= item[4] %>"></td>
+        <td title="<%= item[3] %>"><%= item[3]%></td>
+        <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

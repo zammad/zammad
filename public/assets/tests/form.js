@@ -14,6 +14,8 @@ test( "form elements check", function() {
     selectmulti2: [ false, true ],
     selectmultioption1: false,
     selectmultioption2: [ false, true ],
+    richtext2: 'lalu <l> lalu',
+    datetime1: Date.parse('2015-01-11T12:40:00Z'),
   }
   new App.ControllerForm({
     el:        el,
@@ -31,7 +33,10 @@ test( "form elements check", function() {
         { name: 'selectmulti2', display: 'SelectMulti2', tag: 'select', null: false, multiple: true, options: { true: 'internal', false: 'public' }, default: defaults['selectmulti2'] },
         { name: 'selectmultioption1', display: 'SelectMultiOption1', tag: 'select', null: true, multiple: true, options: [{ value: true, name: 'internal' }, { value: false, name: 'public' }], default: defaults['selectmultioption1'] },
         { name: 'selectmultioption2', display: 'SelectMultiOption2', tag: 'select', null: false, multiple: true, options: [{ value: true, name: 'A' }, { value: 1, name: 'B'}, { value: false, name: 'C' }], default: defaults['selectmultioption2'] },
-
+        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext1']  },
+        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext2']  },
+        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: false, default: defaults['datetime2']  },
       ]
     },
     autofocus: true
@@ -79,6 +84,14 @@ test( "form elements check", function() {
   equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
   equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
 
+  //equal( el.find('[name="richtext1"]').val(), '', 'check textarea1 value')
+  //equal( el.find('[name="richtext1"]').prop('required'), false, 'check textarea1 required')
+  equal( el.find('[name="richtext1"]').is(":focus"), false, 'check textarea1 focus')
+
+  //equal( el.find('[name="richtext2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
+  //equal( el.find('[name="richtext2"]').prop('required'), true, 'check textarea2 required')
+  equal( el.find('[name="richtext2"]').is(":focus"), false, 'check textarea2 focus')
+
 });
 
 test( "form params check", function() {
@@ -98,6 +111,19 @@ test( "form params check", function() {
     selectmultioption2: [ false, true ],
     autocompletion2: 'id2',
     autocompletion2_autocompletion_value_shown: 'value2',
+    richtext2: '<div>lalu <b>b</b> lalu</div>',
+    richtext3: '<div></div>',
+    richtext4: '<div>lalu <i>b</i> lalu</div>',
+    richtext5: '<div></div>',
+    richtext6: '<div>lalu <b>b</b> lalu</div>',
+    richtext7: "<div>&nbsp;<div>&nbsp;\n</div>  \n</div>",
+    richtext8: '<div>lalu <i>b</i> lalu</div>',
+    datetime1: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    datetime3: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    date1:     '2015-01-11',
+    date3:     '2015-01-11',
+    active1:   true,
+    active2:   false,
   }
   new App.ControllerForm({
     el:        el,
@@ -117,6 +143,24 @@ test( "form params check", function() {
         { name: 'selectmultioption2', display: 'SelectMultiOption2', tag: 'select', null: false, multiple: true, options: [{ value: true, name: 'A' }, { value: 1, name: 'B'}, { value: false, name: 'C' }] },
         { name: 'autocompletion1', display: 'AutoCompletion1', tag: 'autocompletion', null: false, options: { true: 'internal', false: 'public' }, source: [ { label: "Choice1", value: "value1", id: "id1" }, { label: "Choice2", value: "value2", id: "id2" }, ], minLength: 1 },
         { name: 'autocompletion2', display: 'AutoCompletion2', tag: 'autocompletion', null: false, options: { true: 'internal', false: 'public' }, source: [ { label: "Choice1", value: "value1", id: "id1" }, { label: "Choice2", value: "value2", id: "id2" }, ], minLength: 1 },
+        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext1']  },
+        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext2']  },
+        { name: 'richtext3', display: 'Richtext3', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext3']  },
+        { name: 'richtext4', display: 'Richtext4', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext4']  },
+        { name: 'richtext5', display: 'Richtext5', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext5']  },
+        { name: 'richtext6', display: 'Richtext6', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext6']  },
+        { name: 'richtext7', display: 'Richtext7', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext7']  },
+        { name: 'richtext8', display: 'Richtext8', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext8']  },
+        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: true, default: defaults['datetime2']  },
+        { name: 'datetime3', display: 'Datetime3', tag: 'datetime', null: false, default: defaults['datetime3']  },
+        { name: 'datetime4', display: 'Datetime4', tag: 'datetime', null: false, default: defaults['datetime4']  },
+        { name: 'date1',     display: 'Date1',     tag: 'date', null: true, default: defaults['date1']  },
+        { name: 'date2',     display: 'Date2',     tag: 'date', null: true, default: defaults['date2']  },
+        { name: 'date3',     display: 'Date3',     tag: 'date', null: false, default: defaults['date3']  },
+        { name: 'date4',     display: 'Date4',     tag: 'date', null: false, default: defaults['date4']  },
+        { name: 'active1',   display: 'Active1',   tag: 'active', default: defaults['active1'] },
+        { name: 'active2',   display: 'Active2',   tag: 'active', default: defaults['active2'] },
       ],
     },
     params: defaults,
@@ -164,6 +208,49 @@ test( "form params check", function() {
   equal( el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
   equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
   equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
+
+  params = App.ControllerForm.params( el )
+  test_params = {
+    input1: '',
+    input2: '123abc',
+    password1: '',
+    password1_confirm: '',
+    password2: 'pw1234<l>',
+    password2_confirm: 'pw1234<l>',
+    textarea1: '',
+    textarea2: 'lalu <l> lalu',
+    select1: 'false',
+    select2: 'true',
+    selectmulti1: 'false',
+    selectmulti2: [ 'true', 'false' ],
+    selectmultioption1: 'false',
+    selectmultioption2: [ 'true', 'false' ],
+    autocompletion1: '',
+    autocompletion1_autocompletion: '',
+    autocompletion1_autocompletion_value_shown: '',
+    autocompletion2: 'id2',
+    autocompletion2_autocompletion: 'value2',
+    autocompletion2_autocompletion_value_shown: 'value2',
+    richtext1: '',
+    richtext2: '<div>lalu <b>b</b> lalu</div>',
+    richtext3: '',
+    richtext4: '<div>lalu <i>b</i> lalu</div>',
+    richtext5: '',
+    richtext6: '<div>lalu <b>b</b> lalu</div>',
+    richtext7: '',
+    richtext8: '<div>lalu <i>b</i> lalu</div>',
+    datetime1: '2015-01-11T12:40:00.000Z',
+    datetime2: undefined,
+    datetime3: '2015-01-11T12:40:00.000Z',
+    datetime4: undefined,
+    date1: '2015-01-11',
+    date2: undefined,
+    date3: '2015-01-11',
+    date4: undefined,
+    active1: true,
+    active2: false,
+  }
+  deepEqual( params, test_params, 'form param check' );
 
 });
 
@@ -262,8 +349,12 @@ test( "form dependend fields check", function() {
     select2: false,
     selectmulti2: [ false, true ],
     selectmultioption1: false,
+    datetime1: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    datetime3: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    date1:     '2015-01-11',
+    date3:     '2015-01-11',
   }
-  new App.ControllerForm({
+  var form = new App.ControllerForm({
     el:        el,
     model:     {
       configure_attributes: [
@@ -274,6 +365,14 @@ test( "form dependend fields check", function() {
         { name: 'select2', display: 'Select2', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, default: true },
         { name: 'selectmulti2', display: 'SelectMulti2', tag: 'select', null: false, multiple: true, options: { true: 'internal', false: 'public' }, default: [] },
         { name: 'selectmultioption1', display: 'SelectMultiOption1', tag: 'select', null: true, multiple: true, options: [{ value: true, name: 'internal' }, { value: false, name: 'public' }], default: true },
+        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: true, default: defaults['datetime2']  },
+        { name: 'datetime3', display: 'Datetime3', tag: 'datetime', null: false, default: defaults['datetime3']  },
+        { name: 'datetime4', display: 'Datetime4', tag: 'datetime', null: false, default: defaults['datetime4']  },
+        { name: 'date1',     display: 'Date1',     tag: 'date', null: true, default: defaults['date1']  },
+        { name: 'date2',     display: 'Date2',     tag: 'date', null: true, default: defaults['date2']  },
+        { name: 'date3',     display: 'Date3',     tag: 'date', null: false, default: defaults['date3']  },
+        { name: 'date4',     display: 'Date4',     tag: 'date', null: false, default: defaults['date4']  },
       ],
     },
     params: defaults,
@@ -291,10 +390,30 @@ test( "form dependend fields check", function() {
       {
         bind: {
           name: 'select1',
+          value: ["true"]
+        },
+        change: {
+          name: 'datetime1',
+          action: 'hide'
+        },
+      },
+      {
+        bind: {
+          name: 'select1',
           value: ["false"]
         },
         change: {
           name: 'input2',
+          action: 'show'
+        },
+      },
+      {
+        bind: {
+          name: 'select1',
+          value: ["false"]
+        },
+        change: {
+          name: 'datetime1',
           action: 'show'
         },
       },
@@ -347,24 +466,188 @@ test( "form dependend fields check", function() {
   var test_params = {
     input1: "",
     input2: "some used default",
+    input3: undefined,
     select1: "false",
     select2: "false",
     selectmulti2: [ "true", "false" ],
-    selectmultioption1: "false"
+    selectmultioption1: "false",
+    datetime1: '2015-01-11T12:40:00.000Z',
+    datetime2: undefined,
+    datetime3: '2015-01-11T12:40:00.000Z',
+    datetime4: undefined,
+    date1: '2015-01-11',
+    date2: undefined,
+    date3: '2015-01-11',
+    date4: undefined,
   }
   deepEqual( params, test_params, 'form param check' );
+
+  errors = form.validate(params)
+  test_errors = {
+    datetime4: "is required",
+    date4:     "is required",
+  }
+  deepEqual( errors, test_errors, 'validation errors check' )
+  App.ControllerForm.validate( { errors: errors, form: el } )
+
   el.find('[name="select1"]').val('true')
   el.find('[name="select1"]').trigger('change')
   params = App.ControllerForm.params( el )
   test_params = {
     input1: "",
+    input2: undefined,
     input3: "some used default",
     select1: "true",
     select2: "false",
     selectmulti2: [ "true", "false" ],
-    selectmultioption1: "false"
+    selectmultioption1: "false",
+    datetime1: null,
+    datetime2: undefined,
+    datetime3: '2015-01-11T12:40:00.000Z',
+    datetime4: undefined,
+    date1: '2015-01-11',
+    date2: undefined,
+    date3: '2015-01-11',
+    date4: undefined,
   }
   deepEqual( params, test_params, 'form param check' );
+});
+
+test( "form handler check with and without fieldset", function() {
+//    deepEqual( item, test.value, 'group set/get tests' );
+
+// mix default and params -> check it -> add note
+// test auto completion
+// show/hide fields base on field values -> bind changed event
+// form validation
+// form params check
+
+// add signature only if form_state is empty
+  $('#forms').append('<hr><h1>form handler check with and without fieldset</h1><form id="form5"></form>')
+  var el = $('#form5')
+  var defaults = {
+    select1: 'a',
+    select2: '',
+  }
+
+  var formChanges = function(params, attribute, attributes, classname, form, ui) {
+    console.log('FROM', form)
+    if (params['select1'] === 'b') {
+      console.log('lala', params)
+      var item = {
+        name:    'select2',
+        display: 'Select2',
+        tag:     'select',
+        null:    true,
+        options: { 1:'1', 2:'2', 3:'3' },
+        default: 3,
+      };
+      var newElement = ui.formGenItem( item, classname, form )
+      form.find('[name="select2"]').closest('.form-group').replaceWith( newElement )
+    }
+    if (params['select1'] === 'a') {
+      console.log('lala', params)
+      var item = {
+        name:    'select2',
+        display: 'Select2',
+        tag:     'select',
+        null:    true,
+        options: { 1:'1', 2:'2', 3:'3' },
+        default: 1,
+      };
+      var newElement = ui.formGenItem( item, classname, form )
+      form.find('[name="select2"]').closest('.form-group').replaceWith( newElement )
+    }
+  }
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'select1', display: 'Select1', tag: 'select', null: true, options: { a: 'a', b: 'b' }, default: 'b'},
+        { name: 'select2', display: 'Select2', tag: 'select', null: true, options: { 1:'1', 2:'2', 3:'3' }, default: 2 },
+      ],
+    },
+    params: defaults,
+    handlers: [
+      formChanges,
+    ],
+    //noFieldset: true,
+  });
+  equal( el.find('[name="select1"]').val(), 'a', 'check select1 value')
+  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+
+  equal( el.find('[name="select2"]').val(), '1', 'check select2 value')
+  equal( el.find('[name="select2"]').prop('required'), false, 'check select2 required')
+
+  var params = App.ControllerForm.params( el )
+  var test_params = {
+    select1: 'a',
+    select2: '1',
+  }
+  deepEqual( params, test_params, 'form param check' );
+  el.find('[name="select1"]').val('b')
+  el.find('[name="select1"]').trigger('change')
+  params = App.ControllerForm.params( el )
+  test_params = {
+    select1: 'b',
+    select2: '3',
+  }
+  deepEqual( params, test_params, 'form param check' );
+  el.find('[name="select1"]').val('a')
+  el.find('[name="select1"]').trigger('change')
+  params = App.ControllerForm.params( el )
+  test_params = {
+    select1: 'a',
+    select2: '1',
+  }
+  deepEqual( params, test_params, 'form param check' );
+
+  // test with noFieldset
+  el.empty()
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'select1', display: 'Select1', tag: 'select', null: true, options: { a: 'a', b: 'b' }, default: 'b'},
+        { name: 'select2', display: 'Select2', tag: 'select', null: true, options: { 1:'1', 2:'2', 3:'3' }, default: 2 },
+      ],
+    },
+    params: defaults,
+    handlers: [
+      formChanges,
+    ],
+    noFieldset: true,
+  });
+  equal( el.find('[name="select1"]').val(), 'a', 'check select1 value')
+  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+
+  equal( el.find('[name="select2"]').val(), '1', 'check select2 value')
+  equal( el.find('[name="select2"]').prop('required'), false, 'check select2 required')
+
+  var params = App.ControllerForm.params( el )
+  var test_params = {
+    select1: 'a',
+    select2: '1',
+  }
+  deepEqual( params, test_params, 'form param check' );
+  el.find('[name="select1"]').val('b')
+  el.find('[name="select1"]').trigger('change')
+  params = App.ControllerForm.params( el )
+  test_params = {
+    select1: 'b',
+    select2: '3',
+  }
+  deepEqual( params, test_params, 'form param check' );
+  el.find('[name="select1"]').val('a')
+  el.find('[name="select1"]').trigger('change')
+  params = App.ControllerForm.params( el )
+  test_params = {
+    select1: 'a',
+    select2: '1',
+  }
+  deepEqual( params, test_params, 'form param check' );
+
 });
 
 test( "form postmaster filter", function() {
@@ -397,8 +680,8 @@ test( "form postmaster filter", function() {
     },
   ] )
 
-  $('#forms').append('<hr><h1>form postmaster filter</h1><form id="form5"></form>')
-  var el = $('#form5')
+  $('#forms').append('<hr><h1>form postmaster filter</h1><form id="form6"></form>')
+  var el = $('#form6')
   var defaults = {
     input2: 'some name',
     match: {
@@ -435,13 +718,13 @@ test( "form postmaster filter", function() {
     set: {
       'x-zammad-ticket-owner': 'owner',
       'x-zammad-ticket-customer': 'customer',
-      'x-zammad-ticket-priority_id': "2",
-      'x-zammad-ticket-group_id': "1",
+      'x-zammad-ticket-priority_id': '2',
+      'x-zammad-ticket-group_id': '1',
     },
   };
   deepEqual( params, test_params, 'form param check' );
-  el.find('[name="set::x-zammad-ticket-priority_id"]').parent().next().click()
-  el.find('[name="set::x-zammad-ticket-customer"]').parent().next().click()
+  el.find('[name="set::x-zammad-ticket-priority_id"]').closest('.form-group').find('.remove').click()
+  el.find('[name="set::x-zammad-ticket-customer"]').closest('.form-group').find('.remove').click()
   App.Delay.set( function() {
       test( "form param check after remove click", function() {
         params = App.ControllerForm.params( el )
@@ -454,7 +737,7 @@ test( "form postmaster filter", function() {
           },
           set: {
             'x-zammad-ticket-owner': 'owner',
-            'x-zammad-ticket-group_id': "1",
+            'x-zammad-ticket-group_id': '1',
           },
         };
         deepEqual( params, test_params, 'form param check' );
@@ -466,8 +749,8 @@ test( "form postmaster filter", function() {
 });
 
 test( "form selector", function() {
-  $('#forms').append('<hr><h1>form selector</h1><div><form id="form6"></form></div>')
-  var el = $('#form6')
+  $('#forms').append('<hr><h1>form selector</h1><div><form id="form7"></form></div>')
+  var el = $('#form7')
   var defaults = {
     input2: 'some name66',
   }
@@ -497,10 +780,12 @@ test( "form selector", function() {
 });
 
 test( "form required_if + shown_if", function() {
-  $('#forms').append('<hr><h1>form required_if + shown_if</h1><div><form id="form7"></form></div>')
-  var el = $('#form7')
+  $('#forms').append('<hr><h1>form required_if + shown_if</h1><div><form id="form8"></form></div>')
+  var el = $('#form8')
   var defaults = {
     input2: 'some name66',
+    input3: 'some name77',
+    input4: 'some name88',
   }
   new App.ControllerForm({
     el:        el,
@@ -508,7 +793,9 @@ test( "form required_if + shown_if", function() {
       configure_attributes: [
         { name: 'input1', display: 'Input1', tag: 'input', type: 'text', limit: 100, null: true, default: 'some not used default33' },
         { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: true }, shown_if: { active: true } },
-        { name: 'active', display: 'Active',  tag: 'boolean', type: 'boolean', 'default': true, null: false },
+        { name: 'input3', display: 'Input3', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: [true,false] }, shown_if: { active: [true,false] } },
+        { name: 'input4', display: 'Input4', tag: 'input', type: 'text', limit: 100, null: true, default: 'some used default', required_if: { active: [55,66] }, shown_if: { active: [55,66] } },
+        { name: 'active', display: 'Active', tag: 'active', 'default': true },
       ],
     },
     params: defaults,
@@ -516,33 +803,49 @@ test( "form required_if + shown_if", function() {
   test_params = {
     input1: "some not used default33",
     input2: "some name66",
-    active: true
+    input3: "some name77",
+    input4: undefined,
+    active: true,
   };
   params = App.ControllerForm.params( el )
   deepEqual( params, test_params, 'form param check via $("#form")' );
   equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
   equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
+  equal( el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3 ')
+  equal( el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3 ')
+  equal( el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
 
-  el.find('[name="active"]').val('{boolean}::false').trigger('change')
+
+  el.find('[name="{boolean}active"]').val('false').trigger('change')
   test_params = {
     input1: "some not used default33",
-    active: false
+    input2: undefined,
+    input3: undefined,
+    input4: undefined,
+    active: false,
   };
   params = App.ControllerForm.params( el )
   deepEqual( params, test_params, 'form param check via $("#form")' );
   equal( el.find('[name="input2"]').attr('required'), undefined, 'check required attribute of input2 ')
   equal( el.find('[name="input2"]').is(":visible"), false, 'check visible attribute of input2 ')
+  equal( el.find('[name="input3"]').is(":visible"), false, 'check visible attribute of input3 ')
+  equal( el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
 
 
-  el.find('[name="active"]').val('{boolean}::true').trigger('change')
+  el.find('[name="{boolean}active"]').val('true').trigger('change')
   test_params = {
     input1: "some not used default33",
     input2: "some name66",
-    active: true
+    input3: "some name77",
+    input4: undefined,
+    active: true,
   };
   params = App.ControllerForm.params( el )
   deepEqual( params, test_params, 'form param check via $("#form")' );
   equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
   equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
+  equal( el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3 ')
+  equal( el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3 ')
+  equal( el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
 
 });

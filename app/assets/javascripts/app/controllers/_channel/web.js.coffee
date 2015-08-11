@@ -1,6 +1,9 @@
 class App.ChannelWeb extends App.ControllerTabs
+  header: 'Web'
   constructor: ->
     super
+
+    @title 'Web', true
 
     @tabs = [
       {

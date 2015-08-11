@@ -1,0 +1,296 @@
+<h2>Selector</h2>
+<p>Create rules that single out the tickets for automated processing.</p>
+<h3>Filters</h3>
+<div class="horizontal-filters">
+  <div class="horizontal-filter">
+    <div class="horizontal-filter-body">
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_attribute_1">
+            <optgroup label="Ticket">
+              <option>Customer</option>
+              <option>Owner</option>
+              <option>Number</option>
+              <option>Title</option>
+              <option>Group</option>
+              <option selected>State</option>
+              <option>Priority</option>
+            </optgroup>
+            <optgroup label="Customer">
+              <option>Email</option>
+              <option>Country</option>
+              <option>Group</option>
+              <option>Organization</option>
+              <option>Department</option>
+              <option>VIP</option>
+            </optgroup>
+            <optgroup label="Organization">
+              <option>Country</option>
+              <option>VIP</option>
+            </optgroup>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option selected>is</option>
+            <option>is not</option>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option>closed</option>
+            <option selected>open</option>
+            <option>pending close</option>
+            <option>pending reminder</option>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+    </div>
+    <div class="filter-controls">
+      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
+        <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+      </div>
+      <div class="filter-control filter-control-add js-add" title="Add new rule">
+        <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+      </div>
+    </div>
+  </div>
+  <div class="horizontal-filter">
+    <div class="horizontal-filter-body">
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_attribute_1">
+            <optgroup label="Ticket">
+              <option>Customer</option>
+              <option>Owner</option>
+              <option>Number</option>
+              <option>Title</option>
+              <option selected>Group</option>
+              <option>State</option>
+              <option>Priority</option>
+            </optgroup>
+            <optgroup label="Customer">
+              <option>Email</option>
+              <option>Country</option>
+              <option>Group</option>
+              <option>Organization</option>
+              <option>Department</option>
+              <option>VIP</option>
+            </optgroup>
+            <optgroup label="Organization">
+              <option>Country</option>
+              <option>VIP</option>
+            </optgroup>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option selected>is</option>
+            <option>is not</option>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option>Inbox</option>
+            <option>Drafts</option>
+            <option>Important</option>
+            <option selected>Spam</option>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+    </div>
+    <div class="filter-controls">
+      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
+        <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+      </div>
+      <div class="filter-control filter-control-add js-add" title="Add new rule">
+        <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="filter-preview">
+  <h3>Preview <span class="subtitle"><span class="u-highlight">2</span> matches</span></h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th style="width: 28px"></th>
+        <th>Customer</th>
+        <th style="width: 42%">Title</th>
+        <th>Group</th>
+        <th style="width: 25%">Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="item" data-id="1" data-position="1" style="cursor: pointer;">
+        <td>
+          <svg class="icon-priority level-1">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+          </svg>
+        </td>
+        <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+            Nicole Braun (Zammad Foundation)
+          </span> </td>
+        <td>
+          <a href="#ticket/zoom/1"> <span title="Welcome to our little planet with flowers and forests&nbsp;asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf">
+              Welcome to our little planet with flowers and forests&nbsp;asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasfasdfasdfasdfasdfasdfasdfasdfasdfasdf
+            </span> </a>
+        </td>
+        <td> <span>
+            Users
+          </span> </td>
+        <td class="noTruncate"> <span>
+            <span class="humanTimeFromNow undefined" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</span> </span>
+        </td>
+      </tr>
+      <tr class="item" data-id="6" data-position="6" style="cursor: pointer;">
+        <td>
+          <svg class="icon-priority level-2">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
+          </svg>
+        </td>
+        <td> <span class="user-popover" data-id="2" data-original-title="" title="">
+            Nicole Braun (Zammad Foundation)
+          </span> </td>
+        <td>
+          <a href="#ticket/zoom/6"> <span title="script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler">
+              script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler.rb start script/scheduler
+            </span> </a>
+        </td>
+        <td> <span>
+            Users
+          </span> </td>
+        <td class="noTruncate"> <span>
+            <span class="humanTimeFromNow undefined" data-time="2015-06-11T07:26:31.000Z" data-tooltip="06/11/2015 09:26">5 days 3 hours ago</span> </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Actions</h2>
+<div class="horizontal-filters">
+  <div class="horizontal-filter">
+    <div class="horizontal-filter-body">
+      <div class="horizontal-filter-text">Set</div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_attribute_1">
+            <optgroup label="Ticket">
+              <option>Customer</option>
+              <option>Owner</option>
+              <option>Number</option>
+              <option>Title</option>
+              <option>Group</option>
+              <option selected>State</option>
+              <option>Priority</option>
+            </optgroup>
+            <optgroup label="Customer">
+              <option>Email</option>
+              <option>Country</option>
+              <option>Group</option>
+              <option>Organization</option>
+              <option>Department</option>
+              <option>VIP</option>
+            </optgroup>
+            <optgroup label="Organization">
+              <option>Country</option>
+              <option>VIP</option>
+            </optgroup>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+      <div class="horizontal-filter-text">to</div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option selected>closed</option>
+            <option>open</option>
+            <option>pending close</option>
+            <option>pending reminder</option>
+          </select>
+          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+        </div>
+      </div>
+    </div>
+    <div class="filter-controls">
+      <div class="filter-control filter-control-remove is-disabled js-remove" title="Remove rule">
+        <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+      </div>
+      <div class="filter-control filter-control-add js-add" title="Add new rule">
+        <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Timer</h2>
+<p>
+  When should the job run?<br>
+  <output class="timer-output js-timerResult">
+    Run every Monday, Tuesday, Wednesday, Thursday and Friday at 7:30 am and 1:30 pm.
+  </output>
+</p>
+<div class="select-boxes">
+  <div class="select-box select-box--vertical">
+    <div class="select-box-header">Day</div>
+    <div data-type="day" class="select-value is-selected">Monday</div>
+    <div data-type="day" class="select-value is-selected">Tuesday</div>
+    <div data-type="day" class="select-value is-selected">Wednesday</div>
+    <div data-type="day" class="select-value is-selected">Thursday</div>
+    <div data-type="day" class="select-value is-selected">Friday</div>
+    <div data-type="day" class="select-value">Saturday</div>
+    <div data-type="day" class="select-value">Sunday</div>
+  </div>
+  <div class="select-box select-box--four">
+    <div data-type="hour" class="select-box-header">Hour</div>
+    <div data-type="hour" class="select-value">12 am</div><!-- 0 Uhr -->
+    <div data-type="hour" class="select-value">1 am</div>
+    <div data-type="hour" class="select-value">2 am</div>
+    <div data-type="hour" class="select-value">3 am</div>
+    <div data-type="hour" class="select-value">4 am</div>
+    <div data-type="hour" class="select-value">5 am</div>
+    <div data-type="hour" class="select-value">6 am</div>
+    <div data-type="hour" class="select-value is-selected">7 am</div>
+    <div data-type="hour" class="select-value">8 am</div>
+    <div data-type="hour" class="select-value">9 am</div>
+    <div data-type="hour" class="select-value">10 am</div>
+    <div data-type="hour" class="select-value">11 am</div>
+    <div data-type="hour" class="select-value">12 am</div><!-- 12 Uhr -->
+    <div data-type="hour" class="select-value is-selected">1 pm</div>
+    <div data-type="hour" class="select-value">2 pm</div>
+    <div data-type="hour" class="select-value">3 pm</div>
+    <div data-type="hour" class="select-value">4 pm</div>
+    <div data-type="hour" class="select-value">5 pm</div>
+    <div data-type="hour" class="select-value">6 pm</div>
+    <div data-type="hour" class="select-value">7 pm</div>
+    <div data-type="hour" class="select-value">8 pm</div>
+    <div data-type="hour" class="select-value">9 pm</div>
+    <div data-type="hour" class="select-value">10 pm</div>
+    <div data-type="hour" class="select-value">11 pm</div><!-- 23 Uhr -->
+  </div>
+  <div class="select-box select-box--vertical">
+    <div data-type="minute" class="select-box-header">Minute</div>
+    <div data-type="minute" class="select-value">00</div>
+    <div data-type="minute" class="select-value">10</div>
+    <div data-type="minute" class="select-value">20</div>
+    <div data-type="minute" class="select-value is-selected">30</div>
+    <div data-type="minute" class="select-value">40</div>
+    <div data-type="minute" class="select-value">50</div>
+  </div>
+</div>

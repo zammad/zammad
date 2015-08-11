@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-module Organization::Assets
+class Organization
+  module Assets
 
 =begin
 
@@ -20,34 +21,47 @@ returns
 
 =end
 
-  def assets (data)
+    def assets (data)
 
-    if !data[ Organization.to_app_model ]
-      data[ Organization.to_app_model ] = {}
-    end
-    if !data[ User.to_app_model ]
-      data[ User.to_app_model ] = {}
-    end
-    if !data[ Organization.to_app_model ][ self.id ]
-      data[ Organization.to_app_model ][ self.id ] = self.attributes_with_associations
-      if data[ Organization.to_app_model ][ self.id ]['member_ids']
-        data[ Organization.to_app_model ][ self.id ]['member_ids'].each {|user_id|
-          if !data[ User.to_app_model ][ user_id ]
-            user = User.lookup( :id => user_id )
-            data = user.assets( data )
-          end
-        }
+      if !data[ Organization.to_app_model ]
+        data[ Organization.to_app_model ] = {}
       end
-    end
-    ['created_by_id', 'updated_by_id'].each {|item|
-      if self[ item ]
-        if !data[ User.to_app_model ][ self[ item ] ]
-          user = User.lookup( :id => self[ item ] )
-          data = user.assets( data )
+      if !data[ User.to_app_model ]
+        data[ User.to_app_model ] = {}
+      end
+      if !data[ Organization.to_app_model ][ id ]
+        local_attributes = attributes
+
+        # set temp. current attributes to assets pool to prevent
+        # loops, will be updated with lookup attributes later
+        data[ Organization.to_app_model ][ id ] = local_attributes
+
+        # get organizations
+        key = "Organization::member_ids::#{id}"
+        local_member_ids = Cache.get(key)
+        if !local_member_ids
+          local_member_ids = member_ids
+          Cache.write(key, local_member_ids)
         end
-      end
-    }
-    data
-  end
+        local_attributes['member_ids'] = local_member_ids
+        if local_member_ids
+          local_member_ids.each {|local_user_id|
+            if !data[ User.to_app_model ][ local_user_id ]
+              user = User.lookup( id: local_user_id )
+              data = user.assets( data )
+            end
+          }
+        end
 
+        data[ Organization.to_app_model ][ id ] = local_attributes
+      end
+      %w(created_by_id updated_by_id).each {|local_user_id|
+        next if !self[ local_user_id ]
+        next if data[ User.to_app_model ][ self[ local_user_id ] ]
+        user = User.lookup( id: self[ local_user_id ] )
+        data = user.assets( data )
+      }
+      data
+    end
+  end
 end

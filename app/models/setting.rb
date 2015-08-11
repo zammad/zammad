@@ -4,12 +4,13 @@ class Setting < ApplicationModel
   store         :options
   store         :state
   store         :state_initial
+  store         :preferences
   before_create :state_check, :set_initial
   before_update :state_check
   after_create  :delete_cache
   after_update  :delete_cache
 
-  @@current = {}
+  @@current = {} # rubocop:disable Style/ClassVars
 
   def self.load
 
@@ -25,42 +26,60 @@ class Setting < ApplicationModel
     # config lookups
     config.each { |key, value|
       next if value.class.to_s != 'String'
-      config[key].gsub!( /\#\{config\.(.+?)\}/ ) { |s|
-        s = config[$1].to_s
+
+      config[key].gsub!( /\#\{config\.(.+?)\}/ ) {
+        config[$1].to_s
       }
     }
 
     # store for class requests
     @@current[:settings_config] = config
-    return config
+    config
   end
 
   def self.set(name, value)
-    setting = Setting.where( :name => name ).first
+    setting = Setting.find_by( name: name )
     if !setting
-      raise "Can't find config setting '#{name}'"
+      fail "Can't find config setting '#{name}'"
     end
-    setting.state = { :value => value }
+    setting.state = { value: value }
     setting.save
+    logger.info "Setting.set() name:#{name}, value:#{value.inspect}"
   end
 
   def self.get(name)
-    self.load
-    return @@current[:settings_config][name]
+    load
+    @@current[:settings_config][name]
+  end
+
+  def self.reset(name)
+    setting = Setting.find_by( name: name )
+    if !setting
+      fail "Can't find config setting '#{name}'"
+    end
+    setting.state = setting.state_initial
+    setting.save
+    logger.info "Setting.reset() name:#{name}, value:#{setting.state.inspect}"
+    load
+    @@current[:settings_config][name]
   end
 
   private
+
   def delete_cache
     @@current[:settings_config] = nil
   end
+
   def set_initial
-    self.state_initial = self.state
+    self.state_initial = state
   end
+
   def state_check
-    if self.state || self.state == false
-      if !self.state.respond_to?('has_key?') || !self.state.has_key?(:value)
-        self.state = { :value => self.state }
-      end
-    end
+
+    return if !(state || state == false)
+
+    return if !( !state.respond_to?('has_key?') || !state.key?(:value) )
+
+    self.state = { value: state }
   end
 end

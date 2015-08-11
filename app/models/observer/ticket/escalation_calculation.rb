@@ -37,6 +37,5 @@ class Observer::Ticket::EscalationCalculation < ActiveRecord::Observer
     record.callback_loop = true
     record.escalation_calculation
     record.callback_loop = false
-
   end
 end

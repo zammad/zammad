@@ -2,51 +2,73 @@
 
 require 'digest/md5'
 
+# @model User
+#
+# @property id(required)    [Integer] The identifier for the User.
+# @property login(required) [String]  The login of the User used for authentication.
+# @property firstname       [String]  The firstname of the User.
+# @property lastname        [String]  The lastname of the User.
+# @property email           [String]  The email of the User.
+# @property image           [String]  The Image used as the User avatar (TODO: Image model?).
+# @property web             [String]  The website/URL of the User.
+# @property password        [String]  The password of the User.
+# @property phone           [String]  The phone number of the User.
+# @property fax             [String]  The fax number of the User.
+# @property mobile          [String]  The mobile number of the User.
+# @property department      [String]  The department the User is working at.
+# @property street          [String]  The street the User lives in.
+# @property zip             [Integer] The zip postal code of the User city.
+# @property city            [String]  The city the User lives in.
+# @property country         [String]  The country the User lives in.
+# @property verified        [Boolean] The flag that shows the verified state of the User.
+# @property active          [Boolean] The flag that shows the active state of the User.
+# @property note            [String]  The note or comment stored to the User.
 class User < ApplicationModel
+  include User::Permission
   load 'user/assets.rb'
   include User::Assets
   extend User::Search
   include User::SearchIndex
 
-  before_create   :check_name, :check_email, :check_login, :check_image, :check_password
-  before_update   :check_password, :check_image, :check_email, :check_login_update
-  after_create    :check_image_load, :notify_clients_after_create
-  after_update    :check_image_load, :notify_clients_after_update
-  after_destroy   :notify_clients_after_destroy
+  before_create   :check_name, :check_email, :check_login, :check_password
+  before_update   :check_password, :check_email, :check_login
+  after_create    :avatar_for_email_check
+  after_update    :avatar_for_email_check
+  after_destroy   :avatar_destroy
+  notify_clients_support
 
-  has_and_belongs_to_many :groups,          :after_add => :cache_update, :after_remove => :cache_update
-  has_and_belongs_to_many :roles,           :after_add => :cache_update, :after_remove => :cache_update
-  has_and_belongs_to_many :organizations,   :after_add => :cache_update, :after_remove => :cache_update
-  has_many                :tokens,          :after_add => :cache_update, :after_remove => :cache_update
-  has_many                :authorizations,  :after_add => :cache_update, :after_remove => :cache_update
-  belongs_to              :organization,    :class_name => 'Organization'
+  has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :roles,           after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update
+  has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
+  has_many                :authorizations,  after_add: :cache_update, after_remove: :cache_update
+  belongs_to              :organization,    class_name: 'Organization'
 
   store                   :preferences
 
   activity_stream_support(
-    :role              => 'Admin',
-    :ignore_attributes => {
-      :last_login   => true,
-      :image        => true,
-      :image_source => true,
+    role: Z_ROLENAME_ADMIN,
+    ignore_attributes: {
+      last_login: true,
+      image: true,
+      image_source: true,
     }
   )
   history_support(
-    :ignore_attributes => {
-      :password     => true,
-      :image        => true,
-      :image_source => true,
+    ignore_attributes: {
+      password: true,
+      image: true,
+      image_source: true,
     }
   )
   search_index_support(
-    :ignore_attributes => {
-      :password     => true,
-      :image        => true,
-      :image_source => true,
-      :source       => true,
-      :login_failed => true,
-      :preferences  => true,
-      :locale       => true,
+    ignore_attributes: {
+      password: true,
+      image: true,
+      image_source: true,
+      source: true,
+      login_failed: true,
+      preferences: true,
     }
   )
 
@@ -65,14 +87,17 @@ returns
 
   def fullname
     fullname = ''
-    if self.firstname
-      fullname = fullname + self.firstname
+    if firstname && !firstname.empty?
+      fullname = fullname + firstname
     end
-    if self.lastname
+    if lastname && !lastname.empty?
       if fullname != ''
         fullname = fullname + ' '
       end
-      fullname = fullname + self.lastname
+      fullname = fullname + lastname
+    end
+    if fullname == '' && email
+      fullname = email
     end
     fullname
   end
@@ -82,7 +107,7 @@ returns
 check if user is in role
 
   user = User.find(123)
-  result = user.is_role('Customer')
+  result = user.role?('Customer')
 
 returns
 
@@ -90,11 +115,15 @@ returns
 
 =end
 
-  def is_role( role_name )
-    self.roles.each { |role|
-      return role if role.name == role_name
+  def role?( role_name )
+
+    result = false
+    roles.each { |role|
+      next if role.name != role_name
+      result = true
+      break
     }
-    false
+    result
   end
 
 =begin
@@ -108,16 +137,16 @@ returns
 
   result = [
     {
-      :id            =>2,
-      :o_id          =>2,
+      :id            => 2,
+      :o_id          => 2,
       :created_by_id => 3,
       :created_at    => '2013-09-28 00:57:21',
       :object        => "User",
       :type          => "created",
     },
     {
-      :id            =>2,
-      :o_id          =>2,
+      :id            => 2,
+      :o_id          => 2,
       :created_by_id => 3,
       :created_at    => '2013-09-28 00:59:21',
       :object        => "User",
@@ -132,15 +161,11 @@ returns
     return activity_stream if !fulldata
 
     # get related objects
-    assets = {}
-    activity_stream.each {|item|
-      require item['object'].to_filename
-      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
-      assets = record.assets(assets)
-    }
-    return {
-      :activity_stream => activity_stream,
-      :assets          => assets,
+    assets = ApplicationModel.assets_of_object_list(activity_stream)
+
+    {
+      activity_stream: activity_stream,
+      assets: assets,
     }
   end
 
@@ -163,16 +188,17 @@ returns
     return if !password || password == ''
 
     # try to find user based on login
-    user = User.where( :login => username.downcase, :active => true ).first
+    user = User.find_by( login: username.downcase, active: true )
 
     # try second lookup with email
     if !user
-      user = User.where( :email => username.downcase, :active => true ).first
+      user = User.find_by( email: username.downcase, active: true )
     end
 
     # check failed logins
-    max_login_failed = Setting.get('password_max_login_failed') || 10
+    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
     if user && user.login_failed > max_login_failed
+      logger.info "Max login faild reached for user #{user.login}."
       return false
     end
 
@@ -186,7 +212,7 @@ returns
     end
 
     # auth ok
-    return user_auth
+    user_auth
   end
 
 =begin
@@ -207,7 +233,7 @@ returns
     user_auth = Sso.check( params )
     return if !user_auth
 
-    return user_auth
+    user_auth
   end
 
 =begin
@@ -223,24 +249,29 @@ returns
 =end
 
   def self.create_from_hash!(hash)
-    url = ''
-    if hash['info']['urls'] then
-      url = hash['info']['urls']['Website'] || hash['info']['urls']['Twitter'] || ''
-    end
-    roles = Role.where( :name => 'Customer' )
-    self.create(
-      :login         => hash['info']['nickname'] || hash['uid'],
-      :firstname     => hash['info']['name'],
-      :email         => hash['info']['email'],
-      :image         => hash['info']['image'],
-      #      :url        => url.to_s,
-      :note          => hash['info']['description'],
-      :source        => hash['provider'],
-      :roles         => roles,
-      :updated_by_id => 1,
-      :created_by_id => 1,
-    )
 
+    roles = Role.where( name: 'Customer' )
+    url = ''
+    if hash['info']['urls']
+      hash['info']['urls'].each {|_name, local_url|
+        next if !local_url
+        next if local_url.empty?
+        url = local_url
+      }
+    end
+    create(
+      login: hash['info']['nickname'] || hash['uid'],
+      firstname: hash['info']['name'],
+      email: hash['info']['email'],
+      image_source: hash['info']['image'],
+      web: url,
+      address: hash['info']['location'],
+      note: hash['info']['description'],
+      source: hash['provider'],
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
   end
 
 =begin
@@ -251,7 +282,7 @@ send reset password email with token to user
 
 returns
 
-  result = true|false
+  result = token
 
 =end
 
@@ -259,11 +290,11 @@ returns
     return if !username || username == ''
 
     # try to find user based on login
-    user = User.where( :login => username.downcase, :active => true ).first
+    user = User.find_by( login: username.downcase, active: true )
 
     # try second lookup with email
     if !user
-      user = User.where( :email => username.downcase, :active => true ).first
+      user = User.find_by( email: username.downcase, active: true )
     end
 
     # check if email address exists
@@ -271,45 +302,44 @@ returns
     return if !user.email
 
     # generate token
-    token = Token.create( :action => 'PasswordReset', :user_id => user.id )
+    token = Token.create( action: 'PasswordReset', user_id: user.id )
 
     # send mail
     data = {}
     data[:subject] = 'Reset your #{config.product_name} password'
     data[:body]    = 'Forgot your password?
 
-    We received a request to reset the password for your #{config.product_name} account (#{user.login}).
+We received a request to reset the password for your #{config.product_name} account (#{user.login}).
 
-    If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
+If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
 
-    #{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
+#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
 
-    This link takes you to a page where you can change your password.
+This link takes you to a page where you can change your password.
 
-    If you don\'t want to reset your password, please ignore this message. Your password will not be reset.
+If you don\'t want to reset your password, please ignore this message. Your password will not be reset.
 
-    Your #{config.product_name} Team
-    '
+Your #{config.product_name} Team'
 
     # prepare subject & body
     [:subject, :body].each { |key|
       data[key.to_sym] = NotificationFactory.build(
-        :locale    => user.locale,
-        :string  => data[key.to_sym],
-        :objects => {
-          :token => token,
-          :user  => user,
+        locale: user.preferences[:locale],
+        string: data[key.to_sym],
+        objects: {
+          token: token,
+          user: user,
         }
       )
     }
 
     # send notification
     NotificationFactory.send(
-      :recipient => user,
-      :subject   => data[:subject],
-      :body      => data[:body]
+      recipient: user,
+      subject: data[:subject],
+      body: data[:body]
     )
-    return true
+    token
   end
 
 =begin
@@ -325,14 +355,14 @@ returns
 =end
 
   def self.password_reset_check(token)
-    user = Token.check( :action => 'PasswordReset', :name => token )
+    user = Token.check( action: 'PasswordReset', name: token )
 
     # reset login failed if token is valid
     if user
       user.login_failed = 0
       user.save
     end
-    return user
+    user
   end
 
 =begin
@@ -347,18 +377,18 @@ returns
 
 =end
 
-  def self.password_reset_via_token(token,password)
+  def self.password_reset_via_token(token, password)
 
     # check token
-    user = Token.check( :action => 'PasswordReset', :name => token )
+    user = Token.check( action: 'PasswordReset', name: token )
     return if !user
 
     # reset password
-    user.update_attributes( :password => password )
+    user.update_attributes( password: password )
 
     # delete token
-    Token.where( :action => 'PasswordReset', :name => token ).first.destroy
-    return user
+    Token.find_by( action: 'PasswordReset', name: token ).destroy
+    user
   end
 
 =begin
@@ -375,140 +405,171 @@ returns
 =end
 
   def update_last_login
-    self.last_login = Time.now
+    self.last_login = Time.zone.now
 
     # reset login failed
     self.login_failed = 0
 
     # set updated by user
-    self.updated_by_id = self.id
+    self.updated_by_id = id
 
-    self.save
+    save
+  end
+
+=begin
+
+list of active users in role
+
+  result = User.of_role('Agent')
+
+returns
+
+  result = [user1, user2]
+
+=end
+
+  def self.of_role(role)
+    User.where(active: true).joins(:roles).where( 'roles.name' => role, 'roles.active' => true ).uniq()
   end
 
   private
 
+  def cache_delete
+    super
+
+    # delete asset caches
+    key = "User::authorizations::#{id}"
+    Cache.delete(key)
+    key = "User::role_ids::#{id}"
+    Cache.delete(key)
+    key = "User::group_ids::#{id}"
+    Cache.delete(key)
+    key = "User::organization_ids::#{id}"
+    Cache.delete(key)
+  end
+
   def check_name
 
-    if ( self.firstname && !self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? )
+    if ( firstname && !firstname.empty? ) && ( !lastname || lastname.empty? )
 
       # Lastname, Firstname
-      scan = self.firstname.scan(/, /)
+      scan = firstname.scan(/, /)
       if scan[0]
-        name = self.firstname.split(', ', 2)
-        self.lastname  = name[0]
-        self.firstname = name[1]
+        name = firstname.split(', ', 2)
+        if !name[0].nil?
+          self.lastname  = name[0]
+        end
+        if !name[1].nil?
+          self.firstname = name[1]
+        end
         return
       end
 
       # Firstname Lastname
-      name = self.firstname.split(' ', 2)
-      self.firstname = name[0]
-      self.lastname  = name[1]
+      name = firstname.split(' ', 2)
+      if !name[0].nil?
+        self.firstname = name[0]
+      end
+      if !name[1].nil?
+        self.lastname = name[1]
+      end
       return
 
-      # -no name- firstname.lastname@example.com
-    elsif ( !self.firstname || self.firstname.empty? ) && ( !self.lastname || self.lastname.empty? ) && ( self.email && !self.email.empty? )
-      scan = self.email.scan(/^(.+?)\.(.+?)\@.+?$/)
+    # -no name- firstname.lastname@example.com
+    elsif ( !firstname || firstname.empty? ) && ( !lastname || lastname.empty? ) && ( email && !email.empty? )
+      scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
-        self.firstname = scan[0][0].capitalize
-        self.lastname  = scan[0][1].capitalize
-      end
-
-    end
-  end
-
-  def check_email
-    if self.email
-      self.email = self.email.downcase
-    end
-  end
-
-  def check_login
-    if self.login
-      self.login = self.login.downcase
-      check = true
-      while check
-        exists = User.where( :login => self.login ).first
-        if exists
-          self.login = self.login + rand(99).to_s
-        else
-          check = false
+        if !scan[0][0].nil?
+          self.firstname = scan[0][0].capitalize
+        end
+        if !scan[0][1].nil?
+          self.lastname  = scan[0][1].capitalize
         end
       end
     end
   end
 
-  # FIXME: Remove me later
-  def check_login_update
-    if self.login
-      self.login = self.login.downcase
-    end
+  def check_email
+
+    return if !email
+
+    self.email = email.downcase
   end
 
-  def check_image
-    if !self.image_source || self.image_source == '' || self.image_source =~ /gravatar.com/i
-      if self.email
-        hash = Digest::MD5.hexdigest(self.email)
-        self.image_source = "http://www.gravatar.com/avatar/#{hash}?s=48&d=404"
+  def check_login
+
+    # use email as login if not given
+    if !login && email
+      self.login = email
+    end
+
+    # if email has changed, login is old email, change also login
+    if changes && changes['email']
+      if changes['email'][0] == login
+        self.login = email
+      end
+    end
+
+    # check if login already exists
+    return if !login
+
+    self.login = login.downcase
+    check      = true
+    while check
+      exists = User.find_by( login: login )
+      if exists && exists.id != id
+        self.login = login + rand(999).to_s
+      else
+        check = false
       end
     end
   end
 
-  def check_image_load
+  def avatar_for_email_check
 
-    return if !self.image_source
-    return if self.image_source !~ /http/i
+    return if !email
+    return if email.empty?
 
-    # download image
-    response = UserAgent.request( self.image_source )
-    if !response.success?
-      self.update_column( :image, 'none' )
-      self.cache_delete
-      #puts "WARNING: Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
-      #raise "Can't fetch '#{self.image_source}', http code: #{response.code.to_s}"
-      return
-    end
-
-    # store image local
-    hash = Digest::MD5.hexdigest( response.body )
-
-    # check if image has changed
-    return if self.image == hash
-
-    # save new image
-    self.update_column( :image, hash )
-    self.cache_delete
-    Store.remove( :object => 'User::Image', :o_id => self.id )
-    Store.add(
-      :object      => 'User::Image',
-      :o_id        => self.id,
-      :data        => response.body,
-      :filename    => 'image',
-      :preferences => {
-        'Content-Type' => response.content_type
-      },
-      :created_by_id => self.updated_by_id,
+    # save/update avatar
+    avatar = Avatar.auto_detection(
+      object: 'User',
+      o_id: id,
+      url: email,
+      source: 'app',
+      updated_by_id: updated_by_id,
+      created_by_id: updated_by_id,
     )
+
+    # update user link
+    return if !avatar
+
+    update_column( :image, avatar.store_hash )
+    cache_delete
+  end
+
+  def avatar_destroy
+    Avatar.remove( 'User', id )
   end
 
   def check_password
 
     # set old password again if not given
-    if self.password == '' || !self.password
+    if password == '' || !password
 
       # get current record
-      if self.id
-        current = User.find(self.id)
-        self.password = current.password
+      if id
+        #current = User.find(self.id)
+        #self.password = current.password
+        self.password = password_was
       end
 
-      # create crypted password if not already crypted
-    else
-      if self.password !~ /^\{sha2\}/
-        crypted = Digest::SHA2.hexdigest( self.password )
-        self.password = "{sha2}#{crypted}"
-      end
     end
+
+    # crypt password if not already crypted
+    return if !password
+    return if password =~ /^\{sha2\}/
+
+    crypted       = Digest::SHA2.hexdigest( password )
+    self.password = "{sha2}#{crypted}"
   end
 end

@@ -1,8 +1,9 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 class Ticket::State < ApplicationModel
-  belongs_to    :state_type,        :class_name => 'Ticket::StateType'
-  validates     :name, :presence => true
+  belongs_to    :state_type, class_name: 'Ticket::StateType'
+  validates     :name, presence: true
+
+  latest_change_support
 
 =begin
 
@@ -19,14 +20,14 @@ returns:
   def self.by_category(category)
     if category == 'open'
       return Ticket::State.where(
-        :state_type_id => Ticket::StateType.where( :name => ['new', 'open', 'pending reminder', 'pending action'] )
+        state_type_id: Ticket::StateType.where( name: ['new', 'open', 'pending reminder', 'pending action'] )
       )
     elsif category == 'closed'
       return Ticket::State.where(
-        :state_type_id => Ticket::StateType.where( :name => ['closed'] )
+        state_type_id: Ticket::StateType.where( name: ['closed'] )
       )
     end
-    raise "Unknown category '#{category}'"
+    fail "Unknown category '#{category}'"
   end
 
 =begin
@@ -44,8 +45,8 @@ returns:
 =end
 
   def ignore_escalation?
-    ignore_escalation = ['removed', 'closed', 'merged']
-    return true if ignore_escalation.include?( self.name )
-    return false
+    ignore_escalation = %w(removed closed merged)
+    return true if ignore_escalation.include?( name )
+    false
   end
 end

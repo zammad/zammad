@@ -1,139 +1,186 @@
-class Index extends App.Controller
+class App.TicketOverview extends App.Controller
   constructor: ->
     super
+
     @render()
 
   render: ->
+    @html App.view('ticket_overview')()
 
-    @html App.view('agent_ticket_view')()
-
-    if !@view
-      cache = App.Store.get( 'navupdate_ticket_overview' )
-      if cache && cache[0]
-        @view = cache[0].link
-
-    new Navbar(
+    @navBarController = new Navbar(
       el:   @el.find('.sidebar')
       view: @view
     )
 
-    new Table(
+    @contentController = new Table(
       el:   @el.find('.main')
       view: @view
     )
 
-class Table extends App.ControllerContent
+  active: (state) =>
+    @activeState = state
+
+  isActive: =>
+    @activeState
+
+  url: =>
+    '#ticket/view/' + @view
+
+  show: (params) =>
+
+    # highlight navbar
+    @navupdate '#ticket/view'
+
+    # redirect to last overview if we got called in first level
+    @view = params['view']
+    if !@view && @viewLast
+      @navigate "ticket/view/#{@viewLast}"
+      return
+
+    # build nav bar
+    if @navBarController
+      @navBarController.update(
+        view:        @view
+        activeState: true
+      )
+
+    # do not rerender overview if current overview is requested again
+    return if @viewLast is @view
+
+    # remember last view
+    @viewLast = @view
+
+    # build content
+    if @contentController
+      @contentController.update(
+        view: @view
+      )
+
+  hide: =>
+    if @navBarController
+      @navBarController.active(false)
+
+  changed: =>
+    false
+
+  release: =>
+    # no
+
+  overview: (overview_id) =>
+    return if !@contentController
+    @contentController.meta(overview_id)
+
+class Table extends App.Controller
   events:
-    'click [data-type=edit]':      'zoom'
-    'click [data-type=settings]':  'settings'
-    'click [data-type=viewmode]':  'viewmode'
-    'click [data-type=page]':      'page'
+    'click [data-type=settings]': 'settings'
+    'click [data-type=viewmode]': 'viewmode'
 
   constructor: ->
     super
 
-    # check authentication
-    return if !@authenticate()
+    @cache = {}
+
+    # rebuild ticket overview data
+    @bind 'ticket_overview_rebuild', (data) =>
+      #console.log('EVENT ticket_overview_rebuild', @view, data.view)
+
+      # remeber bulk attributes
+      @bulk = data.bulk
+
+      # fill cache
+      @cache[data.view] = data
+
+      # check if current view is updated
+      if @view is data.view
+        @render()
+
+    # force fetch ticket overview
+    @bind 'ticket_overview_fetch_force', =>
+      @fetch()
+
+    # force fetch ticket overview
+    @bind 'ticket_overview_local', =>
+      @render(true)
+
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render()
+
+  update: (params) =>
+    for key, value of params
+      @[key] = value
 
     @view_mode = localStorage.getItem( "mode:#{@view}" ) || 's'
     @log 'notice', 'view:', @view, @view_mode
 
-    # set title
-    @title ''
-    @navupdate '#ticket/view/' + @view
+    return if !@view
 
-    @meta = {}
-    @bulk = {}
-
-    # set new key
-    @key = 'ticket_overview_' + @view
-
-    # bind to rebuild view event
-    @bind( 'ticket_overview_rebuild', @fetch )
-
-    # render
-    @fetch()
-
-  fetch: (force) =>
-
-    # use cache of first page
-    cache = App.Store.get( @key )
-    if !force && cache
-      @load(cache)
-
-    # init fetch via ajax, all other updates on time via websockets
+    # fetch initial data
+    if !@cache || !@cache[@view]
+      @fetch()
     else
-      @ajax(
-        id:    'ticket_overview_' + @key,
-        type:  'GET',
-        url:   @apiPath + '/ticket_overviews',
-        data:  {
-          view:       @view,
-          view_mode:  @view_mode,
-        }
-        processData: true,
-        success: (data) =>
-          data.ajax = true
-          @load(data)
-        )
-
-  load: (data) =>
-    return if !data
-    return if !data.ticket_ids
-    return if !data.overview
-
-    @overview      = data.overview
-    @tickets_count = data.tickets_count
-    @ticket_ids    = data.ticket_ids
-
-    if data.ajax
-      data.ajax = false
-      App.Store.write( @key, data )
-
-      # load assets
-      App.Collection.loadAssets( data.assets )
-
-    # get meta data
-    @overview = data.overview
-    App.Overview.refresh( @overview, { clear: true } )
-
-    App.Overview.unbind('local:rerender')
-    App.Overview.bind 'local:rerender', (record) =>
-      @log 'notice', 'rerender...', record
       @render()
 
-    App.Overview.unbind('local:refetch')
-    App.Overview.bind 'local:refetch', (record) =>
-      @log 'notice', 'refetch...', record
-      @fetch(true)
+  fetch: =>
 
-    @ticket_list_show = []
-    for ticket_id in @ticket_ids
-      @ticket_list_show.push App.Ticket.fullLocal( ticket_id )
+    # init fetch via ajax, all other updates on time via websockets
+    @ajax(
+      id:   'ticket_overview_' + @view + '_' + @view_mode
+      type: 'GET'
+      url:  @apiPath + '/ticket_overviews'
+      data:
+        view:      @view
+        view_mode: @view_mode
+      processData: true
+      success: (data) =>
+        if data.assets
+          App.Collection.loadAssets( data.assets )
 
-    # remeber bulk attributes
-    @bulk = data.bulk
+        # remeber bulk attributes
+        @bulk = data.bulk
 
-    # set cache
-#    App.Store.write( @key, data )
+        @cache[data.view] = data
+        @render()
+      )
 
-    # render page
-    @render()
+  meta: (overview_id) =>
+    return if !@cache
 
-  render: ->
+    # find requested overview data
+    for url, data of @cache
+      if data.overview.id is overview_id
+        return data
+    false
 
+  render: (overview_changed = false) =>
+    #console.log('RENDER', @cache, @view)
+    return if !@cache
+    return if !@cache[@view]
 
+    # use cache
+    overview      = @cache[@view].overview
+    tickets_count = @cache[@view].tickets_count
+    ticket_ids    = @cache[@view].ticket_ids
+
+    # use cache if no local change
+    if !overview_changed
+      App.Overview.refresh( overview, { clear: true } )
+
+    # get ticket list
+    ticket_list_show = []
+    for ticket_id in ticket_ids
+      ticket_list_show.push App.Ticket.fullLocal( ticket_id )
 
     # if customer and no ticket exists, show the following message only
-    if !@ticket_list_show[0] && @isRole('Customer')
+    if !ticket_list_show[0] && @isRole('Customer')
       @html App.view('customer_not_ticket_exists')()
       return
 
     @selected = @bulkGetSelected()
 
     # set page title
-    @overview = App.Overview.find( @overview.id )
-    @title @overview.name
+    @overview = App.Overview.find( overview.id )
 
     # render init page
     checkbox = true
@@ -156,14 +203,12 @@ class Table extends App.ControllerContent
     if @isRole('Customer')
       view_modes = []
     html = App.view('agent_ticket_view/content')(
-      overview:    @overview
-      view_modes:  view_modes
-      checkbox:    checkbox
-      edit:        edit
+      overview:   @overview
+      view_modes: view_modes
+      checkbox:   checkbox
+      edit:       edit
     )
     html = $(html)
-#    html.find('li').removeClass('active')
-#    html.find("[data-id=\"#{@start_page}\"]").parents('li').addClass('active')
 
     @html html
 
@@ -172,20 +217,31 @@ class Table extends App.ControllerContent
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
         overview: @overview
-        objects:  @ticket_list_show
+        objects:  ticket_list_show
         checkbox: checkbox
       )
       table = $(table)
       table.delegate('[name="bulk_all"]', 'click', (e) ->
+        console.log('OOOO',  $(e.target).attr('checked') )
         if $(e.target).attr('checked')
-          $(e.target).parents().find('[name="bulk"]').attr('checked', true)
+          $(e.target).closest('table').find('[name="bulk"]').attr('checked', true)
         else
-          $(e.target).parents().find('[name="bulk"]').attr('checked', false)
+          $(e.target).closest('table').find('[name="bulk"]').attr('checked', false)
       )
       @el.find('.table-overview').append(table)
     else
       openTicket = (id,e) =>
+
+        # open ticket via task manager to provide task with overview info
         ticket = App.Ticket.fullLocal(id)
+        App.TaskManager.execute(
+          key:        'Ticket-' + ticket.id
+          controller: 'TicketZoom'
+          params:
+            ticket_id:   ticket.id
+            overview_id: @overview.id
+          show:       true
+        )
         @navigate ticket.uiUrl()
       callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
         attribute.title = object.title
@@ -198,17 +254,37 @@ class Table extends App.ControllerContent
         attribute.data =
           id: refObject.id
         value
+      callbackOrganizationPopover = (value, object, attribute, attributes, refObject) =>
+        attribute.class = 'organization-popover'
+        attribute.data =
+          id: refObject.id
+        value
       callbackCheckbox = (id, checked, e) =>
         if @el.find('table').find('input[name="bulk"]:checked').length == 0
-          @el.find('.bulk-action').addClass('hide')
+          @el.find('.bulkAction').addClass('hide')
         else
-          @el.find('.bulk-action').removeClass('hide')
+          @el.find('.bulkAction').removeClass('hide')
+      callbackIconHeader = (header) ->
+        attribute =
+          name:       'icon'
+          display:    ''
+          translation: false
+          style:      'width: 28px'
+        header.unshift(0)
+        header[0] = attribute
+        header
+      callbackIcon = (value, object, attribute, header, refObject) ->
+        value = ' '
+        attribute.class  = object.icon()
+        attribute.link   = ''
+        attribute.title  = App.i18n.translateInline( object.iconTitle() )
+        value
 
       new App.ControllerTable(
         overview:     @overview.view.s
-        el:           @el.find('.table-overview')
+        el:           @$('.table-overview')
         model:        App.Ticket
-        objects:      @ticket_list_show
+        objects:      ticket_list_show
         checkbox:     checkbox
         groupBy:      @overview.group_by
         bindRow:
@@ -218,9 +294,14 @@ class Table extends App.ControllerContent
         #  customer_id:
         #    events:
         #      'mouseover': popOver
+        callbackHeader:    callbackIconHeader
         callbackAttributes:
+          icon:
+            [ callbackIcon ]
           customer_id:
             [ callbackUserPopover ]
+          organization_id:
+            [ callbackOrganizationPopover ]
           owner_id:
             [ callbackUserPopover ]
           title:
@@ -237,13 +318,16 @@ class Table extends App.ControllerContent
     # start user popups
     @userPopups()
 
+    # start organization popups
+    @organizationPopups()
+
     # show frontend times
     @frontendTimeUpdate()
 
     # start bulk action observ
-    @el.find('.bulk-action').append( @bulk_form() )
+    @el.find('.bulkAction').append( @bulk_form() )
     if @el.find('.table-overview').find('input[name="bulk"]:checked').length isnt 0
-        @el.find('.bulk-action').removeClass('hide')
+        @el.find('.bulkAction').removeClass('hide')
 
     # show/hide bulk action
     @el.find('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
@@ -251,11 +335,13 @@ class Table extends App.ControllerContent
       if @el.find('.table-overview').find('input[name="bulk"]:checked').length == 0
 
         # hide
-        @el.find('.bulk-action').addClass('hide')
+        @el.find('.bulkAction').addClass('hide')
+
+        @resetBulkForm()
       else
 
         # show
-        @el.find('.bulk-action').removeClass('hide')
+        @el.find('.bulkAction').removeClass('hide')
     )
 
     # deselect bulk_all if one item is uncheck observ
@@ -264,40 +350,80 @@ class Table extends App.ControllerContent
         $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
     )
 
-  page: (e) =>
-    e.preventDefault()
-    id = $(e.target).data('id')
-    @start_page = id
-    @fetch()
+    # bind bulk form buttons
+    @$('.js-confirm').click(@bulkFormConfirm)
+    @$('.js-cancel').click(@resetBulkForm)
+
+  bulkFormConfirm: =>
+    @$('.js-action-step').addClass('hide')
+    @$('.js-confirm-step').removeClass('hide')
+
+    # need a delay because of the click event
+    setTimeout ( => @$('.textarea.form-group textarea').focus() ), 0
+
+  resetBulkForm: =>
+    @$('.js-action-step').removeClass('hide')
+    @$('.js-confirm-step').addClass('hide')
+
 
   viewmode: (e) =>
     e.preventDefault()
-    @start_page    = 1
-    mode = $(e.target).data('mode')
-    @view_mode = mode
-    localStorage.setItem( "mode:#{@view}", mode )
+    @view_mode = $(e.target).data('mode')
+    localStorage.setItem( "mode:#{@view}", @view_mode )
     @fetch()
-    @render()
+    #@render()
+
+  articleTypeFilter = (items) =>
+    for item in items
+      if item.name is 'note'
+        return [item]
+    items
 
   bulk_form: =>
     @configure_attributes_ticket = [
-      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
-      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: 'span2', item_class: 'pull-left' },
-      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left'  },
-      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: 'span2', item_class: 'pull-left' },
+      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
+      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
+      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: '', item_class: ''  },
+      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' }
     ]
 
     # render init page
     html = $( App.view('agent_ticket_view/bulk')() )
     new App.ControllerForm(
-      el: html.find('#form-ticket-bulk'),
-      model: {
-        configure_attributes: @configure_attributes_ticket,
-        className:            'create',
-      },
-      form_data: @bulk,
+      el: html.find('#form-ticket-bulk')
+      model:
+        configure_attributes: @configure_attributes_ticket
+        className:            'create'
+        labelClass:           'input-group-addon'
+      form_data:   @bulk
+      noFieldset: true
     )
-#    html.delegate('.bulk-action-form', 'submit', (e) =>
+
+    new App.ControllerForm(
+      el: html.find('#form-ticket-bulk-comment')
+      model:
+        configure_attributes: [{ name: 'body',         display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
+        className:            'create'
+        labelClass:           'input-group-addon'
+      form_data:   @bulk
+      noFieldset: true
+    )
+
+    @confirm_attributes = [
+      { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: articleTypeFilter, default: '9', translate: true, class: 'medium' }
+      { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
+    ]
+
+    new App.ControllerForm(
+      el: html.find('#form-ticket-bulk-typeVisibility')
+      model:
+        configure_attributes: @confirm_attributes
+        className:            'create'
+        labelClass:           'input-group-addon'
+      form_data:   @bulk
+      noFieldset: true
+    )
+
     html.bind('submit', (e) =>
       e.preventDefault()
       @bulk_submit(e)
@@ -337,19 +463,45 @@ class Table extends App.ControllerContent
 
 #      @log 'notice', 'update', params, ticket_update, ticket
 
+      # validate article
+      if params['body']
+        article = new App.TicketArticle
+        params.from      = @Session.get().displayName()
+        params.ticket_id = ticket.id
+        params.form_id   = @form_id
+
+        sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+        type              = App.TicketArticleType.find( params['type_id'] )
+        params.sender_id  = sender.id
+
+        if !params['internal']
+          params['internal'] = false
+
+        @log 'notice', 'update article', params, sender
+        article.load(params)
+        errors = article.validate()
+        if errors
+          @log 'error', 'update article', errors
+          @formEnable(e)
+          return
+
       ticket.load(ticket_update)
       ticket.save(
         done: (r) =>
           @bulk_count_index++
 
+          # reset form after save
+          if article
+            article.save(
+              fail: (r) =>
+                @log 'error', 'update article', r
+            )
+
           # refresh view after all tickets are proceeded
           if @bulk_count_index == @bulk_count
 
-            # rebuild navbar with updated ticket count of overviews
-            App.WebSocket.send( event: 'navupdate_ticket_overview' )
-
             # fetch overview data again
-            @fetch()
+            App.Event.trigger('ticket_overview_fetch_force')
       )
     )
     @el.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
@@ -358,36 +510,19 @@ class Table extends App.ControllerContent
       msg: App.i18n.translateContent('Bulk-Action executed!')
     }
 
-  zoom: (e) =>
-    e.preventDefault()
-    id = $(e.target).parents('[data-id]').data('id')
-    position = $(e.target).parents('[data-position]').data('position')
-
-    # set last overview
-    @Config.set('LastOverview', @view )
-    @Config.set('LastOverviewPosition', position )
-    @Config.set('LastOverviewTotal', @tickets_count )
-
-    @navigate 'ticket/zoom/' + id + '/nav/true'
-
   settings: (e) =>
     e.preventDefault()
     new App.OverviewSettings(
       overview_id: @overview.id
       view_mode:   @view_mode
+      container:   @el.closest('.content')
     )
 
 class App.OverviewSettings extends App.ControllerModal
   constructor: ->
     super
     @overview = App.Overview.find(@overview_id)
-    @render()
 
-  render: ->
-
-    @html App.view('dashboard/ticket_settings')(
-      overview: @overview,
-    )
     @configure_attributes_article = []
     if @view_mode is 'd'
       @configure_attributes_article.push({
@@ -452,19 +587,19 @@ class App.OverviewSettings extends App.ControllerModal
         },
         {
           value:  'last_contact'
-          name:   'Last Contact'
+          name:   'Last Contact Time'
         },
         {
           value:  'last_contact_agent'
-          name:   'Last Contact Agent'
+          name:   'Last Contact Agent Time'
         },
         {
           value:  'last_contact_customer'
-          name:   'Last Contact Customer'
+          name:   'Last Contact Customer Time'
         },
         {
           value:  'first_response'
-          name:   'First Response'
+          name:   'First Response Time'
         },
         {
           value:  'close_time'
@@ -472,7 +607,11 @@ class App.OverviewSettings extends App.ControllerModal
         },
         {
           value:  'escalation_time'
-          name:   'Escalation in'
+          name:   'Escalation Time'
+        },
+        {
+          value:  'pending_time'
+          name:   'Pending Reminder Time'
         },
         {
           value:  'article_count'
@@ -503,7 +642,7 @@ class App.OverviewSettings extends App.ControllerModal
         last_contact_customer:  'Last Contact Customer'
         first_response:         'First Response'
         close_time:             'Close Time'
-        escalation_time:        'Escalation in'
+        escalation_time:        'Escalation'
         article_count:          'Article Count'
       class:   'medium'
     },
@@ -537,27 +676,30 @@ class App.OverviewSettings extends App.ControllerModal
       class:   'medium'
     })
 
-    new App.ControllerForm(
-      el:        @el.find('#form-setting')
+    @head   = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @overview.name )
+    @close  = true
+    @cancel = true
+    @button = true
+    controller = new App.ControllerForm(
       model:     { configure_attributes: @configure_attributes_article }
       autofocus: false
     )
+    @content = controller.form
+    @show()
 
-    @modalShow()
-
-  submit: (e) =>
+  onSubmit: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
 
     # check if refetch is needed
-    @reload_needed = 0
+    @reload_needed = false
     if @overview.order.by isnt params.order.by
       @overview.order.by = params.order.by
-      @reload_needed = 1
+      @reload_needed = true
 
     if @overview.order.direction isnt params.order.direction
       @overview.order.direction = params.order.direction
-      @reload_needed = 1
+      @reload_needed = true
 
     for key, value of params.view
       @overview.view[key] = value
@@ -566,49 +708,93 @@ class App.OverviewSettings extends App.ControllerModal
 
     @overview.save(
       done: =>
+
+        # fetch overview data again
         if @reload_needed
-          @overview.trigger('local:refetch')
+          App.Event.trigger('ticket_overview_fetch_force')
         else
-          @overview.trigger('local:rerender')
+          App.Event.trigger('ticket_overview_local')
+
+        # hide modal
+        @hide()
     )
-    @modalHide()
 
 class Navbar extends App.Controller
   constructor: ->
     super
 
     # rebuild ticket overview data
-    @bind 'navupdate_ticket_overview', (data) =>
-      if !_.isEmpty(data)
-        App.Store.write( 'navupdate_ticket_overview', data )
-        @render(data)
+    @bind 'ticket_overview_index', (data) =>
+      #console.log('EVENT ticket_overview_index')
+      @cache = data
+      @update()
 
-    cache = App.Store.get( 'navupdate_ticket_overview' )
-    if cache
-      @render( cache )
-    else
-      @render( [] )
 
-      # init fetch via ajax, all other updates on time via websockets
-      @ajax(
-        id:    'ticket_overviews',
-        type:  'GET',
-        url:   @apiPath + '/ticket_overviews',
-        processData: true,
-        success: (data) =>
-          App.Store.write( 'navupdate_ticket_overview', data )
-          @render(data)
-        )
+    # force fetch ticket overview
+    @bind 'ticket_overview_fetch_force', =>
+      @fetch()
 
-  render: (dataOrig) ->
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      @render()
 
-    data = _.clone(dataOrig)
+    # init fetch via ajax
+    ajaxInit = =>
+
+      # ignore if already pushed via websockets
+      return if @cache
+      @fetch()
+
+    @delay( ajaxInit, 5000 )
+
+  fetch: =>
+    #console.log('AJAX CALLL')
+    # init fetch via ajax, all other updates on time via websockets
+    @ajax(
+      id:    'ticket_overviews',
+      type:  'GET',
+      url:   @apiPath + '/ticket_overviews',
+      processData: true,
+      success: (data) =>
+        @cache = data
+        @update()
+      )
+
+  active: (state) =>
+    @activeState = state
+
+  update: (params = {}) ->
+    for key, value of params
+      @[key] = value
+    @render()
+
+    if @activeState
+      meta =
+        title: ''
+      if @cache
+        for item in @cache
+          if item.link is @view
+            meta.title = item.name
+      @title meta.title, true
+
+  render: =>
+    #console.log('RENDER NAV')
+    return if !@cache
+    data = _.clone(@cache)
+
+    # redirect to first view
+    if @activeState && !@view && !_.isEmpty(data)
+      view = data[0].link
+      #console.log('REDIRECT', "ticket/view/#{view}")
+      @navigate "ticket/view/#{view}"
+      return
 
     # add new views
     for item in data
       item.target = '#ticket/view/' + item.link
       if item.link is @view
         item.active = true
+        activeOverview = item
       else
         item.active = false
 
@@ -616,61 +802,26 @@ class Navbar extends App.Controller
       items: data
     )
 
-
-class Router extends App.Controller
-  constructor: ->
+class TicketOverviewRouter extends App.ControllerPermanent
+  constructor: (params) ->
     super
 
-    # set new key
-    @key = 'ticket_overview_' + @view
+    # check authentication
+    return if !@authenticate()
 
-    # get data
-    cache = App.Store.get( @key )
-    if cache
-      @tickets_count = cache.tickets_count
-      @ticket_ids    = cache.ticket_ids
-      @redirect()
-    else
-      @ajax(
-        type:       'GET'
-        url:        @apiPath + '/ticket_overviews'
-        data:
-          view:      @view
-          array:     true
-        processData: true
-        success:     @load
-      )
+    # cleanup params
+    clean_params =
+      view: params.view
 
-  load: (data) =>
-    @ticket_ids    = data.ticket_ids
-    @tickets_count = data.tickets_count
-#    App.Store.write( data )
-    @redirect()
+    App.TaskManager.execute(
+      key:        'TicketOverview'
+      controller: 'TicketOverview'
+      params:     clean_params
+      show:       true
+      persistent: true
+    )
 
-  redirect: =>
-    @Config.set('LastOverview', @view )
-    @position = parseInt( @position )
-    @Config.set('LastOverviewPosition', @position )
-    @Config.set('LastOverviewTotal', @tickets_count )
-
-    # redirect
-    if @direction == 'next'
-      if @ticket_ids[ @position ] && @ticket_ids[ @position ]
-        position = @position + 1
-        @Config.set( 'LastOverviewPosition', position )
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position ] + '/nav/true'
-      else
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
-    else
-      if @ticket_ids[ @position - 2 ] && @ticket_ids[ @position - 2 ] + '/nav/true'
-        position = @position - 1
-        @Config.set( 'LastOverviewPosition', position )
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 2 ] + '/nav/true'
-      else
-        @navigate 'ticket/zoom/' + @ticket_ids[ @position - 1 ] + '/nav/true'
-
-App.Config.set( 'ticket/view', Index, 'Routes' )
-App.Config.set( 'ticket/view/:view', Index, 'Routes' )
-#App.Config.set( 'ticket/view/:view/:position/:direction', Router, 'Routes' )
-
-App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'] }, 'NavBar' )
+App.Config.set( 'ticket/view', TicketOverviewRouter, 'Routes' )
+App.Config.set( 'ticket/view/:view', TicketOverviewRouter, 'Routes' )
+App.Config.set( 'TicketOverview', { controller: 'TicketOverview', authentication: true }, 'permanentTask' )
+App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar' )

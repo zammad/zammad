@@ -71,9 +71,12 @@ class App.Controller extends Spine.Controller
     # release custom bindings after it got removed from dom
 
   # add @title methode to set title
-  title: (name) ->
+  title: (name, translate = false) ->
 #    $('html head title').html( @Config.get(product_name) + ' - ' + App.i18n.translateInline(name) )
-    document.title = @Config.get('product_name') + ' - ' + App.i18n.translatePlain(name)
+    title = name
+    if translate
+      title = App.i18n.translatePlain(name)
+    document.title = @Config.get('product_name') + ' - ' + title
 
   copyToClipboard: (text) ->
     if window.clipboardData # IE
@@ -99,6 +102,16 @@ class App.Controller extends Spine.Controller
   navupdate: (url) ->
     App.Event.trigger 'navupdate', url
 
+  # show navigation
+  navShow: ->
+    return if $('#navigation').is(':visible')
+    $('#navigation').removeClass('hide')
+
+  # hide navigation
+  navHide: ->
+    return if !$('#navigation').is(':visible')
+    $('#navigation').addClass('hide')
+
   scrollTo: ( x = 0, y = 0, delay = 0 ) ->
     a = ->
       window.scrollTo( x, y )
@@ -122,8 +135,8 @@ class App.Controller extends Spine.Controller
 
     position = [ 15, 30, 15, 0, -15, -30, -15, 0 ]
     position = position.concat( position.concat( position ) )
-    element.css( 'position', 'relative' ) 
-    shakeMe( element, position, 20 ) 
+    element.css( 'position', 'relative' )
+    shakeMe( element, position, 20 )
 
   isRole: (name) ->
     roles = @Session.get( 'roles' )
@@ -145,103 +158,16 @@ class App.Controller extends Spine.Controller
   formValidate: (data) ->
     App.ControllerForm.validate(data)
 
-  ticketTableAttributes: (attributes) =>
-    all_attributes = [
-      { name: 'number',                 type: 'link', title: 'title', dataType: 'edit' },
-      { name: 'title',                  type: 'link', title: 'title', dataType: 'edit' },
-      { name: 'customer',               class: 'user-popover', data: { id: true } },
-      { name: 'state',                  translate: true, title: true },
-      { name: 'priority',               translate: true, title: true },
-      { name: 'group',                  title: 'group' },
-      { name: 'owner',                  class: 'user-popover', data: { id: true } },
-      { name: 'created_at',             callback: @frontendTime },
-      { name: 'last_contact',           callback: @frontendTime },
-      { name: 'last_contact_agent',     callback: @frontendTime },
-      { name: 'last_contact_customer',  callback: @frontendTime },
-      { name: 'first_response',         callback: @frontendTime },
-      { name: 'close_time',             callback: @frontendTime },
-      { name: 'escalation_time',        callback: @frontendTime, subclass: 'escalation' },
-      { name: 'article_count',          },
-    ]
-    shown_all_attributes = []
-    for all_attribute in all_attributes
-      for attribute in attributes
-        if all_attribute['name'] is attribute
-          shown_all_attributes.push all_attribute
-          break
-    return shown_all_attributes
-
 #  redirectToLogin: (data) ->
 #
 
   # human readable file size
   humanFileSize: (size) =>
-    if size > ( 1024 * 1024 )
-      size = Math.round( size / ( 1024 * 1024 ) ) + ' MBytes'
-    else if size > 1024
-      size = Math.round( size / 1024 ) + ' KBytes'
-    else
-      size = size + ' Bytes'
-    return size
+    App.Utils.humanFileSize(size)
 
   # human readable time
-  humanTime: ( time, escalation ) =>
-    current = new Date()
-    created = new Date(time)
-    string = ''
-    diff = ( current - created ) / 1000
-    escalated = ''
-    if escalation
-      if diff > 0
-        escalated = '-'
-      if diff >= 0
-        style = "class=\"label label-danger\""
-      else if diff > -60 * 60
-        style = "class=\"label label-warning\""
-      else
-        style = "class=\"label label-success\""
-
-    if diff.toString().match('-')
-      diff = diff.toString().replace('-', '')
-      diff = parseFloat(diff)
-
-    if diff >= 86400
-      unit = Math.floor( ( diff / 86400 ) )
-#      if unit > 1
-#        return unit + ' ' + App.i18n.translateContent('days')
-#      else
-#        return unit + ' ' + App.i18n.translateContent('day')
-      string = unit + ' ' + App.i18n.translateInline('d')
-    if diff >= 3600
-      unit = Math.floor( ( diff / 3600 ) % 24 )
-#      if unit > 1
-#        return unit + ' ' + App.i18n.translateContent('hours')
-#      else
-#        return unit + ' ' + App.i18n.translateContent('hour')
-      if string isnt ''
-        string = string + ' ' + unit + ' ' + App.i18n.translateInline('h')
-        if escalation
-          string = "<span #{style}>#{escalated}#{string}</b>"
-        return string
-      else
-        string = unit + ' ' + App.i18n.translateInline('h')
-    if diff <= 86400
-      unit = Math.floor( ( diff / 60 ) % 60 )
-#      if unit > 1
-#        return unit + ' ' + App.i18n.translateContent('minutes')
-#      else
-#        return unit + ' ' + App.i18n.translateContent('minute')
-      if string isnt ''
-        string = string + ' ' + unit + ' ' + App.i18n.translateInline('m')
-        if escalation
-          string = "<span #{style}>#{escalated}#{string}</b>"
-        return string
-      else
-        string = unit + ' ' + App.i18n.translateInline('m')
-
-    if escalation
-      string = "<span #{style}>#{escalated}#{string}</b>"
-    return string
+  humanTime: ( time, escalation, long = true ) =>
+    App.PrettyDate.humanTime( time, escalation, long )
 
   userInfo: (data) =>
     el = data.el || $('[data-id="customer_info"]')
@@ -254,13 +180,18 @@ class App.Controller extends Spine.Controller
       callback: data.callback
     )
 
-  authenticate: ->
+  authenticate: (checkOnly = false) ->
 
-    # return rtue if session exists
-    return true if @Session.get( 'id' )
+    # return true if session exists
+    return true if @Session.get()
 
     # remember requested url
-    @Config.set( 'requested_url', window.location.hash )
+    if !checkOnly
+      location = window.location.hash
+      if location isnt '#login' && location isnt '#logout'
+        @Config.set( 'requested_url', location)
+
+    return false if checkOnly
 
     # redirect to login
     @navigate '#login'
@@ -275,15 +206,28 @@ class App.Controller extends Spine.Controller
     update = =>
       ui = @
       $('.humanTimeFromNow').each( ->
+        item = $(this)
 #        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
-        timestamp = $(this).data('time')
-        time = ui.humanTime( timestamp, $(this).hasClass('escalation') )
-        $(this).attr( 'title', App.i18n.translateTimestamp(timestamp) )
-        $(this).html( time )
+        ui.frontendTimeUpdateItem(item)
       )
     App.Interval.set( update, 30000, 'frontendTimeUpdate', 'ui' )
 
+  frontendTimeUpdateItem: (item) =>
+    timestamp = item.data('time')
+    time      = @humanTime( timestamp, item.hasClass('escalation') )
+    item.attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
+    item.html( time )
+
   ticketPopups: (position = 'right') ->
+
+    # open ticket in new task if curent user agent
+    if @isRole('Agent')
+      @el.find('div.ticket-popover, span.ticket-popover').bind('click', (e) =>
+        id = $(e.target).data('id')
+        if id
+          ticket = App.Ticket.find(id)
+          @navigate ticket.uiUrl()
+      );
 
     @ticketPopupsDestroy()
 
@@ -293,20 +237,25 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 400 }
+      animation:  false
+      delay:      100
       placement:  position
       title: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.fullLocal( ticket_id )
-        App.i18n.escape( ticket.title )
+        ticket    = App.Ticket.fullLocal( ticket_id )
+        App.Utils.htmlEscape( ticket.title )
       content: ->
         ticket_id = $(@).data('id')
-        ticket = App.Ticket.fullLocal( ticket_id )
-        ticket.humanTime = ui.humanTime(ticket.created_at)
-        # insert data
-        App.view('popover/ticket')(
-          ticket: ticket,
+        ticket    = App.Ticket.fullLocal( ticket_id )
+        html = App.view('popover/ticket')(
+          ticket: ticket
         )
+        html = $( html )
+        html.find('.humanTimeFromNow').each( ->
+          item = $(this)
+          ui.frontendTimeUpdateItem(item)
+        )
+        html
     )
 
   ticketPopupsDestroy: =>
@@ -315,12 +264,15 @@ class App.Controller extends Spine.Controller
 
   userPopups: (position = 'right') ->
 
-    # open user in new task if user isn't customer
-    if !@isRole('Customer')
-      @el.find('.user-popover').bind('click', (e) =>
-        user_id = $(e.target).data('id')
-        @navigate "#user/zoom/#{user_id}"
-      );
+    # open user in new task if current user is agent
+    return if !@isRole('Agent')
+
+    @el.find('div.user-popover, span.user-popover').bind('click', (e) =>
+      id = $(e.target).data('id')
+      if id
+        user = App.User.find(id)
+        @navigate user.uiUrl()
+    );
 
     @userPopupsDestroy()
 
@@ -329,39 +281,38 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 400 }
-      placement:  position
+      animation:  false
+      delay:      100
+      placement:  "auto #{position}"
       title: ->
         user_id = $(@).data('id')
-        user = App.User.fullLocal( user_id )
-        App.i18n.escape( user.displayName() )
+        user    = App.User.fullLocal( user_id )
+        App.Utils.htmlEscape( user.displayName() )
       content: ->
         user_id = $(@).data('id')
-        user = App.User.fullLocal( user_id )
+        user    = App.User.fullLocal( user_id )
 
         # get display data
-        data = []
-        for item2 in App.User.configure_attributes
-          item = _.clone( item2 )
+        userData = []
+        for attributeName, attributeConfig of App.User.attributesGet('view')
 
           # check if value for _id exists
-          itemNameValue = item.name
-          itemNameValueNew = itemNameValue.substr( 0, itemNameValue.length - 3 )
-          if itemNameValueNew of user
-            item.name = itemNameValueNew
+          name    = attributeName
+          nameNew = name.substr( 0, name.length - 3 )
+          if nameNew of user
+            name = nameNew
 
           # add to show if value exists
-          if user[item.name]
+          if user[name] && attributeConfig.shown
 
             # do not show firstname and lastname / already show via diplayName()
-            if item.name isnt 'firstname' && item.name isnt 'lastname' && item.name isnt 'organization'
-              if item.info #&& ( @user[item.name] || item.name isnt 'note' )
-                data.push item
+            if name isnt 'firstname' && name isnt 'lastname' && name isnt 'organization'
+              userData.push attributeConfig
 
         # insert data
         App.view('popover/user')(
-          user: user,
-          data: data,
+          user:     user
+          userData: userData
         )
     )
 
@@ -371,6 +322,16 @@ class App.Controller extends Spine.Controller
 
   organizationPopups: (position = 'right') ->
 
+    # open org in new task if current user agent
+    return if !@isRole('Agent')
+
+    @el.find('div.organization-popover, span.organization-popover').bind('click', (e) =>
+      id = $(e.target).data('id')
+      if id
+        organization = App.Organization.find(id)
+        @navigate organization.uiUrl()
+    );
+
     @organizationPopupsDestroy()
 
     # show organization popup
@@ -378,18 +339,38 @@ class App.Controller extends Spine.Controller
       trigger:    'hover'
       container:  'body'
       html:       true
-      delay:      { show: 400, hide: 400 }
-      placement:  position
+      animation:  false
+      delay:      100
+      placement:  "auto #{position}"
       title: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.fullLocal( organization_id )
-        App.i18n.escape( organization.name )
+        organization    = App.Organization.fullLocal( organization_id )
+        App.Utils.htmlEscape( organization.name )
       content: ->
         organization_id = $(@).data('id')
-        organization = App.Organization.fullLocal( organization_id )
+        organization    = App.Organization.fullLocal( organization_id )
+
+        # get display data
+        organizationData = []
+        for attributeName, attributeConfig of App.Organization.attributesGet('view')
+
+          # check if value for _id exists
+          name    = attributeName
+          nameNew = name.substr( 0, name.length - 3 )
+          if nameNew of organization
+            name = nameNew
+
+          # add to show if value exists
+          if organization[name] && attributeConfig.shown
+
+            # do not show firstname and lastname / already show via diplayName()
+            if name isnt 'name'
+              organizationData.push attributeConfig
+
         # insert data
         App.view('popover/organization')(
-          organization: organization,
+          organization:     organization,
+          organizationData: organizationData,
         )
     )
 
@@ -399,7 +380,7 @@ class App.Controller extends Spine.Controller
 
   userTicketPopups: (params) ->
 
-    show = (data, tickets) =>
+    show = (data, ticket_list) =>
 
       if !data.position
         data.position = 'left'
@@ -407,28 +388,34 @@ class App.Controller extends Spine.Controller
       @userTicketPopupsDestroy()
 
       # show user popup
-      controller = @
+      ui = @
       @userTicketPopupsList = @el.find(data.selector).popover(
         trigger:    'hover'
         container:  'body'
         html:       true
-        delay:      { show: 500, hide: 5200 }
-        placement:  data.position
+        animation:  false
+        delay:      100
+        placement:  "auto #{data.position}"
         title: ->
           $(@).find('[title="*"]').val()
 
         content: ->
           type = $(@).filter('[data-type]').data('type')
-          data = tickets[type] || []
-
-          # set human time
-          for ticket in data
-            ticket.humanTime = controller.humanTime(ticket.created_at)
+          tickets = []
+          if ticket_list[type]
+            for ticket_id in ticket_list[type]
+              tickets.push App.Ticket.fullLocal( ticket_id )
 
           # insert data
-          App.view('popover/user_ticket_list')(
-            tickets: data,
+          html = App.view('popover/user_ticket_list')(
+            tickets: tickets
           )
+          html = $( html )
+          html.find('.humanTimeFromNow').each( ->
+            item = $(this)
+            ui.frontendTimeUpdateItem(item)
+          )
+          html
       )
 
     fetch = (params) =>
@@ -440,14 +427,18 @@ class App.Controller extends Spine.Controller
         }
         processData: true,
         success: (data, status, xhr) =>
-          App.Store.write( "user-ticket-popover::#{params.user_id}",  data.tickets )
-          show( params, data.tickets )
+          App.Store.write( "user-ticket-popover::#{params.user_id}",  data )
+
+          # load assets
+          App.Collection.loadAssets( data.assets )
+
+          show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       )
 
     # get data
-    tickets = App.Store.get( "user-ticket-popover::#{params.user_id}" )
-    if tickets
-      show( params, tickets )
+    data = App.Store.get( "user-ticket-popover::#{params.user_id}" )
+    if data
+      show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       @delay(
         =>
           fetch(params)
@@ -468,149 +459,183 @@ class App.Controller extends Spine.Controller
     App.Ajax.request(
       id:    "recent_view_#{object}_#{o_id}"
       type:  'POST'
-      url:   @Config.get('api_path') + '/recent_viewed'
+      url:   @Config.get('api_path') + '/recent_view'
       data:  JSON.stringify(params)
       processData: true
     )
 
+  prepareForObjectList: (items) ->
+    for item in items
+
+      item.link  = ''
+      item.title = '???'
+
+      # convert backend name space to local name space
+      item.object = item.object.replace("::", '')
+
+      # lookup real data
+      if App[item.object] && App[item.object].exists( item.o_id )
+        object            = App[item.object].find( item.o_id )
+        item.link         = object.uiUrl()
+        item.title        = object.displayName()
+        item.object_name  = object.objectDisplayName()
+        item.cssIcon      = object.iconActivity( @Session.get() )
+
+      item.created_by = App.User.retrieve( item.created_by_id )
+    items
+
   ws_send: (data) ->
     App.Event.trigger( 'ws:send', JSON.stringify(data) )
+
+  # central method, is getting called on every ticket form change
+  ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>
+    if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
+      dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+      if !dependency
+        dependency = @form_meta.dependencies[attribute.name][ params[attribute.name] ]
+      if dependency
+        for fieldNameToChange of dependency
+          filter = []
+          if dependency[fieldNameToChange]
+            filter = dependency[fieldNameToChange]
+
+          # find element to replace
+          for item in attributes
+            if item.name is fieldNameToChange
+              item['filter'] = {}
+              item['filter'][ fieldNameToChange ] = filter
+              item.default = params[item.name]
+              #if !item.default
+              #  delete item['default']
+              newElement = ui.formGenItem( item, classname, form )
+
+          # replace new option list
+          form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
 
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
-    $('#content_permanent').show()
-    @el.find('#content').empty()
+    $('.content').addClass('hide');
+    @navShow()
 
 class App.ControllerContent extends App.Controller
   constructor: ->
     super
-    $('#content_permanent').hide()
+    $('.content').addClass('hide');
+    $('#content').removeClass('hide');
+    @navShow()
 
 class App.ControllerModal extends App.Controller
-  className: 'modal fade',
-  tag: 'div',
+  elements:
+    '.modal-body': 'body'
 
   events:
-    'submit form':   'submit',
-    'click .submit': 'submit',
-    'click .cancel': 'modalHide',
-    'click .close':  'modalHide',
+    'submit form':                        'onSubmit'
+    'click .js-submit:not(.is-disabled)': 'onSubmit'
+    'click .js-cancel':                   'hide'
+    'click .js-close':                    'hide'
 
-  constructor: (options) ->
+  className: 'modal fade'
 
-    # do not use @el, because it's inserted by js
-    if options
-      delete options.el
+  constructor: (options = {}) ->
+    defaults =
+      backdrop: true
+      keyboard: true
+      close:    true
+      head:     '?'
+      buttonClass: 'btn--success'
+      centerButtons: []
+      container: null
+      onComplete: (->)
 
-      # callbacks
-#      @callback = {}
-#      if options.success
-#        @callback.success = options.success
-#      if options.error
-#        @callback.error = options.error
+    options = _.extend( defaults, options )
 
     super(options)
-    if options.show
-      @render()
 
-  render: ->
-    @html App.view('modal')(
-      title:   @title,
-      message: @message
-      detail:  @detail
-      close:   @close
-    )
-    @modalShow(
-      backdrop: @backdrop,
-      keyboard: @keyboard,
-    )
+    if @shown
+      @show()
 
-  modalShow: (params) ->
-    defaults = {
-      backdrop: true,
-      keyboard: true,
-      show: true,
-    }
-    data = $.extend({}, defaults, params)
-    @el.modal(data)
+  show: (content) ->
+    if @button is true
+      @button = 'Submit'
 
-    @el.bind('hidden.bs.modal', =>
+    @html App.view('modal')
+      head:          @head
+      message:       @message
+      detail:        @detail
+      close:         @close
+      cancel:        @cancel
+      button:        @button
+      buttonClass:   @buttonClass
+      centerButtons: @centerButtons
+      content:       content
 
-      # navigate back to home page
-#      if @pageData && @pageData.home
-#        @navigate @pageData.home
+    if @content
+      @body.html @content
 
-      # navigate back
-      if params && params.navigateBack
-        window.history.back()
+    if @container
+      @el.addClass('modal--local')
 
-      # remove modal from dom
-      $('.modal').remove();
-    )
+    @el.modal
+      keyboard:  @keyboard
+      show:      true
+      backdrop:  @backdrop
+      container: @container
+    .on
+      'show.bs.modal':   @onShow
+      'shown.bs.modal':  @onComplete
+      'hidden.bs.modal': =>
+        @onHide()
+        # remove modal from dom
+        $('.modal').remove()
 
-  modalHide: (e) ->
+  hide: (e) =>
     if e
       e.preventDefault()
     @el.modal('hide')
 
-  submit: (e) ->
+  onShown: =>
+    @onComplete()
+    console.log('modal shown: do nothing')
+    # do nothing
+
+  onShow: ->
+    console.log('modal rendered: do nothing')
+    # do nothing
+
+  onHide: ->
+    console.log('modal removed: do nothing')
+    # do nothing
+
+  onSubmit: (e) =>
     e.preventDefault()
-    @log 'error', 'You need to implement your own "submit" method!'
+    if @onSubmitCallback
+      @onSubmitCallback()
+    @log 'error', 'You need to implement your own "onSubmit" method!'
 
 class App.ErrorModal extends App.ControllerModal
   constructor: ->
     super
-    @render()
-
-  render: ->
-    @html App.view('modal')(
-      title:   'Error',
-      message: @message
-      detail:  @detail
-      close:   @close
-    )
-    @modalShow(
-      backdrop: false,
-      keyboard: false,
-    )
+    @show()
 
 class App.SessionMessage extends App.ControllerModal
   constructor: ->
     super
-    @render()
+    @show(@content)
 
-  render: ->
-    @html App.view('modal')(
-      title:   @title || '?'
-      message: @message || '?'
-      detail:  @detail
-      close:   @close
-      button:  @button
-    )
-    @modalShow(
-      backdrop: @backdrop,
-      keyboard: @keyboard,
-    )
-
-    # reload page on modal hidden
-    if @forceReload
-      @el.on('hidden', =>
-        @reload()
-      )
-
-  modalHide: (e) =>
+  # reload page on modal hidden
+  onHide: (e) =>
     if @forceReload
       @reload(e)
-    @el.modal('hide')
 
-  submit: (e) =>
+  onSubmit: (e) =>
     if @forceReload
       @reload(e)
 
   reload: (e) ->
     if e
       e.preventDefault()
+    $('#app').hide().attr('style', 'display: none!important')
     if window.location.reload
       window.location.reload()
       return true
@@ -648,3 +673,26 @@ class App.UpdateTastbar extends App.Controller
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
+
+class App.ControllerWidgetPermanent extends App.Controller
+  constructor: (params) ->
+    if params.el
+      params.el.append('<div id="' + params.key + '"></div>')
+      params.el = ("##{params.key}")
+
+    super(params)
+
+class App.ControllerWidgetOnDemand extends App.Controller
+  constructor: (params) ->
+    params.el = $("##{params.key}")
+    super
+
+  element: =>
+    $("##{@key}")
+
+  html: (raw) =>
+
+    # check if parent exists
+    if !$("##{@key}").get(0)
+      $('#app').before("<div id=\"#{@key}\" class=\"#{@className}\"></div>")
+    $("##{@key}").html raw

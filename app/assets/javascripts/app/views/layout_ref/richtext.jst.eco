@@ -1,0 +1,41 @@
+<div class="main flex">
+
+  <h1>Richtext<h1>
+
+  <h2>Singleline / Textonly</h2>
+
+  <div class="textBubble">
+    <div class="bubble-arrow"></div>
+    <div class="js-text-oneline text-1" contenteditable="true" data-name="body" style="min-height: 40px;"></div>
+  </div>
+
+  <div class="textBubble">
+    <div class="bubble-arrow"></div>
+    <div class="js-text-oneline text-2" contenteditable="true" data-name="body" style="min-height: 40px;">some test</div>
+  </div>
+
+  <h2>Multiline / Textonly</h2>
+
+  <div class="textBubble">
+    <div class="bubble-arrow"></div>
+    <div class="js-text-multiline text-3" contenteditable="true" data-name="body" style="min-height: 40px;"></div>
+  </div>
+
+  <div class="textBubble">
+    <div class="bubble-arrow"></div>
+    <div class="js-text-multiline text-4" contenteditable="true" data-name="body" style="min-height: 40px;">some text <br>Multiline</div>
+  </div>
+
+  <h2>Multiline / Richtext</h2>
+
+  <div class="textBubble">
+    <div class="bubble-arrow"></div>
+    <div class="js-text-richtext text-5" contenteditable="true" data-name="body" style="min-height: 40px;"></div>
+  </div>
+
+  <div class="textBubble">
+    <div class="bubble-arrow"></div>
+    <div class="js-text-richtext text-6" contenteditable="true" data-name="body" style="min-height: 40px;">some text <br>Multiline <b>bolt</b></div>
+  </div>
+
+</div>

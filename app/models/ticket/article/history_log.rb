@@ -27,5 +27,4 @@ returns
     data[:created_by_id]          = user_id
     History.add(data)
   end
-
 end

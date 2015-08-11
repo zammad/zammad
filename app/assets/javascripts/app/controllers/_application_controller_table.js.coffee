@@ -55,6 +55,7 @@ class App.ControllerTable extends App.Controller
       groupBy:  'group'
       checkbox: false
       radio:    false
+      class:    'some-css-class'
       bindRow:
         events:
           'click':      rowClick
@@ -82,7 +83,7 @@ class App.ControllerTable extends App.Controller
       el:       element
       overview: ['time', 'area', 'level', 'browser', 'location', 'data']
       attributes: [
-        { name: 'time',     display: 'Time',      type: 'time' },
+        { name: 'time',     display: 'Time',      tag: 'datetime' },
         { name: 'area',     display: 'Area',      type: 'text' },
         { name: 'level',    display: 'Level',     type: 'text' },
         { name: 'browser',  display: 'Browser',   type: 'text' },
@@ -104,7 +105,8 @@ class App.ControllerTable extends App.Controller
 
     # check if table is empty
     if _.isEmpty(data.objects)
-      table = '<p>-' + App.i18n.translateContent( 'none' ) + '-</p>'
+      table = App.view('generic/admin/empty')
+        explanation: data.explanation
       return $(table)
 
     # group by
@@ -169,6 +171,7 @@ class App.ControllerTable extends App.Controller
       checkbox: data.checkbox
       radio:    data.radio
       groupBy:  data.groupBy
+      class:    data.class
       destroy:  destroy
       callbacks: data.callbackAttributes
     )
@@ -235,23 +238,23 @@ class App.ControllerTable extends App.Controller
 
     # bind on delete dialog
     if data.model && destroy
-      table.delegate('[data-type="destroy"]', 'click', (e) ->
+      table.delegate('[data-type="destroy"]', 'click', (e) =>
         e.stopPropagation()
         e.preventDefault()
         itemId = $(e.target).parents('tr').data('id')
         item   = data.model.find(itemId)
         new App.ControllerGenericDestroyConfirm(
-          item: item
+          item:      item
+          container: @container
         )
       )
 
     # enable checkbox bulk selection
     if data.checkbox
 
-      # click first tr>td, click checkbox / improve usability
+      # click first tr>td, catch click
       table.delegate('tr > td:nth-child(1)', event, (e) ->
         e.stopPropagation()
-        $(e.target).find('[name="bulk"]').click()
       )
 
       # bind on full bulk click

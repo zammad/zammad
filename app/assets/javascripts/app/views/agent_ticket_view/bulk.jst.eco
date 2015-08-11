@@ -1,4 +1,16 @@
-<form class="form-stacked pull-left update-box bulk-action-form">
-  <div id="form-ticket-bulk"></div>
-  <input type="submit" class="btn primary submit" value="update">
+<form class="update-box bulkAction-form" role="form">
+  <div class="horizontal center bulkAction-firstStep js-action-step">
+    <div id="form-ticket-bulk" class="form-inline form-inline--enclosed flex"></div>
+    <div class="btn btn--primary js-confirm"><%- @T('Confirm') %></div>
+  </div>
+  <div class="vertical hide bulkAction-secondStep js-confirm-step">
+    <div id="form-ticket-bulk-comment" class="form-inline horizontal"></div>
+    <div class="horizontal">
+      <div id="form-ticket-bulk-typeVisibility" class="form-inline"></div>
+      <div class="bulkAction-controls align-right">
+        <a class="btn btn--text btn--secondary js-cancel"><%- @T( 'Go Back' ) %></a>
+        <input type="submit" class="btn btn--primary js-submit" value="<%- @T('Update') %>">
+      </div>
+    </div>
+  </div>
 </form>

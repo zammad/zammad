@@ -1,0 +1,60 @@
+{
+  "Token": "secret_token",
+  "Users": [
+    {
+      "login": "hans.atila@zammad.org",
+      "firstname": "Hans",
+      "lastname": "Atila",
+      "email": "hans.atila@zammad.org",
+      "organization": "Demo Organization",
+      "password": "Z4mm4dr0ckZ!"
+    }
+  ],
+  "Settings": [
+    {
+      "name": "developer_mode",
+      "value": true
+    },
+    {
+      "name": "product_name",
+      "value": "Zammad Demo System"
+    },
+    {
+      "name": "system_online_service",
+      "value": true
+    }
+  ],
+  "EmailAddresses": [
+    {
+      "id": 1,
+      "realname": "Zammad Demo System",
+      "email": "zammad_demo@localhost"
+    }
+  ],
+  "Organizations": [
+    {
+      "name": "Demo Organization"
+    }
+  ],
+  "Signatures": [
+    {
+      "id": 1,
+      "name": "default",
+      "body": "\n  #{user.firstname} #{user.lastname}\n\n--\n Demo Organization\n--"
+    }
+  ],
+  "Channels": [
+    {
+      "area": "Email::Inbound",
+      "adapter": "IMAP",
+      "group_id": 1,
+      "options": {
+        "host": "mx1.example.com",
+        "user": "some user",
+        "password": "some pw",
+        "ssl": true
+      },
+      "active":false
+    }
+  ]
+}

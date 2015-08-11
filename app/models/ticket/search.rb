@@ -1,29 +1,50 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 module Ticket::Search
 
 =begin
 
-search tickets
+search tickets via search index
 
   result = Ticket.search(
-    :current_user => User.find(123),
-    :query        => 'search something',
-    :limit        => 15,
+    current_user: User.find(123),
+    query:        'search something',
+    limit:        15,
   )
 
 returns
 
   result = [ticket_model1, ticket_model2]
 
-
-search tickets
+search tickets via search index
 
   result = Ticket.search(
-    :current_user => User.find(123),
-    :query        => 'search something',
-    :limit        => 15,
-    :full         => 0
+    current_user: User.find(123),
+    query:        'search something',
+    limit:        15,
+    full:         false,
+  )
+
+returns
+
+  result = [1,3,5,6,7]
+
+search tickets via database
+
+  result = Ticket.search(
+    current_user: User.find(123),
+    condition: {
+      'tickets.owner_id' => user.id,
+      'tickets.state_id' => Ticket::State.where(
+        state_type_id: Ticket::StateType.where(
+          name: [
+            'pending reminder',
+            'pending action',
+          ],
+        ),
+      ),
+    },
+    limit: 15,
+    full: false,
   )
 
 returns
@@ -39,20 +60,20 @@ returns
     limit        = params[:limit] || 12
     current_user = params[:current_user]
     full         = false
-    if params[:full] || !params.has_key?(:full)
+    if params[:full] || !params.key?(:full)
       full = true
     end
 
     # try search index backend
-    if !params[:detail] && SearchIndexBackend.enabled?
+    if !params[:condition] && SearchIndexBackend.enabled?
       query_extention = {}
       query_extention['bool'] = {}
       query_extention['bool']['must'] = []
 
-      if current_user.is_role('Agent')
-        groups = Group.joins(:users).
-        where( 'groups_users.user_id = ?', current_user.id ).
-        where( 'groups.active = ?', true )
+      if current_user.role?('Agent')
+        groups = Group.joins(:users)
+                 .where( 'groups_users.user_id = ?', current_user.id )
+                 .where( 'groups.active = ?', true )
         group_condition = []
         groups.each {|group|
           group_condition.push group.name
@@ -78,49 +99,40 @@ returns
         query_extention['bool']['must'].push access_condition
       end
 
-      ids = SearchIndexBackend.search( query, limit, 'Ticket', query_extention )
+      items = SearchIndexBackend.search( query, limit, 'Ticket', query_extention )
       if !full
+        ids = []
+        items.each {|item|
+          ids.push item[:id]
+        }
         return ids
       end
       tickets = []
-      ids.each { |id|
-        tickets.push Ticket.lookup( :id => id )
+      items.each { |item|
+        tickets.push Ticket.lookup( id: item[:id] )
       }
       return tickets
     end
 
     # fallback do sql query
-    access_condition = []
-    if current_user.is_role('Agent')
-      group_ids = Group.select( 'groups.id' ).joins(:users).
-      where( 'groups_users.user_id = ?', current_user.id ).
-      where( 'groups.active = ?', true ).
-      map( &:id )
-      access_condition = [ 'group_id IN (?)', group_ids ]
-    else
-      if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
-        access_condition = [ 'customer_id = ?', current_user.id ]
-      else
-        access_condition = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-      end
-    end
+    access_condition = Ticket.access_condition( current_user )
 
     # do query
     # - stip out * we already search for *query* -
     if query
       query.gsub! '*', ''
-      tickets_all = Ticket.select('DISTINCT(tickets.id)').
-      where(access_condition).
-      where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" ).
-      joins(:articles).
-      order('`tickets`.`created_at` DESC').
-      limit(limit)
+      tickets_all = Ticket.select('DISTINCT(tickets.id)')
+                    .where(access_condition)
+                    .where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
+                    .joins(:articles)
+                    .order('`tickets`.`created_at` DESC')
+                    .limit(limit)
     else
-      tickets_all = Ticket.select('DISTINCT(tickets.id)').
-      where(access_condition).
-      where(params[:condition]).
-      order('`tickets`.`created_at` DESC').
-      limit(limit)
+      tickets_all = Ticket.select('DISTINCT(tickets.id)')
+                    .where(access_condition)
+                    .where(params[:condition])
+                    .order('`tickets`.`created_at` DESC')
+                    .limit(limit)
     end
 
     # build result list
@@ -134,9 +146,8 @@ returns
 
     tickets = []
     tickets_all.each { |ticket|
-      tickets.push Ticket.lookup( :id => ticket.id )
+      tickets.push Ticket.lookup( id: ticket.id )
     }
-    return tickets
+    tickets
   end
-
 end

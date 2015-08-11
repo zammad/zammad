@@ -3,7 +3,7 @@
   <% if !_.isEmpty( @taskBarActions ): %>
   <div class="taskbar-new">
     <div class="btn-group">
-      <a class="btn btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="#new">
+      <a class="btn btn-small btn--primary dropdown-toggle" data-toggle="dropdown" href="#new">
         <%- @T('New') %>
         <span class="caret"></span>
       </a>

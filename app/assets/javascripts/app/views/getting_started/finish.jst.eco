@@ -1,0 +1,13 @@
+<div class="main flex vertical centered darkBackground">
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <form class="setup wizard">
+    <div class="wizard-slide">
+      <h2><%- @T('Setup Finished') %></h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span><%- @T('Starting Zammad') %>
+        </p>
+      </div>
+    </div>
+  </form>
+</div>

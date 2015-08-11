@@ -1,23 +1,155 @@
-<div class="content-two">
-  <div class="sidebar">
-    <div class="side-overviews" id="sortable-sidebar"></div>
+<div class="dashboard main flex center">
+  <div class="tabs wide-tabs horizontal">
+    <div class="tab active" data-area="stat-widgets"><%- @T('My Stats') %></div>
+    <div class="tab" data-area="first-steps-widgets"><%- @T('First Steps') %></div>
   </div>
-  <div class="main">
 
-    <div class="page-header">
-      <h1><%- @T( @head ) %> <small><!--<a href="#" data-type="settings" class="glyphicon glyphicon-edit">--></a></small></h1>
-    </div>
+  <div class="tab-content first-steps-widgets hidden">
+    <% if @isAdmin: %>
+    <%- @T('Configuration') %>
+    <ul>
+      <li><%- @T('Branding') %></li>
+      <li><%- @T('Your Email Configuration') %></li>
+      <li><%- @T('Invite Agents/Colliges') %></li>
+    </ul>
+    <% end %>
+    <%- @T('How to use it') %>
+    <ul>
+      <li><a href="#" class="intro"><%- @T('Intro') %></a></li>
+      <li><%- @T('Create a Test Ticket') %></li>
+      <li><%- @T('Create new Overviews') %></li>
+      <li><%- @T('Create Text Modues') %></li>
+      <li><%- @T('Create Macros') %></li>
+    </ul>
+    <% if @isAdmin: %>
+    <%- @T('Additionals Channels') %>
+    <ul>
+      <li><%- @T('Twitter') %></li>
+      <li><%- @T('Facebook') %></li>
+      <li><%- @T('Chat') %></li>
+      <li><%- @T('Widget') %></li>
+    </ul>
+    <% end %>
 
-  <div class="span9">
-<!--
-    <div class="row">
-      <div class="span9">
-        <h2>Network</h2>
-      Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-      Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+  </div>
+
+  <div class="tab-content stat-widgets three-columns horizontal">
+    <div class="column">
+      <div class="time stat-widget vertical">
+        <h3>∅ Waiting time today</h3>
+        <div class="stat-graphic">
+          <div class="stat-stopwatch centered">
+            <svg class="stat-icon stopwatch-icon"><use xlink:href="#icon-stopwatch" /></svg>
+            <canvas class="stat-dial"></canvas>
+            <div class="stat-amount"></div>
+          </div>
+        </div>
+        <div class="stat-label">My handling time: 25 minutes</div>
+        <div class="stat-detail">Average: 13%</div>
       </div>
     </div>
--->
-    <div class="main-overviews" id="sortable"></div>
+    <div class="column">
+      <div class="mood stat-widget vertical">
+        <h3>Mood</h3>
+        <div class="stat-graphic">
+          <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-supergood" /></svg>
+        </div>
+        <div class="stat-label">3% of my tickets escalated.</div>
+        <div class="stat-detail">Average: 17%</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="channel-distribution stat-widget vertical centered">
+        <h3>Channel Distribution</h3>
+        <div class="stat-graphic">
+          <div class="stats-row email-channel">
+            <svg class="stat-channel-icon"><use xlink:href="#icon-email" /></svg>
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 80%"></div>
+              <div class="stat-bar secondary" style="height: 100%"></div>
+            </div>
+            <div class="stat-label">34%</div>
+          </div>
+          <div class="stats-row received-calls-channel">
+            <svg class="stat-channel-icon"><use xlink:href="#icon-received-calls" /></svg>
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 53%"></div>
+              <div class="stat-bar secondary" style="height: 47%"></div>
+            </div>
+            <div class="stat-label">26%</div>
+          </div>
+          <div class="stats-row outbound-calls-channel">
+            <svg class="stat-channel-icon"><use xlink:href="#icon-outbound-calls" /></svg>
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 46%"></div>
+              <div class="stat-bar secondary" style="height: 53%"></div>
+            </div>
+            <div class="stat-label">24%</div>
+          </div>
+          <div class="stats-row facebook-channel">
+            <svg class="stat-channel-icon"><use xlink:href="#icon-facebook" /></svg>
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 24%"></div>
+              <div class="stat-bar secondary" style="height: 18%"></div>
+            </div>
+            <div class="stat-label">12%</div>
+          </div>
+          <div class="stats-row twitter-channel">
+            <svg class="stat-channel-icon"><use xlink:href="#icon-twitter" /></svg>
+            <div class="stat-bars">
+              <div class="stat-bar primary" style="height: 13%"></div>
+              <div class="stat-bar secondary" style="height: 16%"></div>
+            </div>
+            <div class="stat-label">4%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="status stat-widget vertical">
+        <h3>Status</h3>
+        <div class="stat-graphic">
+          <div class="stat-tickets vertical reverse end">
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+          </div>
+          <svg class="total-tickets"><use xlink:href="#icon-total-tickets" /></svg>
+        </div>
+        <div class="stat-label">Tickets of my Group: 78 of 234</div>
+        <div class="stat-detail">Average: 22%</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="in-process stat-widget vertical">
+        <h3>Tickets in process</h3>
+        <div class="stat-graphic">
+          <svg class="in-process-icon state-color supergood-state"><use xlink:href="#icon-in-process" /></svg>
+        </div>
+        <div class="stat-label">74% are currently in process</div>
+        <div class="stat-detail">Average: 62%</div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="reopening stat-widget vertical">
+        <h3>Reopening rate</h3>
+        <div class="stat-graphic">
+          <svg class="reopening-icon state-color ok-state"><use xlink:href="#icon-reopening" /></svg>
+        </div>
+        <div class="stat-label">7% are being reopened</div>
+        <div class="stat-detail">Average: 6%</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="sidebar optional">
+  <h2><%- @T('Activity Stream') %></h2>
+  <div class="activity-description hidden">
+    <p><%- @T('Here you will find latest activities in your system.') %></p>
+    <p><%- @T('E. g. recent changed tickets, users or organizations.') %></p>
   </div>
 </div>

@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'cache'
@@ -23,14 +23,32 @@ class ActiveSupport::TestCase
   # load seeds
   load "#{Rails.root}/db/seeds.rb"
 
-  setup do
+  # proccess background jobs
+  Delayed::Worker.new.work_off
+
+  # set system mode to done / to activate
+  Setting.set('system_init_done', true)
+
+  def setup
+
+    # clear cache
+    Cache.clear
 
     # set current user
-    puts 'reset UserInfo.current_user_id'
     UserInfo.current_user_id = nil
+  end
+
+  # cleanup jobs
+  def teardown
+
+    # check if jobs are proccessed
+    return if Delayed::Job.all.empty?
+
+    Delayed::Job.where('failed_at != NULL').each {|job|
+      assert( false, "not processable job #{job.inspect}" )
+    }
+    Delayed::Job.all.destroy_all
   end
 
   # Add more helper methods to be used by all tests here...
 end
-
-

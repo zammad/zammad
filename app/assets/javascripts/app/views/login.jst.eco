@@ -1,50 +1,72 @@
-<div id="login">
+<div class="login fullscreen">
+  <div class="fullscreen-center">
+    <div class="fullscreen-body">
+      <p><%- @T( 'Login with %s', @C( 'fqdn' ) ) %></p>
 
-  <div class="hero-unit">
-  <h1><%- @T( 'Welcome stranger!' ) %></h1>
+      <div class="hero-unit">
+        <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C( 'product_name' ) %>">
+        <form id="login">
+          <div class="form-group">
+            <label for="username"><%- @Ti( 'Username / email' ) %></label>
+            <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
+          </div>
 
-    <div class="col-12">
-      <p><%- @T( 'Sign in with' ) %></p>
-      <form id="login" class="form-inline">
-        <input name="username" type="text" class="form-control col-3" placeholder="<%- @Ti( 'Username or email' ) %>" value="<%= @item.username %>" autocapitalize="off"/>
-        <input name="password" type="password" class="form-control col-3" placeholder="<%- @Ti( 'Password' ) %>"/>
-        <button class="btn btn-primary" type="submit"><%- @T( 'Sign in' ) %></button>
-        <div>
-          <span class="small"><label><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></label></span>
-          <% if @C('user_lost_password'): %>
-          <span class="small">&middot;</span>
-          <a href="#reset_password" class="small"><%- @T( 'Forgot password?' ) %></a>
+          <div class="form-group">
+            <label for="password"><%- @Ti( 'Password' ) %></label>
+            <input id="password" name="password" type="password" class="form-control"/>
+          </div>
+
+          <div class="form-group">
+    <!--
+            <label for="remember_me"><%- @Ti( 'Remember me' ) %></label>
+            <input id="remember_me" name="remember_me" value="1" type="checkbox"/>
+    -->
+            <label><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></label>
+          </div>
+
+          <div class="form-controls">
+            <button class="btn btn--primary" type="submit"><%- @T( 'Sign in' ) %></button>
+
+            <% if @C('user_lost_password'): %>
+              <a href="#password_reset" class="btn btn--text btn--secondary align-right"><%- @T( 'Forgot password?' ) %></a>
+            <% end %>
+          </div>
+
+          <% if !_.isEmpty( @auth_providers ): %>
+          <div class="separator">
+            <span class="separator-text"><%- @T( 'or sign in using' ) %></span>
+          </div>
+
+          <div class="auth-providers">
+            <% for auth_provider in @auth_providers: %>
+              <a class="auth-provider auth-provider--<%= auth_provider.class %>" href="<%= auth_provider.url %>">
+                <svg class="provider-icon"><use xlink:href="#icon-<%= auth_provider.class %>-button" /></svg>
+                <span class="provider-name"><%- @T( auth_provider.name ) %></span>
+              </a>
+            <% end %>
+          </div>
           <% end %>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
 
-  <% if !_.isEmpty( @auth_providers ): %>
-    <div class="col-12">
-      <p>--- <%- @T( 'or' ) %> ---</p>
-    </div>
+      <p>
+        <%- @T( "You're already registered with your email adress if you've been in touch with our support team.") %><br>
+        <% if @C('user_lost_password'): %>
+          <%- @T( "You can request your password") %> <a href="#password_reset"><%- @T( "here") %></a>.
+        <% end %>
+      </p>
 
-    <div class="col-12">
-      <p><%- @T( 'Sign in using' ) %></p>
-      <ul>
-      <% for auth_provider in @auth_providers: %>
-        <li><a href="<%= auth_provider.url %>"><%- @T( auth_provider.name ) %></a></li>
-      <% end %>
-      </ul>
+    <% if @C('user_create_account'): %>
+      <hr>
+      <p>
+        <a href="#signup"><%- @T( 'Register as a new customer' ) %></a>
+      </p>
+    <% end %>
     </div>
-  <% end %>
-
-  <% if @C('user_create_account'): %>
-    <div class="col-12">
-      <p>--- <%- @T( 'or' ) %> ---</p>
-    </div>
-
-    <div class="col-12">
-      <p><%- @T( 'New to %s join today!',  @C( 'product_name' ) ) %></p>
-      <p><a href="#signup" class="btn btn-default"><%- @T( 'Sign up' ) %></a>
-    </div>
-  <% end %>
-
   </div>
-
+  <div class="poweredBy">
+    <svg class="logo icon-logo"><use xlink:href="#icon-logo" /></svg>
+    <%- @T("Powered by") %>
+    <svg class="logotype icon-logotype"><use xlink:href="#icon-logotype" /></svg>
+  </div>
 </div>

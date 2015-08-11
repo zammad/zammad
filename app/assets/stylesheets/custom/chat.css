@@ -1,7 +1,8 @@
-#chat {
+#app > #chat {
   position: fixed;
   bottom: 0;
   right: 0;
+  display: none;
 }
 
 #chat .well-chat {

@@ -3,84 +3,53 @@ require 'browser_test_helper'
 
 class CustomerTicketCreateTest < TestCase
   def test_customer_ticket_create
-    tests = [
-      {
-        :name     => 'customer ticket create',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#customer_ticket_new"]',
-          },
-          {
-            :execute => 'check',
-            :css     => '.ticket-create',
-            :result  => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute => 'select',
-            :css     => '.ticket-create select[name="group_id"]',
-            :value   => 'Users',
-          },
-          {
-            :execute => 'set',
-            :css     => '.ticket-create input[name="title"]',
-            :value   => 'some subject 123äöü',
-          },
-          {
-            :execute => 'set',
-            :css     => '.ticket-create textarea[name="body"]',
-            :value   => 'some body 123äöü',
-          },
-          {
-            :execute => 'click',
-            :css     => '.ticket-create button[type="submit"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute => 'check',
-            :element => :url,
-            :result  => '#ticket/zoom/',
-          },
+    @browser = browser_instance
+    login(
+      username: 'nicole.braun@zammad.org',
+      password: 'test',
+      url: browser_url,
+    )
 
-          # check ticket
-          {
-            :execute      => 'match',
-            :css          => '.active div.ticket-article',
-            :value        => 'some body 123äöü',
-            :match_result => true,
-          },
+    # customer ticket create
+    click( css: 'a[href="#new"]' )
+    click( css: 'a[href="#customer_ticket_new"]' )
+    sleep 2
 
-          # update ticket
-          {
-            :execute => 'check',
-            :css     => '.active textarea[name="body"]',
-            :result  => true,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active textarea[name="body"]',
-            :value   => 'some body 1234 äöüß',
-          },
-          {
-            :execute => 'click',
-            :css     => '.active button',
-            :type    => 'submit',
-          },
-          {
-            :execute  => 'watch_for',
-            :area     => 'body',
-            :value    => 'some body 1234 äöüß',
-          },
-        ],
-      },
-    ]
-    browser_signle_test_with_login(tests)
+    select(
+      css: '.newTicket select[name="group_id"]',
+      value: 'Users',
+    )
+
+    set(
+      css: '.newTicket input[name="title"]',
+      value: 'some subject 123äöü',
+    )
+    set(
+      css: '.newTicket [data-name="body"]',
+      value: 'some body 123äöü',
+    )
+    click( css: '.newTicket button.js-submit' )
+    sleep 5
+
+    # check if ticket is shown
+    location_check( url: '#ticket/zoom/' )
+
+    match(
+      css: '.active div.ticket-article',
+      value: 'some body 123äöü',
+      no_quote: true,
+    )
+
+    # update ticket
+    set(
+      css: '.active [data-name="body"]',
+      value: 'some body 1234 äöüß',
+    )
+    click( css: '.active button.js-submit' )
+
+    watch_for(
+      css: '.active div.ticket-article',
+      value: 'some body 1234 äöüß',
+    )
   end
 end

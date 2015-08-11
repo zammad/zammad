@@ -9,16 +9,16 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # if sender is customer, do not change anything
-    sender = Ticket::Article::Sender.lookup( :id => record.sender_id )
-    return if sender == nil
+    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
+    return if sender.nil?
     return if sender['name'] == 'Customer'
 
     # set email attributes
-    type = Ticket::Article::Type.lookup( :id => record.type_id )
+    type = Ticket::Article::Type.lookup( id: record.type_id )
     return if type['name'] != 'email'
 
     # set subject if empty
-    ticket = Ticket.lookup( :id => record.ticket_id )
+    ticket = Ticket.lookup( id: record.ticket_id )
     if !record.subject || record.subject == ''
       record.subject = ticket.title
     end
@@ -28,12 +28,12 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
 
     # generate message id
     fqdn = Setting.get('fqdn')
-    record.message_id = '<' + DateTime.current.to_s(:number) + '.' + record.ticket_id.to_s + '.' + rand(999999).to_s() + '@' + fqdn + '>'
+    record.message_id = '<' + DateTime.current.to_s(:number) + '.' + record.ticket_id.to_s + '.' + rand(999_999).to_s() + '@' + fqdn + '>'
 
     # set sender
     email_address = ticket.group.email_address
     if !email_address
-      raise "No email address found for group '#{ticket.group.name}'"
+      fail "No email address found for group '#{ticket.group.name}'"
     end
     system_sender = "#{email_address.realname} <#{email_address.email}>"
     if Setting.get('ticket_define_email_from') == 'AgentNameSystemAddressName'

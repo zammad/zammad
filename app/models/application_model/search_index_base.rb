@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 module ApplicationModel::SearchIndexBase
 
 =begin
@@ -20,9 +19,9 @@ returns
 
     # default ignored attributes
     ignore_attributes = {
-      :created_by_id            => true,
-      :updated_by_id            => true,
-      :active                   => true,
+      created_by_id: true,
+      updated_by_id: true,
+      active: true,
     }
     if self.class.search_index_support_config[:ignore_attributes]
       self.class.search_index_support_config[:ignore_attributes].each {|key, value|
@@ -30,23 +29,27 @@ returns
       }
     end
 
+    # for performance reasons, Model.search_index_reload will only collect if of object
+    # get whole data here
+    data = self.class.find(id)
+
     # remove ignored attributes
-    attributes = self.attributes
+    attributes = data.attributes
     ignore_attributes.each {|key, value|
       next if value != true
       attributes.delete( key.to_s )
     }
 
     # fill up with search data
-    attributes = search_index_attribute_lookup(attributes, self)
+    attributes = search_index_attribute_lookup(attributes, data)
     return if !attributes
 
     # update backend
     if self.class.column_names.include? 'active'
-      if self.active
+      if active
         SearchIndexBackend.add( self.class.to_s, attributes )
       else
-        SearchIndexBackend.remove( self.class.to_s, self.id )
+        SearchIndexBackend.remove( self.class.to_s, id )
       end
     else
       SearchIndexBackend.add( self.class.to_s, attributes )
@@ -68,7 +71,7 @@ returns
 
   def search_index_data
     attributes = {}
-    ['name', 'note'].each { |key|
+    %w(name note).each { |key|
       if self[key] && !self[key].empty?
         attributes[key] = self[key]
       end
@@ -108,8 +111,8 @@ returns
       # get attribute name
       attribute_name_with_id = key.to_s
       attribute_name         = key.to_s
-      next if attribute_name[-3,3] != '_id'
-      attribute_name = attribute_name[ 0, attribute_name.length-3 ]
+      next if attribute_name[-3, 3] != '_id'
+      attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
 
       # check if attribute method exists
       next if !ref_object.respond_to?( attribute_name )
@@ -119,7 +122,7 @@ returns
       next if !relation_class
 
       # lookup ref object
-      relation_model = relation_class.lookup( :id => value )
+      relation_model = relation_class.lookup( id: value )
       next if !relation_model
 
       # get name of ref object
@@ -137,5 +140,4 @@ returns
     }
     attributes_new.merge(attributes)
   end
-
 end

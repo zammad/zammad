@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class PostmasterFiltersController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
 =begin
 
@@ -54,7 +54,7 @@ curl http://localhost/api/v1/postmaster_filters.json -v -u #{login}:#{password}
 =end
 
   def index
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_index_render(PostmasterFilter, params)
   end
 
@@ -76,7 +76,7 @@ curl http://localhost/api/v1/postmaster_filters/#{id}.json -v -u #{login}:#{pass
 =end
 
   def show
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(PostmasterFilter, params)
   end
 
@@ -121,7 +121,7 @@ curl http://localhost/api/v1/postmaster_filters.json -v -u #{login}:#{password} 
 =end
 
   def create
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(PostmasterFilter, params)
   end
 
@@ -164,7 +164,7 @@ curl http://localhost/api/v1/postmaster_filters.json -v -u #{login}:#{password} 
 =end
 
   def update
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(PostmasterFilter, params)
   end
 
@@ -179,7 +179,7 @@ Test:
 =end
 
   def destroy
-    return if deny_if_not_role('Admin')
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(PostmasterFilter, params)
   end
 end

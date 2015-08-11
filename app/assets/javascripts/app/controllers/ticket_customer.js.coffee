@@ -1,26 +1,27 @@
 class App.TicketCustomer extends App.ControllerModal
   constructor: ->
     super
-    @render()
 
-  render: ->
+    @head   = 'Change Customer'
+    @close  = true
+    @cancel = true
+    @button = true
+
     configure_attributes = [
-      { name: 'customer_id', display: 'Customer', tag: 'autocompletion', type: 'text', limit: 100, null: false, relation: 'User', class: 'span5', autocapitalize: false, help: 'Select the new customer of the Ticket.', source: @apiPath + '/users/search', minLengt: 2 },
+      { name: 'customer_id', display: 'Customer', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: true },
     ]
 
-    @html App.view('agent_ticket_customer')()
-
-    new App.ControllerForm(
-      el: @el.find('#form-customer'),
-      model: {
+    controller = new App.ControllerForm(
+      model:
         configure_attributes: configure_attributes,
-        className:            'update',
-      },
-      autofocus: true,
+      autofocus: true
     )
-    @modalShow()
 
-  submit: (e) =>
+    @content = controller.form
+
+    @show()
+
+  onSubmit: (e) =>
     e.preventDefault()
 
     params = @formParam(e.target)
@@ -30,7 +31,7 @@ class App.TicketCustomer extends App.ControllerModal
     callback = =>
 
       # close modal
-      @modalHide()
+      @hide()
 
       # update ticket
       @ticket.updateAttributes(

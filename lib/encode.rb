@@ -22,21 +22,19 @@ module Encode
         string.encode!( 'UTF-8', 'Windows-1252' )
 
       rescue EncodingError => e
-        puts "Bad encoding: #{string.inspect}"
+        Rails.logger.error "Bad encoding: #{string.inspect}"
         string = string.encode!( 'UTF-8', invalid: :replace, undef: :replace, replace: '?' )
       end
       return string
     end
 
-#    puts '-------' + charset
-#    puts string
     # convert string
     begin
       string.encode!( 'UTF-8', charset )
     rescue => e
-      puts 'ERROR: ' + e.inspect
+      Rails.logger.error 'ERROR: ' + e.inspect
       string
     end
-#    Iconv.conv( 'UTF8', charset, string )
+    #Iconv.conv( 'UTF8', charset, string )
   end
 end

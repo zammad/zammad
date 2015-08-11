@@ -8,11 +8,12 @@ class Token < ActiveRecord::Base
   def self.check( data )
 
     # fetch token
-    token = Token.where( :action => data[:action], :name => data[:name] ).first
+    token = Token.find_by( action: data[:action], name: data[:name] )
     return if !token
 
     # check if token is still valid
-    if token.created_at < 1.day.ago
+    if !token.persistent &&
+       token.created_at < 1.day.ago
 
       # delete token
       token.delete
@@ -20,14 +21,18 @@ class Token < ActiveRecord::Base
       return
     end
 
-    # return token if valid
-    return token.user
+    # return token user
+    token.user
   end
 
   private
+
   def generate_token
-    begin
+
+    loop do
       self.name = SecureRandom.hex(20)
-    end while Token.exists?( :name => self.name )
+
+      break if !Token.exists?( name: name )
+    end
   end
 end

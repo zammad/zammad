@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 module ApplicationModel::HistoryLogBase
 
 =begin
@@ -36,22 +35,22 @@ returns
 
   result = [
     {
-      :type           => 'created',
-      :object         => 'Organization',
-      :created_by_id  => 3,
-      :created_at     => "2013-08-19 20:41:33",
+      :type          => 'created',
+      :object        => 'Organization',
+      :created_by_id => 3,
+      :created_at    => "2013-08-19 20:41:33",
     },
     {
-      :type           => 'updated',
-      :object         => 'Organization',
-      :attribute      => 'note',
-      :o_id           => 1,
-      :id_to          => nil,
-      :id_from        => nil,
-      :value_from     => "some note",
-      :value_to       => "some other note",
-      :created_by_id  => 3,
-      :created_at     => "2013-08-19 20:41:33",
+      :type          => 'updated',
+      :object        => 'Organization',
+      :attribute     => 'note',
+      :o_id          => 1,
+      :id_to         => nil,
+      :id_from       => nil,
+      :value_from    => "some note",
+      :value_to      => "some other note",
+      :created_by_id => 3,
+      :created_at    => "2013-08-19 20:41:33",
     },
   ]
 
@@ -91,10 +90,9 @@ returns
         history[:assets] = record.assets( history[:assets] )
       end
     }
-    return {
-      :history => history[:list],
-      :assets  => history[:assets],
+    {
+      history: history[:list],
+      assets: history[:assets],
     }
   end
-
 end

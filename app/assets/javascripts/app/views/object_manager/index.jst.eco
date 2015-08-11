@@ -1,0 +1,43 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T( @head ) %> <small><%- @T( 'Object Manager' ) %></small></h1>
+  </div>
+  <div class="page-header-meta">
+    <a class="btn js-restore"><%- @T( 'Restore Defaults' ) %></a>
+    <a class="btn btn--success js-new"><%- @T( 'New Attribute' ) %></a>
+  </div>
+</div>
+<div class="box box--message">
+  <h2>Database Update required</h2>
+  <p><%- @T( 'Changes were made that require a database update. This might take some time.' ) %></p>
+  <div class="box-controls">
+    <div class="btn btn--text btn--secondary js-discard">Discard Changes</div>
+    <div class="btn btn--primary js-sync align-right"><%- @T( 'Update Database' ) %></div>
+  </div>
+</div>
+<div class="box box--message">
+  <div class="box-progress">
+    <div class="box-progress-title"><%- @T('Updating Database') %></div>
+    <div class="box-progress-body">
+      <progress max="100" value="50"></progress>
+    </div>
+  </div>
+</div>
+<table class="table table-striped table-hover is-disabled">
+  <thead>
+    <tr>
+      <th class=""><%- @T('Display') %></th>
+      <th class=""><%- @T('Name') %></th>
+      <th class=""><%- @T('Type') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for item in @items: %>
+    <tr class="<% if item.active is false: %>is-inactive<% end %> js-edit u-clickable" data-id="<%- item.id %>">
+      <td><%= item.display %></td>
+      <td><%= item.name %></td>
+      <td><%= item.data_type %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

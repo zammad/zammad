@@ -1,23 +1,23 @@
-<div class="user-info">
-
-<% if @user.imageUrl: %>
-  <img class="thumbnail" src="<%- @user.imageUrl %>" alt="">
-<% end %>
-  <div class="customer-info" title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></div>
+<div class="sidebar-block">
+  <%- @user.avatar("50", "", "userInfo-avatar") %>
+  <h3 title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></h3>
+</div>
 <% for row in @userData: %>
   <% if @user[row.name] || row.name is 'note': %>
-    <% if row.tag isnt 'textarea': %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>"><%- @L( @P( @user[row.name] ) ) %></div>
+    <div class="sidebar-block">
+    <% if row.tag isnt 'richtext': %>
+      <label><%- @T( row.display ) %></label>
+      <%- @P( @user, row.name ) %>
     <% else: %>
-      <div class="customer-info" title="<%- @Ti( row.display ) %>">
-        <textarea class="customer-info" rows="3" name="<%= row.name %>" data-type="update" placeholder="<%- @T( row.display ) %>"><%= @user[row.name] %></textarea>
-      </div>
+      <label><%- @T( row.display ) %></label>
+      <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @user[row.name] %></div>
     <% end %>
+    </div>
   <% end %>
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
-  <div class="customer-info">
-    <strong><%- @T( 'Linked Accounts' ) %></strong><br/>
+  <div class="sidebar-block">
+    <label><%- @T( 'Linked Accounts' ) %></label>
   <% for account of @user['accounts']: %>
     <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
   <% end %>
@@ -25,24 +25,21 @@
 <% end %>
 <% if !_.isEmpty(@user['links']): %>
   <% for link in @user['links']: %>
-  <div class="customer-info">
-    <strong><%- @T( link['title'] ) %></strong><br/>
-    <% for item in link['items']: %>
-      <% if item['url']: %>
-        <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
-      <% else: %>
-        <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
-      <% end %>
-        <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
-      <% if item['url']: %>
-        </a>
-      <% else: %>
-        </span>
-      <% end %>
-    <% end %>
+  <div class="sidebar-block">
+    <label><%- @T( link['title'] ) %></label>
+<% for item in link['items']: %>
+  <% if item['url']: %>
+    <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>
+  <% else: %>
+    <span title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>">
+  <% end %>
+    <%- @T( item['name'] ) %> <% if item['count'] isnt undefined: %><span class="count">(<%= item['count'] %>)</span><% end %>
+  <% if item['url']: %>
+    </a>
+  <% else: %>
+    </span>
+  <% end %>
   </div>
+<% end %>
   <% end %>
 <% end %>
-</div>
-
-</div>

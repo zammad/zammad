@@ -1,16 +1,25 @@
-<div class="">
+<div class="templates-manage">
   <form>
-    <div id="form-template"></div>
-    <!--<button type="submit" class="btn btn-default" data-type="template_edit"><%- @T( 'Edit' ) %></button>-->
-    <button type="submit" class="btn btn-default" data-type="template_delete"><%- @T( 'Delete' ) %></button>
-    <button type="submit" class="btn btn-default" data-type="template_select"><%- @T( 'Apply' ) %></button>
+    <div class="form-group">
+      <label class="" for="template_name"><%- @T('Select Template') %></label>
+      <div id="form-template"></div>
+    </div>
+    <button type="submit" class="btn" data-type="template_delete"><%- @T('Delete') %></button>
+    <button type="submit" class="btn" data-type="template_select"><%- @T('Apply') %></button>
   </form>
-  <br>
+  <hr>
   <form>
-    <fieldset>
-      <label class="" for="template_name"><%- @T( 'Save as Template' ) %></label>
+    <div class="form-group">
+      <label class="" for="template_name"><%- @T('Save as Template') %></label>
       <input type="text" name="template_name" id="template_name" class="form-control" value="<%= @template.name %>"/>
-    </fieldset>
-    <button type="submit" class="btn btn-default" data-type="template_save"><%- @T( 'Save' ) %></button>
-  </form>
+    </div>
+    <button type="submit" class="btn" data-type="template_save"><%- @T('Save') %></button>
+</form>
+</div>
+
+<div class="templates-welcome">
+  <p><%- @T('No template created yet.') %></p>
+  <p><%- @T('With templates you can pre-fill ticket attributes.') %></p>
+  <p><%- @T('Choose attributes and then save them as a new template.') %></p>
+  <p><a class="create u-clickable"><%- @T('Save new template') %></a></p>
 </div>

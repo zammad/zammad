@@ -1,22 +1,21 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 module Ticket::Number::Date
-  extend self
+  module_function
 
   def generate
 
     # get config
     config = Setting.get('ticket_number_date')
 
-    t = Time.now
-    date = t.strftime("%Y-%m-%d")
+    t = Time.zone.now
+    date = t.strftime('%Y-%m-%d')
 
     # read counter
     counter_increment = nil
     Ticket::Counter.transaction do
-      counter = Ticket::Counter.where( :generator => 'Date' ).lock(true).first
+      counter = Ticket::Counter.where( generator: 'Date' ).lock(true).first
       if !counter
-        counter = Ticket::Counter.new( :generator => 'Date', :content => '0' )
+        counter = Ticket::Counter.new( generator: 'Date', content: '0' )
       end
 
       # increase counter
@@ -33,7 +32,7 @@ module Ticket::Number::Date
     end
 
     system_id = Setting.get('system_id') || ''
-    number = t.strftime("%Y%m%d") + system_id.to_s + sprintf( "%04d", counter_increment)
+    number = t.strftime('%Y%m%d') + system_id.to_s + format('%04d', counter_increment)
 
     # calculate a checksum
     # The algorithm to calculate the checksum is derived from the one
@@ -62,8 +61,9 @@ module Ticket::Number::Date
       end
       number += chksum.to_s
     end
-    return number
+    number
   end
+
   def check(string)
 
     # get config
@@ -73,11 +73,11 @@ module Ticket::Number::Date
     ticket              = nil
 
     # probe format
-    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,50})/i then
-      ticket = Ticket.where( :number => $1 ).first
-    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i then
-      ticket = Ticket.where( :number => $1 ).first
+    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,50})/i
+      ticket = Ticket.find_by( number: $1 )
+    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i
+      ticket = Ticket.find_by( number: $1 )
     end
-    return ticket
+    ticket
   end
 end

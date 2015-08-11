@@ -1,8 +1,9 @@
-class App.WidgetTemplate extends App.ControllerDrox
+class App.WidgetTemplate extends App.Controller
   events:
     'click [data-type=template_save]':   'create',
     'click [data-type=template_select]': 'select',
     'click [data-type=template_delete]': 'delete',
+    'click .templates-welcome .create':  'showManage',
 
   constructor: ->
     super
@@ -17,38 +18,62 @@ class App.WidgetTemplate extends App.ControllerDrox
     ]
 
     template = {}
-    if @template_id
+    if @template_id && App.Template.exists( @template_id )
       template = App.Template.find( @template_id )
 
     # insert data
-    @html @template(
-      file:   'widget/template'
-      header: 'Templates'
-      params:
-        template: template
+    @html App.view('widget/template')(
+      template: template
     )
     new App.ControllerForm(
       el:        @el.find('#form-template')
-      model:     { configure_attributes: @configure_attributes, className: '' }
+      model:
+        configure_attributes: @configure_attributes
       autofocus: false
     )
+
+    if App.Template.all().length is 0
+      @showWelcome()
+    else
+      @showManage()
+
+  showManage: (e) ->
+    if e
+      e.preventDefault()
+    @el.find('.templates-manage').show()
+    @el.find('.templates-welcome').hide()
+
+  showWelcome: (e) ->
+    if e
+      e.preventDefault()
+    @el.find('.templates-manage').hide()
+    @el.find('.templates-welcome').show()
 
   delete: (e) =>
     e.preventDefault()
 
     # get params
     params = @formParam(e.target)
+
+    # check if template is selected
+    return if !params['template_id']
+
     template = App.Template.find( params['template_id'] )
     if confirm('Sure?')
+      @template_id = false
       template.destroy()
-      @template_id = undefined
-      @render()
 
   select: (e) =>
     e.preventDefault()
 
     # get params
     params = @formParam(e.target)
+
+    # check if template is selected
+    return if !params['template_id']
+
+    # remember template (to select it after rerender)
+    @template_id = params['template_id']
 
     template = App.Template.find( params['template_id'] )
     App.Event.trigger 'ticket_create_rerender', template.attributes()
@@ -60,6 +85,7 @@ class App.WidgetTemplate extends App.ControllerDrox
     form   = @formParam( $('.ticket-create') )
     params = @formParam(e.target)
     name = params['template_name']
+    return if !name
 #    delete params['template_name']
 
     template = App.Template.findByAttribute( 'name', name )
@@ -81,8 +107,7 @@ class App.WidgetTemplate extends App.ControllerDrox
       ui = @
       template.save(
         done: ->
-          ui.template_id = @.id
-          ui.render()
+          ui.template_id = @id
 
         fail: =>
           @log 'error', 'save failed!'

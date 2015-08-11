@@ -1,0 +1,64 @@
+<div class="main flex">
+
+  <h1>Communication Reply<h1>
+
+  <hr>
+
+  <h2>Article Reply</h2>
+
+  <div class="article-new">
+    <div class="article-content zIndex-5">
+      <div class="internal-border">
+        <div class="textBubble">
+          <div class="bubble-arrow"></div>
+          <div class="js-textarea articleNewEdit-body" contenteditable="true"><%- @content %></div>
+          <!-- .textBubble grows with textarea (and expanding clone) -->
+          <div class="attachments"></div>
+          
+          <!-- <div>
+            <div class="attachment">
+              <div class="attachment-name u-highlight">sega-genesis-box.gif</div>
+              <div class="attachment-size">2.4mb</div>
+              <div class="attachment-delete js-delete align-right u-clickable">
+                <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Delete File') %>
+              </div>
+            </div>
+            <div class="attachment">
+              <div class="attachment-name u-highlight">license-key.txt</div>
+              <div class="attachment-size">7kb</div>
+              <div class="attachment-delete js-delete align-right u-clickable">
+                <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Delete File') %>
+              </div>
+            </div>
+          </div> -->
+          <div class="article-attachment">
+            <div class="attachmentPlaceholder">
+              <span class="attachmentPlaceholder-hint">Antwort eingeben oder</span>
+              <span class="attachmentPlaceholder-inputHolder">
+                Dateien wählen..
+                <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+              </span>
+            </div>
+            <div class="attachmentUpload hide">
+              <div class="horizontal">
+                <div class="u-highlight">
+                  <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
+                </div>
+                <div class="attachmentUpload-cancel js-cancel">
+                  <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Cancel Upload') %>
+                </div>
+              </div>
+              <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="fit dropArea">
+            <div class="dropArea-inner">
+              <%- @T('Drop Files here') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

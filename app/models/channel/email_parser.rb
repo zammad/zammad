@@ -12,17 +12,17 @@ class Channel::EmailParser
   mail = parse( msg_as_string )
 
   mail = {
-    :from               => 'Some Name <some@example.com>',
-    :from_email         => 'some@example.com',
-    :from_local         => 'some',
-    :from_domain        => 'example.com',
-    :from_display_name  => 'Some Name',
-    :message_id         => 'some_message_id@example.com',
-    :to                 => 'Some System <system@example.com>',
-    :cc                 => 'Somebody <somebody@example.com>',
-    :subject            => 'some message subject',
-    :body               => 'some message body',
-    :attachments        => [
+    :from              => 'Some Name <some@example.com>',
+    :from_email        => 'some@example.com',
+    :from_local        => 'some',
+    :from_domain       => 'example.com',
+    :from_display_name => 'Some Name',
+    :message_id        => 'some_message_id@example.com',
+    :to                => 'Some System <system@example.com>',
+    :cc                => 'Somebody <somebody@example.com>',
+    :subject           => 'some message subject',
+    :body              => 'some message body',
+    :attachments       => [
       {
         :data        => 'binary of attachment',
         :filename    => 'file_name_of_attachment.txt',
@@ -50,9 +50,9 @@ class Channel::EmailParser
     :x-zammad-ticket-owner    => 'some_owner_login',
 
     # article headers
-    :x-zammad-article-internal   => false,
-    :x-zammad-article-type       => 'agent',
-    :x-zammad-article-sender     => 'customer',
+    :x-zammad-article-internal => false,
+    :x-zammad-article-type     => 'agent',
+    :x-zammad-article-sender   => 'customer',
 
     # all other email headers
     :some-header => 'some_value',
@@ -66,28 +66,37 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
+
+      next if !field.name
+
+      # full line, encode, ready for storage
       data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+
+      # if we need to access the lines by objects later again
+      data[ "raw-#{field.name.downcase}".to_sym ] = field
     }
 
     # get sender
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
-      if !from
-        if mail[ item.to_sym ]
-          from = mail[ item.to_sym ].value
-        end
-      end
+
+      next if !mail[ item.to_sym ]
+
+      from = mail[ item.to_sym ].value
+
+      break if from
     }
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
     ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
-      if mail[item.to_sym]
-        if data['x-any-recipient'.to_sym] != ''
-          data['x-any-recipient'.to_sym] += ', '
-        end
-        data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
+
+      next if !mail[item.to_sym]
+
+      if data['x-any-recipient'.to_sym] != ''
+        data['x-any-recipient'.to_sym] += ', '
       end
+      data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
     }
 
     # set extra headers
@@ -96,11 +105,11 @@ class Channel::EmailParser
       data[:from_local]        = Mail::Address.new( from ).local
       data[:from_domain]       = Mail::Address.new( from ).domain
       data[:from_display_name] = Mail::Address.new( from ).display_name ||
-      ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
+                                 ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
     rescue
-      data[:from_email]        = from
-      data[:from_local]        = from
-      data[:from_domain]       = from
+      data[:from_email]  = from
+      data[:from_local]  = from
+      data[:from_domain] = from
     end
 
     # do extra decoding because we needed to use field.value
@@ -123,23 +132,23 @@ class Channel::EmailParser
         data[:body] = Encode.conv( mail.text_part.charset, data[:body] )
 
         if !data[:body].valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
         end
 
-        # html attachment/body may exists and will be converted to text
+      # html attachment/body may exists and will be converted to text
       else
         filename = '-no name-'
-        if mail.html_part.body
-          filename = 'html-email'
+        if mail.html_part && mail.html_part.body
+          filename = 'message.html'
           data[:body] = mail.html_part.body.to_s
           data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
-          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+          data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
-          if !data[:body].valid_encoding?
-            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+          if !data[:body].force_encoding('UTF-8').valid_encoding?
+            data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
           end
 
-          # any other attachments
+        # any other attachments
         else
           data[:body] = 'no visible content'
         end
@@ -158,59 +167,51 @@ class Channel::EmailParser
           headers_store['Charset'] = mail.html_part.charset
         end
         attachment = {
-          :data        => mail.html_part.body.to_s,
-          :filename    => mail.html_part.filename || filename,
-          :preferences => headers_store
+          data: mail.html_part.body.to_s,
+          filename: mail.html_part.filename || filename,
+          preferences: headers_store
         }
         data[:attachments].push attachment
       end
 
       # get attachments
       if mail.parts
-        attachment_count_total = 0
         mail.parts.each { |part|
-          attachment_count_total += 1
 
           # protect process to work fine with spam emails, see test/fixtures/mail15.box
           begin
-            if mail.text_part && mail.text_part == part
-              # ignore text/plain attachments - already shown in view
-            elsif mail.html_part && mail.html_part == part
-              # ignore text/html - html part, already shown in view
-            else
-              attachs = self._get_attachment( part, data[:attachments] )
-              data[:attachments].concat( attachs )
-            end
+            attachs = _get_attachment( part, data[:attachments], mail )
+            data[:attachments].concat( attachs )
           rescue
-            attachs = self._get_attachment( part, data[:attachments] )
+            attachs = _get_attachment( part, data[:attachments], mail )
             data[:attachments].concat( attachs )
           end
         }
       end
 
-      # not multipart email
+    # not multipart email
     else
 
-      # text part
-      if !mail.mime_type || mail.mime_type.to_s ==  '' || mail.mime_type.to_s.downcase == 'text/plain'
+      # text part only
+      if !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.downcase == 'text/plain'
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv( mail.charset, data[:body] )
 
-        if !data[:body].valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+        if !data[:body].force_encoding('UTF-8').valid_encoding?
+          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
         end
 
-        # html part
+      # html part only, convert ot text and add it as attachment
       else
         filename = '-no name-'
         if mail.mime_type.to_s.downcase == 'text/html'
-          filename = 'html-email'
+          filename = 'message.html'
           data[:body] = mail.body.decoded
           data[:body] = Encode.conv( mail.charset, data[:body] )
-          data[:body] = html2ascii( data[:body] ).to_s.force_encoding('utf-8')
+          data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
           if !data[:body].valid_encoding?
-            data[:body] = data[:body].encode('utf-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '?')
+            data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
           end
 
           # any other attachments
@@ -229,31 +230,39 @@ class Channel::EmailParser
           headers_store['Charset'] = mail.charset
         end
         attachment = {
-          :data        => mail.body.decoded,
-          :filename    => mail.filename || filename,
-          :preferences => headers_store
+          data: mail.body.decoded,
+          filename: mail.filename || filename,
+          preferences: headers_store
         }
         data[:attachments].push attachment
       end
     end
 
     # strip not wanted chars
+    data[:body].gsub!( /\n\r/, "\n" )
     data[:body].gsub!( /\r\n/, "\n" )
     data[:body].gsub!( /\r/, "\n" )
 
-    return data
+    data
   end
 
-  def _get_attachment( file, attachments )
+  def _get_attachment( file, attachments, mail )
 
     # check if sub parts are available
     if !file.parts.empty?
       a = []
       file.parts.each {|p|
-        a.concat( self._get_attachment( p, attachments ) )
+        attachment = _get_attachment( p, attachments, mail )
+        a.concat( attachment )
       }
       return a
     end
+
+    # ignore text/plain attachments - already shown in view
+    return [] if mail.text_part && mail.text_part.body.to_s == file.body.to_s
+
+    # ignore text/html - html part, already shown in view
+    return [] if mail.html_part && mail.html_part.body.to_s == file.body.to_s
 
     # get file preferences
     headers_store = {}
@@ -309,11 +318,11 @@ class Channel::EmailParser
     headers_store.delete('Content-Disposition')
 
     attach = {
-      :data        => file.body.to_s,
-      :filename    => filename,
-      :preferences => headers_store,
+      data: file.body.to_s,
+      filename: filename,
+      preferences: headers_store,
     }
-    return [attach]
+    [attach]
   end
 
   def process(channel, msg)
@@ -326,12 +335,12 @@ class Channel::EmailParser
     }
 
     # filter( channel, mail )
-    filters.each {|prio, backend|
+    filters.each {|_prio, backend|
       begin
         backend.run( channel, mail )
-      rescue Exception => e
-        puts "can't run postmaster pre filter #{backend}"
-        puts e.inspect
+      rescue => e
+        Rails.logger.error "can't run postmaster pre filter #{backend}"
+        Rails.logger.error e.inspect
         return false
       end
     }
@@ -349,28 +358,37 @@ class Channel::EmailParser
       # reset current_user
       UserInfo.current_user_id = 1
 
-
+      # create sender
       if mail[ 'x-zammad-customer-login'.to_sym ]
-        user = User.where( :login => mail[ 'x-zammad-customer-login'.to_sym ] ).first
+        user = User.find_by( login: mail[ 'x-zammad-customer-login'.to_sym ] )
       end
       if !user
-        user = User.where( :email => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] ).first
+        user = User.find_by( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] )
       end
       if !user
-        puts 'create user...'
-        roles = Role.where( :name => 'Customer' )
-        user = User.create(
-          :login          => mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          :firstname      => mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-          :lastname       => mail[ 'x-zammad-customer-lastname'.to_sym ],
-          :email          => mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          :password       => '',
-          :active         => true,
-          :roles          => roles,
-          :updated_by_id  => 1,
-          :created_by_id  => 1,
+        user = user_create(
+          login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+          firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
+          lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
+          email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
         )
       end
+
+      # create to and cc user
+      ['raw-to', 'raw-cc'].each { |item|
+
+        next if !mail[item.to_sym]
+        next if !mail[item.to_sym].tree
+
+        items = mail[item.to_sym].tree
+        items.addresses.each {|address_data|
+          user_create(
+            firstname: address_data.display_name,
+            lastname: '',
+            email: address_data.address,
+          )
+        }
+      }
 
       # set current user
       UserInfo.current_user_id = user.id
@@ -389,7 +407,7 @@ class Channel::EmailParser
         end
 
         if state_type.name != 'new'
-          ticket.state = Ticket::State.where( :name => 'open' ).first
+          ticket.state = Ticket::State.find_by( name: 'open' )
           ticket.save
         end
       end
@@ -399,11 +417,11 @@ class Channel::EmailParser
 
         # set attributes
         ticket = Ticket.new(
-          :group_id           => channel[:group_id] || 1,
-          :customer_id        => user.id,
-          :title              => mail[:subject] || '',
-          :state_id    => Ticket::State.where( :name => 'new' ).first.id,
-          :priority_id => Ticket::Priority.where( :name => '2 normal' ).first.id,
+          group_id: channel[:group_id] || 1,
+          customer_id: user.id,
+          title: mail[:subject] || '',
+          state_id: Ticket::State.find_by( name: 'new' ).id,
+          priority_id: Ticket::Priority.find_by( name: '2 normal' ).id,
         )
 
         set_attributes_by_x_headers( ticket, 'ticket', mail )
@@ -416,16 +434,16 @@ class Channel::EmailParser
 
       # set attributes
       article = Ticket::Article.new(
-        :ticket_id    => ticket.id,
-        :type_id      => Ticket::Article::Type.where( :name => 'email' ).first.id,
-        :sender_id    => Ticket::Article::Sender.where( :name => 'Customer' ).first.id,
-        :body         => mail[:body],
-        :from         => mail[:from],
-        :to           => mail[:to],
-        :cc           => mail[:cc],
-        :subject      => mail[:subject],
-        :message_id   => mail[:message_id],
-        :internal     => false,
+        ticket_id: ticket.id,
+        type_id: Ticket::Article::Type.find_by( name: 'email' ).id,
+        sender_id: Ticket::Article::Sender.find_by( name: 'Customer' ).id,
+        body: mail[:body],
+        from: mail[:from],
+        to: mail[:to],
+        cc: mail[:cc],
+        subject: mail[:subject],
+        message_id: mail[:message_id],
+        internal: false,
       )
 
       # x-headers lookup
@@ -436,22 +454,22 @@ class Channel::EmailParser
 
       # store mail plain
       Store.add(
-        :object      => 'Ticket::Article::Mail',
-        :o_id        => article.id,
-        :data        => msg,
-        :filename    => "ticket-#{ticket.number}-#{article.id}.eml",
-        :preferences => {}
+        object: 'Ticket::Article::Mail',
+        o_id: article.id,
+        data: msg,
+        filename: "ticket-#{ticket.number}-#{article.id}.eml",
+        preferences: {}
       )
 
       # store attachments
       if mail[:attachments]
         mail[:attachments].each do |attachment|
           Store.add(
-            :object      => 'Ticket::Article',
-            :o_id        => article.id,
-            :data        => attachment[:data],
-            :filename    => attachment[:filename],
-            :preferences => attachment[:preferences]
+            object: 'Ticket::Article',
+            o_id: article.id,
+            data: attachment[:data],
+            filename: attachment[:filename],
+            preferences: attachment[:preferences]
           )
         end
       end
@@ -466,23 +484,52 @@ class Channel::EmailParser
     }
 
     # filter( channel, mail )
-    filters.each {|prio, backend|
+    filters.each {|_prio, backend|
       begin
         backend.run( channel, mail, ticket, article, user )
-      rescue Exception => e
-        puts "can't run postmaster post filter #{backend}"
-        puts e.inspect
+      rescue => e
+        Rails.logger.error "can't run postmaster post filter #{backend}"
+        Rails.logger.error e.inspect
       end
     }
 
     # return new objects
-    return ticket, article, user
+    [ticket, article, user]
+  end
+
+  def user_create(data)
+
+    # return existing
+    user = User.find_by( login: data[:email].downcase )
+    return user if user
+
+    # create new user
+    roles = Role.where( name: 'Customer' )
+
+    # fillup
+    %w(firstname lastname).each { |item|
+      if data[item.to_sym].nil?
+        data[item.to_sym] = ''
+      end
+    }
+    data[:password]      = ''
+    data[:active]        = true
+    data[:roles]         = roles
+    data[:updated_by_id] = 1
+    data[:created_by_id] = 1
+
+    user = User.create(data)
+    user.update_attributes(
+      updated_by_id: user.id,
+      created_by_id: user.id,
+    )
+    user
   end
 
   def set_attributes_by_x_headers( item_object, header_name, mail )
 
     # loop all x-zammad-hedaer-* headers
-    item_object.attributes.each{|key,value|
+    item_object.attributes.each {|key, _value|
 
       # ignore read only attributes
       next if key == 'updated_at'
@@ -491,25 +538,26 @@ class Channel::EmailParser
       next if key == 'created_by_id'
 
       # check if id exists
-      key_short = key[ key.length-3 , key.length ]
+      key_short = key[ key.length - 3, key.length ]
       if key_short == '_id'
-        key_short = key[ 0, key.length-3 ]
+        key_short = key[ 0, key.length - 3 ]
         header = "x-zammad-#{header_name}-#{key_short}"
         if mail[ header.to_sym ]
-          puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+          Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
           item_object.class.reflect_on_all_associations.map { |assoc|
-            if assoc.name.to_s == key_short
-              puts "NOTICE: ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
-              item = assoc.class_name.constantize
 
-              if item.respond_to?(:name)
-                if item.lookup( :name => mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( :name => mail[ header.to_sym ] ).id
-                end
-              elsif item.respond_to?(:login)
-                if item.lookup( :login => mail[ header.to_sym ] )
-                  item_object[key] = item.lookup( :login => mail[ header.to_sym ] ).id
-                end
+            next if assoc.name.to_s != key_short
+
+            Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
+            item = assoc.class_name.constantize
+
+            if item.respond_to?(:name)
+              if item.lookup( name: mail[ header.to_sym ] )
+                item_object[key] = item.lookup( name: mail[ header.to_sym ] ).id
+              end
+            elsif item.respond_to?(:login)
+              if item.lookup( login: mail[ header.to_sym ] )
+                item_object[key] = item.lookup( login: mail[ header.to_sym ] ).id
               end
             end
           }
@@ -519,99 +567,20 @@ class Channel::EmailParser
       # check if attribute exists
       header = "x-zammad-#{header_name}-#{key}"
       if mail[ header.to_sym ]
-        puts "NOTICE: header #{header} found #{mail[ header.to_sym ]}"
+        Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
         item_object[key] = mail[ header.to_sym ]
       end
     }
 
-  end
-
-  def html2ascii(string)
-
-    # in case of invalid encodeing, strip invalid chars
-    # see also test/fixtures/mail21.box
-    # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
-    if !string.valid_encoding?
-      string = string.chars.select { |c| c.valid_encoding? }.join
-    end
-
-    # find <a href=....> and replace it with [x]
-    link_list = ''
-    counter   = 0
-    string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) { |item|
-      link = $2
-      counter   = counter + 1
-      link_list += "[#{counter}] #{link}\n"
-      "[#{counter}]"
-    }
-
-    # remove empty lines
-    string.gsub!( /^\s*/m, '' )
-
-    # fix some bad stuff from opera and others
-    string.gsub!( /(\n\r|\r\r\n|\r\n)/, "\n" )
-
-    # strip all other tags
-    string.gsub!( /\<(br|br\/|br\s\/)\>/, "\n" )
-
-    # strip all other tags
-    string.gsub!( /\<.+?\>/, '' )
-
-    # strip all &amp; &lt; &gt; &quot;
-    string.gsub!( '&amp;', '&' )
-    string.gsub!( '&lt;', '<' )
-    string.gsub!( '&gt;', '>' )
-    string.gsub!( '&quot;', '"' )
-
-    # encode html entities like "&#8211;"
-    string.gsub!( /(&\#(\d+);?)/x ) { |item|
-      $2.chr
-    }
-
-    # encode html entities like "&#3d;"
-    string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) { |item|
-      chr_orig = $1
-      hex      = $2.hex
-      if hex
-        chr = hex.chr
-        if chr
-          chr_orig = chr
-        else
-          chr_orig
-        end
-      else
-        chr_orig
-      end
-
-      # check valid encoding
-      begin
-        if !chr_orig.encode('UTF-8').valid_encoding?
-          chr_orig = '?'
-        end
-      rescue
-        chr_orig = '?'
-      end
-      chr_orig
-    }
-
-    # remove empty lines
-    string.gsub!( /^\s*\n\s*\n/m, "\n" )
-
-    # add extracted links
-    if link_list
-      string += "\n\n" + link_list
-    end
-
-    return string
   end
 end
 
 # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
 module Mail
   module Encodings
-    def Encodings.value_decode(str)
+    def self.value_decode(str)
       # Optimization: If there's no encoded-words in the string, just return it
-      return str unless str.index("=?")
+      return str unless str.index('=?')
 
       str = str.gsub(/\?=(\s*)=\?/, '?==?') # Remove whitespaces between 'encoded-word's
 
@@ -639,7 +608,7 @@ module Mail
             end
           end
         end
-      end.join("")
+      end.join('')
     end
   end
 end

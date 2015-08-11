@@ -2,7 +2,7 @@
 
 require 'rexml/document'
 class Package < ApplicationModel
-  @@root = Rails.root.to_s
+  @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
 
   # build package based on .szpm
   # Package.build(
@@ -13,41 +13,41 @@ class Package < ApplicationModel
   def self.build(data)
 
     if data[:file]
-      xml     = self._read_file( data[:file], data[:root] || true )
-      package = self._parse(xml)
+      xml     = _read_file( data[:file], data[:root] || true )
+      package = _parse(xml)
     elsif data[:string]
-      package = self._parse( data[:string] )
+      package = _parse( data[:string] )
     end
 
-    build_date = REXML::Element.new("build_date")
-    build_date.text = Time.now.utc.iso8601
-    build_host = REXML::Element.new("build_host")
+    build_date = REXML::Element.new('build_date')
+    build_date.text = Time.zone.now.iso8601
+    build_host = REXML::Element.new('build_host')
     build_host.text = Socket.gethostname
 
     package.root.insert_after( '//zpm/description', build_date )
     package.root.insert_after( '//zpm/description', build_host )
     package.elements.each('zpm/filelist/file') do |element|
       location = element.attributes['location']
-      content = self._read_file( location, data[:root] )
+      content = _read_file( location, data[:root] )
       base64  = Base64.encode64(content)
       element.text = base64
     end
     if data[:output]
-      location = data[:output] + '/' + package.elements["zpm/name"].text + '-' + package.elements["zpm/version"].text + '.zpm'
-      puts "NOTICE: writting package to '#{location}'"
+      location = data[:output] + '/' + package.elements['zpm/name'].text + '-' + package.elements['zpm/version'].text + '.zpm'
+      logger.info "NOTICE: writting package to '#{location}'"
       file = File.new( location, 'wb' )
       file.write( package.to_s )
       file.close
       return true
     end
-    return package.to_s
+    package.to_s
   end
 
   # Package.auto_install
   # install all packages located under auto_install/*.zpm
   def self.auto_install
     path = @@root + '/auto_install/'
-    return if ! File.exist?( path )
+    return if !File.exist?( path )
     data = []
     Dir.foreach( path ) do |entry|
       if entry =~ /\.zpm/ && entry !~ /^\./
@@ -55,9 +55,9 @@ class Package < ApplicationModel
       end
     end
     data.each {|file|
-      self.install( :file => path + '/' + file )
+      install( file: path + '/' + file )
     }
-    return data
+    data
   end
 
   # Package.unlink_all
@@ -67,12 +67,12 @@ class Package < ApplicationModel
     # link files
     Dir.glob( @@root + '/**/*' ) do |entry|
       if File.symlink?( entry)
-        puts "unlink: #{entry}"
+        logger.info "unlink: #{entry}"
         File.delete( entry )
       end
       backup_file = entry + '.link_backup'
-      if File.exists?( backup_file )
-        puts "Restore backup file of #{backup_file} -> #{entry}."
+      if File.exist?( backup_file )
+        logger.info "Restore backup file of #{backup_file} -> #{entry}."
         File.rename( backup_file, entry )
       end
     end
@@ -82,13 +82,13 @@ class Package < ApplicationModel
   def self._package_base_dir?(package_base_dir)
     package = false
     Dir.glob(  package_base_dir + '/*.szpm') do |entry|
-      package = entry.sub( /^.*\/(.+?)\.szpm$/, '\1')
+      package = entry.sub( %r{^.*/(.+?)\.szpm$}, '\1')
     end
     if package == false
-      raise "Can't link package, '#{package_base_dir}' is no package source directory!"
+      fail "Can't link package, '#{package_base_dir}' is no package source directory!"
     end
-    puts package.inspect
-    return package
+    logger.debug package.inspect
+    package
   end
 
   # Package.unlink('/path/to/src/extention')
@@ -109,13 +109,13 @@ class Package < ApplicationModel
       dest = @@root + '/' + file
 
       if File.symlink?( dest.to_s )
-        puts "Unlink file: #{dest.to_s}"
+        logger.info "Unlink file: #{dest}"
         File.delete( dest.to_s )
       end
 
       backup_file = dest.to_s + '.link_backup'
-      if File.exists?( backup_file )
-        puts "Restore backup file of #{backup_file} -> #{dest.to_s}."
+      if File.exist?( backup_file )
+        logger.info "Restore backup file of #{backup_file} -> #{dest}."
         File.rename( backup_file, dest.to_s )
       end
     end
@@ -133,11 +133,11 @@ class Package < ApplicationModel
       entry = entry.sub( '//', '/' )
       file = entry
       file = file.sub( /#{package_base_dir.to_s}/, '' )
-      file = file.sub( /^\//, '' )
+      file = file.sub( %r{^/}, '' )
 
       # ignore files
       if file =~ /^README/
-        puts "NOTICE: Ignore #{file}"
+        logger.info "NOTICE: Ignore #{file}"
         next
       end
 
@@ -145,18 +145,18 @@ class Package < ApplicationModel
       dest = @@root + '/' + file
 
       if File.directory?( entry.to_s )
-        if !File.exists?( dest.to_s )
-          puts "Create dir: #{dest.to_s}"
+        if !File.exist?( dest.to_s )
+          logger.info "Create dir: #{dest}"
           FileUtils.mkdir_p( dest.to_s )
         end
       end
 
       if File.file?( entry.to_s ) && ( File.file?( dest.to_s ) && !File.symlink?( dest.to_s ) )
         backup_file = dest.to_s + '.link_backup'
-        if File.exists?( backup_file )
-          raise "Can't link #{entry.to_s} -> #{dest.to_s}, destination and .link_backup already exists!"
+        if File.exist?( backup_file )
+          fail "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
         else
-          puts "Create backup file of #{dest.to_s} -> #{backup_file}."
+          logger.info "Create backup file of #{dest} -> #{backup_file}."
           File.rename( dest.to_s, backup_file )
         end
       end
@@ -165,7 +165,7 @@ class Package < ApplicationModel
         if File.symlink?( dest.to_s )
           File.delete( dest.to_s )
         end
-        puts "Link file: #{entry.to_s} -> #{dest.to_s}"
+        logger.info "Link file: #{entry} -> #{dest}"
         File.symlink( entry.to_s, dest.to_s )
       end
     end
@@ -178,52 +178,52 @@ class Package < ApplicationModel
   # Package.install( :string => zpm_as_string )
   def self.install(data)
     if data[:file]
-      xml     = self._read_file( data[:file], true )
-      package = self._parse(xml)
+      xml     = _read_file( data[:file], true )
+      package = _parse(xml)
     elsif data[:string]
-      package = self._parse( data[:string] )
+      package = _parse( data[:string] )
     end
 
     # package meta data
     meta = {
-      :name           => package.elements["zpm/name"].text,
-      :version        => package.elements["zpm/version"].text,
-      :vendor         => package.elements["zpm/vendor"].text,
-      :state          => 'uninstalled',
-      :created_by_id  => 1,
-      :updated_by_id  => 1,
+      name: package.elements['zpm/name'].text,
+      version: package.elements['zpm/version'].text,
+      vendor: package.elements['zpm/vendor'].text,
+      state: 'uninstalled',
+      created_by_id: 1,
+      updated_by_id: 1,
     }
 
     # verify if package can get installed
-    package_db = Package.where( :name => meta[:name] ).first
+    package_db = Package.find_by( name: meta[:name] )
     if package_db
       if !data[:reinstall]
         if Gem::Version.new( package_db.version ) == Gem::Version.new( meta[:version] )
-          raise "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
+          fail "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
         end
         if Gem::Version.new( package_db.version ) > Gem::Version.new( meta[:version] )
-          raise "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
+          fail "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
         end
       end
 
       # uninstall files of old package
-      self.uninstall({
-        :name               => package_db.name,
-        :version            => package_db.version,
-        :migration_not_down => true,
-      })
+      uninstall(
+        name: package_db.name,
+        version: package_db.version,
+        migration_not_down: true,
+      )
     end
 
     # store package
     record = Package.create( meta )
     if !data[:reinstall]
       Store.add(
-        :object        => 'Package',
-        :o_id          => record.id,
-        :data          => package.to_s,
-        :filename      => meta[:name] + '-' + meta[:version] + '.zpm',
-        :preferences   => {},
-        :created_by_id => UserInfo.current_user_id || 1,
+        object: 'Package',
+        o_id: record.id,
+        data: package.to_s,
+        filename: meta[:name] + '-' + meta[:version] + '.zpm',
+        preferences: {},
+        created_by_id: UserInfo.current_user_id || 1,
       )
     end
 
@@ -233,7 +233,7 @@ class Package < ApplicationModel
       permission = element.attributes['permission'] || '644'
       base64     = element.text
       content    = Base64.decode64(base64)
-      content    = self._write_file(location, permission, content)
+      content    = _write_file(location, permission, content)
     end
 
     # update package state
@@ -248,18 +248,18 @@ class Package < ApplicationModel
 
     # prebuild assets
 
-    return true
+    true
   end
 
   # Package.reinstall( package_name )
   def self.reinstall(package_name)
-    package = Package.where( :name => package_name ).first
+    package = Package.find_by( name: package_name )
     if !package
-      raise "No such package '#{package_name}'"
+      fail "No such package '#{package_name}'"
     end
 
-    file = self._get_bin( package.name, package.version )
-    self.install( :string => file, :reinstall => true )
+    file = _get_bin( package.name, package.version )
+    install( string: file, reinstall: true )
   end
 
   # Package.uninstall( :name => 'package', :version => '0.1.1' )
@@ -267,16 +267,16 @@ class Package < ApplicationModel
   def self.uninstall( data )
 
     if data[:string]
-      package = self._parse( data[:string] )
+      package = _parse( data[:string] )
     else
-      file    = self._get_bin( data[:name], data[:version] )
-      package = self._parse(file)
+      file    = _get_bin( data[:name], data[:version] )
+      package = _parse(file)
     end
 
     # package meta data
     meta = {
-      :name           => package.elements["zpm/name"].text,
-      :version        => package.elements["zpm/version"].text,
+      name: package.elements['zpm/name'].text,
+      version: package.elements['zpm/version'].text,
     }
 
     # down migrations
@@ -289,72 +289,75 @@ class Package < ApplicationModel
       permission = element.attributes['permission'] || '644'
       base64     = element.text
       content    = Base64.decode64(base64)
-      content    = self._delete_file(location, permission, content)
+      content    = _delete_file(location, permission, content)
     end
 
     # prebuild assets
 
-    # reload new files
-    Package.reload_classes
+    # reload new files (only if we are in uninstall modus)
+    if !data[:migration_not_down]
+      Package.reload_classes
+    end
 
     # delete package
-    record = Package.where(
-      :name     => meta[:name],
-      :version  => meta[:version],
-    ).first
+    record = Package.find_by(
+      name: meta[:name],
+      version: meta[:version],
+    )
     record.destroy
 
-    return true
+    true
   end
 
   # reload .rb files in case they have changed
   def self.reload_classes
-    ['app', 'lib'].each {|dir|
+    %w(app lib).each {|dir|
       Dir.glob( Rails.root.join( dir + '/**/*') ).each {|entry|
-        if entry =~ /\.rb$/
-          begin
-            load entry
-          rescue => e
-            puts "TRIED TO RELOAD '#{entry}'"
-            puts 'ERROR: ' + e.inspect
-            puts 'Traceback: ' + e.backtrace.inspect
-          end
+
+        next if entry !~ /\.rb$/
+
+        begin
+          load entry
+        rescue => e
+          logger.error "TRIED TO RELOAD '#{entry}'"
+          logger.error 'ERROR: ' + e.inspect
+          logger.error 'Traceback: ' + e.backtrace.inspect
         end
       }
     }
   end
 
   def self._parse(xml)
-    #    puts xml.inspect
+    logger.debug xml.inspect
     begin
       package = REXML::Document.new( xml )
     rescue => e
-      puts 'ERROR: ' + e.inspect
+      logger.error 'ERROR: ' + e.inspect
       return
     end
-    #    puts package.inspect
-    return package
+    logger.debug package.inspect
+    package
   end
 
   def self._get_bin( name, version )
-    package = Package.where(
-      :name     => name,
-      :version  => version,
-    ).first
+    package = Package.find_by(
+      name: name,
+      version: version,
+    )
     if !package
-      raise "No such package '#{name}' version '#{version}'"
+      fail "No such package '#{name}' version '#{version}'"
     end
     list = Store.list(
-      :object => 'Package',
-      :o_id   => package.id,
+      object: 'Package',
+      o_id: package.id,
     )
 
     # find file
     if !list || !list.first
-      raise "No such file in storage list #{name} #{version}"
+      fail "No such file in storage list #{name} #{version}"
     end
     if !list.first.content
-      raise "No such file in storage #{name} #{version}"
+      fail "No such file in storage #{name} #{version}"
     end
     list.first.content
   end
@@ -383,27 +386,27 @@ class Package < ApplicationModel
     # rename existing file
     if File.exist?( location )
       backup_location = location + '.save'
-      puts "NOTICE: backup old file '#{location}' to #{backup_location}"
+      logger.info "NOTICE: backup old file '#{location}' to #{backup_location}"
       File.rename( location, backup_location )
     end
 
     # check if directories need to be created
     directories = location.split '/'
-    (0..(directories.length-2) ).each {|position|
+    (0..(directories.length - 2) ).each {|position|
       tmp_path = ''
       (1..position).each {|count|
         tmp_path = tmp_path + '/' + directories[count].to_s
       }
-      if tmp_path != ''
-        if !File.exist?(tmp_path)
-          Dir.mkdir( tmp_path, 0755)
-        end
-      end
+
+      next if tmp_path == ''
+      next if File.exist?(tmp_path)
+
+      Dir.mkdir(tmp_path, 0755)
     }
 
     # install file
     begin
-      puts "NOTICE: install '#{location}' (#{permission})"
+      logger.info "NOTICE: install '#{location}' (#{permission})"
       file = File.new( location, 'wb' )
       file.write( data )
       file.close
@@ -414,11 +417,11 @@ class Package < ApplicationModel
     true
   end
 
-  def self._delete_file(file, permission, data)
+  def self._delete_file(file, _permission, _data)
     location = @@root + '/' + file
 
     # install file
-    puts "NOTICE: uninstall '#{location}'"
+    logger.info "NOTICE: uninstall '#{location}'"
     if File.exist?( location )
       File.delete( location )
     end
@@ -426,21 +429,21 @@ class Package < ApplicationModel
     # rename existing file
     backup_location = location + '.save'
     if File.exist?( backup_location )
-      puts "NOTICE: restore old file '#{backup_location}' to #{location}"
+      logger.info "NOTICE: restore old file '#{backup_location}' to #{location}"
       File.rename( backup_location, location )
     end
 
-    return true
+    true
   end
 
   class Migration < ApplicationModel
-    @@root = Rails.root.to_s
+    @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
 
     def self.migrate( package, direction = 'normal' )
       location = @@root + '/db/addon/' + package.underscore
 
-      return true if !File.exists?( location )
-      migrations_done = Package::Migration.where( :name => package.underscore )
+      return true if !File.exist?( location )
+      migrations_done = Package::Migration.where( name: package.underscore )
 
       # get existing migrations
       migrations_existing = []
@@ -467,31 +470,31 @@ class Package < ApplicationModel
           name    = $2
         end
         if !version || !name
-          raise "Invalid package migration '#{migration}'"
+          fail "Invalid package migration '#{migration}'"
         end
 
         # down
         if direction == 'reverse'
-          done = Package::Migration.where( :name => package.underscore, :version => version ).first
+          done = Package::Migration.find_by( name: package.underscore, version: version )
           next if !done
-          puts "NOTICE: down package migration '#{migration}'"
+          logger.info "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).down
-          record = Package::Migration.where( :name => package.underscore, :version => version ).first
+          record = Package::Migration.find_by( name: package.underscore, version: version )
           if record
             record.destroy
           end
 
           # up
         else
-          done = Package::Migration.where( :name => package.underscore, :version => version ).first
+          done = Package::Migration.find_by( name: package.underscore, version: version )
           next if done
-          puts "NOTICE: up package migration '#{migration}'"
+          logger.info "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           Kernel.const_get(classname).up
-          Package::Migration.create( :name => package.underscore, :version => version )
+          Package::Migration.create( name: package.underscore, version: version )
         end
 
         # reload new files

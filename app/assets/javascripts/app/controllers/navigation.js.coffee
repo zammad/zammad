@@ -1,9 +1,11 @@
-class App.Navigation extends App.Controller
+class App.Navigation extends App.ControllerWidgetPermanent
+  className: 'navigation vertical'
+
   constructor: ->
     super
     @render()
 
-    # rerender view
+    # rerender view, e. g. on langauge change
     @bind 'ui:rerender', (data) =>
       @renderMenu()
       @renderPersonal()
@@ -16,118 +18,120 @@ class App.Navigation extends App.Controller
     @bind 'auth', (user) =>
       @log 'Navigation', 'notice', 'navbar rebuild', user
 
-      if !_.isEmpty( user )
-        cache = App.Store.get( 'update_recent_viewed' )
-        @recent_viewed_build( cache ) if cache
-
       @render()
 
-    # rebuild recent viewed data
-    @bind 'update_recent_viewed', (data) =>
-      @recent_viewed_build(data)
-      @renderPersonal()
+    # fetch new recent viewed after collection change
+    @bind 'RecentView::changed', =>
+      @delay(
+        => @fetchRecentView()
+        1000
+        'recent-view-changed'
+      )
 
     # bell on / bell off
     @bind 'bell', (data) =>
       if data is 'on'
-        @el.find('.bell').addClass('show')
+        @$('.bell').addClass('show')
         App.Audio.play( 'https://www.sounddogs.com/previews/2193/mp3/219024_SOUNDDOGS__be.mp3' )
         @delay(
           -> App.Event.trigger('bell', 'off' )
           3000
         )
       else
-        @el.find('.bell').removeClass('show')
+        @$('.bell').removeClass('show')
 
   renderMenu: =>
     items = @getItems( navbar: @Config.get( 'NavBar' ) )
 
     # get open tabs to repopen on rerender
     open_tab = {}
-    @el.find('.open').children('a').each( (i,d) =>
+    @$('.open').children('a').each( (i,d) =>
       href = $(d).attr('href')
       open_tab[href] = true
     )
 
     # get active tabs to reactivate on rerender
     active_tab = {}
-    @el.find('.active').children('a').each( (i,d) =>
+    @$('.active').children('a').each( (i,d) =>
       href = $(d).attr('href')
       active_tab[href] = true
     )
-    @el.find('.navbar-items-left').html App.view('navigation/menu')(
+    @$('.main-navigation').html App.view('navigation/menu')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab
     )
 
   renderPersonal: =>
+    @recentViewNavbarItemsRebuild()
     items = @getItems( navbar: @Config.get( 'NavBarRight' ) )
 
     # get open tabs to repopen on rerender
     open_tab = {}
-    @el.find('.open').children('a').each( (i,d) =>
+    @$('.open').children('a').each( (i,d) =>
       href = $(d).attr('href')
       open_tab[href] = true
     )
 
     # get active tabs to reactivate on rerender
     active_tab = {}
-    @el.find('.active').children('a').each( (i,d) =>
+    @$('.active').children('a').each( (i,d) =>
       href = $(d).attr('href')
       active_tab[href] = true
     )
 
-    @el.find('.navbar-items-right .navbar-personal').remove()
-
-    @el.find('.navbar-items-right').append App.view('navigation/personal')(
+    @$('.navbar-items-personal').html App.view('navigation/personal')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab
     )
 
-  renderResult: (result = []) =>
-    el = @el.find('#global-search-result')
+    # only start avatar widget on existing session
+    if App.Session.get('id')
+      new App.WidgetAvatar(
+        el:       @$('.js-avatar')
+        user_id:  App.Session.get('id')
+        noPopups: true
+      )
 
-    # destroy existing popovers
-    @ticketPopupsDestroy()
-    @userPopupsDestroy()
-    @organizationPopupsDestroy()
+  renderResult: (result = []) =>
+    el = @$('#global-search-result')
 
     # remove result if not result exists
     if _.isEmpty( result )
-      @el.find('#global-search').parents('li').removeClass('open')
-      el.html( '' )
+      @$('.search').removeClass('open')
+      el.html('')
       return
-
-    # show result list
-    @el.find('#global-search').parents('li').addClass('open')
 
     # build markup
     html = App.view('navigation/result')(
       result: result
     )
-    el.html( html )
+    el.html(html)
+
+    # show result list
+    @$('.search').addClass('open')
 
     # start ticket popups
-    @ticketPopups('left')
+    @ticketPopups()
 
     # start user popups
-    @userPopups('left')
+    @userPopups()
 
     # start oorganization popups
-    @organizationPopups('left')
+    @organizationPopups()
 
   render: () ->
 
-    # remember old search query
-    search = @el.find('#global-search').val()
+    # reset result cache
+    @searchResultCache = {}
 
-    user   = App.Session.all()
+    user = App.Session.get()
     @html App.view('navigation')(
-      user:         user
-      search:       search
+      user: user
     )
+
+    @taskbar = new App.TaskbarWidget( el: @$('.tasks') )
 
     # renderMenu
     @renderMenu()
@@ -135,15 +139,12 @@ class App.Navigation extends App.Controller
     # renderPersonal
     @renderPersonal()
 
-    # set focus to search box
-    if @searchFocus
-      @searchFocusSet = true
-      App.ClipBoard.setPosition( 'global-search', search.length )
-
-    else
-      @searchFocusSet = false
-
     searchFunction = =>
+
+      # use cache for search result
+      if @searchResultCache[@term]
+        @renderResult( @searchResultCache[@term] )
+
       App.Ajax.request(
         id:    'search'
         type:  'GET'
@@ -156,77 +157,105 @@ class App.Navigation extends App.Controller
           # load assets
           App.Collection.loadAssets( data.assets )
 
+          # cache search result
+          @searchResultCache[@term] = data.result
+
           result = data.result
           for area in result
             if area.name is 'Ticket'
               area.result = []
               for id in area.ids
                 ticket = App.Ticket.find( id )
-                ticket.humanTime = @humanTime(ticket.created_at)
-                data =
-                  display:  "##{ticket.number} - #{ticket.title} - #{ticket.humanTime}"
-                  id:       ticket.id
-                  class:    "ticket-popover"
-                  url:      ticket.uiUrl()
-                area.result.push data
+                area.result.push ticket.searchResultAttributes()
             else if area.name is 'User'
               area.result = []
               for id in area.ids
                 user = App.User.find( id )
-                data =
-                  display:  "#{user.displayName()}"
-                  id:       user.id
-                  class:    "user-popover"
-                  url:      user.uiUrl()
-                area.result.push data
+                area.result.push user.searchResultAttributes()
             else if area.name is 'Organization'
               area.result = []
               for id in area.ids
                 organization = App.Organization.find( id )
-                data =
-                  display:  "#{organization.displayName()}"
-                  id:       organization.id
-                  class:    "organization-popover"
-                  url:      organization.uiUrl()
-                area.result.push data
+                area.result.push organization.searchResultAttributes()
 
           @renderResult(result)
+
+          @$('#global-search-result').on('click', 'a', =>
+            close()
+          )
       )
+
+    removePopovers = ->
+      $('.popover').remove()
+
+    close = =>
+      @$('#global-search').blur()
+      @$('.search').removeClass('open')
+
+      # remove not needed popovers
+      @delay( removePopovers, 280, 'removePopovers' )
+
+    emptyAndClose = =>
+      @$('#global-search').val('').blur()
+      @$('.search').removeClass('filled').removeClass('open')
+
+      # remove not needed popovers
+      @delay( removePopovers, 280, 'removePopovers' )
+
 
     # observer search box
-    @el.find('#global-search').bind( 'focusin', (e) =>
-
-      # remember to set search box
-      @searchFocus = true
-
-      # check if search is needed
-      @term = @el.find('#global-search').val()
-      return if @searchFocusSet
-      return if !@term
-      @delay( searchFunction, 200, 'search' )
+    @$('#global-search').bind( 'focusout', (e) =>
+      # delay to be able to click x
+      update = =>
+        @$('.search').removeClass('focused')
+      @delay( update, 180, 'removeFocused' )
     )
 
-    # remove search result
-    @el.find('#global-search').bind( 'focusout', (e) =>
-      @delay(
-        =>
-          @searchFocus = false
-          @renderResult()
-        320
-      )
+    @$('#global-search').bind( 'focusin', (e) =>
+
+      @$('.search').addClass('focused')
+
+      # remove not needed popovers
+      removePopovers()
+
+      # check if search is needed
+      term = @$('#global-search').val().trim()
+      return if !term
+      @term = term
+      @delay( searchFunction, 220, 'search' )
     )
 
     # prevent submit of search box
-    @el.find('#global-search').parent().bind( 'submit', (e) =>
+    @$('form.search').on( 'submit', (e) =>
       e.preventDefault()
     )
 
     # start search
-    @el.find('#global-search').bind( 'keyup', (e) =>
-      @term = @el.find('#global-search').val()
-      return if !@term
-      return if @term is search
-      @delay( searchFunction, 220, 'search' )
+    @$('#global-search').on( 'keyup', (e) =>
+
+      # close on esc
+      if e.which == 27
+        emptyAndClose()
+        return
+
+      # on other keys, show result
+      term = @$('#global-search').val().trim()
+      return if !term
+      return if term is @term
+      @term = term
+      @$('.search').toggleClass('filled', !!@term)
+      @delay( searchFunction, 200, 'search' )
+    )
+
+    # bind to empty search
+    @$('.empty-search').on(
+      'click'
+      =>
+        emptyAndClose()
+    )
+
+    new App.OnlineNotificationWidget(
+      el: @el
     )
 
   getItems: (data) ->
@@ -306,6 +335,16 @@ class App.Navigation extends App.Controller
     inordervalue = []
     for num in inorder
       inordervalue.push newlist[ num ]
+
+    # add differ to after recent viewed item
+    found = false
+    for value in inordervalue
+      if value.type is 'recentViewed'
+        found = true
+      if found && value.type isnt 'recentViewed'
+        value.divider = true
+        found = false
+
     return inordervalue
 
   sortit: (a,b) ->
@@ -318,17 +357,10 @@ class App.Navigation extends App.Controller
           @addPrioCount newlist, item
 
   update: (url) =>
-    @el.find('li').removeClass('active')
-    @el.find("[href=\"#{url}\"]").parents('li').addClass('active')
+    @$('li').removeClass('active')
+    @$("[href=\"#{url}\"]").parents('li').addClass('active')
 
-  recent_viewed_build: (data) =>
-
-    App.Store.write( 'update_recent_viewed', data )
-
-    items = data.recent_viewed
-
-    # load assets
-    App.Collection.loadAssets( data.assets )
+  recentViewNavbarItemsRebuild: =>
 
     # remove old views
     NavBarRight = @Config.get( 'NavBarRight' ) || {}
@@ -338,29 +370,20 @@ class App.Navigation extends App.Controller
         if part[0] is 'RecendViewed'
           delete NavBarRight[key]
 
+    if !@Session.get()
+      @Config.set( 'NavBarRight', NavBarRight )
+      return
+
     # add new views
-    prio = 8000
+    items = App.RecentView.search(sortBy: 'created_at', order: 'DESC' )
+    items = @prepareForObjectList(items)
+    prio = 80
     for item in items
       divider   = false
       navheader = false
-      if prio is 8000
+      if prio is 80
         divider   = true
         navheader = 'Recent Viewed'
-
-      item.link  = ''
-      item.title = '???'
-
-      # convert backend name space to local name space
-      item.object = item.object.replace("::", '')
-
-      # lookup real data
-      if App[item.object]
-        object           = App[item.object].find( item.o_id )
-        item.link        = object.uiUrl()
-        item.title       = object.displayName()
-        item.object_name = object.objectDisplayName()
-
-      item.created_by = App.User.find( item.created_by_id )
 
       prio++
       NavBarRight['RecendViewed::' + item.o_id + item.object + '-' + prio ] = {
@@ -370,8 +393,15 @@ class App.Navigation extends App.Controller
         target:    item.link
         divider:   divider
         navheader: navheader
+        type:      'recentViewed'
       }
 
     @Config.set( 'NavBarRight', NavBarRight )
+
+  fetchRecentView: =>
+    load = (items) =>
+      App.RecentView.refresh( items, { clear: true } )
+      @renderPersonal()
+    App.RecentView.fetchFull(load)
 
 App.Config.set( 'navigation', App.Navigation, 'Navigations' )

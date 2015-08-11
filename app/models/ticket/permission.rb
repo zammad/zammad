@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-
 module Ticket::Permission
 
 =begin
@@ -18,14 +17,14 @@ returns
   def permission (data)
 
     # check customer
-    if data[:current_user].is_role('Customer')
+    if data[:current_user].role?('Customer')
 
       # access ok if its own ticket
-      return true if self.customer_id == data[:current_user].id
+      return true if customer_id == data[:current_user].id
 
       # access ok if its organization ticket
-      if data[:current_user].organization_id && self.organization_id
-        return true if self.organization_id == data[:current_user].organization_id
+      if data[:current_user].organization_id && organization_id
+        return true if organization_id == data[:current_user].organization_id
       end
 
       # no access
@@ -35,13 +34,12 @@ returns
     # check agent
 
     # access if requestor is owner
-    return true if self.owner_id == data[:current_user].id
+    return true if owner_id == data[:current_user].id
 
     # access if requestor is in group
     data[:current_user].groups.each {|group|
       return true if self.group.id == group.id
     }
-    return false
+    false
   end
-
 end

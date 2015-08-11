@@ -2,574 +2,300 @@
 require 'browser_test_helper'
 
 class AgentTicketActionLevel5Test < TestCase
-  def test_I
-    random = 'text_module_test_' + rand(99999999).to_s
-    random2 = 'text_module_test_' + rand(99999999).to_s
+  def test_agent_signature_check
 
-    # user
-    tests = [
-      {
-        :name     => 'add #1',
-        :action   => [
-          {
-            :execute => 'close_all_tasks',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/text_modules"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some name' + random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="keywords"]',
-            :value   => random,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal textarea[name="content"]',
-            :value   => 'some content' + random,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
-          },
-        ],
+    suffix          = rand(99_999_999_999_999_999).to_s
+    signature_name1 = 'sig name 1 äöüß ' + suffix
+    signature_body1 = "--\nsig body 1 äöüß " + suffix
+    signature_name2 = 'sig name 2 äöüß ' + suffix
+    signature_body2 = "--\nsig body 2 äöüß " + suffix
+    group_name1     = 'group name 1 ' + suffix
+    group_name2     = 'group name 2 ' + suffix
+    group_name3     = 'group name 3 ' + suffix
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    #
+    # create groups and signatures
+    #
+
+    # create signatures
+    signature_create(
+      data: {
+        name: signature_name1,
+        body: signature_body1,
       },
-      {
-        :name     => 'add #2',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#manage/text_modules"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some name' + random2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal input[name="keywords"]',
-            :value   => random2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.modal textarea[name="content"]',
-            :value   => 'some content' + random2,
-          },
-          {
-            :execute => 'click',
-            :css     => '.modal button.submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random2,
-            :match_result => true,
-          },
-        ],
+    )
+    signature_create(
+      data: {
+        name: signature_name2,
+        body: signature_body2,
       },
-      {
-        :name     => 'verify usage',
-        :action   => [
-          {
-            :execute => 'click',
-            :css     => 'a[href="#new"]',
-          },
-          {
-            :execute => 'click',
-            :css     => 'a[href="#ticket/create/call_outbound"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :execute => 'set',
-            :css     => '.active textarea[name=body]',
-            :value   => '::' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
-          },
-          {
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :execute      => 'match',
-            :css          => '.active textarea[name=body]',
-            :value        => 'some content' + random,
-            :match_result => true,
-          },
+    )
+
+    # create groups
+    group_create(
+      data: {
+        name: group_name1,
+        signature: signature_name1,
+        member: [
+          'master@example.com'
         ],
-      },
-    ]
-    browser_signle_test_with_login(tests, { :username => 'master@example.com' })
-  end
-  def test_II
-    random = 'text_II_module_test_' + rand(99999999).to_s
-
-    user_rand = rand(99999999).to_s
-    login     = 'agent-text-module-' + user_rand
-    firstname = 'Text' + user_rand
-    lastname  = 'Module' + user_rand
-    email     = 'agent-text-module-' + user_rand + '@example.com'
-    password  = 'agentpw'
-
-    # user
-    tests = [
-      {
-        :name     => 'start',
-        :instance1 => browser_instance,
-        :instance2 => browser_instance,
-        :instance1_username => 'master@example.com',
-        :instance1_password => 'test',
-        :instance2_username => 'agent1@example.com',
-        :instance2_password => 'test',
-        :action   => [
-          # create ticket
-          {
-            :where   => :instance2,
-            :execute => 'close_all_tasks',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#new"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket/create/call_inbound"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active input[name=title]',
-            :value   => 'A',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#new"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.taskbar-new a[href="#ticket/create/call_outbound"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active input[name=title]',
-            :value   => 'B',
-          },
-
-          # create new text module
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage/text_modules"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[data-type="new"]',
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.modal input[name=name]',
-            :value   => 'some name' + random,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.modal input[name="keywords"]',
-            :value   => random,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'set',
-            :css     => '.modal textarea[name="content"]',
-            :value   => 'some content <%= @ticket.customer.lastname %>' + random,
-          },
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => '.modal button.submit',
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :where   => :instance1,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
-          },
-
-
+      }
+    )
+    group_create(
+      data: {
+        name: group_name2,
+        signature: signature_name2,
+        member: [
+          'master@example.com'
         ],
-      },
-
-      # create user
-      {
-        :name     => 'create user',
-        :action   => [
-          {
-            :where      => :instance1,
-            :execute    => 'create_user',
-            :login      => login,
-            :firstname  => firstname,
-            :lastname   => lastname,
-            :email      => email,
-            :password   => password,
-          },
+      }
+    )
+    group_create(
+      data: {
+        name: group_name3,
+        member: [
+          'master@example.com'
         ],
+      }
+    )
+
+    #
+    # check signature in new ticket
+    #
+
+    # reload instances to get new group permissions
+    reload()
+
+    # create ticket
+    ticket_create(
+      data: {
+        customer: 'nicole',
+        group: 'Users',
+        title: 'some subject 5 - 123äöü',
+        body: 'some body 5 - 123äöü',
       },
-      {
-        :name     => 'check if text module exists in instance2, for ready to use',
-        :action   => [
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active textarea[name=body]',
-            :value   => '::' + random,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active textarea[name=body]',
-            :value        => 'some content ' + random,
-            :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 3,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
-            :value   => 'nicole',
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '.active .ticket-create input[name="customer_id_autocompletion"]',
-            :value   => :tab,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '.active textarea[name=body]',
-            :value   => '::' + random,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active textarea[name=body]',
-            :value        => 'some content Braun' + random,
-            :match_result => true,
-          },
-        ],
+      do_not_submit: true,
+    )
+
+    # select group
+    select(
+      css: '.active [name="group_id"]',
+      value: group_name1,
+    )
+
+    # check content
+    match(
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
+    )
+
+    # check signature
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
+
+    # select create channel
+    click(
+      css: '.active [data-type="email-out"]',
+    )
+
+    # group 1 is still selected
+
+    # check content
+    match(
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
+    )
+
+    # check signature
+    match(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
+
+    # select group
+    select(
+      css: '.active [name="group_id"]',
+      value: group_name2,
+    )
+
+    # check content
+    match(
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
+    )
+
+    # check signature
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
+
+    # select group
+    select(
+      css: '.active [name="group_id"]',
+      value: group_name3,
+    )
+
+    # check content
+    match(
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
+    )
+
+    # check signature
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
+
+    # select group
+    select(
+      css: '.active [name="group_id"]',
+      value: group_name1,
+    )
+
+    # check content
+    match(
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
+    )
+
+    # check signature
+    match(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
+
+    # select create channel
+    click(
+      css: '.active [data-type="phone-out"]',
+    )
+
+    # check content
+    match(
+      css: '.active [data-name="body"]',
+      value: 'some body 5',
+    )
+
+    # check signature
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
+
+    #
+    # check signature in zoom ticket
+    #
+    ticket_create(
+      data: {
+        customer: 'nicole',
+        group: group_name1,
+        title: 'some subject 5/2 - 123äöü',
+        body: 'some body 5/2 - 123äöü',
       },
-      {
-        :name     => 'verify zoom',
-        :action   => [
+    )
 
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
+    # execute reply
+    click(
+      css: '.active [data-type="reply"]',
+    )
 
-          # create ticket
-          {
-            :where   => :instance2,
-            :execute => 'create_ticket',
-            :group   => 'Users',
-            :subject => 'some subject 123äöü',
-            :body    => 'some body 123äöü',
-          },
+    # check if signature exists
+    match(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
 
-          # check ticket
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active div.ticket-article',
-            :value        => 'some body 123äöü',
-            :match_result => true,
-          },
+=begin
+    # update group2
+    select(
+      :css   => '.active [name="group_id"]',
+      :value => group_name2,
+    )
 
-          # check ticket zoom
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where    => :instance2,
-            :execute => 'set',
-            :css     => '.active textarea[name=body]',
-            :value   => 'test',
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-          {
-            :where    => :instance2,
-            :execute => 'set',
-            :css     => '.active textarea[name=body]',
-            :value   => '::' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 0.5,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => 'body',
-            :value        => random,
-            :match_result => true,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active textarea[name=body]',
-            :value        => 'some content Braun' + random,
-            :match_result => true,
-          },
-        ],
-      },
-      {
-        :name     => 'change customer',
-        :action   => [
+    # check if signature exists
+    match_not(
+      :css      => '.active [data-name="body"]',
+      :value    => signature_body1,
+      :no_quote => true,
+    )
+    match(
+      :css      => '.active [data-name="body"]',
+      :value    => signature_body2,
+      :no_quote => true,
+    )
+=end
 
-          {
-            :where   => :instance1,
-            :execute => 'click',
-            :css     => 'a[href="#manage"]',
-          },
+    # discard changes
+    sleep 2
+    click(
+      css: '.active .js-reset',
+    )
+    sleep 3
 
-          # create ticket
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active .action button',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.active .action [data-type="customer"]',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'set',
-            :css     => '#form-customer input[name="customer_id_autocompletion"]',
-            :value   => firstname,
-          },
-          {
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '#form-customer input[name="customer_id_autocompletion"]',
-            :value   => :arrow_down,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'sendkey',
-            :css     => '#form-customer input[name="customer_id_autocompletion"]',
-            :value   => :tab,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.modal-content [type="submit"]',
-          },
-          {
-            :where   => :instance2,
-            :execute => 'wait',
-            :value   => 4,
-          },
-          {
-            :where    => :instance2,
-            :execute => 'set',
-            :css     => '.active textarea[name=body]',
-            :value   => '::' + random,
-          },
-          {
-            :execute => 'wait',
-            :value   => 0.5,
-          },
-#          {
-#            :where        => :instance2,
-#            :execute      => 'match',
-#            :css          => 'body',
-#            :value        => random,
-#            :match_result => true,
-#          },
-          {
-            :where   => :instance2,
-            :execute => 'click',
-            :css     => '.-sew-list-item.selected',
-          },
-          {
-            :execute => 'wait',
-            :value   => 1,
-          },
-          {
-            :where        => :instance2,
-            :execute      => 'match',
-            :css          => '.active textarea[name=body]',
-            :value        => 'some content ' + lastname,
-            :match_result => true,
-          },
-          {
-            :execute => 'wait',
-            :value   => 2,
-          },
-        ],
-      },
+    # check if signature exists
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
+    )
+    match_not(
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
+    )
 
-
-    ]
-    browser_double_test(tests)
   end
 end

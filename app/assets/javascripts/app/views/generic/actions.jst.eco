@@ -1,0 +1,14 @@
+<div class="dropdown dropdown--actions">
+  <div class="dropdown-toggle" id="userAction" data-toggle="dropdown">
+    <% if @type isnt 'small': %>
+      <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
+      <label><%- @T('Action') %></label>
+    <% end %>
+    <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+  </div>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
+    <% for item in @items: %>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" data-type="<%= item.name %>"><%- @T( item.title ) %></a>
+    <% end %>
+  </ul>
+</div>

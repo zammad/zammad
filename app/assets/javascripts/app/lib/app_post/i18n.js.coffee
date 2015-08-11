@@ -6,45 +6,82 @@ class App.i18n
 
   @translateContent: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.translateContent( string, args )
 
   @translatePlain: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.translatePlain( string, args )
 
   @translateInline: ( string, args... ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.translateInline( string, args )
 
   @translateTimestamp: ( args, offset = 0 ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.timestamp( args, offset )
+
+  @translateDate: ( args, offset = 0 ) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.date( args, offset )
 
   @get: ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton
+      _instance ?= new _i18nSingleton()
     _instance.get()
 
   @set: ( args ) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton( args )
+      _instance ?= new _i18nSingleton()
     _instance.set( args )
 
-  @escape: ( args ) ->
+  @setMap: (source, target, format) ->
     if _instance == undefined
-      _instance ?= new _i18nSingleton( args )
-    _instance.escape( args )
+      _instance ?= new _i18nSingleton()
+    _instance.setMap( source, target, format )
+
+  @meta: (source, target, format) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.meta()
+
+  @notTranslatedFeatureEnabled: (locale) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.notTranslatedFeatureEnabled( locale )
+
+  @getNotTranslated: (locale) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.getNotTranslated( locale )
+
+  @removeNotTranslated: (locale, key) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.removeNotTranslated( locale, key )
+
+  @setNotTranslated: (locale, key) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.setNotTranslated( locale, key )
 
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 
   constructor: ( locale ) ->
-    @map = {}
-    @timestampFormat = 'yyyy-mm-dd HH:MM'
+    @mapTime           = {}
+    @mapString         = {}
+    @mapMeta           =
+      total: 0
+      translated: 0
+    @_notTranslatedLog = false
+    @_notTranslated    = {}
+    @dateFormat        = 'yyyy-mm-dd'
+    @timestampFormat   = 'yyyy-mm-dd HH:MM'
 
     # observe if text has been translated
     $('body')
@@ -70,13 +107,13 @@ class _i18nSingleton extends Spine.Module
         @log 'debug', 'translate Update', translation_new, $this.data, 'before'
         $this.data 'before', translation_new
 
-        # update runtime translation map
-        @map[ source ] = translation_new
+        # update runtime translation mapString
+        @mapString[ source ] = translation_new
 
         # replace rest in page
         $(".translation[data-text='#{source}']").html( translation_new )
 
-        # update permanent translation map
+        # update permanent translation mapString
         translation = App.Translation.findByAttribute( 'source', source )
         if translation
           translation.updateAttribute( 'target', translation_new )
@@ -94,54 +131,107 @@ class _i18nSingleton extends Spine.Module
   get: ->
     @locale
 
-  set: ( locale ) ->
-    if locale is 'en-US'
-      locale = 'en'
-    @locale = locale
+  set: ( localeToSet ) ->
+
+    # prepare locale
+    localeToSet = localeToSet.toLowerCase()
+
+    # check if locale exists
+    localeFound = false
+    locales     = App.Locale.all()
+    for locale in locales
+      if locale.locale is localeToSet
+        localeFound = true
+
+    # try aliases
+    if !localeFound
+      for locale in locales
+        if locale.alias is localeToSet
+          localeToSet = locale.locale
+
+    # if no locale and no alias was found, try to find correct one
+    if !localeFound
+
+      # try to find by alias
+      localeToSet = localeToSet.substr(0, 2)
+      for locale in locales
+        if locale.alias is localeToSet
+          localeToSet = locale.locale
+          localeFound = true
+
+      # try to find by locale
+      if !localeFound
+        for locale in locales
+          if locale.locale is localeToSet
+            localeToSet = locale.locale
+            localeFound = true
+
+    # check if locale need to be changed
+    return if localeToSet is @locale
+
+    # set locale
+    @locale = localeToSet
+
+    # set if not translated should be logged
+    @_notTranslatedLog = @notTranslatedFeatureEnabled(@locale)
 
     # set lang attribute of html tag
-    $('html').prop( 'lang', locale.substr(0, 2) )
+    $('html').prop( 'lang', @locale.substr(0, 2) )
 
-    @map = {}
+    @mapString = {}
     App.Ajax.request(
-      id:    'i18n-set-' + locale,
+      id:    'i18n-set-' + @locale,
       type:   'GET',
-      url:    App.Config.get('api_path') + '/translations/lang/' + locale,
+      url:    App.Config.get('api_path') + '/translations/lang/' + @locale,
       async:  false,
       success: (data, status, xhr) =>
 
-        # set timestamp format
-        if data.timestampFormat
-          @timestampFormat = data.timestampFormat
+        # total count of translations as ref.
+        @mapMeta.total = data.total
 
         # load translation collection
+        mapToLoad = []
         for object in data.list
 
-          # set runtime lookup table
-          @map[ object[1] ] = object[2]
+          # set date/timestamp format
+          if object[3] is 'time'
+            @mapTime[ object[1] ] = object[2]
 
-          # load in collection if needed
-          App.Translation.refresh( { id: object[0], source: object[1], target: object[2], locale: @locale } )
+          else
+
+            # set runtime lookup table
+            @mapString[ object[1] ] = object[2]
+
+            item = { id: object[0], source: object[1], target: object[2], locale: @locale }
+            mapToLoad.push item
+
+        @mapMeta.translated = mapToLoad.length
+
+        # load in collection if needed
+        if !_.isEmpty(mapToLoad)
+          App.Translation.refresh( mapToLoad, {clear: true} )
+
+        App.Event.trigger('i18n:language:change')
     )
 
-  translateInline: ( string, args... ) =>
-    @escape( @translate( string, args... ) )
+  translateInline: ( string, args ) =>
+    App.Utils.htmlEscape( @translate( string, args ) )
 
-  translateContent: ( string, args... ) =>
-    translated = @escape( @translate( string, args... ) )
-#    replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + '<span class="icon-edit"></span>'
-    if App.Config.get( 'Translation' )
-      replace = '<span class="translation" contenteditable="true" data-text="' + @escape(string) + '">' + translated + ''
+  translateContent: ( string, args ) =>
+    translated = App.Utils.htmlEscape( @translate( string, args ) )
+#    replace = '<span class="translation" contenteditable="true" data-text="' + App.Utils.htmlEscape(string) + '">' + translated + '<span class="icon-edit"></span>'
+    if App.Config.get( 'translation_inline' )
+      replace = '<span class="translation" contenteditable="true" data-text="' + App.Utils.htmlEscape(string) + '">' + translated + ''
   #    if !@_translated
   #       replace += '<span class="missing">XX</span>'
       replace += '</span>'
     else
       translated
 
-  translatePlain: ( string, args... ) =>
-    @translate( string, args... )
+  translatePlain: ( string, args ) =>
+    @translate( string, args )
 
-  translate: ( string, args... ) =>
+  translate: ( string, args ) =>
 
     # type convertation
     if typeof string isnt 'string'
@@ -153,12 +243,20 @@ class _i18nSingleton extends Spine.Module
     return '' if string is ''
 
     # return translation
-    if @map[string] isnt undefined
+    if @mapString[string] isnt undefined
       @_translated = true
-      translated   = @map[string]
+      translated   = @mapString[string]
     else
       @_translated = false
       translated   = string
+
+      # log not translated strings in developer mode
+      if @_notTranslatedLog && App.Config.get('developer_mode') is true
+        if !@_notTranslated[@locale]
+          @_notTranslated[@locale] = {}
+        if !@_notTranslated[@locale][string]
+          @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
+        @_notTranslated[@locale][string] = true
 
     # search %s
     for arg in args
@@ -169,14 +267,36 @@ class _i18nSingleton extends Spine.Module
     # return translated string
     return translated
 
-  escape: ( string ) ->
-    string = ( '' + string )
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/\x22/g, '&quot;')
+  meta: =>
+    @mapMeta
+
+  setMap: ( source, target, format = 'string' ) =>
+    if format is 'time'
+      @mapTime[source] = target
+    else
+      @mapString[source] = target
+
+  notTranslatedFeatureEnabled: (locale) =>
+    if locale.substr(0,2) is 'en'
+      return false
+    true
+
+  getNotTranslated: ( locale ) =>
+    @_notTranslated[locale || @locale]
+
+  removeNotTranslated: ( locale, key ) =>
+    delete @_notTranslated[locale][key]
+
+  setNotTranslated: ( locale, key ) =>
+    @_notTranslated[locale][key] = true
+
+  date: ( time, offset ) =>
+    @convert(time, offset, @mapTime['date'] || @dateFormat)
 
   timestamp: ( time, offset ) =>
+    @convert(time, offset, @mapTime['timestamp'] || @timestampFormat)
+
+  convert: ( time, offset, format ) =>
     s = ( num, digits ) ->
       while num.toString().length < digits
         num = "0" + num
@@ -194,7 +314,6 @@ class _i18nSingleton extends Spine.Module
     S = timeObject.getSeconds()
     M = timeObject.getMinutes()
     H = timeObject.getHours()
-    format = @timestampFormat
     format = format.replace /dd/, s( d, 2 )
     format = format.replace /d/, d
     format = format.replace /mm/, s( m, 2 )

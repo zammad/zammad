@@ -1,11 +1,4 @@
-<form class="form-horizontal">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <a href="#" class="close">&times;</a>
-      <h2 class="modal-title"><%- @T( 'Link' ) %></h2>
-    </div>
-    <div class="modal-body">
+<fieldset>
   <%- @T( 'Link' ) %>
   <%- @T( @link_object ) %>
   <input type="text" name="ticket_number" value="" class="span2" required/>
@@ -19,17 +12,11 @@
   <%- @T( 'of' ) %>
   Ticket#
   <%= @object.number %>.
-<!--
-  <ul>
-    <li>Ticket#</li>
-    <li>Recent Views Tickets</li>
-    <li>Recent Customer Tickets</li>
-  </ul>
--->
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary"><%- @T( 'Submit' ) %></button>
-    </div>
-  </div>
-</div>
-</form>
+
+  <hr>
+  <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
+  <div id="ticket-merge-customer-tickets"></div>
+  <hr>
+  <h4><%- @T( 'Recent viewed Tickets' ) %></h4>
+  <div id="ticket-merge-recent-tickets"></div>
+</fieldset>

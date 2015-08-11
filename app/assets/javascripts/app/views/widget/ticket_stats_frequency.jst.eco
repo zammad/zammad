@@ -1,0 +1,22 @@
+<h3><%- @T('Frequency') %></h3>
+<div class="stat-graphic">
+  <% for item in @ticket_volume_by_year: %>
+    <div class="stats-row">
+      <div class="stat-bars">
+        <div class="stat-bar primary" style="height: <%- item.closed_in_percent %>%"></div>
+        <div class="stat-bar secondary" style="height: <%- item.created_in_percent %>%"></div>
+      </div>
+      <div class="stat-label"><%- @T(item.text.substr(0,3)) %></div>
+    </div>
+  <% end %>
+</div>
+<div class="stat-legend">
+  <div class="stat-legendEntry primary">
+    <span class="primary stat-circle"></span>
+    <span class="stat-legend-label"><%- @T('Closed') %></span>
+  </div>
+  <div class="stat-legendEntry secondary">
+    <span class="secondary stat-circle"></span>
+    <span class="stat-legend-label"><%- @T('Created') %></span>
+  </div>
+</div>

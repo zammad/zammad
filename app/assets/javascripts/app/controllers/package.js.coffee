@@ -8,8 +8,8 @@ class Index extends App.ControllerContent
     # check authentication
     return if !@authenticate()
 
-    # set title
-    @title 'Packages'
+    @title 'Packages', true
+
     @load()
 
   load: ->

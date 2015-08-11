@@ -1,0 +1,13 @@
+<div class="main flex vertical centered darkBackground">
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <form class="setup wizard js-admin">
+    <div class="wizard-slide">
+      <h2><%- @T('Administrator Account') %></h2>
+      <div class="wizard-body vertical justified js-admin-form"></div>
+      <div class="wizard-controls center">
+        <a class="btn btn--text btn--secondary" href="#getting_started"><%- @T('Go Back') %></a>
+        <button class="btn btn--success align-right"><%- @T( 'Create' ) %></button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,198 @@
+# Default enabled cops
+# https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
+
+AllCops:
+  RunRailsCops: true
+  Exclude:
+    - 'bin/rails'
+    - 'bin/rake'
+    - 'bin/spring'
+    - 'db/schema.rb'
+
+# Zammad StyleGuide
+
+Metrics/LineLength:
+  Description: 'Limit lines to 80 characters.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
+  Enabled: false
+
+Style/NegatedIf:
+  Description: >-
+                 Favor unless over if for negative conditions
+                 (or control flow or).
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#unless-for-negatives'
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Description: >-
+                 Favor modifier if/unless usage when you have a
+                 single-line body.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#if-as-a-modifier'
+  Enabled: false
+
+Style/TrailingComma:
+  Description: 'Checks for trailing comma in parameter lists and literals.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
+  Enabled: false
+
+Style/SpaceInsideParens:
+  Description: 'No spaces after ( or before ).'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-spaces-braces'
+  Enabled: false
+
+Style/SpaceAfterMethodName:
+  Description: >-
+                 Do not put a space between a method name and the opening
+                 parenthesis in a method definition.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#parens-no-spaces'
+  Enabled: false
+
+Style/SingleSpaceBeforeFirstArg:
+  Description: >-
+                 Checks that exactly one space is used between a method name
+                 and the first argument for method calls without parentheses.
+  Enabled: false
+
+Style/LeadingCommentSpace:
+  Description: 'Comments should start with a space.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#hash-space'
+  Enabled: false
+
+Style/MethodCallParentheses:
+  Description: 'Do not use parentheses for method calls with no arguments.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-args-no-parens'
+  Enabled: false
+
+Style/SpaceInsideBrackets:
+  Description: 'No spaces after [ or before ].'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-spaces-braces'
+  Enabled: false
+
+Style/DefWithParentheses:
+  Description: 'Use def with parentheses when there are arguments.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
+  Enabled: false
+Style/MethodDefParentheses:
+  Description: >-
+                 Checks if the method definitions have or don't have
+                 parentheses.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Description: "Keeps track of empty lines around class bodies."
+  Enabled: false
+
+Style/EmptyLinesAroundMethodBody:
+  Description: "Keeps track of empty lines around method bodies."
+  Enabled: false
+
+Style/EmptyLinesAroundBlockBody:
+  Description: "Keeps track of empty lines around block bodies."
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Description: "Keeps track of empty lines around module bodies."
+  Enabled: false
+
+Style/BlockDelimiters:
+  Description: >-
+                Avoid using {...} for multi-line blocks (multiline chaining is
+                always ugly).
+                Prefer {...} over do...end for single-line blocks.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
+  Enabled: false
+
+Style/MultilineBlockChain:
+  Description: 'Avoid multi-line chains of blocks.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
+  Enabled: false
+
+Metrics/ClassLength:
+  Description: 'Avoid classes longer than 100 lines of code.'
+  Enabled: false
+
+Metrics/MethodLength:
+  Description: 'Avoid methods longer than 10 lines of code.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#short-methods'
+  Enabled: false
+
+Style/BlockComments:
+  Description: 'Do not use block comments.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-block-comments'
+  Enabled: false
+
+Style/PerlBackrefs:
+  Description: 'Avoid Perl-style regex back references.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-perl-regexp-last-matchers'
+  Enabled: false
+
+Style/SelfAssignment:
+  Description: >-
+                 Checks for places where self-assignment shorthand should have
+                 been used.
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#self-assignment'
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  Description: 'Enforce braces style around hash parameters.'
+  Enabled: false
+
+Rails/FindEach:
+  Description: 'Prefer all.find_each over all.find.'
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Description: 'Prefer has_many :through to has_and_belongs_to_many.'
+#  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Description: 'Checks style of children classes and modules.'
+  Enabled: false
+
+Style/FileName:
+  Description: 'Use snake_case for source file names.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
+  Enabled: true
+  Exclude:
+    - 'script/websocket-server.rb'
+
+
+# 2.0
+
+Metrics/PerceivedComplexity:
+  Description: >-
+                 A complexity metric geared towards measuring complexity for a
+                 human reader.
+  Enabled: false
+
+Metrics/AbcSize:
+  Description: >-
+                 A calculated magnitude based on number of assignments,
+                 branches, and conditions.
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Description: >-
+                 A complexity metric that is strongly correlated to the number
+                 of test cases needed to validate a method.
+  Enabled: false
+
+Metrics/BlockNesting:
+  Description: 'Avoid excessive block nesting'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count'
+  Enabled: false
+
+Metrics/ModuleLength:
+  Description: 'Avoid modules longer than 100 lines of code.'
+  Enabled: false
+
+# TODO
+
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false

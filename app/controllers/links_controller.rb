@@ -1,13 +1,13 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class LinksController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
   # GET /api/v1/links
   def index
     links = Link.list(
-      :link_object       => params[:link_object],
-      :link_object_value => params[:link_object_value],
+      link_object: params[:link_object],
+      link_object_value: params[:link_object_value],
     )
 
     assets = {}
@@ -15,15 +15,15 @@ class LinksController < ApplicationController
     links.each { |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
-        ticket = Ticket.lookup( :id => item['link_object_value'] )
+        ticket = Ticket.lookup( id: item['link_object_value'] )
         assets = ticket.assets(assets)
       end
     }
 
     # return result
-    render :json => {
-      :links  => link_list,
-      :assets => assets,
+    render json: {
+      links: link_list,
+      assets: assets,
     }
   end
 
@@ -31,19 +31,19 @@ class LinksController < ApplicationController
   def add
 
     # lookup object id
-    object_id = Ticket.where( :number => params[:link_object_source_number] ).first.id
+    object_id = Ticket.where( number: params[:link_object_source_number] ).first.id
     link = Link.add(
-      :link_type                => params[:link_type],
-      :link_object_target       => params[:link_object_target],
-      :link_object_target_value => params[:link_object_target_value],
-      :link_object_source       => params[:link_object_source],
-      :link_object_source_value => object_id
+      link_type: params[:link_type],
+      link_object_target: params[:link_object_target],
+      link_object_target_value: params[:link_object_target_value],
+      link_object_source: params[:link_object_source],
+      link_object_source_value: object_id
     )
 
     if link
-      render :json => link, :status => :created
+      render json: link, status: :created
     else
-      render :json => link.errors, :status => :unprocessable_entity
+      render json: link.errors, status: :unprocessable_entity
     end
   end
 
@@ -52,9 +52,9 @@ class LinksController < ApplicationController
     link = Link.remove(params)
 
     if link
-      render :json => link, :status => :created
+      render json: link, status: :created
     else
-      render :json => link.errors, :status => :unprocessable_entity
+      render json: link.errors, status: :unprocessable_entity
     end
   end
 

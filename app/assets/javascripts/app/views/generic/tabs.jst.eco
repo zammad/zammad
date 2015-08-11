@@ -1,3 +1,8 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T( @header ) %> <small><%- @T( @subHeader ) %></small></h1>
+  </div>
+</div>
 <ul class="nav nav-tabs" role="tablist">
   <% for tab in @tabs: %>
     <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>

@@ -1,19 +1,24 @@
-<div class="navbar navbar-fixed-top navbar-inverse">
-  <a class="navbar-brand" href="#/"><%- @C( 'product_name' ) %></a>
-  <ul class="nav navbar-nav navbar-items-left"></ul>
-  <div class="spinner"/>
+<form class="search">
+  <div class="search-holder">
+    <input id="global-search" type="search" autocomplete="off">
+    <svg class="icon-magnifier"><use xlink:href="#icon-magnifier" /></svg>
+    <div class="empty-search">
+      <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+    </div>
+  </div>
+  <div class="logo js-toggleNavigation">
+    <svg class="icon-logo"><use xlink:href="#icon-logo" /></svg>
+    <div class="activity-counter js-counter"></div>
+  </div>
+  <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
+</form>
+
+<ul class="main-navigation"></ul>
+
+<div class="tasks tasks-navigation"></div>
+
 <% if !_.isEmpty(@user): %>
-  <ul class="nav navbar-nav navbar-right navbar-items-right">
+  <!--<a href="#bell" class="glyphicon glyphicon-bell"></a>-->
 
-    <li class="dropdown">
-      <form class="navbar-form">
-        <input id="global-search" class="form-control" type="search" value="<%= @search %>" placeholder="<%- @Ti( 'Search' ) %>" autocomplete="off"/>
-      </form>
-      <ul id="global-search-result" class="dropdown-menu"></ul>
-    </li>
-
-    <li class="bell"><a href="#bell" class="glyphicon glyphicon-bell"></a></li>
-
-  </ul>
+  <ul class="user-menu navbar-items-personal"></ul>
 <% end %>
-</div>

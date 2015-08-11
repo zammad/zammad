@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.2 (12043) - http://www.bohemiancoding.com/sketch -->
+    <title>outbound-calls</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="outbound-calls" sketch:type="MSArtboardGroup" fill="#50E3C2">
+            <path d="M11.0163538,13.4421152 C11.0163538,13.4421152 9.88152382,13.5432832 7.40553282,11.2164412 C4.92954082,8.88960016 4.92954082,7.77676216 4.92954082,7.77676216 L6.68336782,5.95575616 C6.37386882,4.23591716 5.23903982,1.40324016 3.27887982,2.11140916 C1.31871982,2.71841116 0.596555818,5.55108816 1.21555382,7.27092716 C4.31054282,15.4654562 11.4290188,16.9829612 12.4606818,16.9829612 C15.0398398,17.1852952 16.6905008,15.5666232 16.9999998,13.1386142 C16.9999998,13.2397812 14.3176758,11.6211092 13.0796798,11.4187752 L11.0163538,13.4421152 L11.0163538,13.4421152 Z M10.2439018,10.0000002 L13.2682928,6.87804916 L15.3170728,8.92682916 L15.9999998,2.00000016 L9.07317082,2.68292716 L11.1219508,4.73170716 L7.99999982,7.85365916 L10.2439018,10.0000002 L10.2439018,10.0000002 Z" id="calls-out-channel-gray" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>

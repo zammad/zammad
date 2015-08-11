@@ -1,0 +1,115 @@
+<div class="main flex">
+  <h1>Inputs</h1>
+
+  <div style="max-width: 500px">
+    <h2>Time</h2>
+    <p>A time of the day</p>
+    <input type="text" value="14:40" class="time">
+    <p>Add class <code>time--12</code> to activate AM/PM support</p>
+    <input type="text" value="2:40 PM" class="time time--12">
+
+    <h2>Timeframe</h2>
+    <p>A time between 00:00 and 99:99 hours</p>
+    <input type="text" value="48:00" class="timeframe">
+
+    <h2>Text Input</h2>
+    <div class="input form-group">
+      <label for="id1">Name</label>
+      <input id="id1" class="form-control" type="text" placeholder="Text Input">
+    </div>
+    <div class="input form-group">
+      <label for="id2">Password</label>
+      <input id="id2" class="form-control" type="password" value="Password Input">
+    </div>
+    <div class="input form-group">
+      <label for="id3">Email address</label>
+      <input id="id3" class="form-control" type="email" placeholder="Email Input">
+      <p class="help-block">Example block-level help text here.</p>
+    </div>
+    <div class="textarea form-group">
+      <label for="id4">Description</label>
+      <textarea id="id4" class="form-control" placeholder="Free Input"></textarea>
+    </div>
+
+
+    <h2>Select</h2>
+    <div class="select form-group">
+      <label for="a">Company</label>
+      <div class="u-positionOrigin">
+        <select id="a" class="form-control">
+          <option>Apple</option>
+          <option>Microsoft</option>
+          <option>Google</option>
+          <option>Deutsche Bahn</option>
+          <option>Sparkasse</option>
+          <option>Deutsche Post</option>
+          <option>Mitfahrzentrale</option>
+          <option>Starbucks</option>
+          <option>Mac Donalds</option>
+          <option>Flixbus</option>
+          <option>Betahaus</option>
+          <option>Bruno Banani</option>
+          <option>Alpina</option>
+          <option>Samsung</option>
+          <option>ChariTea</option>
+          <option>fritz-kola</option>
+          <option>Vitamin Water</option>
+          <option>Znuny</option>
+          <option>Max &amp; Moritz</option>
+        </select>
+        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      </div>
+    </div>
+
+    <div class="select form-group">
+      <label for="b">Company (searchable)</label>
+      <div class="searchableSelectPlaceholder"></div>
+    </div>
+
+    <div class="select form-group">
+      <label for="b">Users (searchable ajax)</label>
+      <div class="searchableAjaxSelectPlaceholder"></div>
+    </div>
+
+    <h2>Checkbox</h2>
+    <div class="checkbox form-group">
+      <div class="controls">
+        <label>
+          <input type="checkbox"> Checkbox A
+        </label>
+        <label>
+          <input type="checkbox" checked> Checkbox B
+        </label>
+        <label>
+          <input type="checkbox"> Checkbox C
+        </label>
+      </div>
+    </div>
+
+
+    <h2>Multiselect</h2>
+    <div class="radio form-group">
+      <div class="controls">
+        <label>
+          <input type="radio" name="options"> Option A
+        </label>
+        <label>
+          <input type="radio" name="options" checked> Option B
+        </label>
+        <label>
+          <input type="radio" name="options"> Option C
+        </label>
+      </div>
+    </div>
+
+    <h2>Switch</h2>
+    <div class="switch form-group">
+      <div class="controls">
+        <div class="zammad-switch">
+           <input type="checkbox" id="c">
+           <label for="c"></label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -38,34 +38,29 @@ class App.DashboardActivityStream extends App.Controller
     @render(items)
 
   render: (items) ->
+    if _.isEmpty(items)
+      @$('.activity-description').removeClass('hidden')
+      return
 
+    items = @prepareForObjectList(items)
+
+    html = $('<div class="activity-entries"></div>')
     for item in items
+      html.append( @renderItem(item) )
 
-      item.link  = ''
-      item.title = '???'
-
-      # convert backend name space to local name space
-      item.object = item.object.replace("::", '')
-
-      # lookup real data
-      if App[item.object]
-        object           = App[item.object].find( item.o_id )
-        item.link        = object.uiUrl()
-        item.title       = object.displayName()
-        item.object_name = object.objectDisplayName()
-
-      item.created_by = App.User.find( item.created_by_id )
-
-    html = App.view('dashboard/activity_stream')(
-      head: 'Activity Stream',
-      items: items
-    )
-    html = $(html)
-
-    @html html
-
-    # start user popups
-    @userPopups('right')
+    @$('.activity-entries').remove()
+    @el.append html
 
     # update time
     @frontendTimeUpdate()
+
+  renderItem: (item) ->
+    html = $(App.view('dashboard/activity_stream')(
+      item: item
+    ))
+    new App.WidgetAvatar(
+      el:       html.find('.js-avatar')
+      user_id:  item.created_by_id
+      size:     40
+    )
+    html

@@ -1,16 +1,17 @@
 class Sessions::Backend::TicketCreate
-  def initialize( user, client = nil, client_id = nil )
-    @user         = user
-    @client       = client
-    @client_id    = client_id
-    @last_change  = nil
+  def initialize( user, client = nil, client_id = nil, ttl = 30 )
+    @user        = user
+    @client      = client
+    @client_id   = client_id
+    @ttl         = ttl
+    @last_change = nil
   end
 
   def load
 
     # get attributes to update
     ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
-      :user   => @user.id,
+      user: @user.id,
     )
 
     # no data exists
@@ -26,44 +27,42 @@ class Sessions::Backend::TicketCreate
   end
 
   def client_key
-    "as::load::#{ self.class.to_s }::#{ @user.id }::#{ @client_id }"
+    "as::load::#{self.class}::#{@user.id}::#{@client_id}"
   end
 
   def push
 
     # check timeout
-    timeout = Sessions::CacheIn.get( self.client_key )
+    timeout = Sessions::CacheIn.get( client_key )
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( self.client_key, true, { :expires_in => 25.seconds } )
+    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
-    ticket_create_attributes = self.load
+    ticket_create_attributes = load
 
     return if !ticket_create_attributes
 
-
     data = {
-      :assets    => ticket_create_attributes[:assets],
-      :form_meta => {
-        :filter       => ticket_create_attributes[:filter],
-        :dependencies => ticket_create_attributes[:dependencies],
+      assets: ticket_create_attributes[:assets],
+      form_meta: {
+        filter: ticket_create_attributes[:filter],
+        dependencies: ticket_create_attributes[:dependencies],
       }
     }
 
-
     if !@client
       return {
-        :collection => 'ticket_create_attributes',
-        :data       => data,
+        collection: 'ticket_create_attributes',
+        data: data,
       }
     end
 
-    @client.log 'notify', "push ticket_create for user #{ @user.id }"
-    @client.send({
-      :collection => 'ticket_create_attributes',
-      :data       => data,
-    })
+    @client.log "push ticket_create for user #{@user.id}"
+    @client.send(
+      collection: 'ticket_create_attributes',
+      data: data,
+    )
   end
 
 end

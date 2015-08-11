@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class NetworksController < ApplicationController
-  before_filter :authentication_check
+  before_action :authentication_check
 
   # GET /networks
   # GET /networks.json
@@ -10,7 +10,7 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @networks }
+      format.json { render json: @networks }
     end
   end
 
@@ -21,7 +21,7 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @network }
+      format.json { render json: @network }
     end
   end
 
@@ -32,7 +32,7 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @network }
+      format.json { render json: @network }
     end
   end
 
@@ -48,11 +48,11 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       if @network.save
-        format.html { redirect_to @network, :notice => 'Network was successfully created.' }
-        format.json { render :json => @network, :status => :created }
+        format.html { redirect_to @network, notice: 'Network was successfully created.' }
+        format.json { render json: @network, status: :created }
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @network.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.json { render json: @network.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -64,11 +64,11 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       if @network.update_attributes(params[:network])
-        format.html { redirect_to @network, :notice => 'Network was successfully updated.' }
-        format.json { render :json => @network, :status => :ok }
+        format.html { redirect_to @network, notice: 'Network was successfully updated.' }
+        format.json { render json: @network, status: :ok }
       else
-        format.html { render :action => "edit" }
-        format.json { render :json => @network.errors, :status => :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.json { render json: @network.errors, status: :unprocessable_entity }
       end
     end
   end

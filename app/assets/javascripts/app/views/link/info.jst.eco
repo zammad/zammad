@@ -1,11 +1,22 @@
+<label><%- @T('Links') %></label>
 <% for type of @links: %>
-  <strong><%- @T( type ) %></strong>
-  <ul>
+<div class="ticketLinks">
+  <div class="sidebar-list-title"><%- @T( type ) %></div>
+  <ol class="tasks tasks--standalone">
     <% for item in @links[type]: %>
-    <li><a href="#ticket/zoom/<%= item.id %>" data-type="" title="<%= item.title %>" class="<%= item.css %>">T:<%= item.number %> <%= item.title %></a> <a href="" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove" class="glyphicon glyphicon-remove hide" title="<%- @Ti('remove') %>"></a></li>
+    <li class="task">
+      <div class="icon-holder">
+        <svg class="<%- item.icon() %>"><use xlink:href="#icon-priority" /></svg>
+      </div>
+      <div class="task-text">
+        <a class="name ticket-popover" data-id="<%- item.id %>" href="#ticket/zoom/<%= item.id %>"><%= item.title %></a>
+        <div class="time humanTimeFromNow" data-time="<%- item.created_at %>"></div>
+      </div>
+      <div class="sidebar-list-item-delete js-delete" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove">
+        <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
     <% end %>
-  </ul>
-<% end %>
-<div>
-  <a href="" data-type="add" class="glyphicon glyphicon-plus hide" title="<%- @Ti('add') %>"></a>
+  </ol>
 </div>
+<% end %>
+<div class="text-muted u-clickable js-add">+ <%- @T('Add Link') %></div>

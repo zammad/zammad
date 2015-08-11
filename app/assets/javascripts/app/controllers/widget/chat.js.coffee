@@ -1,4 +1,4 @@
-class Widget extends App.Controller
+class Widget extends App.ControllerWidgetPermanent
   events:
     'submit   #chat_form':          'submitMessage'
     'focusin  [name=chat_message]': 'focusIn'
@@ -26,7 +26,7 @@ class Widget extends App.Controller
       @start()
 
   access: ->
-    return false if _.isEmpty( @Session.all() )
+    return false if !@Session.get()
     return true if @isRole('Agent')
     return true if @isRole('Admin')
     return false

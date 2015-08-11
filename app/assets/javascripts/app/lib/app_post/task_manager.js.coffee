@@ -1,18 +1,18 @@
 class App.TaskManager
   _instance = undefined
 
-  @init: ->
-    _instance ?= new _taskManagerSingleton
+  @init: ( params ) ->
+    _instance ?= new _taskManagerSingleton( params )
 
   @all: ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
     _instance.all()
 
-  @add: ( key, callback, params, to_not_show ) ->
+  @execute: ( params ) ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
-    _instance.add( key, callback, params, to_not_show )
+    _instance.execute( params )
 
   @get: ( key ) ->
     if _instance == undefined
@@ -34,6 +34,11 @@ class App.TaskManager
       _instance ?= new _taskManagerSingleton
     _instance.notify( key )
 
+  @mute: ( key ) ->
+    if _instance == undefined
+      _instance ?= new _taskManagerSingleton
+    _instance.mute( key )
+
   @reorder: ( order ) ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
@@ -49,26 +54,26 @@ class App.TaskManager
       _instance ?= new _taskManagerSingleton
     _instance.worker( key )
 
-  @workerAll: ->
+  @nextTaskUrl: ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
-    _instance.workerAll()
+    _instance.nextTaskUrl()
 
   @TaskbarId: ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
     _instance.TaskbarId()
 
-class _taskManagerSingleton extends App.Controller
+class _taskManagerSingleton extends Spine.Module
   @include App.LogInclude
 
-  constructor: ->
+  constructor: (params = {}) ->
     super
-    @workers           = {}
-    @workersStarted    = {}
-    @allTasks          = []
-    @tasksToUpdate     = {}
-    @activeTask        = undefined
+    if params.el
+      @el = params.el
+    else
+      @el = $('#app')
+    @offlineModus = params.offlineModus
     @tasksInitial()
 
     # render on login
@@ -90,6 +95,14 @@ class _taskManagerSingleton extends App.Controller
     # send updates to server
     App.Interval.set( @taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task' )
 
+  init: ->
+    @workers           = {}
+    @workersStarted    = {}
+    @tasksStarted      = {}
+    @allTasks          = []
+    @tasksToUpdate     = {}
+    @activeTaskHistory = []
+
   all: ->
 
     # sort by prio
@@ -106,32 +119,55 @@ class _taskManagerSingleton extends App.Controller
     prio++
     prio
 
+  # generate dom id for task
+  domID: (key) ->
+    "content_permanent_#{key}"
+
   worker: ( key ) ->
     return @workers[ key ] if @workers[ key ]
     return
 
-  workerAll: ->
-    @workers
+  execute: ( params ) ->
 
-  add: ( key, callback, params, to_not_show = false ) ->
-    active = true
-    if to_not_show
-      active = false
+    # input validation
+    params.key = App.Utils.htmlAttributeCleanup(params.key)
 
-    # create new task if not exists
-    task = @get( key )
-    @log 'debug', 'add', key, callback, params, to_not_show, task, active
-    if !task
-      @log 'debug', 'add, create new taskbar in backend'
+    # in case an init execute arrives later but is aleady executed, ignore it
+    if params.init && @tasksStarted[params.key]
+      #console.log('IGNORE LATER INIT', params)
+      return
+
+    # remember started task / prevent to open task twice
+    createNewTask = true
+    if @tasksStarted[params.key]
+      createNewTask = false
+    @tasksStarted[params.key] = true
+
+    # if we have init task startups, let the controller know this
+    if params.init
+      params.params.init = true
+
+    # remember latest active controller
+    if params.show
+      @activeTaskHistory.push _.clone(params)
+
+    # check if task already exists in storage / e. g. from last session
+    task = @get( params.key )
+
+    #console.log 'debug', 'execute', params, 'task', task
+
+    # create new online task if not exists and if not persistent
+    if !task && createNewTask && !params.persistent
+      #console.log 'debug', 'add, create new taskbar in backend'
       task = new App.Taskbar
       task.load(
-        key:      key
-        params:   params
-        callback: callback
+        key:      params.key
+        params:   params.params
+        callback: params.controller
         client_id: 123
         prio:     @newPrio()
         notify:   false
-        active:   active
+        active:   params.show
       )
       @allTasks.push task.attributes()
 
@@ -145,35 +181,21 @@ class _taskManagerSingleton extends App.Controller
               ui.allTasks[taskPosition] = task
       )
 
-    # create div for permanent content
-    if !$("#content_permanent")[0]
-      $('#app section').append('<div id="content_permanent" class="content"></div>')
-
     # empty static content if task is shown
-    if active
-      @activeTask = key
-      $('#content').empty()
+    if params.show
+      @el.find('#content').empty()
 
       # hide all tasks
-      $('.content_permanent').hide()
-      $('.content_permanent').removeClass('active')
+      @el.find('.content').addClass('hide').removeClass('active')
 
     # create div for task if not exists
-    if !$("#content_permanent_#{key}")[0]
-      $('#content_permanent').append('<div id="content_permanent_' + key + '" class="content_permanent"></div>')
-
-    # set task to shown and active
-    if @activeTask is key
-      $('#content_permanent_' + key ).show()
-      $('#content_permanent_' + key ).addClass('active')
-    else
-      $('#content_permanent_' + key ).hide()
-      $('#content_permanent_' + key ).removeClass('active')
+    if !@el.find("##{@domID(params.key)}")[0]
+      @el.append("<div id=\"#{@domID(params.key)}\" class=\"content horizontal flex\"></div>")
 
     # set all tasks to active false, only new/selected one to active
-    if active
+    if params.show
       for task in @allTasks
-        if task.key isnt key
+        if task.key isnt params.key
           if task.active
             task.active = false
             @taskUpdate( task )
@@ -187,60 +209,87 @@ class _taskManagerSingleton extends App.Controller
             task.notify = false
           if changed
             @taskUpdate( task )
-    else
-      for task in @allTasks
-        if @activeTask isnt task.key
-          if task.active
-            task.active = false
-            @taskUpdate( task )
 
     # start worker for task if not exists
-    @startController(key, callback, params, to_not_show)
+    @startController(params)
 
     App.Event.trigger 'task:render'
-    return key
 
-  startController: (key, callback, params, to_not_show) =>
+  startController: (params) =>
 
-    @log 'debug', 'controller start try...', callback, key
+    #console.log 'debug', 'controller start try...', params
 
-    # create params
-    params_app = _.clone(params)
-    params_app['el']       = $('#content_permanent_' + key )
-    params_app['task_key'] = key
-    if to_not_show
+    # create clean params
+    params_app             = _.clone(params.params)
+    params_app['el']       = $("##{@domID(params.key)}")
+    params_app['task_key'] = params.key
+    if !params.show
       params_app['doNotLog'] = 1
 
-    # return if controller is already started
-    if @workersStarted[key]
+    # start controller if not already started
+    if !@workersStarted[params.key]
+      @workersStarted[params.key] = true
 
-      # activate existing controller
-      worker = @worker( key )
-      if worker && worker.activate && !to_not_show
-        worker.activate(params_app)
-        App.Event.trigger('ui:rerender:task')
-      return
+      # create new controller instanz
+      @workers[params.key] = new App[params.controller]( params_app )
 
-    @workersStarted[key] = true
+    # if controller is started hidden, call hide of controller
+    if !params.show
+      @hide(params.key)
 
-    # create new controller instanz
-    a = new App[callback]( params_app )
-    @workers[ key ] = a
+    # hide all other controller / show current controller
+    else
+      @showControllerHideOthers( params.key, params_app )
 
-    # activate controller
-    if !to_not_show
-      a.activate(params_app)
+  showControllerHideOthers: ( thisKey, params_app ) =>
+    for key of @workersStarted
+      if key is thisKey
+        @show(key, params_app)
+      else
+        @hide(key)
 
-    return a
+  # show task content
+  show: (key, params_app) ->
+    @el.find("##{@domID(key)}").removeClass('hide').addClass('active')
 
+    controller = @workers[ key ]
+    return false if !controller
+
+    # set controller state to active
+    if controller.active
+      controller.active(true)
+
+    # execute controllers show
+    if controller.show
+      controller.show(params_app)
+      App.Event.trigger('ui:rerender:task')
+
+    true
+
+  # hide task content
+  hide: (key) ->
+    @el.find("##{@domID(key)}").addClass('hide').removeClass('active')
+
+    controller = @workers[ key ]
+    return false if !controller
+
+    # set controller state to active
+    if controller.active
+      controller.active(false)
+
+    # execute controllers hide
+    if controller.hide
+      controller.hide()
+
+    true
+
+  # get task
   get: ( key ) =>
     for task in @allTasks
       if task.key is key
         return task
-#      return task if task.key is key
-    return
-#    throw "No such task with '#{key}'"
 
+  # update task
   update: ( key, params ) =>
     task = @get( key )
     if !task
@@ -249,11 +298,16 @@ class _taskManagerSingleton extends App.Controller
       task[item] = value
     @taskUpdate( task )
 
-  remove: ( key, to_not_show = false ) =>
-    task = @get( key )
-    if !task
-      throw "No such task with '#{key}' to remove"
+  # remove task certain task from tasks
+  remove: ( key ) =>
 
+    # remember started task
+    delete @tasksStarted[key]
+
+    task = @get( key )
+    return if !task
+
+    # update @allTasks
     allTasks = _.filter(
       @allTasks
       (taskLocal) ->
@@ -262,17 +316,16 @@ class _taskManagerSingleton extends App.Controller
     )
     @allTasks = allTasks || []
 
-    $('#content_permanent_' + key ).html('')
-    $('#content_permanent_' + key ).remove()
+    # release task from dom and destroy controller
+    @release(key)
 
-    delete @workersStarted[ key ]
-    delete @workers[ key ]
-
+    # rerender taskbar
     App.Event.trigger 'task:render'
 
-    # destroy in backend
+    # destroy in backend storage
     @taskDestroy(task)
 
+  # set notify of task
   notify: ( key ) =>
     task = @get( key )
     if !task
@@ -280,6 +333,15 @@ class _taskManagerSingleton extends App.Controller
     task.notify = true
     @taskUpdate( task )
 
+  # unset notify of task
+  mute: ( key ) =>
+    task = @get( key )
+    if !task
+      throw "No such task with '#{key}' to mute"
+    task.notify = false
+    @taskUpdate( task )
+
+  # set new order of tasks (needed for dnd)
   reorder: ( order ) =>
     prio = 0
     for key in order
@@ -291,26 +353,58 @@ class _taskManagerSingleton extends App.Controller
         task.prio = prio
         @taskUpdate( task )
 
+  # release one task
+  release: (key) =>
+    try
+      @el.find( "##{@domID(key)}" ).html('')
+      @el.find( "##{@domID(key)}" ).remove()
+    catch
+      @log 'notice', "invalid key '#{key}'"
+
+    delete @workersStarted[ key ]
+    delete @workers[ key ]
+    delete @tasksStarted[ key ]
+
+  # reset while tasks
   reset: =>
 
-    # release tasks
+    # release touch tasks
     for task in @allTasks
-      $('#content_permanent_' + task.key ).html('')
-      $('#content_permanent_' + task.key ).remove()
+      @release(key)
 
-      delete @workersStarted[ task.key ]
-      delete @workers[ task.key ]
+    # release persistent tasks
+    for key, controller of @workers
+      @release(key)
 
     # clear instance vars
-    @tasksToUpdate = {}
-    @allTasks      = []
-    @activeTask    = undefined
+    @init()
 
     # clear in mem tasks
     App.Taskbar.deleteAll()
 
     # rerender task bar
     App.Event.trigger 'task:render'
+
+  nextTaskUrl: =>
+
+    # activate latest controller based on history
+    loop
+      controllerParams = @activeTaskHistory.pop()
+      break if !controllerParams
+      break if !controllerParams.key
+      controller = @workers[ controllerParams.key ]
+      if controller && controller.url
+        return controller.url()
+
+    # activate latest controller with highest prio
+    tasks = @all()
+    taskNext = tasks[tasks.length-1]
+    if taskNext
+      controller = @workers[ taskNext.key ]
+      if controller && controller.url
+        return controller.url()
+
+    false
 
   TaskbarId: =>
     if !@TaskbarIdInt
@@ -323,6 +417,7 @@ class _taskManagerSingleton extends App.Controller
     App.Event.trigger 'task:render'
 
   taskUpdateLoop: =>
+    return if @offlineModus
     for key of @tasksToUpdate
       continue if !key
       task = @get( key )
@@ -357,31 +452,64 @@ class _taskManagerSingleton extends App.Controller
 
     # destory task in backend
     delete @tasksToUpdate[ task.key ]
+
+    # if task isnt already stored on backend
+    return if !task.id
     App.Taskbar.destroy(task.id)
     return
 
   tasksInitial: =>
+    @init()
 
-    # initial load of taskbar collection
-    tasks     = App.Taskbar.all()
-    @allTasks = []
+    # set taskbar collection stored in database
+    tasks = App.Taskbar.all()
     for task in tasks
       @allTasks.push task.attributes()
 
     # reopen tasks
     App.Event.trigger 'taskbar:init'
 
-    task_count = 0
+    # initial load of permanent tasks
+    authentication = App.Session.get('id')
+    permanentTask  = App.Config.get( 'permanentTask' )
+    task_count     = 0
+    if permanentTask
+      for key, config of permanentTask
+        if !config.authentication || ( config.authentication && authentication )
+          task_count += 1
+          do (key, config, task_count) =>
+            App.Delay.set(
+              =>
+                @execute(
+                  key:        key
+                  controller: config.controller
+                  params:     {}
+                  show:       false
+                  persistent: true
+                  init:       true
+                )
+              task_count * 450
+              undefined
+              'task'
+            )
+
+    # initial load of taskbar collection
     for task in @allTasks
       task_count += 1
-      do (task) =>
+      do (task, task_count) =>
         App.Delay.set(
           =>
-            @add(task.key, task.callback, task.params, true)
-          task_count * 600
+            @execute(
+              key:        task.key
+              controller: task.callback
+              params:     task.params
+              show:       false
+              persistent: false
+              init:       true
+            )
+          task_count * 800
           undefined
           'task'
         )
 
     App.Event.trigger 'taskbar:ready'
-

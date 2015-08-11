@@ -67,17 +67,18 @@ class _collectionSingleton extends Spine.Module
         @reset( localStorage: data.localStorage, type: type, data: collection )
 
   reset: (params) ->
-    if !App[ params.type ]
+
+    # check if collection exists
+    appObject = App[ params.type ]
+    if !appObject
       @log 'error', 'reset', "no such collection #{params.type}", params
       return
-
-    @log 'debug', 'reset', params
 
     # remove permanent storage
     @localDelete( params.type )
 
     # reset in-memory
-    App[ params.type ].refresh( params.data, { clear: true } )
+    appObject.refresh( params.data, { clear: true } )
 
     # remember in store if not already requested from local storage
     for object in params.data
@@ -89,19 +90,21 @@ class _collectionSingleton extends Spine.Module
       @load( localStorage: false, type: type, data: collections )
 
   load: (params) ->
-    @log 'debug', 'load', params
 
+    # no data to load
     return if _.isEmpty( params.data )
 
-    if !App[ params.type ]
-      @log 'error', 'reset', 'no such collection', params
+    # check if collection exists
+    appObject = App[ params.type ]
+    if !appObject
+      @log 'error', 'reset', "no such collection #{params.type}", params
       return
 
     localStorage = params.localStorage
 
     # load full array once
     if _.isArray( params.data )
-      App[ params.type ].refresh( params.data )
+      appObject.refresh( params.data )
 
       # remember in store if not already requested from local storage
       if !localStorage
@@ -111,8 +114,18 @@ class _collectionSingleton extends Spine.Module
 
     # load data from object
     for key, object of params.data
-      if !params.refresh && App[ params.type ]
-        App[ params.type ].refresh( object )
+      if !params.refresh && appObject
+
+        # check if new object is newer, just load newer objects
+        if object.updated_at && appObject.exists( key )
+          exists = appObject.find( key )
+          if exists.updated_at
+            if exists.updated_at < object.updated_at
+              appObject.refresh( object )
+          else
+            appObject.refresh( object )
+        else
+          appObject.refresh( object )
 
       # remember in store if not already requested from local storage
       if !localStorage

@@ -1,0 +1,66 @@
+Return-Path: <sales@example.com>
+X-Original-To: info@znuny.inc
+Delivered-To: znuny-sales@arber.znuny.inc
+Received: from tvweb01.example.com (tvweb01.example.com [46.163.100.194])
+	by arber.znuny.inc (Postfix) with ESMTP id 968B65FEA3
+	for <info@znuny.inc>; Wed,  7 Jan 2015 13:19:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed;
+  s=s1024;d=example.com;
+  h=mime-version:from:to:date:subject:content-type:message-id;
+  bh=zK+PkYiiKU1DhbYV/4TtBgNk7uo=;
+  b=k/6PAyL/rETRuhqEiojQu5ik9zznLdejqT54jdemsm8W7bJ2RAAzcSS0wcUerkfxSiLTbgkG
+    Czsmd7hA5vhLLJ3GJmntQQVEL/2YEnjM0M7JsomkRPTaQ1Z+SoRmxCTOfYobQWqQO4LnZYVj
+    v0l93lwKk6xupEkEZxywHK7fo98=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024;d=example.com;
+  h=mime-version:from:to:date:subject:content-type:message-id;
+  b=IwMtmGbwRPbbvNZXzW2HA+a91T3PgoOAwub4WaayMEf+t9hq2/1AhD9bVMwqM2OqUJ+HRlL5
+    ++Qf5txSej/ysoMZU0F74Z2B4E1WPBpsNF6pifg2KdeB511FaT5C+NWKOUJ9m3kAsknPuZKS
+    m1uSUJ7fkUkRb0jstFF3WKwSS1M=
+Received: from tvweb01 ([46.163.100.194]) by tvweb01.example.com with Microsoft SMTPSVC(7.5.7601.17514);
+	 Wed, 7 Jan 2015 13:18:00 +0100
+MIME-Version: 1.0
+From: "Example Sales" <sales@example.com>
+To: info@znuny.inc
+Date: 7 Jan 2015 13:18:00 +0100
+Subject: Example licensing information: No channel available
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+Message-ID: <TVWEB01QZcflrsYbMea00101f2b@tvweb01.example.com>
+X-OriginalArrivalTime: 07 Jan 2015 12:18:00.0006 (UTC) FILETIME=[FA24B660:01D02A73]
+
+PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0
+aW9uYWwvL0VOIj4NCjxodG1sPg0KPGhlYWQ+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3Mi
+Pg0KPCEtLQ0KLnRleHQsdGQsdGggew0KCWZvbnQtc2l6ZTogMTJweDsNCglmb250LWZh
+bWlseTogQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjsNCn0NCi51bnN1YnNjcmli
+ZSB7DQoJZm9udC1zaXplOiAxMHB4Ow0KfQ0KdGh7dGV4dC1hbGlnbjpsZWZ0O30NCi5y
+aWdodHt0ZXh0LWFsaWduOnJpZ2h0O30NCi0tPg0KPC9zdHlsZT4NCjwvaGVhZD4NCjxi
+b2R5Pg0KPHNwYW4gY2xhc3M9InRleHQiPg0KRGVhciBNci4gRWRlbmhvZmVyLA0KPHA+
+V2Ugd2FudCB0byBrZWVwIHlvdSB1cGRhdGVkIG9uIFRlYW1WaWV3ZXIgbGljZW5zaW5n
+IHNob3J0YWdlcyBvbiBhIHJlZ3VsYXIgYmFzaXMuPC9wPg0KPHA+PHN0cm9uZz5XZSB3
+b3VsZCBsaWtlIHRvIGluZm9ybSB5b3UgdGhhdCBzaW5jZSB0aGUgbGFzdCBtZXNzYWdl
+IG9uIDI1LU5vdi0yMDE0IHRoZXJlIGhhdmUgYmVlbiB0ZW1wb3Jhcnkgc2Vzc2lvbiBj
+aGFubmVsIGV4Y2VlZGFuY2VzIHdoaWNoIG1ha2UgaXQgaW1wb3NzaWJsZSB0byBlc3Rh
+Ymxpc2ggbW9yZSBzZXNzaW9ucy4gU2luY2UgdGhlIGxhc3QgZS1tYWlsIHRoaXMgaGFz
+IG9jY3VycmVkIGluIGEgdG90YWwgb2YgMSBjYXNlcy48L3N0cm9uZz48L3A+DQo8cD5B
+ZGRpdGlvbmFsIHNlc3Npb24gY2hhbm5lbHMgY2FuIGJlIGFkZGVkIGF0IGFueSB0aW1l
+LiBQbGVhc2UgdmlzaXQgb3VyIDxhIGhyZWY9Imh0dHBzOi8vd3d3LnRlYW12aWV3ZXIu
+Y29tL2VuL2xpY2Vuc2luZy91cGRhdGUuYXNweD9jaGFubmVsPUQ4NDJDUzlCRjg1LVAx
+MDA5NjQ1Ti0zNDg3ODVFNzZFIj5UZWFtVmlld2VyIE9ubGluZSBTaG9wPC9hPiBmb3Ig
+cHJpY2luZyBpbmZvcm1hdGlvbi48L3A+DQo8cD5UaGFuayB5b3UgLSBhbmQgYWdhaW4g
+YWxsIHRoZSBiZXN0IHdpdGggVGVhbVZpZXdlciE8L3A+DQo8cD5CZXN0IHJlZ2FyZHMs
+PC9wPg0KPHA+PGk+WW91ciBUZWFtVmlld2VyIFRlYW08L2k+PC9wPg0KPHA+UC5TLjog
+WW91IHJlY2VpdmUgdGhpcyBlLW1haWwgYmVjYXVzZSB5b3UgYXJlIGxpc3RlZCBpbiBv
+dXIgZGF0YWJhc2UgYXMgcGVyc29uIHdobyBvcmRlcmVkIGEgVGVhbVZpZXdlciBsaWNl
+bnNlLiBQbGVhc2UgY2xpY2sgPGEgaHJlZj0iaHR0cDovL3d3dy50ZWFtdmlld2VyLmNv
+bS9lbi9jb21wYW55L3Vuc3Vic2NyaWJlLmFzcHg/aWQ9MTAwOTY0NSZpZGVudD1FMzc2
+ODJFQUM2NUU4Q0E2RkYzNjA3NDkwN0Q4QkMxNCI+aGVyZTwvYT4gdG8gdW5zdWJzY3Jp
+YmUgZnJvbSBmdXJ0aGVyIGUtbWFpbHMuPC9wPg0KLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0NCjxiciAvPg0KPGEgaHJlZj0iaHR0cDovL3d3dy50ZWFtdmlld2VyLmNv
+bSI+d3d3LnRlYW12aWV3ZXIuY29tPC9hPjxiciAvPg0KPGJyIC8+DQogICBUZWFtVmll
+d2VyIEdtYkggKiBKYWhuc3RyLiAzMCAqIDczMDM3IEfDtnBwaW5nZW4gKiBHZXJtYW55
+PGJyIC8+DQogIFRlbC4gMDcxNjEgNjA2OTIgNTAgKiBGYXggMDcxNjEgNjA2OTIgNzk8
+YnIgLz4NCiAgPGJyIC8+DQogIFJlZ2lzdHJhdGlvbiBBRyBVbG0gSFJCIDUzNDA3NSAq
+IEdlbmVyYWwgTWFuYWdlciBIb2xnZXIgRmVsZ25lcjxiciAvPg0KICA8YnIgLz4NCiAg
+PHNwYW4gY2xhc3M9InVuc3Vic2NyaWJlIj48L3NwYW4+DQogIDxiciAvPg0KPC9zcGFu
+Pg0KPC9ib2R5Pg0KPC9odG1sPg==

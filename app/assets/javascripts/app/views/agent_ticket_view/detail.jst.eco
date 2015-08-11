@@ -1,45 +1,54 @@
-<div>
-  <div class="row">
-    <div class="span1">
+<table class="table table-striped table-hover">
+  <tr>
+    <th class="" style="width: 24px;">
       <input type="checkbox" value="" name="bulk_all"/>
-    </div>
-  </div>
-  <table class="table table-striped table-hover">
+    </th>
+    <th></th>
+  </tr>
 <% for ticket in @objects: %>
   <tr data-id="<%= ticket.id %>">
-    <td class="" style="width: 10px;">
-      <input type="checkbox" value="<%= ticket.id %>" name="bulk" class="pull-left"/>
+    <td>
+      <input type="checkbox" value="<%= ticket.id %>" name="bulk"/>
     </td>
-    <td class="span1">
-      <img class="thumbnail user-popover" data-id="<%= ticket.customer_id %>" src="<%= ticket.customer.imageUrl %>" alt="">
-    </td>
-    <td class="span10">
-      <h3><a href="#" data-type="edit"><%= ticket.title %></a> <small><%= ticket.number %> <span class="humanTimeFromNow" data-time="<%= ticket.created_at %>">?</span></small></h3>
-      <div class="row">
-        <div class="span2">
-          <b><%- @T( 'State' ) %></b> <%- @T( ticket.state.name ) %>
+    <td>
+      <%- ticket.customer.avatar("50", "", "userInfo-avatar") %>
+      <h2 style="margin-top: 0px;"><a href="<%- ticket.uiUrl() %>" data-type="edit"><%= ticket.title %></a></h2>
+
+      <div class="horizontal">
+        <div class="vertical flex">
+          <table style="width: 100%;">
+            <tr>
+              <td style="width: 25%;"><label><%- @T( 'Number' ) %></label></td><td> <%- @P( ticket, 'number' ) %></td>
+            </tr>
+            <tr>
+              <td><label><%- @T( 'State' ) %></label></td><td> <%- @P( ticket, 'state' ) %></td>
+            </tr>
+            <tr>
+              <td><label><%- @T( 'Group' ) %></label></td><td> <%- @P( ticket, 'group' ) %></td>
+            </tr>
+            <tr>
+              <td><label><%- @T( 'Customer' ) %></label></td><td> <%- @P( ticket, 'customer' ) %></td>
+            </tr>
+          </table>
         </div>
-        <div class="span2">
-          <b><%- @T( 'Group' ) %></b> <%= ticket.group.name %>
-        </div>
-        <div class="span2">
-          <b><%- @T( 'Customer' ) %></b> <%= ticket.customer.displayName() %>
+        <div class="vertical flex">
+          <table style="width: 100%;">
+            <tr>
+              <td style="width: 25%;"><label><%- @T( 'Erstellt' ) %></label></td><td> <%- @P( ticket, 'created_at' ) %></td>
+            </tr>
+            <tr>
+              <td><label><%- @T( 'Priority' ) %></label></td><td> <%- @P( ticket, 'priority' ) %></td>
+            </tr>
+            <tr>
+              <td><label><%- @T( 'Owner' ) %></label></td><td> <%- @P( ticket, 'owner' ) %></td>
+            </tr>
+            <tr>
+              <td><label><%- @T( 'Organization' ) %></label></td><td> <%- @P( ticket, 'organization' ) %></td>
+            </tr>
+          </table>
         </div>
       </div>
-      <div class="row">
-        <div class="span2">
-          <b><%- @T( 'Priority' ) %></b> <%- @T( ticket.priority.name ) %>
-        </div>
-        <div class="span2">
-          <b><%- @T( 'Owner' ) %></b> <%= ticket.owner.displayName() %>
-        </div>
-        <div class="span2">
-          <b><%- @T( 'Organization' ) %></b> <%= @P( ticket.customer.organization ) %>
-        </div>
-      </div>
-    </div>
     </td>
   </tr>
 <% end %>
-  </table>
-</div>
+</table>
