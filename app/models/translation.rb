@@ -17,7 +17,7 @@ load translations from online
   def self.load
     locales = Locale.where(active: true)
     if Rails.env.test?
-      locales = Locale.where(active: true, name: ['en-us', 'de-de'])
+      locales = Locale.where(active: true, locale: ['en-us', 'de-de'])
     end
     locales.each {|locale|
       url = "https://i18n.zammad.com/api/v1/translations/#{locale.locale}"
