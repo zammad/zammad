@@ -50,6 +50,17 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test 'packages index with nobody' do
+
+    # index
+    get '/api/v1/packages'
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_not(result['packages'])
+
+  end
+
   test 'packages index with admin' do
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-admin@example.com', 'adminpw')

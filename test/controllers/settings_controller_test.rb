@@ -50,6 +50,17 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test 'settings index with nobody' do
+
+    # index
+    get '/api/v1/settings'
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_not(result['settings'])
+
+  end
+
   test 'settings index with admin' do
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-admin@example.com', 'adminpw')
