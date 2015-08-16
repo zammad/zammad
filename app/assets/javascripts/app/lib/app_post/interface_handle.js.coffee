@@ -21,6 +21,9 @@ class App.Run extends App.Controller
     # create web socket connection
     App.WebSocket.connect()
 
+    # start frontend time update
+    @frontendTimeUpdate()
+
     # start navbars
     @setupWidget( 'Navigations', 'nav', @el )
 

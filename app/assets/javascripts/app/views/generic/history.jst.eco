@@ -5,7 +5,7 @@
 
 <% for item in @items: %>
   <span class="user-popover" data-id="<%= item.created_by.id %>"><%= item.created_by.displayName() %></span> -
-  <span class="humanTimeFromNow" data-time="<%- item.created_at %>">?</span>
+  <span class="humanTimeFromNow" data-time="<%- item.created_at %>" data-tooltip="<%- @timestamp(item.created_at) %>"><%- @humanTime(item.created_at) %></span>
   <ul>
     <% for content in item.records: %>
     <li><%- content %></li>

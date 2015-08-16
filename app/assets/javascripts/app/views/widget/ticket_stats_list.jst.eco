@@ -9,7 +9,7 @@
     </div>
     <div class="task-text">
       <a class="name ticket-popover" data-id="<%- ticket_id %>" href="<%- ticket.uiUrl() %>"><%= ticket.title %></a>
-      <div class="time humanTimeFromNow" data-time="<%- ticket.created_at %>"></div>
+      <div class="time humanTimeFromNow" data-time="<%- ticket.created_at %>" data-tooltip="<%- @timestamp(ticket.created_at) %>"><%- @humanTime(ticket.created_at) %></div>
     </div>
   </li>
   <% end %>

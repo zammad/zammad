@@ -274,9 +274,4 @@ class App.ControllerTable extends App.Controller
           )
       )
 
-    time = =>
-      @frontendTimeUpdate()
-    @delay(time, 80) # to show time immediately for normal tables
-    @delay(time, 280) # to show time immediately for tables in modal dialog
-
     table

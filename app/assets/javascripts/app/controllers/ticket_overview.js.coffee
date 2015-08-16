@@ -321,9 +321,6 @@ class Table extends App.Controller
     # start organization popups
     @organizationPopups()
 
-    # show frontend times
-    @frontendTimeUpdate()
-
     # start bulk action observ
     @el.find('.bulkAction').append( @bulk_form() )
     if @el.find('.table-overview').find('input[name="bulk"]:checked').length isnt 0

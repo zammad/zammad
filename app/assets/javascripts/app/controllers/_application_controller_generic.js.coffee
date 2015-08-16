@@ -401,9 +401,6 @@ class App.GenericHistory extends App.ControllerModal
     # enable user popups
     @userPopups()
 
-    # show frontend times
-    @delay( @frontendTimeUpdate, 800, 'ui-time-update' )
-
   sortorder: =>
     @items = @items.reverse()
 

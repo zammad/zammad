@@ -42,9 +42,6 @@ class Index extends App.ControllerContent
       sessions: data.sessions
     )
 
-    # show frontend times
-    @frontendTimeUpdate()
-
   destroy: (e) ->
     e.preventDefault()
     sessionId = $( e.target ).closest('a').data('session-id')
