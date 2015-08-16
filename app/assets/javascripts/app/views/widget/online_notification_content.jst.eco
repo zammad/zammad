@@ -9,7 +9,7 @@
         <span class="activity-text">
           <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> (<%= item.title %>)<% end %>
         </span>
-        <span class="activity-time humanTimeFromNow" data-time="<%- item.created_at %>" data-tooltip="<%- @timestamp(item.created_at) %>"><%- @humanTime(item.created_at) %></span>
+        <%- @humanTime(item.created_at, false, 'activity-time') %>
       </span>
     </a>
   </div>

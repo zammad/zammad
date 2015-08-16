@@ -108,12 +108,11 @@ class App extends Spine.Controller
     else if attribute_config.tag is 'datetime'
       isHtmlEscape = true
       timestamp = App.i18n.translateTimestamp(result)
-      escalation = undefined
-      if attribute_config.class is 'escalation'
-        escalation
+      escalation = false
+      if attribute_config.class && attribute_config.class.match 'escalation'
+        escalation = true
       humanTime = App.PrettyDate.humanTime(result, escalation)
-      result       = "<span class=\"humanTimeFromNow #{attribute_config.class}\" data-time=\"#{result}\" data-tooltip=\"#{timestamp}\">#{humanTime}</span>"
-      #result      = App.i18n.translateTimestamp(result)
+      result    = "<time class=\"humanTimeFromNow #{attribute_config.class}\" data-time=\"#{result}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
 
     if !isHtmlEscape && typeof result is 'string'
       result = App.Utils.htmlEscape(result)
@@ -222,12 +221,12 @@ class App extends Spine.Controller
         App.Utils.humanFileSize(size)
 
       # define pretty/human time helper
-      params.humanTime = ( time, escalation ) ->
-        App.PrettyDate.humanTime(time, escalation)
-
-      # define pretty/human time helper
-      params.timestamp = ( time ) ->
-        App.i18n.translateTimestamp(time)
+      params.humanTime = ( time, escalation = false, cssClass = '') ->
+        timestamp = App.i18n.translateTimestamp(time)
+        if escalation
+          cssClass += ' escalation'
+        humanTime = App.PrettyDate.humanTime(time, escalation)
+        "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
 
       # define template
       JST["app/views/#{name}"](params)

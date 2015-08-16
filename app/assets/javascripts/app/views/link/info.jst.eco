@@ -10,7 +10,7 @@
       </div>
       <div class="task-text">
         <a class="name ticket-popover" data-id="<%- item.id %>" href="#ticket/zoom/<%= item.id %>"><%= item.title %></a>
-        <div class="time humanTimeFromNow" data-time="<%- item.created_at %>" data-tooltip="<%- @timestamp(item.created_at) %>"><%- @humanTime(item.created_at) %></div>
+        <%- @humanTime(item.created_at) %>
       </div>
       <div class="sidebar-list-item-delete js-delete" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove">
         <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
