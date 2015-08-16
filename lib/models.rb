@@ -10,11 +10,11 @@ get list of models
 returns
 
   {
-    'Some::Classname1' => {
+    Some::Classname1 => {
       attributes: ['id', 'name', '...']
       reflections: ...model.reflections...
     },
-    'Some::Classname2' => {
+    Some::Classname2 => {
       attributes: ['id', 'name', '...']
       reflections: ...model.reflections...
     },
@@ -45,6 +45,28 @@ returns
       #puts " #{model_class.attribute_names.inspect}"
     end
     all
+  end
+
+=begin
+
+get list of searchable models
+
+  result = Models.searchable
+
+returns
+
+  [Model1, Model2, Model3]
+
+=end
+
+  def self.searchable
+    models = []
+    all.each {|model_class, options|
+      next if !model_class
+      next if !model_class.respond_to? :search_preferences
+      models.push model_class
+    }
+    models
   end
 
 =begin

@@ -20,12 +20,12 @@ returns if user has no permissions to search
 
 =end
 
-    def search_preferences(_current_user)
-      {
-        prio: 3000,
-        direct_search_index: false,
-      }
-    end
+  def search_preferences(_current_user)
+    {
+      prio: 3000,
+      direct_search_index: false,
+    }
+  end
 
 =begin
 
@@ -79,7 +79,7 @@ returns
 
 =end
 
-  def search (params)
+  def search(params)
 
     # get params
     query        = params[:query]

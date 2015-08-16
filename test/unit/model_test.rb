@@ -235,4 +235,13 @@ class ModelTest < ActiveSupport::TestCase
 
   end
 
+  test 'searchable test' do
+    searchable = Models.searchable
+    assert(searchable.include?(Ticket))
+    assert(searchable.include?(User))
+    assert(searchable.include?(Organization))
+    assert_equal(3, searchable.count)
+
+  end
+
 end
