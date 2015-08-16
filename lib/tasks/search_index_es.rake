@@ -42,9 +42,10 @@ namespace :searchindex do
   task :reload, [:opts] => :environment do |_t, _args|
 
     puts 'reload data...'
-    User.search_index_reload
-    Organization.search_index_reload
-    Ticket.search_index_reload
+    Models.searchable.each {|model_class|
+      puts " reload #{model_class}"
+      model_class.search_index_reload
+    }
 
   end
 
