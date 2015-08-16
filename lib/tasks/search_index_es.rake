@@ -44,7 +44,11 @@ namespace :searchindex do
     puts 'reload data...'
     Models.searchable.each {|model_class|
       puts " reload #{model_class}"
+      started_at = Time.zone.now
+      puts "  - started at #{started_at}"
       model_class.search_index_reload
+      took = Time.zone.now - started_at
+      puts "  - took #{took.to_i} seconds"
     }
 
   end
