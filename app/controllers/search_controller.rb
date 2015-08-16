@@ -21,60 +21,78 @@ class SearchController < ApplicationController
     # convert objects string into array of class names
     # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
     if !params[:objects]
-      objects_all = %w( Ticket User Organization )
+      objects = %w( Ticket User Organization )
     else
-      objects_all = params[:objects].split('-').map(&:camelize)
+      objects = params[:objects].split('-').map(&:camelize)
     end
-    objects = objects_all.clone
-puts "OBJECTS: #{objects.inspect}"
-    search_tickets = objects.delete('Ticket')
-puts "OBJECTS_a: #{objects_all.inspect}/#{search_tickets.inspect}"
+
+    # get priorities of result
+    objects_in_order = []
+    objects_in_order_hash = {}
+    objects.each { |object|
+      preferences = object.constantize.search_preferences(current_user)
+      next if !preferences
+      objects_in_order_hash[preferences[:prio]] = object
+    }
+    objects_in_order_hash.keys.sort.reverse.each {|prio|
+      objects_in_order.push objects_in_order_hash[prio]
+    }
+
     # try search index backend
     assets = {}
     result = []
     if SearchIndexBackend.enabled?
-      items = SearchIndexBackend.search( query, limit, objects )
-      items.each { |item|
-        require item[:type].to_filename
-        record = Kernel.const_get( item[:type] ).find( item[:id] )
-        assets = record.assets(assets)
-        result.push item
+
+      # get direct search index based objects
+      objects_with_direct_search_index = []
+      objects_without_direct_search_index = []
+      objects.each { |object|
+        preferences = object.constantize.search_preferences(current_user)
+        next if !preferences
+        if preferences[:direct_search_index]
+          objects_with_direct_search_index.push object
+        else
+          objects_without_direct_search_index.push object
+        end
       }
 
-      # do ticket query by Ticket class to handle ticket permissions
-      if search_tickets
-        tickets = Ticket.search(
-          query: query,
-          limit: limit,
-          current_user: current_user,
-        )
-        tickets.each do |ticket|
-          assets = ticket.assets(assets)
-          item = {
-            id: ticket.id,
-            type: 'Ticket',
-          }
+      # do only one query to index search backend
+      if !objects_with_direct_search_index.empty?
+        items = SearchIndexBackend.search( query, limit, objects_with_direct_search_index )
+        items.each { |item|
+          require item[:type].to_filename
+          record = Kernel.const_get( item[:type] ).find( item[:id] )
+          assets = record.assets(assets)
           result.push item
-        end
+        }
       end
+
+      # e. g. do ticket query by Ticket class to handle ticket permissions
+      objects_without_direct_search_index.each { |object|
+        object_result = search_generic_backend(object, query, limit, current_user, assets)
+        if !object_result.empty?
+          result = result.concat(object_result)
+        end
+      }
+
+      # sort order by object priority
+      result_in_order = []
+      objects_in_order.each { |object|
+        result.each {|item|
+          next if item[:type] != object
+          item[:id] = item[:id].to_i
+          result_in_order.push item
+        }
+      }
+      result = result_in_order
+
     else
 
       # do query
-      objects_all.each { |object|
-
-        found_objects = object.constantize.search(
-          query:        query,
-          limit:        limit,
-          current_user: current_user,
-        )
-
-        found_objects.each do |found_object|
-          item = {
-            id:   found_object.id,
-            type: found_object.class.to_s
-          }
-          result.push item
-          assets = found_object.assets(assets)
+      objects_in_order.each { |object|
+        object_result = search_generic_backend(object, query, limit, current_user, assets)
+        if !object_result.empty?
+          result = result.concat(object_result)
         end
       }
     end
@@ -85,4 +103,23 @@ puts "OBJECTS_a: #{objects_all.inspect}/#{search_tickets.inspect}"
     }
   end
 
+  private
+
+  def search_generic_backend(object, query, limit, current_user, assets)
+    found_objects = object.constantize.search(
+      query:        query,
+      limit:        limit,
+      current_user: current_user,
+    )
+    result = []
+    found_objects.each do |found_object|
+      item = {
+        id:   found_object.id,
+        type: found_object.class.to_s
+      }
+      result.push item
+      assets = found_object.assets(assets)
+    end
+    result
+  end
 end

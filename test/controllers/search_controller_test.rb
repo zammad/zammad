@@ -152,6 +152,37 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    # configure es
+    if ENV['ES_URL']
+      #fail "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
+      Setting.set('es_url', ENV['ES_URL'])
+
+      # Setting.set('es_url', 'http://172.0.0.1:9200')
+      # Setting.set('es_index', 'estest.local_zammad')
+      # Setting.set('es_user', 'elasticsearch')
+      # Setting.set('es_password', 'zammad')
+
+      # set max attachment size in mb
+      Setting.set('es_attachment_max_size_in_mb', 1 )
+
+      if ENV['ES_INDEX']
+        #fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+        Setting.set('es_index', ENV['ES_INDEX'])
+      end
+
+      # drop/create indexes
+      #Rake::Task["searchindex:drop"].execute
+      #Rake::Task["searchindex:create"].execute
+      system('rake searchindex:rebuild')
+
+      # execute background jobs
+      # execute background jobs
+      #puts Delayed::Job.all.inspect
+      Delayed::Worker.new.work_off
+
+      sleep 6
+    end
   end
 
   test 'settings index with nobody' do
