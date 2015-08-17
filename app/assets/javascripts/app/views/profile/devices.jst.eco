@@ -21,7 +21,7 @@
         <td><%= device.name %></td>
         <td><%= device.location %></td>
         <td><%- @humanTime(device.updated_at) %></td>
-        <td><a href="#" data-device-id="<%- device.id %>" data-type="delete" title="<%- @Ti('Delete') %>"><svg class="icon-trash"><use xlink:href="#icon-trash"></use></svg></a></td>
+        <td><a href="#" data-device-id="<%- device.id %>" data-type="delete" title="<%- @Ti('Delete') %>"<% if device.current: %>disabled<% end %>><svg class="icon-trash"><use xlink:href="#icon-trash"></use></svg></a></td>
       </tr>
     <% end %>
     <tbody>

@@ -98,6 +98,9 @@ class ApplicationController < ActionController::Base
   # check user device
   def check_user_device
 
+    # return if we are in switch to user mode
+    return if session[:switched_from_user_id]
+
     # only if user_id exists
     return if !session[:user_id]
 
@@ -108,11 +111,14 @@ class ApplicationController < ActionController::Base
     return if session[:check_user_device_at] && session[:check_user_device_at] > Time.zone.now - 5.minutes
     session[:check_user_device_at] = Time.zone.now
 
-    UserDevice.add(
+    user_device = UserDevice.add(
       session[:user_agent],
       session[:remote_id],
       session[:user_id],
     )
+    if user_device.id != session[:check_user_device_id]
+      session[:check_user_device_id] = user_device.id
+    end
   end
 
   def authentication_check_only(auth_param)

@@ -9,7 +9,7 @@ class UserDevice < ApplicationModel
 
 store device for user
 
-  UserDevice.add(
+  user_device = UserDevice.add(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
     '172.0.0.1',
     user.id,
