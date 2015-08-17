@@ -55,6 +55,7 @@ gem 'net-ldap'
 
 gem 'writeexcel'
 gem 'icalendar'
+gem 'browser'
 
 # event machine
 gem 'eventmachine'

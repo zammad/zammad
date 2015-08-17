@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
                 :model_index_render
 
   skip_before_action :verify_authenticity_token
-  before_action :set_user, :session_update
+  before_action :set_user, :session_update, :check_user_device
   before_action :cors_preflight_check
 
   after_action  :set_access_control_headers
@@ -93,6 +93,26 @@ class ApplicationController < ActionController::Base
     return if session[:user_agent]
 
     session[:user_agent] = request.env['HTTP_USER_AGENT']
+  end
+
+  # check user device
+  def check_user_device
+
+    # only if user_id exists
+    return if !session[:user_id]
+
+    # only if write action
+    return if request.method == 'GET' || request.method == 'OPTIONS'
+
+    # only update if needed
+    return if session[:check_user_device_at] && session[:check_user_device_at] < Time.zone.now - 10.minutes
+    session[:check_user_device_at] = Time.zone.now
+
+    UserDevice.add(
+      session[:user_agent],
+      session[:remote_id],
+      session[:user_id],
+    )
   end
 
   def authentication_check_only(auth_param)

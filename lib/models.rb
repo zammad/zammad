@@ -35,6 +35,9 @@ returns
       model_class = load_adapter(entry)
       next if !model_class
       next if !model_class.respond_to? :new
+      next if !model_class.respond_to? :table_name
+      table_name = model_class.table_name # handle models where not table exists, pending migrations
+      next if !ActiveRecord::Base.connection.tables.include?(table_name)
       model_object = model_class.new
       next if !model_object.respond_to? :attributes
       all[model_class] = {}

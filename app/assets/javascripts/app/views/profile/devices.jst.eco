@@ -1,0 +1,30 @@
+<div class="page-header">
+  <div class="page-header-title"><h1><%- @T( 'Devices' ) %></h1></div>
+</div>
+
+<form>
+
+  <p><%- @T('All computers and browsers that have access to your Zammad appear here.') %></p>
+
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th><%- @T('Name') %></th>
+        <th><%- @T('Location') %></th>
+        <th><%- @T('Most recent activity') %></th>
+        <th><%- @T('Remove') %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% for device in @devices: %>
+      <tr>
+        <td><%= device.name %></td>
+        <td><%= device.location %></td>
+        <td><%- @humanTime(device.updated_at) %></td>
+        <td><a href="#" data-device-id="<%- device.id %>" data-type="delete" title="<%- @Ti('Delete') %>"><svg class="icon-trash"><use xlink:href="#icon-trash"></use></svg></a></td>
+      </tr>
+    <% end %>
+    <tbody>
+  </table>
+
+</form>
