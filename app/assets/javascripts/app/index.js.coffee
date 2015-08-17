@@ -109,10 +109,11 @@ class App extends Spine.Controller
       isHtmlEscape = true
       timestamp = App.i18n.translateTimestamp(result)
       escalation = false
-      if attribute_config.class && attribute_config.class.match 'escalation'
+      cssClass = attribute_config.class || ''
+      if cssClass.match 'escalation'
         escalation = true
       humanTime = App.PrettyDate.humanTime(result, escalation)
-      result    = "<time class=\"humanTimeFromNow #{attribute_config.class}\" data-time=\"#{result}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
+      result    = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{result}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
 
     if !isHtmlEscape && typeof result is 'string'
       result = App.Utils.htmlEscape(result)
