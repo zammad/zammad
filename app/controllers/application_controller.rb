@@ -105,7 +105,7 @@ class ApplicationController < ActionController::Base
     return if request.method == 'GET' || request.method == 'OPTIONS'
 
     # only update if needed
-    return if session[:check_user_device_at] && session[:check_user_device_at] < Time.zone.now - 5.minutes
+    return if session[:check_user_device_at] && session[:check_user_device_at] > Time.zone.now - 5.minutes
     session[:check_user_device_at] = Time.zone.now
 
     UserDevice.add(
