@@ -46,7 +46,7 @@ store device for user
       :user_id => user_id,
       os: browser[:plattform],
       browser: browser[:name],
-      country: country,
+      location: country,
     )
 
     if exists
@@ -60,7 +60,7 @@ store device for user
       name: name,
       os: browser[:plattform],
       browser: browser[:name],
-      country: country,
+      location: country,
       device_details: browser,
       location_details: location,
     )

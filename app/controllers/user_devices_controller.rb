@@ -9,7 +9,7 @@ class UserDevicesController < ApplicationController
     devices.each {|device|
       attributes = device.attributes
       if device.location_details['city']
-        attributes['country'] += ", #{device.location_details['city']}"
+        attributes['location'] += ", #{device.location_details['city']}"
       end
       attributes.delete('created_at')
       attributes.delete('device_details')
