@@ -29,11 +29,8 @@ class Index extends App.Controller
 
   delete: (e) =>
     e.preventDefault()
-    id = $(e.target).data('device-id')
-    if !id
-      id = $(e.target).closest('a').data('device-id')
-    console.log('ID', id)
-    # get data
+    id = $(e.target).closest('a').data('device-id')
+
     @ajax(
       id:          'user_devices_delete'
       type:        'DELETE'
