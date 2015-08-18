@@ -82,7 +82,7 @@ store device for user
     end
 
     # create new device
-    self.create(
+    user_device = self.create(
       user_id: user_id,
       name: name,
       os: browser[:plattform],
@@ -95,6 +95,13 @@ store device for user
       fingerprint: fingerprint,
     )
 
+    # send notification if needed
+    user_devices = UserDevice.where(user_id: user_id).count
+    if user_devices >= 2
+      user_device.send_notification
+    end
+
+    user_device
   end
 
 =begin
@@ -128,4 +135,54 @@ log user device action
     user_device
   end
 
+=begin
+
+send new user device info
+
+  user_device = UserDevice.find(id)
+
+  user_device.send_notification
+
+=end
+
+  def send_notification
+    user = User.find(user_id)
+
+    # send mail
+    data = {}
+    data[:subject] = '#{config.product_name} signin detected from a new device'
+    data[:body]    = 'Hi #{user.firstname},
+
+it looks like you signed into your #{config.product_name} account using a new device on "#{user_device.created_at}":
+
+Your Location: #{user_device.location}
+Your IP: #{user_device.ip}
+
+Your device has been added to your list of known devices, which you can view here:
+
+#{config.http_type}://#{config.fqdn}/#profile/devices
+
+If this wasn\'t you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.
+
+Your #{config.product_name} Team'
+
+    # prepare subject & body
+    [:subject, :body].each { |key|
+      data[key.to_sym] = NotificationFactory.build(
+        locale: user.preferences[:locale],
+        string: data[key.to_sym],
+        objects: {
+          user_device: self,
+          user: user,
+        }
+      )
+    }
+
+    # send notification
+    NotificationFactory.send(
+      recipient: user,
+      subject: data[:subject],
+      body: data[:body]
+    )
+  end
 end
