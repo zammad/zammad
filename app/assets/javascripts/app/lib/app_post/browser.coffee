@@ -47,6 +47,32 @@ class App.Browser
     # allow browser
     true
 
+  @fingerprint: ->
+    localStorage = window['localStorage']
+
+    # read from local storage
+    if localStorage
+      fingerprint = localStorage.getItem('fingerprint')
+    return fingerprint if fingerprint
+
+    # detect fingerprint
+    data = @detection()
+    resolution = "#{window.screen.availWidth}x#{window.screen.availHeight}/#{window.screen.pixelDepth}"
+    timezone = new Date().toString().match(/\s\(.+?\)$/)
+    hashCode = (s) ->
+      s.split('').reduce(
+        (a,b) ->
+          a=((a<<5)-a)+b.charCodeAt(0)
+          a&a
+        0
+      )
+    fingerprint = hashCode("#{data.browser.name}#{data.browser.major}#{data.os}#{resolution}#{timezone}")
+
+    # write to local storage
+    if localStorage
+      localStorage.setItem('fingerprint', fingerprint)
+    fingerprint
+
   @message: (data, version) ->
     new App.ControllerModal(
       head:     'Browser too old!'

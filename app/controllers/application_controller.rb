@@ -140,25 +140,6 @@ class ApplicationController < ActionController::Base
 
     error_message = 'authentication failed'
 
-    # check logon session
-    if params['logon_session']
-      logon_session = ActiveRecord::SessionStore::Session.where( session_id: params['logon_session'] ).first
-
-      # set logon session user to current user
-      if logon_session
-        userdata = User.find( logon_session.data[:user_id] )
-        current_user_set(userdata)
-
-        session[:persistent] = true
-
-        return {
-          auth: true
-        }
-      end
-
-      error_message = 'no valid session, user_id'
-    end
-
     # check sso
     sso_userdata = User.sso(params)
     if sso_userdata
@@ -296,9 +277,13 @@ class ApplicationController < ActionController::Base
       config['timezones'][ t.name ] = diff
     }
 
+    # remember if we can to swich back to user
     if session[:switched_from_user_id]
       config['switch_back_to_possible'] = true
     end
+
+    # remember session_id for websocket logon
+    config['session_id'] = session.id
 
     config
   end

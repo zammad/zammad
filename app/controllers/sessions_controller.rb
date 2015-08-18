@@ -42,18 +42,6 @@ class SessionsController < ApplicationController
     # get models
     models = SessionHelper.models(user)
 
-    # check logon session
-    logon_session_key = nil
-    if params['logon_session']
-      logon_session_key = Digest::MD5.hexdigest( rand(999_999).to_s + Time.zone.now.to_s )
-      #      session = ActiveRecord::SessionStore::Session.create(
-      #        :session_id => logon_session_key,
-      #        :data => {
-      #          :user_id => user['id']
-      #        }
-      #      )
-    end
-
     # sessions created via this
     # controller are persistent
     session[:persistent] = true
@@ -62,10 +50,10 @@ class SessionsController < ApplicationController
     render  status: :created,
             json: {
               session: user,
+              config: config_frontend,
               models: models,
               collections: collections,
               assets: assets,
-              logon_session: logon_session_key,
             }
   end
 
@@ -78,14 +66,6 @@ class SessionsController < ApplicationController
       user_id = session[:user_id]
     end
 
-    # check logon session
-    if params['logon_session']
-      session = SessionHelper.get( params['logon_session'] )
-      if session
-        user_id = session.data[:user_id]
-      end
-    end
-
     if !user_id
       # get models
       models = SessionHelper.models()
@@ -96,7 +76,7 @@ class SessionsController < ApplicationController
         models: models,
         collections: {
           Locale.to_app_model => Locale.where( active: true )
-        }
+        },
       }
       return
     end
@@ -117,10 +97,10 @@ class SessionsController < ApplicationController
     # return current session
     render json: {
       session: user,
+      config: config_frontend,
       models: models,
       collections: collections,
       assets: assets,
-      config: config_frontend,
     }
   end
 
