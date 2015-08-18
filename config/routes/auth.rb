@@ -9,7 +9,7 @@ Zammad::Application.routes.draw do
 
   # sessions
   match api_path + '/signin',               to: 'sessions#create',               via: :post
-  match api_path + '/signshow',             to: 'sessions#show',                 via: :get
+  match api_path + '/signshow',             to: 'sessions#show',                 via: [:get, :post]
   match api_path + '/signout',              to: 'sessions#destroy',              via: [:get, :delete]
 
   match api_path + '/sessions/switch/:id',  to: 'sessions#switch_to_user',       via: :get

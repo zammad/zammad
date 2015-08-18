@@ -14,10 +14,10 @@ class ApplicationController < ActionController::Base
                 :model_index_render
 
   skip_before_action :verify_authenticity_token
-  before_action :set_user, :session_update, :check_user_device
+  before_action :set_user, :session_update
   before_action :cors_preflight_check
 
-  after_action  :set_access_control_headers
+  after_action  :user_device_update, :set_access_control_headers
   after_action  :trigger_events
 
   # For all responses in this controller, return the CORS access control headers.
@@ -95,8 +95,8 @@ class ApplicationController < ActionController::Base
     session[:user_agent] = request.env['HTTP_USER_AGENT']
   end
 
-  # check user device
-  def check_user_device
+  # user device recent action update
+  def user_device_update
 
     # return if we are in switch to user mode
     return if session[:switched_from_user_id]
@@ -104,21 +104,46 @@ class ApplicationController < ActionController::Base
     # only if user_id exists
     return if !session[:user_id]
 
-    # only if write action
+    # only with user device
+    if !session[:user_device_id]
+      if params[:fingerprint]
+        return false if !user_device_log(current_user, 'session')
+      end
+      return
+    end
+
+    # check if entry exists / only if write action
     return if request.method == 'GET' || request.method == 'OPTIONS'
 
     # only update if needed
-    return if session[:check_user_device_at] && session[:check_user_device_at] > Time.zone.now - 5.minutes
-    session[:check_user_device_at] = Time.zone.now
+    return if session[:user_device_update_at] && session[:user_device_update_at] > Time.zone.now - 5.minutes
+    session[:user_device_update_at] = Time.zone.now
 
-    user_device = UserDevice.add(
+    UserDevice.action(
+      session[:user_device_id],
       session[:user_agent],
       session[:remote_id],
       session[:user_id],
     )
-    if user_device.id != session[:check_user_device_id]
-      session[:check_user_device_id] = user_device.id
+  end
+
+  def user_device_log(user, type)
+
+    # for sessions we need the fingperprint
+    if !params[:fingerprint] && type == 'session'
+      render json: { error: 'Need fingerprint param!' }, status: :unprocessable_entity
+      return false
     end
+
+    # add defice if needed
+    user_device = UserDevice.add(
+      request.env['HTTP_USER_AGENT'],
+      request.remote_ip,
+      user.id,
+      params[:fingerprint],
+      type,
+    )
+    session[:user_device_id] = user_device.id
   end
 
   def authentication_check_only(auth_param)
@@ -130,7 +155,8 @@ class ApplicationController < ActionController::Base
 
     # already logged in, early exit
     if session.id && session[:user_id]
-      userdata = User.find( session[:user_id] )
+
+      userdata = User.find(session[:user_id])
       current_user_set(userdata)
 
       return {
@@ -143,10 +169,9 @@ class ApplicationController < ActionController::Base
     # check sso
     sso_userdata = User.sso(params)
     if sso_userdata
+      session[:persistent] = true
 
       current_user_set(sso_userdata)
-
-      session[:persistent] = true
 
       return {
         auth: true
@@ -161,8 +186,9 @@ class ApplicationController < ActionController::Base
 
       next if !userdata
 
-      # set basic auth user to current user
       current_user_set(userdata)
+      user_device_log(userdata, 'basic_auth')
+
       return {
         auth: true
       }
@@ -180,8 +206,8 @@ class ApplicationController < ActionController::Base
 
         next if !userdata
 
-        # set token user to current user
         current_user_set(userdata)
+        user_device_log(userdata, 'token_auth')
 
         return {
           auth: true
@@ -215,9 +241,6 @@ class ApplicationController < ActionController::Base
       )
       return false
     end
-
-    # store current user id into the session
-    session[:user_id] = current_user.id
 
     # return auth ok
     true

@@ -30,6 +30,9 @@ class SessionsController < ApplicationController
     # set session user
     current_user_set(user)
 
+    # log device
+    return if !user_device_log(user, 'session')
+
     # log new session
     user.activity_stream_log( 'session started', user.id, true )
 
@@ -84,6 +87,9 @@ class SessionsController < ApplicationController
     # Save the user ID in the session so it can be used in
     # subsequent requests
     user = User.find( user_id )
+
+    # log device
+    return if !user_device_log(user, 'session')
 
     # auto population of default collections
     collections, assets = SessionHelper.default_collections(user)
