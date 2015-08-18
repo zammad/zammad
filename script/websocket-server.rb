@@ -184,7 +184,7 @@ EventMachine.run {
       if data['action'] == 'login'
 
         # get user_id
-        if data['session_id']
+        if data && data['session_id']
           session = ActiveRecord::SessionStore::Session.find_by( session_id: data['session_id'] )
         end
 
