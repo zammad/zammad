@@ -55,16 +55,19 @@ store device for user
     }
 
     # generate device name
-    name = browser[:plattform] || ''
-    if browser[:name]
-      if name
+    name = ''
+    if browser[:plattform] && browser[:plattform] != 'Other'
+      name = browser[:plattform]
+    end
+    if browser[:name] && browser[:name] != 'Other'
+      if name && !name.empty?
         name += ', '
       end
       name += browser[:name]
     end
 
     # if not identified, use user agent
-    if name == 'Other, Other'
+    if !name || name == '' || name == 'Other, Other' || name == 'Other'
       name = user_agent
       browser[:name] = user_agent
     end

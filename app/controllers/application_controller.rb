@@ -174,8 +174,6 @@ class ApplicationController < ActionController::Base
     if sso_userdata
       session[:persistent] = true
 
-      current_user_set(sso_userdata)
-
       return {
         auth: true
       }
