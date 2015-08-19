@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
   def user_device_log(user, type)
 
     # return if we are in switch to user mode
-    return if session[:switched_from_user_id]
+    return true if session[:switched_from_user_id]
 
     # for sessions we need the fingperprint
     if !params[:fingerprint] && type == 'session'
