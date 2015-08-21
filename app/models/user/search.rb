@@ -68,7 +68,7 @@ returns
 
       # fallback do sql query
       # - stip out * we already search for *query* -
-      query.delete! '*', ''
+      query.delete! '*'
       if params[:role_ids]
         users = User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where(
           '(users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
