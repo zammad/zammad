@@ -25,8 +25,6 @@
 # Ignore local database settings
 /config/database.yml
 
-Gemfile.lock
-
 # Ignore mac stuff
 .DS_Store
 

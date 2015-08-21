@@ -23,10 +23,10 @@ put working hours matrix and timezone in function, returns UTC working hours mat
     if timezone
       begin
         time_diff = Time.zone.parse(start_time.to_s).in_time_zone(timezone).utc_offset
-     rescue => e
-       Rails.logger.error "Can't fine tomezone #{timezone}"
-       Rails.logger.error e.inspect
-       Rails.logger.error e.backtrace
+      rescue => e
+        Rails.logger.error "Can't fine tomezone #{timezone}"
+        Rails.logger.error e.inspect
+        Rails.logger.error e.backtrace
       end
     end
     beginning_of_workday = Time.zone.parse("1977-10-27 #{config['beginning_of_workday']}")

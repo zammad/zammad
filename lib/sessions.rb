@@ -1,5 +1,3 @@
-# rubocop:disable Rails/TimeZone
-
 require 'json'
 require 'session_helper'
 

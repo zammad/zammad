@@ -452,5 +452,4 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
   end
 
-
 end

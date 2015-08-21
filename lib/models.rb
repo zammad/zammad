@@ -64,7 +64,7 @@ returns
 
   def self.searchable
     models = []
-    all.each {|model_class, options|
+    all.each {|model_class, _options|
       next if !model_class
       next if !model_class.respond_to? :search_preferences
       models.push model_class

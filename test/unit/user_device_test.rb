@@ -21,7 +21,6 @@ class UserDeviceTest < ActiveSupport::TestCase
     )
   end
 
-
   test 'session test' do
 
     # signin with fingerprint A from country A via session -> new device #1
@@ -197,6 +196,5 @@ class UserDeviceTest < ActiveSupport::TestCase
     assert_equal(user_device2.id, user_device6.id)
 
   end
-
 
 end
