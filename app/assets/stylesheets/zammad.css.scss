@@ -5823,18 +5823,15 @@ output {
   }
 
   .searchableSelect-main {
-    background: none;
     position: relative;
   }
   
   .searchableSelect-shadow {
-    pointer-events: none;
-    color: transparent;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    border: none;
+    display: none;
+  }
+
+  .dropdown-menu {
+    margin-top: -3px;
   }
   
   &.dropdown li:hover:not(.is-active) {
@@ -5857,6 +5854,7 @@ output {
     white-space: nowrap;
     overflow: hidden;
     pointer-events: none;
+    display: flex;
   }
 
   .searchableSelect-autocomplete-invisible {
