@@ -2,6 +2,7 @@ class App.Auth
 
   @login: (params) ->
     App.Log.notice 'Auth', 'login', params
+    params.data['fingerprint'] = App.Browser.fingerprint()
     App.Ajax.request(
       id:     'login'
       type:   'POST'
@@ -21,12 +22,15 @@ class App.Auth
     )
 
   @loginCheck: ->
+    params =
+      fingerprint: App.Browser.fingerprint()
     App.Log.debug 'Auth', 'loginCheck'
     App.Ajax.request(
       id:    'login_check'
       async: false
-      type:  'GET'
+      type:  'POST'
       url:   App.Config.get('api_path') + '/signshow'
+      data:  JSON.stringify(params)
       success: (data, status, xhr) =>
 
         # set login (config, session, ...)

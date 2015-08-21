@@ -144,7 +144,6 @@ class TicketStatsList extends App.Controller
       limit:           @limit
     )
 
-    @frontendTimeUpdate()
     @ticketPopups()
 
   showAll: (e) =>

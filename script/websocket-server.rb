@@ -12,6 +12,12 @@ require 'sessions'
 require 'optparse'
 require 'daemons'
 
+# load rails env
+dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+Dir.chdir dir
+RAILS_ENV = ENV['RAILS_ENV'] || 'development'
+require File.join(dir, 'config', 'environment')
+
 # Look for -o with argument, and -I and -D boolean arguments
 @options = {
   p: 6042,
@@ -176,10 +182,23 @@ EventMachine.run {
 
       # get session
       if data['action'] == 'login'
-        @clients[client_id][:session] = data['session']
-        Sessions.create( client_id, data['session'], { type: 'websocket' } )
 
-        # remember ping, send pong back
+        # get user_id
+        if data && data['session_id']
+          session = ActiveRecord::SessionStore::Session.find_by( session_id: data['session_id'] )
+        end
+
+        if session && session.data && session.data['user_id']
+          new_session_data = { 'id' => session.data['user_id'] }
+        else
+          new_session_data = {}
+        end
+
+        @clients[client_id][:session] = new_session_data
+
+        Sessions.create( client_id, new_session_data, { type: 'websocket' } )
+
+      # remember ping, send pong back
       elsif data['action'] == 'ping'
         Sessions.touch(client_id)
         @clients[client_id][:last_ping] = Time.now.utc.to_i
@@ -188,7 +207,7 @@ EventMachine.run {
         }
         websocket_send(client_id, message)
 
-        # broadcast
+      # broadcast
       elsif data['action'] == 'broadcast'
 
         # list all current clients

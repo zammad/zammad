@@ -142,15 +142,15 @@ class App.Navigation extends App.ControllerWidgetPermanent
     searchFunction = =>
 
       # use cache for search result
-      if @searchResultCache[@term]
-        @renderResult( @searchResultCache[@term] )
+      if @searchResultCache[@query]
+        @renderResult( @searchResultCache[@query] )
 
       App.Ajax.request(
         id:    'search'
         type:  'GET'
         url:   @apiPath + '/search'
         data:
-          term: @term
+          query: @query
         processData: true,
         success: (data, status, xhr) =>
 
@@ -158,25 +158,21 @@ class App.Navigation extends App.ControllerWidgetPermanent
           App.Collection.loadAssets( data.assets )
 
           # cache search result
-          @searchResultCache[@term] = data.result
+          @searchResultCache[@query] = data.result
 
-          result = data.result
-          for area in result
-            if area.name is 'Ticket'
-              area.result = []
-              for id in area.ids
-                ticket = App.Ticket.find( id )
-                area.result.push ticket.searchResultAttributes()
-            else if area.name is 'User'
-              area.result = []
-              for id in area.ids
-                user = App.User.find( id )
-                area.result.push user.searchResultAttributes()
-            else if area.name is 'Organization'
-              area.result = []
-              for id in area.ids
-                organization = App.Organization.find( id )
-                area.result.push organization.searchResultAttributes()
+          result = {}
+          for item in data.result
+            if App[item.type] && App[item.type].find
+              if !result[item.type]
+                result[item.type] = []
+              item_object = App[item.type].find(item.id)
+              if item_object.searchResultAttributes
+                item_object_search_attributes = item_object.searchResultAttributes()
+                result[item.type].push item_object_search_attributes
+              else
+                @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
+            else
+              @log 'error', "No such model App.#{item.type}"
 
           @renderResult(result)
 
@@ -219,9 +215,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
       removePopovers()
 
       # check if search is needed
-      term = @$('#global-search').val().trim()
-      return if !term
-      @term = term
+      query = @$('#global-search').val().trim()
+      return if !query
+      @query = query
       @delay( searchFunction, 220, 'search' )
     )
 
@@ -239,11 +235,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
         return
 
       # on other keys, show result
-      term = @$('#global-search').val().trim()
-      return if !term
-      return if term is @term
-      @term = term
-      @$('.search').toggleClass('filled', !!@term)
+      query = @$('#global-search').val().trim()
+      return if !query
+      return if query is @query
+      @query = query
+      @$('.search').toggleClass('filled', !!@query)
       @delay( searchFunction, 200, 'search' )
     )
 

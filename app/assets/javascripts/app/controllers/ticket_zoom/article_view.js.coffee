@@ -112,9 +112,6 @@ class ArticleViewItem extends App.Controller
       article: @article
     )
 
-    # show frontend times
-    @frontendTimeUpdate()
-
     # set see more option
     @setSeeMore()
 

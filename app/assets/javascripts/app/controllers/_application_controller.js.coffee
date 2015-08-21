@@ -210,7 +210,7 @@ class App.Controller extends Spine.Controller
 #        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
         ui.frontendTimeUpdateItem(item)
       )
-    App.Interval.set( update, 30000, 'frontendTimeUpdate', 'ui' )
+    App.Interval.set( update, 61000, 'frontendTimeUpdate', 'ui' )
 
   frontendTimeUpdateItem: (item) =>
     timestamp = item.data('time')

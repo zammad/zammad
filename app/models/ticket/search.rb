@@ -3,6 +3,32 @@ module Ticket::Search
 
 =begin
 
+search tickets preferences
+
+  result = Ticket.search_preferences(user_model)
+
+returns if user has permissions to search
+
+  result = {
+    prio: 3000,
+    direct_search_index: false
+  }
+
+returns if user has no permissions to search
+
+  result = false
+
+=end
+
+  def search_preferences(_current_user)
+    {
+      prio: 3000,
+      direct_search_index: false,
+    }
+  end
+
+=begin
+
 search tickets via search index
 
   result = Ticket.search(
@@ -53,7 +79,7 @@ returns
 
 =end
 
-  def search (params)
+  def search(params)
 
     # get params
     query        = params[:query]

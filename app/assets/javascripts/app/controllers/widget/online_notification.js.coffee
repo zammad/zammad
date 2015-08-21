@@ -130,9 +130,6 @@ class App.OnlineNotificationWidget extends App.Controller
       $( App.view('widget/online_notification_content')(items: items) )
     )
 
-    # show frontend times
-    @frontendTimeUpdate()
-
   createContainer: =>
     @removeContainer()
 

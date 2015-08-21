@@ -51,9 +51,6 @@ class App.DashboardActivityStream extends App.Controller
     @$('.activity-entries').remove()
     @el.append html
 
-    # update time
-    @frontendTimeUpdate()
-
   renderItem: (item) ->
     html = $(App.view('dashboard/activity_stream')(
       item: item
