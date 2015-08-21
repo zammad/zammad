@@ -121,6 +121,18 @@ class UserDeviceTest < ActiveSupport::TestCase
     assert_equal('Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H143 Safari/600.1.4', user_device3.user_agent)
     assert_equal('iPhone', user_device3.browser)
     assert_equal('iPhone', user_device3.name)
+
+    user_device4 = UserDevice.add(
+      'Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1',
+      '91.115.248.231',
+      @agent.id,
+      nil,
+      'session',
+    )
+    assert_equal('Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1', user_device4.user_agent)
+    assert_equal('Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1', user_device4.browser)
+    assert_equal('Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1', user_device4.name)
+
   end
 
   test 'api test' do
