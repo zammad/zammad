@@ -7,12 +7,15 @@
     <%= @autofocus %>
     value="<%= @value %>"
   >
-  <div class="searchableSelect-autocomplete"><span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span><span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span></div>
   <input
     class="searchableSelect-main form-control js-input<%= " #{ @class }" if @class %>"
     placeholder="<%= @placeholder %>"
     value="<%= @valueName %>"
   >
+  <div class="searchableSelect-autocomplete">
+    <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>
+    <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>
+  </div>
   <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
   <div class="small loading icon"></div>
 </div>
