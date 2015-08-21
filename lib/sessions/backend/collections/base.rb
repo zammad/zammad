@@ -1,7 +1,7 @@
 class Sessions::Backend::Collections::Base
   class << self; attr_accessor :model, :roles, :not_roles end
 
-  def initialize( user, client = nil, client_id = nil, ttl )
+  def initialize( user, client, client_id, ttl )
     @user        = user
     @client      = client
     @client_id   = client_id
