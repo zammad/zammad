@@ -58,6 +58,7 @@ class _trackSingleton
     )
 
     # log ajax calls
+    ### disabled, only needed for debugging
     $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
 
       # do not log ui requests
@@ -92,6 +93,7 @@ class _trackSingleton
           }
         )
     )
+    ###
 
     $(window).bind(
       'beforeunload'

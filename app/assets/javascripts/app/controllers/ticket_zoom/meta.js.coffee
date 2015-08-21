@@ -12,8 +12,5 @@ class App.TicketZoomMeta extends App.Controller
       isCustomer: @isRole('Customer')
     )
 
-    # show frontend times
-    @frontendTimeUpdate()
-
   release: =>
     App.Ticket.unsubscribe( @subscribeId )

@@ -27,10 +27,15 @@ body {
   flex-direction: column;
 }
 
+/* prevent clickable <use xlink:href="#icon-abc"></use> */
+use {
+  pointer-events: none;
+}
+
 p {
   margin: 14px 0;
   color: hsl(60,1%,34%);
-  
+
   &.subtle {
     color: hsl(60,1%,74%);
   }
@@ -47,6 +52,13 @@ p {
 a {
   outline: none !important;
   @extend .u-highlight;
+
+  &.is-disabled,
+  &[disabled] {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: .33;
+  }
 }
 
 a.create {
@@ -5823,18 +5835,15 @@ output {
   }
 
   .searchableSelect-main {
-    background: none;
     position: relative;
   }
   
   .searchableSelect-shadow {
-    pointer-events: none;
-    color: transparent;
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    border: none;
+    display: none;
+  }
+
+  .dropdown-menu {
+    margin-top: -3px;
   }
   
   &.dropdown li:hover:not(.is-active) {
@@ -5857,6 +5866,7 @@ output {
     white-space: nowrap;
     overflow: hidden;
     pointer-events: none;
+    display: flex;
   }
 
   .searchableSelect-autocomplete-invisible {

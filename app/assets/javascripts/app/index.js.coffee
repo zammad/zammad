@@ -107,8 +107,13 @@ class App extends Spine.Controller
     # use pretty time for datetime
     else if attribute_config.tag is 'datetime'
       isHtmlEscape = true
-      result       = "<span class=\"humanTimeFromNow #{attribute_config.class}\" data-time=\"#{result}\">?</span>"
-      #result      = App.i18n.translateTimestamp(result)
+      timestamp = App.i18n.translateTimestamp(result)
+      escalation = false
+      cssClass = attribute_config.class || ''
+      if cssClass.match 'escalation'
+        escalation = true
+      humanTime = App.PrettyDate.humanTime(result, escalation)
+      result    = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{result}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
 
     if !isHtmlEscape && typeof result is 'string'
       result = App.Utils.htmlEscape(result)
@@ -215,6 +220,14 @@ class App extends Spine.Controller
       # define file size helper
       params.humanFileSize = ( size ) ->
         App.Utils.humanFileSize(size)
+
+      # define pretty/human time helper
+      params.humanTime = ( time, escalation = false, cssClass = '') ->
+        timestamp = App.i18n.translateTimestamp(time)
+        if escalation
+          cssClass += ' escalation'
+        humanTime = App.PrettyDate.humanTime(time, escalation)
+        "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
 
       # define template
       JST["app/views/#{name}"](params)

@@ -37,7 +37,7 @@ module SessionHelper
   end
 
   def self.get(id)
-    ActiveRecord::SessionStore::Session.where( id: id ).first
+    ActiveRecord::SessionStore::Session.find_by( id: id )
   end
 
   def self.list(limit = 10_000)
@@ -45,7 +45,7 @@ module SessionHelper
   end
 
   def self.destroy(id)
-    session = ActiveRecord::SessionStore::Session.where( id: id ).first
+    session = ActiveRecord::SessionStore::Session.find_by( id: id )
     return if !session
     session.destroy
   end

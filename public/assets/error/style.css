@@ -1,0 +1,80 @@
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('firasans-regular-webfont.eot');
+  src: url('firasans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('firasans-regular-webfont.woff') format('woff'),
+       url('firasans-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-family: "Fira Sans";
+  height: 100%;
+  color: #8c959c;
+  background: #f8f9fa;
+  text-align: center;
+}
+
+.dark {
+  background: #444a4f;
+  color: #919497;
+}
+
+body {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100%;
+  min-height: 600px;
+  margin: 0;
+  padding: 40px 10px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+h1 {
+  margin: 0;
+  color: #444a4f;
+  max-width: 450px;
+}
+
+.dark h1 {
+  color: white;
+}
+
+a {
+  color: #f1d158;
+  text-decoration: none;
+}
+a:visited {
+  color: #ccb250;
+}
+
+ul {
+  text-align: left;
+}
+
+p {
+  max-width: 400px;
+  margin: 0 0 20px;
+}
+
+.error-image {
+  height: 650px;
+  width: 100%;
+  margin: 30px 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}

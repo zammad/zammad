@@ -5,6 +5,33 @@ class User
 
 =begin
 
+search user preferences
+
+  result = User.search_preferences(user_model)
+
+returns if user has permissions to search
+
+  result = {
+    prio: 1000,
+    direct_search_index: true
+  }
+
+returns if user has no permissions to search
+
+  result = false
+
+=end
+
+    def search_preferences(current_user)
+      return false if !current_user.role?('Agent') && !current_user.role?(Z_ROLENAME_ADMIN)
+      {
+        prio: 2000,
+        direct_search_index: true,
+      }
+    end
+
+=begin
+
 search user
 
   result = User.search(
@@ -27,7 +54,7 @@ returns
       current_user = params[:current_user]
 
       # enable search only for agents and admins
-      return [] if !current_user.role?('Agent') && !current_user.role?(Z_ROLENAME_ADMIN)
+      return [] if !search_preferences(current_user)
 
       # try search index backend
       if SearchIndexBackend.enabled?
