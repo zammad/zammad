@@ -45,7 +45,7 @@
         <option>replace</option>
         <option>ignore</option>
       </select>
-      <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+      <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
     </div>
     <div class="merge-arrow">
       <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
@@ -76,7 +76,7 @@
           <option selected>add</option>
           <option>ignore</option>
         </select>
-        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+        <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
       </div>
       <div class="merge-arrow">
         <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
@@ -92,7 +92,7 @@
           <option selected>add</option>
           <option>ignore</option>
         </select>
-        <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+        <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
       </div>
       <div class="merge-arrow">
         <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>

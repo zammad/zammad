@@ -1,7 +1,7 @@
 <div class="u-positionOrigin">
   <input type="hidden" name="<%- @attribute.name %>" value="<%= @attribute.value %>">
   <input name="<%- @attribute.name %>_completion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-  <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+  <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
 </div>
 
 <div class="dropdown-menu" aria-labelledby="customer_id">

@@ -81,7 +81,7 @@
 
             <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
               <input id="customer_id_autocompletion2" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organization/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-              <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+              <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
             </div>
 
             <div class="dropdown-menu" aria-labelledby="customer_id">

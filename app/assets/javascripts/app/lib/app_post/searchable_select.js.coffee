@@ -59,6 +59,7 @@ class App.SearchableSelect extends Spine.Controller
     switch event.keyCode
       when 40 then @nudge event, 1 # down
       when 38 then @nudge event, -1 # up
+      when 39 then @pickSuggestion event # right
       when 13 then @onEnter event
       when 27 then @onEscape()
       when 9 then @onTab event
@@ -83,18 +84,26 @@ class App.SearchableSelect extends Spine.Controller
     visibleOptions.eq(currentPosition).addClass('is-active')
     @clearAutocomplete()
 
+  pickSuggestion: (event) ->
+    if not @suggestion
+      return
+
+
+    # check if the cursor is at the end of the text
+      # pick autocompleteSuggestion
+
   autocomplete: (text) ->
+    @suggestion = text
     startIndex = text.indexOf(@query)
 
     if !@query or startIndex != 0
       return @clearAutocomplete()
 
-    console.log "startIndex", startIndex
-
     @invisiblePart.text(@query)
     @visiblePart.text(text.slice(@query.length))
 
   clearAutocomplete: ->
+    @suggestion = null
     @visiblePart.text('')
     @invisiblePart.text('')
 

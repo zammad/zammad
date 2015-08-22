@@ -29,7 +29,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
       <div class="controls">
@@ -42,7 +42,7 @@
             <option>is</option>
             <option>is not</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
       <input id="filter_value_1" type="text" class="form-control">

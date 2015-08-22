@@ -16,7 +16,7 @@
     <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>
     <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>
   </div>
-  <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+  <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
   <div class="small loading icon"></div>
 </div>
 <ul class="dropdown-menu dropdown-menu-left js-optionsList" role="menu">

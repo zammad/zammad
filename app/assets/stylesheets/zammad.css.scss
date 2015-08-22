@@ -1095,7 +1095,8 @@ input.time.time--12 {
     }
   }
 
-  .form-control + .icon-arrow-down  {
+  .form-control + .icon-arrow-down,
+  .dropdown-arrow {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -1121,7 +1122,8 @@ input.time.time--12 {
 
   */
 
-  html.ff-lt-35 .form-control + .icon-arrow-down {
+  html.ff-lt-35 .form-control + .icon-arrow-down,
+  html.ff-lt-35 .dropdown-arrow {
     display: none;
   }
 

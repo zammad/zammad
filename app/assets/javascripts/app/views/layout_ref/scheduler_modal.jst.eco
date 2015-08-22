@@ -29,7 +29,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
       <div class="controls">
@@ -38,7 +38,7 @@
             <option selected>is</option>
             <option>is not</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
       <div class="controls">
@@ -49,7 +49,7 @@
             <option>pending close</option>
             <option>pending reminder</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
       <div class="controls">
@@ -98,7 +98,7 @@
             <option selected>is</option>
             <option>is not</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
       <div class="controls">
@@ -109,7 +109,7 @@
             <option>Important</option>
             <option selected>Spam</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
     </div>
@@ -212,7 +212,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
       <div class="horizontal-filter-text">to</div>
@@ -224,7 +224,7 @@
             <option>pending close</option>
             <option>pending reminder</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
         </div>
       </div>
     </div>
