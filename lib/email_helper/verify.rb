@@ -77,7 +77,7 @@ or
             found = Channel::Pop3.new.fetch( { options: params[:inbound][:options] }, 'verify', subject )
           end
         rescue => e
-          result {
+          result = {
             result: 'invalid',
             message: e.to_s,
             subject: subject,
