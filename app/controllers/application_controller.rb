@@ -169,7 +169,7 @@ class ApplicationController < ActionController::Base
 
     error_message = 'authentication failed'
 
-    # check sso
+    # check sso based authentication
     sso_userdata = User.sso(params)
     if sso_userdata
       session[:persistent] = true
@@ -179,7 +179,7 @@ class ApplicationController < ActionController::Base
       }
     end
 
-    # check http basic auth
+    # check http basic based authentication
     authenticate_with_http_basic do |username, password|
       logger.debug "http basic auth check '#{username}'"
 
@@ -195,10 +195,10 @@ class ApplicationController < ActionController::Base
       }
     end
 
-    # check token
+    # check http token based authentication
     if auth_param[:token_action]
       authenticate_with_http_token do |token, _options|
-        logger.debug "token auth check #{token}"
+        logger.debug "token auth check '#{token}'"
 
         userdata = Token.check(
           action: auth_param[:token_action],
