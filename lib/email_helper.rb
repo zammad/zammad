@@ -144,68 +144,6 @@ returns
 =end
 
   def self.provider_inbound_mx(user, email, password, mx_domains)
-    inbound_mxs = []
-    mx_domains.each {|domain|
-      inbound_mx = [
-        {
-          adapter: 'imap',
-          options: {
-            host: domain,
-            port: 993,
-            ssl: true,
-            user: user,
-            password: password,
-          },
-        },
-        {
-          adapter: 'imap',
-          options: {
-            host: domain,
-            port: 993,
-            ssl: true,
-            user: email,
-            password: password,
-          },
-        },
-      ]
-      puts "ll #{inbound_mx.inspect}"
-      inbound_mxs = inbound_mxs.concat(inbound_mx)
-    }
-    inbound_mxs
-  end
-
-=begin
-
-get possible inbound settings based on mx
-
-  map = EmailHelper.provider_inbound_mx(user, email, password, mx_domains)
-
-returns
-
-  {
-    adapter: 'imap',
-    options: {
-      host: mx_domains[0],
-      port: 993,
-      ssl: true,
-      user: user,
-      password: password,
-    },
-  },
-  {
-    adapter: 'imap',
-    options: {
-      host: mx_domains[0],
-      port: 993,
-      ssl: true,
-      user: email,
-      password: password,
-    },
-  },
-
-=end
-
-  def self.provider_inbound_mx(user, email, password, mx_domains)
     inbounds = []
     mx_domains.each {|domain|
       inbound = [
@@ -268,7 +206,7 @@ returns
 =end
 
   def self.provider_inbound_guess(user, email, password, domain)
-    inbound_mx = [
+    inbound = [
       {
         adapter: 'imap',
         options: {
@@ -370,7 +308,7 @@ returns
         },
       },
     ]
-    inbound_mx
+    inbound
   end
 
 =begin
@@ -405,9 +343,9 @@ returns
 =end
 
   def self.provider_outbound_mx(user, email, password, mx_domains)
-    outbound_mxs = []
+    outbounds = []
     mx_domains.each {|domain|
-      outbound_mx = [
+      outbound = [
         {
           adapter: 'smtp',
           options: {
@@ -449,9 +387,9 @@ returns
           },
         },
       ]
-      outbound_mxs = outbound_mxs.concat(outbound_mx)
+      outbounds = outbounds.concat(outbound)
     }
-    outbound_mxs
+    outbounds
   end
 
 =begin
@@ -487,7 +425,7 @@ returns
 =end
 
   def self.provider_outbound_guess(user, email, password, domain)
-    outbound_mx = [
+    outbound = [
       {
         adapter: 'smtp',
         options: {
@@ -569,7 +507,7 @@ returns
         },
       },
     ]
-    outbound_mx
+    outbound
   end
 
 =begin
