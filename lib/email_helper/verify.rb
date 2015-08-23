@@ -77,12 +77,12 @@ or
             found = Channel::Pop3.new.fetch( { options: params[:inbound][:options] }, 'verify', subject )
           end
         rescue => e
-          render json: {
+          rresult {
             result: 'invalid',
             message: e.to_s,
             subject: subject,
           }
-          return
+          return result
         end
 
         next if !found

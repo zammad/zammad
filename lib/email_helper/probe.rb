@@ -72,11 +72,11 @@ returns on fail
 
           # probe inbound
           result = EmailHelper::Probe.inbound(settings[:inbound])
-          next if result[:result] != 'ok'
+          return result if result[:result] != 'ok'
 
           # probe outbound
           result = EmailHelper::Probe.outbound(settings[:outbound], params[:email])
-          next if result[:result] != 'ok'
+          return result if result[:result] != 'ok'
 
           result = {
             result: 'ok',
@@ -365,6 +365,7 @@ returns on fail
         'Lookup failed'                                             => 'Authentication failed, username incorrect!',
         'Invalid credentials'                                       => 'Authentication failed, invalid credentials!',
         'getaddrinfo: nodename nor servname provided, or not known' => 'Hostname not found!',
+        'getaddrinfo: Name or service not known'                    => 'Hostname not found!',
         'No route to host'                                          => 'No route to host!',
         'execution expired'                                         => 'Host not reachable!',
         'Connection refused'                                        => 'Connection refused!',
