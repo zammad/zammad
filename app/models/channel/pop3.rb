@@ -2,7 +2,7 @@
 
 require 'net/pop'
 
-class Channel::POP3 < Channel::EmailParser
+class Channel::Pop3 < Channel::EmailParser
 
   def fetch (channel, check_type = '', verify_string = '')
     ssl  = true

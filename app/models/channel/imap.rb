@@ -2,7 +2,7 @@
 
 require 'net/imap'
 
-class Channel::IMAP < Channel::EmailParser
+class Channel::Imap < Channel::EmailParser
 
   def fetch (channel, check_type = '', verify_string = '')
     ssl  = true
