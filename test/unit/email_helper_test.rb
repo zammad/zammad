@@ -158,7 +158,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
       options: {
-        host: 'www.zammad.com',
+        host: 'www.znuny.com',
         port: 993,
         ssl: true,
         user: 'some@example.com',
@@ -167,7 +167,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     )
     assert_equal('invalid', result[:result])
     assert_equal('Connection refused!', result[:message_human])
-    assert_equal('www.zammad.com', result[:settings][:options][:host])
+    assert_equal('www.znuny.com', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
@@ -273,8 +273,8 @@ class EmailHelperTest < ActiveSupport::TestCase
       {
         adapter: 'smtp',
         options: {
-          host: 'www.zammad.com',
-          port: 25,
+          host: 'www.znuny.com',
+          port: 26,
           start_tls: true,
           user: 'some@example.com',
           password: 'password',
@@ -284,7 +284,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     )
     assert_equal('invalid', result[:result])
     assert_equal('Connection refused!', result[:message_human])
-    assert_equal('www.zammad.com', result[:settings][:options][:host])
+    assert_equal('www.znuny.com', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.outbound(
       {
@@ -399,6 +399,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       email: mailbox_user,
       password: mailbox_password,
     )
+    puts "Result #{result.inspect}"
     assert_equal('ok', result[:result])
     assert_equal('arber.znuny.com', result[:setting][:inbound][:options][:host])
     assert_equal('arber.znuny.com', result[:setting][:outbound][:options][:host])
