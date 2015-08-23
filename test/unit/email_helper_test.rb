@@ -180,7 +180,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       }
     )
     assert_equal('invalid', result[:result])
-    assert_match(/Host not reachable|Host not reachable/, result[:message_human])
+    assert_match(/Host not reachable|No route to host/, result[:message_human])
     assert_equal('172.42.42.42', result[:settings][:options][:host])
 
     # gmail
@@ -300,7 +300,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       'some@example.com',
     )
     assert_equal('invalid', result[:result])
-    assert_match(/Host not reachable|Host not reachable/, result[:message_human])
+    assert_match(/Host not reachable|No route to host/, result[:message_human])
     assert_equal('172.42.42.42', result[:settings][:options][:host])
 
     # gmail
