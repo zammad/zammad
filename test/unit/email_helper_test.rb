@@ -348,7 +348,7 @@ puts "DEBUG #{result.inspect}"
     if !result[:message_human].empty?
       assert_equal('Authentication failed!', result[:message_human])
     else
-      assert_match(/Web login required/, result[:message])
+      assert_match(/Please log in with your web browser and then try again/, result[:message])
     end
     assert_equal('smtp.gmail.com', result[:settings][:options][:host])
 
