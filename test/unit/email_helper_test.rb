@@ -211,7 +211,6 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('invalid', result[:result])
 
     # if we have to many failed logins, we need to handle another error message
-puts "DEBUG #{result.inspect}"
     if !result[:message_human].empty?
       assert_equal('Authentication failed, invalid credentials!', result[:message_human])
     else
@@ -344,7 +343,6 @@ puts "DEBUG #{result.inspect}"
     assert_equal('invalid', result[:result])
 
     # if we have to many failed logins, we need to handle another error message
-puts "DEBUG #{result.inspect}"
     if !result[:message_human].empty?
       assert_equal('Authentication failed!', result[:message_human])
     else
