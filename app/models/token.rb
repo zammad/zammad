@@ -62,6 +62,19 @@ returns
     token.user
   end
 
+=begin
+
+cleanup old token
+
+  Token.cleanup
+
+=end
+
+  def self.cleanup
+    Token.where('persistent IS ? AND created_at < ?', nil, Time.zone.now - 30.days).delete_all
+    true
+  end
+
   private
 
   def generate_token
