@@ -209,7 +209,14 @@ class EmailHelperTest < ActiveSupport::TestCase
       }
     )
     assert_equal('invalid', result[:result])
-    assert_equal('Authentication failed, invalid credentials!', result[:message_human])
+
+    # if we have to many failed logins, we need to handle another error message
+puts "DEBUG #{result.inspect}"
+    if !result[:message_human].empty?
+      assert_equal('Authentication failed, invalid credentials!', result[:message_human])
+    else
+      assert_match(/Web login required/, result[:message])
+    end
     assert_equal('imap.gmail.com', result[:settings][:options][:host])
 
     # dovecot
@@ -335,7 +342,14 @@ class EmailHelperTest < ActiveSupport::TestCase
       'some@example.com',
     )
     assert_equal('invalid', result[:result])
-    assert_equal('Authentication failed!', result[:message_human])
+
+    # if we have to many failed logins, we need to handle another error message
+puts "DEBUG #{result.inspect}"
+    if !result[:message_human].empty?
+      assert_equal('Authentication failed!', result[:message_human])
+    else
+      assert_match(/Web login required/, result[:message])
+    end
     assert_equal('smtp.gmail.com', result[:settings][:options][:host])
 
     # dovecot
