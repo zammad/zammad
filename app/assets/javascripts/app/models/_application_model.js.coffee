@@ -525,19 +525,29 @@ class App.Model extends Spine.Model
 
     return true
 
-  @_fillUp: (data) ->
+  @_fillUp: (data, classNames = []) ->
 
     # fill up via relations
-    if App[ @className ].configure_attributes
-      for attribute in App[ @className ].configure_attributes
-        if attribute.relation
+    return data if !App[ @className ].configure_attributes
+    for attribute in App[ @className ].configure_attributes
+
+      # lookup relations
+      if attribute.relation
+
+        # relations if if not calling object, to prevent loops
+        if !_.contains(classNames, @className)
+
+          # only if relation model exists
           if App[ attribute.relation ]
             withoutId = attribute.name.substr( 0, attribute.name.length - 3 )
             if attribute.name.substr( attribute.name.length - 3, attribute.name.length ) is '_id'
               if data[attribute.name]
+
+                # only if relation record exists in collection
                 if App[ attribute.relation ].exists( data[attribute.name] )
+                  classNames.push @className
                   item = App[ attribute.relation ].find( data[attribute.name] )
-                  item = App[ attribute.relation ]._fillUp(item)
+                  item = App[ attribute.relation ]._fillUp(item, classNames)
                   data[ withoutId ] = item
                 else
                   console.log("ERROR, cant find #{ attribute.name } App.#{ attribute.relation }.find(#{ data[attribute.name] }) for '#{ data.constructor.className }' #{ data.displayName() }")
