@@ -545,9 +545,8 @@ class App.Model extends Spine.Model
 
                 # only if relation record exists in collection
                 if App[ attribute.relation ].exists( data[attribute.name] )
-                  classNames.push @className
                   item = App[ attribute.relation ].find( data[attribute.name] )
-                  item = App[ attribute.relation ]._fillUp(item, classNames)
+                  item = App[ attribute.relation ]._fillUp(item, classNames.concat(@className))
                   data[ withoutId ] = item
                 else
                   console.log("ERROR, cant find #{ attribute.name } App.#{ attribute.relation }.find(#{ data[attribute.name] }) for '#{ data.constructor.className }' #{ data.displayName() }")
