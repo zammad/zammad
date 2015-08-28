@@ -81,6 +81,8 @@ send via account
       adapter_options = options[:outbound][:options]
     end
 
+    result = nil
+
     begin
 
       # we need to require each channel backend individually otherwise we get a
@@ -91,7 +93,7 @@ send via account
 
       driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
       driver_instance = driver_class.new
-      driver_instance.send(adapter_options, mail_params, notification)
+      result = driver_instance.send(adapter_options, mail_params, notification)
       self.status_out   = 'ok'
       self.last_log_out = ''
       save
@@ -103,7 +105,7 @@ send via account
       self.last_log_out = error
       save
     end
-
+    result
   end
 
 end
