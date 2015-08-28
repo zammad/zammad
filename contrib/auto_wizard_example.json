@@ -27,6 +27,7 @@
   "EmailAddresses": [
     {
       "id": 1,
+      "channel_id": 10,
       "realname": "Zammad Demo System",
       "email": "zammad_demo@localhost"
     }
@@ -45,6 +46,7 @@
   ],
   "Channels": [
     {
+      "id": 10,
       "area": "Email::Account",
       "group_id": 1,
       "options": {
