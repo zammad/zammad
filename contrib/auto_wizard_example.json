@@ -45,14 +45,21 @@
   ],
   "Channels": [
     {
-      "area": "Email::Inbound",
-      "adapter": "IMAP",
+      "area": "Email::Account",
       "group_id": 1,
       "options": {
-        "host": "mx1.example.com",
-        "user": "some user",
-        "password": "some pw",
-        "ssl": true
+        "inbound": {
+          "adapter": "imap",
+          "options": {
+            "host": "mx1.example.com",
+            "user": "some user",
+            "password": "some pw",
+            "ssl": true
+          }
+        },
+        "outbound": {
+          "adapter": "sendmail"
+        }
       },
       "active":false
     }
