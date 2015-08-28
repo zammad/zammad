@@ -364,7 +364,7 @@ class Base extends App.ControllerContent
             if App.Config.get('system_online_service')
               @navigate 'getting_started/channel/email_pre_configured'
             else
-              @navigate 'getting_started/channel'
+              @navigate 'getting_started/email_notification'
           else
             for key, value of data.messages
               @showAlert( key, value )
@@ -393,6 +393,151 @@ class Base extends App.ControllerContent
     @$('.wizard-controls .btn').attr('disabled', false)
 
 App.Config.set( 'getting_started/base', Base, 'Routes' )
+
+class EmailNotification extends App.ControllerContent
+  className: 'getstarted fit'
+  events:
+    'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
+    'submit .js-outbound':                'submit'
+
+  constructor: ->
+    super
+
+    # redirect if we are not admin
+    if !@authenticate(true)
+      @navigate '#'
+      return
+
+    # set title
+    @title 'Email Notifications'
+
+    @adapters = [
+      {
+        name: 'Email'
+        class: 'email'
+        link: '#getting_started/channel/email'
+      },
+    ]
+
+    @fetch()
+
+  release: =>
+    @el.removeClass('fit getstarted')
+
+  fetch: ->
+
+    # get data
+    @ajax(
+      id:    'getting_started',
+      type:  'GET',
+      url:   @apiPath + '/getting_started',
+      processData: true,
+      success: (data, status, xhr) =>
+
+        # check if import is active
+        if data.import_mode == true
+          @navigate '#import/' + data.import_backend
+          return
+
+        # render page
+        @render()
+    )
+
+  render: ->
+    @html App.view('getting_started/email_notification')()
+    adapters =
+      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
+      smtp:     'SMTP - configure your own outgoing SMTP settings'
+    adapter_used = 'sendmail'
+    configureAttributesOutbound = [
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , default: adapter_used },
+    ]
+    new App.ControllerForm(
+      el:    @$('.base-outbound-type'),
+      model: { configure_attributes: configureAttributesOutbound, className: '' },
+    )
+    @toggleOutboundAdapter()
+
+  toggleOutboundAdapter: =>
+
+    # show used backend
+    channel_used = { options: {} }
+    adapter = @$('.js-outbound [name=adapter]').val()
+    if adapter is 'smtp'
+      configureAttributesOutbound = [
+        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true, default: (channel_used['options']&&channel_used['options']['host']) },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['user']) },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, single: true, default: (channel_used['options']&&channel_used['options']['password']) },
+      ]
+      @form = new App.ControllerForm(
+        el:    @$('.base-outbound-settings')
+        model: { configure_attributes: configureAttributesOutbound, className: '' }
+      )
+    else
+      @el.find('.base-outbound-settings').html('')
+
+
+  submit: (e) =>
+    e.preventDefault()
+
+    # get params
+    params          = @formParam(e.target)
+    params['email'] = 'me@localhost'
+    @disable(e)
+
+    @showSlide('js-test')
+
+    @ajax(
+      id:   'email_notification'
+      type: 'POST'
+      url:  @apiPath + '/channels/email_notification'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          for key, value of data.settings
+            App.Config.set( key, value )
+          if App.Config.get('system_online_service')
+            @navigate 'getting_started/channel/email_pre_configured'
+          else
+            @navigate 'getting_started/channel'
+        else
+          @showSlide('js-outbound')
+          @showAlert('js-outbound', data.message_human || data.message )
+          @enable(e)
+
+      fail: =>
+        @showSlide('js-outbound')
+        @showAlert('js-outbound', data.message_human || data.message )
+        @enable(e)
+    )
+
+  goToSlide: (e) =>
+    e.preventDefault()
+    slide = $(e.target).data('slide')
+    @showSlide(slide)
+
+  showSlide: (name) =>
+    @hideAlert(name)
+    @$('.setup.wizard').addClass('hide')
+    @$(".setup.wizard.#{name}").removeClass('hide')
+    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
+
+  showAlert: (screen, message) =>
+    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
+
+  hideAlert: (screen) =>
+    @$(".#{screen}").find('.alert').addClass('hide')
+
+  disable: (e) =>
+    @formDisable(e)
+    @$('.wizard-controls .btn').attr('disabled', true)
+
+  enable: (e) =>
+    @formEnable(e)
+    @$('.wizard-controls .btn').attr('disabled', false)
+
+App.Config.set( 'getting_started/email_notification', EmailNotification, 'Routes' )
 
 class Channel extends App.ControllerContent
   className: 'getstarted fit'
@@ -610,7 +755,7 @@ class ChannelEmail extends App.ControllerContent
     @ajax(
       id:   'email_probe'
       type: 'POST'
-      url:  @apiPath + '/getting_started/email_probe'
+      url:  @apiPath + '/channels/email_probe'
       data: JSON.stringify( params )
       processData: true
       success: (data, status, xhr) =>
@@ -643,7 +788,7 @@ class ChannelEmail extends App.ControllerContent
     @ajax(
       id:   'email_inbound'
       type: 'POST'
-      url:  @apiPath + '/getting_started/email_inbound'
+      url:  @apiPath + '/channels/email_inbound'
       data: JSON.stringify( params )
       processData: true
       success: (data, status, xhr) =>
@@ -679,7 +824,7 @@ class ChannelEmail extends App.ControllerContent
     @ajax(
       id:   'email_outbound'
       type: 'POST'
-      url:  @apiPath + '/getting_started/email_outbound'
+      url:  @apiPath + '/channels/email_outbound'
       data: JSON.stringify( params )
       processData: true
       success: (data, status, xhr) =>
@@ -705,7 +850,7 @@ class ChannelEmail extends App.ControllerContent
     @ajax(
       id:   'email_verify'
       type: 'POST'
-      url:  @apiPath + '/getting_started/email_verify'
+      url:  @apiPath + '/channels/email_verify'
       data: JSON.stringify( account )
       processData: true
       success: (data, status, xhr) =>

@@ -2,6 +2,7 @@
 
 class EmailAddress < ApplicationModel
   has_many                :groups,   after_add: :cache_update, after_remove: :cache_update
+  belongs_to              :channel
   validates               :realname, presence: true
   validates               :email,    presence: true
 

@@ -1,0 +1,39 @@
+<div class="modal-dialog">
+
+  <form class="setup wizard hide js-probe">
+    <div class="wizard-slide">
+      <h2><%- @T('Email Account') %></h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> <%- @T('Testing') %> <span class="js-email"></span>
+        </p>
+      </div>
+    </div>
+  </form>
+
+  <form class="setup wizard hide js-test">
+    <div class="wizard-slide">
+      <h2><%- @T('Email Account') %></h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> <%- @T('Verifying...') %>
+        </p>
+      </div>
+    </div>
+  </form>
+
+  <form class="setup wizard js-outbound">
+    <div class="wizard-slide">
+      <h2><%- @T('Email Outbound') %></h2>
+      <div class="wizard-body vertical justified">
+        <div class="alert alert--danger hide" role="alert"></div>
+        <div class="base-outbound-type"></div>
+        <div class="base-outbound-settings"></div>
+      </div>
+      <div class="wizard-controls center">
+        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
+      </div>
+    </div>
+  </form>
+
+</div>

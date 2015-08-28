@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 # http://stem.ps/rails/2015/01/25/ruby-gotcha-toplevel-constant-referenced-by.html
-require 'channel/twitter'
+require 'channel/driver/twitter'
 
 class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
   observe 'ticket::_article'
@@ -20,7 +20,7 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     type = Ticket::Article::Type.lookup( id: record.type_id )
     return if type['name'] !~ /\Atwitter/
 
-    twitter = Channel::Twitter.new
+    twitter = Channel::Driver::Twitter.new
     tweet   = twitter.send({
                              type:        type['name'],
                              to:          record.to,

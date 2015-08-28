@@ -1743,21 +1743,28 @@ Overview.create_if_not_exists(
 )
 
 Channel.create_if_not_exists(
-  adapter: 'SMTP',
-  area: 'Email::Outbound',
+  area: 'Email::Notification',
   options: {
-    host: 'host.example.com',
-    user: '',
-    password: '',
-    ssl: true,
+    outbound: {
+      adapter: 'smtp',
+      options: {
+        host: 'host.example.com',
+        user: '',
+        password: '',
+        ssl: true,
+      },
+    },
   },
   group_id: 1,
   active: false,
 )
 Channel.create_if_not_exists(
-  adapter: 'Sendmail',
-  area: 'Email::Outbound',
-  options: {},
+  area: 'Email::Notification',
+  options: {
+    outbound: {
+      adapter: 'sendmail',
+    },
+  },
   active: true,
 )
 

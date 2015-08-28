@@ -28,12 +28,12 @@ class TwitterTest < ActiveSupport::TestCase
   me_bauer_token_secret = 'T8ph5afeSDjGDA9X1ZBlzEvoSiXfN266ZZUMj5UaY'
 
   # add channel
-  current = Channel.where( adapter: 'Twitter' )
+  current = Channel.where(area: 'Twitter::Account')
   current.each(&:destroy)
   Channel.create(
-    adapter: 'Twitter',
-    area: 'Twitter::Inbound',
+    area: 'Twitter::Account',
     options: {
+      adapter: 'twitter',
       auth: {
         consumer_key:       consumer_key,
         consumer_secret:    consumer_secret,

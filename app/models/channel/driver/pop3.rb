@@ -2,19 +2,19 @@
 
 require 'net/pop'
 
-class Channel::Pop3 < Channel::EmailParser
+class Channel::Driver::Pop3 < Channel::EmailParser
 
-  def fetch (channel, check_type = '', verify_string = '')
+  def fetch (options, channel, check_type = '', verify_string = '')
     ssl  = true
     port = 995
-    if channel[:options].key?(:ssl) && channel[:options][:ssl].to_s == 'false'
+    if options.key?(:ssl) && options[:ssl].to_s == 'false'
       ssl  = false
       port = 110
     end
 
-    Rails.logger.info "fetching pop3 (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
+    Rails.logger.info "fetching pop3 (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
-    @pop = Net::POP3.new( channel[:options][:host], port )
+    @pop = Net::POP3.new( options[:host], port )
 
     # on check, reduce open_timeout to have faster probing
     if check_type == 'check'
@@ -25,7 +25,7 @@ class Channel::Pop3 < Channel::EmailParser
     if ssl
       @pop.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
     end
-    @pop.start( channel[:options][:user], channel[:options][:password] )
+    @pop.start( options[:user], options[:password] )
     if check_type == 'check'
       Rails.logger.info 'check only mode, fetch no emails'
       disconnect

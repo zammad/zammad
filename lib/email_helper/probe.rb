@@ -14,26 +14,28 @@ returns on success
 
   {
     result: 'ok',
-    inbound: {
-      adapter: 'imap',
-      options: {
-        host: 'imap.gmail.com',
-        port: 993,
-        ssl: true,
-        user: 'some@example.com',
-        password: 'password',
+    settings: {
+      inbound: {
+        adapter: 'imap',
+        options: {
+          host: 'imap.gmail.com',
+          port: 993,
+          ssl: true,
+          user: 'some@example.com',
+          password: 'password',
+        },
       },
-    },
-    outbound: {
-      adapter: 'smtp',
-      options: {
-        host: 'smtp.gmail.com',
-        port: 25,
-        ssl: true,
-        user: 'some@example.com',
-        password: 'password',
+      outbound: {
+        adapter: 'smtp',
+        options: {
+          host: 'smtp.gmail.com',
+          port: 25,
+          ssl: true,
+          user: 'some@example.com',
+          password: 'password',
+        },
       },
-    },
+    }
   }
 
 returns on fail
@@ -150,7 +152,7 @@ get result of inbound probe
 
   result = EmailHelper::Probe.inbound(
     adapter: 'imap',
-    options: {
+    settings: {
       host: 'imap.gmail.com',
       port: 993,
       ssl: true,
@@ -184,24 +186,22 @@ returns on fail
 
     def self.inbound(params)
 
-      # validate params
-      if !params[:adapter]
-        result = {
-          result: 'invalid',
-          message: 'Invalid, need adapter!',
-        }
-        return result
-      end
+      adapter = params[:adapter].downcase
 
       # connection test
       begin
-        if params[:adapter] =~ /^imap$/i
-          Channel::Imap.new.fetch( { options: params[:options] }, 'check' )
-        elsif params[:adapter] =~ /^pop3$/i
-          Channel::Pop3.new.fetch( { options: params[:options] }, 'check' )
-        else
-          fail "Invalid adapter '#{params[:adapter]}'"
+
+        # validate adapter
+        if adapter !~ /^(imap|pop3)$/
+          fail "Unknown adapter '#{adapter}'"
         end
+
+        require "channel/driver/#{adapter.to_filename}"
+
+        driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+        driver_instance = driver_class.new
+        driver_instance.fetch(params[:options], nil, 'check')
+
       rescue => e
         message_human = ''
         translations.each {|key, message|
@@ -238,7 +238,8 @@ get result of outbound probe
         password: 'password',
       }
     },
-    'sender@example.com',
+    'sender_and_recipient_of_test_email@example.com',
+    'subject of probe email',
   )
 
 returns on success
@@ -266,15 +267,9 @@ returns on fail
 
     def self.outbound(params, email, subject = nil)
 
-      # validate params
-      if !params[:adapter]
-        result = {
-          result: 'invalid',
-          message: 'Invalid, need adapter!',
-        }
-        return result
-      end
+      adapter = params[:adapter].downcase
 
+      # prepare test email
       if subject
         mail = {
           :from             => email,
@@ -295,29 +290,29 @@ returns on fail
       # test connection
       begin
 
-        if params[:adapter] =~ /^smtp$/i
+        # validate adapter
+        if adapter !~ /^(smtp|sendmail)$/
+          fail "Unknown adapter '#{adapter}'"
+        end
 
-          # in case, fill missing params
+        # set smtp defaults
+        if adapter =~ /^smtp$/
           if !params[:options].key?(:port)
             params[:options][:port] = 25
           end
           if !params[:options].key?(:ssl)
             params[:options][:ssl] = true
           end
-          Channel::SMTP.new.send(
-            mail,
-            {
-              options: params[:options]
-            }
-          )
-        elsif params[:adapter] =~ /^sendmail$/i
-          Channel::Sendmail.new.send(
-            mail,
-            nil
-          )
-        else
-          fail "Invalid adapter '#{params[:adapter]}'"
         end
+
+        require "channel/driver/#{adapter.to_filename}"
+
+        driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+        driver_instance = driver_class.new
+        driver_instance.send(
+            params[:options],
+            mail,
+        )
       rescue => e
 
         # check if sending email was ok, but mailserver rejected

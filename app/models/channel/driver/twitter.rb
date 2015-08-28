@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
 
-class Channel::Twitter
+class Channel::Driver::Twitter
 
-  def fetch (channel)
+  def fetch (adapter_options, channel)
 
     @channel = channel
     @tweet   = Tweet.new( @channel[:options][:auth] )
@@ -21,7 +21,7 @@ class Channel::Twitter
 
   def send(article, _notification = false)
 
-    @channel = Channel.find_by( area: 'Twitter::Inbound', active: true )
+    @channel = Channel.find_by( area: 'Twitter::Account', active: true )
     @tweet   = Tweet.new( @channel[:options][:auth] )
 
     tweet = @tweet.from_article(article)

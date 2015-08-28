@@ -1,7 +1,6 @@
-<div class="main flex vertical centered darkBackground">
-  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+<div class="modal-dialog">
 
-  <form class="setup wizard js-intro">
+ <form class="setup wizard js-intro">
     <div class="wizard-slide">
       <h2><%- @T('Email Account') %></h2>
       <div class="wizard-body vertical justified">
@@ -22,8 +21,7 @@
         </fieldset>
       </div>
       <div class="wizard-controls center">
-        <a class="btn btn--text btn--secondary" href="#getting_started/channel"><%- @T('Go Back') %></a>
-        <button class="btn btn--primary align-right"><%- @T( 'Connect' ) %></button>
+        <button class="btn btn--primary align-right"><%- @T('Connect') %></button>
       </div>
     </div>
   </form>

@@ -11,14 +11,25 @@ JSON
 Example:
 {
   "id":1,
-  "area":"Email::Inbound",
-  "adapter":"IMAP",
+  "area":"Email::Account",
   "group_id:": 1,
   "options":{
-    "host":"mail.example.com",
-    "user":"some_user",
-    "password":"some_password",
-    "ssl":true
+    "inbound": {
+      "adapter":"IMAP",
+      "options": {
+      "host":"mail.example.com",
+      "user":"some_user",
+      "password":"some_password",
+      "ssl":true
+    },
+    "outbound":{
+      "adapter":"SMTP",
+      "options": {
+      "host":"mail.example.com",
+      "user":"some_user",
+      "password":"some_password",
+      "start_tls":true
+    }
   },
   "active":true,
   "updated_at":"2012-09-14T17:51:53Z",
@@ -29,10 +40,10 @@ Example:
 
 {
   "id":1,
-  "area":"Twitter::Inbound",
-  "adapter":"Twitter",
+  "area":"Twitter::Account",
   "group_id:": 1,
   "options":{
+    "adapter":"Twitter",
     "auth": {
       "consumer_key":"PJ4c3dYYRtSZZZdOKo8ow",
       "consumer_secret":"ggAdnJE2Al1Vv0cwwvX5bdvKOieFs0vjCIh5M8Dxk",
@@ -84,14 +95,12 @@ Response:
 [
   {
     "id": 1,
-    "area":"Email::Inbound",
-    "adapter":"IMAP",
+    "area":"Email::Account",
     ...
   },
   {
     "id": 2,
-    "area":"Email::Inbound",
-    "adapter":"IMAP",
+    "area":"Email::Account",
     ...
   }
 ]
@@ -114,8 +123,7 @@ GET /api/v1/channels/#{id}.json
 Response:
 {
   "id": 1,
-  "area":"Email::Inbound",
-  "adapter":"IMAP",
+  "area":"Email::Account",
   ...
 }
 
@@ -136,22 +144,33 @@ POST /api/v1/channels.json
 
 Payload:
 {
-  "area":"Email::Inbound",
-  "adapter":"IMAP",
+  "area":"Email::Account",
   "group_id:": 1,
   "options":{
-    "host":"mail.example.com",
-    "user":"some_user",
-    "password":"some_password",
-    "ssl":true
+    "inbound":
+      "adapter":"IMAP",
+      "options":{
+        "host":"mail.example.com",
+        "user":"some_user",
+        "password":"some_password",
+        "ssl":true
+      },
+    },
+    "outbound":{
+      "adapter":"SMTP",
+      "options": {
+      "host":"mail.example.com",
+      "user":"some_user",
+      "password":"some_password",
+      "start_tls":true
+    }
   },
   "active":true,
 }
 
 Response:
 {
-  "area":"Email::Inbound",
-  "adapter":"IMAP",
+  "area":"Email::Account",
   ...
 }
 
@@ -173,14 +192,26 @@ PUT /api/v1/channels/{id}.json
 Payload:
 {
   "id":1,
-  "area":"Email::Inbound",
-  "adapter":"IMAP",
+  "area":"Email::Account",
   "group_id:": 1,
   "options":{
-    "host":"mail.example.com",
-    "user":"some_user",
-    "password":"some_password",
-    "ssl":true
+    "inbound":
+      "adapter":"IMAP",
+      "options":{
+        "host":"mail.example.com",
+        "user":"some_user",
+        "password":"some_password",
+        "ssl":true
+      },
+    },
+    "outbound":{
+      "adapter":"SMTP",
+      "options": {
+      "host":"mail.example.com",
+      "user":"some_user",
+      "password":"some_password",
+      "start_tls":true
+    }
   },
   "active":true,
 }
@@ -218,5 +249,208 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def destroy
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Channel, params)
+  end
+
+  def email_index
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    assets = {}
+    Channel.all.each {|channel|
+      assets = channel.assets(assets)
+    }
+    EmailAddress.all.each {|email_address|
+      assets = email_address.assets(assets)
+    }
+    render json: {
+      assets: assets
+    }
+  end
+
+  def email_probe
+
+    # check admin permissions
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    # probe settings based on email and password
+    result = EmailHelper::Probe.full(
+      email: params[:email],
+      password: params[:password],
+    )
+
+    # verify if user+host already exists
+    if result[:result] == 'ok'
+      return if email_account_duplicate?(result)
+    end
+
+    render json: result
+  end
+
+  def email_outbound
+
+    # check admin permissions
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    # connection test
+    render json: EmailHelper::Probe.outbound(params, params[:email])
+  end
+
+  def email_inbound
+
+    # check admin permissions
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    # connection test
+    result = EmailHelper::Probe.inbound(params)
+
+    # check account duplicate
+    return if email_account_duplicate?({ setting: { inbound: params } }, params[:channel_id])
+
+    render json: result
+  end
+
+  def email_verify
+
+    # check admin permissions
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    email = params[:email] || params[:meta][:email]
+    email = email.downcase
+    channel_id = params[:channel_id]
+
+    # check account duplicate
+    return if email_account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)
+
+    # check delivery for 30 sek.
+    result = EmailHelper::Verify.email(
+      outbound: params[:outbound],
+      inbound: params[:inbound],
+      sender: email,
+      subject: params[:subject],
+    )
+
+    if result[:result] != 'ok'
+      render json: result
+      return
+    end
+
+    # update account
+    if channel_id
+      channel = Channel.find(channel_id)
+      channel.update_attributes(
+        options: {
+          inbound: params[:inbound],
+          outbound: params[:outbound],
+        },
+        last_log_in: '',
+        last_log_out: '',
+        status_in: nil,
+        status_out: nil,
+      )
+      render json: {
+        result: 'ok',
+      }
+      return
+    end
+
+    # create new account
+    channel = Channel.create(
+      area: 'Email::Account',
+      options: {
+        inbound: params[:inbound],
+        outbound: params[:outbound],
+      },
+      active: true,
+      group_id: Group.first.id,
+    )
+
+    # remember address && set channel for email address
+    address = EmailAddress.find_by(email: email)
+
+    # if we are on initial setup, use already exisiting dummy email address
+    if Channel.count == 1
+      address = EmailAddress.first
+    end
+
+    if address
+      address.update_attributes(
+        realname: params[:meta][:realname],
+        email: email,
+        active: true,
+        channel_id: channel.id,
+      )
+    else
+      address = EmailAddress.create(
+        realname: params[:meta][:realname],
+        email: email,
+        active: true,
+        channel_id: channel.id,
+      )
+    end
+
+    render json: {
+      result: 'ok',
+    }
+  end
+
+  def email_notification
+
+    # check admin permissions
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    adapter = params[:adapter].downcase
+
+    email = Setting.get('notification_sender')
+
+    # connection test
+    result = EmailHelper::Probe.outbound(params, email)
+
+    # save settings
+    if result[:result] == 'ok'
+
+      # validate adapter
+      if adapter !~ /^(smtp|sendmail)$/
+        render json: {
+          result: 'failed',
+          message: "Unknown adapter '#{adapter}'",
+        }
+        return
+      end
+
+      Channel.where(area: 'Email::Notification').each {|channel|
+        active = false
+        if adapter =~ /^#{channel.options[:outbound][:adapter]}$/i
+          active = true
+          channel.options = {
+            outbound: {
+              adapter: adapter,
+              options: params[:options],
+            },
+          }
+        end
+        channel.active = active
+        channel.save
+      }
+    end
+    render json: result
+  end
+
+  private
+
+  def email_account_duplicate?(result, channel_id = nil)
+    Channel.where(area: 'Email::Account').each {|channel|
+      next if !channel.options
+      next if !channel.options[:inbound]
+      next if !channel.options[:inbound][:adapter]
+      next if channel.options[:inbound][:adapter] != result[:setting][:inbound][:adapter]
+      next if channel.options[:inbound][:options][:host] != result[:setting][:inbound][:options][:host]
+      next if channel.options[:inbound][:options][:user] != result[:setting][:inbound][:options][:user]
+      next if channel.id.to_s == channel_id.to_s
+      render json: {
+        result: 'duplicate',
+        message: 'Account already exists!',
+      }
+      return true
+    }
+    false
   end
 end

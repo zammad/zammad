@@ -44,13 +44,9 @@ class AaaGettingStartedTest < TestCase
       value: 'test1234äöüß',
     )
     click( css: '.js-admin .btn--success' )
-    watch_for(
-      css: '.js-base h2',
-      value: 'Organization',
-    )
 
     # getting started - base
-    match(
+    watch_for(
       css: '.js-base h2',
       value: 'Organization',
     )
@@ -76,18 +72,26 @@ class AaaGettingStartedTest < TestCase
     click(
       css: '.js-base .btn--primary',
     )
+
+    # getting started - email notification
     watch_for(
-      css: 'body',
-      value: 'channel',
+      css: '.js-outbound h2',
+      value: 'Email Notification',
     )
     location_check(
-      url: '#getting_started/channel',
+      url: '#getting_started/email_notification',
+    )
+    click(
+      css: '.js-outbound .btn--primary',
     )
 
     # getting started - create email account
-    match(
+    watch_for(
       css: '.js-channel h2',
       value: 'Connect Channels',
+    )
+    location_check(
+      url: '#getting_started/channel',
     )
     click(
       css: '.js-channel .email .provider_name',
@@ -117,14 +121,10 @@ class AaaGettingStartedTest < TestCase
       value: 'invite',
       timeout: 100,
     )
-    location_check(
-      url: '#getting_started/agents',
-    )
 
     # invite agent1
-    match(
-      css: 'body',
-      value: 'Invite',
+    location_check(
+      url: '#getting_started/agents',
     )
     set(
       css: '.js-agent input[name="firstname"]',
