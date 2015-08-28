@@ -28,9 +28,10 @@
       </td>
       <td class="<% if channel.status_out is 'ok': %>success<% else if channel.status_out is 'error': %>danger<% else: %>warning<% end %>">
         <%- @T('State') %>: <%- @T(channel.status_out || 'unknown') %><br>
+        <a href="#" data-type="edit-outbound">
         <% if channel.options.outbound && channel.options.outbound.options: %>
           <%= channel.options.outbound.options.user %><br>
-          <a href="#" data-type="edit-outbound"><%= channel.options.outbound.options.host %>
+          <%= channel.options.outbound.options.host %>
         <% end %>
         (<%= channel.options.outbound.adapter %>)</a>
       </td>
