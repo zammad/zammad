@@ -2,7 +2,7 @@
 
 class Channel::Driver::Twitter
 
-  def fetch (adapter_options, channel)
+  def fetch (_adapter_options, channel)
 
     @channel = channel
     @tweet   = Tweet.new( @channel[:options][:auth] )

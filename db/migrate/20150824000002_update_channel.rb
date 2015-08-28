@@ -4,9 +4,9 @@ class UpdateChannel < ActiveRecord::Migration
     add_column :email_addresses, :channel_id, :integer, null: true
     EmailAddress.reset_column_information
 
-    channel = Channel.find_by(area: 'Email::Inbound')
+    channel_inbound = Channel.find_by(area: 'Email::Inbound')
     EmailAddress.all.each {|email_address|
-      email_address.channel_id = channel.id
+      email_address.channel_id = channel_inbound.id
       email_address.save
     }
 

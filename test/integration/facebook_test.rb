@@ -32,7 +32,7 @@ class FacebookTest < ActiveSupport::TestCase
   }
 
   # add channel
-  current = Channel.where( adapter: 'Facebook' )
+  current = Channel.where(area: 'Facebook::Account')
   current.each(&:destroy)
   Channel.create(
     area:          'Facebook::Account',

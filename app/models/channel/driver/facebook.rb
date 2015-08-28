@@ -4,7 +4,7 @@ require 'facebook'
 
 class Channel::Driver::Facebook
 
-  def fetch (adapter_options, channel)
+  def fetch (_adapter_options, channel)
 
     @channel  = channel
     @facebook = Facebook.new( @channel[:options] )

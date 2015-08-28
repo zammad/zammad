@@ -310,8 +310,8 @@ returns on fail
         driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         driver_instance = driver_class.new
         driver_instance.send(
-            params[:options],
-            mail,
+          params[:options],
+          mail,
         )
       rescue => e
 

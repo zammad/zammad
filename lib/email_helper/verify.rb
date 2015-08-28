@@ -61,7 +61,6 @@ or
       else
         subject = params[:subject]
       end
-      puts "VERIFY #{subject.inspect}/#{params[:sender]}"
       result = EmailHelper::Probe.outbound(params[:outbound], params[:sender], subject)
 
       # looking for verify email
