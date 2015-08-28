@@ -7,8 +7,8 @@ class App.ChannelEmail extends App.ControllerTabs
 
     @tabs = [
       {
-        name:       'Email Accounts',
-        target:     'c-channel',
+        name:       'Accounts',
+        target:     'c-account',
         controller: App.ChannelEmailAccountOverview,
       },
       {

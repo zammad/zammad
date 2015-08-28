@@ -341,10 +341,10 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
           inbound: params[:inbound],
           outbound: params[:outbound],
         },
-        last_log_in: '',
-        last_log_out: '',
-        status_in: nil,
-        status_out: nil,
+        last_log_in: nil,
+        last_log_out: nil,
+        status_in: 'ok',
+        status_out: 'ok',
       )
       render json: {
         result: 'ok',
@@ -399,6 +399,15 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
     adapter = params[:adapter].downcase
 
+    # validate adapter
+    if adapter !~ /^(smtp|sendmail)$/
+      render json: {
+        result: 'failed',
+        message: "Unknown adapter '#{adapter}'",
+      }
+      return
+    end
+
     email = Setting.get('notification_sender')
 
     # connection test
@@ -406,15 +415,6 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
     # save settings
     if result[:result] == 'ok'
-
-      # validate adapter
-      if adapter !~ /^(smtp|sendmail)$/
-        render json: {
-          result: 'failed',
-          message: "Unknown adapter '#{adapter}'",
-        }
-        return
-      end
 
       Channel.where(area: 'Email::Notification').each {|channel|
         active = false
@@ -426,6 +426,8 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
               options: params[:options],
             },
           }
+          channel.status_out   = 'ok'
+          channel.last_log_out = nil
         end
         channel.active = active
         channel.save

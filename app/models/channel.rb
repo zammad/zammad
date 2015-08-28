@@ -3,6 +3,10 @@
 class Channel < ApplicationModel
   store :options
 
+  after_create   :email_address_check
+  after_update   :email_address_check
+  after_destroy  :email_address_check
+
 =begin
 
 fetch all accounts
@@ -106,6 +110,14 @@ send via account
       save
     end
     result
+  end
+
+  private
+
+  def email_address_check
+
+    # reset non existing channel_ids
+    EmailAddress.channel_cleanup
   end
 
 end

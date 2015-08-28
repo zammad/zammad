@@ -23,8 +23,10 @@
     <tr data-id="<%- channel.id %>">
       <td class="<% if channel.status_in is 'ok': %>success<% else if channel.status_in is 'error': %>danger<% else: %>warning<% end %>">
         <%- @T('State') %>: <%- @T(channel.status_in || 'unknown') %><br>
+        <a href="#" data-type="edit-inbound">
         <%= channel.options.inbound.options.user %><br>
-        <a href="#" data-type="edit-inbound"><%= channel.options.inbound.options.host %> (<%= channel.options.inbound.adapter %>)</a>
+        <%= channel.options.inbound.options.host %> (<%= channel.options.inbound.adapter %>)
+        </a>
       </td>
       <td class="<% if channel.status_out is 'ok': %>success<% else if channel.status_out is 'error': %>danger<% else: %>warning<% end %>">
         <%- @T('State') %>: <%- @T(channel.status_out || 'unknown') %><br>
@@ -79,9 +81,10 @@
     <tr data-id="<%- @channel.id %>">
       <td class="<% if @channel.status_out is 'ok': %>success<% else if @channel.status_out is 'error': %>danger<% else: %>warning<% end %>">
         <%- @T('State') %>: <%- @T(@channel.status_out || 'unknown') %><br>
+        <a href="#" data-type="edit-notification-outbound">
         <% if @channel.options.outbound && @channel.options.outbound.options: %>
           <%= @channel.options.outbound.options.user %><br>
-          <a href="#" data-type="edit-notification-outbound"><%= @channel.options.outbound.options.host %>
+          <%= @channel.options.outbound.options.host %>
         <% end %>
         (<%= @channel.options.outbound.adapter %>)</a>
       </td>
