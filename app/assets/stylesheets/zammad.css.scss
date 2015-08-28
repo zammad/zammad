@@ -4429,6 +4429,9 @@ footer {
   margin-top: 35px;
   margin-bottom: 35px;
 }
+.modal-dialog.wizard {
+  max-width: 460px;
+}
 
 .modal-backdrop {
   position: fixed;

@@ -1,8 +1,13 @@
-<div class="modal-dialog">
+<div class="modal-dialog wizard">
 
- <form class="setup wizard js-intro">
-    <div class="wizard-slide">
-      <h2><%- @T('Email Account') %></h2>
+  <form class="modal-content setup wizard js-intro">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
+      <h1 class="modal-title"><%- @T('Email Account') %></h1>
+    </div>
+    <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <fieldset>
@@ -20,37 +25,56 @@
           </div>
         </fieldset>
       </div>
-      <div class="wizard-controls center">
-        <button class="btn btn--primary align-right"><%- @T('Connect') %></button>
-      </div>
+    </div>
+    <div class="modal-footer">
+        <div class="modal-centerFooter">
+          <button class="btn btn--primary align-center"><%- @T('Connect') %></button>
+        </div>
     </div>
   </form>
 
-  <form class="setup wizard hide js-probe">
-    <div class="wizard-slide">
-      <h2><%- @T('Email Account') %></h2>
+  <form class="modal-content setup wizard hide js-probe">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
+      <h1 class="modal-title"><%- @T('Email Account') %></h1>
+    </div>
+    <div class="modal-body">
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
           <span class="loading icon"></span> <%- @T('Testing') %> <span class="js-email"></span>
         </p>
       </div>
     </div>
+    <div class="modal-footer"></div>
   </form>
 
-  <form class="setup wizard hide js-test">
-    <div class="wizard-slide">
-      <h2><%- @T('Email Account') %></h2>
+  <form class="modal-content setup wizard hide js-test">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
+      <h1 class="modal-title"><%- @T('Email Account') %></h1>
+    </div>
+    <div class="modal-body">
       <div class="wizard-body vertical justified">
         <p class="wizard-loadingText">
           <span class="loading icon"></span> <%- @T('Verifying...') %>
         </p>
       </div>
     </div>
+    <div class="modal-footer"></div>
   </form>
 
-  <form class="setup wizard hide js-verify">
-    <div class="wizard-slide">
-      <h2><%- @T('Email Account') %></h2>
+  <form class="modal-content setup wizard hide js-verify">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
+      <h1 class="modal-title"><%- @T('Email Account') %></h1>
+    </div>
+    <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <p class="wizard-loadingText">
@@ -58,33 +82,52 @@
         </p>
       </div>
     </div>
+    <div class="modal-footer"></div>
   </form>
 
-  <form class="setup wizard hide js-inbound">
-    <div class="wizard-slide">
-      <h2><%- @T('Email Inbound') %></h2>
+  <form class="modal-content setup wizard hide js-inbound">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      </div>
+      <h1 class="modal-title"><%- @T('Email Inbound') %></h1>
+    </div>
+    <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="base-inbound-settings"></div>
       </div>
-      <div class="wizard-controls center">
-        <a class="btn btn--text btn--secondary js-back" data-slide="js-intro"><%- @T('Go Back') %></a>
-        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-rightFooter">
+      <a class="btn btn--text btn--secondary js-back align-left" data-slide="js-intro"><%- @T('Go Back') %></a>
+      </div>
+      <div class="modal-rightFooter">
+        <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>
 
-  <form class="setup wizard hide js-outbound">
-    <div class="wizard-slide">
-      <h2><%- @T('Email Outbound') %></h2>
+  <form class="modal-content setup wizard hide js-outbound">
+    <div class="modal-header">
+        <div class="modal-close js-close">
+          <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+        </div>
+        <h1 class="modal-title"><%- @T('Email Outbound') %></h1>
+    </div>
+    <div class="modal-body">
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="base-outbound-type"></div>
         <div class="base-outbound-settings"></div>
       </div>
-      <div class="wizard-controls center">
-        <a class="btn btn--text btn--secondary js-back" data-slide="js-inbound"><%- @T('Go Back') %></a>
-        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-rightFooter">
+      <a class="btn btn--text btn--secondary js-back align-left" data-slide="js-inbound"><%- @T('Go Back') %></a>
+      </div>
+      <div class="modal-rightFooter">
+        <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>

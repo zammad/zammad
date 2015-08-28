@@ -17,7 +17,7 @@ class App.EmailAddress extends App.Model
     { name: 'channel_id', display: 'Channel',   tag: 'select', multiple: false, null: true, relation: 'Channel', nulloption: true, filter: @filterChannel },
     { name: 'note',       display: 'Note',      tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true },
     { name: 'updated_at', display: 'Updated',   tag: 'datetime', readonly: 1 },
-    { name: 'active',     display: 'Active',    tag: 'active',   default: true },
+    { name: 'active',     display: 'Active',    tag: 'active',   readonly: 1 },
   ]
   @configure_overview = [
     'realname', 'email'

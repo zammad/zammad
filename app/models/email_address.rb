@@ -21,18 +21,28 @@ check and if channel not exists reset configured channels for email addresses
 
   def self.channel_cleanup
     EmailAddress.all.each {|email_address|
-      next if !email_address.channel_id
-      next if Channel.find_by(id: email_address.channel_id)
-      email_address.channel_id = nil
-      email_address.save
+      if email_address.channel_id && Channel.find_by(id: email_address.channel_id)
+        if !email_address.active
+          email_address.save
+        end
+        next
+      end
+      if email_address.channel_id || email_address.active
+        email_address.save
+      end
     }
   end
 
   private
 
   def channel_check
-    return if Channel.find_by(id: channel_id)
+    if channel_id && Channel.find_by(id: channel_id)
+      self.active = true
+      return true
+    end
     self.channel_id = nil
+    self.active = false
+    true
   end
 
 end

@@ -12,14 +12,14 @@ class App.ChannelEmail extends App.ControllerTabs
         controller: App.ChannelEmailAccountOverview,
       },
       {
-        name:       'Signatures',
-        target:     'c-signature',
-        controller: App.ChannelEmailSignature,
-      },
-      {
         name:       'Filter',
         target:     'c-filter',
         controller: App.ChannelEmailFilter,
+      },
+      {
+        name:       'Signatures',
+        target:     'c-signature',
+        controller: App.ChannelEmailSignature,
       },
       {
         name:       'Settings',
@@ -354,6 +354,7 @@ class App.ChannelEmailAccountWizard extends App.Controller
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
     'click  .js-back':                    'goToSlide'
+    'click  .js-close':                   'hide'
 
   constructor: ->
     super
@@ -385,12 +386,10 @@ class App.ChannelEmailAccountWizard extends App.Controller
       backdrop:  true
       container: @container
     .on
-      'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onComplete
       'hidden.bs.modal': =>
         if @callback
           @callback()
-        $('.modal').remove()
+        @el.remove()
 
     if @slide
       @showSlide(@slide)
@@ -418,7 +417,7 @@ class App.ChannelEmailAccountWizard extends App.Controller
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: { imap: 'IMAP', pop3: 'POP3' } },
+      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: { imap: 'imap', pop3: 'pop3' } },
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, single: true },
@@ -645,6 +644,10 @@ class App.ChannelEmailAccountWizard extends App.Controller
     @formEnable(e)
     @$('.wizard-controls .btn').attr('disabled', false)
 
+  hide: (e) =>
+    e.preventDefault()
+    @el.modal('hide')
+
 class App.ChannelEmailNotificationWizard extends App.Controller
   elements:
     '.modal-body': 'body'
@@ -654,6 +657,7 @@ class App.ChannelEmailNotificationWizard extends App.Controller
   events:
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
+    'click  .js-close':                   'hide'
 
   constructor: ->
     super
@@ -689,7 +693,7 @@ class App.ChannelEmailNotificationWizard extends App.Controller
       'hidden.bs.modal': =>
         if @callback
           @callback()
-        $('.modal').remove()
+        @el.remove()
 
     if @slide
       @showSlide(@slide)
@@ -785,3 +789,7 @@ class App.ChannelEmailNotificationWizard extends App.Controller
   enable: (e) =>
     @formEnable(e)
     @$('.wizard-controls .btn').attr('disabled', false)
+
+  hide: (e) =>
+    e.preventDefault()
+    @el.modal('hide')
