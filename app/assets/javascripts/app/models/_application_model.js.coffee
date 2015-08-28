@@ -138,6 +138,13 @@ class App.Model extends Spine.Model
             errors[attributeName] = 'didn\'t match'
             errors["#{attributeName}_confirm"] = ''
 
+        # check email
+        if attribute.type is 'email' && data['params'][attributeName]
+          if !data['params'][attributeName].match(/\S+@\S+\.\S+/)
+            errors[attributeName] = 'invalid'
+          if data['params'][attributeName].match(/ /)
+            errors[attributeName] = 'invalid'
+
         # check datetime
         if attribute.tag is 'datetime'
           if data['params'][attributeName] is 'invalid'
