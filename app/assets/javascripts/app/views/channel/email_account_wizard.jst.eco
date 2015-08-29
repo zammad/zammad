@@ -1,6 +1,10 @@
 <div class="modal-dialog wizard">
 
   <form class="modal-content setup wizard js-intro">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
     <div class="modal-header">
       <div class="modal-close js-close">
         <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
@@ -86,6 +90,10 @@
   </form>
 
   <form class="modal-content setup wizard hide js-inbound">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
     <div class="modal-header">
       <div class="modal-close js-close">
         <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
@@ -109,6 +117,10 @@
   </form>
 
   <form class="modal-content setup wizard hide js-outbound">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
     <div class="modal-header">
         <div class="modal-close js-close">
           <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>

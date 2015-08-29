@@ -616,10 +616,6 @@ class App.Wizard extends App.Controller
   hideAlert: (screen) =>
     @$(".#{screen}").find('.alert').addClass('hide')
 
-  hideAlerts: =>
-    @$('.form-group').removeClass('has-error')
-    @$('.alert').addClass('hide')
-
   disable: (e) =>
     @formDisable(e)
     @$('.wizard-controls .btn').attr('disabled', true)

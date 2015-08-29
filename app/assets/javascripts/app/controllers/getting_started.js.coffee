@@ -367,7 +367,7 @@ class Base extends App.Wizard
               @navigate 'getting_started/email_notification'
           else
             for key, value of data.messages
-              @showAlert( key, value )
+              @showAlert(key, value)
             @enable(e)
         fail: =>
           @enable(e)
@@ -375,6 +375,14 @@ class Base extends App.Wizard
 
     # add resized image
     App.ImageService.resizeForApp( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
+
+  hideAlerts: =>
+    @$('.form-group').removeClass('has-error')
+    @$('.alert').addClass('hide')
+
+  showAlert: (field, message) =>
+    @$("[name=#{field}]").closest('.form-group').addClass('has-error')
+    @$("[name=#{field}]").closest('.form-group').find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
 
 App.Config.set( 'getting_started/base', Base, 'Routes' )
 
