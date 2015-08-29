@@ -11,7 +11,15 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     subject = ticket.subject_build( record.subject )
 
     # send email
-    message = Channel::EmailSend.send(
+    if !ticket.group.email_address_id
+      fail "Can't send email, no email address definde for group id '#{ticket.group.id}'"
+    elsif !ticket.group.email_address.channel_id
+      fail "Can't send email, no channel definde for email_address id '#{ticket.group.email_address_id}'"
+    end
+    channel = ticket.group.email_address.channel
+
+    # get linked channel and send
+    message = channel.deliver(
       {
         message_id: record.message_id,
         in_reply_to: record.in_reply_to,

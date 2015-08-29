@@ -46,7 +46,7 @@ store device for user
     end
 
     # get browser details
-    browser = Browser.new(:ua => user_agent, :accept_language => 'en-us')
+    browser = Browser.new(ua: user_agent, accept_language: 'en-us')
     browser = {
       plattform: browser.platform.to_s.camelize,
       name: browser.name,
@@ -73,7 +73,7 @@ store device for user
     end
 
     # check if exists
-    user_device = self.find_by(
+    user_device = find_by(
       user_id: user_id,
       os: browser[:plattform],
       browser: browser[:name],
@@ -85,7 +85,7 @@ store device for user
     end
 
     # create new device
-    user_device = self.create(
+    user_device = create(
       user_id: user_id,
       name: name,
       os: browser[:plattform],
@@ -120,7 +120,7 @@ log user device action
 
 =end
 
-  def self.action(user_device_id, user_agent, ip, user_id)
+  def self.action(user_device_id, _user_agent, ip, _user_id)
     user_device = UserDevice.find(user_device_id)
 
     # update location if needed

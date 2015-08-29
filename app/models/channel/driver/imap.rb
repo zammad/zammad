@@ -2,17 +2,17 @@
 
 require 'net/imap'
 
-class Channel::IMAP < Channel::EmailParser
+class Channel::Driver::Imap < Channel::EmailParser
 
-  def fetch (channel, check_type = '', verify_string = '')
+  def fetch (options, channel, check_type = '', verify_string = '')
     ssl  = true
     port = 993
-    if channel[:options].key?(:ssl) && channel[:options][:ssl].to_s == 'false'
+    if options.key?(:ssl) && options[:ssl].to_s == 'false'
       ssl  = false
       port = 143
     end
 
-    Rails.logger.info "fetching imap (#{channel[:options][:host]}/#{channel[:options][:user]} port=#{port},ssl=#{ssl})"
+    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
     # on check, reduce open_timeout to have faster probing
     timeout = 12
@@ -22,24 +22,24 @@ class Channel::IMAP < Channel::EmailParser
 
     Timeout.timeout(timeout) do
 
-      @imap = Net::IMAP.new( channel[:options][:host], port, ssl, nil, false )
+      @imap = Net::IMAP.new( options[:host], port, ssl, nil, false )
 
     end
 
     # try LOGIN, if not - try plain
     begin
-      @imap.authenticate( 'LOGIN', channel[:options][:user], channel[:options][:password] )
+      @imap.authenticate( 'LOGIN', options[:user], options[:password] )
     rescue => e
       if e.to_s !~ /(unsupported\s(authenticate|authentication)\smechanism|not\ssupported)/i
         raise e
       end
-      @imap.login( channel[:options][:user], channel[:options][:password] )
+      @imap.login( options[:user], options[:password] )
     end
 
-    if !channel[:options][:folder] || channel[:options][:folder].empty?
+    if !options[:folder] || options[:folder].empty?
       @imap.select('INBOX')
     else
-      @imap.select( channel[:options][:folder] )
+      @imap.select( options[:folder] )
     end
     if check_type == 'check'
       Rails.logger.info 'check only mode, fetch no emails'

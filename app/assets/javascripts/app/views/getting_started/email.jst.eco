@@ -2,6 +2,10 @@
   <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
 
   <form class="setup wizard js-intro">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
     <div class="wizard-slide">
       <h2><%- @T('Email Account') %></h2>
       <div class="wizard-body vertical justified">
@@ -13,11 +17,11 @@
           </div>
           <div class="form-group">
             <label><%- @T('Email') %></label>
-            <input type="email" class="form-control" value="" name="email" placeholder="<%- @Ti('support@example.com') %>" required>
+            <input type="email" class="form-control" value="" name="email" placeholder="<%- @Ti('support@example.com') %>" required autocomplete="off">
           </div>
           <div class="form-group">
             <label><%- @T('Password') %></label>
-            <input type="password" class="form-control" name="password" value="" required>
+            <input type="password" class="form-control" name="password" value="" required autocomplete="new-password">
           </div>
         </fieldset>
       </div>
@@ -63,8 +67,12 @@
   </form>
 
   <form class="setup wizard hide js-inbound">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
     <div class="wizard-slide">
-      <h2><%- @T('E-Mail Inbound') %></h2>
+      <h2><%- @T('Email Inbound') %></h2>
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="base-inbound-settings"></div>
@@ -77,8 +85,12 @@
   </form>
 
   <form class="setup wizard hide js-outbound">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
     <div class="wizard-slide">
-      <h2><%- @T('E-Mail Outbound') %></h2>
+      <h2><%- @T('Email Outbound') %></h2>
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>
         <div class="base-outbound-type"></div>

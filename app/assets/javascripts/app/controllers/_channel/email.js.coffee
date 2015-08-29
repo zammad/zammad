@@ -7,29 +7,19 @@ class App.ChannelEmail extends App.ControllerTabs
 
     @tabs = [
       {
-        name:       'Inbound',
-        target:     'c-inbound',
-        controller: App.ChannelEmailInbound,
-      },
-      {
-        name:       'Outbound',
-        target:     'c-outbound',
-        controller: App.ChannelEmailOutbound,
-      },
-      {
-        name:       'Adresses',
-        target:     'c-address',
-        controller: App.ChannelEmailAddress,
-      },
-      {
-        name:       'Signatures',
-        target:     'c-signature',
-        controller: App.ChannelEmailSignature,
+        name:       'Accounts',
+        target:     'c-account',
+        controller: App.ChannelEmailAccountOverview,
       },
       {
         name:       'Filter',
         target:     'c-filter',
         controller: App.ChannelEmailFilter,
+      },
+      {
+        name:       'Signatures',
+        target:     'c-signature',
+        controller: App.ChannelEmailSignature,
       },
       {
         name:       'Settings',
@@ -110,100 +100,6 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     params['channel'] = 'email'
 
     object = @object || new App.PostmasterFilter
-    object.load(params)
-
-    # validate form
-    errors = @form.validate( params )
-
-    # show errors in form
-    if errors
-      @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
-      return false
-
-    # disable form
-    @formDisable(e)
-
-    # save object
-    object.save(
-      done: =>
-        @hide()
-      fail: =>
-        @hide()
-    )
-
-
-class App.ChannelEmailAddress extends App.Controller
-  events:
-    'click [data-type=new]':  'new'
-
-  constructor: ->
-    super
-
-    App.EmailAddress.subscribe( @render, initFetch: true )
-
-  render: =>
-    data = App.EmailAddress.search( sortBy: 'realname' )
-
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
-
-    new App.ControllerTable(
-      el:       template.find('.overview')
-      model:    App.EmailAddress
-      objects:  data
-      bindRow:
-        events:
-          'click': @edit
-    )
-
-    @html template
-
-  new: (e) =>
-    e.preventDefault()
-    new App.ChannelEmailAddressEdit(
-      container: @el.closest('.content')
-    )
-
-  edit: (id, e) =>
-    e.preventDefault()
-    item = App.EmailAddress.find(id)
-    new App.ChannelEmailAddressEdit(
-      object:    item
-      container: @el.closest('.content')
-    )
-
-class App.ChannelEmailAddressEdit extends App.ControllerModal
-  constructor: ->
-    super
-
-    @head   = 'Email-Address'
-    @button = true
-    @close  = true
-    @cancel = true
-
-    if @object
-      @form = new App.ControllerForm(
-        model:     App.EmailAddress
-        params:    @object
-        autofocus: true
-      )
-    else
-      @form = new App.ControllerForm(
-        model:     App.EmailAddress,
-        autofocus: true,
-      )
-
-    @content = @form.form
-
-    @show()
-
-  onSubmit: (e) =>
-    e.preventDefault()
-
-    # get params
-    params = @formParam(e.target)
-
-    object = @object || new App.EmailAddress
     object.load(params)
 
     # validate form
@@ -317,193 +213,555 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
         @hide()
     )
 
-class App.ChannelEmailInbound extends App.Controller
+class App.ChannelEmailAccountOverview extends App.Controller
   events:
-    'click [data-type=new]':  'new'
+    'click [data-type="new"]': 'wizard'
+    'click [data-type="delete"]': 'delete'
+    'click [data-type="edit-inbound"]': 'edit_inbound'
+    'click [data-type="edit-outbound"]': 'edit_outbound'
+    'click [data-type="email-address-new"]': 'email_address_new'
+    'click [data-type="email-address-edit"]': 'email_address_edit'
+    'click [data-type="edit-notification-outbound"]': 'edit_notification_outbound'
 
   constructor: ->
     super
-    App.Channel.subscribe( @render, initFetch: true )
+    @interval(@load, 20000)
 
-  render: =>
-    channels = App.Channel.search( filter: { area: 'Email::Inbound' } )
+  load: =>
+    @ajax(
+      id:   'email_index'
+      type: 'GET'
+      url:  @apiPath + '/channels/email_index'
+      processData: true
+      success: (data, status, xhr) =>
 
-    template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
+        # load assets
+        App.Collection.loadAssets(data.assets)
 
-    new App.ControllerTable(
-      el:       template.find('.overview')
-      model:    App.Channel
-      objects:  channels
-      bindRow:
-        events:
-          'click': @edit
-    )
-    @html template
-
-  new: (e) =>
-    e.preventDefault()
-    new App.ChannelEmailInboundEdit(
-      container: @el.closest('.content')
+        @render(accounts_fixed: data.accounts_fixed)
     )
 
-  edit: (id, e) =>
-    e.preventDefault()
-    item = App.Channel.find(id)
-    new App.ChannelEmailInboundEdit(
-      object:    item
-      container: @el.closest('.content')
-    )
+  render: (params = {}) =>
 
-
-class App.ChannelEmailInboundEdit extends App.ControllerModal
-  constructor: ->
-    super
-
-    @head   = 'Email Channel'
-    @button = true
-    @close  = true
-    @cancel = true
-
-    if @object
-      @form = new App.ControllerForm(
-        model:     App.Channel
-        params:    @object
-        autofocus: true
-      )
-    else
-      @form = new App.ControllerForm(
-        model:     App.Channel
-        autofocus: true
-      )
-
-    @content = @form.form
-
-    @show()
-
-  onSubmit: (e) =>
-    e.preventDefault()
-
-    # get params
-    params = @formParam(e.target)
-    params['area'] = 'Email::Inbound'
-
-    object = @object || new App.Channel
-    object.load(params)
-
-    # validate form
-    errors = @form.validate( params )
-
-    # show errors in form
-    if errors
-      @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
-      return false
-
-    # disable form
-    @formDisable(e)
-
-    # save object
-    object.save(
-      done: =>
-        @hide()
-      fail: =>
-        @hide()
-    )
-
-class App.ChannelEmailOutbound extends App.Controller
-  events:
-    'change [name="adapter"]': 'toggle'
-    'submit #mail_adapter':    'update'
-
-  constructor: ->
-    super
-
-    App.Channel.subscribe( @render, initFetch: true )
-
-  render: =>
-
-    @html App.view('channel/email_outbound')()
-
-    # get current Email::Outbound channel
-    channels     = App.Channel.all()
-    adapters     = {}
-    adapter_used = undefined
-    channel_used = undefined
+    # get channels
+    channels = App.Channel.search( filter: { area: 'Email::Account' } )
     for channel in channels
-      if channel.area is 'Email::Outbound'
+      email_addresses = App.EmailAddress.search( filter: { channel_id: channel.id } )
+      channel.email_addresses = email_addresses
 
-        adapters[channel.adapter] = channel.adapter
-        if @adapter_used
-          if @adapter_used is channel.adapter
-            adapter_used = channel.adapter
-            channel_used = channel
-        else if channel.active is true
-            adapter_used = channel.adapter
-            channel_used = channel
+    # get all unlinked email addresses
+    email_addresses_all      = App.EmailAddress.all()
+    email_addresses_not_used = []
+    for email_address in email_addresses_all
+      if !email_address.channel_id || !App.Channel.exists(email_address.channel_id)
+        email_addresses_not_used.push email_address
 
-    configure_attributes = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , default: adapter_used },
+    # get channels
+    channel = App.Channel.search( filter: { area: 'Email::Notification', active: true } )[0]
+
+    @html App.view('channel/email_account_overview')(
+      channels:                 channels
+      email_addresses_not_used: email_addresses_not_used
+      channel:                  channel
+      accounts_fixed:           params.accounts_fixed
+    )
+
+  wizard: (e) =>
+    e.preventDefault()
+    new App.ChannelEmailAccountWizard(
+      container: @el.closest('.content')
+      callback:  @load
+    )
+
+  edit_inbound: (e) =>
+    e.preventDefault()
+    id      = $(e.target).closest('tr').data('id')
+    channel = App.Channel.find(id)
+    slide   = 'js-inbound'
+    new App.ChannelEmailAccountWizard(
+      container: @el.closest('.content')
+      slide:     slide
+      channel:   channel
+      callback:  @load
+    )
+
+  edit_outbound: (e) =>
+    e.preventDefault()
+    id      = $(e.target).closest('tr').data('id')
+    channel = App.Channel.find(id)
+    slide   = 'js-outbound'
+    new App.ChannelEmailAccountWizard(
+      container: @el.closest('.content')
+      slide:     slide
+      channel:   channel
+      callback:  @load
+    )
+
+  delete: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('tr').data('id')
+    item = App.Channel.find(id)
+    new App.ControllerGenericDestroyConfirm(
+      item:      item
+      container: @el.closest('.content')
+      callback:  @load
+    )
+
+  email_address_new: (e) =>
+    e.preventDefault()
+    channel_id = $(e.target).closest('tr').data('id')
+    new App.ControllerGenericNew(
+      pageData:
+        object: 'Email Address'
+      genericObject: 'EmailAddress'
+      container: @el.closest('.content')
+      item:
+        channel_id: channel_id
+      callback: @load
+    )
+
+  email_address_edit: (e) =>
+    e.preventDefault()
+    id = $(e.target).closest('li').data('id')
+    new App.ControllerGenericEdit(
+      pageData:
+        object: 'Email Address'
+      genericObject: 'EmailAddress'
+      container: @el.closest('.content')
+      id: id
+      callback: @load
+    )
+
+  edit_notification_outbound: (e) =>
+    e.preventDefault()
+    id      = $(e.target).closest('tr').data('id')
+    channel = App.Channel.find(id)
+    slide   = 'js-outbound'
+    new App.ChannelEmailNotificationWizard(
+      container: @el.closest('.content')
+      channel:   channel
+      callback:  @load
+    )
+
+class App.ChannelEmailAccountWizard extends App.Wizard
+  elements:
+    '.modal-body': 'body'
+
+  className: 'modal fade'
+
+  events:
+    'submit .js-intro':                   'probeBasedOnIntro'
+    'submit .js-inbound':                 'probeInbound'
+    'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
+    'submit .js-outbound':                'probleOutbound'
+    'click  .js-back':                    'goToSlide'
+    'click  .js-close':                   'hide'
+
+  constructor: ->
+    super
+
+    # store account settings
+    @account =
+      inbound:
+        adapter: undefined
+        options: undefined
+      outbound:
+        adapter: undefined
+        options: undefined
+      meta:     {}
+
+    if @channel
+      @account =
+        inbound: @channel.options.inbound
+        outbound: @channel.options.outbound
+        meta:     {}
+
+    if @container
+      @el.addClass('modal--local')
+
+    @render()
+
+    @el.modal
+      keyboard:  true
+      show:      true
+      backdrop:  true
+      container: @container
+    .on
+      'hidden.bs.modal': =>
+        if @callback
+          @callback()
+        @el.remove()
+
+    if @slide
+      @showSlide(@slide)
+
+  render: =>
+    @html App.view('channel/email_account_wizard')()
+    @showSlide('js-intro')
+
+    # outbound
+    adapters =
+      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
+      smtp:     'SMTP - configure your own outgoing SMTP settings'
+    configureAttributesOutbound = [
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters },
     ]
     new App.ControllerForm(
-      el: @el.find('#form-email-adapter'),
-      model: { configure_attributes: configure_attributes, className: '' },
-      autofocus: true,
+      el:    @$('.base-outbound-type')
+      model:
+        configure_attributes: configureAttributesOutbound
+        className: ''
+      params:
+        adapter: @account.outbound.adapter || 'smtp'
+    )
+    @toggleOutboundAdapter()
+
+    # inbound
+    configureAttributesInbound = [
+      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: { imap: 'imap', pop3: 'pop3' } },
+      { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
+      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+    ]
+    new App.ControllerForm(
+      el:    @$('.base-inbound-settings'),
+      model:
+        configure_attributes: configureAttributesInbound
+        className: ''
+      params: @account.inbound
     )
 
-#    if adapter_used is 'Sendmail'
-#      # some form
+  toggleOutboundAdapter: =>
 
-    if adapter_used is 'SMTP'
-      configure_attributes = [
-        { name: 'host',     display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: false, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['host']) },
-        { name: 'user',     display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['user']) },
-        { name: 'password', display: 'Password', tag: 'input',    type: 'password', limit: 120, null: true, autocapitalize: false, default: (channel_used['options']&&channel_used['options']['password']) },
-        { name: 'ssl',      display: 'SSL',      tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' } , translate: true, default: (channel_used['options']&&channel_used['options']['ssl']) },
-        { name: 'port',     display: 'Port',     tag: 'input',    type: 'text', limit: 5, null: false, class: 'span1', autocapitalize: false, default: ((channel_used['options']&&channel_used['options']['port']) || 25) },
+    # fill user / password based on intro info
+    channel_used = { options: {} }
+    if @account['meta']
+      channel_used['options']['user']     = @account['meta']['email']
+      channel_used['options']['password'] = @account['meta']['password']
+
+    # show used backend
+    @$('.base-outbound-settings').html('')
+    adapter = @$('.js-outbound [name=adapter]').val()
+    if adapter is 'smtp'
+      configureAttributesOutbound = [
+        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
       ]
       @form = new App.ControllerForm(
-        el: @el.find('#form-email-adapter-settings'),
-        model: { configure_attributes: configure_attributes, className: '' },
-        autofocus: true,
+        el:    @$('.base-outbound-settings')
+        model:
+          configure_attributes: configureAttributesOutbound
+          className: ''
+        params: @account.outbound
       )
 
-  toggle: (e) =>
+  probeBasedOnIntro: (e) =>
+    e.preventDefault()
+    params = @formParam(e.target)
+
+    # remember account settings
+    @account.meta = params
+
+    # let backend know about the channel
+    if @channel
+      params.channel_id = @channel.id
+
+    @disable(e)
+    @$('.js-probe .js-email').text( params.email )
+    @showSlide('js-probe')
+
+    @ajax(
+      id:   'email_probe'
+      type: 'POST'
+      url:  @apiPath + '/channels/email_probe'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          if data.setting
+            for key, value of data.setting
+              @account[key] = value
+          @verify(@account)
+        else if data.result is 'duplicate'
+          @showSlide('js-intro')
+          @showAlert('js-intro', 'Account already exists!' )
+        else
+          @showSlide('js-inbound')
+          @showAlert('js-inbound', 'Unable to detect your server settings. Manual configuration needed.' )
+          @$('.js-inbound [name="options::user"]').val( @account['meta']['email'] )
+          @$('.js-inbound [name="options::password"]').val( @account['meta']['password'] )
+
+        @enable(e)
+      fail: =>
+        @enable(e)
+        @showSlide('js-intro')
+    )
+
+  probeInbound: (e) =>
+    e.preventDefault()
 
     # get params
     params = @formParam(e.target)
 
-    # render page with new selected adapter
-    if @adapter_used isnt params['adapter']
+    # let backend know about the channel
+    if @channel
+      params.channel_id = @channel.id
 
-      # set selected adapter
-      @adapter_used = params['adapter']
+    @disable(e)
 
-      @render()
+    @showSlide('js-test')
 
-  update: (e) =>
+    @ajax(
+      id:   'email_inbound'
+      type: 'POST'
+      url:  @apiPath + '/channels/email_inbound'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+
+          # remember account settings
+          @account.inbound = params
+
+          @showSlide('js-outbound')
+
+          # fill user / password based on inbound settings
+          if !@channel
+            if @account['inbound']['options']
+              @$('.js-outbound [name="options::host"]').val( @account['inbound']['options']['host'] )
+              @$('.js-outbound [name="options::user"]').val( @account['inbound']['options']['user'] )
+              @$('.js-outbound [name="options::password"]').val( @account['inbound']['options']['password'] )
+            else
+              @$('.js-outbound [name="options::user"]').val( @account['meta']['email'] )
+              @$('.js-outbound [name="options::password"]').val( @account['meta']['password'] )
+
+        else
+          @showSlide('js-inbound')
+          @showAlert('js-inbound', data.message_human || data.message )
+          @showInvalidField('js-inbound', data.invalid_field)
+        @enable(e)
+      fail: =>
+        @showSlide('js-inbound')
+        @showAlert('js-inbound', data.message_human || data.message )
+        @showInvalidField('js-inbound', data.invalid_field)
+        @enable(e)
+    )
+
+  probleOutbound: (e) =>
     e.preventDefault()
-    params   = @formParam(e.target)
 
-#    errors = @form.validate( params )
+    # get params
+    params          = @formParam(e.target)
+    params['email'] = @account['meta']['email']
 
-    # update Email::Outbound adapter
-    channels = App.Channel.all()
-    for channel in channels
-      if channel.area is 'Email::Outbound' && channel.adapter is params['adapter']
-        channel.updateAttributes(
-          options: {
-            host:     params['host'],
-            user:     params['user'],
-            password: params['password'],
-            ssl:      params['ssl'],
-            port:     params['port'],
-          },
-          active: true,
-        )
+    if !params['email'] && @channel
+      email_addresses = App.EmailAddress.search( filter: { channel_id: @channel.id } )
+      if email_addresses && email_addresses[0]
+        params['email'] = email_addresses[0].email
 
-    # set all other Email::Outbound adapters to inactive
-    channels = App.Channel.all()
-    for channel in channels
-      if channel.area is 'Email::Outbound' && channel.adapter isnt params['adapter']
-        channel.updateAttributes( active: false )
+    # let backend know about the channel
+    if @channel
+      params.channel_id = @channel.id
 
+    @disable(e)
+
+    @showSlide('js-test')
+
+    @ajax(
+      id:   'email_outbound'
+      type: 'POST'
+      url:  @apiPath + '/channels/email_outbound'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+
+          # remember account settings
+          @account.outbound = params
+
+          @verify(@account)
+        else
+          @showSlide('js-outbound')
+          @showAlert('js-outbound', data.message_human || data.message )
+          @showInvalidField('js-outbound', data.invalid_field)
+        @enable(e)
+      fail: =>
+        @showSlide('js-outbound')
+        @showAlert('js-outbound', data.message_human || data.message )
+        @showInvalidField('js-outbound', data.invalid_field)
+        @enable(e)
+    )
+
+  verify: (account, count = 0) =>
+    @showSlide('js-verify')
+
+    # let backend know about the channel
+    if @channel
+      account.channel_id = @channel.id
+
+    if !account.email && @channel
+      email_addresses = App.EmailAddress.search( filter: { channel_id: @channel.id } )
+      if email_addresses && email_addresses[0]
+        account.email = email_addresses[0].email
+
+    @ajax(
+      id:   'email_verify'
+      type: 'POST'
+      url:  @apiPath + '/channels/email_verify'
+      data: JSON.stringify( account )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          @el.modal('hide')
+        else
+          if data.source is 'inbound' || data.source is 'outbound'
+              @showSlide("js-#{data.source}")
+              @showAlert("js-#{data.source}", data.message_human || data.message )
+              @showInvalidField("js-#{data.source}", data.invalid_field)
+          else
+            if count is 2
+              @showAlert('js-verify', data.message_human || data.message )
+              @delay(
+                =>
+                  @showSlide('js-intro')
+                  @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
+
+                2300
+              )
+            else
+              if data.subject && @account
+                @account.subject = data.subject
+              @verify( @account, count + 1 )
+      fail: =>
+        @showSlide('js-intro')
+        @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
+    )
+
+  hide: (e) =>
+    e.preventDefault()
+    @el.modal('hide')
+
+class App.ChannelEmailNotificationWizard extends App.Wizard
+  elements:
+    '.modal-body': 'body'
+
+  className: 'modal fade'
+
+  events:
+    'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
+    'submit .js-outbound':                'probleOutbound'
+    'click  .js-close':                   'hide'
+
+  constructor: ->
+    super
+
+    # store account settings
+    @account =
+      inbound:
+        adapter: undefined
+        options: undefined
+      outbound:
+        adapter: undefined
+        options: undefined
+      meta:     {}
+
+    if @channel
+      @account =
+        inbound: @channel.options.inbound
+        outbound: @channel.options.outbound
+
+    if @container
+      @el.addClass('modal--local')
+
+    @render()
+
+    @el.modal
+      keyboard:  true
+      show:      true
+      backdrop:  true
+      container: @container
+    .on
+      'show.bs.modal':   @onShow
+      'shown.bs.modal':  @onComplete
+      'hidden.bs.modal': =>
+        if @callback
+          @callback()
+        @el.remove()
+
+    if @slide
+      @showSlide(@slide)
+
+  render: =>
+    @html App.view('channel/email_notification_wizard')()
+    @showSlide('js-outbound')
+
+    # outbound
+    adapters =
+      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
+      smtp:     'SMTP - configure your own outgoing SMTP settings'
+    configureAttributesOutbound = [
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters },
+    ]
+    new App.ControllerForm(
+      el:    @$('.base-outbound-type')
+      model:
+        configure_attributes: configureAttributesOutbound
+        className: ''
+      params:
+        adapter: @account.outbound.adapter || 'sendmail'
+    )
+    @toggleOutboundAdapter()
+
+  toggleOutboundAdapter: =>
+
+    # show used backend
+    @el.find('.base-outbound-settings').html('')
+    adapter = @$('.js-outbound [name=adapter]').val()
+    if adapter is 'smtp'
+      configureAttributesOutbound = [
+        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
+      ]
+      @form = new App.ControllerForm(
+        el:    @$('.base-outbound-settings')
+        model:
+          configure_attributes: configureAttributesOutbound
+          className: ''
+        params: @account.outbound
+      )
+
+  probleOutbound: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+
+    # let backend know about the channel
+    params.channel_id = @channel.id
+
+    @disable(e)
+
+    @showSlide('js-test')
+
+    @ajax(
+      id:   'email_outbound'
+      type: 'POST'
+      url:  @apiPath + '/channels/email_notification'
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        if data.result is 'ok'
+          @el.remove()
+        else
+          @showSlide('js-outbound')
+          @showAlert('js-outbound', data.message_human || data.message )
+          @showInvalidField('js-outbound', data.invalid_field)
+        @enable(e)
+      fail: =>
+        @showSlide('js-outbound')
+        @showAlert('js-outbound', data.message_human || data.message )
+        @showInvalidField('js-outbound', data.invalid_field)
+        @enable(e)
+    )

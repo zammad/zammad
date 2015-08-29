@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2012-2013 Zammad Foundation, http://zammad-foundation.org/
-# rubocop:disable Rails/TimeZone
 
 $LOAD_PATH << './lib'
 require 'rubygems'

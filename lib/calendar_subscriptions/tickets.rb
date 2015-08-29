@@ -120,10 +120,8 @@ class CalendarSubscriptions::Tickets
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
 
-      # rubocop:disable Rails/TimeZone
       event_data[:dtstart]     = Icalendar::Values::DateTime.new( pending_time )
       event_data[:dtend]       = Icalendar::Values::DateTime.new( pending_time )
-      # rubocop:enable Rails/TimeZone
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
 
@@ -162,10 +160,8 @@ class CalendarSubscriptions::Tickets
         escalation_time = Time.zone.today
       end
 
-      # rubocop:disable Rails/TimeZone
       event_data[:dtstart]     = Icalendar::Values::DateTime.new( escalation_time )
       event_data[:dtend]       = Icalendar::Values::DateTime.new( escalation_time )
-      # rubocop:enable Rails/TimeZone
       event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
 

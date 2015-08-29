@@ -111,7 +111,9 @@ module NotificationFactory
       content_type = data[:content_type]
     end
 
-    Channel::EmailSend.send(
+    # get active Email::Outbound Channel and send
+    channel = Channel.find_by(area: 'Email::Notification', active: true)
+    channel.deliver(
       {
         # in_reply_to: in_reply_to,
         from: sender,

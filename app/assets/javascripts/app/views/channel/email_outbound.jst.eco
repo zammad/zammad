@@ -1,5 +1,0 @@
-<form id="mail_adapter">
-  <div id="form-email-adapter"></div>
-  <div id="form-email-adapter-settings"></div>
-  <button data-type="" type="submit" class="btn"><%- @T( 'Submit' ) %></botton>
-</form>

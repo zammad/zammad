@@ -20,6 +20,7 @@ class FacebookTest < ActiveSupport::TestCase
 
   provider_page_name = 'Hansi Merkurs Hutfabrik'
   provider_options   = {
+    adapter: 'facebook',
     auth: {
       access_token: provider_key
     },
@@ -31,11 +32,10 @@ class FacebookTest < ActiveSupport::TestCase
   }
 
   # add channel
-  current = Channel.where( adapter: 'Facebook' )
+  current = Channel.where(area: 'Facebook::Account')
   current.each(&:destroy)
   Channel.create(
-    adapter:       'Facebook',
-    area:          'Facebook::Inbound',
+    area:          'Facebook::Account',
     options:       provider_options,
     active:        true,
     created_by_id: 1,

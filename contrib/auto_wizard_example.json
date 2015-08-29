@@ -27,6 +27,7 @@
   "EmailAddresses": [
     {
       "id": 1,
+      "channel_id": 10,
       "realname": "Zammad Demo System",
       "email": "zammad_demo@localhost"
     }
@@ -45,14 +46,22 @@
   ],
   "Channels": [
     {
-      "area": "Email::Inbound",
-      "adapter": "IMAP",
+      "id": 10,
+      "area": "Email::Account",
       "group_id": 1,
       "options": {
-        "host": "mx1.example.com",
-        "user": "some user",
-        "password": "some pw",
-        "ssl": true
+        "inbound": {
+          "adapter": "imap",
+          "options": {
+            "host": "mx1.example.com",
+            "user": "some user",
+            "password": "some pw",
+            "ssl": true
+          }
+        },
+        "outbound": {
+          "adapter": "sendmail"
+        }
       },
       "active":false
     }

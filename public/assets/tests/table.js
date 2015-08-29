@@ -370,6 +370,19 @@ test( "table test 2", function() {
       created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
+
+  App.Channel.configure_delete = true
+  App.Channel.configure_attributes = [
+    { name: 'adapter',            display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } },
+    { name: 'options::host',      display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::user',      display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::password',  display: 'Password', tag: 'input',    type: 'password', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::ssl',       display: 'SSL',      tag: 'select',   multiple: false, null: true, options: { true: 'yes', false: 'no' }, translate: true, default: true},
+    { name: 'options::folder',    display: 'Folder',   tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, nulloption: true, relation: 'Group'  },
+    { name: 'active',             display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' }, translate: true, default: true },
+  ]
+
   App.Channel.refresh( [
     {
       id:      1,

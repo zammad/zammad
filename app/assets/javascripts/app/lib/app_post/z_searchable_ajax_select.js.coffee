@@ -19,7 +19,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     if @searchResultCache[@cacheKey]
       return @onAjaxResponse( @searchResultCache[@cacheKey] )
 
-    # add timout for loader icon
+    # add timeout for loader icon
     clearTimeout @loaderTimeoutId
     @loaderTimeoutId = setTimeout @showLoader, 1000
 

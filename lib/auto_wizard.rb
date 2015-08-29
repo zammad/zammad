@@ -118,8 +118,8 @@ returns
 
     # create EmailAddresses/Channels/Signatures
     model_map = {
-      'EmailAddresses' => 'EmailAddress',
       'Channels'       => 'Channel',
+      'EmailAddresses' => 'EmailAddress',
       'Signatures'     => 'Signature',
     }
     model_map.each {|map_name, model|

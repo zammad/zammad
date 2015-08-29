@@ -68,7 +68,7 @@ returns
 
       # fallback do sql query
       # - stip out * we already search for *query* -
-      query.gsub! '*', ''
+      query.delete! '*'
       organizations = Organization.where(
         'name LIKE ? OR note LIKE ?', "%#{query}%", "%#{query}%"
       ).order('name').limit(limit)

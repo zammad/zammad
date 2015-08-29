@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-require 'channel/facebook'
+require 'channel/driver/facebook'
 
 class Observer::Ticket::Article::CommunicateFacebook < ActiveRecord::Observer
   observe 'ticket::_article'
@@ -19,7 +19,7 @@ class Observer::Ticket::Article::CommunicateFacebook < ActiveRecord::Observer
     type = Ticket::Article::Type.lookup( id: record.type_id )
     return if type['name'] !~ /\Afacebook/
 
-    facebook = Channel::Facebook.new
+    facebook = Channel::Driver::Facebook.new
     post     = facebook.send({
                                type:        type['name'],
                                to:          record.to,

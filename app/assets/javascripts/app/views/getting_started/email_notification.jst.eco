@@ -1,0 +1,34 @@
+<div class="main flex vertical centered darkBackground">
+  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+
+  <form class="setup wizard js-outbound">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
+    <div class="wizard-slide">
+      <h2><%- @T('Email Notification') %></h2>
+      <div class="wizard-body vertical justified">
+        <div class="alert alert--danger hide" role="alert"></div>
+        <div class="base-outbound-type"></div>
+        <div class="base-outbound-settings"></div>
+      </div>
+      <div class="wizard-controls center">
+        <a class="btn btn--text btn--secondary" href="#getting_started/base"><%- @T('Go Back') %></a>
+        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
+      </div>
+    </div>
+  </form>
+
+  <form class="setup wizard hide js-test">
+    <div class="wizard-slide">
+      <h2><%- @T('Email Notification') %></h2>
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> <%- @T('Verifying...') %>
+        </p>
+      </div>
+    </div>
+  </form>
+
+</div>

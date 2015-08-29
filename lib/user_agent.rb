@@ -402,7 +402,8 @@ returns
     end
 
     def success?
-      @success
+      return true if @success
+      false
     end
   end
 end
