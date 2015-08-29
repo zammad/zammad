@@ -5,10 +5,11 @@ class ChannelsController < ApplicationController
 
 =begin
 
-Format:
-JSON
+Resource:
+GET /api/v1/channels/#{id}.json
 
-Example:
+Response example 1:
+
 {
   "id":1,
   "area":"Email::Account",
@@ -37,6 +38,8 @@ Example:
   "updated_by_id":2.
   "created_by_id":2,
 }
+
+Response example 2:
 
 {
   "id":1,
@@ -84,49 +87,6 @@ Example:
   "created_by_id":2,
 }
 
-=end
-
-=begin
-
-Resource:
-GET /api/v1/channels.json
-
-Response:
-[
-  {
-    "id": 1,
-    "area":"Email::Account",
-    ...
-  },
-  {
-    "id": 2,
-    "area":"Email::Account",
-    ...
-  }
-]
-
-Test:
-curl http://localhost/api/v1/channels.json -v -u #{login}:#{password}
-
-=end
-
-  def index
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    model_index_render(Channel, params)
-  end
-
-=begin
-
-Resource:
-GET /api/v1/channels/#{id}.json
-
-Response:
-{
-  "id": 1,
-  "area":"Email::Account",
-  ...
-}
-
 Test:
 curl http://localhost/api/v1/channels/#{id}.json -v -u #{login}:#{password}
 
@@ -134,6 +94,7 @@ curl http://localhost/api/v1/channels/#{id}.json -v -u #{login}:#{password}
 
   def show
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if !check_access
     model_show_render(Channel, params)
   end
 
@@ -230,6 +191,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
   def update
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if !check_access
     model_update_render(Channel, params)
   end
 
@@ -248,6 +210,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
   def destroy
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if !check_access
     model_destory_render(Channel, params)
   end
 
@@ -256,9 +219,11 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
     assets = {}
     Channel.all.each {|channel|
+      next if channel.preferences && channel.preferences[:online_service_disable]
       assets = channel.assets(assets)
     }
     EmailAddress.all.each {|email_address|
+      next if email_address.preferences && email_address.preferences[:online_service_disable]
       assets = email_address.assets(assets)
     }
     render json: {
@@ -290,6 +255,9 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     # check admin permissions
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
+    # verify access
+    return if !check_access(params[:channel_id]) if params[:channel_id]
+
     # connection test
     render json: EmailHelper::Probe.outbound(params, params[:email])
   end
@@ -298,6 +266,9 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
     # check admin permissions
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    # verify access
+    return if !check_access(params[:channel_id]) if params[:channel_id]
 
     # connection test
     result = EmailHelper::Probe.inbound(params)
@@ -316,6 +287,9 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     email = params[:email] || params[:meta][:email]
     email = email.downcase
     channel_id = params[:channel_id]
+
+    # verify access
+    return if !check_access(channel_id) if channel_id
 
     # check account duplicate
     return if email_account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)
@@ -359,6 +333,10 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
         inbound: params[:inbound],
         outbound: params[:outbound],
       },
+      last_log_in: nil,
+      last_log_out: nil,
+      status_in: 'ok',
+      status_out: 'ok',
       active: true,
       group_id: Group.first.id,
     )
@@ -393,6 +371,8 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   end
 
   def email_notification
+
+    return if !check_online_service
 
     # check admin permissions
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
@@ -453,6 +433,25 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
       }
       return true
     }
+    false
+  end
+
+  def check_online_service
+    return true if !Setting.get('system_online_service')
+    response_access_deny
+    false
+   end
+
+  def check_access(id = nil)
+    if !id
+      id = params[:id]
+    end
+    return true if !Setting.get('system_online_service')
+
+    channel = Channel.find(id)
+    return true if channel.preferences && !channel.preferences[:online_service_disable]
+
+    response_access_deny
     false
   end
 end

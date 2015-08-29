@@ -2,6 +2,7 @@
 
 class Channel < ApplicationModel
   store :options
+  store :preferences
 
   after_create   :email_address_check
   after_update   :email_address_check

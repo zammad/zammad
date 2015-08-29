@@ -62,10 +62,14 @@ or
         subject = params[:subject]
       end
       result = EmailHelper::Probe.outbound(params[:outbound], params[:sender], subject)
+      if result[:result] != 'ok'
+        result[:source] = 'outbound'
+        return result
+      end
 
       # looking for verify email
-      (1..5).each {
-        sleep 10
+      (1..10).each {
+        sleep 5
 
         # fetch mailbox
         found = nil
@@ -79,7 +83,10 @@ or
         rescue => e
           result = {
             result: 'invalid',
+            source: 'inbound',
             message: e.to_s,
+            message_human: EmailHelper::Probe.translation(e.message),
+            invalid_field: EmailHelper::Probe.invalid_field(e.message),
             subject: subject,
           }
           return result

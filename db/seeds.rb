@@ -1160,6 +1160,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: '(MAILER-DAEMON|postmaster|abuse)@.+?\..+?',
+  preferences: { online_service_disable: true },
   frontend: false
 )
 

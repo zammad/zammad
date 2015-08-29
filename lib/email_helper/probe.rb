@@ -203,17 +203,12 @@ returns on fail
         driver_instance.fetch(params[:options], nil, 'check')
 
       rescue => e
-        message_human = ''
-        translations.each {|key, message|
-          if e.message =~ /#{Regexp.escape(key)}/i
-            message_human = message
-          end
-        }
         result = {
           result: 'invalid',
           settings: params,
           message: e.message,
-          message_human: message_human,
+          message_human: translation(e.message),
+          invalid_field: invalid_field(e.message),
         }
         return result
       end
@@ -335,17 +330,12 @@ returns on fail
             return result
           }
         end
-        message_human = ''
-        translations.each {|key, message|
-          if e.message =~ /#{Regexp.escape(key)}/i
-            message_human = message
-          end
-        }
         result = {
           result: 'invalid',
           settings: params,
           message: e.message,
-          message_human: message_human,
+          message_human: translation(e.message),
+          invalid_field: invalid_field(e.message),
         }
         return result
       end
@@ -353,6 +343,35 @@ returns on fail
         result: 'ok',
       }
       result
+    end
+
+    def self.invalid_field(message_backend)
+      invalid_fields.each {|key, fields|
+        return fields if message_backend =~ /#{Regexp.escape(key)}/i
+      }
+      {}
+    end
+
+    def self.invalid_fields
+      {
+        'authentication failed'                                     => { user: true, password: true},
+        'Username and Password not accepted'                        => { user: true, password: true},
+        'Incorrect username'                                        => { user: true, password: true},
+        'Lookup failed'                                             => { user: true },
+        'Invalid credentials'                                       => { user: true, password: true},
+        'getaddrinfo: nodename nor servname provided, or not known' => { host: true },
+        'getaddrinfo: Name or service not known'                    => { host: true },
+        'No route to host'                                          => { host: true },
+        'execution expired'                                         => { host: true },
+        'Connection refused'                                        => { host: true },
+      }
+    end
+
+    def self.translation(message_backend)
+      translations.each {|key, message_human|
+        return message_human if message_backend =~ /#{Regexp.escape(key)}/i
+      }
+      nil
     end
 
     def self.translations

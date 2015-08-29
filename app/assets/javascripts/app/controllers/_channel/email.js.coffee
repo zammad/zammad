@@ -411,7 +411,7 @@ class App.ChannelEmailAccountWizard extends App.Controller
         configure_attributes: configureAttributesOutbound
         className: ''
       params:
-        adapter: @account.outbound.adapter || 'sendmail'
+        adapter: @account.outbound.adapter || 'smtp'
     )
     @toggleOutboundAdapter()
 
@@ -419,8 +419,8 @@ class App.ChannelEmailAccountWizard extends App.Controller
     configureAttributesInbound = [
       { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: { imap: 'imap', pop3: 'pop3' } },
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, single: true },
+      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
+      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
     ]
     new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
@@ -439,13 +439,13 @@ class App.ChannelEmailAccountWizard extends App.Controller
       channel_used['options']['password'] = @account['meta']['password']
 
     # show used backend
-    @el.find('.base-outbound-settings').html('')
+    @$('.base-outbound-settings').html('')
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false },
-        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, single: true },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
@@ -504,7 +504,8 @@ class App.ChannelEmailAccountWizard extends App.Controller
     params = @formParam(e.target)
 
     # let backend know about the channel
-    params.channel_id = @channel.id
+    if @channel
+      params.channel_id = @channel.id
 
     @disable(e)
 
@@ -523,17 +524,26 @@ class App.ChannelEmailAccountWizard extends App.Controller
           @account.inbound = params
 
           @showSlide('js-outbound')
+
+          # fill user / password based on inbound settings
           if !@channel
-            @$('.js-outbound [name="options::user"]').val( @account['meta']['email'] )
-            @$('.js-outbound [name="options::password"]').val( @account['meta']['password'] )
+            if @account['inbound']['options']
+              @$('.js-outbound [name="options::host"]').val( @account['inbound']['options']['host'] )
+              @$('.js-outbound [name="options::user"]').val( @account['inbound']['options']['user'] )
+              @$('.js-outbound [name="options::password"]').val( @account['inbound']['options']['password'] )
+            else
+              @$('.js-outbound [name="options::user"]').val( @account['meta']['email'] )
+              @$('.js-outbound [name="options::password"]').val( @account['meta']['password'] )
 
         else
           @showSlide('js-inbound')
           @showAlert('js-inbound', data.message_human || data.message )
+          @showInvalidField('js-inbound', data.invalid_field)
         @enable(e)
       fail: =>
         @showSlide('js-inbound')
         @showAlert('js-inbound', data.message_human || data.message )
+        @showInvalidField('js-inbound', data.invalid_field)
         @enable(e)
     )
 
@@ -550,7 +560,8 @@ class App.ChannelEmailAccountWizard extends App.Controller
         params['email'] = email_addresses[0].email
 
     # let backend know about the channel
-    params.channel_id = @channel.id
+    if @channel
+      params.channel_id = @channel.id
 
     @disable(e)
 
@@ -572,10 +583,12 @@ class App.ChannelEmailAccountWizard extends App.Controller
         else
           @showSlide('js-outbound')
           @showAlert('js-outbound', data.message_human || data.message )
+          @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
       fail: =>
         @showSlide('js-outbound')
         @showAlert('js-outbound', data.message_human || data.message )
+        @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
 
@@ -599,24 +612,29 @@ class App.ChannelEmailAccountWizard extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
-          @el.remove()
+          @el.modal('hide')
         else
-          if count is 2
-            @showAlert('js-verify', data.message_human || data.message )
-            @delay(
-              =>
-                @showSlide('js-intro')
-                @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
-
-              2300
-            )
+          if data.source is 'inbound' || data.source is 'outbound'
+              @showSlide("js-#{data.source}")
+              @showAlert("js-#{data.source}", data.message_human || data.message )
+              @showInvalidField("js-#{data.source}", data.invalid_field)
           else
-            if data.subject && @account
-              @account.subject = data.subject
-            @verify( @account, count + 1 )
+            if count is 2
+              @showAlert('js-verify', data.message_human || data.message )
+              @delay(
+                =>
+                  @showSlide('js-intro')
+                  @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
+
+                2300
+              )
+            else
+              if data.subject && @account
+                @account.subject = data.subject
+              @verify( @account, count + 1 )
       fail: =>
         @showSlide('js-intro')
-        @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
+        @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
     )
 
   goToSlide: (e) =>
@@ -643,6 +661,13 @@ class App.ChannelEmailAccountWizard extends App.Controller
   enable: (e) =>
     @formEnable(e)
     @$('.wizard-controls .btn').attr('disabled', false)
+
+  showInvalidField: (screen, fields) =>
+    @$(".#{screen}").find('.form-group').removeClass('has-error')
+    return if !fields
+    for field, type of fields
+      if type
+        @$(".#{screen}").find("[name=\"options::#{field}\"]").closest('.form-group').addClass('has-error')
 
   hide: (e) =>
     e.preventDefault()
@@ -727,8 +752,8 @@ class App.ChannelEmailNotificationWizard extends App.Controller
     if adapter is 'smtp'
       configureAttributesOutbound = [
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false },
-        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, single: true },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')

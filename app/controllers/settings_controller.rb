@@ -91,6 +91,7 @@ class SettingsController < ApplicationController
   # DELETE /settings/1
   def destroy
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if !check_access
     model_destory_render(Setting, params)
   end
 

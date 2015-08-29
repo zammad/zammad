@@ -204,8 +204,15 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
 
   onSubmit: (e) ->
     e.preventDefault()
-    @hide()
-    @item.destroy()
+    @item.destroy(
+      done: =>
+        if @callback
+          @callback()
+        @hide()
+      fail: =>
+        @log 'errors'
+        @hide()
+    )
 
 class App.ControllerDrox extends App.Controller
   constructor: (params) ->
