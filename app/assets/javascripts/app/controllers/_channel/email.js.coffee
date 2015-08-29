@@ -236,12 +236,12 @@ class App.ChannelEmailAccountOverview extends App.Controller
       success: (data, status, xhr) =>
 
         # load assets
-        App.Collection.loadAssets( data.assets )
+        App.Collection.loadAssets(data.assets)
 
-        @render()
+        @render(accounts_fixed: data.accounts_fixed)
     )
 
-  render: =>
+  render: (params = {}) =>
 
     # get channels
     channels = App.Channel.search( filter: { area: 'Email::Account' } )
@@ -260,9 +260,10 @@ class App.ChannelEmailAccountOverview extends App.Controller
     channel = App.Channel.search( filter: { area: 'Email::Notification', active: true } )[0]
 
     @html App.view('channel/email_account_overview')(
-      channels: channels
+      channels:                 channels
       email_addresses_not_used: email_addresses_not_used
-      channel: channel
+      channel:                  channel
+      accounts_fixed:           params.accounts_fixed
     )
 
   wizard: (e) =>

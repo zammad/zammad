@@ -217,17 +217,25 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def email_index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     system_online_service = Setting.get('system_online_service')
+    accounts_fixed = []
     assets = {}
     Channel.all.each {|channel|
-      next if system_online_service && channel.preferences && channel.preferences[:online_service_disable]
+      if system_online_service && channel.preferences && channel.preferences['online_service_disable']
+        email_addresses = EmailAddress.where(channel_id: channel.id)
+        email_addresses.each {|email_address|
+          accounts_fixed.push email_address
+        }
+        next
+      end
       assets = channel.assets(assets)
     }
     EmailAddress.all.each {|email_address|
-      next if system_online_service && email_address.preferences && email_address.preferences[:online_service_disable]
+      next if system_online_service && email_address.preferences && email_address.preferences['online_service_disable']
       assets = email_address.assets(assets)
     }
     render json: {
-      assets: assets
+      accounts_fixed: accounts_fixed,
+      assets: assets,
     }
   end
 
