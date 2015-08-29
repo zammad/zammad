@@ -5,6 +5,7 @@ class AddSettingOnlineService2 < ActiveRecord::Migration
     add_column :channels, :preferences, :string, limit: 2000, null: true
     Channel.reset_column_information
     Channel.where(area: 'Email::Notification').each {|channel|
+      channel.preferences = {}
       channel.preferences[:online_service_disable] = true
       channel.save
     }
@@ -21,6 +22,7 @@ class AddSettingOnlineService2 < ActiveRecord::Migration
     EmailAddress.reset_column_information
     EmailAddress.all.each {|email_address|
       next if email_address.email !~ /zammad/i
+      email_address.preferences = {}
       email_address.preferences[:online_service_disable] = true
       email_address.save
     }
