@@ -5,10 +5,12 @@ class UpdateChannel < ActiveRecord::Migration
     EmailAddress.reset_column_information
 
     channel_inbound = Channel.find_by(area: 'Email::Inbound')
-    EmailAddress.all.each {|email_address|
-      email_address.channel_id = channel_inbound.id
-      email_address.save
-    }
+    if channel_inbound
+      EmailAddress.all.each {|email_address|
+        email_address.channel_id = channel_inbound.id
+        email_address.save
+      }
+    end
 
     add_column :channels, :last_log_in, :text, limit: 500.kilobytes + 1, null: true
     add_column :channels, :last_log_out, :text, limit: 500.kilobytes + 1, null: true
