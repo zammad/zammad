@@ -354,11 +354,11 @@ returns on fail
 
     def self.invalid_fields
       {
-        'authentication failed'                                     => { user: true, password: true},
-        'Username and Password not accepted'                        => { user: true, password: true},
-        'Incorrect username'                                        => { user: true, password: true},
+        'authentication failed'                                     => { user: true, password: true },
+        'Username and Password not accepted'                        => { user: true, password: true },
+        'Incorrect username'                                        => { user: true, password: true },
         'Lookup failed'                                             => { user: true },
-        'Invalid credentials'                                       => { user: true, password: true},
+        'Invalid credentials'                                       => { user: true, password: true },
         'getaddrinfo: nodename nor servname provided, or not known' => { host: true },
         'getaddrinfo: Name or service not known'                    => { host: true },
         'No route to host'                                          => { host: true },

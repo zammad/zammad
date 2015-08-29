@@ -440,7 +440,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     return true if !Setting.get('system_online_service')
     response_access_deny
     false
-   end
+  end
 
   def check_access(id = nil)
     if !id
