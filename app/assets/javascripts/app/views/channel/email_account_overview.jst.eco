@@ -69,35 +69,37 @@
 
 <a data-type="new" class="btn btn--success"><%- @T('New') %></a>
 
-<h1><%- @T('Notification Account') %></h1>
+<% if @channel && !App.Config.get('system_online_service'): %>
+  <h1><%- @T('Notification Account') %></h1>
 
-<table class="table table-hover user-list">
-  <thead>
-    <tr>
-      <th><%- @T('Outbound') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr data-id="<%- @channel.id %>">
-      <td class="<% if @channel.status_out is 'ok': %>success<% else if @channel.status_out is 'error': %>danger<% else: %>warning<% end %>">
-        <%- @T('State') %>: <%- @T(@channel.status_out || 'unknown') %><br>
-        <a href="#" data-type="edit-notification-outbound">
-        <% if @channel.options.outbound && @channel.options.outbound.options: %>
-          <%= @channel.options.outbound.options.user %><br>
-          <%= @channel.options.outbound.options.host %>
-        <% end %>
-        (<%= @channel.options.outbound.adapter %>)</a>
-      </td>
-    </tr>
-    <% if @channel.status_in is 'error': %>
-    <tr>
-      <td colspan="1"><%= @channel.last_log_in %></td>
-    </tr>
-    <% end %>
-    <% if @channel.status_out is 'error': %>
-    <tr>
-      <td colspan="1"><%= @channel.last_log_out %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+  <table class="table table-hover user-list">
+    <thead>
+      <tr>
+        <th><%- @T('Outbound') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-id="<%- @channel.id %>">
+        <td class="<% if @channel.status_out is 'ok': %>success<% else if @channel.status_out is 'error': %>danger<% else: %>warning<% end %>">
+          <%- @T('State') %>: <%- @T(@channel.status_out || 'unknown') %><br>
+          <a href="#" data-type="edit-notification-outbound">
+          <% if @channel.options.outbound && @channel.options.outbound.options: %>
+            <%= @channel.options.outbound.options.user %><br>
+            <%= @channel.options.outbound.options.host %>
+          <% end %>
+          (<%= @channel.options.outbound.adapter %>)</a>
+        </td>
+      </tr>
+      <% if @channel.status_in is 'error': %>
+      <tr>
+        <td colspan="1"><%= @channel.last_log_in %></td>
+      </tr>
+      <% end %>
+      <% if @channel.status_out is 'error': %>
+      <tr>
+        <td colspan="1"><%= @channel.last_log_out %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

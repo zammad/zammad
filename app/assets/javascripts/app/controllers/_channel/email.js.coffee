@@ -342,7 +342,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback:  @load
     )
 
-class App.ChannelEmailAccountWizard extends App.Controller
+class App.ChannelEmailAccountWizard extends App.Wizard
   elements:
     '.modal-body': 'body'
 
@@ -637,43 +637,11 @@ class App.ChannelEmailAccountWizard extends App.Controller
         @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
     )
 
-  goToSlide: (e) =>
-    e.preventDefault()
-    slide = $(e.target).data('slide')
-    @showSlide(slide)
-
-  showSlide: (name) =>
-    @hideAlert(name)
-    @$('.setup.wizard').addClass('hide')
-    @$(".setup.wizard.#{name}").removeClass('hide')
-    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
-
-  showAlert: (screen, message) =>
-    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
-
-  hideAlert: (screen) =>
-    @$(".#{screen}").find('.alert').addClass('hide')
-
-  disable: (e) =>
-    @formDisable(e)
-    @$('.wizard-controls .btn').attr('disabled', true)
-
-  enable: (e) =>
-    @formEnable(e)
-    @$('.wizard-controls .btn').attr('disabled', false)
-
-  showInvalidField: (screen, fields) =>
-    @$(".#{screen}").find('.form-group').removeClass('has-error')
-    return if !fields
-    for field, type of fields
-      if type
-        @$(".#{screen}").find("[name=\"options::#{field}\"]").closest('.form-group').addClass('has-error')
-
   hide: (e) =>
     e.preventDefault()
     @el.modal('hide')
 
-class App.ChannelEmailNotificationWizard extends App.Controller
+class App.ChannelEmailNotificationWizard extends App.Wizard
   elements:
     '.modal-body': 'body'
 
@@ -788,33 +756,11 @@ class App.ChannelEmailNotificationWizard extends App.Controller
         else
           @showSlide('js-outbound')
           @showAlert('js-outbound', data.message_human || data.message )
+          @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
       fail: =>
         @showSlide('js-outbound')
         @showAlert('js-outbound', data.message_human || data.message )
+        @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
-
-  showSlide: (name) =>
-    @hideAlert(name)
-    @$('.setup.wizard').addClass('hide')
-    @$(".setup.wizard.#{name}").removeClass('hide')
-    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
-
-  showAlert: (screen, message) =>
-    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
-
-  hideAlert: (screen) =>
-    @$(".#{screen}").find('.alert').addClass('hide')
-
-  disable: (e) =>
-    @formDisable(e)
-    @$('.wizard-controls .btn').attr('disabled', true)
-
-  enable: (e) =>
-    @formEnable(e)
-    @$('.wizard-controls .btn').attr('disabled', false)
-
-  hide: (e) =>
-    e.preventDefault()
-    @el.modal('hide')

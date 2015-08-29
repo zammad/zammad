@@ -2,6 +2,7 @@
   <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
 
   <form class="setup wizard js-outbound">
+    <input type="password" style="display:none"/><!-- dummy to prevent chrome to ask for password save -->
     <div class="wizard-slide">
       <h2><%- @T('Email Notification') %></h2>
       <div class="wizard-body vertical justified">

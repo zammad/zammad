@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class Index extends App.Controller
   className: 'getstarted fit'
 
   constructor: ->
@@ -61,7 +61,7 @@ class Index extends App.ControllerContent
 App.Config.set( 'getting_started', Index, 'Routes' )
 
 
-class AutoWizard extends App.ControllerContent
+class AutoWizard extends App.Controller
   className: 'getstarted fit'
 
   constructor: ->
@@ -130,7 +130,7 @@ App.Config.set( 'getting_started/auto_wizard', AutoWizard, 'Routes' )
 App.Config.set( 'getting_started/auto_wizard/:token', AutoWizard, 'Routes' )
 
 
-class Admin extends App.ControllerContent
+class Admin extends App.Controller
   className: 'getstarted fit'
   events:
     'submit form': 'submit'
@@ -247,7 +247,7 @@ class Admin extends App.ControllerContent
 App.Config.set( 'getting_started/admin', Admin, 'Routes' )
 
 
-class Base extends App.ControllerContent
+class Base extends App.Wizard
   className: 'getstarted fit'
   elements:
     '.logo-preview': 'logoPreview'
@@ -376,25 +376,10 @@ class Base extends App.ControllerContent
     # add resized image
     App.ImageService.resizeForApp( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
 
-  hideAlerts: =>
-    @$('.form-group').removeClass('has-error')
-    @$('.alert').addClass('hide')
-
-  showAlert: (field, message) =>
-    @$("[name=#{field}]").closest('.form-group').addClass('has-error')
-    @$("[name=#{field}]").closest('.form-group').find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
-
-  disable: (e) =>
-    @formDisable(e)
-    @$('.wizard-controls .btn').attr('disabled', true)
-
-  enable: (e) =>
-    @formEnable(e)
-    @$('.wizard-controls .btn').attr('disabled', false)
-
 App.Config.set( 'getting_started/base', Base, 'Routes' )
 
-class EmailNotification extends App.ControllerContent
+
+class EmailNotification extends App.Wizard
   className: 'getstarted fit'
   events:
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
@@ -504,42 +489,20 @@ class EmailNotification extends App.ControllerContent
         else
           @showSlide('js-outbound')
           @showAlert('js-outbound', data.message_human || data.message )
+          @showInvalidField('js-outbound', data.invalid_field)
           @enable(e)
 
       fail: =>
         @showSlide('js-outbound')
         @showAlert('js-outbound', data.message_human || data.message )
+        @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
 
-  goToSlide: (e) =>
-    e.preventDefault()
-    slide = $(e.target).data('slide')
-    @showSlide(slide)
-
-  showSlide: (name) =>
-    @hideAlert(name)
-    @$('.setup.wizard').addClass('hide')
-    @$(".setup.wizard.#{name}").removeClass('hide')
-    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
-
-  showAlert: (screen, message) =>
-    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
-
-  hideAlert: (screen) =>
-    @$(".#{screen}").find('.alert').addClass('hide')
-
-  disable: (e) =>
-    @formDisable(e)
-    @$('.wizard-controls .btn').attr('disabled', true)
-
-  enable: (e) =>
-    @formEnable(e)
-    @$('.wizard-controls .btn').attr('disabled', false)
-
 App.Config.set( 'getting_started/email_notification', EmailNotification, 'Routes' )
 
-class Channel extends App.ControllerContent
+
+class Channel extends App.Controller
   className: 'getstarted fit'
 
   constructor: ->
@@ -592,7 +555,7 @@ class Channel extends App.ControllerContent
 
 App.Config.set( 'getting_started/channel', Channel, 'Routes' )
 
-class ChannelEmailPreConfigured extends App.ControllerContent
+class ChannelEmailPreConfigured extends App.Controller
   className: 'getstarted fit'
 
   constructor: ->
@@ -637,7 +600,7 @@ class ChannelEmailPreConfigured extends App.ControllerContent
 
 App.Config.set( 'getting_started/channel/email_pre_configured', ChannelEmailPreConfigured, 'Routes' )
 
-class ChannelEmail extends App.ControllerContent
+class ChannelEmail extends App.Wizard
   className: 'getstarted fit'
   events:
     'submit .js-intro':                   'probeBasedOnIntro'
@@ -896,42 +859,9 @@ class ChannelEmail extends App.ControllerContent
         @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
     )
 
-  goToSlide: (e) =>
-    e.preventDefault()
-    slide = $(e.target).data('slide')
-    @showSlide(slide)
-
-  showSlide: (name) =>
-    @hideAlert(name)
-    @$('.setup.wizard').addClass('hide')
-    @$(".setup.wizard.#{name}").removeClass('hide')
-    @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
-
-  showAlert: (screen, message) =>
-    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
-
-  hideAlert: (screen) =>
-    @$(".#{screen}").find('.alert').addClass('hide')
-
-  disable: (e) =>
-    @formDisable(e)
-    @$('.wizard-controls .btn').attr('disabled', true)
-
-  enable: (e) =>
-    @formEnable(e)
-    @$('.wizard-controls .btn').attr('disabled', false)
-
-  showInvalidField: (screen, fields) =>
-    @$(".#{screen}").find('.form-group').removeClass('has-error')
-    return if !fields
-    for field, type of fields
-      if type
-        @$(".#{screen}").find("[name=\"options::#{field}\"]").closest('.form-group').addClass('has-error')
-
 App.Config.set( 'getting_started/channel/email', ChannelEmail, 'Routes' )
 
-
-class Agent extends App.ControllerContent
+class Agent extends App.Controller
   className: 'getstarted fit'
   events:
     'submit form': 'submit'
@@ -1031,7 +961,7 @@ class Agent extends App.ControllerContent
 
 App.Config.set( 'getting_started/agents', Agent, 'Routes' )
 
-class Channel extends App.ControllerContent
+class Channel extends App.Controller
   className: 'getstarted fit'
 
   constructor: ->
