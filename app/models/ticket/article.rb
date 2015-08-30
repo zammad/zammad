@@ -42,7 +42,7 @@ class Ticket::Article < ApplicationModel
   def check_message_id_md5
     return if !message_id
     return if message_id_md5
-    self.message_id_md5 = Digest::MD5.hexdigest(message_id)
+    self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
   end
 
   class Flag < ApplicationModel
