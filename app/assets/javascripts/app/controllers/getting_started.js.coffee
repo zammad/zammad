@@ -93,7 +93,7 @@ class AutoWizard extends App.Controller
       url:         url
       processData: true
       success:     (data, status, xhr) =>
-        console.log('DDD', data)
+
         # redirect to login if master user already exists
         if @Config.get('system_init_done')
           @navigate '#login'

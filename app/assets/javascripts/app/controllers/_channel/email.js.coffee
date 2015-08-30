@@ -238,32 +238,35 @@ class App.ChannelEmailAccountOverview extends App.Controller
         # load assets
         App.Collection.loadAssets(data.assets)
 
-        @render(accounts_fixed: data.accounts_fixed)
+        @render(data)
     )
 
-  render: (params = {}) =>
+  render: (data = {}) =>
 
     # get channels
-    channels = App.Channel.search( filter: { area: 'Email::Account' } )
-    for channel in channels
+    account_channels = []
+    for channel_id in data.account_channel_ids
+      account_channels.push App.Channel.fullLocal(channel_id)
+
+    for channel in account_channels
       email_addresses = App.EmailAddress.search( filter: { channel_id: channel.id } )
       channel.email_addresses = email_addresses
 
     # get all unlinked email addresses
-    email_addresses_all      = App.EmailAddress.all()
-    email_addresses_not_used = []
-    for email_address in email_addresses_all
-      if !email_address.channel_id || email_address.channel_id is ''
-        email_addresses_not_used.push email_address
+    not_used_email_addresses = []
+    for email_address_id in data.not_used_email_address_ids
+      not_used_email_addresses.push App.EmailAddress.find(email_address_id)
 
     # get channels
-    channel = App.Channel.search( filter: { area: 'Email::Notification', active: true } )[0]
+    notification_channels = []
+    for channel_id in data.notification_channel_ids
+      notification_channels.push App.Channel.find(channel_id)
 
     @html App.view('channel/email_account_overview')(
-      channels:                 channels
-      email_addresses_not_used: email_addresses_not_used
-      channel:                  channel
-      accounts_fixed:           params.accounts_fixed
+      account_channels:         account_channels
+      not_used_email_addresses: not_used_email_addresses
+      notification_channels:    notification_channels
+      accounts_fixed:           data.accounts_fixed
     )
 
   wizard: (e) =>

@@ -1757,6 +1757,7 @@ Channel.create_if_not_exists(
     },
   },
   group_id: 1,
+  preferences: { online_service_disable: true },
   active: false,
 )
 Channel.create_if_not_exists(
@@ -1766,6 +1767,7 @@ Channel.create_if_not_exists(
       adapter: 'sendmail',
     },
   },
+  preferences: { online_service_disable: true },
   active: true,
 )
 

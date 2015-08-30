@@ -217,6 +217,10 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def email_index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     system_online_service = Setting.get('system_online_service')
+    account_channel_ids = []
+    notification_channel_ids = []
+    email_address_ids = []
+    not_used_email_address_ids = []
     accounts_fixed = []
     assets = {}
     Channel.all.each {|channel|
@@ -227,15 +231,29 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
         }
         next
       end
-      assets = channel.assets(assets)
+      if channel.area == 'Email::Account'
+        account_channel_ids.push channel.id
+        assets = channel.assets(assets)
+      elsif channel.area == 'Email::Notification' && channel.active
+        notification_channel_ids.push channel.id
+        assets = channel.assets(assets)
+      end
     }
     EmailAddress.all.each {|email_address|
       next if system_online_service && email_address.preferences && email_address.preferences['online_service_disable']
+      email_address_ids.push email_address.id
       assets = email_address.assets(assets)
+      if !email_address.channel_id || !email_address.active || !Channel.find_by(id: email_address.channel_id)
+        not_used_email_address_ids.push email_address.id
+      end
     }
     render json: {
       accounts_fixed: accounts_fixed,
       assets: assets,
+      account_channel_ids: account_channel_ids,
+      notification_channel_ids: notification_channel_ids,
+      email_address_ids: email_address_ids,
+      not_used_email_address_ids: not_used_email_address_ids,
     }
   end
 
