@@ -225,7 +225,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('invalid', result[:result])
 
     # if we have to many failed logins, we need to handle another error message
-    if !result[:message_human].empty?
+    if result[:message_human] && !result[:message_human].empty?
       assert_equal('Authentication failed, invalid credentials!', result[:message_human])
     else
       assert_match(/Web login required/, result[:message])
@@ -374,7 +374,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('invalid', result[:result])
 
     # if we have to many failed logins, we need to handle another error message
-    if !result[:message_human].empty?
+    if result[:message_human] && !result[:message_human].empty?
       assert_equal('Authentication failed!', result[:message_human])
     else
       assert_match(/Please log in with your web browser and then try again/, result[:message])
