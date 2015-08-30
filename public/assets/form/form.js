@@ -1,7 +1,23 @@
 (function ($) {
 
 /*
-  provides feedback form for zammad
+*
+*  provides feedback form for zammad
+*
+
+<button id="feedback-form">Feedback</button>
+
+<script id="zammad_form_script" src="http://localhost:3000/assets/form/form.js"></script>
+<script>
+$('#feedback-form').zammad_form({
+  messageTitle: 'Feedback Form',
+  messageSubmit: 'Submit',
+  messageThankYou: 'Thank you for your inquiry! We\'ll contact you soon as possible.',
+  showTitle: true,
+  modal: true
+});
+</script>
+
 */
 
   var pluginName = 'zammad_form',
