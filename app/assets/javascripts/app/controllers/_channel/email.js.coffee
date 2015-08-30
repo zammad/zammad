@@ -253,7 +253,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     email_addresses_all      = App.EmailAddress.all()
     email_addresses_not_used = []
     for email_address in email_addresses_all
-      if !email_address.channel_id || !App.Channel.exists(email_address.channel_id)
+      if !email_address.channel_id || email_address.channel_id is ''
         email_addresses_not_used.push email_address
 
     # get channels
