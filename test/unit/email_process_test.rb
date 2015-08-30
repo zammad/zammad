@@ -2023,6 +2023,36 @@ Some Text',
     process(files)
   end
 
+  test 'process with bounce check' do
+
+    ticket = Ticket.create(
+      title: 'bounce check',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article = Ticket::Article.create(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: '<20150830145601.30.608881@edenhofer.zammad.com>',
+      body: 'some message article',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Agent').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    email_raw_string = IO.read('test/fixtures/mail33-undelivered-mail-returned-to-sender.box')
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string)
+    assert_equal(ticket_p.id, ticket.id)
+  end
+
   test 'process with postmaster filter' do
     group1 = Group.create_if_not_exists(
       name: 'Test Group1',
