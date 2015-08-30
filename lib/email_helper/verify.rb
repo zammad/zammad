@@ -74,7 +74,6 @@ or
           result: 'failed',
           message: "Unknown adapter '#{adapter}'",
         }
-        return
       end
 
       # looking for verify email

@@ -39,7 +39,6 @@ returns
         data[ self.class.to_app_model ][ id ] = attributes
       end
 
-
       return data if !self['created_by_id'] && !self['updated_by_id']
       %w(created_by_id updated_by_id).each {|local_user_id|
         next if !self[ local_user_id ]

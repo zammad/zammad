@@ -18,13 +18,13 @@ returns
   def self.available_driver
     if Setting.get('system_online_service')
       return {
-        :inbound => ['imap', 'pop3'],
-        :outbound => ['smtp'],
+        inbound: %w(imap pop3),
+        outbound: %w(smtp),
       }
     end
     {
-      :inbound => ['imap', 'pop3'],
-      :outbound => ['smtp', 'sendmail'],
+      inbound: %w(imap pop3),
+      outbound: %w(smtp sendmail),
     }
   end
 
