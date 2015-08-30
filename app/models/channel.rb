@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Channel < ApplicationModel
+  load 'channel/assets.rb'
+  include Channel::Assets
+
   store :options
   store :preferences
 
@@ -34,9 +37,7 @@ fetch one account
 
     adapter         = options[:adapter]
     adapter_options = options
-    if options[:options]
-      adapter_options = options[:options]
-    elsif options[:inbound] && options[:inbound][:adapter]
+    if options[:inbound] && options[:inbound][:adapter]
       adapter         = options[:inbound][:adapter]
       adapter_options = options[:inbound][:options]
     end
@@ -79,9 +80,7 @@ send via account
 
     adapter         = options[:adapter]
     adapter_options = options
-    if options[:options]
-      adapter_options = options[:options]
-    elsif options[:outbound] && options[:outbound][:adapter]
+    if options[:outbound] && options[:outbound][:adapter]
       adapter         = options[:outbound][:adapter]
       adapter_options = options[:outbound][:options]
     end

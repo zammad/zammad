@@ -139,6 +139,20 @@ class EmailHelperTest < ActiveSupport::TestCase
 
   test 'z probe_inbound' do
 
+    # invalid adapter
+    result = EmailHelper::Probe.inbound(
+      adapter: 'imap2',
+      options: {
+        host: 'not_existsing_host',
+        port: 993,
+        ssl: true,
+        user: 'some@example.com',
+        password: 'password',
+      }
+    )
+
+    assert_equal('failed', result[:result])
+
     # network issues
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
@@ -255,6 +269,23 @@ class EmailHelperTest < ActiveSupport::TestCase
   end
 
   test 'z probe_outbound' do
+
+    # invalid adapter
+    result = EmailHelper::Probe.outbound(
+      {
+        adapter: 'smtp2',
+        options: {
+          host: 'not_existsing_host',
+          port: 25,
+          start_tls: true,
+          user: 'some@example.com',
+          password: 'password',
+        },
+      },
+      'some@example.com',
+    )
+
+    assert_equal('failed', result[:result])
 
     # network issues
     result = EmailHelper::Probe.outbound(

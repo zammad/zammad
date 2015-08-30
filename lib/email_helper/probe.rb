@@ -188,13 +188,16 @@ returns on fail
 
       adapter = params[:adapter].downcase
 
+      # validate adapter
+      if !EmailHelper.available_driver[:inbound].include?(adapter)
+        return {
+          result: 'failed',
+          message: "Unknown adapter '#{adapter}'",
+        }
+      end
+
       # connection test
       begin
-
-        # validate adapter
-        if adapter !~ /^(imap|pop3)$/
-          fail "Unknown adapter '#{adapter}'"
-        end
 
         require "channel/driver/#{adapter.to_filename}"
 
@@ -264,6 +267,14 @@ returns on fail
 
       adapter = params[:adapter].downcase
 
+      # validate adapter
+      if !EmailHelper.available_driver[:outbound].include?(adapter)
+        return {
+          result: 'failed',
+          message: "Unknown adapter '#{adapter}'",
+        }
+      end
+
       # prepare test email
       if subject
         mail = {
@@ -287,21 +298,6 @@ returns on fail
 
       # test connection
       begin
-
-        # validate adapter
-        if adapter !~ /^(smtp|sendmail)$/
-          fail "Unknown adapter '#{adapter}'"
-        end
-
-        # set smtp defaults
-        if adapter =~ /^smtp$/
-          if !params[:options].key?(:port)
-            params[:options][:port] = 25
-          end
-          if !params[:options].key?(:ssl)
-            params[:options][:ssl] = true
-          end
-        end
 
         require "channel/driver/#{adapter.to_filename}"
 

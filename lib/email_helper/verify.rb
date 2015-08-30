@@ -67,6 +67,16 @@ or
         return result
       end
 
+      # validate adapter
+      adapter = params[:inbound][:adapter].downcase
+      if !EmailHelper.available_driver[:inbound].include?(adapter)
+        return {
+          result: 'failed',
+          message: "Unknown adapter '#{adapter}'",
+        }
+        return
+      end
+
       # looking for verify email
       (1..10).each {
         sleep 5
@@ -75,11 +85,11 @@ or
         found = nil
 
         begin
-          if params[:inbound][:adapter] =~ /^imap$/i
-            found = Channel::Driver::Imap.new.fetch(params[:inbound][:options], self, 'verify', subject)
-          else
-            found = Channel::Driver::Pop3.new.fetch(params[:inbound][:options], self, 'verify', subject)
-          end
+          require "channel/driver/#{adapter.to_filename}"
+
+          driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+          driver_instance = driver_class.new
+          found           = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
         rescue => e
           result = {
             result: 'invalid',

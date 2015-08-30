@@ -2,6 +2,34 @@ module EmailHelper
 
 =begin
 
+get available driver
+
+  result = EmailHelper.available_driver
+
+returns
+
+  {
+    :inbound => ['imap', 'pop3'],
+    :outbound => ['smtp', 'sendmail'],
+  }
+
+=end
+
+  def self.available_driver
+    if Setting.get('system_online_service')
+      return {
+        :inbound => ['imap', 'pop3'],
+        :outbound => ['smtp'],
+      }
+    end
+    {
+      :inbound => ['imap', 'pop3'],
+      :outbound => ['smtp', 'sendmail'],
+    }
+  end
+
+=begin
+
 get mail parts
 
   user, domain = EmailHelper.parse_email('somebody@example.com')
