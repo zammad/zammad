@@ -31,11 +31,10 @@ module Channel::Filter::FollowUpCheck
       mail[:attachments].each {|attachment|
         next if !attachment[:data]
         ticket = Ticket::Number.check(attachment[:data])
-        if ticket
-          Rails.logger.debug "Follow up for '##{ticket.number}' in attachment."
-          mail[ 'x-zammad-ticket-id'.to_sym ] = ticket.id
-          return true
-        end
+        next if !ticket
+        Rails.logger.debug "Follow up for '##{ticket.number}' in attachment."
+        mail[ 'x-zammad-ticket-id'.to_sym ] = ticket.id
+        return true
       }
     end
 
@@ -55,16 +54,15 @@ module Channel::Filter::FollowUpCheck
       end
       if references != ''
         message_ids = references.split(/\s+/)
-        sender_type_agent = Ticket::Article::Sender.lookup(name:'Agent')
-        sender_type_system = Ticket::Article::Sender.lookup(name:'System')
+        sender_type_agent = Ticket::Article::Sender.lookup(name: 'Agent')
+        sender_type_system = Ticket::Article::Sender.lookup(name: 'System')
         message_ids.each {|message_id|
           message_id_md5 = Digest::MD5.hexdigest(message_id)
           article = Ticket::Article.where(message_id_md5: message_id_md5, sender_id: [sender_type_agent.id, sender_type_system.id]).order('created_at DESC, id DESC').limit(1).first
-          if article
-            Rails.logger.debug "Follow up for '##{article.ticket.number}' in references."
-            mail[ 'x-zammad-ticket-id'.to_sym ] = article.ticket_id
-            return true
-          end
+          next if !article
+          Rails.logger.debug "Follow up for '##{article.ticket.number}' in references."
+          mail[ 'x-zammad-ticket-id'.to_sym ] = article.ticket_id
+          return true
         }
       end
     end
