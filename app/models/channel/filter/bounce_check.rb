@@ -16,10 +16,11 @@ module Channel::Filter::BounceCheck
       result = Channel::EmailParser.new.parse(attachment[:data])
       next if !result[:message_id]
       message_id_md5 = Digest::MD5.hexdigest(result[:message_id])
-      article = Ticket::Article.where(message_id_md5: message_id_md5).order('id DESC').limit(1).first
+      article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
       if article
+        Rails.logger.debug "Follow up for '##{article.ticket.number}' in bounce email."
         mail[ 'x-zammad-ticket-id'.to_sym ] = article.ticket_id
-        break
+        return true
       end
     }
 

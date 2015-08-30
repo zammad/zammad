@@ -357,7 +357,7 @@ retrns
       rescue => e
         Rails.logger.error "can't run postmaster pre filter #{backend}"
         Rails.logger.error e.inspect
-        return false
+        fail e
       end
     }
 
