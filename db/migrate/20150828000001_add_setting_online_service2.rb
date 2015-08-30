@@ -11,9 +11,10 @@ class AddSettingOnlineService2 < ActiveRecord::Migration
     }
     Channel.where(area: 'Email::Account').each {|channel|
       next if !channel.options
-      next if !channel.options[:options]
-      next if !channel.options[:options][:host]
-      next if channel.options[:options][:host] !~ /zammad/i
+      next if !channel.options[:inbound][:options]
+      next if !channel.options[:inbound][:options][:host]
+      next if channel.options[:inbound][:options][:host] !~ /zammad/i
+      channel.preferences = {}
       channel.preferences[:online_service_disable] = true
       channel.save
     }

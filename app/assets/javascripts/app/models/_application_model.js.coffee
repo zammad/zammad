@@ -556,7 +556,8 @@ class App.Model extends Spine.Model
                   item = App[ attribute.relation ]._fillUp(item, classNames.concat(@className))
                   data[ withoutId ] = item
                 else
-                  console.log("ERROR, cant find #{ attribute.name } App.#{ attribute.relation }.find(#{ data[attribute.name] }) for '#{ data.constructor.className }' #{ data.displayName() }")
+                  if !attribute.do_not_log
+                    console.log("ERROR, cant find #{ attribute.name } App.#{ attribute.relation }.find(#{ data[attribute.name] }) for '#{ data.constructor.className }' #{ data.displayName() }")
     data
 
   ###
