@@ -30,19 +30,19 @@ class Ticket::Article < ApplicationModel
     preferences: true,
   }
 
+  # fillup md5 of message id to search easier on very long message ids
+  def check_message_id_md5
+    return if !message_id
+    return if message_id_md5
+    self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
+  end
+
   private
 
   # strip not wanted chars
   def check_subject
     return if !subject
     subject.gsub!(/\s|\t|\r/, ' ')
-  end
-
-  # fillup md5 of message id to search easier on very long message ids
-  def check_message_id_md5
-    return if !message_id
-    return if message_id_md5
-    self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
   end
 
   class Flag < ApplicationModel
