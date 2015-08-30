@@ -39,7 +39,7 @@ class UpdateChannel < ActiveRecord::Migration
         channel.area = 'Email::Notification'
         options = {
           outbound: {
-            adapter: channel.adapter,
+            adapter: channel.adapter.downcase,
             options: channel.options,
           },
         }
@@ -47,7 +47,7 @@ class UpdateChannel < ActiveRecord::Migration
         channel.save
       elsif channel.area == 'Twitter::Inbound'
         channel.area = 'Twitter::Account'
-        channel.options[:adapter] = channel.adapter
+        channel.options[:adapter] = channel.adapter.downcase
         channel.save
       end
     }
