@@ -2093,7 +2093,6 @@ Some Text #{ticket.subject_build('some new subject')} "
     email_raw_string_attachment = "From: me@example.com
 Content-Type: multipart/mixed; boundary=\"Apple-Mail=_ED77AC8D-FB6F-40E5-8FBE-D41FF5E1BAF2\"
 Subject: no reference
-Message-Id: <DA918CD1-BE9A-4262-ACF6-5001E59291B6@znuny.com>
 Date: Sun, 30 Aug 2015 23:20:54 +0200
 To: Martin Edenhofer <me@znuny.com>
 Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
@@ -2132,21 +2131,6 @@ References: <DA918CD1-BE9A-4262-ACF6-5001E59291B6@znuny.com> <20150830145601.30.
 
 no reference "
 
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_subject)
-    assert_equal(ticket.id, ticket_p.id)
-
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_body)
-    assert_not_equal(ticket.id, ticket_p.id)
-
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_attachment)
-    assert_not_equal(ticket.id, ticket_p.id)
-
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references1)
-    assert_not_equal(ticket.id, ticket_p.id)
-
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references2)
-    assert_not_equal(ticket.id, ticket_p.id)
-
     setting_orig = Setting.get('postmaster_follow_up_search_in')
     Setting.set('postmaster_follow_up_search_in', ['body', 'attachment', 'references'])
 
@@ -2167,6 +2151,20 @@ no reference "
 
     Setting.set('postmaster_follow_up_search_in', setting_orig)
 
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_body)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_attachment)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references1)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references2)
+    assert_not_equal(ticket.id, ticket_p.id)
   end
 
   test 'process with postmaster filter' do
