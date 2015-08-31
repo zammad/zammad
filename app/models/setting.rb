@@ -137,12 +137,7 @@ reset config setting to default
 
   # convert state ot hash to be able to store it as store
   def state_check
-
-    return if !state
-    return if state == false
-
-    return if state.respond_to?('has_key?') && state.key?(:value)
-
+    return if state.class == Hash && state.key?(:value)
     self.state = { value: state }
   end
 end
