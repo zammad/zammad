@@ -12,50 +12,50 @@ class Channel::EmailParser
   mail = parse( msg_as_string )
 
   mail = {
-    :from              => 'Some Name <some@example.com>',
-    :from_email        => 'some@example.com',
-    :from_local        => 'some',
-    :from_domain       => 'example.com',
-    :from_display_name => 'Some Name',
-    :message_id        => 'some_message_id@example.com',
-    :to                => 'Some System <system@example.com>',
-    :cc                => 'Somebody <somebody@example.com>',
-    :subject           => 'some message subject',
-    :body              => 'some message body',
-    :attachments       => [
+    from:              'Some Name <some@example.com>',
+    from_email:        'some@example.com',
+    from_local:        'some',
+    from_domain:       'example.com',
+    from_display_name: 'Some Name',
+    message_id:        'some_message_id@example.com',
+    to:                'Some System <system@example.com>',
+    cc:                'Somebody <somebody@example.com>',
+    subject:           'some message subject',
+    body:              'some message body',
+    attachments:       [
       {
-        :data        => 'binary of attachment',
-        :filename    => 'file_name_of_attachment.txt',
-        :preferences => {
-          :content-alternative => true,
-          :Mime-Type           => 'text/plain',
-          :Charset             => 'iso-8859-1',
+        data:        'binary of attachment',
+        filename:    'file_name_of_attachment.txt',
+        preferences: {
+          content-alternative: true,
+          Mime-Type:           'text/plain',
+          Charset:             'iso-8859-1',
         },
       },
     ],
 
     # ignore email header
-    :x-zammad-ignore => 'false',
+    x-zammad-ignore: 'false',
 
     # customer headers
-    :x-zammad-customer-login     => '',
-    :x-zammad-customer-email     => '',
-    :x-zammad-customer-firstname => '',
-    :x-zammad-customer-lastname  => '',
+    x-zammad-customer-login:     '',
+    x-zammad-customer-email:     '',
+    x-zammad-customer-firstname: '',
+    x-zammad-customer-lastname:  '',
 
     # ticket headers
-    :x-zammad-ticket-group    => 'some_group',
-    :x-zammad-ticket-state    => 'some_state',
-    :x-zammad-ticket-priority => 'some_priority',
-    :x-zammad-ticket-owner    => 'some_owner_login',
+    x-zammad-ticket-group:    'some_group',
+    x-zammad-ticket-state:    'some_state',
+    x-zammad-ticket-priority: 'some_priority',
+    x-zammad-ticket-owner:    'some_owner_login',
 
     # article headers
-    :x-zammad-article-internal => false,
-    :x-zammad-article-type     => 'agent',
-    :x-zammad-article-sender   => 'customer',
+    x-zammad-article-internal: false,
+    x-zammad-article-type:     'agent',
+    x-zammad-article-sender:   'customer',
 
     # all other email headers
-    :some-header => 'some_value',
+    some-header: 'some_value',
   }
 
 =end
@@ -243,6 +243,9 @@ class Channel::EmailParser
     data[:body].gsub!( /\r\n/, "\n" )
     data[:body].gsub!( /\r/, "\n" )
 
+    # remember original mail instance
+    data[:mail_instance] = mail
+
     data
   end
 
@@ -325,23 +328,36 @@ class Channel::EmailParser
     [attach]
   end
 
+=begin
+
+  parser = Channel::EmailParser.new
+  ticket, article, user = parser.process(channel, email_raw_string)
+
+retrns
+
+  [ticket, article, user]
+
+=end
+
   def process(channel, msg)
     mail = parse( msg )
 
     # run postmaster pre filter
     filters = {
       '0010' => Channel::Filter::Trusted,
+      '0100' => Channel::Filter::FollowUpCheck,
+      '0900' => Channel::Filter::BounceCheck,
       '1000' => Channel::Filter::Database,
     }
 
     # filter( channel, mail )
     filters.each {|_prio, backend|
       begin
-        backend.run( channel, mail )
+        backend.run(channel, mail)
       rescue => e
         Rails.logger.error "can't run postmaster pre filter #{backend}"
         Rails.logger.error e.inspect
-        return false
+        raise e
       end
     }
 
@@ -393,8 +409,13 @@ class Channel::EmailParser
       # set current user
       UserInfo.current_user_id = user.id
 
-      # get ticket# from subject
-      ticket = Ticket::Number.check( mail[:subject] )
+      # get ticket# based on email headers
+      if mail[ 'x-zammad-ticket-id'.to_sym ]
+        ticket = Ticket.find_by( id: mail[ 'x-zammad-ticket-id'.to_sym ] )
+      end
+      if mail[ 'x-zammad-ticket-number'.to_sym ]
+        ticket = Ticket.find_by( number: mail[ 'x-zammad-ticket-number'.to_sym ] )
+      end
 
       # set ticket state to open if not new
       if ticket

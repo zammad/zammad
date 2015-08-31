@@ -10,9 +10,6 @@ Zammad::Application.routes.draw do
   match api_path + '/channels/email_notification',    to: 'channels#email_notification',  via: :post
 
   # channels
-  match api_path + '/channels/:id',                   to: 'channels#show',    via: :get
-  match api_path + '/channels',                       to: 'channels#create',  via: :post
-  match api_path + '/channels/:id',                   to: 'channels#update',  via: :put
   match api_path + '/channels/:id',                   to: 'channels#destroy', via: :delete
 
 end

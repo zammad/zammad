@@ -243,6 +243,9 @@ returns
       state_type = Ticket::StateType.lookup( id: state.state_type_id )
     end
 
+    # set all to seen if new state is pending reminder state
+    return true if state_type.name == 'pending reminder'
+
     # set all to seen if new state is a closed or merged state
     return true if state_type.name == 'closed'
     return true if state_type.name == 'merged'

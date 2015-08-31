@@ -139,6 +139,20 @@ class EmailHelperTest < ActiveSupport::TestCase
 
   test 'z probe_inbound' do
 
+    # invalid adapter
+    result = EmailHelper::Probe.inbound(
+      adapter: 'imap2',
+      options: {
+        host: 'not_existsing_host',
+        port: 993,
+        ssl: true,
+        user: 'some@example.com',
+        password: 'password',
+      }
+    )
+
+    assert_equal('failed', result[:result])
+
     # network issues
     result = EmailHelper::Probe.inbound(
       adapter: 'imap',
@@ -211,7 +225,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('invalid', result[:result])
 
     # if we have to many failed logins, we need to handle another error message
-    if !result[:message_human].empty?
+    if result[:message_human] && !result[:message_human].empty?
       assert_equal('Authentication failed, invalid credentials!', result[:message_human])
     else
       assert_match(/Web login required/, result[:message])
@@ -255,6 +269,23 @@ class EmailHelperTest < ActiveSupport::TestCase
   end
 
   test 'z probe_outbound' do
+
+    # invalid adapter
+    result = EmailHelper::Probe.outbound(
+      {
+        adapter: 'smtp2',
+        options: {
+          host: 'not_existsing_host',
+          port: 25,
+          start_tls: true,
+          user: 'some@example.com',
+          password: 'password',
+        },
+      },
+      'some@example.com',
+    )
+
+    assert_equal('failed', result[:result])
 
     # network issues
     result = EmailHelper::Probe.outbound(
@@ -343,7 +374,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('invalid', result[:result])
 
     # if we have to many failed logins, we need to handle another error message
-    if !result[:message_human].empty?
+    if result[:message_human] && !result[:message_human].empty?
       assert_equal('Authentication failed!', result[:message_human])
     else
       assert_match(/Please log in with your web browser and then try again/, result[:message])

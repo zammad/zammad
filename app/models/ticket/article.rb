@@ -13,8 +13,9 @@ class Ticket::Article < ApplicationModel
   belongs_to    :created_by,  class_name: 'User'
   belongs_to    :updated_by,  class_name: 'User'
   store         :preferences
-  before_create :check_subject
-  before_update :check_subject
+  before_create :check_subject, :check_message_id_md5
+  before_update :check_subject, :check_message_id_md5
+
   notify_clients_support
 
   activity_stream_support ignore_attributes: {
@@ -29,12 +30,18 @@ class Ticket::Article < ApplicationModel
     preferences: true,
   }
 
+  # fillup md5 of message id to search easier on very long message ids
+  def check_message_id_md5
+    return if !message_id
+    return if message_id_md5
+    self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
+  end
+
   private
 
+  # strip not wanted chars
   def check_subject
-
     return if !subject
-
     subject.gsub!(/\s|\t|\r/, ' ')
   end
 

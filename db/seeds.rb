@@ -753,7 +753,7 @@ Setting.create_if_not_exists(
   title: 'Ticket Hook Position',
   name: 'ticket_hook_position',
   area: 'Ticket::Base',
-  description: 'The format of the subject. "Left" means "[Ticket#12345] Some Subject", "Right" means "Some Subject [Ticket#12345]", "None" means "Some Subject" and no ticket number. In the last case you should enable PostmasterFollowupSearchInRaw or PostmasterFollowUpSearchInReferences to recognize followups based on email headers and/or body.',
+  description: 'The format of the subject. "Left" means "[Ticket#12345] Some Subject", "Right" means "Some Subject [Ticket#12345]", "None" means "Some Subject" and no ticket number. In the last case you should enable "postmaster_follow_up_search_in" to recognize followups based on email headers and/or body.',
   options: {
     form: [
       {
@@ -1103,7 +1103,7 @@ Setting.create_if_not_exists(
   title: 'Additional follow up detection',
   name: 'postmaster_follow_up_search_in',
   area: 'Email::Base',
-  description: '"References" - Executes follow up checks on In-Reply-To or References headers for mails that don\'t have a ticket number in the subject. "Body" - Executes follow up mail body checks in mails that don\'t have a ticket number in the subject. "Attachment" - Executes follow up mail attachments checks in mails that don\'t have a ticket number in the subject. "Raw" - Executes follow up plain/raw mail checks in mails that don\'t have a ticket number in the subject.',
+  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up ckeck is executed. "References" - Executes follow up check on In-Reply-To or References headers for mails. "Body" - Executes follow up check in mail body. "Attachment" - Executes follow up check in mail attachments.',
   options: {
     form: [
       {
@@ -1115,12 +1115,11 @@ Setting.create_if_not_exists(
           'references' => 'References',
           'body'       => 'Body',
           'attachment' => 'Attachment',
-          'raw'        => 'Raw',
         },
       },
     ],
   },
-  state: ['subject'],
+  state: [],
   frontend: false
 )
 
