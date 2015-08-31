@@ -1,4 +1,4 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -61,7 +61,7 @@ class Index extends App.Controller
 App.Config.set( 'getting_started', Index, 'Routes' )
 
 
-class AutoWizard extends App.Controller
+class AutoWizard extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -130,7 +130,7 @@ App.Config.set( 'getting_started/auto_wizard', AutoWizard, 'Routes' )
 App.Config.set( 'getting_started/auto_wizard/:token', AutoWizard, 'Routes' )
 
 
-class Admin extends App.Controller
+class Admin extends App.ControllerContent
   className: 'getstarted fit'
   events:
     'submit form': 'submit'
@@ -510,7 +510,7 @@ class EmailNotification extends App.Wizard
 App.Config.set( 'getting_started/email_notification', EmailNotification, 'Routes' )
 
 
-class Channel extends App.Controller
+class Channel extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -563,7 +563,7 @@ class Channel extends App.Controller
 
 App.Config.set( 'getting_started/channel', Channel, 'Routes' )
 
-class ChannelEmailPreConfigured extends App.Controller
+class ChannelEmailPreConfigured extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -869,7 +869,7 @@ class ChannelEmail extends App.Wizard
 
 App.Config.set( 'getting_started/channel/email', ChannelEmail, 'Routes' )
 
-class Agent extends App.Controller
+class Agent extends App.ControllerContent
   className: 'getstarted fit'
   events:
     'submit form': 'submit'
@@ -969,7 +969,7 @@ class Agent extends App.Controller
 
 App.Config.set( 'getting_started/agents', Agent, 'Routes' )
 
-class Channel extends App.Controller
+class Channel extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
