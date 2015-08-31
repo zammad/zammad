@@ -5,12 +5,24 @@ class App.OnlineNotificationWidget extends App.Controller
   constructor: ->
     super
 
+    # at runtime if a online notifiction has changed
     @bind 'OnlineNotification::changed', =>
       @delay(
         => @fetch()
-        1200
+        1600
         'online-notification-changed'
       )
+
+    # after new websocket connection has been established
+    @ignoreInitLogin = false
+    @bind 'ws:login', =>
+      if @ignoreInitLogin
+        @delay(
+          => @fetch()
+          3200
+          'online-notification-changed'
+        )
+      @ignoreInitLogin = true
 
     # rebuild widget on auth
     @bind 'auth', (user) =>
