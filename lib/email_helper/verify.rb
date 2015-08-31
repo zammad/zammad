@@ -69,7 +69,7 @@ or
 
       # validate adapter
       adapter = params[:inbound][:adapter].downcase
-      if !EmailHelper.available_driver[:inbound].include?(adapter)
+      if !EmailHelper.available_driver[:inbound][adapter.to_sym]
         return {
           result: 'failed',
           message: "Unknown adapter '#{adapter}'",

@@ -62,6 +62,9 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
       notification_channel_ids: notification_channel_ids,
       email_address_ids: email_address_ids,
       not_used_email_address_ids: not_used_email_address_ids,
+      channel_driver: {
+        email: EmailHelper.available_driver,
+      }
     }
   end
 

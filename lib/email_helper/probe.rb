@@ -189,7 +189,7 @@ returns on fail
       adapter = params[:adapter].downcase
 
       # validate adapter
-      if !EmailHelper.available_driver[:inbound].include?(adapter)
+      if !EmailHelper.available_driver[:inbound][adapter.to_sym]
         return {
           result: 'failed',
           message: "Unknown adapter '#{adapter}'",
@@ -268,7 +268,7 @@ returns on fail
       adapter = params[:adapter].downcase
 
       # validate adapter
-      if !EmailHelper.available_driver[:outbound].include?(adapter)
+      if !EmailHelper.available_driver[:outbound][adapter.to_sym]
         return {
           result: 'failed',
           message: "Unknown adapter '#{adapter}'",
