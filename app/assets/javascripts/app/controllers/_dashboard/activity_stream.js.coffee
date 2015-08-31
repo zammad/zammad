@@ -38,9 +38,14 @@ class App.DashboardActivityStream extends App.Controller
     @render(items)
 
   render: (items) ->
+
+    # show description of activity stream
     if _.isEmpty(items)
       @$('.activity-description').removeClass('hidden')
       return
+
+    # remove description of activity stream
+    @$('.activity-description').remove()
 
     items = @prepareForObjectList(items)
 
