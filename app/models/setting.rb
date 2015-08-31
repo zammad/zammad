@@ -141,8 +141,7 @@ reset config setting to default
     return if !state
     return if state == false
 
-    return if state.respond_to?('has_key?')
-    return if state.key?(:value)
+    return if state.respond_to?('has_key?') && state.key?(:value)
 
     self.state = { value: state }
   end
