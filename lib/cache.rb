@@ -20,7 +20,7 @@ write a cache
     'some_key',
     { some: { data: { 'structure' } } },
     {
-      :expires_in => 24.hours, # optional, default 7 days
+      expires_in: 24.hours, # optional, default 7 days
     }
   )
 
@@ -41,7 +41,7 @@ write a cache
 
 get a cache
 
-  value = Cache.write('some_key')
+  value = Cache.get('some_key')
 
 =end
 
