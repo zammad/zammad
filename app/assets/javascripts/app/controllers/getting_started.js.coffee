@@ -446,7 +446,7 @@ class EmailNotification extends App.Wizard
         configure_attributes: configureAttributesOutbound
         className: ''
       params:
-        adapter: @account.outbound.adapter || 'sendmail'
+        adapter: 'sendmail'
     )
     @toggleOutboundAdapter()
 
@@ -466,7 +466,6 @@ class EmailNotification extends App.Wizard
         model:
           configure_attributes: configureAttributesOutbound
           className: ''
-        params: @account.outbound
       )
 
   submit: (e) =>

@@ -100,62 +100,59 @@ class App.Utils
 
   # textWithoutTags = App.Utils.htmlRemoveTags( html )
   @htmlRemoveTags: (html) ->
-    htmlTmp = $( '<div>' + html.html() + '</div>' )
 
     # remove comments
-    @_removeComments( htmlTmp )
+    @_removeComments(html)
 
     # remove work markup
-    htmlTmp = @_removeWordMarkup( htmlTmp )
+    @_removeWordMarkup(html)
 
     # remove tags, keep content
-    htmlTmp.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    htmlTmp.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
 
-    html.html(htmlTmp)
+    html
 
   # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext( html )
   @htmlRemoveRichtext: (html) ->
-    htmlTmp = $( '<div>' + html.html() + '</div>' )
 
     # remove comments
-    @_removeComments( htmlTmp )
+    @_removeComments(html)
 
     # remove style and class
-    @_removeAttributes( htmlTmp )
+    @_removeAttributes(html)
 
     # remove work markup
-    htmlTmp = @_removeWordMarkup( htmlTmp )
+    @_removeWordMarkup(html)
 
     # remove tags, keep content
-    htmlTmp.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    htmlTmp.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
 
-    html.html(htmlTmp)
+    html
 
   # cleanHtmlWithRichText = App.Utils.htmlCleanup( html )
   @htmlCleanup: (html) ->
-    htmlTmp = $( '<div>' + html.html() + '</div>' )
 
     # remove comments
-    @_removeComments( htmlTmp )
+    @_removeComments(html)
 
     # remove style and class
-    @_removeAttributes( htmlTmp )
+    @_removeAttributes(html)
 
     # remove work markup
-    htmlTmp = @_removeWordMarkup( htmlTmp )
+    @_removeWordMarkup(html)
 
     # remove tags, keep content
-    htmlTmp.find('a, font, small, time').replaceWith( ->
+    html.find('a, font, small, time').replaceWith( ->
       $(@).contents()
     )
 
@@ -164,7 +161,7 @@ class App.Utils
     replacementTag = 'div';
 
     # Replace all x tags with the type of replacementTag
-    htmlTmp.find('h1, h2, h3, h4, h5, h6, textarea').each( ->
+    html.find('h1, h2, h3, h4, h5, h6, textarea').each( ->
       outer = this.outerHTML;
 
       # Replace opening tag
@@ -179,9 +176,9 @@ class App.Utils
     )
 
     # remove tags & content
-    htmlTmp.find('form, font, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('form, font, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
 
-    html.html(htmlTmp)
+    html
 
   @_removeAttributes: (html) ->
     html.find('*')
@@ -199,12 +196,18 @@ class App.Utils
     html
 
   @_removeWordMarkup: (html) ->
+    match = false
     htmlTmp = html.get(0).outerHTML
     regex = new RegExp('<(/w|w)\:[A-Za-z]{3}>')
-    htmlTmp = htmlTmp.replace(regex, '')
+    if htmlTmp.match(regex)
+      match = true
+      htmlTmp = htmlTmp.replace(regex, '')
     regex = new RegExp('<(/o|o)\:[A-Za-z]{1}>')
-    htmlTmp = htmlTmp.replace(regex, '')
-    $(htmlTmp)
+    if htmlTmp.match(regex)
+      match = true
+      htmlTmp = htmlTmp.replace(regex, '')
+    if match
+      html.html(htmlTmp)
 
   # signatureNeeded = App.Utils.signatureCheck( message, signature )
   @signatureCheck: (message, signature) ->

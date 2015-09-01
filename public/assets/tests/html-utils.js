@@ -212,47 +212,55 @@ test( "htmlEscape", function() {
 test( "htmlRemoveTags", function() {
 
   var source = "<div>test</div>"
-  var should = "<div>test</div>"
+  //var should = "<div>test</div>"
+  var should = "test"
   var result = App.Utils.htmlRemoveTags( $(source) )
   equal( result.html(), should, source )
 
   source = "<div>test<!-- some comment --></div>"
-  should = "<div>test</div>"
+  //should = "<div>test</div>"
+  should = "test"
   result = App.Utils.htmlRemoveTags( $(source) )
   equal( result.html(), should, source )
 
   source = "<a href=\"some_link\">some link to somewhere</a>"
-  should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlRemoveTags( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><a href=\"some_link\">some link to somewhere</a></div>"
-  should = "<div>some link to somewhere</div>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlRemoveTags( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><a href=\"some_link\">some link to somewhere</a><input value=\"should not be shown\"></div>"
-  should = "<div>some link to somewhere</div>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlRemoveTags( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><a href=\"some_link\">some link to somewhere</a> <div><hr></div> <span>123</span> <img src=\"some_image\"/></div>"
-  should = "<div>some link to somewhere  123 </div>"
+  //should = "<div>some link to somewhere  123 </div>"
+  should = "some link to somewhere  123 "
   result = App.Utils.htmlRemoveTags( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><form class=\"xxx\">test 123</form></div>"
-  should = "<div>test 123</div>"
+  //should = "<div>test 123</div>"
+  should = "test 123"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><textarea class=\"xxx\">test 123</textarea></div>"
-  should = "<div>test 123</div>"
+  //should = "<div>test 123</div>"
+  should = "test 123"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
-  should = "<div>This is some text!</div>"
+  //should = "<div>This is some text!</div>"
+  should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 });
@@ -261,72 +269,85 @@ test( "htmlRemoveTags", function() {
 test( "htmlRemoveRichtext", function() {
 
   var source = "<div><!--test comment--><a href=\"test\">test</a></div>"
-  var should = "<div>test</div>"
+  //var should = "<div>test</div>"
+  var should = "test"
   var result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><!--[if !supportLists]--><span lang=\"DE\">1.1.1<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><!--[endif]--><span lang=\"DE\">Description</span></div>"
-  should = "<div><span>1.1.1<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span>Description</span></div>"
+  //should = "<div><span>1.1.1<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span>Description</span></div>"
+  should = "<span>1.1.1<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span>Description</span>"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<a href=\"some_link\">some link to somewhere</a>"
-  should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><a href=\"some_link\"></a> test </div>"
-  should = "<div> test </div>"
+  //should = "<div> test </div>"
+  should = " test "
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><b></b> test </div>"
-  should = "<div> test </div>"
+  //should = "<div> test </div>"
+  should = " test "
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><div><b></b> test </div></div>"
-  should = "<div><div> test </div></div>"
-  result = App.Utils.htmlRemoveRichtext( $(source) )
-  equal( result.html(), should, source )
-
-  source = "<div><div><b></b> test <input value=\"should not be shown\"></div></div>"
-  should = "<div><div> test </div></div>"
-  result = App.Utils.htmlRemoveRichtext( $(source) )
-  equal( result.html(), should, source )
-
-  source = "<div><div><b></b> test </div><span>123</span></div>"
-  should = "<div><div> test </div><span>123</span></div>"
-  result = App.Utils.htmlRemoveRichtext( $(source) )
-  equal( result.html(), should, source )
-
-  source = "<div><div class=\"xxx\" title=\"some title\" lang=\"en\"><b></b> test </div></div>"
-  should = "<div><div> test </div></div>"
-  result = App.Utils.htmlRemoveRichtext( $(source) )
-  equal( result.html(), should, source )
-
-  source = "<div><textarea class=\"xxx\"> test </textarea></div>"
+  //should = "<div><div> test </div></div>"
   should = "<div> test </div>"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
+  source = "<div><div><b></b> test <input value=\"should not be shown\"></div></div>"
+  //should = "<div><div> test </div></div>"
+  should = "<div> test </div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><div><b></b> test </div><span>123</span></div>"
+  //should = "<div><div> test </div><span>123</span></div>"
+  should = "<div> test </div><span>123</span>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><div class=\"xxx\" title=\"some title\" lang=\"en\"><b></b> test </div></div>"
+  //should = "<div><div> test </div></div>"
+  should = "<div> test </div>"
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
+  source = "<div><textarea class=\"xxx\"> test </textarea></div>"
+  //should = "<div> test </div>"
+  should = " test "
+  result = App.Utils.htmlRemoveRichtext( $(source) )
+  equal( result.html(), should, source )
+
   source = "<div><br></div>"
-  should = "<div><br></div>"
+  //should = "<div><br></div>"
+  should = "<br>"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><div class=\"xxx\"><br></div></div>"
-  should = "<div><div><br></div></div>"
+  //should = "<div><div><br></div></div>"
+  should = "<div><br></div>"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><form class=\"xxx\">test 123</form></div>"
-  should = "<div>test 123</div>"
+  //should = "<div>test 123</div>"
+  should = "test 123"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
-  should = "<div>This is some text!</div>"
+  //should = "<div>This is some text!</div>"
+  should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
@@ -336,64 +357,73 @@ test( "htmlRemoveRichtext", function() {
 test( "htmlCleanup", function() {
 
   var source = "<div><!--test comment--><a href=\"test\">test</a></div>"
-  var should = "<div>test</div>"
+  //var should = "<div>test</div>"
+  var should = "test"
   var result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<a href=\"some_link\">some link to somewhere</a>"
-  //should = "some link to somewhere"
-  should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><h1>some link to somewhere</h1></div>"
-  should = "<div><div>some link to somewhere</div></div>"
+  //should = "<div><div>some link to somewhere</div></div>"
+  should = "<div>some link to somewhere</div>"
   result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><small>some link to somewhere</small></a>"
-  should = "<div>some link to somewhere</div>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><time>some link to somewhere</time></a>"
-  should = "<div>some link to somewhere</div>"
+  //should = "<div>some link to somewhere</div>"
+  should = "some link to somewhere"
   result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><h1>some h1 for somewhere</h1><p><hr></p></div>"
-  should = "<div><div>some h1 for somewhere</div><p></p><p></p></div>"
+  //should = "<div><div>some h1 for somewhere</div><p></p><p></p></div>"
+  should = "<div>some h1 for somewhere</div><p></p><p></p>"
   result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><br></div>"
-  should = "<div><br></div>"
+  //should = "<div><br></div>"
+  should = "<br>"
   result = App.Utils.htmlCleanup( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><div class=\"xxx\"><br></div></div>"
-  should = "<div><div><br></div></div>"
+  //should = "<div><div><br></div></div>"
+  should = "<div><br></div>"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><form class=\"xxx\">test 123</form></div>"
   //should = "<div>test 123<br></div>"
-  should = "<div>test 123</div>"
+  should = "test 123"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><form class=\"xxx\">test 123</form> some other value</div>"
-  should = "<div>test 123 some other value</div>"
+  //should = "<div>test 123 some other value</div>"
+  should = "test 123 some other value"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><form class=\"xxx\">test 123</form> some other value<input value=\"should not be shown\"></div>"
-  should = "<div>test 123 some other value</div>"
+  //should = "<div>test 123 some other value</div>"
+  should = "test 123 some other value"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
   source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
-  should = "<div>This is some text!</div>"
+  //should = "<div>This is some text!</div>"
+  should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext( $(source) )
   equal( result.html(), should, source )
 
