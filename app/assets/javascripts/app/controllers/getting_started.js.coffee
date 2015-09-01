@@ -1,4 +1,4 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -61,7 +61,7 @@ class Index extends App.Controller
 App.Config.set( 'getting_started', Index, 'Routes' )
 
 
-class AutoWizard extends App.Controller
+class AutoWizard extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -130,7 +130,7 @@ App.Config.set( 'getting_started/auto_wizard', AutoWizard, 'Routes' )
 App.Config.set( 'getting_started/auto_wizard/:token', AutoWizard, 'Routes' )
 
 
-class Admin extends App.Controller
+class Admin extends App.ControllerContent
   className: 'getstarted fit'
   events:
     'submit form': 'submit'
@@ -404,13 +404,10 @@ class EmailNotification extends App.Wizard
     # set title
     @title 'Email Notifications'
 
-    @adapters = [
-      {
-        name: 'Email'
-        class: 'email'
-        link: '#getting_started/channel/email'
-      },
-    ]
+    @channelDriver =
+      email:
+        inbound: {}
+        outbound: {}
 
     @fetch()
 
@@ -432,43 +429,44 @@ class EmailNotification extends App.Wizard
           @navigate '#import/' + data.import_backend
           return
 
+        @channelDriver = data.channel_driver
+
         # render page
         @render()
     )
 
   render: ->
     @html App.view('getting_started/email_notification')()
-    adapters =
-      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
-      smtp:     'SMTP - configure your own outgoing SMTP settings'
-    adapter_used = 'sendmail'
     configureAttributesOutbound = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , default: adapter_used },
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
     ]
     new App.ControllerForm(
-      el:    @$('.base-outbound-type'),
-      model: { configure_attributes: configureAttributesOutbound, className: '' },
+      el:    @$('.base-outbound-type')
+      model:
+        configure_attributes: configureAttributesOutbound
+        className: ''
+      params:
+        adapter: 'sendmail'
     )
     @toggleOutboundAdapter()
 
   toggleOutboundAdapter: =>
 
     # show used backend
-    channel_used = { options: {} }
+    @el.find('.base-outbound-settings').html('')
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
-        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true, default: (channel_used['options']&&channel_used['options']['host']) },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', default: (channel_used['options']&&channel_used['options']['user']) },
-        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true, default: (channel_used['options']&&channel_used['options']['password']) },
+        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
-        model: { configure_attributes: configureAttributesOutbound, className: '' }
+        model:
+          configure_attributes: configureAttributesOutbound
+          className: ''
       )
-    else
-      @el.find('.base-outbound-settings').html('')
-
 
   submit: (e) =>
     e.preventDefault()
@@ -510,7 +508,7 @@ class EmailNotification extends App.Wizard
 App.Config.set( 'getting_started/email_notification', EmailNotification, 'Routes' )
 
 
-class Channel extends App.Controller
+class Channel extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -563,7 +561,7 @@ class Channel extends App.Controller
 
 App.Config.set( 'getting_started/channel', Channel, 'Routes' )
 
-class ChannelEmailPreConfigured extends App.Controller
+class ChannelEmailPreConfigured extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->
@@ -634,6 +632,11 @@ class ChannelEmail extends App.Wizard
       outbound: {}
       meta:     {}
 
+    @channelDriver =
+      email:
+        inbound: {}
+        outbound: {}
+
     @fetch()
 
   release: =>
@@ -654,6 +657,8 @@ class ChannelEmail extends App.Wizard
           @navigate '#import/' + data.import_backend
           return
 
+        @channelDriver = data.channel_driver
+
         # render page
         @render()
     )
@@ -664,29 +669,32 @@ class ChannelEmail extends App.Wizard
     @showSlide('js-intro')
 
     # outbound
-    adapters =
-      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
-      smtp:     'SMTP - configure your own outgoing SMTP settings'
-    adapter_used = 'smtp'
     configureAttributesOutbound = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters , default: adapter_used },
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
     ]
     new App.ControllerForm(
-      el:    @$('.base-outbound-type'),
-      model: { configure_attributes: configureAttributesOutbound, className: '' },
+      el:    @$('.base-outbound-type')
+      model:
+        configure_attributes: configureAttributesOutbound
+        className: ''
+      params:
+        adapter: @account.outbound.adapter || 'smtp'
     )
     @toggleOutboundAdapter()
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: { imap: 'IMAP', pop3: 'POP3' } },
+      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
     ]
     new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
-      model: { configure_attributes: configureAttributesInbound, className: '' },
+      model:
+        configure_attributes: configureAttributesInbound
+        className: ''
+      params: @account.inbound
     )
 
   toggleOutboundAdapter: =>
@@ -702,16 +710,17 @@ class ChannelEmail extends App.Wizard
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
       configureAttributesOutbound = [
-        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true, default: (channel_used['options']&&channel_used['options']['host']) },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', default: (channel_used['options']&&channel_used['options']['user']) },
-        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true, default: (channel_used['options']&&channel_used['options']['password']) },
+        { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
+        { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
-        model: { configure_attributes: configureAttributesOutbound, className: '' }
+        model:
+          configure_attributes: configureAttributesOutbound
+          className: ''
+        params: @account.outbound
       )
-    else
-      @el.find('.base-outbound-settings').html('')
 
   probeBasedOnIntro: (e) =>
     e.preventDefault()
@@ -869,7 +878,7 @@ class ChannelEmail extends App.Wizard
 
 App.Config.set( 'getting_started/channel/email', ChannelEmail, 'Routes' )
 
-class Agent extends App.Controller
+class Agent extends App.ControllerContent
   className: 'getstarted fit'
   events:
     'submit form': 'submit'
@@ -969,7 +978,7 @@ class Agent extends App.Controller
 
 App.Config.set( 'getting_started/agents', Agent, 'Routes' )
 
-class Channel extends App.Controller
+class Channel extends App.ControllerContent
   className: 'getstarted fit'
 
   constructor: ->

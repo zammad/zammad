@@ -226,6 +226,9 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       addresses: addresses,
       groups: groups,
       config: config_to_update,
+      channel_driver: {
+        email: EmailHelper.available_driver,
+      },
     }
     true
   end

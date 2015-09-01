@@ -9,8 +9,14 @@ get available driver
 returns
 
   {
-    :inbound => ['imap', 'pop3'],
-    :outbound => ['smtp', 'sendmail'],
+    inbound: {
+      imap: 'IMAP',
+      pop3: 'POP3',
+    },
+    outbound: {
+      smtp: 'SMTP - configure your own outgoing SMTP settings',
+      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup',
+    },
   }
 
 =end
@@ -18,13 +24,24 @@ returns
   def self.available_driver
     if Setting.get('system_online_service')
       return {
-        inbound: %w(imap pop3),
-        outbound: %w(smtp),
+        inbound: {
+          imap: 'IMAP',
+          pop3: 'POP3',
+        },
+        outbound: {
+          smtp: 'SMTP - configure your own outgoing SMTP settings',
+        },
       }
     end
     {
-      inbound: %w(imap pop3),
-      outbound: %w(smtp sendmail),
+      inbound: {
+        imap: 'IMAP',
+        pop3: 'POP3',
+      },
+      outbound: {
+        smtp: 'SMTP - configure your own outgoing SMTP settings',
+        sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup',
+      },
     }
   end
 

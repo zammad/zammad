@@ -26,9 +26,11 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     # clean subject
     record.subject = ticket.subject_clean( record.subject )
 
-    # generate message id
-    fqdn = Setting.get('fqdn')
-    record.message_id = '<' + DateTime.current.to_s(:number) + '.' + record.ticket_id.to_s + '.' + rand(999_999).to_s() + '@' + fqdn + '>'
+    # generate message id, force it in prodution, in test allow to set it for testing reasons
+    if !record.message_id || Rails.env.production?
+      fqdn = Setting.get('fqdn')
+      record.message_id = '<' + DateTime.current.to_s(:number) + '.' + record.ticket_id.to_s + '.' + rand(999_999).to_s() + '@' + fqdn + '>'
+    end
 
     # generate message_id_md5
     record.check_message_id_md5

@@ -243,6 +243,8 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   render: (data = {}) =>
 
+    @channelDriver = data.channel_driver
+
     # get channels
     account_channels = []
     for channel_id in data.account_channel_ids
@@ -272,8 +274,9 @@ class App.ChannelEmailAccountOverview extends App.Controller
   wizard: (e) =>
     e.preventDefault()
     new App.ChannelEmailAccountWizard(
-      container: @el.closest('.content')
-      callback:  @load
+      container:     @el.closest('.content')
+      callback:      @load
+      channelDriver: @channelDriver
     )
 
   edit_inbound: (e) =>
@@ -282,10 +285,11 @@ class App.ChannelEmailAccountOverview extends App.Controller
     channel = App.Channel.find(id)
     slide   = 'js-inbound'
     new App.ChannelEmailAccountWizard(
-      container: @el.closest('.content')
-      slide:     slide
-      channel:   channel
-      callback:  @load
+      container:     @el.closest('.content')
+      slide:         slide
+      channel:       channel
+      callback:      @load
+      channelDriver: @channelDriver
     )
 
   edit_outbound: (e) =>
@@ -294,10 +298,11 @@ class App.ChannelEmailAccountOverview extends App.Controller
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
     new App.ChannelEmailAccountWizard(
-      container: @el.closest('.content')
-      slide:     slide
-      channel:   channel
-      callback:  @load
+      container:     @el.closest('.content')
+      slide:         slide
+      channel:       channel
+      callback:      @load
+      channelDriver: @channelDriver
     )
 
   delete: (e) =>
@@ -341,9 +346,10 @@ class App.ChannelEmailAccountOverview extends App.Controller
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
     new App.ChannelEmailNotificationWizard(
-      container: @el.closest('.content')
-      channel:   channel
-      callback:  @load
+      container:     @el.closest('.content')
+      channel:       channel
+      callback:      @load
+      channelDriver: @channelDriver
     )
 
 class App.ChannelEmailAccountWizard extends App.Wizard
@@ -403,11 +409,8 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     @showSlide('js-intro')
 
     # outbound
-    adapters =
-      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
-      smtp:     'SMTP - configure your own outgoing SMTP settings'
     configureAttributesOutbound = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters },
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
     ]
     new App.ControllerForm(
       el:    @$('.base-outbound-type')
@@ -421,7 +424,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: { imap: 'imap', pop3: 'pop3' } },
+      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
@@ -700,11 +703,8 @@ class App.ChannelEmailNotificationWizard extends App.Wizard
     @showSlide('js-outbound')
 
     # outbound
-    adapters =
-      sendmail: 'Local MTA (Sendmail/Postfix/Exim/...) - use server setup'
-      smtp:     'SMTP - configure your own outgoing SMTP settings'
     configureAttributesOutbound = [
-      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: adapters },
+      { name: 'adapter', display: 'Send Mails via', tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound },
     ]
     new App.ControllerForm(
       el:    @$('.base-outbound-type')
