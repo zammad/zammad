@@ -86,7 +86,7 @@ Liebe Grüße!
       },
       {
         data: IO.read('test/fixtures/mail6.box'),
-        body_md5: 'cc60217317756f45a6e02829c0a8c49c',
+        body_md5: '6229bcc5fc1396445d781daf3c12a285',
         params: {
           from: '"Hans BÄKOSchönland" <me@bogen.net>',
           from_email: 'me@bogen.net',
@@ -102,6 +102,7 @@ Test2:&
 Test3:&ni;
 Test4:&
 Test5:=
+
 
 [1] http://localhost/8HMZENUS/2737??PS="
         },
@@ -327,7 +328,7 @@ Hof
       # spam email
       {
         data: IO.read('test/fixtures/mail16.box'),
-        body_md5: 'a2367adfa77857a078dad83826d659e8',
+        body_md5: '5e96cc53e78c0e44523502ee50647808',
         params: {
           from: nil,
           from_email: 'vipyimin@126.com',
@@ -361,7 +362,7 @@ Hof
       },
       {
         data: IO.read('test/fixtures/mail19.box'),
-        body_md5: '3e42be74f967379a3053f21f4125ca66',
+        body_md5: '0bf7e746158d121bce7e2c46b64b0d39',
         params: {
           from: '"我" <>',
           from_email: '"=?GB2312?B?ztI=?=" <>',
@@ -372,7 +373,7 @@ Hof
       },
       {
         data: IO.read('test/fixtures/mail20.box'),
-        body_md5: '65ca1367dfc26abcf49d30f68098f122',
+        body_md5: '646e803f30cddf06db90f426df3672c1',
         params: {
           from: 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
           from_email: 'drugs-cheapest8@sicor.com',
@@ -387,7 +388,7 @@ Closing the nursery with you down. Here and made the mess. Maybe the oï from un
 When someone who gave up from here. Feel of god knows what. 
 TB&piv;&exist;M5T5&Epsilon;Ef2&ucirc;&ndash;N&para;1v&Zeta;'1&dArr;&prop;5S2225 &Chi;0j&Delta;HbAg&thorn;E&mdash;2i6A2lD&uArr;LGj2nTOy11H2&tau;9&rsquo;:Their mother and tugged it seemed like 
 d3RsV&para;H2&Theta;i&macr;B&part;gax1b&icirc;gdH23r2J&yuml;1aIK1&sup2; n1jfaTk1Vs3952 C&tilde;lBl&lsquo;mxGo0&radic;2XwT8Ya 28ksa&int;f1&alefsym;s&rdquo;62Q 2Ad7$p32d1e&prod;2e.0&rdquo;261a2&Kappa;63&alpha;SM2 Nf52CdL&cup;1i&harr;xcaa52R3l6Lc3i2z16s&oacute;9&egrave;U zDE1aE21gs25&Euml;2 hE1cl&sup;&cent;11o21&micro;Bw1zF1 q2k&otilde;aXUius1r0&sube; d&bull;&isin;2$1Z2F1218l.07d56P&Uacute;l25JAO6 
-45loV2iv1i2&atilde;&Upsilon;&lfloor;a2&sup;d2g&Atilde;&Upsilon;3&trade;r22u&cedil;aWjO8 n40&ndash;Soy&egrave;2u1&empty;23p1J&Mu;Ne&Igrave;22jr&aacute;2r&Kappa; 1229A2rAkc8nuEtl22ai&Dagger;OB8vSb&eacute;&sigma;e&iota;&otilde;q1+65cw 2s8Ua&ograve;4PrsE1y8 &lang;fMElh&upsih;&sdot;Jo8pmzwj&circ;N1 wv39aW1WtsvuU3 1a&oelig;1$2&Nu;nR2O2&rceil;B.&forall;2c&rarr;5&Ecirc;9&chi;w5p1&frasl;N fHGFVfE&sup3;2i&sigma;jGpa51kgg12cWrUq52akx2h 0F24P&cedil;2L2rn22&Iuml;o2&Yacute;2HfoRb2eU&alpha;w6s2N&oline;ws&para;13&Beta;i2X1&cedil;ofgtHnR&perp;32ase92lF1H5 26B1a&sup;2i&upsih;s&ocirc;12i &Aring;kMyl2J1&Auml;oQ&ndash;0&image;wvm&ugrave;2 2&circ;&mu;\"aQ7jVse62f 1h2p$L2r&pound;3i1t2.323h5qP8g0&hearts;&divide;R2  
+45loV2iv1i2&atilde;&Upsilon;&lfloor;a2&sup;d2g&Atilde;&Upsilon;3&trade;r22u&cedil;aWjO8 n40&ndash;Soy&egrave;2u1&empty;23p1J&Mu;Ne&Igrave;22jr&aacute;2r&Kappa; 1229A2rAkc8nuEtl22ai&Dagger;OB8vSb&eacute;&sigma;e&iota;&otilde;q1+65cw 2s8Ua&ograve;4PrsE1y8 &lang;fMElh&upsih;&sdot;Jo8pmzwj&circ;N1 wv39aW1WtsvuU3 1a&oelig;1$2&Nu;nR2O2&rceil;B.&forall;2c&rarr;5&Ecirc;9&chi;w5p1&frasl;N fHGFVfE&sup3;2i&sigma;jGpa51kgg12cWrUq52akx2h 0F24P&cedil;2L2rn22&Iuml;o2&Yacute;2HfoRb2eU&alpha;w6s2N&oline;ws&para;13&Beta;i2X1&cedil;ofgtHnR&perp;32ase92lF1H5 26B1a&sup;2i&upsih;s&ocirc;12i &Aring;kMyl2J1&Auml;oQ&ndash;0&image;wvm&ugrave;2 2&circ;&mu;\"aQ7jVse62f 1h2p$L2r&pound;3i1t2.323h5qP8g0&hearts;&divide;R2 
 &middot;i&fnof;PV1&Beta;&ni;&oslash;iF1R1a4v32gL9&cent;wr1722a2&ucirc;0&eta; &thorn;12&szlig;Stu21u7&aacute;&iexcl;lp2ocEe1SLlrV2Xj &perp;U&micro;1F&not;48&eth;ov71Arm242c2Vw2e1&sect;&supe;N 1242aL&thorn;Z2ski&times;5 c&euro;pBl&ucirc;26&part;ol1f&Uacute;wK&szlig;32 4i2la4C12sRE21 &atilde;eI2$2z8t442fG.&cedil;1&le;12F&rsquo;&Atilde;152in&nsub; Tl1&euml;C2v7Ci71X8a225Nl&thorn;U&rang;&iota;icO&sum;&laquo;s&middot;iKN Uu&upsih;jS1j52u2J&uuml;&sect;pn5&deg;1e&yen;&Ucirc;3&weierp;r1W&Dagger;2 J&lsaquo;S7A1j0sc&1pkt1qq2iZ561vn81&lowast;e22Q3+723&Scaron; &sum;RkLaKX2as2s22 &iuml;111lD2z8o278wwU&ndash;&Agrave;C T6U2a&upsih;938s20G&yuml; Ox2&isin;$98&lsquo;R21H25.&Ograve;L6b9&theta;r&delta;292f9j 
 Please matt on his neck. Okay matt huï ed into your mind Since her head to check dylan. Where dylan matt got up there 
 1&Egrave;&plusmn;&Alpha;AYQ1dN12&upsih;XT00&Agrave;vI&or;&iacute;o8-1b&reg;8A&Epsilon;1V4Lg&Otilde;&uarr;7LKtgcEiw1yR5Y22GRA1&deg;I10C2C2Ti&uuml;/2wc0Ax211S&Uuml;&Acirc;2&OElig;T&Aacute;22&ograve;HpN&acirc;&ugrave;M6&Egrave;10A5Tb1:Simmons and now you really is what. Matt picked up this moment later that. 
@@ -407,12 +408,13 @@ x1qJ>mC7f 512y1GA420lCQe09s9u%uks&atilde; &psi;2X5A4g3nu&larr;&Tau;yst72pMh&scar
 Both hands through the fear in front.
 Wade to give it seemed like this. Yeah but one for any longer. Everything you going inside the kids.
 
+
 [1] http://pxmzcgy.storeprescription.ru?zz=fkxffti"
         },
       },
       {
         data: IO.read('test/fixtures/mail21.box'),
-        body_md5: 'f909a17fde261099903f3236f8755249',
+        body_md5: '617017ee0b2d1842f410fceaac696230',
         params: {
           from: 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
           from_email: 'pharmacy_affordable1@ertelecom.ru',
@@ -423,7 +425,7 @@ Wade to give it seemed like this. Yeah but one for any longer. Everything you go
       },
       {
         data: IO.read('test/fixtures/mail22.box'),
-        body_md5: '9e79cb133d52afe9e18e8438df539305',
+        body_md5: '7dd64b40dce1aa3053fc7bbdea136612',
         params: {
           from: 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
           from_email: 'ireoniqla@lipetsk.ru',
@@ -434,7 +436,8 @@ Wade to give it seemed like this. Yeah but one for any longer. Everything you go
 Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.
 Freemont and they talked with beppe.
 Thinking of bed and whenever adam.
-Mike was too tired man to hear.I10PQSHEJl2Nwf&tilde;2113S173 &Icirc;1mEbb5N371L&piv;C7AlFnR1&diams;HG64B242&brvbar;M2242zk&Iota;N&rceil;7&rceil;TBN&ETH; T2xPI&ograve;gI2&Atilde;lL2&Otilde;ML&perp;22Sa&Psi;RBreathed adam gave the master bedroom door.
+Mike was too tired man to hear.
+I10PQSHEJl2Nwf&tilde;2113S173 &Icirc;1mEbb5N371L&piv;C7AlFnR1&diams;HG64B242&brvbar;M2242zk&Iota;N&rceil;7&rceil;TBN&ETH; T2xPI&ograve;gI2&Atilde;lL2&Otilde;ML&perp;22Sa&Psi;RBreathed adam gave the master bedroom door.
 Better get charlie took the wall.
 Charlotte clark smile he saw charlie.
 Dave and leaned her tears adam.
@@ -444,6 +447,7 @@ Well as though adam took out here. Melvin will be more money. Called him into th
 Men joined the pickup truck pulled away. Chuck could make sure that.[1] &dagger;p1C?L&thinsp;I?C&ensp;K?88&ensp;5 E R?EEOD !Chuckled adam leaned forward and le? charlie.
 Just then returned to believe it here.
 Freemont and pulling out several minutes.
+
 
 [1] &#104;&#116;&#116;&#112;&#58;&#47;&#47;&#1072;&#1086;&#1089;&#1082;&#46;&#1088;&#1092;?jmlfwnwe&ucwkiyyc",
         },
@@ -571,14 +575,15 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
       },
       {
         data: IO.read('test/fixtures/mail29.box'),
-        body_md5: 'b6cc8164ce896046d631ddd44f8c9f6e',
+        body_md5: 'bd34701dd5246b7651f67aeea6dd0fd3',
         params: {
           from: 'Example Sales <sales@example.com>',
           from_email: 'sales@example.com',
           from_display_name: 'Example Sales',
           subject: 'Example licensing information: No channel available',
           to: 'info@znuny.inc',
-          body: "Dear Mr. Edenhofer,We want to keep you updated on TeamViewer licensing shortages on a regular basis.
+          body: "Dear Mr. Edenhofer,
+We want to keep you updated on TeamViewer licensing shortages on a regular basis.
 We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.
 Additional session channels can be added at any time. Please visit our [1] TeamViewer Online Shop for pricing information.
 Thank you - and again all the best with TeamViewer!
@@ -601,7 +606,7 @@ Registration AG Ulm HRB 534075 * General Manager Holger Felgner
       },
       {
         data: IO.read('test/fixtures/mail30.box'),
-        body_md5: 'bba63e2dbe29e7b82d893c2554ff466a',
+        body_md5: '23220f9537e59a8febc62705aa1c387c',
         params: {
           from: 'Manfred Haert <Manfred.Haert@example.com>',
           from_email: 'Manfred.Haert@example.com',
@@ -634,7 +639,8 @@ JETZT AUCH BEI FACEBOOK !
 [3] https://www.facebook.com/test
 ___________________________________
 Test Somewhere GmbH
- Diesee-Mail ist ausschließlich für den beabsichtigten Empfängerbestimmt. Sollten Sie irrtümlich diese e-Mail erhaltenhaben, unterrichten Sie uns bitte umgehend unter[4] kontakt@example.com und vernichten Sie diese Mitteilungeinschließlich der ggf. beigefügten Dateien.
+ 
+Diesee-Mail ist ausschließlich für den beabsichtigten Empfängerbestimmt. Sollten Sie irrtümlich diese e-Mail erhaltenhaben, unterrichten Sie uns bitte umgehend unter[4] kontakt@example.com und vernichten Sie diese Mitteilungeinschließlich der ggf. beigefügten Dateien.
 Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen Informationen nicht garantierenkönnen, bitten wir um Verständnis, dass wir zu Ihrem undunserem Schutz die rechtliche Verbindlichkeit dervorstehenden Erklärungen ausschließen, soweit wir mitIhnen keine anders lautenden Vereinbarungen getroffenhaben.
 
 

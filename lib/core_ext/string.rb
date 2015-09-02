@@ -71,11 +71,11 @@ class String
 
   returns
 
-    'string with text'
+    'string with text only'
 
 =end
 
-  def html2text
+  def html2text(string_only = false)
     string = "#{self}"
 
     # in case of invalid encodeing, strip invalid chars
@@ -88,12 +88,17 @@ class String
     # find <a href=....> and replace it with [x]
     link_list = ''
     counter   = 0
-    string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) {
-      link = $2
-      counter   = counter + 1
-      link_list += "[#{counter}] #{link}\n"
-      "[#{counter}] "
-    }
+    if !string_only
+      string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) {
+        link = $2
+        counter   = counter + 1
+        link_list += "[#{counter}] #{link}\n"
+        "[#{counter}] "
+      }
+    end
+
+    # remove style tags with content
+    string.gsub!(/<style(|\s.+?)>(.+?)<\/style>/im, '')
 
     # remove empty lines
     string.gsub!( /^\s*/m, '' )
@@ -107,27 +112,37 @@ class String
     }
 
     # remove all new lines
-    string.gsub!( /(\n\r|\r\r\n|\r\n|\n)/, '' )
+    string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
+
+    # blockquote handling
+    string.gsub!( %r{<blockquote(| [^>]*)>(.+?)</blockquote>}m ) { |placeholder|
+      placeholder = "\n" + $2.html2text(true).gsub(/^(.*)$/, "&gt; \\1") + "\n"
+    }
 
     # pre/code handling 2/2
-    string.gsub!( /###BR###/, "\n" )
+    string.gsub!(/###BR###/, "\n" )
 
     # add counting
     string.gsub!(/<li(| [^>]*)>/i, "\n* ")
 
-    # add quoting
-    string.gsub!(/<blockquote(| [^>]*)>/i, '> ')
-
     # add hr
-    string.gsub!(%r{<hr(|/| [^>]*)>}i, "___\n")
+    string.gsub!(%r{<hr(|/| [^>]*)>}i, "\n___\n")
+
+    # add h\d
+    string.gsub!(%r{</h\d>}i, "\n")
 
     # add new lines
-    string.gsub!( %r{<(br|table)(|/| [^>]*)>}i, "\n" )
-    string.gsub!( %r{</(div|p|pre|blockquote|table|tr)(|\s.+?)>}i, "\n" )
+    string.gsub!( %r{</div><div(|\s.+?)>}im, "\n" )
+    string.gsub!( %r{</p><p(|\s.+?)>}im, "\n" )
+    string.gsub!( %r{<(div|p|pre|br|table|h)(|/| [^>]*)>}i, "\n" )
+    string.gsub!( %r{</(tr|p|br|div)(|\s.+?)>}i, "\n" )
     string.gsub!( %r{</td>}i, ' '  )
 
     # strip all other tags
     string.gsub!( /\<.+?\>/, '' )
+
+    # replace multible spaces with one
+    string.gsub!(/  /, ' ')
 
     # strip all &amp; &lt; &gt; &quot;
     string.gsub!( '&amp;', '&' )
@@ -173,9 +188,11 @@ class String
     # remove multible empty lines
     string.gsub!(/\n\n\n/, "\n\n")
 
+    string.strip!
+
     # add extracted links
     if link_list != ''
-      string += "\n\n" + link_list
+      string += "\n\n\n" + link_list
     end
 
     string.strip
