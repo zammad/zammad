@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
-
+# rubocop:disable TrailingWhitespace
 class AaaStringTest < ActiveSupport::TestCase
 
   test 'to_filename ref' do
@@ -188,7 +188,6 @@ ont-size: 12px;;
     should = 'some other content'
     assert_equal( should, html.html2text )
 
-
     html = '        IT-Infrastruktur</span><br>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
       <meta name="Generator" content="Microsoft Word 14 (filtered
@@ -285,7 +284,6 @@ some content
 
 some text later'
     assert_equal( result, html.html2text )
-
 
     html   = "<h1>some head</h1>
     some content
