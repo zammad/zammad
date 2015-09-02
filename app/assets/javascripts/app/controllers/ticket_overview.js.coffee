@@ -34,7 +34,7 @@ class App.TicketOverview extends App.Controller
     # redirect to last overview if we got called in first level
     @view = params['view']
     if !@view && @viewLast
-      @navigate "ticket/view/#{@viewLast}"
+      @navigate "ticket/view/#{@viewLast}", true
       return
 
     # build nav bar
@@ -783,7 +783,7 @@ class Navbar extends App.Controller
     if @activeState && !@view && !_.isEmpty(data)
       view = data[0].link
       #console.log('REDIRECT', "ticket/view/#{view}")
-      @navigate "ticket/view/#{view}"
+      @navigate "ticket/view/#{view}", true
       return
 
     # add new views
