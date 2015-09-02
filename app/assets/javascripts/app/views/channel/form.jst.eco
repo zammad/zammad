@@ -69,9 +69,12 @@
 &lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
 
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
+
 &lt;script&gt;
-$('#feedback-form').zammad_form({
+$(function() {
+  $('#feedback-form').zammad_form({
 <span class="js-modal-params"></span>
+  });
 });
 &lt;/script&gt;</pre>
 </div>

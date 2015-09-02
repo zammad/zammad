@@ -27,7 +27,7 @@ class App.ChannelForm extends App.Controller
       if paramString != ''
         paramString += ",\n"
       if value == 'true' || value == 'false'
-        paramString += "  #{key}: #{value}"
+        paramString += "    #{key}: #{value}"
       else
-        paramString += "  #{key}: '#{quote(value)}'"
+        paramString += "    #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)
