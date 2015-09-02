@@ -377,6 +377,22 @@ class App.Utils
             foundInLines = lineCount
     searchForMs(textToSearchInLines, markers)
 
+    # word 14
+    # edv hotline wrote:
+    # edv hotline schrieb:
+    searchForWord14 = (textToSearchInLines, markers) ->
+      lineCount = 0
+      for line in textToSearchInLines
+        lineCount += 1
+        if line && line.match( /^.{1,250}\s(wrote|schrieb):/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'Word14'
+          markers.push marker
+          return
+    searchForWord14(textToSearchInLines, markers)
+
     # marker template
     markerTemplate = '<span class="js-signatureMarker"></span>'
 
