@@ -87,17 +87,11 @@ class App.Content extends App.ControllerWidgetPermanent
             params:     params_only,
           )
 
-          # remove waypoints
-          $('footer').waypoint('remove')
-
           # execute controller
           controller = (params) =>
             params.el = @el
             new callback(params)
           controller(params)
-
-          # scroll to top / remember last screen position
-#          @scrollTo(0, 0, 100)
         )
 
     Spine.Route.setup()
