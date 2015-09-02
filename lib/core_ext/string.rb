@@ -98,7 +98,7 @@ class String
     end
 
     # remove style tags with content
-    string.gsub!(/<style(|\s.+?)>(.+?)<\/style>/im, '')
+    string.gsub!( %r{<style(|\s.+?)>(.+?)</style>}im, '')
 
     # remove empty lines
     string.gsub!( /^\s*/m, '' )
@@ -115,8 +115,8 @@ class String
     string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
 
     # blockquote handling
-    string.gsub!( %r{<blockquote(| [^>]*)>(.+?)</blockquote>}m ) { |placeholder|
-      placeholder = "\n" + $2.html2text(true).gsub(/^(.*)$/, "&gt; \\1") + "\n"
+    string.gsub!( %r{<blockquote(| [^>]*)>(.+?)</blockquote>}m ) {
+      "\n" + $2.html2text(true).gsub(/^(.*)$/, '&gt; \1') + "\n"
     }
 
     # pre/code handling 2/2
