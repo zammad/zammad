@@ -87,6 +87,13 @@ class App.Content extends App.ControllerWidgetPermanent
             params:     params_only,
           )
 
+          # remember history
+          # needed to mute "redirect" url to support browser back
+          history = App.Config.get('History')
+          if history[10]
+            history.pop()
+          history.push window.location.hash
+
           # execute controller
           controller = (params) =>
             params.el = @el

@@ -1,4 +1,5 @@
-App.Config.set( 'User', {
+App.Config.set('History', [])
+App.Config.set('User', {
   prio:   1000,
   parent: '',
   callback: ->

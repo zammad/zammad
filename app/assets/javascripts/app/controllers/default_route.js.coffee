@@ -1,4 +1,4 @@
-class Index extends App.Controller
+class DefaultRouter extends App.Controller
 
   constructor: ->
     super
@@ -28,5 +28,5 @@ class Index extends App.Controller
 
     @navigate '#dashboard', true
 
-App.Config.set( '', Index, 'Routes' )
-App.Config.set( '/', Index, 'Routes' )
+App.Config.set( '', DefaultRouter, 'Routes' )
+App.Config.set( '/', DefaultRouter, 'Routes' )
