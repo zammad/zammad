@@ -29,6 +29,16 @@ class App.Controller extends Spine.Controller
       ajaxId = App.Ajax.request(data)
       @ajaxCalls.push ajaxId
 
+  navigate: (location, hide_current_location_from_history = false) ->
+    @log 'notice', "navigate to '#{location}'"
+
+    # hide current location from browser history, allow to use back button in browser
+    if hide_current_location_from_history
+      @log 'debug', "ignore new location from browser histroy '#{location}'"
+      if window.history
+        window.history.replaceState(null, null, location)
+    super location
+
   bind: (event, callback) =>
     App.Event.bind(
       event

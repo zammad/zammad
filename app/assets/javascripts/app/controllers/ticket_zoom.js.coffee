@@ -88,7 +88,12 @@ class App.TicketZoom extends App.Controller
     '#ticket/zoom/' + @ticket_id
 
   show: (params) =>
-    return if @activeState
+
+    # if controller is executed twice, go to latest article
+    if @activeState
+      @scrollToBottom()
+      return
+
     @activeState = true
 
     App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )

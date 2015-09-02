@@ -93,6 +93,18 @@ class App.OnlineNotificationWidget extends App.Controller
       @hidePopover()
     )
 
+    # execute controller again of already open (because hash hasn't changed, we need to do it manually)
+    $('.js-locationVerify').on('click', (e) =>
+      newLocation = $(e.target).attr 'href'
+      if !newLocation
+        newLocation = $(e.target).closest('.js-locationVerify').attr 'href'
+      return if !newLocation
+      currentLocation = Spine.Route.getPath()
+      return if newLocation.replace(/#/, '') isnt currentLocation
+      @log 'debug', "execute controller again for '#{currentLocation}' because of same hash"
+      Spine.Route.matchRoutes(currentLocation)
+    )
+
     # mark all notifications as read
     $('.js-markAllAsRead').on('click', (e) =>
       e.preventDefault()

@@ -4,7 +4,7 @@
     <a class="activity-avatar user-popover" data-id="<%= item.created_by_id %>" href="<%- item.created_by.uiUrl() %>">
       <%- item.created_by.avatar() %>
     </a>
-    <a href="<%- item.link %>" class="activity-body">
+    <a href="<%- item.link %>" class="activity-body js-locationVerify">
       <span class="activity-message">
         <span class="activity-text">
           <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> (<%= item.title %>)<% end %>
