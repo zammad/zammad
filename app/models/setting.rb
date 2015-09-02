@@ -43,6 +43,7 @@ get config setting
 =end
 
   def self.get(name)
+    logger.debug "Setting.get(#{name.inspect})"
     load
     @@current[:settings_config][name]
   end
