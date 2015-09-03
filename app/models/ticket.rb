@@ -165,8 +165,8 @@ merge tickets
 
   ticket = Ticket.find(123)
   result = ticket.merge_to(
-    :ticket_id => 123,
-    :user_id   => 123,
+    ticket_id: 123,
+    user_id:   123,
   )
 
 returns
@@ -222,10 +222,19 @@ returns
 
 =begin
 
-know if online notifcation should be shown as already seen with current state
+check if online notifcation should be shown in general as already seen with current state
 
   ticket = Ticket.find(1)
-  seen = ticket.online_notification_seen_state
+  seen = ticket.online_notification_seen_state(user_id_check)
+
+returns
+
+  result = true # or false
+
+check if online notifcation should be shown for this user as already seen with current state
+
+  ticket = Ticket.find(1)
+  seen = ticket.online_notification_seen_state(check_user_id)
 
 returns
 
@@ -233,7 +242,7 @@ returns
 
 =end
 
-  def online_notification_seen_state
+  def online_notification_seen_state(user_id_check = nil)
     state      = Ticket::State.lookup( id: state_id )
     state_type = Ticket::StateType.lookup( id: state.state_type_id )
 
@@ -244,7 +253,14 @@ returns
     end
 
     # set all to seen if new state is pending reminder state
-    return true if state_type.name == 'pending reminder'
+    if state_type.name == 'pending reminder'
+      if user_id_check
+        return false if owner_id == 1
+        return false if updated_by_id != owner_id && user_id_check == owner_id
+        return true
+      end
+      return true
+    end
 
     # set all to seen if new state is a closed or merged state
     return true if state_type.name == 'closed'
@@ -260,9 +276,7 @@ returns
   end
 
   def check_title
-
     return if !title
-
     title.gsub!(/\s|\t|\r/, ' ')
   end
 

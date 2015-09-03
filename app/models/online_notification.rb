@@ -14,12 +14,12 @@ class OnlineNotification < ApplicationModel
 add a new online notification for this user
 
   OnlineNotification.add(
-    :type          => 'Assigned to you',
-    :object        => 'Ticket',
-    :o_id          => ticket.id,
-    :seen          => false,
-    :created_by_id => 1,
-    :user_id       => 2,
+    type:          'Assigned to you',
+    object:        'Ticket',
+    o_id:          ticket.id,
+    seen:          false,
+    created_by_id: 1,
+    user_id:       2,
   )
 
 =end
@@ -51,7 +51,7 @@ add a new online notification for this user
 mark online notification as seen
 
   OnlineNotification.seen(
-    :id => 2,
+    id: 2,
   )
 
 =end
@@ -93,9 +93,9 @@ return all online notifications of an user
                     .limit( limit )
     list = []
     notifications.each do |item|
-      data = item.attributes
-      data['object']  = ObjectLookup.by_id( data['object_lookup_id'] )
-      data['type']    = TypeLookup.by_id( data['type_lookup_id'] )
+      data           = item.attributes
+      data['object'] = ObjectLookup.by_id( data['object_lookup_id'] )
+      data['type']   = TypeLookup.by_id( data['type_lookup_id'] )
       data.delete('object_lookup_id')
       data.delete('type_lookup_id')
       list.push data
@@ -119,24 +119,14 @@ return all online notifications of an object
     )
     .order( 'created_at DESC, id DESC' ) # rubocop:disable Style/MultilineOperationIndentation
     .limit( 10_000 ) # rubocop:disable Style/MultilineOperationIndentation
-
-    list = []
-    notifications.each do |item|
-      data = item.attributes
-      data['object']  = ObjectLookup.by_id( data['object_lookup_id'] )
-      data['type']    = TypeLookup.by_id( data['type_lookup_id'] )
-      data.delete('object_lookup_id')
-      data.delete('type_lookup_id')
-      list.push data
-    end
-    list
+    notifications
   end
 
 =begin
 
 mark online notification as seen by object
 
-  OnlineNotification.seen_by_object( 'Ticket', 123 )
+  OnlineNotification.seen_by_object( 'Ticket', 123, user_id )
 
 =end
 
@@ -163,8 +153,8 @@ return all online notifications of an user with assets
 returns:
 
   list = {
-    :stream => notifications,
-    :assets => assets
+    stream: notifications,
+    assets: assets,
   }
 
 =end
