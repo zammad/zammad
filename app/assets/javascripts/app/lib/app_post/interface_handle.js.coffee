@@ -91,7 +91,7 @@ class App.Content extends App.ControllerWidgetPermanent
           # needed to mute "redirect" url to support browser back
           history = App.Config.get('History')
           if history[10]
-            history.pop()
+            history.shift()
           history.push window.location.hash
 
           # execute controller

@@ -30,7 +30,7 @@ class App.Controller extends Spine.Controller
       @ajaxCalls.push ajaxId
 
   navigate: (location, hideCurrentLocationFromHistory = false) ->
-    @log 'notice', "navigate to '#{location}', hide from history '#{hideCurrentLocationFromHistory}'"
+    @log 'debug', "navigate to '#{location}', hide from history '#{hideCurrentLocationFromHistory}'"
 
     # hide current location from browser history, allow to use back button in browser
     if hideCurrentLocationFromHistory
