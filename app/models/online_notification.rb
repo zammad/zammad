@@ -188,7 +188,7 @@ cleanup old online notifications
 =end
 
   def self.cleanup
-    OnlineNotification.where('created_at < ?', Time.zone.now - 12.months).delete_all
+    OnlineNotification.where('created_at < ?', Time.zone.now - 6.months).delete_all
     OnlineNotification.where('seen = ? AND created_at < ?', true, Time.zone.now - 4.hours).delete_all
     OnlineNotification.where('seen = ? AND updated_at < ?', true, Time.zone.now - 1.hours).delete_all
 
