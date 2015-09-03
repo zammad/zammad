@@ -323,7 +323,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
   test 'ticket notification item check' do
     ticket1 = Ticket.create(
-      title: "some title",
+      title: 'some title',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
       state: Ticket::State.lookup(name: 'new'),
