@@ -1,4 +1,4 @@
 <div class="fullscreenMessage">
-  <svg class="icon-error icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+  <%- @Icon('icon-diagonal-cross', 'icon-error icon-diagonal-cross') %>
   <h2><%- @T('Status Code') %>: 1234. Check your internet connection...</h2>
 </div>

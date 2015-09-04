@@ -1,7 +1,7 @@
 <div class="modal-content">
   <div class="modal-arrow js-arrow"></div>
   <div class="modal-close js-close">
-    <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+    <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
   </div>
   <div class="modal-header"><%= @headline %></div>
   <div class="modal-body"><%- @text %></div>

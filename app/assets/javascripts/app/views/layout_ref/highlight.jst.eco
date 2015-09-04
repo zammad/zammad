@@ -3,11 +3,11 @@
   <div class="ticketZoom">
     <div class="ticketZoom-controls">
       <div class="btn btn--action btn--split--first js-highlight">
-        <svg class="icon icon-marker js-highlight-icon"><use xlink:href="#icon-marker" /></svg>
+        <%- @Icon('icon-marker', 'icon icon-marker js-highlight-icon') %>
       </div>
       <div class="dropdown dropdown--actions">
         <div class="btn btn--action btn--split--last btn--slim" id="highlight" data-toggle="dropdown" aria-expanded="true">
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+          <%- @Icon('icon-arrow-down', 'icon-arrow-down') %>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu">
           <% for entry, i in @colors: %>
@@ -30,11 +30,11 @@
         <ul class="pagination">
           <li>
             <a class="btn btn--action btn--split--first" data-from="0" data-type="page">
-              <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
+              <%- @Icon('icon-arrow-left', 'icon-arrow-left') %>
             </a>
           <li>
             <a class="btn btn--action btn--split--last" href="#" data-from="1" data-type="page">
-              <svg class="icon-arrow-right"><use xlink:href="#icon-arrow-right" /></svg>
+              <%- @Icon('icon-arrow-right', 'icon-arrow-right') %>
             </a>
         </ul>
       </li>
@@ -55,11 +55,11 @@
       <ul class="pagination">
         <li>
           <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-            <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
+            <%- @Icon('icon-arrow-left', 'icon-arrow-left') %>
           </a>
         <li>
           <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-            <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
+            <%- @Icon('icon-arrow-left', 'icon-arrow-left') %>
           </a>
       </ul>
     </div>

@@ -3,7 +3,7 @@
   <form class="modal-content setup wizard hide js-probe">
     <div class="modal-header">
       <div class="modal-close js-close">
-        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+        <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
       </div>
       <h1 class="modal-title"><%- @T('Email Notification') %></h1>
     </div>
@@ -20,7 +20,7 @@
   <form class="modal-content setup wizard hide js-test">
     <div class="modal-header">
       <div class="modal-close js-close">
-        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+        <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
       </div>
       <h1 class="modal-title"><%- @T('Email Notification') %></h1>
     </div>
@@ -41,7 +41,7 @@
     <!-- /dummy to prevent chrome to ask for password save -->
     <div class="modal-header">
       <div class="modal-close js-close">
-        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+        <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
       </div>
       <h1 class="modal-title"><%- @T('Email Notification') %></h1>
     </div>

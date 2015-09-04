@@ -40,7 +40,7 @@
           <div class="auth-providers">
             <% for auth_provider in @auth_providers: %>
               <a class="auth-provider auth-provider--<%= auth_provider.class %>" href="<%= auth_provider.url %>">
-                <svg class="provider-icon"><use xlink:href="#icon-<%= auth_provider.class %>-button" /></svg>
+                <%- @Icon("icon-#{auth_provider.class}-button", 'provider-icon') %>
                 <span class="provider-name"><%- @T( auth_provider.name ) %></span>
               </a>
             <% end %>
@@ -65,8 +65,8 @@
     </div>
   </div>
   <div class="poweredBy">
-    <svg class="logo icon-logo"><use xlink:href="#icon-logo" /></svg>
+    <%- @Icon('icon-logo', 'logo icon-logo') %>
     <%- @T("Powered by") %>
-    <svg class="logotype icon-logotype"><use xlink:href="#icon-logotype" /></svg>
+    <%- @Icon('icon-logotype', 'logotype icon-logotype') %>
   </div>
 </div>

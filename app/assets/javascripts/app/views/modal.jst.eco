@@ -4,7 +4,7 @@
       <div class="modal-header">
   <% if @close: %>
         <div class="modal-close js-close">
-          <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+          <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
         </div>
   <% end %>
         <h1 class="modal-title"><%- @T( @head ) %></h1>

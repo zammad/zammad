@@ -7,6 +7,6 @@
 <% end %>
   </select>
   <% if not @attribute.multiple: %>
-  <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
+    <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
   <% end %>
 </div>

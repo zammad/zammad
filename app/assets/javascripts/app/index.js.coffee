@@ -229,6 +229,10 @@ class App extends Spine.Controller
         humanTime = App.PrettyDate.humanTime(time, escalation)
         "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
 
+      # define icon helper
+      params.Icon = (name, className = '') ->
+        "<svg class=\"#{className}\"><use xlink:href=\"##{name}\" /></svg>"
+
       # define template
       JST["app/views/#{name}"](params)
     template

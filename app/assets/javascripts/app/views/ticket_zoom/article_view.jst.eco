@@ -48,7 +48,7 @@
         </div>
         <% if !_.isEmpty( @article.attachments ): %>
           <div class="attachments">
-            <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
+            <%- @Icon('icon-paperclip', 'icon-paperclip') %>
             <h3><%- @article.attachments.length %> <%- @T('Attached Files') %></h3>
             <% for attachment in @article.attachments: %>
               <div class="attachment">
@@ -69,7 +69,7 @@
       <div class="horizontal article-meta-row">
         <div class="article-meta-key"><%- @T( 'Channel' ) %></div>
         <div class="article-meta-value">
-          <svg class="article-meta-icon"><use xlink:href="#icon-<%- @article.type.name %>" /></svg>
+          <%- @Icon("icon-#{@article.type.name}", 'article-meta-icon') %>
           <%- @T(@article.type.name) %>
           <% if @article.type.name is 'email': %>
           <a class="text-muted" href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= @article.id %>"><%- @T( 'raw' ) %></a>

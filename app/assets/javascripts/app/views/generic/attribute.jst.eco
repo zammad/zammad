@@ -9,7 +9,7 @@
     <% end %>
     <% if @attribute.note: %>
     <div class="help-message" title="<%- @Ti( @attribute.note ) + ' ' %>">
-      <svg class="icon-help"><use xlink:href="#icon-help" /></svg>
+      <%- @Icon('icon-help', 'icon-help') %>
     </div>
     <% end %>
   </div>

@@ -1,8 +1,8 @@
-<svg class="switchBackToUser-icon"><use xlink:href="#icon-switchView" /></svg>
+<%- @Icon('icon-switchView', 'switchBackToUser-icon') %>
 <div class="switchBackToUser-text"><%- @T('Zammad looks like this for "%s"', @S('firstname') + ' ' + @S('lastname')  ) %></div>
 <div class="align-right horizontal center js-close u-clickable">
   <%- @T('Back to my view') %>
   <div class="switchBackToUser-close">
-    <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+    <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
   </div>
 </div>

@@ -1,23 +1,19 @@
 <% for item in @item_list: %>
   <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="nav-tab task <%= item.data.class %><% if item.task.active: %> is-active<% end %><% if item.task.notify: %> is-modified<% end %>" data-key="<%- item.task.key %>">
     <div class="nav-tab-icon">
-      <svg class="icon icon-<%= item.data.iconClass %>">
-        <% if item.task.notify && item.data.iconClass is 'priority': %>
-        <use xlink:href="#icon-priority-modified-outer-circle" />
-        <% else: %>
-        <use xlink:href="#icon-<%= item.data.iconClass %>" />
-        <% end %>
-      </svg>
       <% if item.task.notify && item.data.iconClass is 'priority': %>
-      <svg class="icon modified-inner-circle icon-<%= item.data.iconClass %>">
-        <use xlink:href="#icon-priority-modified-inner-circle" />
-      </svg>
+        <%- @Icon('icon-priority-modified-outer-circle', "icon icon-#{item.data.iconClass}") %>
+      <% else: %>
+        <%- @Icon("icon-#{item.data.iconClass}", "icon icon-#{item.data.iconClass}") %>
+      <% end %>
+      <% if item.task.notify && item.data.iconClass is 'priority': %>
+        <%- @Icon('icon-priority-modified-inner-circle', "icon modified-inner-circle icon-#{item.data.iconClass}") %>
       <% end %>
     </div>
     <div class="nav-tab-name u-textTruncate flex"><%= item.data.head %></div>
     <div class="nav-tab-close js-close" title="<%- @Ti('close') %>">
       <div class="nav-tab-close-inner">
-        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+        <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
       </div>
     </div>
   </a>

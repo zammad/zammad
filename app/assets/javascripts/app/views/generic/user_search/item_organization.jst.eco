@@ -1,10 +1,10 @@
 <li class="recipientList-entry js-organization" data-organization-id="<%- @organization.id %>">
   <div class="recipientList-iconSpacer">
-    <svg class="recipientList-icon"><use xlink:href="#icon-organization" /></svg>
+    <%- @Icon('icon-organization', 'recipientList-icon') %>
   </div>
   <div class="recipientList-name">
     <%= @organization.displayName() %>
     <span class="recipientList-detail">- <%= @organization.member_ids.length %> <%- @T('People') %></span>
   </div>
-  <svg class="recipientList-arrow icon-arrow-right"><use xlink:href="#icon-arrow-right" /></svg>
+  <%- @Icon('icon-arrow-right', 'recipientList-arrow icon-arrow-right') %>
 </li>

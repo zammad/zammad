@@ -5,8 +5,8 @@
       <th style="width: 40px" class="no-padding">
         <label class="input-replacement">
           <input type="checkbox" value="" name="bulk_all"/>
-          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
-          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
+          <%- @Icon('icon-checkbox', 'icon-checkbox icon-unchecked') %>
+          <%- @Icon('icon-checkbox-checked', 'icon-checkbox-checked icon-checked') %>
         </label>
       </th>
     <% end %>
@@ -42,8 +42,8 @@
       <td class="no-padding">
         <label class="input-replacement">
           <input type="checkbox" value="<%= object.id %>" name="bulk"/>
-          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
-          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
+          <%- @Icon('icon-checkbox', 'icon-checkbox icon-unchecked') %>
+          <%- @Icon('icon-checkbox-checked', 'icon-checkbox-checked icon-checked') %>
         </label>
       </td>
     <% end %>
@@ -51,8 +51,8 @@
       <td class="no-padding">
         <label class="input-replacement">
           <input type="radio" value="<%= object.id %>" name="radio"/>
-          <svg class="icon-radio icon-unchecked"><use xlink:href="#icon-radio" /></svg>
-          <svg class="icon-radio-checked icon-checked"><use xlink:href="#icon-radio-checked" /></svg>
+          <%- @Icon('icon-radio', 'icon-radio icon-unchecked') %>
+          <%- @Icon('icon-radio-checked', 'icon-radio-checked icon-checked') %>
         </label>
       </td>
     <% end %>
@@ -73,9 +73,7 @@
 
       <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %>>
         <% if item.name is 'icon': %>
-          <svg class="<%- item.class %>">
-            <use xlink:href="#icon-priority" />
-          </svg>
+          <%- @Icon('icon-priority', item.class) %>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
@@ -92,7 +90,7 @@
       </td>
     <% end %>
     <% if @destroy: %>
-      <td><svg class="icon-trash" data-type="destroy"><use xlink:href="#icon-trash" /></svg></td>
+      <td data-type="destroy"><%- @Icon('icon-trash', 'icon-trash') %></td>
     <% end %>
   </tr>
 <% end %>

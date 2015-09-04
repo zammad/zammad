@@ -5,7 +5,7 @@
   <% ticket = App.Ticket.fullLocal(ticket_id) %>
   <li class="task">
     <div class="icon-holder">
-      <svg class="<%- ticket.icon() %>"><use xlink:href="#icon-priority" /></svg>
+      <%- @Icon('icon-priority', ticket.icon()) %>
     </div>
     <div class="task-text">
       <a class="name ticket-popover" data-id="<%- ticket_id %>" href="<%- ticket.uiUrl() %>"><%= ticket.title %></a>

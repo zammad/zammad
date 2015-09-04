@@ -3,7 +3,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <div class="modal-close js-close">
-        <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+        <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
       </div>
       <h1 class="modal-title"><%- @T( @head ) %></h1>
     </div>

@@ -3,9 +3,8 @@
   <% for tag in @tags: %>
   <li class="sidebar-list-item">
     <div class="sidebar-list-item-name"><%= tag %></div>
-    <!--<span>3</span>-->
     <div class="sidebar-list-item-delete js-delete">
-      <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      <%- @Icon('icon-diagonal-cross', 'icon icon-diagonal-cross') %>
     </div>
   <% end %>
 </ul>

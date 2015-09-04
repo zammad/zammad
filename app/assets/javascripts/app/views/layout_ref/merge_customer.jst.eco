@@ -16,11 +16,11 @@
 
   <div class="merge-control">
     <div class="merge-arrow">
-      <svg class="line-arrow icon-line-left-arrow"><use xlink:href="#icon-line-left-arrow" /></svg>
+      <%- @Icon('icon-line-left-arrow', 'line-arrow icon-line-left-arrow') %>
     </div>
     <div class="merge-control-input">is equal</div>
     <div class="merge-arrow">
-      <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+      <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
     </div>
   </div>
 
@@ -38,17 +38,17 @@
 
   <div class="merge-control">
     <div class="merge-arrow">
-      <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+      <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
     </div>
     <div class="merge-control-input u-positionOrigin">
       <select id="a" class="form-control form-control--small">
         <option>replace</option>
         <option>ignore</option>
       </select>
-      <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
+      <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
     </div>
     <div class="merge-arrow">
-      <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+      <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
     </div>
   </div>
 
@@ -68,7 +68,7 @@
   <div class="merge-controls">
     <div class="merge-control">
       <div class="merge-arrow">
-        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
       </div>
       <div class="merge-control-input u-positionOrigin">
         <select id="a" class="form-control form-control--small">
@@ -76,15 +76,15 @@
           <option selected>add</option>
           <option>ignore</option>
         </select>
-        <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
+        <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
       </div>
       <div class="merge-arrow">
-        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
       </div>
     </div>
     <div class="merge-control">
       <div class="merge-arrow">
-        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
       </div>
       <div class="merge-control-input u-positionOrigin">
         <select id="a" class="form-control form-control--small">
@@ -92,10 +92,10 @@
           <option selected>add</option>
           <option>ignore</option>
         </select>
-        <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
+        <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
       </div>
       <div class="merge-arrow">
-        <svg class="line-arrow icon-line-right-arrow"><use xlink:href="#icon-line-right-arrow" /></svg>
+        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
       </div>
     </div>
   </div>

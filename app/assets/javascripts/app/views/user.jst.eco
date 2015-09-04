@@ -12,7 +12,7 @@
 </div>
 
 <div class="searchfield">
-  <svg class="icon icon-magnifier"><use xlink:href="#icon-magnifier" /></svg>
+  <%- @Icon('icon-magnifier', 'icon icon-magnifier') %>
   <input class="js-search form-control" name="search" placeholder="<%- @Ti('Search for users') %>" type="search">
 </div>
 

@@ -57,7 +57,7 @@
           <option>Znuny</option>
           <option>Max &amp; Moritz</option>
         </select>
-        <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down" /></svg>
+        <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
       </div>
     </div>
 

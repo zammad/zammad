@@ -1,5 +1,5 @@
 <div class="main flex vertical centered darkBackground">
-  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <%- @Icon('icon-full-logo', 'wizard-logo icon-full-logo') %>
   <div class="setup wizard">
     <div class="wizard-slide">
       <div class="wizard-body vertical centered">
