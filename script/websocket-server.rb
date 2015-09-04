@@ -184,7 +184,9 @@ EventMachine.run {
 
         # get user_id
         if data && data['session_id']
+          ActiveRecord::Base.establish_connection
           session = ActiveRecord::SessionStore::Session.find_by( session_id: data['session_id'] )
+          ActiveRecord::Base.remove_connection
         end
 
         if session && session.data && session.data['user_id']
