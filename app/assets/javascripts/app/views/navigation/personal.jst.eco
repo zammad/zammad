@@ -6,7 +6,7 @@
         <% if item.class is 'user': %>
           <span class="js-avatar"></span>
         <% else: %>
-          <%- @Icon('icon-plus', 'user-menu-icon icon-plus') %>
+          <%- @Icon('plus', 'user-menu-icon') %>
         <% end %>
       </a>
       <ul class="dropdown-menu dropdown-menu--light" role="menu">
@@ -21,7 +21,7 @@
             <a href="<%= item.target %>" class="horizontal center">
               <span class="flex u-textTruncate"><% if item.translate: %><%- @T( item.name ) %><% else: %><%= item.name %><% end %></span>
               <% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %>
-              <% if item.iconClass: %><%- @Icon("icon-#{item.iconClass}", "icon-#{item.iconClass}") %><% end %>
+              <% if item.iconClass: %><%- @Icon(item.iconClass) %><% end %>
             </a>
           </li>
         <% end %>
@@ -30,7 +30,7 @@
   <% else: %>
     <li class="settings <% if @active_tab[item.target] : %>active<% end %>">
       <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
-        <%- @Icon('icon-cog', 'user-menu-icon icon-cog') %>
+        <%- @Icon('cog', 'user-menu-icon') %>
       </a>
     </li>
   <% end %>

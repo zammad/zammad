@@ -9,17 +9,17 @@
         <ul class="horizontal tabs type-tabs">
 
           <li class="tab u-textTruncate" data-type="phone-in">
-            <%- @Icon('icon-received-calls', 'tab-icon') %>
+            <%- @Icon('received-calls', 'tab-icon') %>
             <%- @T('Received Call') %>
           </li>
 
           <li class="tab u-textTruncate" data-type="phone-out">
-            <%- @Icon('icon-outbound-calls', 'tab-icon') %>
+            <%- @Icon('outbound-calls', 'tab-icon') %>
             <%- @T('Outbound Call') %>
           </li>
 
          <li class="tab u-textTruncate" data-type="email-out">
-            <%- @Icon('icon-email', 'tab-icon') %>
+            <%- @Icon('email', 'tab-icon') %>
             <%- @T('Send Email') %>
           </li>
         </ul>

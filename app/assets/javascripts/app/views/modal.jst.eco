@@ -4,7 +4,7 @@
       <div class="modal-header">
   <% if @close: %>
         <div class="modal-close js-close">
-          <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
+          <%- @Icon('diagonal-cross') %>
         </div>
   <% end %>
         <h1 class="modal-title"><%- @T( @head ) %></h1>

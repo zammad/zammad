@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <div class="modal-close js-close">
-              <%- @Icon('icon-diagonal-cross', 'icon-error icon-diagonal-cross') %>
+              <%- @Icon('diagonal-cross', 'icon-error') %>
             </div>
             <h1 class="modal-title">Edit Customer</h1>
           </div>

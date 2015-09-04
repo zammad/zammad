@@ -2,8 +2,8 @@
 <% for row in @attribute.options: %>
     <label>
       <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>> <%= row.name %> <% if row.note: %>- <%= row.note %><% end %>
-      <%- @Icon('icon-radio', 'icon-radio') %>
-      <%- @Icon('icon-radio-checked', 'icon-radio-checked') %>
+      <%- @Icon('radio') %>
+      <%- @Icon('radio-checked') %>
     </label>
 <% end %>
 </div>

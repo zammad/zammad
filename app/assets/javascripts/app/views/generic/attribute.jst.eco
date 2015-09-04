@@ -9,7 +9,7 @@
     <% end %>
     <% if @attribute.note: %>
     <div class="help-message" title="<%- @Ti( @attribute.note ) + ' ' %>">
-      <%- @Icon('icon-help', 'icon-help') %>
+      <%- @Icon('help') %>
     </div>
     <% end %>
   </div>

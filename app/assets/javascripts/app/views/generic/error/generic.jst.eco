@@ -1,4 +1,4 @@
 <div class="fullscreenMessage">
-  <%- @Icon('icon-diagonal-cross', 'icon-error icon-diagonal-cross') %>
+  <%- @Icon('diagonal-cross', 'icon-error') %>
   <h2><%- @T('Status Code') %>: <%= @status %>. <%= @detail %></h2>
 </div>

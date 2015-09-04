@@ -1,6 +1,6 @@
 <li class="recipientList-entry js-user" data-user-id="<%= @user.id %>">
   <div class="recipientList-iconSpacer">
-    <%- @Icon('icon-user', 'recipientList-icon') %>
+    <%- @Icon('user', 'recipientList-icon') %>
   </div>
   <div class="recipientList-name">
     <%= @user.displayName() %>

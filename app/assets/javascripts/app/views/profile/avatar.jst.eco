@@ -22,7 +22,7 @@
       <span class="avatar size-80 <% if avatar.default: %>is-active<% end %>" data-avatar-id="<%- avatar.id %>" style="background-image: url(<%- avatar.content %>)"></span>
       <% if avatar.deletable: %>
         <div class="avatar-delete">
-          <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
+          <%- @Icon('diagonal-cross') %>
         </div>
       <% end %>
     <% end %>

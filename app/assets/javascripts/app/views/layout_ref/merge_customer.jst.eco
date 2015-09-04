@@ -16,11 +16,11 @@
 
   <div class="merge-control">
     <div class="merge-arrow">
-      <%- @Icon('icon-line-left-arrow', 'line-arrow icon-line-left-arrow') %>
+      <%- @Icon('line-left-arrow', 'line-arrow') %>
     </div>
     <div class="merge-control-input">is equal</div>
     <div class="merge-arrow">
-      <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
+      <%- @Icon('line-right-arrow', 'line-arrow') %>
     </div>
   </div>
 
@@ -38,17 +38,17 @@
 
   <div class="merge-control">
     <div class="merge-arrow">
-      <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
+      <%- @Icon('line-right-arrow', 'line-arrow') %>
     </div>
     <div class="merge-control-input u-positionOrigin">
       <select id="a" class="form-control form-control--small">
         <option>replace</option>
         <option>ignore</option>
       </select>
-      <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
+      <%- @Icon('arrow-down', 'dropdown-arrow') %>
     </div>
     <div class="merge-arrow">
-      <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
+      <%- @Icon('line-right-arrow', 'line-arrow') %>
     </div>
   </div>
 
@@ -68,7 +68,7 @@
   <div class="merge-controls">
     <div class="merge-control">
       <div class="merge-arrow">
-        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
+        <%- @Icon('line-right-arrow', 'line-arrow') %>
       </div>
       <div class="merge-control-input u-positionOrigin">
         <select id="a" class="form-control form-control--small">
@@ -76,15 +76,15 @@
           <option selected>add</option>
           <option>ignore</option>
         </select>
-        <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
       </div>
       <div class="merge-arrow">
-        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
+        <%- @Icon('line-right-arrow', 'line-arrow') %>
       </div>
     </div>
     <div class="merge-control">
       <div class="merge-arrow">
-        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
+        <%- @Icon('line-right-arrow', 'line-arrow') %>
       </div>
       <div class="merge-control-input u-positionOrigin">
         <select id="a" class="form-control form-control--small">
@@ -92,10 +92,10 @@
           <option selected>add</option>
           <option>ignore</option>
         </select>
-        <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
       </div>
       <div class="merge-arrow">
-        <%- @Icon('icon-line-right-arrow', 'line-arrow icon-line-right-arrow') %>
+        <%- @Icon('line-right-arrow', 'line-arrow') %>
       </div>
     </div>
   </div>

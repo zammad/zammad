@@ -4,7 +4,7 @@
   <li class="sidebar-list-item">
     <div class="sidebar-list-item-name"><%= tag %></div>
     <div class="sidebar-list-item-delete js-delete">
-      <%- @Icon('icon-diagonal-cross', 'icon icon-diagonal-cross') %>
+      <%- @Icon('diagonal-cross') %>
     </div>
   <% end %>
 </ul>

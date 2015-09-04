@@ -1,8 +1,8 @@
-<%- @Icon('icon-switchView', 'switchBackToUser-icon') %>
+<%- @Icon('switchView', 'switchBackToUser-icon') %>
 <div class="switchBackToUser-text"><%- @T('Zammad looks like this for "%s"', @S('firstname') + ' ' + @S('lastname')  ) %></div>
 <div class="align-right horizontal center js-close u-clickable">
   <%- @T('Back to my view') %>
   <div class="switchBackToUser-close">
-    <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
+    <%- @Icon('diagonal-cross') %>
   </div>
 </div>

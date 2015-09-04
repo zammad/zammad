@@ -59,10 +59,10 @@
               <li><%- @T('none') %></li>
           <% end %>
           </ul>
-          <a href="#" data-type="email-address-new" title="<%- @Ti('New Email Address') %>"><%- @Icon('icon-plus', 'icon-trash') %></a>
+          <a href="#" data-type="email-address-new" title="<%- @Ti('New Email Address') %>"><%- @Icon('plus', 'icon-trash') %></a>
         </td>
         <td>
-          <a href="#" data-type="delete" title="<%- @Ti('Delete') %>"><%- @Icon('icon-trash', 'icon-trash') %></a>
+          <a href="#" data-type="delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
         </td>
       </tr>
       <% if channel.status_in is 'error': %>

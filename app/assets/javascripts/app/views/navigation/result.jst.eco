@@ -5,7 +5,7 @@
     <li>
       <a href="<%- item.url %>" class="nav-tab nav-tab--search <%= item.class %>" data-id="<%= item.id %>">
         <div class="nav-tab-icon">
-          <%- @Icon("icon-#{item.iconClass}", "icon icon-#{item.iconClass}") %>
+          <%- @Icon(item.iconClass) %>
         </div>
         <span class="nav-tab-name flex u-textTruncate"><%= item.display %></span>
       </a>

@@ -1,5 +1,5 @@
 <div class="main flex vertical centered darkBackground">
-  <%- @Icon('icon-full-logo', 'wizard-logo icon-full-logo') %>
+  <%- @Icon('full-logo', 'wizard-logo') %>
 
   <form class="setup wizard js-intro">
     <!-- dummy to prevent chrome to ask for password save -->

@@ -1,7 +1,7 @@
 <div class="modal-content">
   <div class="modal-arrow js-arrow"></div>
   <div class="modal-close js-close">
-    <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
+    <%- @Icon('diagonal-cross') %>
   </div>
   <div class="modal-header"><%= @headline %></div>
   <div class="modal-body"><%- @text %></div>

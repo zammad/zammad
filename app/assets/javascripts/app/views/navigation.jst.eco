@@ -1,13 +1,13 @@
 <form class="search">
   <div class="search-holder">
     <input id="global-search" type="search" autocomplete="off">
-    <%- @Icon('icon-magnifier', 'icon-magnifier') %>
+    <%- @Icon('magnifier') %>
     <div class="empty-search">
-      <%- @Icon('icon-diagonal-cross', 'icon-diagonal-cross') %>
+      <%- @Icon('diagonal-cross') %>
     </div>
   </div>
   <div class="logo js-toggleNavigation">
-    <%- @Icon('icon-logo', 'icon-logo') %>
+    <%- @Icon('logo') %>
     <div class="activity-counter js-counter"></div>
   </div>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>

@@ -3,11 +3,11 @@
   <div class="ticketZoom">
     <div class="ticketZoom-controls">
       <div class="btn btn--action btn--split--first js-highlight">
-        <%- @Icon('icon-marker', 'icon icon-marker js-highlight-icon') %>
+        <%- @Icon('marker', 'js-highlight-icon') %>
       </div>
       <div class="dropdown dropdown--actions">
         <div class="btn btn--action btn--split--last btn--slim" id="highlight" data-toggle="dropdown" aria-expanded="true">
-          <%- @Icon('icon-arrow-down', 'icon-arrow-down') %>
+          <%- @Icon('arrow-down') %>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu">
           <% for entry, i in @colors: %>
@@ -30,11 +30,11 @@
         <ul class="pagination">
           <li>
             <a class="btn btn--action btn--split--first" data-from="0" data-type="page">
-              <%- @Icon('icon-arrow-left', 'icon-arrow-left') %>
+              <%- @Icon('arrow-left') %>
             </a>
           <li>
             <a class="btn btn--action btn--split--last" href="#" data-from="1" data-type="page">
-              <%- @Icon('icon-arrow-right', 'icon-arrow-right') %>
+              <%- @Icon('arrow-right') %>
             </a>
         </ul>
       </li>
@@ -55,11 +55,11 @@
       <ul class="pagination">
         <li>
           <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-            <%- @Icon('icon-arrow-left', 'icon-arrow-left') %>
+            <%- @Icon('arrow-left') %>
           </a>
         <li>
           <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-            <%- @Icon('icon-arrow-left', 'icon-arrow-left') %>
+            <%- @Icon('arrow-left') %>
           </a>
       </ul>
     </div>

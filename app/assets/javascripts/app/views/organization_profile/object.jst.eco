@@ -1,7 +1,7 @@
 <div class="profile-section vertical centered">
   <div class="align-right profile-action js-action"></div>
   <div class="profile-organizationIcon">
-    <%- @Icon('icon-organization', 'icon-organization') %>
+    <%- @Icon('organization') %>
   </div>
   <h1><%= @organization.displayName() %></h1>
 </div>

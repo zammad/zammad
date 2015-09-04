@@ -1,9 +1,9 @@
 <div class="btn btn--action btn--split--first js-highlight centered">
-  <%- @Icon('icon-marker', 'icon icon-marker js-highlight-icon') %>
+  <%- @Icon('marker', 'js-highlight-icon') %>
 </div>
 <div class="dropdown dropdown--actions">
   <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown" aria-expanded="true">
-    <%- @Icon('icon-arrow-down', 'icon-arrow-down') %>
+    <%- @Icon('arrow-down') %>
   </div>
   <ul class="dropdown-menu dropdown-menu-right" role="menu">
     <% for entry, i in @colors: %>

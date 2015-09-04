@@ -57,7 +57,7 @@
           <option>Znuny</option>
           <option>Max &amp; Moritz</option>
         </select>
-        <%- @Icon('icon-arrow-down', 'dropdown-arrow') %>
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
       </div>
     </div>
 

@@ -5,8 +5,8 @@
       <th style="width: 40px" class="no-padding">
         <label class="input-replacement">
           <input type="checkbox" value="" name="bulk_all"/>
-          <%- @Icon('icon-checkbox', 'icon-checkbox icon-unchecked') %>
-          <%- @Icon('icon-checkbox-checked', 'icon-checkbox-checked icon-checked') %>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
       </th>
     <% end %>
@@ -42,8 +42,8 @@
       <td class="no-padding">
         <label class="input-replacement">
           <input type="checkbox" value="<%= object.id %>" name="bulk"/>
-          <%- @Icon('icon-checkbox', 'icon-checkbox icon-unchecked') %>
-          <%- @Icon('icon-checkbox-checked', 'icon-checkbox-checked icon-checked') %>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
       </td>
     <% end %>
@@ -51,8 +51,8 @@
       <td class="no-padding">
         <label class="input-replacement">
           <input type="radio" value="<%= object.id %>" name="radio"/>
-          <%- @Icon('icon-radio', 'icon-radio icon-unchecked') %>
-          <%- @Icon('icon-radio-checked', 'icon-radio-checked icon-checked') %>
+          <%- @Icon('radio', 'icon-unchecked') %>
+          <%- @Icon('radio-checked', 'icon-checked') %>
         </label>
       </td>
     <% end %>
@@ -73,7 +73,7 @@
 
       <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %>>
         <% if item.name is 'icon': %>
-          <%- @Icon('icon-priority', item.class) %>
+          <%- @Icon('priority', item.class) %>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
@@ -90,7 +90,7 @@
       </td>
     <% end %>
     <% if @destroy: %>
-      <td data-type="destroy"><%- @Icon('icon-trash', 'icon-trash') %></td>
+      <td data-type="destroy"><%- @Icon('trash') %></td>
     <% end %>
   </tr>
 <% end %>
