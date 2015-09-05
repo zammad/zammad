@@ -21,8 +21,8 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal('Regensdorf', result['city_name'])
     assert_equal('CH', result['country_code'])
     assert_equal('EU', result['continent_code'])
-    assert_equal(47.4299, result['latitude'])
-    assert_equal(8.465100000000007, result['longitude'])
+    assert_equal(47.4319, result['latitude'])
+    assert_equal(8.4658, result['longitude'])
 
     result = Service::GeoIp.location( '134.109.140.74' )
     assert(result)
@@ -30,8 +30,8 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal('Chemnitz', result['city_name'])
     assert_equal('DE', result['country_code'])
     assert_equal('EU', result['continent_code'])
-    assert_equal(50.83330000000001, result['latitude'])
-    assert_equal(12.916699999999992, result['longitude'])
+    assert_equal(50.8333, result['latitude'])
+    assert_equal(12.9167, result['longitude'])
 
     result = Service::GeoIp.location( '46.253.55.170' )
     assert(result)
@@ -39,8 +39,8 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal('Halle', result['city_name'])
     assert_equal('DE', result['country_code'])
     assert_equal('EU', result['continent_code'])
-    assert_equal(51.5, result['latitude'])
-    assert_equal(12.0, result['longitude'])
+    assert_equal(51.5034, result['latitude'])
+    assert_equal(11.9622, result['longitude'])
 
     result = Service::GeoIp.location( '169.229.216.200' )
     assert(result)
@@ -48,7 +48,7 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal('Berkeley', result['city_name'])
     assert_equal('US', result['country_code'])
     assert_equal('NA', result['continent_code'])
-    assert_equal(37.86680000000001, result['latitude'])
+    assert_equal(37.8668, result['latitude'])
     assert_equal(-122.2536, result['longitude'])
 
   end
