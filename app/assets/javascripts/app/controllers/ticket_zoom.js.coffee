@@ -89,6 +89,11 @@ class App.TicketZoom extends App.Controller
 
   show: (params) =>
 
+    @navupdate '#'
+
+    # set all notifications to seen
+    App.OnlineNotification.seen( 'Ticket', @ticket_id )
+
     # if controller is executed twice, go to latest article
     if @activeState
       @scrollToBottom()
@@ -103,8 +108,6 @@ class App.TicketZoom extends App.Controller
       @highlighed = true
       @highligher.loadHighlights()
 
-    App.OnlineNotification.seen( 'Ticket', @ticket_id )
-    @navupdate '#'
     @positionPageHeaderStart()
 
   hide: =>
