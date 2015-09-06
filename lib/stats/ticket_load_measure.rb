@@ -4,14 +4,17 @@ class Stats::TicketLoadMeasure
 
   def self.generate(user)
 
+    open_state_ids = Ticket::State.by_category('open').map(&:id)
+
     # owned tickets
-    count = Ticket.where(owner_id: user.id).count
+    count = Ticket.where(owner_id: user.id, state_id: open_state_ids).count
 
     # get total open
-    total = Ticket.where(group_id: user.groups.map(&:id), state_id: Ticket::State.by_category('open').map(&:id) ).count
+    total = Ticket.where(group_id: user.groups.map(&:id), state_id: open_state_ids).count
 
     average = '-'
     state = 'good'
+    load_measure_precent = 0
     #  if in_process_precent > 80
     #    state = 'supergood'
     #  elsif in_process_precent > 60
@@ -27,8 +30,10 @@ class Stats::TicketLoadMeasure
     if count > total
       total = count
     end
-    load_measure_precent = (count * 1000) / ((total * 1000) / 100)
 
+    if count != 0 && total != 0
+      load_measure_precent = (count * 1000) / ((total * 1000) / 100)
+    end
     {
       average: average,
       percent: load_measure_precent,
