@@ -16,7 +16,6 @@ class CreateStatsStore < ActiveRecord::Migration
     add_index :stats_stores, [:created_by_id]
     add_index :stats_stores, [:created_at]
 
-
     Scheduler.create_or_update(
       name: 'Generate user based stats.',
       method: 'Stats.generate',
