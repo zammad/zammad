@@ -133,7 +133,7 @@ EventMachine.run {
         next
       end
 
-      # check if connection already exists
+      # check if connection not already exists
       next if !@clients[client_id]
 
       # spool messages for new connects
