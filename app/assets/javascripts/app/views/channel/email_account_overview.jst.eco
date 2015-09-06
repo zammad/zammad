@@ -65,12 +65,12 @@
           <a href="#" data-type="delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
         </td>
       </tr>
-      <% if channel.status_in is 'error': %>
+      <% if !_.isEmpty(channel.last_log_in): %>
       <tr>
         <td colspan="4"><%= channel.last_log_in %></td>
       </tr>
       <% end %>
-      <% if channel.status_out is 'error': %>
+      <% if !_.isEmpty(channel.last_log_out): %>
       <tr>
         <td colspan="4"><%= channel.last_log_out %></td>
       </tr>

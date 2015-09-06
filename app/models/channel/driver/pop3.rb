@@ -88,7 +88,7 @@ returns
           break if content_max_check < content_messages
         end
       end
-      if content_messages >= content_messages
+      if content_messages >= content_max_check
         content_messages = mails.count
       end
       disconnect
@@ -109,14 +109,13 @@ returns
         next if !mail
 
         # check if verify message exists
-        if mail =~ /#{verify_string}/
-          Rails.logger.info " - verify email #{verify_string} found"
-          m.delete
-          disconnect
-          return {
-            result: 'ok',
-          }
-        end
+        next if mail !~ /#{verify_string}/
+        Rails.logger.info " - verify email #{verify_string} found"
+        m.delete
+        disconnect
+        return {
+          result: 'ok',
+        }
       end
 
       return {
@@ -132,14 +131,14 @@ returns
     mails.each do |m|
       count += 1
       Rails.logger.info " - message #{count}/#{count_all}"
-
       mail = m.pop
+      next if !mail
 
       # ignore to big messages
-      max_message_size = Setting.get('postmaster_max_size')
+      max_message_size = Setting.get('postmaster_max_size').to_f
       real_message_size = mail.size.to_f / 1024 / 1024
       if real_message_size > max_message_size
-        info = "  - ignore message #{count}/#{count_all} - because message is to big (is:#{real_message_size}/max:#{max_message_size} in MB)"
+        info = "  - ignore message #{count}/#{count_all} - because message is to big (is:#{real_message_size} MB/max:#{max_message_size} MB)"
         Rails.logger.info info
         notice += "#{info}\n"
         next

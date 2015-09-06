@@ -72,15 +72,15 @@ returns on fail
           next if domain_to_check !~ /#{settings[:domain]}/i
 
           # probe inbound
-          Rails.logger.info "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}"
+          Rails.logger.debug "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}"
           result_inbound = EmailHelper::Probe.inbound(settings[:inbound])
-          Rails.logger.info "INBOUND RESULT PROVIDER: #{result_inbound.inspect}"
+          Rails.logger.debug "INBOUND RESULT PROVIDER: #{result_inbound.inspect}"
           next if result_inbound[:result] != 'ok'
 
           # probe outbound
-          Rails.logger.info "OUTBOUND PROBE PROVIDER: #{settings[:outbound].inspect}"
+          Rails.logger.debug "OUTBOUND PROBE PROVIDER: #{settings[:outbound].inspect}"
           result_outbound = EmailHelper::Probe.outbound(settings[:outbound], params[:email])
-          Rails.logger.info "OUTBOUND RESULT PROVIDER: #{result_outbound.inspect}"
+          Rails.logger.debug "OUTBOUND RESULT PROVIDER: #{result_outbound.inspect}"
           next if result_outbound[:result] != 'ok'
 
           return {
@@ -103,9 +103,9 @@ returns on fail
       }
       success = false
       inbound_map.each {|config|
-        Rails.logger.info "INBOUND PROBE GUESS: #{config.inspect}"
+        Rails.logger.debug "INBOUND PROBE GUESS: #{config.inspect}"
         result_inbound = EmailHelper::Probe.inbound(config)
-        Rails.logger.info "INBOUND RESULT GUESS: #{result_inbound.inspect}"
+        Rails.logger.debug "INBOUND RESULT GUESS: #{result_inbound.inspect}"
 
         next if result_inbound[:result] != 'ok'
 
@@ -131,9 +131,9 @@ returns on fail
 
       success = false
       outbound_map.each {|config|
-        Rails.logger.info "OUTBOUND PROBE GUESS: #{config.inspect}"
+        Rails.logger.debug "OUTBOUND PROBE GUESS: #{config.inspect}"
         result_outbound = EmailHelper::Probe.outbound(config, params[:email])
-        Rails.logger.info "OUTBOUND RESULT GUESS: #{result_outbound.inspect}"
+        Rails.logger.debug "OUTBOUND RESULT GUESS: #{result_outbound.inspect}"
 
         next if result_outbound[:result] != 'ok'
 
@@ -149,7 +149,7 @@ returns on fail
           reason: 'outbound failed',
         }
       end
-
+      Rails.logger.info "PROBE FULL SUCCESS: #{result.inspect}"
       result
     end
 

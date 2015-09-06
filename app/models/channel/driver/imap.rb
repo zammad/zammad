@@ -101,7 +101,7 @@ returns
           break if content_max_check < content_messages
         end
       end
-      if content_messages >= content_messages
+      if content_messages >= content_max_check
         content_messages = message_ids.count
       end
       disconnect
@@ -123,15 +123,15 @@ returns
 
         # check if verify message exists
         subject = message_meta['ENVELOPE'].subject
-        if subject && subject =~ /#{verify_string}/
-          Rails.logger.info " - verify email #{verify_string} found"
-          @imap.store(message_id, '+FLAGS', [:Deleted])
-          @imap.expunge()
-          disconnect
-          return {
-            result: 'ok',
-          }
-        end
+        next if !subject
+        next if subject !~ /#{verify_string}/
+        Rails.logger.info " - verify email #{verify_string} found"
+        @imap.store(message_id, '+FLAGS', [:Deleted])
+        @imap.expunge()
+        disconnect
+        return {
+          result: 'ok',
+        }
       end
 
       disconnect
@@ -153,10 +153,10 @@ returns
       message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE'])[0]
 
       # ignore to big messages
-      max_message_size = Setting.get('postmaster_max_size')
+      max_message_size = Setting.get('postmaster_max_size').to_f
       real_message_size = message_meta.attr['RFC822.SIZE'].to_f / 1024 / 1024
       if real_message_size > max_message_size
-        info = "  - ignore message #{count}/#{count_all} - because message is to big (is:#{real_message_size}/max:#{max_message_size} in MB)"
+        info = "  - ignore message #{count}/#{count_all} - because message is to big (is:#{real_message_size} MB/max:#{max_message_size} MB)"
         Rails.logger.info info
         notice += "#{info}\n"
         next
@@ -170,6 +170,7 @@ returns
 
       # delete email from server after article was created
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
+      next if !msg
       if process(channel, msg)
         @imap.store(message_id, '+FLAGS', [:Deleted])
         count_fetched += 1
