@@ -602,6 +602,7 @@ class App.Wizard extends App.Controller
   goToSlide: (e) =>
     e.preventDefault()
     slide = $(e.target).data('slide')
+    return if !slide
     @showSlide(slide)
 
   showSlide: (name) =>

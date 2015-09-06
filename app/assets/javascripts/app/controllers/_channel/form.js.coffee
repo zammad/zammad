@@ -31,3 +31,5 @@ class App.ChannelForm extends App.Controller
       else
         paramString += "    #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)
+
+App.Config.set( 'Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, role: ['Admin'] }, 'NavBarAdmin' )

@@ -108,10 +108,33 @@
     </div>
     <div class="modal-footer">
       <div class="modal-rightFooter">
-      <a class="btn btn--text btn--secondary js-back align-left" data-slide="js-intro"><%- @T('Go Back') %></a>
+      <a class="btn btn--text btn--secondary js-goToSlide align-left" data-slide="js-intro"><%- @T('Go Back') %></a>
       </div>
       <div class="modal-rightFooter">
         <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
+      </div>
+    </div>
+  </form>
+
+  <form class="modal-content setup wizard hide js-inbound-acknowledge">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+      <h1 class="modal-title"><%- @T('Email Inbound') %></h1>
+    </div>
+    <div class="modal-body">
+      <div class="wizard-body vertical justified">
+        <div class="alert alert--danger hide" role="alert"></div>
+        <p class="js-message"><%- @T('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', 'x') %></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-rightFooter">
+      <a class="btn btn--text btn--secondary js-goToSlide js-back align-left" data-slide="js-inbound"><%- @T('Go Back') %></a>
+      </div>
+      <div class="modal-rightFooter">
+        <button class="btn btn--primary js-goToSlide js-next align-right" data-slide="js-outbound"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>
@@ -136,7 +159,7 @@
     </div>
     <div class="modal-footer">
       <div class="modal-rightFooter">
-      <a class="btn btn--text btn--secondary js-back align-left" data-slide="js-inbound"><%- @T('Go Back') %></a>
+      <a class="btn btn--text btn--secondary js-goToSlide align-left" data-slide="js-inbound"><%- @T('Go Back') %></a>
       </div>
       <div class="modal-rightFooter">
         <button class="btn btn--primary align-right"><%- @T('Continue') %></button>

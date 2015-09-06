@@ -157,9 +157,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
         status_in: 'ok',
         status_out: 'ok',
       )
-      render json: {
-        result: 'ok',
-      }
+      render json: result
       return
     end
 
@@ -202,9 +200,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
       )
     end
 
-    render json: {
-      result: 'ok',
-    }
+    render json: result
   end
 
   def email_notification

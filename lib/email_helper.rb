@@ -107,8 +107,8 @@ returns
   def self.provider(email, password)
     # check domain based attributes
     provider_map = {
-      google: {
-        domain: 'gmail.com|googlemail.com|gmail.de',
+      google_imap: {
+        domain: 'gmail|googlemail|google',
         inbound: {
           adapter: 'imap',
           options: {
@@ -146,6 +146,29 @@ returns
           adapter: 'smtp',
           options: {
             host: 'smtp-mail.outlook.com',
+            port: 25,
+            start_tls: true,
+            user: email,
+            password: password,
+          }
+        },
+      },
+      google_pop3: {
+        domain: 'gmail|googlemail|google',
+        inbound: {
+          adapter: 'pop3',
+          options: {
+            host: 'pop.gmail.com',
+            port: 995,
+            ssl: true,
+            user: email,
+            password: password,
+          },
+        },
+        outbound: {
+          adapter: 'smtp',
+          options: {
+            host: 'smtp.gmail.com',
             port: 25,
             start_tls: true,
             user: email,

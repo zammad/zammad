@@ -32,18 +32,18 @@ class EmailHelperTest < ActiveSupport::TestCase
     password = 'some_pw'
     map = EmailHelper.provider(email, password)
 
-    assert_equal('imap', map[:google][:inbound][:adapter])
-    assert_equal('imap.gmail.com', map[:google][:inbound][:options][:host])
-    assert_equal(993, map[:google][:inbound][:options][:port])
-    assert_equal(email, map[:google][:inbound][:options][:user])
-    assert_equal(password, map[:google][:inbound][:options][:password])
+    assert_equal('imap', map[:google_imap][:inbound][:adapter])
+    assert_equal('imap.gmail.com', map[:google_imap][:inbound][:options][:host])
+    assert_equal(993, map[:google_imap][:inbound][:options][:port])
+    assert_equal(email, map[:google_imap][:inbound][:options][:user])
+    assert_equal(password, map[:google_imap][:inbound][:options][:password])
 
-    assert_equal('smtp', map[:google][:outbound][:adapter])
-    assert_equal('smtp.gmail.com', map[:google][:outbound][:options][:host])
-    assert_equal(25, map[:google][:outbound][:options][:port])
-    assert_equal(true, map[:google][:outbound][:options][:start_tls])
-    assert_equal(email, map[:google][:outbound][:options][:user])
-    assert_equal(password, map[:google][:outbound][:options][:password])
+    assert_equal('smtp', map[:google_imap][:outbound][:adapter])
+    assert_equal('smtp.gmail.com', map[:google_imap][:outbound][:options][:host])
+    assert_equal(25, map[:google_imap][:outbound][:options][:port])
+    assert_equal(true, map[:google_imap][:outbound][:options][:start_tls])
+    assert_equal(email, map[:google_imap][:outbound][:options][:user])
+    assert_equal(password, map[:google_imap][:outbound][:options][:password])
 
   end
 
@@ -431,7 +431,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('invalid', result[:result])
     assert_not(result[:setting])
 
-    # realtest - test I
+    # realtest - test I, with imap
     if !ENV['EMAILHELPER_MAILBOX_1']
       fail "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
@@ -446,11 +446,26 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('arber.znuny.com', result[:setting][:inbound][:options][:host])
     assert_equal('arber.znuny.com', result[:setting][:outbound][:options][:host])
 
+    # realtest - test II, gmail with only pop3
+    if !ENV['EMAILHELPER_MAILBOX_2']
+      fail "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
+    end
+    mailbox_user     = ENV['EMAILHELPER_MAILBOX_2'].split(':')[0]
+    mailbox_password = ENV['EMAILHELPER_MAILBOX_2'].split(':')[1]
+
+    result = EmailHelper::Probe.full(
+      email: mailbox_user,
+      password: mailbox_password,
+    )
+    assert_equal('ok', result[:result])
+    assert_equal('pop.gmail.com', result[:setting][:inbound][:options][:host])
+    assert_equal('smtp.gmail.com', result[:setting][:outbound][:options][:host])
+
   end
 
   test 'zz verify' do
 
-    # realtest - test I
+    # realtest - test I, with imap
     if !ENV['EMAILHELPER_MAILBOX_1']
       fail "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
@@ -481,6 +496,39 @@ class EmailHelperTest < ActiveSupport::TestCase
       sender: mailbox_user,
     )
     assert_equal('ok', result[:result])
+
+    # realtest - test II, gmail with pop3
+    if !ENV['EMAILHELPER_MAILBOX_2']
+      fail "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
+    end
+    mailbox_user     = ENV['EMAILHELPER_MAILBOX_2'].split(':')[0]
+    mailbox_password = ENV['EMAILHELPER_MAILBOX_2'].split(':')[1]
+    user, domain = EmailHelper.parse_email(mailbox_user)
+    result = EmailHelper::Verify.email(
+      inbound: {
+        adapter: 'pop3',
+        options: {
+          host: 'pop.gmail.com',
+          port: 995,
+          ssl: true,
+          user: mailbox_user,
+          password: mailbox_password,
+        },
+      },
+      outbound: {
+        adapter: 'smtp',
+        options: {
+          host: 'smtp.gmail.com',
+          port: 25,
+          start_tls: true,
+          user: mailbox_user,
+          password: mailbox_password,
+        },
+      },
+      sender: mailbox_user,
+    )
+    assert_equal('ok', result[:result])
+
   end
 
 end

@@ -363,7 +363,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     'submit .js-inbound':                 'probeInbound'
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
-    'click  .js-back':                    'goToSlide'
+    'click  .js-goToSlide':               'goToSlide'
     'click  .js-close':                   'hide'
 
   constructor: ->
@@ -488,7 +488,20 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           if data.setting
             for key, value of data.setting
               @account[key] = value
-          @verify(@account)
+
+          if !@channel &&  data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            @$('.js-inbound-acknowledge .js-message').html(message)
+            @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
+            @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
+            @$('.js-inbound-acknowledge .js-next').unbind('click.verify').bind('click.verify', (e) =>
+              e.preventDefault()
+              @verify(@account)
+            )
+            @showSlide('js-inbound-acknowledge')
+          else
+            @verify(@account)
+
         else if data.result is 'duplicate'
           @showSlide('js-intro')
           @showAlert('js-intro', 'Account already exists!' )
@@ -530,7 +543,14 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           # remember account settings
           @account.inbound = params
 
-          @showSlide('js-outbound')
+          if !@channel && data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            @$('.js-inbound-acknowledge .js-message').html(message)
+            @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
+            @$('.js-inbound-acknowledge .js-next').unbind('click.verify')
+            @showSlide('js-inbound-acknowledge')
+          else
+            @showSlide('js-outbound')
 
           # fill user / password based on inbound settings
           if !@channel
@@ -768,3 +788,5 @@ class App.ChannelEmailNotificationWizard extends App.Wizard
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
+
+App.Config.set( 'Email', { prio: 3000, name: 'Email', parent: '#channels', target: '#channels/email', controller: App.ChannelEmail, role: ['Admin'] }, 'NavBarAdmin' )

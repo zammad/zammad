@@ -29,12 +29,21 @@ returns
       if !data[ self.class.to_app_model ][ id ]
         attributes = attributes_with_associations
 
-        # remove passwords
-        %w(inbound outbound).each {|key|
-          if attributes['options'] && attributes['options'][key] && attributes['options'][key]['options']
-            attributes['options'][key]['options'].delete('password')
+        # remove passwords if use is no admin
+        access = false
+        if UserInfo.current_user_id
+          user = User.lookup(id: UserInfo.current_user_id)
+          if user.role?('Admin')
+            access = true
           end
-        }
+        end
+        if !access
+          %w(inbound outbound).each {|key|
+            if attributes['options'] && attributes['options'][key] && attributes['options'][key]['options']
+              attributes['options'][key]['options'].delete('password')
+            end
+          }
+        end
 
         data[ self.class.to_app_model ][ id ] = attributes
       end
