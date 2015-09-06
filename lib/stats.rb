@@ -28,6 +28,7 @@ returns
 
     users = User.of_role('Agent')
     users.each {|user|
+      next if user.id == 1
       data = {}
       backends.each {|backend|
         data[backend.to_app_model] = backend.generate(user)

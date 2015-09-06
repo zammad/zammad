@@ -4,13 +4,19 @@ class Stats::TicketInProcess
 
   def self.generate(user)
 
-    open_state_ids = Ticket::State.by_category('open').map(&:id)
+    open_state_ids = Ticket::State.by_category('work_on').map(&:id)
+    pending_state_ids = Ticket::State.by_category('pending_reminder').map(&:id)
 
     # get history entries of tickets worked on today
     history_object = History::Object.lookup(name: 'Ticket')
 
-    own_ticket_ids = Ticket.select('id').where(owner_id: user.id, state_id: open_state_ids).map(&:id)
+    # get own tickets which are "workable"
+    own_ticket_ids = Ticket.select('id').where(
+      'owner_id = ? AND (state_id IN (?) OR (state_id IN (?) AND pending_time < ?))',
+      user.id, open_state_ids, pending_state_ids, Time.zone.now
+    ).limit(1000).map(&:id)
 
+    # get count where user worked on
     count = History.select('DISTINCT(o_id)').where(
       'histories.created_at >= ? AND histories.history_object_id = ? AND histories.created_by_id = ? AND histories.o_id IN (?)', Time.zone.now - 1.day, history_object.id, user.id, own_ticket_ids
     ).count
