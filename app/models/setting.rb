@@ -43,8 +43,11 @@ get config setting
 =end
 
   def self.get(name)
-    logger.debug "Setting.get(#{name.inspect})"
-    load
+    if load
+      logger.debug "Setting.get(#{name.inspect}) # no cache"
+    else
+      logger.debug "Setting.get(#{name.inspect}) # from cache"
+    end
     @@current[:settings_config][name]
   end
 
@@ -75,7 +78,7 @@ reset config setting to default
 
     # check if config is already generated
     if @@current[:settings_config]
-      return @@current[:settings_config] if cache_valid?
+      return false if cache_valid?
     end
 
     # read all config settings
@@ -95,7 +98,7 @@ reset config setting to default
 
     # store for class requests
     cache(config)
-    config
+    true
   end
 
   # set initial value in state_initial
@@ -123,7 +126,7 @@ reset config setting to default
   # check if cache is still valid
   def self.cache_valid?
     if @@lookup_at && @@lookup_at > Time.zone.now - @@lookup_timeout
-      logger.debug 'Setting.cache_valid?: cache_id has beed set within last 2 minutes'
+      #logger.debug 'Setting.cache_valid?: cache_id has beed set within last 2 minutes'
       return true
     end
     change_id = Cache.get('Setting::ChangeId')
@@ -138,7 +141,7 @@ reset config setting to default
 
   # convert state ot hash to be able to store it as store
   def state_check
-    return if state.class == Hash && state.key?(:value)
+    return if state.respond_to?('has_key?') && state.key?(:value)
     self.state = { value: state }
   end
 end
