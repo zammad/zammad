@@ -225,7 +225,8 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   constructor: ->
     super
-    @interval(@load, 20000)
+    # @interval(@load, 20000)
+    @load()
 
   load: =>
     @ajax(
