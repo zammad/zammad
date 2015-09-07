@@ -29,11 +29,12 @@ class Stats::TicketEscalation
       state = 'ok'
     elsif own_escalated > 5
       state = 'bad'
-    elsif own_escalated > 10
+    else
       state = 'superbad'
     end
 
     {
+      state: state,
       average: average,
       state: state,
       own: own_escalated,

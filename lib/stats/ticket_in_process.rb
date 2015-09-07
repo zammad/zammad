@@ -26,7 +26,7 @@ class Stats::TicketInProcess
     state = 'supergood'
     average_in_percent = '-'
 
-    if count != 0 && total != 0
+    if total != 0
       in_process_precent = (count * 1000) / ((total * 1000) / 100)
       if in_process_precent > 80
         state = 'supergood'
@@ -36,7 +36,7 @@ class Stats::TicketInProcess
         state = 'ok'
       elsif in_process_precent > 20
         state = 'bad'
-      elsif in_process_precent > 5
+      else
         state = 'superbad'
       end
     end
