@@ -1,9 +1,9 @@
 <label><%- @T( 'Tags' ) %></label>
-<ul class="sidebar-list">
+<ul class="list list--sidebar">
   <% for tag in @tags: %>
-  <li class="sidebar-list-item">
-    <div class="sidebar-list-item-name"><%= tag %></div>
-    <div class="sidebar-list-item-delete js-delete">
+  <li class="list-item">
+    <div class="list-item-name"><%= tag %></div>
+    <div class="list-item-delete js-delete">
       <%- @Icon('diagonal-cross') %>
     </div>
   <% end %>

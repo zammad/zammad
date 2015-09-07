@@ -771,7 +771,7 @@
         <div class="tags">
           <label>Tags</label>
 
-          <ul class="sidebar-list"></ul>
+          <ul class="list list--sidebar"></ul>
 
           <div class="text-muted js-newTagLabel u-clickable">
             + Add Tag
@@ -786,7 +786,7 @@
           <label>Links</label>
 
           <div class="ticketLinks">
-            <div class="sidebar-list-title">
+            <div class="list-title">
               child
             </div>
 
@@ -802,7 +802,7 @@
                   </div>
                 </div>
 
-                <div class="sidebar-list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
+                <div class="list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
               </li>
             </ol>
           </div>
