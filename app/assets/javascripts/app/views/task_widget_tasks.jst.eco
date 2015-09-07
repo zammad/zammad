@@ -4,7 +4,7 @@
       <% if item.task.notify && item.data.iconClass is 'priority': %>
         <%- @Icon('priority-modified-outer-circle', "icon-#{item.data.iconClass}") %>
       <% else: %>
-        <%- @Icon(item.data.iconClass, "icon-#{item.data.iconClass}") %>
+        <%- @Icon(item.data.iconClass) %>
       <% end %>
       <% if item.task.notify && item.data.iconClass is 'priority': %>
         <%- @Icon('priority-modified-inner-circle', "modified-inner-circle icon-#{item.data.iconClass}") %>
