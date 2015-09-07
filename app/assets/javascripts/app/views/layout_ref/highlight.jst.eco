@@ -273,7 +273,7 @@ Oliver<br></div>
               </div>
               <div class="attachments">
                 <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
-                <h3>2 <%- @T('Attached Files') %></h3>
+                <div class="attachments-title">2 <%- @T('Attached Files') %></div>
                 <div class="attachment">
                   <div class="attachment-name u-highlight">midinotes_view.jpg</div>
                   <div class="attachment-size">35.5 kb</div>

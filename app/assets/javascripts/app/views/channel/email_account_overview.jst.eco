@@ -1,7 +1,7 @@
-<h1><%- @T('Email Accounts') %></h1>
+<h2><%- @T('Email Accounts') %></h2>
 
 <% if !_.isEmpty(@accounts_fixed): %>
-<h2><%- @T('Fixed email addresses') %></h2>
+<h3><%- @T('Fixed email addresses') %></h3>
 <ul>
   <% for email_address in @accounts_fixed: %>
     <li><%= email_address.realname %> &lt;<%= email_address.email %>&gt;
@@ -10,7 +10,7 @@
 <% end %>
 
 <% if !_.isEmpty(@not_used_email_addresses): %>
-<h2><%- @T('Not linked email addresses') %></h2>
+<h3><%- @T('Not linked email addresses') %></h3>
 <ul>
 <% for email_address in @not_used_email_addresses: %>
   <li data-id="<%= email_address.id %>"><a href="" data-type="email-address-edit"><%= email_address.email %></a>
@@ -83,7 +83,7 @@
 <a data-type="new" class="btn btn--success"><%- @T('New') %></a>
 
 <% if !_.isEmpty(@notification_channels) && !App.Config.get('system_online_service'): %>
-  <h1><%- @T('Notification Account') %></h1>
+  <h2><%- @T('Notification Account') %></h2>
 
   <table class="table table-hover user-list">
     <thead>
