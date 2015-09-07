@@ -738,17 +738,15 @@ h1 {
 
 h2,
 h2.popover-title {
-  font-size: 19px;
+  font-size: 20px;
   line-height: 25px;
 }
 
 h3 {
-  font-size: 13px;
+  font-size: 16px;
   margin: 20px 0 8px;
-  color: #a9bcc4;
-  font-weight: 200;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
+  color: hsl(207,7%,29%);
+  font-weight: normal;
   
   .subtitle {
     display: inline;
@@ -760,11 +758,13 @@ h3 {
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
 h5 {
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 label,
@@ -2870,10 +2870,11 @@ footer {
     box-shadow: 0 1px rgba(0,8,14,.02);
   }
 
-    .stat-widget h3 {
+    .stat-title {
+      font-size: 13px;
       margin: 2px 0 8px;
       color: #444a4f;
-      letter-spacing: 0;
+      text-transform: uppercase;
       font-weight: normal;
     }
 
@@ -3442,9 +3443,9 @@ footer {
     position: relative;
   }
 
-    .ticket-article-item .attachments h3 {
+    .ticket-article-item .attachments .attachments-title {
+      font-size: 13px;
       color: hsl(60,1%,34%);
-      letter-spacing: 0;
       font-weight: bold;
       padding: 0 7px;
       margin: 0 0 4px;

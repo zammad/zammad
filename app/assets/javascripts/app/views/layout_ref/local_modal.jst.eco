@@ -411,7 +411,7 @@
     </div>
     <div class="profile-section horizontal two-columns">
       <div class="column status stat-widget vertical">
-        <h3>Status</h3>
+        <div class="stat-title">Status</div>
         <div class="stat-graphic">
           <div class="stat-tickets vertical reverse end">
             <div class="stat-ticket icon supergood-state"></div>
@@ -430,7 +430,7 @@
         <div class="stat-detail">Average: 22%</div>
       </div>
       <div class="column mood stat-widget vertical">
-        <h3>Stimmung</h3>
+        <div class="stat-title">Stimmung</div>
         <div class="stat-graphic">
           <div class="mood icon supergood-state"></div>
         </div>
@@ -440,7 +440,7 @@
     </div>
     <div class="profile-section">
       <div class="frequency stat-widget vertical">
-        <h3><%- @T('Frequency') %></h3>
+        <div class="stat-title"><%- @T('Frequency') %></div>
         <div class="stat-graphic">
           <div class="stats-row">
             <div class="stat-bars">
