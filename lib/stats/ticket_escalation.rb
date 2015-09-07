@@ -23,20 +23,17 @@ class Stats::TicketEscalation
     state = 'supergood'
     if own_escalated == 0
       state = 'supergood'
-    elsif own_escalated > 1
+    elsif own_escalated <= 1
       state = 'good'
-    elsif own_escalated > 2
+    elsif own_escalated <= 4
       state = 'ok'
-    elsif own_escalated > 5
-      state = 'bad'
     else
-      state = 'superbad'
+      state = 'bad'
     end
 
     {
       state: state,
       average: average,
-      state: state,
       own: own_escalated,
       total: all_escalated,
     }
