@@ -1776,6 +1776,21 @@ ol.tabs li {
   height: 11px;
 }
 
+.icon-status {
+  fill: $ok-color;
+  
+  &.inline {
+    margin: 2px 2px 0 0;
+  }
+  
+  &.ok {
+    fill: $supergood-color;
+  }
+  &.error {
+    fill: $superbad-color;
+  }
+}
+
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
