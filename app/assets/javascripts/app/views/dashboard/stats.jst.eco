@@ -57,11 +57,11 @@
 </div>
 <div class="column">
   <div class="in-process stat-widget vertical">
-    <h3><%- @T('Tickets in process') %></h3>
+    <h3><%- @T('Your Tickets in process') %></h3>
     <div class="stat-graphic">
       <%- @Icon('in-process', "in-process-icon state-color #{@StatsTicketInProcess.state}-state") %>
     </div>
-    <div class="stat-label"><%- @T('%s% are currently in process', @StatsTicketInProcess.percent) %></div>
+    <div class="stat-label" title="<%- @T('%s of your Tickets are currently in process.', @StatsTicketInProcess.in_process) %>"><%- @T('%s% are currently in process', @StatsTicketInProcess.percent) %></div>
     <div class="stat-detail"><%- @T('Average: %s%', @StatsTicketInProcess.average_percent) %></div>
   </div>
 </div>
