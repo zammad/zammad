@@ -2116,6 +2116,13 @@ footer {
   .nav-tab-icon .icon.icon-loading {
     animation: rotateplane 1.2s infinite ease-in-out;
     fill: $supergood-color;
+    
+    /*
+      Safari font rendering bugfix while animating
+      http://stackoverflow.com/questions/9733011/safari-changing-font-weights-when-unrelated-animations-are-running
+    */
+    z-index: 60000;
+    position: relative;
   }
 
   .nav-tab-close {
