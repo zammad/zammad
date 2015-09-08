@@ -9,7 +9,7 @@ class Ticket::State < ApplicationModel
 
 list tickets by customer
 
-  states = Ticket::State.by_category('open') # open|closed|work_on|work_on_all|pending_reminder
+  states = Ticket::State.by_category('open') # open|closed|work_on|work_on_all|pending_reminder|pending_action
 
 returns:
 
@@ -25,6 +25,10 @@ returns:
     elsif category == 'pending_reminder'
       return Ticket::State.where(
         state_type_id: Ticket::StateType.where( name: ['pending reminder'] )
+      )
+    elsif category == 'pending_action'
+      return Ticket::State.where(
+        state_type_id: Ticket::StateType.where( name: ['pending action'] )
       )
     elsif category == 'work_on'
       return Ticket::State.where(
