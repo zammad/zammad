@@ -768,7 +768,8 @@ h5 {
 }
 
 label,
-.checkbox.form-group label {
+.checkbox.form-group label,
+.label {
   text-transform: uppercase;
   color: hsl(198,19%,72%);
   display: block;
@@ -1774,6 +1775,21 @@ ol.tabs li {
   border-radius: 100%;
   width: 11px;
   height: 11px;
+}
+
+.icon-status {
+  fill: $ok-color;
+  
+  &.inline {
+    margin: 2px 2px 0 0;
+  }
+  
+  &.ok {
+    fill: $supergood-color;
+  }
+  &.error {
+    fill: $superbad-color;
+  }
 }
 
 
@@ -4074,12 +4090,12 @@ footer {
   margin: 20px 0;
 }
 
-.sidebar-list {
+.list {
   padding: 0;
   margin-bottom: 5px;
 }
 
-  .sidebar-list-title {
+  .list-title {
     margin-top: 7px;
     margin-bottom: 4px;
     text-transform: uppercase;
@@ -4090,19 +4106,19 @@ footer {
     letter-spacing: 0.1em;
   }
 
-  .sidebar-list-item {
+  .list-item {
     display: flex;
     align-items: center;
     color: hsl(206,7%,28%);
     border-bottom: 1px solid hsl(240,4%,95%);
   }
 
-  .sidebar-list-item-name {
+  .list-item-name {
     flex: 1;
     padding: 4px 1px;
   }
 
-  .sidebar-list-item-delete {
+  .list-item-delete {
     padding: 0 10px;
     margin-right: -3px;
     display: flex;
@@ -4118,7 +4134,7 @@ footer {
     }
   }
 
-    .sidebar-list-item-delete:hover .icon {
+    .list-item-delete:hover .icon {
       fill: hsl(1,77%,47%);
     }
 
@@ -4382,6 +4398,10 @@ footer {
 
   tr:hover .switchView {
     visibility: visible;
+  }
+
+  td .list {
+    margin-top: -4px;
   }
   
   .switchView {
