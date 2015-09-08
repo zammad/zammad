@@ -4,12 +4,12 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th class="span4"><%- @T('User') %></th>
-      <th class="span3"><%- @T('Browser') %></th>
-      <th class="span3"><%- @T('Location') %></th>
-      <th class="span1"><%- @T('Age') %></th>
-      <th class="span1"><%- @T('Update') %></th>
-      <th class="span1"></th>
+      <th><%- @T('User') %></th>
+      <th><%- @T('Browser') %></th>
+      <th><%- @T('Location') %></th>
+      <th><%- @T('Age') %></th>
+      <th><%- @T('Update') %></th>
+      <th><%- @T('Action') %></th>
     </tr>
   </thead>
   <tbody>
