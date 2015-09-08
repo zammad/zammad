@@ -71,12 +71,24 @@ returns
       data.each {|backend, result|
         data_for_user[backend.to_app_model] = result
       }
-      StatsStore.sync(
+      state_store = StatsStore.sync(
         object: 'User',
         o_id: user_id,
         key: 'dashboard',
         data: data_for_user,
       )
+
+      message = {
+        event: 'resetCollection',
+        data: {
+          state_store.class.to_app_model => [state_store],
+        },
+      }
+      Sessions.send_to(user_id, message)
+      event = {
+        event: 'dashboard_stats_rebuild',
+      }
+      Sessions.send_to(user_id, event)
     }
 
     true

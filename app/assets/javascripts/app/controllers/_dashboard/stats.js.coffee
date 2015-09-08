@@ -1,15 +1,15 @@
 class App.DashboardStats extends App.Controller
   constructor: ->
     super
+    @load()
+    @bind('dashboard_stats_rebuild', @load)
 
+  load: =>
     stats_store = App.StatsStore.first()
     if stats_store
       @render(stats_store.data)
     else
       @render()
-
-    # bind to rebuild view event
-    @bind('dashboard_stats_rebuild', @render)
 
   render: (data = {}) ->
     if !data.TicketResponseTime
@@ -63,7 +63,7 @@ class App.DashboardStats extends App.Controller
     if data.TicketResponseTime
       @renderWidgetClockFace data.TicketResponseTime.handling_time
 
-  renderWidgetClockFace: (time) =>
+  renderWidgetClockFace: (time, max_time = 60) =>
     canvas = @el.find 'canvas'
     ctx    = canvas.get(0).getContext '2d'
     radius = 26
@@ -73,14 +73,14 @@ class App.DashboardStats extends App.Controller
     canvas.attr 'width', 2 * radius
     canvas.attr 'height', 2 * radius
 
-    time = 60 if time > 60
+    time = max_time if time > max_time
 
-    handlingTimeColors =
-      5: '#38AE6A' # supergood
-      10: '#A9AC41' # good
-      15: '#FAAB00' # ok
-      20: '#F6820B' # bad
-      25: '#F35910' # superbad
+    handlingTimeColors = {}
+    handlingTimeColors[max_time/12] = '#38AE6A' # supergood
+    handlingTimeColors[max_time/6] = '#A9AC41' # good
+    handlingTimeColors[max_time/4] = '#FAAB00' # ok
+    handlingTimeColors[max_time/3] = '#F6820B' # bad
+    handlingTimeColors[max_time/2] = '#F35910' # superbad
 
     for handlingTime, timeColor of handlingTimeColors
       if time <= handlingTime
@@ -88,7 +88,8 @@ class App.DashboardStats extends App.Controller
         break
 
     # 30% background
-    ctx.globalAlpha = 0.3
+    if time isnt 0
+      ctx.globalAlpha = 0.3
     ctx.fillStyle = backgroundColor
     ctx.beginPath()
     ctx.arc radius, radius, radius, 0, Math.PI * 2, true
@@ -100,7 +101,7 @@ class App.DashboardStats extends App.Controller
 
     ctx.beginPath()
     ctx.moveTo radius, radius
-    arcsector = Math.PI * 2 * time/60
+    arcsector = Math.PI * 2 * time/max_time
     ctx.arc radius, radius, radius, -Math.PI/2, arcsector - Math.PI/2, false
     ctx.lineTo radius, radius
     ctx.closePath()

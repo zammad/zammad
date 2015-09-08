@@ -68,7 +68,7 @@ class StatsStore < ApplicationModel
     if item
       item.data = data
       item.save
-      return true
+      return item
     end
 
     # lookups
