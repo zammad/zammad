@@ -22,13 +22,13 @@
 <% if _.isEmpty(@account_channels): %>
   <p><%- @T('You have no configured account right now.') %></p>
 <% else: %>
-  <table class="table table-hover user-list">
+  <table class="table table-hover table-fluid user-list">
     <thead>
       <tr>
         <th><%- @T('Inbound') %></th>
         <th><%- @T('Outbound') %></th>
         <th><%- @T('Email Adresses') %></th>
-        <th style="width: 20%"><%- @T('Action') %></th>
+        <th><%- @T('Action') %></th>
       </tr>
     </thead>
     <tbody>

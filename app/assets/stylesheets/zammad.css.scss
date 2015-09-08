@@ -548,6 +548,10 @@ table {
   display: table;
 }
 
+.table-fluid {
+  table-layout: auto;
+}
+
 .table .table-row {
   display: table-row;
 }
