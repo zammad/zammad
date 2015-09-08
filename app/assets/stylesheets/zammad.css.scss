@@ -2924,6 +2924,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
   }
 
     .time.stat-widget .stat-amount {
@@ -2933,6 +2934,7 @@ footer {
       color: white;
       text-shadow: 0 2px rgba(0,8,14,.2);
       position: relative;
+      cursor: default;
     }
 
     .time.stat-widget .stat-dial {
