@@ -11,11 +11,12 @@ class Stats::TicketReopen
       end:    Time.zone.now,
     )
     {
+      used_for_average: 0,
+      average_per_agent: '',
       state: 'good',
       own: count,
       total: 0,
       percent: 0,
-      average_percent: '-',
     }
   end
 

@@ -32,8 +32,9 @@ class Stats::TicketEscalation
     end
 
     {
+      used_for_average: own_escalated,
+      average_per_agent: average,
       state: state,
-      average: average,
       own: own_escalated,
       total: all_escalated,
     }

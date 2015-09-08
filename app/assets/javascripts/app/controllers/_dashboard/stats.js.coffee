@@ -12,10 +12,11 @@ class App.DashboardStats extends App.Controller
     @bind('dashboard_stats_rebuild', @render)
 
   render: (data = {}) ->
-    if !data.StatsTicketWaitingTime
-      data.StatsTicketWaitingTime =
+    if !data.TicketResponseTime
+      data.TicketResponseTime =
         handling_time: 0
         average: 0
+        average_per_agent: 0
     if !data.StatsTicketEscalation
       data.StatsTicketEscalation =
         state: 'supergood'
@@ -45,22 +46,22 @@ class App.DashboardStats extends App.Controller
         percent: 0
         own: 0
         total: 0
-        average: 0
+        average_per_agent: 0
     if !data.StatsTicketInProcess
       data.StatsTicketInProcess =
         state: 'supergood'
         percent: 0
-        average_percent: 0
+        average_per_agent: 0
     if !data.StatsTicketReopen
       data.StatsTicketReopen =
         state: 'supergood'
         percent: 0
-        average_percent: 0
+        average_per_agent: 0
 
     @html App.view('dashboard/stats')(data)
 
-    if data.StatsTicketWaitingTime
-      @renderWidgetClockFace data.StatsTicketWaitingTime.handling_time
+    if data.TicketResponseTime
+      @renderWidgetClockFace data.TicketResponseTime.handling_time
 
   renderWidgetClockFace: (time) =>
     canvas = @el.find 'canvas'

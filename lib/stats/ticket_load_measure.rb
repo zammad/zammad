@@ -4,7 +4,7 @@ class Stats::TicketLoadMeasure
 
   def self.generate(user)
 
-    open_state_ids = Ticket::State.by_category('open').map(&:id)
+    open_state_ids = Ticket::State.by_category('work_on_all').map(&:id)
 
     # owned tickets
     count = Ticket.where(owner_id: user.id, state_id: open_state_ids).count
@@ -31,11 +31,12 @@ class Stats::TicketLoadMeasure
       total = count
     end
 
-    if count != 0 && total != 0
+    if total != 0
       load_measure_precent = (count * 1000) / ((total * 1000) / 100)
     end
     {
-      average: average,
+      used_for_average: load_measure_precent,
+      average_per_agent: average,
       percent: load_measure_precent,
       state: state,
       own: count,

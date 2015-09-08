@@ -22,7 +22,7 @@ class Stats::TicketResponseTime
   end
 
   def self.generate(user)
-    items = Stats.where('action_at > ? AND action_at < ?', Time.zone.now - 7.days, Time.zone.now).where(key: 'ticket:response_time')
+    items = StatsStore.where('created_at > ? AND created_at < ?', Time.zone.now - 7.days, Time.zone.now).where(key: 'ticket:response_time')
     count_total = items.count
     total = 0
     count_own = 0
@@ -35,9 +35,14 @@ class Stats::TicketResponseTime
       end
       total += data[:time]
     }
+    if total != 0
+      own = (own / count_own).round
+    end
     {
-      own: (own / count_own).round,
-      total: (total / count_total).round,
+      used_for_average: 0,
+      average_per_agent: '-',
+      own: own,
+      total: total,
     }
   end
 
