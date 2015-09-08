@@ -20,14 +20,14 @@ class Stats::TicketInProcess
     closed_state_ids = Ticket::State.by_category('closed').map(&:id)
     closed_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND state_id IN (?) AND close_time > ?',
-      user.id, closed_state_ids, Time.zone.now-1.day
+      user.id, closed_state_ids, Time.zone.now - 1.day
     ).limit(100).map(&:id)
 
     # get all tickets which I changed to pending action
     pending_action_state_ids = Ticket::State.by_category('pending_action').map(&:id)
     pending_action_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND state_id IN (?) AND updated_at > ?',
-      user.id, pending_action_state_ids, Time.zone.now-1.day
+      user.id, pending_action_state_ids, Time.zone.now - 1.day
     ).limit(100).map(&:id)
 
     all_ticket_ids = own_ticket_ids.concat(closed_ticket_ids).concat(pending_action_ticket_ids).uniq

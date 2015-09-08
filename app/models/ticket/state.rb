@@ -32,7 +32,7 @@ returns:
       )
     elsif category == 'work_on'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: ['new', 'open'] )
+        state_type_id: Ticket::StateType.where( name: %w(new open) )
       )
     elsif category == 'work_on_all'
       return Ticket::State.where(
@@ -40,7 +40,7 @@ returns:
       )
     elsif category == 'closed'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: ['closed'] )
+        state_type_id: Ticket::StateType.where( name: %w(closed) )
       )
     end
     fail "Unknown category '#{category}'"

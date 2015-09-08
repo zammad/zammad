@@ -43,9 +43,9 @@ returns
 
     # calculate average
     backend_average_sum = {}
-    user_result.each {|user_id, data|
+    user_result.each {|_user_id, data|
       data.each {|backend_model, backend_result|
-        next if !backend_result.has_key?(:used_for_average)
+        next if !backend_result.key?(:used_for_average)
         if !backend_average_sum[backend_model]
           backend_average_sum[backend_model] = 0
         end
@@ -56,10 +56,10 @@ returns
     # generate average stats
     backend_average_sum.each {|backend_model_average, result|
       average = ( result.to_f / agent_count.to_f ).round(1)
-      user_result.each {|user_id, data|
+      user_result.each {|_user_id, data|
         data.each {|backend_model_data, backend_result|
           next if backend_model_data != backend_model_average
-          next if !backend_result.has_key?(:used_for_average)
+          next if !backend_result.key?(:used_for_average)
           backend_result[:average_per_agent] = average
         }
       }
