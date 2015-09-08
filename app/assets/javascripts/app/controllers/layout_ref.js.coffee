@@ -1424,7 +1424,7 @@ class InputsRef extends App.ControllerContent
     @render()
 
   render: ->
-    @html App.view('layout_ref/inputs')
+    @html App.view('layout_ref/inputs')()
 
     # activate widgets
 
