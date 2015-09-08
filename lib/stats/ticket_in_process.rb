@@ -43,18 +43,7 @@ class Stats::TicketInProcess
     average_in_percent = '-'
 
     if total != 0
-      in_process_precent = (count * 1000) / ((total * 1000) / 100)
-      if in_process_precent >= 75
-        state = 'supergood'
-      elsif in_process_precent >= 55
-        state = 'good'
-      elsif in_process_precent >= 40
-        state = 'ok'
-      elsif in_process_precent >= 20
-        state = 'bad'
-      else
-        state = 'superbad'
-      end
+      in_process_precent = ( count.to_f / (total.to_f/100) ).round(1)
     end
 
     {
@@ -67,4 +56,28 @@ class Stats::TicketInProcess
     }
   end
 
+  def self.average_state(result, _user_id)
+
+    return result if !result.key?(:used_for_average)
+
+    if result[:total] < 1
+      result[:state] = 'supergood'
+      return result
+    end
+
+    in_percent = ( result[:used_for_average].to_f / (result[:total].to_f/100) ).round(1)
+    if in_percent >= 90
+      result[:state] = 'supergood'
+    elsif in_percent >= 65
+      result[:state] = 'good'
+    elsif in_percent >= 40
+      result[:state] = 'ok'
+    elsif in_percent >= 20
+      result[:state] = 'bad'
+    else
+      result[:state] = 'superbad'
+    end
+
+    result
+  end
 end

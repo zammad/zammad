@@ -86,4 +86,8 @@ class Stats::TicketChannelDistribution
     { channels: result }
   end
 
+  def self.average_state(result, _user_id)
+    result
+  end
+
 end

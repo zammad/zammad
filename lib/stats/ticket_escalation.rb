@@ -40,4 +40,8 @@ class Stats::TicketEscalation
     }
   end
 
+  def self.average_state(result, _user_id)
+    result
+  end
+
 end

@@ -15,24 +15,13 @@ class Stats::TicketLoadMeasure
     average = '-'
     state = 'good'
     load_measure_precent = 0
-    #  if in_process_precent > 80
-    #    state = 'supergood'
-    #  elsif in_process_precent > 60
-    #    state = 'good'
-    #  elsif in_process_precent > 40
-    #    state = 'ok'
-    #  elsif in_process_precent > 20
-    #    state = 'bad'
-    #  elsif in_process_precent > 5
-    #    state = 'superbad'
-    #  end
 
     if count > total
       total = count
     end
 
     if total != 0
-      load_measure_precent = (count * 1000) / ((total * 1000) / 100)
+      load_measure_precent = ( count.to_f / (total.to_f/100) ).round(1)
     end
     {
       used_for_average: load_measure_precent,
@@ -42,6 +31,32 @@ class Stats::TicketLoadMeasure
       own: count,
       total: total,
     }
+  end
+
+  def self.average_state(result, _user_id)
+
+    return result if !result.key?(:used_for_average)
+
+    if result[:total] < 1
+      result[:state] = 'supergood'
+      return result
+    end
+
+    in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f/100) ).round(1)
+    result[:average_per_agent_in_percent] = in_percent
+    if in_percent >= 90
+      result[:state] = 'supergood'
+    elsif in_percent >= 65
+      result[:state] = 'good'
+    elsif in_percent >= 40
+      result[:state] = 'ok'
+    elsif in_percent >= 20
+      result[:state] = 'bad'
+    else
+      result[:state] = 'superbad'
+    end
+
+    result
   end
 
 end

@@ -46,4 +46,29 @@ class Stats::TicketResponseTime
     }
   end
 
+  def self.average_state(result, _user_id)
+
+    return result if !result.key?(:used_for_average)
+
+    if result[:total] < 1
+      result[:state] = 'supergood'
+      return result
+    end
+
+    in_percent = ( result[:used_for_average].to_f / (result[:total].to_f/100) ).round(1)
+    if in_percent >= 90
+      result[:state] = 'supergood'
+    elsif in_percent >= 65
+      result[:state] = 'good'
+    elsif in_percent >= 40
+      result[:state] = 'ok'
+    elsif in_percent >= 20
+      result[:state] = 'bad'
+    else
+      result[:state] = 'superbad'
+    end
+
+    result
+  end
+
 end

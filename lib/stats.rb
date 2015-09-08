@@ -36,7 +36,7 @@ returns
       agent_count += 1
       data = {}
       backends.each {|backend|
-        data[backend.to_app_model] = backend.generate(user)
+        data[backend] = backend.generate(user)
       }
       user_result[user.id] = data
     }
@@ -53,24 +53,29 @@ returns
       }
     }
 
-    # generate average stats
+    # generate average param and icon state
     backend_average_sum.each {|backend_model_average, result|
       average = ( result.to_f / agent_count.to_f ).round(1)
-      user_result.each {|_user_id, data|
-        data.each {|backend_model_data, backend_result|
-          next if backend_model_data != backend_model_average
-          next if !backend_result.key?(:used_for_average)
-          backend_result[:average_per_agent] = average
-        }
+      user_result.each {|user_id, data|
+        next if !data[backend_model_average]
+        next if !data[backend_model_average].key?(:used_for_average)
+        data[backend_model_average][:average_per_agent] = average
+
+        # generate icon state
+        backend_model_average.to_s.constantize.average_state(data[backend_model_average], user_id)
       }
     }
 
     user_result.each {|user_id, data|
+      data_for_user = {}
+      data.each {|backend, result|
+        data_for_user[backend.to_app_model] = result
+      }
       StatsStore.sync(
         object: 'User',
         o_id: user_id,
         key: 'dashboard',
-        data: data,
+        data: data_for_user,
       )
     }
 
