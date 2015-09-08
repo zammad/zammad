@@ -31,8 +31,8 @@ module SessionHelper
     # delete temp. sessions
     ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', Time.zone.now - 2.hours ).delete_all
 
-    # web sessions older the x days
-    ActiveRecord::SessionStore::Session.where('updated_at < ?', Time.zone.now - 90.days ).delete_all
+    # web sessions not updated the last x days
+    ActiveRecord::SessionStore::Session.where('updated_at < ?', Time.zone.now - 60.days ).delete_all
 
   end
 
