@@ -24,7 +24,7 @@ class Stats::TicketLoadMeasure
       load_measure_precent = ( count.to_f / (total.to_f/100) ).round(1)
     end
     {
-      used_for_average: count,
+      used_for_average: load_measure_precent,
       average_per_agent: average,
       percent: load_measure_precent,
       state: state,
@@ -42,7 +42,7 @@ class Stats::TicketLoadMeasure
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:total].to_f/100) ).round(1)
+    in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f/100) ).round(1)
     result[:average_per_agent_in_percent] = in_percent
     if in_percent >= 90
       result[:state] = 'supergood'
@@ -55,6 +55,9 @@ class Stats::TicketLoadMeasure
     else
       result[:state] = 'superbad'
     end
+
+    # convert result[:used_for_average] in percent to related total
+    result[:average_per_agent] = ( (result[:total].to_f/100) * result[:used_for_average] ).round(1)
 
     result
   end
