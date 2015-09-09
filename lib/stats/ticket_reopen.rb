@@ -3,6 +3,14 @@
 class Stats::TicketReopen
 
   def self.generate(user)
+
+    # get my closed tickets
+    total = Ticket.select('id').where(
+      'owner_id = ? AND close_time > ?',
+      user.id, Time.zone.now - 7.days
+    ).count
+
+    # get count of repoens
     count = StatsStore.count_by_search(
       object: 'User',
       o_id:   user.id,
@@ -10,14 +18,22 @@ class Stats::TicketReopen
       start:  Time.zone.now - 7.days,
       end:    Time.zone.now,
     )
+
+    if count > total
+      total = count
+    end
+
+    reopen_in_precent = 0
+    if total != 0
+      reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(3)
+    end
     {
-      used_for_average: 0,
+      used_for_average: reopen_in_precent,
+      percent: reopen_in_precent,
       average_per_agent: '-',
       state: 'good',
-      own: count,
-      total: 0,
-      percent: 0,
-      its_me: true,
+      count: count,
+      total: total,
     }
   end
 
@@ -25,24 +41,25 @@ class Stats::TicketReopen
 
     return result if !result.key?(:used_for_average)
 
-    if result[:total] < 1
+    if result[:total] < 1 || result[:average_per_agent] == 0.0
       result[:state] = 'supergood'
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:total].to_f/100) ).round(1)
+    #in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
+    #result[:average_per_agent_in_percent] = in_percent
+    in_percent = ( result[:count].to_f / (result[:total].to_f / 100) ).round(1)
     if in_percent >= 90
-      result[:state] = 'supergood'
+      result[:state] = 'superbad'
     elsif in_percent >= 65
-      result[:state] = 'good'
+      result[:state] = 'bad'
     elsif in_percent >= 40
       result[:state] = 'ok'
     elsif in_percent >= 20
-      result[:state] = 'bad'
+      result[:state] = 'good'
     else
-      result[:state] = 'superbad'
+      result[:state] = 'supergood'
     end
-
     result
   end
 
