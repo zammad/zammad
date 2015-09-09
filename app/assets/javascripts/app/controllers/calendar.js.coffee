@@ -1,4 +1,6 @@
 class Index extends App.ControllerContent
+  events:
+    'click .js-new': 'newDialog'
   constructor: ->
     super
 
@@ -16,7 +18,7 @@ class Index extends App.ControllerContent
       public_holidays_preview = {}
       if calendar.public_holidays
         from = new Date().setTime(new Date().getTime() - (5*24*60*60*1000))
-        till = new Date().setTime(new Date().getTime() + (90*24*60*60*1000))
+        till = new Date().setTime(new Date().getTime() + (70*24*60*60*1000))
         keys = Object.keys(calendar.public_holidays).reverse()
         #for day, comment of calendar.public_holidays
         for day in keys
@@ -33,5 +35,19 @@ class Index extends App.ControllerContent
     if @subscribeId
       App.Calendar.unsubscribe(@subscribeId)
 
+  newDialog: =>
+    console.log('NEW')
+    @newItemModal = new App.ControllerModal
+      head: 'New Calendar'
+      content: App.view('calendar/new')()
+      button: 'Create'
+      shown: true
+      cancel: true
+      container: @el.closest('.content')
+      onComplete: =>
+        @$('.js-responseTime').timepicker
+          maxHours: 99
+        @$('.js-time').timepicker
+          showMeridian: true # show am/pm
 
 App.Config.set( 'Calendars', { prio: 2400, name: 'Calendars', parent: '#manage', target: '#manage/calendars', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

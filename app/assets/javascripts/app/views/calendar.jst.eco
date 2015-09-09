@@ -4,7 +4,7 @@
   </div>
 
   <div class="page-header-meta">
-    <a class="btn btn--success" data-type="new"><%- @T('New Calendar') %></a>
+    <a class="btn btn--success js-new"><%- @T('New Calendar') %></a>
   </div>
 </div>
 
@@ -12,12 +12,12 @@
 <div class="action">
   <div class="action-flow">
     <div class="action-block">
-    <h3><%= calendar.name %></h3>
+    <h3><span title="Last iCal Feed sync at: <%= calendar.last_sync %>: <%= calendar.last_log %>"><%- @Icon('status', 'ok inline') %></span> <%= calendar.name %></h3>
       <%- @T('Timezone') %>: <%= calendar.timezone %>
     </div>
     <div class="action-block">
       <%- @T('Business Hours') %>:<br>
-      <table>
+      <table class="table table-fluid">
         <tr>
           <td><%- @T('Monday') %></td><td><% if _.isEmpty(calendar.business_hours['mon']): %>-<% else: %><% for from, till of calendar.business_hours['mon']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
         </tr>
@@ -42,10 +42,12 @@
       </table>
     </div>
     <div class="action-block">
-      <%- @T('Public Holidays') %>:<br>
+      <%- @T('Public Holidays') %>:
+      <table class="table table-fluid">
       <% for holiday, meta of calendar.public_holidays_preview: %>
-        <%= holiday %>: <%= meta.summary %><br>
+        <tr <% if !meta.active: %>class="is-inactive"<% end %>><td><%- @Tdate(holiday) %></td><td><%= meta.summary %></td></tr>
       <% end %>
+      </table>
     </div>
   </div>
   <div class="action-controls">

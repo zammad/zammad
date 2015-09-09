@@ -182,6 +182,14 @@ class App extends Spine.Controller
       params.Ti = ( item, args... ) ->
         App.i18n.translateInline( item, args... )
 
+      # define translation for date helper
+      params.Tdate = ( item, args... ) ->
+        App.i18n.translateDate( item, args... )
+
+      # define translation for timestamp helper
+      params.Ttimestamp = ( item, args... ) ->
+        App.i18n.translateTimestamp( item, args... )
+
       # define linkify helper
       params.L = ( item ) ->
         if item && typeof item is 'string'
