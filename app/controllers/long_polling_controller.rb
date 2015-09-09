@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class LongPollingController < ApplicationController
-  skip_filter :session_update
+  skip_action_callback :session_update # prevent race conditions
 
   # GET /api/v1/message_send
   def message_send

@@ -218,9 +218,11 @@ translate strings in ruby context, e. g. for notifications
   def cache_clear
     Cache.delete( 'TranslationMap::' + locale.downcase )
   end
+
   def self.cache_set(locale, data)
     Cache.write( 'TranslationMap::' + locale.downcase, data )
   end
+
   def self.cache_get(locale)
     Cache.get( 'TranslationMap::' + locale.downcase )
   end
