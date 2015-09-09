@@ -36,7 +36,7 @@ GEM
     ast (2.1.0)
     astrolabe (1.3.1)
       parser (~> 2.2)
-    autoprefixer-rails (5.2.1.3)
+    autoprefixer-rails (6.0.2)
       execjs
       json
     browser (1.0.1)
@@ -89,7 +89,6 @@ GEM
       guard (~> 2.8)
       multi_json (~> 1.8)
     hashie (3.4.2)
-    hike (1.2.3)
     http (0.6.4)
       http_parser.rb (~> 0.6.0)
     http_parser.rb (0.6.0)
@@ -118,7 +117,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.20)
-    naught (1.0.0)
+    naught (1.1.0)
     nenv (0.2.0)
     net-ldap (0.11)
     notiffany (0.0.7)
@@ -184,11 +183,11 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
     rake (10.4.2)
-    rb-fsevent (0.9.5)
+    rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     ref (2.0.0)
-    rubocop (0.33.0)
+    rubocop (0.34.1)
       astrolabe (~> 1.3)
       parser (>= 2.2.2.5, < 3.0)
       powerpack (~> 0.1)
@@ -197,12 +196,12 @@ GEM
     ruby-progressbar (1.7.5)
     rubyzip (1.1.7)
     sass (3.4.18)
-    sass-rails (5.0.3)
+    sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-      tilt (~> 1.1)
+      tilt (>= 1.1, < 3)
     selenium-webdriver (2.47.1)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
@@ -220,12 +219,9 @@ GEM
       simplecov (>= 0.4.1)
     slop (3.6.0)
     spring (1.3.6)
-    sprockets (2.12.4)
-      hike (~> 1.2)
-      multi_json (~> 1.0)
+    sprockets (3.3.4)
       rack (~> 1.0)
-      tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.3.2)
+    sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
@@ -237,7 +233,7 @@ GEM
       ref
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (1.4.1)
+    tilt (2.0.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -283,7 +279,7 @@ DEPENDENCIES
   libv8
   mail (~> 2.5.0)
   mime-types
-  mysql2
+  mysql2 (~> 0.3.20)
   net-ldap
   omniauth
   omniauth-facebook
@@ -302,10 +298,13 @@ DEPENDENCIES
   simplecov
   simplecov-rcov
   spring
-  sprockets (~> 2.0)
+  sprockets
   sqlite3
   test-unit
   therubyracer
   twitter (~> 5.13.0)
   uglifier
   writeexcel
+
+BUNDLED WITH
+   1.10.5

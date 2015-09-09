@@ -16,8 +16,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'coffee-script-source'
 
-  # use dedicated version of sprockets, 3.0.0 is broken
-  gem 'sprockets', '~> 2.0'
+  gem 'sprockets'
 
   gem 'uglifier'
   gem 'eco'
@@ -48,7 +47,7 @@ gem 'execjs'
 gem 'therubyracer'
 
 # e. g. for mysql you need to load mysql
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.20'
 #gem 'sqlite3'
 
 gem 'net-ldap'
