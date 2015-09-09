@@ -1,0 +1,59 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Calendar') %> <small><%- @T('Management') %></small></h1>
+  </div>
+
+  <div class="page-header-meta">
+    <a class="btn btn--success" data-type="new"><%- @T('New Calendar') %></a>
+  </div>
+</div>
+
+<% for calendar in @calendars: %>
+<div class="action">
+  <div class="action-flow">
+    <div class="action-block">
+    <h3><%= calendar.name %></h3>
+      <%- @T('Timezone') %>: <%= calendar.timezone %>
+    </div>
+    <div class="action-block">
+      <%- @T('Business Hours') %>:<br>
+      <table>
+        <tr>
+          <td><%- @T('Monday') %></td><td><% if _.isEmpty(calendar.business_hours['mon']): %>-<% else: %><% for from, till of calendar.business_hours['mon']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+        </tr>
+        <tr>
+          <td><%- @T('Tuesday') %></td><td><% if _.isEmpty(calendar.business_hours['tue']): %>-<% else: %><% for from, till of calendar.business_hours['tue']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+        </tr>
+        <tr>
+          <td><%- @T('Wednesday') %></td><td><% if _.isEmpty(calendar.business_hours['wed']): %>-<% else: %><% for from, till of calendar.business_hours['wed']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+        </tr>
+        <tr>
+          <td><%- @T('Thursday') %></td><td><% if _.isEmpty(calendar.business_hours['thu']): %>-<% else: %><% for from, till of calendar.business_hours['thu']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+        </tr>
+        <tr>
+          <td><%- @T('Friday') %></td><td><% if _.isEmpty(calendar.business_hours['fri']): %>-<% else: %><% for from, till of calendar.business_hours['fri']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+        </tr>
+        <tr>
+          <td><%- @T('Saturday') %></td><td><% if _.isEmpty(calendar.business_hours['sat']): %>-<% else: %><% for from, till of calendar.business_hours['sat']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+        </tr>
+        <tr>
+          <td><%- @T('Sunday') %></td><td><% if _.isEmpty(calendar.business_hours['sun']): %>-<% else: %><% for from, till of calendar.business_hours['sun']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="action-block">
+      <%- @T('Public Holidays') %>:<br>
+      <% for holiday, meta of calendar.public_holidays_preview: %>
+        <%= holiday %>: <%= meta.summary %><br>
+      <% end %>
+    </div>
+  </div>
+  <div class="action-controls">
+    <% if !calendar.default: %>
+      <div class="sla-toggle btn btn--danger btn--secondary js-toggle"><%- @T('Delete') %></div>
+      <div class="sla-toggle btn btn--secondary js-toggle"><%- @T('Set as Default') %></div>
+    <% end %>
+    <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
+  </div>
+</div>
+<% end %>

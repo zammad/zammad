@@ -287,19 +287,7 @@ class ApplicationController < ActionController::Base
     }
 
     # get all time zones
-    config['timezones'] = {}
-    TZInfo::Timezone.all.each { |t|
-
-      # ignore the following time zones
-      next if t.name =~ /^GMT/
-      next if t.name =~ /^Etc/
-      next if t.name =~ /^MET/
-      next if t.name =~ /^MST/
-      next if t.name =~ /^ROC/
-      next if t.name =~ /^ROK/
-      diff = t.current_period.utc_total_offset / 60 / 60
-      config['timezones'][ t.name ] = diff
-    }
+    config['timezones'] = Calendar.timezones
 
     # remember if we can to swich back to user
     if session[:switched_from_user_id]
