@@ -1593,4 +1593,16 @@ class mergeCustomerRef extends App.ControllerContent
 App.Config.set( 'layout_ref/merge_customer', mergeCustomerRef, 'Routes' )
 
 
+class PrimaryEmailRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/primary_email')
+
+App.Config.set( 'layout_ref/primary_email', PrimaryEmailRef, 'Routes' )
+
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

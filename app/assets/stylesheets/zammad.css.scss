@@ -955,6 +955,15 @@ fieldset > *:not(.form-group) .form-control {
   .bookmark.icon {
     margin-bottom: -1px;
   }
+
+  .formGroup-metaControl {
+    @extend .u-clickable;
+    padding: 6px 4px;
+    margin: -6px 0 -6px auto;
+    font-size: 20px;
+    line-height: 1;
+    color: hsl(198, 19%, 72%);
+  }
 }
 
 .formGroup-bookmark {
@@ -1186,7 +1195,47 @@ input.time.time--12 {
       display: flex;
       align-items: center;
     }
+  }
 
+  .controls--emailSwitch {
+    display: flex;
+    
+    .form-control {
+      flex: 1;
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      
+      &:focus + .primary-email-switch-holder {
+        label {
+          border-color: hsl(200,71%,59%);
+        }
+        
+        /* 
+
+          fake the form-control outline 
+
+        */
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: -3px;
+          right: -3px;
+          bottom: -3px;
+          background: hsl(201,62%,90%);
+          border-radius: 0 7px 7px 0;
+        }
+      }
+    }
+
+    .primary-email-switch-holder label {
+      padding: 0 9px;
+      background: white;
+      position: relative;
+      border: 1px solid hsl(0, 0%, 90%);
+      border-radius: 0 3px 3px 0;
+    }
   }
 
 .searchfield {

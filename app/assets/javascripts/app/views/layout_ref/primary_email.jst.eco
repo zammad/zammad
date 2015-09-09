@@ -1,0 +1,450 @@
+<div aria-hidden="false" class="modal fade in" style="display: block; left: 0px; top: 0px; width: 1280px; padding-left: 0px;">
+  <div class="modal-backdrop fade in" style="left: 0px; top: 0px; width: 1280px; height: 1806px;"></div>
+
+  <div class="modal-dialog">
+    <form>
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-close js-close"></div>
+
+          <h1 class="modal-title">New: User</h1>
+        </div>
+
+        <div class="modal-body">
+          <fieldset>
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_firstname">Firstname <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <input autofocus="" class="form-control" id="User_510389_firstname" name="firstname" required="" type="text" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_lastname">Lastname <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <input class="form-control" id="User_510389_lastname" name="lastname" required="" type="text" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_email1">Email <span>*</span></label>
+                <span class="formGroup-metaControl js-addEmail" title="Add Email Address">+</span>
+              </div>
+
+              <div class="controls controls--emailSwitch">
+                <input class="form-control" id="User_510389_email1" name="email" required="" type="email" value="">
+                <div class="primary-email-switch-holder">
+                  <input class="primary-email-switch" type="radio" name="merge-primary-email" id="User_510389_email1_switch" checked>
+                  <label for="User_510389_email1_switch">primary</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_email2">Email <span>*</span></label>
+                <span class="formGroup-metaControl js-removeEmail" title="Remove Email Address">&times;</span>
+              </div>
+
+              <div class="controls controls--emailSwitch">
+                <input class="form-control" id="User_510389_email2" name="email" required="" type="email" value="">
+                <div class="primary-email-switch-holder">
+                  <input class="primary-email-switch" type="radio" name="merge-primary-email" id="User_510389_email2_switch" checked>
+                  <label for="User_510389_email2_switch">primary</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_web">Web <span></span></label>
+              </div>
+
+              <div class="controls">
+                <input class="form-control" id="User_510389_web" name="web" type="url" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_phone">Phone <span></span></label>
+              </div>
+
+              <div class="controls">
+                <input class="form-control" id="User_510389_phone" name="phone" type="phone" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_mobile">Mobile <span></span></label>
+              </div>
+
+              <div class="controls">
+                <input class="form-control" id="User_510389_mobile" name="mobile" type="phone" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_fax">Fax <span></span></label>
+              </div>
+
+              <div class="controls">
+                <input class="form-control" id="User_510389_fax" name="fax" type="phone" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="select form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_organization_id">Organization <span></span></label>
+              </div>
+
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="User_510389_organization_id" name="organization_id">
+                    <option value="">
+                      -
+                    </option>
+
+                    <option value="48">
+                      FillOrganization::103209
+                    </option>
+
+                    <option value="21">
+                      FillOrganization::10465
+                    </option>
+
+                    <option value="41">
+                      FillOrganization::215426
+                    </option>
+
+                    <option value="25">
+                      FillOrganization::224110
+                    </option>
+
+                    <option value="32">
+                      FillOrganization::274061
+                    </option>
+
+                    <option value="7">
+                      FillOrganization::275931
+                    </option>
+
+                    <option value="16">
+                      FillOrganization::278146
+                    </option>
+
+                    <option value="30">
+                      FillOrganization::285672
+                    </option>
+
+                    <option value="39">
+                      FillOrganization::306437
+                    </option>
+
+                    <option value="18">
+                      FillOrganization::317801
+                    </option>
+
+                    <option value="20">
+                      FillOrganization::361678
+                    </option>
+
+                    <option value="19">
+                      FillOrganization::370911
+                    </option>
+
+                    <option value="50">
+                      FillOrganization::38701
+                    </option>
+
+                    <option value="8">
+                      FillOrganization::388645
+                    </option>
+
+                    <option value="44">
+                      FillOrganization::393526
+                    </option>
+
+                    <option value="29">
+                      FillOrganization::396202
+                    </option>
+
+                    <option value="12">
+                      FillOrganization::406400
+                    </option>
+
+                    <option value="31">
+                      FillOrganization::41799
+                    </option>
+
+                    <option value="11">
+                      FillOrganization::450605
+                    </option>
+
+                    <option value="45">
+                      FillOrganization::456164
+                    </option>
+
+                    <option value="22">
+                      FillOrganization::463757
+                    </option>
+
+                    <option value="24">
+                      FillOrganization::493399
+                    </option>
+
+                    <option value="36">
+                      FillOrganization::503874
+                    </option>
+
+                    <option value="46">
+                      FillOrganization::528851
+                    </option>
+
+                    <option value="14">
+                      FillOrganization::547006
+                    </option>
+
+                    <option value="26">
+                      FillOrganization::578162
+                    </option>
+
+                    <option value="49">
+                      FillOrganization::580680
+                    </option>
+
+                    <option value="4">
+                      FillOrganization::586820
+                    </option>
+
+                    <option value="47">
+                      FillOrganization::587067
+                    </option>
+
+                    <option value="37">
+                      FillOrganization::617801
+                    </option>
+
+                    <option value="27">
+                      FillOrganization::623525
+                    </option>
+
+                    <option value="3">
+                      FillOrganization::659366
+                    </option>
+
+                    <option value="9">
+                      FillOrganization::677215
+                    </option>
+
+                    <option value="35">
+                      FillOrganization::720063
+                    </option>
+
+                    <option value="28">
+                      FillOrganization::722369
+                    </option>
+
+                    <option value="5">
+                      FillOrganization::72386
+                    </option>
+
+                    <option value="15">
+                      FillOrganization::733108
+                    </option>
+
+                    <option value="6">
+                      FillOrganization::7430
+                    </option>
+
+                    <option value="17">
+                      FillOrganization::750783
+                    </option>
+
+                    <option value="2">
+                      FillOrganization::761476
+                    </option>
+
+                    <option value="38">
+                      FillOrganization::774142
+                    </option>
+
+                    <option value="51">
+                      FillOrganization::838652
+                    </option>
+
+                    <option value="13">
+                      FillOrganization::872402
+                    </option>
+
+                    <option value="43">
+                      FillOrganization::893575
+                    </option>
+
+                    <option value="42">
+                      FillOrganization::915847
+                    </option>
+
+                    <option value="33">
+                      FillOrganization::922765
+                    </option>
+
+                    <option value="34">
+                      FillOrganization::944482
+                    </option>
+
+                    <option value="23">
+                      FillOrganization::944688
+                    </option>
+
+                    <option value="10">
+                      FillOrganization::97133
+                    </option>
+
+                    <option value="40">
+                      FillOrganization::98632
+                    </option>
+
+                    <option value="1">
+                      Zammad Foundation
+                    </option>
+                  </select> 
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="textarea form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_address">Address <span></span></label>
+              </div>
+
+              <div class="controls">
+                <textarea class="form-control" id="User_510389_address" name="address" rows="">
+</textarea>
+
+                <div class="file-uploader undefined" id="file-uploader-1441721980963-12830"></div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_password">Password <span></span></label>
+              </div>
+
+              <div class="controls">
+                <input autocomplete="off" class="form-control" id="User_510389_password" name="password" type="password" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="input form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_password_confirm">Password (confirm) <span></span></label>
+              </div>
+
+              <div class="controls">
+                <input autocomplete="off" class="form-control" id="User_510389_password_confirm" name="password_confirm" type="password" value=""> <span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="boolean form-group formGroup--halfSize">
+              <div class="formGroup-label">
+                <label for="User_510389_vip">VIP <span></span></label>
+              </div>
+
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="User_510389_vip" name="{boolean}vip">
+                    <option selected value="false">
+                      no
+                    </option>
+
+                    <option value="true">
+                      yes
+                    </option>
+                  </select> 
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="richtext form-group">
+              <div class="formGroup-label">
+                <label for="User_510389_note">Note <span></span></label>
+
+                <div class="help-message" title="Notes are visible to agents only, never to customers. "></div>
+              </div>
+
+              <div class="controls">
+                <div class="richtext form-control">
+                  <div class="" contenteditable="true" data-name="note" id="User_510389_note"></div>
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="checkbox form-group">
+              <div class="formGroup-label">
+                <label for="User_510389_role_ids">Roles <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <div class=" checkbox">
+                  <label><input name="role_ids" type="checkbox" value="1"> Admin - To configure your system.</label> <label><input name="role_ids" type="checkbox" value="2"> Agent - To work on Tickets.</label> <label><input name="role_ids" type="checkbox" value="3"> Customer - People who create Tickets ask for help.</label>
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="checkbox form-group">
+              <div class="formGroup-label">
+                <label for="User_510389_group_ids">Groups <span></span></label>
+              </div>
+
+              <div class="controls">
+                <div class=" checkbox">
+                  <label><input name="group_ids" type="checkbox" value="15"> FillGroup::124782</label> <label><input name="group_ids" type="checkbox" value="6"> FillGroup::180684</label> <label><input name="group_ids" type="checkbox" value="2"> FillGroup::206709</label> <label><input name="group_ids" type="checkbox" value="16"> FillGroup::240252</label> <label><input name="group_ids" type="checkbox" value="19"> FillGroup::316438</label> <label><input name="group_ids" type="checkbox" value="3"> FillGroup::331147</label> <label><input name="group_ids" type="checkbox" value="4"> FillGroup::370967</label> <label><input name="group_ids" type="checkbox" value="9"> FillGroup::371994</label> <label><input name="group_ids" type="checkbox" value="5"> FillGroup::387404</label> <label><input name="group_ids" type="checkbox" value="7"> FillGroup::505241</label> <label><input name="group_ids" type="checkbox" value="21"> FillGroup::596513</label> <label><input name="group_ids" type="checkbox" value="12"> FillGroup::661322</label> <label><input name="group_ids" type="checkbox" value="11"> FillGroup::707393</label> <label><input name="group_ids" type="checkbox" value="17"> FillGroup::808471</label> <label><input name="group_ids" type="checkbox" value="18"> FillGroup::854423</label> <label><input name="group_ids" type="checkbox" value="8"> FillGroup::894121</label> <label><input name="group_ids" type="checkbox" value="14"> FillGroup::907762</label> <label><input name="group_ids" type="checkbox" value="20"> FillGroup::927450</label> <label><input name="group_ids" type="checkbox" value="10"> FillGroup::957248</label> <label><input name="group_ids" type="checkbox" value="13"> FillGroup::975373</label> <label><input name="group_ids" type="checkbox" value="1"> Users - Standard Group/Pool for Tickets.</label>
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+
+            <div class="active form-group">
+              <div class="formGroup-label">
+                <label for="User_510389_active">Active <span>*</span></label>
+              </div>
+
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="User_510389_active" name="{boolean}active" required="">
+                    <option selected value="true">
+                      active
+                    </option>
+
+                    <option value="false">
+                      inactive
+                    </option>
+                  </select> 
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="modal-footer">
+          <div class="modal-leftFooter">
+            <a class="btn btn--text btn--subtle js-cancel align-left" href="#/">Cancel &amp; Go Back</a>
+          </div>
+
+          <div class="modal-rightFooter">
+            <button class="btn btn--success js-submit align-right" type="submit">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
