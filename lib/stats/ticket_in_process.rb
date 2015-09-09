@@ -4,13 +4,9 @@ class Stats::TicketInProcess
 
   def self.generate(user)
 
+    # get own tickets which are "workable"
     open_state_ids = Ticket::State.by_category('work_on').map(&:id)
     pending_state_ids = Ticket::State.by_category('pending_reminder').map(&:id)
-
-    # get history entries of tickets worked on today
-    history_object = History::Object.lookup(name: 'Ticket')
-
-    # get own tickets which are "workable"
     own_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND (state_id IN (?) OR (state_id IN (?) AND pending_time < ?))',
       user.id, open_state_ids, pending_state_ids, Time.zone.now
@@ -33,6 +29,7 @@ class Stats::TicketInProcess
     all_ticket_ids = own_ticket_ids.concat(closed_ticket_ids).concat(pending_action_ticket_ids).uniq
 
     # get count where user worked on
+    history_object = History::Object.lookup(name: 'Ticket')
     count = History.select('DISTINCT(o_id)').where(
       'histories.created_at >= ? AND histories.history_object_id = ? AND histories.created_by_id = ? AND histories.o_id IN (?)', Time.zone.now - 1.day, history_object.id, user.id, all_ticket_ids
     ).count
@@ -43,7 +40,7 @@ class Stats::TicketInProcess
     average_in_percent = '-'
 
     if total != 0
-      in_process_precent = ( count.to_f / (total.to_f/100) ).round(1)
+      in_process_precent = ( count.to_f / (total.to_f / 100) ).round(1)
     end
 
     {
@@ -65,7 +62,7 @@ class Stats::TicketInProcess
       return result
     end
 
-    in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f/100) ).round(1)
+    in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
     if in_percent >= 90
       result[:state] = 'supergood'
     elsif in_percent >= 65
