@@ -2,6 +2,7 @@
 require 'test_helper'
 
 class TicketSlaTest < ActiveSupport::TestCase
+
   test 'ticket sla' do
 
     # cleanup
@@ -24,18 +25,29 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
-    sla = Sla.create(
+    calendar1 = Calendar.create_or_update(
+      name: 'EU 1',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: { '09:00' => '17:00' },
+        tue: { '09:00' => '17:00' },
+        wed: { '09:00' => '17:00' },
+        thu: { '09:00' => '17:00' },
+        fri: { '09:00' => '17:00' }
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    sla = Sla.create_or_update(
       name: 'test sla 1',
       condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '8:00',
-        'end_of_workday'       => '18:00',
-      },
       first_response_time: 120,
       update_time: 180,
       close_time: 240,
-      active: true,
+      calendar_id: calendar1.id,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -47,18 +59,30 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = sla.destroy
     assert( delete, 'sla destroy 1' )
 
-    sla = Sla.create(
+    calendar2 = Calendar.create_or_update(
+      name: 'EU 2',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: { '08:00' => '18:00' },
+        tue: { '08:00' => '18:00' },
+        wed: { '08:00' => '18:00' },
+        thu: { '08:00' => '18:00' },
+        fri: { '08:00' => '18:00' },
+        sat: { '08:00' => '18:00' },
+        sun: { '08:00' => '18:00' },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
       name: 'test sla 2',
       condition: { 'tickets.priority_id' => %w(1 2 3) },
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '8:00',
-        'end_of_workday'       => '18:00',
-      },
+      calendar_id: calendar2.id,
       first_response_time: 60,
       update_time: 120,
       close_time: 180,
-      active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -81,7 +105,6 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update_attributes(
       first_response: '2013-03-21 10:00:00 UTC',
     )
-    puts ticket.inspect
 
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_time verify 3' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 3' )
@@ -101,7 +124,6 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update_attributes(
       first_response: '2013-03-21 14:00:00 UTC',
     )
-    puts ticket.inspect
 
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_time verify 4' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 4' )
@@ -269,8 +291,8 @@ class TicketSlaTest < ActiveSupport::TestCase
       type: Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
-      created_at: '2013-03-29 08:00:03 UTC',
-      updated_at: '2013-03-29 08:00:03 UTC',
+      created_at: '2013-03-29 07:00:03 UTC',
+      updated_at: '2013-03-29 07:00:03 UTC',
     )
 
     ticket = Ticket.find(ticket.id)
@@ -355,20 +377,31 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
-    # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 8:00-17:00
-    sla = Sla.create(
-      name: 'test sla 1',
-      condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '9:00',
-        'end_of_workday'       => '18:00',
-      },
+    # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 7:00-16:00
+    calendar = Calendar.create_or_update(
+      name: 'EU 3',
       timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: { '08:00' => '17:00' },
+        tue: { '08:00' => '17:00' },
+        wed: { '08:00' => '17:00' },
+        thu: { '08:00' => '17:00' },
+        fri: { '08:00' => '17:00' },
+        sat: { '08:00' => '17:00' },
+        sun: { '08:00' => '17:00' },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
+      name: 'test sla 3',
+      condition: {},
+      calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
       close_time: 240,
-      active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -397,23 +430,35 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
-    # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
-    sla = Sla.create(
-      name: 'test sla 1',
-      condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '9:00',
-        'end_of_workday'       => '18:00',
-      },
+    # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 6:00-15:00
+    calendar = Calendar.create_or_update(
+      name: 'EU 4',
       timezone: 'Europe/Berlin',
-      first_response_time: 120,
-      update_time: 180,
-      close_time: 240,
-      active: true,
+      business_hours: {
+        mon: { '08:00' => '17:00' },
+        tue: { '08:00' => '17:00' },
+        wed: { '08:00' => '17:00' },
+        thu: { '08:00' => '17:00' },
+        fri: { '08:00' => '17:00' },
+        sat: { '08:00' => '17:00' },
+        sun: { '08:00' => '17:00' },
+      },
+      default: true,
+      ical_url: nil,
       updated_by_id: 1,
       created_by_id: 1,
     )
+    sla = Sla.create_or_update(
+      name: 'test sla 4',
+      condition: {},
+      calendar_id: calendar.id,
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 240,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 11:30:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-10-21 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -432,36 +477,30 @@ class TicketSlaTest < ActiveSupport::TestCase
       customer_id: 2,
       state: Ticket::State.lookup( name: 'new' ),
       priority: Ticket::Priority.lookup( name: '2 normal' ),
-      created_at: '2013-10-21 06:30:00 UTC',
-      updated_at: '2013-10-21 06:30:00 UTC',
+      created_at: '2013-10-21 05:30:00 UTC',
+      updated_at: '2013-10-21 05:30:00 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert( ticket, 'ticket created' )
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify' )
 
-    # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
-    sla = Sla.create(
-      name: 'test sla 1',
+    # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 6:00-15:00
+    sla = Sla.create_or_update(
+      name: 'test sla 5',
       condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '9:00',
-        'end_of_workday'       => '18:00',
-      },
-      timezone: 'Europe/Berlin',
+      calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
       close_time: 240,
-      active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
-    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 09:00:00 UTC', 'ticket.escalation_time verify 1' )
-    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-10-21 09:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
-    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-10-21 10:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
-    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-10-21 11:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 08:00:00 UTC', 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-10-21 08:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-10-21 09:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-10-21 10:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
 
     delete = sla.destroy
     assert( delete, 'sla destroy' )
@@ -545,22 +584,34 @@ class TicketSlaTest < ActiveSupport::TestCase
     )
 
     # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
-    sla = Sla.create(
-      name: 'test sla 1',
-      condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '9:00',
-        'end_of_workday'       => '18:00',
-      },
+    calendar = Calendar.create_or_update(
+      name: 'EU 5',
       timezone: 'Europe/Berlin',
-      first_response_time: 120,
-      update_time: 180,
-      close_time: 250,
-      active: true,
+      business_hours: {
+        mon: { '09:00' => '18:00' },
+        tue: { '09:00' => '18:00' },
+        wed: { '09:00' => '18:00' },
+        thu: { '09:00' => '18:00' },
+        fri: { '09:00' => '18:00' },
+        sat: { '09:00' => '18:00' },
+        sun: { '09:00' => '18:00' },
+      },
+      default: true,
+      ical_url: nil,
       updated_by_id: 1,
       created_by_id: 1,
     )
+    sla = Sla.create_or_update(
+      name: 'test sla 5',
+      condition: {},
+      calendar_id: calendar.id,
+      first_response_time: 120,
+      update_time: 180,
+      close_time: 250,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -608,25 +659,37 @@ class TicketSlaTest < ActiveSupport::TestCase
       close_time: '2013-06-04 12:00:00 UTC',
     )
 
-    sla = Sla.create(
-      name: 'test sla 1',
-      condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '9:00',
-        'end_of_workday'       => '18:00',
+    calendar = Calendar.create_or_update(
+      name: 'EU 5',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: { '09:00' => '18:00' },
+        tue: { '09:00' => '18:00' },
+        wed: { '09:00' => '18:00' },
+        thu: { '09:00' => '18:00' },
+        fri: { '09:00' => '18:00' },
+        sat: { '09:00' => '18:00' },
+        sun: { '09:00' => '18:00' },
       },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
+      name: 'test sla 5',
+      condition: {},
+      calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
       close_time: 240,
-      active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
 
-    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.escalation_time verify 1' )
-    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
     assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
     assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 15:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
@@ -702,25 +765,37 @@ class TicketSlaTest < ActiveSupport::TestCase
       close_time: '2013-06-04 12:00:00 UTC',
     )
 
-    sla = Sla.create(
-      name: 'test sla 1',
-      condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '9:00',
-        'end_of_workday'       => '18:00',
+    calendar = Calendar.create_or_update(
+      name: 'EU 5',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: { '09:00' => '18:00' },
+        tue: { '09:00' => '18:00' },
+        wed: { '09:00' => '18:00' },
+        thu: { '09:00' => '18:00' },
+        fri: { '09:00' => '18:00' },
+        sat: { '09:00' => '18:00' },
+        sun: { '09:00' => '18:00' },
       },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
+      name: 'test sla 5',
+      condition: {},
+      calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
       close_time: 240,
-      active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
 
-    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
-    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
     assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
     assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
@@ -812,25 +887,37 @@ class TicketSlaTest < ActiveSupport::TestCase
       close_time: '2013-06-04 12:00:00 UTC',
     )
 
-    sla = Sla.create(
-      name: 'test sla 1',
-      condition: {},
-      data: {
-        'Mon' => 'Mon', 'Tue' => 'Tue', 'Wed' => 'Wed', 'Thu' => 'Thu', 'Fri' => 'Fri', 'Sat' => 'Sat', 'Sun' => 'Sun',
-        'beginning_of_workday' => '9:00',
-        'end_of_workday'       => '18:00',
+    calendar = Calendar.create_or_update(
+      name: 'EU 5',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: { '09:00' => '18:00' },
+        tue: { '09:00' => '18:00' },
+        wed: { '09:00' => '18:00' },
+        thu: { '09:00' => '18:00' },
+        fri: { '09:00' => '18:00' },
+        sat: { '09:00' => '18:00' },
+        sun: { '09:00' => '18:00' },
       },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
+      name: 'test sla 5',
+      condition: {},
+      calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
       close_time: 240,
-      active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )
     ticket = Ticket.find(ticket.id)
 
-    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.escalation_time verify 1' )
-    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
     assert_equal( ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3' )
     assert_equal( ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3' )
     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
@@ -845,4 +932,5 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( delete, 'ticket destroy' )
 
   end
+
 end

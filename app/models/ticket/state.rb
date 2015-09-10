@@ -50,7 +50,7 @@ returns:
 
 check if state is ignored for escalation
 
-  state = Ticket::State.lookup( :name => 'state name' )
+  state = Ticket::State.lookup(name: 'state name')
 
   result = state.ignore_escalation?
 
@@ -61,8 +61,7 @@ returns:
 =end
 
   def ignore_escalation?
-    ignore_escalation = %w(removed closed merged)
-    return true if ignore_escalation.include?( name )
+    return true if ignore_escalation
     false
   end
 end

@@ -36,6 +36,8 @@ gem 'mail', '~> 2.5.0'
 
 gem 'mime-types'
 
+gem 'biz'
+
 gem 'delayed_job_active_record'
 gem 'daemons'
 

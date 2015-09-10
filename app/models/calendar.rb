@@ -4,6 +4,10 @@ class Calendar < ApplicationModel
   store :business_hours
   store :public_holidays
 
+  after_create   :sync_default, :min_one_check
+  after_update   :sync_default, :min_one_check
+  after_destroy  :min_one_check
+
 =begin
 
 get default calendar
@@ -100,11 +104,6 @@ returns
   def self.timezones
     list = {}
     TZInfo::Timezone.all_country_zone_identifiers.each { |timezone|
-
-      # ignore the following time zones
-      #next if t.name =~ /^GMT/
-      #next if t.name =~ /^Etc/
-      #next if t.name !~ /\//
       t = TZInfo::Timezone.get(timezone)
       diff = t.current_period.utc_total_offset / 60 / 60
       list[ timezone ] = diff
@@ -193,5 +192,28 @@ returns
       events[day] = comment
     }
     events.sort.to_h
+  end
+
+  private
+
+  # if changed calendar is default, set all others default to false
+  def sync_default
+    return if !default
+    Calendar.all.each {|calendar|
+      next if calendar.id == id
+      next if !calendar.default
+      calendar.default = false
+      calendar.save
+    }
+  end
+
+  # check if min one is set to default true
+  def min_one_check
+    Calendar.all.each {|calendar|
+      return if calendar.default
+    }
+    first = Calendar.first
+    first.default = true
+    first.save
   end
 end
