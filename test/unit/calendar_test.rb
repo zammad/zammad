@@ -3,7 +3,7 @@ require 'test_helper'
 
 class CalendarTest < ActiveSupport::TestCase
   test 'default test' do
-
+    Calendar.delete_all
     calendar1 = Calendar.create_or_update(
       name: 'US 1',
       timezone: 'America/Los_Angeles',
@@ -19,7 +19,7 @@ class CalendarTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-
+    sleep 1
     calendar2 = Calendar.create_or_update(
       name: 'US 2',
       timezone: 'America/Los_Angeles',

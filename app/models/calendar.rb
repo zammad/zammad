@@ -212,7 +212,7 @@ returns
     Calendar.all.each {|calendar|
       return if calendar.default
     }
-    first = Calendar.first
+    first = Calendar.order(:created_at, :id).limit(1).first
     first.default = true
     first.save
   end
