@@ -331,7 +331,7 @@ returns
 
 =begin
 
-create model if not exists (check exists based on id, name, login or locale)
+create model if not exists (check exists based on id, name, login, email or locale)
 
   result = Model.create_if_not_exists( attributes )
 
@@ -359,6 +359,13 @@ returns
       records.each {|loop_record|
         return loop_record if loop_record.login == data[:login]
       }
+    elsif data[:email]
+
+      # do lookup with == to handle case insensitive databases
+      records = where( email: data[:email] )
+      records.each {|loop_record|
+        return loop_record if loop_record.email == data[:email]
+      }
     elsif data[:locale] && data[:source]
 
       # do lookup with == to handle case insensitive databases
@@ -372,7 +379,7 @@ returns
 
 =begin
 
-create or update model (check exists based on id, name, login or locale)
+create or update model (check exists based on id, name, login, email or locale)
 
   result = Model.create_or_update( attributes )
 
@@ -411,6 +418,19 @@ returns
       records = where( login: data[:login] )
       records.each {|loop_record|
         if loop_record.login.downcase == data[:login].downcase
+          loop_record.update_attributes( data )
+          return loop_record
+        end
+      }
+      record = new( data )
+      record.save
+      return record
+    elsif data[:email]
+
+      # do lookup with == to handle case insensitive databases
+      records = where( email: data[:email] )
+      records.each {|loop_record|
+        if loop_record.email.downcase == data[:email].downcase
           loop_record.update_attributes( data )
           return loop_record
         end

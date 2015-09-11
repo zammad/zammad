@@ -4,8 +4,7 @@ require 'test_helper'
 class EmailAddressTest < ActiveSupport::TestCase
   test 'basic tests' do
 
-    EmailAddress.delete_all
-    email_address1 = EmailAddress.create(
+    email_address1 = EmailAddress.create_or_update(
       realname: 'address #1',
       email: 'address1@example.com',
       active: true,
@@ -22,8 +21,7 @@ class EmailAddressTest < ActiveSupport::TestCase
 
   test 'group tests' do
 
-    EmailAddress.delete_all
-    email_address1 = EmailAddress.create(
+    email_address1 = EmailAddress.create_or_update(
       realname: 'address #1',
       email: 'address1@example.com',
       active: true,
@@ -55,8 +53,7 @@ class EmailAddressTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    EmailAddress.delete_all
-    email_address1 = EmailAddress.create(
+    email_address1 = EmailAddress.create_or_update(
       realname: 'address #1',
       email: 'address1@example.com',
       active: true,
@@ -64,7 +61,7 @@ class EmailAddressTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    email_address2 = EmailAddress.create(
+    email_address2 = EmailAddress.create_or_update(
       realname: 'address #2',
       email: 'address2@example.com',
       active: true,
