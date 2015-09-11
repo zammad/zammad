@@ -6,6 +6,29 @@ class ChannelsController < ApplicationController
 =begin
 
 Resource:
+POST /api/v1/channels/group/{id}.json
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/v1/group/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST '{group_id:123}'
+
+=end
+
+  def group_update
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if !check_access
+
+    channel = Channel.find(params[:id])
+    channel.group_id = params[:group_id]
+    channel.save
+    render json: {}
+  end
+
+=begin
+
+Resource:
 DELETE /api/v1/channels/{id}.json
 
 Response:
@@ -64,6 +87,9 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
       not_used_email_address_ids: not_used_email_address_ids,
       channel_driver: {
         email: EmailHelper.available_driver,
+      },
+      config: {
+        notification_sender: Setting.get('notification_sender'),
       }
     }
   end
@@ -144,6 +170,11 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
       return
     end
 
+    # fallback
+    if !params[:group_id]
+      params[:group_id] = Group.first.id
+    end
+
     # update account
     if channel_id
       channel = Channel.find(channel_id)
@@ -152,6 +183,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
           inbound: params[:inbound],
           outbound: params[:outbound],
         },
+        group_id: params[:group_id],
         last_log_in: nil,
         last_log_out: nil,
         status_in: 'ok',
@@ -168,12 +200,12 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
         inbound: params[:inbound],
         outbound: params[:outbound],
       },
+      group_id: params[:group_id],
       last_log_in: nil,
       last_log_out: nil,
       status_in: 'ok',
       status_out: 'ok',
       active: true,
-      group_id: Group.first.id,
     )
 
     # remember address && set channel for email address

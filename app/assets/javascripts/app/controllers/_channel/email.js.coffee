@@ -217,6 +217,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
   events:
     'click .js-channelNew': 'wizard'
     'click .js-channelDelete': 'delete'
+    'click .js-channelGroupChange': 'group_change'
     'click .js-editInbound': 'edit_inbound'
     'click .js-editOutbound': 'edit_outbound'
     'click .js-emailAddressNew': 'email_address_new'
@@ -250,7 +251,12 @@ class App.ChannelEmailAccountOverview extends App.Controller
     # get channels
     account_channels = []
     for channel_id in data.account_channel_ids
-      account_channels.push App.Channel.fullLocal(channel_id)
+      account_channel = App.Channel.fullLocal(channel_id)
+      if account_channel.group_id
+        account_channel.group = App.Group.find(account_channel.group_id).displayName()
+      else
+        account_channel.group = '-'
+      account_channels.push account_channel
 
     for channel in account_channels
       email_addresses = App.EmailAddress.search( filter: { channel_id: channel.id } )
@@ -271,6 +277,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       not_used_email_addresses: not_used_email_addresses
       notification_channels:    notification_channels
       accounts_fixed:           data.accounts_fixed
+      config:                   data.config
     )
 
   wizard: (e) =>
@@ -315,6 +322,16 @@ class App.ChannelEmailAccountOverview extends App.Controller
       item:      item
       container: @el.closest('.content')
       callback:  @load
+    )
+
+  group_change: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    new App.ChannelEmailEdit(
+      container: @el.closest('.content')
+      item: item
+      callback: @load
     )
 
   email_address_new: (e) =>
@@ -364,6 +381,60 @@ class App.ChannelEmailAccountOverview extends App.Controller
       channelDriver: @channelDriver
     )
 
+class App.ChannelEmailEdit extends App.ControllerModal
+  constructor: ->
+    super
+
+    @head   = 'Channel'
+    @button = true
+    @close  = true
+    @cancel = true
+
+    configureAttributesBase = [
+      { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
+    ]
+    @form = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributesBase
+        className: ''
+      params: @item
+    )
+
+    @content = @form.form
+    @show()
+
+  onSubmit: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+
+    # validate form
+    errors = @form.validate( params )
+
+    # show errors in form
+    if errors
+      @log 'error', errors
+      @formValidate( form: e.target, errors: errors )
+      return false
+
+    # disable form
+    @formDisable(e)
+
+    # update
+    @ajax(
+      id:   'channel_group_update'
+      type: 'POST'
+      url:  "#{@apiPath}/channels/group/#{@item.id}"
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        @callback()
+        @hide()
+      fail: =>
+        @enable(e)
+    )
+
 class App.ChannelEmailAccountWizard extends App.Wizard
   elements:
     '.modal-body': 'body'
@@ -402,6 +473,9 @@ class App.ChannelEmailAccountWizard extends App.Wizard
 
     @render()
 
+    if @channel
+      @$('.js-goToSlide[data-slide=js-intro]').addClass('hidden')
+
     @el.modal
       keyboard:  true
       show:      true
@@ -419,6 +493,21 @@ class App.ChannelEmailAccountWizard extends App.Wizard
   render: =>
     @html App.view('channel/email_account_wizard')()
     @showSlide('js-intro')
+
+    # base
+    configureAttributesBase = [
+      { name: 'realname', display: 'Department Name',   tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
+      { name: 'email',    display: 'User',     tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off', },
+      { name: 'password', display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
+    ]
+    new App.ControllerForm(
+      el:    @$('.base-settings'),
+      model:
+        configure_attributes: configureAttributesBase
+        className: ''
+      params: @account.meta
+    )
 
     # outbound
     configureAttributesOutbound = [
@@ -637,6 +726,11 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     # let backend know about the channel
     if @channel
       account.channel_id = @channel.id
+
+    if account.meta.group_id
+      account.group_id = account.meta.group_id
+    else if @channel.group_id
+      account.group_id = @channel.group_id
 
     if !account.email && @channel
       email_addresses = App.EmailAddress.search( filter: { channel_id: @channel.id } )
