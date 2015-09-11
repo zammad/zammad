@@ -452,7 +452,7 @@ returns
       record.save
       return record
     else
-      fail 'Need name, login or locale for create_or_update()'
+      fail 'Need name, login, email or locale for create_or_update()'
     end
   end
 
