@@ -1426,13 +1426,6 @@ Setting.create_if_not_exists(
   frontend: true
 )
 
-email_address = EmailAddress.create_if_not_exists(
-  id: 1,
-  realname: 'Zammad',
-  email: 'zammad@localhost',
-  updated_by_id: 1,
-  created_by_id: 1
-)
 signature = Signature.create_if_not_exists(
   id: 1,
   name: 'default',
@@ -1473,7 +1466,6 @@ Role.create_if_not_exists(
 Group.create_if_not_exists(
   id: 1,
   name: 'Users',
-  email_address_id: email_address.id,
   signature_id: signature.id,
   note: 'Standard Group/Pool for Tickets.',
   updated_by_id: 1,
