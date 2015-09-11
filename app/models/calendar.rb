@@ -210,7 +210,7 @@ returns
   # check if min one is set to default true
   def min_one_check
     Calendar.all.each {|calendar|
-      return if calendar.default
+      return true if calendar.default
     }
     first = Calendar.order(:created_at, :id).limit(1).first
     first.default = true

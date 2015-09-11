@@ -108,8 +108,8 @@ returns
         self.update_time_escal_date = biz.time(pending_time, :minutes).after(update_time_escal_date)
       end
     end
-    if (!self.escalation_time && self.update_time_escal_date) || self.update_time_escal_date < self.escalation_time
-      self.escalation_time = self.update_time_escal_date
+    if (!escalation_time && update_time_escal_date) || update_time_escal_date < escalation_time
+      self.escalation_time = update_time_escal_date
     end
 
     # get update time in min
@@ -136,10 +136,8 @@ returns
     if close_time
       self.close_time_in_min = pending_minutes(created_at, close_time, biz, 'business_minutes')
     else
-      if (!self.escalation_time && self.close_time_escal_date) || self.close_time_escal_date < self.escalation_time
-        if !escalation_disabled
-          self.escalation_time = self.close_time_escal_date
-        end
+      if (!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time
+        self.escalation_time = close_time_escal_date
       end
     end
 
