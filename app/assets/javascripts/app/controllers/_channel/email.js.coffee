@@ -215,18 +215,19 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
 
 class App.ChannelEmailAccountOverview extends App.Controller
   events:
-    'click [data-type="new"]': 'wizard'
-    'click [data-type="delete"]': 'delete'
-    'click [data-type="edit-inbound"]': 'edit_inbound'
-    'click [data-type="edit-outbound"]': 'edit_outbound'
-    'click [data-type="email-address-new"]': 'email_address_new'
-    'click [data-type="email-address-edit"]': 'email_address_edit'
-    'click [data-type="edit-notification-outbound"]': 'edit_notification_outbound'
+    'click .js-channelNew': 'wizard'
+    'click .js-channelDelete': 'delete'
+    'click .js-editInbound': 'edit_inbound'
+    'click .js-editOutbound': 'edit_outbound'
+    'click .js-emailAddressNew': 'email_address_new'
+    'click .js-emailAddressEdit': 'email_address_edit'
+    'click .js-emailAddressDelete': 'email_address_delete',
+    'click .js-editNotificationOutbound': 'edit_notification_outbound'
 
   constructor: ->
     super
-    # @interval(@load, 20000)
-    @load()
+    @interval(@load, 30000)
+    #@load()
 
   load: =>
     @ajax(
@@ -282,7 +283,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   edit_inbound: (e) =>
     e.preventDefault()
-    id      = $(e.target).closest('tr').data('id')
+    id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-inbound'
     new App.ChannelEmailAccountWizard(
@@ -295,7 +296,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   edit_outbound: (e) =>
     e.preventDefault()
-    id      = $(e.target).closest('tr').data('id')
+    id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
     new App.ChannelEmailAccountWizard(
@@ -308,7 +309,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   delete: (e) =>
     e.preventDefault()
-    id   = $(e.target).closest('tr').data('id')
+    id   = $(e.target).closest('.action').data('id')
     item = App.Channel.find(id)
     new App.ControllerGenericDestroyConfirm(
       item:      item
@@ -318,7 +319,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   email_address_new: (e) =>
     e.preventDefault()
-    channel_id = $(e.target).closest('tr').data('id')
+    channel_id = $(e.target).closest('.action').data('id')
     new App.ControllerGenericNew(
       pageData:
         object: 'Email Address'
@@ -341,9 +342,19 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback: @load
     )
 
+  email_address_delete: (e) =>
+    e.preventDefault()
+    id = $(e.target).closest('li').data('id')
+    item = App.EmailAddress.find(id)
+    new App.ControllerGenericDestroyConfirm(
+      item: item
+      container: @el.closest('.content')
+      callback: @load
+    )
+
   edit_notification_outbound: (e) =>
     e.preventDefault()
-    id      = $(e.target).closest('tr').data('id')
+    id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
     new App.ChannelEmailNotificationWizard(

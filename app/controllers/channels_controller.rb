@@ -31,7 +31,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     not_used_email_address_ids = []
     accounts_fixed = []
     assets = {}
-    Channel.all.each {|channel|
+    Channel.order(:id).each {|channel|
       if system_online_service && channel.preferences && channel.preferences['online_service_disable']
         email_addresses = EmailAddress.where(channel_id: channel.id)
         email_addresses.each {|email_address|

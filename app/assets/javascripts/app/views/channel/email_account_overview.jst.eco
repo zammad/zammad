@@ -1,24 +1,110 @@
-<h2><%- @T('Email Accounts') %></h2>
 
 <% if !_.isEmpty(@accounts_fixed): %>
-<h3><%- @T('Fixed email addresses') %></h3>
-<ul>
-  <% for email_address in @accounts_fixed: %>
-    <li><%= email_address.realname %> &lt;<%= email_address.email %>&gt;
-  <% end %>
-</ul>
+<h2><%- @T('Fixed Email Accounts') %></h2>
+<div class="action">
+  <div class="action-flow">
+    <div class="action-block">
+      <ul>
+        <% for email_address in @accounts_fixed: %>
+          <li><%= email_address.realname %> &lt;<%= email_address.email %>&gt;
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
 <% end %>
+
+<h2><%- @T('Email Accounts') %></h2>
 
 <% if !_.isEmpty(@not_used_email_addresses): %>
-<h3><%- @T('Unlinked Email Addresses') %></h3>
-<ul>
-<% for email_address in @not_used_email_addresses: %>
-  <li data-id="<%= email_address.id %>"><a href="" data-type="email-address-edit"><%= email_address.email %></a>
-<% end %>
-</ul>
+<div class="action">
+  <div class="action-flow">
+    <div class="action-block">
+      <%- @T('Notice') %>: <%- @T('Unlinked Email Addresses, assign it to a channel or delete it.') %></h3>
+      <ul class="list">
+      <% for email_address in @not_used_email_addresses: %>
+        <li class="list-item" data-id="<%= email_address.id %>">
+          <div class="list-item-name">
+            <a href="#" class="js-emailAddressEdit"><%= email_address.realname %> &lt;<%= email_address.email %>&gt;</a>
+          </div>
+          <div class="list-item-delete js-emailAddressDelete">
+            <%- @Icon('diagonal-cross') %>
+          </div>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
 <% end %>
 
-<h3><%- @T('Linked Email Addresses') %></h3>
+<% if _.isEmpty(@account_channels): %>
+  <p><%- @T('You have no configured account right now.') %></p>
+<% else: %>
+  <% for channel in @account_channels: %>
+  <div class="action" data-id="<%- channel.id %>">
+    <div class="action-flow" style="width: 100%;">
+      <div class="action-block" style="width: 50%;">
+        <%- @Icon('status', channel.status_in + " inline") %> <%- @T('Inbound') %>:<br>
+        <a class="js-editInbound" href="#">
+        <%- @T('User') %>: <%= channel.options.inbound.options.user %><br>
+        <%- @T('Host') %>: <%= channel.options.inbound.options.host %><br>
+        <%- @T('Protocol') %>: <%= channel.options.inbound.adapter %>
+        </a>
+
+        <% if !_.isEmpty(channel.last_log_in): %>
+        <div>
+        <%- @T('Notice') %>:<br>
+        <%= channel.last_log_in %>
+        </div>
+        <% end %>
+
+        <br>
+
+        <%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %>:<br>
+        <a class="js-editOutbound" href="#">
+          <% if channel.options.outbound && channel.options.outbound.options: %>
+            <%- @T('User') %>: <%= channel.options.outbound.options.user %><br>
+            <%- @T('Host') %>: <%= channel.options.outbound.options.host %><br>
+          <% end %>
+          <%- @T('Protocol') %>: <%= channel.options.outbound.adapter %>
+        </a>
+        <% if !_.isEmpty(channel.last_log_out): %>
+        <div>
+        <%- @T('Notice') %>:<br>
+        <%= channel.last_log_out %>
+        <div>
+        <% end %>
+      </div>
+      <div class="action-block">
+        <%- @T('Email Adresses') %>:
+        <ul class="list">
+        <% if !_.isEmpty(channel.email_addresses): %>
+          <% for email_address in channel.email_addresses: %>
+            <li class="list-item" data-id="<%= email_address.id %>">
+              <div class="list-item-name">
+                <a href="" class="js-emailAddressEdit"><%= email_address.realname %> &lt;<%= email_address.email %>&gt;</a>
+              </div>
+              <% if channel.email_addresses.length > 1: %>
+              <div class="list-item-delete js-emailAddressDelete">
+                <%- @Icon('diagonal-cross') %>
+              </div>
+              <% end %>
+          <% end %>
+        <% else: %>
+          <li class="list-item"><%- @T('none') %>
+        <% end %>
+        </ul>
+        <a class="text-muted js-emailAddressNew" href="#" title="<%- @Ti('New Email Address') %>">+ <%- @T('Add Email') %></a>
+      </div>
+    </div>
+    <div class="action-controls">
+      <div class="sla-toggle btn btn--danger btn--secondary js-channelDelete"><%- @T('Delete') %></div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+<!--
 <% if _.isEmpty(@account_channels): %>
   <p><%- @T('You have no configured account right now.') %></p>
 <% else: %>
@@ -37,7 +123,7 @@
         <td class="noTruncate">
           <div class="horizontal">
             <%- @Icon('status', channel.status_in + " inline") %>
-            <a class="flex" href="#" data-type="edit-inbound">
+            <a class="flex js-editInbound" href="#">
             <%= channel.options.inbound.options.user %><br>
             <%= channel.options.inbound.options.host %> (<%= channel.options.inbound.adapter %>)
             </a>
@@ -46,7 +132,7 @@
         <td class="noTruncate">
           <div class="horizontal">
             <%- @Icon('status', channel.status_out + " inline") %>
-            <a class="flex" href="#" data-type="edit-outbound">
+            <a class="flex js-editOutbound" href="#">
               <% if channel.options.outbound && channel.options.outbound.options: %>
                 <%= channel.options.outbound.options.user %><br>
                 <%= channel.options.outbound.options.host %>
@@ -61,7 +147,7 @@
             <% for email_address in channel.email_addresses: %>
               <li class="list-item" data-id="<%= email_address.id %>">
                 <div class="list-item-name">
-                  <a href="" data-type="email-address-edit"><%= email_address.email %></a>
+                  <a href="" class="js-emailAddressEdit"><%= email_address.email %></a>
                 </div>
                 <div class="list-item-delete js-delete">
                   <%- @Icon('diagonal-cross') %>
@@ -71,7 +157,7 @@
             <li class="list-item"><%- @T('none') %>
           <% end %>
           </ul>
-          <a class="text-muted" href="#" data-type="email-address-new" title="<%- @Ti('New Email Address') %>">+ <%- @Ti('Add Email') %></a>
+          <a class="text-muted js-emailAddressNew" href="#" title="<%- @Ti('New Email Address') %>">+ <%- @Ti('Add Email') %></a>
         </td>
         <td class="noTruncate">
           <a href="#" data-type="delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
@@ -91,12 +177,40 @@
     </tbody>
   </table>
 <% end %>
-
-<a data-type="new" class="btn btn--success"><%- @T('New') %></a>
+-->
+<a class="btn btn--success js-channelNew"><%- @T('New') %></a>
 
 <% if !_.isEmpty(@notification_channels) && !App.Config.get('system_online_service'): %>
-  <h2><%- @T('Notification Email Account') %></h2>
+  <h2><%- @T('Email Notification') %></h2>
+  <% for channel in @notification_channels: %>
+    <div class="action" data-id="<%- channel.id %>">
+      <div class="action-flow">
+        <div class="action-block">
 
+          <%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %>:<br>
+          <a class="js-editNotificationOutbound" href="#">
+            <% if channel.options.outbound && channel.options.outbound.options: %>
+              <%- @T('User') %>: <%= channel.options.outbound.options.user %><br>
+              <%- @T('Host') %>: <%= channel.options.outbound.options.host %><br>
+            <% end %>
+            <%- @T('Protocol') %>: <%= channel.options.outbound.adapter %>
+          </a>
+
+          <% if channel.status_in is 'error': %>
+            <div><%= channel.last_log_in %></div>
+          <% end %>
+          <% if channel.status_out is 'error': %>
+            <div><%= channel.last_log_out %></div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<!--
+<% if !_.isEmpty(@notification_channels) && !App.Config.get('system_online_service'): %>
   <table class="table table-hover user-list">
     <thead>
       <tr>
@@ -109,7 +223,7 @@
         <td class="noTruncate">
           <div class="horizontal">
             <%- @Icon('status', channel.status_out + " inline") %>
-            <a class="flex" href="#" data-type="edit-notification-outbound">
+            <a class="flex js-editNotificationOutbound" href="#">
               <% if channel.options.outbound && channel.options.outbound.options: %>
                 <%= channel.options.outbound.options.user %><br>
                 <%= channel.options.outbound.options.host %>
@@ -132,3 +246,4 @@
     </tbody>
   </table>
 <% end %>
+-->
