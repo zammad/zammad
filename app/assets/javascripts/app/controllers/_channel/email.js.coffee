@@ -45,6 +45,10 @@ class App.ChannelEmailFilter extends App.Controller
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
+    description = '''
+With Filters you can e. g. dispatch new Tickets into certain groups or set a certain priority for Tickets of an VIP customer.
+'''
+
     new App.ControllerTable(
       el:       template.find('.overview')
       model:    App.PostmasterFilter
@@ -52,6 +56,7 @@ class App.ChannelEmailFilter extends App.Controller
       bindRow:
         events:
           'click': @edit
+      explanation: description
     )
     @html template
 
@@ -135,6 +140,13 @@ class App.ChannelEmailSignature extends App.Controller
     data = App.Signature.search( sortBy: 'name' )
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
+
+    description = '''
+You can define differenct signatures for each group. So you can have different email signatures for different departments.
+
+Once you have created a signature here, you need also to edit the groups where you want to use it.
+'''
+
     new App.ControllerTable(
       el:       template.find('.overview')
       model:    App.Signature
@@ -142,6 +154,7 @@ class App.ChannelEmailSignature extends App.Controller
       bindRow:
         events:
           'click': @edit
+      explanation: description
     )
     @html template
 

@@ -21,7 +21,6 @@ class Index extends App.ControllerContent
         buttons: [
           { name: 'New TextModule', 'data-type': 'new', class: 'btn--success' }
         ]
-        explanation: 'Create Text Modules to spend less time writing responses. TextModules can include smart variables like the users name or email address.'
       container: @el.closest('.content')
     )
 

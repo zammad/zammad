@@ -144,3 +144,9 @@ class App.Overview extends App.Model
     'role',
     'prio',
   ]
+
+  @description = '''
+Übersichten können Sie Ihren Agenten und Kunden bereitstellen. Sie dienen als eine Art Arbeitslisten von Aufgaben welche der Agent abarbeiten soll.
+
+Sie können auch individuelle Übersichten für einzelne Agenten oder agenten Gruppen erstellen.
+'''

@@ -241,6 +241,15 @@ class App extends Spine.Controller
       params.Icon = (name, className = '') ->
         "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#icon-#{name}\" /></svg>"
 
+      # define richtext helper
+      params.RichText = ( string ) ->
+        if string.match(/@T\('/)
+          string = string.replace(/@T\('(.+?)'\)/g, (match, capture) ->
+            App.i18n.translateContent(capture)
+          )
+          return marked(string)
+        App.i18n.translateContent(string)
+
       # define template
       JST["app/views/#{name}"](params)
     template

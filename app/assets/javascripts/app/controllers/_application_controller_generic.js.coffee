@@ -98,8 +98,9 @@ class App.ControllerGenericEdit extends App.ControllerModal
 
 class App.ControllerGenericIndex extends App.Controller
   events:
-    'click [data-type = edit]':    'edit'
-    'click [data-type = new]':     'new'
+    'click [data-type=edit]': 'edit'
+    'click [data-type=new]':  'new'
+    'click .js-description':  'description'
 
   constructor: ->
     super
@@ -147,12 +148,24 @@ class App.ControllerGenericIndex extends App.Controller
         return item
       )
 
+    # show description button, only if content exists
+    showDescription = false
+    if App[ @genericObject ].description && !_.isEmpty(objects)
+      showDescription = true
+
     @html App.view('generic/admin/index')(
-      head:    @pageData.objects
-      notes:   @pageData.notes
-      buttons: @pageData.buttons
-      menus:   @pageData.menus
+      head:            @pageData.objects
+      notes:           @pageData.notes
+      buttons:         @pageData.buttons
+      menus:           @pageData.menus
+      showDescription: showDescription
     )
+
+    # show description in content if no no content exists
+    if _.isEmpty(objects) && App[ @genericObject ].description
+      description = marked(App[ @genericObject ].description)
+      @$('.table-overview').html(description)
+      return
 
     # append content table
     params = _.extend(
@@ -192,6 +205,26 @@ class App.ControllerGenericIndex extends App.Controller
       genericObject: @genericObject
       container:     @container
     )
+
+  description: (e) =>
+    new App.ControllerGenericDescription(
+      description: App[ @genericObject ].description
+      container:   @container
+    )
+
+class App.ControllerGenericDescription extends App.ControllerModal
+  constructor: ->
+    super
+    @head       = 'Description'
+    @cancel     = false
+    @button     = 'Close'
+    description = marked(@description)
+
+    @show(description)
+
+  onSubmit: (e) ->
+    e.preventDefault()
+    @hide()
 
 class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   constructor: ->

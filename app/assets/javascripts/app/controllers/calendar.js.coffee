@@ -1,6 +1,8 @@
 class Index extends App.ControllerContent
   events:
-    'click .js-new': 'newDialog'
+    'click .js-new':         'newDialog'
+    'click .js-description': 'description'
+
   constructor: ->
     super
 
@@ -11,7 +13,9 @@ class Index extends App.ControllerContent
     App.Calendar.fetch()
 
   render: =>
-    calendars = App.Calendar.all()
+    calendars = App.Calendar.search(
+      sortBy: 'name'
+    )
     for calendar in calendars
 
       # get preview public holidays
@@ -27,8 +31,18 @@ class Index extends App.ControllerContent
             public_holidays_preview[day] = calendar.public_holidays[day]
       calendar.public_holidays_preview = public_holidays_preview
 
+    # show description button, only if content exists
+    showDescription = false
+    if App.Calendar.description
+      if !_.isEmpty(calendars)
+        showDescription = true
+      else
+        description = marked(App[ @genericObject ].description)
+
     @html App.view('calendar')(
-      calendars: calendars
+      calendars:       calendars
+      showDescription: showDescription
+      description:     description
     )
 
   release: =>
@@ -49,5 +63,11 @@ class Index extends App.ControllerContent
           maxHours: 99
         @$('.js-time').timepicker
           showMeridian: true # show am/pm
+
+  description: (e) =>
+    new App.ControllerGenericDescription(
+      description: App.Calendar.description
+      container:   @el.closest('.content')
+    )
 
 App.Config.set( 'Calendars', { prio: 2400, name: 'Calendars', parent: '#manage', target: '#manage/calendars', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

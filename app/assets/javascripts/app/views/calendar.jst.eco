@@ -4,9 +4,16 @@
   </div>
 
   <div class="page-header-meta">
+    <% if @showDescription: %>
+      <a class="btn js-description"><%- @T('Description') %></a>
+    <% end %>
     <a class="btn btn--success js-new"><%- @T('New Calendar') %></a>
   </div>
 </div>
+
+<% if _.isEmpty(@calendars): %>
+<%- @description %>
+<% end %>
 
 <% for calendar in @calendars: %>
 <div class="action">

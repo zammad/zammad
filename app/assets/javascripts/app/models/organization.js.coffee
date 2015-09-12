@@ -14,6 +14,13 @@ class App.Organization extends App.Model
     'shared',
   ]
 
+  @description = '''
+Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei bedeutende Vorteile.
+
+1. Als **Agent** haben Sie nicht nur die Übersicht über die Tickets eines Kunden sondern zusätzlich die **Übersicht über die gesamte Organisation**. Z. B. über die Suchen nach der Organisation, diese per einfachen klick öffnen.
+2. Als **Kunde** können Sie die **Tickets ihrer Kollegen mit einsehen** und bearbeiten (sofern die Organisation eine "teilende" ist, dies können Sie je Organisation als Parameter einstellen).
+'''
+
   uiUrl: ->
     '#organization/profile/' + @id
 
