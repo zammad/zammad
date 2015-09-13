@@ -5,8 +5,8 @@ class App.ControllerForm extends App.Controller
 
     if !@handlers
       @handlers = []
-    @handlers.push @_showHideToggle
-    @handlers.push @_requiredMandantoryToggle
+    @handlers.push @showHideToggle
+    @handlers.push @requiredMandantoryToggle
 
     # set empty class attributes if needed
     if !@form
@@ -1063,16 +1063,16 @@ class App.ControllerForm extends App.Controller
               # check if value is used in condition
               if _.contains( action.bind.value, value )
                 if action.change.action is 'hide'
-                  ui._hide(action.change.name)
+                  ui.hide(action.change.name)
                 else
-                  ui._show(action.change.name)
+                  ui.show(action.change.name)
             )
 
     if !attribute.display
 
       # hide/show item
       #if attribute.hide
-      #  @._hide(attribute.name)
+      #  @.hide(attribute.name)
 
       return item
     else
@@ -1087,11 +1087,11 @@ class App.ControllerForm extends App.Controller
 
       # hide/show item
       if attribute.hide
-        @._hide(attribute.name, fullItem)
+        @.hide(attribute.name, fullItem)
 
       return fullItem
 
-  _show: (name, el = @el) ->
+  show: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
@@ -1105,7 +1105,7 @@ class App.ControllerForm extends App.Controller
       el.find('.has-error').removeClass('has-error')
       el.find('.help-inline').html('')
 
-  _hide: (name, el = @el) ->
+  hide: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
@@ -1114,21 +1114,21 @@ class App.ControllerForm extends App.Controller
       el.find('[data-name="' + key + '"]').closest('.form-group').addClass('hide')
       el.find('[data-name="' + key + '"]').addClass('is-hidden')
 
-  _mandantory: (name, el = @el) ->
+  mandantory: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
       el.find('[name="' + key + '"]').attr('required', true)
       el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('*')
 
-  _optional: (name, el = @el) ->
+  optional: (name, el = @el) ->
     if !_.isArray(name)
       name = [name]
     for key in name
       el.find('[name="' + key + '"]').attr('required', false)
       el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('')
 
-  _showHideToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+  showHideToggle: (params, changedAttribute, attributes, classname, form, ui) =>
     for attribute in attributes
       if attribute.shown_if
         hit = false
@@ -1141,11 +1141,11 @@ class App.ControllerForm extends App.Controller
             else if params[refAttribute].toString() is refValue.toString()
               hit = true
         if hit
-          ui._show(attribute.name)
+          ui.show(attribute.name)
         else
-          ui._hide(attribute.name)
+          ui.hide(attribute.name)
 
-  _requiredMandantoryToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+  requiredMandantoryToggle: (params, changedAttribute, attributes, classname, form, ui) =>
     for attribute in attributes
       if attribute.required_if
         hit = false
@@ -1158,9 +1158,9 @@ class App.ControllerForm extends App.Controller
             else if params[refAttribute].toString() is refValue.toString()
               hit = true
         if hit
-          ui._mandantory(attribute.name)
+          ui.mandantory(attribute.name)
         else
-          ui._optional(attribute.name)
+          ui.optional(attribute.name)
 
   validate: (params) ->
     App.Model.validate(

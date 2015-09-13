@@ -2,7 +2,7 @@ class Index extends App.Controller
   elements:
     '.js-search' : 'searchInput'
   events:
-    'click [data-type="new"]':  'new'
+    'click [data-type="new"]': 'new'
 
   constructor: ->
     super
@@ -60,7 +60,7 @@ class Index extends App.Controller
       header
 
     callbackAttributes = (value, object, attribute, header, refObject) ->
-      text                  = App.i18n.translateInline("View from user's perspective")
+      text                  = App.i18n.translateInline('View from user\'s perspective')
       value                 = ' '
       attribute.raw         = ' <span class="btn btn--primary btn--table switchView" title="' + text + '"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> ' + text + '</span>'
       attribute.class       = ''
@@ -84,7 +84,7 @@ class Index extends App.Controller
         @renderResult(user_ids)
 
       new App.ControllerGenericEdit(
-        id:       item.id
+        id: item.id
         pageData:
           title:     'Users'
           home:      'users'
@@ -93,6 +93,7 @@ class Index extends App.Controller
           navupdate: '#users'
         genericObject: 'User'
         callback: rerender
+        container: @el.closest('.content')
       )
 
     users = []
@@ -175,6 +176,7 @@ class Index extends App.Controller
         objects:   'Users'
         navupdate: '#users'
       genericObject: 'User'
+      container: @el.closest('.content')
     )
 
 App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
