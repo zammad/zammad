@@ -39,7 +39,7 @@ class Index extends App.ControllerContent
       else
         description = marked(App[ @genericObject ].description)
 
-    @html App.view('calendar')(
+    @html App.view('calendar/index')(
       calendars:       calendars
       showDescription: showDescription
       description:     description
