@@ -254,4 +254,6 @@ class App extends Spine.Controller
       JST["app/views/#{name}"](params)
     template
 
+class App.UiElement
+
 window.App = App
