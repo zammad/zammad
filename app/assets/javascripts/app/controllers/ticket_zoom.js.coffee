@@ -101,6 +101,8 @@ class App.TicketZoom extends App.Controller
 
     @activeState = true
 
+    @autosaveStart()
+
     App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
 
     # inital load of highlights
@@ -113,6 +115,7 @@ class App.TicketZoom extends App.Controller
   hide: =>
     @activeState = false
     @positionPageHeaderStop()
+    @autosaveStop()
 
   changed: =>
     return false if !@ticket
@@ -349,8 +352,6 @@ class App.TicketZoom extends App.Controller
         @scrollTo( 0, offset )
       @delay( scrollTo, 100, false )
 
-    @autosaveStart()
-
     @scrollToBottom()
 
     @positionPageHeaderStart()
@@ -372,7 +373,8 @@ class App.TicketZoom extends App.Controller
     if !@autosaveLast
       @autosaveLast = @taskGet()
     update = =>
-      #console.log('AR', @formParam( @el.find('.article-add') ) )
+      #console.log('AR', @ticket_id, @ticket, @formParam( @el.find('.article-add') ) )
+      return if !@ticket
       currentStoreTicket = @ticket.attributes()
       delete currentStoreTicket.article
       currentStore  =
