@@ -98,23 +98,31 @@ class App.TicketZoom extends App.Controller
     if @activeState
       @scrollToBottom()
       return
-
     @activeState = true
 
+    # start autosave
     @autosaveStart()
-
-    App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
 
     # inital load of highlights
     if @highligher && !@highlighed
       @highlighed = true
       @highligher.loadHighlights()
 
-    @positionPageHeaderStart()
+    if !@shown
+
+      # trigger shown to article
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
+
+      # observe content header position
+      @positionPageHeaderStart()
 
   hide: =>
     @activeState = false
+
+    # stop observing content header position
     @positionPageHeaderStop()
+
+    # stop autosave
     @autosaveStop()
 
   changed: =>
@@ -352,15 +360,18 @@ class App.TicketZoom extends App.Controller
         @scrollTo( 0, offset )
       @delay( scrollTo, 100, false )
 
-    @scrollToBottom()
-
-    @positionPageHeaderStart()
-
     @ticketLastAttributes = @ticket.attributes()
 
-    # trigger shown
-    if @activeState
-      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket.id } )
+    if @shown
+
+      # scroll to end of page
+      @scrollToBottom()
+
+      # observe content header position
+      @positionPageHeaderStart()
+
+      # trigger shown if init shown render
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
 
   scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
@@ -636,6 +647,7 @@ class TicketZoomRouter extends App.ControllerPermanent
       ticket_id:  params.ticket_id
       article_id: params.article_id
       nav:        params.nav
+      shown:      true
 
     App.TaskManager.execute(
       key:        'Ticket-' + @ticket_id

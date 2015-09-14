@@ -38,12 +38,14 @@ class ArticleViewItem extends App.Controller
 
     @render()
 
-    # set article type and expand text area
+    # set expand of text area only once
     @bind(
       'ui::ticket::shown'
       (data) =>
-        if data.ticket_id.toString() is @ticket.id.toString()
-          @setSeeMore()
+        if !@shown
+          if data.ticket_id.toString() is @ticket.id.toString()
+            @setSeeMore()
+            @shown = true
     )
 
     # subscribe to changes
