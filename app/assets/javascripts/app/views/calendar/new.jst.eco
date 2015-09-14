@@ -12,7 +12,7 @@
   <div class="formGroup-label">
     <label for="name">Timezone <span>*</span></label>
   </div>
-  <div class="controls">
+  <div class="controls" style="position: relative">
 
     <select class="form-control js-selectTimezone" name="timezone">
       <option value="Africa/Abidjan">Africa/Abidjan (GMT0)</option>
@@ -563,98 +563,87 @@
     <label for="name">Business Hours <span>*</span></label>
   </div>
   <div class="controls">
-    <table class="settings-list">
+    <table class="settings-list settings-list--stretch settings-list--toggleColumn">
       <thead>
         <tr>
           <th style="text-align: center">
-            <%- @T('Day') %>
+            <label class="day-name"><input class="js-activateColumn" data-target="monday" type="checkbox" checked> Monday</label>
           <th style="text-align: center">
-            <%- @T('From/Till') %>
+            <label class="day-name"><input class="js-activateColumn" data-target="tuesday" type="checkbox" checked> Tuesday</label>
           <th style="text-align: center">
-            <%- @T('From/Till') %>
+            <label class="day-name"><input class="js-activateColumn" data-target="wednesday" type="checkbox" checked> Wednesday</label>
+          <th style="text-align: center">
+            <label class="day-name"><input class="js-activateColumn" data-target="thursday" type="checkbox" checked> Thursday</label>
+          <th style="text-align: center">
+            <label class="day-name"><input class="js-activateColumn" data-target="friday" type="checkbox" checked> Friday</label>
+          <th style="text-align: center">
+            <label class="day-name"><input class="js-activateColumn" data-target="saturday" type="checkbox"> Saturday</label>
+          <th style="text-align: center">
+            <label class="day-name"><input class="js-activateColumn" data-target="sunday" type="checkbox"> Sunday</label>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><%- @T('Monday') %></td>
-          <td>
-            <input type="text" name="mon_start_time" value="07:00" class="time time--12 js-time">
-            <input type="text" name="mon_end_time" value="18:00" class="time time--12 js-time">
-          </td>
-          <td>
-            <input type="text" name="mon_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="mon_end_time" value="" class="time time--12 js-time">
-          </td>
+          <td data-column="monday" class="form-group day-time is-active">
+            <label for="monday_start_time">from</label>
+            <input type="text" id="monday_start_time" value="07:00" class="form-control form-control--small time js-time">
+            <label for="monday_end_time">till</label>
+            <input type="text" id="monday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+          <td data-column="tuesday" class="form-group day-time is-active">
+            <label for="tuesday_start_time">from</label>
+            <input type="text" id="tuesday_start_time" value="07:00" class="form-control form-control--small time js-time">
+            <label for="tuesday_end_time">till</label>
+            <input type="text" id="tuesday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+          <td data-column="wednesday" class="form-group day-time is-active">
+            <label for="wednesday_start_time">from</label>
+            <input type="text" id="wednesday_start_time" value="07:00" class="form-control form-control--small time js-time">
+            <label for="wednesday_end_time">till</label>
+            <input type="text" id="wednesday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+          <td data-column="thursday" class="form-group day-time is-active">
+            <label for="thursday_start_time">from</label>
+            <input type="text" id="thursday_start_time" value="07:00" class="form-control form-control--small time js-time">
+            <label for="thursday_end_time">till</label>
+            <input type="text" id="thursday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+          <td data-column="friday" class="form-group day-time is-active">
+            <label for="friday_start_time">from</label>
+            <input type="text" id="friday_start_time" value="07:00" class="form-control form-control--small time js-time">
+            <label for="friday_end_time">till</label>
+            <input type="text" id="friday_end_time" value="13:00" class="form-control form-control--small time js-time">
+
+          <td data-column="saturday" class="form-group day-time">
+            <label for="saturday_start_time">from</label>
+            <input type="text" id="saturday_start_time" value="07:00" class="form-control form-control--small time js-time">
+            <label for="saturday_end_time">till</label>
+            <input type="text" id="saturday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+          <td data-column="sunday" class="form-group day-time">
+            <label for="sunday_start_time">from</label>
+            <input type="text" id="sunday_start_time" value="07:00" class="form-control form-control--small time js-time">
+            <label for="sunday_end_time">till</label>
+            <input type="text" id="sunday_end_time" value="18:00" class="form-control form-control--small time js-time">
         </tr>
         <tr>
-          <td><%- @T('Tuesday') %></td>
-          <td>
-            <input type="text" name="tue_start_time" value="07:00" class="time time--12 js-time">
-            <input type="text" name="tue_end_time" value="18:00" class="time time--12 js-time">
-          </td>
-          <td>
-            <input type="text" name="tue_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="tue_end_time" value="" class="time time--12 js-time">
-          </td>
-        </tr>
-        <tr>
-          <td><%- @T('Wednesday') %></td>
-          <td>
-            <input type="text" name="wed_start_time" value="07:00" class="time time--12 js-time">
-            <input type="text" name="wed_end_time" value="18:00" class="time time--12 js-time">
-          </td>
-          <td>
-            <input type="text" name="wed_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="wed_end_time" value="" class="time time--12 js-time">
-          </td>
-        </tr>
-        <tr>
-          <td><%- @T('Thursday') %></td>
-          <td>
-            <input type="text" name="thu_start_time" value="07:00" class="time time--12 js-time">
-            <input type="text" name="thu_end_time" value="18:00" class="time time--12 js-time">
-          </td>
-          <td>
-            <input type="text" name="thu_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="thu_end_time" value="" class="time time--12 js-time">
-          </td>
-        </tr>
-        <tr>
-          <td><%- @T('Friday') %></td>
-          <td>
-            <input type="text" name="fri_start_time" value="07:00" class="time time--12 js-time">
-            <input type="text" name="fri_end_time" value="18:00" class="time time--12 js-time">
-          </td>
-          <td>
-            <input type="text" name="fri_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="fri_end_time" value="" class="time time--12 js-time">
-          </td>
-        </tr>
-        <tr>
-          <td><%- @T('Saturday') %></td>
-          <td>
-            <input type="text" name="sat_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="sat_end_time" value="" class="time time--12 js-time">
-          </td>
-          <td>
-            <input type="text" name="sat_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="sat_end_time" value="" class="time time--12 js-time">
-          </td>
-        </tr>
-        <tr>
-          <td><%- @T('Sunday') %></td>
-          <td>
-            <input type="text" name="sun_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="sun_end_time" value="" class="time time--12 js-time">
-          </td>
-          <td>
-            <input type="text" name="sun_start_time" value="" class="time time--12 js-time">
-            <input type="text" name="sun_end_time" value="" class="time time--12 js-time">
-          </td>
+          <td data-column="monday" class="settings-list-action-cell js-add-time is-active">
+            <%- @Icon('plus') %>
+          <td data-column="tuesday" class="settings-list-action-cell js-add-time is-active">
+            <%- @Icon('plus') %>
+          <td data-column="wednesday" class="settings-list-action-cell js-add-time is-active">
+            <%- @Icon('plus') %>
+          <td data-column="thursday" class="settings-list-action-cell js-add-time is-active">
+            <%- @Icon('plus') %>
+          <td data-column="friday" class="settings-list-action-cell js-add-time is-active">
+            <%- @Icon('plus') %>
+          <td data-column="saturday" class="settings-list-action-cell js-add-time">
+            <%- @Icon('plus') %>
+          <td data-column="sunday" class="settings-list-action-cell js-add-time">
+            <%- @Icon('plus') %>
         </tr>
       </tbody>
     </table>
-
   </div>
 </div>
 
