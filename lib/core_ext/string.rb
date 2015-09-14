@@ -141,7 +141,7 @@ class String
     # strip all other tags
     string.gsub!( /\<.+?\>/, '' )
 
-    # replace multible spaces with one
+    # replace multiple spaces with one
     string.gsub!(/  /, ' ')
 
     # strip all &amp; &lt; &gt; &quot;
@@ -185,7 +185,7 @@ class String
     # remove tailing empty spaces
     string.gsub!(/\s+\n$/, "\n")
 
-    # remove multible empty lines
+    # remove multiple empty lines
     string.gsub!(/\n\n\n/, "\n\n")
 
     string.strip!
