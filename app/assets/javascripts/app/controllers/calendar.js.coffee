@@ -52,6 +52,7 @@ class Index extends App.ControllerContent
   newDialog: =>
     console.log('NEW')
     @newItemModal = new App.ControllerModal
+      large: true
       head: 'New Calendar'
       content: App.view('calendar/new')()
       button: 'Create'

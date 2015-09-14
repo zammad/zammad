@@ -5,7 +5,7 @@
     <form>
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-close js-close"></div>
+          <div class="modal-close js-close"><%- @Icon('diagonal-cross') %></div>
 
           <h1 class="modal-title">New: User</h1>
         </div>

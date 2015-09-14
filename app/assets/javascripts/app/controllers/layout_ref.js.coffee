@@ -1600,7 +1600,7 @@ class PrimaryEmailRef extends App.ControllerContent
     @render()
 
   render: ->
-    @html App.view('layout_ref/primary_email')
+    @html App.view('layout_ref/primary_email')()
 
 App.Config.set( 'layout_ref/primary_email', PrimaryEmailRef, 'Routes' )
 

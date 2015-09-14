@@ -779,7 +779,7 @@ label,
   display: block;
   font-size: 12px;
   font-weight: normal;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   margin-bottom: 4px;
   text-align: left;
   padding: 0;
@@ -1054,6 +1054,10 @@ input.time {
   box-sizing: content-box;
   padding: 0 6px;
   line-height: 42px;
+  
+  &.form-control--small {
+    line-height: 31px;
+  }
 }
 
 input.time.time--12 {
@@ -4514,6 +4518,9 @@ footer {
   margin-top: 35px;
   margin-bottom: 35px;
 }
+.modal--large .modal-dialog {
+  max-width: 740px;
+}
 .modal-dialog.wizard {
   max-width: 460px;
 }
@@ -5773,13 +5780,28 @@ output {
 }
 
 .form-group.day-time {
-  padding: 5px;
+  padding-bottom: 4px;
+  
+  label {
+    text-align: center; 
+  }
+
+  .form-control {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5px;
+  }
 }
 
 .settings-list {
   border-collapse: separate;
   color: hsl(60,1%,34%);
   background: white;
+  table-layout: auto;
+  
+  &.settings-list--stretch {
+    width: 100%;
+  }
   
   &:not(:last-child) {
     margin-bottom: 34px;
@@ -5799,7 +5821,7 @@ output {
   
   
   th, td {
-    padding: 10px;
+    padding: 5px;
     border: 1px solid hsl(198,18%,86%);
   }
   
@@ -5807,6 +5829,8 @@ output {
     font-weight: normal;
     text-transform: uppercase;
     font-size: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     letter-spacing: 1px;
     background: hsl(197,20%,93%);
     border-bottom: none;
@@ -5850,6 +5874,23 @@ output {
 
   p {
     margin: 0;
+  }
+}
+
+.settings-list-action-cell {
+  @extend .u-clickable;
+  text-align: center;
+  background: hsl(197,22%,96%);
+  
+  &:hover {
+    .icon {
+      fill: hsl(60,1%,34%);
+    }
+  }
+  
+  .icon {
+    fill: hsl(198,19%,72%);
+    vertical-align: top;
   }
 }
 
