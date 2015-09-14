@@ -6,7 +6,7 @@ class App.Utils
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
       .replace(/[ ]\n/g, "\n")        # remove tailing spaces
-      .replace(/\n{3,20}/g, "\n\n")    # remove multible empty lines
+      .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.text2html( rawText )
   @text2html: ( ascii ) ->
@@ -34,7 +34,7 @@ class App.Utils
     $('<div>' + html + '</div>').text().trim()
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
-      .replace(/\n{3,20}/g, "\n\n")   # remove multible empty lines
+      .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.linkify( rawText )
   @linkify: (ascii) ->
