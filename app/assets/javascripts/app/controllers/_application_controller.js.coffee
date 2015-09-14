@@ -219,16 +219,19 @@ class App.Controller extends Spine.Controller
       ui = @
       $('.humanTimeFromNow').each( ->
         item = $(this)
-#        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
-        ui.frontendTimeUpdateItem(item)
+        currentVal = item.text()
+        ui.frontendTimeUpdateItem(item, currentVal)
       )
     App.Interval.set( update, 61000, 'frontendTimeUpdate', 'ui' )
 
-  frontendTimeUpdateItem: (item) =>
+  frontendTimeUpdateItem: (item, currentVal) =>
     timestamp = item.data('time')
     time      = @humanTime( timestamp, item.hasClass('escalation') )
-    item.attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
-    item.html( time )
+
+    # only do dom updates on changes
+    return if time is currentVal
+    item.attr('data-tooltip', App.i18n.translateTimestamp(timestamp))
+    item.html(time)
 
   ticketPopups: (position = 'right') ->
 
