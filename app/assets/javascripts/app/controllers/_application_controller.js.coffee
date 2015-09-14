@@ -554,6 +554,7 @@ class App.ControllerModal extends App.Controller
       backdrop: true
       keyboard: true
       close:    true
+      large:    false
       head:     '?'
       buttonClass: 'btn--success'
       centerButtons: []
@@ -561,6 +562,8 @@ class App.ControllerModal extends App.Controller
       onComplete: (->)
 
     options = _.extend( defaults, options )
+
+    @className += ' modal--large' if options.large
 
     super(options)
 
