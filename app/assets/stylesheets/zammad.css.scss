@@ -2438,7 +2438,7 @@ footer {
       justify-content: center;
     }
     
-    .user-menu .list-button *:not(.dropdown-nose) {
+    .user-menu .list-button *:not(.dropdown-nose):not(.icon-crown) {
       position: relative;
     }
 
@@ -2547,8 +2547,9 @@ footer {
   .icon-crown {
     position: absolute;
     width: 32px;
-    left: -5px;
-    top: -23px;
+    left: 50%;
+    margin-left: -16px;
+    top: -15px;
     fill: hsl(47,100%,59%);
   }
 
@@ -2558,8 +2559,8 @@ footer {
       
     .icon-crown {
       width: 40px;
-      left: -6px;
-      top: -24px;
+      margin-left: -20px;
+      top: -15px;
     }
   }
 
@@ -2569,8 +2570,8 @@ footer {
       
     .icon-crown {
       width: 64px;
-      left: -10px;
-      top: -23px;
+      margin-left: -32px;
+      top: -16px;
     }
   }
 
