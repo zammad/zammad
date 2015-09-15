@@ -23,6 +23,7 @@ class App.User extends App.Model
     { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role' },
     { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', invite_agent: true },
     { name: 'active',           display: 'Active',        tag: 'active',   default: true },
+    { name: 'created_at',       display: 'Created',       tag: 'datetime', readonly: 1 },
     { name: 'updated_at',       display: 'Updated',       tag: 'datetime', readonly: 1 },
   ]
   @configure_overview = [

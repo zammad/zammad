@@ -196,6 +196,7 @@ class App.ControllerGenericIndex extends App.Controller
       pageData:      @pageData
       genericObject: @genericObject
       container:     @container
+      large:         @large
     )
 
   new: (e) ->
@@ -204,6 +205,7 @@ class App.ControllerGenericIndex extends App.Controller
       pageData:      @pageData
       genericObject: @genericObject
       container:     @container
+      large:         @large
     )
 
   description: (e) =>

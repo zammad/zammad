@@ -19,41 +19,41 @@
 <div class="action">
   <div class="action-flow">
     <div class="action-block">
-    <h3><span title="Last iCal Feed sync at: <%= calendar.last_sync %>: <%= calendar.last_log %>"><%- @Icon('status', 'ok inline') %></span> <%= calendar.name %></h3>
+      <h3><span title="Last iCal Feed sync at: <%= calendar.last_sync %>: <%= calendar.last_log %>"><%- @Icon('status', 'ok inline') %></span> <%= calendar.name %></h3>
       <%- @T('Timezone') %>: <%= calendar.timezone %>
     </div>
     <div class="action-block">
       <%- @T('Business Hours') %>:<br>
       <table class="table table-fluid">
         <tr>
-          <td><%- @T('Monday') %></td><td><% if _.isEmpty(calendar.business_hours['mon']): %>-<% else: %><% for from, till of calendar.business_hours['mon']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Monday') %></td><td><% if _.isEmpty(calendar.business_hours['mon']): %>-<% else: %><% for from, till of calendar.business_hours['mon']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Tuesday') %></td><td><% if _.isEmpty(calendar.business_hours['tue']): %>-<% else: %><% for from, till of calendar.business_hours['tue']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Tuesday') %></td><td><% if _.isEmpty(calendar.business_hours['tue']): %>-<% else: %><% for from, till of calendar.business_hours['tue']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Wednesday') %></td><td><% if _.isEmpty(calendar.business_hours['wed']): %>-<% else: %><% for from, till of calendar.business_hours['wed']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Wednesday') %></td><td><% if _.isEmpty(calendar.business_hours['wed']): %>-<% else: %><% for from, till of calendar.business_hours['wed']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Thursday') %></td><td><% if _.isEmpty(calendar.business_hours['thu']): %>-<% else: %><% for from, till of calendar.business_hours['thu']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Thursday') %></td><td><% if _.isEmpty(calendar.business_hours['thu']): %>-<% else: %><% for from, till of calendar.business_hours['thu']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Friday') %></td><td><% if _.isEmpty(calendar.business_hours['fri']): %>-<% else: %><% for from, till of calendar.business_hours['fri']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Friday') %></td><td><% if _.isEmpty(calendar.business_hours['fri']): %>-<% else: %><% for from, till of calendar.business_hours['fri']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Saturday') %></td><td><% if _.isEmpty(calendar.business_hours['sat']): %>-<% else: %><% for from, till of calendar.business_hours['sat']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Saturday') %></td><td><% if _.isEmpty(calendar.business_hours['sat']): %>-<% else: %><% for from, till of calendar.business_hours['sat']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Sunday') %></td><td><% if _.isEmpty(calendar.business_hours['sun']): %>-<% else: %><% for from, till of calendar.business_hours['sun']: %><%= from %>:<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Sunday') %></td><td><% if _.isEmpty(calendar.business_hours['sun']): %>-<% else: %><% for from, till of calendar.business_hours['sun']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
         </tr>
       </table>
     </div>
     <div class="action-block">
       <%- @T('Public Holidays') %>:
       <table class="table table-fluid">
-      <% for holiday, meta of calendar.public_holidays_preview: %>
-        <tr <% if !meta.active: %>class="is-inactive"<% end %>><td><%- @Tdate(holiday) %></td><td><%= meta.summary %></td></tr>
-      <% end %>
+        <% for holiday, meta of calendar.public_holidays_preview: %>
+          <tr <% if !meta.active: %>class="is-inactive"<% end %>><td><%- @Tdate(holiday) %></td><td><%= meta.summary %></td></tr>
+        <% end %>
       </table>
     </div>
   </div>

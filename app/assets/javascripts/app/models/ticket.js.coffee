@@ -3,14 +3,14 @@ class App.Ticket extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/tickets'
   @configure_attributes = [
-      { name: 'number',                display: '#',        tag: 'input',    type: 'text', limit: 100, null: true, read_only: true,  style: 'width: 60px'  },
-      { name: 'customer_id',           display: 'Customer', tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
-      { name: 'organization_id',       display: 'Organization', relation: 'Organization', tagreadonly: 1 },
-      { name: 'group_id',              display: 'Group',    tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', style: 'width: 10%', edit: true },
-      { name: 'owner_id',              display: 'Owner',    tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', style: 'width: 12%', edit: true },
-      { name: 'title',                 display: 'Title',    tag: 'input',    type: 'text', limit: 100, null: false, parentClass: 'noTruncate' },
-      { name: 'state_id',              display: 'State',    tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', style: 'width: 12%', edit: true, customer: true, },
-      { name: 'priority_id',           display: 'Priority', tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', style: 'width: 12%', edit: true, customer: true, },
+      { name: 'number',                display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, read_only: true,  style: 'width: 60px'  },
+      { name: 'customer_id',           display: 'Customer',     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
+      { name: 'organization_id',       display: 'Organization', tag: 'select',   relation: 'Organization', tagreadonly: 1 },
+      { name: 'group_id',              display: 'Group',        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', style: 'width: 10%', edit: true },
+      { name: 'owner_id',              display: 'Owner',        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', style: 'width: 12%', edit: true },
+      { name: 'title',                 display: 'Title',        tag: 'input',    type: 'text', limit: 100, null: false, parentClass: 'noTruncate' },
+      { name: 'state_id',              display: 'State',        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', style: 'width: 12%', edit: true, customer: true, },
+      { name: 'priority_id',           display: 'Priority',     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', style: 'width: 12%', edit: true, customer: true, },
       { name: 'last_contact',          display: 'Last contact',            tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'last_contact_agent',    display: 'Last contact (Agent)',    tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'last_contact_customer', display: 'Last contact (Customer)', tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },

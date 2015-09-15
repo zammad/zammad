@@ -48,7 +48,28 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    model_index_render(Sla, params)
+
+    assets = {}
+
+    # calendars
+    calendar_ids = []
+    Calendar.all.each {|calendar|
+      calendar_ids.push calendar.id
+      assets = calendar.assets(assets)
+    }
+
+    # slas
+    sla_ids = []
+    Sla.all.each {|sla|
+      sla_ids.push sla.id
+      assets = sla.assets(assets)
+    }
+
+    render json: {
+      calendar_ids: calendar_ids,
+      sla_ids: sla_ids,
+      assets: assets,
+    }, status: :ok
   end
 
 =begin

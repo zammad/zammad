@@ -1576,8 +1576,8 @@ wait untill text in selector disabppears
   sla_create(
     :browser => browser2,
     :data => {
-       :name                => 'some sla' + random,
-       :first_response_time => 61
+       :name                        => 'some sla' + random,
+       :first_response_time_in_text => 61
     },
   )
 
@@ -1592,14 +1592,14 @@ wait untill text in selector disabppears
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
     instance.find_elements( { css: 'a[href="#manage/slas"]' } )[0].click
     sleep 2
-    instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
+    instance.find_elements( { css: 'a.js-new' } )[0].click
     sleep 2
     element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
     element.clear
     element.send_keys( data[:name] )
-    element = instance.find_elements( { css: '.modal input[name=first_response_time]' } )[0]
+    element = instance.find_elements( { css: '.modal input[name=first_response_time_in_text]' } )[0]
     element.clear
-    element.send_keys( data[:first_response_time] )
+    element.send_keys( data[:first_response_time_in_text] )
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
     (1..8).each {
       element = instance.find_elements( { css: 'body' } )[0]

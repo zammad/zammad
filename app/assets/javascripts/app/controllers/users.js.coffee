@@ -1,8 +1,8 @@
 class Index extends App.Controller
   elements:
-    '.js-search' : 'searchInput'
+    '.js-search': 'searchInput'
   events:
-    'click [data-type="new"]': 'new'
+    'click [data-type=new]': 'new'
 
   constructor: ->
     super

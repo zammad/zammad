@@ -1,5 +1,5 @@
 class App.UiElement.select extends App.UiElement.ApplicationUiElement
-  @render: (attribute, params, form_controller) ->
+  @render: (attribute, params) ->
 
     # set multiple option
     if attribute.multiple
