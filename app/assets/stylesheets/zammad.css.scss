@@ -615,7 +615,8 @@ table {
   margin-top: -3px;
 }
 
-.input-replacement {
+.checkbox-replacement,
+.radio-replacement {
   padding: 0;
   margin: 0;
   height: 38px;
@@ -625,9 +626,12 @@ table {
   justify-content: center;
 }
 
-.input-replacement input,
-.input-replacement input:not(:checked) ~ .icon-checked,
-.input-replacement input:checked ~ .icon-unchecked {
+.checkbox-replacement input,
+.checkbox-replacement input:not(:checked) ~ .icon-checked,
+.checkbox-replacement input:checked ~ .icon-unchecked,
+.radio-replacement input,
+.radio-replacement input:not(:checked) ~ .icon-checked,
+.radio-replacement input:checked ~ .icon-unchecked {
   display: none;
 }
 
