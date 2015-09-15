@@ -2546,9 +2546,10 @@ footer {
   
   .icon-crown {
     position: absolute;
-    width: 16px;
-    top: -12px;
-    left: 0;
+    width: 32px;
+    left: -5px;
+    top: -23px;
+    fill: hsl(47,100%,59%);
   }
 
   &.size-50 {
@@ -2556,7 +2557,9 @@ footer {
     height: 50px;
       
     .icon-crown {
-      width: 20px;
+      width: 40px;
+      left: -6px;
+      top: -24px;
     }
   }
 
@@ -2565,8 +2568,9 @@ footer {
     height: 82px;
       
     .icon-crown {
-      width: 32px;
-      top: -11px;
+      width: 64px;
+      left: -10px;
+      top: -23px;
     }
   }
 
