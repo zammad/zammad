@@ -61,10 +61,13 @@ class App.User extends App.Model
     if !@image || @image is 'none' || unique
       return @uniqueAvatar(size, placement, cssClass, avatar)
     else
-      if @vip
-        cssClass += " vip"
       image = @imageUrl()
-      "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
+
+      # TODO: don't show vip when its the avatar of the logged-in user
+      if @vip
+        return "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></span>"
+      else
+        return "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
 
   uniqueAvatar: (size, placement = '', cssClass = '', avatar) ->
     width  = 300
@@ -82,8 +85,9 @@ class App.User extends App.Model
       data      = "data-avatar-id=\"#{avatar.id}\""
 
     if @vip
-      cssClass += " vip"
-    "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
+      return "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg>#{ @initials() }</span>"
+    else
+      return "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
   imageUrl: ->
     return if !@image
