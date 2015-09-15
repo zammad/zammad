@@ -49,7 +49,9 @@
       var self = this;
 
       if (this.$element.hasClass('time--12')) {
-        this.showMeridian = true
+        this.showMeridian = true;
+      } else if(this.showMeridian) {
+        this.$element.addClass('time--12');
       }
 
       if (this.showWidgetOnAddonClick && (this.$element.parent().hasClass('input-append') || this.$element.parent().hasClass('input-prepend'))) {
