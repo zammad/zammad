@@ -4,7 +4,7 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require ./bootstrap.css
- *= require ./cropper.min.css
+ *= require ./cropper.css
  *= require ./fineuploader.css
  *= require ./ui-lightness/jquery-ui-1.11.2.css
  *= require ./jquery.noty.css

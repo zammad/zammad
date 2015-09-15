@@ -208,16 +208,18 @@ class ImageCropper extends App.ControllerModal
 
   initializeCropper: =>
     @image.cropper
-      aspectRatio: 1,
-      guides: false,
-      autoCrop: true,
-      autoCropArea: 1,
-      preview: ".imageCropper-preview"
+      aspectRatio: 1
+      guides: false
+      autoCrop: true
+      autoCropArea: 1
+      minContainerWidth: 500
+      minContainerHeight: 300
+      preview: '.imageCropper-preview'
 
   onSubmit: (e) =>
     e.preventDefault()
-    @options.callback( @image.cropper("getDataURL") )
-    @image.cropper("destroy")
+    @options.callback( @image.cropper('getCroppedCanvas').toDataURL() )
+    @image.cropper('destroy')
     @hide()
 
 
