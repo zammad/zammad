@@ -22,10 +22,25 @@
   <tbody>
     <% for stateType, options of @preferences: %>
     <tr>
-      <td style="text-transform: capitalize"><%= @translationTable[stateType] %>
-      <td><label class="inline-label"><input type="checkbox" name="<%= stateType %>/own"<%= if options.own then ' checked' %>> <%= @T('own tickets') %></label>
-      <td><label class="inline-label"><input type="checkbox" name="<%= stateType %>/not_assigned"<%= if options.not_assigned then ' checked' %>> <%= @T('not assigned tickets') %></label>
-      <td><div class="btn btn--table btn--text js-showLink"><%= @T('Show') %></div><input class="form-control form-control--borderless js-select is-hidden" readonly value="<%= @baseurl %>/ical/tickets/<%= stateType %>">
+      <td style="text-transform: capitalize">
+        <%= @translationTable[stateType] %>
+      <td>
+        <label class="inline-label checkbox-replacement">
+          <input type="checkbox" name="<%= stateType %>/own"<%= if options.own then ' checked' %>>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+          <span class="label-text"><%= @T('own tickets') %></span>
+        </label>
+      <td>
+        <label class="inline-label checkbox-replacement">
+          <input type="checkbox" name="<%= stateType %>/not_assigned"<%= if options.not_assigned then ' checked' %>>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+          <span class="label-text"><%= @T('not assigned tickets') %></span>
+        </label>
+      <td>
+        <div class="btn btn--table btn--text js-showLink"><%= @T('Show') %></div>
+        <input class="form-control form-control--borderless js-select is-hidden" readonly value="<%= @baseurl %>/ical/tickets/<%= stateType %>">
     </tr>
     <% end %>
   </tbody>

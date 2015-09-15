@@ -1580,6 +1580,7 @@ class mergeCustomerRef extends App.ControllerContent
     @html App.view('layout_ref/merge_customer_view')
 
     new App.ControllerModal
+      large: true
       head: "Merge #{@mergeSource.firstname} #{@mergeSource.lastname}"
       content: App.view('layout_ref/merge_customer')()
       button: 'Merge'

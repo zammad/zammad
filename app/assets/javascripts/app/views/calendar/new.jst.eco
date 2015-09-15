@@ -661,34 +661,71 @@
     <label for="name">Public Holidays</label>
   </div>
   <div class="controls">
-
-    <table class="table table-fluid">
+    <table class="settings-list">
       <thead>
         <tr>
+          <th><%- @T('Active') %>
           <th><%- @T('Date') %>
           <th><%- @T('Description') %>
           <th><%- @T('Action') %>
       </thead>
       <tbody>
         <tr>
+          <td>
+            <label class="checkbox-replacement">
+              <input type="checkbox" checked>
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
           <td><%- @Tdate('2015-12-24') %>
           <td>Some Description
-          <td class="list-item-delete js-disable"><%- @Icon('diagonal-cross') %>
+          <td>
+            <div class="settings-list-rowControls">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </div>
         <tr>
+          <td>
+            <label class="checkbox-replacement">
+              <input type="checkbox" checked>
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
           <td><%- @Tdate('2015-12-25') %>
           <td>Some Description
-          <td class="list-item-delete js-disable"><%- @Icon('diagonal-cross') %>
+          <td>
+            <div class="settings-list-rowControls">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </div>
         <tr class="is-inactive">
+          <td>
+            <label class="checkbox-replacement">
+              <input type="checkbox">
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
           <td><%- @Tdate('2015-12-26') %>
           <td>Some Description
-          <td class="list-item-delete js-disable">ICON FOR ENABLE?
-        <tr>
-          <td colspan="2"><%- @T('Add manual hollidays') %>:
-        <tr>
-          <td><input type="text" name="public_holidays_date" placeholder="<%- @Tdate('2015-12-26') %>"/>
-          <td><input type="text" name="public_holidays_description" placeholder="Some New Description"/>
-            <%- @Icon('plus') %>
-
+          <td>
+            <div class="settings-list-rowControls">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </div>
+        <tr class="settings-list-controlRow">
+          <td>
+          <td>
+            <!-- Hallo Martin! Allow to add by pressing enter! -->
+            <input class="form-control form-control--small" type="date" name="public_holidays_date" placeholder="<%- @T('Date') %>"/>
+          <td>
+            <input class="form-control form-control--small" type="text" name="public_holidays_description" placeholder="<%- @T('Date Description') %>"/>
+          <td>
+            <div class="btn btn--text js-add">
+              <%- @Icon('plus-small') %> Add Date
+            </div>
       </tbody>
     </table>
   </div>
