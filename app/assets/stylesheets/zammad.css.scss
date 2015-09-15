@@ -294,6 +294,11 @@ span[data-tooltip]:hover:before {
   white-space: nowrap;
   vertical-align: middle;
   
+  .icon {
+    vertical-align: middle;
+    margin-top: -3px;
+  }
+  
   &:focus {
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
@@ -619,7 +624,6 @@ table {
 .radio-replacement {
   padding: 0;
   margin: 0;
-  height: 38px;
   @extend .u-clickable;
   display: flex;
   align-items: center;
@@ -633,6 +637,11 @@ table {
 .radio-replacement input:not(:checked) ~ .icon-checked,
 .radio-replacement input:checked ~ .icon-unchecked {
   display: none;
+}
+
+.table .checkbox-replacement,
+.table .radio-replacement {
+  height: 38px;
 }
 
 .table .priority.icon:after {
@@ -800,6 +809,9 @@ label,
   text-transform: none;
   display: inline;
   white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
+}
+.inline-label .label-text {
+  margin-left: 3px;
 }
 
 fieldset {
@@ -1020,6 +1032,7 @@ input[type="checkbox"] {
 input[type=text],
 input[type=password],
 input[type=email],
+input[type=date],
 textarea,
 .form-control,
 .checkbox.form-group .checkbox {
@@ -1040,8 +1053,7 @@ textarea,
   appearance: none;
   
   &.form-control--small {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 8px;
     height: 31px;
   }
 }
@@ -5823,7 +5835,6 @@ output {
     }
   }
   
-  
   th, td {
     padding: 10px;
     border: 1px solid hsl(198,18%,86%);
@@ -5849,6 +5860,14 @@ output {
     margin: 0;
   }
 
+  .btn.btn--text:not(.btn--secondary) {
+    color: hsl(60,1%,61%);
+  }
+
+  .btn .icon {
+    fill: hsl(60,1%,61%);
+  }
+
   th:not(:last-child),
   td:not(:last-child) {
     border-right: none;
@@ -5856,6 +5875,11 @@ output {
 
   tr:not(:last-child) td {
     border-bottom: none;
+  }
+
+  tr.is-inactive td {
+    color: hsl(199,19%,80%);
+    text-decoration: line-through;
   }
 
   thead th:first-child {
@@ -5894,6 +5918,12 @@ output {
     .icon {
       fill: hsl(198,19%,72%);
       vertical-align: top;
+    }
+  }
+
+  .settings-list-controlRow {
+    td {
+      padding: 5px;
     }
   }
 }
