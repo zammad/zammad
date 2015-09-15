@@ -1,5 +1,5 @@
 class App.Sla extends App.Model
-  @configure 'Sla', 'name', 'first_response_time', 'update_time', 'close_time', 'condition', 'calendar_id'
+  @configure 'Sla', 'name', 'first_response_time', 'update_time', 'solution_time', 'condition', 'calendar_id'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/slas'
   @configure_attributes = [

@@ -5,21 +5,40 @@ class App.UiElement.sla_times
       attribute: attribute
       first_response_time: params.first_response_time
       update_time: params.update_time
-      close_time: params.close_time
+      solution_time: params.solution_time
       first_response_time_in_text: @toText(params.first_response_time)
       update_time_in_text: @toText(params.update_time)
-      close_time_in_text: @toText(params.close_time)
+      solution_time_in_text: @toText(params.solution_time)
     ) )
 
+    item.find('.js-activateRow').bind('change', (e) =>
+      element = $(e.target)
+      if element.prop('checked')
+        element.closest('tr').addClass('is-active')
+      else
+        element.closest('tr').removeClass('is-active')
+        element.closest('tr').find('.js-timeConvertFrom').val('')
+    )
+
     item.find('.js-timeConvertFrom').bind('keyup', (e) =>
-      inText = $(e.target).val()
+      element = $(e.target)
+      inText = element.val()
       inMinutes = @toMinutes(inText)
       if !inMinutes
-        $(e.target).addClass('has-error')
+        element.addClass('has-error')
       else
-        $(e.target).removeClass('has-error')
-      dest = $(e.target).closest('td').find('.js-timeConvertTo')
+        element.removeClass('has-error')
+      dest = element.closest('td').find('.js-timeConvertTo')
       dest.val(inMinutes)
+      element.closest('tr').find('.js-activateRow').prop('checked', true)
+      element.closest('tr').addClass('is-active')
+    )
+
+    item.find('.js-timeConvertFrom').each(->
+      if $(@).val()
+        $(@).closest('tr').find('.js-activateRow').prop('checked', true)
+      else
+        $(@).closest('tr').find('.js-activateRow').prop('checked', false)
     )
 
     item
