@@ -18,15 +18,16 @@ class App.UiElement.textarea
 
       # add file uploader
       u = =>
+
         # only add upload item if html element exists
-        if @el.find('#' + fileUploaderId )[0]
-          @el.find('#' + fileUploaderId ).fineUploader(
+        if $('#' + fileUploaderId )[0]
+          $('#' + fileUploaderId ).fineUploader(
             request:
               endpoint: App.Config.get('api_path') + '/ticket_attachment_upload'
               params:
                 form_id: @form_id
             text:
-              uploadButton: '<i class="glyphicon glyphicon-paperclip"></i>'
+              uploadButton: '<svg class="icon icon-paperclip"><use xlink:href="#icon-paperclip"></use></svg>'
             template: '<div class="qq-uploader">' +
                         '<pre class="btn qq-upload-icon qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
                         '<div class="btn btn-default qq-upload-icon2 qq-upload-button pull-right" style="">{uploadButtonText}</div>' +
