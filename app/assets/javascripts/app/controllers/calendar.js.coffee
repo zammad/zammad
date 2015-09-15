@@ -3,6 +3,37 @@ class Index extends App.ControllerContent
     'click .js-new':         'newDialog'
     'click .js-description': 'description'
 
+  hours: {
+    mon: {
+      active: true
+      timeframes: ['09:00-17:00']
+    }
+    tue: {
+      active: true
+      timeframes: ['00:00-24:00']
+    }
+    wed: {
+      active: true
+      timeframes: ['09:00-17:00']
+    }
+    thu: {
+      active: true
+      timeframes: ['09:00-12:00', '13:00-17:00']
+    }
+    fri: {
+      active: true
+      timeframes: ['09:00-17:00']
+    }
+    sat: {
+      active: false
+      timeframes: ['10:00-14:00']
+    }
+    sun: {
+      active: false
+      timeframes: ['10:00-14:00']
+    }
+  }
+
   constructor: ->
     super
 
@@ -50,7 +81,6 @@ class Index extends App.ControllerContent
       App.Calendar.unsubscribe(@subscribeId)
 
   newDialog: =>
-    console.log('NEW')
     @newItemModal = new App.ControllerModal
       large: true
       head: 'New Calendar'
@@ -60,10 +90,12 @@ class Index extends App.ControllerContent
       cancel: true
       container: @el.closest('.content')
       onComplete: =>
-        @$('.js-responseTime').timepicker
-          maxHours: 99
-        @$('.js-time').timepicker
-          showMeridian: true # show am/pm
+        businessHours = new App.BusinessHours
+          hours: @hours
+
+        businessHours.render()
+
+        @el.closest('.content').find('.js-business-hours').html(businessHours.el)
 
   description: (e) =>
     new App.ControllerGenericDescription(

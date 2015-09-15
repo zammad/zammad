@@ -1333,7 +1333,7 @@ class slaRef extends App.ControllerContent
         @$('.js-responseTime').timepicker
           maxHours: 99
         @$('.js-time').timepicker
-          showMeridian: true # show am/pm
+          showMeridian: true # meridian = am/pm
 
 App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
 

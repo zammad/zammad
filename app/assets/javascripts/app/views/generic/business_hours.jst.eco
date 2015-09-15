@@ -1,0 +1,75 @@
+<thead>
+  <tr>
+    <% for id, day of @days: %>
+    <th style="text-align: center">
+      <label class="day-name">
+        <span class="checkbox-replacement checkbox-replacement--inline">
+          <input class="js-activateColumn" data-target="<%- id %>" type="checkbox"<%- ' checked' if @hours[id].active %>>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </span>
+        <span class="label-text"><%- day %></span>
+      </label>
+    <% end %>
+</thead>
+<tbody>
+  <tr>
+    <td data-column="monday" class="form-group day-time is-active">
+      <label for="monday_start_time">from</label>
+      <input type="text" id="monday_start_time" value="07:00" class="form-control form-control--small time js-time">
+      <label for="monday_end_time">till</label>
+      <input type="text" id="monday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+    <td data-column="tuesday" class="form-group day-time is-active">
+      <label for="tuesday_start_time">from</label>
+      <input type="text" id="tuesday_start_time" value="07:00" class="form-control form-control--small time js-time">
+      <label for="tuesday_end_time">till</label>
+      <input type="text" id="tuesday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+    <td data-column="wednesday" class="form-group day-time is-active">
+      <label for="wednesday_start_time">from</label>
+      <input type="text" id="wednesday_start_time" value="07:00" class="form-control form-control--small time js-time">
+      <label for="wednesday_end_time">till</label>
+      <input type="text" id="wednesday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+    <td data-column="thursday" class="form-group day-time is-active">
+      <label for="thursday_start_time">from</label>
+      <input type="text" id="thursday_start_time" value="07:00" class="form-control form-control--small time js-time">
+      <label for="thursday_end_time">till</label>
+      <input type="text" id="thursday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+    <td data-column="friday" class="form-group day-time is-active">
+      <label for="friday_start_time">from</label>
+      <input type="text" id="friday_start_time" value="07:00" class="form-control form-control--small time js-time">
+      <label for="friday_end_time">till</label>
+      <input type="text" id="friday_end_time" value="13:00" class="form-control form-control--small time js-time">
+
+    <td data-column="saturday" class="form-group day-time">
+      <label for="saturday_start_time">from</label>
+      <input type="text" id="saturday_start_time" value="07:00" class="form-control form-control--small time js-time">
+      <label for="saturday_end_time">till</label>
+      <input type="text" id="saturday_end_time" value="18:00" class="form-control form-control--small time js-time">
+
+    <td data-column="sunday" class="form-group day-time">
+      <label for="sunday_start_time">from</label>
+      <input type="text" id="sunday_start_time" value="07:00" class="form-control form-control--small time js-time">
+      <label for="sunday_end_time">till</label>
+      <input type="text" id="sunday_end_time" value="18:00" class="form-control form-control--small time js-time">
+  </tr>
+  <tr>
+    <td data-column="monday" class="settings-list-action-cell js-add-time is-active">
+      <%- @Icon('plus-small') %>
+    <td data-column="tuesday" class="settings-list-action-cell js-add-time is-active">
+      <%- @Icon('plus-small') %>
+    <td data-column="wednesday" class="settings-list-action-cell js-add-time is-active">
+      <%- @Icon('plus-small') %>
+    <td data-column="thursday" class="settings-list-action-cell js-add-time is-active">
+      <%- @Icon('plus-small') %>
+    <td data-column="friday" class="settings-list-action-cell js-add-time is-active">
+      <%- @Icon('plus-small') %>
+    <td data-column="saturday" class="settings-list-action-cell js-add-time">
+      <%- @Icon('plus-small') %>
+    <td data-column="sunday" class="settings-list-action-cell js-add-time">
+      <%- @Icon('plus-small') %>
+  </tr>
+</tbody>

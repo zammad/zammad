@@ -630,6 +630,11 @@ table {
   justify-content: center;
 }
 
+.checkbox-replacement.checkbox-replacement--inline,
+.radio-replacement.radio-replacement--inline {
+  display: inline-flex;
+}
+
 .checkbox-replacement input,
 .checkbox-replacement input:not(:checked) ~ .icon-checked,
 .checkbox-replacement input:checked ~ .icon-unchecked,
@@ -810,8 +815,10 @@ label,
   display: inline;
   white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
 }
-.inline-label .label-text {
+.label-text {
   margin-left: 3px;
+  user-select: none;
+  cursor: pointer;
 }
 
 fieldset {
@@ -5799,7 +5806,8 @@ output {
 }
 
 .form-group.day-time {
-  padding: 5px 5px 4px;
+  padding: 10px 5px 6px;
+  margin: 0;
   
   label {
     text-align: center; 
@@ -5808,7 +5816,7 @@ output {
   .form-control {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
   }
 }
 
@@ -5908,9 +5916,8 @@ output {
   .settings-list-action-cell {
     @extend .u-clickable;
     text-align: center;
-    padding-top: 7px;
-    padding-bottom: 7px;
     background: hsl(197,22%,96%);
+    line-height: 1;
     
     &:hover {
       .icon {

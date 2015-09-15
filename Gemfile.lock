@@ -315,6 +315,3 @@ DEPENDENCIES
   twitter (~> 5.13.0)
   uglifier
   writeexcel
-
-BUNDLED WITH
-   1.10.5
