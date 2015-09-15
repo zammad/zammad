@@ -53,48 +53,57 @@ class App.User extends App.Model
     else
       return '??'
 
-  avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar) ->
+  avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar, type = undefined) ->
     cssClass += " size-#{size}"
 
     if placement
       placement = "data-placement=\"#{placement}\""
 
+    # use generated avatar
     if !@image || @image is 'none' || unique
-      return @uniqueAvatar(size, placement, cssClass, avatar)
+      return @uniqueAvatar(size, placement, cssClass, avatar, type)
+
+    # use image as avatar
+    image = @imageUrl()
+    vip = @vip
+    if type is 'personal'
+      vip = false
     else
-      image = @imageUrl()
+      cssClass += ' user-popover'
 
-      # TODO: don't show vip when its the avatar of the logged-in user
-      if @vip
-        return "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></span>"
-      else
-        return "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
+    if vip
+      return "<span class=\"avatar #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></span>"
+    "<span class=\"avatar #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
 
-  uniqueAvatar: (size, placement = '', cssClass = '', avatar) ->
+  uniqueAvatar: (size, placement = '', cssClass = '', avatar, type) ->
     width  = 300
     height = 226
     size   = parseInt(size, 10)
+    vip    = @vip
 
     rng = new Math.seedrandom(@id)
     x   = rng() * (width - size)
     y   = rng() * (height - size)
 
     if !avatar
-      cssClass += " user-popover"
-      data      = "data-id=\"#{@id}\""
+      if type is 'personal'
+        vip = false
+        data = "data-id=\"#{@id}\""
+      else
+        cssClass += " user-popover"
+        data      = "data-id=\"#{@id}\""
     else
-      data      = "data-avatar-id=\"#{avatar.id}\""
+      vip = false
+      data = "data-avatar-id=\"#{avatar.id}\""
 
-    if @vip
+    if vip
       return "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg>#{ @initials() }</span>"
-    else
-      return "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
+    "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
   imageUrl: ->
     return if !@image
     # set image url
     @constructor.apiPath + '/users/image/' + @image
-
 
   @_fillUp: (data) ->
 

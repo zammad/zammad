@@ -91,7 +91,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       new App.WidgetAvatar(
         el:       @$('.js-avatar')
         user_id:  App.Session.get('id')
-        noPopups: true
+        type:     'personal'
       )
 
   renderResult: (result = []) =>
