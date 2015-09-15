@@ -828,7 +828,7 @@ class App.ChannelEmailNotificationWizard extends App.Wizard
       container: @container
     .on
       'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onComplete
+      'shown.bs.modal':  @onShown
       'hidden.bs.modal': =>
         if @callback
           @callback()

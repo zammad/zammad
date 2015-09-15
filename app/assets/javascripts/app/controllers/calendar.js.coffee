@@ -89,7 +89,7 @@ class Index extends App.ControllerContent
       shown: true
       cancel: true
       container: @el.closest('.content')
-      onComplete: =>
+      onShown: =>
         businessHours = new App.BusinessHours
           hours: @hours
 

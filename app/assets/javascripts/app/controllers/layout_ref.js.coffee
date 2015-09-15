@@ -1329,7 +1329,7 @@ class slaRef extends App.ControllerContent
       shown: true
       cancel: true
       container: @el
-      onComplete: =>
+      onShown: =>
         @$('.js-responseTime').timepicker
           maxHours: 99
         @$('.js-time').timepicker
