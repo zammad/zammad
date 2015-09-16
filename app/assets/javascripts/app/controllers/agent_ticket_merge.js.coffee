@@ -25,7 +25,7 @@ class App.TicketMerge extends App.ControllerModal
 
   render: ->
 
-    @content = $App.view('agent_ticket_merge')()
+    @content = $( App.view('agent_ticket_merge')() )
 
     new App.TicketList(
       el:         @content.find('#ticket-merge-customer-tickets')
