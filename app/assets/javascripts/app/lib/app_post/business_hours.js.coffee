@@ -4,13 +4,14 @@ class App.BusinessHours extends Spine.Controller
   tag: 'table'
 
   events:
-    'click .js-activateColumn': 'activateColumn'
+    'click .js-toggle-day': 'toggleDay'
+    'click .js-add-time': 'addTime'
+    'click .js-remove-time': 'removeTime'
 
   constructor: ->
     super
 
-  render: =>
-    days =
+    @days =
       mon: App.i18n.translateInline('Monday')
       tue: App.i18n.translateInline('Tuesday')
       wed: App.i18n.translateInline('Wednesday')
@@ -19,18 +20,32 @@ class App.BusinessHours extends Spine.Controller
       sat: App.i18n.translateInline('Saturday')
       sun: App.i18n.translateInline('Sunday')
 
-    html = App.view('generic/business_hours')
-      days: days
-      hours: @options.hours
+  render: =>
+    maxTimeframeDay = _.max @hours, (day) -> day.timeframes.length
 
-    console.log "BusinessHours:", "days", days, "hours", @options.hours, "html", html
+    html = App.view('generic/business_hours')
+      days: @days
+      hours: @options.hours
+      maxTimeframes: maxTimeframeDay.timeframes.length
 
     @html html
 
     @$('.js-time').timepicker
       showMeridian: false # meridian = am/pm
+      tillMidnight: true
 
-  activateColumn: (event) =>
+  addTime: (event) =>
+    day = @$(event.currentTarget).attr('data-day')
+    @options.hours[day].timeframes.push(['13:00', '17:00'])
+    @render()
+
+  removeTime: (event) =>
+    day = @$(event.currentTarget).attr('data-day')
+    @options.hours[day].timeframes.pop()
+    @render()
+
+  toggleDay: (event) =>
     checkbox = @$(event.currentTarget)
-    columnName = checkbox.attr('data-target')
-    @$("[data-column=#{columnName}]").toggleClass('is-active', checkbox.prop('checked'))
+    day = checkbox.attr('data-target')
+    @options.hours[day].active = checkbox.prop('checked')
+    @$("[data-day=#{day}]").toggleClass('is-active', checkbox.prop('checked'))

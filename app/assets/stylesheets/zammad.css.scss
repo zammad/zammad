@@ -5860,6 +5860,10 @@ output {
     border-bottom: none;
   }
 
+  td.empty-cell {
+    border-top: none;
+  }
+
   .text-muted {
     text-transform: none;
     font-size: 10px;
