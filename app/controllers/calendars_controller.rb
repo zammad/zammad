@@ -10,7 +10,7 @@ class CalendarsController < ApplicationController
 
     # calendars
     calendar_ids = []
-    Calendar.all.each {|calendar|
+    Calendar.all.order(:name).each {|calendar|
       calendar_ids.push calendar.id
       assets = calendar.assets(assets)
     }

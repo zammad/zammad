@@ -1,6 +1,10 @@
 class App.UiElement.sla_times
   @render: (attribute, params = {}) ->
 
+    # set default value
+    if !params.first_response_time && params.first_response_time isnt 0
+      params.first_response_time = 120
+
     item = $( App.view('generic/sla_times')(
       attribute: attribute
       first_response_time: params.first_response_time
@@ -11,34 +15,49 @@ class App.UiElement.sla_times
       solution_time_in_text: @toText(params.solution_time)
     ) )
 
-    item.find('.js-activateRow').bind('change', (e) =>
-      element = $(e.target)
-      if element.prop('checked')
-        element.closest('tr').addClass('is-active')
-      else
-        element.closest('tr').removeClass('is-active')
-        element.closest('tr').find('.js-timeConvertFrom').val('')
+    # appliy hour picker
+    item.find('.js-timeConvertFrom').timepicker(
+      maxHours: 999
     )
 
-    item.find('.js-timeConvertFrom').bind('keyup', (e) =>
+    # disable/enable rows
+    item.find('.js-activateRow').bind('change', (e) =>
+      element = $(e.target)
+      row = element.closest('tr')
+      if element.prop('checked')
+        row.addClass('is-active')
+      else
+        row.removeClass('is-active')
+
+        # reset data item
+        row.find('.js-timeConvertFrom').val('')
+        row.find('.js-timeConvertTo').val('')
+    )
+
+    # convert hours into minutes
+    item.find('.js-timeConvertFrom').bind('keyup focus blur', (e) =>
       element = $(e.target)
       inText = element.val()
+      row = element.closest('tr')
+      dest = element.closest('td').find('.js-timeConvertTo')
       inMinutes = @toMinutes(inText)
       if !inMinutes
         element.addClass('has-error')
+        dest.val('')
       else
         element.removeClass('has-error')
-      dest = element.closest('td').find('.js-timeConvertTo')
-      dest.val(inMinutes)
-      element.closest('tr').find('.js-activateRow').prop('checked', true)
-      element.closest('tr').addClass('is-active')
+        dest.val(inMinutes)
+      row.find('.js-activateRow').prop('checked', true)
+      row.addClass('is-active')
     )
 
+    # set initial active/inactive rows
     item.find('.js-timeConvertFrom').each(->
+      row = $(@).closest('tr').find('.js-activateRow')
       if $(@).val()
-        $(@).closest('tr').find('.js-activateRow').prop('checked', true)
+        row.prop('checked', true)
       else
-        $(@).closest('tr').find('.js-activateRow').prop('checked', false)
+        row.prop('checked', false)
     )
 
     item
