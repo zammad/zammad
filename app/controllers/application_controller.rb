@@ -286,9 +286,6 @@ class ApplicationController < ActionController::Base
       config[setting.name] = Setting.get(setting.name)
     }
 
-    # get all time zones
-    config['timezones'] = Calendar.timezones
-
     # remember if we can to swich back to user
     if session[:switched_from_user_id]
       config['switch_back_to_possible'] = true

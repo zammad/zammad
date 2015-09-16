@@ -1,0 +1,69 @@
+    <table class="settings-list">
+      <thead>
+        <tr>
+          <th><%- @T('Active') %>
+          <th><%- @T('Date') %>
+          <th><%- @T('Description') %>
+          <th><%- @T('Action') %>
+      </thead>
+      <tbody>
+        <% for day, meta of @days: %>
+        <tr <% if !meta.active: %>class="is-inactive"<% end %>>
+          <td>
+            <label class="checkbox-replacement">
+              <input type="checkbox" checked>
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
+          <td><%- @Tdate(day) %>
+          <td><%= meta.summary %>
+          <td>
+            <div class="settings-list-rowControls">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </div>
+        <% end %>
+        <tr>
+          <td>
+            <label class="checkbox-replacement">
+              <input type="checkbox" checked>
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
+          <td><%- @Tdate('2015-12-25') %>
+          <td>Some Description
+          <td>
+            <div class="settings-list-rowControls">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </div>
+        <tr class="is-inactive">
+          <td>
+            <label class="checkbox-replacement">
+              <input type="checkbox">
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
+          <td><%- @Tdate('2015-12-26') %>
+          <td>Some Description
+          <td>
+            <div class="settings-list-rowControls">
+              <div class="btn btn--text js-remove">
+                <%- @Icon('trash') %> <%- @T('Remove') %>
+              </div>
+            </div>
+        <tr class="settings-list-controlRow">
+          <td>
+          <td>
+            <!-- Hallo Martin! Allow to add by pressing enter! -->
+            <input class="form-control form-control--small" type="date" name="public_holidays_date" placeholder="<%- @T('Date') %>"/>
+          <td>
+            <input class="form-control form-control--small" type="text" name="public_holidays_description" placeholder="<%- @T('Date Description') %>"/>
+          <td>
+            <div class="btn btn--text js-add">
+              <%- @Icon('plus-small') %> <%- @T('Add') %>
+            </div>
+      </tbody>
+    </table>

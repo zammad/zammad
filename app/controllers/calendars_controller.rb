@@ -5,7 +5,24 @@ class CalendarsController < ApplicationController
 
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    model_index_render(Calendar, params)
+
+    assets = {}
+
+    # calendars
+    calendar_ids = []
+    Calendar.all.each {|calendar|
+      calendar_ids.push calendar.id
+      assets = calendar.assets(assets)
+    }
+
+    ical_feeds = Calendar.ical_feeds
+    timezones = Calendar.timezones
+    render json: {
+      calendar_ids: calendar_ids,
+      ical_feeds: ical_feeds,
+      timezones: timezones,
+      assets: assets,
+    }, status: :ok
   end
 
   def show

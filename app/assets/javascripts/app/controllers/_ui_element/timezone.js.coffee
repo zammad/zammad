@@ -1,5 +1,5 @@
 class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
-  @render: (attribute) ->
+  @render: (attribute, params) ->
 
     attribute.options = []
     timezones = App.Config.get('timezones')
@@ -22,4 +22,6 @@ class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
     # finde selected/checked item of list
     @selectedOptions( attribute, params )
 
-    $( App.view('generic/select')( attribute: attribute ) )
+    attribute.tag =        'searchable_select'
+    attribute.placeholder = App.i18n.translateInline('Enter timzone...')
+    App.UiElement.searchable_select.render(attribute)

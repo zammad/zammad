@@ -80,10 +80,11 @@ returns
       'US Holidays' => 'en.usa',
       'Vietnamese Holidays' => 'en.vietnamese',
     }
+    all_feeds = {}
     gfeeds.each {|key, name|
-      gfeeds[key] = "http://www.google.com/calendar/ical/#{name}%23holiday%40group.v.calendar.google.com/public/basic.ics"
+      all_feeds["http://www.google.com/calendar/ical/#{name}%23holiday%40group.v.calendar.google.com/public/basic.ics"] = key
     }
-    gfeeds
+    all_feeds
   end
 
 =begin
@@ -189,6 +190,9 @@ returns
       if !comment.valid_encoding?
         comment = comment.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
       end
+
+      # ignore daylight saving time entries
+      next if comment =~ /(daylight saving|sommerzeit|summertime)/i
       events[day] = comment
     }
     events.sort.to_h

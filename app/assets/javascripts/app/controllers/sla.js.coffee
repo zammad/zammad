@@ -12,7 +12,6 @@ class Index extends App.ControllerContent
     return if !@authenticate()
 
     @load()
-    #@subscribeId = App.Calendar.subscribe(@render)
 
   load: =>
     @ajax(

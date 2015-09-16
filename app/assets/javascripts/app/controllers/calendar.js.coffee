@@ -1,38 +1,8 @@
 class Index extends App.ControllerContent
   events:
-    'click .js-new':         'newDialog'
+    'click .js-new':         'new'
+    'click .js-edit':        'edit'
     'click .js-description': 'description'
-
-  hours: {
-    mon: {
-      active: true
-      timeframes: ['09:00-17:00']
-    }
-    tue: {
-      active: true
-      timeframes: ['00:00-24:00']
-    }
-    wed: {
-      active: true
-      timeframes: ['09:00-17:00']
-    }
-    thu: {
-      active: true
-      timeframes: ['09:00-12:00', '13:00-17:00']
-    }
-    fri: {
-      active: true
-      timeframes: ['09:00-17:00']
-    }
-    sat: {
-      active: false
-      timeframes: ['10:00-14:00']
-    }
-    sun: {
-      active: false
-      timeframes: ['10:00-14:00']
-    }
-  }
 
   constructor: ->
     super
@@ -40,8 +10,24 @@ class Index extends App.ControllerContent
     # check authentication
     return if !@authenticate()
 
-    @subscribeId = App.Calendar.subscribe(@render)
-    App.Calendar.fetch()
+    @load()
+
+  load: =>
+    @ajax(
+      id:   'calendar_index'
+      type: 'GET'
+      url:  @apiPath + '/calendars'
+      processData: true
+      success: (data, status, xhr) =>
+
+        App.Config.set('ical_feeds', data.ical_feeds)
+        App.Config.set('timezones', data.timezones)
+
+        # load assets
+        App.Collection.loadAssets(data.assets)
+
+        @render(data)
+    )
 
   render: =>
     calendars = App.Calendar.search(
@@ -80,22 +66,31 @@ class Index extends App.ControllerContent
     if @subscribeId
       App.Calendar.unsubscribe(@subscribeId)
 
-  newDialog: =>
-    @newItemModal = new App.ControllerModal
-      large: true
-      head: 'New Calendar'
-      content: App.view('calendar/new')()
-      button: 'Create'
-      shown: true
-      cancel: true
-      container: @el.closest('.content')
-      onShown: =>
-        businessHours = new App.BusinessHours
-          hours: @hours
+  new: =>
+    new App.ControllerGenericNew(
+      pageData:
+        title: 'Calendars'
+        object: 'Calendar'
+        objects: 'Calendars'
+      genericObject: 'Calendar'
+      callback:      @load
+      container:     @el.closest('.content')
+      large:         true
+    )
 
-        businessHours.render()
-
-        @el.closest('.content').find('.js-business-hours').html(businessHours.el)
+  edit: (e) =>
+    id = $(e.target).closest('.action').data('id')
+    new App.ControllerGenericEdit(
+      id: id
+      pageData:
+        title: 'Calendars'
+        object: 'Calendar'
+        objects: 'Calendars'
+      genericObject: 'Calendar'
+      callback:      @load
+      container:     @el.closest('.content')
+      large:         true
+    )
 
   description: (e) =>
     new App.ControllerGenericDescription(

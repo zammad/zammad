@@ -16,7 +16,7 @@
 <% end %>
 
 <% for calendar in @calendars: %>
-<div class="action">
+<div class="action" data-id="<%- calendar.id %>">
   <div class="action-flow">
     <div class="action-block">
       <h3><span title="Last iCal Feed sync at: <%= calendar.last_sync %>: <%= calendar.last_log %>"><%- @Icon('status', 'ok inline') %></span> <%= calendar.name %></h3>
