@@ -71,7 +71,7 @@
       <%   end %>
       <% end %>
 
-      <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %>>
+      <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %>>
         <% if item.name is 'icon': %>
           <%- @Icon('priority', item.class) %>
         <% else: %>
@@ -81,9 +81,13 @@
           <% if item.raw: %>
             <%- item.raw %>
           <% else: %>
-          <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
+            <% if item.class || item.data: %>
+            <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
+            <% end %>
             <%- value %>
-          </span>
+            <% if item.class || item.data: %>
+            </span>
+            <% end %>
           <% end %>
           <% if item.link: %></a><% end %>
         <% end %>

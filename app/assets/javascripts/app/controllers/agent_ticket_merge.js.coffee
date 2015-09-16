@@ -16,7 +16,6 @@ class App.TicketMerge extends App.ControllerModal
       processData: true,
       success: (data, status, xhr) =>
 
-        # load assets
         App.Collection.loadAssets( data.assets )
 
         @ticket_ids_by_customer    = data.ticket_ids_by_customer
@@ -26,36 +25,22 @@ class App.TicketMerge extends App.ControllerModal
 
   render: ->
 
-    @content = $ App.view('agent_ticket_merge')()
+    @content = $App.view('agent_ticket_merge')()
 
-    list = []
-    for ticket_id in @ticket_ids_by_customer
-      if ticket_id isnt @ticket.id
-        ticketItem = App.Ticket.fullLocal( ticket_id )
-        list.push ticketItem
-    new App.ControllerTable(
-      el:       @content.find('#ticket-merge-customer-tickets'),
-      overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
-      model:    App.Ticket,
-      objects:  list,
-      radio:    true,
+    new App.TicketList(
+      el:         @content.find('#ticket-merge-customer-tickets')
+      ticket_ids: @ticket_ids_by_customer
+      radio:      true
     )
 
-    list = []
-    for ticket_id in @ticket_ids_recent_viewed
-      if ticket_id isnt @ticket.id
-        ticketItem = App.Ticket.fullLocal( ticket_id )
-        list.push ticketItem
-    new App.ControllerTable(
-      el:       @content.find('#ticket-merge-recent-tickets'),
-      overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
-      model:    App.Ticket,
-      objects:  list,
-      radio:    true,
+    new App.TicketList(
+      el:         @content.find('#ticket-merge-recent-tickets'),
+      ticket_ids: @ticket_ids_recent_viewed
+      radio:      true
     )
 
     @content.delegate('[name="master_ticket_number"]', 'focus', (e) ->
-      $(e.target).parents().find('[name="radio"]').prop( 'checked', false )
+      $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
     @content.delegate('[name="radio"]', 'click', (e) ->

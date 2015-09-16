@@ -3,7 +3,7 @@ class App.Ticket extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/tickets'
   @configure_attributes = [
-      { name: 'number',                display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, read_only: true,  style: 'width: 60px'  },
+      { name: 'number',                display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, read_only: true,  style: 'width: 68px'  },
       { name: 'customer_id',           display: 'Customer',     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
       { name: 'organization_id',       display: 'Organization', tag: 'select',   relation: 'Organization', tagreadonly: 1 },
       { name: 'group_id',              display: 'Group',        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', style: 'width: 10%', edit: true },
