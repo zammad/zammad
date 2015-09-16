@@ -12,6 +12,7 @@
  *    - automatically jump from hours to minutes when typing in a number
  *    - continue stepping from manually input value
  *    - activate meridian on class 'time--12'
+ *    - tillMidnight (special mode to allow to display 24:00)
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -38,6 +39,7 @@
     this.template = options.template;
     this.appendWidgetTo = options.appendWidgetTo;
     this.showWidgetOnAddonClick = options.showWidgetOnAddonClick;
+    this.tillMidnight = options.tillMidnight;
 
     this._init();
   };
@@ -140,7 +142,11 @@
         }
       } else {
         if (this.hour <= 0) {
-          this.hour = this.maxHours;
+          if(this.tillMidnight) {
+            this.hour = this.maxHours;
+          } else {
+            this.hour = this.maxHours - 1;
+          }
         } else {
           this.hour--;
         }
@@ -514,10 +520,16 @@
           this.hour = 0;
         }
       }
-      if (this.hour === this.maxHours) {
-        this.hour = 0;
-
-        return;
+      if (this.tillMidnight) {
+        if (this.hour === 24) {
+          this.hour = 1;
+          return;
+        }
+      } else {
+        if (this.hour === 23) {
+          this.hour = 0;
+          return;
+        }
       }
       this.hour++;
     },
@@ -537,6 +549,12 @@
       } else {
         this.minute = newVal;
       }
+
+      if (this.tillMidnight && this.hour === 24) {
+        if (this.minute !== 0) {
+          this.hour = 0;
+        }
+      }
     },
 
     incrementSecond: function() {
@@ -547,6 +565,12 @@
         this.second = newVal - 60;
       } else {
         this.second = newVal;
+      }
+
+      if (this.tillMidnight && this.hour === 24) {
+        if (this.second !== 0) {
+          this.hour = 0;
+        }
       }
     },
 
@@ -1093,7 +1117,8 @@
     template: false,
     appendWidgetTo: 'body',
     showWidgetOnAddonClick: true,
-    maxHours: 23
+    maxHours: 23,
+    tillMidnight: false
   };
 
   $.fn.timepicker.Constructor = Timepicker;
