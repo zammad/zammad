@@ -581,14 +581,14 @@ table {
 .table > tbody > tr > td {
   padding: 9px;
   border: none;
-  box-shadow: 0 1px rgba(0,0,0,.02);
+  box-shadow: 0 1px rgba(0,0,0,.03);
 }
 
 .table-hover > tbody > tr:hover > td {
   background: white;
   box-shadow: 
-    0 1px rgba(0,0,0,.02),
-    0 -1px rgba(0,0,0,.02);
+    0 1px rgba(0,0,0,.03),
+    0 -1px rgba(0,0,0,.03);
 }
  
 .table-hover > tbody > tr:hover > th {
@@ -1861,7 +1861,8 @@ ol.tabs li {
   fill: $ok-color;
   
   &.inline {
-    margin: 2px 2px 0 0;
+    margin-top: -3px;
+    vertical-align: middle;
   }
   
   &.ok {
@@ -6099,11 +6100,38 @@ output {
 
   .action-flow {
     display: flex;
+    flex-wrap: wrap;
+  }
+
+  .action-separator {
+    width: 1px;
+    background: hsl(0,0%,97%);
+    margin: 0 10px;
+  }
+
+  .table {
+    margin-left: -9px;
+    margin-right: -9px;
   }
 
   .action-block,
-  .action-controls {
+  .action-controls,
+  .action-row {
     padding: 10px;
+    
+    h2:first-child,
+    h3:first-child {
+      margin-top: 0;
+    }
+
+    h2:only-child,
+    h3:only-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .action-row {
+    flex-basis: 100%;
   }
   
   h3 {
@@ -6124,6 +6152,7 @@ output {
   .action-controls {
     display: flex;
     margin-left: auto;
+    align-self: flex-end;
     
     .btn {
       align-self: center;
