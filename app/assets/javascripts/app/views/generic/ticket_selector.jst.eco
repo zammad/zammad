@@ -24,3 +24,7 @@
     </div>
   </div>
 </div>
+<div class="js-preview">
+  <h3><%- @T('Preview') %><span class="subtitle"> <span class="u-highlight js-previewCounter">?</span> <%- @T('matches') %></span></h3>
+  <div class="js-previewTable"></div>
+</div>

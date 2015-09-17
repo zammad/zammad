@@ -3,14 +3,14 @@ class App.Sla extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/slas'
   @configure_attributes = [
-    { name: 'name',           display: 'Name',        tag: 'input',    type: 'text', limit: 100, null: false },
-    { name: 'condition',      display: 'Selector',    tag: 'ticket_selector', null: false, note: 'Create rules that single out the tickets for the Service Level Agreement.' },
-    { name: 'calendar_id',    display: 'Calendar',    tag: 'select', relation: 'Calendar', null: false },
-    { name: 'sla_times',      display: 'SLA Times',   tag: 'sla_times', null: true },
-    { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
-    { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1 },
-    { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1 },
-    { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1 },
+    { name: 'name',           display: 'Name',            tag: 'input',    type: 'text', limit: 100, null: false },
+    { name: 'condition',      display: 'Ticket Selector', tag: 'ticket_selector', null: false, note: 'Create rules that single out the tickets for the Service Level Agreement.' },
+    { name: 'calendar_id',    display: 'Calendar',        tag: 'select', relation: 'Calendar', null: false },
+    { name: 'sla_times',      display: 'SLA Times',       tag: 'sla_times', null: true },
+    { name: 'created_by_id',  display: 'Created by',      relation: 'User', readonly: 1 },
+    { name: 'created_at',     display: 'Created',         tag: 'datetime', readonly: 1 },
+    { name: 'updated_by_id',  display: 'Updated by',      relation: 'User', readonly: 1 },
+    { name: 'updated_at',     display: 'Updated',         tag: 'datetime', readonly: 1 },
   ]
   @configure_delete = true
   @configure_overview = [

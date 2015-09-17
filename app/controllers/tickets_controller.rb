@@ -345,6 +345,29 @@ class TicketsController < ApplicationController
     }
   end
 
+  # GET /api/v1/tickets/selector
+  def selector
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    ticket_count, tickets = Ticket.selectors(params[:condition], 6)
+
+    assets = {}
+    ticket_ids = []
+    if tickets
+      tickets.each do |ticket|
+        ticket_ids.push ticket.id
+        assets = ticket.assets(assets)
+      end
+    end
+
+    # return result
+    render json: {
+      ticket_ids: ticket_ids,
+      ticket_count: ticket_count || 0,
+      assets: assets,
+    }
+  end
+
   # GET /api/v1/ticket_stats
   def stats
 

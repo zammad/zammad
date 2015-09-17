@@ -1,4 +1,4 @@
-class App.UiElement.ticket_selector extends App.UiElement.ApplicationUiElement
+class App.UiElement.ticket_selector
   @render: (attribute, params = {}) ->
 
     # list of attributes
@@ -129,25 +129,19 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationUiElement
       groupAndAttribute = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
 
-      console.log('CHANGE', groupAndAttribute, $(e.target))
-
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute)
       @rebuildOperater(item, elementRow, groupAndAttribute, elements)
       @buildValue(item, elementRow, groupAndAttribute, elements)
     )
 
     # build inital params
-    console.log('P', params)
     if !_.isEmpty(params.condition)
       selectorExists = false
-      for position of params.condition.attribute
-
-        # get stored params
-        groupAndAttribute = params.condition.attribute[position]
-        if params.condition[groupAndAttribute]
+      for groupAndAttribute, meta of params.condition
+        if groupAndAttribute isnt 'attribute'
           selectorExists = true
-          operator = params.condition[groupAndAttribute].operator
-          value = params.condition[groupAndAttribute].value
+          operator = meta.operator
+          value = meta.value
 
           # get selector rows
           elementFirst = item.find('.js-filterElement').first()
@@ -163,7 +157,48 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationUiElement
       # remove first dummy row
       if selectorExists
         item.find('.js-filterElement').first().remove()
+
+    # bind for preview
+    search = =>
+      @preview(item)
+    item.on('change', 'select.form-control', (e) =>
+      App.Delay.set(
+        search,
+        600,
+        'preview',
+      )
+    )
+    item.on('keyup', 'input.form-control', (e) =>
+      App.Delay.set(
+        search,
+        600,
+        'preview',
+      )
+    )
+
     item
+
+  @preview: (item) ->
+    params = App.ControllerForm.params(item)
+
+    # ajax call
+    App.Ajax.request(
+      id:    'ticket_selector'
+      type:  'POST'
+      url:   "#{App.Config.get('api_path')}/tickets/selector"
+      data:        JSON.stringify(params)
+      processData: true,
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets( data.assets )
+        @ticketTable(data.ticket_ids, data.ticket_count, item)
+    )
+
+  @ticketTable: (ticket_ids, ticket_count, item) =>
+    item.find('.js-previewCounter').html(ticket_count)
+    new App.TicketList(
+      el:         item.find('.js-previewTable')
+      ticket_ids: ticket_ids
+    )
 
   @getElementConfig: (groupAndAttribute, elements) ->
     for elementGroup, elementConfig of elements
@@ -253,7 +288,8 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationUiElement
     elementRow.find('.js-operator select').replaceWith(operator)
 
   @humanText: (condition) ->
-    return [] if _.isEmpty(condition)
+    none = App.i18n.translateContent('No filter.')
+    return [none] if _.isEmpty(condition)
     rules = []
     for position of condition.attribute
 
@@ -263,5 +299,7 @@ class App.UiElement.ticket_selector extends App.UiElement.ApplicationUiElement
         selectorExists = true
         operator = condition[groupAndAttribute].operator
         value = condition[groupAndAttribute].value
-        rules.push "Where <b>#{groupAndAttribute}</b> #{operator} <b>#{value}</b>."
+        rules.push "#{App.i18n.translateContent('Where')} <b>#{App.i18n.translateContent(groupAndAttribute)}</b> #{App.i18n.translateContent(operator)} <b>#{App.i18n.translateContent(value)}</b>."
+
+    return [none] if _.isEmpty(rules)
     rules

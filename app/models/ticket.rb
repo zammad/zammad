@@ -268,6 +268,52 @@ returns
     false
   end
 
+  def self.selectors(selectors, limit = 10)
+    return if !selectors
+    query, bind_params = _selectors(selectors)
+    ticket_count = Ticket.where(query, *bind_params).count
+    tickets = Ticket.where(query, *bind_params).limit(limit)
+    [ticket_count, tickets]
+  end
+
+  def self._selectors(selectors)
+    return if !selectors
+    query = ''
+    bind_params = []
+
+    selectors.each {|attribute, selector|
+      if query != ''
+        query += ' AND '
+      end
+      next if !selector
+      next if !selector.respond_to?(:key?)
+      next if !selector['operator']
+      return nil if !selector['value']
+      return nil if selector['value'].respond_to?(:key?) && selector['value'].empty?
+      if selector['operator'] == 'is'
+        query += "#{attribute} IN (?)"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'is not'
+        query += "#{attribute} NOT IN (?)"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains'
+        query += "#{attribute} LIKE (?)"
+        value = "%#{selector['value']}%"
+        bind_params.push value
+      elsif selector['operator'] == 'contains not'
+        query += "#{attribute} NOT LIKE (?)"
+        value = "%#{selector['value']}%"
+        bind_params.push value
+      elsif selector['operator'] == 'before'
+        query += "#{attribute} <= (?)"
+        bind_params.push selector['value']
+      else
+        fail "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
+      end
+    }
+    [query, bind_params]
+  end
+
   private
 
   def check_generate
