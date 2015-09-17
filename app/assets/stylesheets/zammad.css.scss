@@ -1108,7 +1108,7 @@ input.time.time--12 {
     height: 118px;
   }
 
-  select.form-control {
+  select.form-control:not([multiple]) {
     padding-left: 10px;
     padding-right: 34px;
     word-wrap: normal;
@@ -1170,6 +1170,10 @@ input.time.time--12 {
 
   select::-ms-expand {
     display: none;
+  }
+
+  .form-control.ui-autocomplete-input {
+    padding-right: 35px;
   }
 
   .has-error .form-control,
@@ -5632,7 +5636,6 @@ label + .wizard-buttonList {
   .horizontal-filter-body {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     flex: 1;
   }
   
