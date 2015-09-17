@@ -5836,7 +5836,7 @@ output {
   }
 
   &.settings-list--toggleRow {
-    tr:not(.is-active) td * {
+    tr:not(.is-active) td > *:not(.dont-grey-out) {
       opacity: 0.33;
     }
   }
