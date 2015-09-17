@@ -5956,8 +5956,11 @@ output {
   display: flex;
   flex-wrap: wrap;
   margin: 0 14px;
-  background: hsl(234,10%,19%);
-  color: white;
+  background: white;
+  color: hsl(60,1%,34%);
+  border-right: 1px solid hsl(198,18%,86%);
+  border-bottom: 1px solid hsl(198,18%,86%);
+  border-radius: 3px 3px 0 0;
   
   &.select-box--vertical .select-value {
     flex-basis: 100%;
@@ -5974,12 +5977,16 @@ output {
   .select-box-header {
     @extend label;
     margin: 0;
-    color: hsl(240,2%,60%);
+    color: inherit;
     display: flex;
     align-items: center;
     padding: 8px 10px;
     flex-basis: 100%;
     white-space: nowrap;
+    background: hsl(197, 20%, 93%);
+    border-left: 1px solid hsl(198,18%,86%);
+    border-top: 1px solid hsl(198,18%,86%);
+    border-radius: 3px 3px 0 0;
   }
 
   .select-value {
@@ -5989,13 +5996,14 @@ output {
     min-height: 34px;
     background-clip: content-box;
     box-shadow: 
-      1px 0 hsl(240,5%,27%) inset,
-      0 1px hsl(240,5%,27%) inset;
+      1px 0 hsl(198,18%,86%) inset,
+      0 1px hsl(198,18%,86%) inset;
     cursor: pointer;
     
     &.is-selected {
-      background-color: hsl(203,65%,55%);
+      background-color: $highlight-color;
       box-shadow: none;
+      color: white;
     }
   }
   
