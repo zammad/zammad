@@ -41,6 +41,14 @@ p {
   }
 }
 
+.text-muted {
+  color: hsl(60,1%,74%);
+}
+
+.text-small {
+  font-size: 12px;
+}
+
 .u-highlight {
   color: #0F94D6;
 }
@@ -99,6 +107,10 @@ blockquote {
 
 .u-positionOrigin {
   position: relative;
+}
+
+.u-inlineBlock {
+  display: inline-block;
 }
 
 .zIndex-1,
@@ -342,6 +354,11 @@ span[data-tooltip]:hover:before {
     padding: 6px 11px !important;
     display: inline-flex;
     align-items: center;
+    
+    .icon {
+      margin: -2px 5px 0 -2px;
+      fill: hsl(0,0%,60%);
+    }
     
     &.btn--slim {
       padding-left: 7px !important;
@@ -633,6 +650,7 @@ table {
 .checkbox-replacement.checkbox-replacement--inline,
 .radio-replacement.radio-replacement--inline {
   display: inline-flex;
+  margin-right: 3px;
 }
 
 .checkbox-replacement input,
@@ -1040,6 +1058,7 @@ input[type=text],
 input[type=password],
 input[type=email],
 input[type=date],
+input[type=url],
 textarea,
 .form-control,
 .checkbox.form-group .checkbox {
@@ -1062,6 +1081,11 @@ textarea,
   &.form-control--small {
     padding: 0 8px;
     height: 31px;
+  }
+
+  &.form-control--inline {
+    display: inline-block;
+    width: auto;
   }
 }
 
@@ -5824,6 +5848,10 @@ output {
   }
 }
 
+.settings-row {
+  margin-bottom: 10px;
+}
+
 .settings-list {
   border-collapse: separate;
   color: hsl(60,1%,34%);
@@ -6112,6 +6140,10 @@ output {
   .action-flow {
     display: flex;
     flex-wrap: wrap;
+    
+    &.action-flow--row {
+      flex-basis: 100%;
+    }
   }
 
   .action-separator {
@@ -6138,6 +6170,12 @@ output {
     h2:only-child,
     h3:only-child {
       margin-bottom: 0;
+    }
+  }
+
+  .action-block {
+    &.action-block--flex {
+      flex: 1;
     }
   }
 

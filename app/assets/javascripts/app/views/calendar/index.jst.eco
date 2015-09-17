@@ -17,14 +17,14 @@
 
 <% for calendar in @calendars: %>
 <div class="action" data-id="<%- calendar.id %>">
-  <div class="action-flow">
+  <div class="action-flow action-flow--row">
     <div class="action-row">
       <h2><span title="Last iCal Feed sync at: <%= calendar.last_sync %>: <%= calendar.last_log %>"><%- @Icon('status', 'ok inline') %></span> <%= calendar.name %></h2>
     </div>
     <div class="action-row">
       <div class="label"><%- @T('Timezone') %></div> <%= calendar.timezone %>
     </div>
-    <div class="action-block">
+    <div class="action-block action-block--flex">
       <div class="label"><%- @T('Business Hours') %></div>
       <table class="table table-fluid">
         <tr>
@@ -50,7 +50,7 @@
         </tr>
       </table>
     </div>
-    <div class="action-block">
+    <div class="action-block action-block--flex">
       <div class="label"><%- @T('Public Holidays') %></div>
       <table class="table table-fluid">
         <% for holiday, meta of calendar.public_holidays_preview: %>
