@@ -1575,8 +1575,14 @@ Overview.create_if_not_exists(
   prio: 1000,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [ 1, 2, 3, 7 ],
-    'tickets.owner_id' => 'current_user.id',
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [ 1, 2, 3, 7 ],
+    },
+    'ticket.owner_id' => {
+      operator: 'is',
+      value: current_user.id,
+    },
   },
   order: {
     by: 'created_at',
@@ -1596,9 +1602,18 @@ Overview.create_if_not_exists(
   prio: 1010,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id'     => [3],
-    'tickets.owner_id'     => 'current_user.id',
-    'tickets.pending_time' => { 'direction' => 'before', 'count' => 1, 'area' => 'minute' },
+    'ticket.state_id' => {
+      operator: 'is',
+      value: 3,
+    },
+    'ticket.owner_id' => {
+      operator: 'is',
+      value: 'current_user.id',
+    },
+    'ticket.pending_time' => {
+      operator: 'after (relative)',
+      value: '1',
+    },
   },
   order: {
     by: 'created_at',
@@ -1618,8 +1633,14 @@ Overview.create_if_not_exists(
   prio: 1020,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [1, 2, 3],
-    'tickets.owner_id' => 1,
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [1, 2, 3],
+    },
+    'ticket.owner_id' => {
+      operator: 'is',
+      value: 1,
+    },
   },
   order: {
     by: 'created_at',
@@ -1639,7 +1660,10 @@ Overview.create_if_not_exists(
   prio: 1030,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [1, 2, 3],
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [1, 2, 3],
+    },
   },
   order: {
     by: 'created_at',
@@ -1659,8 +1683,14 @@ Overview.create_if_not_exists(
   prio: 1035,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id'     => [3],
-    'tickets.pending_time' => { 'direction' => 'before', 'count' => 1, 'area' => 'minute' },
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [3],
+    },
+    'ticket.pending_time' => {
+      operator: 'after (relative)',
+      value: 1,
+    },
   },
   order: {
     by: 'created_at',
@@ -1680,7 +1710,10 @@ Overview.create_if_not_exists(
   prio: 1040,
   role_id: overview_role.id,
   condition: {
-    'tickets.escalation_time' => { 'direction' => 'before', 'count' => 5, 'area' => 'minute' },
+    'ticket.escalation_time' => {
+      operator: 'before (relative)',
+      value: 5,
+    },
   },
   order: {
     by: 'escalation_time',
@@ -1701,8 +1734,14 @@ Overview.create_if_not_exists(
   prio: 1000,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id'    => [ 1, 2, 3, 4, 6 ],
-    'tickets.customer_id' => 'current_user.id',
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [ 1, 2, 3, 4, 6 ],
+    },
+    'ticket.customer_id' => {
+      operator: 'is',
+      value: 'current_user.id',
+    },
   },
   order: {
     by: 'created_at',
@@ -1722,8 +1761,14 @@ Overview.create_if_not_exists(
   role_id: overview_role.id,
   organization_shared: true,
   condition: {
-    'tickets.state_id' => [ 1, 2, 3, 4, 6 ],
-    'tickets.organization_id' => 'current_user.organization_id',
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [ 1, 2, 3, 4, 6 ],
+    },
+    'ticket.organization_id' => {
+      operator: 'is',
+      value: 'current_user.organization_id',
+    },
   },
   order: {
     by: 'created_at',

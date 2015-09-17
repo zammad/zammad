@@ -39,16 +39,16 @@ returns
 selected overview by user
 
   result = Ticket::Overviews.list(
-    :current_user => User.find(123),
-    :view         => 'some_view_url',
+    current_user: User.find(123),
+    view:         'some_view_url',
   )
 
 returns
 
   result = {
-    :tickets       => tickets,                # [ticket1, ticket2, ticket3]
-    :tickets_count => tickets_count,          # count of tickets
-    :overview      => overview_selected_raw,  # overview attributes
+    tickets:       tickets,                # [ticket1, ticket2, ticket3]
+    tickets_count: tickets_count,          # count of tickets
+    overview:      overview_selected_raw,  # overview attributes
   }
 
 =end
@@ -71,18 +71,29 @@ returns
       end
 
       # replace e.g. 'current_user.id' with current_user.id
-      overview.condition.each { |item, value|
+      overview.condition.each { |attribute, content|
+        next if !content
+        next if !content.respond_to?(:key?)
+        next if !content['value']
+        next if content['value'].class != String && content['value'].class != Array
 
-        next if !value
-        next if value.class.to_s != 'String'
+        if content['value'].class == String
+          parts = content['value'].split( '.', 2 )
+          next if !parts[0]
+          next if !parts[1]
+          next if parts[0] != 'current_user'
+          overview.condition[attribute]['value'] = data[:current_user][parts[1].to_sym]
+          next
+        end
 
-        parts = value.split( '.', 2 )
-
-        next if !parts[0]
-        next if !parts[1]
-        next if parts[0] != 'current_user'
-
-        overview.condition[item] = data[:current_user][parts[1].to_sym]
+        content['value'].each {|item|
+          next if item.class != String
+          parts = item.split('.', 2)
+          next if !parts[0]
+          next if !parts[1]
+          next if parts[0] != 'current_user'
+          item = data[:current_user][parts[1].to_sym]
+        }
       }
     }
 
@@ -90,37 +101,8 @@ returns
       fail "No such view '#{data[:view]}'"
     end
 
-    # sortby
-    # prio
-    # state
-    # group
-    # customer
-
-    # order
-    # asc
-    # desc
-
-    # groupby
-    # prio
-    # state
-    # group
-    # customer
-
-    #    all = attributes[:myopenassigned]
-    #    all.merge( { :group_id => groups } )
-
-    #    @tickets = Ticket.where(:group_id => groups, attributes[:myopenassigned] ).limit(params[:limit])
     # get only tickets with permissions
-    if data[:current_user].role?('Customer')
-      group_ids = Group.select( 'groups.id' )
-                  .where( 'groups.active = ?', true )
-                  .map( &:id )
-    else
-      group_ids = Group.select( 'groups.id' ).joins(:users)
-                  .where( 'groups_users.user_id = ?', [ data[:current_user].id ] )
-                  .where( 'groups.active = ?', true )
-                  .map( &:id )
-    end
+    access_condition = Ticket.access_condition( data[:current_user] )
 
     # overview meta for navbar
     if !overview_selected
@@ -129,8 +111,10 @@ returns
       result = []
       overviews.each { |overview|
 
+        query_condition, bind_condition = Ticket._selectors(overview.condition)
+
         # get count
-        count = Ticket.where( group_id: group_ids ).where( _condition( overview.condition ) ).count()
+        count = Ticket.where( access_condition ).where( query_condition, *bind_condition ).count()
 
         # get meta info
         all = {
@@ -151,9 +135,12 @@ returns
       if overview_selected.group_by && !overview_selected.group_by.empty?
         order_by = overview_selected.group_by + '_id, ' + order_by
       end
-      tickets = Ticket.select( 'id' )
-                .where( group_id: group_ids )
-                .where( _condition( overview_selected.condition ) )
+
+      query_condition, bind_condition = Ticket._selectors(overview_selected.condition)
+
+      tickets = Ticket.select('id')
+                .where( access_condition )
+                .where( query_condition, *bind_condition )
                 .order( order_by )
                 .limit( 500 )
 
@@ -162,9 +149,7 @@ returns
         ticket_ids.push ticket.id
       }
 
-      tickets_count = Ticket.where( group_id: group_ids )
-                      .where( _condition( overview_selected.condition ) )
-                      .count()
+      tickets_count = Ticket.where( access_condition ).where( query_condition, *bind_condition ).count()
 
       return {
         ticket_ids: ticket_ids,
@@ -175,15 +160,12 @@ returns
 
     # get tickets for overview
     data[:start_page] ||= 1
-    tickets = Ticket.where( group_id: group_ids )
-              .where( _condition( overview_selected.condition ) )
+    query_condition, bind_condition = Ticket._selectors(overview_selected.condition)
+    tickets = Ticket.where( access_condition )
+              .where( query_condition, *bind_condition )
               .order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )
-    #          .limit( overview_selected.view[ data[:view_mode].to_sym ][:per_page] )
-    #          .offset( overview_selected.view[ data[:view_mode].to_sym ][:per_page].to_i * ( data[:start_page].to_i - 1 ) )
 
-    tickets_count = Ticket.where( group_id: group_ids )
-                    .where( _condition( overview_selected.condition ) )
-                    .count()
+    tickets_count = Ticket.where( access_condition ).where( query_condition, *bind_condition ).count()
 
     {
       tickets: tickets,
@@ -192,64 +174,4 @@ returns
     }
   end
 
-  private
-
-  def self._condition(condition)
-    sql  = ''
-    bind = [nil]
-    condition.each {|key, value|
-      if sql != ''
-        sql += ' AND '
-      end
-      if value.class == Array
-        sql += " #{key} IN (?)"
-        bind.push value
-      elsif value.class == Hash || value.class == ActiveSupport::HashWithIndifferentAccess
-        time = Time.zone.now
-        if value['area'] == 'minute'
-          if value['direction'] == 'last'
-            time -= value['count'].to_i * 60
-          else
-            time += value['count'].to_i * 60
-          end
-        elsif value['area'] == 'hour'
-          if value['direction'] == 'last'
-            time -= value['count'].to_i * 60 * 60
-          else
-            time += value['count'].to_i * 60 * 60
-          end
-        elsif value['area'] == 'day'
-          if value['direction'] == 'last'
-            time -= value['count'].to_i * 60 * 60 * 24
-          else
-            time += value['count'].to_i * 60 * 60 * 24
-          end
-        elsif value['area'] == 'month'
-          if value['direction'] == 'last'
-            time -= value['count'].to_i * 60 * 60 * 24 * 31
-          else
-            time += value['count'].to_i * 60 * 60 * 24 * 31
-          end
-        elsif value['area'] == 'year'
-          if value['direction'] == 'last'
-            time -= value['count'].to_i * 60 * 60 * 24 * 365
-          else
-            time += value['count'].to_i * 60 * 60 * 24 * 365
-          end
-        end
-        if value['direction'] == 'last'
-          sql += " #{key} > ?"
-          bind.push time
-        else
-          sql += " #{key} < ?"
-          bind.push time
-        end
-      else
-        sql += " #{key} = ?"
-        bind.push value
-      end
-    }
-    bind[0] = sql
-    bind
-  end
 end

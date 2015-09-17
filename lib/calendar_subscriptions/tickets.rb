@@ -46,12 +46,18 @@ class CalendarSubscriptions::Tickets
     return events_data if owner_ids.empty?
 
     condition = {
-      'tickets.owner_id' => owner_ids,
-      'tickets.state_id' => Ticket::State.where(
-        state_type_id: Ticket::StateType.where(
-          name: %w(new open),
-        ),
-      ),
+      'tickets.owner_id' => {
+        operator: 'is',
+        value: owner_ids,
+      },
+      'tickets.state_id' => {
+        operator: 'is',
+        value: Ticket::State.where(
+          state_type_id: Ticket::StateType.where(
+            name: %w(new open),
+          ),
+        ).map(&:id),
+      },
     }
 
     tickets = Ticket.search(
@@ -87,15 +93,21 @@ class CalendarSubscriptions::Tickets
     return events_data if owner_ids.empty?
 
     condition = {
-      'tickets.owner_id' => owner_ids,
-      'tickets.state_id' => Ticket::State.where(
-        state_type_id: Ticket::StateType.where(
-          name: [
-            'pending reminder',
-            'pending action',
-          ],
-        ),
-      ),
+      'tickets.owner_id' => {
+        operator: 'is',
+        value: owner_ids,
+      },
+      'tickets.state_id' => {
+        operator: 'is',
+        value: Ticket::State.where(
+          state_type_id: Ticket::StateType.where(
+            name: [
+              'pending reminder',
+              'pending action',
+            ],
+          ),
+        ).map(&:id),
+      },
     }
 
     tickets = Ticket.search(
@@ -137,9 +149,16 @@ class CalendarSubscriptions::Tickets
     owner_ids   = owner_ids(:escalation)
     return events_data if owner_ids.empty?
 
-    condition = [
-      'tickets.owner_id IN (?) AND tickets.escalation_time IS NOT NULL', owner_ids
-    ]
+    condition = {
+      'tickets.owner_id' => {
+        operator: 'is',
+        value: owner_ids,
+      },
+      'tickets.escalation_time' => {
+        operator: 'is not',
+        value: nil,
+      }
+    }
 
     tickets = Ticket.search(
       current_user: @user,

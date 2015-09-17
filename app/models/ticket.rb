@@ -270,9 +270,10 @@ returns
 
   def self.selectors(selectors, limit = 10)
     return if !selectors
-    query, bind_params = _selectors(selectors)
-    ticket_count = Ticket.where(query, *bind_params).count
-    tickets = Ticket.where(query, *bind_params).limit(limit)
+    query, bind_params, tables = _selectors(selectors)
+    return [] if !query
+    ticket_count = Ticket.where(query, *bind_params).joins(tables).count
+    tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
     [ticket_count, tickets]
   end
 
@@ -280,6 +281,15 @@ returns
     return if !selectors
     query = ''
     bind_params = []
+
+    tables = []
+    selectors.each {|attribute, selector|
+      selector = attribute.split(/\./)
+      next if !selector[1]
+      next if selector[0] == 'ticket'
+      next if tables.include?(selector[0])
+      tables.push selector[0].to_sym
+    }
 
     selectors.each {|attribute, selector|
       if query != ''
@@ -289,7 +299,9 @@ returns
       next if !selector.respond_to?(:key?)
       next if !selector['operator']
       return nil if !selector['value']
-      return nil if selector['value'].respond_to?(:key?) && selector['value'].empty?
+      return nil if selector['value'].respond_to?(:empty?) && selector['value'].empty?
+      attributes = attribute.split(/\./)
+      attribute = "#{attributes[0]}s.#{attributes[1]}"
       if selector['operator'] == 'is'
         query += "#{attribute} IN (?)"
         bind_params.push selector['value']
@@ -304,14 +316,23 @@ returns
         query += "#{attribute} NOT LIKE (?)"
         value = "%#{selector['value']}%"
         bind_params.push value
-      elsif selector['operator'] == 'before'
-        query += "#{attribute} <= (?)"
+      elsif selector['operator'] == 'before (absolute)'
+        query += "#{attribute} <= ?"
         bind_params.push selector['value']
+      elsif selector['operator'] == 'after (absolute)'
+        query += "#{attribute} >= ?"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'before (relative)'
+        query += "#{attribute} <= ?"
+        bind_params.push Time.zone.now - selector['value'].to_i.minutes
+      elsif selector['operator'] == 'after (relative)'
+        query += "#{attribute} >= ?"
+        bind_params.push Time.zone.now + selector['value'].to_i.minutes
       else
         fail "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end
     }
-    [query, bind_params]
+    [query, bind_params, tables]
   end
 
   private

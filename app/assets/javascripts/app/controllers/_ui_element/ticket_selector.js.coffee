@@ -1,110 +1,57 @@
 class App.UiElement.ticket_selector
-  @render: (attribute, params = {}) ->
+  @defaults: ->
+    defaults = ['ticket.state_id']
 
-    # list of attributes
     groups =
-      tickets:
+      ticket:
         name: 'Ticket'
         model: 'Ticket'
-      users:
+      customer:
         name: 'Customer'
         model: 'User'
-      organizations:
+      organization:
         name: 'Organization'
         model: 'Organization'
 
-    elements =
-      tickets:
-        title:
-          tag: 'input'
-          operator: ['contains', 'contains not']
-        number:
-          tag: 'input'
-          operator: ['contains', 'contains not']
-        group_id:
-          relation: 'Group'
-          tag: 'select'
-          multible: true
-          operator: ['is', 'is not']
-        priority_id:
-          relation: 'Priority'
-          tag: 'select'
-          multible: true
-          operator: ['is', 'is not']
-        state_id:
-          relation: 'State'
-          tag: 'select'
-          multible: true
-          operator: ['is', 'is not']
-        owner_id:
-          tag: 'user_selection'
-          relation: 'User'
-          operator: ['is', 'is not']
-        customer_id:
-          tag: 'user_selection'
-          relation: 'User'
-          operator: ['is', 'is not']
-        organization_id:
-          tag: ''
-          relation: 'Organization'
-          operator: ['is', 'is not']
-        tag:
-          tag: 'tag'
-          multible: true
-          operator: ['is', 'is not']
-        created_at:
-          tag: 'timestamp'
-          operator: ['before', 'after']
-        updated_at:
-          tag: 'timestamp'
-          operator: ['before', 'after']
-        escalation_time:
-          tag: 'timestamp'
-          operator: ['before', 'after']
-      users:
-        firstname:
-          tag: 'input'
-          operator: ['contains', 'contains not']
-        lastname:
-          tag: 'input'
-          operator: ['contains', 'contains not']
-        email:
-          tag: 'input'
-          operator: ['contains', 'contains not']
-        login:
-          tag: 'input'
-          operator: ['contains', 'contains not']
-        created_at:
-          tag: 'time_selector_enhanced'
-          operator: ['before', 'after']
-        updated_at:
-          tag: 'time_selector_enhanced'
-          operator: ['before', 'after']
-      organizations:
-        name:
-          tag: 'input'
-          operator: ['contains', 'contains not']
-        shared:
-          tag: 'boolean'
-          operator: ['is', 'is not']
-        created_at:
-          tag: 'time_selector_enhanced'
-          operator: ['before', 'after']
-        updated_at:
-          tag: 'time_selector_enhanced'
-          operator: ['before', 'after']
+    operators_type =
+      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)']
+      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)']
+      'boolean$': ['is', 'is not']
+      '^input$': ['contains', 'contains not']
+      '^textarea$': ['contains', 'contains not']
+
+    operators_name =
+      '_id$': ['is', 'is not']
+      '_ids$': ['is', 'is not']
 
     # megre config
+    elements = {}
     for groupKey, groupMeta of groups
-      for elementKey, elementGroup of elements
-        if elementKey is groupKey
-          configure_attributes = App[groupMeta.model].configure_attributes
-          for attributeName, attributeConfig of elementGroup
-            for attribute in configure_attributes
-              if attribute.name is attributeName
-                attributeConfig.config = attribute
+      for row in App[groupMeta.model].configure_attributes
+
+        # ignore passwords and relations
+        if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
+          config = _.clone(row)
+          for operatorRegEx, operator of operators_type
+            myRegExp = new RegExp(operatorRegEx, 'i')
+            if config.tag && config.tag.match(myRegExp)
+              config.operator = operator
+            elements["#{groupKey}.#{config.name}"] = config
+          for operatorRegEx, operator of operators_name
+            myRegExp = new RegExp(operatorRegEx, 'i')
+            if config.name && config.name.match(myRegExp)
+              config.operator = operator
+            elements["#{groupKey}.#{config.name}"] = config
+    [defaults, groups, elements]
+
+  @render: (attribute, params = {}) ->
+
+    [defaults, groups, elements] = @defaults()
 
     selector = @buildAttributeSelector(groups, elements)
+
+    search = =>
+      @preview(item)
 
     # return item
     item = $( App.view('generic/ticket_selector')( attribute: attribute ) )
@@ -116,12 +63,14 @@ class App.UiElement.ticket_selector
       elementClone = element.clone(true)
       element.after(elementClone)
       elementClone.find('.js-attributeSelector select').trigger('change')
+      @preview(item)
     )
 
     # remove filter
     item.find('.js-remove').bind('click', (e) =>
       $(e.target).closest('.js-filterElement').remove()
       @rebuildAttributeSelectors(item)
+      @preview(item)
     )
 
     # change filter
@@ -158,9 +107,20 @@ class App.UiElement.ticket_selector
       if selectorExists
         item.find('.js-filterElement').first().remove()
 
+    else
+      for default_row in defaults
+
+        # get selector rows
+        elementFirst = item.find('.js-filterElement').first()
+        elementLast = item.find('.js-filterElement').last()
+
+        # clone, rebuild and append
+        elementClone = elementFirst.clone(true)
+        @rebuildAttributeSelectors(item, elementClone, default_row)
+        elementLast.after(elementClone)
+      item.find('.js-filterElement').first().remove()
+
     # bind for preview
-    search = =>
-      @preview(item)
     item.on('change', 'select.form-control', (e) =>
       App.Delay.set(
         search,
@@ -168,7 +128,7 @@ class App.UiElement.ticket_selector
         'preview',
       )
     )
-    item.on('keyup', 'input.form-control', (e) =>
+    item.on('change keyup', 'input.form-control', (e) =>
       App.Delay.set(
         search,
         600,
@@ -200,13 +160,6 @@ class App.UiElement.ticket_selector
       ticket_ids: ticket_ids
     )
 
-  @getElementConfig: (groupAndAttribute, elements) ->
-    for elementGroup, elementConfig of elements
-      for elementKey, elementItem of elementConfig
-        if "#{elementGroup}.#{elementKey}" is groupAndAttribute
-          return elementItem
-    false
-
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value) ->
 
     # do nothing if item already exists
@@ -214,16 +167,32 @@ class App.UiElement.ticket_selector
     return if elementRow.find("[name=\"#{name}\"]").get(0)
 
     # build new item
-    attributeConfig = @getElementConfig(groupAndAttribute, elements)
+    attributeConfig = elements[groupAndAttribute]
+    config = _.clone(attributeConfig)
+
+    # force to use auto compition on user lookup
+    if config.relation is 'User'
+      config.tag = 'user_autocompletion'
+
+    # render ui element
     item = ''
-    if attributeConfig && attributeConfig.config && App.UiElement[attributeConfig.config.tag]
-      config = _.clone(attributeConfig.config)
+    if config && App.UiElement[config.tag]
       config['name'] = name
       config['value'] = value
       if 'multiple' of config
         config.multiple = true
         config.nulloption = false
-      item = App.UiElement[attributeConfig.config.tag].render(config, {})
+      if config.tag is 'checkbox'
+        config.tag = 'select'
+        #config.type = 'datetime-local'
+      #if config.tag is 'datetime'
+      #  config.tag = 'input'
+      #  config.type = 'datetime-local'
+      tagSearch = "#{config.tag}_search"
+      if App.UiElement[tagSearch]
+        item = App.UiElement[tagSearch].render(config, {})
+      else
+        item = App.UiElement[config.tag].render(config, {})
     elementRow.find('.js-value').html(item)
 
   @buildAttributeSelector: (groups, elements) ->
@@ -233,13 +202,12 @@ class App.UiElement.ticket_selector
       selection.closest('select').append("<optgroup label=\"#{displayName}\" class=\"js-#{groupKey}\"></optgroup>")
       optgroup = selection.find("optgroup.js-#{groupKey}")
       for elementKey, elementGroup of elements
-        if elementKey is groupKey
-          for attributeName, attributeConfig of elementGroup
-            if attributeConfig.config && attributeConfig.config.display
-              displayName = App.i18n.translateInline(attributeConfig.config.display)
-            else
-              displayName = App.i18n.translateInline(attributeName)
-            optgroup.append("<option value=\"#{groupKey}.#{attributeName}\">#{displayName}</option>")
+        spacer = elementKey.split(/\./)
+        if spacer[0] is groupKey
+          attributeConfig = elements[elementKey]
+          if attributeConfig.operator
+            displayName = App.i18n.translateInline(attributeConfig.display)
+            optgroup.append("<option value=\"#{elementKey}\">#{displayName}</option>")
     selection
 
   @rebuildAttributeSelectors: (elementFull, elementRow, groupAndAttribute) ->
@@ -267,14 +235,16 @@ class App.UiElement.ticket_selector
 
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, current_operator) ->
     selection = $("<select class=\"form-control\" name=\"condition::#{groupAndAttribute}::operator\"></select>")
-    attributeConfig = @getElementConfig(groupAndAttribute, elements)
-    for operator in attributeConfig.operator
-      operatorName = App.i18n.translateInline(operator)
-      selected = ''
-      if current_operator is operator
-        selected = 'selected="selected"'
-      selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
-    selection
+
+    attributeConfig = elements[groupAndAttribute]
+    if attributeConfig.operator
+      for operator in attributeConfig.operator
+        operatorName = App.i18n.translateInline(operator)
+        selected = ''
+        if current_operator is operator
+          selected = 'selected="selected"'
+        selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
+      selection
 
   @rebuildOperater: (elementFull, elementRow, groupAndAttribute, elements, current_operator) ->
     return if !groupAndAttribute
@@ -290,16 +260,43 @@ class App.UiElement.ticket_selector
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')
     return [none] if _.isEmpty(condition)
+    [defaults, groups, elements] = @defaults()
     rules = []
-    for position of condition.attribute
+    for attribute, meta of condition
+
+      objectAttribute = attribute.split(/\./)
 
       # get stored params
-      groupAndAttribute = condition.attribute[position]
-      if condition[groupAndAttribute]
+      if meta && objectAttribute[1]
         selectorExists = true
-        operator = condition[groupAndAttribute].operator
-        value = condition[groupAndAttribute].value
-        rules.push "#{App.i18n.translateContent('Where')} <b>#{App.i18n.translateContent(groupAndAttribute)}</b> #{App.i18n.translateContent(operator)} <b>#{App.i18n.translateContent(value)}</b>."
+        operator = meta.operator
+        value = meta.value
+        model = toCamelCase(objectAttribute[0])
+        modelAttribute = objectAttribute[1]
+
+        config = elements[attribute]
+
+        if modelAttribute.substr(modelAttribute.length-4,4) is '_ids'
+          modelAttribute = modelAttribute.substr(0, modelAttribute.length-4)
+        if modelAttribute.substr(modelAttribute.length-3,3) is '_id'
+          modelAttribute = modelAttribute.substr(0, modelAttribute.length-3)
+        valueHuman = []
+        if _.isArray(value)
+          for data in value
+            r = @humanTextLookup(config, data)
+            valueHuman.push r
+        else
+          valueHuman.push @humanTextLookup(config, value)
+        rules.push "#{App.i18n.translateContent('Where')} <b>#{App.i18n.translateContent(model)} -> #{App.i18n.translateContent(toCamelCase(modelAttribute))}</b> #{App.i18n.translateContent(operator)} <b>#{valueHuman}</b>."
 
     return [none] if _.isEmpty(rules)
     rules
+
+  @humanTextLookup: (config, value) ->
+    return value if !App[config.relation]
+    return value if !App[config.relation].exists(value)
+    data = App[config.relation].fullLocal(value)
+    return value if !data
+    if data.displayName
+      return App.i18n.translateContent( data.displayName() )
+    valueHuman.push App.i18n.translateContent( data.name )

@@ -208,6 +208,13 @@ function underscored (str) {
   return str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
 }
 
+function toCamelCase (str) {
+  return str
+    .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+    .replace(/\s/g, '')
+    .replace(/^(.)/, function($1) { return $1.toUpperCase(); });
+};
+
 jQuery.event.special.remove = {
   remove: function(e) {
     if (e.handler) e.handler();

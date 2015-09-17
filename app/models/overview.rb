@@ -6,5 +6,19 @@ class Overview < ApplicationModel
   store     :view
   validates :name, presence: true
   validates :prio, presence: true
-  validates :link, presence: true
+
+  before_create   :fill_link
+  before_update   :fill_link
+
+  private
+
+  # fill link
+  def fill_link
+    return true if link && !link.empty?
+    self.link = name.downcase
+    link.gsub!(/\s/, '_')
+    link.gsub!(/[^0-9a-z]/i, '_')
+    link.gsub!(/_+/, '_')
+  end
+
 end

@@ -1,16 +1,15 @@
 class App.Overview extends App.Model
-  @configure 'Overview', 'name', 'link', 'prio', 'condition', 'order', 'group_by', 'view', 'user_id', 'organization_shared', 'role_id', 'order', 'group_by', 'active', 'updated_at'
+  @configure 'Overview', 'name', 'prio', 'condition', 'order', 'group_by', 'view', 'user_id', 'organization_shared', 'role_id', 'order', 'group_by', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/overviews'
   @configure_attributes = [
-    { name: 'name',       display: 'Name',                tag: 'input',    type: 'text', limit: 100, 'null': false, 'class': 'span4' },
-    { name: 'link',       display: 'URL',                 tag: 'input',    type: 'text', limit: 100, 'null': false, 'class': 'span4' },
-    { name: 'role_id',    display: 'Available for Role',  tag: 'select',   multiple: false, nulloption: true, null: false, relation: 'Role', translate: true, class: 'span4' },
-    { name: 'user_id',    display: 'Available for User',  tag: 'select',   multiple: true, nulloption: true, null: true,  relation: 'User', sortBy: 'firstname', class: 'span4' },
-    { name: 'organization_shared', display: 'Only available for Users with shared Organization', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true, 'class': 'span4' },
-#    { name: 'content',    display: 'Content',             tag: 'textarea',                limit: 250, 'null': false, 'class': 'span4' },
-    { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_attribute_selection', null: true, class: 'span4' },
-    { name: 'prio',       display: 'Prio',                tag: 'input',    type: 'text', limit: 10, 'null': false, 'class': 'span4' },
+    { name: 'name',       display: 'Name',                tag: 'input',    type: 'text', limit: 100, 'null': false },
+    { name: 'role_id',    display: 'Available for Role',  tag: 'select',   multiple: false, nulloption: true, null: false, relation: 'Role', translate: true },
+    { name: 'user_id',    display: 'Available for User',  tag: 'select',   multiple: true, nulloption: true, null: true,  relation: 'User', sortBy: 'firstname' },
+    { name: 'organization_shared', display: 'Only available for Users with shared Organization', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
+#    { name: 'content',    display: 'Content',             tag: 'textarea',                limit: 250, 'null': false },
+    { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_selector', null: false },
+    { name: 'prio',       display: 'Prio',                tag: 'input',    type: 'text', limit: 10, 'null': false },
     {
       name:    'view::s'
       display: 'Attributes'
