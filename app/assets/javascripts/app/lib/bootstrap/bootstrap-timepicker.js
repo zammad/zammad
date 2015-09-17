@@ -12,7 +12,7 @@
  *    - automatically jump from hours to minutes when typing in a number
  *    - continue stepping from manually input value
  *    - activate meridian on class 'time--12'
- *    - tillMidnight (special mode to allow to display 24:00)
+ *    - normalize output hour to 24-hour clock
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -32,6 +32,7 @@
     this.modalBackdrop = options.modalBackdrop;
     this.orientation = options.orientation;
     this.secondStep = options.secondStep;
+    this.snapToStep = options.snapToStep;
     this.showInputs = options.showInputs;
     this.showMeridian = options.showMeridian;
     this.showSeconds = options.showSeconds;
@@ -39,7 +40,6 @@
     this.template = options.template;
     this.appendWidgetTo = options.appendWidgetTo;
     this.showWidgetOnAddonClick = options.showWidgetOnAddonClick;
-    this.tillMidnight = options.tillMidnight;
 
     this._init();
   };
@@ -142,11 +142,7 @@
         }
       } else {
         if (this.hour <= 0) {
-          if(this.tillMidnight) {
-            this.hour = this.maxHours;
-          } else {
-            this.hour = this.maxHours - 1;
-          }
+          this.hour = this.maxHours - 1;
         } else {
           this.hour--;
         }
@@ -520,16 +516,9 @@
           this.hour = 0;
         }
       }
-      if (this.tillMidnight) {
-        if (this.hour === 24) {
-          this.hour = 1;
-          return;
-        }
-      } else {
-        if (this.hour === 23) {
-          this.hour = 0;
-          return;
-        }
+      if (this.hour === this.maxHours) {
+        this.hour = 0;
+        return;
       }
       this.hour++;
     },
@@ -549,12 +538,6 @@
       } else {
         this.minute = newVal;
       }
-
-      if (this.tillMidnight && this.hour === 24) {
-        if (this.minute !== 0) {
-          this.hour = 0;
-        }
-      }
     },
 
     incrementSecond: function() {
@@ -565,12 +548,6 @@
         this.second = newVal - 60;
       } else {
         this.second = newVal;
-      }
-
-      if (this.tillMidnight && this.hour === 24) {
-        if (this.second !== 0) {
-          this.hour = 0;
-        }
       }
     },
 
@@ -629,6 +606,23 @@
       }
 
       return false;
+    },
+
+    /**
+     * Given a segment value like 43, will round and snap the segment
+     * to the nearest "step", like 45 if step is 15. Segment will
+     * "overflow" to 0 if it's larger than 59 or would otherwise
+     * round up to 60.
+     */
+    changeToNearestStep: function (segment, step) {
+      if (segment % step === 0) {
+        return segment;
+      }
+      if (Math.round((segment % step) / step)) {
+        return (segment + (step - segment % step)) % 60;
+      } else {
+        return segment - segment % step;
+      }
     },
 
     // This method was adapted from bootstrap-datepicker.
@@ -759,7 +753,8 @@
         return;
       }
 
-      var timeArray,
+      var timeMode,
+          timeArray,
           hour,
           minute,
           second,
@@ -783,34 +778,38 @@
           }
         }
       } else {
-        if (time.match(/p/i) !== null) {
-          meridian = 'PM';
-        } else {
-          meridian = 'AM';
+        timeMode = ((/a/i).test(time) ? 1 : 0) + ((/p/i).test(time) ? 2 : 0); // 0 = none, 1 = AM, 2 = PM, 3 = BOTH.
+        if (timeMode > 2) { // If both are present, fail.
+          this.clear();
+          return;
         }
 
-        time = time.replace(/[^0-9\:]/g, '');
-
-        timeArray = time.split(':');
+        timeArray = time.replace(/[^0-9\:]/g, '').split(':');
 
         hour = timeArray[0] ? timeArray[0].toString() : timeArray.toString();
+
+        if(this.explicitMode && hour.length > 2 && (hour.length % 2) !== 0 ) {
+          this.clear();
+          return;
+        }
+
         minute = timeArray[1] ? timeArray[1].toString() : '';
         second = timeArray[2] ? timeArray[2].toString() : '';
 
-        // idiot proofing
+        // adaptive time parsing
         if (hour.length > 4) {
-          second = hour.substr(4, 2);
+          second = hour.slice(-2);
+          hour = hour.slice(0, -2);
         }
+
         if (hour.length > 2) {
-          minute = hour.substr(2, 2);
-          hour = hour.substr(0, 2);
+          minute = hour.slice(-2);
+          hour = hour.slice(0, -2);
         }
+
         if (minute.length > 2) {
-          second = minute.substr(2, 2);
-          minute = minute.substr(0, 2);
-        }
-        if (second.length > 2) {
-          second = second.substr(2, 2);
+          second = minute.slice(-2);
+          minute = minute.slice(0, -2);
         }
 
         hour = parseInt(hour, 10);
@@ -827,43 +826,53 @@
           second = 0;
         }
 
-        if (this.showMeridian) {
-          if (hour < 1) {
-            hour = 1;
-          } else if (hour > 12) {
-            hour = 12;
-          }
-        } else {
-          if (hour >= this.maxHours + 1) {
-            hour = this.maxHours;
-          } else if (hour < 0) {
-            hour = 0;
-          }
-          if (hour < 13 && meridian === 'PM') {
-            hour = hour + 12;
-          }
+        // Adjust the time based upon unit boundary.
+        // NOTE: Negatives will never occur due to time.replace() above.
+        if (second > 59) {
+          second = 59;
         }
 
-        if (minute < 0) {
-          minute = 0;
-        } else if (minute >= 60) {
+        if (minute > 59) {
           minute = 59;
         }
 
-        if (this.showSeconds) {
-          if (isNaN(second)) {
-            second = 0;
-          } else if (second < 0) {
-            second = 0;
-          } else if (second >= 60) {
-            second = 59;
+        if (hour >= this.maxHours) {
+          // No day/date handling.
+          hour = this.maxHours - 1;
+        }
+
+        if (this.showMeridian) {
+          if (hour > 12) {
+            // Force PM.
+            timeMode = 2;
+            hour -= 12;
+          }
+          if (!timeMode) {
+            timeMode = 1;
+          }
+          if (hour === 0) {
+            hour = 12; // AM or PM, reset to 12.  0 AM = 12 AM.  0 PM = 12 PM, etc.
+          }
+          meridian = timeMode === 1 ? 'AM' : 'PM';
+        } else if (hour < 12 && timeMode === 2) {
+          hour += 12;
+        } else {
+          if (hour >= this.maxHours) {
+            hour = this.maxHours - 1;
+          } else if ((hour < 0) || (hour === 12 && timeMode === 1)){
+            hour = 0;
           }
         }
       }
 
       this.hour = hour;
-      this.minute = minute;
-      this.second = second;
+      if (this.snapToStep) {
+        this.minute = this.changeToNearestStep(minute, this.minuteStep);
+        this.second = this.changeToNearestStep(second, this.secondStep);
+      } else {
+        this.minute = minute;
+        this.second = second;
+      }
       this.meridian = meridian;
 
       if (!silent) {
@@ -939,11 +948,17 @@
         this.updateWidget();
       }
 
+      // normalize hour to 24-hour clock
+      var hour = this.hour;
+      if (this.showMeridian && this.meridian == 'PM') {
+        hour += 12;
+      }
+
       this.$element.trigger({
         'type': 'changeTime.timepicker',
         'time': {
           'value': this.getTime(),
-          'hours': this.hour,
+          'hours': hour,
           'minutes': this.minute,
           'seconds': this.second,
           'meridian': this.meridian
@@ -1118,7 +1133,7 @@
     appendWidgetTo: 'body',
     showWidgetOnAddonClick: true,
     maxHours: 23,
-    tillMidnight: false
+    snapToStep: false
   };
 
   $.fn.timepicker.Constructor = Timepicker;
