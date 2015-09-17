@@ -13,15 +13,15 @@
     <% end %>
 </thead>
 <tbody>
-  <% for i in [0..@maxTimeframes-1]: %>
+  <% for slot in [0..@maxTimeframes-1]: %>
   <tr>
     <% for id, day of @days: %>
-      <% if @hours[id].timeframes[i]: %>
-      <td data-day="<%- id %>" class="form-group day-time<%- ' is-active' if @hours[id].active %>">
+      <% if @hours[id].timeframes[slot]: %>
+      <td data-day="<%- id %>" data-slot="<%- slot %>" class="form-group day-time<%- ' is-active' if @hours[id].active %>">
         <label for="<%- id %>_start_time">from</label>
-        <input type="text" id="<%- id %>_start_time" value="<%- @hours[id].timeframes[i][0] %>" class="form-control form-control--small time js-time">
+        <input type="text" id="<%- id %>_start_time" value="<%- @hours[id].timeframes[slot][0] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="0" class="form-control form-control--small time js-time">
         <label for="monday_end_time">till</label>
-        <input type="text" id="monday_end_time" value="<%- @hours[id].timeframes[i][1] %>" class="form-control form-control--small time js-time">
+        <input type="text" id="monday_end_time" value="<%- @hours[id].timeframes[slot][1] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="1" class="form-control form-control--small time js-time">
       <% else: %>
       <td class="empty-cell">
       <% end %>

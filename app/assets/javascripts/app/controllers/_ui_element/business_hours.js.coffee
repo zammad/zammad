@@ -1,6 +1,9 @@
 class App.UiElement.business_hours
   @render: (attribute, params) ->
 
+    # Martin: our frontend doesn't create 24:00. 
+    # you have to check second values ('till') for 00:00 
+    # and convert them to 24:00
     hours =
       mon:
         active: true
@@ -25,8 +28,9 @@ class App.UiElement.business_hours
         ]
       fri:
         active: true
-        timeframes:
+        timeframes: [
           ['09:00','17:00']
+        ]
       sat:
         active: false
         timeframes: [

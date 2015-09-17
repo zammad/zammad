@@ -30,9 +30,18 @@ class App.BusinessHours extends Spine.Controller
 
     @html html
 
-    @$('.js-time').timepicker
-      showMeridian: false # meridian = am/pm
-      tillMidnight: true
+    @$('.js-time')
+      .timepicker
+        showMeridian: false # meridian = am/pm
+      .on 'changeTime.timepicker', @onTimeChange
+
+  onTimeChange: (event) =>
+    input = @$(event.currentTarget)
+    day = input.attr('data-day')
+    slot = input.attr('data-slot')
+    i = input.attr('data-i')
+    console.log "something changed", event.time
+    @options.hours[day].timeframes[slot][i] = "#{event.time.hours}:#{event.time.minutes}"
 
   addTime: (event) =>
     day = @$(event.currentTarget).attr('data-day')
