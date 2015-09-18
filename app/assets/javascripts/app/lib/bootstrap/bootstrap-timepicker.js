@@ -12,7 +12,8 @@
  *    - automatically jump from hours to minutes when typing in a number
  *    - continue stepping from manually input value
  *    - activate meridian on class 'time--12'
- *    - normalize output hour to 24-hour clock
+ *    - normalize output to 24-hour clock
+ *    - add hoursAndMinutes
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -142,7 +143,7 @@
         }
       } else {
         if (this.hour <= 0) {
-          this.hour = this.maxHours - 1;
+          this.hour = this.maxHours;
         } else {
           this.hour--;
         }
@@ -950,20 +951,30 @@
 
       // normalize hour to 24-hour clock
       var hour = this.hour;
-      if (this.showMeridian && this.meridian == 'PM') {
-        hour += 12;
+      if (this.showMeridian) {
+        if (this.meridian == 'PM' && hour < 12) {
+          hour += 12;
+        }
+        if (this.meridian == 'AM' && hour == 12) {
+          hour = 0;
+        }
       }
 
       this.$element.trigger({
         'type': 'changeTime.timepicker',
         'time': {
           'value': this.getTime(),
+          'hoursAndMinutes': this.pad(hour) +':'+ this.pad(this.minute),
           'hours': hour,
           'minutes': this.minute,
           'seconds': this.second,
           'meridian': this.meridian
         }
       });
+    },
+
+    pad: function(val) {
+      return val.toString().length === 1 ? '0'+ val : val;
     },
 
     updateElement: function() {
