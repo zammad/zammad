@@ -21,12 +21,12 @@ class App.BusinessHours extends Spine.Controller
       sun: App.i18n.translateInline('Sunday')
 
   render: =>
-    maxTimeframeDay = _.max @hours, (day) -> day.timeframes.length
+    @updateMaxTimeframes()
 
     html = App.view('generic/business_hours')
       days: @days
       hours: @options.hours
-      maxTimeframes: maxTimeframeDay.timeframes.length
+      maxTimeframes: @maxTimeframes
 
     @html html
 
@@ -35,13 +35,21 @@ class App.BusinessHours extends Spine.Controller
         showMeridian: false # meridian = am/pm
       .on 'changeTime.timepicker', @onTimeChange
 
+    @el.toggleClass 'is-invalid', !@validate()
+
+  updateMaxTimeframes: =>
+    maxTimeframeDay = _.max @hours, (day) -> day.timeframes.length
+    @maxTimeframes = maxTimeframeDay.timeframes.length
+
   onTimeChange: (event) =>
     input = @$(event.currentTarget)
     day = input.attr('data-day')
     slot = input.attr('data-slot')
     i = input.attr('data-i')
-    console.log "something changed", event.time
-    @options.hours[day].timeframes[slot][i] = "#{event.time.hours}:#{event.time.minutes}"
+    @options.hours[day].timeframes[slot][i] = event.time.hoursAndMinutes
+    console.log event.time.hoursAndMinutes
+
+    @el.toggleClass 'is-invalid', !@validate()
 
   addTime: (event) =>
     day = @$(event.currentTarget).attr('data-day')
@@ -58,3 +66,54 @@ class App.BusinessHours extends Spine.Controller
     day = checkbox.attr('data-target')
     @options.hours[day].active = checkbox.prop('checked')
     @$("[data-day=#{day}]").toggleClass('is-active', checkbox.prop('checked'))
+
+    @el.toggleClass 'is-invalid', !@validate()
+
+  validate: =>
+    for day, hours of @options.hours
+      break if not hours.active
+
+      # edge case: full day
+      if hours.timeframes[0][0] is '00:00' and hours.timeframes[hours.timeframes.length - 1][1] is '00:00'
+        return true
+
+      # check each timeframe
+      for slot in [0..hours.timeframes.length - 1]
+
+        # check if start time is earlier than end time
+        if not @earlier hours.timeframes[slot][0], hours.timeframes[slot][1]
+          return false
+
+        # check if start time of slot is later than end time of slot before
+        if slot > 0 && not @later hours.timeframes[slot][0], hours.timeframes[slot-1][1]
+          return false
+
+    # all passed
+    return true
+
+  later: (a, b) ->
+    # a later b
+    # input 'hh:mm'
+    [ha, ma] = a.split(':').map (val) -> parseInt val, 10
+    [hb, mb] = b.split(':').map (val) -> parseInt val, 10
+
+    if ha > hb
+      return true
+    if ha is hb
+      if ma > mb
+        return true
+    return false
+
+  earlier: (a, b) ->
+    # a earlier than b
+    # input 'hh:mm'
+
+    [ha, ma] = a.split(':').map (val) -> parseInt val, 10
+    [hb, mb] = b.split(':').map (val) -> parseInt val, 10
+
+    if ha < hb
+      return true
+    if ha is hb
+      if ma < mb
+        return true
+    return false
