@@ -1072,7 +1072,7 @@ textarea,
   height: 41px;
   font-size: 14px;
   font-weight: normal;
-  line-height: 22px;
+  line-height: 27px;
   color: #555;
   background: white;
   border: 1px solid hsl(0, 0%, 90%);
@@ -1085,6 +1085,7 @@ textarea,
   &.form-control--small {
     padding: 0 8px;
     height: 31px;
+    line-height: 29px;
   }
 
   &.form-control--inline {
