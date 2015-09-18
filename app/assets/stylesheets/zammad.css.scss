@@ -1043,6 +1043,10 @@ fieldset > *:not(.form-group) .form-control {
 .form-group.formGroup--halfSize {
   width: 50%;
   float: left;
+  
+  .form-control {
+    min-width: auto;
+  }
 }
 
 .fromGroup--standalone .form-control {
@@ -1087,6 +1091,15 @@ textarea,
     display: inline-block;
     width: auto;
   }
+}
+
+input[type=url] {
+  min-width: 400px;
+}
+
+.user-select.form-control {
+  padding-right: 35px;
+  min-width: 300px;
 }
 
 input[type=time] {
@@ -1194,10 +1207,6 @@ input.time.time--12 {
 
   select::-ms-expand {
     display: none;
-  }
-
-  .form-control.ui-autocomplete-input {
-    padding-right: 35px;
   }
 
   .has-error .form-control,
