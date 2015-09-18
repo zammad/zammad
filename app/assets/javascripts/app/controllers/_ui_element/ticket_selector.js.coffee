@@ -84,9 +84,10 @@ class App.UiElement.ticket_selector
     )
 
     # build inital params
-    if !_.isEmpty(params.condition)
+    if !_.isEmpty(params[attribute.name])
+
       selectorExists = false
-      for groupAndAttribute, meta of params.condition
+      for groupAndAttribute, meta of params[attribute.name]
         if groupAndAttribute isnt 'attribute'
           selectorExists = true
           operator = meta.operator
@@ -268,18 +269,11 @@ class App.UiElement.ticket_selector
 
       # get stored params
       if meta && objectAttribute[1]
-        selectorExists = true
         operator = meta.operator
         value = meta.value
         model = toCamelCase(objectAttribute[0])
-        modelAttribute = objectAttribute[1]
-
         config = elements[attribute]
 
-        if modelAttribute.substr(modelAttribute.length-4,4) is '_ids'
-          modelAttribute = modelAttribute.substr(0, modelAttribute.length-4)
-        if modelAttribute.substr(modelAttribute.length-3,3) is '_id'
-          modelAttribute = modelAttribute.substr(0, modelAttribute.length-3)
         valueHuman = []
         if _.isArray(value)
           for data in value
@@ -287,7 +281,10 @@ class App.UiElement.ticket_selector
             valueHuman.push r
         else
           valueHuman.push @humanTextLookup(config, value)
-        rules.push "#{App.i18n.translateContent('Where')} <b>#{App.i18n.translateContent(model)} -> #{App.i18n.translateContent(toCamelCase(modelAttribute))}</b> #{App.i18n.translateContent(operator)} <b>#{valueHuman}</b>."
+
+        if valueHuman.join
+          valueHuman = valueHuman.join(', ')
+        rules.push "#{App.i18n.translateContent('Where')} <b>#{App.i18n.translateContent(model)} -> #{App.i18n.translateContent(config.display)}</b> #{App.i18n.translateContent(operator)} <b>#{valueHuman}</b>."
 
     return [none] if _.isEmpty(rules)
     rules
