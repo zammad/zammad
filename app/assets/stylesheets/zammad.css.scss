@@ -1043,6 +1043,10 @@ fieldset > *:not(.form-group) .form-control {
 .form-group.formGroup--halfSize {
   width: 50%;
   float: left;
+  
+  .form-control {
+    min-width: auto;
+  }
 }
 
 .fromGroup--standalone .form-control {
@@ -1068,7 +1072,7 @@ textarea,
   height: 41px;
   font-size: 14px;
   font-weight: normal;
-  line-height: 22px;
+  line-height: 27px;
   color: #555;
   background: white;
   border: 1px solid hsl(0, 0%, 90%);
@@ -1081,12 +1085,22 @@ textarea,
   &.form-control--small {
     padding: 0 8px;
     height: 31px;
+    line-height: 29px;
   }
 
   &.form-control--inline {
     display: inline-block;
     width: auto;
   }
+}
+
+input[type=url] {
+  min-width: 400px;
+}
+
+.user-select.form-control {
+  padding-right: 35px;
+  min-width: 300px;
 }
 
 input[type=time] {
@@ -1194,10 +1208,6 @@ input.time.time--12 {
 
   select::-ms-expand {
     display: none;
-  }
-
-  .form-control.ui-autocomplete-input {
-    padding-right: 35px;
   }
 
   .has-error .form-control,
@@ -5857,6 +5867,13 @@ output {
   color: hsl(60,1%,34%);
   background: white;
   table-layout: auto;
+  
+  &.is-invalid {
+    border-radius: 3px;
+    box-shadow: 
+      0 0 0 2px white,
+      0 0 0 4px hsl(0,90%,70%);
+  }
   
   &.settings-list--stretch {
     width: 100%;
