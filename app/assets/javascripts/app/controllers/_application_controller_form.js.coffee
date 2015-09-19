@@ -226,53 +226,7 @@ class App.ControllerForm extends App.Controller
 
     if App.UiElement[attribute.tag]
       item = App.UiElement[attribute.tag].render(attribute, @params, @)
-
-    # ticket attribute selection
-    else if attribute.tag is 'ticket_attribute_selection'
-
-      # list of possible attributes
-      item = $(
-        App.view('generic/ticket_attribute_manage')(
-          attribute: attribute
-        )
-      )
-
-      addShownAttribute = ( key, value ) =>
-        parts = key.split(/::/)
-        key   = parts[0]
-        type  = parts[1]
-        if key is 'tickets.number'
-          attribute_config = {
-            name:       attribute.name + '::tickets.number'
-            display:    'Number'
-            tag:        'input'
-            type:       'text'
-            null:       false
-            value:      value
-            remove:     true
-          }
-        else if key is 'tickets.title'
-          attribute_config = {
-            name:       attribute.name + '::tickets.title'
-            display:    'Title'
-            tag:        'input'
-            type:       'text'
-            null:       false
-            value:      value
-            remove:     true
-          }
-        else if key is 'tickets.group_id'
-          attribute_config = {
-            name:       attribute.name + '::tickets.group_id'
-            display:    'Group'
-            tag:        'select'
-            multiple:   true
-            null:       false
-            nulloption: false
-            relation:   'Group'
-            value:      value
-            remove:     true
-          }
+      ###
         else if key is 'tickets.owner_id' || key is 'tickets.customer_id'
           display = 'Owner'
           name    = 'owner_id'
@@ -332,344 +286,7 @@ class App.ControllerForm extends App.Controller
               } )
               all
           }
-        else if key is 'tickets.state_id'
-          attribute_config = {
-            name:       attribute.name + '::tickets.state_id'
-            display:    'State'
-            tag:        'select'
-            multiple:   true
-            null:       false
-            nulloption: false
-            relation:   'TicketState'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.priority_id'
-          attribute_config = {
-            name:       attribute.name + '::tickets.priority_id'
-            display:    'Priority'
-            tag:        'select'
-            multiple:   true
-            null:       false
-            nulloption: false
-            relation:   'TicketPriority'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.created_at' && ( type is '<>' || value.count )
-          attribute_config = {
-            name:       attribute.name + '::tickets.created_at'
-            display:    'Created (before / last)'
-            tag:        'time_before_last'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.created_at' && ( type is '><' || 0 )
-          attribute_config = {
-            name:       attribute.name + '::tickets.created_at'
-            display:    'Created (between)'
-            tag:        'time_range'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.close_time' && ( type is '<>' || value.count )
-          attribute_config = {
-            name:       attribute.name + '::tickets.close_time'
-            display:    'Closed (before / last)'
-            tag:        'time_before_last'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.close_time' && ( type is '><' || 0 )
-          attribute_config = {
-            name:       attribute.name + '::tickets.close_time'
-            display:    'Closed (between)'
-            tag:        'time_range'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.updated_at' && ( type is '<>' || value.count )
-          attribute_config = {
-            name:       attribute.name + '::tickets.updated_at'
-            display:    'Updated (before / last)'
-            tag:        'time_before_last'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.updated_at' && ( type is '><' || 0 )
-          attribute_config = {
-            name:       attribute.name + '::tickets.updated_at'
-            display:    'Updated (between)'
-            tag:        'time_range'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.escalation_time' && ( type is '<>' || value.count )
-          attribute_config = {
-            name:       attribute.name + '::tickets.escalation_time'
-            display:    'Escalation (before / last)'
-            tag:        'time_before_last'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else if key is 'tickets.escalation_time' && ( type is '><' || 0 )
-          attribute_config = {
-            name:       attribute.name + '::tickets.escalation_time'
-            display:    'Escatlation (between)'
-            tag:        'time_range'
-            value:      value
-            translate:  true
-            remove:     true
-          }
-        else
-          attribute_config = {
-            name:       attribute.name + '::' + key
-            display:    'FIXME!'
-            tag:        'input'
-            type:       'text'
-            value:      value
-            remove:     true
-          }
-
-        item.find('select[name=ticket_attribute_list] option[value="' + key + '"]').hide().prop('disabled', true)
-
-        itemSub = @formGenItem( attribute_config )
-        itemSub.find('.glyphicon-minus').bind('click', (e) ->
-          e.preventDefault()
-          value = $(e.target).closest('.controls').find('[name]').attr('name')
-          if value
-            value = value.replace("#{attribute.name}::", '')
-            $(e.target).closest('.sub_attribute').find('select[name=ticket_attribute_list] option[value="' + value + '"]').show().prop('disabled', false)
-          $(@).parent().parent().parent().remove()
-        )
-#        itemSub.append('<a href=\"#\" class=\"icon-minus\"></a>')
-        item.find('.ticket_attribute_item').append( itemSub )
-
-      # list of existing attributes
-      attribute_config = {
-        name:       'ticket_attribute_list'
-        display:    'Add Attribute'
-        tag:        'select'
-        multiple:   false
-        null:       false
-#        nulloption: true
-        options: [
-          {
-            value:    ''
-            name:     '-- Ticket --'
-            selected: false
-            disable:  true
-          },
-          {
-            value:    'tickets.number'
-            name:     'Number'
-            selected: false
-            disable:  false
-          },
-          {
-            value:    'tickets.title'
-            name:     'Title'
-            selected: false
-            disable:  false
-          },
-          {
-            value:    'tickets.group_id'
-            name:     'Group'
-            selected: false
-            disable:  false
-          },
-          {
-            value:    'tickets.state_id'
-            name:     'State'
-            selected: false
-            disable:  false
-          },
-          {
-            value:    'tickets.priority_id'
-            name:     'Priority'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'tickets.owner_id'
-            name:     'Owner'
-            selected: true
-            disable:  false
-          },
-          #{
-          #  value:    'tickets.created_at::<>'
-          #  name:     'Created (before/last)'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.created_at::><'
-          #  name:     'Created (between)'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.close_time::<>'
-          #  name:     'Closed (before/last)'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.close_time::><'
-          #  name:     'Closed (between)'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.updated_at::<>'
-          #  name:     'Updated (before/last)'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.updated_at::><'
-          #  name:     'Updated (between)'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.escalation_time::<>'
-          #  name:     'Escalation (before/last)'
-          #  selected: true
-          #  disable:  false
-          #},
-          #{
-          #  value:    'tickets.escalation_time::><'
-          #  name:     'Escalation (between)'
-          #  selected: true
-          #  disable:  false
-          #},
-#         # {
-#            value:    'tag'
-#            name:     'Tag'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.created_before'
-#            name:     'Erstell vor'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.created_after'
-#            name:     'Erstell nach'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.created_between'
-#            name:     'Erstell zwischen'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.closed_before'
-#            name:     'Geschlossen vor'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.closed_after'
-#            name:     'Geschlossen nach'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'tickets.closed_between'
-#            name:     'Geschlossen zwischen'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    '-a'
-#            name:     '-- ' + App.i18n.translateInline('Article') + ' --'
-#            selected: false
-#            disable:  true
-#          },
-#          {
-#            value:    'ticket_articles.from'
-#            name:     'From'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'ticket_articles.to'
-#            name:     'To'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'ticket_articles.cc'
-#            name:     'Cc'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'ticket_articles.subject'
-#            name:     'Subject'
-#            selected: true
-#            disable:  false
-#          },
-#          {
-#            value:    'ticket_articles.body'
-#            name:     'Text'
-#            selected: true
-#            disable:  false
-#          },
-          {
-            value:    '-c'
-            name:     '-- ' + App.i18n.translateInline('Customer') + ' --'
-            selected: false
-            disable:  true
-          },
-          {
-            value:    'customers.id'
-            name:     'Customer'
-            selected: true
-            disable:  false
-          },
-          {
-            value:    'organization.id'
-            name:     'Organization'
-            selected: true
-            disable:  false
-          },
-        ]
-        default:    ''
-        translate:  true
-        class:      'medium'
-        add:        true
-      }
-      list = @formGenItem( attribute_config )
-
-      list.find('.glyphicon-plus').bind('click', (e) ->
-        e.preventDefault()
-        value = $(e.target).closest('.controls').find('[name=ticket_attribute_list]').val()
-        addShownAttribute( value, '' )
-      )
-      item.find('.ticket_attribute_list').prepend( list )
-
-      # list of shown attributes
-      show = []
-      if attribute.value
-        for key, value of attribute.value
-          addShownAttribute( key, value )
-
+        ###
     else
       throw "Invalid UiElement.#{attribute.tag}"
 
@@ -844,88 +461,52 @@ class App.ControllerForm extends App.Controller
 
       # get boolean
       if key.substr(0,9) is '{boolean}'
-        newKey          = key.substr( 9, key.length )
-        param[ newKey ] = param[ key ]
-        delete param[ key ]
-        if param[ newKey ] && param[ newKey ].toString() is 'true'
-          param[ newKey ] = true
+        newKey = key.substr(9, key.length)
+        if param[key] && param[key].toString() is 'true'
+          param[newKey] = true
         else
-          param[ newKey ] = false
+          param[newKey] = false
+        delete param[key]
 
       # get {date}
       else if key.substr(0,6) is '{date}'
-        newKey    = key.substr( 6, key.length )
-        namespace = newKey.split '___'
-
-        if !param[ namespace[0] ]
-          dateKey = "{date}#{namespace[0]}___"
-          year    = param[ "#{dateKey}year" ]
-          month   = param[ "#{dateKey}month" ]
-          day     = param[ "#{dateKey}day" ]
-
-          if lookupForm.find('[data-name = "' + namespace[0] + '"]').hasClass('is-hidden')
-            param[ namespace[0] ] = null
-          else if year && month && day && day
+        newKey = key.substr(6, key.length)
+        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-hidden')
+          param[newKey] = null
+        else if param[key]
+          try
+            time = new Date( Date.parse( "#{param[key]}T00:00:00Z" ) )
             format = (number) ->
               if parseInt(number) < 10
                 number = "0#{number}"
               number
-            try
-              time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T00:00:00Z" ) )
-              if time && time.toString() is 'Invalid Date'
-                throw "Invalid Date #{year}-#{format(month)}-#{format(day)}"
-              param[ namespace[0] ] = "#{time.getUTCFullYear()}-#{format(time.getUTCMonth()+1)}-#{format(time.getUTCDate())}"
-            catch err
-              param[ namespace[0] ] = 'invalid'
-              console.log('ERR', err)
-          else
-            param[ namespace[0] ] = undefined
-
-        #console.log('T', time, time.getHours(), time.getMinutes())
-
-          delete param[ "#{dateKey}year" ]
-          delete param[ "#{dateKey}month" ]
-          delete param[ "#{dateKey}day" ]
+            if time is 'Invalid Date'
+              throw "Invalid Date #{param[key]}"
+            param[newKey] = "#{time.getUTCFullYear()}-#{format(time.getUTCMonth()+1)}-#{format(time.getUTCDate())}"
+          catch err
+            param[newKey] = "invalid #{param[key]}"
+            console.log('ERR', err)
+        else
+          param[newKey] = undefined
+        delete param[key]
 
       # get {datetime}
       else if key.substr(0,10) is '{datetime}'
-        newKey    = key.substr( 10, key.length )
-        namespace = newKey.split '___'
-
-        if !param[ namespace[0] ]
-          datetimeKey = "{datetime}#{namespace[0]}___"
-          year        = param[ "#{datetimeKey}year" ]
-          month       = param[ "#{datetimeKey}month" ]
-          day         = param[ "#{datetimeKey}day" ]
-          hour        = param[ "#{datetimeKey}hour" ]
-          minute      = param[ "#{datetimeKey}minute" ]
-
-          if lookupForm.find('[data-name="' + namespace[0] + '"]').hasClass('is-hidden')
-            param[ namespace[0] ] = null
-          else if year && month && day && hour && minute
-            format = (number) ->
-              if parseInt(number) < 10
-                number = "0#{number}"
-              number
-            try
-              time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
-              if time && time.toString() is 'Invalid Date'
-                throw "Invalid Date #{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z"
-              time.setMinutes( time.getMinutes() + time.getTimezoneOffset() )
-              param[ namespace[0] ] = time.toISOString()
-            catch err
-              param[ namespace[0] ] = 'invalid'
-              console.log('ERR', err)
-          else
-            param[ namespace[0] ] = undefined
-
-        #console.log('T', time, time.getHours(), time.getMinutes())
-
-          delete param[ "#{datetimeKey}year" ]
-          delete param[ "#{datetimeKey}month" ]
-          delete param[ "#{datetimeKey}day" ]
-          delete param[ "#{datetimeKey}hour" ]
-          delete param[ "#{datetimeKey}minute" ]
+        newKey = key.substr(10, key.length)
+        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-hidden')
+          param[newKey] = null
+        else if param[key]
+          try
+            time = new Date( Date.parse( param[key] ) )
+            if time is 'Invalid Datetime'
+              throw "Invalid Datetime #{param[key]}"
+            param[newKey] = time.toISOString().replace(/:\d\d\.\d\d\dZ$/, ':00Z')
+          catch err
+            param[newKey] = "invalid #{param[key]}"
+            console.log('ERR', err)
+        else
+          param[newKey] = undefined
+        delete param[key]
 
     # split :: fields, build objects
     inputSelectObject = {}
@@ -1027,15 +608,21 @@ class App.ControllerForm extends App.Controller
     # show new errors
     for key, msg of data.errors
 
-      # use native fields
-      item = lookupForm.find('[name="' + key + '"]').closest('.form-group')
-      item.addClass('has-error')
-      item.find('.help-inline').html(msg)
+      # generic validation
+      itemGeneric = lookupForm.find('[name="' + key + '"]').closest('.form-group')
+      itemGeneric.addClass('has-error')
+      itemGeneric.find('.help-inline').html(msg)
 
       # use meta fields
-      item = lookupForm.find('[data-name="' + key + '"]').closest('.form-group')
-      item.addClass('has-error')
-      item.find('.help-inline').html(msg)
+      itemMeta = lookupForm.find('[data-name="' + key + '"]').closest('.form-group')
+      itemMeta.addClass('has-error')
+      itemMeta.find('.help-inline').html(msg)
+
+      # use native fields
+      itemGeneric = lookupForm.find('[name="' + key + '"]').closest('.form-control')
+      itemGeneric.trigger('validate')
+      itemMeta = lookupForm.find('[data-name="' + key + '"]').closest('.form-control')
+      itemMeta.trigger('validate')
 
     # set autofocus by delay to make validation testable
     App.Delay.set(

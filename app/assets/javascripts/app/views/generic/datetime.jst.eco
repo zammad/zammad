@@ -1,19 +1,19 @@
-<div class="horizontal" data-name="<%= @attribute.nameRaw %>">
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___day" value="<%= @day %>" placeholder="dd" style="width: 44px;">
+<div class="horizontal form-control" style="padding: 0 0 0 4px; line-height: 40px;" data-name="<%= @attribute.nameRaw %>">
+  <input type="hidden" name="<%= @attribute.name %>" value="<%= @attribute.value %>">
+  <input type="text" maxlength="2" data-item="day" value="<%= @day %>" placeholder="dd" style="width: 36px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
   .
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___month" value="<%= @month %>" placeholder="mm" style="width: 44px;">
+  <input type="text" maxlength="2" data-item="month" value="<%= @month %>" placeholder="mm" style="width: 36px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
   .
-  <input type="text" maxlength="4" name="<%= @attribute.name %>___year" value="<%= @year %>" placeholder="yyyy" style="width: 70px;">
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___hour" value="<%= @hour %>" placeholder="00" style="width: 44px;">
+  <input type="text" maxlength="4" data-item="year" value="<%= @year %>" placeholder="yyyy" style="width: 54px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
+  <input type="text" maxlength="2" data-item="hour" value="<%= @hour %>" placeholder="00" style="width: 36px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
   :
-  <input type="text" maxlength="2" name="<%= @attribute.name %>___minute" value="<%= @minute %>" placeholder="00" style="width: 44px;">
+  <input type="text" maxlength="2" data-item="minute" value="<%= @minute %>" placeholder="00" style="width: 36px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
 </div>
-<div>
-<a class="js-today"><%- @T('now') %></a>
-|
-<a class="js-minus-hour">-1</a> <a class="js-plus-hour">+1</a> <%- @T('hour') %>
-|
-<a class="js-minus-day">-1</a> <a class="js-plus-day">+1</a> <%- @T('day') %>
-|
-<a class="js-minus-week">-7</a> <a class="js-plus-week">+7</a> <%- @T('days') %>
-</div>
+<% if !@attribute.disable_feature: %>
+  <small>
+    <a href="#" class="js-today"><%- @T('now') %></a> |
+    <a href="#" class="js-minus-hour">-1</a> <a href="#" class="js-plus-hour">+1</a> <%- @T('hour') %> |
+    <a href="#" class="js-minus-day">-1</a> <a href="#" class="js-plus-day">+1</a> <%- @T('day') %> |
+    <a href="#" class="js-minus-week">-7</a> <a href="#" class="js-plus-week">+7</a> <%- @T('days') %>
+  </small>
+<% end %>

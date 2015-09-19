@@ -1,20 +1,25 @@
 class App.UiElement.datetime
-  @render: (attribute) ->
+  @render: (attributeOrig) ->
 
-    # set data type
-    if attribute.name
-      attribute.nameRaw = attribute.name
-      attribute.name    = '{datetime}' + attribute.name
+    attribute = _.clone(attributeOrig)
+    attribute.nameRaw = attribute.name
+    attribute.name = "{datetime}#{attribute.name}"
+
+    # get time object
     if attribute.value
-      if typeof( attribute.value ) is 'string'
-        unixtime = new Date( Date.parse( attribute.value ) )
+      if typeof attribute.value is 'string'
+        time = new Date( Date.parse( attribute.value ) )
       else
-        unixtime = new Date( attribute.value )
-      year     = unixtime.getFullYear()
-      month    = unixtime.getMonth() + 1
-      day      = unixtime.getDate()
-      hour     = unixtime.getHours()
-      minute   = unixtime.getMinutes()
+        time = new Date( attribute.value )
+
+      # time items
+      year   = time.getFullYear()
+      month  = time.getMonth() + 1
+      day    = time.getDate()
+      hour   = time.getHours()
+      minute = time.getMinutes()
+
+    # create element
     item = $( App.view('generic/datetime')(
       attribute: attribute
       year:      year
@@ -24,149 +29,183 @@ class App.UiElement.datetime
       minute:    minute
     ) )
 
-    setNewTime = (diff, el, reset) ->
-      name = $(el).closest('.form-group').find('[data-name]').attr('data-name')
-
-      # remove old validation
-      item.find('.has-error').removeClass('has-error')
-      item.closest('.form-group').find('.help-inline').html('')
-
-      day    = item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val()
-      month  = item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val()
-      year   = item.closest('.form-group').find("[name=\"{datetime}#{name}___year\"]").val()
-      hour   = item.closest('.form-group').find("[name=\"{datetime}#{name}___hour\"]").val()
-      minute = item.closest('.form-group').find("[name=\"{datetime}#{name}___minute\"]").val()
-      format = (number) ->
-        if parseInt(number) < 10
-          number = "0#{number}"
-        number
-      if !reset && (year isnt '' && month isnt '' && day isnt '' && hour isnt '' && day isnt '')
-        time = new Date( Date.parse( "#{year}-#{format(month)}-#{format(day)}T#{format(hour)}:#{format(minute)}:00Z" ) )
-        time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
-      else
-        time = new Date()
-        time.setMinutes( time.getMinutes() + diff )
-      #console.log('T', time, time.getHours(), time.getMinutes())
-      item.closest('.form-group').find("[name=\"{datetime}#{name}___day\"]").val( time.getDate() )
-      item.closest('.form-group').find("[name=\"{datetime}#{name}___month\"]").val( time.getMonth()+1 )
-      item.closest('.form-group').find("[name=\"{datetime}#{name}___year\"]").val( time.getFullYear() )
-      item.closest('.form-group').find("[name=\"{datetime}#{name}___hour\"]").val( time.getHours() )
-      item.closest('.form-group').find("[name=\"{datetime}#{name}___minute\"]").val( time.getMinutes() )
-
-    item.find('.js-today').bind('click', (e) ->
+    # start bindings
+    item.find('.js-today').bind('click', (e) =>
       e.preventDefault()
-      setNewTime(0, @, true)
+      @setNewTime(item, attribute, 0, true)
+      @validation(item, attribute)
     )
-    item.find('.js-plus-hour').bind('click', (e) ->
+    item.find('.js-plus-hour').bind('click', (e) =>
       e.preventDefault()
-      setNewTime(60, @)
+      @setNewTime(item, attribute, 60)
+      @validation(item, attribute)
     )
-    item.find('.js-minus-hour').bind('click', (e) ->
+    item.find('.js-minus-hour').bind('click', (e) =>
       e.preventDefault()
-      setNewTime(-60, @)
+      @setNewTime(item, attribute, -60)
+      @validation(item, attribute)
     )
-    item.find('.js-plus-day').bind('click', (e) ->
+    item.find('.js-plus-day').bind('click', (e) =>
       e.preventDefault()
-      setNewTime(60 * 24, @)
+      @setNewTime(item, attribute, 60 * 24)
+      @validation(item, attribute)
     )
-    item.find('.js-minus-day').bind('click', (e) ->
+    item.find('.js-minus-day').bind('click', (e) =>
       e.preventDefault()
-      setNewTime(-60 * 24, @)
+      @setNewTime(item, attribute, -60 * 24)
+      @validation(item, attribute)
     )
-    item.find('.js-plus-week').bind('click', (e) ->
+    item.find('.js-plus-week').bind('click', (e) =>
       e.preventDefault()
-      setNewTime(60 * 24 * 7, @)
+      @setNewTime(item, attribute, 60 * 24 * 7)
+      @validation(item, attribute)
     )
-    item.find('.js-minus-week').bind('click', (e) ->
+    item.find('.js-minus-week').bind('click', (e) =>
       e.preventDefault()
-      setNewTime(-60 * 24 * 7, @)
+      @setNewTime(item, attribute, -60 * 24 * 7)
+      @validation(item, attribute)
     )
-
-    item.find('input').bind('keyup blur focus change', (e) ->
-
-      # do validation
-      name = $(@).attr('name')
-      if name
-        fieldPrefix = name.split('___')[0]
-
-      # remove old validation
-      item.find('.has-error').removeClass('has-error')
-      item.closest('.form-group').find('.help-inline').html('')
-
-      day    = item.closest('.form-group').find("[name=\"#{fieldPrefix}___day\"]").val()
-      month  = item.closest('.form-group').find("[name=\"#{fieldPrefix}___month\"]").val()
-      year   = item.closest('.form-group').find("[name=\"#{fieldPrefix}___year\"]").val()
-      hour   = item.closest('.form-group').find("[name=\"#{fieldPrefix}___hour\"]").val()
-      minute = item.closest('.form-group').find("[name=\"#{fieldPrefix}___minute\"]").val()
-
-      # validate exists
-      errors = {}
-      if !day
-        errors.day = 'missing'
-      if !month
-        errors.month = 'missing'
-      if !year
-        errors.year = 'missing'
-      if !hour
-        errors.hour = 'missing'
-      if !minute
-        errors.minute = 'missing'
-
-      # ranges
-      if day
-        daysInMonth = 31
-        if month && year
-          daysInMonth = new Date(year, month, 0).getDate();
-
-        if parseInt(day).toString() is 'NaN'
-          errors.day = 'invalid'
-        else if parseInt(day) > daysInMonth || parseInt(day) < 1
-          errors.day = 'invalid'
-
-      if month
-        if parseInt(month).toString() is 'NaN'
-          errors.month = 'invalid'
-        else if parseInt(month) > 12 || parseInt(month) < 1
-          errors.month = 'invalid'
-
-      if year
-        if parseInt(year).toString() is 'NaN'
-          errors.year = 'invalid'
-        else if parseInt(year) > 2100 || parseInt(year) < 2001
-          errors.year = 'invalid'
-
-      if hour
-        if parseInt(hour).toString() is 'NaN'
-          errors.hour = 'invalid'
-        else if parseInt(hour) > 23 || parseInt(hour) < 0
-          errors.hour = 'invalid'
-
-      if minute
-        if parseInt(minute).toString() is 'NaN'
-          errors.minute = 'invalid'
-        else if parseInt(minute) > 59
-          errors.minute = 'invalid'
-
-      if !_.isEmpty(errors)
-
-        # if field is required, if not do not show error
-        if year is '' && day is '' && month is '' && hour is '' && minute is ''
-          if attribute.null
-            e.preventDefault()
-            e.stopPropagation()
-            return
-          else
-            item.closest('.form-group').find('.help-inline').text( 'is required' )
-
-        # show invalid options
-        for key, value of errors
-          item.closest('.form-group').addClass('has-error')
-          item.closest('.form-group').find("[name=\"#{fieldPrefix}___#{key}\"]").addClass('has-error')
-          #item.closest('.form-group').find('.help-inline').text( value )
-
-        e.preventDefault()
-        e.stopPropagation()
-        return
+    item.find('input').bind('keyup blur focus change', (e) =>
+      @setNewTime(item, attribute, 0)
+      @validation(item, attribute, true)
     )
+    item.bind('validate', (e) =>
+      @validation(item, attribute)
+    )
+    #setShadowTimestamp()
+    @setNewTime(item, attribute, 0)
 
     item
+
+  @format: (number) ->
+    if parseInt(number) < 10
+      number = "0#{number}"
+    number
+
+  @setNewTime: (item, attribute, diff, reset = false) ->
+
+    # remove old validation
+    #item.find('.has-error').removeClass('has-error')
+    #item.closest('.form-group').find('.help-inline').html('')
+
+    if reset
+      time = new Date()
+      time.setMinutes( time.getMinutes() + diff )
+      @setParams(item, attribute, time)
+      return
+
+    params = @getParams(item)
+    return if params.year is '' && params.month is '' && params.day is '' && params.hour is '' && params.day is ''
+    time = new Date( Date.parse( "#{params.year}-#{@format(params.month)}-#{@format(params.day)}T#{@format(params.hour)}:#{@format(params.minute)}:00Z" ) )
+    time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
+    return if !time
+    @setParams(item, attribute, time)
+
+  @setShadowTimestamp: (item, attribute, time) ->
+    timestamp = ''
+    if time
+      timestamp = time.toISOString().replace(/\d\d\.\d\d\dZ$/, '00.000Z')
+    item.find("[name=\"#{attribute.name}\"]").val(timestamp)
+
+  @setParams: (item, attribute, time) ->
+    if time.toString() is 'Invalid Date'
+      @setShadowTimestamp(item, attribute)
+      return
+
+    day = time.getDate()
+    month = time.getMonth()+1
+    year = time.getFullYear()
+    hour = time.getHours()
+    minute = time.getMinutes()
+    item.find('[data-item=day]').val(day)
+    item.find('[data-item=month]').val(month)
+    item.find('[data-item=year]').val(year)
+    item.find('[data-item=hour]').val(hour)
+    item.find('[data-item=minute]').val(minute)
+    @setShadowTimestamp(item, attribute, time)
+
+  @getParams: (item) ->
+    params = {}
+    params.day    = item.find('[data-item=day]').val()
+    params.month  = item.find('[data-item=month]').val()
+    params.year   = item.find('[data-item=year]').val()
+    params.hour   = item.find('[data-item=hour]').val()
+    params.minute = item.find('[data-item=minute]').val()
+    params
+
+  @validation: (item, attribute, runtime) ->
+
+    # remove old validation
+    item.closest('.form-group').removeClass('has-error')
+    item.find('.has-error').removeClass('has-error')
+    item.find('.help-inline').html('')
+    item.closest('.form-group').find('.help-inline').html('')
+
+    params = @getParams(item)
+
+    # check required attributes
+    errors = {}
+    if !runtime && !attribute.null
+      if params.day is ''
+        errors.day = 'missing'
+      if params.month is ''
+        errors.month = 'missing'
+      if params.year is ''
+        errors.year = 'missing'
+      if params.hour is ''
+        errors.hour = 'missing'
+      if params.minute is ''
+        errors.minute = 'missing'
+
+    # ranges
+    if params.day
+      daysInMonth = 31
+      if params.month && params.year
+        daysInMonth = new Date(params.year, params.month, 0).getDate()
+
+      if isNaN( Number(params.day) )
+        errors.day = 'invalid'
+      else if Number(params.day) > daysInMonth || Number(params.day) < 1
+        errors.day = 'invalid'
+
+    if params.month
+      if isNaN( Number(params.month) )
+        errors.month = 'invalid'
+      else if Number(params.month) > 12 || Number(params.month) < 1
+        errors.month = 'invalid'
+
+    if params.year
+      if isNaN( Number(params.year) )
+        errors.year = 'invalid'
+      else if Number(params.year) > 2200 || Number(params.year) < 2001
+        errors.year = 'invalid'
+
+    if params.hour
+      if isNaN( Number(params.hour) )
+        errors.hour = 'invalid'
+      else if parseInt(params.hour) > 23 || parseInt(params.hour) < 0
+        errors.hour = 'invalid'
+
+    if params.minute
+      if isNaN( Number(params.minute) )
+        errors.minute = 'invalid'
+      else if Number(params.minute) > 59
+        errors.minute = 'invalid'
+
+    #formGroup = item.closest('.form-group')
+    formGroup = item
+    if !_.isEmpty(errors)
+
+      # if field is required, if not do not show error
+      if params.year is '' && params.day is '' && params.month is '' && params.hour is '' && params.minute is ''
+        return if attribute.null
+        item.closest('.form-group').addClass('has-error')
+        item.closest('.form-group').find('.help-inline').text( 'is required' )
+        return
+
+      # show invalid options
+      for key, value of errors
+        formGroup.addClass('has-error')
+        formGroup.find("[data-item=#{key}]").addClass('has-error')
+
+      return
