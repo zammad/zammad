@@ -35,6 +35,16 @@ class Index extends App.ControllerContent
     )
     for calendar in calendars
 
+      # validate config
+      for day in ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+        if !calendar.business_hours[day]
+          calendar.business_hours[day] = {}
+      for day, meta of calendar.business_hours
+        if !meta.active
+          meta.active = false
+        if !meta.timeframes
+          meta.timeframes = []
+
       # get preview public holidays
       public_holidays_preview = {}
       if calendar.public_holidays

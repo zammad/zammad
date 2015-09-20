@@ -20,6 +20,16 @@ class App.BusinessHours extends Spine.Controller
       sat: App.i18n.translateInline('Saturday')
       sun: App.i18n.translateInline('Sunday')
 
+    # validate config
+    for day of @days
+      if !@hours[day]
+        @hours[day] = {}
+    for day, meta of @hours
+      if !meta.active
+        meta.active = false
+      if !meta.timeframes
+        meta.timeframes = []
+
   render: =>
     @updateMaxTimeframes()
 
@@ -73,7 +83,6 @@ class App.BusinessHours extends Spine.Controller
   validate: =>
     for day, hours of @options.hours
       break if !hours.active
-      break if !hours.timeframes
 
       # edge case: full day
       if hours.timeframes[0][0] is '00:00' and hours.timeframes[hours.timeframes.length - 1][1] is '00:00'

@@ -68,7 +68,18 @@ returns
     self.close_time_escal_date     = nil
 
     biz = Biz::Schedule.new do |config|
-      config.hours = calendar.business_hours.symbolize_keys
+      hours = {}
+      calendar.business_hours.each {|day, meta|
+        next if !meta[:active]
+        next if !meta[:timeframes]
+        hours[day.to_sym] = {}
+        meta[:timeframes].each {|frame|
+          next if !frame[0]
+          next if !frame[1]
+          hours[day.to_sym][frame[0]] = frame[1]
+        }
+      }
+      config.hours = hours
       #config.holidays = [Date.new(2014, 1, 1), Date.new(2014, 12, 25)]
       config.time_zone = calendar.timezone
     end
@@ -124,8 +135,8 @@ returns
 
     # close time
     # calculate close time escalation
-    if sla.close_time
-      self.close_time_escal_date = biz.time(sla.close_time, :minutes).after(created_at)
+    if sla.solution_time
+      self.close_time_escal_date = biz.time(sla.solution_time, :minutes).after(created_at)
       pending_time = pending_minutes(created_at, first_response_escal_date, biz)
       if pending_time && pending_time > 0
         self.close_time_escal_date = biz.time(pending_time, :minutes).after(close_time_escal_date)
@@ -142,8 +153,8 @@ returns
     end
 
     # set time to show if sla is raised or not
-    if sla.close_time && close_time_in_min
-      self.close_time_diff_in_min = sla.close_time - close_time_in_min
+    if sla.solution_time && close_time_in_min
+      self.close_time_diff_in_min = sla.solution_time - close_time_in_min
     end
 
     if escalation_disabled

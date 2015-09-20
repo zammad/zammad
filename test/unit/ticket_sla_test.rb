@@ -29,11 +29,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 1',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '09:00' => '17:00' },
-        tue: { '09:00' => '17:00' },
-        wed: { '09:00' => '17:00' },
-        thu: { '09:00' => '17:00' },
-        fri: { '09:00' => '17:00' }
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        sat: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sun: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -46,7 +69,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       condition: {},
       first_response_time: 120,
       update_time: 180,
-      close_time: 240,
+      solution_time: 240,
       calendar_id: calendar1.id,
       updated_by_id: 1,
       created_by_id: 1,
@@ -63,13 +86,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 2',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '08:00' => '18:00' },
-        tue: { '08:00' => '18:00' },
-        wed: { '08:00' => '18:00' },
-        thu: { '08:00' => '18:00' },
-        fri: { '08:00' => '18:00' },
-        sat: { '08:00' => '18:00' },
-        sun: { '08:00' => '18:00' },
+        mon: {
+          active: true,
+          timeframes: [ ['08:00', '18:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['08:00', '18:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['08:00', '18:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['08:00', '18:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['08:00', '18:00'] ]
+        },
+        sat: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sun: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -82,7 +126,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar2.id,
       first_response_time: 60,
       update_time: 120,
-      close_time: 180,
+      solution_time: 180,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -382,13 +426,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 3',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '08:00' => '17:00' },
-        tue: { '08:00' => '17:00' },
-        wed: { '08:00' => '17:00' },
-        thu: { '08:00' => '17:00' },
-        fri: { '08:00' => '17:00' },
-        sat: { '08:00' => '17:00' },
-        sun: { '08:00' => '17:00' },
+        mon: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -401,7 +466,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
-      close_time: 240,
+      solution_time: 240,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -435,13 +500,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 4',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '08:00' => '17:00' },
-        tue: { '08:00' => '17:00' },
-        wed: { '08:00' => '17:00' },
-        thu: { '08:00' => '17:00' },
-        fri: { '08:00' => '17:00' },
-        sat: { '08:00' => '17:00' },
-        sun: { '08:00' => '17:00' },
+        mon: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -454,7 +540,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
-      close_time: 240,
+      solution_time: 240,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -492,7 +578,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
-      close_time: 240,
+      solution_time: 240,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -588,13 +674,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 5',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '09:00' => '18:00' },
-        tue: { '09:00' => '18:00' },
-        wed: { '09:00' => '18:00' },
-        thu: { '09:00' => '18:00' },
-        fri: { '09:00' => '18:00' },
-        sat: { '09:00' => '18:00' },
-        sun: { '09:00' => '18:00' },
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -607,7 +714,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
-      close_time: 250,
+      solution_time: 250,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -663,13 +770,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 5',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '09:00' => '18:00' },
-        tue: { '09:00' => '18:00' },
-        wed: { '09:00' => '18:00' },
-        thu: { '09:00' => '18:00' },
-        fri: { '09:00' => '18:00' },
-        sat: { '09:00' => '18:00' },
-        sun: { '09:00' => '18:00' },
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -682,7 +810,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
-      close_time: 240,
+      solution_time: 240,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -769,13 +897,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 5',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '09:00' => '18:00' },
-        tue: { '09:00' => '18:00' },
-        wed: { '09:00' => '18:00' },
-        thu: { '09:00' => '18:00' },
-        fri: { '09:00' => '18:00' },
-        sat: { '09:00' => '18:00' },
-        sun: { '09:00' => '18:00' },
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -788,7 +937,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
-      close_time: 240,
+      solution_time: 240,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -891,13 +1040,34 @@ class TicketSlaTest < ActiveSupport::TestCase
       name: 'EU 5',
       timezone: 'Europe/Berlin',
       business_hours: {
-        mon: { '09:00' => '18:00' },
-        tue: { '09:00' => '18:00' },
-        wed: { '09:00' => '18:00' },
-        thu: { '09:00' => '18:00' },
-        fri: { '09:00' => '18:00' },
-        sat: { '09:00' => '18:00' },
-        sun: { '09:00' => '18:00' },
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
       },
       default: true,
       ical_url: nil,
@@ -910,7 +1080,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
-      close_time: 240,
+      solution_time: 240,
       updated_by_id: 1,
       created_by_id: 1,
     )

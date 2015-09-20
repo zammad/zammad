@@ -28,25 +28,25 @@
       <div class="label"><%- @T('Business Hours') %></div>
       <table class="table table-fluid">
         <tr>
-          <td><%- @T('Monday') %></td><td><% if _.isEmpty(calendar.business_hours['mon']): %>-<% else: %><% for from, till of calendar.business_hours['mon']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Monday') %></td><td><% if !calendar.business_hours['mon'].active || _.isEmpty(calendar.business_hours['mon'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['mon'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Tuesday') %></td><td><% if _.isEmpty(calendar.business_hours['tue']): %>-<% else: %><% for from, till of calendar.business_hours['tue']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Tuesday') %></td><td><% if !calendar.business_hours['tue'].active || _.isEmpty(calendar.business_hours['tue'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['tue'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Wednesday') %></td><td><% if _.isEmpty(calendar.business_hours['wed']): %>-<% else: %><% for from, till of calendar.business_hours['wed']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Wednesday') %></td><td><% if !calendar.business_hours['wed'].active || _.isEmpty(calendar.business_hours['wed'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['wed'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Thursday') %></td><td><% if _.isEmpty(calendar.business_hours['thu']): %>-<% else: %><% for from, till of calendar.business_hours['thu']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Thursday') %></td><td><% if !calendar.business_hours['thu'].active || _.isEmpty(calendar.business_hours['thu'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['thu'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Friday') %></td><td><% if _.isEmpty(calendar.business_hours['fri']): %>-<% else: %><% for from, till of calendar.business_hours['fri']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Friday') %></td><td><% if !calendar.business_hours['fri'].active || _.isEmpty(calendar.business_hours['fri'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['fri'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Saturday') %></td><td><% if _.isEmpty(calendar.business_hours['sat']): %>-<% else: %><% for from, till of calendar.business_hours['sat']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Saturday') %></td><td><% if !calendar.business_hours['sat'].active || _.isEmpty(calendar.business_hours['sat'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['sat'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
         </tr>
         <tr>
-          <td><%- @T('Sunday') %></td><td><% if _.isEmpty(calendar.business_hours['sun']): %>-<% else: %><% for from, till of calendar.business_hours['sun']: %><%= from %>-<%= till %> </td><td><% end %><% end %></td>
+          <td><%- @T('Sunday') %></td><td><% if !calendar.business_hours['sun'].active || _.isEmpty(calendar.business_hours['sun'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['sun'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
         </tr>
       </table>
     </div>
