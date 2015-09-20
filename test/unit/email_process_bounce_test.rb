@@ -22,7 +22,7 @@ class EmailProcessBounceTest < ActiveSupport::TestCase
       message_id: '<20150830145601.30.608881@edenhofer.zammad.com>',
       body: 'some message bounce check',
       internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
