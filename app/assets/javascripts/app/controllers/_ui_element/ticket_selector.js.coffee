@@ -73,7 +73,7 @@ class App.UiElement.ticket_selector
       @preview(item)
     )
 
-    # change filter
+    # change attribute selector
     item.find('.js-attributeSelector select').bind('change', (e) =>
       groupAndAttribute = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
@@ -83,26 +83,34 @@ class App.UiElement.ticket_selector
       @buildValue(item, elementRow, groupAndAttribute, elements)
     )
 
+    # change operator
+    item.find('.js-operator select').bind('change', (e) =>
+      groupAndAttribute = $(e.target).find('.js-attributeSelector option:selected').attr('value')
+      operator = $(e.target).find('option:selected').attr('value')
+      elementRow = $(e.target).closest('.js-filterElement')
+      @buildValue(item, elementRow, groupAndAttribute, elements, undefined, operator)
+    )
+
     # build inital params
+    console.log('initial', params[attribute.name])
     if !_.isEmpty(params[attribute.name])
 
       selectorExists = false
       for groupAndAttribute, meta of params[attribute.name]
-        if groupAndAttribute isnt 'attribute'
-          selectorExists = true
-          operator = meta.operator
-          value = meta.value
+        selectorExists = true
+        operator = meta.operator
+        value = meta.value
 
-          # get selector rows
-          elementFirst = item.find('.js-filterElement').first()
-          elementLast = item.find('.js-filterElement').last()
+        # get selector rows
+        elementFirst = item.find('.js-filterElement').first()
+        elementLast = item.find('.js-filterElement').last()
 
-          # clone, rebuild and append
-          elementClone = elementFirst.clone(true)
-          @rebuildAttributeSelectors(item, elementClone, groupAndAttribute)
-          @rebuildOperater(item, elementClone, groupAndAttribute, elements, operator)
-          @buildValue(item, elementClone, groupAndAttribute, elements, value)
-          elementLast.after(elementClone)
+        # clone, rebuild and append
+        elementClone = elementFirst.clone(true)
+        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute)
+        @rebuildOperater(item, elementClone, groupAndAttribute, elements, operator)
+        @buildValue(item, elementClone, groupAndAttribute, elements, value, operator)
+        elementLast.after(elementClone)
 
       # remove first dummy row
       if selectorExists
@@ -161,11 +169,12 @@ class App.UiElement.ticket_selector
       ticket_ids: ticket_ids
     )
 
-  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value) ->
+  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, operator) ->
 
     # do nothing if item already exists
     name = "condition::#{groupAndAttribute}::value"
     return if elementRow.find("[name=\"#{name}\"]").get(0)
+    return if elementRow.find("[data-name=\"#{name}\"]").get(0)
 
     # build new item
     attributeConfig = elements[groupAndAttribute]
@@ -185,10 +194,6 @@ class App.UiElement.ticket_selector
         config.nulloption = false
       if config.tag is 'checkbox'
         config.tag = 'select'
-        #config.type = 'datetime-local'
-      #if config.tag is 'datetime'
-      #  config.tag = 'input'
-      #  config.type = 'datetime-local'
       tagSearch = "#{config.tag}_search"
       if App.UiElement[tagSearch]
         item = App.UiElement[tagSearch].render(config, {})
@@ -197,7 +202,7 @@ class App.UiElement.ticket_selector
     elementRow.find('.js-value').html(item)
 
   @buildAttributeSelector: (groups, elements) ->
-    selection = $('<input type="hidden" name="condition::attribute"><select class="form-control"></select>')
+    selection = $('<select class="form-control"></select>')
     for groupKey, groupMeta of groups
       displayName = App.i18n.translateInline(groupMeta.name)
       selection.closest('select').append("<optgroup label=\"#{displayName}\" class=\"js-#{groupKey}\"></optgroup>")
@@ -220,7 +225,6 @@ class App.UiElement.ticket_selector
     elementFull.find('.js-attributeSelector select').each(->
       keyLocal = $(@).val()
       elementFull.find('.js-attributeSelector select option[value="' + keyLocal + '"]').attr('disabled', true)
-      elementFull.find('.js-hiddenAttribute').val(keyLocal)
     )
 
     # disable - if we only have one attribute
@@ -232,7 +236,6 @@ class App.UiElement.ticket_selector
     # set attribute
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
-      elementRow.find('[name="condition::attribute"]').val("#{groupAndAttribute}")
 
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, current_operator) ->
     selection = $("<select class=\"form-control\" name=\"condition::#{groupAndAttribute}::operator\"></select>")
