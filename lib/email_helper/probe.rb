@@ -298,10 +298,11 @@ returns on fail
       if subject
         mail['X-Zammad-Test-Message'] = subject
       end
-      mail['X-Zammad-Ignore'] = 'true'
-      mail['X-Loop']          = 'yes'
-      mail['Precedence']      = 'bulk'
-      mail['Auto-Submitted']  = 'auto-generated'
+      mail['X-Zammad-Ignore']          = 'true'
+      mail['X-Loop']                   = 'yes'
+      mail['Precedence']               = 'bulk'
+      mail['Auto-Submitted']           = 'auto-generated'
+      mail['X-Auto-Response-Suppress'] = 'All'
 
       # test connection
       begin

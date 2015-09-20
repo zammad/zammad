@@ -345,6 +345,8 @@ retrns
     # run postmaster pre filter
     filters = {
       '0010' => Channel::Filter::Trusted,
+      '0020' => Channel::Filter::AutoResponseCheck,
+      '0030' => Channel::Filter::OutOfOfficeCheck,
       '0100' => Channel::Filter::FollowUpCheck,
       '0900' => Channel::Filter::BounceCheck,
       '1000' => Channel::Filter::Database,
@@ -427,8 +429,9 @@ retrns
 
         end
 
-        if state_type.name != 'new'
-          ticket.state = Ticket::State.find_by( name: 'open' )
+        # set ticket to open again
+        if state_type.name != 'new' && !mail[ 'x-zammad-out-of-office'.to_sym ]
+          ticket.state = Ticket::State.find_by(name: 'open')
           ticket.save
         end
       end
@@ -515,7 +518,7 @@ retrns
     }
 
     # return new objects
-    [ticket, article, user]
+    [ticket, article, user, mail]
   end
 
   def user_create(data)
