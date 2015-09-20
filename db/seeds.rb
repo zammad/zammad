@@ -1581,7 +1581,7 @@ Overview.create_if_not_exists(
     },
     'ticket.owner_id' => {
       operator: 'is',
-      value: current_user.id,
+      value: 'current_user.id',
     },
   },
   order: {
