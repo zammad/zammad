@@ -6,38 +6,44 @@ module Channel::Filter::Database
   def self.run( _channel, mail )
 
     # process postmaster filter
-    filters = PostmasterFilter.where( active: true, channel: 'email' )
+    filters = PostmasterFilter.where( active: true, channel: 'email' ).order(:name)
     filters.each {|filter|
       Rails.logger.info " proccess filter #{filter.name} ..."
-      match = true
-      looped = false
-      filter[:match].each {|key, value|
-        looped = true
+      all_matches_ok = true
+      min_one_rule_exists = false
+      filter[:match].each {|key, meta|
         begin
+          next if !meta || !meta['value'] || meta['value'].empty?
+          min_one_rule_exists = true
           scan = []
           if mail
-            scan = mail[ key.downcase.to_sym ].scan(/#{value}/i)
+            scan = mail[ key.downcase.to_sym ].scan(/#{meta['value']}/i)
           end
-          if match && scan[0]
-            Rails.logger.info "  matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{value}"
-            match = true
+          if scan[0]
+            if meta[:operator] == 'contains not'
+              all_matches_ok = false
+            end
+            Rails.logger.info "  matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{meta['value']}"
           else
-            Rails.logger.info "  is not matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{value}"
-            match = false
+            if meta[:operator] == 'contains'
+              all_matches_ok = false
+            end
+            Rails.logger.info "  not matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{meta['value']}"
           end
+          break if !all_matches_ok
         rescue => e
-          match = false
-          Rails.logger.error "can't use match rule #{value} on #{mail[ key.to_sym ]}"
+          all_matches_ok = false
+          Rails.logger.error "can't use match rule #{meta['value']} on #{mail[ key.to_sym ]}"
           Rails.logger.error e.inspect
         end
       }
 
-      next if !looped
-      next if !match
+      next if !min_one_rule_exists
+      next if !all_matches_ok
 
-      filter[:perform].each {|key, value|
-        Rails.logger.info "  perform '#{key.downcase}' = '#{value}'"
-        mail[ key.downcase.to_sym ] = value
+      filter[:perform].each {|key, meta|
+        Rails.logger.info "  perform '#{key.downcase}' = '#{meta.inspect}'"
+        mail[ key.downcase.to_sym ] = meta['value']
       }
     }
 
