@@ -4,7 +4,7 @@
     <th style="text-align: center">
       <label class="day-name">
         <span class="checkbox-replacement checkbox-replacement--inline">
-          <input class="js-toggle-day" data-target="<%- id %>" type="checkbox"<%- ' checked' if @hours[id].active %>>
+          <input class="js-toggle-day" name="<%= @attribute.name %>::<%- id %>::active" value="true" data-target="<%- id %>" type="checkbox"<%- ' checked' if @hours[id].active %>>
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </span>
@@ -19,9 +19,9 @@
       <% if @hours[id].timeframes[slot]: %>
       <td data-day="<%- id %>" data-slot="<%- slot %>" class="form-group day-time<%- ' is-active' if @hours[id].active %>">
         <label for="<%- id %>_start_time">from</label>
-        <input type="text" id="<%- id %>_start_time" value="<%- @hours[id].timeframes[slot][0] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="0" class="form-control form-control--small time js-time">
+        <input type="text" id="<%- id %>_start_time" name="<%= @attribute.name %>::<%- id %>::start" value="<%- @hours[id].timeframes[slot][0] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="0" class="form-control form-control--small time js-time">
         <label for="monday_end_time">till</label>
-        <input type="text" id="monday_end_time" value="<%- @hours[id].timeframes[slot][1] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="1" class="form-control form-control--small time js-time">
+        <input type="text" id="monday_end_time" name="<%= @attribute.name %>::<%- id %>::end" value="<%- @hours[id].timeframes[slot][1] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="1" class="form-control form-control--small time js-time">
       <% else: %>
       <td class="empty-cell">
       <% end %>

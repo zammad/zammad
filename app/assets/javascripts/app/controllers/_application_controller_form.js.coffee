@@ -500,7 +500,7 @@ class App.ControllerForm extends App.Controller
             time = new Date( Date.parse( param[key] ) )
             if time is 'Invalid Datetime'
               throw "Invalid Datetime #{param[key]}"
-            param[newKey] = time.toISOString().replace(/:\d\d\.\d\d\dZ$/, ':00Z')
+            param[newKey] = time.toISOString().replace(/:\d\d\.\d\d\dZ$/, ':00.000Z')
           catch err
             param[newKey] = "invalid #{param[key]}"
             console.log('ERR', err)
@@ -526,6 +526,32 @@ class App.ControllerForm extends App.Controller
     # set new object params
     for key of inputSelectObject
       param[ key ] = inputSelectObject[ key ]
+
+    # data type conversion
+    for key of param
+
+      # get {business_hours}
+      if key.substr(0,16) is '{business_hours}'
+        newKey = key.substr(16, key.length)
+        if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-hidden')
+          param[newKey] = null
+        else if param[key]
+          newParams = {}
+          for day, value of param[key]
+            newParams[day] = {}
+            newParams[day].active = false
+            if value.active is 'true'
+              newParams[day].active = true
+            newParams[day].timeframes = []
+            if _.isArray(value.start)
+              for pos of value.start
+                newParams[day].timeframes.push [ value.start[pos], value.end[pos] ]
+            else
+              newParams[day].timeframes.push [ value.start, value.end ]
+          param[newKey] = newParams
+        else
+          param[newKey] = undefined
+        delete param[key]
 
     #App.Log.notice 'ControllerForm', 'formParam', form, param
     param

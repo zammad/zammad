@@ -1,6 +1,6 @@
 
 // form
-test( "form simple checks", function() {
+test( 'form checks', function() {
 
   App.TicketPriority.refresh( [
     {
@@ -33,55 +33,254 @@ test( "form simple checks", function() {
     },
   ] )
 
-  // timeplan
   $('#forms').append('<hr><h1>form time check</h1><form id="form1"></form>')
 
   var el = $('#form1')
   var defaults = {
-    times: {
-      days:  ['mon', 'wed'],
-      hours: [2],
+    working_hours: {
+      mon: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      tue: {
+        active: true,
+        timeframes: [
+          ['00:00','22:00']
+        ]
+      },
+      wed: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      thu: {
+        active: true,
+        timeframes: [
+          ['09:00','12:00'],
+          ['13:00','17:00']
+        ]
+      },
+      fri: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      sat: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
+      sun: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
     },
+    first_response_time: 150,
+    solution_time: '',
+    update_time: 45,
     conditions: {
-      'tickets.title':       'some title',
-      'tickets.priority_id': [1,2,3],
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+      'ticket.priority_id': {
+        operator: 'is',
+        value: [1,2,3],
+      },
+      'ticket.created_at': {
+        operator: 'before (absolute)',
+        value: '2015-09-20T03:41:00.000Z',
+      },
     },
     executions: {
-      'tickets.title':       'some title new',
-      'tickets.priority_id': 3,
+      'ticket.title': {
+        value: 'some title new',
+      },
+      'ticket.priority_id': {
+        value: 3,
+      },
     },
   }
   new App.ControllerForm({
     el:        el,
     model:     {
       configure_attributes: [
-        { name: 'times', display: 'Times', tag: 'timeplan', null: true, default: defaults['times'] },
-        { name: 'conditions', display: 'Conditions', tag: 'ticket_attribute_selection', null: true, default: defaults['conditions'] },
-        { name: 'executions', display: 'Executions', tag: 'ticket_attribute_set', null: true, default: defaults['executions'] },
+        { name: 'escalation_times', display: 'Times', tag: 'sla_times', null: true },
+        { name: 'working_hours',    display: 'Hours', tag: 'business_hours', null: true },
+        { name: 'conditions',       display: 'Conditions', tag: 'ticket_selector', null: true },
+        { name: 'executions',       display: 'Executions', tag: 'ticket_perform_action', null: true },
       ]
     },
+    params: defaults,
     autofocus: true
   });
-  deepEqual( el.find('[name="times::days"]').val(), ['mon', 'wed'], 'check times::days value')
-  equal( el.find('[name="times::hours"]').val(), 2, 'check times::hours value')
-  equal( el.find('[name="times::minutes"]').val(), null, 'check times::minutes value')
 
   var params = App.ControllerForm.params( el )
   var test_params = {
-    times: {
-      days:  ['mon', 'wed'],
-      hours: '2',
-    },
+    first_response_time: '150',
+    first_response_time_in_text: '02:30',
+    solution_time: '',
+    solution_time_in_text: '',
+    update_time: '45',
+    update_time_in_text: '00:45',
     conditions: {
-      'tickets.title':       'some title',
-      'tickets.priority_id': ['1','3'],
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+      'ticket.priority_id': {
+        operator: 'is',
+        value: ['1', '3'],
+      },
+      'ticket.created_at': {
+        operator: 'before (absolute)',
+        value: '2015-09-20T03:41:00.000Z',
+      },
     },
     executions: {
-      'tickets.title':       'some title new',
-      'tickets.priority_id': '3',
+      'ticket.title': {
+        value: 'some title new',
+      },
+      'ticket.priority_id': {
+        value: '3',
+      },
+    },
+    working_hours: {
+      mon: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      tue: {
+        active: true,
+        timeframes: [
+          ['00:00','22:00']
+        ]
+      },
+      wed: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      thu: {
+        active: true,
+        timeframes: [
+          ['09:00','12:00'],
+          ['13:00','17:00']
+        ]
+      },
+      fri: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      sat: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
+      sun: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
     },
   }
   deepEqual( params, test_params, 'form param check' );
 
+  // change sla times
+  el.find('[name="first_response_time_in_text"]').val('0:30').trigger('blur')
+  el.find('#update_time').click()
+
+  // change selector
+  el.find('[name="conditions::ticket.priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
+  el.find('[name="executions::ticket.title::value"]').closest('.js-filterElement').find('.js-remove').click()
+
+  var params = App.ControllerForm.params( el )
+  var test_params = {
+    working_hours: {
+      mon: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      tue: {
+        active: true,
+        timeframes: [
+          ['00:00','22:00']
+        ]
+      },
+      wed: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      thu: {
+        active: true,
+        timeframes: [
+          ['09:00','12:00'],
+          ['13:00','17:00']
+        ]
+      },
+      fri: {
+        active: true,
+        timeframes: [
+          ['09:00','17:00']
+        ]
+      },
+      sat: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
+      sun: {
+        active: false,
+        timeframes: [
+          ['10:00','14:00']
+        ]
+      },
+    },
+    first_response_time: '30',
+    first_response_time_in_text: '00:30',
+    solution_time: '',
+    solution_time_in_text: '',
+    update_time: '',
+    update_time_in_text: '',
+    conditions: {
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+      'ticket.created_at': {
+        operator: 'before (absolute)',
+        value: '2015-09-20T03:41:00.000Z',
+      },
+    },
+    executions: {
+      'ticket.priority_id': {
+        value: '3',
+      },
+    },
+  }
+  deepEqual( params, test_params, 'form param check' );
+
+  //deepEqual( el.find('[name="times::days"]').val(), ['mon', 'wed'], 'check times::days value')
+  //equal( el.find('[name="times::hours"]').val(), 2, 'check times::hours value')
+  //equal( el.find('[name="times::minutes"]').val(), null, 'check times::minutes value')
 
 });

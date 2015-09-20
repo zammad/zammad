@@ -685,14 +685,29 @@ test( "form postmaster filter", function() {
   var defaults = {
     input2: 'some name',
     match: {
-      from: 'some@address',
-      subject: 'some subject',
+      from: {
+        operator: 'contains',
+        value: 'some@address',
+      },
+      subject: {
+        operator: 'contains',
+        value: 'some subject',
+      },
     },
     set: {
-      'x-zammad-ticket-owner': 'owner',
-      'x-zammad-ticket-customer': 'customer',
-      'x-zammad-ticket-priority_id': 2,
-      'x-zammad-ticket-group_id': 1,
+      'x-zammad-ticket-customer': {
+        value: 'customer'
+      },
+      'x-zammad-ticket-group_id': {
+        value: '1'
+      },
+      'x-zammad-ticket-owner': {
+        value: 'owner',
+        value_completion: ''
+      },
+      'x-zammad-ticket-priority_id': {
+        value: '1'
+      }
     },
   }
   new App.ControllerForm({
@@ -709,35 +724,61 @@ test( "form postmaster filter", function() {
   });
   params = App.ControllerForm.params( el )
   test_params = {
-    input1: "some not used default",
-    input2: "some name",
+    input1: 'some not used default',
+    input2: 'some name',
     match: {
-      from: 'some@address',
-      subject: 'some subject',
+      from: {
+        operator: 'contains',
+        value: 'some@address'
+      },
+      subject: {
+        operator: 'contains',
+        value: 'some subject'
+      }
     },
     set: {
-      'x-zammad-ticket-owner': 'owner',
-      'x-zammad-ticket-customer': 'customer',
-      'x-zammad-ticket-priority_id': '2',
-      'x-zammad-ticket-group_id': '1',
+      'x-zammad-ticket-customer': {
+        value: 'customer'
+      },
+      'x-zammad-ticket-group_id': {
+        value: '1'
+      },
+      'x-zammad-ticket-owner': {
+        value: 'owner',
+        value_completion: ''
+      },
+      'x-zammad-ticket-priority_id': {
+        value: '1'
+      }
     },
   };
   deepEqual( params, test_params, 'form param check' );
-  el.find('[name="set::x-zammad-ticket-priority_id"]').closest('.form-group').find('.remove').click()
-  el.find('[name="set::x-zammad-ticket-customer"]').closest('.form-group').find('.remove').click()
+  el.find('[name="set::x-zammad-ticket-priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
+  el.find('[name="set::x-zammad-ticket-customer::value"]').closest('.js-filterElement').find('.js-remove').click()
   App.Delay.set( function() {
       test( "form param check after remove click", function() {
         params = App.ControllerForm.params( el )
         test_params = {
-          input1: "some not used default",
-          input2: "some name",
+          input1: 'some not used default',
+          input2: 'some name',
           match: {
-            from: 'some@address',
-            subject: 'some subject',
+            from: {
+              operator: 'contains',
+              value: 'some@address'
+            },
+            subject: {
+              operator: 'contains',
+              value: 'some subject'
+            }
           },
           set: {
-            'x-zammad-ticket-owner': 'owner',
-            'x-zammad-ticket-group_id': '1',
+            'x-zammad-ticket-owner': {
+              value: 'owner',
+              value_completion: ''
+            },
+            'x-zammad-ticket-group_id': {
+              value: '1'
+            },
           },
         };
         deepEqual( params, test_params, 'form param check' );
@@ -765,8 +806,8 @@ test( "form selector", function() {
     params: defaults,
   });
   test_params = {
-    input1: "some not used default33",
-    input2: "some name66",
+    input1: 'some not used default33',
+    input2: 'some name66',
   };
   params = App.ControllerForm.params( el )
   deepEqual( params, test_params, 'form param check via $("#form")' );

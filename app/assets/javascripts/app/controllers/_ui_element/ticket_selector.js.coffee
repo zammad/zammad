@@ -79,8 +79,8 @@ class App.UiElement.ticket_selector
       elementRow = $(e.target).closest('.js-filterElement')
 
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute)
-      @rebuildOperater(item, elementRow, groupAndAttribute, elements)
-      @buildValue(item, elementRow, groupAndAttribute, elements)
+      @rebuildOperater(item, elementRow, groupAndAttribute, elements, undefined, attribute)
+      @buildValue(item, elementRow, groupAndAttribute, elements, undefined, undefined, attribute)
     )
 
     # change operator
@@ -88,7 +88,7 @@ class App.UiElement.ticket_selector
       groupAndAttribute = $(e.target).find('.js-attributeSelector option:selected').attr('value')
       operator = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
-      @buildValue(item, elementRow, groupAndAttribute, elements, undefined, operator)
+      @buildValue(item, elementRow, groupAndAttribute, elements, undefined, operator, attribute)
     )
 
     # build inital params
@@ -108,8 +108,8 @@ class App.UiElement.ticket_selector
         # clone, rebuild and append
         elementClone = elementFirst.clone(true)
         @rebuildAttributeSelectors(item, elementClone, groupAndAttribute)
-        @rebuildOperater(item, elementClone, groupAndAttribute, elements, operator)
-        @buildValue(item, elementClone, groupAndAttribute, elements, value, operator)
+        @rebuildOperater(item, elementClone, groupAndAttribute, elements, operator, attribute)
+        @buildValue(item, elementClone, groupAndAttribute, elements, value, operator, attribute)
         elementLast.after(elementClone)
 
       # remove first dummy row
@@ -169,10 +169,10 @@ class App.UiElement.ticket_selector
       ticket_ids: ticket_ids
     )
 
-  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, operator) ->
+  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, operator, attribute) ->
 
     # do nothing if item already exists
-    name = "condition::#{groupAndAttribute}::value"
+    name = "#{attribute.name}::#{groupAndAttribute}::value"
     return if elementRow.find("[name=\"#{name}\"]").get(0)
     return if elementRow.find("[data-name=\"#{name}\"]").get(0)
 
@@ -237,8 +237,8 @@ class App.UiElement.ticket_selector
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
 
-  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, current_operator) ->
-    selection = $("<select class=\"form-control\" name=\"condition::#{groupAndAttribute}::operator\"></select>")
+  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute) ->
+    selection = $("<select class=\"form-control\" name=\"#{attribute.name}::#{groupAndAttribute}::operator\"></select>")
 
     attributeConfig = elements[groupAndAttribute]
     if attributeConfig.operator
@@ -250,15 +250,15 @@ class App.UiElement.ticket_selector
         selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
       selection
 
-  @rebuildOperater: (elementFull, elementRow, groupAndAttribute, elements, current_operator) ->
+  @rebuildOperater: (elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute) ->
     return if !groupAndAttribute
 
     # do nothing if item already exists
-    name = "condition::#{groupAndAttribute}::operator"
+    name = "#{attribute.name}::#{groupAndAttribute}::operator"
     return if elementRow.find("[name=\"#{name}\"]").get(0)
 
     # render new operator
-    operator = @buildOperator(elementFull, elementRow, groupAndAttribute, elements, current_operator)
+    operator = @buildOperator(elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute)
     elementRow.find('.js-operator select').replaceWith(operator)
 
   @humanText: (condition) ->

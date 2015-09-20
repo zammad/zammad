@@ -24,6 +24,7 @@ class App.BusinessHours extends Spine.Controller
     @updateMaxTimeframes()
 
     html = App.view('generic/business_hours')
+      attribute: @attribute
       days: @days
       hours: @options.hours
       maxTimeframes: @maxTimeframes
@@ -71,7 +72,8 @@ class App.BusinessHours extends Spine.Controller
 
   validate: =>
     for day, hours of @options.hours
-      break if not hours.active
+      break if !hours.active
+      break if !hours.timeframes
 
       # edge case: full day
       if hours.timeframes[0][0] is '00:00' and hours.timeframes[hours.timeframes.length - 1][1] is '00:00'
