@@ -517,7 +517,7 @@ test( "table test 3", function() {
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), '', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 1')
-  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').attr('title'), 'Umschalten zu', 'check row 1')
+  equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3)').attr('title'), 'Umschalten zu', 'check row 1')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('some'), 'value55', 'check row 2')
   equal( el.find('tbody > tr:nth-child(1) > td:nth-child(3) > a > span').data('xxx'), '55', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
@@ -526,7 +526,7 @@ test( "table test 3", function() {
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), '', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon-user'), true, 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').hasClass('glyphicon'), true, 'check row 2')
-  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').attr('title'), 'Umschalten zu', 'check row 2')
+  equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3)').attr('title'), 'Umschalten zu', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('some'), 'value56', 'check row 2')
   equal( el.find('tbody > tr:nth-child(2) > td:nth-child(3) > a > span').data('xxx'), '56', 'check row 2')
 
