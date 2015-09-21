@@ -59,7 +59,6 @@ class Index extends App.Controller
         url:  @apiPath + '/users/avatar'
         data: JSON.stringify( params )
         processData: true
-        success: (data, status, xhr) =>
     )
 
   pick: (avatar) =>
@@ -136,7 +135,7 @@ class Index extends App.Controller
     EXIF.getData event.target.files[0], ->
       orientation   = this.exifdata.Orientation
       reader        = new FileReader()
-      reader.onload = (e) =>
+      reader.onload = (e) ->
         new ImageCropper
           imageSource: e.target.result
           callback:    callback

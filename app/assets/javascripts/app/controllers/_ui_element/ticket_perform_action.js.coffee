@@ -30,7 +30,7 @@ class App.UiElement.ticket_perform_action
     item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
-    item.find('.js-add').bind('click', (e) =>
+    item.find('.js-add').bind('click', (e) ->
       element = $(e.target).closest('.js-filterElement')
       elementClone = element.clone(true)
       element.after(elementClone)

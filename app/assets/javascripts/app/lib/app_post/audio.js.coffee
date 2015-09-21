@@ -6,7 +6,7 @@ class App.Audio
     canPlay = audio.canPlayType('audio/mp3')
     return if canPlay isnt 'maybe' and canPlay isnt 'probably'
     $(audio).prop( 'src', url )
-    audio.load();
-    audio.preload = "auto";
-    audio.volume = volume;
+    audio.load()
+    audio.preload = 'auto'
+    audio.volume = volume
     audio.play()

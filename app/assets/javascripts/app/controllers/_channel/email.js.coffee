@@ -761,9 +761,9 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           @el.modal('hide')
         else
           if data.source is 'inbound' || data.source is 'outbound'
-              @showSlide("js-#{data.source}")
-              @showAlert("js-#{data.source}", data.message_human || data.message )
-              @showInvalidField("js-#{data.source}", data.invalid_field)
+            @showSlide("js-#{data.source}")
+            @showAlert("js-#{data.source}", data.message_human || data.message )
+            @showInvalidField("js-#{data.source}", data.invalid_field)
           else
             if count is 2
               @showAlert('js-verify', data.message_human || data.message )

@@ -106,9 +106,9 @@ class Index extends App.ControllerContent
     )
 
     hide = =>
-      @hideAction()
       App.Event.trigger('i18n:translation_todo_reload')
       App.Event.trigger('i18n:translation_list_reload')
+      @hideAction()
       @loader.hide(1)
 
     locales = App.Locale.all()
@@ -201,7 +201,7 @@ class TranslationToDo extends App.Controller
       url:         @apiPath + '/translations'
       data:        JSON.stringify(params)
       processData: false
-      success: (data, status, xhr) =>
+      success: (data, status, xhr) ->
         App.Event.trigger('i18n:translation_list_reload')
     )
 
@@ -235,7 +235,7 @@ class TranslationToDo extends App.Controller
       url:         @apiPath + '/translations'
       data:        JSON.stringify(params)
       processData: false
-      success: (data, status, xhr) =>
+      success: (data, status, xhr) ->
         App.Event.trigger('i18n:translation_list_reload')
     )
 

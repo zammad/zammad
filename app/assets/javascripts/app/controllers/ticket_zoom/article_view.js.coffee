@@ -270,7 +270,7 @@ class ArticleViewItem extends App.Controller
         height: bubbleContent.attr('data-height')
       options:
         duration: 300
-        complete: -> bubbleOvervlowContainer.addClass('hide');
+        complete: -> bubbleOvervlowContainer.addClass('hide')
 
   isOrContains: (node, container) ->
     while node

@@ -38,7 +38,7 @@ class App.UserProfile extends App.Controller
     App.OnlineNotification.seen( 'User', @user_id )
     @navupdate '#'
 
-  changed: =>
+  changed: ->
     false
 
   render: (user) =>
@@ -110,7 +110,7 @@ class Object extends App.Controller
     })
 
     # start action controller
-    showHistory = =>
+    showHistory = ->
       new App.UserHistory( user_id: user.id )
 
     editUser = =>

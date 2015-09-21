@@ -130,14 +130,14 @@ class App.UiElement.ticket_selector
       item.find('.js-filterElement').first().remove()
 
     # bind for preview
-    item.on('change', 'select.form-control', (e) =>
+    item.on('change', 'select.form-control', (e) ->
       App.Delay.set(
         search,
         600,
         'preview',
       )
     )
-    item.on('change keyup', 'input.form-control', (e) =>
+    item.on('change keyup', 'input.form-control', (e) ->
       App.Delay.set(
         search,
         600,
@@ -162,7 +162,7 @@ class App.UiElement.ticket_selector
         @ticketTable(data.ticket_ids, data.ticket_count, item)
     )
 
-  @ticketTable: (ticket_ids, ticket_count, item) =>
+  @ticketTable: (ticket_ids, ticket_count, item) ->
     item.find('.js-previewCounter').html(ticket_count)
     new App.TicketList(
       el:         item.find('.js-previewTable')

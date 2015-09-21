@@ -12,7 +12,7 @@ class App.Notify extends App.ControllerWidgetPermanent
       @log 'notify:removeall', @
       @destroyAll()
 
-    @bind 'notifyDesktop', (data) =>
+    @bind 'notifyDesktop', (data) ->
       if !data['icon']
         data['icon'] = 'unknown'
       notify.createNotification( data.msg, data )

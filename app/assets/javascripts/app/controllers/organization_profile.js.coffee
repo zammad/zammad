@@ -36,7 +36,7 @@ class App.OrganizationProfile extends App.Controller
     App.OnlineNotification.seen( 'Organization', @organization_id )
     @navupdate '#'
 
-  changed: =>
+  changed: ->
     false
 
   render: (organization) =>
@@ -107,7 +107,7 @@ class Object extends App.Controller
     })
 
     # start action controller
-    showHistory = =>
+    showHistory = ->
       new App.OrganizationHistory( organization_id: organization.id )
     editOrganization = =>
       new App.ControllerGenericEdit(

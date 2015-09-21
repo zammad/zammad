@@ -74,9 +74,9 @@ class App.TicketZoomArticleActions extends App.Controller
       recipients = []
       if article.sender.name is 'Agent'
         if article.to
-            localRecipients = emailAddresses.parseAddressList(article.to)
-            if localRecipients
-              recipients = recipients.concat localRecipients
+          localRecipients = emailAddresses.parseAddressList(article.to)
+          if localRecipients
+            recipients = recipients.concat localRecipients
       else
         if article.from
           localRecipients = emailAddresses.parseAddressList(article.from)

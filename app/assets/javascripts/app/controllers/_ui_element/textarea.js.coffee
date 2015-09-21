@@ -3,7 +3,7 @@ class App.UiElement.textarea
     fileUploaderId = 'file-uploader-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
     item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
 
-    a = =>
+    a = ->
       visible = $( item[0] ).is(":visible")
       if visible && !$( item[0] ).expanding('active')
         $( item[0] ).expanding()

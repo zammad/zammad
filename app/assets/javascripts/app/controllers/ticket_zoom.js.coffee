@@ -378,7 +378,7 @@ class App.TicketZoom extends App.Controller
 
   autosaveStop: =>
     @autosaveLast = {}
-    @clearInterval( 'autosave' )
+    @clearInterval('autosave')
 
   autosaveStart: =>
     if !@autosaveLast
@@ -410,15 +410,15 @@ class App.TicketZoom extends App.Controller
       #console.log('modelDiff', modelDiff)
 
       # get diff of last save
-      changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast )
+      changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast)
       if !changedBetweenLastSave
         #console.log('model DIFF ', modelDiff)
 
         @autosaveLast = clone(currentParams)
-        @markFormDiff( modelDiff )
+        @markFormDiff(modelDiff)
 
-        @taskUpdateAll( modelDiff )
-    @interval( update, 2400, 'autosave' )
+        @taskUpdateAll(modelDiff)
+    @interval(update, 2400, 'autosave')
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
@@ -593,7 +593,7 @@ class App.TicketZoom extends App.Controller
         @fetch( ticket.id, true )
     )
 
-  bookmark: (e) =>
+  bookmark: (e) ->
     $(e.currentTarget).find('.bookmark.icon').toggleClass('filled')
 
   reset: (e) =>

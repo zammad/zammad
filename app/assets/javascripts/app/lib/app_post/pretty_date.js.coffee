@@ -1,7 +1,7 @@
 class App.PrettyDate
 
   # human readable time
-  @humanTime: ( time, escalation, long = true ) =>
+  @humanTime: ( time, escalation, long = true ) ->
     return '' if !time
     current = new Date()
     created = new Date(time)

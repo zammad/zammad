@@ -32,7 +32,6 @@ class App.UiElement.richtext
               url:         App.Config.get('api_path') + '/ticket_attachment_upload'
               data:        JSON.stringify( { store_id: store_id } ),
               processData: false
-              success:     (data, status, xhr) =>
             )
 
             # remove attachment from dom

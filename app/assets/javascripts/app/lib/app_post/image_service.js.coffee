@@ -12,11 +12,11 @@ class App.ImageService
     else
       @resize( dataURL, x, y, 2, 'image/png', 0.7, callback )
 
-  @resize: ( dataURL, x = 'auto', y = 'auto', sizeFactor = 1, type, quallity, callback) =>
+  @resize: ( dataURL, x = 'auto', y = 'auto', sizeFactor = 1, type, quallity, callback) ->
 
     # load image from data url
     imageObject = new Image()
-    imageObject.onload = =>
+    imageObject.onload = ->
       imageWidth  = imageObject.width
       imageHeight = imageObject.height
       if y is 'auto' && x is 'auto'

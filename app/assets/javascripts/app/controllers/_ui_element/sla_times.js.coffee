@@ -21,7 +21,7 @@ class App.UiElement.sla_times
     )
 
     # disable/enable rows
-    item.find('.js-activateRow').bind('change', (e) =>
+    item.find('.js-activateRow').bind('change', (e) ->
       element = $(e.target)
       row = element.closest('tr')
       if element.prop('checked')

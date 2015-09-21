@@ -40,11 +40,11 @@ class App.UiElement.autocompletion
       ###
       source = attribute.source
       if typeof(source) is 'string'
-        source = source.replace('#{@apiPath}', App.Config.get('api_path') );
+        source = source.replace('#{@apiPath}', App.Config.get('api_path') )
       $(local_attribute_full).autocomplete(
         source: source,
         minLength: attribute.minLengt || 3,
-        select: ( event, ui ) =>
+        select: ( event, ui ) ->
           b(event, ui.item)
       )
     App.Delay.set( a, 280, undefined, 'form_autocompletion' )

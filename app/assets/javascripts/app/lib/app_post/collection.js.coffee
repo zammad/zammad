@@ -61,10 +61,10 @@ class _collectionSingleton extends Spine.Module
         @load( data )
 
   resetCollections: (data) ->
-      # load assets
-      for type, collection of data
-        @log 'debug', 'resetCollection:trigger', type, collection
-        @reset( localStorage: data.localStorage, type: type, data: collection )
+    # load assets
+    for type, collection of data
+      @log 'debug', 'resetCollection:trigger', type, collection
+      @reset( localStorage: data.localStorage, type: type, data: collection )
 
   reset: (params) ->
 

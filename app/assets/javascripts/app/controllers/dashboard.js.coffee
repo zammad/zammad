@@ -46,7 +46,7 @@ class App.Dashboard extends App.Controller
   isActive: =>
     @activeState
 
-  url: =>
+  url: ->
     '#dashboard'
 
   show: (params) =>
@@ -57,13 +57,13 @@ class App.Dashboard extends App.Controller
     # highlight navbar
     @navupdate '#dashboard'
 
-  hide: =>
+  hide: ->
     # no
 
-  changed: =>
+  changed: ->
     false
 
-  release: =>
+  release: ->
     # no
 
   toggle: (e) =>

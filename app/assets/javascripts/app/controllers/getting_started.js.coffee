@@ -219,7 +219,7 @@ class Admin extends App.ControllerContent
             username: @params.email
             password: @params.password
           success: @relogin
-          error: =>
+          error: ->
             App.Event.trigger 'notify', {
               type:    'error'
               msg:     App.i18n.translateContent( 'Signin failed! Please contact the support team!' )
@@ -874,9 +874,9 @@ class ChannelEmail extends App.Wizard
           @navigate 'getting_started/agents'
         else
           if data.source is 'inbound' || data.source is 'outbound'
-              @showSlide("js-#{data.source}")
-              @showAlert("js-#{data.source}", data.message_human || data.message )
-              @showInvalidField("js-#{data.source}", data.invalid_field)
+            @showSlide("js-#{data.source}")
+            @showAlert("js-#{data.source}", data.message_human || data.message )
+            @showInvalidField("js-#{data.source}", data.invalid_field)
           else
             if count is 2
               @showAlert('js-verify', data.message_human || data.message )

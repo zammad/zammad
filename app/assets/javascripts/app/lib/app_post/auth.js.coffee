@@ -88,7 +88,7 @@ class App.Auth
       App.Event.trigger( 'auth:logout' )
       App.Event.trigger( 'ui:rerender' )
 
-      return false;
+      return false
 
     # clear local store
     if type isnt 'check'

@@ -6,15 +6,15 @@ class App.TicketList extends App.Controller
 
   render: =>
 
-    callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
+    callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) ->
       attribute.title = object.title
       value
-    callbackUserPopover = (value, object, attribute, attributes, refObject) =>
+    callbackUserPopover = (value, object, attribute, attributes, refObject) ->
       attribute.class = 'user-popover'
       attribute.data =
         id: refObject.id
       value
-    callbackOrganizationPopover = (value, object, attribute, attributes, refObject) =>
+    callbackOrganizationPopover = (value, object, attribute, attributes, refObject) ->
       attribute.class = 'organization-popover'
       attribute.data =
         id: refObject.id

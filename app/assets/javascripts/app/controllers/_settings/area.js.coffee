@@ -126,7 +126,7 @@ class App.SettingsAreaItem extends App.Controller
 
           if @setting.preferences.session_check
             App.Auth.loginCheck()
-      fail: =>
+      fail: ->
         ui.formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'

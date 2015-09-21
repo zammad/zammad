@@ -84,7 +84,7 @@ class App.Utils
     ascii = @textCleanup(ascii)
     ascii = @wrap(ascii, max)
     $.trim( ascii )
-      .replace /^(.*)$/mg, (match) =>
+      .replace /^(.*)$/mg, (match) ->
         if match
           '> ' + match
         else
@@ -538,7 +538,7 @@ class App.Utils
     false
 
   # human readable file size
-  @humanFileSize: (size) =>
+  @humanFileSize: (size) ->
     if size > ( 1024 * 1024 )
       size = Math.round( size / ( 1024 * 1024 ) ) + ' MB'
     else if size > 1024
