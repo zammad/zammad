@@ -228,6 +228,48 @@ class App.ControllerGenericDescription extends App.ControllerModal
     e.preventDefault()
     @hide()
 
+class App.ControllerModalLoading extends App.Controller
+  className: 'modal fade'
+
+  constructor: ->
+    super
+
+    if @container
+      @el.addClass('modal--local')
+
+    @render()
+
+    @el.modal
+      keyboard:  false
+      show:      true
+      backdrop:  false
+      container: @container
+
+  render: ->
+    @html App.view('generic/modal_loader')(
+      head: @head
+      message: App.i18n.translateContent(@message)
+    )
+
+  update: (message, translate = true) =>
+    if translate
+      message = App.i18n.translateContent(message)
+    @$('.js-loading').html(message)
+
+  hideIcon: =>
+    @$('.js-loadingIcon').addClass('hide')
+
+  showIcon: =>
+    @$('.js-loadingIcon').removeClass('hide')
+
+  hide: (delay) =>
+    remove = =>
+      @el.remove()
+    if !delay
+      remove()
+      return
+    App.Delay.set(remove, delay * 1000)
+
 class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   constructor: ->
     super

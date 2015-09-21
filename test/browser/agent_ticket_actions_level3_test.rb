@@ -202,6 +202,7 @@ class AgentTicketActionsLevel3Test < TestCase
     reload(
       browser: browser2,
     )
+    sleep 2
     click(
       css: '.content.active .js-reset',
       browser: browser2,

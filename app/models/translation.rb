@@ -10,17 +10,28 @@ class Translation < ApplicationModel
 
 load translations from online
 
+all:
+
   Translation.load
+
+dedicated:
+
+  Translation.load(locale) # e. g. en-us or de-de
 
 =end
 
-  def self.load
-    locales = Locale.where(active: true)
-    if Rails.env.test?
-      locales = Locale.where(active: true, locale: ['en-us', 'de-de'])
+  def self.load(dedicated_locale = nil)
+    locales_list = []
+    if !dedicated_locale
+      locales = Locale.to_sync
+      locales.each {|locale|
+        locales_list.push locale.locale
+      }
+    else
+      locales_list = [dedicated_locale]
     end
-    locales.each {|locale|
-      url = "https://i18n.zammad.com/api/v1/translations/#{locale.locale}"
+    locales_list.each {|locale|
+      url = "https://i18n.zammad.com/api/v1/translations/#{locale}"
       if !UserInfo.current_user_id
         UserInfo.current_user_id = 1
       end

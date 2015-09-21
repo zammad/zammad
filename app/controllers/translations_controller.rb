@@ -19,11 +19,10 @@ class TranslationsController < ApplicationController
     render json: { message: 'ok' }, status: :ok
   end
 
-  # POST /translations/sync
+  # POST /translations/sync/:locale
   def sync
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    Locale.load
-    Translation.load
+    Translation.load(params[:locale])
     render json: { message: 'ok' }, status: :ok
   end
 

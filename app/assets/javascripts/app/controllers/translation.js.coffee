@@ -52,80 +52,83 @@ class Index extends App.ControllerContent
   pushChanges: =>
     locale = @$('[name="locale"]').val()
 
-    @modal = new App.ControllerModal(
-      head:      'Pushing own translations...'
-      message:   'Pushing own translations to i18n.zammad.com, Thanks for contributing!'
-      cancel:    false
-      close:     false
-      shown:     true
+    @loader = new App.ControllerModalLoading(
+      head:      'Push my changes'
+      message:   'Pushing translations to i18n.zammad.com'
       container: @el.closest('.content')
     )
 
     @ajax(
       id:          'translations'
       type:        'PUT'
-      url:         @apiPath + '/translations/push'
+      url:         "#{@apiPath}/translations/push"
       data:        JSON.stringify(locale: locale)
       processData: false
       success: (data, status, xhr) =>
-        @modal.hide()
+        @loader.update('Thanks for contributing!')
+        @loader.hideIcon()
+        @loader.hide(2)
       error: =>
-        @modal.hide()
+        @loader.hide()
     )
 
   resetChanges: =>
     locale = @$('[name="locale"]').val()
 
-    @modal = new App.ControllerModal(
-      head:      'Reseting changes...'
-      message:   'Reseting changes own translation changes...'
-      cancel:    false
-      close:     false
-      shown:     true
+    @loader = new App.ControllerModalLoading(
+      head:      'Reset changes'
+      message:   'Reseting changes...'
       container: @el.closest('.content')
     )
 
     @ajax(
       id:          'translations'
       type:        'POST'
-      url:         @apiPath + '/translations/reset'
+      url:         "#{@apiPath}/translations/reset"
       data:        JSON.stringify(locale: locale)
       processData: false
       success: (data, status, xhr) =>
         App.Event.trigger('i18n:translation_todo_reload')
         App.Event.trigger('i18n:translation_list_reload')
         @hideAction()
-        @modal.hide()
+        @loader.hide()
       error: =>
-        @modal.hide()
+        @loader.hide()
     )
 
   syncChanges: =>
     locale = @$('[name="locale"]').val()
 
-    @modal = new App.ControllerModal(
-      head:      'Syncing with latest translations...'
-      message:   'Syncing with latest translations!'
-      cancel:    false
-      close:     false
-      shown:     true
+    @loader = new App.ControllerModalLoading(
+      head:      'Get latest translations'
+      message:   'Getting latest translations from i18n.zammad.com'
       container: @el.closest('.content')
     )
 
+    hide = =>
+      @hideAction()
+      App.Event.trigger('i18n:translation_todo_reload')
+      App.Event.trigger('i18n:translation_list_reload')
+      @loader.hide(1)
+
+    locales = App.Locale.all()
+    locale = locales.shift()
+    @_syncChanges(locale, locales, @loader, hide)
+
+  _syncChanges: (locale, locales, loader, hide) =>
     @ajax(
       id:          'translations'
-      type:        'POST'
-      url:         @apiPath + '/translations/sync'
-      data:        JSON.stringify(locale: locale)
+      type:        'GET'
+      url:         "#{@apiPath}/translations/sync/#{locale.locale}"
       processData: false
-      success: (data, status, xhr) =>
-        App.Event.trigger('i18n:translation_todo_reload')
-        App.Event.trigger('i18n:translation_list_reload')
-        @hideAction()
-        @modal.hide()
-      error: =>
-        @modal.hide()
-    )
+      complete: (data, status, xhr) =>
+        loader.update(locale.name, false)
+        locale = locales.shift()
+        if _.isEmpty(locales)
+          hide()
+          return
+        @_syncChanges(locale, locales, loader, hide)
+      )
 
 class TranslationToDo extends App.Controller
   hasChanges: false
@@ -149,6 +152,7 @@ class TranslationToDo extends App.Controller
       return
 
     if !App.i18n.getNotTranslated(@locale)
+      @html ''
       return
 
     listNotTranslated = []
