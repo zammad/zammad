@@ -121,7 +121,12 @@ class App extends Spine.Controller
     result
 
   @view: (name) ->
-    template = ( params = {} ) =>
+    template = ( params = {} ) ->
+
+      s = ( num, digits ) ->
+        while num.toString().length < digits
+          num = '0' + num
+        num
 
       # define print name helper
       params.P = ( object, attribute_name ) ->
@@ -130,10 +135,6 @@ class App extends Spine.Controller
       # define date format helper
       params.date = ( time ) ->
         return '' if !time
-        s = ( num, digits ) ->
-          while num.toString().length < digits
-            num = "0" + num
-          num
 
         timeObject = new Date(time)
         d = s( timeObject.getDate(), 2 )
@@ -144,10 +145,6 @@ class App extends Spine.Controller
       # define datetime format helper
       params.datetime = ( time ) ->
         return '' if !time
-        s = ( num, digits ) ->
-          while num.toString().length < digits
-            num = "0" + num
-          num
 
         timeObject = new Date(time)
         d = s( timeObject.getDate(), 2 )
@@ -161,10 +158,7 @@ class App extends Spine.Controller
       # define decimal format helper
       params.decimal = ( data, positions = 2 ) ->
         return '' if !data
-        s = ( num, digits ) ->
-          while num.toString().length < digits
-            num = num + "0"
-          num
+
         result = data.toString().match(/^(.+?)\.(.+?)$/)
         if !result || !result[2]
           return "#{data}." + s( 0, positions ).toString()

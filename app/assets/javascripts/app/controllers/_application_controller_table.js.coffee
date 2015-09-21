@@ -115,7 +115,7 @@ class App.ControllerTable extends App.Controller
       # remove group by attribute from header
       overview = _.filter(
         overview
-        (item) =>
+        (item) ->
           return item if item isnt data.groupBy
           return
       )
@@ -123,7 +123,7 @@ class App.ControllerTable extends App.Controller
       # get new order
       groupObjects = _.groupBy(
         data.objects
-        (item) =>
+        (item) ->
           return '' if !item[data.groupBy]
           return item[data.groupBy].displayName() if item[data.groupBy].displayName
           item[data.groupBy]
@@ -135,7 +135,7 @@ class App.ControllerTable extends App.Controller
       # sort new groups
       groupOrder = _.sortBy(
         groupOrder
-        (item) =>
+        (item) ->
           item
       )
 
@@ -201,11 +201,11 @@ class App.ControllerTable extends App.Controller
 
           if hit
             for event, callback of item.events
-              do (table, event, callback) =>
+              do (table, event, callback) ->
                 if cursorMap[event]
                   table.find("tbody > tr > td:nth-child(#{position}) span").css( 'cursor', cursorMap[event] )
                 table.on( event, "tbody > tr > td:nth-child(#{position}) span",
-                  (e) =>
+                  (e) ->
                     e.stopPropagation()
                     id = $(e.target).parents('tr').data('id')
                     callback(id, e)
@@ -215,11 +215,11 @@ class App.ControllerTable extends App.Controller
     if data.bindRow
       if data.bindRow.events
         for event, callback of data.bindRow.events
-          do (table, event, callback) =>
+          do (table, event, callback) ->
             if cursorMap[event]
               table.find('tbody > tr').css( 'cursor', cursorMap[event] )
             table.on( event, 'tbody > tr',
-              (e) =>
+              (e) ->
                 id = $(e.target).parents('tr').data('id')
                 callback(id, e)
             )
@@ -228,7 +228,7 @@ class App.ControllerTable extends App.Controller
     if data.bindCheckbox
       if data.bindCheckbox.events
         for event, callback of data.bindCheckbox.events
-          do (table, event, callback) =>
+          do (table, event, callback) ->
             table.delegate('input[name="bulk"]', event, (e) ->
               e.stopPropagation()
               id      = $(e.target).parents('tr').data('id')

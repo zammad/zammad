@@ -91,7 +91,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
           ui.callback( item )
         ui.hide()
 
-      fail: =>
+      fail: ->
         ui.log 'errors'
         ui.hide()
     )
@@ -569,7 +569,7 @@ class App.ActionRow extends App.Controller
       do (item) =>
         @el.find('[data-type="' + item.name + '"]').on(
           'click',
-          (e) =>
+          (e) ->
             e.preventDefault()
             item.callback()
         )
@@ -620,7 +620,7 @@ class App.Sidebar extends App.Controller
           type:  'small'
         )
 
-  toggleDropdown: (e) =>
+  toggleDropdown: (e) ->
     e.stopPropagation()
     $(e.currentTarget).next('.js-actions').find('.dropdown-toggle').dropdown('toggle')
 

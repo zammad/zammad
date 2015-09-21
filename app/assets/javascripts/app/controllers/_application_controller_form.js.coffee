@@ -81,7 +81,7 @@ class App.ControllerForm extends App.Controller
         # rename display and name to _confirm
         if !attribute.single
           attribute.display = attribute.display + ' (confirm)'
-          attribute.name = attribute.name + '_confirm';
+          attribute.name = attribute.name + '_confirm'
           item = @formGenItem( attribute, className, fieldset, attribute_count )
           item.appendTo(fieldset)
 
@@ -93,9 +93,9 @@ class App.ControllerForm extends App.Controller
     # bind form events
     if @events
       for eventSelector, callback of @events
-        do (eventSelector, callback) =>
+        do (eventSelector, callback) ->
           evs = eventSelector.split(' ')
-          fieldset.find( evs[1] ).bind( evs[0], (e) => callback(e) )
+          fieldset.find( evs[1] ).bind( evs[0], (e) -> callback(e) )
 
     # return form
     return fieldset
@@ -383,7 +383,7 @@ class App.ControllerForm extends App.Controller
       el.find('[name="' + key + '"]').attr('required', false)
       el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('')
 
-  showHideToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+  showHideToggle: (params, changedAttribute, attributes, classname, form, ui) ->
     for attribute in attributes
       if attribute.shown_if
         hit = false
@@ -400,7 +400,7 @@ class App.ControllerForm extends App.Controller
         else
           ui.hide(attribute.name)
 
-  requiredMandantoryToggle: (params, changedAttribute, attributes, classname, form, ui) =>
+  requiredMandantoryToggle: (params, changedAttribute, attributes, classname, form, ui) ->
     for attribute in attributes
       if attribute.required_if
         hit = false

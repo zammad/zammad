@@ -79,7 +79,7 @@ class App.Controller extends Spine.Controller
     @userPopupsDestroy()
     @organizationPopupsDestroy()
 
-  release: =>
+  release: ->
     # release custom bindings after it got removed from dom
 
   # add @title methode to set title
@@ -138,7 +138,7 @@ class App.Controller extends Spine.Controller
       element.css( 'left', positionStart + 'px' )
       if position.length > 0
         setTimeout( ->
-            shakeMe( element, position, positionEnd )
+          shakeMe( element, position, positionEnd )
         , positionEnd)
       else
         try
@@ -174,14 +174,14 @@ class App.Controller extends Spine.Controller
 #
 
   # human readable file size
-  humanFileSize: (size) =>
+  humanFileSize: (size) ->
     App.Utils.humanFileSize(size)
 
   # human readable time
-  humanTime: ( time, escalation, long = true ) =>
+  humanTime: ( time, escalation, long = true ) ->
     App.PrettyDate.humanTime( time, escalation, long )
 
-  userInfo: (data) =>
+  userInfo: (data) ->
     el = data.el || $('[data-id="customer_info"]')
     el.unbind()
 
@@ -242,7 +242,7 @@ class App.Controller extends Spine.Controller
         if id
           ticket = App.Ticket.find(id)
           @navigate ticket.uiUrl()
-      );
+      )
 
     @ticketPopupsDestroy()
 
@@ -287,7 +287,7 @@ class App.Controller extends Spine.Controller
       if id
         user = App.User.find(id)
         @navigate user.uiUrl()
-    );
+    )
 
     @userPopupsDestroy()
 
@@ -345,7 +345,7 @@ class App.Controller extends Spine.Controller
       if id
         organization = App.Organization.find(id)
         @navigate organization.uiUrl()
-    );
+    )
 
     @organizationPopupsDestroy()
 
@@ -441,7 +441,7 @@ class App.Controller extends Spine.Controller
           customer_id: params.user_id,
         }
         processData: true,
-        success: (data, status, xhr) =>
+        success: (data, status, xhr) ->
           App.Store.write( "user-ticket-popover::#{params.user_id}",  data )
 
           # load assets
@@ -455,7 +455,7 @@ class App.Controller extends Spine.Controller
     if data
       show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       @delay(
-        =>
+        ->
           fetch(params)
         1000
         'fetch'
@@ -530,14 +530,14 @@ class App.Controller extends Spine.Controller
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
-    $('.content').addClass('hide');
+    $('.content').addClass('hide')
     @navShow()
 
 class App.ControllerContent extends App.Controller
   constructor: ->
     super
-    $('.content').addClass('hide');
-    $('#content').removeClass('hide');
+    $('.content').addClass('hide')
+    $('#content').removeClass('hide')
     @navShow()
 
 class App.ControllerModal extends App.Controller
@@ -611,7 +611,7 @@ class App.ControllerModal extends App.Controller
       e.preventDefault()
     @el.modal('hide')
 
-  onShown: =>
+  onShown: ->
     console.log('modal shown: do nothing')
     # do nothing
 
@@ -685,7 +685,7 @@ class App.UpdateTastbar extends App.Controller
   release: =>
     App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
 
-  update: (genericObject) =>
+  update: (genericObject) ->
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
