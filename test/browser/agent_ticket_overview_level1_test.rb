@@ -3,7 +3,7 @@ require 'browser_test_helper'
 
 class AgentTicketOverviewLevel1Test < TestCase
   def test_i
-    name = 'name-' + rand(999_999).to_s
+    name = 'name_' + rand(999_999).to_s
 
     browser1 = browser_instance
     login(
@@ -75,7 +75,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket_open_by_overview(
       browser: browser2,
       number: ticket3[:number],
-      link: '#ticket/view/' + name,
+      link: "#ticket/view/#{name}",
     )
 
     # use overview navigation to got to #2 & #3

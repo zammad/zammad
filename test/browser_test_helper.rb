@@ -1323,7 +1323,7 @@ wait untill text in selector disabppears
   ticket_open_by_overview(
     :browser => browser2,
     :number  => ticket1[:number],
-    :link    => '#ticket/view/' + name,
+    :link    => "#ticket/view/#{name}",
   )
 
 =end
