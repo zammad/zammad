@@ -28,7 +28,6 @@ class AgentTicketOverviewLevel1Test < TestCase
       browser: browser1,
       data: {
         :name              => name,
-        :link              => name,
         :role              => 'Agent',
         :prio              => 1000,
         'order::direction' => 'down',

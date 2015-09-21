@@ -922,7 +922,6 @@ wait untill text in selector disabppears
     :browser => browser1,
     :data    => {
       :name              => name,
-      :link              => name,
       :role              => 'Agent',
       :prio              => 1000,
       'order::direction' => 'down',
@@ -947,11 +946,6 @@ wait untill text in selector disabppears
       element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
       element.clear
       element.send_keys( data[:name] )
-    end
-    if data[:link]
-      element = instance.find_elements( { css: '.modal input[name=link]' } )[0]
-      element.clear
-      element.send_keys( data[:link] )
     end
     if data[:role]
       element = instance.find_elements( { css: '.modal select[name="role_id"]' } )[0]
