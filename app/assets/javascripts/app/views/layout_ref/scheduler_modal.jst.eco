@@ -46,10 +46,10 @@
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
         <%- @Icon('minus') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
         <%- @Icon('plus') %>
       </div>
     </div>
@@ -106,10 +106,10 @@
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
         <%- @Icon('minus') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
         <%- @Icon('plus') %>
       </div>
     </div>
@@ -164,10 +164,10 @@
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
         <%- @Icon('minus') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
         <%- @Icon('plus') %>
       </div>
     </div>
@@ -227,10 +227,10 @@
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
         <%- @Icon('minus') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
         <%- @Icon('plus') %>
       </div>
     </div>
@@ -301,10 +301,10 @@
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
         <%- @Icon('minus') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
         <%- @Icon('plus') %>
       </div>
     </div>
@@ -417,10 +417,10 @@
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove is-disabled js-remove" title="Remove rule">
+      <div class="filter-control filter-control-remove is-disabled js-remove" title=<%- @T('Remote') %>>
         <%- @Icon('minus') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
         <%- @Icon('plus') %>
       </div>
     </div>

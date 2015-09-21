@@ -48,10 +48,10 @@
       <input id="filter_value_1" type="text" class="form-control">
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove is-disabled" title="Remove rule">
+      <div class="filter-control filter-control-remove js-remove is-disabled" title=<%- @T('Remote') %>>
         <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
         <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
       </div>
     </div>
