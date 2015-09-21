@@ -3,7 +3,8 @@ require 'browser_test_helper'
 
 class AgentTicketOverviewLevel1Test < TestCase
   def test_i
-    name = 'name_' + rand(999_999).to_s
+    name1 = 'name_low_' + rand(999_999).to_s
+    name2 = 'name_high_' + rand(999_999).to_s
 
     browser1 = browser_instance
     login(
@@ -27,9 +28,24 @@ class AgentTicketOverviewLevel1Test < TestCase
     overview_create(
       browser: browser1,
       data: {
-        :name              => name,
+        :name              => name1,
         :role              => 'Agent',
+        :selector          => {
+          'Priority' => '1 low',
+        },
         :prio              => 1000,
+        'order::direction' => 'down',
+      }
+    )
+    overview_create(
+      browser: browser1,
+      data: {
+        :name              => name2,
+        :role              => 'Agent',
+        :selector          => {
+          'Priority' => '3 high',
+        },
+        :prio              => 1001,
         'order::direction' => 'down',
       }
     )
@@ -39,6 +55,7 @@ class AgentTicketOverviewLevel1Test < TestCase
       browser: browser1,
       data: {
         customer: 'nico*',
+        priority: '1 low',
         group: 'Users',
         title: 'overview #1',
         body: 'overview #1',
@@ -55,6 +72,7 @@ class AgentTicketOverviewLevel1Test < TestCase
       browser: browser1,
       data: {
         customer: 'nico*',
+        priority: '1 low',
         group: 'Users',
         title: 'overview #2',
         body: 'overview #2',
@@ -65,6 +83,7 @@ class AgentTicketOverviewLevel1Test < TestCase
       browser: browser1,
       data: {
         customer: 'nico*',
+        priority: '1 low',
         group: 'Users',
         title: 'overview #3',
         body: 'overview #3',
@@ -75,7 +94,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket_open_by_overview(
       browser: browser2,
       number: ticket3[:number],
-      link: "#ticket/view/#{name}",
+      link: "#ticket/view/#{name1}",
     )
 
     # use overview navigation to got to #2 & #3
@@ -155,5 +174,34 @@ class AgentTicketOverviewLevel1Test < TestCase
       css: '.active .ticketZoom-header .ticket-number',
       value: ticket2[:number],
     )
+    click(
+      browser: browser2,
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .next',
+    )
+    match(
+      browser: browser2,
+      css: '.active .ticketZoom-header .ticket-number',
+      value: ticket1[:number],
+    )
+    sleep 2 # needed to selenium cache issues
+    ticket_update(
+      browser: browser2,
+      data: {
+        priority: '3 high',
+      }
+    )
+    sleep 8
+
+    match(
+      browser: browser2,
+      css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
+      value: '1',
+    )
+    match(
+      browser: browser2,
+      css: '.active .ticketZoom-header .ticket-number',
+      value: ticket1[:number],
+    )
+
   end
 end
