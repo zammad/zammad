@@ -267,7 +267,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
           duration: duration
 
   add_textarea_catcher: ->
-    @textareaCatcher = new App.clickCatcher
+    @textareaCatcher = new App.ClickCatcher
       holder: @articleNewEdit.offsetParent()
       callback: @close_textarea
       zIndexScale: 4
@@ -353,7 +353,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     # console.log "working of", file, "from", @uploadQueue
     @fakeUpload file.name, file.size, @workOfUploadQueue
 
-  humanFileSize: (size) =>
+  humanFileSize: (size) ->
     i = Math.floor( Math.log(size) / Math.log(1024) )
     return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
 
@@ -431,10 +431,10 @@ class ModalForm extends App.ControllerModal
 
     @show()
 
-  onHide: =>
+  onHide: ->
     window.history.back()
 
-  onSubmit: (e) =>
+  onSubmit: (e) ->
     e.preventDefault()
     params = App.ControllerForm.params( $(e.target).closest('form') )
     console.log('params', params)
@@ -452,7 +452,7 @@ class ModalText extends App.ControllerModal
   render: ->
     @show( App.view('layout_ref/content')() )
 
-  onHide: =>
+  onHide: ->
     window.history.back()
 
 App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
@@ -755,7 +755,7 @@ class LocalModalRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/local_modal', LocalModalRef, 'Routes' )
 
-class loadingPlaceholderRef extends App.ControllerContent
+class LoadingPlaceholderRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -764,9 +764,9 @@ class loadingPlaceholderRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/loading_placeholder')()
 
-App.Config.set( 'layout_ref/loading_placeholder', loadingPlaceholderRef, 'Routes' )
+App.Config.set( 'layout_ref/loading_placeholder', LoadingPlaceholderRef, 'Routes' )
 
-class insufficientRightsRef extends App.ControllerContent
+class InsufficientRightsRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -775,10 +775,10 @@ class insufficientRightsRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/insufficient_rights')()
 
-App.Config.set( 'layout_ref/insufficient_rights', insufficientRightsRef, 'Routes' )
+App.Config.set( 'layout_ref/insufficient_rights', InsufficientRightsRef, 'Routes' )
 
 
-class errorRef extends App.ControllerContent
+class ErrorRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -787,10 +787,10 @@ class errorRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/error')()
 
-App.Config.set( 'layout_ref/error', errorRef, 'Routes' )
+App.Config.set( 'layout_ref/error', ErrorRef, 'Routes' )
 
 
-class highlightRef extends App.ControllerContent
+class HighlightRef extends App.ControllerContent
   elements:
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
@@ -939,10 +939,10 @@ class highlightRef extends App.ControllerContent
     @storeHighlights()
 
 
-App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
+App.Config.set( 'layout_ref/highlight', HighlightRef, 'Routes' )
 
 
-class cluesRef extends App.ControllerContent
+class CluesRef extends App.ControllerContent
 
   clues: [
     {
@@ -1257,10 +1257,10 @@ class cluesRef extends App.ControllerContent
         when 'click' then target.trigger('click')
         when 'hover' then target.toggleClass('is-hovered')
 
-App.Config.set( 'layout_ref/clues', cluesRef, 'Routes' )
+App.Config.set( 'layout_ref/clues', CluesRef, 'Routes' )
 
 
-class adminPlaceholderRef extends App.ControllerContent
+class AdminPlaceholderRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -1269,9 +1269,9 @@ class adminPlaceholderRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/admin_placeholder')()
 
-App.Config.set( 'layout_ref/admin_placeholder', adminPlaceholderRef, 'Routes' )
+App.Config.set( 'layout_ref/admin_placeholder', AdminPlaceholderRef, 'Routes' )
 
-class userListRef extends App.ControllerContent
+class UserListRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -1280,10 +1280,10 @@ class userListRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/user_list')()
 
-App.Config.set( 'layout_ref/user_list', userListRef, 'Routes' )
+App.Config.set( 'layout_ref/user_list', UserListRef, 'Routes' )
 
 
-class slaRef extends App.ControllerContent
+class SlaRef extends App.ControllerContent
 
   events:
     'click .js-activateColumn': 'activateColumn'
@@ -1303,7 +1303,7 @@ class slaRef extends App.ControllerContent
   selectTimezone: (e) =>
     @$('.js-timezone').text e.currentTarget.value
 
-  toggle: (e) =>
+  toggle: (e) ->
     entry = $(e.currentTarget).closest('.action')
     isInactive = entry.hasClass('is-inactive')
     entry.toggleClass('is-inactive')
@@ -1335,10 +1335,10 @@ class slaRef extends App.ControllerContent
         @$('.js-time').timepicker
           showMeridian: true # meridian = am/pm
 
-App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
+App.Config.set( 'layout_ref/sla', SlaRef, 'Routes' )
 
 
-class schedulersRef extends App.ControllerContent
+class SchedulersRef extends App.ControllerContent
   events:
     'click .select-value': 'select'
     'click [data-type=new]': 'createNew'
@@ -1351,7 +1351,7 @@ class schedulersRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/schedulers')()
 
-  toggle: (e) =>
+  toggle: (e) ->
     entry = $(e.currentTarget).closest('.action')
     isInactive = entry.hasClass('is-inactive')
     entry.toggleClass('is-inactive')
@@ -1415,7 +1415,7 @@ class schedulersRef extends App.ControllerContent
       else
         return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
-App.Config.set( 'layout_ref/schedulers', schedulersRef, 'Routes' )
+App.Config.set( 'layout_ref/schedulers', SchedulersRef, 'Routes' )
 
 class InputsRef extends App.ControllerContent
 
@@ -1457,7 +1457,7 @@ class InputsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/inputs', InputsRef, 'Routes' )
 
 
-class calendarSubscriptionsRef extends App.ControllerContent
+class CalendarSubscriptionsRef extends App.ControllerContent
 
   elements:
     'input[type=checkbox]': 'options'
@@ -1530,7 +1530,7 @@ class calendarSubscriptionsRef extends App.ControllerContent
         return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
 
-App.Config.set( 'layout_ref/calendar_subscriptions', calendarSubscriptionsRef, 'Routes' )
+App.Config.set( 'layout_ref/calendar_subscriptions', CalendarSubscriptionsRef, 'Routes' )
 
 
 class ButtonsRef extends App.ControllerContent
@@ -1544,7 +1544,7 @@ class ButtonsRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/buttons', ButtonsRef, 'Routes' )
 
-class mergeCustomerRef extends App.ControllerContent
+class MergeCustomerRef extends App.ControllerContent
 
   mergeTarget:
     firstname: 'Nicole',
@@ -1591,7 +1591,7 @@ class mergeCustomerRef extends App.ControllerContent
   onChange: ->
 
 
-App.Config.set( 'layout_ref/merge_customer', mergeCustomerRef, 'Routes' )
+App.Config.set( 'layout_ref/merge_customer', MergeCustomerRef, 'Routes' )
 
 
 class PrimaryEmailRef extends App.ControllerContent

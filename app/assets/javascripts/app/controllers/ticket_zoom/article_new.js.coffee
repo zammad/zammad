@@ -54,9 +54,14 @@ class App.TicketZoomArticleNew extends App.Controller
         attributes: []
       },
       {
-        name:       'twitter'
+        name:       'twitter status'
         icon:       'twitter'
         attributes: []
+      },
+      {
+        name:       'twitter direct-message'
+        icon:       'twitter'
+        attributes: ['to']
       },
       {
         name:       'phone'
@@ -213,7 +218,7 @@ class App.TicketZoomArticleNew extends App.Controller
         data:
           ticket: ticket
       )
-      callback = (ticket) =>
+      callback = (ticket) ->
         textModule.reload(
           ticket: ticket
         )
@@ -256,7 +261,7 @@ class App.TicketZoomArticleNew extends App.Controller
         speed: 300
         easing: [ 0.34, 1.61, 0.7, 1 ]
 
-    @pickRecipientsCatcher = new App.clickCatcher
+    @pickRecipientsCatcher = new App.ClickCatcher
       holder: @el.offsetParent()
       callback: @hide_recipients
       zIndexScale: 6
@@ -304,7 +309,7 @@ class App.TicketZoomArticleNew extends App.Controller
   showSelectableArticleType: =>
     @el.find('.js-articleTypes').removeClass('is-hidden')
 
-    @selectTypeCatcher = new App.clickCatcher
+    @selectTypeCatcher = new App.ClickCatcher
       holder:      @el.offsetParent()
       callback:    @hideSelectableArticleType
       zIndexScale: 6
@@ -325,7 +330,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @type = type
     @$('[name="type"]').val(type)
     @articleNewEdit.attr('data-type', type)
-    typeIcon.find('use').attr 'xlink:href', '#icon-'+ @type
+    typeIcon.find('use').attr 'xlink:href', "#icon-#{@type}"
 
     # show/hide attributes
     for articleType in @articleTypes
@@ -419,7 +424,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   addTextareaCatcher: =>
     if @articleNewEdit.is(':visible')
-      @textareaCatcher = new App.clickCatcher
+      @textareaCatcher = new App.ClickCatcher
         holder:      @articleNewEdit.offsetParent()
         callback:    @closeTextarea
         zIndexScale: 4
@@ -471,7 +476,7 @@ class App.TicketZoomArticleNew extends App.Controller
             duration: 100
             stagger: 50
             drag: true
-            complete: (elements) => $(elements).addClass('is-hidden')
+            complete: (elements) -> $(elements).addClass('is-hidden')
 
   onDragenter: (event) =>
     # on the first event,
@@ -508,7 +513,6 @@ class App.TicketZoomArticleNew extends App.Controller
           url:   App.Config.get('api_path') + '/ticket_attachment_upload'
           data:  JSON.stringify( { store_id: store_id } ),
           processData: false
-          success: (data, status, xhr) =>
         )
 
         # remove attachment from dom

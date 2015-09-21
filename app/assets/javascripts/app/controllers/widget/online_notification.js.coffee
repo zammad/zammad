@@ -112,7 +112,7 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
     # add clickCatcher
-    @clickCatcher = new App.clickCatcher
+    @clickCatcher = new App.ClickCatcher
       holder:      @el.offsetParent()
       callback:    @hidePopover
       zIndexScale: 4
@@ -175,7 +175,7 @@ class App.OnlineNotificationWidget extends App.Controller
       @updateContent()
 
     @delay(
-      => waitUntilOldPopoverIsRemoved()
+      -> waitUntilOldPopoverIsRemoved()
       600
       'popover'
     )

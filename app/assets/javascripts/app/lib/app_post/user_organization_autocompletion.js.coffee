@@ -23,7 +23,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
   open: =>
     @clearDelay('close')
     @el.addClass('open')
-    @catcher = new App.clickCatcher
+    @catcher = new App.ClickCatcher
       holder:       @el.offsetParent()
       callback:     @close
       zIndexScale:  1
@@ -59,7 +59,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     if @callback
       @callback(userId)
 
-  buildOrganizationItem: (organization) =>
+  buildOrganizationItem: (organization) ->
     App.view('generic/user_search/item_organization')(
       organization: organization
     )
@@ -72,12 +72,12 @@ class App.UserOrganizationAutocompletion extends App.Controller
       user = App.User.fullLocal(userId)
       organizationMemebers.append( @buildUserItem(user) )
 
-  buildUserItem: (user) =>
+  buildUserItem: (user) ->
     App.view('generic/user_search/item_user')(
       user: user
     )
 
-  buildUserNew: =>
+  buildUserNew: ->
     App.view('generic/user_search/new_user')()
 
   build: =>
