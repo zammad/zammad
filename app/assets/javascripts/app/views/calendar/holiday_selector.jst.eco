@@ -60,7 +60,7 @@
             <!-- Hallo Martin! Allow to add by pressing enter! -->
             <input class="form-control form-control--small" type="date" name="public_holidays_date" placeholder="<%- @T('Date') %>"/>
           <td>
-            <input class="form-control form-control--small" type="text" name="public_holidays_description" placeholder="<%- @T('Date Description') %>"/>
+            <input class="form-control form-control--small" type="text" name="public_holidays_description" placeholder="<%- @T('Description') %>"/>
           <td>
             <div class="btn btn--text js-add">
               <%- @Icon('plus-small') %> <%- @T('Add') %>
