@@ -418,7 +418,7 @@ class App.TicketZoom extends App.Controller
         @markFormDiff( modelDiff )
 
         @taskUpdateAll( modelDiff )
-    @interval( update, 3000, 'autosave' )
+    @interval( update, 2400, 'autosave' )
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
