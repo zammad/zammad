@@ -7,11 +7,22 @@ module Channel::Filter::OutOfOfficeCheck
     mail[ 'x-zammad-out-of-office'.to_sym ] = false
 
     # check ms out of office characteristics
-    return if !mail[ 'x-auto-response-suppress'.to_sym ]
-    return if mail[ 'x-auto-response-suppress'.to_sym ] !~ /all/i
-    return if !mail[ 'x-ms-exchange-inbox-rules-loop'.to_sym ]
+    if mail[ 'x-auto-response-suppress'.to_sym ]
+      return if mail[ 'x-auto-response-suppress'.to_sym ] !~ /all/i
+      return if !mail[ 'x-ms-exchange-inbox-rules-loop'.to_sym ]
 
-    mail[ 'x-zammad-out-of-office'.to_sym ] = true
+      mail[ 'x-zammad-out-of-office'.to_sym ] = true
+      return
+    end
+
+    # check zimbra out of office characteristics
+    if mail[ 'auto-submitted'.to_sym ]
+      return if mail[ 'auto-submitted'.to_sym ] !~ /vacation/i
+
+      mail[ 'x-zammad-out-of-office'.to_sym ] = true
+      return
+    end
 
   end
+
 end
