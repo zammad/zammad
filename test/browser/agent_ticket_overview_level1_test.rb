@@ -196,7 +196,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     match(
       browser: browser2,
       css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
-      value: '1',
+      value: '2',
     )
     match(
       browser: browser2,
