@@ -6098,12 +6098,13 @@ output {
   .searchableSelect-autocomplete {
     position: absolute;
     left: 13px;
-    top: 11px;
+    top: 10px;
     right: 37px;
     white-space: nowrap;
     overflow: hidden;
-    pointer-events: none;
     display: flex;
+    pointer-events: none;
+    white-space: pre;
   }
 
   .searchableSelect-autocomplete-invisible {

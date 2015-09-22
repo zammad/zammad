@@ -5,8 +5,8 @@ class App.SearchableSelect extends Spine.Controller
     'blur .js-input':                   'onBlur'
     'click .js-option':                 'selectItem'
     'mouseenter .js-option':            'highlightItem'
-    'shown.bs.dropdown':  'onDropdownShown'
-    'hidden.bs.dropdown': 'onDropdownHidden'
+    'shown.bs.dropdown':                'onDropdownShown'
+    'hidden.bs.dropdown':               'onDropdownHidden'
 
   elements:
     '.js-option': 'option_items'
@@ -59,7 +59,8 @@ class App.SearchableSelect extends Spine.Controller
     switch event.keyCode
       when 40 then @nudge event, 1 # down
       when 38 then @nudge event, -1 # up
-      when 39 then @pickSuggestion event # right
+      when 39 then @fillWithAutocompleteSuggestion event # right
+      when 37 then @fillWithAutocompleteSuggestion event # left
       when 13 then @onEnter event
       when 27 then @onEscape()
       when 9 then @onTab event
@@ -84,13 +85,23 @@ class App.SearchableSelect extends Spine.Controller
     visibleOptions.eq(currentPosition).addClass('is-active')
     @clearAutocomplete()
 
-  pickSuggestion: (event) ->
-    if not @suggestion
+  fillWithAutocompleteSuggestion: (event) ->
+    if !@suggestion
       return
 
+    if event.keyCode is 39 # right
+      # end position
+      caretPosition = @suggestion.length
+    else
+      # current position
+      caretPosition = @invisiblePart.text().length + 1
 
-    # check if the cursor is at the end of the text
-      # pick autocompleteSuggestion
+    @input.val @suggestion
+    @clearAutocomplete()
+    @toggle()
+
+    @input.prop('selectionStart', caretPosition)
+    @input.prop('selectionEnd', caretPosition)
 
   autocomplete: (text) ->
     @suggestion = text
@@ -135,7 +146,7 @@ class App.SearchableSelect extends Spine.Controller
     @toggle()
 
   onBlur: =>
-    @clearAutocomplete()
+    # @clearAutocomplete()
 
   onInput: (event) =>
     @toggle() if not @isOpen
@@ -157,7 +168,7 @@ class App.SearchableSelect extends Spine.Controller
   highlightFirst: ->
     first = @option_items.removeClass('is-active').not('.is-hidden').first()
     first.addClass 'is-active'
-    @autocomplete first.text()
+    @autocomplete first.text().trim()
 
   highlightItem: (event) =>
     @option_items.removeClass('is-active')
