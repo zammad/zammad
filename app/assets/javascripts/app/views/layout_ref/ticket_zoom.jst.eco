@@ -24,20 +24,6 @@
           <% end %>
         </ul>
       </div>
-      <div class="pagination-counter">
-          <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
-        </div>
-        <ul class="pagination">
-          <li>
-            <a class="btn btn--action btn--split--first" data-from="0" data-type="page">
-              <%- @Icon('arrow-left') %>
-            </a>
-          <li>
-            <a class="btn btn--action btn--split--last" href="#" data-from="1" data-type="page">
-              <%- @Icon('arrow-right') %>
-            </a>
-        </ul>
-      </li>
     </div>
 
     <div class="scrollPageHeader tabsSidebar-sidebarSpacer" 

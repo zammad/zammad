@@ -790,7 +790,7 @@ class ErrorRef extends App.ControllerContent
 App.Config.set( 'layout_ref/error', ErrorRef, 'Routes' )
 
 
-class HighlightRef extends App.ControllerContent
+class ticketZoomRef extends App.ControllerContent
   elements:
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
@@ -839,7 +839,7 @@ class HighlightRef extends App.ControllerContent
     @loadHighlights()
 
   render: ->
-    @html App.view('layout_ref/highlight')
+    @html App.view('layout_ref/ticket_zoom')
       colors: @colors
       activeColorIndex: @activeColorIndex
 
@@ -939,7 +939,7 @@ class HighlightRef extends App.ControllerContent
     @storeHighlights()
 
 
-App.Config.set( 'layout_ref/highlight', HighlightRef, 'Routes' )
+App.Config.set( 'layout_ref/ticket_zoom', ticketZoomRef, 'Routes' )
 
 
 class CluesRef extends App.ControllerContent
