@@ -2,6 +2,8 @@ class Index extends App.ControllerContent
   events:
     'click .js-new':         'new'
     'click .js-edit':        'edit'
+    'click .js-delete':      'delete'
+    'click .js-default':     'default'
     'click .js-description': 'description'
 
   constructor: ->
@@ -100,6 +102,28 @@ class Index extends App.ControllerContent
       callback:      @load
       container:     @el.closest('.content')
       large:         true
+    )
+
+  delete: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Calendar.find(id)
+    new App.ControllerGenericDestroyConfirm(
+      item:      item
+      container: @el.closest('.content')
+      callback:  @load
+    )
+
+  default: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Calendar.find(id)
+    item.default = true
+    item.save(
+      done: =>
+        @load()
+      fail: =>
+        @load()
     )
 
   description: (e) =>
