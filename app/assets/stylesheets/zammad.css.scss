@@ -5808,7 +5808,7 @@ output {
   justify-content: center;
   width: 30px;
   height: 30px;
-  border: 1px solid hsl(198,19%,86%);
+  box-shadow: 0 0 0 1px hsl(198,19%,86%) inset;
   border-radius: 100%;
   background: white;
   cursor: pointer;
@@ -5831,8 +5831,6 @@ output {
   }
   
   .icon {
-    width: 13px;
-    height: 13px;
     fill: hsl(0,0%,61%);
   }
 }
