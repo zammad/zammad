@@ -662,6 +662,11 @@ table {
   display: none;
 }
 
+.checkbox-replacement + .label-text,
+.radio-replacement + .label-text {
+  margin-left: 0;
+}
+
 .table .checkbox-replacement,
 .table .radio-replacement {
   height: 38px;
