@@ -19,7 +19,10 @@
 <div class="action" data-id="<%- calendar.id %>">
   <div class="action-flow action-flow--row">
     <div class="action-row">
-      <h2><span title="Last iCal Feed sync at: <%= calendar.last_sync %>: <%= calendar.last_log %>"><%- @Icon('status', 'ok inline') %></span> <%= calendar.name %></h2>
+      <div class="action-flow action-flow--noWrap">
+        <h2><span title="Last iCal Feed sync at: <%= calendar.last_sync %>: <%= calendar.last_log %>"><%- @Icon('status', 'ok inline') %></span> <%= calendar.name %></h2>
+        <div class="action-label">Default</div>
+      </div>
     </div>
     <div class="action-row">
       <div class="label"><%- @T('Timezone') %></div> <%= calendar.timezone %>

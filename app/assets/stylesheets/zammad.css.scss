@@ -6158,6 +6158,10 @@ output {
     display: flex;
     flex-wrap: wrap;
     
+    &.action-flow--noWrap {
+      flex-wrap: nowrap;
+    }
+    
     &.action-flow--row {
       flex-basis: 100%;
     }
@@ -6203,6 +6207,17 @@ output {
   h3 {
     color: hsl(0,0%,60%);
     margin-top: 0;
+  }
+
+  .action-label {
+    margin-left: auto;
+    background: hsl(197,20%,93%);
+    border: 1px solid hsl(197,20%,88%);
+    align-self: flex-start;
+    padding: 5px 10px;
+    margin-right: -25px;
+    margin-top: -4px;
+    color: hsl(197,16%,65%);
   }
     
   .action-flow-icon {
