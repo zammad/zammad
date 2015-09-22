@@ -6142,10 +6142,7 @@ output {
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  
-  & + .action {
-    margin-top: 17px;
-  }
+  margin-bottom: 17px;
 
   &.is-inactive {
     background: none;
