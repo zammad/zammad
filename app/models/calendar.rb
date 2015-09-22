@@ -10,6 +10,36 @@ class Calendar < ApplicationModel
 
 =begin
 
+set inital default calendar
+
+  calendar = Calendar.init_setup
+
+returns calendar object
+
+=end
+
+  def self.init_setup(ip = nil)
+
+    # call for calendar suggestion
+    calendar_details = Service::GeoCalendar.location(ip)
+    return if !calendar_details
+
+    calendar_details['name'] = Calendar.genrate_uniq_name(calendar_details['name'])
+    calendar_details['default'] = true
+    calendar_details['created_by_id'] = 1
+    calendar_details['updated_by_id'] = 1
+
+    # find if auto generated calendar exists
+    calendar = Calendar.find_by(default: true, updated_by_id: 1, created_by_id: 1)
+    if calendar
+      calendar.update_attributes(calendar_details)
+      return calendar
+    end
+    create(calendar_details)
+  end
+
+=begin
+
 get default calendar
 
   calendar = Calendar.default

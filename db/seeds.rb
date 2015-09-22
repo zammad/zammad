@@ -277,6 +277,30 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Geo Calendar Service',
+  name: 'geo_calendar_backend',
+  area: 'System::Services',
+  description: 'Defines the backend for geo calendar lookups. Used for inital calendar succession.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'geo_calendar_backend',
+        tag: 'select',
+        options: {
+          '' => '-',
+          'Service::GeoCalendar::Zammad' => 'Zammad GeoCalendar Service',
+        },
+      },
+    ],
+  },
+  state: 'Service::GeoCalendar::Zammad',
+  preferences: { prio: 2 },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
   title: 'Send client stats',
   name: 'ui_send_client_stats',
   area: 'System::UI',
@@ -1920,6 +1944,7 @@ Locale.create_if_not_exists(
 )
 Locale.load
 Translation.load
+Calendar.init_setup
 
 # install all packages in auto_install
-Package.auto_install()
+Package.auto_install

@@ -15,6 +15,15 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal(nil, result['latitude'])
     assert_equal(nil, result['longitude'])
 
+    result = Service::GeoIp.location( '127.0.0.1' )
+    assert(result)
+    assert_equal(nil, result['country_name'])
+    assert_equal(nil, result['city_name'])
+    assert_equal(nil, result['country_code'])
+    assert_equal(nil, result['continent_code'])
+    assert_equal(nil, result['latitude'])
+    assert_equal(nil, result['longitude'])
+
     result = Service::GeoIp.location( '195.65.29.254' )
     assert(result)
     assert_equal('Switzerland', result['country_name'])
@@ -50,6 +59,15 @@ class GeoIpTest < ActiveSupport::TestCase
     assert_equal('NA', result['continent_code'])
     assert_equal(37.8668, result['latitude'])
     assert_equal(-122.2536, result['longitude'])
+
+    result = Service::GeoIp.location( '17.171.2.25' )
+    assert(result)
+    assert_equal('United States', result['country_name'])
+    assert_equal('Cupertino', result['city_name'])
+    assert_equal('US', result['country_code'])
+    assert_equal('NA', result['continent_code'])
+    assert_equal(37.323, result['latitude'])
+    assert_equal(-122.0322, result['longitude'])
 
   end
 end

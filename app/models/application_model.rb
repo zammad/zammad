@@ -278,6 +278,31 @@ returns
 
 =begin
 
+generate uniq name (will check name of model and generates _1 sequenze)
+
+Used as before_update callback, no own use needed
+
+  name = Model.genrate_uniq_name('some name')
+
+returns
+
+  result = 'some name_X'
+
+=end
+
+  def self.genrate_uniq_name(name)
+    return name if !find_by(name: name)
+    (1..100).each {|counter|
+      name = "#{name}_#{counter}"
+      exists = find_by(name: name)
+      next if exists
+      break
+    }
+    name
+  end
+
+=begin
+
 lookup model from cache (if exists) or retrieve it from db, id, name or login possible
 
   result = Model.lookup( :id => 123 )
