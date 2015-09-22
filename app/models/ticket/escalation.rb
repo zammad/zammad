@@ -208,7 +208,7 @@ returns
         sla_selected = sla
       elsif sla.condition
         query_condition, bind_condition = Ticket._selectors(sla.condition)
-        ticket = Ticket.where( query_condition, *bind_condition ).where(id: id).first
+        ticket = Ticket.where( query_condition, *bind_condition ).find_by(id: id)
         next if !ticket
         sla_selected = sla
         break
