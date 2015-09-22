@@ -592,7 +592,7 @@ table {
   font-weight: normal;
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
 }
 
 .table > tbody > tr > td {
@@ -1781,7 +1781,7 @@ ol.tabs li {
     padding: 0 10px;
     color: #999;
     font-size: 12px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     background: white;
     display: inline-block;
@@ -2633,7 +2633,7 @@ footer {
     line-height: 40px;
     text-align: center;
     font-size: 13px;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     text-shadow: 0 1px rgba(0,0,0,.2);
     cursor: default;
@@ -2875,7 +2875,7 @@ footer {
     color: #a9bcc4;
     font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.05em;
   }
 
   .popover .column label {
@@ -4232,7 +4232,7 @@ footer {
     display: block;
     font-size: 12px;
     font-weight: normal;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
   }
 
   .list-item {
@@ -5907,7 +5907,7 @@ output {
     font-weight: normal;
     text-transform: uppercase;
     font-size: 12px;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
     background: hsl(197,20%,93%);
     border-bottom: none;
   }
