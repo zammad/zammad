@@ -26,6 +26,23 @@ class Ticket < ApplicationModel
     create_article_type_id: true,
     create_article_sender_id: true,
     article_count: true,
+    first_response: true,
+    first_response_escal_date: true,
+    first_response_sla_time: true,
+    first_response_in_min: true,
+    first_response_diff_in_min: true,
+    close_time: true,
+    close_time_escal_date: true,
+    close_time_sla_time: true,
+    close_time_in_min: true,
+    close_time_diff_in_min: true,
+    update_time_escal_date: true,
+    updtate_time_sla_time: true,
+    update_time_in_min: true,
+    update_time_diff_in_min: true,
+    last_contact: true,
+    last_contact_agent: true,
+    last_contact_customer: true,
   }
 
   history_support ignore_attributes: {
