@@ -187,6 +187,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket_update(
       browser: browser2,
       data: {
+        state: 'closed',
         priority: '3 high',
       }
     )
