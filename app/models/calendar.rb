@@ -284,5 +284,18 @@ returns
     first = Calendar.order(:created_at, :id).limit(1).first
     first.default = true
     first.save
+
+    # check if sla's are refer to an existing calendar
+    Sla.all.each {|sla|
+      if !sla.calendar_id
+        sla.calendar_id = first.id
+        sla.save
+        next
+      end
+      if !Calendar.find_by(id: sla.calendar_id)
+        sla.calendar_id = first.id
+        sla.save
+      end
+    }
   end
 end

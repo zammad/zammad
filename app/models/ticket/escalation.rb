@@ -48,6 +48,7 @@ returns
     if sla
       calendar = sla.calendar
     end
+    return if !calendar
 
     # if no escalation is enabled
     if !sla
@@ -68,6 +69,8 @@ returns
     self.close_time_escal_date     = nil
 
     biz = Biz::Schedule.new do |config|
+
+      # get business hours
       hours = {}
       calendar.business_hours.each {|day, meta|
         next if !meta[:active]
@@ -80,7 +83,20 @@ returns
         }
       }
       config.hours = hours
-      #config.holidays = [Date.new(2014, 1, 1), Date.new(2014, 12, 25)]
+
+      # get holidays
+      holidays = []
+      if calendar.public_holidays
+        calendar.public_holidays.each {|day, meta|
+          next if !meta
+          next if !meta['active']
+          next if meta['removed']
+          holidays.push Date.parse(day)
+        }
+      end
+      config.holidays = holidays
+
+      # get timezone
       config.time_zone = calendar.timezone
     end
 
@@ -184,34 +200,18 @@ returns
     sla_selected = nil
     sla_list = Cache.get( 'SLA::List::Active' )
     if sla_list.nil?
-      sla_list = Sla.all
+      sla_list = Sla.all.order(:name)
       Cache.write( 'SLA::List::Active', sla_list, { expires_in: 1.hour } )
     end
     sla_list.each {|sla|
       if !sla.condition || sla.condition.empty?
         sla_selected = sla
       elsif sla.condition
-        hit = false
-        map = [
-          [ 'tickets.priority_id', 'priority_id' ],
-          [ 'tickets.group_id', 'group_id' ]
-        ]
-        map.each {|item|
-
-          next if !sla.condition[ item[0] ]
-
-          if sla.condition[ item[0] ].class == String
-            sla.condition[ item[0] ] = [ sla.condition[ item[0] ] ]
-          end
-          if sla.condition[ item[0] ].include?( self[ item[1] ].to_s )
-            hit = true
-          else
-            hit = false
-          end
-        }
-        if hit
-          sla_selected = sla
-        end
+        query_condition, bind_condition = Ticket._selectors(sla.condition)
+        ticket = Ticket.where( query_condition, *bind_condition ).where(id: id).first
+        next if !ticket
+        sla_selected = sla
+        break
       end
     }
     sla_selected

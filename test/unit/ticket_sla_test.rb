@@ -122,7 +122,12 @@ class TicketSlaTest < ActiveSupport::TestCase
     )
     sla = Sla.create_or_update(
       name: 'test sla 2',
-      condition: { 'tickets.priority_id' => %w(1 2 3) },
+      condition: {
+        'ticket.priority_id' => {
+          operator: 'is',
+          value: %w(1 2 3),
+        },
+      },
       calendar_id: calendar2.id,
       first_response_time: 60,
       update_time: 120,
@@ -399,7 +404,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert( delete, 'sla destroy' )
   end
 
-  test 'ticket sla + timezone' do
+  test 'ticket sla + timezone + holiday' do
 
     # cleanup
     delete = Sla.destroy_all
@@ -461,8 +466,28 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     sla = Sla.create_or_update(
+      name: 'aaa should not match',
+      condition: {
+        'ticket.priority_id' => {
+          operator: 'is not',
+          value: %w(1 2 3),
+        },
+      },
+      calendar_id: calendar.id,
+      first_response_time: 10,
+      update_time: 20,
+      solution_time: 300,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
       name: 'test sla 3',
-      condition: {},
+      condition: {
+        'ticket.priority_id' => {
+          operator: 'is not',
+          value: '1',
+        },
+      },
       calendar_id: calendar.id,
       first_response_time: 120,
       update_time: 180,
@@ -529,6 +554,20 @@ class TicketSlaTest < ActiveSupport::TestCase
           timeframes: [ ['08:00', '17:00'] ]
         },
       },
+      public_holidays: {
+        '2015-09-22' => {
+          'active' => true,
+          'summary' => 'test 1',
+        },
+        '2015-09-23' => {
+          'active' => false,
+          'summary' => 'test 2',
+        },
+        '2015-09-24' => {
+          'removed' => false,
+          'summary' => 'test 3',
+        },
+      },
       default: true,
       ical_url: nil,
       updated_by_id: 1,
@@ -587,6 +626,23 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-10-21 08:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
     assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-10-21 09:00:00 UTC', 'ticket.update_time_escal_date verify 1' )
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-10-21 10:00:00 UTC', 'ticket.close_time_escal_date verify 1' )
+
+    ticket = Ticket.create(
+      title: 'some title holiday test',
+      group: Group.lookup( name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup( name: 'new' ),
+      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      created_at: '2015-09-21 14:30:00 UTC',
+      updated_at: '2015-09-21 14:30:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket = Ticket.find(ticket.id)
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2015-09-23 07:30:00 UTC', 'ticket.escalation_time verify 1' )
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2015-09-23 07:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2015-09-23 08:30:00 UTC', 'ticket.update_time_escal_date verify 1' )
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2015-09-23 09:30:00 UTC', 'ticket.close_time_escal_date verify 1' )
 
     delete = sla.destroy
     assert( delete, 'sla destroy' )
