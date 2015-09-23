@@ -31,6 +31,7 @@
         <% end %>
       </div>
     </div>
+    <% if calendar.last_log: %><div class="action-row"><div class="alert alert--danger"><%= calendar.last_log %></div></div><% end %>
     <div class="action-row">
       <div class="label"><%- @T('Timezone') %></div> <%= calendar.timezone %>
     </div>

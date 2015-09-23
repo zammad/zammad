@@ -12,7 +12,8 @@ class Index extends App.ControllerContent
     # check authentication
     return if !@authenticate()
 
-    @load()
+    @interval(@load, 60000)
+    #@load()
 
   load: =>
     @ajax(

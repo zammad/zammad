@@ -52,8 +52,7 @@
         </a>
 
         <% if !_.isEmpty(channel.last_log_in): %>
-        <div>
-          <%- @T('Notice') %>:<br>
+        <div class="alert alert--danger">
           <%= channel.last_log_in %>
         </div>
         <% end %>
@@ -76,8 +75,7 @@
           <%- @T('Protocol') %>: <%= channel.options.outbound.adapter %>
         </a>
         <% if !_.isEmpty(channel.last_log_out): %>
-        <div>
-          <%- @T('Notice') %>:<br>
+        <div class="alert alert--danger">
           <%= channel.last_log_out %>
         <div>
         <% end %>
@@ -132,10 +130,10 @@
           </a>
 
           <% if channel.status_in is 'error': %>
-            <div><%= channel.last_log_in %></div>
+            <div class="alert alert--danger"><%= channel.last_log_in %></div>
           <% end %>
           <% if channel.status_out is 'error': %>
-            <div><%= channel.last_log_out %></div>
+            <div class="alert alert--danger"><%= channel.last_log_out %></div>
           <% end %>
 
         </div>

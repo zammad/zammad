@@ -4,6 +4,8 @@ class Calendar < ApplicationModel
   store :business_hours
   store :public_holidays
 
+  before_create  :fetch_ical
+  before_update  :fetch_ical
   after_create   :sync_default, :min_one_check
   after_update   :sync_default, :min_one_check
   after_destroy  :min_one_check
@@ -207,37 +209,47 @@ returns
 
 =end
 
-  def sync
+  def sync(without_save = nil)
     return if !ical_url
-    events = Calendar.parse(ical_url)
+    begin
+      events = Calendar.parse(ical_url)
 
-    # sync with public_holidays
-    if !public_holidays
-      self.public_holidays = {}
-    end
-    events.each {|day, summary|
-      if !public_holidays[day]
-        public_holidays[day] = {}
+      # sync with public_holidays
+      if !public_holidays
+        self.public_holidays = {}
       end
+      events.each {|day, summary|
+        if !public_holidays[day]
+          public_holidays[day] = {}
+        end
 
-      # ignore if already added or changed
-      next if public_holidays[day].key?('active')
+        # ignore if already added or changed
+        next if public_holidays[day].key?('active')
 
-      # create new entry
-      public_holidays[day] = {
-        active: true,
-        summary: summary,
+        # create new entry
+        public_holidays[day] = {
+          active: true,
+          summary: summary,
+        }
       }
-    }
-    self.last_log = ''
+      self.last_log = nil
+    rescue => e
+      self.last_log = e.inspect
+    end
+
     self.last_sync = Time.zone.now
-    save
+    if !without_save
+      save
+    end
     true
   end
 
   def self.parse(location)
     if location =~ /^http/i
       result = UserAgent.get(location)
+      if !result.success?
+        fail result.error
+      end
       cal_file = result.body
     else
       cal_file = File.open(location)
@@ -297,5 +309,10 @@ returns
         sla.save
       end
     }
+  end
+
+  # fetch ical feed
+  def fetch_ical
+    sync(true)
   end
 end
