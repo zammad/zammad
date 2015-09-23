@@ -389,11 +389,11 @@ class TicketsController < ApplicationController
     if params[:user_id]
       user = User.find( params[:user_id] )
       condition = {
-        'tickets.state_id' => {
+        'ticket.state_id' => {
           operator: 'is',
           value: Ticket::State.by_category('open').map(&:id),
         },
-        'tickets.customer_id' => {
+        'ticket.customer_id' => {
           operator: 'is',
           value: user.id,
         },
@@ -407,11 +407,11 @@ class TicketsController < ApplicationController
 
       # lookup closed user tickets
       condition = {
-        'tickets.state_id' => {
+        'ticket.state_id' => {
           operator: 'is',
           value: Ticket::State.by_category('closed').map(&:id),
         },
-        'tickets.customer_id' => {
+        'ticket.customer_id' => {
           operator: 'is',
           value: user.id,
         },
@@ -463,11 +463,11 @@ class TicketsController < ApplicationController
     if params[:organization_id] && !params[:organization_id].empty?
 
       condition = {
-        'tickets.state_id' => {
+        'ticket.state_id' => {
           operator: 'is',
           value: Ticket::State.by_category('open').map(&:id),
         },
-        'tickets.organization_id' => {
+        'ticket.organization_id' => {
           operator: 'is',
           value: params[:organization_id],
         },
@@ -481,11 +481,11 @@ class TicketsController < ApplicationController
 
       # lookup closed org tickets
       condition = {
-        'tickets.state_id' => {
+        'ticket.state_id' => {
           operator: 'is',
           value: Ticket::State.by_category('closed').map(&:id),
         },
-        'tickets.organization_id' => {
+        'ticket.organization_id' => {
           operator: 'is',
           value: params[:organization_id],
         },

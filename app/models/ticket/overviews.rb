@@ -111,7 +111,7 @@ returns
       result = []
       overviews.each { |overview|
 
-        query_condition, bind_condition = Ticket._selectors(overview.condition)
+        query_condition, bind_condition = Ticket.selector2sql(overview.condition)
 
         # get count
         count = Ticket.where( access_condition ).where( query_condition, *bind_condition ).count()
@@ -136,7 +136,7 @@ returns
         order_by = overview_selected.group_by + '_id, ' + order_by
       end
 
-      query_condition, bind_condition = Ticket._selectors(overview_selected.condition)
+      query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition)
 
       tickets = Ticket.select('id')
                 .where( access_condition )
@@ -160,7 +160,7 @@ returns
 
     # get tickets for overview
     data[:start_page] ||= 1
-    query_condition, bind_condition = Ticket._selectors(overview_selected.condition)
+    query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition)
     tickets = Ticket.where( access_condition )
               .where( query_condition, *bind_condition )
               .order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )

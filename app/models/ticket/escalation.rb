@@ -206,7 +206,7 @@ returns
       if !sla.condition || sla.condition.empty?
         sla_selected = sla
       elsif sla.condition
-        query_condition, bind_condition = Ticket._selectors(sla.condition)
+        query_condition, bind_condition = Ticket.selector2sql(sla.condition)
         ticket = Ticket.where( query_condition, *bind_condition ).find_by(id: id)
         next if !ticket
         sla_selected = sla

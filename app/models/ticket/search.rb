@@ -160,7 +160,7 @@ returns
                     .order('`tickets`.`created_at` DESC')
                     .limit(limit)
     else
-      query_condition, bind_condition = _selectors(params[:condition])
+      query_condition, bind_condition = selector2sql(params[:condition])
       tickets_all = Ticket.select('DISTINCT(tickets.id)')
                     .where(access_condition)
                     .where(query_condition, *bind_condition)

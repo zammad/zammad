@@ -285,16 +285,41 @@ returns
     false
   end
 
+=begin
+
+get count of tickets and tickets which match on selector
+
+  ticket_count, tickets = Ticket.selectors(params[:condition], 6)
+
+=end
+
   def self.selectors(selectors, limit = 10)
     return if !selectors
-    query, bind_params, tables = _selectors(selectors)
+    query, bind_params, tables = selector2sql(selectors)
     return [] if !query
     ticket_count = Ticket.where(query, *bind_params).joins(tables).count
     tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
     [ticket_count, tickets]
   end
 
-  def self._selectors(selectors)
+=begin
+
+generate condition query to search for tickets based on condition
+
+  query_condition, bind_condition = selector2sql(params[:condition])
+
+condition example
+
+  {
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [1,2,5]
+    }
+  }
+
+=end
+
+  def self.selector2sql(selectors)
     return if !selectors
     query = ''
     bind_params = []
@@ -308,13 +333,14 @@ returns
       tables.push selector[0].to_sym
     }
 
-    selectors.each {|attribute, selector|
+    selectors.each {|attribute, selector_raw|
       if query != ''
         query += ' AND '
       end
-      next if !selector
-      next if !selector.respond_to?(:key?)
-      next if !selector['operator']
+      selector = selector_raw.stringify_keys
+      fail "Invalid selector #{selector.inspect}" if !selector
+      fail "Invalid selector #{selector.inspect}" if !selector.respond_to?(:key?)
+      fail "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
       return nil if !selector['value']
       return nil if selector['value'].respond_to?(:empty?) && selector['value'].empty?
       attributes = attribute.split(/\./)
