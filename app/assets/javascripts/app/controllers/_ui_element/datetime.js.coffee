@@ -109,6 +109,8 @@ class App.UiElement.datetime
     item.find("[name=\"#{attribute.name}\"]").val(timestamp)
 
   @setParams: (item, attribute, time) ->
+    App.Log.debug 'UiElement.datetime.setParams', time.toString()
+
     if time.toString() is 'Invalid Date'
       @setShadowTimestamp(item, attribute)
       return
@@ -127,11 +129,12 @@ class App.UiElement.datetime
 
   @getParams: (item) ->
     params = {}
-    params.day    = item.find('[data-item=day]').val()
-    params.month  = item.find('[data-item=month]').val()
-    params.year   = item.find('[data-item=year]').val()
-    params.hour   = item.find('[data-item=hour]').val()
-    params.minute = item.find('[data-item=minute]').val()
+    params.day    = item.find('[data-item=day]').val().trim()
+    params.month  = item.find('[data-item=month]').val().trim()
+    params.year   = item.find('[data-item=year]').val().trim()
+    params.hour   = item.find('[data-item=hour]').val().trim()
+    params.minute = item.find('[data-item=minute]').val().trim()
+    App.Log.debug 'UiElement.datetime.getParams', params
     params
 
   @validation: (item, attribute, runtime) ->
@@ -195,6 +198,7 @@ class App.UiElement.datetime
 
     #formGroup = item.closest('.form-group')
     formGroup = item
+    App.Log.debug 'UiElement.datetime.validation', errors
     if !_.isEmpty(errors)
 
       # if field is required, if not do not show error
