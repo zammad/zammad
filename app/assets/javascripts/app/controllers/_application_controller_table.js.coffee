@@ -203,8 +203,8 @@ class App.ControllerTable extends App.Controller
             for event, callback of item.events
               do (table, event, callback) ->
                 if cursorMap[event]
-                  table.find("tbody > tr > td:nth-child(#{position}) span").css( 'cursor', cursorMap[event] )
-                table.on( event, "tbody > tr > td:nth-child(#{position}) span",
+                  table.find("tbody > tr > td:nth-child(#{position})").css( 'cursor', cursorMap[event] )
+                table.on( event, "tbody > tr > td:nth-child(#{position})",
                   (e) ->
                     e.stopPropagation()
                     id = $(e.target).parents('tr').data('id')
