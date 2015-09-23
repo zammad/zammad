@@ -85,7 +85,7 @@ class App.TicketZoom extends App.Controller
     meta
 
   url: =>
-    '#ticket/zoom/' + @ticket_id
+    "#ticket/zoom/#{@ticket_id}"
 
   show: (params) =>
 
@@ -108,7 +108,7 @@ class App.TicketZoom extends App.Controller
       @highlighed = true
       @highligher.loadHighlights()
 
-    if !@shown
+    if @shown
 
       # trigger shown to article
       App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
