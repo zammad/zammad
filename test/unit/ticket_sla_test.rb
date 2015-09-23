@@ -397,6 +397,29 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.first_response, nil, 'ticket.first_response verify - inbound' )
     assert_equal( ticket.close_time, nil, 'ticket.close_time verify - inbound' )
 
+    # create note article
+    article_note = Ticket::Article.create(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Agent').first,
+      type: Ticket::Article::Type.where(name: 'note').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2013-03-28 23:52:00 UTC',
+      updated_at: '2013-03-28 23:52:00 UTC',
+    )
+    ticket = Ticket.find(ticket.id)
+    assert_equal( ticket.article_count, 2, 'ticket.article_count verify - inbound' )
+    assert_equal( ticket.last_contact.to_s, article_inbound.created_at.to_s, 'ticket.last_contact verify - inbound' )
+    assert_equal( ticket.last_contact_customer.to_s, article_inbound.created_at.to_s, 'ticket.last_contact_customer verify - inbound' )
+    assert_equal( ticket.last_contact_agent, nil, 'ticket.last_contact_agent verify - inbound' )
+    assert_equal( ticket.first_response, nil, 'ticket.first_response verify - inbound' )
+    assert_equal( ticket.close_time, nil, 'ticket.close_time verify - inbound' )
+
     # create outbound article
     article_outbound = Ticket::Article.create(
       ticket_id: ticket.id,
@@ -413,7 +436,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_at: '2013-03-28 23:55:00 UTC',
     )
     ticket = Ticket.find(ticket.id)
-    assert_equal( ticket.article_count, 2, 'ticket.article_count verify - inbound' )
+    assert_equal( ticket.article_count, 3, 'ticket.article_count verify - inbound' )
     assert_equal( ticket.last_contact.to_s, article_outbound.created_at.to_s, 'ticket.last_contact verify - inbound' )
     assert_equal( ticket.last_contact_customer.to_s, article_inbound.created_at.to_s, 'ticket.last_contact_customer verify - inbound' )
     assert_equal( ticket.last_contact_agent.to_s, article_outbound.created_at.to_s, 'ticket.last_contact_agent verify - inbound' )
