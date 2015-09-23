@@ -292,7 +292,7 @@ class UpdateObjectManager2 < ActiveRecord::Migration
       object: 'User',
       name: 'organization_id',
       display: 'Organization',
-      data_type: 'select',
+      data_type: 'autocompletion_ajax',
       data_option: {
         multiple: false,
         nulloption: true,

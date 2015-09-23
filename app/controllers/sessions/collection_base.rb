@@ -26,19 +26,14 @@ module ExtraCollection
     Group.all.each {|item|
       assets = item.assets(assets)
     }
-    if !user.role?(Z_ROLENAME_CUSTOMER)
-      collections[ Organization.to_app_model ] = []
-      Organization.all.each {|item|
+
+    collections[ Organization.to_app_model ] = []
+    if user.organization_id
+      Organization.where( id: user.organization_id ).each {|item|
         assets = item.assets(assets)
       }
-    else
-      if user.organization_id
-        collections[ Organization.to_app_model ] = []
-        Organization.where( id: user.organization_id ).each {|item|
-          assets = item.assets(assets)
-        }
-      end
     end
+
     [collections, assets]
   end
   module_function :session

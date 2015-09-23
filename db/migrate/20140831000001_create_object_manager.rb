@@ -30,6 +30,7 @@ class CreateObjectManager < ActiveRecord::Migration
       display: 'Customer',
       data_type: 'user_autocompletion',
       data_option: {
+        relation: 'User',
         autocapitalize: false,
         multiple: false,
         null: false,
