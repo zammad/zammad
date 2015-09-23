@@ -37,32 +37,32 @@ class App.UiElement.datetime
     )
     item.find('.js-plus-hour').bind('click', (e) =>
       e.preventDefault()
-      @setNewTime(item, attribute, 60)
+      @setNewTime(item, attribute, 60, false, true)
       @validation(item, attribute)
     )
     item.find('.js-minus-hour').bind('click', (e) =>
       e.preventDefault()
-      @setNewTime(item, attribute, -60)
+      @setNewTime(item, attribute, -60, false, true)
       @validation(item, attribute)
     )
     item.find('.js-plus-day').bind('click', (e) =>
       e.preventDefault()
-      @setNewTime(item, attribute, 60 * 24)
+      @setNewTime(item, attribute, 60 * 24, false, true)
       @validation(item, attribute)
     )
     item.find('.js-minus-day').bind('click', (e) =>
       e.preventDefault()
-      @setNewTime(item, attribute, -60 * 24)
+      @setNewTime(item, attribute, -60 * 24, false, true)
       @validation(item, attribute)
     )
     item.find('.js-plus-week').bind('click', (e) =>
       e.preventDefault()
-      @setNewTime(item, attribute, 60 * 24 * 7)
+      @setNewTime(item, attribute, 60 * 24 * 7, false, true)
       @validation(item, attribute)
     )
     item.find('.js-minus-week').bind('click', (e) =>
       e.preventDefault()
-      @setNewTime(item, attribute, -60 * 24 * 7)
+      @setNewTime(item, attribute, -60 * 24 * 7, false, true)
       @validation(item, attribute)
     )
     item.find('input').bind('keyup blur focus change', (e) =>
@@ -82,20 +82,21 @@ class App.UiElement.datetime
       number = "0#{number}"
     number
 
-  @setNewTime: (item, attribute, diff, reset = false) ->
+  @setNewTime: (item, attribute, diff, reset = false, tolerant = false) ->
 
-    # remove old validation
-    #item.find('.has-error').removeClass('has-error')
-    #item.closest('.form-group').find('.help-inline').html('')
-
-    if reset
+    resetTimeToToday = =>
       time = new Date()
       time.setMinutes( time.getMinutes() + diff )
       @setParams(item, attribute, time)
-      return
+
+    return resetTimeToToday() if reset
 
     params = @getParams(item)
-    return if params.year is '' && params.month is '' && params.day is '' && params.hour is '' && params.day is ''
+    if params.year is '' && params.month is '' && params.day is '' && params.hour is '' && params.minute is ''
+      return if !tolerant
+      resetTimeToToday()
+      params = @getParams(item)
+
     time = new Date( Date.parse( "#{params.year}-#{@format(params.month)}-#{@format(params.day)}T#{@format(params.hour)}:#{@format(params.minute)}:00Z" ) )
     time.setMinutes( time.getMinutes() + diff + time.getTimezoneOffset() )
     return if !time
