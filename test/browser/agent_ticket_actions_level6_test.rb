@@ -185,7 +185,7 @@ class AgentTicketActionLevel6Test < TestCase
     click( browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
     sleep 2
     set( browser: browser1, css: '.modal .js-input', value: 'zammad' )
-    click( browser: browser1, css: '.modal .dropdown-arrow' )
+    click( browser: browser1, css: '.modal .js-input' )
     click( browser: browser1, css: '.modal .js-option' )
 
     click( browser: browser1, css: '.modal .js-submit')
