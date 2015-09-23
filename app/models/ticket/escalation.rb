@@ -48,10 +48,9 @@ returns
     if sla
       calendar = sla.calendar
     end
-    return if !calendar
 
     # if no escalation is enabled
-    if !sla
+    if !sla || !calendar
 
       # nothing to change
       return true if !escalation_time
