@@ -337,9 +337,9 @@ condition example
       if query != ''
         query += ' AND '
       end
+      fail "Invalid selector #{selector_raw.inspect}" if !selector_raw
+      fail "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
       selector = selector_raw.stringify_keys
-      fail "Invalid selector #{selector.inspect}" if !selector
-      fail "Invalid selector #{selector.inspect}" if !selector.respond_to?(:key?)
       fail "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
       return nil if !selector['value']
       return nil if selector['value'].respond_to?(:empty?) && selector['value'].empty?
