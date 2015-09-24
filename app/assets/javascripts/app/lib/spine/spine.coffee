@@ -1,4 +1,4 @@
-# coffeelint: disable=no_this
+# coffeelint: disable=no_this,arrow_spacing,no_unnecessary_double_quotes
 ###
 Spine.js MVC library
 Released under the MIT License

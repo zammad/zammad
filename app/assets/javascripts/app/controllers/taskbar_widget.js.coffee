@@ -67,7 +67,7 @@ class App.TaskbarWidget extends App.Controller
         for item in items
           key = $(item).data('key')
           if !key
-            throw "No such key attributes found for task item"
+            throw 'No such key attributes found for task item'
           order.push key
         App.TaskManager.reorder( order )
 
@@ -78,7 +78,7 @@ class App.TaskbarWidget extends App.Controller
     if !key
       key = $(e.target).parents('a').data('key')
     if !key
-      throw "No such key attributes found for task item"
+      throw 'No such key attributes found for task item'
 
     # check if input has changed
     worker = App.TaskManager.worker( key )

@@ -88,7 +88,7 @@ class App.UiElement.richtext
             # Called during upload progress, first parameter
             # is decimal value from 0 to 100.
             onProgress: (progress, fileSize, uploadedBytes) =>
-              @progressBar.width(parseInt(progress) + "%")
+              @progressBar.width(parseInt(progress) + '%')
               @progressText.text(parseInt(progress))
               # hide cancel on 90%
               if parseInt(progress) >= 90

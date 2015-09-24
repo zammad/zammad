@@ -180,9 +180,9 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     if @content is 'no_content'
       @content = ''
     else if @content is 'content'
-      @content = "some content la la la la"
+      @content = 'some content la la la la'
     else
-      @content = "<p>some</p><p>multiline content</p>1<p>2</p><p>3</p>"
+      @content = '<p>some</p><p>multiline content</p>1<p>2</p><p>3</p>'
 
     @render()
 
@@ -255,7 +255,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
 
       @attachmentPlaceholder.velocity
         properties:
-          translateX: -@attachmentInputHolder.position().left + "px"
+          translateX: -@attachmentInputHolder.position().left + 'px'
         options:
           duration: duration
           easing: 'easeOutQuad'
@@ -358,7 +358,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
 
   updateUploadProgress: (progress) =>
-    @progressBar.width(progress + "%")
+    @progressBar.width(progress + '%')
     @progressText.text(progress)
 
     if progress is 100
@@ -553,7 +553,7 @@ class App.ControllerWizard extends App.ControllerContent
     button = $(e.currentTarget)
 
     switch button.attr('data-action')
-      when "reveal" then @showNextButton button
+      when 'reveal' then @showNextButton button
 
   showNextButton: (sibling) ->
     sibling.parents('.wizard-slide').find('.btn.hide').removeClass('hide')
@@ -587,7 +587,7 @@ class ImportWizard extends App.ControllerWizard
     @otrsLink.on 'input', _.debounce(@checkOtrsLink, 600)
 
   checkOtrsLink: (e) =>
-    if @otrsLink.val() is ""
+    if @otrsLink.val() is ''
       @inputFeedback.attr('data-state', '')
       return
 
@@ -802,28 +802,28 @@ class TicketZoomRef extends App.ControllerContent
   colors: [
     {
       name: 'Yellow'
-      color: "#f7e7b2"
+      color: '#f7e7b2'
     },
     {
       name: 'Green'
-      color: "#bce7b6"
+      color: '#bce7b6'
     },
     {
       name: 'Blue'
-      color: "#b3ddf9"
+      color: '#b3ddf9'
     },
     {
       name: 'Pink'
-      color: "#fea9c5"
+      color: '#fea9c5'
     },
     {
       name: 'Purple'
-      color: "#eac5ee"
+      color: '#eac5ee'
     }
   ]
 
   activeColorIndex: 0
-  highlightClassPrefix: "highlight-"
+  highlightClassPrefix: 'highlight-'
 
   constructor: ->
     super
@@ -1244,7 +1244,7 @@ class CluesRef extends App.ControllerContent
 
   perform: (actions, container) ->
     for action in actions
-      if action.indexOf(" ") < 0
+      if action.indexOf(' ') < 0
         # 'click'
         eventName = action
         target = container
@@ -1398,7 +1398,7 @@ class SchedulersRef extends App.ControllerContent
 
     for hour in hours
       # split off am/pm
-      [hour, suffix] = hour.split(" ")
+      [hour, suffix] = hour.split(' ')
 
       for minute in minutes
         combined = "#{ hour }:#{ minute }"
@@ -1434,7 +1434,7 @@ class InputsRef extends App.ControllerContent
         name:        'project-name'
         id:          'project-name-123'
         placeholder: 'Enter Project Name'
-        options:     [{"value":0,"name":"Apple"},{"value":1,"name":"Microsoft","selected":true},{"value":2,"name":"Google"},{"value":3,"name":"Deutsche Bahn"},{"value":4,"name":"Sparkasse"},{"value":5,"name":"Deutsche Post"},{"value":6,"name":"Mitfahrzentrale"},{"value":7,"name":"Starbucks"},{"value":8,"name":"Mac Donalds"},{"value":9,"name":"Flixbus"},{"value":10,"name":"Betahaus"},{"value":11,"name":"Bruno Banani"},{"value":12,"name":"Alpina"},{"value":13,"name":"Samsung"},{"value":14,"name":"ChariTea"},{"value":15,"name":"fritz-kola"},{"value":16,"name":"Vitamin Water"},{"value":17,"name":"Znuny"},{"value":18,"name":"Max & Moritz"}]
+        options:     [{value:0,name:'Apple'},{value:1,name:'Microsoft',selected:true},{value:2,name:'Google'},{value:3,name:'Deutsche Bahn'},{value:4,name:'Sparkasse'},{value:5,name:'Deutsche Post'},{value:6,name:'Mitfahrzentrale'},{value:7,name:'Starbucks'},{value:8,name:'Mac Donalds'},{value:9,name:'Flixbus'},{value:10,name:'Betahaus'},{value:11,name:'Bruno Banani'},{value:12,name:'Alpina'},{value:13,name:'Samsung'},{value:14,name:'ChariTea'},{value:15,name:'fritz-kola'},{value:16,name:'Vitamin Water'},{value:17,name:'Znuny'},{value:18,name:'Max & Moritz'}]
     @$('.searchableSelectPlaceholder').replaceWith( searchableSelectObject.element() )
 
     # selectable search
@@ -1493,7 +1493,7 @@ class CalendarSubscriptionsRef extends App.ControllerContent
     if data.length is 0
       @output
         .attr 'disabled', true
-        .text "No subscriptions active"
+        .text 'No subscriptions active'
       return
 
     # check if all my tickets got selected
@@ -1502,21 +1502,21 @@ class CalendarSubscriptionsRef extends App.ControllerContent
 
     if own.length > 0
       if own.length is optionCount
-        modules.push "all my tickets"
+        modules.push 'all my tickets'
       else
         modules.push.apply modules, own.map (entry) ->
           [option, value] = entry.name.split('/')
           return "#{ translationTable[value] } #{ translationTable[option] }"
-        modules[modules.length-1] += " tickets"
+        modules[modules.length-1] += ' tickets'
 
     if not_assigned.length > 0
       if not_assigned.length is optionCount
-        modules.push "all not assigned tickets"
+        modules.push 'all not assigned tickets'
       else
         modules.push.apply modules, not_assigned.map (entry) ->
           [option, value] = entry.name.split('/')
           return "#{ translationTable[value] } #{ translationTable[option] }"
-        modules[modules.length-1] += " tickets"
+        modules[modules.length-1] += ' tickets'
 
     @output
       .attr 'disabled', false

@@ -1,4 +1,4 @@
-# coffeelint: disable=camel_case_classes
+# coffeelint: disable=camel_case_classes,no_interpolation_in_single_quotes
 class App.UiElement.autocompletion
   @render: (attribute, params) ->
 

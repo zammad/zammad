@@ -130,7 +130,7 @@ class _trackSingleton
 
         newDataNew.push item
       catch e
-        # nothing
+        console.log 'error', e
 
     App.Ajax.request(
       type:   'POST'

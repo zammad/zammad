@@ -314,7 +314,7 @@ class Base extends App.Wizard
       logoUrl:      logoUrl
       organization: organization
     )
-    @$("input, select").first().focus()
+    @$('input, select').first().focus()
 
   onLogoPick: (event) =>
     reader = new FileReader()

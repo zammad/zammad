@@ -42,6 +42,6 @@ Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei be
   searchResultAttributes: ->
     display:    "#{@displayName()}"
     id:         @id
-    class:      "organization organization-popover"
+    class:      'organization organization-popover'
     url:        @uiUrl()
-    iconClass:  "organization"
+    iconClass:  'organization'

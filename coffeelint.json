@@ -1,6 +1,6 @@
 {
   "arrow_spacing": {
-    "level": "ignore"
+    "level": "error"
   },
   "braces_spacing": {
     "level": "ignore",
@@ -31,7 +31,7 @@
     "level": "ignore"
   },
   "ensure_comprehensions": {
-    "level": "warn"
+    "level": "error"
   },
   "eol_last": {
     "level": "ignore"
@@ -41,7 +41,7 @@
     "level": "error"
   },
   "line_endings": {
-    "level": "ignore",
+    "level": "error",
     "value": "unix"
   },
   "max_line_length": {
@@ -61,14 +61,14 @@
     "level": "error"
   },
   "no_debugger": {
-    "level": "warn",
+    "level": "error",
     "console": false
   },
   "no_empty_functions": {
     "level": "ignore"
   },
   "no_empty_param_list": {
-    "level": "warn"
+    "level": "error"
   },
   "no_implicit_braces": {
     "level": "ignore",
@@ -79,16 +79,16 @@
     "level": "ignore"
   },
   "no_interpolation_in_single_quotes": {
-    "level": "warn"
+    "level": "error"
   },
   "no_nested_string_interpolation": {
-    "level": "warn"
+    "level": "error"
   },
   "no_plusplus": {
     "level": "ignore"
   },
   "no_private_function_fat_arrows": {
-    "level": "warn"
+    "level": "error"
   },
   "no_stand_alone_at": {
     "level": "ignore"
@@ -97,7 +97,7 @@
     "level": "error"
   },
   "no_this": {
-    "level": "warn"
+    "level": "error"
   },
   "no_throwing_strings": {
     "level": "ignore"
@@ -111,10 +111,10 @@
     "allowed_in_empty_lines": true
   },
   "no_unnecessary_double_quotes": {
-    "level": "ignore"
+    "level": "error"
   },
   "no_unnecessary_fat_arrows": {
-    "level": "warn"
+    "level": "error"
   },
   "non_empty_constructor_needs_parens": {
     "level": "ignore"
@@ -130,6 +130,6 @@
     "level": "ignore"
   },
   "transform_messes_up_line_numbers": {
-    "level": "warn"
+    "level": "error"
   }
 }

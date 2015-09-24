@@ -511,7 +511,7 @@ class App.TicketZoom extends App.Controller
 
     # validate article
     articleParams = @formParam( @$('.article-add') )
-    console.log "submit article", articleParams
+    console.log 'submit article', articleParams
     if articleParams['body']
       articleParams.from         = @Session.get().displayName()
       articleParams.ticket_id    = ticket.id

@@ -12,11 +12,11 @@ class App.PrettyDate
       if diff > 0
         escalated = '-'
       if diff >= 0
-        style = "class=\"label label-danger\""
+        style = 'class="label label-danger"'
       else if diff > -60 * 60
-        style = "class=\"label label-warning\""
+        style = 'class="label label-warning"'
       else
-        style = "class=\"label label-success\""
+        style = 'class="label label-success"'
 
     # remember past/future
     direction = 'future'

@@ -26,11 +26,11 @@ class App.TicketStats extends App.Controller
 
   load: (object) =>
     if @organization
-      ajaxKey = "org_" + @organization.id
+      ajaxKey = "org_#{@organization.id}"
       data =
         organization_id: @organization.id
     else
-      ajaxKey = "user_" + @user.id
+      ajaxKey = "user_#{@user.id}"
       data =
         user_id:         @user.id
         organization_id: @user.organization_id

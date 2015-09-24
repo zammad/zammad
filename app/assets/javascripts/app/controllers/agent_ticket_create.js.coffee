@@ -448,7 +448,7 @@ class App.TicketCreate extends App.Controller
             return
 
           # if not, show start screen
-          ui.navigate "#"
+          ui.navigate '#'
 
         fail: ->
           ui.log 'save failed!'

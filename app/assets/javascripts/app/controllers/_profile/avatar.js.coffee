@@ -365,7 +365,7 @@ class Camera extends App.ControllerModal
         # cache raw video data
         @cacheScreenshot()
     catch e
-      if e.name is "NS_ERROR_NOT_AVAILABLE"
+      if e.name is 'NS_ERROR_NOT_AVAILABLE'
         setTimeout @updatePreview, 200
       else
         throw e

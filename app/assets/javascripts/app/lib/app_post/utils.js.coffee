@@ -1,3 +1,4 @@
+# coffeelint: disable=no_unnecessary_double_quotes
 class App.Utils
 
   # textCleand = App.Utils.textCleanup( rawText )

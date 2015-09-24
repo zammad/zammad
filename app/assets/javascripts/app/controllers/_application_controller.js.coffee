@@ -94,7 +94,7 @@ class App.Controller extends Spine.Controller
     if window.clipboardData # IE
       window.clipboardData.setData( 'Text', text )
     else
-      window.prompt( "Copy to clipboard: Ctrl+C, Enter", text )
+      window.prompt( 'Copy to clipboard: Ctrl+C, Enter', text )
 
   # disable all delay's and interval's
   disconnectClient: ->
@@ -144,6 +144,7 @@ class App.Controller extends Spine.Controller
         try
           element.css( 'position', 'static' )
         catch e
+          console.log 'error', e
 
     position = [ 15, 30, 15, 0, -15, -30, -15, 0 ]
     position = position.concat( position.concat( position ) )
@@ -486,7 +487,7 @@ class App.Controller extends Spine.Controller
       item.title = '???'
 
       # convert backend name space to local name space
-      item.object = item.object.replace("::", '')
+      item.object = item.object.replace('::', '')
 
       # lookup real data
       if App[item.object] && App[item.object].exists( item.o_id )
@@ -659,7 +660,7 @@ class App.SessionMessage extends App.ControllerModal
       window.location.href = window.location.href
       return true
 
-    throw "Cant reload page!"
+    throw 'Cant reload page!'
 
 class App.UpdateHeader extends App.Controller
   constructor: ->

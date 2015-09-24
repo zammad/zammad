@@ -318,7 +318,7 @@ class App.FirstStepsClues extends App.Controller
 
   perform: (actions, container) ->
     for action in actions
-      if action.indexOf(" ") < 0
+      if action.indexOf(' ') < 0
         # 'click'
         eventName = action
         target = container

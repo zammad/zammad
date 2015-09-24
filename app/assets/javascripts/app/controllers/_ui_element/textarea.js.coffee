@@ -5,11 +5,11 @@ class App.UiElement.textarea
     item = $( App.view('generic/textarea')( attribute: attribute ) + '<div class="file-uploader ' + attribute.class + '" id="' + fileUploaderId + '"></div>' )
 
     a = ->
-      visible = $( item[0] ).is(":visible")
+      visible = $( item[0] ).is(':visible')
       if visible && !$( item[0] ).expanding('active')
         $( item[0] ).expanding()
       $( item[0] ).on('focus', ->
-        visible = $( item[0] ).is(":visible")
+        visible = $( item[0] ).is(':visible')
         if visible && !$( item[0] ).expanding('active')
           $( item[0] ).expanding().focus()
       )

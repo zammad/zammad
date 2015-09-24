@@ -1,3 +1,4 @@
+# coffeelint: disable=no_unnecessary_double_quotes
 class App.ChannelForm extends App.Controller
   events:
     'change form.js-params': 'updateParams'

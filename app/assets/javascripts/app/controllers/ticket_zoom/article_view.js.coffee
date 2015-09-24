@@ -192,7 +192,7 @@ class ArticleViewItem extends App.Controller
       article.removeClass('state--folde-out')
 
       # scroll back up
-      article.velocity "scroll",
+      article.velocity 'scroll',
         container: article.scrollParent()
         offset: -article.offset().top - metaTop.outerHeight()
         duration: animSpeed
@@ -224,7 +224,7 @@ class ArticleViewItem extends App.Controller
       metaTop.removeClass('hide')
 
       # balance out the top meta height by scrolling down
-      article.velocity("scroll",
+      article.velocity('scroll',
         container: article.scrollParent()
         offset: -article.offset().top + metaTop.outerHeight()
         duration: animSpeed

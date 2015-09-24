@@ -164,7 +164,7 @@ class App.OnlineNotificationWidget extends App.Controller
         container: 'body'
         html:      true
         placement: 'right'
-        viewport:  { "selector": "#app", "padding": 10 }
+        viewport:  { selector: '#app', padding: 10 }
         template:  App.view('widget/online_notification')()
         title:     ' '
         content:   ' '

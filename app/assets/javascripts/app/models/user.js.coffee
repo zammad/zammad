@@ -82,7 +82,7 @@ class App.User extends App.Model
         vip = false
         data = "data-id=\"#{@id}\""
       else
-        cssClass += " user-popover"
+        cssClass += ' user-popover'
         data      = "data-id=\"#{@id}\""
     else
       vip = false
@@ -129,6 +129,6 @@ class App.User extends App.Model
   searchResultAttributes: ->
     display:    "#{@displayName()}"
     id:         @id
-    class:      "user user-popover"
+    class:      'user user-popover'
     url:        @uiUrl()
-    iconClass:  "user"
+    iconClass:  'user'

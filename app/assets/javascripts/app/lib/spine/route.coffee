@@ -1,4 +1,4 @@
-# coffeelint: disable=no_this,indentation
+# coffeelint: disable=no_this,indentation,arrow_spacing
 Spine = @Spine or require('spine')
 $     = Spine.$
 

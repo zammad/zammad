@@ -56,4 +56,4 @@ class App.Ticket extends App.Model
     id:         @id
     class:      "level-#{@level()} ticket-popover"
     url:        @uiUrl()
-    iconClass:  "priority"
+    iconClass:  'priority'
