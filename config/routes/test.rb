@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
   match '/tests-model',           to: 'tests#model',           via: :get
   match '/tests-model-ui',        to: 'tests#model_ui',        via: :get
   match '/tests-form',            to: 'tests#form',            via: :get
+  match '/tests-form-trim',       to: 'tests#form_trim',       via: :get
   match '/tests-form-extended',   to: 'tests#form_extended',   via: :get
   match '/tests-form-validation', to: 'tests#form_validation', via: :get
   match '/tests-table',           to: 'tests#table',           via: :get

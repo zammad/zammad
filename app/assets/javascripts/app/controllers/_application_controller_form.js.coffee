@@ -450,11 +450,11 @@ class App.ControllerForm extends App.Controller
       # collect all params, push it to an array if already exists
       if param[key.name] isnt undefined
         if typeof param[key.name] is 'string'
-          param[key.name] = [param[key.name], key.value]
+          param[key.name] = [param[key.name], key.value.trim()]
         else
           param[key.name].push key.value
       else
-        param[key.name] = key.value
+        param[key.name] = key.value.trim()
 
     # data type conversion
     for key of param
