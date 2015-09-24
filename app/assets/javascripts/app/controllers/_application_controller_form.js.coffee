@@ -452,7 +452,7 @@ class App.ControllerForm extends App.Controller
         if typeof param[key.name] is 'string'
           param[key.name] = [param[key.name], key.value.trim()]
         else
-          param[key.name].push key.value
+          param[key.name].push key.value.trim()
       else
         param[key.name] = key.value.trim()
 

@@ -8,6 +8,12 @@ test( 'form trim checks', function() {
     input3: 'a',
     input4: 'a b',
     input5: 'äö  ü',
+    input6: [
+      'a',
+      'b',
+      'c',
+      'd'
+    ],
     textarea1: '',
     textarea2: '',
     textarea3: 'a',
@@ -23,6 +29,5 @@ test( 'form trim checks', function() {
   var params = App.ControllerForm.params( el )
 
   deepEqual( params, test_params, 'form param check' )
-  console.log('22', params)
-  console.log('22', test_params)
+
 })
