@@ -16,6 +16,8 @@ Version:      0.0
 License:    GNU AFFERO GENERAL PUBLIC LICENSE Version 3, 19 November 2007
 Group:        Applications/Mail
 Provides:     zammad
+Requires(pre): /usr/sbin/useradd, /usr/bin/getent
+Requires(postun): /usr/sbin/userdel
 Requires:     cronie httpd 
 Autoreqprov:  no
 Release:      01
@@ -27,6 +29,7 @@ BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 <DESCRIPTION>
 
 %prep
+/usr/bin/getent passwd zammad || /usr/sbin/useradd -d /opt/zammad -s /bin/bash zammad  
 #%setup
 
 %build
