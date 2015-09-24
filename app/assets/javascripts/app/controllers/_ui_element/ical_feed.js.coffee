@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
   @render: (attribute, params) ->
     console.log('A', attribute)

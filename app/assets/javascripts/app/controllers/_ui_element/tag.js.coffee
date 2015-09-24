@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.UiElement.tag
   @render: (attribute) ->
     item = $( App.view('generic/input')( attribute: attribute ) )

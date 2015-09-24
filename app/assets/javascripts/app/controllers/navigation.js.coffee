@@ -121,7 +121,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # start oorganization popups
     @organizationPopups()
 
-  render: () ->
+  render: ->
 
     # reset result cache
     @searchResultCache = {}

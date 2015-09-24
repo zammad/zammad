@@ -218,7 +218,7 @@ class App.Controller extends Spine.Controller
     update = =>
       ui = @
       $('.humanTimeFromNow').each( ->
-        item = $(this)
+        item = $(@)
         currentVal = item.text()
         ui.frontendTimeUpdateItem(item, currentVal)
       )
@@ -265,9 +265,9 @@ class App.Controller extends Spine.Controller
         html = App.view('popover/ticket')(
           ticket: ticket
         )
-        html = $( html )
+        html = $(html)
         html.find('.humanTimeFromNow').each( ->
-          item = $(this)
+          item = $(@)
           ui.frontendTimeUpdateItem(item)
         )
         html
@@ -427,7 +427,7 @@ class App.Controller extends Spine.Controller
           )
           html = $( html )
           html.find('.humanTimeFromNow').each( ->
-            item = $(this)
+            item = $(@)
             ui.frontendTimeUpdateItem(item)
           )
           html

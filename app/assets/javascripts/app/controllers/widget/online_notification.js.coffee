@@ -65,7 +65,7 @@ class App.OnlineNotificationWidget extends App.Controller
       processData: true
     )
 
-  removeClickCatcher: () =>
+  removeClickCatcher: =>
     return if !@clickCatcher
     @clickCatcher.remove()
     @clickCatcher = null

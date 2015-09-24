@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.UiElement.holiday_selector
   @render: (attribute, params) ->
     console.log('aa', attribute)

@@ -162,14 +162,14 @@ class App.Utils
 
     # Replace all x tags with the type of replacementTag
     html.find('h1, h2, h3, h4, h5, h6, textarea').each( ->
-      outer = this.outerHTML;
+      outer = @outerHTML;
 
       # Replace opening tag
-      regex = new RegExp('<' + this.tagName, 'i')
+      regex = new RegExp('<' + @tagName, 'i')
       newTag = outer.replace(regex, '<' + replacementTag)
 
       # Replace closing tag
-      regex = new RegExp('</' + this.tagName, 'i')
+      regex = new RegExp('</' + @tagName, 'i')
       newTag = newTag.replace(regex, '</' + replacementTag)
 
       $(@).replaceWith(newTag)

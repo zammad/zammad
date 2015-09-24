@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.UiElement.postmaster_match
   @defaults: ->
     groups =

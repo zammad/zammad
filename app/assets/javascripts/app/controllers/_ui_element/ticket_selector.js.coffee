@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.UiElement.ticket_selector
   @defaults: ->
     defaults = ['ticket.state_id']

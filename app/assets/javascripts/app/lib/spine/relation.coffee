@@ -1,3 +1,4 @@
+# coffeelint: disable=no_this,indentation,no_unnecessary_fat_arrows
 Spine   = @Spine or require('spine')
 
 class Collection extends Spine.Module

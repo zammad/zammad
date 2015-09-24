@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.UiElement.business_hours
   @render: (attributeOrig) ->
 
@@ -5,8 +6,8 @@ class App.UiElement.business_hours
     attribute.nameRaw = attribute.name
     attribute.name = "{business_hours}#{attribute.name}"
 
-    # Martin: our frontend doesn't create 24:00. 
-    # you have to check second values ('till') for 00:00 
+    # Martin: our frontend doesn't create 24:00.
+    # you have to check second values ('till') for 00:00
     # and convert them to 24:00
     if !attribute.value
       attribute.value =

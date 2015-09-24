@@ -790,7 +790,7 @@ class ErrorRef extends App.ControllerContent
 App.Config.set( 'layout_ref/error', ErrorRef, 'Routes' )
 
 
-class ticketZoomRef extends App.ControllerContent
+class TicketZoomRef extends App.ControllerContent
   elements:
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
@@ -939,7 +939,7 @@ class ticketZoomRef extends App.ControllerContent
     @storeHighlights()
 
 
-App.Config.set( 'layout_ref/ticket_zoom', ticketZoomRef, 'Routes' )
+App.Config.set( 'layout_ref/ticket_zoom', TicketZoomRef, 'Routes' )
 
 
 class CluesRef extends App.ControllerContent

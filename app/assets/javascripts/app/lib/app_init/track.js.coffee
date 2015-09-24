@@ -1,3 +1,4 @@
+# coffeelint: disable=no_backticks
 class App.Track
   _instance = undefined
 

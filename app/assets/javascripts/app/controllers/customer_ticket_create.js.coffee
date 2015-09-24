@@ -205,7 +205,7 @@ class Index extends App.ControllerContent
         done: ->
 
           # redirect to zoom
-          ui.navigate '#ticket/zoom/' + this.id
+          ui.navigate '#ticket/zoom/' + @id
 
         fail: ->
           ui.log 'CustomerTicketCreate', 'error', 'can not create'

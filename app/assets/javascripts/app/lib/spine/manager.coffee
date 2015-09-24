@@ -1,3 +1,4 @@
+# coffeelint: disable=no_this
 Spine = @Spine or require('spine')
 $     = Spine.$
 

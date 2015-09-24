@@ -1,3 +1,4 @@
+# coffeelint: disable=no_this
 ###
 Spine.js MVC library
 Released under the MIT License

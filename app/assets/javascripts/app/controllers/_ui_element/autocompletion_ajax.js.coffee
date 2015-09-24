@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.UiElement.autocompletion_ajax
   @render: (attribute, params = {}) ->
     if params[attribute.name]

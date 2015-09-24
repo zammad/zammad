@@ -145,7 +145,7 @@ class App.SearchableSelect extends Spine.Controller
     @shadowInput.trigger('change')
     @toggle()
 
-  onBlur: =>
+  onBlur: ->
     # @clearAutocomplete()
 
   onInput: (event) =>
@@ -160,7 +160,7 @@ class App.SearchableSelect extends Spine.Controller
     @option_items
       .addClass 'is-hidden'
       .filter ->
-        this.textContent.match(regex)
+        @textContent.match(regex)
       .removeClass 'is-hidden'
 
     @highlightFirst()

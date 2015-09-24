@@ -133,7 +133,7 @@ class Index extends App.Controller
   onUpload: (event) =>
     callback = @storeImage
     EXIF.getData event.target.files[0], ->
-      orientation   = this.exifdata.Orientation
+      orientation   = @exifdata.Orientation
       reader        = new FileReader()
       reader.onload = (e) ->
         new ImageCropper
@@ -141,7 +141,7 @@ class Index extends App.Controller
           callback:    callback
           orientation: orientation
 
-      reader.readAsDataURL(this)
+      reader.readAsDataURL(@)
 
 App.Config.set( 'Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index }, 'NavBarProfile' )
 

@@ -280,7 +280,7 @@ class TranslationList extends App.Controller
     ui = @
     @changesAvailable = false
     @$('.js-Item').each( (e) ->
-      id = $(this).data('id')
+      id = $(@).data('id')
       ui.updateRow(id)
     )
     if @changesAvailable
