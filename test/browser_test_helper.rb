@@ -134,7 +134,7 @@ class TestCase < Test::Unit::TestCase
     element.send_keys( params[:password] )
 
     if params[:remember_me]
-      instance.find_elements( { css: '#login [name="remember_me"]' } )[0].click
+      instance.find_elements( { css: '#login .checkbox-replacement' } )[0].click
     end
     instance.find_elements( { css: '#login button' } )[0].click
 
