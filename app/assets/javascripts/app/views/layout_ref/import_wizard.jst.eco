@@ -45,7 +45,7 @@
             <input type="url" id="otrs-link" class="form-control" placeholder="http://otrs.company.de/otrs">
             <div class="input-feedback centered">
               <div class="small loading icon"></div>
-              <svg class="icon icon-error"><use xlink:href="#icon-diagonal-cross" /></svg>
+              <svg class="icon icon-error icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
               <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
             </div>
           </div>

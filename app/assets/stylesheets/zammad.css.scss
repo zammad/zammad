@@ -5093,6 +5093,10 @@ footer {
 .wizard-body {
   flex: 1;
   padding-bottom: 15px;
+  
+  .form-control {
+    min-width: 0;
+  }
 }
 
 .wizard-controls {
