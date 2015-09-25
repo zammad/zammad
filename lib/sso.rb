@@ -40,8 +40,8 @@ returns
 
     # added configured backends
     Setting.where( area: 'Security::SSO' ).each {|setting|
-      if setting.state[:value]
-        config.push setting.state[:value]
+      if setting.state_current[:value]
+        config.push setting.state_current[:value]
       end
     }
 

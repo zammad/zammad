@@ -67,9 +67,9 @@ class App.SettingsAreaItem extends App.Controller
       directValue += 1
     if directValue > 1
       for item in @setting.options['form']
-        item['default'] = @setting.state.value[item.name]
+        item['default'] = @setting.state_current.value[item.name]
     else
-      item['default'] = @setting.state.value
+      item['default'] = @setting.state_current.value
 
     # form
     @configure_attributes = @setting.options['form']
@@ -97,17 +97,17 @@ class App.SettingsAreaItem extends App.Controller
       directData  = params[item.name]
 
     if directValue > 1
-      state = {
+      state_current = {
         value: params
       }
       #App.Config.set((@setting.name, params)
     else
-      state = {
+      state_current = {
         value: directData
       }
       #App.Config.set(@setting.name, directData)
 
-    @setting['state'] = state
+    @setting['state_current'] = state_current
     ui = @
     @setting.save(
       done: =>
