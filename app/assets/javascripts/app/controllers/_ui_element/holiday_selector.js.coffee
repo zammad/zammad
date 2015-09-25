@@ -20,10 +20,10 @@ class App.UiElement.holiday_selector
     item.find('.js-datePicker').html(datePicker)
 
     # set active/inactive of date
-    item.find('.js-active').bind('click', (e) ->
+    item.delegate('.js-active', 'click', (e) ->
       active = $(e.target).prop('checked')
       row = $(e.target).closest('tr')
-      input = $(e.target).closest('tr').find('.js-description')
+      input = $(e.target).closest('tr').find('.js-summary')
       if !active
         row.addClass('is-inactive')
         input.prop('readonly', true)
@@ -35,7 +35,7 @@ class App.UiElement.holiday_selector
     )
 
     # remove date
-    item.find('.js-remove').bind('click', (e) ->
+    item.delegate('.js-remove', 'click', (e) ->
       $(e.target).closest('tr').remove()
     )
 
@@ -61,14 +61,14 @@ class App.UiElement.holiday_selector
       $(e.target).closest('tr').find('.js-summary').val('')
 
       # place new element
-      template = item.find('.js-placeholder').clone()
-      template.removeClass('hidden').removeClass('js-placeholder')
-      template.attr('data-date', date)
-      template.find('.js-date').html(App.i18n.translateDate(date))
-      template.find('.js-active').attr('name', "{boolean}public_holidays::#{date}::active")
-      template.find('.js-summary').attr('name', "public_holidays::#{date}::summary")
-      template.find('.js-summary').val(summary)
-      item.find('.js-placeholder').before(template)
+
+      template = App.view('calendar/holiday_selector_placeholder')(
+        placeholderDate: date
+        placeholderSummary: summary
+        nameSummary: "public_holidays::#{date}::summary"
+        nameActive: "{boolean}public_holidays::#{date}::active"
+      )
+      item.find('.settings-list-controlRow').before(template)
     )
 
     item

@@ -1,0 +1,15 @@
+<tr class="" data-date="<%= @placeholderDate %>">
+  <td>
+    <label class="checkbox-replacement">
+      <input type="checkbox" checked class="js-active" name="<%= @nameActive %>" value="true">
+      <%- @Icon('checkbox', 'icon-unchecked') %>
+      <%- @Icon('checkbox-checked', 'icon-checked') %>
+    </label>
+  <td><%- @Tdate(@placeholderDate) %>
+  <td><input class="form-control form-control--small js-summary" type="text" name="<%= @placeholderSummary %>" value="<%= @placeholderSummary %>" required/>
+  <td>
+    <div class="settings-list-rowControls">
+      <div class="btn btn--text js-remove">
+        <%- @Icon('trash') %> <%- @T('Remove') %>
+      </div>
+    </div>
