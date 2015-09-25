@@ -19,7 +19,7 @@ class App.UiElement.business_hours
         tue:
           active: true
           timeframes: [
-            ['00:00','22:00']
+            ['09:00','17:00']
           ]
         wed:
           active: true
@@ -29,8 +29,7 @@ class App.UiElement.business_hours
         thu:
           active: true
           timeframes: [
-            ['09:00','12:00'],
-            ['13:00','17:00']
+            ['09:00','17:00']
           ]
         fri:
           active: true

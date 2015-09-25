@@ -35,7 +35,7 @@
               <%- @Icon('checkbox-checked', 'icon-checked') %>
             </label>
           <td class="js-date">
-          <td><input class="form-control form-control--small js-summary" type="text" name="" value="<%= meta.summary %>" required/>
+          <td><input class="form-control form-control--small js-summary" type="text" name="" value="" required/>
           <td>
             <div class="settings-list-rowControls">
               <div class="btn btn--text js-remove">
