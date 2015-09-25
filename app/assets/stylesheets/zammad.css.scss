@@ -818,7 +818,7 @@ label,
   text-transform: uppercase;
   color: hsl(198,19%,72%);
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
   letter-spacing: 0.05em;
   margin-bottom: 4px;
@@ -989,7 +989,7 @@ fieldset > *:not(.form-group) .form-control {
 
 .formGroup-label {
   padding: 0 2px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   position: relative;
   display: flex;
   align-items: center;
@@ -1567,6 +1567,14 @@ kbd {
   box-shadow:
     0 8px 17px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+  label {
+    color: hsl(0,0%,60%);
+  }
+
+  .inline-label {
+    font-size: inherit;
+  }
 }
 
   .hero-unit h1,
