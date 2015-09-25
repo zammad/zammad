@@ -31,11 +31,7 @@ set config setting
     if !setting
       fail "Can't find config setting '#{name}'"
     end
-    if setting.respond_to?(:state_current)
-      setting.state_current = { value: value }
-    else
-      setting.state = { value: value }
-    end
+    setting.state_current = { value: value }
     setting.save
     logger.info "Setting.set(#{name}, #{value.inspect})"
   end
@@ -70,15 +66,9 @@ reset config setting to default
     if !setting
       fail "Can't find config setting '#{name}'"
     end
-    if setting.respond_to?(:state_current)
-      setting.state_current = setting.state_initial
-      setting.save
-      logger.info "Setting.reset(#{name}, #{setting.state_current.inspect})"
-    else
-      setting.state = setting.state_initial
-      setting.save
-      logger.info "Setting.reset(#{name}, #{setting.state_current.inspect})"
-    end
+    setting.state_current = setting.state_initial
+    setting.save
+    logger.info "Setting.reset(#{name}, #{setting.state_current.inspect})"
     load
     @@current[:settings_config][name]
   end
@@ -95,16 +85,9 @@ reset config setting to default
 
     # read all config settings
     config = {}
-    s = Setting.new
-    if s.respond_to?(:state_current)
-      Setting.select('name, state_current').order(:id).each { |setting|
-        config[setting.name] = setting.state_current[:value]
-      }
-    else
-      Setting.select('name, state').order(:id).each { |setting|
-        config[setting.name] = setting.state[:value]
-      }
-    end
+    Setting.select('name, state_current').order(:id).each { |setting|
+      config[setting.name] = setting.state_current[:value]
+    }
 
     # config lookups
     config.each { |key, value|
@@ -122,11 +105,7 @@ reset config setting to default
 
   # set initial value in state_initial
   def set_initial
-    if self.respond_to?(:state_current)
-      self.state_initial = state_current
-    else
-      self.state_initial = state
-    end
+    self.state_initial = state_current
   end
 
   # set new cache
@@ -165,10 +144,6 @@ reset config setting to default
   # convert state ot hash to be able to store it as store
   def state_check
     return if state && state.respond_to?('has_key?') && state.key?(:value)
-    if self.respond_to?(:state_current)
-      self.state_current = { value: state }
-    else
-      self.state = { value: state }
-    end
+    self.state_current = { value: state }
   end
 end
