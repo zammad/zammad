@@ -209,7 +209,10 @@ returns
   def sync(without_save = nil)
     return if !ical_url
     begin
-      events = Calendar.parse(ical_url)
+      events = {}
+      if ical_url && !ical_url.empty?
+        events = Calendar.parse(ical_url)
+      end
 
       # sync with public_holidays
       if !public_holidays
