@@ -6178,6 +6178,10 @@ output {
     margin-left: -9px;
     margin-right: -9px;
   }
+  
+  h2, h3 {
+    margin-bottom: 0;
+  }
 
   .action-block,
   .action-controls,
@@ -6187,11 +6191,6 @@ output {
     h2:first-child,
     h3:first-child {
       margin-top: 0;
-    }
-
-    h2:only-child,
-    h3:only-child {
-      margin-bottom: 0;
     }
   }
 
@@ -6218,7 +6217,9 @@ output {
     padding: 5px 10px;
     margin-right: -25px;
     margin-top: -4px;
+    margin-bottom: -5px;
     color: hsl(197,16%,65%);
+    cursor: default;
   }
     
   .action-flow-icon {
