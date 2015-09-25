@@ -1,4 +1,4 @@
-<div class="main flex">
+<div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
 
   <div class="ticketZoom">
     <div class="ticketZoom-controls">
@@ -300,4 +300,325 @@ Oliver<br></div>
     </div>
   </div>
 
+</div>
+
+<div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical">
+  <div class="sidebar bottom-form-shadow flex" data-tab="ticket">
+    <div class="sidebar-header">
+      <h2 class="sidebar-header-headline js-headline">
+        Ticket
+      </h2>
+      <div class="sidebar-header-actions js-actions">
+        <div class="dropdown dropdown--actions">
+          <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+          <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
+            <li role="presentation">
+              <a data-type="ticket-history" href="#" role="menuitem" tabindex="-1">History</a>
+            </li>
+            <li role="presentation">
+              <a data-type="ticket-merge" href="#" role="menuitem" tabindex="-1">Merge</a>
+            </li>
+            <li role="presentation">
+              <a data-type="customer-change" href="#" role="menuitem" tabindex="-1">Change Customer</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="tabsSidebar-close"></div>
+    </div>
+    <hr>
+    <div class="sidebar-content">
+      <form class="edit">
+        <fieldset>
+          <div class="select form-group">
+            <div class="formGroup-label">
+              <label for="Ticket_187247_group_id">Group <span>*</span></label>
+            </div>
+            <div class="controls">
+              <div class="u-positionOrigin">
+                <select class="form-control" id="Ticket_187247_group_id" name="group_id" required="">
+                  <option value="">
+                    -
+                  </option>
+                  <option value="15">
+                    FillGroup::124782
+                  </option>
+                  <option value="6">
+                    FillGroup::180684
+                  </option>
+                  <option value="2">
+                    FillGroup::206709
+                  </option>
+                  <option value="16">
+                    FillGroup::240252
+                  </option>
+                  <option value="19">
+                    FillGroup::316438
+                  </option>
+                  <option value="3">
+                    FillGroup::331147
+                  </option>
+                  <option value="4">
+                    FillGroup::370967
+                  </option>
+                  <option value="9">
+                    FillGroup::371994
+                  </option>
+                  <option value="5">
+                    FillGroup::387404
+                  </option>
+                  <option value="7">
+                    FillGroup::505241
+                  </option>
+                  <option value="21">
+                    FillGroup::596513
+                  </option>
+                  <option value="12">
+                    FillGroup::661322
+                  </option>
+                  <option value="11">
+                    FillGroup::707393
+                  </option>
+                  <option value="17">
+                    FillGroup::808471
+                  </option>
+                  <option value="18">
+                    FillGroup::854423
+                  </option>
+                  <option value="8">
+                    FillGroup::894121
+                  </option>
+                  <option value="14">
+                    FillGroup::907762
+                  </option>
+                  <option value="20">
+                    FillGroup::927450
+                  </option>
+                  <option value="10">
+                    FillGroup::957248
+                  </option>
+                  <option value="13">
+                    FillGroup::975373
+                  </option>
+                  <option selected value="1">
+                    Users
+                  </option>
+                </select>
+              </div><span class="help-inline"></span> <span class="help-block"></span>
+            </div>
+          </div>
+          <div class="select form-group">
+            <div class="formGroup-label">
+              <label for="Ticket_187247_owner_id">Owner <span></span></label>
+            </div>
+            <div class="controls">
+              <div class="u-positionOrigin">
+                <select class="form-control" id="Ticket_187247_owner_id" name="owner_id">
+                  <option value="">
+                    -
+                  </option>
+                  <option value="3">
+                    Felix Niklas
+                  </option>
+                  <option selected value="4">
+                    Hans Huber
+                  </option>
+                </select>
+              </div><span class="help-inline"></span> <span class="help-block"></span>
+            </div>
+          </div>
+          <div class="select form-group">
+            <div class="formGroup-label">
+              <label for="Ticket_187247_state_id">State <span>*</span></label>
+            </div>
+            <div class="controls">
+              <div class="u-positionOrigin">
+                <select class="form-control" id="Ticket_187247_state_id" name="state_id" required="">
+                  <option value="4">
+                    closed
+                  </option>
+                  <option value="2">
+                    open
+                  </option>
+                  <option selected value="7">
+                    pending close
+                  </option>
+                  <option value="3">
+                    pending reminder
+                  </option>
+                </select>
+              </div><span class="help-inline"></span> <span class="help-block"></span>
+            </div>
+          </div>
+          <div class="datetime form-group">
+            <div class="formGroup-label">
+              <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
+            </div>
+            <div class="controls">
+              <input type="text" class="form-control js-datepicker">
+            </div>
+          </div>
+          <div class="select form-group">
+            <div class="formGroup-label">
+              <label for="Ticket_187247_priority_id">Priority <span>*</span></label>
+            </div>
+            <div class="controls">
+              <div class="u-positionOrigin">
+                <select class="form-control" id="Ticket_187247_priority_id" name="priority_id" required="">
+                  <option selected value="1">
+                    1 low
+                  </option>
+                  <option value="2">
+                    2 normal
+                  </option>
+                  <option value="3">
+                    3 high
+                  </option>
+                </select>
+              </div><span class="help-inline"></span> <span class="help-block"></span>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <div class="tags">
+        <label>Tags</label>
+        <ul class="list list--sidebar">
+          <li class="list-item">
+            <div class="list-item-name">
+              test
+            </div>
+            <div class="list-item-delete js-delete"></div>
+          </li>
+          <li class="list-item">
+            <div class="list-item-name">
+              123
+            </div>
+            <div class="list-item-delete js-delete"></div>
+          </li>
+          <li class="list-item">
+            <div class="list-item-name">
+              planeten
+            </div>
+            <div class="list-item-delete js-delete"></div>
+          </li>
+        </ul>
+        <div class="text-muted js-newTagLabel u-clickable">
+          + Add Tag
+        </div>
+        <form>
+          <input autocomplete="off" class="hide js-newTagInput" name="new_tag" type="text">
+        </form>
+      </div>
+      <div class="links">
+        <label>Links</label>
+        <div class="ticketLinks">
+          <div class="list-title">
+            child
+          </div>
+          <ol class="tasks tasks--standalone">
+            <li class="task">
+              <div class="icon-holder"></div>
+              <div class="task-text">
+                <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a> <time class="humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">01/20/2015</time>
+              </div>
+              <div class="list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
+            </li>
+          </ol>
+        </div>
+        <div class="text-muted u-clickable js-add">
+          + Add Link
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar bottom-form-shadow flex hide" data-tab="customer">
+    <div class="sidebar-header">
+      <h2 class="sidebar-header-headline js-headline">
+        Customer
+      </h2>
+      <div class="sidebar-header-actions js-actions">
+        <div class="dropdown dropdown--actions">
+          <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+          <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
+            <li role="presentation">
+              <a data-type="customer-change" href="#" role="menuitem" tabindex="-1">Change Customer</a>
+            </li>
+            <li role="presentation">
+              <a data-type="customer-edit" href="#" role="menuitem" tabindex="-1">Edit Customer</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="tabsSidebar-close"></div>
+    </div>
+    <hr>
+    <div class="sidebar-content">
+      <div class="sidebar-block">
+        <span class="avatar unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
+        <h3 title="Name">
+          Nicole Braun
+        </h3>
+      </div>
+      <div class="sidebar-block">
+        <label>Email</label> nicole.braun@zammad.org
+      </div>
+      <div class="sidebar-block">
+        <label>Note</label>
+        <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update"></div>
+      </div>
+      <div class="sidebar-block">
+        <label>Tickets</label> <span class="user-tickets" data-original-title="Open Tickets" data-type="open" style="" title="">open <span class="count">(5)</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar bottom-form-shadow flex hide" data-tab="organization">
+    <div class="sidebar-header">
+      <h2 class="sidebar-header-headline js-headline">
+        Organization
+      </h2>
+      <div class="sidebar-header-actions js-actions">
+        <div class="dropdown dropdown--actions">
+          <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+          <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
+            <li role="presentation">
+              <a data-type="organization-edit" href="#" role="menuitem" tabindex="-1">Edit Organization</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="tabsSidebar-close"></div>
+    </div>
+    <hr>
+    <div class="sidebar-content">
+      <div class="sidebar-block">
+        <div class="avatar organizationInfo-avatar size-50">
+          <a href="#organization/profile/1"></a>
+        </div>
+        <h3 title="Name">
+          Zammad Foundation
+        </h3>
+      </div>
+      <div class="sidebar-block">
+        <label>Shared organization</label> Yes
+      </div>
+      <div class="sidebar-block">
+        <label>Note</label>
+        <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update-org">
+          Wir sand ausm Woid!
+        </div>
+      </div>
+      <hr>
+      <label>Members</label>
+      <ul class="userList">
+        <li>
+          <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tabsSidebar-tabs vertical justified">
+    <div class="tabsSidebar-tab active" data-tab="ticket"></div>
+    <div class="tabsSidebar-tab" data-tab="customer"></div>
+    <div class="tabsSidebar-tab" data-tab="organization"></div>
+  </div>
 </div>

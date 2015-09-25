@@ -843,6 +843,11 @@ class TicketZoomRef extends App.ControllerContent
       colors: @colors
       activeColorIndex: @activeColorIndex
 
+    @$('.js-datepicker').datepicker
+      todayHighlight: true
+      startDate: new Date().toLocaleDateString("en-US") # returns 9/25/2015
+      container: @$('.js-datepicker').parent()
+
   # for testing purposes the highlights get stored in localStorage
   loadHighlights: ->
     if highlights = localStorage['highlights']

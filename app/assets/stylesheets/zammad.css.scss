@@ -875,6 +875,10 @@ fieldset > *:not(.form-group) .form-control {
   }
 }
 
+.datetime.form-group .controls {
+  position: relative;
+}
+
 .form-group + .form-group {
   margin-top: 0;
 }
@@ -6251,6 +6255,106 @@ output {
     
     .btn {
       align-self: center;
+    }
+  }
+}
+
+.datepicker {
+  background: hsl(234,10%,19%);
+  color: white;
+  padding: 0 14px 11px;
+  position: absolute;
+  left: 0 !important;
+  top: 41px !important;
+  min-width: 0;
+  cursor: default;
+  
+  .datepicker-switch {
+    padding: 12px 0;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    
+    &:hover {
+      background: hsl(240,10%,14%);
+    }
+  }
+
+  .next,
+  .prev {
+    cursor: pointer;
+    padding: 12px 9px 0;
+    vertical-align: top;
+    text-align: center;
+    
+    .icon {
+      margin-top: 4px;
+      fill: white;
+      opacity: 1;
+    }
+    
+    &:hover {
+      background: hsl(240,10%,14%);
+    }
+  }
+  
+  .dow {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 20px 5px 0;
+    text-align: center;
+  }
+
+  .day {
+    width: 27px;
+    height: 27px;
+    border-radius: 100%;
+    padding: 0;
+  }
+
+  .month,
+  .year {
+    float: left;
+    width: 23%;
+    margin: 1%;
+    padding: 5px 0;
+  }
+  
+  .day, .month, .year {
+    text-align: center;
+    font-size: 15px;
+    
+    &:not(.disabled) {
+      cursor: pointer;
+    }
+    
+    &.disabled,
+    &.old,
+    &.new {
+      color: hsl(0,0%,33%);
+    }
+
+    &.today {
+      background: hsl(240,10%,14%);
+    }
+
+    &.focused {
+      box-shadow: 0 0 0 1px hsl(207,82%,64%) inset;
+    }
+
+    &.active {
+      color: white;
+      background: hsl(207,82%,64%);
+    }
+  }
+
+  .today {
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+    
+    &.hidden {
+      display: none;
     }
   }
 }
