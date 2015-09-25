@@ -1,36 +1,48 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
   @render: (attribute, params) ->
-    console.log('A', attribute)
-    item = $( '<div>' + App.view('generic/input')( attribute: attribute ) + '</div>' )
 
-    ical_feeds = App.Config.get('ical_feeds')
+    ical_feeds = App.Config.get('ical_feeds') || {}
+    item = $( App.view('generic/ical_feed')( attribute: attribute, ical_feeds: ical_feeds ) )
 
-    if !_.isEmpty(ical_feeds)
-      attribute_ical =
-        options:    ical_feeds
-        tag:        'searchable_select'
-        placeholder: App.i18n.translateInline('Search public ical feed...')
+    updateCheckList = ->
+      return if item.find('.js-checkList').prop('checked')
+      return if !item.find('.js-list').val()
+      item.find('.js-checkList').prop('checked', true)
+      item.find('.js-checkManual').prop('checked', false)
 
-      # build options list based on config
-      @getConfigOptionList( attribute_ical )
+    updateCheckManual = ->
+      return if item.find('.js-checkManual').prop('checked')
+      item.find('.js-checkList').prop('checked', false)
+      item.find('.js-checkManual').prop('checked', true)
 
-      # add null selection if needed
-      @addNullOption( attribute_ical )
+    updateShadow = (selected) ->
+      if !selected
+        selected = item.find('.js-check:checked').attr('value')
+      if selected is 'manual'
+        item.find('.js-shadow').val( item.find('.js-manual').val() )
+      else
+        item.find('.js-shadow').val( item.find('.js-list').val() )
 
-      # sort attribute.options
-      @sortOptions( attribute_ical )
+    # set inital state
+    if ical_feeds[attribute.value]
+      updateCheckList()
+    else
+      updateCheckManual()
+      item.find('.js-manual').val(attribute.value)
 
-      # finde selected/checked item of list
-      @selectedOptions( attribute_ical )
+    item.find('.js-check').bind('change', ->
+      updateShadow()
+    )
 
-      templateSelections =  App.UiElement.searchable_select.render(attribute_ical)
+    item.find('.js-list').bind('click change', ->
+      updateCheckList()
+      updateShadow('list')
+    )
 
-      templateSelections.find('.js-shadow').bind('change', (e) ->
-        val = $(e.target).val()
-        if val
-          item.find("[name=#{attribute.name}]").val(val)
-      )
-      item.append(templateSelections)
+    item.find('.js-manual').bind('keyup focus blur', ->
+      updateCheckManual()
+      updateShadow('manual')
+    )
 
     item

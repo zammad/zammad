@@ -58,7 +58,8 @@ class Index extends App.ControllerContent
         for day in keys
           itemTime = new Date( Date.parse( "#{day}T00:00:00Z" ) )
           if itemTime < till && itemTime > from
-            public_holidays_preview[day] = calendar.public_holidays[day]
+            if calendar.public_holidays[day] && calendar.public_holidays[day].active
+              public_holidays_preview[day] = calendar.public_holidays[day]
       calendar.public_holidays_preview = public_holidays_preview
 
     # show description button, only if content exists

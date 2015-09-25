@@ -1161,7 +1161,7 @@ input.time.time--12 {
     display: none;
   }
 
-  .form-control[disabled] {
+  .form-control[disabled], .form-control.is-disabled {
     cursor: not-allowed;
     background-color: #fff;
     color: #d5d5d5;

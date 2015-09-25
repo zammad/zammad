@@ -4,8 +4,8 @@ class Calendar < ApplicationModel
   store :business_hours
   store :public_holidays
 
-  before_create  :fetch_ical
-  before_update  :fetch_ical
+  before_create  :validate_public_holidays, :fetch_ical
+  before_update  :validate_public_holidays, :fetch_ical
   after_create   :sync_default, :min_one_check
   after_update   :sync_default, :min_one_check
   after_destroy  :min_one_check
@@ -71,14 +71,14 @@ returns
 
   def self.ical_feeds
     gfeeds = {
-      'Australian' => 'en.australian',
-      'Austrian' => 'de.austrian',
+      'Australia' => 'en.australian',
+      'Austria' => 'de.austrian',
       'Argentina' => 'en.ar',
       'Bahamas' => 'en.bs',
       'Belarus' => 'en.by',
-      'Brazilian' => 'en.brazilian',
+      'Brazil' => 'en.brazilian',
       'Bulgaria' => 'en.bulgarian',
-      'Canadian' => 'en.canadian',
+      'Canada' => 'en.canadian',
       'China' => 'en.china',
       'Chile' => 'en.cl',
       'Costa Rica' => 'en.cr',
@@ -87,47 +87,44 @@ returns
       'Cuba' => 'en.cu',
       'Cyprus' => 'de.cy',
       'Switzerland' => 'de.ch',
-      'Christian' => 'en.christian',
-      'Danish' => 'da.danish',
-      'Dutch' => 'nl.dutch',
+      'Denmark' => 'da.danish',
+      'Netherlands' => 'nl.dutch',
       'Egypt' => 'en.eg',
       'Ethiopia' => 'en.et',
       'Ecuador' => 'en.ec',
       'Estonia' => 'en.ee',
-      'Finnish' => 'en.finnish',
-      'French' => 'en.french',
-      'German' => 'de.german',
-      'Greek' => 'en.greek',
+      'Finland' => 'en.finnish',
+      'France' => 'en.french',
+      'Germany' => 'de.german',
+      'Greece' => 'en.greek',
       'Ghana' => 'en.gh',
       'Hong Kong' => 'en.hong_kong',
       'Haiti' => 'en.ht',
       'Hungary' => 'en.hungarian',
-      'Indian' => 'en.indian',
-      'Indonesian' => 'en.indonesian',
-      'Iranian' => 'en.ir',
-      'Irish' => 'en.irish',
-      'Islamic' => 'en.islamic',
-      'Italian' => 'it.italian',
+      'India' => 'en.indian',
+      'Indonesia' => 'en.indonesian',
+      'Iran' => 'en.ir',
+      'Ireland' => 'en.irish',
+      'Italy' => 'it.italian',
       'Israel' => 'en.jewish',
-      'Japanese' => 'en.japanese',
-      'Jewish' => 'en.jewish',
+      'Japan' => 'en.japanese',
       'Kuwait' => 'en.kw',
       'Latvia' => 'en.latvian',
       'Liechtenstein' => 'en.li',
       'Lithuania' => 'en.lithuanian',
       'Luxembourg' => 'en.lu',
-      'Malaysian' => 'en.malaysia',
-      'Mexican' => 'en.mexican',
+      'Malaysia' => 'en.malaysia',
+      'Mexico' => 'en.mexican',
       'Morocco' => 'en.ma',
       'Mauritius' => 'en.mu',
       'Moldova' => 'en.md',
       'New Zealand' => 'en.new_zealand',
-      'Norwegian' => 'en.norwegian',
+      'Norway' => 'en.norwegian',
       'Philippines' => 'en.philippines',
-      'Polish' => 'en.polish',
-      'Portuguese' => 'en.portuguese',
+      'Poland' => 'en.polish',
+      'Portugal' => 'en.portuguese',
       'Pakistan' => 'en.pk',
-      'Russian' => 'en.russian',
+      'Russia' => 'en.russian',
       'Senegal' => 'en.sn',
       'Singapore' => 'en.singapore',
       'South Africa' => 'en.sa',
@@ -136,7 +133,7 @@ returns
       'Slovakia' => 'en.slovak',
       'Serbia' => 'en.rs',
       'Slovenia' => 'en.slovenian',
-      'Swedish' => 'en.swedish',
+      'Sweden' => 'en.swedish',
       'Taiwan' => 'en.taiwan',
       'Thai' => 'en.th',
       'Turkey' => 'en.turkish',
@@ -144,12 +141,12 @@ returns
       'US' => 'en.usa',
       'Ukraine' => 'en.ukrainian',
       'Uruguay' => 'en.uy',
-      'Vietnamese' => 'en.vietnamese',
+      'Vietnam' => 'en.vietnamese',
       'Venezuela' => 'en.ve',
     }
     all_feeds = {}
     gfeeds.each {|key, name|
-      all_feeds["http://www.google.com/calendar/ical/#{name}%23holiday%40group.v.calendar.google.com/public/basic.ics"] = "#{key} - Holidays"
+      all_feeds["http://www.google.com/calendar/ical/#{name}%23holiday%40group.v.calendar.google.com/public/basic.ics"] = key
     }
     all_feeds
   end
@@ -218,6 +215,15 @@ returns
       if !public_holidays
         self.public_holidays = {}
       end
+
+      # remove old ical entries if feed has changed
+      public_holidays.each {|day, meta|
+        next if !public_holidays[day]['feed']
+        next if meta['feed'] == Digest::MD5.hexdigest(ical_url)
+        public_holidays.delete(day)
+      }
+
+      # sync new ical feed dates
       events.each {|day, summary|
         if !public_holidays[day]
           public_holidays[day] = {}
@@ -230,6 +236,7 @@ returns
         public_holidays[day] = {
           active: true,
           summary: summary,
+          feed: Digest::MD5.hexdigest(ical_url)
         }
       }
       self.last_log = nil
@@ -314,5 +321,22 @@ returns
   # fetch ical feed
   def fetch_ical
     sync(true)
+  end
+
+  # validate format of public holidays
+  def validate_public_holidays
+
+    # fillup feed info
+    public_holidays.each {|day, meta|
+      if public_holidays_was && public_holidays_was[day] && public_holidays_was[day]['feed']
+        meta['feed'] = public_holidays_was[day]['feed']
+      end
+      if meta['active']
+        meta['active'] = true
+      else
+        meta['active'] = false
+      end
+    }
+
   end
 end
