@@ -1946,12 +1946,84 @@ Network::Item::Comment.create(
   body: 'Some comment....',
 )
 
-Scheduler.create_or_update(
+Scheduler.create_if_not_exists(
   name: 'Process pending tickets',
   method: 'Ticket.process_pending',
   period: 60 * 15,
   prio: 1,
   active: true,
+)
+Scheduler.create_if_not_exists(
+  name: 'Import OTRS diff load',
+  method: 'Import::OTRS.diff_worker',
+  period: 60 * 3,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Check Channels',
+  method: 'Channel.fetch',
+  period: 30,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Generate Session data',
+  method: 'Sessions.jobs',
+  period: 60,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Cleanup expired sessions',
+  method: 'SessionHelper.cleanup_expired',
+  period: 60 * 60 * 12,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Delete old activity stream entries.',
+  method: 'ActivityStream.cleanup',
+  period: 1.day,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Delete old entries.',
+  method: 'RecentView.cleanup',
+  period: 1.day,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
+  name: 'Delete old online notification entries.',
+  method: 'OnlineNotification.cleanup',
+  period: 2.hours,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
+  name: 'Delete old token entries.',
+  method: 'Token.cleanup',
+  period: 30.days,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
 )
 
 # install locales and translations

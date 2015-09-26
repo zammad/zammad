@@ -190,6 +190,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :tokens, :user_id
     add_index :tokens, [:name, :action], unique: true
     add_index :tokens, :created_at
+    add_index :tokens, :persistent
 
     create_table :packages do |t|
       t.string :name,                 limit: 250, null: false
@@ -396,6 +397,25 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps
     end
     add_index :online_notifications, [:user_id]
+    add_index :online_notifications, [:seen]
+    add_index :online_notifications, [:created_at]
+    add_index :online_notifications, [:updated_at]
+
+    create_table :schedulers do |t|
+      t.column :name,           :string, limit: 250,   null: false
+      t.column :method,         :string, limit: 250,   null: false
+      t.column :period,         :integer,                 null: true
+      t.column :running,        :integer,                 null: false, default: false
+      t.column :last_run,       :timestamp,               null: true
+      t.column :prio,           :integer,                 null: false
+      t.column :pid,            :string, limit: 250,   null: true
+      t.column :note,           :string, limit: 250,   null: true
+      t.column :active,         :boolean,                 null: false, default: false
+      t.column :updated_by_id,  :integer,                 null: false
+      t.column :created_by_id,  :integer,                 null: false
+      t.timestamps
+    end
+    add_index :schedulers, [:name], unique: true
 
     create_table :delayed_jobs, force: true do |t|
       t.integer  :priority, default: 0      # Allows some jobs to jump to the front of the queue
