@@ -29,6 +29,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :zip,                  limit: 100, null: true, default: ''
       t.string :city,                 limit: 100, null: true, default: ''
       t.string :country,              limit: 100, null: true, default: ''
+      t.string :address,              limit: 500, null: true, default: ''
       t.boolean :vip,                                         default: false
       t.boolean :verified,                        null: false, default: false
       t.boolean :active,                          null: false, default: true
