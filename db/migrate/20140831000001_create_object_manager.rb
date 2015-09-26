@@ -1,10 +1,5 @@
 class CreateObjectManager < ActiveRecord::Migration
   def up
-    add_column :tickets, :pending_time,  :timestamp,  null: true
-    add_index :tickets, [:pending_time]
-
-    add_column :tickets, :type,  :string, limit: 100, null: true
-    add_index :tickets, [:type]
 
     create_table :object_manager_attributes do |t|
       t.references :object_lookup,                            null: false
