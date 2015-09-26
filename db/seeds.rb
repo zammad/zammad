@@ -1441,6 +1441,16 @@ Setting.create_if_not_exists(
   frontend: true
 )
 
+Setting.create_if_not_exists(
+  title: 'Define translator identifier.',
+  name: 'translator_key',
+  area: 'i18n::translator_key',
+  description: 'Defines the translator identifier for contributions.',
+  options: {},
+  state: '',
+  frontend: false
+)
+
 signature = Signature.create_if_not_exists(
   id: 1,
   name: 'default',
@@ -1934,6 +1944,14 @@ item = Network::Item.create(
 Network::Item::Comment.create(
   network_item_id: item.id,
   body: 'Some comment....',
+)
+
+Scheduler.create_or_update(
+  name: 'Process pending tickets',
+  method: 'Ticket.process_pending',
+  period: 60 * 15,
+  prio: 1,
+  active: true,
 )
 
 # install locales and translations
