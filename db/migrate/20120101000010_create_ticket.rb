@@ -34,11 +34,11 @@ class CreateTicket < ActiveRecord::Migration
       t.references :priority,                                             null: false
       t.references :state,                                                null: false
       t.references :organization,                                         null: true
-      t.column :number,                           :string,  limit: 60, null: false
-      t.column :title,                            :string,  limit: 250, null: false
+      t.column :number,                           :string,  limit: 60,    null: false
+      t.column :title,                            :string,  limit: 250,   null: false
       t.column :owner_id,                         :integer,               null: false
       t.column :customer_id,                      :integer,               null: false
-      t.column :note,                             :string,  limit: 250, null: true
+      t.column :note,                             :string,  limit: 250,   null: true
       t.column :first_response,                   :timestamp,             null: true
       t.column :first_response_escal_date,        :timestamp,             null: true
       t.column :first_response_sla_time,          :timestamp,             null: true
@@ -60,6 +60,8 @@ class CreateTicket < ActiveRecord::Migration
       t.column :create_article_sender_id,         :integer,               null: true
       t.column :article_count,                    :integer,               null: true
       t.column :escalation_time,                  :timestamp,             null: true
+      t.column :pending_time,                     :timestamp,             null: true
+      t.column :type,                             :string, limit: 100,    null: true
       t.column :updated_by_id,                    :integer,               null: false
       t.column :created_by_id,                    :integer,               null: false
       t.timestamps
@@ -89,6 +91,8 @@ class CreateTicket < ActiveRecord::Migration
     add_index :tickets, [:create_article_type_id]
     add_index :tickets, [:create_article_sender_id]
     add_index :tickets, [:created_by_id]
+    add_index :tickets, [:pending_time]
+    add_index :tickets, [:type]
 
     create_table :ticket_flags do |t|
       t.references :tickets,                            null: false
@@ -317,11 +321,11 @@ class CreateTicket < ActiveRecord::Migration
     add_index :channels, [:adapter]
 
     create_table :slas do |t|
-      t.column :name,                 :string, limit: 150,   null: true
+      t.column :name,                 :string, limit: 150,      null: true
       t.column :first_response_time,  :integer,                 null: true
       t.column :update_time,          :integer,                 null: true
       t.column :close_time,           :integer,                 null: true
-      t.column :condition,            :string, limit: 5000,  null: true
+      t.column :condition,            :string, limit: 5000,     null: true
       t.column :data,                 :string, limit: 5000,  null: true
       t.column :timezone,             :string, limit: 50,    null: true
       t.column :active,               :boolean,                 null: false, default: true

@@ -3,11 +3,13 @@ class CreateBase < ActiveRecord::Migration
 
     create_table :sessions do |t|
       t.string :session_id, null: false
+      t.boolean :persistent, null: true
       t.text :data
       t.timestamps
     end
     add_index :sessions, :session_id
     add_index :sessions, :updated_at
+    add_index :sessions, :persistent
 
     create_table :users do |t|
       t.references :organization,                 null: true
