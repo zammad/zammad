@@ -323,6 +323,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :state_current,          limit: 2000, null: true
       t.string :state_initial,          limit: 2000, null: true
       t.boolean :frontend,                           null: false
+      t.string :preferences,            limit: 2000, null: true
       t.timestamps
     end
     add_index :settings, [:name], unique: true
