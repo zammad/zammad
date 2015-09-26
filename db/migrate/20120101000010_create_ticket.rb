@@ -11,7 +11,8 @@ class CreateTicket < ActiveRecord::Migration
 
     create_table :ticket_states do |t|
       t.references :state_type, null: false
-      t.column :name,                 :string, limit: 250, null: false
+      t.column :name,                 :string, limit: 250,  null: false
+      t.column :next_state_id,        :integer,             null: true
       t.column :note,                 :string, limit: 250, null: true
       t.column :active,               :boolean,               null: false, default: true
       t.column :updated_by_id,        :integer,               null: false
