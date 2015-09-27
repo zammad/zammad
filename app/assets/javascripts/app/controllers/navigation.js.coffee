@@ -45,14 +45,14 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
     # get open tabs to repopen on rerender
     open_tab = {}
-    @$('.open').children('a').each( (i,d) =>
+    @$('.open').children('a').each( (i,d) ->
       href = $(d).attr('href')
       open_tab[href] = true
     )
 
     # get active tabs to reactivate on rerender
     active_tab = {}
-    @$('.active').children('a').each( (i,d) =>
+    @$('.active').children('a').each( (i,d) ->
       href = $(d).attr('href')
       active_tab[href] = true
     )
@@ -68,14 +68,14 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
     # get open tabs to repopen on rerender
     open_tab = {}
-    @$('.open').children('a').each( (i,d) =>
+    @$('.open').children('a').each( (i,d) ->
       href = $(d).attr('href')
       open_tab[href] = true
     )
 
     # get active tabs to reactivate on rerender
     active_tab = {}
-    @$('.active').children('a').each( (i,d) =>
+    @$('.active').children('a').each( (i,d) ->
       href = $(d).attr('href')
       active_tab[href] = true
     )
@@ -91,7 +91,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       new App.WidgetAvatar(
         el:       @$('.js-avatar')
         user_id:  App.Session.get('id')
-        noPopups: true
+        type:     'personal'
       )
 
   renderResult: (result = []) =>
@@ -121,7 +121,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # start oorganization popups
     @organizationPopups()
 
-  render: () ->
+  render: ->
 
     # reset result cache
     @searchResultCache = {}
@@ -176,7 +176,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
           @renderResult(result)
 
-          @$('#global-search-result').on('click', 'a', =>
+          @$('#global-search-result').on('click', 'a', ->
             close()
           )
       )
@@ -222,7 +222,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     )
 
     # prevent submit of search box
-    @$('form.search').on( 'submit', (e) =>
+    @$('form.search').on( 'submit', (e) ->
       e.preventDefault()
     )
 
@@ -246,7 +246,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # bind to empty search
     @$('.empty-search').on(
       'click'
-      =>
+      ->
         emptyAndClose()
     )
 
@@ -347,10 +347,10 @@ class App.Navigation extends App.ControllerWidgetPermanent
     return(a-b)
 
   addPrioCount: (newlist, item) ->
-     if newlist[ item['prio'] ]
-        item['prio']++
-        if newlist[ item['prio'] ]
-          @addPrioCount newlist, item
+    if newlist[ item['prio'] ]
+      item['prio']++
+      if newlist[ item['prio'] ]
+        @addPrioCount newlist, item
 
   update: (url) =>
     @$('li').removeClass('active')

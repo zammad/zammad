@@ -38,12 +38,14 @@ class ArticleViewItem extends App.Controller
 
     @render()
 
-    # set article type and expand text area
+    # set expand of text area only once
     @bind(
       'ui::ticket::shown'
       (data) =>
-        if data.ticket_id.toString() is @ticket.id.toString()
-          @setSeeMore()
+        if !@shown
+          if data.ticket_id.toString() is @ticket.id.toString()
+            @setSeeMore()
+            @shown = true
     )
 
     # subscribe to changes
@@ -190,7 +192,7 @@ class ArticleViewItem extends App.Controller
       article.removeClass('state--folde-out')
 
       # scroll back up
-      article.velocity "scroll",
+      article.velocity 'scroll',
         container: article.scrollParent()
         offset: -article.offset().top - metaTop.outerHeight()
         duration: animSpeed
@@ -222,7 +224,7 @@ class ArticleViewItem extends App.Controller
       metaTop.removeClass('hide')
 
       # balance out the top meta height by scrolling down
-      article.velocity("scroll",
+      article.velocity('scroll',
         container: article.scrollParent()
         offset: -article.offset().top + metaTop.outerHeight()
         duration: animSpeed
@@ -268,7 +270,7 @@ class ArticleViewItem extends App.Controller
         height: bubbleContent.attr('data-height')
       options:
         duration: 300
-        complete: -> bubbleOvervlowContainer.addClass('hide');
+        complete: -> bubbleOvervlowContainer.addClass('hide')
 
   isOrContains: (node, container) ->
     while node

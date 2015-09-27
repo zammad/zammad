@@ -1,3 +1,4 @@
+# coffeelint: disable=no_this,indentation,no_unnecessary_double_quotes
 Spine  = @Spine or require('spine')
 $      = Spine.$
 Model  = Spine.Model

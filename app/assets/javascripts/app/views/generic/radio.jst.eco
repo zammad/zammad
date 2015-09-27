@@ -2,8 +2,8 @@
 <% for row in @attribute.options: %>
     <label>
       <input type="radio" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>> <%= row.name %> <% if row.note: %>- <%= row.note %><% end %>
-      <svg class="icon-radio"><use xlink:href="#icon-radio" /></svg>
-      <svg class="icon-radio-checked"><use xlink:href="#icon-radio-checked" /></svg>
+      <%- @Icon('radio') %>
+      <%- @Icon('radio-checked') %>
     </label>
 <% end %>
 </div>

@@ -95,7 +95,7 @@ class _Singleton
       if !@moduleColorsMap[module]
         @moduleColorsMap[module]= @yieldColor()
       color       = @moduleColorsMap[module]
-      colorString = "color: hsl(" + (color) + ",99%,40%); font-weight: bold";
+      colorString = 'color: hsl(' + (color) + ',99%,40%); font-weight: bold'
       logArgs     = [prefix, colorString].concat(args)
     else
       logArgs = [prefix].concat(args)

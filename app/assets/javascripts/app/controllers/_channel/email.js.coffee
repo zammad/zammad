@@ -45,6 +45,10 @@ class App.ChannelEmailFilter extends App.Controller
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
+    description = '''
+With Filters you can e. g. dispatch new Tickets into certain groups or set a certain priority for Tickets of an VIP customer.
+'''
+
     new App.ControllerTable(
       el:       template.find('.overview')
       model:    App.PostmasterFilter
@@ -52,6 +56,7 @@ class App.ChannelEmailFilter extends App.Controller
       bindRow:
         events:
           'click': @edit
+      explanation: description
     )
     @html template
 
@@ -135,6 +140,13 @@ class App.ChannelEmailSignature extends App.Controller
     data = App.Signature.search( sortBy: 'name' )
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
+
+    description = '''
+You can define differenct signatures for each group. So you can have different email signatures for different departments.
+
+Once you have created a signature here, you need also to edit the groups where you want to use it.
+'''
+
     new App.ControllerTable(
       el:       template.find('.overview')
       model:    App.Signature
@@ -142,6 +154,7 @@ class App.ChannelEmailSignature extends App.Controller
       bindRow:
         events:
           'click': @edit
+      explanation: description
     )
     @html template
 
@@ -215,17 +228,20 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
 
 class App.ChannelEmailAccountOverview extends App.Controller
   events:
-    'click [data-type="new"]': 'wizard'
-    'click [data-type="delete"]': 'delete'
-    'click [data-type="edit-inbound"]': 'edit_inbound'
-    'click [data-type="edit-outbound"]': 'edit_outbound'
-    'click [data-type="email-address-new"]': 'email_address_new'
-    'click [data-type="email-address-edit"]': 'email_address_edit'
-    'click [data-type="edit-notification-outbound"]': 'edit_notification_outbound'
+    'click .js-channelNew': 'wizard'
+    'click .js-channelDelete': 'delete'
+    'click .js-channelGroupChange': 'group_change'
+    'click .js-editInbound': 'edit_inbound'
+    'click .js-editOutbound': 'edit_outbound'
+    'click .js-emailAddressNew': 'email_address_new'
+    'click .js-emailAddressEdit': 'email_address_edit'
+    'click .js-emailAddressDelete': 'email_address_delete',
+    'click .js-editNotificationOutbound': 'edit_notification_outbound'
 
   constructor: ->
     super
-    @interval(@load, 20000)
+    @interval(@load, 30000)
+    #@load()
 
   load: =>
     @ajax(
@@ -248,7 +264,12 @@ class App.ChannelEmailAccountOverview extends App.Controller
     # get channels
     account_channels = []
     for channel_id in data.account_channel_ids
-      account_channels.push App.Channel.fullLocal(channel_id)
+      account_channel = App.Channel.fullLocal(channel_id)
+      if account_channel.group_id
+        account_channel.group = App.Group.find(account_channel.group_id).displayName()
+      else
+        account_channel.group = '-'
+      account_channels.push account_channel
 
     for channel in account_channels
       email_addresses = App.EmailAddress.search( filter: { channel_id: channel.id } )
@@ -269,6 +290,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       not_used_email_addresses: not_used_email_addresses
       notification_channels:    notification_channels
       accounts_fixed:           data.accounts_fixed
+      config:                   data.config
     )
 
   wizard: (e) =>
@@ -281,7 +303,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   edit_inbound: (e) =>
     e.preventDefault()
-    id      = $(e.target).closest('tr').data('id')
+    id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-inbound'
     new App.ChannelEmailAccountWizard(
@@ -294,7 +316,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   edit_outbound: (e) =>
     e.preventDefault()
-    id      = $(e.target).closest('tr').data('id')
+    id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
     new App.ChannelEmailAccountWizard(
@@ -307,7 +329,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
 
   delete: (e) =>
     e.preventDefault()
-    id   = $(e.target).closest('tr').data('id')
+    id   = $(e.target).closest('.action').data('id')
     item = App.Channel.find(id)
     new App.ControllerGenericDestroyConfirm(
       item:      item
@@ -315,9 +337,19 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback:  @load
     )
 
+  group_change: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    new App.ChannelEmailEdit(
+      container: @el.closest('.content')
+      item: item
+      callback: @load
+    )
+
   email_address_new: (e) =>
     e.preventDefault()
-    channel_id = $(e.target).closest('tr').data('id')
+    channel_id = $(e.target).closest('.action').data('id')
     new App.ControllerGenericNew(
       pageData:
         object: 'Email Address'
@@ -340,9 +372,19 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback: @load
     )
 
+  email_address_delete: (e) =>
+    e.preventDefault()
+    id = $(e.target).closest('li').data('id')
+    item = App.EmailAddress.find(id)
+    new App.ControllerGenericDestroyConfirm(
+      item: item
+      container: @el.closest('.content')
+      callback: @load
+    )
+
   edit_notification_outbound: (e) =>
     e.preventDefault()
-    id      = $(e.target).closest('tr').data('id')
+    id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
     slide   = 'js-outbound'
     new App.ChannelEmailNotificationWizard(
@@ -350,6 +392,60 @@ class App.ChannelEmailAccountOverview extends App.Controller
       channel:       channel
       callback:      @load
       channelDriver: @channelDriver
+    )
+
+class App.ChannelEmailEdit extends App.ControllerModal
+  constructor: ->
+    super
+
+    @head   = 'Channel'
+    @button = true
+    @close  = true
+    @cancel = true
+
+    configureAttributesBase = [
+      { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
+    ]
+    @form = new App.ControllerForm(
+      model:
+        configure_attributes: configureAttributesBase
+        className: ''
+      params: @item
+    )
+
+    @content = @form.form
+    @show()
+
+  onSubmit: (e) =>
+    e.preventDefault()
+
+    # get params
+    params = @formParam(e.target)
+
+    # validate form
+    errors = @form.validate( params )
+
+    # show errors in form
+    if errors
+      @log 'error', errors
+      @formValidate( form: e.target, errors: errors )
+      return false
+
+    # disable form
+    @formDisable(e)
+
+    # update
+    @ajax(
+      id:   'channel_group_update'
+      type: 'POST'
+      url:  "#{@apiPath}/channels/group/#{@item.id}"
+      data: JSON.stringify( params )
+      processData: true
+      success: (data, status, xhr) =>
+        @callback()
+        @hide()
+      fail: =>
+        @enable(e)
     )
 
 class App.ChannelEmailAccountWizard extends App.Wizard
@@ -363,7 +459,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     'submit .js-inbound':                 'probeInbound'
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
-    'click  .js-back':                    'goToSlide'
+    'click  .js-goToSlide':               'goToSlide'
     'click  .js-close':                   'hide'
 
   constructor: ->
@@ -390,6 +486,9 @@ class App.ChannelEmailAccountWizard extends App.Wizard
 
     @render()
 
+    if @channel
+      @$('.js-goToSlide[data-slide=js-intro]').addClass('hidden')
+
     @el.modal
       keyboard:  true
       show:      true
@@ -407,6 +506,21 @@ class App.ChannelEmailAccountWizard extends App.Wizard
   render: =>
     @html App.view('channel/email_account_wizard')()
     @showSlide('js-intro')
+
+    # base
+    configureAttributesBase = [
+      { name: 'realname', display: 'Department Name',   tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
+      { name: 'email',    display: 'User',     tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off', },
+      { name: 'password', display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
+    ]
+    new App.ControllerForm(
+      el:    @$('.base-settings'),
+      model:
+        configure_attributes: configureAttributesBase
+        className: ''
+      params: @account.meta
+    )
 
     # outbound
     configureAttributesOutbound = [
@@ -488,7 +602,20 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           if data.setting
             for key, value of data.setting
               @account[key] = value
-          @verify(@account)
+
+          if !@channel &&  data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            @$('.js-inbound-acknowledge .js-message').html(message)
+            @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
+            @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
+            @$('.js-inbound-acknowledge .js-next').unbind('click.verify').bind('click.verify', (e) =>
+              e.preventDefault()
+              @verify(@account)
+            )
+            @showSlide('js-inbound-acknowledge')
+          else
+            @verify(@account)
+
         else if data.result is 'duplicate'
           @showSlide('js-intro')
           @showAlert('js-intro', 'Account already exists!' )
@@ -530,7 +657,14 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           # remember account settings
           @account.inbound = params
 
-          @showSlide('js-outbound')
+          if !@channel && data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            @$('.js-inbound-acknowledge .js-message').html(message)
+            @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
+            @$('.js-inbound-acknowledge .js-next').unbind('click.verify')
+            @showSlide('js-inbound-acknowledge')
+          else
+            @showSlide('js-outbound')
 
           # fill user / password based on inbound settings
           if !@channel
@@ -606,6 +740,11 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     if @channel
       account.channel_id = @channel.id
 
+    if account.meta.group_id
+      account.group_id = account.meta.group_id
+    else if @channel.group_id
+      account.group_id = @channel.group_id
+
     if !account.email && @channel
       email_addresses = App.EmailAddress.search( filter: { channel_id: @channel.id } )
       if email_addresses && email_addresses[0]
@@ -622,9 +761,9 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           @el.modal('hide')
         else
           if data.source is 'inbound' || data.source is 'outbound'
-              @showSlide("js-#{data.source}")
-              @showAlert("js-#{data.source}", data.message_human || data.message )
-              @showInvalidField("js-#{data.source}", data.invalid_field)
+            @showSlide("js-#{data.source}")
+            @showAlert("js-#{data.source}", data.message_human || data.message )
+            @showInvalidField("js-#{data.source}", data.invalid_field)
           else
             if count is 2
               @showAlert('js-verify', data.message_human || data.message )
@@ -689,7 +828,7 @@ class App.ChannelEmailNotificationWizard extends App.Wizard
       container: @container
     .on
       'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onComplete
+      'shown.bs.modal':  @onShown
       'hidden.bs.modal': =>
         if @callback
           @callback()
@@ -768,3 +907,5 @@ class App.ChannelEmailNotificationWizard extends App.Wizard
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
+
+App.Config.set( 'Email', { prio: 3000, name: 'Email', parent: '#channels', target: '#channels/email', controller: App.ChannelEmail, role: ['Admin'] }, 'NavBarAdmin' )

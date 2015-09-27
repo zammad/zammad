@@ -91,7 +91,8 @@ class _delaySingleton extends Spine.Module
       for key, data of items
         @clear( key, level )
       @levelStack[level] = {}
+    true
 
   _all: ->
-    return @levelStack
+    @levelStack
 

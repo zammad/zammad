@@ -2,11 +2,11 @@
   <% if item.child: %>
   <li class="dropdown <%= item.class %> <% if @open_tab[item.target] : %>open<% end %>">
     <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown">
-        <svg class="nav-icon"><use xlink:href="#icon-<%= item.class %>" /></svg>
+        <%- @Icon(item.class, 'nav-icon') %>
         <span class="nav-item-name flex">
-          <%- @T( item.name ) %>
+          <%- @T(item.name) %>
         </span>
-        <svg class="dropdown-icon icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+        <%- @Icon('arrow-down', 'dropdown-icon') %>
     </a>
     <ul class="dropdown-menu dropdown-menu--light">
       <% for item in item.child: %>
@@ -23,9 +23,9 @@
   <% else: %>
     <li class="<%= item.class %> <% if @active_tab[item.target] : %>active<% end %>">
       <a class="horizontal center" href="<%= item.target %>">
-        <svg class="nav-icon"><use xlink:href="#icon-<%= item.class %>" /></svg>
+        <%- @Icon(item.class, 'nav-icon') %>
         <span class="nav-item-name flex">
-          <%- @T( item.name ) %>
+          <%- @T(item.name) %>
         </span>
       </a>
     </li>

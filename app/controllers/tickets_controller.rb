@@ -345,6 +345,29 @@ class TicketsController < ApplicationController
     }
   end
 
+  # GET /api/v1/tickets/selector
+  def selector
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+
+    ticket_count, tickets = Ticket.selectors(params[:condition], 6)
+
+    assets = {}
+    ticket_ids = []
+    if tickets
+      tickets.each do |ticket|
+        ticket_ids.push ticket.id
+        assets = ticket.assets(assets)
+      end
+    end
+
+    # return result
+    render json: {
+      ticket_ids: ticket_ids,
+      ticket_count: ticket_count || 0,
+      assets: assets,
+    }
+  end
+
   # GET /api/v1/ticket_stats
   def stats
 
@@ -366,8 +389,14 @@ class TicketsController < ApplicationController
     if params[:user_id]
       user = User.find( params[:user_id] )
       condition = {
-        'tickets.state_id'    => Ticket::State.by_category('open'),
-        'tickets.customer_id' => user.id,
+        'ticket.state_id' => {
+          operator: 'is',
+          value: Ticket::State.by_category('open').map(&:id),
+        },
+        'ticket.customer_id' => {
+          operator: 'is',
+          value: user.id,
+        },
       }
       user_tickets_open = Ticket.search(
         limit: limit,
@@ -378,8 +407,14 @@ class TicketsController < ApplicationController
 
       # lookup closed user tickets
       condition = {
-        'tickets.state_id'    => Ticket::State.by_category('closed'),
-        'tickets.customer_id' => user.id,
+        'ticket.state_id' => {
+          operator: 'is',
+          value: Ticket::State.by_category('closed').map(&:id),
+        },
+        'ticket.customer_id' => {
+          operator: 'is',
+          value: user.id,
+        },
       }
       user_tickets_closed = Ticket.search(
         limit: limit,
@@ -428,8 +463,14 @@ class TicketsController < ApplicationController
     if params[:organization_id] && !params[:organization_id].empty?
 
       condition = {
-        'tickets.state_id'        => Ticket::State.by_category('open'),
-        'tickets.organization_id' => params[:organization_id],
+        'ticket.state_id' => {
+          operator: 'is',
+          value: Ticket::State.by_category('open').map(&:id),
+        },
+        'ticket.organization_id' => {
+          operator: 'is',
+          value: params[:organization_id],
+        },
       }
       org_tickets_open = Ticket.search(
         limit: limit,
@@ -440,8 +481,14 @@ class TicketsController < ApplicationController
 
       # lookup closed org tickets
       condition = {
-        'tickets.state_id'        => Ticket::State.by_category('closed'),
-        'tickets.organization_id' => params[:organization_id],
+        'ticket.state_id' => {
+          operator: 'is',
+          value: Ticket::State.by_category('closed').map(&:id),
+        },
+        'ticket.organization_id' => {
+          operator: 'is',
+          value: params[:organization_id],
+        },
       }
       org_tickets_closed = Ticket.search(
         limit: limit,

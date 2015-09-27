@@ -134,7 +134,7 @@ class TestCase < Test::Unit::TestCase
     element.send_keys( params[:password] )
 
     if params[:remember_me]
-      instance.find_elements( { css: '#login [name="remember_me"]' } )[0].click
+      instance.find_elements( { css: '#login .checkbox-replacement' } )[0].click
     end
     instance.find_elements( { css: '#login button' } )[0].click
 
@@ -922,8 +922,10 @@ wait untill text in selector disabppears
     :browser => browser1,
     :data    => {
       :name              => name,
-      :link              => name,
       :role              => 'Agent',
+      :selector          => {
+        'Priority': '1 low',
+      },
       :prio              => 1000,
       'order::direction' => 'down',
     }
@@ -946,27 +948,35 @@ wait untill text in selector disabppears
     if data[:name]
       element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
       element.clear
-      element.send_keys( data[:name] )
-    end
-    if data[:link]
-      element = instance.find_elements( { css: '.modal input[name=link]' } )[0]
-      element.clear
-      element.send_keys( data[:link] )
+      element.send_keys(data[:name])
     end
     if data[:role]
       element = instance.find_elements( { css: '.modal select[name="role_id"]' } )[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data[:role])
+      dropdown.select_by(:text, data[:role])
     end
+
+    if data[:selector]
+      data[:selector].each {|key, value|
+        element = instance.find_elements( { css: '.modal .ticket_selector .js-attributeSelector select' } )[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by(:text, key)
+        element = instance.find_elements( { css: '.modal .ticket_selector .js-value select' } )[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.deselect_all
+        dropdown.select_by(:text, value)
+      }
+    end
+
     if data[:prio]
       element = instance.find_elements( { css: '.modal input[name=prio]' } )[0]
       element.clear
-      element.send_keys( data[:prio] )
+      element.send_keys(data[:prio])
     end
     if data['order::direction']
       element = instance.find_elements( { css: '.modal select[name="order::direction"]' } )[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data['order::direction'])
+      dropdown.select_by(:text, data['order::direction'])
     end
 
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
@@ -993,6 +1003,7 @@ wait untill text in selector disabppears
     :data    => {
       :customer => 'nico',
       :group    => 'Users',
+      :priority => '2 normal',
       :title    => 'overview #1',
       :body     => 'overview #1',
     },
@@ -1030,6 +1041,12 @@ wait untill text in selector disabppears
       element = instance.find_elements( { css: '.active .newTicket select[name="group_id"]' } )[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by( :text, data[:group])
+      sleep 0.2
+    end
+    if data[:priority]
+      element = instance.find_elements( { css: '.active .newTicket select[name="priority_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, data[:priority])
       sleep 0.2
     end
     if data[:title]
@@ -1122,6 +1139,7 @@ wait untill text in selector disabppears
       :customer => 'some_customer@example.com',
       :body     => 'some body',
       :group    => 'some group',
+      :priority => '1 low',
       :state    => 'closed',
     },
     :do_not_submit => true,
@@ -1231,6 +1249,13 @@ wait untill text in selector disabppears
       sleep 0.2
     end
 
+    if data[:priority]
+      element = instance.find_elements( { css: '.active .sidebar select[name="priority_id"]' } )[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by( :text, data[:priority])
+      sleep 0.2
+    end
+
     if data[:state]
       element = instance.find_elements( { css: '.active .sidebar select[name="state_id"]' } )[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
@@ -1329,7 +1354,7 @@ wait untill text in selector disabppears
   ticket_open_by_overview(
     :browser => browser2,
     :number  => ticket1[:number],
-    :link    => '#ticket/view/' + name,
+    :link    => "#ticket/view/#{name}",
   )
 
 =end
@@ -1576,8 +1601,8 @@ wait untill text in selector disabppears
   sla_create(
     :browser => browser2,
     :data => {
-       :name                => 'some sla' + random,
-       :first_response_time => 61
+       :name                        => 'some sla' + random,
+       :first_response_time_in_text => 61
     },
   )
 
@@ -1592,14 +1617,14 @@ wait untill text in selector disabppears
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
     instance.find_elements( { css: 'a[href="#manage/slas"]' } )[0].click
     sleep 2
-    instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
+    instance.find_elements( { css: 'a.js-new' } )[0].click
     sleep 2
     element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
     element.clear
     element.send_keys( data[:name] )
-    element = instance.find_elements( { css: '.modal input[name=first_response_time]' } )[0]
+    element = instance.find_elements( { css: '.modal input[name=first_response_time_in_text]' } )[0]
     element.clear
-    element.send_keys( data[:first_response_time] )
+    element.send_keys( data[:first_response_time_in_text] )
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
     (1..8).each {
       element = instance.find_elements( { css: 'body' } )[0]

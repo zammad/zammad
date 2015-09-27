@@ -34,7 +34,7 @@ class App.TicketOverview extends App.Controller
     # redirect to last overview if we got called in first level
     @view = params['view']
     if !@view && @viewLast
-      @navigate "ticket/view/#{@viewLast}"
+      @navigate "ticket/view/#{@viewLast}", true
       return
 
     # build nav bar
@@ -60,10 +60,10 @@ class App.TicketOverview extends App.Controller
     if @navBarController
       @navBarController.active(false)
 
-  changed: =>
+  changed: ->
     false
 
-  release: =>
+  release: ->
     # no
 
   overview: (overview_id) =>
@@ -243,18 +243,18 @@ class Table extends App.Controller
           show:       true
         )
         @navigate ticket.uiUrl()
-      callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) =>
+      callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) ->
         attribute.title = object.title
         value
-      callbackLinkToTicket = (value, object, attribute, attributes, refObject) =>
+      callbackLinkToTicket = (value, object, attribute, attributes, refObject) ->
         attribute.link = object.uiUrl()
         value
-      callbackUserPopover = (value, object, attribute, attributes, refObject) =>
+      callbackUserPopover = (value, object, attribute, attributes, refObject) ->
         attribute.class = 'user-popover'
         attribute.data =
           id: refObject.id
         value
-      callbackOrganizationPopover = (value, object, attribute, attributes, refObject) =>
+      callbackOrganizationPopover = (value, object, attribute, attributes, refObject) ->
         attribute.class = 'organization-popover'
         attribute.data =
           id: refObject.id
@@ -324,7 +324,7 @@ class Table extends App.Controller
     # start bulk action observ
     @el.find('.bulkAction').append( @bulk_form() )
     if @el.find('.table-overview').find('input[name="bulk"]:checked').length isnt 0
-        @el.find('.bulkAction').removeClass('hide')
+      @el.find('.bulkAction').removeClass('hide')
 
     # show/hide bulk action
     @el.find('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
@@ -342,7 +342,7 @@ class Table extends App.Controller
     )
 
     # deselect bulk_all if one item is uncheck observ
-    @el.find('.table-overview').delegate('[name="bulk"]', 'click', (e) =>
+    @el.find('.table-overview').delegate('[name="bulk"]', 'click', (e) ->
       if !$(e.target).attr('checked')
         $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
     )
@@ -370,7 +370,7 @@ class Table extends App.Controller
     @fetch()
     #@render()
 
-  articleTypeFilter = (items) =>
+  articleTypeFilter = (items) ->
     for item in items
       if item.name is 'note'
         return [item]
@@ -436,7 +436,7 @@ class Table extends App.Controller
     @ticketIDs
 
   bulkSetSelected: (ticketIDs) ->
-    @el.find('.table-overview').find('[name="bulk"]').each( (index, element) =>
+    @el.find('.table-overview').find('[name="bulk"]').each( (index, element) ->
       ticket_id = $(element).val()
       for ticket_id_selected in ticketIDs
         if ticket_id_selected is ticket_id
@@ -783,7 +783,7 @@ class Navbar extends App.Controller
     if @activeState && !@view && !_.isEmpty(data)
       view = data[0].link
       #console.log('REDIRECT', "ticket/view/#{view}")
-      @navigate "ticket/view/#{view}"
+      @navigate "ticket/view/#{view}", true
       return
 
     # add new views

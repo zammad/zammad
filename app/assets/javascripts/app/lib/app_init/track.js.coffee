@@ -1,3 +1,4 @@
+# coffeelint: disable=no_backticks
 class App.Track
   _instance = undefined
 
@@ -129,7 +130,7 @@ class _trackSingleton
 
         newDataNew.push item
       catch e
-        # nothing
+        console.log 'error', e
 
     App.Ajax.request(
       type:   'POST'

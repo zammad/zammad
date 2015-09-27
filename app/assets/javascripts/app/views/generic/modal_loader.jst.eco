@@ -1,0 +1,20 @@
+<div class="modal-dialog wizard">
+
+  <form class="modal-content setup wizard">
+    <div class="modal-header">
+      <!--<div class="modal-close js-close">
+        <%- @Icon('diagonal-cross') %>
+      </div>-->
+      <h1 class="modal-title"><%- @T(@head) %></h1>
+    </div>
+    <div class="modal-body">
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon js-loadingIcon"></span> <span class="js-loading"><%- @message %> </span>
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer"></div>
+  </form>
+
+</div>

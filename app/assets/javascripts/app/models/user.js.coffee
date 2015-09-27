@@ -9,20 +9,13 @@ class App.User extends App.Model
     { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true },
     { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true },
     { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true },
-    { name: 'web',              display: 'Web',           tag: 'input',    type: 'url',      limit: 100, null: true, signup: false, info: true },
-    { name: 'phone',            display: 'Phone',         tag: 'input',    type: 'phone',    limit: 100, null: true, signup: false, info: true },
-    { name: 'mobile',           display: 'Mobile',        tag: 'input',    type: 'phone',    limit: 100, null: true, signup: false, info: true },
-    { name: 'fax',              display: 'Fax',           tag: 'input',    type: 'phone',    limit: 100, null: true, signup: false, info: true },
     { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true },
-    { name: 'department',       display: 'Department',    tag: 'input',    type: 'text',    limit: 200, null: true, signup: false, info: true },
-    { name: 'street',           display: 'Street',        tag: 'input',    type: 'text',    limit: 100, null: true, signup: false, info: true },
-    { name: 'zip',              display: 'Zip',           tag: 'input',    type: 'text',    limit: 100, null: true, signup: false, info: true },
-    { name: 'city',             display: 'City',          tag: 'input',    type: 'text',    limit: 100, null: true, signup: false, info: true },
     { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', signup: true, },
     { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
     { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role' },
     { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', invite_agent: true },
     { name: 'active',           display: 'Active',        tag: 'active',   default: true },
+    { name: 'created_at',       display: 'Created',       tag: 'datetime', readonly: 1 },
     { name: 'updated_at',       display: 'Updated',       tag: 'datetime', readonly: 1 },
   ]
   @configure_overview = [
@@ -52,44 +45,57 @@ class App.User extends App.Model
     else
       return '??'
 
-  avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar) ->
+  avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar, type = undefined) ->
     cssClass += " size-#{size}"
 
     if placement
       placement = "data-placement=\"#{placement}\""
 
+    # use generated avatar
     if !@image || @image is 'none' || unique
-      return @uniqueAvatar(size, placement, cssClass, avatar)
-    else
-      if @vip
-        cssClass += " vip"
-      image = @imageUrl()
-      "<span class=\"avatar user-popover #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
+      return @uniqueAvatar(size, placement, cssClass, avatar, type)
 
-  uniqueAvatar: (size, placement = '', cssClass = '', avatar) ->
+    # use image as avatar
+    image = @imageUrl()
+    vip = @vip
+    if type is 'personal'
+      vip = false
+    else
+      cssClass += ' user-popover'
+
+    if vip
+      return "<span class=\"avatar #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></span>"
+    "<span class=\"avatar #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
+
+  uniqueAvatar: (size, placement = '', cssClass = '', avatar, type) ->
     width  = 300
     height = 226
     size   = parseInt(size, 10)
+    vip    = @vip
 
     rng = new Math.seedrandom(@id)
     x   = rng() * (width - size)
     y   = rng() * (height - size)
 
     if !avatar
-      cssClass += " user-popover"
-      data      = "data-id=\"#{@id}\""
+      if type is 'personal'
+        vip = false
+        data = "data-id=\"#{@id}\""
+      else
+        cssClass += ' user-popover'
+        data      = "data-id=\"#{@id}\""
     else
-      data      = "data-avatar-id=\"#{avatar.id}\""
+      vip = false
+      data = "data-avatar-id=\"#{avatar.id}\""
 
-    if @vip
-      cssClass += " vip"
+    if vip
+      return "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg>#{ @initials() }</span>"
     "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
 
   imageUrl: ->
     return if !@image
     # set image url
     @constructor.apiPath + '/users/image/' + @image
-
 
   @_fillUp: (data) ->
 
@@ -123,6 +129,6 @@ class App.User extends App.Model
   searchResultAttributes: ->
     display:    "#{@displayName()}"
     id:         @id
-    class:      "user user-popover"
+    class:      'user user-popover'
     url:        @uiUrl()
-    iconClass:  "user"
+    iconClass:  'user'

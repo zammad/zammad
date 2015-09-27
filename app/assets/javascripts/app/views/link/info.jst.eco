@@ -1,19 +1,19 @@
 <label><%- @T('Links') %></label>
 <% for type of @links: %>
 <div class="ticketLinks">
-  <div class="sidebar-list-title"><%- @T( type ) %></div>
+  <div class="list-title"><%- @T( type ) %></div>
   <ol class="tasks tasks--standalone">
     <% for item in @links[type]: %>
     <li class="task">
       <div class="icon-holder">
-        <svg class="<%- item.icon() %>"><use xlink:href="#icon-priority" /></svg>
+        <%- @Icon('priority', item.icon()) %>
       </div>
       <div class="task-text">
         <a class="name ticket-popover" data-id="<%- item.id %>" href="#ticket/zoom/<%= item.id %>"><%= item.title %></a>
         <%- @humanTime(item.created_at) %>
       </div>
-      <div class="sidebar-list-item-delete js-delete" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove">
-        <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+      <div class="list-item-delete js-delete" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove">
+        <%- @Icon('diagonal-cross') %>
       </div>
     <% end %>
   </ol>

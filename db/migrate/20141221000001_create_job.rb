@@ -14,7 +14,7 @@ class CreateJob < ActiveRecord::Migration
       t.column :active,         :boolean,                 null: false, default: false
       t.column :updated_by_id,  :integer,                 null: false
       t.column :created_by_id,  :integer,                 null: false
-      t.timestamps
+      t.timestamps                                        null: false
     end
     add_index :jobs, [:name], unique: true
   end

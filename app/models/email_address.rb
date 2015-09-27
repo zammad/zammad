@@ -6,8 +6,9 @@ class EmailAddress < ApplicationModel
   validates       :realname, presence: true
   validates       :email,    presence: true
 
-  before_create   :channel_check
-  before_update   :channel_check
+  before_create   :check_if_channel_exists_set_inactive
+  before_update   :check_if_channel_exists_set_inactive
+  after_destroy   :delete_group_reference
 
   latest_change_support
 
@@ -21,28 +22,42 @@ check and if channel not exists reset configured channels for email addresses
 
   def self.channel_cleanup
     EmailAddress.all.each {|email_address|
+
+      # set to active if channel exists
       if email_address.channel_id && Channel.find_by(id: email_address.channel_id)
         if !email_address.active
           email_address.save
         end
         next
       end
-      if email_address.channel_id || email_address.active
-        email_address.save
-      end
+
+      # set in inactive if channel not longer exists
+      next if !email_address.active
+      email_address.save
     }
   end
 
   private
 
-  def channel_check
+  # set email address to inactive/active if channel exists or not
+  def check_if_channel_exists_set_inactive
+
+    # set to active if channel exists
     if channel_id && Channel.find_by(id: channel_id)
       self.active = true
       return true
     end
+
+    # set in inactive if channel not longer exists
     self.channel_id = nil
     self.active = false
     true
   end
 
+  # delete group.email_address_id reference if email address get's deleted
+  def delete_group_reference
+    Group.where(email_address_id: id).each { |group|
+      group.email_address_id = nil
+    }
+  end
 end

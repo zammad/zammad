@@ -41,6 +41,14 @@ p {
   }
 }
 
+.text-muted {
+  color: hsl(60,1%,74%);
+}
+
+.text-small {
+  font-size: 12px;
+}
+
 .u-highlight {
   color: #0F94D6;
 }
@@ -99,6 +107,10 @@ blockquote {
 
 .u-positionOrigin {
   position: relative;
+}
+
+.u-inlineBlock {
+  display: inline-block;
 }
 
 .zIndex-1,
@@ -294,6 +306,11 @@ span[data-tooltip]:hover:before {
   white-space: nowrap;
   vertical-align: middle;
   
+  .icon {
+    vertical-align: middle;
+    margin-top: -3px;
+  }
+  
   &:focus {
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
@@ -337,6 +354,11 @@ span[data-tooltip]:hover:before {
     padding: 6px 11px !important;
     display: inline-flex;
     align-items: center;
+    
+    .icon {
+      margin: -2px 5px 0 -2px;
+      fill: hsl(0,0%,60%);
+    }
     
     &.btn--slim {
       padding-left: 7px !important;
@@ -548,6 +570,10 @@ table {
   display: table;
 }
 
+.table-fluid {
+  table-layout: auto;
+}
+
 .table .table-row {
   display: table-row;
 }
@@ -566,20 +592,20 @@ table {
   font-weight: normal;
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.05em;
 }
 
 .table > tbody > tr > td {
   padding: 9px;
   border: none;
-  box-shadow: 0 1px rgba(0,0,0,.02);
+  box-shadow: 0 1px rgba(0,0,0,.03);
 }
 
 .table-hover > tbody > tr:hover > td {
   background: white;
   box-shadow: 
-    0 1px rgba(0,0,0,.02),
-    0 -1px rgba(0,0,0,.02);
+    0 1px rgba(0,0,0,.03),
+    0 -1px rgba(0,0,0,.03);
 }
  
 .table-hover > tbody > tr:hover > th {
@@ -611,20 +637,39 @@ table {
   margin-top: -3px;
 }
 
-.input-replacement {
+.checkbox-replacement,
+.radio-replacement {
   padding: 0;
   margin: 0;
-  height: 38px;
   @extend .u-clickable;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.input-replacement input,
-.input-replacement input:not(:checked) ~ .icon-checked,
-.input-replacement input:checked ~ .icon-unchecked {
+.checkbox-replacement.checkbox-replacement--inline,
+.radio-replacement.radio-replacement--inline {
+  display: inline-flex;
+  margin-right: 3px;
+}
+
+.checkbox-replacement input,
+.checkbox-replacement input:not(:checked) ~ .icon-checked,
+.checkbox-replacement input:checked ~ .icon-unchecked,
+.radio-replacement input,
+.radio-replacement input:not(:checked) ~ .icon-checked,
+.radio-replacement input:checked ~ .icon-unchecked {
   display: none;
+}
+
+.checkbox-replacement + .label-text,
+.radio-replacement + .label-text {
+  margin-left: 0;
+}
+
+.table .checkbox-replacement,
+.table .radio-replacement {
+  height: 38px;
 }
 
 .table .priority.icon:after {
@@ -738,17 +783,15 @@ h1 {
 
 h2,
 h2.popover-title {
-  font-size: 19px;
+  font-size: 20px;
   line-height: 25px;
 }
 
 h3 {
-  font-size: 13px;
+  font-size: 16px;
   margin: 20px 0 8px;
-  color: #a9bcc4;
-  font-weight: 200;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
+  color: hsl(207,7%,29%);
+  font-weight: normal;
   
   .subtitle {
     display: inline;
@@ -760,21 +803,24 @@ h3 {
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
 h5 {
-  font-size: 16px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 label,
-.checkbox.form-group label {
+.checkbox.form-group label,
+.label {
   text-transform: uppercase;
   color: hsl(198,19%,72%);
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   margin-bottom: 4px;
   text-align: left;
   padding: 0;
@@ -791,6 +837,11 @@ label,
   text-transform: none;
   display: inline;
   white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
+}
+.label-text {
+  margin-left: 3px;
+  user-select: none;
+  cursor: pointer;
 }
 
 fieldset {
@@ -822,6 +873,10 @@ fieldset > *:not(.form-group) .form-control {
   &.form-group--inactive {
     opacity: 0.5;
   }
+}
+
+.datetime.form-group .controls {
+  position: relative;
 }
 
 .form-group + .form-group {
@@ -938,7 +993,7 @@ fieldset > *:not(.form-group) .form-control {
 
 .formGroup-label {
   padding: 0 2px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   position: relative;
   display: flex;
   align-items: center;
@@ -949,6 +1004,15 @@ fieldset > *:not(.form-group) .form-control {
 
   .bookmark.icon {
     margin-bottom: -1px;
+  }
+
+  .formGroup-metaControl {
+    @extend .u-clickable;
+    padding: 6px 4px;
+    margin: -6px 0 -6px auto;
+    font-size: 20px;
+    line-height: 1;
+    color: hsl(198, 19%, 72%);
   }
 }
 
@@ -988,6 +1052,10 @@ fieldset > *:not(.form-group) .form-control {
 .form-group.formGroup--halfSize {
   width: 50%;
   float: left;
+  
+  .form-control {
+    min-width: auto;
+  }
 }
 
 .fromGroup--standalone .form-control {
@@ -1002,6 +1070,8 @@ input[type="checkbox"] {
 input[type=text],
 input[type=password],
 input[type=email],
+input[type=date],
+input[type=url],
 textarea,
 .form-control,
 .checkbox.form-group .checkbox {
@@ -1011,7 +1081,7 @@ textarea,
   height: 41px;
   font-size: 14px;
   font-weight: normal;
-  line-height: 22px;
+  line-height: 27px;
   color: #555;
   background: white;
   border: 1px solid hsl(0, 0%, 90%);
@@ -1022,10 +1092,24 @@ textarea,
   appearance: none;
   
   &.form-control--small {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 8px;
     height: 31px;
+    line-height: 29px;
   }
+
+  &.form-control--inline {
+    display: inline-block;
+    width: auto;
+  }
+}
+
+input[type=url] {
+  min-width: 400px;
+}
+
+.user-select.form-control {
+  padding-right: 35px;
+  min-width: 300px;
 }
 
 input[type=time] {
@@ -1040,6 +1124,10 @@ input.time {
   box-sizing: content-box;
   padding: 0 6px;
   line-height: 42px;
+  
+  &.form-control--small {
+    line-height: 31px;
+  }
 }
 
 input.time.time--12 {
@@ -1067,7 +1155,7 @@ input.time.time--12 {
     height: 118px;
   }
 
-  select.form-control {
+  select.form-control:not([multiple]) {
     padding-left: 10px;
     padding-right: 34px;
     word-wrap: normal;
@@ -1077,7 +1165,7 @@ input.time.time--12 {
     display: none;
   }
 
-  .form-control[disabled] {
+  .form-control[disabled], .form-control.is-disabled {
     cursor: not-allowed;
     background-color: #fff;
     color: #d5d5d5;
@@ -1095,7 +1183,8 @@ input.time.time--12 {
     }
   }
 
-  .form-control + .icon-arrow-down  {
+  .form-control + .icon-arrow-down,
+  .dropdown-arrow {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -1121,7 +1210,8 @@ input.time.time--12 {
 
   */
 
-  html.ff-lt-35 .form-control + .icon-arrow-down {
+  html.ff-lt-35 .form-control + .icon-arrow-down,
+  html.ff-lt-35 .dropdown-arrow {
     display: none;
   }
 
@@ -1179,7 +1269,47 @@ input.time.time--12 {
       display: flex;
       align-items: center;
     }
+  }
 
+  .controls--emailSwitch {
+    display: flex;
+    
+    .form-control {
+      flex: 1;
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      
+      &:focus + .primary-email-switch-holder {
+        label {
+          border-color: hsl(200,71%,59%);
+        }
+        
+        /* 
+
+          fake the form-control outline 
+
+        */
+        &:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: -3px;
+          right: -3px;
+          bottom: -3px;
+          background: hsl(201,62%,90%);
+          border-radius: 0 7px 7px 0;
+        }
+      }
+    }
+
+    .primary-email-switch-holder label {
+      padding: 0 9px;
+      background: white;
+      position: relative;
+      border: 1px solid hsl(0, 0%, 90%);
+      border-radius: 0 3px 3px 0;
+    }
   }
 
 .searchfield {
@@ -1441,6 +1571,14 @@ kbd {
   box-shadow:
     0 8px 17px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+  label {
+    color: hsl(0,0%,60%);
+  }
+
+  .inline-label {
+    font-size: inherit;
+  }
 }
 
   .hero-unit h1,
@@ -1514,7 +1652,7 @@ kbd {
 
   .login hr {
     margin: 0 auto 22px;
-    border-top-color: rgba(255,255,255,.15);
+    border-top-color: hsl(240,5%,27%);
     width: 100%;
     max-width: 400px;
   }
@@ -1535,7 +1673,7 @@ kbd {
   left: 0;
   right: 0;
   
-  .logo {
+  .icon-logo {
     margin-right: 8px;
     margin-top: -11px;
   }
@@ -1553,6 +1691,10 @@ kbd {
   width: 100%;
   height: 100%;
   min-height: 100vh;
+}
+
+.fullscreen p {
+  color: hsl(212,8%,40%);
 }
 
 .fullscreen-center {
@@ -1655,7 +1797,7 @@ ol.tabs li {
     padding: 0 10px;
     color: #999;
     font-size: 12px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     background: white;
     display: inline-block;
@@ -1772,6 +1914,22 @@ ol.tabs li {
   border-radius: 100%;
   width: 11px;
   height: 11px;
+}
+
+.icon-status {
+  fill: $ok-color;
+  
+  &.inline {
+    margin-top: -3px;
+    vertical-align: middle;
+  }
+  
+  &.ok {
+    fill: $supergood-color;
+  }
+  &.error {
+    fill: $superbad-color;
+  }
 }
 
 
@@ -2114,6 +2272,13 @@ footer {
   .nav-tab-icon .icon.icon-loading {
     animation: rotateplane 1.2s infinite ease-in-out;
     fill: $supergood-color;
+    
+    /*
+      Safari font rendering bugfix while animating
+      http://stackoverflow.com/questions/9733011/safari-changing-font-weights-when-unrelated-animations-are-running
+    */
+    z-index: 60000;
+    position: relative;
   }
 
   .nav-tab-close {
@@ -2340,7 +2505,7 @@ footer {
       justify-content: center;
     }
     
-    .user-menu .list-button *:not(.dropdown-nose) {
+    .user-menu .list-button *:not(.dropdown-nose):not(.icon-crown) {
       position: relative;
     }
 
@@ -2444,59 +2609,62 @@ footer {
   border-radius: 100%;
   display: inline-block;
   vertical-align: bottom;
-}
-
-  :not(.navigation) .avatar.vip {
-    border: 2px dotted;
-    border-color: #fff;
+  position: relative;
+  
+  .icon-crown {
+    position: absolute;
+    width: 28px;
+    left: 50%;
+    margin-left: -14px;
+    top: -15px;
+    fill: hsl(47,100%,59%);
   }
 
-  .avatar.size-50 {
+  &.size-50 {
     width: 50px;
     height: 50px;
+      
+    .icon-crown {
+      width: 36px;
+      margin-left: -18px;
+      top: -15px;
+    }
   }
 
-  .avatar.size-80 {
+  &.size-80 {
     width: 82px;
     height: 82px;
+      
+    .icon-crown {
+      width: 64px;
+      margin-left: -32px;
+      top: -16px;
+    }
   }
 
-  .unique.avatar {
+  &.unique {
     background-image: image_url("/assets/images/avatar-bg.png");
     background-size: auto;
     color: white;
     line-height: 40px;
     text-align: center;
     font-size: 13px;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     text-shadow: 0 1px rgba(0,0,0,.2);
     cursor: default;
-  }
 
-  :not(.navigation) .unique.avatar.vip {
-    border: 2px dotted;
-    line-height: 36px;
-  }
+    &.size-50 {
+      font-size: 16px;
+      line-height: 52px;
+    }
 
-  .unique.avatar.size-50 {
-    font-size: 16px;
-    line-height: 52px;
+    &.size-80 {
+      font-size: 20px;
+      line-height: 84px;
+    }
   }
-
-  :not(.navigation) .unique.avatar.size-50.vip {
-    line-height: 46px;
-  }
-
-  .unique.avatar.size-80 {
-    font-size: 20px;
-    line-height: 84px;
-  }
-
-  :not(.navigation) .unique.avatar.size-80.vip {
-    font-size: 20px;
-    line-height: 78px;
-  }
+}
 
 .sidebar {
   width: 32%;
@@ -2527,10 +2695,6 @@ footer {
     &:first-child {
       margin-top: 0;
     }
-  }
-  .sidebar-block,
-  .sidebar-block > * {
-    @extend .u-textTruncate;
   }
   .sidebar-block [contenteditable=true] {
     white-space: normal; // do no u-textTruncate, we want to edit it inline
@@ -2723,7 +2887,7 @@ footer {
     color: #a9bcc4;
     font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.05em;
   }
 
   .popover .column label {
@@ -2868,10 +3032,11 @@ footer {
     box-shadow: 0 1px rgba(0,8,14,.02);
   }
 
-    .stat-widget h3 {
+    .stat-title {
+      font-size: 13px;
       margin: 2px 0 8px;
       color: #444a4f;
-      letter-spacing: 0;
+      text-transform: uppercase;
       font-weight: normal;
     }
 
@@ -2894,6 +3059,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
   }
 
     .time.stat-widget .stat-amount {
@@ -2903,6 +3069,7 @@ footer {
       color: white;
       text-shadow: 0 2px rgba(0,8,14,.2);
       position: relative;
+      cursor: default;
     }
 
     .time.stat-widget .stat-dial {
@@ -3440,9 +3607,9 @@ footer {
     position: relative;
   }
 
-    .ticket-article-item .attachments h3 {
+    .ticket-article-item .attachments .attachments-title {
+      font-size: 13px;
       color: hsl(60,1%,34%);
-      letter-spacing: 0;
       font-weight: bold;
       padding: 0 7px;
       margin: 0 0 4px;
@@ -4064,12 +4231,12 @@ footer {
   margin: 20px 0;
 }
 
-.sidebar-list {
+.list {
   padding: 0;
   margin-bottom: 5px;
 }
 
-  .sidebar-list-title {
+  .list-title {
     margin-top: 7px;
     margin-bottom: 4px;
     text-transform: uppercase;
@@ -4077,22 +4244,22 @@ footer {
     display: block;
     font-size: 12px;
     font-weight: normal;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
   }
 
-  .sidebar-list-item {
+  .list-item {
     display: flex;
     align-items: center;
     color: hsl(206,7%,28%);
     border-bottom: 1px solid hsl(240,4%,95%);
   }
 
-  .sidebar-list-item-name {
+  .list-item-name {
     flex: 1;
     padding: 4px 1px;
   }
 
-  .sidebar-list-item-delete {
+  .list-item-delete {
     padding: 0 10px;
     margin-right: -3px;
     display: flex;
@@ -4108,7 +4275,7 @@ footer {
     }
   }
 
-    .sidebar-list-item-delete:hover .icon {
+    .list-item-delete:hover .icon {
       fill: hsl(1,77%,47%);
     }
 
@@ -4373,6 +4540,10 @@ footer {
   tr:hover .switchView {
     visibility: visible;
   }
+
+  td .list {
+    margin-top: -4px;
+  }
   
   .switchView {
     visibility: hidden;
@@ -4428,6 +4599,9 @@ footer {
   max-width: 660px;
   margin-top: 35px;
   margin-bottom: 35px;
+}
+.modal--large .modal-dialog {
+  max-width: 740px;
 }
 .modal-dialog.wizard {
   max-width: 460px;
@@ -4870,7 +5044,7 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .zIndex-6;
+  @extend .zIndex-8;
   display: flex;
   align-items: center;
   background: white;
@@ -4931,6 +5105,10 @@ footer {
 .wizard-body {
   flex: 1;
   padding-bottom: 15px;
+  
+  .form-control {
+    min-width: 0;
+  }
 }
 
 .wizard-controls {
@@ -5513,7 +5691,6 @@ label + .wizard-buttonList {
   .horizontal-filter-body {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     flex: 1;
   }
   
@@ -5647,7 +5824,7 @@ output {
   justify-content: center;
   width: 30px;
   height: 30px;
-  border: 1px solid hsl(198,19%,86%);
+  box-shadow: 0 0 0 1px hsl(198,19%,86%) inset;
   border-radius: 100%;
   background: white;
   cursor: pointer;
@@ -5670,8 +5847,6 @@ output {
   }
   
   .icon {
-    width: 13px;
-    height: 13px;
     fill: hsl(0,0%,61%);
   }
 }
@@ -5688,20 +5863,47 @@ output {
 }
 
 .form-group.day-time {
-  padding: 5px;
+  padding: 10px 5px 6px;
+  margin: 0;
+  
+  label {
+    text-align: center; 
+  }
+
+  .form-control {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 8px;
+  }
+}
+
+.settings-row {
+  margin-bottom: 10px;
 }
 
 .settings-list {
   border-collapse: separate;
   color: hsl(60,1%,34%);
   background: white;
+  table-layout: auto;
+  
+  &.is-invalid {
+    border-radius: 3px;
+    box-shadow: 
+      0 0 0 2px white,
+      0 0 0 4px hsl(0,90%,70%);
+  }
+  
+  &.settings-list--stretch {
+    width: 100%;
+  }
   
   &:not(:last-child) {
     margin-bottom: 34px;
   }
 
   &.settings-list--toggleRow {
-    tr:not(.is-active) td * {
+    tr:not(.is-active) td > *:not(.dont-grey-out) {
       opacity: 0.33;
     }
   }
@@ -5712,7 +5914,6 @@ output {
     }
   }
   
-  
   th, td {
     padding: 10px;
     border: 1px solid hsl(198,18%,86%);
@@ -5722,9 +5923,13 @@ output {
     font-weight: normal;
     text-transform: uppercase;
     font-size: 12px;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
     background: hsl(197,20%,93%);
     border-bottom: none;
+  }
+
+  td.empty-cell {
+    border-top: none;
   }
 
   .text-muted {
@@ -5738,6 +5943,14 @@ output {
     margin: 0;
   }
 
+  .btn.btn--text:not(.btn--secondary) {
+    color: hsl(60,1%,61%);
+  }
+
+  .btn .icon {
+    fill: hsl(60,1%,61%);
+  }
+
   th:not(:last-child),
   td:not(:last-child) {
     border-right: none;
@@ -5745,6 +5958,11 @@ output {
 
   tr:not(:last-child) td {
     border-bottom: none;
+  }
+
+  tr.is-inactive td {
+    color: hsl(199,19%,80%);
+    text-decoration: line-through;
   }
 
   thead th:first-child {
@@ -5766,6 +5984,30 @@ output {
   p {
     margin: 0;
   }
+
+  .settings-list-action-cell {
+    @extend .u-clickable;
+    text-align: center;
+    background: hsl(197,22%,96%);
+    line-height: 1;
+    
+    &:hover {
+      .icon {
+        fill: hsl(60,1%,34%);
+      }
+    }
+    
+    .icon {
+      fill: hsl(198,19%,72%);
+      vertical-align: top;
+    }
+  }
+
+  .settings-list-controlRow {
+    td {
+      padding: 5px;
+    }
+  }
 }
 
 
@@ -5778,8 +6020,11 @@ output {
   display: flex;
   flex-wrap: wrap;
   margin: 0 14px;
-  background: hsl(234,10%,19%);
-  color: white;
+  background: white;
+  color: hsl(60,1%,34%);
+  border-right: 1px solid hsl(198,18%,86%);
+  border-bottom: 1px solid hsl(198,18%,86%);
+  border-radius: 3px 3px 0 0;
   
   &.select-box--vertical .select-value {
     flex-basis: 100%;
@@ -5796,12 +6041,16 @@ output {
   .select-box-header {
     @extend label;
     margin: 0;
-    color: hsl(240,2%,60%);
+    color: inherit;
     display: flex;
     align-items: center;
     padding: 8px 10px;
     flex-basis: 100%;
     white-space: nowrap;
+    background: hsl(197, 20%, 93%);
+    border-left: 1px solid hsl(198,18%,86%);
+    border-top: 1px solid hsl(198,18%,86%);
+    border-radius: 3px 3px 0 0;
   }
 
   .select-value {
@@ -5811,13 +6060,14 @@ output {
     min-height: 34px;
     background-clip: content-box;
     box-shadow: 
-      1px 0 hsl(240,5%,27%) inset,
-      0 1px hsl(240,5%,27%) inset;
+      1px 0 hsl(198,18%,86%) inset,
+      0 1px hsl(198,18%,86%) inset;
     cursor: pointer;
     
     &.is-selected {
-      background-color: hsl(203,65%,55%);
+      background-color: $highlight-color;
       box-shadow: none;
+      color: white;
     }
   }
   
@@ -5864,12 +6114,13 @@ output {
   .searchableSelect-autocomplete {
     position: absolute;
     left: 13px;
-    top: 11px;
+    top: 10px;
     right: 37px;
     white-space: nowrap;
     overflow: hidden;
-    pointer-events: none;
     display: flex;
+    pointer-events: none;
+    white-space: pre;
   }
 
   .searchableSelect-autocomplete-invisible {
@@ -5906,10 +6157,7 @@ output {
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  
-  & + .action {
-    margin-top: 17px;
-  }
+  margin-bottom: 17px;
 
   &.is-inactive {
     background: none;
@@ -5925,16 +6173,69 @@ output {
 
   .action-flow {
     display: flex;
+    flex-wrap: wrap;
+    
+    &.action-flow--noWrap {
+      flex-wrap: nowrap;
+    }
+    
+    &.action-flow--row {
+      flex-basis: 100%;
+    }
+  }
+
+  .action-separator {
+    width: 1px;
+    background: hsl(0,0%,97%);
+    margin: 0 10px;
+  }
+
+  .table {
+    margin-left: -9px;
+    margin-right: -9px;
+  }
+  
+  h2, h3 {
+    margin-bottom: 0;
   }
 
   .action-block,
-  .action-controls {
+  .action-controls,
+  .action-row {
     padding: 10px;
+    
+    h2:first-child,
+    h3:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .action-block {
+    &.action-block--flex {
+      flex: 1;
+    }
+  }
+
+  .action-row {
+    flex-basis: 100%;
   }
   
   h3 {
     color: hsl(0,0%,60%);
     margin-top: 0;
+  }
+
+  .action-label {
+    margin-left: auto;
+    background: hsl(197,20%,93%);
+    border: 1px solid hsl(197,20%,88%);
+    align-self: flex-start;
+    padding: 5px 10px;
+    margin-right: -25px;
+    margin-top: -4px;
+    margin-bottom: -5px;
+    color: hsl(197,16%,65%);
+    cursor: default;
   }
     
   .action-flow-icon {
@@ -5950,9 +6251,110 @@ output {
   .action-controls {
     display: flex;
     margin-left: auto;
+    align-self: flex-end;
     
     .btn {
       align-self: center;
+    }
+  }
+}
+
+.datepicker {
+  background: hsl(234,10%,19%);
+  color: white;
+  padding: 0 14px 11px;
+  position: absolute;
+  left: 0 !important;
+  top: 41px !important;
+  min-width: 0;
+  cursor: default;
+  
+  .datepicker-switch {
+    padding: 12px 0;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    
+    &:hover {
+      background: hsl(240,10%,14%);
+    }
+  }
+
+  .next,
+  .prev {
+    cursor: pointer;
+    padding: 12px 9px 0;
+    vertical-align: top;
+    text-align: center;
+    
+    .icon {
+      margin-top: 4px;
+      fill: white;
+      opacity: 1;
+    }
+    
+    &:hover {
+      background: hsl(240,10%,14%);
+    }
+  }
+  
+  .dow {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 20px 5px 0;
+    text-align: center;
+  }
+
+  .day {
+    width: 27px;
+    height: 27px;
+    border-radius: 100%;
+    padding: 0;
+  }
+
+  .month,
+  .year {
+    float: left;
+    width: 23%;
+    margin: 1%;
+    padding: 5px 0;
+  }
+  
+  .day, .month, .year {
+    text-align: center;
+    font-size: 15px;
+    
+    &:not(.disabled) {
+      cursor: pointer;
+    }
+    
+    &.disabled,
+    &.old,
+    &.new {
+      color: hsl(0,0%,33%);
+    }
+
+    &.today {
+      background: hsl(240,10%,14%);
+    }
+
+    &.focused {
+      box-shadow: 0 0 0 1px hsl(207,82%,64%) inset;
+    }
+
+    &.active {
+      color: white;
+      background: hsl(207,82%,64%);
+    }
+  }
+
+  .today {
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+    
+    &.hidden {
+      display: none;
     }
   }
 }

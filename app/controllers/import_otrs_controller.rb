@@ -43,7 +43,7 @@ class ImportOtrsController < ApplicationController
     suffixes = ['/public.pl', '/otrs/public.pl']
     suffixes.each {|suffix|
       url = params[:url] + suffix + '?Action=ZammadMigrator'
-      # strip multible / in url
+      # strip multiple / in url
       url.gsub!(%r{([^:])(/+/)}, '\\1/')
       response = UserAgent.request( url )
 

@@ -278,6 +278,31 @@ returns
 
 =begin
 
+generate uniq name (will check name of model and generates _1 sequenze)
+
+Used as before_update callback, no own use needed
+
+  name = Model.genrate_uniq_name('some name')
+
+returns
+
+  result = 'some name_X'
+
+=end
+
+  def self.genrate_uniq_name(name)
+    return name if !find_by(name: name)
+    (1..100).each {|counter|
+      name = "#{name}_#{counter}"
+      exists = find_by(name: name)
+      next if exists
+      break
+    }
+    name
+  end
+
+=begin
+
 lookup model from cache (if exists) or retrieve it from db, id, name or login possible
 
   result = Model.lookup( :id => 123 )
@@ -331,7 +356,7 @@ returns
 
 =begin
 
-create model if not exists (check exists based on id, name, login or locale)
+create model if not exists (check exists based on id, name, login, email or locale)
 
   result = Model.create_if_not_exists( attributes )
 
@@ -359,6 +384,13 @@ returns
       records.each {|loop_record|
         return loop_record if loop_record.login == data[:login]
       }
+    elsif data[:email]
+
+      # do lookup with == to handle case insensitive databases
+      records = where( email: data[:email] )
+      records.each {|loop_record|
+        return loop_record if loop_record.email == data[:email]
+      }
     elsif data[:locale] && data[:source]
 
       # do lookup with == to handle case insensitive databases
@@ -372,7 +404,7 @@ returns
 
 =begin
 
-create or update model (check exists based on id, name, login or locale)
+create or update model (check exists based on id, name, login, email or locale)
 
   result = Model.create_or_update( attributes )
 
@@ -418,6 +450,19 @@ returns
       record = new( data )
       record.save
       return record
+    elsif data[:email]
+
+      # do lookup with == to handle case insensitive databases
+      records = where( email: data[:email] )
+      records.each {|loop_record|
+        if loop_record.email.downcase == data[:email].downcase
+          loop_record.update_attributes( data )
+          return loop_record
+        end
+      }
+      record = new( data )
+      record.save
+      return record
     elsif data[:locale]
 
       # do lookup with == to handle case insensitive databases
@@ -432,7 +477,7 @@ returns
       record.save
       return record
     else
-      fail 'Need name, login or locale for create_or_update()'
+      fail 'Need name, login, email or locale for create_or_update()'
     end
   end
 

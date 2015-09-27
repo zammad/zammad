@@ -1,6 +1,6 @@
 <li class="recipientList-entry recipientList--new js-user-new" data-user-id="new">
   <div class="recipientList-iconSpacer">
-    <svg class="recipientList-icon"><use xlink:href="#icon-plus" /></svg>
+    <%- @Icon('plus', 'recipientList-icon') %>
   </div>
   <div class="recipientList-name">
     <%- @T('Create new Customer') %>

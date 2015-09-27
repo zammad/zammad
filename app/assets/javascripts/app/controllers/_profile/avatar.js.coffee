@@ -59,7 +59,6 @@ class Index extends App.Controller
         url:  @apiPath + '/users/avatar'
         data: JSON.stringify( params )
         processData: true
-        success: (data, status, xhr) =>
     )
 
   pick: (avatar) =>
@@ -134,15 +133,15 @@ class Index extends App.Controller
   onUpload: (event) =>
     callback = @storeImage
     EXIF.getData event.target.files[0], ->
-      orientation   = this.exifdata.Orientation
+      orientation   = @exifdata.Orientation
       reader        = new FileReader()
-      reader.onload = (e) =>
+      reader.onload = (e) ->
         new ImageCropper
           imageSource: e.target.result
           callback:    callback
           orientation: orientation
 
-      reader.readAsDataURL(this)
+      reader.readAsDataURL(@)
 
 App.Config.set( 'Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index }, 'NavBarProfile' )
 
@@ -208,16 +207,18 @@ class ImageCropper extends App.ControllerModal
 
   initializeCropper: =>
     @image.cropper
-      aspectRatio: 1,
-      guides: false,
-      autoCrop: true,
-      autoCropArea: 1,
-      preview: ".imageCropper-preview"
+      aspectRatio: 1
+      guides: false
+      autoCrop: true
+      autoCropArea: 1
+      minContainerWidth: 500
+      minContainerHeight: 300
+      preview: '.imageCropper-preview'
 
   onSubmit: (e) =>
     e.preventDefault()
-    @options.callback( @image.cropper("getDataURL") )
-    @image.cropper("destroy")
+    @options.callback( @image.cropper('getCroppedCanvas').toDataURL() )
+    @image.cropper('destroy')
     @hide()
 
 
@@ -364,7 +365,7 @@ class Camera extends App.ControllerModal
         # cache raw video data
         @cacheScreenshot()
     catch e
-      if e.name is "NS_ERROR_NOT_AVAILABLE"
+      if e.name is 'NS_ERROR_NOT_AVAILABLE'
         setTimeout @updatePreview, 200
       else
         throw e

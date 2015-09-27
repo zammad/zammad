@@ -32,9 +32,9 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     return true if record.internal
 
     # if sender is not agent
-    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
-    type   = Ticket::Article::Type.lookup( id: record.type_id )
-    return true if sender.name != 'Agent' && type.name !~ /^phone/
+    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
+    type   = Ticket::Article::Type.lookup(id: record.type_id)
+    return true if sender.name != 'Agent'
 
     # if article is a message to customer
     return true if !type.communication
@@ -52,7 +52,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
   def sender_type_update(record)
 
     # ignore if create channel is already set
-    count = Ticket::Article.where( ticket_id: record.ticket_id ).count
+    count = Ticket::Article.where(ticket_id: record.ticket_id).count
     return if count > 1
 
     record.ticket.create_article_type_id   = record.type_id
@@ -66,10 +66,10 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     return true if record.internal
 
     # if article is a message to customer
-    return true if !Ticket::Article::Type.lookup( id: record.type_id ).communication
+    return true if !Ticket::Article::Type.lookup(id: record.type_id).communication
 
     # if sender is customer
-    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
+    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     if sender.name == 'Customer'
 
       # check if last communication is done by agent, else do not set last_contact_customer

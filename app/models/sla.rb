@@ -5,6 +5,8 @@ class Sla < ApplicationModel
   store     :data
   validates :name, presence: true
 
+  belongs_to  :calendar
+
   after_create  :escalation_calculation_rebuild
   after_update  :escalation_calculation_rebuild
   after_destroy :escalation_calculation_rebuild

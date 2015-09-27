@@ -52,9 +52,9 @@ fetch one account
 
       driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
       driver_instance = driver_class.new
-      driver_instance.fetch(adapter_options, self)
-      self.status_in   = 'ok'
-      self.last_log_in = ''
+      result = driver_instance.fetch(adapter_options, self)
+      self.status_in   = result[:result]
+      self.last_log_in = result[:notice]
       save
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"

@@ -15,6 +15,6 @@ class Widget
 | Your Zammad Team!
 |
 """
-    console.log(banner, "text-decoration: underline;", "text-decoration: none;")
+    console.log(banner, 'text-decoration: underline;', 'text-decoration: none;')
 
-App.Config.set( 'hello_banner', Widget, 'Widgets' )
+App.Config.set('hello_banner', Widget, 'Widgets')

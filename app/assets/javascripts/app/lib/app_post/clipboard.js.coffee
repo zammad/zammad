@@ -62,7 +62,7 @@ class _Singleton
 
   # get cross browser selected string
   _getSelected: ->
-    text = '';
+    text = ''
     if window.getSelection
       text = window.getSelection()
     else if document.getSelection

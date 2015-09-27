@@ -1,3 +1,4 @@
+# coffeelint: disable=no_this
 BindingsClass =
 
   model: 'model'

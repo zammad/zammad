@@ -4,10 +4,18 @@
 <ul class="pagination">
   <li <% if !@previous: %>class="disabled"<% end %> title="<%- @Ti( 'previous in Overview' ) %>">
     <a class="centered previous" href="<% if @previous: %><%- @previous.uiUrl() %><% end %>" data-id="<% if @previous: %><%- @previous.id %><% end %>">
-      <svg class="icon icon-arrow-left<% if !@previous: %> arrow--disabled<% end %>"><use xlink:href="#icon-arrow-left" /></svg>
+      <% if @previous: %>
+        <%- @Icon('arrow-left') %>
+      <% else: %>
+        <%- @Icon('arrow-left', 'arrow--disabled') %>
+      <% end %>
     </a>
   <li <% if !@next: %>class="disabled"<% end %> title="<%- @Ti( 'next in Overview' ) %>">
     <a class="centered next" href="<% if @next: %><%- @next.uiUrl() %><% end %>" data-id="<% if @next: %><%- @next.id %><% end %>">
-      <svg class="icon icon-arrow-right<% if !@next: %> arrow--disabled<% end %>"><use xlink:href="#icon-arrow-right" /></svg>
+      <% if @next: %>
+        <%- @Icon('arrow-right') %>
+      <% else: %>
+        <%- @Icon('arrow-right', 'arrow--disabled') %>
+      <% end %>
     </a>
 </ul>

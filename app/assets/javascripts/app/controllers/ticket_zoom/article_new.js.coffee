@@ -54,9 +54,14 @@ class App.TicketZoomArticleNew extends App.Controller
         attributes: []
       },
       {
-        name:       'twitter'
+        name:       'twitter status'
         icon:       'twitter'
         attributes: []
+      },
+      {
+        name:       'twitter direct-message'
+        icon:       'twitter'
+        attributes: ['to']
       },
       {
         name:       'phone'
@@ -197,7 +202,7 @@ class App.TicketZoomArticleNew extends App.Controller
           # Called during upload progress, first parameter
           # is decimal value from 0 to 100.
           onProgress: (progress, fileSize, uploadedBytes) =>
-            @progressBar.width(parseInt(progress) + "%")
+            @progressBar.width(parseInt(progress) + '%')
             @progressText.text(parseInt(progress))
             # hide cancel on 90%
             if parseInt(progress) >= 90
@@ -213,7 +218,7 @@ class App.TicketZoomArticleNew extends App.Controller
         data:
           ticket: ticket
       )
-      callback = (ticket) =>
+      callback = (ticket) ->
         textModule.reload(
           ticket: ticket
         )
@@ -245,7 +250,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @recipientListArrow.css('top', arrowCenter)
     @recipientList.css('top', top)
 
-    $.Velocity.hook(@recipientList, 'transformOriginX', "0")
+    $.Velocity.hook(@recipientList, 'transformOriginX', '0')
     $.Velocity.hook(@recipientList, 'transformOriginY', "#{ arrowCenter }px")
 
     @recipientList.velocity
@@ -256,7 +261,7 @@ class App.TicketZoomArticleNew extends App.Controller
         speed: 300
         easing: [ 0.34, 1.61, 0.7, 1 ]
 
-    @pickRecipientsCatcher = new App.clickCatcher
+    @pickRecipientsCatcher = new App.ClickCatcher
       holder: @el.offsetParent()
       callback: @hide_recipients
       zIndexScale: 6
@@ -283,7 +288,7 @@ class App.TicketZoomArticleNew extends App.Controller
   add_recipient: (e) ->
     e.stopPropagation()
     e.preventDefault()
-    console.log "add recipient", e
+    console.log 'add recipient', e
     # store recipient
 
   toggleVisibility: ->
@@ -292,19 +297,19 @@ class App.TicketZoomArticleNew extends App.Controller
         .removeClass 'is-public'
         .addClass 'is-internal'
 
-      @$('[name="internal"]').val 'true'
+      @$('[name=internal]').val 'true'
     else
       @articleNewEdit
         .addClass 'is-public'
         .removeClass 'is-internal'
 
 
-      @$('[name="internal"]').val ''
+      @$('[name=internal]').val ''
 
   showSelectableArticleType: =>
     @el.find('.js-articleTypes').removeClass('is-hidden')
 
-    @selectTypeCatcher = new App.clickCatcher
+    @selectTypeCatcher = new App.ClickCatcher
       holder:      @el.offsetParent()
       callback:    @hideSelectableArticleType
       zIndexScale: 6
@@ -323,9 +328,9 @@ class App.TicketZoomArticleNew extends App.Controller
   setArticleType: (type) ->
     typeIcon = @$('.js-selectedType')
     @type = type
-    @$('[name="type"]').val(type)
+    @$('[name=type]').val(type)
     @articleNewEdit.attr('data-type', type)
-    typeIcon.find('use').attr 'xlink:href', '#icon-'+ @type
+    typeIcon.find('use').attr 'xlink:href', "#icon-#{@type}"
 
     # show/hide attributes
     for articleType in @articleTypes
@@ -335,7 +340,7 @@ class App.TicketZoomArticleNew extends App.Controller
           @$("[name=#{name}]").closest('.form-group').removeClass('hide')
 
     # check if signature need to be added
-    body      = @$('[data-name="body"]').html() || ''
+    body      = @$('[data-name=body]').html() || ''
     signature = undefined
     if @ticket.group.signature_id
       signature = App.Signature.find( @ticket.group.signature_id )
@@ -347,11 +352,11 @@ class App.TicketZoomArticleNew extends App.Controller
         if !App.Utils.lastLineEmpty(body)
           body = body + '<br>'
         body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
-        @$('[data-name="body"]').html(body)
+        @$('[data-name=body]').html(body)
 
     # remove old signature
     else
-      @$('[data-name="body"]').find("[data-signature=true]").remove()
+      @$('[data-name=body]').find('[data-signature=true]').remove()
 
   detectEmptyTextarea: =>
     if !@textarea.text().trim()
@@ -384,7 +389,7 @@ class App.TicketZoomArticleNew extends App.Controller
           easing: 'easeOutQuad'
 
       # scroll to bottom
-      @textarea.velocity "scroll",
+      @textarea.velocity 'scroll',
         container: @textarea.scrollParent()
         offset: 99999
         duration: 300
@@ -406,7 +411,7 @@ class App.TicketZoomArticleNew extends App.Controller
       # move attachment text to the left bottom (bottom happens automatically)
       @attachmentPlaceholder.velocity
         properties:
-          translateX: -@attachmentInputHolder.position().left + "px"
+          translateX: -@attachmentInputHolder.position().left + 'px'
         options:
           duration: duration
           easing: 'easeOutQuad'
@@ -419,7 +424,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   addTextareaCatcher: =>
     if @articleNewEdit.is(':visible')
-      @textareaCatcher = new App.clickCatcher
+      @textareaCatcher = new App.ClickCatcher
         holder:      @articleNewEdit.offsetParent()
         callback:    @closeTextarea
         zIndexScale: 4
@@ -471,7 +476,7 @@ class App.TicketZoomArticleNew extends App.Controller
             duration: 100
             stagger: 50
             drag: true
-            complete: (elements) => $(elements).addClass('is-hidden')
+            complete: (elements) -> $(elements).addClass('is-hidden')
 
   onDragenter: (event) =>
     # on the first event,
@@ -508,7 +513,6 @@ class App.TicketZoomArticleNew extends App.Controller
           url:   App.Config.get('api_path') + '/ticket_attachment_upload'
           data:  JSON.stringify( { store_id: store_id } ),
           processData: false
-          success: (data, status, xhr) =>
         )
 
         # remove attachment from dom

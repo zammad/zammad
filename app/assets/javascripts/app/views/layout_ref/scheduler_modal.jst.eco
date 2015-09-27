@@ -11,6 +11,58 @@
               <option>Customer</option>
               <option>Owner</option>
               <option>Number</option>
+              <option selected>Title</option>
+              <option>Group</option>
+              <option>State</option>
+              <option>Priority</option>
+            </optgroup>
+            <optgroup label="Customer">
+              <option>Email</option>
+              <option>Country</option>
+              <option>Group</option>
+              <option>Organization</option>
+              <option>Department</option>
+              <option>VIP</option>
+            </optgroup>
+            <optgroup label="Organization">
+              <option>Country</option>
+              <option>VIP</option>
+            </optgroup>
+          </select>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option selected>contains</option>
+            <option>contains not</option>
+          </select>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
+        </div>
+      </div>
+      <div class="controls">
+        <input class="form-control" value="job#4711">
+      </div>
+    </div>
+    <div class="filter-controls">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
+        <%- @Icon('minus-small') %>
+      </div>
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
+        <%- @Icon('plus-small') %>
+      </div>
+    </div>
+  </div>
+  <div class="horizontal-filter">
+    <div class="horizontal-filter-body">
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_attribute_1">
+            <optgroup label="Ticket">
+              <option>Customer</option>
+              <option>Owner</option>
+              <option>Number</option>
               <option>Title</option>
               <option>Group</option>
               <option selected>State</option>
@@ -29,7 +81,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
       <div class="controls">
@@ -38,7 +90,7 @@
             <option selected>is</option>
             <option>is not</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
       <div class="controls">
@@ -49,16 +101,74 @@
             <option>pending close</option>
             <option>pending reminder</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
-        <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
+        <%- @Icon('minus-small') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
-        <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
+        <%- @Icon('plus-small') %>
+      </div>
+    </div>
+  </div>
+  <div class="horizontal-filter">
+    <div class="horizontal-filter-body">
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_attribute_1">
+            <optgroup label="Ticket">
+              <option>Customer</option>
+              <option>Owner</option>
+              <option>Number</option>
+              <option>Title</option>
+              <option>Group</option>
+              <option>State</option>
+              <option selected>Priority</option>
+            </optgroup>
+            <optgroup label="Customer">
+              <option>Email</option>
+              <option>Country</option>
+              <option>Group</option>
+              <option>Organization</option>
+              <option>Department</option>
+              <option>VIP</option>
+            </optgroup>
+            <optgroup label="Organization">
+              <option>Country</option>
+              <option>VIP</option>
+            </optgroup>
+          </select>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1">
+            <option selected>is</option>
+            <option>is not</option>
+          </select>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1" multiple>
+            <option>high</option>
+            <option selected>normal</option>
+            <option selected>low</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="filter-controls">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
+        <%- @Icon('minus-small') %>
+      </div>
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
+        <%- @Icon('plus-small') %>
       </div>
     </div>
   </div>
@@ -89,7 +199,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
       <div class="controls">
@@ -98,30 +208,108 @@
             <option selected>is</option>
             <option>is not</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_operator_1" multiple>
+            <option>Inbox with very long line for mrflix, very long line for mrflix,</option>
+            <option>Drafts</option>
+            <option>Important</option>
+            <option selected>Spam</option>
+            <option>Important 2</option>
+            <option>Important 3</option>
+            <option>Important 4</option>
+            <option>Important 5</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="filter-controls">
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
+        <%- @Icon('minus-small') %>
+      </div>
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
+        <%- @Icon('plus-small') %>
+      </div>
+    </div>
+  </div>
+  <div class="horizontal-filter">
+    <div class="horizontal-filter-body">
+      <div class="controls">
+        <div class="u-positionOrigin">
+          <select class="form-control" name="filter_attribute_1">
+            <optgroup label="Ticket">
+              <option>Customer</option>
+              <option selected>Owner</option>
+              <option>Number</option>
+              <option>Title</option>
+              <option>Group</option>
+              <option>State</option>
+              <option>Priority</option>
+            </optgroup>
+            <optgroup label="Customer">
+              <option>Email</option>
+              <option>Country</option>
+              <option>Group</option>
+              <option>Organization</option>
+              <option>Department</option>
+              <option>VIP</option>
+            </optgroup>
+            <optgroup label="Organization">
+              <option>Country</option>
+              <option>VIP</option>
+            </optgroup>
+          </select>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
       <div class="controls">
         <div class="u-positionOrigin">
           <select class="form-control" name="filter_operator_1">
-            <option>Inbox</option>
-            <option>Drafts</option>
-            <option>Important</option>
-            <option selected>Spam</option>
+            <option selected>is</option>
+            <option>is not</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
+        </div>
+      </div>
+      <div class="controls">
+        <div class="u-positionOrigin">
+
+          <div class="searchableSelect dropdown dropdown--actions">
+            <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <input class="searchableSelect-shadow form-control js-shadow" id="user-123" name="user" value="">
+              <input class="searchableSelect-main form-control js-input" placeholder="Bob Pfitzer" value="">
+              <div class="searchableSelect-autocomplete">
+                <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>
+                <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>
+              </div>
+              <%- @Icon('arrow-down', 'dropdown-arrow') %>
+              <div class="small loading icon"></div>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-left js-optionsList" role="menu">
+              <li role="presentation" class="js-option" data-value="13">Bob Pfizer
+              <li role="presentation" class="js-option" data-value="18">Hans Bauer
+              <li role="presentation" class="js-option is-hidden" data-value="11">Mail Delivery System
+              <li role="presentation" class="js-option" data-value="2">Nicole Braun
+              <li role="presentation" class="js-option is-active" data-value="14">Nicole Oberzobel via Znuny Projects
+            </ul>
+          </div>
+
         </div>
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="Remove rule">
-        <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+      <div class="filter-control filter-control-remove js-remove" title=<%- @T('Remote') %>>
+        <%- @Icon('minus-small') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
-        <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
+        <%- @Icon('plus-small') %>
       </div>
     </div>
   </div>
+
 </div>
 <div class="filter-preview">
   <h3>Preview <span class="subtitle"><span class="u-highlight">2</span> matches</span></h3>
@@ -212,7 +400,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
       <div class="horizontal-filter-text">to</div>
@@ -224,16 +412,16 @@
             <option>pending close</option>
             <option>pending reminder</option>
           </select>
-          <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove is-disabled js-remove" title="Remove rule">
-        <svg class="icon icon-minus"><use xlink:href="#icon-minus" /></svg>
+      <div class="filter-control filter-control-remove is-disabled js-remove" title=<%- @T('Remote') %>>
+        <%- @Icon('minus-small') %>
       </div>
-      <div class="filter-control filter-control-add js-add" title="Add new rule">
-        <svg class="icon icon-plus"><use xlink:href="#icon-plus" /></svg>
+      <div class="filter-control filter-control-add js-add" title=<%- @T('Add') %>>
+        <%- @Icon('plus-small') %>
       </div>
     </div>
   </div>

@@ -272,35 +272,35 @@ class _webSocketSingleton extends App.Controller
       App.Delay.set @connect, 4500, 'websocket-try-reconnect-after-x-sec', 'ws'
 
     @ws.onerror = (e) =>
-      @log 'debug', "ws:onerror", e
+      @log 'debug', 'ws:onerror', e
 
   _receiveMessage: (data = []) =>
 
-      # go through all blocks
-      for item in data
+    # go through all blocks
+    for item in data
 
-        # set timestamp to get spool messages later
-        if item['spool']
-          @lastSpoolMessage = Math.round( +new Date()/1000 )
+      # set timestamp to get spool messages later
+      if item['spool']
+        @lastSpoolMessage = Math.round( +new Date()/1000 )
 
-        # reset reconnect loop
-        if item['action'] is 'pong'
-          @pong()
+      # reset reconnect loop
+      if item['action'] is 'pong'
+        @pong()
 
-        # fill collection
-        if item['collection']
-          @log 'debug', "onmessage collection:" + item['collection']
-          App.Store.write( item['collection'], item['data'] )
+      # fill collection
+      if item['collection']
+        @log 'debug', 'onmessage collection:' + item['collection']
+        App.Store.write( item['collection'], item['data'] )
 
-        # fire event
-        if item['event']
-          if typeof item['event'] is 'object'
-            for event in item['event']
-              @log 'debug', "onmessage event:" + event
-              App.Event.trigger( event, item['data'] )
-          else
-            @log 'debug', "onmessage event:" + item['event']
-            App.Event.trigger( item['event'], item['data'] )
+      # fire event
+      if item['event']
+        if typeof item['event'] is 'object'
+          for event in item['event']
+            @log 'debug', 'onmessage event:' + event
+            App.Event.trigger( event, item['data'] )
+        else
+          @log 'debug', 'onmessage event:' + item['event']
+          App.Event.trigger( item['event'], item['data'] )
 
   _ajaxInit: (data = {}) =>
 

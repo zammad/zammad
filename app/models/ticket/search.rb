@@ -59,14 +59,20 @@ search tickets via database
   result = Ticket.search(
     current_user: User.find(123),
     condition: {
-      'tickets.owner_id' => user.id,
-      'tickets.state_id' => Ticket::State.where(
-        state_type_id: Ticket::StateType.where(
-          name: [
-            'pending reminder',
-            'pending action',
-          ],
-        ),
+      'tickets.owner_id' => {
+        operator: 'is',
+        value: user.id,
+      },
+      'tickets.state_id' => {
+        operator: 'is',
+        value: Ticket::State.where(
+          state_type_id: Ticket::StateType.where(
+            name: [
+              'pending reminder',
+              'pending action',
+            ],
+          ).map(&:id),
+        },
       ),
     },
     limit: 15,
@@ -154,9 +160,10 @@ returns
                     .order('`tickets`.`created_at` DESC')
                     .limit(limit)
     else
+      query_condition, bind_condition = selector2sql(params[:condition])
       tickets_all = Ticket.select('DISTINCT(tickets.id)')
                     .where(access_condition)
-                    .where(params[:condition])
+                    .where(query_condition, *bind_condition)
                     .order('`tickets`.`created_at` DESC')
                     .limit(limit)
     end

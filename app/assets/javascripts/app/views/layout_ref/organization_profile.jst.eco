@@ -4,9 +4,9 @@
     <div class="profile-section vertical centered">
       <div class="align-right profile-action dropdown dropdown--actions">
         <div class="dropdown-toggle" id="organizationProfile" data-toggle="dropdown">
-          <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
+          <%- @Icon('cog', 'dropdown-icon') %>
           <label>Aktion</label>
-          <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down') %>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="organizationProfile">
           <li role="presentation"><a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
@@ -16,7 +16,7 @@
         </ul>
       </div>
       <div class="profile-organizationIcon">
-        <svg class="icon-organization"><use xlink:href="#icon-organization" /></svg>
+        <%- @Icon('organization') %>
       </div>
       <h1>Steuerbüro C. Kaik</h1>
     </div>
@@ -135,7 +135,7 @@
     </div>
     <div class="profile-section">
       <div class="frequency stat-widget vertical">
-        <h3><%- @T('Frequency') %></h3>
+        <div class="stat-title"><%- @T('Frequency') %></div>
         <div class="stat-graphic">
           <div class="stats-row">
             <div class="stat-bars">

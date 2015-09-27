@@ -26,6 +26,23 @@ class Ticket < ApplicationModel
     create_article_type_id: true,
     create_article_sender_id: true,
     article_count: true,
+    first_response: true,
+    first_response_escal_date: true,
+    first_response_sla_time: true,
+    first_response_in_min: true,
+    first_response_diff_in_min: true,
+    close_time: true,
+    close_time_escal_date: true,
+    close_time_sla_time: true,
+    close_time_in_min: true,
+    close_time_diff_in_min: true,
+    update_time_escal_date: true,
+    updtate_time_sla_time: true,
+    update_time_in_min: true,
+    update_time_diff_in_min: true,
+    last_contact: true,
+    last_contact_agent: true,
+    last_contact_customer: true,
   }
 
   history_support ignore_attributes: {
@@ -165,8 +182,8 @@ merge tickets
 
   ticket = Ticket.find(123)
   result = ticket.merge_to(
-    :ticket_id => 123,
-    :user_id   => 123,
+    ticket_id: 123,
+    user_id:   123,
   )
 
 returns
@@ -222,10 +239,19 @@ returns
 
 =begin
 
-know if online notifcation should be shown as already seen with current state
+check if online notifcation should be shown in general as already seen with current state
 
   ticket = Ticket.find(1)
-  seen = ticket.online_notification_seen_state
+  seen = ticket.online_notification_seen_state(user_id_check)
+
+returns
+
+  result = true # or false
+
+check if online notifcation should be shown for this user as already seen with current state
+
+  ticket = Ticket.find(1)
+  seen = ticket.online_notification_seen_state(check_user_id)
 
 returns
 
@@ -233,7 +259,7 @@ returns
 
 =end
 
-  def online_notification_seen_state
+  def online_notification_seen_state(user_id_check = nil)
     state      = Ticket::State.lookup( id: state_id )
     state_type = Ticket::StateType.lookup( id: state.state_type_id )
 
@@ -244,12 +270,112 @@ returns
     end
 
     # set all to seen if new state is pending reminder state
-    return true if state_type.name == 'pending reminder'
+    if state_type.name == 'pending reminder'
+      if user_id_check
+        return false if owner_id == 1
+        return false if updated_by_id != owner_id && user_id_check == owner_id
+        return true
+      end
+      return true
+    end
 
     # set all to seen if new state is a closed or merged state
     return true if state_type.name == 'closed'
     return true if state_type.name == 'merged'
     false
+  end
+
+=begin
+
+get count of tickets and tickets which match on selector
+
+  ticket_count, tickets = Ticket.selectors(params[:condition], 6)
+
+=end
+
+  def self.selectors(selectors, limit = 10)
+    return if !selectors
+    query, bind_params, tables = selector2sql(selectors)
+    return [] if !query
+    ticket_count = Ticket.where(query, *bind_params).joins(tables).count
+    tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+    [ticket_count, tickets]
+  end
+
+=begin
+
+generate condition query to search for tickets based on condition
+
+  query_condition, bind_condition = selector2sql(params[:condition])
+
+condition example
+
+  {
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [1,2,5]
+    }
+  }
+
+=end
+
+  def self.selector2sql(selectors)
+    return if !selectors
+    query = ''
+    bind_params = []
+
+    tables = []
+    selectors.each {|attribute, selector|
+      selector = attribute.split(/\./)
+      next if !selector[1]
+      next if selector[0] == 'ticket'
+      next if tables.include?(selector[0])
+      tables.push selector[0].to_sym
+    }
+
+    selectors.each {|attribute, selector_raw|
+      if query != ''
+        query += ' AND '
+      end
+      fail "Invalid selector #{selector_raw.inspect}" if !selector_raw
+      fail "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
+      selector = selector_raw.stringify_keys
+      fail "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
+      return nil if !selector['value']
+      return nil if selector['value'].respond_to?(:empty?) && selector['value'].empty?
+      attributes = attribute.split(/\./)
+      attribute = "#{attributes[0]}s.#{attributes[1]}"
+      if selector['operator'] == 'is'
+        query += "#{attribute} IN (?)"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'is not'
+        query += "#{attribute} NOT IN (?)"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains'
+        query += "#{attribute} LIKE (?)"
+        value = "%#{selector['value']}%"
+        bind_params.push value
+      elsif selector['operator'] == 'contains not'
+        query += "#{attribute} NOT LIKE (?)"
+        value = "%#{selector['value']}%"
+        bind_params.push value
+      elsif selector['operator'] == 'before (absolute)'
+        query += "#{attribute} <= ?"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'after (absolute)'
+        query += "#{attribute} >= ?"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'before (relative)'
+        query += "#{attribute} <= ?"
+        bind_params.push Time.zone.now - selector['value'].to_i.minutes
+      elsif selector['operator'] == 'after (relative)'
+        query += "#{attribute} >= ?"
+        bind_params.push Time.zone.now + selector['value'].to_i.minutes
+      else
+        fail "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
+      end
+    }
+    [query, bind_params, tables]
   end
 
   private
@@ -260,9 +386,7 @@ returns
   end
 
   def check_title
-
     return if !title
-
     title.gsub!(/\s|\t|\r/, ' ')
   end
 

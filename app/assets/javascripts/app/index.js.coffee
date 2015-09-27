@@ -121,7 +121,12 @@ class App extends Spine.Controller
     result
 
   @view: (name) ->
-    template = ( params = {} ) =>
+    template = ( params = {} ) ->
+
+      s = ( num, digits ) ->
+        while num.toString().length < digits
+          num = '0' + num
+        num
 
       # define print name helper
       params.P = ( object, attribute_name ) ->
@@ -130,10 +135,6 @@ class App extends Spine.Controller
       # define date format helper
       params.date = ( time ) ->
         return '' if !time
-        s = ( num, digits ) ->
-          while num.toString().length < digits
-            num = "0" + num
-          num
 
         timeObject = new Date(time)
         d = s( timeObject.getDate(), 2 )
@@ -144,10 +145,6 @@ class App extends Spine.Controller
       # define datetime format helper
       params.datetime = ( time ) ->
         return '' if !time
-        s = ( num, digits ) ->
-          while num.toString().length < digits
-            num = "0" + num
-          num
 
         timeObject = new Date(time)
         d = s( timeObject.getDate(), 2 )
@@ -161,10 +158,7 @@ class App extends Spine.Controller
       # define decimal format helper
       params.decimal = ( data, positions = 2 ) ->
         return '' if !data
-        s = ( num, digits ) ->
-          while num.toString().length < digits
-            num = num + "0"
-          num
+
         result = data.toString().match(/^(.+?)\.(.+?)$/)
         if !result || !result[2]
           return "#{data}." + s( 0, positions ).toString()
@@ -181,6 +175,14 @@ class App extends Spine.Controller
       # define translation inline helper
       params.Ti = ( item, args... ) ->
         App.i18n.translateInline( item, args... )
+
+      # define translation for date helper
+      params.Tdate = ( item, args... ) ->
+        App.i18n.translateDate( item, args... )
+
+      # define translation for timestamp helper
+      params.Ttimestamp = ( item, args... ) ->
+        App.i18n.translateTimestamp( item, args... )
 
       # define linkify helper
       params.L = ( item ) ->
@@ -229,8 +231,23 @@ class App extends Spine.Controller
         humanTime = App.PrettyDate.humanTime(time, escalation)
         "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
 
+      # define icon helper
+      params.Icon = (name, className = '') ->
+        "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#icon-#{name}\" /></svg>"
+
+      # define richtext helper
+      params.RichText = ( string ) ->
+        if string.match(/@T\('/)
+          string = string.replace(/@T\('(.+?)'\)/g, (match, capture) ->
+            App.i18n.translateContent(capture)
+          )
+          return marked(string)
+        App.i18n.translateContent(string)
+
       # define template
       JST["app/views/#{name}"](params)
     template
+
+class App.UiElement
 
 window.App = App

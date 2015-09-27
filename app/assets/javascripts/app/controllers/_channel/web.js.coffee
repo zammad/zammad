@@ -14,3 +14,5 @@ class App.ChannelWeb extends App.ControllerTabs
     ]
 
     @render()
+
+App.Config.set( 'Web', { prio: 1000, name: 'Web', parent: '#channels', target: '#channels/web', controller: App.ChannelWeb, role: ['Admin'] }, 'NavBarAdmin' )

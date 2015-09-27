@@ -26,9 +26,10 @@ module Channel::EmailBuild
 
     # notification
     if notification
-      attr['X-Loop']         = 'yes'
-      attr['Precedence']     = 'bulk'
-      attr['Auto-Submitted'] = 'auto-generated'
+      attr['X-Loop']                   = 'yes'
+      attr['Precedence']               = 'bulk'
+      attr['Auto-Submitted']           = 'auto-generated'
+      attr['X-Auto-Response-Suppress'] = 'All'
     end
 
     #attr['X-Powered-BY'] = 'Zammad - Support/Helpdesk (http://www.zammad.org/)'

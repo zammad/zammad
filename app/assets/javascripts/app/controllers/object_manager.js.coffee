@@ -1,3 +1,4 @@
+# coffeelint: disable=duplicate_key
 class Index extends App.ControllerTabs
   header: 'Object Manager'
   constructor: ->

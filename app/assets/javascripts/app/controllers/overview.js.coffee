@@ -22,6 +22,7 @@ class Index extends App.ControllerContent
           { name: 'New Overview', 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
+      large: true,
     )
 
 App.Config.set( 'Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

@@ -219,7 +219,7 @@ class Admin extends App.ControllerContent
             username: @params.email
             password: @params.password
           success: @relogin
-          error: =>
+          error: ->
             App.Event.trigger 'notify', {
               type:    'error'
               msg:     App.i18n.translateContent( 'Signin failed! Please contact the support team!' )
@@ -314,7 +314,7 @@ class Base extends App.Wizard
       logoUrl:      logoUrl
       organization: organization
     )
-    @$("input, select").first().focus()
+    @$('input, select').first().focus()
 
   onLogoPick: (event) =>
     reader = new FileReader()
@@ -613,7 +613,7 @@ class ChannelEmail extends App.Wizard
     'submit .js-inbound':                 'probeInbound'
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
-    'click  .js-back':                    'goToSlide'
+    'click  .js-goToSlide':               'goToSlide'
 
   constructor: ->
     super
@@ -744,7 +744,20 @@ class ChannelEmail extends App.Wizard
           if data.setting
             for key, value of data.setting
               @account[key] = value
-          @verify(@account)
+
+          if data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            @$('.js-inbound-acknowledge .js-message').html(message)
+            @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
+            @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
+            @$('.js-inbound-acknowledge .js-next').unbind('click.verify').bind('click.verify', (e) =>
+              e.preventDefault()
+              @verify(@account)
+            )
+            @showSlide('js-inbound-acknowledge')
+          else
+            @verify(@account)
+
         else if data.result is 'duplicate'
           @showSlide('js-intro')
           @showAlert('js-intro', 'Account already exists!' )
@@ -781,7 +794,14 @@ class ChannelEmail extends App.Wizard
           # remember account settings
           @account.inbound = params
 
-          @showSlide('js-outbound')
+          if data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            @$('.js-inbound-acknowledge .js-message').html(message)
+            @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
+            @$('.js-inbound-acknowledge .js-next').unbind('click.verify')
+            @showSlide('js-inbound-acknowledge')
+          else
+            @showSlide('js-outbound')
 
           # fill user / password based on inbound settings
           if !@channel
@@ -854,9 +874,9 @@ class ChannelEmail extends App.Wizard
           @navigate 'getting_started/agents'
         else
           if data.source is 'inbound' || data.source is 'outbound'
-              @showSlide("js-#{data.source}")
-              @showAlert("js-#{data.source}", data.message_human || data.message )
-              @showInvalidField("js-#{data.source}", data.invalid_field)
+            @showSlide("js-#{data.source}")
+            @showAlert("js-#{data.source}", data.message_human || data.message )
+            @showInvalidField("js-#{data.source}", data.invalid_field)
           else
             if count is 2
               @showAlert('js-verify', data.message_human || data.message )

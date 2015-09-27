@@ -87,17 +87,18 @@ class App.Content extends App.ControllerWidgetPermanent
             params:     params_only,
           )
 
-          # remove waypoints
-          $('footer').waypoint('remove')
+          # remember history
+          # needed to mute "redirect" url to support browser back
+          history = App.Config.get('History')
+          if history[10]
+            history.shift()
+          history.push window.location.hash
 
           # execute controller
           controller = (params) =>
             params.el = @el
             new callback(params)
           controller(params)
-
-          # scroll to top / remember last screen position
-#          @scrollTo(0, 0, 100)
         )
 
     Spine.Route.setup()

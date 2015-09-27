@@ -135,7 +135,7 @@ EventMachine.run {
         next
       end
 
-      # check if connection already exists
+      # check if connection not already exists
       next if !@clients[client_id]
 
       # spool messages for new connects
@@ -186,7 +186,9 @@ EventMachine.run {
 
         # get user_id
         if data && data['session_id']
+          ActiveRecord::Base.establish_connection
           session = ActiveRecord::SessionStore::Session.find_by( session_id: data['session_id'] )
+          ActiveRecord::Base.remove_connection
         end
 
         if session && session.data && session.data['user_id']

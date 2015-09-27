@@ -9,7 +9,7 @@ class App.TicketZoomOverviewNavigator extends App.Controller
     @bind 'ticket_overview_rebuild', (data) =>
       execute = =>
         @render()
-      @delay(execute, 600, 'overview-navigator')
+      @delay(execute, 1600, 'overview-navigator')
 
     @render()
 

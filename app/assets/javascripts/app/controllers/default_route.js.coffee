@@ -1,4 +1,4 @@
-class Index extends App.Controller
+class DefaultRouter extends App.Controller
 
   constructor: ->
     super
@@ -9,24 +9,24 @@ class Index extends App.Controller
 
     # check if import is active
     if !@Config.get('system_init_done') && @Config.get('import_mode')
-      @navigate '#import'
+      @navigate '#import', true
       return
 
     # route to getting started screen
     if !@Config.get('system_init_done')
-      @navigate '#getting_started'
+      @navigate '#getting_started', true
       return
 
     # check role
     if @isRole('Customer')
-      @navigate '#ticket/view/my_tickets'
+      @navigate '#ticket/view/my_tickets', true
       return
 
     if @Config.get('default_controller')
-      @navigate @Config.get('default_controller')
+      @navigate @Config.get('default_controller'), true
       return
 
-    @navigate '#dashboard'
+    @navigate '#dashboard', true
 
-App.Config.set( '', Index, 'Routes' )
-App.Config.set( '/', Index, 'Routes' )
+App.Config.set( '', DefaultRouter, 'Routes' )
+App.Config.set( '/', DefaultRouter, 'Routes' )

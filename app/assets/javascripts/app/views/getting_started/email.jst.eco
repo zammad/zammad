@@ -1,5 +1,5 @@
 <div class="main flex vertical centered darkBackground">
-  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <%- @Icon('full-logo', 'wizard-logo') %>
 
   <form class="setup wizard js-intro">
     <!-- dummy to prevent chrome to ask for password save -->
@@ -78,8 +78,22 @@
         <div class="base-inbound-settings"></div>
       </div>
       <div class="wizard-controls center">
-        <a class="btn btn--text btn--secondary js-back" data-slide="js-intro"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary js-goToSlide" data-slide="js-intro"><%- @T('Go Back') %></a>
         <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
+      </div>
+    </div>
+  </form>
+
+  <form class="setup wizard hide js-inbound-acknowledge">
+    <div class="wizard-slide">
+      <h2><%- @T('Email Inbound') %></h2>
+      <div class="wizard-body vertical justified">
+        <div class="alert alert--danger hide" role="alert"></div>
+        <p class="js-message"><%- @T('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', 'x') %></p>
+      </div>
+      <div class="wizard-controls center">
+        <a class="btn btn--text btn--secondary js-goToSlide js-back" data-slide="js-intro"><%- @T('Go Back') %></a>
+        <button class="btn btn--primary js-goToSlide js-next align-right" data-slide="js-outbound"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>
@@ -97,7 +111,7 @@
         <div class="base-outbound-settings"></div>
       </div>
       <div class="wizard-controls center">
-        <a class="btn btn--text btn--secondary js-back" data-slide="js-inbound"><%- @T('Go Back') %></a>
+        <a class="btn btn--text btn--secondary js-goToSlide" data-slide="js-inbound"><%- @T('Go Back') %></a>
         <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
       </div>
     </div>

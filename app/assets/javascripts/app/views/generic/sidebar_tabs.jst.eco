@@ -4,7 +4,7 @@
     <h2 class="sidebar-header-headline js-headline"><%- @T( item.head ) %></h2>
     <div class="sidebar-header-actions js-actions"></div>
     <div class="tabsSidebar-close">
-      <svg class="icon icon-long-arrow-right"><use xlink:href="#icon-long-arrow-right" /></svg>
+      <%- @Icon('long-arrow-right') %>
     </div>
   </div>
   <hr>
@@ -16,7 +16,7 @@
 <div class="tabsSidebar-tabs vertical justified">
 <% for item in @items: %>
   <div class="tabsSidebar-tab" data-tab="<%= item.name %>">
-    <svg class="icon"><use xlink:href="#icon-<%= item.icon %>" /></svg>
+    <%- @Icon(item.icon) %>
   </div>
 <% end %>
 </div>

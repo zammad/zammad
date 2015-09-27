@@ -65,7 +65,7 @@ class Observer::Ticket::Notification::BackgroundJob
       # create desktop notification
 
       # create online notification
-      seen = ticket.online_notification_seen_state
+      seen = ticket.online_notification_seen_state(user.id)
       OnlineNotification.add(
         type: @p[:type],
         object: 'Ticket',

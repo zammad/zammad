@@ -48,7 +48,52 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    model_index_render(Sla, params)
+
+    assets = {}
+
+    # calendars
+    calendar_ids = []
+    Calendar.all.order(:name).each {|calendar|
+      calendar_ids.push calendar.id
+      assets = calendar.assets(assets)
+    }
+
+    # slas
+    sla_ids = []
+    models = Models.all
+    Sla.all.order(:name).each {|sla|
+      sla_ids.push sla.id
+      assets = sla.assets(assets)
+
+      # get assets of condition
+      sla.condition.each {|item, content|
+        attribute = item.split(/\./)
+        next if !attribute[1]
+        attribute_class = attribute[0].to_classname.constantize
+        reflection = attribute[1].sub(/_id$/, '')
+        reflection = reflection.to_sym
+        next if !models[attribute_class]
+        next if !models[attribute_class][:reflections]
+        next if !models[attribute_class][:reflections][reflection]
+        next if !models[attribute_class][:reflections][reflection].klass
+        attribute_ref_class = models[attribute_class][:reflections][reflection].klass
+        if content['value'].class == Array
+          content['value'].each {|item_id|
+            attribute_object = attribute_ref_class.find_by(id: item_id)
+            assets = attribute_object.assets(assets)
+          }
+        else
+          attribute_object = attribute_ref_class.find_by(id: content['value'])
+          assets = attribute_object.assets(assets)
+        end
+      }
+    }
+
+    render json: {
+      calendar_ids: calendar_ids,
+      sla_ids: sla_ids,
+      assets: assets,
+    }, status: :ok
   end
 
 =begin

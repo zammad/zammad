@@ -109,25 +109,25 @@ class Widget extends App.ControllerWidgetPermanent
 
   show: =>
     @isShown = true
-    @el.find('#chat_toogle').html('&times;');
+    @el.find('#chat_toogle').html('&times;')
     if @newMessage
       @el.find('div.well').addClass('alert-success')
       @delay( =>
-          @el.find('div.well').removeClass('alert-success')
+        @el.find('div.well').removeClass('alert-success')
 
-          App.Event.trigger(
-            'ws:send'
-              action: 'broadcast'
-              recipient:
-                user_id: [ @Session.get('id') ]
-              event:  'chat:message_new'
-              spool:  true
-              data:
-                show: true
-          )
+        App.Event.trigger(
+          'ws:send'
+            action: 'broadcast'
+            recipient:
+              user_id: [ @Session.get('id') ]
+            event:  'chat:message_new'
+            spool:  true
+            data:
+              show: true
+        )
 
-        2000
-        'chat-message-new'
+      2000
+      'chat-message-new'
       )
     @el.find('#chat_content').show(100)
     @el.find('#chat_content').removeClass('hide')
@@ -135,16 +135,16 @@ class Widget extends App.ControllerWidgetPermanent
 
     # hide
     @delay( =>
-        @hide()
-      60000
-      'chat-window-hide'
+      @hide()
+    60000
+    'chat-window-hide'
     )
 
   hide: =>
     @isShown = false
     @el.find('#chat_content').hide(100)
     @el.find('#chat_content').addClass('hide')
-    @el.find('#chat_toogle').html('&diams;');
+    @el.find('#chat_toogle').html('&diams;')
 
   focusIn: =>
     @focus = true
@@ -158,9 +158,9 @@ class Widget extends App.ControllerWidgetPermanent
 
     # hide
     @delay( =>
-        @hide()
-      60000
-      'chat-window-hide'
+      @hide()
+    60000
+    'chat-window-hide'
     )
 
   render: ->

@@ -29,6 +29,18 @@ class App.Controller extends Spine.Controller
       ajaxId = App.Ajax.request(data)
       @ajaxCalls.push ajaxId
 
+  navigate: (location, hideCurrentLocationFromHistory = false) ->
+    @log 'debug', "navigate to '#{location}', hide from history '#{hideCurrentLocationFromHistory}'"
+
+    # hide current location from browser history, allow to use back button in browser
+    if hideCurrentLocationFromHistory
+      if window.history
+        history = App.Config.get('History')
+        oldLocation = history[history.length-2]
+        if oldLocation
+          window.history.replaceState(null, null, oldLocation)
+    super location
+
   bind: (event, callback) =>
     App.Event.bind(
       event
@@ -67,7 +79,7 @@ class App.Controller extends Spine.Controller
     @userPopupsDestroy()
     @organizationPopupsDestroy()
 
-  release: =>
+  release: ->
     # release custom bindings after it got removed from dom
 
   # add @title methode to set title
@@ -82,7 +94,7 @@ class App.Controller extends Spine.Controller
     if window.clipboardData # IE
       window.clipboardData.setData( 'Text', text )
     else
-      window.prompt( "Copy to clipboard: Ctrl+C, Enter", text )
+      window.prompt( 'Copy to clipboard: Ctrl+C, Enter', text )
 
   # disable all delay's and interval's
   disconnectClient: ->
@@ -126,12 +138,13 @@ class App.Controller extends Spine.Controller
       element.css( 'left', positionStart + 'px' )
       if position.length > 0
         setTimeout( ->
-            shakeMe( element, position, positionEnd )
+          shakeMe( element, position, positionEnd )
         , positionEnd)
       else
         try
           element.css( 'position', 'static' )
         catch e
+          console.log 'error', e
 
     position = [ 15, 30, 15, 0, -15, -30, -15, 0 ]
     position = position.concat( position.concat( position ) )
@@ -162,14 +175,14 @@ class App.Controller extends Spine.Controller
 #
 
   # human readable file size
-  humanFileSize: (size) =>
+  humanFileSize: (size) ->
     App.Utils.humanFileSize(size)
 
   # human readable time
-  humanTime: ( time, escalation, long = true ) =>
+  humanTime: ( time, escalation, long = true ) ->
     App.PrettyDate.humanTime( time, escalation, long )
 
-  userInfo: (data) =>
+  userInfo: (data) ->
     el = data.el || $('[data-id="customer_info"]')
     el.unbind()
 
@@ -206,17 +219,20 @@ class App.Controller extends Spine.Controller
     update = =>
       ui = @
       $('.humanTimeFromNow').each( ->
-        item = $(this)
-#        console.log('rewrite frontendTimeUpdate', this, $(this).hasClass('escalation'))
-        ui.frontendTimeUpdateItem(item)
+        item = $(@)
+        currentVal = item.text()
+        ui.frontendTimeUpdateItem(item, currentVal)
       )
     App.Interval.set( update, 61000, 'frontendTimeUpdate', 'ui' )
 
-  frontendTimeUpdateItem: (item) =>
+  frontendTimeUpdateItem: (item, currentVal) =>
     timestamp = item.data('time')
     time      = @humanTime( timestamp, item.hasClass('escalation') )
-    item.attr( 'data-tooltip', App.i18n.translateTimestamp(timestamp) )
-    item.html( time )
+
+    # only do dom updates on changes
+    return if time is currentVal
+    item.attr('data-tooltip', App.i18n.translateTimestamp(timestamp))
+    item.html(time)
 
   ticketPopups: (position = 'right') ->
 
@@ -227,7 +243,7 @@ class App.Controller extends Spine.Controller
         if id
           ticket = App.Ticket.find(id)
           @navigate ticket.uiUrl()
-      );
+      )
 
     @ticketPopupsDestroy()
 
@@ -250,9 +266,9 @@ class App.Controller extends Spine.Controller
         html = App.view('popover/ticket')(
           ticket: ticket
         )
-        html = $( html )
+        html = $(html)
         html.find('.humanTimeFromNow').each( ->
-          item = $(this)
+          item = $(@)
           ui.frontendTimeUpdateItem(item)
         )
         html
@@ -272,7 +288,7 @@ class App.Controller extends Spine.Controller
       if id
         user = App.User.find(id)
         @navigate user.uiUrl()
-    );
+    )
 
     @userPopupsDestroy()
 
@@ -330,7 +346,7 @@ class App.Controller extends Spine.Controller
       if id
         organization = App.Organization.find(id)
         @navigate organization.uiUrl()
-    );
+    )
 
     @organizationPopupsDestroy()
 
@@ -412,7 +428,7 @@ class App.Controller extends Spine.Controller
           )
           html = $( html )
           html.find('.humanTimeFromNow').each( ->
-            item = $(this)
+            item = $(@)
             ui.frontendTimeUpdateItem(item)
           )
           html
@@ -426,7 +442,7 @@ class App.Controller extends Spine.Controller
           customer_id: params.user_id,
         }
         processData: true,
-        success: (data, status, xhr) =>
+        success: (data, status, xhr) ->
           App.Store.write( "user-ticket-popover::#{params.user_id}",  data )
 
           # load assets
@@ -440,7 +456,7 @@ class App.Controller extends Spine.Controller
     if data
       show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       @delay(
-        =>
+        ->
           fetch(params)
         1000
         'fetch'
@@ -471,7 +487,7 @@ class App.Controller extends Spine.Controller
       item.title = '???'
 
       # convert backend name space to local name space
-      item.object = item.object.replace("::", '')
+      item.object = item.object.replace('::', '')
 
       # lookup real data
       if App[item.object] && App[item.object].exists( item.o_id )
@@ -515,14 +531,14 @@ class App.Controller extends Spine.Controller
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
-    $('.content').addClass('hide');
+    $('.content').addClass('hide')
     @navShow()
 
 class App.ControllerContent extends App.Controller
   constructor: ->
     super
-    $('.content').addClass('hide');
-    $('#content').removeClass('hide');
+    $('.content').addClass('hide')
+    $('#content').removeClass('hide')
     @navShow()
 
 class App.ControllerModal extends App.Controller
@@ -542,13 +558,15 @@ class App.ControllerModal extends App.Controller
       backdrop: true
       keyboard: true
       close:    true
+      large:    false
       head:     '?'
       buttonClass: 'btn--success'
       centerButtons: []
       container: null
-      onComplete: (->)
 
     options = _.extend( defaults, options )
+
+    @className += ' modal--large' if options.large
 
     super(options)
 
@@ -583,7 +601,7 @@ class App.ControllerModal extends App.Controller
       container: @container
     .on
       'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onComplete
+      'shown.bs.modal':  @onShown
       'hidden.bs.modal': =>
         @onHide()
         # remove modal from dom
@@ -594,8 +612,7 @@ class App.ControllerModal extends App.Controller
       e.preventDefault()
     @el.modal('hide')
 
-  onShown: =>
-    @onComplete()
+  onShown: ->
     console.log('modal shown: do nothing')
     # do nothing
 
@@ -643,7 +660,7 @@ class App.SessionMessage extends App.ControllerModal
       window.location.href = window.location.href
       return true
 
-    throw "Cant reload page!"
+    throw 'Cant reload page!'
 
 class App.UpdateHeader extends App.Controller
   constructor: ->
@@ -669,7 +686,7 @@ class App.UpdateTastbar extends App.Controller
   release: =>
     App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
 
-  update: (genericObject) =>
+  update: (genericObject) ->
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'

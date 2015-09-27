@@ -3,7 +3,7 @@ class App.EmailAddress extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/email_addresses'
 
-  @filterChannel: (options, type) =>
+  @filterChannel: (options, type) ->
     return options if type isnt 'collection'
     _.filter(
       options

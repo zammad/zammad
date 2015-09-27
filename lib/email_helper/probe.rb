@@ -51,13 +51,12 @@ returns on fail
       user, domain = EmailHelper.parse_email(params[:email])
 
       if !user || !domain
-        result = {
+        return {
           result: 'invalid',
           messages: {
             email: 'Invalid email.'
           },
         }
-        return result
       end
 
       # probe provider based settings
@@ -73,18 +72,22 @@ returns on fail
           next if domain_to_check !~ /#{settings[:domain]}/i
 
           # probe inbound
-          result = EmailHelper::Probe.inbound(settings[:inbound])
-          return result if result[:result] != 'ok'
+          Rails.logger.debug "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}"
+          result_inbound = EmailHelper::Probe.inbound(settings[:inbound])
+          Rails.logger.debug "INBOUND RESULT PROVIDER: #{result_inbound.inspect}"
+          next if result_inbound[:result] != 'ok'
 
           # probe outbound
-          result = EmailHelper::Probe.outbound(settings[:outbound], params[:email])
-          return result if result[:result] != 'ok'
+          Rails.logger.debug "OUTBOUND PROBE PROVIDER: #{settings[:outbound].inspect}"
+          result_outbound = EmailHelper::Probe.outbound(settings[:outbound], params[:email])
+          Rails.logger.debug "OUTBOUND RESULT PROVIDER: #{result_outbound.inspect}"
+          next if result_outbound[:result] != 'ok'
 
-          result = {
+          return {
             result: 'ok',
+            content_messages: result_inbound[:content_messages],
             setting: settings,
           }
-          return result
         }
       }
 
@@ -94,25 +97,31 @@ returns on fail
       inbound_mx = EmailHelper.provider_inbound_mx(user, params[:email], params[:password], mx_records)
       inbound_guess = EmailHelper.provider_inbound_guess(user, params[:email], params[:password], domain)
       inbound_map = inbound_mx + inbound_guess
-      settings = {}
+      result = {
+        result: 'ok',
+        setting: {}
+      }
       success = false
       inbound_map.each {|config|
-        Rails.logger.info "INBOUND PROBE: #{config.inspect}"
-        result = EmailHelper::Probe.inbound( config )
-        Rails.logger.info "INBOUND RESULT: #{result.inspect}"
+        Rails.logger.debug "INBOUND PROBE GUESS: #{config.inspect}"
+        result_inbound = EmailHelper::Probe.inbound(config)
+        Rails.logger.debug "INBOUND RESULT GUESS: #{result_inbound.inspect}"
 
-        next if result[:result] != 'ok'
+        next if result_inbound[:result] != 'ok'
 
-        success = true
-        settings[:inbound] = config
+        success                    = true
+        result[:setting][:inbound] = config
+        result[:content_messages]  = result_inbound[:content_messages]
+
         break
       }
 
+      # give up, no possible inbound found
       if !success
-        result = {
+        return {
           result: 'failed',
+          reason: 'inbound failed',
         }
-        return result
       end
 
       # probe outbound
@@ -122,28 +131,26 @@ returns on fail
 
       success = false
       outbound_map.each {|config|
-        Rails.logger.info "OUTBOUND PROBE: #{config.inspect}"
-        result = EmailHelper::Probe.outbound( config, params[:email] )
-        Rails.logger.info "OUTBOUND RESULT: #{result.inspect}"
+        Rails.logger.debug "OUTBOUND PROBE GUESS: #{config.inspect}"
+        result_outbound = EmailHelper::Probe.outbound(config, params[:email])
+        Rails.logger.debug "OUTBOUND RESULT GUESS: #{result_outbound.inspect}"
 
-        next if result[:result] != 'ok'
+        next if result_outbound[:result] != 'ok'
 
-        success = true
-        settings[:outbound] = config
+        success                     = true
+        result[:setting][:outbound] = config
         break
       }
 
+      # give up, no possible outbound found
       if !success
-        result = {
+        return {
           result: 'failed',
+          reason: 'outbound failed',
         }
-        return result
       end
-
-      {
-        result: 'ok',
-        setting: settings,
-      }
+      Rails.logger.info "PROBE FULL SUCCESS: #{result.inspect}"
+      result
     end
 
 =begin
@@ -197,28 +204,25 @@ returns on fail
       end
 
       # connection test
+      result_inbound = {}
       begin
 
         require "channel/driver/#{adapter.to_filename}"
 
         driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         driver_instance = driver_class.new
-        driver_instance.fetch(params[:options], nil, 'check')
+        result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
 
       rescue => e
-        result = {
+        return {
           result: 'invalid',
           settings: params,
           message: e.message,
           message_human: translation(e.message),
           invalid_field: invalid_field(e.message),
         }
-        return result
       end
-      result = {
-        result: 'ok',
-      }
-      result
+      result_inbound
     end
 
 =begin
@@ -291,10 +295,14 @@ returns on fail
           body:    "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it.",
         }
       end
-      mail['X-Zammad-Ignore']  = 'true'
-      mail['X-Loop']           = 'yes'
-      mail['Precedence']       = 'bulk'
-      mail['Auto-Submitted']   = 'auto-generated'
+      if subject
+        mail['X-Zammad-Test-Message'] = subject
+      end
+      mail['X-Zammad-Ignore']          = 'true'
+      mail['X-Loop']                   = 'yes'
+      mail['Precedence']               = 'bulk'
+      mail['Auto-Submitted']           = 'auto-generated'
+      mail['X-Auto-Response-Suppress'] = 'All'
 
       # test connection
       begin
@@ -318,27 +326,24 @@ returns on fail
 
             next if e.message !~ /#{Regexp.escape(key)}/i
 
-            result = {
+            return {
               result: 'ok',
               settings: params,
               notice: e.message,
             }
-            return result
           }
         end
-        result = {
+        return {
           result: 'invalid',
           settings: params,
           message: e.message,
           message_human: translation(e.message),
           invalid_field: invalid_field(e.message),
         }
-        return result
       end
-      result = {
+      {
         result: 'ok',
       }
-      result
     end
 
     def self.invalid_field(message_backend)

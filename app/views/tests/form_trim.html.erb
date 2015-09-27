@@ -1,0 +1,43 @@
+
+<link rel="stylesheet" href="/assets/tests/qunit-1.10.0.css">
+<script src="/assets/tests/qunit-1.10.0.js"></script>
+<script src="/assets/tests/form-trim.js"></script>
+
+<style type="text/css">
+body {
+  padding-top: 0px;
+}
+</style>
+
+<script type="text/javascript">
+</script>
+
+<div id="qunit" class="u-dontfold"></div>
+
+<div>
+  <form class="form-stacked pull-left" id="form1">
+    <input type="text" value="" name="input1">
+    <input type="text" value="
+    " name="input2">
+    <input type="text" value=" a " name="input3">
+    <input type="text" value=" a b " name="input4">
+    <input type="text" value=" äö  ü" name="input5">
+
+    <input type="text" value=" a " name="input6">
+    <input type="text" value=" b " name="input6">
+    <input type="text" value=" c " name="input6">
+    <input type="text" value=" d " name="input6">
+
+    <textarea name="textarea1"></textarea>
+    <textarea name="textarea2"> </textarea>
+    <textarea name="textarea3"> a </textarea>
+    <textarea name="textarea4">test
+
+    123
+
+    </textarea>
+    <div contenteditable="true" data-name="ce1"> lala </div>
+    <div contenteditable="true" data-name="ce2"> la
+la </div>
+  </form>
+</div>

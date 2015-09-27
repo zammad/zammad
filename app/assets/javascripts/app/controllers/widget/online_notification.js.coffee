@@ -65,7 +65,7 @@ class App.OnlineNotificationWidget extends App.Controller
       processData: true
     )
 
-  removeClickCatcher: () =>
+  removeClickCatcher: =>
     return if !@clickCatcher
     @clickCatcher.remove()
     @clickCatcher = null
@@ -93,6 +93,18 @@ class App.OnlineNotificationWidget extends App.Controller
       @hidePopover()
     )
 
+    # execute controller again of already open (because hash hasn't changed, we need to do it manually)
+    $('.js-locationVerify').on('click', (e) =>
+      newLocation = $(e.target).attr 'href'
+      if !newLocation
+        newLocation = $(e.target).closest('.js-locationVerify').attr 'href'
+      return if !newLocation
+      currentLocation = Spine.Route.getPath()
+      return if newLocation.replace(/#/, '') isnt currentLocation
+      @log 'debug', "execute controller again for '#{currentLocation}' because of same hash"
+      Spine.Route.matchRoutes(currentLocation)
+    )
+
     # mark all notifications as read
     $('.js-markAllAsRead').on('click', (e) =>
       e.preventDefault()
@@ -100,7 +112,7 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
     # add clickCatcher
-    @clickCatcher = new App.clickCatcher
+    @clickCatcher = new App.ClickCatcher
       holder:      @el.offsetParent()
       callback:    @hidePopover
       zIndexScale: 4
@@ -152,7 +164,7 @@ class App.OnlineNotificationWidget extends App.Controller
         container: 'body'
         html:      true
         placement: 'right'
-        viewport:  { "selector": "#app", "padding": 10 }
+        viewport:  { selector: '#app', padding: 10 }
         template:  App.view('widget/online_notification')()
         title:     ' '
         content:   ' '
@@ -163,7 +175,7 @@ class App.OnlineNotificationWidget extends App.Controller
       @updateContent()
 
     @delay(
-      => waitUntilOldPopoverIsRemoved()
+      -> waitUntilOldPopoverIsRemoved()
       600
       'popover'
     )

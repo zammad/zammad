@@ -142,7 +142,7 @@
                 <option selected>IMAP</option>
                 <option>POP3</option>
               </select>
-              <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+              <svg class="dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
             </div>
           </div>
           <div class="form-group">

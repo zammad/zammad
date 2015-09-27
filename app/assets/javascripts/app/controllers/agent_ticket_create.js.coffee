@@ -117,7 +117,7 @@ class App.TicketCreate extends App.Controller
     return false if !diff || _.isEmpty( diff )
     return true
 
-  release: =>
+  release: ->
     # nothing
 
   autosave: =>
@@ -448,7 +448,7 @@ class App.TicketCreate extends App.Controller
             return
 
           # if not, show start screen
-          ui.navigate "#"
+          ui.navigate '#'
 
         fail: ->
           ui.log 'save failed!'
@@ -522,7 +522,7 @@ class Sidebar extends App.Controller
               objects: 'Organizations'
             container: @el.closest('.content')
           )
-        showOrganization = (el) =>
+        showOrganization = (el) ->
           new App.WidgetOrganization(
             el:              el
             organization_id: user.organization_id
@@ -542,7 +542,7 @@ class Sidebar extends App.Controller
           callback: showOrganization
         }
 
-    showTemplates = (el) =>
+    showTemplates = (el) ->
 
       # show template UI
       new App.WidgetTemplate(

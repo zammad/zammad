@@ -247,7 +247,7 @@ class AssetsTest < ActiveSupport::TestCase
     attributes['password'] = ''
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
-    assert( !diff(attributes, assets[:User][user_new_2.id]), 'check assets' )
+    assert( diff(attributes, assets[:User][user_new_2.id]), 'check assets' )
 
     # check new assets lookup
     assets = org_new.assets({})
@@ -266,12 +266,14 @@ class AssetsTest < ActiveSupport::TestCase
 
   def diff(o1, o2)
     return true if o1 == o2
-    if o1['updated_at']
-      o1['updated_at'] = o1['updated_at'].to_s
-    end
-    if o2['updated_at']
-      o2['updated_at'] = o2['updated_at'].to_s
-    end
+    %w(updated_at created_at).each {|item|
+      if o1[item]
+        o1[item] = o1[item].to_s
+      end
+      if o2[item]
+        o2[item] = o2[item].to_s
+      end
+    }
     return true if (o1.to_a - o2.to_a).empty?
     #puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
     false

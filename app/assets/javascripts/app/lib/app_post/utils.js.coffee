@@ -1,3 +1,4 @@
+# coffeelint: disable=no_unnecessary_double_quotes
 class App.Utils
 
   # textCleand = App.Utils.textCleanup( rawText )
@@ -6,7 +7,7 @@ class App.Utils
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
       .replace(/[ ]\n/g, "\n")        # remove tailing spaces
-      .replace(/\n{3,20}/g, "\n\n")    # remove multible empty lines
+      .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.text2html( rawText )
   @text2html: ( ascii ) ->
@@ -34,7 +35,7 @@ class App.Utils
     $('<div>' + html + '</div>').text().trim()
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
-      .replace(/\n{3,20}/g, "\n\n")   # remove multible empty lines
+      .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.linkify( rawText )
   @linkify: (ascii) ->
@@ -84,7 +85,7 @@ class App.Utils
     ascii = @textCleanup(ascii)
     ascii = @wrap(ascii, max)
     $.trim( ascii )
-      .replace /^(.*)$/mg, (match) =>
+      .replace /^(.*)$/mg, (match) ->
         if match
           '> ' + match
         else
@@ -162,14 +163,14 @@ class App.Utils
 
     # Replace all x tags with the type of replacementTag
     html.find('h1, h2, h3, h4, h5, h6, textarea').each( ->
-      outer = this.outerHTML;
+      outer = @outerHTML;
 
       # Replace opening tag
-      regex = new RegExp('<' + this.tagName, 'i')
+      regex = new RegExp('<' + @tagName, 'i')
       newTag = outer.replace(regex, '<' + replacementTag)
 
       # Replace closing tag
-      regex = new RegExp('</' + this.tagName, 'i')
+      regex = new RegExp('</' + @tagName, 'i')
       newTag = newTag.replace(regex, '</' + replacementTag)
 
       $(@).replaceWith(newTag)
@@ -377,6 +378,22 @@ class App.Utils
             foundInLines = lineCount
     searchForMs(textToSearchInLines, markers)
 
+    # word 14
+    # edv hotline wrote:
+    # edv hotline schrieb:
+    searchForWord14 = (textToSearchInLines, markers) ->
+      lineCount = 0
+      for line in textToSearchInLines
+        lineCount += 1
+        if line && line.match( /^.{1,250}\s(wrote|schrieb):/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'Word14'
+          markers.push marker
+          return
+    searchForWord14(textToSearchInLines, markers)
+
     # marker template
     markerTemplate = '<span class="js-signatureMarker"></span>'
 
@@ -522,7 +539,7 @@ class App.Utils
     false
 
   # human readable file size
-  @humanFileSize: (size) =>
+  @humanFileSize: (size) ->
     if size > ( 1024 * 1024 )
       size = Math.round( size / ( 1024 * 1024 ) ) + ' MB'
     else if size > 1024

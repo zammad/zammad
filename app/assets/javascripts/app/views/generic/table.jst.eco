@@ -3,10 +3,10 @@
     <tr>
     <% if @checkbox: %>
       <th style="width: 40px" class="no-padding">
-        <label class="input-replacement">
-          <input type="checkbox" value="" name="bulk_all"/>
-          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
-          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
+        <label class="checkbox-replacement">
+          <input type="checkbox" value="" name="bulk_all">
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
       </th>
     <% end %>
@@ -40,19 +40,19 @@
   <tr class="item<% if object.active is false: %> is-inactive<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
       <td class="no-padding">
-        <label class="input-replacement">
-          <input type="checkbox" value="<%= object.id %>" name="bulk"/>
-          <svg class="icon-checkbox icon-unchecked"><use xlink:href="#icon-checkbox" /></svg>
-          <svg class="icon-checkbox-checked icon-checked"><use xlink:href="#icon-checkbox-checked" /></svg>
+        <label class="checkbox-replacement">
+          <input type="checkbox" value="<%= object.id %>" name="bulk">
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
       </td>
     <% end %>
     <% if @radio: %>
       <td class="no-padding">
-        <label class="input-replacement">
-          <input type="radio" value="<%= object.id %>" name="radio"/>
-          <svg class="icon-radio icon-unchecked"><use xlink:href="#icon-radio" /></svg>
-          <svg class="icon-radio-checked icon-checked"><use xlink:href="#icon-radio-checked" /></svg>
+        <label class="radio-replacement">
+          <input type="radio" value="<%= object.id %>" name="radio">
+          <%- @Icon('radio', 'icon-unchecked') %>
+          <%- @Icon('radio-checked', 'icon-checked') %>
         </label>
       </td>
     <% end %>
@@ -71,11 +71,9 @@
       <%   end %>
       <% end %>
 
-      <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %>>
+      <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %>>
         <% if item.name is 'icon': %>
-          <svg class="<%- item.class %>">
-            <use xlink:href="#icon-priority" />
-          </svg>
+          <%- @Icon('priority', item.class) %>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
@@ -83,16 +81,20 @@
           <% if item.raw: %>
             <%- item.raw %>
           <% else: %>
-          <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
+            <% if item.class || item.data: %>
+            <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
+            <% end %>
             <%- value %>
-          </span>
+            <% if item.class || item.data: %>
+            </span>
+            <% end %>
           <% end %>
           <% if item.link: %></a><% end %>
         <% end %>
       </td>
     <% end %>
     <% if @destroy: %>
-      <td><svg class="icon-trash" data-type="destroy"><use xlink:href="#icon-trash" /></svg></td>
+      <td data-type="destroy"><%- @Icon('trash') %></td>
     <% end %>
   </tr>
 <% end %>

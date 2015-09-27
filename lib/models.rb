@@ -11,12 +11,14 @@ returns
 
   {
     Some::Classname1 => {
-      attributes: ['id', 'name', '...']
-      reflections: ...model.reflections...
+      attributes: ['id', 'name', '...'],
+      reflections: ...model.reflections...,
+      table: 'some_classname1s',
     },
     Some::Classname2 => {
       attributes: ['id', 'name', '...']
       reflections: ...model.reflections...
+      table: 'some_classname2s',
     },
   }
 
@@ -43,6 +45,7 @@ returns
       all[model_class] = {}
       all[model_class][:attributes] = model_class.attribute_names
       all[model_class][:reflections] = model_class.reflections
+      all[model_class][:table] = model_class.table_name
       #puts model_class
       #puts "rrrr #{all[model_class][:attributes]}"
       #puts " #{model_class.attribute_names.inspect}"

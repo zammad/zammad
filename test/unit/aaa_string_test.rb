@@ -1,6 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
-
+# rubocop:disable TrailingWhitespace
 class AaaStringTest < ActiveSupport::TestCase
 
   test 'to_filename ref' do
@@ -102,7 +102,7 @@ class AaaStringTest < ActiveSupport::TestCase
     assert_equal( result, html.html2text )
 
     html   = '<table><tr><td>test</td><td>col</td></td></tr><tr><td>test</td><td>4711</td></tr></table>'
-    result = "test col  \ntest 4711"
+    result = "test col \ntest 4711"
     assert_equal( result, html.html2text )
 
     html   = "<!-- some comment -->
@@ -153,5 +153,180 @@ you
 >'
     assert_equal( should, html.html2text )
 
+    html = '      <style type="text/css">
+    body {
+      width:90% !important;
+      -webkit-text-size-adjust:90%;
+      -ms-text-size-adjust:90%;
+      font-family:\'helvetica neue\', helvetica, arial, geneva, sans-serif; f=
+ont-size: 12px;;
+    }
+    img {
+      outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;
+    }
+    a img {
+      border:none;
+    }
+    table td {
+      border-collapse: collapse;
+    }
+    table {
+      border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;
+    }
+    p, table, div, td {
+      max-width: 600px;
+    }
+    p {
+      margin: 0;
+    }
+    blockquote, pre {
+      margin: 0px;
+      padding: 8px 12px 8px 12px;
+    }
+
+    </style><p>some other content</p>'
+    should = 'some other content'
+    assert_equal( should, html.html2text )
+
+    html = '        IT-Infrastruktur</span><br>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 14 (filtered
+        medium)">
+      <!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]-->
+      <style><!--
+
+@font-face
+    {font-family:calibri;
+    panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+    {font-family:tahoma;
+    panose-1:2 11 6 4 3 5 4 4 2 4;}
+
+p.msonormal, li.msonormal, div.msonormal
+    {margin:0cm;
+    margin-bottom:.0001pt;
+    font-size:11.0pt;
+    font-family:"calibri","sans-serif";
+    mso-fareast-language:en-us;}
+a:link, span.msohyperlink
+    {mso-style-priority:99;
+    color:blue;
+    text-decoration:underline;}
+a:visited, span.msohyperlinkfollowed
+    {mso-style-priority:99;
+    color:purple;
+    text-decoration:underline;}
+p.msoacetate, li.msoacetate, div.msoacetate
+    {mso-style-priority:99;
+    mso-style-link:"sprechblasentext zchn";
+    margin:0cm;
+    margin-bottom:.0001pt;
+    font-size:8.0pt;
+    font-family:"tahoma","sans-serif";
+    mso-fareast-language:en-us;}
+span.e-mailformatvorlage17
+    {mso-style-type:personal;
+    font-family:"calibri","sans-serif";
+    color:windowtext;}
+span.sprechblasentextzchn
+    {mso-style-name:"sprechblasentext zchn";
+    mso-style-priority:99;
+    mso-style-link:sprechblasentext;
+    font-family:"tahoma","sans-serif";}
+.msochpdefault
+    {mso-style-type:export-only;
+    font-family:"calibri","sans-serif";
+    mso-fareast-language:en-us;}
+@page wordsection1
+    {size:612.0pt 792.0pt;
+    margin:70.85pt 70.85pt 2.0cm 70.85pt;}
+div.wordsection1
+    {page:wordsection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->'
+    should = 'IT-Infrastruktur'
+    assert_equal( should, html.html2text )
+
+    html   = "<h1>some head</h1>
+    some content
+    <blockquote>
+    <p>line 1</p>
+    <p>line 2</p>
+    </blockquote>
+    <p>some text later</p>"
+    result = 'some head
+some content
+> line 1
+> line 2
+
+some text later'
+    assert_equal( result, html.html2text )
+
+    html   = "<h1>some head</h1>
+    some content
+    <blockquote>
+    line 1<br/>
+    line 2<br>
+    </blockquote>
+    <p>some text later</p>"
+    result = 'some head
+some content
+> line 1
+> line 2
+
+some text later'
+    assert_equal( result, html.html2text )
+
+    html   = "<h1>some head</h1>
+    some content
+    <blockquote>
+    <div><div>line 1</div><br></div>
+    <div><div>line 2</div><br></div>
+    </blockquote>
+    some text later"
+    result = 'some head
+some content
+> line 1
+> 
+> line 2
+some text later'
+    assert_equal( result, html.html2text )
+
+    html   = "<p>Best regards,</p>
+<p><i>Your Team Team</i></p>
+<p>P.S.: You receive this e-mail because you are listed in our database as person who ordered a Team license. Please click <a href=\"http://www.teamviewer.example/en/company/unsubscribe.aspx?id=1009645&ident=xxx\">here</a> to unsubscribe from further e-mails.</p>
+-----------------------------
+<br />"
+    result = 'Best regards,
+Your Team Team
+P.S.: You receive this e-mail because you are listed in our database as person who ordered a Team license. Please click [1] here to unsubscribe from further e-mails.
+-----------------------------
+
+
+[1] http://www.teamviewer.example/en/company/unsubscribe.aspx?id=1009645&ident=xxx'
+    assert_equal( result, html.html2text )
+
+    html   = "<div><br>Dave and leaned her 
+days adam.</div><span style=\"color:#F7F3FF; font-size:8px\">Maybe we 
+want any help me that.<br>Next morning charlie saw at their 
+father.<br>Well as though adam took out here. Melvin will be more money. 
+Called him into this one last thing.<br>Men-----------------------
+<br />"
+    result = 'Dave and leaned her days adam.
+Maybe we want any help me that.
+Next morning charlie saw at their father.
+Well as though adam took out here. Melvin will be more money. Called him into this one last thing.
+Men-----------------------'
+    assert_equal( result, html.html2text )
+
   end
+
 end

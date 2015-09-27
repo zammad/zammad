@@ -1,3 +1,4 @@
+# coffeelint: disable=,arrow_spacing
 Spine = @Spine or require('spine')
 
 Spine.Model.Local =

@@ -30,7 +30,6 @@ class App.TicketZoomSidebar extends App.Controller
           el:       el.find('.edit')
           model:    App.Ticket
           screen:   'edit'
-          params:   App.Ticket.find(ticket.id)
           handlers: [
             @ticketFormChanges
           ]
@@ -44,7 +43,7 @@ class App.TicketZoomSidebar extends App.Controller
       show(ticket)
       @bind(
         'ui::ticket::taskReset'
-        (data) =>
+        (data) ->
           if data.ticket_id is ticket.id
             show(ticket)
       )
@@ -120,7 +119,7 @@ class App.TicketZoomSidebar extends App.Controller
             objects: 'Users'
           container: @el.closest('.content')
         )
-      showCustomer = (el) =>
+      showCustomer = (el) ->
         new App.WidgetUser(
           el:       el
           user_id:  ticket.customer_id
@@ -154,7 +153,7 @@ class App.TicketZoomSidebar extends App.Controller
               objects: 'Organizations'
             container: @el.closest('.content')
           )
-        showOrganization = (el) =>
+        showOrganization = (el) ->
           new App.WidgetOrganization(
             el:              el
             organization_id: ticket.organization_id

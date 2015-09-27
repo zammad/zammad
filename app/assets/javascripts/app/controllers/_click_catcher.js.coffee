@@ -1,4 +1,4 @@
-class App.clickCatcher extends Spine.Controller
+class App.ClickCatcher extends Spine.Controller
   # clickCatcher has no template because it's a plain <div>
   className: 'clickCatcher'
 

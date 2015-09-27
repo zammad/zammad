@@ -23,7 +23,7 @@ class App.Store
       _instance ?= new _storeSingleton
     _instance.clear()
 
-  @list: () ->
+  @list: ->
     if _instance == undefined
       _instance ?= new _storeSingleton
     _instance.list()

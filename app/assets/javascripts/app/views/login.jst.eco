@@ -7,12 +7,16 @@
         <img class="company-logo" src="<%= @logoUrl %>" alt="<%= @C( 'product_name' ) %>">
         <form id="login">
           <div class="form-group">
-            <label for="username"><%- @Ti( 'Username / email' ) %></label>
+            <div class="formGroup-label">
+              <label for="username"><%- @Ti( 'Username / email' ) %></label>
+            </div>
             <input id="username" name="username" type="text" class="form-control" value="<%= @item.username %>" autocapitalize="off" />
           </div>
 
           <div class="form-group">
-            <label for="password"><%- @Ti( 'Password' ) %></label>
+            <div class="formGroup-label">
+              <label for="password"><%- @Ti( 'Password' ) %></label>
+            </div>
             <input id="password" name="password" type="password" class="form-control"/>
           </div>
 
@@ -21,7 +25,12 @@
             <label for="remember_me"><%- @Ti( 'Remember me' ) %></label>
             <input id="remember_me" name="remember_me" value="1" type="checkbox"/>
     -->
-            <label><input name="remember_me" value="1" type="checkbox"/> <%- @T( 'Remember me' ) %></label>
+            <label class="inline-label checkbox-replacement">
+              <input name="remember_me" value="1" type="checkbox">
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+              <span class="label-text"><%- @T( 'Remember me' ) %></span>
+            </label>
           </div>
 
           <div class="form-controls">
@@ -40,7 +49,7 @@
           <div class="auth-providers">
             <% for auth_provider in @auth_providers: %>
               <a class="auth-provider auth-provider--<%= auth_provider.class %>" href="<%= auth_provider.url %>">
-                <svg class="provider-icon"><use xlink:href="#icon-<%= auth_provider.class %>-button" /></svg>
+                <%- @Icon("#{auth_provider.class}-button", 'provider-icon') %>
                 <span class="provider-name"><%- @T( auth_provider.name ) %></span>
               </a>
             <% end %>
@@ -65,8 +74,8 @@
     </div>
   </div>
   <div class="poweredBy">
-    <svg class="logo icon-logo"><use xlink:href="#icon-logo" /></svg>
+    <%- @Icon('logo') %>
     <%- @T("Powered by") %>
-    <svg class="logotype icon-logotype"><use xlink:href="#icon-logotype" /></svg>
+    <%- @Icon('logotype', 'logotype') %>
   </div>
 </div>

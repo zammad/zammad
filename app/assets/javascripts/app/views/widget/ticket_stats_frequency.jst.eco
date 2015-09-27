@@ -1,4 +1,4 @@
-<h3><%- @T('Frequency') %></h3>
+<div class="stat-title"><%- @T('Frequency') %></div>
 <div class="stat-graphic">
   <% for item in @ticket_volume_by_year: %>
     <div class="stats-row">

@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <div class="modal-close js-close">
-              <svg class="icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg>
+              <%- @Icon('diagonal-cross', 'icon-error') %>
             </div>
             <h1 class="modal-title">Edit Customer</h1>
           </div>
@@ -120,7 +120,7 @@
 
 
               </select>
-              <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+              <svg class="dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
             </div>
               
               
@@ -279,7 +279,7 @@
 
 
               </select>
-              <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+              <svg class="dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
             </div>
               
               
@@ -411,7 +411,7 @@
     </div>
     <div class="profile-section horizontal two-columns">
       <div class="column status stat-widget vertical">
-        <h3>Status</h3>
+        <div class="stat-title">Status</div>
         <div class="stat-graphic">
           <div class="stat-tickets vertical reverse end">
             <div class="stat-ticket icon supergood-state"></div>
@@ -430,7 +430,7 @@
         <div class="stat-detail">Average: 22%</div>
       </div>
       <div class="column mood stat-widget vertical">
-        <h3>Stimmung</h3>
+        <div class="stat-title">Stimmung</div>
         <div class="stat-graphic">
           <div class="mood icon supergood-state"></div>
         </div>
@@ -440,7 +440,7 @@
     </div>
     <div class="profile-section">
       <div class="frequency stat-widget vertical">
-        <h3><%- @T('Frequency') %></h3>
+        <div class="stat-title"><%- @T('Frequency') %></div>
         <div class="stat-graphic">
           <div class="stats-row">
             <div class="stat-bars">

@@ -2,6 +2,14 @@
 
 class Locale < ApplicationModel
 
+  def self.to_sync
+    locales = Locale.where(active: true)
+    if Rails.env.test?
+      locales = Locale.where(active: true, locale: ['en-us', 'de-de'])
+    end
+    locales
+  end
+
   def self.load
     url = 'https://i18n.zammad.com/api/v1/locales'
 

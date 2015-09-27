@@ -45,7 +45,7 @@ class ManageTest < TestCase
     sla_create(
       data: {
         name: 'some sla' + random,
-        first_response_time: 61
+        first_response_time_in_text: '1:01'
       }
     )
     watch_for(
@@ -54,7 +54,7 @@ class ManageTest < TestCase
     )
     sleep 1
 
-    click( css: '.table-overview tr:last-child td' )
+    click( css: '.content:not(.hide) .action:last-child .js-edit' )
     sleep 1
 
     set(
@@ -62,8 +62,8 @@ class ManageTest < TestCase
       value: 'some sla update ' + random,
     )
     set(
-      css: '.modal input[name="first_response_time"]',
-      value: 121,
+      css: '.modal input[name="first_response_time_in_text"]',
+      value: '2:01',
     )
     click( css: '.modal button.js-submit' )
 
@@ -73,7 +73,7 @@ class ManageTest < TestCase
     )
     sleep 4
 
-    click( css: '[data-type="destroy"]:last-child' )
+    click( css: '.content:not(.hide) .action:last-child .js-delete' )
     sleep 2
 
     click( css: '.modal button.js-submit' )

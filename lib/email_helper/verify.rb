@@ -81,14 +81,14 @@ or
         sleep 5
 
         # fetch mailbox
-        found = nil
+        fetch_result = nil
 
         begin
           require "channel/driver/#{adapter.to_filename}"
 
           driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
           driver_instance = driver_class.new
-          found           = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
+          fetch_result    = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
         rescue => e
           result = {
             result: 'invalid',
@@ -101,13 +101,10 @@ or
           return result
         end
 
-        next if !found
-        next if found != 'verify ok'
+        next if !fetch_result
+        next if fetch_result[:result] != 'ok'
 
-        return {
-          result: 'ok',
-        }
-
+        return fetch_result
       }
 
       {

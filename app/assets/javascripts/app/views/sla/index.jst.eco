@@ -1,0 +1,49 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('SLA') %> <small><%- @T('Management') %></small></h1>
+  </div>
+
+  <div class="page-header-meta">
+    <% if @showDescription: %>
+      <a class="btn js-description"><%- @T('Description') %></a>
+    <% end %>
+    <a class="btn btn--success js-new"><%- @T('New SLA') %></a>
+  </div>
+</div>
+
+<% if _.isEmpty(@slas): %>
+<%- @description %>
+<% end %>
+
+<% for sla in @slas: %>
+<div class="action" data-id="<%- sla.id %>">
+  <div class="action-flow action-flow--row">
+    <div class="action-row">
+      <h3><%= sla.name %></h3>
+    </div>
+    <div class="action-block action-block--flex">
+      <div class="label"><%- @T('Filter') %></div>
+      <% for rule in sla.rules: %>
+        <%- rule %><br>
+      <% end %>
+    </div>
+    <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+    <div class="action-block action-block--flex">
+      <div class="label"><%- @T('Escalation Times') %></div>
+      <% if sla.first_response_time: %>
+        <%- sla.first_response_time_in_text %> <%- @T('hours') %> - <%- @T('First Response Time') %><br>
+      <% end %>
+      <% if sla.update_time: %>
+        <%- sla.update_time_in_text %> <%- @T('hours') %> - <%- @T('Update Time') %><br>
+      <% end %>
+      <% if sla.solution_time: %>
+        <%- sla.solution_time_in_text %> <%- @T('hours') %> - <%- @T('Solution Time') %>
+      <% end %>
+    </div>
+  </div>
+  <div class="action-controls">
+    <div class="sla-toggle btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+    <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
+  </div>
+</div>
+<% end %>

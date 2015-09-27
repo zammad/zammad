@@ -1,11 +1,10 @@
-App.Config.set( 'User', {
+App.Config.set('History', [])
+App.Config.set('User', {
   prio:   1000,
   parent: '',
   callback: ->
     item         = {}
-    item['name'] = App.Session.get( 'login' )
-    if App.Session.get()
-      item['avatar'] = App.Session.get().avatar()
+    item['name'] = App.Session.get('login')
     return item
   target: '#current_user',
   class:  'user'

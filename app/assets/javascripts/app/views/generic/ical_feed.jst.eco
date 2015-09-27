@@ -1,0 +1,33 @@
+<div class="settings-row">
+  <label class="inline-label">
+    <span class="radio-replacement radio-replacement--inline">
+      <input type="radio" name="holiday-radio" value="list" class="js-check js-checkList">
+      <%- @Icon('radio', 'icon-unchecked') %>
+      <%- @Icon('radio-checked', 'icon-checked') %>
+    </span>
+    <%- @T('Subscribe to public holidays in') %>
+  </label>
+  <div class="u-inlineBlock u-positionOrigin">
+    <select class="form-control form-control--small js-list">
+      <option value="">-</option>
+      <% for url, name of @ical_feeds: %>
+        <option value="<%= url %>" <% if @attribute.value is url: %>selected<%end%>><%- @T(name) %></option>
+      <% end %>
+    </select>
+    <%- @Icon('arrow-down', 'dropdown-arrow') %>
+  </div>
+  <span class="text-small text-muted">(<%- @T('iCalendar links from Google, will get fetched once a day') %>)</span>
+</div>
+
+<div class="settings-row">
+  <label class="inline-label">
+    <span class="radio-replacement radio-replacement--inline">
+      <input type="radio" name="holiday-radio" value="manual" class="js-check js-checkManual">
+      <%- @Icon('radio', 'icon-unchecked') %>
+      <%- @Icon('radio-checked', 'icon-checked') %>
+    </span>
+    <%- @T('Subscribe to iCalendar feed') %>
+  </label>
+  <input class="form-control form-control--small form-control--inline js-manual" type="url" placeholder="<%= @attribute.placeholder %>">
+  <input type="hidden" class="js-shadow" name="<%= @attribute.name %>" value="<%= @attribute.value %>">
+</div>

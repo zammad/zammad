@@ -706,6 +706,19 @@ test( "identify signature", function() {
   result  = App.Utils.signatureIdentify( message, true )
   equal( result, should )
 
+  // word 14
+  // en
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Bob Smith wrote:<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Bob Smith wrote:<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
+  // de
+  message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Bob Smith schrieb:<br/>lalala</div>"
+  should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Bob Smith schrieb:<br/>lalala</div>'
+  result  = App.Utils.signatureIdentify( message, true )
+  equal( result, should )
+
 });
 
 // replace tags

@@ -109,6 +109,8 @@ check if user is in role
   user = User.find(123)
   result = user.role?('Customer')
 
+  result = user.role?(['Agent', 'Admin'])
+
 returns
 
   result = true|false
@@ -119,7 +121,11 @@ returns
 
     result = false
     roles.each { |role|
-      next if role.name != role_name
+      if role_name.class == Array
+        next if !role_name.include?(role.name)
+      else
+        next if role.name != role_name
+      end
       result = true
       break
     }

@@ -79,4 +79,3 @@ class Index extends App.Controller
       @formEnable( @$('form') )
 
 App.Config.set( 'Password', { prio: 2000, name: 'Password', parent: '#profile', target: '#profile/password', controller: Index }, 'NavBarProfile' )
-

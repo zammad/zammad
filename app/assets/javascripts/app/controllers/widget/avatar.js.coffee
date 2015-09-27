@@ -3,7 +3,7 @@ class App.WidgetAvatar extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.User.full( @user_id, @render, false, true )
+    @subscribeId = App.User.full(@user_id, @render, false, true)
 
   release: =>
     App.User.unsubscribe(@subscribeId)
@@ -13,8 +13,8 @@ class App.WidgetAvatar extends App.Controller
       user:     user
       size:     @size
       position: @position
+      type:     @type
     )
 
     # start user popups
-    if !@noPopups
-      @userPopups(@position)
+    @userPopups(@position)

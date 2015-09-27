@@ -12,7 +12,7 @@ class CalendarSubscriptions
       next if calendar_subscription.name !~ /\Adefaults_calendar_subscriptions_(.*)\z/
 
       object_name                 = $1
-      @preferences[ object_name ] = calendar_subscription.state[:value]
+      @preferences[ object_name ] = calendar_subscription.state_current[:value]
     }
 
     return if !@user.preferences[:calendar_subscriptions]

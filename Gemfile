@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.1.13'
+gem 'rails', '4.2.4'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -16,8 +16,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'coffee-script-source'
 
-  # use dedicated version of sprockets, 3.0.0 is broken
-  gem 'sprockets', '~> 2.0'
+  gem 'sprockets'
 
   gem 'uglifier'
   gem 'eco'
@@ -37,6 +36,8 @@ gem 'mail', '~> 2.5.0'
 
 gem 'mime-types'
 
+gem 'biz'
+
 gem 'delayed_job_active_record'
 gem 'daemons'
 
@@ -48,7 +49,7 @@ gem 'execjs'
 gem 'therubyracer'
 
 # e. g. for mysql you need to load mysql
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.20'
 #gem 'sqlite3'
 
 gem 'net-ldap'

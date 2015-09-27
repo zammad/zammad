@@ -15,3 +15,22 @@ class App.TextModule extends App.Model
     'keywords',
     'content',
   ]
+
+  @description = '''
+Create Text Modules to **spend less time writing responses**. TextModules can include smart variables like the users name or email address.
+
+Examples of snippets are:
+
+* Hallo Frau <%= @ticket.customer.lastname %>,
+* Hallo Herr <%= @ticket.customer.lastname %>,
+* Hallo <%= @ticket.customer.firstname %>,
+
+Of course you can also use multi line snippets.
+
+Available objects are:
+* @ticket (e. g. @ticket.state, @ticket.group)
+* @ticket.customer (e. g. @ticket.customer.firstname, @ticket.customer.lastname)
+* @ticket.owner (e. g. @ticket.owner.firstname, @ticket.owner.lastname)
+* @ticket.organization (e. g. @ticket.organization.name)
+
+'''

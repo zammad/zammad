@@ -1,5 +1,5 @@
 <div class="main flex vertical centered darkBackground">
-  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <%- @Icon('full-logo', 'wizard-logo') %>
   <div class="import wizard">
     <div class="wizard-slide vertical" data-slide="otrs-prepare">
       <h2><%- @T('Create OTRS Migration Plugin') %></h2>
@@ -18,7 +18,7 @@
         <p>
           <%- @T('Download and install your personalised OTRS Migration Plugin on your OTRS System') %>:
         </p>
-        <a class="btn btn--primary btn--download js-download" download><svg class="icon-download"><use xlink:href="#icon-download" /></svg> <%- @T('Personal Migration Plugin') %></a>
+        <a class="btn btn--primary btn--download js-download" download><%- @Icon('download') %> <%- @T('Personal Migration Plugin') %></a>
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
@@ -37,8 +37,8 @@
             <input type="url" id="otrs-link" class="form-control" placeholder="http://otrs.example.com" name="url">
             <div class="input-feedback centered">
               <div class="small loading icon"></div>
-              <svg class="icon icon-error"><use xlink:href="#icon-diagonal-cross" /></svg>
-              <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+              <%- @Icon('diagonal-cross', 'icon-error') %>
+              <%- @Icon('checkmark') %>
             </div>
           </div>
           <div class="error otrs-link-error"></div>
@@ -60,7 +60,7 @@
             <td class="progressTable-progressCell">
               <div class="horizontal center">
                 <div class="flex"><progress value="0.3"></progress></div><!-- if there is no max, the value is between 0..1 -->
-                <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+                <%- @Icon('checkmark') %>
               </div>
           </tr>
           <tr class="js-base">
@@ -69,7 +69,7 @@
             <td class="progressTable-progressCell">
               <div class="horizontal center">
                 <div class="flex"><progress max="42" value="42"></progress></div>
-                <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+                <%- @Icon('checkmark') %>
               </div>
           </tr>
           <tr class="js-user">
@@ -78,7 +78,7 @@
             <td class="progressTable-progressCell">
               <div class="horizontal center">
                 <div class="flex"><progress max="42" value="42"></progress></div>
-                <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+                <%- @Icon('checkmark') %>
               </div>
           </tr>
           <tr class="js-ticket">
@@ -87,7 +87,7 @@
             <td class="progressTable-progressCell">
               <div class="horizontal center">
                 <div class="flex"><progress max="134318" value="134318"></progress></div>
-                <svg class="icon icon-checkmark"><use xlink:href="#icon-checkmark" /></svg>
+                <%- @Icon('checkmark') %>
               </div>
           </tr>
         </table>

@@ -99,7 +99,7 @@ class Index extends App.ControllerContent
       # reset
       @Config.set( 'requested_url', '' )
     else
-      @log 'notice', "REDIRECT to -#/-"
+      @log 'notice', 'REDIRECT to -#/-'
       @navigate '#/'
 
   error: (xhr, statusText, error) =>

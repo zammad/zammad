@@ -30,7 +30,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
   )
   customer_user = User.lookup( login: 'nicole.braun@zammad.org' )
 
-  test 'ticket notifiaction' do
+  test 'ticket notification' do
     tests = [
 
       # test 1
@@ -319,6 +319,92 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       notifications = OnlineNotification.list_by_object( 'Ticket', ticket_id )
       assert( notifications.empty?, 'still notifications for destroyed ticket available')
     }
+  end
+
+  test 'ticket notification item check' do
+    ticket1 = Ticket.create(
+      title: 'some title',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert( ticket1, 'ticket created' )
+    article_inbound = Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message article_inbound',
+      internal: false,
+      sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, false)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1), false)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2), false)
+
+    # pending reminder, just let new owner to unseed
+    ticket1.update_attributes(
+      owner_id: agent_user1.id,
+      state: Ticket::State.lookup(name: 'pending reminder'),
+      updated_by_id: agent_user2.id,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+
+    # pending reminder, just let new owner to unseed
+    ticket1.update_attributes(
+      owner_id: 1,
+      state: Ticket::State.lookup(name: 'pending reminder'),
+      updated_by_id: agent_user2.id,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), false)
+
+    # pending reminder, self done, all to unseed
+    ticket1.update_attributes(
+      owner_id: agent_user1.id,
+      state: Ticket::State.lookup(name: 'pending reminder'),
+      updated_by_id: agent_user1.id,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+
+    # pending close, all to unseen
+    ticket1.update_attributes(
+      owner_id: agent_user1.id,
+      state: Ticket::State.lookup(name: 'pending close'),
+      updated_by_id: agent_user2.id,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+
+    # to open, all to seen
+    ticket1.update_attributes(
+      owner_id: agent_user1.id,
+      state: Ticket::State.lookup(name: 'open'),
+      updated_by_id: agent_user2.id,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, false)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), false)
+
   end
 
   def notification_check( online_notifications, checks )

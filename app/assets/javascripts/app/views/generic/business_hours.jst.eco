@@ -1,0 +1,48 @@
+<thead>
+  <tr>
+    <% for id, day of @days: %>
+    <th style="text-align: center">
+      <label class="day-name">
+        <span class="checkbox-replacement checkbox-replacement--inline">
+          <input class="js-toggle-day" name="<%= @attribute.name %>::<%- id %>::active" value="true" data-target="<%- id %>" type="checkbox"<%- ' checked' if @hours[id].active %>>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </span>
+        <span class="label-text"><%- day %></span>
+      </label>
+    <% end %>
+</thead>
+<tbody>
+  <% for slot in [0..@maxTimeframes-1]: %>
+  <tr>
+    <% for id, day of @days: %>
+      <% if @hours[id].timeframes[slot]: %>
+      <td data-day="<%- id %>" data-slot="<%- slot %>" class="form-group day-time<%- ' is-active' if @hours[id].active %>">
+        <label for="<%- id %>_start_time">from</label>
+        <input type="text" id="<%- id %>_start_time" name="<%= @attribute.name %>::<%- id %>::start" value="<%- @hours[id].timeframes[slot][0] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="0" class="form-control form-control--small time js-time">
+        <label for="monday_end_time">till</label>
+        <input type="text" id="monday_end_time" name="<%= @attribute.name %>::<%- id %>::end" value="<%- @hours[id].timeframes[slot][1] %>" data-day="<%- id %>" data-slot="<%- slot %>" data-i="1" class="form-control form-control--small time js-time">
+      <% else: %>
+      <td class="empty-cell">
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @maxTimeframes > 1: %>
+  <tr>
+    <% for id, day of @days: %>
+      <% if @hours[id].timeframes.length > 1: %>
+      <td data-day="<%- id %>" class="settings-list-action-cell js-remove-time<%- ' is-active' if @hours[id].active %>">
+        <%- @Icon('minus-small') %>
+      <% else: %>
+      <td class="empty-cell">
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <% for id, day of @days: %>
+    <td data-day="<%- id %>" class="settings-list-action-cell js-add-time<%- ' is-active' if @hours[id].active %>">
+      <%- @Icon('plus-small') %>
+    <% end %>
+</tbody>

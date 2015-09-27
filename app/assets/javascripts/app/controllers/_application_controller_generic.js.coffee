@@ -91,15 +91,16 @@ class App.ControllerGenericEdit extends App.ControllerModal
           ui.callback( item )
         ui.hide()
 
-      fail: =>
+      fail: ->
         ui.log 'errors'
         ui.hide()
     )
 
 class App.ControllerGenericIndex extends App.Controller
   events:
-    'click [data-type = edit]':    'edit'
-    'click [data-type = new]':     'new'
+    'click [data-type=edit]': 'edit'
+    'click [data-type=new]':  'new'
+    'click .js-description':  'description'
 
   constructor: ->
     super
@@ -147,12 +148,24 @@ class App.ControllerGenericIndex extends App.Controller
         return item
       )
 
+    # show description button, only if content exists
+    showDescription = false
+    if App[ @genericObject ].description && !_.isEmpty(objects)
+      showDescription = true
+
     @html App.view('generic/admin/index')(
-      head:    @pageData.objects
-      notes:   @pageData.notes
-      buttons: @pageData.buttons
-      menus:   @pageData.menus
+      head:            @pageData.objects
+      notes:           @pageData.notes
+      buttons:         @pageData.buttons
+      menus:           @pageData.menus
+      showDescription: showDescription
     )
+
+    # show description in content if no no content exists
+    if _.isEmpty(objects) && App[ @genericObject ].description
+      description = marked(App[ @genericObject ].description)
+      @$('.table-overview').html(description)
+      return
 
     # append content table
     params = _.extend(
@@ -183,6 +196,7 @@ class App.ControllerGenericIndex extends App.Controller
       pageData:      @pageData
       genericObject: @genericObject
       container:     @container
+      large:         @large
     )
 
   new: (e) ->
@@ -191,7 +205,70 @@ class App.ControllerGenericIndex extends App.Controller
       pageData:      @pageData
       genericObject: @genericObject
       container:     @container
+      large:         @large
     )
+
+  description: (e) =>
+    new App.ControllerGenericDescription(
+      description: App[ @genericObject ].description
+      container:   @container
+    )
+
+class App.ControllerGenericDescription extends App.ControllerModal
+  constructor: ->
+    super
+    @head       = 'Description'
+    @cancel     = false
+    @button     = 'Close'
+    description = marked(@description)
+
+    @show(description)
+
+  onSubmit: (e) ->
+    e.preventDefault()
+    @hide()
+
+class App.ControllerModalLoading extends App.Controller
+  className: 'modal fade'
+
+  constructor: ->
+    super
+
+    if @container
+      @el.addClass('modal--local')
+
+    @render()
+
+    @el.modal
+      keyboard:  false
+      show:      true
+      backdrop:  false
+      container: @container
+
+  render: ->
+    @html App.view('generic/modal_loader')(
+      head: @head
+      message: App.i18n.translateContent(@message)
+    )
+
+  update: (message, translate = true) =>
+    if translate
+      message = App.i18n.translateContent(message)
+    @$('.js-loading').html(message)
+
+  hideIcon: =>
+    @$('.js-loadingIcon').addClass('hide')
+
+  showIcon: =>
+    @$('.js-loadingIcon').removeClass('hide')
+
+  hide: (delay) =>
+    remove = =>
+      @el.remove()
+    if !delay
+      remove()
+      return
+    App.Delay.set(remove, delay * 1000)
 
 class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   constructor: ->
@@ -492,7 +569,7 @@ class App.ActionRow extends App.Controller
       do (item) =>
         @el.find('[data-type="' + item.name + '"]').on(
           'click',
-          (e) =>
+          (e) ->
             e.preventDefault()
             item.callback()
         )
@@ -543,7 +620,7 @@ class App.Sidebar extends App.Controller
           type:  'small'
         )
 
-  toggleDropdown: (e) =>
+  toggleDropdown: (e) ->
     e.stopPropagation()
     $(e.currentTarget).next('.js-actions').find('.dropdown-toggle').dropdown('toggle')
 
@@ -602,6 +679,7 @@ class App.Wizard extends App.Controller
   goToSlide: (e) =>
     e.preventDefault()
     slide = $(e.target).data('slide')
+    return if !slide
     @showSlide(slide)
 
   showSlide: (name) =>

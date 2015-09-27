@@ -22,6 +22,7 @@ class ActiveSupport::TestCase
 
   # load seeds
   load "#{Rails.root}/db/seeds.rb"
+  load "#{Rails.root}/test/fixtures/seeds.rb"
 
   # proccess background jobs
   Delayed::Worker.new.work_off

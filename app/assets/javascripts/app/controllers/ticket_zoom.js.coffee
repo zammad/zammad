@@ -85,26 +85,45 @@ class App.TicketZoom extends App.Controller
     meta
 
   url: =>
-    '#ticket/zoom/' + @ticket_id
+    "#ticket/zoom/#{@ticket_id}"
 
   show: (params) =>
-    return if @activeState
+
+    @navupdate '#'
+
+    # set all notifications to seen
+    App.OnlineNotification.seen( 'Ticket', @ticket_id )
+
+    # if controller is executed twice, go to latest article
+    if @activeState
+      @scrollToBottom()
+      return
     @activeState = true
 
-    App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
+    # start autosave
+    @autosaveStart()
 
     # inital load of highlights
     if @highligher && !@highlighed
       @highlighed = true
       @highligher.loadHighlights()
 
-    App.OnlineNotification.seen( 'Ticket', @ticket_id )
-    @navupdate '#'
-    @positionPageHeaderStart()
+    if @shown
+
+      # trigger shown to article
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
+
+      # observe content header position
+      @positionPageHeaderStart()
 
   hide: =>
     @activeState = false
+
+    # stop observing content header position
     @positionPageHeaderStop()
+
+    # stop autosave
+    @autosaveStop()
 
   changed: =>
     return false if !@ticket
@@ -341,30 +360,32 @@ class App.TicketZoom extends App.Controller
         @scrollTo( 0, offset )
       @delay( scrollTo, 100, false )
 
-    @autosaveStart()
-
-    @scrollToBottom()
-
-    @positionPageHeaderStart()
-
     @ticketLastAttributes = @ticket.attributes()
 
-    # trigger shown
-    if @activeState
-      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket.id } )
+    if @shown
+
+      # scroll to end of page
+      @scrollToBottom()
+
+      # observe content header position
+      @positionPageHeaderStart()
+
+      # trigger shown if init shown render
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
 
   scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
 
   autosaveStop: =>
     @autosaveLast = {}
-    @clearInterval( 'autosave' )
+    @clearInterval('autosave')
 
   autosaveStart: =>
     if !@autosaveLast
       @autosaveLast = @taskGet()
     update = =>
-      #console.log('AR', @formParam( @el.find('.article-add') ) )
+      #console.log('AR', @ticket_id, @ticket, @formParam( @el.find('.article-add') ) )
+      return if !@ticket
       currentStoreTicket = @ticket.attributes()
       delete currentStoreTicket.article
       currentStore  =
@@ -389,15 +410,15 @@ class App.TicketZoom extends App.Controller
       #console.log('modelDiff', modelDiff)
 
       # get diff of last save
-      changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast )
+      changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast)
       if !changedBetweenLastSave
         #console.log('model DIFF ', modelDiff)
 
         @autosaveLast = clone(currentParams)
-        @markFormDiff( modelDiff )
+        @markFormDiff(modelDiff)
 
-        @taskUpdateAll( modelDiff )
-    @interval( update, 4000, 'autosave' )
+        @taskUpdateAll(modelDiff)
+    @interval(update, 2400, 'autosave')
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
@@ -490,7 +511,7 @@ class App.TicketZoom extends App.Controller
 
     # validate article
     articleParams = @formParam( @$('.article-add') )
-    console.log "submit article", articleParams
+    console.log 'submit article', articleParams
     if articleParams['body']
       articleParams.from         = @Session.get().displayName()
       articleParams.ticket_id    = ticket.id
@@ -572,7 +593,7 @@ class App.TicketZoom extends App.Controller
         @fetch( ticket.id, true )
     )
 
-  bookmark: (e) =>
+  bookmark: (e) ->
     $(e.currentTarget).find('.bookmark.icon').toggleClass('filled')
 
   reset: (e) =>
@@ -626,6 +647,7 @@ class TicketZoomRouter extends App.ControllerPermanent
       ticket_id:  params.ticket_id
       article_id: params.article_id
       nav:        params.nav
+      shown:      true
 
     App.TaskManager.execute(
       key:        'Ticket-' + @ticket_id

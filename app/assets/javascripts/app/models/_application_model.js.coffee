@@ -30,7 +30,7 @@ class App.Model extends Spine.Model
       name = @firstname
       if @lastname
         if name
-         name = name + ' '
+          name = name + ' '
         name = name + @lastname
       return name
     if @email
@@ -47,7 +47,7 @@ class App.Model extends Spine.Model
       name = @firstname
       if @lastname
         if name
-         name = name + ' '
+          name = name + ' '
         name = name + @lastname
       if @organization
         if typeof @organization is 'object'
@@ -290,7 +290,7 @@ class App.Model extends Spine.Model
             if _.isEmpty @FULL_CALLBACK[ data.id ]
               delete @FULL_CALLBACK[ data.id ]
 
-        error: (xhr, statusText, error) =>
+        error: (xhr, statusText, error) ->
           console.log(statusText, error)
       )
     subscribeId
@@ -518,7 +518,7 @@ class App.Model extends Spine.Model
         # execute callbacks
         callback(data.stream)
 
-      error: (xhr, statusText, error) =>
+      error: (xhr, statusText, error) ->
         console.log(statusText, error)
     )
 

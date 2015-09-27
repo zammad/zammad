@@ -1,5 +1,5 @@
 <div class="main flex vertical centered darkBackground">
-  <svg class="wizard-logo icon-full-logo"><use xlink:href="#icon-full-logo" /></svg>
+  <%- @Icon('full-logo', 'wizard-logo') %>
   <form class="setup wizard js-channel">
     <div class="wizard-slide">
       <h2><%- @T('Connect Channels') %></h2>

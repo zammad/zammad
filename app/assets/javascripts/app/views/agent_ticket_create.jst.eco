@@ -9,17 +9,17 @@
         <ul class="horizontal tabs type-tabs">
 
           <li class="tab u-textTruncate" data-type="phone-in">
-            <svg class="tab-icon"><use xlink:href="#icon-received-calls" /></svg>
+            <%- @Icon('received-calls', 'tab-icon') %>
             <%- @T('Received Call') %>
           </li>
 
           <li class="tab u-textTruncate" data-type="phone-out">
-            <svg class="tab-icon"><use xlink:href="#icon-outbound-calls" /></svg>
+            <%- @Icon('outbound-calls', 'tab-icon') %>
             <%- @T('Outbound Call') %>
           </li>
 
          <li class="tab u-textTruncate" data-type="email-out">
-            <svg class="tab-icon"><use xlink:href="#icon-email" /></svg>
+            <%- @Icon('email', 'tab-icon') %>
             <%- @T('Send Email') %>
           </li>
         </ul>

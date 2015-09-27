@@ -1,9 +1,9 @@
 <div class="btn btn--action btn--split--first js-highlight centered">
-  <svg class="icon icon-marker js-highlight-icon"><use xlink:href="#icon-marker" /></svg>
+  <%- @Icon('marker', 'js-highlight-icon') %>
 </div>
 <div class="dropdown dropdown--actions">
   <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown" aria-expanded="true">
-    <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+    <%- @Icon('arrow-down') %>
   </div>
   <ul class="dropdown-menu dropdown-menu-right" role="menu">
     <% for entry, i in @colors: %>

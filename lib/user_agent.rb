@@ -24,6 +24,10 @@ get http/https calls
     },
   )
 
+returns
+
+  result.body # as response
+
 get json object
 
   result = UserAgent.get(

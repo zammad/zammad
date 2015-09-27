@@ -28,6 +28,20 @@
 
   <p><code>.avatar.size-80</code></p>
 
+  <h2>VIP Avatars</h2>
+
+  <div class="avatar avatar--vip" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></div>
+
+  <p><code>.avatar</code></p>
+
+  <div class="avatar avatar--vip size-50" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></div>
+
+  <p><code>.avatar.size-50</code></p>
+
+  <div class="avatar avatar--vip size-80" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></div>
+
+  <p><code>.avatar.size-80</code></p>
+
 
   <h2>Unique Avatars</h2>
 
@@ -81,7 +95,7 @@
 
             <div class="dropdown-toggle u-positionOrigin" data-toggle="dropdown">
               <input id="customer_id_autocompletion2" name="customer_id_autocompletion" class="ui-autocomplete-input form-control" autocapitalize="off" placeholder="Enter Person or Organization/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-              <svg class="icon-arrow-down"><use xlink:href="#icon-arrow-down" /></svg>
+              <%- @Icon('arrow-down', 'dropdown-arrow') %>
             </div>
 
             <div class="dropdown-menu" aria-labelledby="customer_id">
@@ -89,26 +103,26 @@
               <ul class="recipientList" role="menu">
                 <li class="recipientList-entry js-organization" data-organization-id="AlbrechtBertschlerGmbG">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-team" /></svg>
+                    <%- @Icon('team', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Albrecht &amp; Bertschler GmbH
                     <span class="recipientList-detail">- 4 Personen</span>
                   </div>
-                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <%- @Icon('arrow-right', 'recipientList-arrow') %>
                     <li class="recipientList-entry js-organization" data-organization-id="BENCHMARKhumanresources">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-organization" /></svg>
+                    <%- @Icon('organization', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     BENCHMARK human resources
                     <span class="recipientList-detail">- 2 Personen</span>
                   </div>
-                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <%- @Icon('arrow-right', 'recipientList-arrow') %>
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Belinda Matt
@@ -117,7 +131,7 @@
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Benjamin Wahlers
@@ -126,7 +140,7 @@
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Benjamin Weiß
@@ -135,7 +149,7 @@
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-organization" /></svg>
+                    <%- @Icon('organization', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Benteler SGL Composite Technology GmbH
@@ -144,37 +158,37 @@
 
                 <li class="recipientList-entry js-organization">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-team" /></svg>
+                    <%- @Icon('team', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Support Team Berlin
                     <span class="recipientList-detail">- 5 Personen</span>
                   </div>
-                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <%- @Icon('arrow-right', 'recipientList-arrow') %>
 
                 <li class="recipientList-entry js-organization">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-organization" /></svg>
+                    <%- @Icon('organization', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Bernecker + Rainer Industrie-Elektronik Ges.m.b.H.
                     <span class="recipientList-detail">- 3 Personen</span>
                   </div>
-                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <%- @Icon('arrow-right', 'recipientList-arrow') %>
 
                 <li class="recipientList-entry js-organization">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-organization" /></svg>
+                    <%- @Icon('organization', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Bertsch Ecopower GmbH
                     <span class="recipientList-detail">- 1 Person</span>
                   </div>
-                  <svg class="icon-arrow-right recipientList-arrow"><use xlink:href="#icon-arrow-right" /></svg>
+                  <%- @Icon('arrow-right', 'recipientList-arrow') %>
 
                 <li class="recipientList-entry recipientList--new u-clickable horizontal center">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-plus" /></svg>
+                    <%- @Icon('plus', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     <%- @T('Create new Customer') %>
@@ -184,13 +198,13 @@
               <ul class="recipientList-organizationMembers hide" id="AlbrechtBertschlerGmbG">
                 <li class="recipientList-controls js-back">
                   <div class="btn btn--action btn--onDark">
-                    <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
+                    <%- @Icon('arrow-left') %>
                     <span class="btn-label"><%- @T('Back') %></span>
                   </div>
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Andreas Kramer
@@ -199,7 +213,7 @@
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Belinda Matt
@@ -208,7 +222,7 @@
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Damian Sprengler
@@ -217,24 +231,24 @@
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Katharina Nussman
                     <span class="recipientList-detail">- Albrecht &amp; Bertschler GmbG</span>
                   </div>
-              </ul>              
+              </ul>
 
               <ul class="recipientList-organizationMembers hide" id="BENCHMARKhumanresources">
                 <li class="recipientList-controls js-back">
                   <div class="btn btn--action btn--onDark">
-                    <svg class="icon-arrow-left"><use xlink:href="#icon-arrow-left" /></svg>
+                    <%- @Icon('arrow-left') %>
                     <span class="btn-label"><%- @T('Back') %></span>
                   </div>
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Hubert Lang
@@ -243,7 +257,7 @@
 
                 <li class="recipientList-entry">
                   <div class="recipientList-iconSpacer">
-                    <svg class="recipientList-icon"><use xlink:href="#icon-user" /></svg>
+                    <%- @Icon('user', 'recipientList-icon') %>
                   </div>
                   <div class="recipientList-name">
                     Mario Steibel

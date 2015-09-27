@@ -1,3 +1,4 @@
+# coffeelint: disable=camel_case_classes
 class App.i18n
   _instance = undefined
 
@@ -69,6 +70,11 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.setNotTranslated( locale, key )
 
+  @timeFormat: (locale, key) ->
+    if _instance == undefined
+      _instance ?= new _i18nSingleton()
+    _instance.mapTime
+
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 
@@ -85,7 +91,7 @@ class _i18nSingleton extends Spine.Module
 
     # observe if text has been translated
     $('body')
-      .delegate '.translation', 'focus', (e) =>
+      .delegate '.translation', 'focus', (e) ->
         $this = $(e.target)
         $this.data 'before', $this.html()
         return $this
@@ -276,7 +282,7 @@ class _i18nSingleton extends Spine.Module
     else
       @mapString[source] = target
 
-  notTranslatedFeatureEnabled: (locale) =>
+  notTranslatedFeatureEnabled: (locale) ->
     if locale.substr(0,2) is 'en'
       return false
     true
@@ -296,10 +302,10 @@ class _i18nSingleton extends Spine.Module
   timestamp: ( time, offset ) =>
     @convert(time, offset, @mapTime['timestamp'] || @timestampFormat)
 
-  convert: ( time, offset, format ) =>
+  convert: ( time, offset, format ) ->
     s = ( num, digits ) ->
       while num.toString().length < digits
-        num = "0" + num
+        num = '0' + num
       num
 
     timeObject = new Date(time)

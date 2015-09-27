@@ -123,7 +123,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -135,10 +135,13 @@ curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password} -H 
 =begin
 
 Resource:
+POST /api/v1/email_addresses/{id}.json
 
 Response:
+{}
 
 Test:
+curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
 
 =end
 

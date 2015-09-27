@@ -205,7 +205,7 @@ class App.FirstStepsClues extends App.Controller
       if target.right + modal.width <= maxWidth
         left = target.right
         position = 'right'
-      else 
+      else
         # place left
         left = target.left - modal.width
         position = 'left'
@@ -318,7 +318,7 @@ class App.FirstStepsClues extends App.Controller
 
   perform: (actions, container) ->
     for action in actions
-      if action.indexOf(" ") < 0
+      if action.indexOf(' ') < 0
         # 'click'
         eventName = action
         target = container

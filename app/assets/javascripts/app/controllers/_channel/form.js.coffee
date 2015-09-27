@@ -1,3 +1,4 @@
+# coffeelint: disable=no_unnecessary_double_quotes
 class App.ChannelForm extends App.Controller
   events:
     'change form.js-params': 'updateParams'
@@ -27,7 +28,9 @@ class App.ChannelForm extends App.Controller
       if paramString != ''
         paramString += ",\n"
       if value == 'true' || value == 'false'
-        paramString += "  #{key}: #{value}"
+        paramString += "    #{key}: #{value}"
       else
-        paramString += "  #{key}: '#{quote(value)}'"
+        paramString += "    #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)
+
+App.Config.set( 'Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, role: ['Admin'] }, 'NavBarAdmin' )

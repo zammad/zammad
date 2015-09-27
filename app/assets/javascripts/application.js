@@ -35,6 +35,7 @@
 //= require ./app/lib/bootstrap/button.js
 //= require ./app/lib/bootstrap/collapse.js
 //= require ./app/lib/bootstrap/bootstrap-timepicker.js
+//= require ./app/lib/bootstrap/bootstrap-datepicker.js
 
 //= require ./app/lib/rangy/rangy-core.js
 //= require ./app/lib/rangy/rangy-classapplier.js
@@ -207,6 +208,13 @@ function clone2(item) {
 function underscored (str) {
   return str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
 }
+
+function toCamelCase (str) {
+  return str
+    .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
+    .replace(/\s/g, '')
+    .replace(/^(.)/, function($1) { return $1.toUpperCase(); });
+};
 
 jQuery.event.special.remove = {
   remove: function(e) {

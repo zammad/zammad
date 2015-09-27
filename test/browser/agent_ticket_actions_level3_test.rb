@@ -198,15 +198,16 @@ class AgentTicketActionsLevel3Test < TestCase
       value: '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
     )
-    sleep 2
+    sleep 3
     reload(
       browser: browser2,
     )
+    sleep 3
     click(
       css: '.content.active .js-reset',
       browser: browser2,
     )
-    sleep 5
+    sleep 4
     ticket_verify(
       browser: browser2,
       data: {

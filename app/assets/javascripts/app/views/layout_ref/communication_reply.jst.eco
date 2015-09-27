@@ -20,14 +20,14 @@
               <div class="attachment-name u-highlight">sega-genesis-box.gif</div>
               <div class="attachment-size">2.4mb</div>
               <div class="attachment-delete js-delete align-right u-clickable">
-                <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Delete File') %>
+                <%- @Icon('diagonal-cross') %><%- @T('Delete File') %>
               </div>
             </div>
             <div class="attachment">
               <div class="attachment-name u-highlight">license-key.txt</div>
               <div class="attachment-size">7kb</div>
               <div class="attachment-delete js-delete align-right u-clickable">
-                <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Delete File') %>
+                <%- @Icon('diagonal-cross') %><%- @T('Delete File') %>
               </div>
             </div>
           </div> -->
@@ -45,7 +45,7 @@
                   <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
                 </div>
                 <div class="attachmentUpload-cancel js-cancel">
-                  <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Cancel Upload') %>
+                  <%- @Icon('diagonal-cross') %></svg><%- @T('Cancel Upload') %>
                 </div>
               </div>
               <div class="attachmentUpload-progressBar" style="width: 0%"></div>

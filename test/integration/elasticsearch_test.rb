@@ -121,7 +121,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root}/test/fixtures/es-normal.txt", 'rb') { |file| file.read },
+      data: IO.read("#{Rails.root}/test/fixtures/es-normal.txt"),
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -132,7 +132,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root}/test/fixtures/es-pdf1.pdf", 'rb') { |file| file.read },
+      data: IO.read("#{Rails.root}/test/fixtures/es-pdf1.pdf"),
       filename: 'es-pdf1.pdf',
       preferences: {},
       created_by_id: 1,
@@ -143,7 +143,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root}/test/fixtures/es-box1.box", 'rb') { |file| file.read },
+      data: IO.read("#{Rails.root}/test/fixtures/es-box1.box"),
       filename: 'mail1.box',
       preferences: {},
       created_by_id: 1,
@@ -154,7 +154,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: File.open("#{Rails.root}/test/fixtures/es-too-big.txt", 'rb') { |file| file.read },
+      data: IO.read("#{Rails.root}/test/fixtures/es-too-big.txt"),
       filename: 'es-too-big.txt',
       preferences: {},
       created_by_id: 1,

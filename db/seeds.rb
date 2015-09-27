@@ -93,7 +93,11 @@ Setting.create_if_not_exists(
   preferences: { prio: 2 },
   frontend: true
 )
-
+options = {}
+(10..99).each {|item|
+  options[item] = item
+}
+system_id = rand(10..99)
 Setting.create_if_not_exists(
   title: 'SystemID',
   name: 'system_id',
@@ -106,16 +110,11 @@ Setting.create_if_not_exists(
         null: true,
         name: 'system_id',
         tag: 'select',
-        options: {
-          '10' => '10',
-          '11' => '11',
-          '12' => '12',
-          '13' => '13',
-        },
+        options: options,
       },
     ],
   },
-  state: '10',
+  state: system_id,
   preferences: { online_service_disable: true },
   frontend: true
 )
@@ -278,6 +277,30 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Geo Calendar Service',
+  name: 'geo_calendar_backend',
+  area: 'System::Services',
+  description: 'Defines the backend for geo calendar lookups. Used for inital calendar succession.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'geo_calendar_backend',
+        tag: 'select',
+        options: {
+          '' => '-',
+          'Service::GeoCalendar::Zammad' => 'Zammad GeoCalendar Service',
+        },
+      },
+    ],
+  },
+  state: 'Service::GeoCalendar::Zammad',
+  preferences: { prio: 2 },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
   title: 'Send client stats',
   name: 'ui_send_client_stats',
   area: 'System::UI',
@@ -418,7 +441,7 @@ Setting.create_if_not_exists(
   title: 'Authentication via Twitter',
   name: 'auth_twitter',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via twitter. Register your app first at https://dev.twitter.com/apps',
+  description: "@T('Enables user authentication via twitter. Register your app first at [Twitter Developer Site](https://dev.twitter.com/apps)')",
   options: {
     form: [
       {
@@ -464,7 +487,7 @@ Setting.create_if_not_exists(
   title: 'Authentication via Facebook',
   name: 'auth_facebook',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via Facebook. Register your app first at https://developers.facebook.com/apps/',
+  description: "@T('Enables user authentication via Facebook. Register your app first at [Facebook Developer Site](https://developers.facebook.com/apps/)')",
   options: {
     form: [
       {
@@ -615,15 +638,23 @@ Setting.create_if_not_exists(
         name: 'password_min_size',
         tag: 'select',
         options: {
-          4 => 4,
-          5 => 5,
-          6 => 6,
-          7 => 7,
-          8 => 8,
-          9 => 9,
-          10 => 10,
-          11 => 11,
-          12 => 12,
+          4 => ' 4',
+          5 => ' 5',
+          6 => ' 6',
+          7 => ' 7',
+          8 => ' 8',
+          9 => ' 9',
+          10 => '10',
+          11 => '11',
+          12 => '12',
+          13 => '13',
+          14 => '14',
+          15 => '15',
+          16 => '16',
+          17 => '17',
+          18 => '18',
+          19 => '19',
+          20 => '20',
         },
       },
     ],
@@ -688,22 +719,22 @@ Setting.create_if_not_exists(
         name: 'password_max_login_failed',
         tag: 'select',
         options: {
-          4 => 4,
-          5 => 5,
-          6 => 6,
-          7 => 7,
-          8 => 8,
-          9 => 9,
-          10 => 10,
-          11 => 11,
-          13 => 13,
-          14 => 14,
-          15 => 15,
-          16 => 16,
-          17 => 17,
-          18 => 18,
-          19 => 19,
-          20 => 20,
+          4 => ' 4',
+          5 => ' 5',
+          6 => ' 6',
+          7 => ' 7',
+          8 => ' 8',
+          9 => ' 9',
+          10 => '10',
+          11 => '11',
+          13 => '13',
+          14 => '14',
+          15 => '15',
+          16 => '16',
+          17 => '17',
+          18 => '18',
+          19 => '19',
+          20 => '20',
         },
       },
     ],
@@ -753,7 +784,10 @@ Setting.create_if_not_exists(
   title: 'Ticket Hook Position',
   name: 'ticket_hook_position',
   area: 'Ticket::Base',
-  description: 'The format of the subject. "Left" means "[Ticket#12345] Some Subject", "Right" means "Some Subject [Ticket#12345]", "None" means "Some Subject" and no ticket number. In the last case you should enable "postmaster_follow_up_search_in" to recognize followups based on email headers and/or body.',
+  description: "@T('The format of the subject.')
+* @T('**Right** means **Some Subject [Ticket#12345]**')
+* @T('**Left** means **[Ticket#12345] Some Subject**')
+* @T('**None** means **Some Subject** (without ticket number). In the last case you should enable *postmaster_follow_up_search_in* to recognize followups based on email headers and/or body.')",
   options: {
     form: [
       {
@@ -808,27 +842,15 @@ Setting.create_if_not_exists(
   state: 'RE',
   frontend: false
 )
-#Setting.create(
-#  :title       => 'Ticket Subject Forward',
-#  :name        => 'ticket_subject_fw',
-#  :area        => 'Ticket::Base',
-#  :description => 'The text at the beginning of the subject when an email is forwarded, e.g. FW, Fwd, or WG.',
-#  :state       => {
-#    :value => 'FW',
-#  },
-#  :frontend    => false
-#)
-
 Setting.create_if_not_exists(
   title: 'Ticket Number Format',
   name: 'ticket_number',
   area: 'Ticket::Number',
-  description: 'Selects the ticket number generator module. "Increment" increments the ticket
- number, the SystemID and the counter are used with SystemID.Counter format (e.g. 1010138, 1010139).
- With "Date" the ticket numbers will be generated by the current date, the SystemID and the counter.
- The format looks like Year.Month.Day.SystemID.counter (e.g. 201206231010138, 201206231010139).
- With param "Checksum => true" the counter will be appended as checksum to the string. The format
- looks like SystemID.Counter.CheckSum (e. g. 10101384, 10101392) or Year.Month.Day.SystemID.Counter.CheckSum (e.g. 2012070110101520, 2012070110101535).',
+  description: "@T('Selects the ticket number generator module.')
+* @T('**Increment** increments the ticket number, the SystemID and the counter are used with SystemID.Counter format (e.g. 1010138, 1010139).')
+* @T('With **Date** the ticket numbers will be generated by the current date, the SystemID and the counter. The format looks like Year.Month.Day.SystemID.counter (e.g. 201206231010138, 201206231010139).')
+
+@T('With param 'Checksum => true' the counter will be appended as checksum to the string. The format looks like SystemID.Counter.CheckSum (e. g. 10101384, 10101392) or Year.Month.Day.SystemID.Counter.CheckSum (e.g. 2012070110101520, 2012070110101535).')",
   options: {
     form: [
       {
@@ -869,26 +891,26 @@ Setting.create_if_not_exists(
         name: 'min_size',
         tag: 'select',
         options: {
-          1 => 1,
-          2 => 2,
-          3 => 3,
-          4 => 4,
-          5 => 5,
-          6 => 6,
-          7 => 7,
-          8 => 8,
-          9 => 9,
-          10 => 10,
-          11 => 11,
-          12 => 12,
-          13 => 13,
-          14 => 14,
-          15 => 15,
-          16 => 16,
-          17 => 17,
-          18 => 18,
-          19 => 19,
-          20 => 20,
+          1 => ' 1',
+          2 => ' 2',
+          3 => ' 3',
+          4 => ' 4',
+          5 => ' 5',
+          6 => ' 6',
+          7 => ' 7',
+          8 => ' 8',
+          9 => ' 9',
+          10 => '10',
+          11 => '11',
+          12 => '12',
+          13 => '13',
+          14 => '14',
+          15 => '15',
+          16 => '16',
+          17 => '17',
+          18 => '18',
+          19 => '19',
+          20 => '20',
         },
       },
     ],
@@ -1070,26 +1092,31 @@ Setting.create_if_not_exists(
         name: 'postmaster_max_size',
         tag: 'select',
         options: {
-          1 => 1,
-          2 => 2,
-          3 => 3,
-          4 => 4,
-          5 => 5,
-          6 => 6,
-          7 => 7,
-          8 => 8,
-          9 => 9,
-          10 => 10,
-          11 => 11,
-          12 => 12,
-          13 => 13,
-          14 => 14,
-          15 => 15,
-          16 => 16,
-          17 => 17,
-          18 => 18,
-          19 => 19,
-          20 => 20,
+          1 => '  1',
+          2 => '  2',
+          3 => '  3',
+          4 => '  4',
+          5 => '  5',
+          6 => '  6',
+          7 => '  7',
+          8 => '  8',
+          9 => '  9',
+          10 => ' 10',
+          15 => ' 15',
+          20 => ' 20',
+          25 => ' 25',
+          30 => ' 30',
+          35 => ' 35',
+          40 => ' 40',
+          45 => ' 45',
+          50 => ' 50',
+          60 => ' 60',
+          70 => ' 70',
+          80 => ' 80',
+          90 => ' 90',
+          100 => '100',
+          125 => '125',
+          150 => '150',
         },
       },
     ],
@@ -1103,7 +1130,7 @@ Setting.create_if_not_exists(
   title: 'Additional follow up detection',
   name: 'postmaster_follow_up_search_in',
   area: 'Email::Base',
-  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up ckeck is executed. "References" - Executes follow up check on In-Reply-To or References headers for mails. "Body" - Executes follow up check in mail body. "Attachment" - Executes follow up check in mail attachments.',
+  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up ckeck is executed.',
   options: {
     form: [
       {
@@ -1112,9 +1139,9 @@ Setting.create_if_not_exists(
         name: 'postmaster_follow_up_search_in',
         tag: 'checkbox',
         options: {
-          'references' => 'References',
-          'body'       => 'Body',
-          'attachment' => 'Attachment',
+          'references' => 'References - Search for follow up also in In-Reply-To or References headers.',
+          'body'       => 'Body - Search for follow up also in mail body.',
+          'attachment' => 'Attachment - Search for follow up also in attachments.',
         },
       },
     ],
@@ -1414,13 +1441,16 @@ Setting.create_if_not_exists(
   frontend: true
 )
 
-email_address = EmailAddress.create_if_not_exists(
-  id: 1,
-  realname: 'Zammad',
-  email: 'zammad@localhost',
-  updated_by_id: 1,
-  created_by_id: 1
+Setting.create_if_not_exists(
+  title: 'Define translator identifier.',
+  name: 'translator_key',
+  area: 'i18n::translator_key',
+  description: 'Defines the translator identifier for contributions.',
+  options: {},
+  state: '',
+  frontend: false
 )
+
 signature = Signature.create_if_not_exists(
   id: 1,
   name: 'default',
@@ -1461,7 +1491,6 @@ Role.create_if_not_exists(
 Group.create_if_not_exists(
   id: 1,
   name: 'Users',
-  email_address_id: email_address.id,
   signature_id: signature.id,
   note: 'Standard Group/Pool for Tickets.',
   updated_by_id: 1,
@@ -1515,13 +1544,13 @@ Ticket::StateType.create_if_not_exists( id: 5, name: 'closed' )
 Ticket::StateType.create_if_not_exists( id: 6, name: 'merged' )
 Ticket::StateType.create_if_not_exists( id: 7, name: 'removed' )
 
-Ticket::State.create_if_not_exists( id: 1, name: 'new', state_type_id: Ticket::StateType.where(name: 'new').first.id )
-Ticket::State.create_if_not_exists( id: 2, name: 'open', state_type_id: Ticket::StateType.where(name: 'open').first.id )
-Ticket::State.create_if_not_exists( id: 3, name: 'pending reminder', state_type_id: Ticket::StateType.where(name: 'pending reminder').first.id  )
-Ticket::State.create_if_not_exists( id: 4, name: 'closed', state_type_id: Ticket::StateType.where(name: 'closed').first.id  )
-Ticket::State.create_if_not_exists( id: 5, name: 'merged', state_type_id: Ticket::StateType.where(name: 'merged').first.id  )
-Ticket::State.create_if_not_exists( id: 6, name: 'removed', state_type_id: Ticket::StateType.where(name: 'removed').first.id, active: false )
-Ticket::State.create_if_not_exists( id: 7, name: 'pending close', state_type_id: Ticket::StateType.where(name: 'pending action').first.id, next_state_id: 4 )
+Ticket::State.create_if_not_exists( id: 1, name: 'new', state_type_id: Ticket::StateType.find_by(name: 'new').id,  )
+Ticket::State.create_if_not_exists( id: 2, name: 'open', state_type_id: Ticket::StateType.find_by(name: 'open').id )
+Ticket::State.create_if_not_exists( id: 3, name: 'pending reminder', state_type_id: Ticket::StateType.find_by(name: 'pending reminder').id, ignore_escalation: true )
+Ticket::State.create_if_not_exists( id: 4, name: 'closed', state_type_id: Ticket::StateType.find_by(name: 'closed').id, ignore_escalation: true )
+Ticket::State.create_if_not_exists( id: 5, name: 'merged', state_type_id: Ticket::StateType.find_by(name: 'merged').id, ignore_escalation: true )
+Ticket::State.create_if_not_exists( id: 6, name: 'removed', state_type_id: Ticket::StateType.find_by(name: 'removed').id, active: false, ignore_escalation: true )
+Ticket::State.create_if_not_exists( id: 7, name: 'pending close', state_type_id: Ticket::StateType.find_by(name: 'pending action').id, next_state_id: 4, ignore_escalation: true )
 
 Ticket::Priority.create_if_not_exists( id: 1, name: '1 low' )
 Ticket::Priority.create_if_not_exists( id: 2, name: '2 normal' )
@@ -1580,8 +1609,14 @@ Overview.create_if_not_exists(
   prio: 1000,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [ 1, 2, 3, 7 ],
-    'tickets.owner_id' => 'current_user.id',
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [ 1, 2, 3, 7 ],
+    },
+    'ticket.owner_id' => {
+      operator: 'is',
+      value: 'current_user.id',
+    },
   },
   order: {
     by: 'created_at',
@@ -1601,9 +1636,18 @@ Overview.create_if_not_exists(
   prio: 1010,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id'     => [3],
-    'tickets.owner_id'     => 'current_user.id',
-    'tickets.pending_time' => { 'direction' => 'before', 'count' => 1, 'area' => 'minute' },
+    'ticket.state_id' => {
+      operator: 'is',
+      value: 3,
+    },
+    'ticket.owner_id' => {
+      operator: 'is',
+      value: 'current_user.id',
+    },
+    'ticket.pending_time' => {
+      operator: 'after (relative)',
+      value: '1',
+    },
   },
   order: {
     by: 'created_at',
@@ -1623,8 +1667,14 @@ Overview.create_if_not_exists(
   prio: 1020,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [1, 2, 3],
-    'tickets.owner_id' => 1,
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [1, 2, 3],
+    },
+    'ticket.owner_id' => {
+      operator: 'is',
+      value: 1,
+    },
   },
   order: {
     by: 'created_at',
@@ -1644,7 +1694,10 @@ Overview.create_if_not_exists(
   prio: 1030,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id' => [1, 2, 3],
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [1, 2, 3],
+    },
   },
   order: {
     by: 'created_at',
@@ -1664,8 +1717,14 @@ Overview.create_if_not_exists(
   prio: 1035,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id'     => [3],
-    'tickets.pending_time' => { 'direction' => 'before', 'count' => 1, 'area' => 'minute' },
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [3],
+    },
+    'ticket.pending_time' => {
+      operator: 'after (relative)',
+      value: 1,
+    },
   },
   order: {
     by: 'created_at',
@@ -1685,7 +1744,10 @@ Overview.create_if_not_exists(
   prio: 1040,
   role_id: overview_role.id,
   condition: {
-    'tickets.escalation_time' => { 'direction' => 'before', 'count' => 5, 'area' => 'minute' },
+    'ticket.escalation_time' => {
+      operator: 'before (relative)',
+      value: 5,
+    },
   },
   order: {
     by: 'escalation_time',
@@ -1706,8 +1768,14 @@ Overview.create_if_not_exists(
   prio: 1000,
   role_id: overview_role.id,
   condition: {
-    'tickets.state_id'    => [ 1, 2, 3, 4, 6 ],
-    'tickets.customer_id' => 'current_user.id',
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [ 1, 2, 3, 4, 6 ],
+    },
+    'ticket.customer_id' => {
+      operator: 'is',
+      value: 'current_user.id',
+    },
   },
   order: {
     by: 'created_at',
@@ -1727,8 +1795,14 @@ Overview.create_if_not_exists(
   role_id: overview_role.id,
   organization_shared: true,
   condition: {
-    'tickets.state_id' => [ 1, 2, 3, 4, 6 ],
-    'tickets.organization_id' => 'current_user.organization_id',
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [ 1, 2, 3, 4, 6 ],
+    },
+    'ticket.organization_id' => {
+      operator: 'is',
+      value: 'current_user.organization_id',
+    },
   },
   order: {
     by: 'created_at',
@@ -1872,6 +1946,1281 @@ Network::Item::Comment.create(
   body: 'Some comment....',
 )
 
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'customer_id',
+  display: 'Customer',
+  data_type: 'user_autocompletion',
+  data_option: {
+    relation: 'User',
+    autocapitalize: false,
+    multiple: false,
+    null: false,
+    limit: 200,
+    placeholder: 'Enter Person or Organization/Company',
+    minLengt: 2,
+    translate: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_top: {
+      Agent: {
+        null: false,
+      },
+    },
+    edit: {},
+  },
+  pending_migration: false,
+  position: 10,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'type',
+  display: 'Type',
+  data_type: 'select',
+  data_option: {
+    options: {
+      'Incident' => 'Incident',
+      'Problem'  => 'Problem',
+      'Request for Change' => 'Request for Change',
+    },
+    nulloption: true,
+    multiple: false,
+    null: true,
+    translate: true,
+  },
+  editable: false,
+  active: false,
+  screens: {
+    create_middle: {
+      '-all-' => {
+        null: false,
+        item_class: 'column',
+      },
+    },
+    edit: {
+      Agent: {
+        null: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 20,
+)
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'group_id',
+  display: 'Group',
+  data_type: 'select',
+  data_option: {
+    relation: 'Group',
+    relation_condition: { access: 'rw' },
+    nulloption: true,
+    multiple: false,
+    null: false,
+    translate: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {
+      '-all-' => {
+        null: false,
+        item_class: 'column',
+      },
+    },
+    edit: {
+      Agent: {
+        null: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 20,
+)
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'owner_id',
+  display: 'Owner',
+  data_type: 'select',
+  data_option: {
+    relation: 'User',
+    relation_condition: { roles: 'Agent' },
+    nulloption: true,
+    multiple: false,
+    null: true,
+    translate: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {
+      Agent: {
+        null: true,
+        item_class: 'column',
+      },
+    },
+    edit: {
+      Agent: {
+        null: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 30,
+)
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'state_id',
+  display: 'State',
+  data_type: 'select',
+  data_option: {
+    relation: 'TicketState',
+    nulloption: true,
+    multiple: false,
+    null: false,
+    default: 2,
+    translate: true,
+    filter: [1, 2, 3, 4, 7],
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {
+      Agent: {
+        null: false,
+        item_class: 'column',
+      },
+      Customer: {
+        item_class: 'column',
+        nulloption: false,
+        null: true,
+        filter: [1, 4],
+        default: 1,
+      },
+    },
+    edit: {
+      Agent: {
+        nulloption: false,
+        null: false,
+        filter: [2, 3, 4, 7],
+      },
+      Customer: {
+        nulloption: false,
+        null: true,
+        filter: [2, 4],
+        default: 2,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 40,
+)
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'pending_time',
+  display: 'Pending till',
+  data_type: 'datetime',
+  data_option: {
+    future: true,
+    past: false,
+    diff: 24,
+    null: true,
+    translate: true,
+    required_if: {
+      state_id: [3, 7]
+    },
+    shown_if: {
+      state_id: [3, 7]
+    },
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {
+      '-all-' => {
+        null: false,
+        item_class: 'column',
+      },
+    },
+    edit: {
+      Agent: {
+        null: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 41,
+)
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'priority_id',
+  display: 'Priority',
+  data_type: 'select',
+  data_option: {
+    relation: 'TicketPriority',
+    nulloption: true,
+    multiple: false,
+    null: false,
+    default: 2,
+    translate: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {
+      Agent: {
+        null: false,
+        item_class: 'column',
+      },
+    },
+    edit: {
+      Agent: {
+        null: false,
+        nulloption: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 80,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'tags',
+  display: 'Tags',
+  data_type: 'tag',
+  data_option: {
+    type: 'text',
+    null: true,
+    translate: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_bottom: {
+      Agent: {
+        null: true,
+      },
+    },
+    edit: {},
+  },
+  pending_migration: false,
+  position: 900,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'title',
+  display: 'Title',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 200,
+    null: false,
+    translate: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_top: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {},
+  },
+  pending_migration: false,
+  position: 15,
+)
+
+ObjectManager::Attribute.add(
+  object: 'TicketArticle',
+  name: 'type_id',
+  display: 'Type',
+  data_type: 'select',
+  data_option: {
+    relation: 'TicketArticleType',
+    nulloption: false,
+    multiple: false,
+    null: false,
+    default: 9,
+    translate: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {},
+    edit: {
+      Agent: {
+        null: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 100,
+)
+
+ObjectManager::Attribute.add(
+  object: 'TicketArticle',
+  name: 'internal',
+  display: 'Visibility',
+  data_type: 'select',
+  data_option: {
+    options: { true: 'internal', false: 'public' },
+    nulloption: false,
+    multiple: false,
+    null: true,
+    default: false,
+    translate: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {},
+    edit: {
+      Agent: {
+        null: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 200,
+)
+
+ObjectManager::Attribute.add(
+  object: 'TicketArticle',
+  name: 'to',
+  display: 'To',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 1000,
+    null: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_middle: {},
+    edit: {
+      Agent: {
+        null: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 300,
+)
+ObjectManager::Attribute.add(
+  object: 'TicketArticle',
+  name: 'cc',
+  display: 'Cc',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 1000,
+    null: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_phone_in: {},
+    create_phone_out: {},
+    create_email_out: {
+      '-all-' => {
+        null: true,
+      }
+    },
+    create_middle: {},
+    edit: {
+      Agent: {
+        null: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 400,
+)
+
+ObjectManager::Attribute.add(
+  object: 'TicketArticle',
+  name: 'body',
+  display: 'Text',
+  data_type: 'richtext',
+  data_option: {
+    type: 'richtext',
+    maxlength: 20_000,
+    upload: true,
+    rows: 8,
+    null: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_top: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {
+      Agent: {
+        null: true,
+      },
+      Customer: {
+        null: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 600,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'login',
+  display: 'Login',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 100,
+    null: true,
+    autocapitalize: false,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {},
+    view: {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 100,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'firstname',
+  display: 'Firstname',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 150,
+    null: false,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    invite_agent: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 200,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'lastname',
+  display: 'Lastname',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 150,
+    null: false,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    invite_agent: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 300,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'email',
+  display: 'Email',
+  data_type: 'input',
+  data_option: {
+    type: 'email',
+    maxlength: 150,
+    null: false,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    invite_agent: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 400,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'web',
+  display: 'Web',
+  data_type: 'input',
+  data_option: {
+    type: 'url',
+    maxlength: 250,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 500,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'phone',
+  display: 'Phone',
+  data_type: 'input',
+  data_option: {
+    type: 'phone',
+    maxlength: 100,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 600,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'mobile',
+  display: 'Mobile',
+  data_type: 'input',
+  data_option: {
+    type: 'phone',
+    maxlength: 100,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 700,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'fax',
+  display: 'Fax',
+  data_type: 'input',
+  data_option: {
+    type: 'phone',
+    maxlength: 100,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 800,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'organization_id',
+  display: 'Organization',
+  data_type: 'autocompletion_ajax',
+  data_option: {
+    multiple: false,
+    nulloption: true,
+    null: true,
+    relation: 'Organization',
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 900,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'department',
+  display: 'Department',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 200,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1000,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'street',
+  display: 'Street',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 100,
+    null: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1100,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'zip',
+  display: 'Zip',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 100,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1200,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'city',
+  display: 'City',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 100,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1300,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'address',
+  display: 'Address',
+  data_type: 'textarea',
+  data_option: {
+    type: 'text',
+    maxlength: 500,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1350,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'password',
+  display: 'Password',
+  data_type: 'input',
+  data_option: {
+    type: 'password',
+    maxlength: 100,
+    null: true,
+    autocomplete: 'off',
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    invite_agent: {},
+    edit: {
+      Admin: {
+        null: true,
+      },
+    },
+    view: {}
+  },
+  pending_migration: false,
+  position: 1400,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'vip',
+  display: 'VIP',
+  data_type: 'boolean',
+  data_option: {
+    null: true,
+    default: false,
+    item_class: 'formGroup--halfSize',
+    options: {
+      false: 'no',
+      true: 'yes',
+    },
+    translate: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    edit: {
+      Admin: {
+        null: true,
+      },
+      Agent: {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1490,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'note',
+  display: 'Note',
+  data_type: 'richtext',
+  data_option: {
+    type: 'text',
+    maxlength: 250,
+    null: true,
+    note: 'Notes are visible to agents only, never to customers.',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1500,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'role_ids',
+  display: 'Roles',
+  data_type: 'checkbox',
+  data_option: {
+    multiple: true,
+    null: false,
+    relation: 'Role',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      Admin: {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1600,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'group_ids',
+  display: 'Groups',
+  data_type: 'checkbox',
+  data_option: {
+    multiple: true,
+    null: true,
+    relation: 'Group',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {
+      Admin: {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1700,
+)
+
+ObjectManager::Attribute.add(
+  object: 'User',
+  name: 'active',
+  display: 'Active',
+  data_type: 'active',
+  data_option: {
+    default: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    signup: {},
+    invite_agent: {},
+    edit: {
+      Admin: {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1800,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Organization',
+  name: 'name',
+  display: 'Name',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 150,
+    null: false,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 200,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Organization',
+  name: 'shared',
+  display: 'Shared organization',
+  data_type: 'boolean',
+  data_option: {
+    maxlength: 250,
+    null: true,
+    default: true,
+    note: 'Customers in the organization can view each other items.',
+    item_class: 'formGroup--halfSize',
+    options: {
+      true: 'Yes',
+      false: 'No',
+    }
+  },
+  editable: false,
+  active: true,
+  screens: {
+    edit: {
+      Admin: {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1400,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Organization',
+  name: 'note',
+  display: 'Note',
+  data_type: 'richtext',
+  data_option: {
+    type: 'text',
+    maxlength: 250,
+    null: true,
+    note: 'Notes are visible to agents only, never to customers.',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1500,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Organization',
+  name: 'active',
+  display: 'Active',
+  data_type: 'active',
+  data_option: {
+    default: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    edit: {
+      Admin: {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  pending_migration: false,
+  position: 1800,
+)
+
+Scheduler.create_if_not_exists(
+  name: 'Process pending tickets',
+  method: 'Ticket.process_pending',
+  period: 60 * 15,
+  prio: 1,
+  active: true,
+)
+Scheduler.create_if_not_exists(
+  name: 'Import OTRS diff load',
+  method: 'Import::OTRS.diff_worker',
+  period: 60 * 3,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Check Channels',
+  method: 'Channel.fetch',
+  period: 30,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Generate Session data',
+  method: 'Sessions.jobs',
+  period: 60,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Cleanup expired sessions',
+  method: 'SessionHelper.cleanup_expired',
+  period: 60 * 60 * 12,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Delete old activity stream entries.',
+  method: 'ActivityStream.cleanup',
+  period: 1.day,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Delete old entries.',
+  method: 'RecentView.cleanup',
+  period: 1.day,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
+  name: 'Delete old online notification entries.',
+  method: 'OnlineNotification.cleanup',
+  period: 2.hours,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
+  name: 'Delete old token entries.',
+  method: 'Token.cleanup',
+  period: 30.days,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+
 # install locales and translations
 Locale.create_if_not_exists(
   locale: 'en-us',
@@ -1880,6 +3229,7 @@ Locale.create_if_not_exists(
 )
 Locale.load
 Translation.load
+Calendar.init_setup
 
 # install all packages in auto_install
-Package.auto_install()
+Package.auto_install

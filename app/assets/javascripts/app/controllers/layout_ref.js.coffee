@@ -180,9 +180,9 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     if @content is 'no_content'
       @content = ''
     else if @content is 'content'
-      @content = "some content la la la la"
+      @content = 'some content la la la la'
     else
-      @content = "<p>some</p><p>multiline content</p>1<p>2</p><p>3</p>"
+      @content = '<p>some</p><p>multiline content</p>1<p>2</p><p>3</p>'
 
     @render()
 
@@ -255,7 +255,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
 
       @attachmentPlaceholder.velocity
         properties:
-          translateX: -@attachmentInputHolder.position().left + "px"
+          translateX: -@attachmentInputHolder.position().left + 'px'
         options:
           duration: duration
           easing: 'easeOutQuad'
@@ -267,7 +267,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
           duration: duration
 
   add_textarea_catcher: ->
-    @textareaCatcher = new App.clickCatcher
+    @textareaCatcher = new App.ClickCatcher
       holder: @articleNewEdit.offsetParent()
       callback: @close_textarea
       zIndexScale: 4
@@ -353,12 +353,12 @@ class LayoutRefCommunicationReply extends App.ControllerContent
     # console.log "working of", file, "from", @uploadQueue
     @fakeUpload file.name, file.size, @workOfUploadQueue
 
-  humanFileSize: (size) =>
+  humanFileSize: (size) ->
     i = Math.floor( Math.log(size) / Math.log(1024) )
     return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
 
   updateUploadProgress: (progress) =>
-    @progressBar.width(progress + "%")
+    @progressBar.width(progress + '%')
     @progressText.text(progress)
 
     if progress is 100
@@ -431,10 +431,10 @@ class ModalForm extends App.ControllerModal
 
     @show()
 
-  onHide: =>
+  onHide: ->
     window.history.back()
 
-  onSubmit: (e) =>
+  onSubmit: (e) ->
     e.preventDefault()
     params = App.ControllerForm.params( $(e.target).closest('form') )
     console.log('params', params)
@@ -452,7 +452,7 @@ class ModalText extends App.ControllerModal
   render: ->
     @show( App.view('layout_ref/content')() )
 
-  onHide: =>
+  onHide: ->
     window.history.back()
 
 App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
@@ -553,7 +553,7 @@ class App.ControllerWizard extends App.ControllerContent
     button = $(e.currentTarget)
 
     switch button.attr('data-action')
-      when "reveal" then @showNextButton button
+      when 'reveal' then @showNextButton button
 
   showNextButton: (sibling) ->
     sibling.parents('.wizard-slide').find('.btn.hide').removeClass('hide')
@@ -587,7 +587,7 @@ class ImportWizard extends App.ControllerWizard
     @otrsLink.on 'input', _.debounce(@checkOtrsLink, 600)
 
   checkOtrsLink: (e) =>
-    if @otrsLink.val() is ""
+    if @otrsLink.val() is ''
       @inputFeedback.attr('data-state', '')
       return
 
@@ -755,7 +755,7 @@ class LocalModalRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/local_modal', LocalModalRef, 'Routes' )
 
-class loadingPlaceholderRef extends App.ControllerContent
+class LoadingPlaceholderRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -764,9 +764,9 @@ class loadingPlaceholderRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/loading_placeholder')()
 
-App.Config.set( 'layout_ref/loading_placeholder', loadingPlaceholderRef, 'Routes' )
+App.Config.set( 'layout_ref/loading_placeholder', LoadingPlaceholderRef, 'Routes' )
 
-class insufficientRightsRef extends App.ControllerContent
+class InsufficientRightsRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -775,10 +775,10 @@ class insufficientRightsRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/insufficient_rights')()
 
-App.Config.set( 'layout_ref/insufficient_rights', insufficientRightsRef, 'Routes' )
+App.Config.set( 'layout_ref/insufficient_rights', InsufficientRightsRef, 'Routes' )
 
 
-class errorRef extends App.ControllerContent
+class ErrorRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -787,10 +787,10 @@ class errorRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/error')()
 
-App.Config.set( 'layout_ref/error', errorRef, 'Routes' )
+App.Config.set( 'layout_ref/error', ErrorRef, 'Routes' )
 
 
-class highlightRef extends App.ControllerContent
+class TicketZoomRef extends App.ControllerContent
   elements:
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
@@ -802,28 +802,28 @@ class highlightRef extends App.ControllerContent
   colors: [
     {
       name: 'Yellow'
-      color: "#f7e7b2"
+      color: '#f7e7b2'
     },
     {
       name: 'Green'
-      color: "#bce7b6"
+      color: '#bce7b6'
     },
     {
       name: 'Blue'
-      color: "#b3ddf9"
+      color: '#b3ddf9'
     },
     {
       name: 'Pink'
-      color: "#fea9c5"
+      color: '#fea9c5'
     },
     {
       name: 'Purple'
-      color: "#eac5ee"
+      color: '#eac5ee'
     }
   ]
 
   activeColorIndex: 0
-  highlightClassPrefix: "highlight-"
+  highlightClassPrefix: 'highlight-'
 
   constructor: ->
     super
@@ -839,9 +839,14 @@ class highlightRef extends App.ControllerContent
     @loadHighlights()
 
   render: ->
-    @html App.view('layout_ref/highlight')
+    @html App.view('layout_ref/ticket_zoom')
       colors: @colors
       activeColorIndex: @activeColorIndex
+
+    @$('.js-datepicker').datepicker
+      todayHighlight: true
+      startDate: new Date().toLocaleDateString("en-US") # returns 9/25/2015
+      container: @$('.js-datepicker').parent()
 
   # for testing purposes the highlights get stored in localStorage
   loadHighlights: ->
@@ -939,10 +944,10 @@ class highlightRef extends App.ControllerContent
     @storeHighlights()
 
 
-App.Config.set( 'layout_ref/highlight', highlightRef, 'Routes' )
+App.Config.set( 'layout_ref/ticket_zoom', TicketZoomRef, 'Routes' )
 
 
-class cluesRef extends App.ControllerContent
+class CluesRef extends App.ControllerContent
 
   clues: [
     {
@@ -1244,7 +1249,7 @@ class cluesRef extends App.ControllerContent
 
   perform: (actions, container) ->
     for action in actions
-      if action.indexOf(" ") < 0
+      if action.indexOf(' ') < 0
         # 'click'
         eventName = action
         target = container
@@ -1257,10 +1262,10 @@ class cluesRef extends App.ControllerContent
         when 'click' then target.trigger('click')
         when 'hover' then target.toggleClass('is-hovered')
 
-App.Config.set( 'layout_ref/clues', cluesRef, 'Routes' )
+App.Config.set( 'layout_ref/clues', CluesRef, 'Routes' )
 
 
-class adminPlaceholderRef extends App.ControllerContent
+class AdminPlaceholderRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -1269,9 +1274,9 @@ class adminPlaceholderRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/admin_placeholder')()
 
-App.Config.set( 'layout_ref/admin_placeholder', adminPlaceholderRef, 'Routes' )
+App.Config.set( 'layout_ref/admin_placeholder', AdminPlaceholderRef, 'Routes' )
 
-class userListRef extends App.ControllerContent
+class UserListRef extends App.ControllerContent
 
   constructor: ->
     super
@@ -1280,10 +1285,10 @@ class userListRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/user_list')()
 
-App.Config.set( 'layout_ref/user_list', userListRef, 'Routes' )
+App.Config.set( 'layout_ref/user_list', UserListRef, 'Routes' )
 
 
-class slaRef extends App.ControllerContent
+class SlaRef extends App.ControllerContent
 
   events:
     'click .js-activateColumn': 'activateColumn'
@@ -1303,7 +1308,7 @@ class slaRef extends App.ControllerContent
   selectTimezone: (e) =>
     @$('.js-timezone').text e.currentTarget.value
 
-  toggle: (e) =>
+  toggle: (e) ->
     entry = $(e.currentTarget).closest('.action')
     isInactive = entry.hasClass('is-inactive')
     entry.toggleClass('is-inactive')
@@ -1329,16 +1334,16 @@ class slaRef extends App.ControllerContent
       shown: true
       cancel: true
       container: @el
-      onComplete: =>
+      onShown: =>
         @$('.js-responseTime').timepicker
           maxHours: 99
         @$('.js-time').timepicker
-          showMeridian: true # show am/pm
+          showMeridian: true # meridian = am/pm
 
-App.Config.set( 'layout_ref/sla', slaRef, 'Routes' )
+App.Config.set( 'layout_ref/sla', SlaRef, 'Routes' )
 
 
-class schedulersRef extends App.ControllerContent
+class SchedulersRef extends App.ControllerContent
   events:
     'click .select-value': 'select'
     'click [data-type=new]': 'createNew'
@@ -1351,7 +1356,7 @@ class schedulersRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/schedulers')()
 
-  toggle: (e) =>
+  toggle: (e) ->
     entry = $(e.currentTarget).closest('.action')
     isInactive = entry.hasClass('is-inactive')
     entry.toggleClass('is-inactive')
@@ -1398,7 +1403,7 @@ class schedulersRef extends App.ControllerContent
 
     for hour in hours
       # split off am/pm
-      [hour, suffix] = hour.split(" ")
+      [hour, suffix] = hour.split(' ')
 
       for minute in minutes
         combined = "#{ hour }:#{ minute }"
@@ -1415,7 +1420,7 @@ class schedulersRef extends App.ControllerContent
       else
         return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
-App.Config.set( 'layout_ref/schedulers', schedulersRef, 'Routes' )
+App.Config.set( 'layout_ref/schedulers', SchedulersRef, 'Routes' )
 
 class InputsRef extends App.ControllerContent
 
@@ -1424,7 +1429,7 @@ class InputsRef extends App.ControllerContent
     @render()
 
   render: ->
-    @html App.view('layout_ref/inputs')
+    @html App.view('layout_ref/inputs')()
 
     # activate widgets
 
@@ -1434,7 +1439,7 @@ class InputsRef extends App.ControllerContent
         name:        'project-name'
         id:          'project-name-123'
         placeholder: 'Enter Project Name'
-        options:     [{"value":0,"name":"Apple"},{"value":1,"name":"Microsoft","selected":true},{"value":2,"name":"Google"},{"value":3,"name":"Deutsche Bahn"},{"value":4,"name":"Sparkasse"},{"value":5,"name":"Deutsche Post"},{"value":6,"name":"Mitfahrzentrale"},{"value":7,"name":"Starbucks"},{"value":8,"name":"Mac Donalds"},{"value":9,"name":"Flixbus"},{"value":10,"name":"Betahaus"},{"value":11,"name":"Bruno Banani"},{"value":12,"name":"Alpina"},{"value":13,"name":"Samsung"},{"value":14,"name":"ChariTea"},{"value":15,"name":"fritz-kola"},{"value":16,"name":"Vitamin Water"},{"value":17,"name":"Znuny"},{"value":18,"name":"Max & Moritz"}]
+        options:     [{value:0,name:'Apple'},{value:1,name:'Microsoft',selected:true},{value:2,name:'Google'},{value:3,name:'Deutsche Bahn'},{value:4,name:'Sparkasse'},{value:5,name:'Deutsche Post'},{value:6,name:'Mitfahrzentrale'},{value:7,name:'Starbucks'},{value:8,name:'Mac Donalds'},{value:9,name:'Flixbus'},{value:10,name:'Betahaus'},{value:11,name:'Bruno Banani'},{value:12,name:'Alpina'},{value:13,name:'Samsung'},{value:14,name:'ChariTea'},{value:15,name:'fritz-kola'},{value:16,name:'Vitamin Water'},{value:17,name:'Znuny'},{value:18,name:'Max & Moritz'}]
     @$('.searchableSelectPlaceholder').replaceWith( searchableSelectObject.element() )
 
     # selectable search
@@ -1457,7 +1462,7 @@ class InputsRef extends App.ControllerContent
 App.Config.set( 'layout_ref/inputs', InputsRef, 'Routes' )
 
 
-class calendarSubscriptionsRef extends App.ControllerContent
+class CalendarSubscriptionsRef extends App.ControllerContent
 
   elements:
     'input[type=checkbox]': 'options'
@@ -1493,7 +1498,7 @@ class calendarSubscriptionsRef extends App.ControllerContent
     if data.length is 0
       @output
         .attr 'disabled', true
-        .text "No subscriptions active"
+        .text 'No subscriptions active'
       return
 
     # check if all my tickets got selected
@@ -1502,21 +1507,21 @@ class calendarSubscriptionsRef extends App.ControllerContent
 
     if own.length > 0
       if own.length is optionCount
-        modules.push "all my tickets"
+        modules.push 'all my tickets'
       else
         modules.push.apply modules, own.map (entry) ->
           [option, value] = entry.name.split('/')
           return "#{ translationTable[value] } #{ translationTable[option] }"
-        modules[modules.length-1] += " tickets"
+        modules[modules.length-1] += ' tickets'
 
     if not_assigned.length > 0
       if not_assigned.length is optionCount
-        modules.push "all not assigned tickets"
+        modules.push 'all not assigned tickets'
       else
         modules.push.apply modules, not_assigned.map (entry) ->
           [option, value] = entry.name.split('/')
           return "#{ translationTable[value] } #{ translationTable[option] }"
-        modules[modules.length-1] += " tickets"
+        modules[modules.length-1] += ' tickets'
 
     @output
       .attr 'disabled', false
@@ -1530,7 +1535,7 @@ class calendarSubscriptionsRef extends App.ControllerContent
         return "#{ items.slice(0, -1).join(', ') } and #{ items[items.length-1] }"
 
 
-App.Config.set( 'layout_ref/calendar_subscriptions', calendarSubscriptionsRef, 'Routes' )
+App.Config.set( 'layout_ref/calendar_subscriptions', CalendarSubscriptionsRef, 'Routes' )
 
 
 class ButtonsRef extends App.ControllerContent
@@ -1544,7 +1549,7 @@ class ButtonsRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/buttons', ButtonsRef, 'Routes' )
 
-class mergeCustomerRef extends App.ControllerContent
+class MergeCustomerRef extends App.ControllerContent
 
   mergeTarget:
     firstname: 'Nicole',
@@ -1580,6 +1585,7 @@ class mergeCustomerRef extends App.ControllerContent
     @html App.view('layout_ref/merge_customer_view')
 
     new App.ControllerModal
+      large: true
       head: "Merge #{@mergeSource.firstname} #{@mergeSource.lastname}"
       content: App.view('layout_ref/merge_customer')()
       button: 'Merge'
@@ -1590,7 +1596,19 @@ class mergeCustomerRef extends App.ControllerContent
   onChange: ->
 
 
-App.Config.set( 'layout_ref/merge_customer', mergeCustomerRef, 'Routes' )
+App.Config.set( 'layout_ref/merge_customer', MergeCustomerRef, 'Routes' )
+
+
+class PrimaryEmailRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/primary_email')()
+
+App.Config.set( 'layout_ref/primary_email', PrimaryEmailRef, 'Routes' )
 
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
