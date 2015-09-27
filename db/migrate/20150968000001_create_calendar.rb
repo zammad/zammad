@@ -11,7 +11,7 @@ class CreateCalendar < ActiveRecord::Migration
       t.timestamp :last_sync,            null: true
       t.integer :updated_by_id,          null: false
       t.integer :created_by_id,          null: false
-      t.timestamps
+      t.timestamps                       null: false
     end
     add_index :calendars, [:name], unique: true
 
