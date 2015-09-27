@@ -437,6 +437,24 @@ class CreateBase < ActiveRecord::Migration
     add_index :user_devices, [:updated_at]
     add_index :user_devices, [:created_at]
 
+    create_table :object_manager_attributes do |t|
+      t.references :object_lookup,                            null: false
+      t.column :name,               :string, limit: 200,   null: false
+      t.column :display,            :string, limit: 200,   null: false
+      t.column :data_type,          :string, limit: 100,   null: false
+      t.column :data_option,        :string, limit: 8000,  null: true
+      t.column :editable,           :boolean,                 null: false, default: true
+      t.column :active,             :boolean,                 null: false, default: true
+      t.column :screens,            :string, limit: 2000,  null: true
+      t.column :pending_migration,  :boolean,                 null: false, default: true
+      t.column :position,           :integer,                 null: false
+      t.column :created_by_id,      :integer,                 null: false
+      t.column :updated_by_id,      :integer,                 null: false
+      t.timestamps
+    end
+    add_index :object_manager_attributes, [:object_lookup_id, :name],   unique: true
+    add_index :object_manager_attributes, [:object_lookup_id]
+
     create_table :delayed_jobs, force: true do |t|
       t.integer  :priority, default: 0      # Allows some jobs to jump to the front of the queue
       t.integer  :attempts, default: 0      # Provides for retries, but still fail eventually.
