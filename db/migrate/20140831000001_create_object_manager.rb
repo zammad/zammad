@@ -478,7 +478,6 @@ class CreateObjectManager < ActiveRecord::Migration
       updated_by_id: 1,
     )
 
-
     ObjectManager::Attribute.add(
       object: 'User',
       name: 'login',
