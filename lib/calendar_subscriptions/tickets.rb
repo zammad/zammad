@@ -46,11 +46,11 @@ class CalendarSubscriptions::Tickets
     return events_data if owner_ids.empty?
 
     condition = {
-      'tickets.owner_id' => {
+      'ticket.owner_id' => {
         operator: 'is',
         value: owner_ids,
       },
-      'tickets.state_id' => {
+      'ticket.state_id' => {
         operator: 'is',
         value: Ticket::State.where(
           state_type_id: Ticket::StateType.where(
@@ -93,11 +93,11 @@ class CalendarSubscriptions::Tickets
     return events_data if owner_ids.empty?
 
     condition = {
-      'tickets.owner_id' => {
+      'ticket.owner_id' => {
         operator: 'is',
         value: owner_ids,
       },
-      'tickets.state_id' => {
+      'ticket.state_id' => {
         operator: 'is',
         value: Ticket::State.where(
           state_type_id: Ticket::StateType.where(
@@ -150,11 +150,11 @@ class CalendarSubscriptions::Tickets
     return events_data if owner_ids.empty?
 
     condition = {
-      'tickets.owner_id' => {
+      'ticket.owner_id' => {
         operator: 'is',
         value: owner_ids,
       },
-      'tickets.escalation_time' => {
+      'ticket.escalation_time' => {
         operator: 'is not',
         value: nil,
       }
