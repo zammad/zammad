@@ -87,7 +87,7 @@ class App.WidgetTag extends App.Controller
 
   onRemoveTag: (e) =>
     e.preventDefault()
-    item = $(e.target).parents('li').find('.tag').text()
+    item = $(e.target).parents('li').find('.js-tag').text()
     return if !item
 
     @tags = _.filter(@tags, (tagItem) -> return tagItem if tagItem isnt item )
