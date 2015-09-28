@@ -79,8 +79,8 @@ class App.UiElement.datetime
     item
 
   @format: (number) ->
-    if parseInt(number) < 10
-      number = "0#{number}"
+    if number isnt '' && Number(number) < 10
+      number = "0#{Number(number)}"
     number
 
   @setNewTime: (item, attribute, diff, reset = false, tolerant = false) ->
