@@ -63,6 +63,13 @@ returns
 
     UserInfo.current_user_id = admin_user.id
 
+    # set default calendar
+    if auto_wizard_hash['CalendarSetup']
+      if auto_wizard_hash['CalendarSetup']['Ip']
+        Calendar.init_setup(auto_wizard_hash['CalendarSetup']['Ip'])
+      end
+    end
+
     # set Settings
     if auto_wizard_hash['Settings']
       auto_wizard_hash['Settings'].each { |setting_data|

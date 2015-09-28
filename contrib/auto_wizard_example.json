@@ -1,5 +1,8 @@
 {
   "Token": "secret_token",
+  "CalendarSetup": {
+    "Ip": "195.65.29.254"
+  },
   "Users": [
     {
       "login": "hans.atila@zammad.org",
