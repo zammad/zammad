@@ -4,12 +4,13 @@ class App.Ticket extends App.Model
   @url: @apiPath + '/tickets'
   @configure_attributes = [
       { name: 'number',                display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, read_only: true,  style: 'width: 68px'  },
+      { name: 'title',                 display: 'Title',        tag: 'input',    type: 'text', limit: 100, null: false, parentClass: 'noTruncate' },
       { name: 'customer_id',           display: 'Customer',     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
       { name: 'organization_id',       display: 'Organization', tag: 'select',   relation: 'Organization', tagreadonly: 1 },
       { name: 'group_id',              display: 'Group',        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', style: 'width: 10%', edit: true },
       { name: 'owner_id',              display: 'Owner',        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', style: 'width: 12%', edit: true },
-      { name: 'title',                 display: 'Title',        tag: 'input',    type: 'text', limit: 100, null: false, parentClass: 'noTruncate' },
       { name: 'state_id',              display: 'State',        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', style: 'width: 12%', edit: true, customer: true, },
+      { name: 'pending_time',          display: 'Pending Time',            tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'priority_id',           display: 'Priority',     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', style: 'width: 12%', edit: true, customer: true, },
       { name: 'article_count',         display: 'Article#',     style: 'width: 12%' },
       { name: 'escalation_time',       display: 'Escalation',              tag: 'datetime', null: true, style: 'width: 12%', class: 'escalation', parentClass: 'noTruncate' },
@@ -18,7 +19,6 @@ class App.Ticket extends App.Model
       { name: 'last_contact_customer', display: 'Last contact (Customer)', tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'first_response',        display: 'First response',          tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'close_time',            display: 'Close time',              tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
-      { name: 'pending_time',          display: 'Pending Time',            tag: 'datetime', null: true, style: 'width: 12%', parentClass: 'noTruncate' },
       { name: 'created_by_id',         display: 'Created by',   relation: 'User', readonly: 1 },
       { name: 'created_at',            display: 'Created at',   tag: 'datetime', style: 'width: 120px', readonly: 1, parentClass: 'noTruncate' },
       { name: 'updated_by_id',         display: 'Updated by',   relation: 'User', readonly: 1 },

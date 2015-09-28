@@ -523,11 +523,11 @@ class App.OverviewSettings extends App.ControllerModal
     @configure_attributes_article = []
     if @view_mode is 'd'
       @configure_attributes_article.push({
-        name:     'view::per_page',
-        display:  'Items per page',
-        tag:      'select',
-        multiple: false,
-        null:     false,
+        name:     'view::per_page'
+        display:  'Items per page'
+        tag:      'select'
+        multiple: false
+        null:     false
         default: @overview.view.per_page
         options: {
           5: ' 5'
@@ -536,8 +536,32 @@ class App.OverviewSettings extends App.ControllerModal
           20: '20'
           25: '25'
         },
-        class: 'medium',
       })
+    attributeOptions = {}
+    attributeOptionsArray = []
+    configure_attributes = App.Ticket.configure_attributes
+    for row, attribute of App.Ticket.attributesGet()
+      configure_attributes.push attribute
+    for row in configure_attributes
+
+      # ignore passwords
+      if row.type isnt 'password'
+        name = row.name
+
+        # get correct data name
+        if row.name.substr(row.name.length-4,4) is '_ids'
+          name = row.name.substr(0, row.name.length-4)
+        else if row.name.substr(row.name.length-3,3) is '_id'
+          name = row.name.substr(0, row.name.length-3)
+
+        if !attributeOptions[ name ]
+          attributeOptions[ name ] = row.display
+          attributeOptionsArray.push(
+            {
+              value:  name
+              name:   row.display
+            }
+          )
     @configure_attributes_article.push({
       name:    "view::#{@view_mode}"
       display: 'Attributes'
@@ -545,77 +569,8 @@ class App.OverviewSettings extends App.ControllerModal
       default: @overview.view[@view_mode]
       null:    false
       translate: true
-      options: [
-        {
-          value:  'number'
-          name:   'Number'
-        },
-        {
-          value:  'title'
-          name:   'Title'
-        },
-        {
-          value:  'customer'
-          name:   'Customer'
-        },
-        {
-          value:  'organization'
-          name:   'Organization'
-        },
-        {
-          value:  'state'
-          name:   'State'
-        },
-        {
-          value:  'priority'
-          name:   'Priority'
-        },
-        {
-          value:  'group'
-          name:   'Group'
-        },
-        {
-          value:  'owner'
-          name:   'Owner'
-        },
-        {
-          value:  'created_at'
-          name:   'Age'
-        },
-        {
-          value:  'last_contact'
-          name:   'Last Contact Time'
-        },
-        {
-          value:  'last_contact_agent'
-          name:   'Last Contact Agent Time'
-        },
-        {
-          value:  'last_contact_customer'
-          name:   'Last Contact Customer Time'
-        },
-        {
-          value:  'first_response'
-          name:   'First Response Time'
-        },
-        {
-          value:  'close_time'
-          name:   'Close Time'
-        },
-        {
-          value:  'escalation_time'
-          name:   'Escalation Time'
-        },
-        {
-          value:  'pending_time'
-          name:   'Pending Reminder Time'
-        },
-        {
-          value:  'article_count'
-          name:   'Article Count'
-        },
-      ]
-      class:      'medium'
+      sortBy: null
+      options: attributeOptionsArray
     },
     {
       name:    'order::by'
@@ -624,24 +579,8 @@ class App.OverviewSettings extends App.ControllerModal
       default: @overview.order.by
       null:    false
       translate: true
-      options:
-        number:                 'Number'
-        title:                  'Title'
-        customer:               'Customer'
-        organization:           'Organization'
-        state:                  'State'
-        priority:               'Priority'
-        group:                  'Group'
-        owner:                  'Owner'
-        created_at:             'Age'
-        last_contact:           'Last Contact'
-        last_contact_agent:     'Last Contact Agent'
-        last_contact_customer:  'Last Contact Customer'
-        first_response:         'First Response'
-        close_time:             'Close Time'
-        escalation_time:        'Escalation'
-        article_count:          'Article Count'
-      class:   'medium'
+      sortBy: null
+      options: attributeOptionsArray
     },
     {
       name:    'order::direction'
@@ -653,7 +592,6 @@ class App.OverviewSettings extends App.ControllerModal
       options:
         ASC:   'up'
         DESC:  'down'
-      class:   'medium'
     },
     {
       name:    'group_by'
@@ -670,7 +608,6 @@ class App.OverviewSettings extends App.ControllerModal
         priority:       'Priority'
         group:          'Group'
         owner:          'Owner'
-      class:   'medium'
     })
 
     @head   = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @overview.name )
