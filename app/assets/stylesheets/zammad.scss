@@ -637,6 +637,16 @@ table {
   fill: hsl(240,1%,77%);
 }
 
+.table .table-sort-arrow {
+  opacity: 1;
+  fill: hsl(206,7%,33%);
+  width: 8px;
+  height: 8px;
+  margin-left: 3px;
+  margin-top: -2px;
+  vertical-align: middle;
+}
+
 .checkbox-replacement,
 .radio-replacement {
   padding: 0;

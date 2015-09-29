@@ -14,7 +14,10 @@
       <th style="width: 22px"></th>
     <% end %>
 <% for item in @header: %>
-      <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
+      <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>>
+        <%- @T( item.display ) %>
+        <%- @Icon('arrow-down', 'table-sort-arrow') %>
+      </th>
 <% end %>
 <% if @destroy: %>
       <th><%- @T('Delete') %></th>
