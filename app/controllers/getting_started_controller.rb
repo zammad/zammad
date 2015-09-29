@@ -43,6 +43,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # return result
+    Calendar.init_setup(request.remote_ip)
     render json: {
       setup_done: setup_done,
       import_mode: Setting.get('import_mode'),
@@ -212,10 +213,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   def setup_done_response
     return false if !setup_done
 
-    # get all groups
     groups = Group.where( active: true )
-
-    # get email addresses
     addresses = EmailAddress.where( active: true )
 
     render json: {
