@@ -848,6 +848,8 @@ class TicketZoomRef extends App.ControllerContent
       startDate: new Date().toLocaleDateString("en-US") # returns 9/25/2015
       container: @$('.js-datepicker').parent()
 
+    @$('.js-timepicker').timepicker()
+
   # for testing purposes the highlights get stored in localStorage
   loadHighlights: ->
     if highlights = localStorage['highlights']

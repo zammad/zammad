@@ -1,220 +1,1051 @@
-/**
-* jQuery Noty Plugin v1.1.1
-* Authors: Nedim Arabacı (http://ned.im), Muhittin Özer (http://muhittinozer.com)
-*
-* Examples and Documentation - http://needim.github.com/noty/
-*
-* Licensed under the MIT licenses:
-* http://www.opensource.org/licenses/mit-license.php
-*
-**/
-(function($) {
-	$.noty = function(options, customContainer) {
+!function(root, factory) {
+	 if (typeof define === 'function' && define.amd) {
+		 define(['jquery'], factory);
+	 } else if (typeof exports === 'object') {
+		 module.exports = factory(require('jquery'));
+	 } else {
+		 factory(root.jQuery);
+	 }
+}(this, function($) {
 
-		var base = this;
-		var $noty = null;
-		var isCustom = false;
+/*!
+ @package noty - jQuery Notification Plugin
+ @version version: 2.3.7
+ @contributors https://github.com/needim/noty/graphs/contributors
 
-		base.init = function(options) {
-			base.options = $.extend({}, $.noty.defaultOptions, options);
-			base.options.type = base.options.cssPrefix+base.options.type;
-			base.options.id = base.options.type+'_'+new Date().getTime();
-			base.options.layout = base.options.cssPrefix+'layout_'+base.options.layout;
+ @documentation Examples and Documentation - http://needim.github.com/noty/
 
-			if (base.options.custom.container) customContainer = base.options.custom.container;
-			isCustom = ($.type(customContainer) === 'object') ? true : false;
+ @license Licensed under the MIT licenses: http://www.opensource.org/licenses/mit-license.php
+ */
 
-			return base.addQueue();
-		};
+    if(typeof Object.create !== 'function') {
+        Object.create = function(o) {
+            function F() {
+            }
 
-		// Push notification to queue
-		base.addQueue = function() {
-			var isGrowl = ($.inArray(base.options.layout, $.noty.growls) == -1) ? false : true;
-	  	if (!isGrowl) (base.options.force) ? $.noty.queue.unshift({options: base.options}) : $.noty.queue.push({options: base.options});
-	  	return base.render(isGrowl);
-		};
+            F.prototype = o;
+            return new F();
+        };
+    }
 
-		// Render the noty
-		base.render = function(isGrowl) {
+    var NotyObject = {
 
-			// Layout spesific container settings
-			var container = (isCustom) ? customContainer.addClass(base.options.theme+' '+base.options.layout+' noty_custom_container') : $('body');
-	  	if (isGrowl) {
-	  		if ($('ul.noty_cont.' + base.options.layout).length == 0)
-	  			container.prepend($('<ul/>').addClass('noty_cont ' + base.options.layout));
-	  		container = $('ul.noty_cont.' + base.options.layout);
-	  	} else {
-	  		if ($.noty.available) {
-					var fromQueue = $.noty.queue.shift(); // Get noty from queue
-					if ($.type(fromQueue) === 'object') {
-						$.noty.available = false;
-						base.options = fromQueue.options;
-					} else {
-						$.noty.available = true; // Queue is over
-						return base.options.id;
-					}
-	  		} else {
-	  			return base.options.id;
-	  		}
-	  	}
-	  	base.container = container;
+        init: function(options) {
 
-	  	// Generating noty bar
-	  	base.bar = $('<div class="noty_bar"/>').attr('id', base.options.id).addClass(base.options.theme+' '+base.options.layout+' '+base.options.type);
-	  	$noty = base.bar;
-	  	$noty.append(base.options.template).find('.noty_text').html(base.options.text);
-	  	$noty.data('noty_options', base.options);
+            // Mix in the passed in options with the default options
+            this.options = $.extend({}, $.noty.defaults, options);
 
-	  	// Close button display
-	  	(base.options.closeButton) ? $noty.addClass('noty_closable').find('.noty_close').show() : $noty.find('.noty_close').remove();
+            this.options.layout = (this.options.custom) ? $.noty.layouts['inline'] : $.noty.layouts[this.options.layout];
 
-	  	// Bind close event to button
-	  	$noty.find('.noty_close').bind('click', function() { $noty.trigger('noty.close'); });
+            if($.noty.themes[this.options.theme])
+                this.options.theme = $.noty.themes[this.options.theme];
+            else
+                options.themeClassName = this.options.theme;
 
-	  	// If we have a button we must disable closeOnSelfClick and closeOnSelfOver option
-	  	if (base.options.buttons) base.options.closeOnSelfClick = base.options.closeOnSelfOver = false;
-	  	// Close on self click
-	  	if (base.options.closeOnSelfClick) $noty.bind('click', function() { $noty.trigger('noty.close'); }).css('cursor', 'pointer');
-	  	// Close on self mouseover
-	  	if (base.options.closeOnSelfOver) $noty.bind('mouseover', function() { $noty.trigger('noty.close'); }).css('cursor', 'pointer');
+            delete options.layout;
+            delete options.theme;
 
-	  	// Set buttons if available
-	  	if (base.options.buttons) {
-				$buttons = $('<div/>').addClass('noty_buttons');
-				$noty.find('.noty_message').append($buttons);
-				$.each(base.options.buttons, function(i, button) {
-					bclass = (button.type) ? button.type : 'gray';
-					$button = $('<button/>').addClass(bclass).html(button.text).appendTo($noty.find('.noty_buttons'))
-					.bind('click', function() {
-						if ($.isFunction(button.click)) {
-							button.click.call($button, $noty);
-						}
-					});
-				});
-			}
+            this.options = $.extend({}, this.options, this.options.layout.options);
+            this.options.id = 'noty_' + (new Date().getTime() * Math.floor(Math.random() * 1000000));
 
-	  	return base.show(isGrowl);
-		};
+            this.options = $.extend({}, this.options, options);
 
-		base.show = function(isGrowl) {
+            // Build the noty dom initial structure
+            this._build();
 
-			// is Modal?
-			if (base.options.modal) $('<div/>').addClass('noty_modal').addClass(base.options.theme).prependTo($('body')).fadeIn('fast');
+            // return this so we can chain/use the bridge with less code.
+            return this;
+        }, // end init
 
-			$noty.close = function() { return this.trigger('noty.close'); };
+        _build: function() {
 
-			// Prepend noty to container
-			(isGrowl) ? base.container.prepend($('<li/>').append($noty)) : base.container.prepend($noty);
+            // Generating noty bar
+            var $bar = $('<div class="noty_bar noty_type_' + this.options.type + '"></div>').attr('id', this.options.id);
+            $bar.append(this.options.template).find('.noty_text').html(this.options.text);
 
-	  	// topCenter and center specific options
-	  	if (base.options.layout == 'noty_layout_topCenter' || base.options.layout == 'noty_layout_center') {
-				$.noty.reCenter($noty);
-			}
+            this.$bar = (this.options.layout.parent.object !== null) ? $(this.options.layout.parent.object).css(this.options.layout.parent.css).append($bar) : $bar;
 
-	  	$noty.bind('noty.setText', function(event, text) {
-	  		$noty.find('.noty_text').html(text); $.noty.reCenter($noty);
-	  	});
+            if(this.options.themeClassName)
+                this.$bar.addClass(this.options.themeClassName).addClass('noty_container_type_' + this.options.type);
 
-	  	$noty.bind('noty.getId', function(event) {
-	  		return $noty.data('noty_options').id;
-	  	});
+            // Set buttons if available
+            if(this.options.buttons) {
 
-	  	// Bind close event
-	  	$noty.one('noty.close', function(event) {
-				var options = $noty.data('noty_options');
+                // If we have button disable closeWith & timeout options
+                this.options.closeWith = [];
+                this.options.timeout = false;
 
-				// Modal Cleaning
-				if (options.modal) $('.noty_modal').fadeOut('fast', function() { $(this).remove(); });
+                var $buttons = $('<div/>').addClass('noty_buttons');
 
-				$noty.clearQueue().stop().animate(
-						$noty.data('noty_options').animateClose,
-						$noty.data('noty_options').speed,
-						$noty.data('noty_options').easing,
-						$noty.data('noty_options').onClose)
-				.promise().done(function() {
+                (this.options.layout.parent.object !== null) ? this.$bar.find('.noty_bar').append($buttons) : this.$bar.append($buttons);
 
-					// Layout spesific cleaning
-					if ($.inArray($noty.data('noty_options').layout, $.noty.growls) > -1) {
-						$noty.parent().remove();
-					} else {
-						$noty.remove();
+                var self = this;
 
-						// queue render
-						$.noty.available = true;
-						base.render(false);
-					}
+                $.each(this.options.buttons, function(i, button) {
+                    var $button = $('<button/>').addClass((button.addClass) ? button.addClass : 'gray').html(button.text).attr('id', button.id ? button.id : 'button-' + i)
+                        .attr('title', button.title)
+                        .appendTo(self.$bar.find('.noty_buttons'))
+                        .on('click', function(event) {
+                            if($.isFunction(button.onClick)) {
+                                button.onClick.call($button, self, event);
+                            }
+                        });
+                });
+            }
 
-				});
-			});
+            // For easy access
+            this.$message = this.$bar.find('.noty_message');
+            this.$closeButton = this.$bar.find('.noty_close');
+            this.$buttons = this.$bar.find('.noty_buttons');
 
-	  	// Start the show
-	  	$noty.animate(base.options.animateOpen, base.options.speed, base.options.easing, base.options.onShow);
+            $.noty.store[this.options.id] = this; // store noty for api
 
-	  	// If noty is have a timeout option
-	  	if (base.options.timeout) $noty.delay(base.options.timeout).promise().done(function() { $noty.trigger('noty.close'); });
-			return base.options.id;
-		};
+        }, // end _build
 
-		// Run initializer
-		return base.init(options);
-	};
+        show: function() {
 
-	// API
-	$.noty.get = function(id) { return $('#'+id); };
-	$.noty.close = function(id) {
-		$.noty.get(id).trigger('noty.close');
-	};
-	$.noty.setText = function(id, text) {
-		$.noty.get(id).trigger('noty.setText', text);
-	};
-	$.noty.closeAll = function() {
-		$.noty.clearQueue();
-		$('.noty_bar').trigger('noty.close');
-	};
-	$.noty.reCenter = function(noty) {
-		noty.css({'left': ($(window).width() - noty.outerWidth()) / 2 + 'px'});
-	};
-	$.noty.clearQueue = function() {
-		$.noty.queue = [];
-	};
+            var self = this;
 
-	$.noty.queue = [];
-	$.noty.growls = ['noty_layout_topLeft', 'noty_layout_topRight', 'noty_layout_bottomLeft', 'noty_layout_bottomRight'];
-	$.noty.available = true;
-	$.noty.defaultOptions = {
-		layout: 'top',
-		theme: 'noty_theme_default',
-		animateOpen: {height: 'toggle'},
-		animateClose: {height: 'toggle'},
-		easing: 'swing',
-		text: '',
-		type: 'alert',
-		speed: 500,
-		timeout: 5000,
-		closeButton: false,
-		closeOnSelfClick: true,
-		closeOnSelfOver: false,
-		force: false,
-		onShow: false,
-		onClose: false,
-		buttons: false,
-		modal: false,
-		template: '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
-		cssPrefix: 'noty_',
-		custom: {
-			container: null
-		}
-	};
+            (self.options.custom) ? self.options.custom.find(self.options.layout.container.selector).append(self.$bar) : $(self.options.layout.container.selector).append(self.$bar);
 
-	$.fn.noty = function(options) {
-		return this.each(function() {
-			 (new $.noty(options, $(this)));
-		});
-	};
+            if(self.options.theme && self.options.theme.style)
+                self.options.theme.style.apply(self);
 
-})(jQuery);
+            ($.type(self.options.layout.css) === 'function') ? this.options.layout.css.apply(self.$bar) : self.$bar.css(this.options.layout.css || {});
 
-//Helper
-function noty(options) {
-	return jQuery.noty(options); // returns an id
-}
+            self.$bar.addClass(self.options.layout.addClass);
+
+            self.options.layout.container.style.apply($(self.options.layout.container.selector), [self.options.within]);
+
+            self.showing = true;
+
+            if(self.options.theme && self.options.theme.style)
+                self.options.theme.callback.onShow.apply(this);
+
+            if($.inArray('click', self.options.closeWith) > -1)
+                self.$bar.css('cursor', 'pointer').one('click', function(evt) {
+                    self.stopPropagation(evt);
+                    if(self.options.callback.onCloseClick) {
+                        self.options.callback.onCloseClick.apply(self);
+                    }
+                    self.close();
+                });
+
+            if($.inArray('hover', self.options.closeWith) > -1)
+                self.$bar.one('mouseenter', function() {
+                    self.close();
+                });
+
+            if($.inArray('button', self.options.closeWith) > -1)
+                self.$closeButton.one('click', function(evt) {
+                    self.stopPropagation(evt);
+                    self.close();
+                });
+
+            if($.inArray('button', self.options.closeWith) == -1)
+                self.$closeButton.remove();
+
+            if(self.options.callback.onShow)
+                self.options.callback.onShow.apply(self);
+
+            if (typeof self.options.animation.open == 'string') {
+                self.$bar.css('height', self.$bar.innerHeight());
+                self.$bar.on('click',function(e){
+                    self.wasClicked = true;
+                });
+                self.$bar.show().addClass(self.options.animation.open).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                    if(self.options.callback.afterShow) self.options.callback.afterShow.apply(self);
+                    self.showing = false;
+                    self.shown = true;
+                    if(self.hasOwnProperty('wasClicked')){
+                        self.$bar.off('click',function(e){
+                            self.wasClicked = true;
+                        });
+                        self.close();
+                    }
+                });
+
+            } else {
+                self.$bar.animate(
+                    self.options.animation.open,
+                    self.options.animation.speed,
+                    self.options.animation.easing,
+                    function() {
+                        if(self.options.callback.afterShow) self.options.callback.afterShow.apply(self);
+                        self.showing = false;
+                        self.shown = true;
+                    });
+            }
+
+            // If noty is have a timeout option
+            if(self.options.timeout)
+                self.$bar.delay(self.options.timeout).promise().done(function() {
+                    self.close();
+                });
+
+            return this;
+
+        }, // end show
+
+        close: function() {
+
+            if(this.closed) return;
+            if(this.$bar && this.$bar.hasClass('i-am-closing-now')) return;
+
+            var self = this;
+
+            if(this.showing) {
+                self.$bar.queue(
+                    function() {
+                        self.close.apply(self);
+                    }
+                );
+                return;
+            }
+
+            if(!this.shown && !this.showing) { // If we are still waiting in the queue just delete from queue
+                var queue = [];
+                $.each($.noty.queue, function(i, n) {
+                    if(n.options.id != self.options.id) {
+                        queue.push(n);
+                    }
+                });
+                $.noty.queue = queue;
+                return;
+            }
+
+            self.$bar.addClass('i-am-closing-now');
+
+            if(self.options.callback.onClose) {
+                self.options.callback.onClose.apply(self);
+            }
+
+            if (typeof self.options.animation.close == 'string') {
+                self.$bar.addClass(self.options.animation.close).one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                    if(self.options.callback.afterClose) self.options.callback.afterClose.apply(self);
+                    self.closeCleanUp();
+                });
+            } else {
+                self.$bar.clearQueue().stop().animate(
+                    self.options.animation.close,
+                    self.options.animation.speed,
+                    self.options.animation.easing,
+                    function() {
+                        if(self.options.callback.afterClose) self.options.callback.afterClose.apply(self);
+                    })
+                    .promise().done(function() {
+                        self.closeCleanUp();
+                    });
+            }
+
+        }, // end close
+
+        closeCleanUp: function() {
+
+            var self = this;
+
+            // Modal Cleaning
+            if(self.options.modal) {
+                $.notyRenderer.setModalCount(-1);
+                if($.notyRenderer.getModalCount() == 0) $('.noty_modal').fadeOut(self.options.animation.fadeSpeed, function() {
+                    $(this).remove();
+                });
+            }
+
+            // Layout Cleaning
+            $.notyRenderer.setLayoutCountFor(self, -1);
+            if($.notyRenderer.getLayoutCountFor(self) == 0) $(self.options.layout.container.selector).remove();
+
+            // Make sure self.$bar has not been removed before attempting to remove it
+            if(typeof self.$bar !== 'undefined' && self.$bar !== null) {
+
+                if (typeof self.options.animation.close == 'string') {
+                    self.$bar.css('transition', 'all 100ms ease').css('border', 0).css('margin', 0).height(0);
+                    self.$bar.one('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function() {
+                        self.$bar.remove();
+                        self.$bar = null;
+                        self.closed = true;
+
+                        if(self.options.theme.callback && self.options.theme.callback.onClose) {
+                            self.options.theme.callback.onClose.apply(self);
+                        }
+                    });
+                } else {
+                    self.$bar.remove();
+                    self.$bar = null;
+                    self.closed = true;
+                }
+            }
+
+            delete $.noty.store[self.options.id]; // deleting noty from store
+
+            if(self.options.theme.callback && self.options.theme.callback.onClose) {
+                self.options.theme.callback.onClose.apply(self);
+            }
+
+            if(!self.options.dismissQueue) {
+                // Queue render
+                $.noty.ontap = true;
+
+                $.notyRenderer.render();
+            }
+
+            if(self.options.maxVisible > 0 && self.options.dismissQueue) {
+                $.notyRenderer.render();
+            }
+
+        }, // end close clean up
+
+        setText: function(text) {
+            if(!this.closed) {
+                this.options.text = text;
+                this.$bar.find('.noty_text').html(text);
+            }
+            return this;
+        },
+
+        setType: function(type) {
+            if(!this.closed) {
+                this.options.type = type;
+                this.options.theme.style.apply(this);
+                this.options.theme.callback.onShow.apply(this);
+            }
+            return this;
+        },
+
+        setTimeout: function(time) {
+            if(!this.closed) {
+                var self = this;
+                this.options.timeout = time;
+                self.$bar.delay(self.options.timeout).promise().done(function() {
+                    self.close();
+                });
+            }
+            return this;
+        },
+
+        stopPropagation: function(evt) {
+            evt = evt || window.event;
+            if(typeof evt.stopPropagation !== "undefined") {
+                evt.stopPropagation();
+            }
+            else {
+                evt.cancelBubble = true;
+            }
+        },
+
+        closed : false,
+        showing: false,
+        shown  : false
+
+    }; // end NotyObject
+
+    $.notyRenderer = {};
+
+    $.notyRenderer.init = function(options) {
+
+        // Renderer creates a new noty
+        var notification = Object.create(NotyObject).init(options);
+
+        if(notification.options.killer)
+            $.noty.closeAll();
+
+        (notification.options.force) ? $.noty.queue.unshift(notification) : $.noty.queue.push(notification);
+
+        $.notyRenderer.render();
+
+        return ($.noty.returns == 'object') ? notification : notification.options.id;
+    };
+
+    $.notyRenderer.render = function() {
+
+        var instance = $.noty.queue[0];
+
+        if($.type(instance) === 'object') {
+            if(instance.options.dismissQueue) {
+                if(instance.options.maxVisible > 0) {
+                    if($(instance.options.layout.container.selector + ' > li').length < instance.options.maxVisible) {
+                        $.notyRenderer.show($.noty.queue.shift());
+                    }
+                    else {
+
+                    }
+                }
+                else {
+                    $.notyRenderer.show($.noty.queue.shift());
+                }
+            }
+            else {
+                if($.noty.ontap) {
+                    $.notyRenderer.show($.noty.queue.shift());
+                    $.noty.ontap = false;
+                }
+            }
+        }
+        else {
+            $.noty.ontap = true; // Queue is over
+        }
+
+    };
+
+    $.notyRenderer.show = function(notification) {
+
+        if(notification.options.modal) {
+            $.notyRenderer.createModalFor(notification);
+            $.notyRenderer.setModalCount(+1);
+        }
+
+        // Where is the container?
+        if(notification.options.custom) {
+            if(notification.options.custom.find(notification.options.layout.container.selector).length == 0) {
+                notification.options.custom.append($(notification.options.layout.container.object).addClass('i-am-new'));
+            }
+            else {
+                notification.options.custom.find(notification.options.layout.container.selector).removeClass('i-am-new');
+            }
+        }
+        else {
+            if($(notification.options.layout.container.selector).length == 0) {
+                $('body').append($(notification.options.layout.container.object).addClass('i-am-new'));
+            }
+            else {
+                $(notification.options.layout.container.selector).removeClass('i-am-new');
+            }
+        }
+
+        $.notyRenderer.setLayoutCountFor(notification, +1);
+
+        notification.show();
+    };
+
+    $.notyRenderer.createModalFor = function(notification) {
+        if($('.noty_modal').length == 0) {
+            var modal = $('<div/>').addClass('noty_modal').addClass(notification.options.theme).data('noty_modal_count', 0);
+
+            if(notification.options.theme.modal && notification.options.theme.modal.css)
+                modal.css(notification.options.theme.modal.css);
+
+            modal.prependTo($('body')).fadeIn(notification.options.animation.fadeSpeed);
+
+            if($.inArray('backdrop', notification.options.closeWith) > -1)
+                modal.on('click', function(e) {
+                    $.noty.closeAll();
+                });
+        }
+    };
+
+    $.notyRenderer.getLayoutCountFor = function(notification) {
+        return $(notification.options.layout.container.selector).data('noty_layout_count') || 0;
+    };
+
+    $.notyRenderer.setLayoutCountFor = function(notification, arg) {
+        return $(notification.options.layout.container.selector).data('noty_layout_count', $.notyRenderer.getLayoutCountFor(notification) + arg);
+    };
+
+    $.notyRenderer.getModalCount = function() {
+        return $('.noty_modal').data('noty_modal_count') || 0;
+    };
+
+    $.notyRenderer.setModalCount = function(arg) {
+        return $('.noty_modal').data('noty_modal_count', $.notyRenderer.getModalCount() + arg);
+    };
+
+    // This is for custom container
+    $.fn.noty = function(options) {
+        options.custom = $(this);
+        return $.notyRenderer.init(options);
+    };
+
+    $.noty = {};
+    $.noty.queue = [];
+    $.noty.ontap = true;
+    $.noty.layouts = {};
+    $.noty.themes = {};
+    $.noty.returns = 'object';
+    $.noty.store = {};
+
+    $.noty.get = function(id) {
+        return $.noty.store.hasOwnProperty(id) ? $.noty.store[id] : false;
+    };
+
+    $.noty.close = function(id) {
+        return $.noty.get(id) ? $.noty.get(id).close() : false;
+    };
+
+    $.noty.setText = function(id, text) {
+        return $.noty.get(id) ? $.noty.get(id).setText(text) : false;
+    };
+
+    $.noty.setType = function(id, type) {
+        return $.noty.get(id) ? $.noty.get(id).setType(type) : false;
+    };
+
+    $.noty.clearQueue = function() {
+        $.noty.queue = [];
+    };
+
+    $.noty.closeAll = function() {
+        $.noty.clearQueue();
+        $.each($.noty.store, function(id, noty) {
+            noty.close();
+        });
+    };
+
+    var windowAlert = window.alert;
+
+    $.noty.consumeAlert = function(options) {
+        window.alert = function(text) {
+            if(options)
+                options.text = text;
+            else
+                options = {text: text};
+
+            $.notyRenderer.init(options);
+        };
+    };
+
+    $.noty.stopConsumeAlert = function() {
+        window.alert = windowAlert;
+    };
+
+    $.noty.defaults = {
+        layout      : 'top',
+        theme       : 'defaultTheme',
+        type        : 'alert',
+        text        : '',
+        dismissQueue: true,
+        template    : '<div class="noty_message"><span class="noty_text"></span><div class="noty_close"></div></div>',
+        animation   : {
+            open  : {height: 'toggle'},
+            close : {height: 'toggle'},
+            easing: 'swing',
+            speed : 500,
+            fadeSpeed: 'fast',
+        },
+        timeout     : false,
+        force       : false,
+        modal       : false,
+        maxVisible  : 5,
+        killer      : false,
+        closeWith   : ['click'],
+        callback    : {
+            onShow      : function() {
+            },
+            afterShow   : function() {
+            },
+            onClose     : function() {
+            },
+            afterClose  : function() {
+            },
+            onCloseClick: function() {
+            }
+        },
+        buttons     : false
+    };
+
+    $(window).on('resize', function() {
+        $.each($.noty.layouts, function(index, layout) {
+            layout.container.style.apply($(layout.container.selector));
+        });
+    });
+
+    // Helpers
+    window.noty = function noty(options) {
+        return $.notyRenderer.init(options);
+    };
+
+$.noty.layouts.bottom = {
+    name     : 'bottom',
+    options  : {},
+    container: {
+        object  : '<ul id="noty_bottom_layout_container" />',
+        selector: 'ul#noty_bottom_layout_container',
+        style   : function() {
+            $(this).css({
+                bottom       : 0,
+                left         : '5%',
+                position     : 'fixed',
+                width        : '90%',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 9999999
+            });
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none'
+    },
+    addClass : ''
+};
+
+$.noty.layouts.bottomCenter = {
+    name     : 'bottomCenter',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_bottomCenter_layout_container" />',
+        selector: 'ul#noty_bottomCenter_layout_container',
+        style   : function() {
+            $(this).css({
+                bottom       : 20,
+                left         : 0,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            $(this).css({
+                left: ($(window).width() - $(this).outerWidth(false)) / 2 + 'px'
+            });
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+
+
+$.noty.layouts.bottomLeft = {
+    name     : 'bottomLeft',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_bottomLeft_layout_container" />',
+        selector: 'ul#noty_bottomLeft_layout_container',
+        style   : function() {
+            $(this).css({
+                bottom       : 20,
+                left         : 20,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            if(window.innerWidth < 600) {
+                $(this).css({
+                    left: 5
+                });
+            }
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+$.noty.layouts.bottomRight = {
+    name     : 'bottomRight',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_bottomRight_layout_container" />',
+        selector: 'ul#noty_bottomRight_layout_container',
+        style   : function() {
+            $(this).css({
+                bottom       : 20,
+                right        : 20,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            if(window.innerWidth < 600) {
+                $(this).css({
+                    right: 5
+                });
+            }
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+$.noty.layouts.center = {
+    name     : 'center',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_center_layout_container" />',
+        selector: 'ul#noty_center_layout_container',
+        style   : function() {
+            $(this).css({
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            // getting hidden height
+            var dupe = $(this).clone().css({visibility: "hidden", display: "block", position: "absolute", top: 0, left: 0}).attr('id', 'dupe');
+            $("body").append(dupe);
+            dupe.find('.i-am-closing-now').remove();
+            dupe.find('li').css('display', 'block');
+            var actual_height = dupe.height();
+            dupe.remove();
+
+            if($(this).hasClass('i-am-new')) {
+                $(this).css({
+                    left: ($(window).width() - $(this).outerWidth(false)) / 2 + 'px',
+                    top : ($(window).height() - actual_height) / 2 + 'px'
+                });
+            }
+            else {
+                $(this).animate({
+                    left: ($(window).width() - $(this).outerWidth(false)) / 2 + 'px',
+                    top : ($(window).height() - actual_height) / 2 + 'px'
+                }, 500);
+            }
+
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+$.noty.layouts.centerLeft = {
+    name     : 'centerLeft',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_centerLeft_layout_container" />',
+        selector: 'ul#noty_centerLeft_layout_container',
+        style   : function() {
+            $(this).css({
+                left         : 20,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            // getting hidden height
+            var dupe = $(this).clone().css({visibility: "hidden", display: "block", position: "absolute", top: 0, left: 0}).attr('id', 'dupe');
+            $("body").append(dupe);
+            dupe.find('.i-am-closing-now').remove();
+            dupe.find('li').css('display', 'block');
+            var actual_height = dupe.height();
+            dupe.remove();
+
+            if($(this).hasClass('i-am-new')) {
+                $(this).css({
+                    top: ($(window).height() - actual_height) / 2 + 'px'
+                });
+            }
+            else {
+                $(this).animate({
+                    top: ($(window).height() - actual_height) / 2 + 'px'
+                }, 500);
+            }
+
+            if(window.innerWidth < 600) {
+                $(this).css({
+                    left: 5
+                });
+            }
+
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+
+$.noty.layouts.centerRight = {
+    name     : 'centerRight',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_centerRight_layout_container" />',
+        selector: 'ul#noty_centerRight_layout_container',
+        style   : function() {
+            $(this).css({
+                right        : 20,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            // getting hidden height
+            var dupe = $(this).clone().css({visibility: "hidden", display: "block", position: "absolute", top: 0, left: 0}).attr('id', 'dupe');
+            $("body").append(dupe);
+            dupe.find('.i-am-closing-now').remove();
+            dupe.find('li').css('display', 'block');
+            var actual_height = dupe.height();
+            dupe.remove();
+
+            if($(this).hasClass('i-am-new')) {
+                $(this).css({
+                    top: ($(window).height() - actual_height) / 2 + 'px'
+                });
+            }
+            else {
+                $(this).animate({
+                    top: ($(window).height() - actual_height) / 2 + 'px'
+                }, 500);
+            }
+
+            if(window.innerWidth < 600) {
+                $(this).css({
+                    right: 5
+                });
+            }
+
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+$.noty.layouts.inline = {
+    name     : 'inline',
+    options  : {},
+    container: {
+        object  : '<ul class="noty_inline_layout_container" />',
+        selector: 'ul.noty_inline_layout_container',
+        style   : function() {
+            $(this).css({
+                width        : '100%',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 9999999
+            });
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none'
+    },
+    addClass : ''
+};
+$.noty.layouts.top = {
+    name     : 'top',
+    options  : {},
+    container: {
+        object  : '<ul id="noty_top_layout_container" />',
+        selector: 'ul#noty_top_layout_container',
+        style   : function() {
+            $(this).css({
+                top          : 0,
+                left         : '5%',
+                position     : 'fixed',
+                width        : '90%',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 9999999
+            });
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none'
+    },
+    addClass : ''
+};
+$.noty.layouts.topCenter = {
+    name     : 'topCenter',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_topCenter_layout_container" />',
+        selector: 'ul#noty_topCenter_layout_container',
+        style   : function() {
+            $(this).css({
+                top          : 20,
+                left         : 0,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            $(this).css({
+                left: ($(window).width() - $(this).outerWidth(false)) / 2 + 'px'
+            });
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+
+$.noty.layouts.topLeft = {
+    name     : 'topLeft',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_topLeft_layout_container" />',
+        selector: 'ul#noty_topLeft_layout_container',
+        style   : function() {
+            $(this).css({
+                top          : 20,
+                left         : 20,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            if(window.innerWidth < 600) {
+                $(this).css({
+                    left: 5
+                });
+            }
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+$.noty.layouts.topRight = {
+    name     : 'topRight',
+    options  : { // overrides options
+
+    },
+    container: {
+        object  : '<ul id="noty_topRight_layout_container" />',
+        selector: 'ul#noty_topRight_layout_container',
+        style   : function() {
+            $(this).css({
+                top          : 20,
+                right        : 20,
+                position     : 'fixed',
+                width        : '310px',
+                height       : 'auto',
+                margin       : 0,
+                padding      : 0,
+                listStyleType: 'none',
+                zIndex       : 10000000
+            });
+
+            if(window.innerWidth < 600) {
+                $(this).css({
+                    right: 5
+                });
+            }
+        }
+    },
+    parent   : {
+        object  : '<li />',
+        selector: 'li',
+        css     : {}
+    },
+    css      : {
+        display: 'none',
+        width  : '310px'
+    },
+    addClass : ''
+};
+
+return window.noty;
+
+});
