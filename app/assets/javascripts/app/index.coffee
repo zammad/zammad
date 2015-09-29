@@ -3,7 +3,7 @@
 
 #= require_self
 #= require_tree ./lib/app_init
-#= require ./config.js.coffee
+#= require ./config.coffee
 #= require_tree ./models
 #= require_tree ./controllers
 #= require_tree ./views
