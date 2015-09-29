@@ -2,8 +2,8 @@
 .icon-arrow-left { width: 7px; height: 13px; }
 .icon-arrow-right { width: 7px; height: 13px; }
 .icon-arrow-up { width: 13px; height: 7px; }
-.icon-checkbox-checked { width: 10px; height: 10px; }
-.icon-checkbox { width: 10px; height: 10px; }
+.icon-checkbox-checked { width: 11px; height: 11px; }
+.icon-checkbox { width: 11px; height: 11px; }
 .icon-checkmark { width: 16px; height: 14px; }
 .icon-clipboard { width: 16px; height: 16px; }
 .icon-clock { width: 16px; height: 16px; }
@@ -70,6 +70,9 @@
 .icon-status { width: 16px; height: 16px; }
 .icon-stopwatch { width: 77px; height: 83px; }
 .icon-switchView { width: 19px; height: 18px; }
+.icon-task-state-modified-inner-circle { width: 16px; height: 16px; }
+.icon-task-state-modified-outer-circle { width: 16px; height: 16px; }
+.icon-task-state { width: 16px; height: 16px; }
 .icon-team { width: 16px; height: 16px; }
 .icon-templates { width: 24px; height: 24px; }
 .icon-tools { width: 24px; height: 24px; }

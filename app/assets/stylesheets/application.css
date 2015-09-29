@@ -14,7 +14,7 @@
  *= require ./medium.css
  *= require ./fira-sans.css
  *= require ./svg-dimensions.css
- *= require ./zammad.css.scss
+ *= require ./zammad.scss
  *
  *= require_tree ./custom/
  *

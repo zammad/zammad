@@ -4,6 +4,11 @@ $ok-color:        hsl(41,100%,49%);
 $bad-color:       hsl(30,93%,50%);
 $superbad-color:  hsl(19,90%,51%);
 
+$task-state-closed-color: $supergood-color;
+$task-state-pending-color: hsl(206,7%,28%);
+$task-state-open-color: $ok-color;
+$task-state-escalating-color: $superbad-color;
+
 $minWidth: 1024px;
 $sidebarWidth: 280px;
 $navigationWidth: 260px;
@@ -632,11 +637,6 @@ table {
   fill: hsl(240,1%,77%);
 }
 
-.table .icon-priority {
-  vertical-align: middle;
-  margin-top: -3px;
-}
-
 .checkbox-replacement,
 .radio-replacement {
   padding: 0;
@@ -672,8 +672,11 @@ table {
   height: 38px;
 }
 
-.table .priority.icon:after {
-  background: #f8f9fa;
+.table-overview tbody .icon-checkbox,
+.table-overview tbody .icon-radio,
+.table-overview tbody .icon-checkbox-checked,
+.table-overview tbody .icon-radio-checked {
+  fill: transparent;
 }
 
 .table .table-cell {
@@ -1932,6 +1935,11 @@ ol.tabs li {
   }
 }
 
+.icon-checkbox,
+.icon-checkbox-checked {
+  fill: white;
+}
+
 
 /*
  * removed margin of forms to not break the layout with submit buttons within <form></form> area e. g. for modal dialogs
@@ -2176,13 +2184,12 @@ footer {
       color: hsl(198,19%,72%);
     }
 
-    .tasks--standalone .icon-priority {
+    .tasks--standalone .icon-task-state {
       margin-right: 4px;
-      margin-top: 2px;
     }
 
   .nav-tab {
-    padding: 10px 15px 7px 0;
+    padding: 11px 15px 8px 0;
     position: relative;
     color: #808080;
     display: flex;
@@ -2191,7 +2198,7 @@ footer {
   }
 
     .tasks-navigation .nav-tab {
-      height: 38px;
+      height: 40px;
       border-bottom: 1px solid #33363e;
     }
 
@@ -2229,6 +2236,7 @@ footer {
 
   .nav-tab.nav-tab--search {
     height: 30px;
+    padding-top: 9px;
   }
 
   .nav-tab-icon {
@@ -2323,33 +2331,60 @@ footer {
       opacity: 1;
     }
 
-.level-1.is-active {
-  background-color: #38ae6a;
-}
-.level-1 .icon-priority,
-.level-1.icon-priority {
-  fill: #38ae6a;
+.icon-task-state {
+  vertical-align: middle;
+  margin-top: -2px;
 }
 
-.level-2.is-active {
-  background-color: #f35910;
-}
-.level-2 .icon-priority,
-.level-2.icon-priority {
-  fill: #f35910;
+.nav-tab-icon .icon-task-state {
+  margin: 0;
 }
 
-.level-3.is-active {
-  background-color: #faab00;
+.nav-tab.task-state-open.is-active {
+  background-color: $task-state-open-color;
 }
-.level-3 .icon-priority,
-.level-3.icon-priority {
-  fill: #faab00;
+.task-state-open-color {
+  color: $task-state-open-color;
+}
+.icon-task-state.open {
+  fill: $task-state-open-color;
+}
+
+.nav-tab.task-state-closed.is-active {
+  background-color: $task-state-closed-color;
+}
+.task-state-closed-color {
+  color: $task-state-closed-color;
+}
+.icon-task-state.closed {
+  fill: $task-state-closed-color;
+}
+
+.nav-tab.task-state-escalating.is-active {
+  background-color: $task-state-escalating-color;
+}
+.task-state-escalating-color {
+  color: $task-state-escalating-color;
+}
+.icon-task-state.escalating {
+  fill: $task-state-escalating-color;
+}
+
+// pending: stays blue
+// .nav-tab.task-state-pending.is-active {
+//   background-color: $task-state-pending-color;
+// }
+
+.task-state-pending-color {
+  color: $task-state-pending-color;
+}
+.icon-task-state.pending {
+  fill: $task-state-pending-color;
 }
 
 .search {
   padding: 11px 5px 4px 10px;
-  border-bottom: 1px solid rgba(240, 250, 255, .05);
+  border-bottom: 1px solid rgba(240,250,255,.05);
   flex-shrink: 0;
   display: flex;
   background-color: inherit;
@@ -4932,7 +4967,8 @@ footer {
   margin-top: 0;
   margin-bottom: 15px;
   height: auto;
-  padding-bottom: 2px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   background: hsl(210,17%,98%);
 }
 
@@ -4953,7 +4989,7 @@ footer {
 }
 
 .checkbox.form-group input[type=checkbox] {
-  margin-top: 3px;
+  margin-top: 7px;
   vertical-align: bottom;
 }
 
