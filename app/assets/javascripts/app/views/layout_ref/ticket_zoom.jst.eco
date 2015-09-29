@@ -1,624 +1,689 @@
-<div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
+<div class="tabsSidebar-holder">
+  <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
 
-  <div class="ticketZoom">
-    <div class="ticketZoom-controls">
-      <div class="btn btn--action btn--split--first js-highlight">
-        <%- @Icon('marker', 'js-highlight-icon') %>
-      </div>
-      <div class="dropdown dropdown--actions">
-        <div class="btn btn--action btn--split--last btn--slim" id="highlight" data-toggle="dropdown" aria-expanded="true">
-          <%- @Icon('arrow-down') %>
+    <div class="ticketZoom">
+      <div class="ticketZoom-controls">
+        <div class="btn btn--action btn--split--first js-highlight">
+          <%- @Icon('marker', 'js-highlight-icon') %>
         </div>
-        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-          <% for entry, i in @colors: %>
-          <li role="presentation">
-            <a role="menuitem" tabindex="-1" class="js-highlightColor" data-key="<%= i %>">
-              <span class="dropdown-iconSpacer">
-                <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
-              </span>
-              <%- @Ti(entry.name) %>
-              <span class="dropdown-activeSpacer visibility-change<%= ' is-active' if i is @activeColorIndex %>">
-                <svg class="icon-checkmark" data-visible="active"><use xlink:href="#icon-checkmark" fill="white" /></svg>
-              </span>
-            </a>
-          <% end %>
-        </ul>
+        <div class="dropdown dropdown--actions">
+          <div class="btn btn--action btn--split--last btn--slim" id="highlight" data-toggle="dropdown" aria-expanded="true">
+            <%- @Icon('arrow-down') %>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <% for entry, i in @colors: %>
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" class="js-highlightColor" data-key="<%= i %>">
+                <span class="dropdown-iconSpacer">
+                  <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
+                </span>
+                <%- @Ti(entry.name) %>
+                <span class="dropdown-activeSpacer visibility-change<%= ' is-active' if i is @activeColorIndex %>">
+                  <svg class="icon-checkmark" data-visible="active"><use xlink:href="#icon-checkmark" fill="white" /></svg>
+                </span>
+              </a>
+            <% end %>
+          </ul>
+        </div>
       </div>
-    </div>
 
-    <div class="scrollPageHeader tabsSidebar-sidebarSpacer" 
-      data-anchor-target=".ticketZoom .page-header"
-      data-128-top-bottom="transform: translateY(-64px);"
-      data-64-top-bottom="transform: translateY(0px);"
-    >
-      <small>Ticket# <span class="ticket-number">1002</span></small>
-      <div class="ticket-title flex">
-        <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
-      </div>
-      <div class="pagination-counter">
-        <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
-      </div>
-      <ul class="pagination">
-        <li>
-          <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
-            <%- @Icon('arrow-left') %>
-          </a>
-        <li>
-          <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
-            <%- @Icon('arrow-left') %>
-          </a>
-      </ul>
-    </div>
-    <div class="page-header">
-      <div class="flex vertical center">
-        <span class="avatar unique user-popover size-50" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
-        <div class="ticket-title">
+      <div class="scrollPageHeader tabsSidebar-sidebarSpacer" 
+        data-anchor-target=".ticketZoom .page-header"
+        data-128-top-bottom="transform: translateY(-64px);"
+        data-64-top-bottom="transform: translateY(0px);"
+      >
+        <small>Ticket# <span class="ticket-number">1002</span></small>
+        <div class="ticket-title flex">
           <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
         </div>
-        <div class="ticket-meta">
-          <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="11.07.2014 12:10">11.07.2014</span> 
-          </small>
+        <div class="pagination-counter">
+          <span class="pagination-item-current">1</span>/<span class="pagination-total-items">36</span>
         </div>
-      </div>
-    </div>
-
-    <div class="ticket-article">
-      <div class="ticket-article-item customer phone" data-id="1" id="article-1">
-        <div class="article-meta-clip top">
-          <div class="article-content-meta top hide">
-            <div class="article-meta top">
-              <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
-                <div class="article-meta-key u-textTruncate">From</div>
-                <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="article-content zIndex-1">
-          <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
-          <div class="flex bubble-gap internal-border">
-            <div class="textBubble">
-              <div class="bubble-arrow"></div>
-              <div class="textBubble-content">
-                <div class="article-text" id="article-1249870934">
-Welcome!
-<br/>
-Thank you for installing Zammad.<br/>
-<br/>
-You will find updates and patches at <a href="http://zammad.org/" title="http://zammad.org/" target="_blank">http://zammad.org/</a>. Online<br/>
-documentation is available at <a href="http://guides.zammad.org/" title="http://guides.zammad.org/" target="_blank">http://guides.zammad.org/</a>. You can also<br/>
-use our forums at <a href="http://forums.zammad.org/" title="http://forums.zammad.org/" target="_blank">http://forums.zammad.org/</a><br/>
-<br/>
-Regards,<br/>
-The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad.org</a> Project
-                </div>
-                <div class="textBubble-overflowContainer">
-                  <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="article-meta-clip bottom">
-          <div class="article-content-meta bottom hide">
-            <div class="article-meta bottom">
-              <div class="horizontal article-meta-row">
-                <div class="article-meta-key">Kanal</div>
-                <div class="article-meta-value">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-phone" /></svg>
-                  phone
-                </div>
-              </div>
-            </div>
-            <div class="article-actions horizontal stretch">
-              <a href="" data-type="internal" class="article-action u-clickable">
-                <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
-                set to internal
-              </a>
-              <a href="#" data-type="reply" class="article-action u-clickable">
-                <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
-                reply
-              </a>
-              <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
-                split
-              </a>
-            </div>
-          </div>
-        </div>
-        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
-      </div>
-
-      <div class="ticket-article-item agent note" data-id="23" id="article-23">      
-        <div class="article-meta-clip top">
-          <div class="article-content-meta top hide">
-            <div class="article-meta top">
-              <div class="horizontal article-meta-row" title="From: Felix Niklas">
-                <div class="article-meta-key u-textTruncate">From</div>
-                <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="article-content zIndex-1">
-          <span class="avatar user-popover" data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
-          <div class="flex bubble-gap internal-border">
-            <div class="textBubble"><div class="bubble-arrow"></div>
-            <div class="article-text" id="article-3509870934">Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div></div>
-          </div>
-        </div>
-        <div class="article-meta-clip bottom">
-          <div class="article-content-meta bottom hide">
-            <div class="article-meta bottom">
-              <div class="horizontal article-meta-row">
-                <div class="article-meta-key">Kanal</div>
-                <div class="article-meta-value">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
-                  note
-                </div>
-              </div>
-            </div>
-            <div class="article-actions horizontal stretch">
-              <a href="" data-type="internal" class="article-action u-clickable">
-                <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
-                set to internal
-              </a>
-            </div>
-          </div>
-        </div>
-        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
-      </div>
-
-      <div class="ticket-article-item customer phone" data-id="1" id="article-1">
-        <div class="article-meta-clip top">
-          <div class="article-content-meta top hide">
-            <div class="article-meta top">
-              <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
-                <div class="article-meta-key u-textTruncate">From</div>
-                <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="article-content zIndex-1">
-          <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
-          <div class="flex bubble-gap internal-border">
-            <div class="textBubble"><div class="bubble-arrow"></div><div class="article-text" id="article-35098758344">Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
-
-Grüße, Peter</div></div>
-          </div>
-        </div>
-        <div class="article-meta-clip bottom">
-          <div class="article-content-meta bottom hide">
-            <div class="article-meta bottom">
-              <div class="horizontal article-meta-row">
-                <div class="article-meta-key">Kanal</div>
-                <div class="article-meta-value">
-                  <span class="white phone channel icon"></span>
-                  phone
-                </div>
-              </div>
-            </div>
-            <div class="article-actions horizontal stretch">
-              <a href="" data-type="internal" class="article-action u-clickable">
-                <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
-                set to internal
-              </a>
-              <a href="#" data-type="reply" class="article-action u-clickable">
-                <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
-                reply
-              </a>
-              <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
-                split
-              </a>
-            </div>
-          </div>
-        </div>
-        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
-      </div>
-
-      <div class="ticket-article-item agent note" data-id="23" id="article-23">      
-        <div class="article-meta-clip top">
-          <div class="article-content-meta top hide">
-            <div class="article-meta top">
-              <div class="horizontal article-meta-row" title="From: Felix Niklas">
-                <div class="article-meta-key u-textTruncate">From</div>
-                <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="article-content zIndex-1">
-          <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
-          <div class="flex bubble-gap internal-border">
-            <div class="textBubble">
-              <div class="bubble-arrow"></div>
-              <div class="textBubble-content"><div class="article-text" id="article-350234270934">Lieber HP,<br>
-anbei findest du die Midi Noten für Maria Maria "I Like it Loud".<br>
-Wünsche dir einen guten Auftritt in Hamburg.<br>
-<br>
-Deine Frau bekommt ein Kind haben wir gehört.<br>
-Gratulation dazu! Wir schicken dir was liebes.<br>
-<br>
-Und wenn du noch mal Probleme mit der Stimme hast sag bescheid – ich kenn da ein Wundermittel.<br>
-<br>
-Das ist eine Pille von einem Druiden aus dem Bayerischen Wald. Die ölt einem so richtig die Stimmbänder.<br>
-<br>
-Verwende ich immer wenn ich meine Frau anschreien will. Die macht meinen Tenor richtig zum Löwen.<br>
-<br>
-Ach ja und dein Freund Tim. Richt dem mal aus dass er das doch bitte sein lassen soll mit den Anrufen.<br>
-<br>Ich weiß schon dass ich ein hübscher bin. Aber ich hab ihm schon tausend mal gesagt, dass ich seine Gefühle leider nicht erwiedern kann.<br>
-<br>
-Bin verheiratet, hab Kind. Is doch offensichtlich, Junge!<br>
-Alles gute,<br>
-Oliver<br></div>
-                <div class="textBubble-overflowContainer">
-                  <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
-                </div>
-              </div>
-              <div class="attachments">
-                <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
-                <div class="attachments-title">2 <%- @T('Attached Files') %></div>
-                <div class="attachment">
-                  <div class="attachment-name u-highlight">midinotes_view.jpg</div>
-                  <div class="attachment-size">35.5 kb</div>
-                </div>
-                <div class="attachment">
-                  <div class="attachment-name u-highlight">lyrics_I_Like_it_Loud.txt</div>
-                  <div class="attachment-size">17.1 kb</div>
-                </div>
-                <div class="attachment">
-                  <div class="attachment-name u-highlight">something with very long line which is slonger as the container arount it if you can see it I wish you a very happy day.txt</div>
-                  <div class="attachment-size">17.1 kb</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="article-meta-clip bottom">
-          <div class="article-content-meta bottom hide">
-            <div class="article-meta bottom">
-              <div class="horizontal article-meta-row">
-                <div class="article-meta-key">Kanal</div>
-                <div class="article-meta-value">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
-                  note
-                </div>
-              </div>
-            </div>
-            <div class="article-actions horizontal stretch">
-              <a href="" data-type="internal" class="article-action u-clickable">
-              <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
-                set to internal
-              </a>
-            </div>
-          </div>
-        </div>
-        <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical">
-  <div class="sidebar bottom-form-shadow flex" data-tab="ticket">
-    <div class="sidebar-header">
-      <h2 class="sidebar-header-headline js-headline">
-        Ticket
-      </h2>
-      <div class="sidebar-header-actions js-actions">
-        <div class="dropdown dropdown--actions">
-          <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
-          <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
-            <li role="presentation">
-              <a data-type="ticket-history" href="#" role="menuitem" tabindex="-1">History</a>
-            </li>
-            <li role="presentation">
-              <a data-type="ticket-merge" href="#" role="menuitem" tabindex="-1">Merge</a>
-            </li>
-            <li role="presentation">
-              <a data-type="customer-change" href="#" role="menuitem" tabindex="-1">Change Customer</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="tabsSidebar-close"></div>
-    </div>
-    <hr>
-    <div class="sidebar-content">
-      <form class="edit">
-        <fieldset>
-          <div class="select form-group">
-            <div class="formGroup-label">
-              <label for="Ticket_187247_group_id">Group <span>*</span></label>
-            </div>
-            <div class="controls">
-              <div class="u-positionOrigin">
-                <select class="form-control" id="Ticket_187247_group_id" name="group_id" required="">
-                  <option value="">
-                    -
-                  </option>
-                  <option value="15">
-                    FillGroup::124782
-                  </option>
-                  <option value="6">
-                    FillGroup::180684
-                  </option>
-                  <option value="2">
-                    FillGroup::206709
-                  </option>
-                  <option value="16">
-                    FillGroup::240252
-                  </option>
-                  <option value="19">
-                    FillGroup::316438
-                  </option>
-                  <option value="3">
-                    FillGroup::331147
-                  </option>
-                  <option value="4">
-                    FillGroup::370967
-                  </option>
-                  <option value="9">
-                    FillGroup::371994
-                  </option>
-                  <option value="5">
-                    FillGroup::387404
-                  </option>
-                  <option value="7">
-                    FillGroup::505241
-                  </option>
-                  <option value="21">
-                    FillGroup::596513
-                  </option>
-                  <option value="12">
-                    FillGroup::661322
-                  </option>
-                  <option value="11">
-                    FillGroup::707393
-                  </option>
-                  <option value="17">
-                    FillGroup::808471
-                  </option>
-                  <option value="18">
-                    FillGroup::854423
-                  </option>
-                  <option value="8">
-                    FillGroup::894121
-                  </option>
-                  <option value="14">
-                    FillGroup::907762
-                  </option>
-                  <option value="20">
-                    FillGroup::927450
-                  </option>
-                  <option value="10">
-                    FillGroup::957248
-                  </option>
-                  <option value="13">
-                    FillGroup::975373
-                  </option>
-                  <option selected value="1">
-                    Users
-                  </option>
-                </select>
-              </div><span class="help-inline"></span> <span class="help-block"></span>
-            </div>
-          </div>
-          <div class="select form-group">
-            <div class="formGroup-label">
-              <label for="Ticket_187247_owner_id">Owner <span></span></label>
-            </div>
-            <div class="controls">
-              <div class="u-positionOrigin">
-                <select class="form-control" id="Ticket_187247_owner_id" name="owner_id">
-                  <option value="">
-                    -
-                  </option>
-                  <option value="3">
-                    Felix Niklas
-                  </option>
-                  <option selected value="4">
-                    Hans Huber
-                  </option>
-                </select>
-              </div><span class="help-inline"></span> <span class="help-block"></span>
-            </div>
-          </div>
-          <div class="select form-group">
-            <div class="formGroup-label">
-              <label for="Ticket_187247_state_id">State <span>*</span></label>
-            </div>
-            <div class="controls">
-              <div class="u-positionOrigin">
-                <select class="form-control" id="Ticket_187247_state_id" name="state_id" required="">
-                  <option value="4">
-                    closed
-                  </option>
-                  <option value="2">
-                    open
-                  </option>
-                  <option selected value="7">
-                    pending close
-                  </option>
-                  <option value="3">
-                    pending reminder
-                  </option>
-                </select>
-              </div><span class="help-inline"></span> <span class="help-block"></span>
-            </div>
-          </div>
-          <div class="datetime form-group">
-            <div class="formGroup-label">
-              <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
-            </div>
-            <div class="controls">
-              <input type="text" class="form-control js-datepicker">
-            </div>
-          </div>
-          <div class="select form-group">
-            <div class="formGroup-label">
-              <label for="Ticket_187247_priority_id">Priority <span>*</span></label>
-            </div>
-            <div class="controls">
-              <div class="u-positionOrigin">
-                <select class="form-control" id="Ticket_187247_priority_id" name="priority_id" required="">
-                  <option selected value="1">
-                    1 low
-                  </option>
-                  <option value="2">
-                    2 normal
-                  </option>
-                  <option value="3">
-                    3 high
-                  </option>
-                </select>
-              </div><span class="help-inline"></span> <span class="help-block"></span>
-            </div>
-          </div>
-        </fieldset>
-      </form>
-      <div class="tags">
-        <label>Tags</label>
-        <ul class="list list--sidebar">
-          <li class="list-item">
-            <div class="list-item-name">
-              test
-            </div>
-            <div class="list-item-delete js-delete"></div>
-          </li>
-          <li class="list-item">
-            <div class="list-item-name">
-              123
-            </div>
-            <div class="list-item-delete js-delete"></div>
-          </li>
-          <li class="list-item">
-            <div class="list-item-name">
-              planeten
-            </div>
-            <div class="list-item-delete js-delete"></div>
-          </li>
+        <ul class="pagination">
+          <li>
+            <a class="centered" href="#" data-from="<%= @items_from - @items_per_page %>" data-type="page">
+              <%- @Icon('arrow-left') %>
+            </a>
+          <li>
+            <a class="centered" href="#" data-from="<%= @items_from + @items_per_page %>" data-type="page">
+              <%- @Icon('arrow-left') %>
+            </a>
         </ul>
-        <div class="text-muted js-newTagLabel u-clickable">
-          + Add Tag
-        </div>
-        <form>
-          <input autocomplete="off" class="hide js-newTagInput" name="new_tag" type="text">
-        </form>
       </div>
-      <div class="links">
-        <label>Links</label>
-        <div class="ticketLinks">
-          <div class="list-title">
-            child
+      <div class="page-header">
+        <div class="flex vertical center">
+          <span class="avatar unique user-popover size-50" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
+          <div class="ticket-title">
+            <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
           </div>
-          <ol class="tasks tasks--standalone">
-            <li class="task">
-              <div class="icon-holder"></div>
-              <div class="task-text">
-                <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a> <time class="humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">01/20/2015</time>
+          <div class="ticket-meta">
+            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="11.07.2014 12:10">11.07.2014</span> 
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-article">
+        <div class="ticket-article-item customer phone" data-id="1" id="article-1">
+          <div class="article-meta-clip top">
+            <div class="article-content-meta top hide">
+              <div class="article-meta top">
+                <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
+                  <div class="article-meta-key u-textTruncate">From</div>
+                  <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
+                </div>
               </div>
-              <div class="list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
-            </li>
-          </ol>
+            </div>
+          </div>
+          <div class="article-content zIndex-1">
+            <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
+            <div class="flex bubble-gap internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content">
+                  <div class="article-text" id="article-1249870934">
+  Welcome!
+  <br/>
+  Thank you for installing Zammad.<br/>
+  <br/>
+  You will find updates and patches at <a href="http://zammad.org/" title="http://zammad.org/" target="_blank">http://zammad.org/</a>. Online<br/>
+  documentation is available at <a href="http://guides.zammad.org/" title="http://guides.zammad.org/" target="_blank">http://guides.zammad.org/</a>. You can also<br/>
+  use our forums at <a href="http://forums.zammad.org/" title="http://forums.zammad.org/" target="_blank">http://forums.zammad.org/</a><br/>
+  <br/>
+  Regards,<br/>
+  The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad.org</a> Project
+                  </div>
+                  <div class="textBubble-overflowContainer">
+                    <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="article-meta-clip bottom">
+            <div class="article-content-meta bottom hide">
+              <div class="article-meta bottom">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key">Kanal</div>
+                  <div class="article-meta-value">
+                    <svg class="article-meta-icon"><use xlink:href="#icon-phone" /></svg>
+                    phone
+                  </div>
+                </div>
+              </div>
+              <div class="article-actions horizontal stretch">
+                <a href="" data-type="internal" class="article-action u-clickable">
+                  <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                  set to internal
+                </a>
+                <a href="#" data-type="reply" class="article-action u-clickable">
+                  <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                  reply
+                </a>
+                <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
+                  <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                  split
+                </a>
+              </div>
+            </div>
+          </div>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
         </div>
-        <div class="text-muted u-clickable js-add">
-          + Add Link
+
+        <div class="ticket-article-item agent note" data-id="23" id="article-23">      
+          <div class="article-meta-clip top">
+            <div class="article-content-meta top hide">
+              <div class="article-meta top">
+                <div class="horizontal article-meta-row" title="From: Felix Niklas">
+                  <div class="article-meta-key u-textTruncate">From</div>
+                  <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="article-content zIndex-1">
+            <span class="avatar user-popover" data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
+            <div class="flex bubble-gap internal-border">
+              <div class="textBubble"><div class="bubble-arrow"></div>
+              <div class="article-text" id="article-3509870934">Hallp HP, du kannst dich nur einmal einloggen. Was machst du genau?</div></div>
+            </div>
+          </div>
+          <div class="article-meta-clip bottom">
+            <div class="article-content-meta bottom hide">
+              <div class="article-meta bottom">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key">Kanal</div>
+                  <div class="article-meta-value">
+                    <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
+                    note
+                  </div>
+                </div>
+              </div>
+              <div class="article-actions horizontal stretch">
+                <a href="" data-type="internal" class="article-action u-clickable">
+                  <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                  set to internal
+                </a>
+              </div>
+            </div>
+          </div>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
+        </div>
+
+        <div class="ticket-article-item customer phone" data-id="1" id="article-1">
+          <div class="article-meta-clip top">
+            <div class="article-content-meta top hide">
+              <div class="article-meta top">
+                <div class="horizontal article-meta-row" title="From: Zammad Feedback <feedback@zammad.org>">
+                  <div class="article-meta-key u-textTruncate">From</div>
+                  <div class="article-meta-value flex u-textTruncate">Zammad Feedback &lt;feedback@zammad.org&gt;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="article-content zIndex-1">
+            <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
+            <div class="flex bubble-gap internal-border">
+              <div class="textBubble"><div class="bubble-arrow"></div><div class="article-text" id="article-35098758344">Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
+
+  Grüße, Peter</div></div>
+            </div>
+          </div>
+          <div class="article-meta-clip bottom">
+            <div class="article-content-meta bottom hide">
+              <div class="article-meta bottom">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key">Kanal</div>
+                  <div class="article-meta-value">
+                    <span class="white phone channel icon"></span>
+                    phone
+                  </div>
+                </div>
+              </div>
+              <div class="article-actions horizontal stretch">
+                <a href="" data-type="internal" class="article-action u-clickable">
+                  <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                  set to internal
+                </a>
+                <a href="#" data-type="reply" class="article-action u-clickable">
+                  <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                  reply
+                </a>
+                <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
+                  <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                  split
+                </a>
+              </div>
+            </div>
+          </div>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
+        </div>
+
+        <div class="ticket-article-item agent note" data-id="23" id="article-23">      
+          <div class="article-meta-clip top">
+            <div class="article-content-meta top hide">
+              <div class="article-meta top">
+                <div class="horizontal article-meta-row" title="From: Felix Niklas">
+                  <div class="article-meta-key u-textTruncate">From</div>
+                  <div class="article-meta-value flex u-textTruncate">Felix Niklas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="article-content zIndex-1">
+            <span class="avatar user-popover " data-id="3" style="background-image: url(api/v1/users/image/bb100af55234cf61fb6f207636f095f8)" data-placement="right" data-original-title="" title=""></span>
+            <div class="flex bubble-gap internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content"><div class="article-text" id="article-350234270934">Lieber HP,<br>
+  anbei findest du die Midi Noten für Maria Maria "I Like it Loud".<br>
+  Wünsche dir einen guten Auftritt in Hamburg.<br>
+  <br>
+  Deine Frau bekommt ein Kind haben wir gehört.<br>
+  Gratulation dazu! Wir schicken dir was liebes.<br>
+  <br>
+  Und wenn du noch mal Probleme mit der Stimme hast sag bescheid – ich kenn da ein Wundermittel.<br>
+  <br>
+  Das ist eine Pille von einem Druiden aus dem Bayerischen Wald. Die ölt einem so richtig die Stimmbänder.<br>
+  <br>
+  Verwende ich immer wenn ich meine Frau anschreien will. Die macht meinen Tenor richtig zum Löwen.<br>
+  <br>
+  Ach ja und dein Freund Tim. Richt dem mal aus dass er das doch bitte sein lassen soll mit den Anrufen.<br>
+  <br>Ich weiß schon dass ich ein hübscher bin. Aber ich hab ihm schon tausend mal gesagt, dass ich seine Gefühle leider nicht erwiedern kann.<br>
+  <br>
+  Bin verheiratet, hab Kind. Is doch offensichtlich, Junge!<br>
+  Alles gute,<br>
+  Oliver<br></div>
+                  <div class="textBubble-overflowContainer">
+                    <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+                  </div>
+                </div>
+                <div class="attachments">
+                  <svg class="icon-paperclip"><use xlink:href="#icon-paperclip" /></svg>
+                  <div class="attachments-title">2 <%- @T('Attached Files') %></div>
+                  <div class="attachment">
+                    <div class="attachment-name u-highlight">midinotes_view.jpg</div>
+                    <div class="attachment-size">35.5 kb</div>
+                  </div>
+                  <div class="attachment">
+                    <div class="attachment-name u-highlight">lyrics_I_Like_it_Loud.txt</div>
+                    <div class="attachment-size">17.1 kb</div>
+                  </div>
+                  <div class="attachment">
+                    <div class="attachment-name u-highlight">something with very long line which is slonger as the container arount it if you can see it I wish you a very happy day.txt</div>
+                    <div class="attachment-size">17.1 kb</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="article-meta-clip bottom">
+            <div class="article-content-meta bottom hide">
+              <div class="article-meta bottom">
+                <div class="horizontal article-meta-row">
+                  <div class="article-meta-key">Kanal</div>
+                  <div class="article-meta-value">
+                    <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
+                    note
+                  </div>
+                </div>
+              </div>
+              <div class="article-actions horizontal stretch">
+                <a href="" data-type="internal" class="article-action u-clickable">
+                <svg class="article-action-icon"><use xlink:href="#icon-lock" /></svg>
+                  set to internal
+                </a>
+              </div>
+            </div>
+          </div>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
         </div>
       </div>
     </div>
+
   </div>
-  <div class="sidebar bottom-form-shadow flex hide" data-tab="customer">
-    <div class="sidebar-header">
-      <h2 class="sidebar-header-headline js-headline">
-        Customer
-      </h2>
-      <div class="sidebar-header-actions js-actions">
-        <div class="dropdown dropdown--actions">
-          <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
-          <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
-            <li role="presentation">
-              <a data-type="customer-change" href="#" role="menuitem" tabindex="-1">Change Customer</a>
-            </li>
-            <li role="presentation">
-              <a data-type="customer-edit" href="#" role="menuitem" tabindex="-1">Edit Customer</a>
-            </li>
-          </ul>
+
+  <div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical">
+    <div class="sidebar bottom-form-shadow flex" data-tab="ticket">
+      <div class="sidebar-header">
+        <h2 class="sidebar-header-headline js-headline">
+          Ticket
+        </h2>
+        <div class="sidebar-header-actions js-actions">
+          <div class="dropdown dropdown--actions">
+            <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+            <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
+              <li role="presentation">
+                <a data-type="ticket-history" href="#" role="menuitem" tabindex="-1">History</a>
+              </li>
+              <li role="presentation">
+                <a data-type="ticket-merge" href="#" role="menuitem" tabindex="-1">Merge</a>
+              </li>
+              <li role="presentation">
+                <a data-type="customer-change" href="#" role="menuitem" tabindex="-1">Change Customer</a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="tabsSidebar-close"></div>
-    </div>
-    <hr>
-    <div class="sidebar-content">
-      <div class="sidebar-block">
-        <span class="avatar unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
-        <h3 title="Name">
-          Nicole Braun
-        </h3>
-      </div>
-      <div class="sidebar-block">
-        <label>Email</label> nicole.braun@zammad.org
-      </div>
-      <div class="sidebar-block">
-        <label>Note</label>
-        <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update"></div>
-      </div>
-      <div class="sidebar-block">
-        <label>Tickets</label> <span class="user-tickets" data-original-title="Open Tickets" data-type="open" style="" title="">open <span class="count">(5)</span></span>
-      </div>
-    </div>
-  </div>
-  <div class="sidebar bottom-form-shadow flex hide" data-tab="organization">
-    <div class="sidebar-header">
-      <h2 class="sidebar-header-headline js-headline">
-        Organization
-      </h2>
-      <div class="sidebar-header-actions js-actions">
-        <div class="dropdown dropdown--actions">
-          <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
-          <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
-            <li role="presentation">
-              <a data-type="organization-edit" href="#" role="menuitem" tabindex="-1">Edit Organization</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="tabsSidebar-close"></div>
-    </div>
-    <hr>
-    <div class="sidebar-content">
-      <div class="sidebar-block">
-        <div class="avatar organizationInfo-avatar size-50">
-          <a href="#organization/profile/1"></a>
-        </div>
-        <h3 title="Name">
-          Zammad Foundation
-        </h3>
-      </div>
-      <div class="sidebar-block">
-        <label>Shared organization</label> Yes
-      </div>
-      <div class="sidebar-block">
-        <label>Note</label>
-        <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update-org">
-          Wir sand ausm Woid!
-        </div>
+        <div class="tabsSidebar-close"></div>
       </div>
       <hr>
-      <label>Members</label>
-      <ul class="userList">
-        <li>
-          <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
-        </li>
-      </ul>
+      <div class="sidebar-content">
+        <form class="edit">
+          <fieldset>
+            <div class="select form-group">
+              <div class="formGroup-label">
+                <label for="Ticket_187247_group_id">Group <span>*</span></label>
+              </div>
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_187247_group_id" name="group_id" required="">
+                    <option value="">
+                      -
+                    </option>
+                    <option value="15">
+                      FillGroup::124782
+                    </option>
+                    <option value="6">
+                      FillGroup::180684
+                    </option>
+                    <option value="2">
+                      FillGroup::206709
+                    </option>
+                    <option value="16">
+                      FillGroup::240252
+                    </option>
+                    <option value="19">
+                      FillGroup::316438
+                    </option>
+                    <option value="3">
+                      FillGroup::331147
+                    </option>
+                    <option value="4">
+                      FillGroup::370967
+                    </option>
+                    <option value="9">
+                      FillGroup::371994
+                    </option>
+                    <option value="5">
+                      FillGroup::387404
+                    </option>
+                    <option value="7">
+                      FillGroup::505241
+                    </option>
+                    <option value="21">
+                      FillGroup::596513
+                    </option>
+                    <option value="12">
+                      FillGroup::661322
+                    </option>
+                    <option value="11">
+                      FillGroup::707393
+                    </option>
+                    <option value="17">
+                      FillGroup::808471
+                    </option>
+                    <option value="18">
+                      FillGroup::854423
+                    </option>
+                    <option value="8">
+                      FillGroup::894121
+                    </option>
+                    <option value="14">
+                      FillGroup::907762
+                    </option>
+                    <option value="20">
+                      FillGroup::927450
+                    </option>
+                    <option value="10">
+                      FillGroup::957248
+                    </option>
+                    <option value="13">
+                      FillGroup::975373
+                    </option>
+                    <option selected value="1">
+                      Users
+                    </option>
+                  </select>
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="select form-group">
+              <div class="formGroup-label">
+                <label for="Ticket_187247_owner_id">Owner <span></span></label>
+              </div>
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_187247_owner_id" name="owner_id">
+                    <option value="">
+                      -
+                    </option>
+                    <option value="3">
+                      Felix Niklas
+                    </option>
+                    <option selected value="4">
+                      Hans Huber
+                    </option>
+                  </select>
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="select form-group">
+              <div class="formGroup-label">
+                <label for="Ticket_187247_state_id">State <span>*</span></label>
+              </div>
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_187247_state_id" name="state_id" required="">
+                    <option value="4">
+                      closed
+                    </option>
+                    <option value="2">
+                      open
+                    </option>
+                    <option selected value="7">
+                      pending close
+                    </option>
+                    <option value="3">
+                      pending reminder
+                    </option>
+                  </select>
+                  <%- @Icon('arrow-down', 'dropdown-arrow') %>
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+            <div class="formGroup-bundle">
+              <div class="date form-group flex">
+                <div class="formGroup-label">
+                  <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
+                </div>
+                <div class="controls">
+                  <input type="text" value="10/28/2015" class="form-control js-datepicker">
+                </div>
+              </div>
+              <div class="formGroup-bundle-label">at</div>
+              <div class="datetime form-group">
+                <div class="controls">
+                  <input type="text" value="08:00" class="form-control time js-timepicker">
+                </div>
+              </div>
+            </div>
+            <div class="select form-group">
+              <div class="formGroup-label">
+                <label for="Ticket_187247_priority_id">Priority <span>*</span></label>
+              </div>
+              <div class="controls">
+                <div class="u-positionOrigin">
+                  <select class="form-control" id="Ticket_187247_priority_id" name="priority_id" required="">
+                    <option selected value="1">
+                      1 low
+                    </option>
+                    <option value="2">
+                      2 normal
+                    </option>
+                    <option value="3">
+                      3 high
+                    </option>
+                  </select>
+                  <%- @Icon('arrow-down', 'dropdown-arrow') %>
+                </div><span class="help-inline"></span> <span class="help-block"></span>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <div class="tags">
+          <label>Tags</label>
+          <ul class="list list--sidebar">
+            <li class="list-item">
+              <div class="list-item-name">
+                test
+              </div>
+              <div class="list-item-delete js-delete"></div>
+            </li>
+            <li class="list-item">
+              <div class="list-item-name">
+                123
+              </div>
+              <div class="list-item-delete js-delete"></div>
+            </li>
+            <li class="list-item">
+              <div class="list-item-name">
+                planeten
+              </div>
+              <div class="list-item-delete js-delete"></div>
+            </li>
+          </ul>
+          <div class="text-muted js-newTagLabel u-clickable">
+            + Add Tag
+          </div>
+          <form>
+            <input autocomplete="off" class="hide js-newTagInput" name="new_tag" type="text">
+          </form>
+        </div>
+        <div class="links">
+          <label>Links</label>
+          <div class="ticketLinks">
+            <div class="list-title">
+              child
+            </div>
+            <ol class="tasks tasks--standalone">
+              <li class="task">
+                <div class="icon-holder"></div>
+                <div class="task-text">
+                  <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a> <time class="humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">01/20/2015</time>
+                </div>
+                <div class="list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
+              </li>
+            </ol>
+          </div>
+          <div class="text-muted u-clickable js-add">
+            + Add Link
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar bottom-form-shadow flex hide" data-tab="customer">
+      <div class="sidebar-header">
+        <h2 class="sidebar-header-headline js-headline">
+          Customer
+        </h2>
+        <div class="sidebar-header-actions js-actions">
+          <div class="dropdown dropdown--actions">
+            <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+            <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
+              <li role="presentation">
+                <a data-type="customer-change" href="#" role="menuitem" tabindex="-1">Change Customer</a>
+              </li>
+              <li role="presentation">
+                <a data-type="customer-edit" href="#" role="menuitem" tabindex="-1">Edit Customer</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="tabsSidebar-close"></div>
+      </div>
+      <hr>
+      <div class="sidebar-content">
+        <div class="sidebar-block">
+          <span class="avatar unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
+          <h3 title="Name">
+            Nicole Braun
+          </h3>
+        </div>
+        <div class="sidebar-block">
+          <label>Email</label> nicole.braun@zammad.org
+        </div>
+        <div class="sidebar-block">
+          <label>Note</label>
+          <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update"></div>
+        </div>
+        <div class="sidebar-block">
+          <label>Tickets</label> <span class="user-tickets" data-original-title="Open Tickets" data-type="open" style="" title="">open <span class="count">(5)</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar bottom-form-shadow flex hide" data-tab="organization">
+      <div class="sidebar-header">
+        <h2 class="sidebar-header-headline js-headline">
+          Organization
+        </h2>
+        <div class="sidebar-header-actions js-actions">
+          <div class="dropdown dropdown--actions">
+            <div class="dropdown-toggle" data-toggle="dropdown" id="userAction"></div>
+            <ul aria-labelledby="userAction" class="dropdown-menu dropdown-menu-right" role="menu">
+              <li role="presentation">
+                <a data-type="organization-edit" href="#" role="menuitem" tabindex="-1">Edit Organization</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="tabsSidebar-close"></div>
+      </div>
+      <hr>
+      <div class="sidebar-content">
+        <div class="sidebar-block">
+          <div class="avatar organizationInfo-avatar size-50">
+            <a href="#organization/profile/1"></a>
+          </div>
+          <h3 title="Name">
+            Zammad Foundation
+          </h3>
+        </div>
+        <div class="sidebar-block">
+          <label>Shared organization</label> Yes
+        </div>
+        <div class="sidebar-block">
+          <label>Note</label>
+          <div contenteditable="true" data-name="note" data-placeholder="Add a Note" data-type="update-org">
+            Wir sand ausm Woid!
+          </div>
+        </div>
+        <hr>
+        <label>Members</label>
+        <ul class="userList">
+          <li>
+            <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="tabsSidebar-tabs vertical justified">
+      <div class="tabsSidebar-tab active" data-tab="ticket">
+        <%- @Icon('message') %>
+      </div>
+      <div class="tabsSidebar-tab" data-tab="customer">
+        <%- @Icon('person') %>
+      </div>
+      <div class="tabsSidebar-tab" data-tab="organization">
+        <%- @Icon('group') %>
+      </div>
     </div>
   </div>
-  <div class="tabsSidebar-tabs vertical justified">
-    <div class="tabsSidebar-tab active" data-tab="ticket"></div>
-    <div class="tabsSidebar-tab" data-tab="customer"></div>
-    <div class="tabsSidebar-tab" data-tab="organization"></div>
+  <div class="attributeBar">
+    <form class="form-inline is-closed hide" role="form">
+      <div class="form-group">
+        <label for="update_ticket_1_state_id123" class="input-group-addon u-clickable">State</label>
+        <select id="update_ticket_1_state_id123" class="form-control level-1" name="state_id">
+          <option value="4">closed</option>
+          <option value="1" selected="">new</option>
+          <option value="2">open</option>
+          <option value="3">pending</option>
+        </select>
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+      </div>
+      <div class="form-group is-changed">
+        <label for="update_ticket_1_priority_id123" class="input-group-addon u-clickable">Priority</label>
+        <select id="update_ticket_1_priority_id123" class="form-control" name="priority_id">
+          <option value="1">1 low</option>
+          <option value="2" selected="">2 normal</option>
+          <option value="3">3 high</option>
+        </select>
+        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+      </div>
+      <div class="form-group">
+        <label for="update_ticket_1_group_id123" class="input-group-addon u-clickable">Group</label>
+        <select id="update_ticket_1_group_id123" class="form-control" name="group_id">
+          <option value="4">FillGroup::450863</option>
+          <option value="3">FillGroup::918672</option>
+          <option value="2">Twitter</option>
+          <option value="1" selected="">Users</option>
+        </select>
+        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+      </div>
+      <div class="form-group">
+        <label for="update_ticket_1_owner_id123" class="input-group-addon u-clickable">Owner</label>
+        <select id="update_ticket_1_owner_id123" class="form-control" name="owner_id">
+          <option value="">-</option>
+          <option value="3">Felix Niklas</option>
+        </select>
+        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+      </div>
+    </form>
+    <form class="form-inline">
+    <div class="form-group">
+      <button type="submit" class="btn btn--primary js-submit pull-right">Update</button>
+      <button type="submit" class="btn js-reset pull-right hide">Discard your unsaved changes.</button>
+    </div>
+    </form>
   </div>
 </div>

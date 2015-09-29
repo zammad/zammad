@@ -867,17 +867,12 @@ fieldset {
   }
 }
 
-fieldset .form-group {
+fieldset > .form-group {
   padding: 0 4px;
 
   &:last-child {
     margin-bottom: 0;
   }
-}
-
-fieldset > *:not(.form-group) .form-control {
-  margin-left: 4px;
-  margin-right: 4px;
 }
 
 .form-group {
@@ -888,7 +883,7 @@ fieldset > *:not(.form-group) .form-control {
   }
 }
 
-.datetime.form-group .controls {
+.date.form-group .controls {
   position: relative;
 }
 
@@ -1071,8 +1066,18 @@ fieldset > *:not(.form-group) .form-control {
   }
 }
 
-.fromGroup--standalone .form-control {
+.formGroup--standalone .form-control {
   margin-bottom: 0;
+}
+
+.formGroup-bundle {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 4px;
+  
+  .formGroup-bundle-label {
+    margin: 0 5px 27px 11px;
+  }
 }
 
 input[type="radio"], 
