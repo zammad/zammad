@@ -6410,6 +6410,93 @@ output {
   }
 }
 
+#notify {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  @extend .zIndex-10;
+  
+  .defaultTheme {
+    pointer-events: none;
+  }
+  
+  .noty_bar {
+    max-width: 500px;
+    text-align: center;
+    margin: 0 auto 10px;
+
+    .noty_message {
+      pointer-events: auto;
+      display: inline-block;
+      background: white;
+      border: 1px solid hsl(0,0%,80%);
+      border-bottom-color: hsl(0,0%,70%);
+      padding: 10px 15px;
+      border-radius: 3px;
+      color: hsl(202,5%,18%);
+      box-shadow:
+        0 6px 12px hsla(210,17%,10%,.21);
+    }
+
+    &.noty_type_success .noty_message {
+      border-color: hsl(145,51%,70%);
+      background: hsl(145,51%,77%);
+    }
+
+    &.noty_type_alert .noty_message {
+      border-color: hsl(43,92%,71%);
+      background: hsl(42,94%,80%);
+    }
+
+    &.noty_type_error .noty_message {
+      border-color: hsl(9,72%,62%);
+      background: hsl(12,73%,66%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
+.animated {
+  animation-duration: 300ms;
+  animation-fill-mode: both;
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeOutDown {
+  animation-name: fadeOutDown;
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 50%, 0);
+  }
+}
+
 /*
 
   ----------------

@@ -36,27 +36,14 @@ class App.Notify extends App.ControllerWidgetPermanent
       $.noty.closeAll()
     if data.link
       data.msg = '<a href="' + data.link + '">' + data.msg + '</a>'
-    $('#notify').noty(
-      {
-        dismissQueue: true
-        text:     data.msg
-        layout:   'top'
-        type:     data.type
-        theme:    'noty_theme_twitter'
-        animateOpen: {
-          height: 'toggle'
-          opacity: 0.85,
-        },
-        animateClose: {
-          opacity: 0.25
-        },
-        speed:            450
-        timeout:          data.timeout || 3800
-        closeButton:      false
-        closeOnSelfClick: true
-        closeOnSelfOver:  false
-      }
-    )
+    $('#notify').noty
+      text:      data.msg
+      type:      data.type
+      animation:
+        open:    'animated fadeInDown'
+        close:   'animated fadeOutDown'
+      timeout:   data.timeout || 3800
+      closeWith: ['click']
 
   destroy: (e) ->
     e.preventDefault()
