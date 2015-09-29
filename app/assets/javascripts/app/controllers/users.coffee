@@ -107,7 +107,7 @@ class Index extends App.Controller
       model:    App.User
       objects:  users
       class:    'user-list'
-      callbackHeader:   callbackHeader
+      callbackHeader: [callbackHeader]
       callbackAttributes:
         switch_to: [
           callbackAttributes

@@ -264,15 +264,28 @@ class Table extends App.Controller
           @el.find('.bulkAction').addClass('hide')
         else
           @el.find('.bulkAction').removeClass('hide')
-      callbackIconHeader = (header) ->
+      callbackIconHeader = (headers) ->
         attribute =
           name:       'icon'
           display:    ''
           translation: false
           style:      'width: 28px'
-        header.unshift(0)
-        header[0] = attribute
-        header
+        headers.unshift(0)
+        headers[0] = attribute
+        headers
+      callbackSortOrderHeader = (headers) =>
+        return headers if !@overview
+        return headers if !@overview.order
+        return headers if !@overview.order.by
+        for header in headers
+          if header.name is @overview.order.by
+            if @overview.order.direction is 'DESC'
+              header.sortOrderIcon = ['arrow-down', 'table-sort-arrow']
+            else
+              header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
+          else
+            header.sortOrderIcon = undefined
+        headers
       callbackIcon = (value, object, attribute, header, refObject) ->
         value = ' '
         attribute.class  = object.iconClass()
@@ -294,7 +307,7 @@ class Table extends App.Controller
         #  customer_id:
         #    events:
         #      'mouseover': popOver
-        callbackHeader:    callbackIconHeader
+        callbackHeader: [ callbackIconHeader, callbackSortOrderHeader ]
         callbackAttributes:
           icon:
             [ callbackIcon ]

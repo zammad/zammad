@@ -46,7 +46,7 @@ class App.TicketList extends App.Controller
       overview: [ 'number', 'title', 'customer', 'group', 'created_at' ]
       model:    App.Ticket
       objects:  list
-      callbackHeader: callbackIconHeader
+      callbackHeader: [ callbackIconHeader ]
       callbackAttributes:
         icon:
           [ callbackIcon ]

@@ -72,7 +72,7 @@ class App.ControllerTable extends App.Controller
           'mouseover':  rowMouseover
           'mouseout':   rowMouseout
           'dblclick':   rowDblClick
-      callbackHeader:   callbackHeader
+      callbackHeader:   [callbackHeader]
       callbackAttributes:
         attributeName: [
           callbackAttributes
@@ -161,7 +161,8 @@ class App.ControllerTable extends App.Controller
 
     # execute header callback
     if data.callbackHeader
-      header = data.callbackHeader(header)
+      for callback in data.callbackHeader
+        header = callback(header)
 
     # get content
     @log 'debug', 'table', 'header', header, 'overview', 'objects', data.objects
