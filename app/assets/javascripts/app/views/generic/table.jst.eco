@@ -16,7 +16,7 @@
 <% for item in @header: %>
       <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>>
         <%- @T( item.display ) %>
-        <%- @Icon('arrow-down', 'table-sort-arrow') %>
+        <% if item.sortOrderIcon: %><%- @Icon(item.sortOrderIcon[0], item.sortOrderIcon[1]) %><% end %>
       </th>
 <% end %>
 <% if @destroy: %>

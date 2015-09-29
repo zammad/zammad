@@ -43,7 +43,7 @@ class App.Ticket extends App.Model
     state
 
   icon: ->
-    "task-state"
+    'task-state'
 
   iconClass: ->
     @getState()

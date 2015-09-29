@@ -20,18 +20,18 @@ class App.TicketList extends App.Controller
         id: refObject.id
       value
 
-    callbackIconHeader = (header) ->
+    callbackIconHeader = (headers) ->
       attribute =
         name:       'icon'
         display:    ''
         translation: false
         style:      'width: 28px'
-      header.unshift(0)
-      header[0] = attribute
-      header
+      headers.unshift(0)
+      headers[0] = attribute
+      headers
     callbackIcon = (value, object, attribute, header, refObject) ->
       value = ' '
-      attribute.class  = object.icon()
+      attribute.class  = object.iconClass()
       attribute.link   = ''
       attribute.title  = App.i18n.translateInline( object.iconTitle() )
       value
