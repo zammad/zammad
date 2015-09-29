@@ -78,10 +78,10 @@ group :development, :test do
   gem 'selenium-webdriver'
 
   # livereload on template changes (html, js, css)
-  gem 'guard', '>= 2.2.2', require: false
-  gem 'guard-livereload',  require: false
+  gem 'guard', '>= 2.2.2', :require => false
+  gem 'guard-livereload',  :require => false
   gem 'rack-livereload'
-  gem 'rb-fsevent',        require: false
+  gem 'rb-fsevent',        :require => false
 
   # code QA
   gem 'rubocop'
