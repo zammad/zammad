@@ -34,6 +34,10 @@ class App.Ticket extends App.Model
     state = 'closed'
     if stateType.name is 'new' || stateType.name is 'open'
       state = 'open'
+
+      # if ticket is escalated, overwrite state
+      if @escalation_time && new Date( Date.parse( @escalation_time ) ) < new Date
+        state = 'escalating'
     else if stateType.name is 'pending reminder' || stateType.name is 'pending action'
       state = 'pending'
     state
