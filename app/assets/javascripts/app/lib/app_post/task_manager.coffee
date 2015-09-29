@@ -507,7 +507,7 @@ class _taskManagerSingleton extends Spine.Module
               persistent: false
               init:       true
             )
-          task_count * 800
+          task_count * 600
           undefined
           'task'
         )
