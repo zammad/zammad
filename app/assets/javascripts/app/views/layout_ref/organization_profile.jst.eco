@@ -76,7 +76,7 @@
           <ol class="tasks tasks--standalone">
             <li class="task">
               <div class="icon-holder">
-                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
+                <%- @Icon('task-state', 'open') %>
               </div>
               <div class="task-text">
                 <div class="name">Micro-SIM doesn't work</div>
@@ -84,7 +84,7 @@
               </div>
             <li class="task">
               <div class="icon-holder">
-                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
+                <%- @Icon('task-state', 'pending') %>
               </div>
               <div class="task-text">
                 <div class="name">Superb Service here_with_some_extrem_example_sting_witch_can_really_be!</div>
@@ -92,7 +92,7 @@
               </div>
             <li class="task">
               <div class="icon-holder">
-                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
+                <%- @Icon('task-state', 'closed') %>
               </div>
               <div class="task-text">
                 <div class="name">Print sheets strip off</div>
@@ -100,7 +100,7 @@
               </div>
             <li class="task">
               <div class="icon-holder">
-                <svg class="icon-priority level-2"><use xlink:href="#icon-priority" /></svg>
+                <%- @Icon('task-state', 'closed') %>
               </div>
               <div class="task-text">
                 <div class="name">Block not properly wrought</div>
@@ -114,7 +114,7 @@
           <ol class="tasks tasks--standalone">
             <li class="task">
               <div class="icon-holder">
-                <svg class="icon-priority level-1"><use xlink:href="#icon-priority" /></svg>
+                <%- @Icon('task-state', 'pending') %>
               </div>
               <div class="task-text">
                 <div class="name">Micro-SIM doesn't work</div>
@@ -122,7 +122,7 @@
               </div>
             <li class="task">
               <div class="icon-holder">
-                <svg class="icon-priority level-1"><use xlink:href="#icon-priority" /></svg>
+                <%- @Icon('task-state', 'closed') %>
               </div>
               <div class="task-text">
                 <div class="name">Superb Service!</div>

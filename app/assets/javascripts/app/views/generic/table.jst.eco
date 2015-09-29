@@ -73,7 +73,7 @@
 
       <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %>>
         <% if item.name is 'icon': %>
-          <%- @Icon('priority', item.class) %>
+          <%- @Icon('task-state', item.class) %>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>

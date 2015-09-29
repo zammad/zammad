@@ -28,24 +28,27 @@ class App.Ticket extends App.Model
   uiUrl: ->
     '#ticket/zoom/' + @id
 
-  level: ->
-    state = App.TicketState.find( @state_id )
-    stateType = App.TicketStateType.find( state.state_type_id )
-    level = 1
+  getState: ->
+    type = App.TicketState.find( @state_id )
+    stateType = App.TicketStateType.find( type.state_type_id )
+    state = 'closed'
     if stateType.name is 'new' || stateType.name is 'open'
-      level = 2
+      state = 'open'
     else if stateType.name is 'pending reminder' || stateType.name is 'pending action'
-      level = 3
-    level
+      state = 'pending'
+    state
 
   icon: ->
-    "icon-priority level-#{ @level() }"
+    "task-state"
+
+  iconClass: ->
+    @getState()
 
   iconTitle: ->
     App.TicketState.find( @state_id ).displayName()
 
   iconTextClass: ->
-    "level-#{ @level() }"
+    "task-state-#{ @getState() }-color"
 
   iconActivity: (user) ->
     if @owner_id == user.id
@@ -54,6 +57,7 @@ class App.Ticket extends App.Model
   searchResultAttributes: ->
     display:    "##{@number} - #{@title}"
     id:         @id
-    class:      "level-#{@level()} ticket-popover"
+    class:      "task-state-#{ @getState() } ticket-popover"
     url:        @uiUrl()
-    iconClass:  'priority'
+    icon:       'task-state'
+    iconClass:  @getState()

@@ -275,7 +275,7 @@ class Table extends App.Controller
         header
       callbackIcon = (value, object, attribute, header, refObject) ->
         value = ' '
-        attribute.class  = object.icon()
+        attribute.class  = object.iconClass()
         attribute.link   = ''
         attribute.title  = App.i18n.translateInline( object.iconTitle() )
         value

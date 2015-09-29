@@ -44,4 +44,4 @@ Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei be
     id:         @id
     class:      'organization organization-popover'
     url:        @uiUrl()
-    iconClass:  'organization'
+    icon:       'organization'

@@ -131,4 +131,4 @@ class App.User extends App.Model
     id:         @id
     class:      'user user-popover'
     url:        @uiUrl()
-    iconClass:  'user'
+    icon:       'user'

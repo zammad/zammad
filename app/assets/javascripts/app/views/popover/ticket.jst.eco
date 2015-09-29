@@ -1,5 +1,5 @@
 <div>
-  <span class="<%- @ticket.icon() %>" title="<%- @ticket.iconTitle() %>"></span> <span class="<%- @ticket.iconTextClass() %>"><%- @ticket.iconTitle() %></span>
+  <%- @Icon(@ticket.icon, @ticket.iconClass) %> <span class="<%- @ticket.iconTextClass() %>"><%- @ticket.iconTitle() %></span>
 </div>
 <hr>
 <div class="popover-block">

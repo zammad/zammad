@@ -6,7 +6,7 @@
     <% for item in @links[type]: %>
     <li class="task">
       <div class="icon-holder">
-        <%- @Icon('priority', item.icon()) %>
+        <%- @Icon('task-state', item.iconClass()) %>
       </div>
       <div class="task-text">
         <a class="name ticket-popover" data-id="<%- item.id %>" href="#ticket/zoom/<%= item.id %>"><%= item.title %></a>
