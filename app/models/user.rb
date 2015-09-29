@@ -52,6 +52,7 @@ class User < ApplicationModel
       last_login: true,
       image: true,
       image_source: true,
+      preferences: true,
     }
   )
   history_support(
@@ -59,6 +60,7 @@ class User < ApplicationModel
       password: true,
       image: true,
       image_source: true,
+      preferences: true,
     }
   )
   search_index_support(
