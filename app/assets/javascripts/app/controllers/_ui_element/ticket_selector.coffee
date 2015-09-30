@@ -130,20 +130,21 @@ class App.UiElement.ticket_selector
         elementLast.after(elementClone)
       item.find('.js-filterElement').first().remove()
 
+    triggerSearch = ->
+      item.find('.js-previewCounterContainer').addClass('hide')
+      item.find('.js-previewLoader').removeClass('hide')
+      App.Delay.set(
+        search,
+        600,
+        'preview',
+      )
+
     # bind for preview
     item.on('change', 'select.form-control', (e) ->
-      App.Delay.set(
-        search,
-        600,
-        'preview',
-      )
+      triggerSearch()
     )
     item.on('change keyup', 'input.form-control', (e) ->
-      App.Delay.set(
-        search,
-        600,
-        'preview',
-      )
+      triggerSearch()
     )
 
     item
@@ -160,6 +161,8 @@ class App.UiElement.ticket_selector
       processData: true,
       success: (data, status, xhr) =>
         App.Collection.loadAssets( data.assets )
+        item.find('.js-previewCounterContainer').removeClass('hide')
+        item.find('.js-previewLoader').addClass('hide')
         @ticketTable(data.ticket_ids, data.ticket_count, item)
     )
 
