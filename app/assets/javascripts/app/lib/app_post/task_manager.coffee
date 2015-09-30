@@ -147,6 +147,13 @@ class _taskManagerSingleton extends Spine.Module
     if params.init
       params.params.init = true
 
+    # modify shown param for controller
+    if params.params
+      if !params.show
+        delete params.params.shown
+      else
+        params.params.shown = true
+
     # remember latest active controller
     if params.show
       @activeTaskHistory.push _.clone(params)

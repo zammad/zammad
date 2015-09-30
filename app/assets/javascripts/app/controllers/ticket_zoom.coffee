@@ -105,12 +105,10 @@ class App.TicketZoom extends App.Controller
     # start autosave
     @autosaveStart()
 
-    # inital load of highlights
-    if @highligher && !@highlighed
-      @highlighed = true
-      @highligher.loadHighlights()
+    if !@shown
 
-    if @shown
+      # inital load of highlights
+      @loadHighlighter()
 
       # trigger shown to article
       App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
@@ -269,6 +267,12 @@ class App.TicketZoom extends App.Controller
 
     @scrollPageHeader.css('transform', "translateY(#{top}px)")
 
+  loadHighlighter: =>
+    return if !@highligher
+    return if @highlighed
+    @highlighed = true
+    @highligher.loadHighlights()
+
   render: (force) =>
 
     # update taskbar with new meta data
@@ -365,6 +369,9 @@ class App.TicketZoom extends App.Controller
     @ticketLastAttributes = @ticket.attributes()
 
     if @shown
+
+      # inital load of highlights
+      @loadHighlighter()
 
       # scroll to end of page
       @scrollToBottom()
