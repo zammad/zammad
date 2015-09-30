@@ -912,7 +912,7 @@
       </div>
     </div>
 
-    <div class="tabsSidebar-tabs vertical justified">
+    <div class="tabsSidebar-tabs">
       <div class="tabsSidebar-tab is-changed" data-tab="ticket"></div>
 
       <div class="tabsSidebar-tab active" data-tab="customer"></div>

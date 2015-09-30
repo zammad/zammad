@@ -4209,6 +4209,9 @@ footer {
   }
 
   .tabsSidebar-tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: absolute;
     left: -55px;
     top: 0;
