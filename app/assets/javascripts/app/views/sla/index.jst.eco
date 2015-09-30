@@ -19,7 +19,7 @@
 <div class="action" data-id="<%- sla.id %>">
   <div class="action-flow action-flow--row">
     <div class="action-row">
-      <h3><%= sla.name %></h3>
+      <h2><%= sla.name %></h2>
     </div>
     <div class="action-block action-block--flex">
       <div class="label"><%- @T('Filter') %></div>
@@ -39,6 +39,9 @@
       <% if sla.solution_time: %>
         <%- sla.solution_time_in_text %> <%- @T('hours') %> - <%- @T('Solution Time') %>
       <% end %>
+      <br>
+      <div class="label"><%- @T('Calendar') %></div>
+      <%= sla.calendar.displayName() %>
     </div>
   </div>
   <div class="action-controls">

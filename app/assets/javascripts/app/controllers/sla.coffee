@@ -40,6 +40,7 @@ class Index extends App.ControllerContent
       if sla.solution_time
         sla.solution_time_in_text = @toText(sla.solution_time)
       sla.rules = App.UiElement.ticket_selector.humanText(sla.condition)
+      sla.calendar = App.Calendar.find(sla.calendar_id)
 
     # show description button, only if content exists
     showDescription = false
