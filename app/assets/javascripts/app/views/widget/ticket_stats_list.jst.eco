@@ -4,7 +4,7 @@
   <% for ticket_id in @ticket_ids_show: %>
   <% ticket = App.Ticket.fullLocal(ticket_id) %>
   <li class="task">
-    <div class="icon-holder">
+    <div class="icon-holder" title="<%- ticket.iconTitle() %>">
       <%- @Icon('task-state', ticket.iconClass()) %>
     </div>
     <div class="task-text">

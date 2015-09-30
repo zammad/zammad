@@ -1,7 +1,7 @@
 <ol class="tasks tasks--standalone">
   <% for ticket in @tickets: %>
   <li class="task">
-    <div class="icon-holder">
+    <div class="icon-holder" title="<%- ticket.iconTitle() %>">
       <%- @Icon('task-state', ticket.iconClass()) %>
     </div>
     <div class="task-text">

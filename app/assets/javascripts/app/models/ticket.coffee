@@ -38,7 +38,13 @@ class App.Ticket extends App.Model
       # if ticket is escalated, overwrite state
       if @escalation_time && new Date( Date.parse( @escalation_time ) ) < new Date
         state = 'escalating'
-    else if stateType.name is 'pending reminder' || stateType.name is 'pending action'
+    else if stateType.name is 'pending reminder'
+      state = 'pending'
+
+      # if ticket pending_time is reached, overwrite state
+      if @pending_time && new Date( Date.parse( @pending_time ) ) < new Date
+        state = 'open'
+    else if stateType.name is 'pending action'
       state = 'pending'
     state
 
@@ -49,7 +55,13 @@ class App.Ticket extends App.Model
     @getState()
 
   iconTitle: ->
-    App.TicketState.find( @state_id ).displayName()
+    type = App.TicketState.find( @state_id )
+    stateType = App.TicketStateType.find( type.state_type_id )
+    if stateType.name is 'pending reminder' && @pending_time && new Date( Date.parse( @pending_time ) ) < new Date
+      return "#{App.i18n.translateInline(type.displayName())} - #{App.i18n.translateInline('reached')}"
+    if @escalation_time && new Date( Date.parse( @escalation_time ) ) < new Date
+      return "#{App.i18n.translateInline(type.displayName())} - #{App.i18n.translateInline('escalated')}"
+    App.i18n.translateInline(type.displayName())
 
   iconTextClass: ->
     "task-state-#{ @getState() }-color"

@@ -82,6 +82,7 @@ class App.TicketZoom extends App.Controller
       meta.title     = '#' + @ticket.number + ' - ' + @ticket.title
       meta.class     = "task-state-#{ @ticket.getState() }"
       meta.type      = 'task'
+      meta.iconTitle = @ticket.iconTitle()
       meta.iconClass = @ticket.iconClass()
     meta
 

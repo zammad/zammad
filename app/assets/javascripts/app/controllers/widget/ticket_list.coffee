@@ -33,7 +33,7 @@ class App.TicketList extends App.Controller
       value = ' '
       attribute.class  = object.iconClass()
       attribute.link   = ''
-      attribute.title  = App.i18n.translateInline( object.iconTitle() )
+      attribute.title  = object.iconTitle()
       value
 
     list = []
