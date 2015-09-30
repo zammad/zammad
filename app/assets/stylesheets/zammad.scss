@@ -1918,6 +1918,11 @@ ol.tabs li {
   height: 20px;
 }
 
+.tiny.loading.icon {
+  width: 12px;
+  height: 12px;
+}
+
 @keyframes rotateplane {
   0% { 
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
