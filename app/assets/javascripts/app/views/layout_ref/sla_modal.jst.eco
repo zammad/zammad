@@ -855,6 +855,7 @@
       <th>Active
       <th>Type
       <th>Time <span class="text-muted">in hours</span>
+      <th>Advance Warning <span class="text-muted">in hours</span>
     </tr>
   </thead>
   <tbody>
@@ -863,21 +864,30 @@
       <td>
         <label class="inline-label" for="first_response_time">First Response Time</label>
         <p class="subtle">Timeframe for the first response.</p>
-      <td><input type="text" value="02:00" class="timeframe js-responseTime">
+      <td>
+        <input type="text" value="02:00" class="form-control--small timeframe js-responseTime">
+      <td>
+        <input type="text" value="00:30" class="form-control--small timeframe js-responseTime">
     </tr>
     <tr class="is-active">
       <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="update_time">
       <td>
         <label class="inline-label" for="update_time">Update Time</label>
         <p class="subtle">Timeframe for every following response.</p>
-      <td><input type="text" value="04:00" class="timeframe js-responseTime">
+      <td>
+        <input type="text" value="04:00" class="form-control--small timeframe js-responseTime">
+      <td>
+        <input type="text" value="00:30" class="form-control--small timeframe js-responseTime">
     </tr>
     <tr>
       <td style="text-align: center"><input type="checkbox" id="solution_time" class="js-activateRow">
       <td>
         <label class="inline-label" for="solution_time">Solution Time</label>
         <p class="subtle">Timeframe for solving the problem.</p>
-      <td><input type="text" value="16:00" class="timeframe js-responseTime">
+      <td>
+        <input type="text" value="16:00" class="form-control--small timeframe js-responseTime">
+      <td>
+        <input type="text" value="00:30" class="form-control--small timeframe js-responseTime">
     </tr>
   </tbody>
 </table>
