@@ -4251,28 +4251,26 @@ footer {
   }
 
 .alert {
-  padding: 10px 15px;
+  padding: 10px 15px 8px;
   border-radius: 3px;
-  color: hsl(202,5%,18%);
+  color: white;
+  border: none;
   
   &.alert--info {
-    border-color: hsl(188,50%,72%);
-    background: hsl(191,53%,79%);
+    background: hsl(203,65%,55%);
   }
 
   &.alert--success {
-    border-color: hsl(145,51%,70%);
-    background: hsl(145,51%,77%);
+    background: hsl(145,51%,45%);
   }
 
   &.alert--warning {
-    border-color: hsl(43,92%,71%);
-    background: hsl(42,94%,80%);
+    color: hsl(45,98%,17%);
+    background: hsl(45,98%,63%);
   }
 
   &.alert--danger {
-    border-color: hsl(9,72%,62%);
-    background: hsl(12,73%,66%);
+    background: hsl(11,85%,48%);
   }
 }
 
@@ -6412,7 +6410,7 @@ output {
 
 #notify {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 0;
   right: 0;
   @extend .zIndex-10;
@@ -6429,29 +6427,23 @@ output {
     .noty_message {
       pointer-events: auto;
       display: inline-block;
-      background: white;
-      border: 1px solid hsl(0,0%,80%);
-      border-bottom-color: hsl(0,0%,70%);
-      padding: 10px 15px;
+      background: hsl(203,65%,55%);
+      padding: 10px 15px 8px;
       border-radius: 3px;
-      color: hsl(202,5%,18%);
-      box-shadow:
-        0 6px 12px hsla(210,17%,10%,.21);
+      color: white;
     }
 
     &.noty_type_success .noty_message {
-      border-color: hsl(145,51%,70%);
-      background: hsl(145,51%,77%);
+      background: hsl(145,51%,45%);
     }
 
     &.noty_type_alert .noty_message {
-      border-color: hsl(43,92%,71%);
-      background: hsl(42,94%,80%);
+      color: hsl(45,98%,17%);
+      background: hsl(45,98%,63%);
     }
 
     &.noty_type_error .noty_message {
-      border-color: hsl(9,72%,62%);
-      background: hsl(12,73%,66%);
+      background: hsl(11,85%,48%);
     }
 
     a {
