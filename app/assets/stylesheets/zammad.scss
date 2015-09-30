@@ -601,7 +601,7 @@ table {
 }
 
 .table > tbody > tr > td {
-  padding: 9px;
+  padding: 11px 10px 7px;
   border: none;
   box-shadow: 0 1px rgba(0,0,0,.03);
 }
@@ -679,7 +679,7 @@ table {
 
 .table .checkbox-replacement,
 .table .radio-replacement {
-  height: 38px;
+  height: 40px;
 }
 
 .table-overview tbody .icon-checkbox,
