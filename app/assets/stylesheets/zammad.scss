@@ -6293,10 +6293,9 @@ output {
   }
     
   .action-flow-icon {
-    align-self: center;
     width: 15px;
     height: 24px;
-    margin-top: 20px; /* compensate for h3 height */
+    margin-top: 16px; /* compensate for h3 height */
     margin-left: 20px;
     margin-right: 20px;
     fill: hsl(198,17%,89%);
