@@ -15,8 +15,6 @@ class App.PrettyDate
         style = 'class="label label-danger"'
       else if diff > -60 * 60
         style = 'class="label label-warning"'
-      else
-        style = 'class="label label-success"'
 
     # remember past/future
     direction = 'future'

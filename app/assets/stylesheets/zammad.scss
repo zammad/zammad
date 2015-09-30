@@ -840,7 +840,9 @@ label,
 }
 
 /* circumventing the label:not(.inline-label) selector because it's too strong */
-.inline-label {
+.inline-label,
+.label.label-warning,
+.label.label-danger {
   font-size: inherit;
   font-weight: inherit;
   text-align: inherit;
@@ -855,6 +857,19 @@ label,
   margin-left: 3px;
   user-select: none;
   cursor: pointer;
+}
+
+.label.label-warning,
+.label.label-danger {
+  background: none;
+}
+
+.label.label-warning {
+  color: $ok-color;
+}
+
+.label.label-danger {
+  color: $superbad-color;
 }
 
 fieldset {
