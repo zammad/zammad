@@ -15,7 +15,7 @@
       <div class="controls js-value"></div>
     </div>
     <div class="filter-controls">
-      <div class="filter-control filter-control-remove js-remove" title="<%- @T('Remote') %>">
+      <div class="filter-control filter-control-remove js-remove" title="<%- @T('Remove') %>">
         <%- @Icon('minus-small') %>
       </div>
       <div class="filter-control filter-control-add js-add" title="<%- @T('Add') %>">
