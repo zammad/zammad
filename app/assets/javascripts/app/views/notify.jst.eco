@@ -1,4 +1,9 @@
-<div class="alert <%= @data.type %>">
-  <a class="close" href="#">×</a>
-  <%= @data.text %>
+<div class="noty_message">
+  <% if @type is 'error': %>
+    <%- @Icon('diagonal-cross', 'icon-error') %>
+  <% end %>
+  <% if @type is 'success': %>
+    <%- @Icon('checkmark') %>
+  <% end %>
+  <span class="noty_text"></span>
 </div>
