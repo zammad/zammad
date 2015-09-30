@@ -1918,6 +1918,11 @@ ol.tabs li {
   height: 20px;
 }
 
+.tiny.loading.icon {
+  width: 12px;
+  height: 12px;
+}
+
 @keyframes rotateplane {
   0% { 
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
@@ -6486,6 +6491,17 @@ output {
   to {
     opacity: 0;
     transform: translate3d(0, 50%, 0);
+  }
+}
+
+.loading-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 133px;
+  
+  .loading-text {
+    margin-left: 10px;
   }
 }
 
