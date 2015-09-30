@@ -1185,7 +1185,7 @@ wait untill text in selector disabppears
       click( browser: instance, css: '.active .tabsSidebar-tab[data-tab="customer"]')
 
       click( browser: instance, css: '.active div[data-tab="customer"] .js-actions .icon-arrow-down' )
-      click( browser: instance, css: '.active div[data-tab="customer"] .js-actions a[data-type="customer-change"]' )
+      click( browser: instance, css: '.active div[data-tab="customer"] .js-actions [data-type="customer-change"]' )
       watch_for(
         browser: instance,
         css: '.modal',
