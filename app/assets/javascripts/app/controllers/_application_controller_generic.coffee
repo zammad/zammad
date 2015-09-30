@@ -604,7 +604,9 @@ class App.Sidebar extends App.Controller
     @toggleTabAction(name)
 
   render: =>
-    @html App.view('generic/sidebar_tabs')( items: @items )
+    @html App.view('generic/sidebar_tabs')
+      items: @items
+      scrollbarWidth: @getScrollBarWidth()
 
     # init content callback
     for item in @items
@@ -619,6 +621,21 @@ class App.Sidebar extends App.Controller
           items: item.actions
           type:  'small'
         )
+
+  getScrollBarWidth: ->
+    $outer = $('<div>').css(
+      visibility: 'hidden'
+      width: 100
+      overflow: 'scroll'
+    ).appendTo('body')
+
+    widthWithScroll = $('<div>').css(
+      width: '100%'
+    ).appendTo($outer).outerWidth()
+
+    $outer.remove()
+
+    return 100 - widthWithScroll
 
   toggleDropdown: (e) ->
     e.stopPropagation()

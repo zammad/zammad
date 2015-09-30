@@ -1,6 +1,6 @@
 class App.BusinessHours extends Spine.Controller
 
-  className: 'settings-list settings-list--stretch settings-list--toggleColumn'
+  className: 'settings-list settings-list--fixed settings-list--stretch settings-list--toggleColumn'
   tag: 'table'
 
   events:

@@ -601,7 +601,7 @@ table {
 }
 
 .table > tbody > tr > td {
-  padding: 9px;
+  padding: 11px 10px 7px;
   border: none;
   box-shadow: 0 1px rgba(0,0,0,.03);
 }
@@ -679,7 +679,7 @@ table {
 
 .table .checkbox-replacement,
 .table .radio-replacement {
-  height: 38px;
+  height: 40px;
 }
 
 .table-overview tbody .icon-checkbox,
@@ -5962,6 +5962,10 @@ output {
       0 0 0 2px white,
       0 0 0 4px hsl(0,90%,70%);
   }
+
+  &.settings-list--fixed {
+    table-layout: fixed;
+  }
   
   &.settings-list--stretch {
     width: 100%;
@@ -5992,6 +5996,7 @@ output {
     font-weight: normal;
     text-transform: uppercase;
     font-size: 12px;
+    line-height: 17px;
     letter-spacing: 0.05em;
     background: hsl(197,20%,93%);
     border-bottom: none;
