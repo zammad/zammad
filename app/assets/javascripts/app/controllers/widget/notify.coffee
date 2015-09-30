@@ -44,7 +44,7 @@ class App.Notify extends App.ControllerWidgetPermanent
       animation:
         open:    'animated fadeInDown'
         close:   'animated fadeOutDown'
-      timeout:   false #data.timeout || 3800
+      timeout:   data.timeout || 3800
       closeWith: ['click']
 
   destroy: (e) ->
