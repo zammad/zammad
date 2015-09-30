@@ -39,10 +39,12 @@ class App.Notify extends App.ControllerWidgetPermanent
     $('#notify').noty
       text:      data.msg
       type:      data.type
+      template:  App.view('notify')
+                   type: data.type
       animation:
         open:    'animated fadeInDown'
         close:   'animated fadeOutDown'
-      timeout:   data.timeout || 3800
+      timeout:   false #data.timeout || 3800
       closeWith: ['click']
 
   destroy: (e) ->

@@ -1913,11 +1913,11 @@ ol.tabs li {
 }
 
 .icon-checkmark {
-  fill: #38AE6A;
+  fill: $supergood-color;
 }
 
 .icon-error {
-  fill: #F35910;
+  fill: $superbad-color;
 }
 
 .loading.icon {
@@ -2243,7 +2243,6 @@ footer {
 
     .navigation .nav-tab-name {
       text-align: left;
-      padding-bottom: 2px;
     }
 
     .tasks-navigation .nav-tab-icon .error {
@@ -4209,6 +4208,9 @@ footer {
   }
 
   .tabsSidebar-tabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     position: absolute;
     left: -55px;
     top: 0;
@@ -6451,23 +6453,16 @@ output {
     .noty_message {
       pointer-events: auto;
       display: inline-block;
-      background: hsl(203,65%,55%);
+      background: rgba(0,0,0,.75);
       padding: 10px 15px 8px;
       border-radius: 3px;
       color: white;
     }
 
-    &.noty_type_success .noty_message {
-      background: hsl(145,51%,45%);
-    }
-
-    &.noty_type_alert .noty_message {
-      color: hsl(45,98%,17%);
-      background: hsl(45,98%,63%);
-    }
-
-    &.noty_type_error .noty_message {
-      background: hsl(11,85%,48%);
+    .icon {
+      vertical-align: middle;
+      margin-top: -3px;
+      margin-right: 5px;
     }
 
     a {
