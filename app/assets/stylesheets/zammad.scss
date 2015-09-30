@@ -5962,6 +5962,10 @@ output {
       0 0 0 2px white,
       0 0 0 4px hsl(0,90%,70%);
   }
+
+  &.settings-list--fixed {
+    table-layout: fixed;
+  }
   
   &.settings-list--stretch {
     width: 100%;

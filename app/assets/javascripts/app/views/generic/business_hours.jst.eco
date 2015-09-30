@@ -2,7 +2,7 @@
   <tr>
     <% for id, day of @days: %>
     <th style="text-align: center">
-      <label class="day-name">
+      <label class="day-name u-textTruncate">
         <span class="checkbox-replacement checkbox-replacement--inline">
           <input class="js-toggle-day" name="<%= @attribute.name %>::<%- id %>::active" value="true" data-target="<%- id %>" type="checkbox"<%- ' checked' if @hours[id].active %>>
           <%- @Icon('checkbox', 'icon-unchecked') %>
