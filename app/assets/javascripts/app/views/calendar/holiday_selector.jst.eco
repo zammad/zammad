@@ -3,7 +3,7 @@
     <tr>
       <th><%- @T('Active') %>
       <th><%- @T('Date') %>
-      <th><%- @T('Description') %>
+      <th style="width: 300px"><%- @T('Description') %>
       <th><%- @T('Action') %>
   </thead>
   <tbody>
