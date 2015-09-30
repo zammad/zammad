@@ -6494,6 +6494,17 @@ output {
   }
 }
 
+.loading-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 133px;
+  
+  .loading-text {
+    margin-left: 10px;
+  }
+}
+
 /*
 
   ----------------

@@ -58,7 +58,13 @@
   </div>
 </div>
 <div class="filter-preview">
-  <h3>Preview <span class="subtitle"><span class="u-highlight">5</span> matches</span></h3>
+  <h3>
+    Preview 
+    <span class="subtitle hide">
+      <span class="u-highlight">5</span> matches
+    </span>
+    <span class="tiny loading icon" style="margin-left: 3px;"></span>
+  </h3>
   <table class="table table-hover">
     <thead>
       <tr>
