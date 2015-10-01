@@ -46,7 +46,7 @@ class ArticleViewItem extends App.Controller
         return if data.ticket_id.toString() isnt @ticket.id.toString()
 
         # set highlighter
-        @highligher.loadHighlights(@ticket_article_id)
+        @setHighlighter()
 
         if !@shown
 
@@ -61,6 +61,10 @@ class ArticleViewItem extends App.Controller
 
   release: =>
     App.TicketArticle.unsubscribe(@subscribeId)
+
+  setHighlighter: =>
+    return if !@el.is(':visible')
+    @highligher.loadHighlights(@ticket_article_id)
 
   hasChanged: (article) =>
 
@@ -122,11 +126,11 @@ class ArticleViewItem extends App.Controller
       article: @article
     )
 
-    # set see more option
+    # set see more
     @setSeeMore()
 
     # set highlighter
-    @highligher.loadHighlights(@ticket_article_id)
+    @setHighlighter()
 
   # set see more options
   setSeeMore: =>
