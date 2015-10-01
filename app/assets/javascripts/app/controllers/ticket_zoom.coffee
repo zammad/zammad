@@ -170,6 +170,10 @@ class App.TicketZoom extends App.Controller
           @doNotLog = 1
           @recentView( 'Ticket', ticket_id )
 
+        # scroll to end of page
+        if force
+          @scrollToBottom()
+
       error: (xhr) =>
         statusText = xhr.statusText
         status     = xhr.status
@@ -233,7 +237,7 @@ class App.TicketZoom extends App.Controller
     @ticket.article = undefined
 
     # render page
-    @render(force)
+    @render()
 
   positionPageHeaderStart: =>
 
@@ -273,13 +277,13 @@ class App.TicketZoom extends App.Controller
     @highlighed = true
     @highligher.loadHighlights()
 
-  render: (force) =>
+  render: =>
 
     # update taskbar with new meta data
     App.Event.trigger 'task:render'
     @formEnable( @$('.submit') )
 
-    if force || !@renderDone
+    if !@renderDone
       @renderDone = true
       @html App.view('ticket_zoom')(
         ticket:     @ticket
@@ -348,10 +352,9 @@ class App.TicketZoom extends App.Controller
     # show article
     if !@article_view
       @article_view = new App.TicketZoomArticleView(
-        ticket:      @ticket
-        el:          @el.find('.ticket-article')
-        ui:          @
-        highlighter: @highlighter
+        ticket: @ticket
+        el:     @el.find('.ticket-article')
+        ui:     @
       )
 
     @article_view.execute(
@@ -368,7 +371,8 @@ class App.TicketZoom extends App.Controller
 
     @ticketLastAttributes = @ticket.attributes()
 
-    if @shown
+    if @shown && !@initDone
+      @initDone = true
 
       # inital load of highlights
       @loadHighlighter()
@@ -589,7 +593,9 @@ class App.TicketZoom extends App.Controller
     # submit changes
     ticket.save(
       done: (r) =>
-        @renderDone = false
+
+        # enable form
+        @formEnable(e)
 
         # reset article - should not be resubmited on next ticket update
         ticket.article = undefined
