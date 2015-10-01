@@ -39,7 +39,7 @@ class AgentOrganizationProfileTest < TestCase
 
     # check and change note again in edit screen
     click( css: '.active .js-action .icon-arrow-down', fast: true )
-    click( css: '.active .js-action a[data-type="edit"]' )
+    click( css: '.active .js-action [data-type="edit"]' )
 
     watch_for(
       css: '.active .modal',
