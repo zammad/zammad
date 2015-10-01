@@ -10,7 +10,7 @@ class App.Ticket extends App.Model
       { name: 'group_id',              display: 'Group',        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', style: 'width: 10%', edit: true },
       { name: 'owner_id',              display: 'Owner',        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', style: 'width: 12%', edit: true },
       { name: 'state_id',              display: 'State',        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', style: 'width: 12%', edit: true, customer: true },
-      { name: 'pending_time',          display: 'Pending Time',            tag: 'datetime', null: true, style: 'width: 130px' },
+      { name: 'pending_time',          display: 'Pending Time', tag: 'datetime', null: true, style: 'width: 130px' },
       { name: 'priority_id',           display: 'Priority',     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', style: 'width: 12%', edit: true, customer: true },
       { name: 'article_count',         display: 'Article#',     style: 'width: 12%' },
       { name: 'escalation_time',       display: 'Escalation',              tag: 'datetime', null: true, style: 'width: 130px', class: 'escalation' },
