@@ -14,12 +14,13 @@ class App.TicketZoomArticleView extends App.Controller
           ticket_article_id: ticket_article_id
           el:                el
           ui:                @ui
+          highligher:        @highligher
         )
         all.push el
     @el.append( all )
 
 class ArticleViewItem extends App.Controller
-  hasChangedAttributes: ['from', 'to', 'cc', 'subject', 'body', 'internal']
+  hasChangedAttributes: ['from', 'to', 'cc', 'subject', 'body', 'internal', 'preferences']
 
   elements:
     '.textBubble-content':           'textBubbleContent'
@@ -42,10 +43,17 @@ class ArticleViewItem extends App.Controller
     @bind(
       'ui::ticket::shown'
       (data) =>
+        return if data.ticket_id.toString() isnt @ticket.id.toString()
+
+        # set highlighter
+        @highligher.loadHighlights(@ticket_article_id)
+
         if !@shown
-          if data.ticket_id.toString() is @ticket.id.toString()
-            @setSeeMore()
-            @shown = true
+
+          # set see more
+          @setSeeMore()
+
+          @shown = true
     )
 
     # subscribe to changes
@@ -116,6 +124,9 @@ class ArticleViewItem extends App.Controller
 
     # set see more option
     @setSeeMore()
+
+    # set highlighter
+    @highligher.loadHighlights(@ticket_article_id)
 
   # set see more options
   setSeeMore: =>

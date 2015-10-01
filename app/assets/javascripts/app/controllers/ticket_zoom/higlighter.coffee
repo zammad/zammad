@@ -49,11 +49,6 @@ class App.TicketZoomHighlighter extends App.Controller
     # store original highlight css data
     @storeOriginalHighlight()
 
-    update = =>
-      @loadHighlights()
-      @refreshObserver()
-    App.Delay.set( update, 800 )
-
   render: ->
     @html App.view('ticket_zoom/highlighter')
       colors: @colors
@@ -93,14 +88,14 @@ class App.TicketZoomHighlighter extends App.Controller
     articles.on('mouseup', @onMouseUp) #future: touchend
 
   # for testing purposes the highlights get stored in localStorage
-  loadHighlights: ->
+  loadHighlights: (ticket_article_id) ->
     return if !@isRole('Agent')
-    @el.closest('.content').find('.textBubble-content').each( (index, element) =>
-      article_id = $(element).data('id')
-      article    = App.TicketArticle.find(article_id)
-      if article.preferences && article.preferences['highlight']
-        @highlighter.deserialize(article.preferences['highlight'])
-    )
+    article = App.TicketArticle.find(ticket_article_id)
+    return if !article.preferences
+    return if !article.preferences.highlight
+    return if _.isEmpty(article.preferences.highlight)
+    return if article.preferences.highlight is 'type:TextRange'
+    @highlighter.deserialize(article.preferences['highlight'])
 
   # the serialization creates one string for the entiery ticket
   # containing the offsets and the highlight classes

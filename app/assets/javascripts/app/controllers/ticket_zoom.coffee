@@ -107,9 +107,6 @@ class App.TicketZoom extends App.Controller
 
     if !@shown
 
-      # inital load of highlights
-      @loadHighlighter()
-
       # trigger shown to article
       App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
 
@@ -271,12 +268,6 @@ class App.TicketZoom extends App.Controller
 
     @scrollPageHeader.css('transform', "translateY(#{top}px)")
 
-  loadHighlighter: =>
-    return if !@highligher
-    return if @highlighed
-    @highlighed = true
-    @highligher.loadHighlights()
-
   render: =>
 
     # update taskbar with new meta data
@@ -320,15 +311,16 @@ class App.TicketZoom extends App.Controller
         ui:        @
       )
 
-      @article_view = new App.TicketZoomArticleView(
-        ticket: @ticket
-        el:     @el.find('.ticket-article')
-        ui:     @
-      )
-
       @highligher = new App.TicketZoomHighlighter(
         el:        @$('.highlighter')
         ticket_id: @ticket.id
+      )
+
+      @article_view = new App.TicketZoomArticleView(
+        ticket:     @ticket
+        el:         @el.find('.ticket-article')
+        ui:         @
+        highligher: @highligher
       )
 
     # rerender whole sidebar if customer or organization has changed
@@ -350,13 +342,6 @@ class App.TicketZoom extends App.Controller
       )
 
     # show article
-    if !@article_view
-      @article_view = new App.TicketZoomArticleView(
-        ticket: @ticket
-        el:     @el.find('.ticket-article')
-        ui:     @
-      )
-
     @article_view.execute(
       ticket_article_ids: @ticket_article_ids
     )
@@ -373,9 +358,6 @@ class App.TicketZoom extends App.Controller
 
     if @shown && !@initDone
       @initDone = true
-
-      # inital load of highlights
-      @loadHighlighter()
 
       # scroll to end of page
       @scrollToBottom()
