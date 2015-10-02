@@ -895,7 +895,7 @@ class TicketZoomRef extends App.ControllerContent
     # don't go into highlight mode
     # just toggle the selected
     if !selection.isCollapsed
-      @toggleHighlightAtSelection $(selection.anchorNode).closest @articles.selector
+      @toggleHighlightAtSelection selection, $(selection.anchorNode).closest @articles.selector
     else
       # show color
       @highlightIcon.css('fill', @colors[@activeColorIndex].color)
@@ -919,7 +919,9 @@ class TicketZoomRef extends App.ControllerContent
     @setColor()
 
   onMouseUp: (e) =>
-    @toggleHighlightAtSelection $(e.currentTarget).closest @articles.selector
+    selection = rangy.getSelection()
+
+    @toggleHighlightAtSelection selection, $(e.currentTarget).closest @articles.selector
 
   #
   # toggle Highlight
@@ -930,18 +932,27 @@ class TicketZoomRef extends App.ControllerContent
   # - or highlights the selection
   # - clears the selection
 
-  toggleHighlightAtSelection: (article) ->
-    selection = rangy.getSelection()
+  toggleHighlightAtSelection: (selection, article) ->
 
     if @highlighter.selectionOverlapsHighlight selection
       @highlighter.unhighlightSelection()
-    else
-      @highlighter.highlightSelection @highlightClass,
-        selection: selection
-        containerElementId: article.get(0).id
+      return @storeHighlights()
 
-      # remove selection
-      selection.removeAllRanges()
+    # selection.anchorNode = element in which the selection started
+    # selection.focusNode = element in which the selection ended
+    # 
+    # check if the start node is inside of the article or the article itself
+    startNode = @$(selection.anchorNode)
+
+    if !(article.is(startNode) or article.contents().is(startNode))
+      return selection.removeAllRanges()
+
+    @highlighter.highlightSelection @highlightClass,
+      selection: selection
+      containerElementId: article.get(0).id
+
+    # remove selection
+    selection.removeAllRanges()
 
     @storeHighlights()
 
