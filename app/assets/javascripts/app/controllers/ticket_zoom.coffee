@@ -14,7 +14,7 @@ class App.TicketZoom extends App.Controller
 
     # check authentication
     if !@authenticate()
-      App.TaskManager.remove( @task_key )
+      App.TaskManager.remove(@task_key)
       return
 
     @navupdate '#'
@@ -32,14 +32,14 @@ class App.TicketZoom extends App.Controller
       @overview_id = false
 
     @key = 'ticket::' + @ticket_id
-    cache = App.Store.get( @key )
+    cache = App.Store.get(@key)
     if cache
       @load(cache)
     update = =>
-      @fetch( @ticket_id, false )
+      @fetch(@ticket_id, false)
 
     # check if ticket has beed updated every 30 min
-    @interval( update, 1800000, 'pull_check' )
+    @interval(update, 1800000, 'pull_check')
 
     # fetch new data if triggered
     @bind(
@@ -47,14 +47,14 @@ class App.TicketZoom extends App.Controller
       (data) =>
 
         # check if current ticket has changed
-        if data.id.toString() is @ticket_id.toString()
+        return if data.id.toString() isnt @ticket_id.toString()
 
-          # check if we already have the request queued
-          #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
-          update = =>
-            @fetch( @ticket_id, false )
-          if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-            @delay( update, 1200, 'ticket-zoom-' + @ticket_id )
+        # check if we already have the request queued
+        #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
+        update = =>
+          @fetch( @ticket_id, false )
+        if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
+          @delay( update, 1200, 'ticket-zoom-' + @ticket_id )
     )
 
     # rerender view, e. g. on langauge change
@@ -85,7 +85,7 @@ class App.TicketZoom extends App.Controller
 
     # set icon and title based on ticket
     if @ticket
-      @ticket        = App.Ticket.fullLocal( @ticket.id )
+      @ticket        = App.Ticket.fullLocal(@ticket.id)
       meta.head      = @ticket.title
       meta.title     = '#' + @ticket.number + ' - ' + @ticket.title
       meta.class     = "task-state-#{ @ticket.getState() }"
@@ -102,7 +102,7 @@ class App.TicketZoom extends App.Controller
     @navupdate '#'
 
     # set all notifications to seen
-    App.OnlineNotification.seen( 'Ticket', @ticket_id )
+    App.OnlineNotification.seen('Ticket', @ticket_id)
 
     # if controller is executed twice, go to latest article
     if @activeState
@@ -116,7 +116,7 @@ class App.TicketZoom extends App.Controller
     if !@shown
 
       # trigger shown to article
-      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
       # observe content header position
       @positionPageHeaderStart()
@@ -134,8 +134,8 @@ class App.TicketZoom extends App.Controller
     return false if !@ticket
     formCurrent = @formParam( @el.find('.edit') )
     ticket      = App.Ticket.find(@ticket_id).attributes()
-    modelDiff   = App.Utils.formDiff( formCurrent, ticket  )
-    return false if !modelDiff || _.isEmpty( modelDiff )
+    modelDiff   = App.Utils.formDiff(formCurrent, ticket)
+    return false if !modelDiff || _.isEmpty(modelDiff)
     return true
 
   release: =>
@@ -143,14 +143,13 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
   fetch: (ticket_id, force) ->
-
     return if !@Session.get()
 
     # get data
     @ajax(
-      id:    'ticket_zoom_' + ticket_id
+      id:    "ticket_zoom_#{ticket_id}"
       type:  'GET'
-      url:   @apiPath + '/ticket_full/' + ticket_id
+      url:   "#{@apiPath}/ticket_full/#{ticket_id}"
       processData: true
       success: (data, status, xhr) =>
 
@@ -163,21 +162,22 @@ class App.TicketZoom extends App.Controller
 
           # notify if ticket changed not by my self
           if newTicketRaw.updated_by_id isnt @Session.get('id')
-            App.TaskManager.notify( @task_key )
+            App.TaskManager.notify(@task_key)
 
         # remember current data
         @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
         @load(data, force)
-        App.Store.write( @key, data )
+        App.Store.write(@key, data)
 
         if !@doNotLog
           @doNotLog = 1
-          @recentView( 'Ticket', ticket_id )
+          @recentView('Ticket', ticket_id)
 
         # scroll to end of page
         if force
           @scrollToBottom()
+          @positionPageHeaderUpdate()
 
       error: (xhr) =>
         statusText = xhr.statusText
@@ -235,10 +235,10 @@ class App.TicketZoom extends App.Controller
     @form_meta = data.form_meta
 
     # load assets
-    App.Collection.loadAssets( data.assets )
+    App.Collection.loadAssets(data.assets)
 
     # get data
-    @ticket = App.Ticket.fullLocal( @ticket_id )
+    @ticket = App.Ticket.fullLocal(@ticket_id)
     @ticket.article = undefined
 
     # render page
@@ -334,9 +334,9 @@ class App.TicketZoom extends App.Controller
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
       new App.WidgetAvatar(
-        el:       @$('.ticketZoom-header .js-avatar')
-        user_id:  @ticket.customer_id
-        size:     50
+        el:      @$('.ticketZoom-header .js-avatar')
+        user_id: @ticket.customer_id
+        size:    50
       )
       new App.TicketZoomSidebar(
         el:           @el.find('.tabsSidebar')
@@ -374,7 +374,7 @@ class App.TicketZoom extends App.Controller
       @positionPageHeaderStart()
 
       # trigger shown if init shown render
-      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id } )
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
   scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
@@ -593,9 +593,9 @@ class App.TicketZoom extends App.Controller
         # reset form after save
         @reset()
 
-        App.TaskManager.mute( @task_key )
+        App.TaskManager.mute(@task_key)
 
-        @fetch( ticket.id, true )
+        @fetch(ticket.id, true)
     )
 
   bookmark: (e) ->
@@ -609,7 +609,7 @@ class App.TicketZoom extends App.Controller
     @taskReset()
 
     # reset edit ticket / reset new article
-    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id } )
+    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id })
 
     # hide reset button
     @$('.js-reset').addClass('hide')
@@ -630,18 +630,18 @@ class App.TicketZoom extends App.Controller
 
   taskUpdate: (area, data) =>
     @localTaskData[area] = data
-    App.TaskManager.update( @task_key, { 'state': @localTaskData })
+    App.TaskManager.update(@task_key, { 'state': @localTaskData })
 
   taskUpdateAll: (data) =>
     @localTaskData = data
-    App.TaskManager.update( @task_key, { 'state': @localTaskData })
+    App.TaskManager.update(@task_key, { 'state': @localTaskData })
 
   # reset task state
   taskReset: =>
     @localTaskData =
       ticket:  {}
       article: {}
-    App.TaskManager.update( @task_key, { 'state': @localTaskData })
+    App.TaskManager.update(@task_key, { 'state': @localTaskData })
 
 class TicketZoomRouter extends App.ControllerPermanent
   constructor: (params) ->

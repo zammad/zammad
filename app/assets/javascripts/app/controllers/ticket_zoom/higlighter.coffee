@@ -38,6 +38,8 @@ class App.TicketZoomHighlighter extends App.Controller
 
     return if !@isRole('Agent')
 
+    @currentHighlights = {}
+
     rangy.init()
 
     @highlighter = rangy.createHighlighter(document, 'TextRange')
@@ -86,6 +88,8 @@ class App.TicketZoomHighlighter extends App.Controller
     articles = @el.closest('.content').find('.textBubble-content')
     articles.off('mouseup', @onMouseUp)
     articles.on('mouseup', @onMouseUp) #future: touchend
+    articles.off('mousedown', @onMouseDown)
+    articles.on('mousedown', @onMouseDown) #future: touchend
 
   # for testing purposes the highlights get stored in localStorage
   loadHighlights: (ticket_article_id) ->
@@ -95,7 +99,9 @@ class App.TicketZoomHighlighter extends App.Controller
     return if !article.preferences.highlight
     return if _.isEmpty(article.preferences.highlight)
     return if article.preferences.highlight is 'type:TextRange'
-    @highlighter.deserialize(article.preferences['highlight'])
+    return if @currentHighlights[ticket_article_id] is article.preferences.highlight
+    @currentHighlights[ticket_article_id] = article.preferences.highlight
+    @highlighter.deserialize(article.preferences.highlight)
 
   # the serialization creates one string for the entiery ticket
   # containing the offsets and the highlight classes
@@ -136,6 +142,8 @@ class App.TicketZoomHighlighter extends App.Controller
       articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
   toggleHighlight: (e) =>
+    @mouseDownInside = false
+    @mouseUpInside = false
 
     if @isActive
       $(e.currentTarget).removeClass('active')
@@ -168,19 +176,31 @@ class App.TicketZoomHighlighter extends App.Controller
     # check if selection exists - highlight it or remove highlight
     @toggleHighlightAtSelection(@content, @article_id)
 
-  onMouseUp: (e) =>
-    @updateSelectedArticle(e)
+  onMouseDown: (e) =>
+    if @updateSelectedArticle(e)
+      @mouseDownInside = true
+    else
+      @mouseDownInside = false
 
-    console.log('onMouseUp', @isActive, @content, @article_id)
-    if @isActive
-      @toggleHighlightAtSelection(@content, @article_id) # @articles.selector
+  onMouseUp: (e) =>
+    if @updateSelectedArticle(e)
+      @mouseUpInside = true
+    else
+      @mouseUpInside = false
+
+    return if !@mouseDownInside
+    return if !@mouseUpInside
+    return if !@isActive
+    @toggleHighlightAtSelection(@content, @article_id)
 
   updateSelectedArticle: (e) =>
     @content    = $(e.currentTarget).closest('.textBubble-content')
     @article_id = @content.data('id')
-    if !@article_id
-      @content    = $(e.currentTarget)
-      @article_id = @content.data('id')
+    return true if @article_id
+    @content    = $(e.currentTarget)
+    @article_id = @content.data('id')
+    return true if @article_id
+    false
 
   #
   # toggle Highlight

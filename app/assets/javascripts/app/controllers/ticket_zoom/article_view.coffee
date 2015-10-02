@@ -48,12 +48,8 @@ class ArticleViewItem extends App.Controller
         # set highlighter
         @setHighlighter()
 
-        if !@shown
-
-          # set see more
-          @setSeeMore()
-
-          @shown = true
+        # set see more
+        @setSeeMore()
     )
 
     # subscribe to changes
@@ -64,7 +60,11 @@ class ArticleViewItem extends App.Controller
 
   setHighlighter: =>
     return if !@el.is(':visible')
-    @highligher.loadHighlights(@ticket_article_id)
+    # use delay do no ui blocking
+    #@highligher.loadHighlights(@ticket_article_id)
+    d = =>
+      @highligher.loadHighlights(@ticket_article_id)
+    @delay(d, 800)
 
   hasChanged: (article) =>
 
@@ -127,6 +127,7 @@ class ArticleViewItem extends App.Controller
     )
 
     # set see more
+    @shown = false
     @setSeeMore()
 
     # set highlighter
@@ -134,6 +135,10 @@ class ArticleViewItem extends App.Controller
 
   # set see more options
   setSeeMore: =>
+    return if !@el.is(':visible')
+    return if @shown
+    @shown = true
+
     maxHeight               = 560
     bubbleContent           = @textBubbleContent
     bubbleOvervlowContainer = @textBubbleOverflowContainer
@@ -183,10 +188,10 @@ class ArticleViewItem extends App.Controller
     # allow double click select
     # by adding a delay to the toggle
 
-    if @lastClick and +new Date - @lastClick < 150
+    if @lastClick and +new Date - @lastClick < 100
       clearTimeout(@toggleMetaTimeout)
     else
-      @toggleMetaTimeout = setTimeout(@toggle_meta, 150, e)
+      @toggleMetaTimeout = setTimeout(@toggle_meta, 100, e)
       @lastClick = +new Date
 
   toggle_meta: (e) =>

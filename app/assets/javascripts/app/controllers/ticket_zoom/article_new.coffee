@@ -162,7 +162,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @$('[data-name="body"]').ce({
       mode:      'richtext'
       multiline: true
-      maxlength: 5000
+      maxlength: 40000
     })
 
     html5Upload.initialize(
