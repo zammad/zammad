@@ -104,11 +104,15 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is shown
     match(
-      css: '.active table th:nth-child(7)',
+      css: '.active table th:nth-child(3)',
       value: '#',
     )
     match(
       css: '.active table th:nth-child(4)',
+      value: 'Title',
+    )
+    match(
+      css: '.active table th:nth-child(7)',
       value: 'Article#',
     )
 
@@ -118,11 +122,15 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is shown
     match(
-      css: '.active table th:nth-child(7)',
+      css: '.active table th:nth-child(3)',
       value: '#',
     )
     match(
       css: '.active table th:nth-child(4)',
+      value: 'Title',
+    )
+    match(
+      css: '.active table th:nth-child(7)',
       value: 'Article#',
     )
 
@@ -146,6 +154,10 @@ class AgentTicketOverviewLevel0Test < TestCase
     match_not(
       css: '.active table th:nth-child(3)',
       value: '#',
+    )
+    match(
+      css: '.active table th:nth-child(3)',
+      value: 'Title',
     )
     exists_not(
       css: '.active table th:nth-child(8)',

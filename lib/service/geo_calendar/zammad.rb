@@ -34,7 +34,7 @@ class Service::GeoCalendar::Zammad
 
       data = response.data
 
-      Cache.write( cache_key, data, { expires_in: 1.day } )
+      Cache.write( cache_key, data, { expires_in: 30.minutes } )
     rescue => e
       Rails.logger.error "#{host}#{url}: #{e.inspect}"
       Cache.write( cache_key, data, { expires_in: 1.minutes } )

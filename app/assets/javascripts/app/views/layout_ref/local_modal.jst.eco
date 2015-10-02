@@ -372,33 +372,33 @@
         <div class="profile-ticketList">
           <label>Bearbeitete Tickets (12)</label>
           <ol class="tasks tasks--standalone">
-            <li class="task level-1">
+            <li class="task">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <%- @Icon('task-state', 'escalating') %>
               </div>
               <div class="task-text">
                 <div class="name">Micro-SIM doesn't work</div>
                 <div class="time">23 minutes ago</div>
               </div>
-            <li class="task level-1">
+            <li class="task">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <%- @Icon('task-state', 'open') %>
               </div>
               <div class="task-text">
                 <div class="name">Superb Service!</div>
                 <div class="time">43 minutes ago</div>
               </div>
-            <li class="task level-1">
+            <li class="task">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <%- @Icon('task-state', 'closed') %>
               </div>
               <div class="task-text">
                 <div class="name">Print sheets strip off</div>
                 <div class="time">1 hour ago</div>
               </div>
-            <li class="task level-1">
+            <li class="task">
               <div class="icon-holder">
-                <div class="priority icon"></div>
+                <%- @Icon('task-state', 'closed') %>
               </div>
               <div class="task-text">
                 <div class="name">Block not properly wrought</div>

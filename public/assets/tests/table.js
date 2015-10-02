@@ -496,7 +496,7 @@ test( "table test 3", function() {
     el:                 el,
     model:              App.EmailAddress,
     objects:            App.EmailAddress.search({sortBy:'realname', order: 'ASC'}),
-    callbackHeader:     callbackHeader,
+    callbackHeader:     [callbackHeader],
     callbackAttributes: {
       'some name': [ callbackAttributes ]
     },

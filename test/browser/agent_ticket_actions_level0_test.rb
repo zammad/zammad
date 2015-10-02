@@ -234,7 +234,7 @@ class AgentTicketActionLevel0Test < TestCase
     )
     click(
       browser: browser2,
-      css: '.active div[data-tab="ticket"] .js-actions a[data-type="customer-change"]',
+      css: '.active div[data-tab="ticket"] .js-actions [data-type="customer-change"]',
     )
     sleep 1
 

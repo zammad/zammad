@@ -44,7 +44,7 @@
 
 //= require_tree ./app/lib/base
 
-//= require ./app/index.js.coffee
+//= require ./app/index.coffee
 
 // IE8 workaround for missing console.log
 if (!window.console) {

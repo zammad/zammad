@@ -4,8 +4,8 @@
   <% for ticket_id in @ticket_ids_show: %>
   <% ticket = App.Ticket.fullLocal(ticket_id) %>
   <li class="task">
-    <div class="icon-holder">
-      <%- @Icon('priority', ticket.icon()) %>
+    <div class="icon-holder" title="<%- ticket.iconTitle() %>">
+      <%- @Icon('task-state', ticket.iconClass()) %>
     </div>
     <div class="task-text">
       <a class="name ticket-popover" data-id="<%- ticket_id %>" href="<%- ticket.uiUrl() %>"><%= ticket.title %></a>

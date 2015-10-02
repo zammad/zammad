@@ -32,17 +32,17 @@ Rails.application.configure do
   config.assets.debug = false
 
   # Automatically inject JavaScript needed for LiveReload
-  config.middleware.use(
+  config.middleware.insert_after(
+    ActionDispatch::Static,
     Rack::LiveReload,
     min_delay: 500,    # default 1000
     max_delay: 10_000, # default 60_000
-    live_reload_port: 35_738,
-    source: :vendored
+    live_reload_port: 35_738
   )
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
-  config.assets.digest = true
+  config.assets.digest = false
 
   # format log
   config.log_formatter = Logger::Formatter.new

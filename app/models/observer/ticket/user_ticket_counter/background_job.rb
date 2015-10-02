@@ -1,20 +1,21 @@
 class Observer::Ticket::UserTicketCounter::BackgroundJob
-  def initialize(id)
-    @customer_id = id
+  def initialize(customer_id, updated_by_id)
+    @customer_id = customer_id
+    @updated_by_id = updated_by_id
   end
 
   def perform
 
     # open ticket count
-    state_open    = Ticket::State.by_category( 'open' )
-    tickets_open  = Ticket.where(
+    state_open = Ticket::State.by_category( 'open' )
+    tickets_open = Ticket.where(
       customer_id: @customer_id,
       state_id: state_open,
     ).count()
 
     # closed ticket count
-    state_closed    = Ticket::State.by_category( 'closed' )
-    tickets_closed  = Ticket.where(
+    state_closed = Ticket::State.by_category( 'closed' )
+    tickets_closed = Ticket.where(
       customer_id: @customer_id,
       state_id: state_closed,
     ).count()
@@ -24,7 +25,7 @@ class Observer::Ticket::UserTicketCounter::BackgroundJob
     need_update = false
     if customer[:preferences][:tickets_open] != tickets_open
       need_update = true
-      customer[:preferences][:tickets_open]   = tickets_open
+      customer[:preferences][:tickets_open] = tickets_open
     end
     if customer[:preferences][:tickets_closed] != tickets_closed
       need_update = true
@@ -32,7 +33,7 @@ class Observer::Ticket::UserTicketCounter::BackgroundJob
     end
 
     return if !need_update
-
+    customer.updated_by_id = @updated_by_id
     customer.save
   end
 end

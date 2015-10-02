@@ -39,7 +39,7 @@
         <p>
           Enter the link provided by the plugin at the end of the installation to link the two systems:
         </p>
-        <div class="form-group fromGroup--standalone">
+        <div class="form-group formGroup--standalone">
           <label for="otrs-link">OTRS Link</label>
           <div class="u-positionOrigin">
             <input type="url" id="otrs-link" class="form-control" placeholder="http://otrs.company.de/otrs">

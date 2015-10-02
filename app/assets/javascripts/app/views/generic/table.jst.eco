@@ -14,7 +14,10 @@
       <th style="width: 22px"></th>
     <% end %>
 <% for item in @header: %>
-      <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>><%- @T( item.display ) %></th>
+      <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>>
+        <%- @T( item.display ) %>
+        <% if item.sortOrderIcon: %><%- @Icon(item.sortOrderIcon[0], item.sortOrderIcon[1]) %><% end %>
+      </th>
 <% end %>
 <% if @destroy: %>
       <th><%- @T('Delete') %></th>
@@ -73,7 +76,7 @@
 
       <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %>>
         <% if item.name is 'icon': %>
-          <%- @Icon('priority', item.class) %>
+          <%- @Icon('task-state', item.class) %>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>

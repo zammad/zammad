@@ -22,6 +22,11 @@ returns calendar object
 
   def self.init_setup(ip = nil)
 
+    # ignore client ip if not public ip
+    if ip && ip =~ /^(::1|127\.|10\.|172\.1[6-9]\.|172\.2[0-9]\.|172\.3[0-1]\.|192\.168\.)/
+      ip = nil
+    end
+
     # call for calendar suggestion
     calendar_details = Service::GeoCalendar.location(ip)
     return if !calendar_details

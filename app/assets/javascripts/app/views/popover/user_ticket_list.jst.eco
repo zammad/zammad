@@ -1,8 +1,13 @@
-<ul>
-<% for ticket in @tickets: %>
-  <li>
-    <a href="#ticket/zoom/<%= ticket.id %>" title="<%= ticket.title %>">T:<%= ticket.number %></a> <%- @P( ticket, 'title') %><br/>
-    <%- @T('Created') %> <%- @P( ticket, 'created_at') %>
+<ol class="tasks tasks--standalone">
+  <% for ticket in @tickets: %>
+  <li class="task">
+    <div class="icon-holder" title="<%- ticket.iconTitle() %>">
+      <%- @Icon('task-state', ticket.iconClass()) %>
+    </div>
+    <div class="task-text">
+      <a class="name" data-id="<%- ticket.id %>" href="<%- ticket.uiUrl() %>">#<%= ticket.number %> <%= ticket.title %></a>
+      <%- @humanTime(ticket.created_at, false, 'time') %>
+    </div>
   </li>
-<% end %>
-<ul>
+  <% end %>
+</ol>

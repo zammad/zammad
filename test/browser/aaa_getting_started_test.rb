@@ -19,6 +19,10 @@ class AaaGettingStartedTest < TestCase
       value: 'setup new system',
     )
     click( css: '.js-start .btn--primary' )
+    watch_for(
+      css: '.setup.wizard',
+      value: 'admin',
+    )
     set(
       css: '.js-admin input[name="firstname"]',
       value: 'Test Master',

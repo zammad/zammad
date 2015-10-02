@@ -14,6 +14,7 @@
  *    - activate meridian on class 'time--12'
  *    - normalize output to 24-hour clock
  *    - add hoursAndMinutes
+ *    - disableMousewheel by default
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -1131,7 +1132,7 @@
   $.fn.timepicker.defaults = {
     defaultTime: false,
     disableFocus: false,
-    disableMousewheel: false,
+    disableMousewheel: true,
     isOpen: false,
     minuteStep: 15,
     modalBackdrop: false,

@@ -326,9 +326,7 @@
     <tbody>
       <tr class="item" data-id="1" data-position="1" style="cursor: pointer;">
         <td>
-          <svg class="icon-priority level-1">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
-          </svg>
+          <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
             Nicole Braun (Zammad Foundation)
@@ -347,9 +345,7 @@
       </tr>
       <tr class="item" data-id="6" data-position="6" style="cursor: pointer;">
         <td>
-          <svg class="icon-priority level-2">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
-          </svg>
+          <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
             Nicole Braun (Zammad Foundation)

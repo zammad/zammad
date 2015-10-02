@@ -58,7 +58,13 @@
   </div>
 </div>
 <div class="filter-preview">
-  <h3>Preview <span class="subtitle"><span class="u-highlight">5</span> matches</span></h3>
+  <h3>
+    Preview 
+    <span class="subtitle hide">
+      <span class="u-highlight">5</span> matches
+    </span>
+    <span class="tiny loading icon" style="margin-left: 3px;"></span>
+  </h3>
   <table class="table table-hover">
     <thead>
       <tr>
@@ -72,9 +78,7 @@
     <tbody>
       <tr class="item" data-id="1" data-position="1" style="cursor: pointer;">
         <td>
-          <svg class="icon-priority level-1">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
-          </svg>
+          <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
             Nicole Braun (Zammad Foundation)
@@ -93,9 +97,7 @@
       </tr>
       <tr class="item" data-id="3" data-position="3" style="cursor: pointer;">
         <td>
-          <svg class="icon-priority level-2">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
-          </svg>
+          <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="4" data-original-title="" title="">
             Hans Huber
@@ -114,9 +116,7 @@
       </tr>
       <tr class="item" data-id="4" data-position="4" style="cursor: pointer;">
         <td>
-          <svg class="icon-priority level-3">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
-          </svg>
+          <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
             Nicole Braun (Zammad Foundation)
@@ -135,9 +135,7 @@
       </tr>
       <tr class="item" data-id="5" data-position="5" style="cursor: pointer;">
         <td>
-          <svg class="icon-priority level-3">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
-          </svg>
+          <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
             Nicole Braun (Zammad Foundation)
@@ -156,9 +154,7 @@
       </tr>
       <tr class="item" data-id="6" data-position="6" style="cursor: pointer;">
         <td>
-          <svg class="icon-priority level-2">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-priority"></use>
-          </svg>
+          <%- @Icon('task-state', 'closed') %>
         </td>
         <td> <span class="user-popover" data-id="2" data-original-title="" title="">
             Nicole Braun (Zammad Foundation)
@@ -859,6 +855,7 @@
       <th>Active
       <th>Type
       <th>Time <span class="text-muted">in hours</span>
+      <th>Advance Warning <span class="text-muted">in hours</span>
     </tr>
   </thead>
   <tbody>
@@ -867,21 +864,30 @@
       <td>
         <label class="inline-label" for="first_response_time">First Response Time</label>
         <p class="subtle">Timeframe for the first response.</p>
-      <td><input type="text" value="02:00" class="timeframe js-responseTime">
+      <td>
+        <input type="text" value="02:00" class="form-control--small timeframe js-responseTime">
+      <td>
+        <input type="text" value="00:30" class="form-control--small timeframe js-responseTime">
     </tr>
     <tr class="is-active">
       <td style="text-align: center"><input type="checkbox" checked class="js-activateRow" id="update_time">
       <td>
         <label class="inline-label" for="update_time">Update Time</label>
         <p class="subtle">Timeframe for every following response.</p>
-      <td><input type="text" value="04:00" class="timeframe js-responseTime">
+      <td>
+        <input type="text" value="04:00" class="form-control--small timeframe js-responseTime">
+      <td>
+        <input type="text" value="00:30" class="form-control--small timeframe js-responseTime">
     </tr>
     <tr>
       <td style="text-align: center"><input type="checkbox" id="solution_time" class="js-activateRow">
       <td>
         <label class="inline-label" for="solution_time">Solution Time</label>
         <p class="subtle">Timeframe for solving the problem.</p>
-      <td><input type="text" value="16:00" class="timeframe js-responseTime">
+      <td>
+        <input type="text" value="16:00" class="form-control--small timeframe js-responseTime">
+      <td>
+        <input type="text" value="00:30" class="form-control--small timeframe js-responseTime">
     </tr>
   </tbody>
 </table>
