@@ -547,3 +547,34 @@ class App.Utils
     else
       size = size + ' Bytes'
     size
+
+  # format decimal
+  @decimal: (data, positions = 2) ->
+
+    # input validation
+    return data if data is ''
+    return data if data.match(/[A-z]/)
+
+    format = ( num, digits ) ->
+      while num.toString().length < digits
+        num = num + '0'
+      num
+
+    result = data.toString().match(/^(.+?)\.(.+?)$/)
+
+    # add .00
+    if !result || !result[2]
+      return "#{data}." + format( 0, positions ).toString()
+    length = result[2].toString().length
+    diff = positions - length
+
+    # check length, add .00
+    return "#{result[1]}." + format( result[2], positions ).toString() if diff > 0
+
+    # check length, remove longer positions
+    "#{result[1]}.#{result[2].substr(0,positions)}"
+
+  @formatTime: (num, digits) ->
+    while num.toString().length < digits
+      num = '0' + num
+    num

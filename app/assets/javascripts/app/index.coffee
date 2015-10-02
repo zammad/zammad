@@ -123,11 +123,6 @@ class App extends Spine.Controller
   @view: (name) ->
     template = ( params = {} ) ->
 
-      s = ( num, digits ) ->
-        while num.toString().length < digits
-          num = '0' + num
-        num
-
       # define print name helper
       params.P = ( object, attribute_name ) ->
         App.viewPrint( object, attribute_name )
@@ -137,8 +132,8 @@ class App extends Spine.Controller
         return '' if !time
 
         timeObject = new Date(time)
-        d = s( timeObject.getDate(), 2 )
-        m = s( timeObject.getMonth() + 1, 2 )
+        d = App.Utils.formatTime( timeObject.getDate(), 2 )
+        m = App.Utils.formatTime( timeObject.getMonth() + 1, 2 )
         y = timeObject.getFullYear()
         "#{y}-#{m}-#{d}"
 
@@ -147,26 +142,17 @@ class App extends Spine.Controller
         return '' if !time
 
         timeObject = new Date(time)
-        d = s( timeObject.getDate(), 2 )
-        m = s( timeObject.getMonth() + 1, 2 )
+        d = App.Utils.formatTime( timeObject.getDate(), 2 )
+        m = App.Utils.formatTime( timeObject.getMonth() + 1, 2 )
         y = timeObject.getFullYear()
-        S = s( timeObject.getSeconds(), 2 )
-        M = s( timeObject.getMinutes(), 2 )
-        H = s( timeObject.getHours(), 2 )
+        S = App.Utils.formatTime( timeObject.getSeconds(), 2 )
+        M = App.Utils.formatTime( timeObject.getMinutes(), 2 )
+        H = App.Utils.formatTime( timeObject.getHours(), 2 )
         "#{y}-#{m}-#{d} #{H}:#{M}:#{S}"
 
       # define decimal format helper
       params.decimal = ( data, positions = 2 ) ->
-        return '' if !data
-
-        result = data.toString().match(/^(.+?)\.(.+?)$/)
-        if !result || !result[2]
-          return "#{data}." + s( 0, positions ).toString()
-        length = result[2].toString().length
-        diff = positions - length
-        if diff > 0
-          return "#{result[1]}." + s( result[2], positions ).toString()
-        "#{result[1]}.#{result[2].substr(0,positions)}"
+        App.Utils.decimal(data, positions)
 
       # define translation helper
       params.T = ( item, args... ) ->

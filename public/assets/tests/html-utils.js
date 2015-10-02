@@ -1208,4 +1208,49 @@ test( "check form diff", function() {
 
 });
 
+// check decimal format
+test( "check decimal format", function() {
+
+  var string = '123'
+  var result  = '123.00'
+  var verify  = App.Utils.decimal( string )
+  equal( verify, result, string )
+
+  string = '0.6'
+  result  = '0.60'
+  verify  = App.Utils.decimal( string )
+  equal( verify, result, string )
+
+  string = '111111.6'
+  result  = '111111.60'
+  verify  = App.Utils.decimal( string )
+  equal( verify, result, string )
+
+  string = '111111.622'
+  result  = '111111.62'
+  verify  = App.Utils.decimal( string )
+  equal( verify, result, string )
+
+  string = 'abc.6'
+  result  = 'abc.6'
+  verify  = App.Utils.decimal( string )
+  equal( verify, result, string )
+
+});
+
+// check formatTime format
+test( "check formatTime format", function() {
+
+  var string = '123'
+  var result  = '123'
+  var verify  = App.Utils.formatTime( string, 0 )
+  equal( verify, result, string )
+
+  string = '6'
+  result  = '06'
+  verify  = App.Utils.formatTime( string, 2 )
+  equal( verify, result, string )
+
+});
+
 }
