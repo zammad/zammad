@@ -795,9 +795,18 @@ class TicketZoomRef extends App.ControllerContent
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
 
+    '.buttonDropdown': 'buttonDropdown' 
+
   events:
     'click .js-highlight': 'toggleHighlight'
     'click .js-highlightColor': 'pickColor'
+
+    'mousedown .js-openDropdown': 'toggleDropdown'
+    'click .js-openDropdown': 'stopPropagation'
+    'mouseup .js-dropdownAction': 'performTicketMacro'
+
+  stopPropagation: (event) ->
+    event.stopPropagation()
 
   colors: [
     {
@@ -955,6 +964,22 @@ class TicketZoomRef extends App.ControllerContent
     selection.removeAllRanges()
 
     @storeHighlights()
+
+  toggleDropdown: =>
+    if @buttonDropdown.hasClass 'is-open'
+      @closeDropdown()
+    else
+      @buttonDropdown.addClass 'is-open'
+      $(document).bind 'click.buttonDropdown', @closeDropdown
+
+  closeDropdown: =>
+    @buttonDropdown.removeClass 'is-open'
+    $(document).unbind 'click.buttonDropdown'
+
+  performTicketMacro: (event) =>
+    console.log "perform action", $(event.currentTarget).text()
+    @closeDropdown()
+
 
 
 App.Config.set( 'layout_ref/ticket_zoom', TicketZoomRef, 'Routes' )

@@ -640,50 +640,15 @@
     </div>
   </div>
   <div class="attributeBar">
-    <form class="form-inline is-closed hide" role="form">
-      <div class="form-group">
-        <label for="update_ticket_1_state_id123" class="input-group-addon u-clickable">State</label>
-        <select id="update_ticket_1_state_id123" class="form-control level-1" name="state_id">
-          <option value="4">closed</option>
-          <option value="1" selected="">new</option>
-          <option value="2">open</option>
-          <option value="3">pending</option>
-        </select>
-        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+    <div class="btn js-reset hide">Discard your unsaved changes.</div>
+    <div class="buttonDropdown">
+      <div class="buttonDropdown-main btn btn--primary js-submit">Update</div>
+      <div class="buttonDropdown-toggle btn btn--primary btn--slim js-openDropdown"><%- @Icon('arrow-up') %></div>
+      <div class="buttonDropdown-dropdown">
+        <div class="btn btn--primary js-dropdownAction">Update &amp; Close</div>
+        <div class="btn btn--primary js-dropdownAction">Remind me in 2 weeks</div>
       </div>
-      <div class="form-group is-changed">
-        <label for="update_ticket_1_priority_id123" class="input-group-addon u-clickable">Priority</label>
-        <select id="update_ticket_1_priority_id123" class="form-control" name="priority_id">
-          <option value="1">1 low</option>
-          <option value="2" selected="">2 normal</option>
-          <option value="3">3 high</option>
-        </select>
-        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
-      </div>
-      <div class="form-group">
-        <label for="update_ticket_1_group_id123" class="input-group-addon u-clickable">Group</label>
-        <select id="update_ticket_1_group_id123" class="form-control" name="group_id">
-          <option value="4">FillGroup::450863</option>
-          <option value="3">FillGroup::918672</option>
-          <option value="2">Twitter</option>
-          <option value="1" selected="">Users</option>
-        </select>
-        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
-      </div>
-      <div class="form-group">
-        <label for="update_ticket_1_owner_id123" class="input-group-addon u-clickable">Owner</label>
-        <select id="update_ticket_1_owner_id123" class="form-control" name="owner_id">
-          <option value="">-</option>
-          <option value="3">Felix Niklas</option>
-        </select>
-        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
-      </div>
-    </form>
-    <form class="form-inline">
-    <div class="form-group">
-      <button type="submit" class="btn btn--primary js-submit pull-right">Update</button>
-      <button type="submit" class="btn js-reset pull-right hide">Discard your unsaved changes.</button>
     </div>
-    </form>
+    </div>
   </div>
 </div>
