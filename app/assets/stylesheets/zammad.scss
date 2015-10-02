@@ -364,6 +364,10 @@ span[data-tooltip]:hover:before {
       margin: -2px 5px 0 -2px;
       fill: hsl(0,0%,60%);
     }
+
+    .icon:only-child {
+      margin: 0;
+    }
     
     &.btn--slim {
       padding-left: 7px !important;
