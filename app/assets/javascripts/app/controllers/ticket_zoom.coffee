@@ -60,7 +60,15 @@ class App.TicketZoom extends App.Controller
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
-      @render(true)
+
+      # reset controllers state vars
+      @shown = false
+      @initDone = false
+      @activeState = false
+      @renderDone = false
+
+      # rerender view
+      @render()
 
   meta: =>
 
