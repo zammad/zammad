@@ -1221,6 +1221,16 @@ test( "check decimal format", function() {
   verify  = App.Utils.decimal( string )
   equal( verify, result, string )
 
+  string = '6'
+  result  = '6.00'
+  verify  = App.Utils.decimal( string )
+  equal( verify, result, string )
+
+  string = 6.5
+  result  = '6.50'
+  verify  = App.Utils.decimal( string )
+  equal( verify, result, string )
+
   string = '111111.6'
   result  = '111111.60'
   verify  = App.Utils.decimal( string )
