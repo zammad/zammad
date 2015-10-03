@@ -64,7 +64,7 @@ class ArticleViewItem extends App.Controller
     #@highligher.loadHighlights(@ticket_article_id)
     d = =>
       @highligher.loadHighlights(@ticket_article_id)
-    @delay(d, 800)
+    @delay(d, 200)
 
   hasChanged: (article) =>
 

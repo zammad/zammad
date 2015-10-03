@@ -497,7 +497,7 @@ class App.Controller extends Spine.Controller
         item.object_name  = object.objectDisplayName()
         item.cssIcon      = object.iconActivity( @Session.get() )
 
-      item.created_by = App.User.retrieve( item.created_by_id )
+      item.created_by = App.User.find( item.created_by_id )
     items
 
   ws_send: (data) ->

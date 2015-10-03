@@ -161,7 +161,7 @@ class App.Model extends Spine.Model
 
     # return error object
     if !_.isEmpty(errors)
-      console.log 'error', 'validation failed', errors
+      App.Log.error('Model', 'validation failed', errors)
       return errors
 
     # return no errors
@@ -267,12 +267,15 @@ class App.Model extends Spine.Model
       @FULL_FETCH = {}
     if !@FULL_FETCH[id]
       @FULL_FETCH[id] = true
+      App.Log.debug('Model', "fetch #{@className}.find(#{id}) from server", url)
       App.Ajax.request(
         type:  'GET'
         url:   url
         processData: true,
         success: (data, status, xhr) =>
           @FULL_FETCH[ data.id ] = false
+
+          App.Log.debug('Model', "got #{@className}.find(#{id}) from server", data)
 
           # full / load assets
           if data.assets
@@ -291,54 +294,9 @@ class App.Model extends Spine.Model
               delete @FULL_CALLBACK[ data.id ]
 
         error: (xhr, statusText, error) ->
-          console.log(statusText, error)
+          App.Log.error('Model', statusText, error, url)
       )
     subscribeId
-
-  @retrieve: ( id, callback, force ) ->
-    if !force && App[ @className ].exists( id )
-      data = App[ @className ].find( id )
-      data = @_fillUp( data )
-      if callback
-        callback( data )
-      return data
-
-    if force
-      console.log 'debug', 'find forced to load!', @className, id
-    else
-      console.log 'debug', 'find not loaded, load now!', @className, id
-    if callback
-
-      # store callback and requested id
-      if !@RETRIEVE_CALLBACK
-        @RETRIEVE_CALLBACK = {}
-      if !@RETRIEVE_CALLBACK[id]
-        @RETRIEVE_CALLBACK[id] = {}
-      key = @className + '-' + Math.floor( Math.random() * 99999 )
-      @RETRIEVE_CALLBACK[id][key] = callback
-
-      # bind refresh event
-      if !@RETRIEVE_BIND
-        @RETRIEVE_BIND = true
-
-        # check if bind for requested id exists
-        App[ @className ].bind 'refresh', (records) ->
-          for record in records
-            if @RETRIEVE_CALLBACK[ record.id ]
-              for key, callback of @RETRIEVE_CALLBACK[ record.id ]
-                data = callback( @_fillUp( App[ @className ].find( record.id ) ) )
-                delete @RETRIEVE_CALLBACK[ record.id ][ key ]
-              if _.isEmpty @RETRIEVE_CALLBACK[ record.id ]
-                delete @RETRIEVE_CALLBACK[ record.id ]
-          @fetchActive = false
-
-      # fetch object
-      console.log 'debug', 'loading..' + @className +  '..', id
-      if !@fetchActive
-        @fetchActive = true
-        App[ @className ].fetch( id: id )
-      return true
-    return false
 
   ###
 
@@ -360,6 +318,7 @@ class App.Model extends Spine.Model
       @bind(
         'refresh change'
         (items) =>
+          App.Log.debug('Model', "local collection refresh/change #{@className}", items)
           for key, callback of @SUBSCRIPTION_COLLECTION
             callback(items)
       )
@@ -369,6 +328,7 @@ class App.Model extends Spine.Model
       App.Event.bind(
         events
         =>
+          App.Log.debug('Model', "server notify collection change #{@className}")
           @fetch( {}, { clear: true } )
 
         'Collection::Subscribe::' + @className
@@ -419,7 +379,7 @@ class App.Model extends Spine.Model
           # check if result is array or singel item
           if !_.isArray(items)
             items = [items]
-
+          App.Log.debug('Model', "local change #{@className}", items)
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
               item = App[ @className ]._fillUp( item )
@@ -434,7 +394,7 @@ class App.Model extends Spine.Model
           # check if result is array or singel item
           if !_.isArray(items)
             items = [items]
-
+          App.Log.debug('Model', "local refresh #{@className}", items)
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
 
@@ -454,12 +414,13 @@ class App.Model extends Spine.Model
             genericObject = undefined
             if App[ @className ].exists( item.id )
               genericObject = App[ @className ].find( item.id )
-
+            App.Log.debug('Model', "server change on #{@className}.find(#{item.id}) #{item.updated_at}")
             callback = =>
-              if !genericObject || ( new Date(item.updated_at).toString() isnt new Date(genericObject.updated_at).toString() )
+              if !genericObject || new Date(item.updated_at) >= new Date(genericObject.updated_at)
+                App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
                 @full( item.id, false, true )
 
-            App.Delay.set(callback, 800, item.id, "full-#{@className}")
+            App.Delay.set(callback, 500, item.id, "full-#{@className}")
 
         'Item::Subscribe::' + @className
       )
@@ -500,12 +461,14 @@ class App.Model extends Spine.Model
   ###
   @fetchFull: (callback) ->
     url = "#{@url}/?full=true"
-
+    App.Log.debug('Model', "fetchFull collection #{@className}", url)
     App.Ajax.request(
       type:  'GET'
       url:   url
       processData: true,
       success: (data, status, xhr) =>
+
+        App.Log.debug('Model', "got fetchFull collection #{@className}", data)
 
         # full / load assets
         if data.assets
@@ -519,7 +482,7 @@ class App.Model extends Spine.Model
         callback(data.stream)
 
       error: (xhr, statusText, error) ->
-        console.log(statusText, error)
+        App.Log.error('Model', statusText, error, url)
     )
 
   @_bindsEmpty: ->

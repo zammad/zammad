@@ -2,9 +2,9 @@ class App.TicketZoomMeta extends App.Controller
   constructor: ->
     super
 
-    @ticket      = App.Ticket.fullLocal( @ticket.id )
-    @subscribeId = @ticket.subscribe(@render)
+    @ticket = App.Ticket.fullLocal(@ticket.id)
     @render(@ticket)
+    @subscribeId = @ticket.subscribe(@render)
 
   render: (ticket) =>
     @html App.view('ticket_zoom/meta')(
@@ -13,4 +13,4 @@ class App.TicketZoomMeta extends App.Controller
     )
 
   release: =>
-    App.Ticket.unsubscribe( @subscribeId )
+    App.Ticket.unsubscribe(@subscribeId)
