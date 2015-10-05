@@ -67,7 +67,7 @@ class AgentTicketActionLevel6Test < TestCase
 
     # submit form
     click(
-      css: '.active button.js-submit',
+      css: '.active .js-submit',
     )
     sleep 2
 
@@ -80,7 +80,7 @@ class AgentTicketActionLevel6Test < TestCase
 
     # submit form
     click(
-      css: '.active button.js-submit',
+      css: '.active .js-submit',
     )
     sleep 2
 
