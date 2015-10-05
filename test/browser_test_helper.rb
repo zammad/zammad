@@ -1291,7 +1291,7 @@ wait untill text in selector disabppears
       return true
     end
 
-    instance.find_elements( { css: '.content.active button.js-submit' } )[0].click
+    instance.find_elements( { css: '.content.active .js-submit' } )[0].click
 
     (1..10).each {
       begin

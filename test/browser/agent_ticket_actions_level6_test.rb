@@ -29,7 +29,7 @@ class AgentTicketActionLevel6Test < TestCase
     sleep 1
 
     # submit form
-    click( css: '.content.active button.js-submit' )
+    click( css: '.content.active .js-submit' )
     sleep 2
 
     # check warning
@@ -42,7 +42,7 @@ class AgentTicketActionLevel6Test < TestCase
     @browser.execute_script( "App.TestHelper.attachmentUploadFake('.active .richtext .attachments')" )
 
     # submit form
-    click( css: '.content.active button.js-submit' )
+    click( css: '.content.active .js-submit' )
     sleep 5
 
     # no warning
