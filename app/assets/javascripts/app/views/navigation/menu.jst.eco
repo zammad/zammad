@@ -24,7 +24,7 @@
     <li class="<%= item.class %> <% if @active_tab[item.target] : %>active<% end %>">
       <a class="horizontal center" href="<%= item.target %>">
         <%- @Icon(item.class, 'nav-icon') %>
-        <span class="nav-item-name flex">
+        <span class="nav-item-name">
           <%- @T(item.name) %>
         </span>
       </a>

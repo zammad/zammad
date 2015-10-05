@@ -2202,10 +2202,14 @@ footer {
 
   .main-navigation .nav-icon {
     margin-right: 15px;
-    vertical-align: bottom;
     width: 24px;
     height: 24px;
     fill: hsl(206,7%,37%);
+  }
+
+  .main-navigation .nav-item-name {
+    flex: 1;
+    margin-top: 2px;
   }
 
   .main-navigation .dropdown-icon {
