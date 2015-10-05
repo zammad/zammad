@@ -13,10 +13,10 @@
 
 @font-face {
     font-family: 'Fira Sans';
-    src: url('fonts/FiraSans-Book.eot');
-    src: url('fonts/FiraSans-Book.woff2') format('woff2'),
-         url('fonts/FiraSans-Book.woff') format('woff'),
-         url('fonts/FiraSans-Book.ttf') format('truetype');
+    src: url('fonts/FiraSans-Regular.eot');
+    src: url('fonts/FiraSans-Regular.woff2') format('woff2'),
+         url('fonts/FiraSans-Regular.woff') format('woff'),
+         url('fonts/FiraSans-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
