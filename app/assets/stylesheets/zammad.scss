@@ -1108,13 +1108,11 @@ fieldset > .form-group {
   margin-bottom: 0;
 }
 
-.formGroup-bundle {
+.formGroup--bundle .controls {
   display: flex;
-  align-items: flex-end;
-  margin: 0 4px;
   
-  .formGroup-bundle-label {
-    margin: 0 10px 27px 10px;
+  .controls-label {
+    margin: 11px 10px 0;
   }
 }
 

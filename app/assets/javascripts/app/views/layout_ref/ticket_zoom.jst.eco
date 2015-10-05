@@ -452,20 +452,14 @@
                 </div><span class="help-inline"></span> <span class="help-block"></span>
               </div>
             </div>
-            <div class="formGroup-bundle">
-              <div class="date form-group flex">
-                <div class="formGroup-label">
-                  <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
-                </div>
-                <div class="controls">
-                  <input type="text" value="10/28/2015" class="form-control js-datepicker">
-                </div>
+            <div class="date form-group formGroup--bundle">
+              <div class="formGroup-label">
+                <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
               </div>
-              <div class="formGroup-bundle-label">at</div>
-              <div class="datetime form-group">
-                <div class="controls">
-                  <input type="text" value="08:00" class="form-control time js-timepicker">
-                </div>
+              <div class="controls">
+                <input type="text" value="10/28/2015" class="form-control js-datepicker">
+                <div class="controls-label">at</div>
+                <input type="text" value="08:00" class="form-control time js-timepicker">
               </div>
             </div>
             <div class="select form-group">
