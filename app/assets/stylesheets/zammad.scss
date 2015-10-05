@@ -392,6 +392,10 @@ span[data-tooltip]:hover:before {
     &:active {
       background: hsl(203,65%,45%);
     }
+    .icon {
+      fill: white;
+      opacity: 1;
+    }
   }
 
   &.btn--positive,
@@ -572,62 +576,16 @@ span[data-tooltip]:hover:before {
 }
 
 .buttonDropdown {
-  position: relative;
   display: flex;
+  position: relative;
+  user-select: none;
   
-  .btn.buttonDropdown-main {
-    margin: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    
-    &:not(:active) {
-      border-right: none;
-    }
-
-    &:active + .btn {
-      border-left: none;
-    }
+  .dropdown-menu {
+    margin-bottom: 0;
   }
-
-  .btn.buttonDropdown-toggle {
-    margin: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    
-    .icon {
-      fill: white;
-      opacity: 1;
-    }
-  }
-
-  .buttonDropdown-dropdown {
-    position: absolute;
-    bottom: 40px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
-    perspective: 200px;
-
-    .btn {
-      margin: 0;
-      transform: rotateX(90deg);
-      transform-origin: right bottom;
-      opacity: 0;
-      pointer-events: none;
-      // transition: 400ms;
-      
-      &:first-child {
-        transform-origin: right 82px;
-      }
-    }
-  }
-
-  &.is-open .buttonDropdown-dropdown .btn {
-    transform: none;
-    opacity: 1;
-    pointer-events: auto;
+  
+  &.is-open .dropdown-menu {
+    display: block;
   }
 }
 
@@ -1156,7 +1114,7 @@ fieldset > .form-group {
   margin: 0 4px;
   
   .formGroup-bundle-label {
-    margin: 0 5px 27px 11px;
+    margin: 0 10px 27px 10px;
   }
 }
 
@@ -4824,7 +4782,7 @@ footer {
   margin: 0;
   padding: 0;
   min-width: 100%;
-  color: hsl(198,19%,72%);
+  color: white;
   text-transform: initial;
   letter-spacing: 0;
   background: hsl(234,10%,19%);
@@ -4848,6 +4806,7 @@ footer {
 
   .dropdown-menu.dropdown-menu--light {
     background: white;
+    color: hsl(198,19%,72%);
   }
 
   .dropdown-menu.dropdown-menu--light > li > a {
@@ -4891,14 +4850,14 @@ footer {
     }
 
   .dropdown-menu > li > a {
-    color: white;
+    color: inherit;
     padding: 0 15px;
     margin: 0 -15px;
     line-height: inherit;
   }
 
   .dropdown-menu > li > a:hover {
-    color: white;
+    color: inherit;
     background: hsl(205,90%,60%);
   }
 
@@ -4907,14 +4866,10 @@ footer {
   }
 
   .dropdown.dropdown--actions {
-    .dropdown-menu {
-      color: white;  
-    }
-
     li {
       line-height: initial;
       height: auto;
-      padding: 9px 15px;
+      padding: 11px 15px;
       display: flex;
       align-items: center;
       word-break: break-all;

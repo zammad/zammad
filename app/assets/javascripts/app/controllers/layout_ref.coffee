@@ -795,7 +795,7 @@ class TicketZoomRef extends App.ControllerContent
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
 
-    '.buttonDropdown': 'buttonDropdown' 
+    '.buttonDropdown': 'buttonDropdown'
 
   events:
     'click .js-highlight': 'toggleHighlight'
@@ -804,6 +804,8 @@ class TicketZoomRef extends App.ControllerContent
     'mousedown .js-openDropdown': 'toggleDropdown'
     'click .js-openDropdown': 'stopPropagation'
     'mouseup .js-dropdownAction': 'performTicketMacro'
+    'mouseenter .js-dropdownAction': 'onActionMouseEnter'
+    'mouseleave .js-dropdownAction': 'onActionMouseLeave'
 
   stopPropagation: (event) ->
     event.stopPropagation()
@@ -977,8 +979,14 @@ class TicketZoomRef extends App.ControllerContent
     $(document).unbind 'click.buttonDropdown'
 
   performTicketMacro: (event) =>
-    console.log "perform action", $(event.currentTarget).text()
+    console.log "perform action", @$(event.currentTarget).text()
     @closeDropdown()
+
+  onActionMouseEnter: (event) =>
+    @$(event.currentTarget).addClass('is-active')
+
+  onActionMouseLeave: (event) =>
+    @$(event.currentTarget).removeClass('is-active')
 
 
 

@@ -641,14 +641,13 @@
   </div>
   <div class="attributeBar">
     <div class="btn js-reset hide">Discard your unsaved changes.</div>
-    <div class="buttonDropdown">
-      <div class="buttonDropdown-main btn btn--primary js-submit">Update</div>
-      <div class="buttonDropdown-toggle btn btn--primary btn--slim js-openDropdown"><%- @Icon('arrow-up') %></div>
-      <div class="buttonDropdown-dropdown">
-        <div class="btn btn--primary js-dropdownAction">Update &amp; Close</div>
-        <div class="btn btn--primary js-dropdownAction">Remind me in 2 weeks</div>
-      </div>
-    </div>
+    <div class="buttonDropdown dropdown dropup">
+      <div class="btn btn--primary btn--split--first js-submit">Update</div>
+      <div class="btn btn--primary btn--slim btn--split--last js-openDropdown"><%- @Icon('arrow-up') %></div>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
+        <li class="js-dropdownAction" role="menuitem">Update &amp; Close
+        <li class="js-dropdownAction" role="menuitem">Remind me in 2 weeks
+      </ul>
     </div>
   </div>
 </div>
