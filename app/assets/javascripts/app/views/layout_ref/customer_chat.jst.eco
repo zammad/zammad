@@ -1,0 +1,24 @@
+<div class="chat main">
+  <div class="page-header">
+      <div class="page-header-title">
+        <h1>Customer Chat</h1>
+      </div>
+      <div class="page-header-center">
+        <div class="status-fields">
+          <div class="status-field">
+            <span class="badge">0</span> Waiting Customers
+          </div>
+          <div class="status-field">
+            <span class="badge">15</span> Chatting Customers
+          </div>
+          <div class="status-field">
+            <span class="badge">5</span> Active Agents
+          </div>
+        </div>
+      </div>
+      <div class="page-header-meta">
+        <div class="btn btn--action" data-type="settings"><%= @T('Settings') %></div>
+      </div>
+    </div>
+  <div class="chat-workspace"></div>
+</div>

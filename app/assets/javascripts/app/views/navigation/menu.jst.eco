@@ -1,6 +1,6 @@
 <% for item in @items: %>
   <% if item.child: %>
-  <li class="dropdown <%= item.class %> <% if @open_tab[item.target] : %>open<% end %>">
+  <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
     <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown">
         <%- @Icon(item.class, 'nav-icon') %>
         <span class="nav-item-name flex">
@@ -16,17 +16,26 @@
         <% if item.navheader: %>
           <li class="dropdown-header"><%- @T( item.navheader ) %></li>
         <% end %>
-        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge count"><%= item['count'] %></span><% end %></a></li>
+        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %></a></li>
       <% end %>
     </ul>
   </li>
   <% else: %>
-    <li class="<%= item.class %> <% if @active_tab[item.target] : %>active<% end %>">
+    <li<% ' class="active"' if @active_tab[item.target] %>>
       <a class="horizontal center" href="<%= item.target %>">
         <%- @Icon(item.class, 'nav-icon') %>
         <span class="nav-item-name">
           <%- @T(item.name) %>
         </span>
+        <% if item.counter: %>
+        <span class="counter badge badge--big"></span>
+        <% end %>
+        <% if item.switch: %>
+        <div class="zammad-switch zammad-switch--dark zammad-switch--small">
+           <input type="checkbox" id="<%- item.class %>-switch">
+           <label for="<%- item.class %>-switch"></label>
+        </div>
+        <% end %>
       </a>
     </li>
   <% end %>

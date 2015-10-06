@@ -1657,4 +1657,370 @@ class PrimaryEmailRef extends App.ControllerContent
 App.Config.set( 'layout_ref/primary_email', PrimaryEmailRef, 'Routes' )
 
 
+class App.CustomerChatRef extends App.ControllerContent
+  @extend Spine.Events
+
+  questions: [
+    {
+      question: "Der dümmste Bauer hat die dicksten ..?"
+      answers: ["Kartoffeln"]
+    },
+    {
+      question: "Welchen Wein besang einst Udo Jürgens?"
+      answers: ["griechisch"]
+    },
+    {
+      question: "Was behandelt ein Logopäde?"
+      answers: ["Sprachstörung"]
+    },
+    {
+      question: "In welcher Stadt ist das Porsche Stammwerk?"
+      answers: ["Stuttgart"]
+    },
+    {
+      question: "Wer erfand den legendären C64-Computer?"
+      answers: ["Commodore"]
+    },
+    {
+      question: 'Im Englischen steht "Lost And Found" für ..?'
+      answers: ["Fundbüro"]
+    },
+    {
+      question: 'Welches Möbelstück ist und war besonders in Sigmund Freuds Arbeitszimmer bekannt?'
+      answers: ["Couch"]
+    },
+    {
+      question: 'Wenn es einem gut geht, lebt man "wie die Made im .."?'
+      answers: ["Speck"]
+    },
+    {
+      question: 'Von welcher Sportart handelt der US-amerikanische Film "Rocky"?'
+      answers: ["Boxen"]
+    },
+    {
+      question: 'Wo soll man hingehen, wenn man sich weit entfernen soll? Dahin wo ..?'
+      answers: ["Pfeffer", "wächst"]
+    },
+    {
+      question: 'Welches internationale Autokennzeichen hat Spanien?'
+      answers: ["ES"]
+    },
+    {
+      question: 'Wenn man sich ärgert sagt man "Verdammt und .."?'
+      answers: ["zugenäht"]
+    },
+    {
+      question: 'Bei welchem Spiel muss man ohne zu zittern Stäbchen sammeln?'
+      answers: ["Mikado"]
+    },
+    {
+      question: 'Wann wurde Znuny gegründet?'
+      answers: ["2012"]
+    }
+  ]
+
+  constructor: ->
+    super
+
+    @i = 0
+    @chatWindows = []
+    @totalQuestions = 7
+    @answered = 0
+    @correct = 0
+    @wrong = 0
+    @maxChats = 4;
+
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/customer_chat')()
+
+    @addChat()
+
+    # @testChat @chatWindows[0], 100
+    @initQuiz()
+
+  testChat: (chat, count) ->
+    for i in [0..count]
+      text = @questions[Math.floor(Math.random() * @questions.length)].question
+      chat.addMessage text, if i % 2 then 'customer' else 'agent'
+
+  addChat: ->
+    chat = new chatWindowRef
+      name: "Quizmaster-#{ ++@i }"
+
+    @on 'layout-has-changed', @propagateLayoutChange
+
+    @$('.chat-workspace').append(chat.el)
+    @chatWindows.push chat
+
+  propagateLayoutChange: (event) =>
+    # adjust scroll position on layoutChange
+    console.log "propagateLayoutChange", event
+
+    for chat in @chatWindows
+      chat.trigger 'layout-changed'
+
+  initQuiz: ->
+    @chatWindows[0].addStatusMessage('To start the quiz type <strong>Start</strong>')
+    @chatWindows[0].bind "answer", @startQuiz
+
+  startQuiz: (answer) =>
+    return false unless answer is "Start"
+
+    @chatWindows[0].unbind "answer"
+
+    @nextQuestion()
+
+  nextQuestion: ->
+    if not @questions.length
+      @currentChat.addStatusMessage("Du hast #{ @correct } von #{ @totalQuestions } Fragen richtig beantwortet!")
+      for chat in @chatWindows
+        chat.unbind "answer"
+        if chat is not @currentChat
+          chat.goOffline()
+      return
+
+    if @chatWindows.length < @maxChats and Math.random() < 0.2
+      @addChat()
+      randomWindowId = @chatWindows.length-1
+    else 
+      # maybe take a chat offline
+      if @chatWindows.length > 1 and Math.random() > 0.85
+        randomWindowId = Math.floor(Math.random()*@chatWindows.length)
+        [killedChat] = @chatWindows.splice randomWindowId, 1
+        killedChat.goOffline()
+
+      randomWindowId = Math.floor(Math.random()*@chatWindows.length)
+
+    randomQuestionId = Math.floor(Math.random()*@questions.length)
+
+    @currentQuestion = @questions.splice(randomQuestionId, 1)[0]
+
+    newChat = @chatWindows[randomWindowId]
+
+    messageDelay = 500
+
+    if newChat != @currentChat
+      @currentChat.unbind("answer") if @currentChat
+      @currentChat = newChat
+      @currentChat.bind "answer", @onQuestionAnswer
+      messageDelay = 1500
+
+    @currentChat.showWritingLoader()
+
+    setTimeout @currentChat.receiveMessage, messageDelay + Math.random() * 1000, @currentQuestion.question
+
+  onQuestionAnswer: (answer) =>
+    match = false
+
+    for text in @currentQuestion.answers
+      if answer.match( new RegExp(text,'i') )
+        match = true
+
+    @answered++
+
+    if match
+      @correct++
+      @currentChat.receiveMessage _.shuffle(['😀','😃','😊','😍','😎','😏','👍','😌','😇','👌'])[0]
+    else
+      @wrong++
+      @currentChat.receiveMessage _.shuffle(['👎','💩','😰','😩','😦','😧','😟','😠','😡','😞','😢','😒','😕'])[0]
+
+    if @answerd is @totalQuestions
+      @finishQuiz()
+    else
+      @nextQuestion()
+
+
+
+App.Config.set( 'layout_ref/customer_chat', App.CustomerChatRef, 'Routes' )
+
+App.Config.set( 'Chat', { prio: 300, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', switch: true, counter: true, role: ['Agent'], class: 'chat' }, 'NavBar' )
+# App.Config.set( 'Chat', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
+
+
+class chatWindowRef extends Spine.Controller
+  @extend Spine.Events
+
+  className: 'chat-window'
+
+  events:
+    'keydown .js-customerChatInput': 'onKeydown'
+    'focus .js-customerChatInput':   'clearUnread'
+    'click':                         'clearUnread'
+    'click .js-send':                'sendMessage'
+    'click .js-close':               'close'
+
+  elements:
+    '.js-customerChatInput': 'input'
+    '.js-status':            'status'
+    '.js-body':              'body'
+    '.js-scrollHolder':      'scrollHolder'
+
+  sound:
+    message: new Audio('assets/sounds/chat_message.mp3')
+    window: new Audio('assets/sounds/chat_new.mp3')
+
+  constructor: ->
+    super
+
+    @showTimeEveryXMinutes = 1
+    @lastTimestamp
+    @lastAddedType
+    @render()
+    @sound.window.play()
+
+    @on 'layout-change', @scrollToBottom
+
+  render: ->
+    @html App.view('layout_ref/customer_chat_window')
+      name: @options.name
+
+    @el.one 'transitionend', @onTransitionend
+
+    # make sure animation will run
+    setTimeout (=> @el.addClass('is-open')), 0
+
+    # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent' 
+
+  onTransitionend: (event) =>
+    # chat window is done with animation - adjust scroll-bars
+    # of sibling chat windows
+    @trigger 'layout-has-changed'
+
+    if event.data and event.data.callback
+      event.data.callback()
+
+  close: =>
+    @el.one 'transitionend', { callback: @release }, @onTransitionend
+    @el.removeClass('is-open')
+
+  release: =>
+    @trigger 'closed'
+    super
+
+  clearUnread: =>
+    @$('.chat-message--new').removeClass('chat-message--new')
+    @updateModified(false)
+
+  onKeydown: (event) =>
+    TABKEY = 9;
+    ENTERKEY = 13;
+
+    switch event.keyCode 
+      when TABKEY
+        allChatInputs = $('.js-customerChatInput').not('[disabled="disabled"]')
+        chatCount = allChatInputs.size()
+        index = allChatInputs.index(@input)
+
+        if chatCount > 1
+          switch index 
+            when chatCount-1
+              if !event.shiftKey
+                # State: tab without shift on last input
+                # Jump to first input
+                event.preventDefault()
+                allChatInputs.eq(0).focus()
+            when 0
+              if event.shiftKey
+                # State: tab with shift on first input
+                # Jump to last input
+                event.preventDefault()
+                allChatInputs.eq(chatCount-1).focus()
+
+      when ENTERKEY
+        if !event.shiftKey
+          event.preventDefault()
+          @sendMessage()
+
+  sendMessage: =>
+    return if !@input.html()
+
+    @addMessage @input.html(), 'agent'
+
+    @trigger "answer", @input.html()
+
+    @input.html('')
+
+  updateModified: (state) =>
+    @status.toggleClass('is-modified', state)
+
+  receiveMessage: (message) =>
+    isFocused = @input.is(':focus')
+
+    @removeWritingLoader()
+    @addMessage(message, 'customer', !isFocused)
+
+    if !isFocused
+      @updateModified(true) 
+      @sound.message.play()
+
+  addMessage: (message, sender, isNew) =>
+    @maybeAddTimestamp()
+
+    @lastAddedType = sender
+
+    @body.append App.view('layout_ref/customer_chat_message')
+      message: message
+      sender: sender
+      isNew: isNew
+      timestamp: Date.now()
+
+    @scrollToBottom()
+
+  showWritingLoader: =>
+    @maybeAddTimestamp()
+    @body.append App.view('layout_ref/customer_chat_loader')()
+
+    @scrollToBottom()
+
+  removeWritingLoader: =>
+    @$('.js-loader').remove()
+
+  goOffline: =>
+    @addStatusMessage("<strong>#{ @options.name }</strong>'s connection got closed")
+    @status.attr('data-status', 'offline')
+    @el.addClass('is-offline')
+    @input.attr('disabled', true)
+
+  maybeAddTimestamp: ->
+    timestamp = Date.now()
+
+    if !@lastTimestamp or timestamp - @lastTimestamp > @showTimeEveryXMinutes * 60000
+      label = 'Today'
+      time = new Date().toTimeString().substr(0,5)
+      if @lastAddedType is 'timestamp'
+        # update last time
+        @updateLastTimestamp label, time
+        @lastTimestamp = timestamp
+      else
+        @addTimestamp label, time 
+        @lastTimestamp = timestamp
+        @lastAddedType = 'timestamp'
+
+  addTimestamp: (label, time) =>
+    @body.append App.view('layout_ref/customer_chat_timestamp')
+      label: label
+      time: time
+
+  updateLastTimestamp: (label, time) ->
+    @body
+      .find('.js-timestamp')
+      .last()
+      .replaceWith App.view('layout_ref/customer_chat_timestamp')
+        label: label
+        time: time
+
+  addStatusMessage: (message) ->
+    @body.append App.view('layout_ref/customer_chat_status_message')
+      message: message
+
+    @scrollToBottom()
+
+  scrollToBottom: ->
+    @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+
+
+
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
