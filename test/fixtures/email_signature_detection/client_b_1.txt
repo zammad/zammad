@@ -1,0 +1,53 @@
+Guten Tag Frau Huber,
+
+ich habe gerade eine Mail an Herrn Bauer geschickt, die unter anderem folgendes enthält.
+
+- Als Ticket-Typ steht zur Verfügung:
+
+A. Anfrage (Auskunft, Info, Frage)
+
+B. Auftrag
+
+C. Störung (Fehler, Problem)
+
+D. Default (bei E-Mail-Tickets)
+
+- Wenn der Tickettyp A,B,C erstmalig gesetzt wird, oder der Tickettyp von D auf A,B,C geändert wird, so soll an den Kunden der Standardtext 1,2,3 gehen
+
+- Wenn der Tickettyp von C auf B geändert wird, so soll an den Kunden der Standardtext 4 gehen
+
+- Wenn der Tickettyp von A auf B geändert wird, so soll an den Kunden der Standardtext 5 gehen
+
+- Wenn ein Ticket mit dem Tickettyp A,B,C geschlossen wird, so soll an den Kunden der Standardtext 6,7,8 gehen
+
+- Die Texte bekommen Sie von Frau Huber (andrea.huber@example.com<mailto:andrea.huber@example.com>)
+
+Bitte senden Sie noch die Texte an Herrn Bauer.
+
+Freundliche Grüße
+
+Günter Lässig
+Lokale Daten
+
+Music GmbH
+Baustraße 123, 12345 Max City
+Telefon 0123 5432114
+Telefax 0123 5432139
+E-Mail Günter.Lässig@example.com<mailto:Günter.Lässig@example.com>
+
+Example. Zusammen für eine bessere Welt.
+[cid:image001.png@01CE92A6.EC495B60]<http://www.example.com/>
+
+[cid:image002.png@01CE92A6.EC495B60]<http://www.facebook.com/example.com>
+
+[cid:image003.png@01CE92A6.EC495B60]<http://twitter.com/example>
+
+[cid:image004.png@01CE92A6.EC495B60]<https://www.xing.com/companies/example/neu-example>
+
+[cid:image005.jpg@01CE92A6.EC495B60]<http://www.youtube.com/example>
+
+[cid:image006.png@01CE92A6.EC495B60]<http://www.example.com/no_cache/privatkunden/aktuelles/news-presse/newsletter.html>
+
+Sitz der Gesellschaft: Max City, Amtsgericht Max City HRB Nr. 1234
+Geschäftsführer: Bob Smith
+Vorsitzender des Aufsichtsrats: Alex Marx

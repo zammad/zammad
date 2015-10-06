@@ -196,6 +196,10 @@ class App.TicketZoomArticleNew extends App.Controller
             @attachmentPlaceholder.removeClass('hide')
             @attachmentUpload.addClass('hide')
 
+            # reset progress bar
+            @progressBar.width(parseInt(0) + '%')
+            @progressText.text('')
+
             @renderAttachment(response.data)
             console.log('upload complete', response.data )
 

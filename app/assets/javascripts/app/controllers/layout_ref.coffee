@@ -1500,10 +1500,27 @@ class InputsRef extends App.ControllerContent
     @$('.searchableAjaxSelectPlaceholder').replaceWith( searchableAjaxSelectObject.element() )
 
     # time and timeframe
-    @$('.time').timepicker()
+    @$('.js-timepicker1, .js-timepicker2').timepicker()
 
-    @$('.timeframe').timepicker
+    @$('.timeframe').timepicker(
       maxHours: 99
+    )
+
+    # date picker
+    @$('.js-datepicker3').datepicker(
+      todayHighlight: true
+      startDate: new Date().toLocaleDateString('de-DE') # returns 25.09.2015
+      format: 'dd.mm.yyyy',
+      container: @$('.js-datepicker3').parent()
+    )
+
+    # date time picker
+    @$('.js-datepicker4').datepicker(
+      todayHighlight: true
+      startDate: new Date().toLocaleDateString('en-US') # returns 9/25/2015
+      container: @$('.js-datepicker4').parent()
+    )
+    @$('.js-timepicker4').timepicker()
 
 App.Config.set( 'layout_ref/inputs', InputsRef, 'Routes' )
 

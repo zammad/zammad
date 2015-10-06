@@ -13,7 +13,7 @@ class App.UiElement.richtext
       renderAttachment = (file) =>
         item.find('.attachments').append( App.view('generic/attachment_item')(
           fileName: file.filename
-          fileSize: @humanFileSize( file.size )
+          fileSize: App.Utils.humanFileSize( file.size )
           store_id: file.store_id
         ))
         item.on(
@@ -82,7 +82,12 @@ class App.UiElement.richtext
               @attachmentPlaceholder.removeClass('hide')
               @attachmentUpload.addClass('hide')
 
+              # reset progress bar
+              @progressBar.width(parseInt(0) + '%')
+              @progressText.text('')
+
               renderAttachment(response.data)
+
               console.log('upload complete', response.data )
 
             # Called during upload progress, first parameter
