@@ -1,0 +1,33 @@
+Guten Tag Herr Meister,
+
+unsere OTRS-DB ist nun nicht mehr korrupt. Allerdings gibt es im Systemprotokoll von OTRS immer noch die roten Fehlermeldungen "Got no Type or TypeID!". Können Sie mir bitte mitteilen, was dies genau zu bedeuten hat?
+
+Herr Smith möchte vor der Implementierung der neuen Verbesserungsvorschläge noch die neue OTRS und Postgres-Version einspielen. Falls Sie Zeit hätten, könnten wir trotzdem schon mal die neuen Verbesserungsvorschläge (siehe Anhang) telefonisch besprechen, ich hätte ab Donnerstag dafür Zeit. Wenn Sie wollen, können Sie mir einen Terminvorschlag senden.
+
+Freundliche Grüße
+
+Günter Lässig
+Lokale Daten
+
+Music GmbH
+Baustraße 123, 12345 Max City
+Telefon 0123 5432114
+Telefax 0123 5432139
+E-Mail Günter.Lässig@example.com<mailto:Günter.Lässig@example.com>
+
+Example. Zusammen für eine bessere Welt.
+[cid:image001.png@01CE92A6.EC495B60]<http://www.example.com/>
+
+[cid:image002.png@01CE92A6.EC495B60]<http://www.facebook.com/example.com>
+
+[cid:image003.png@01CE92A6.EC495B60]<http://twitter.com/example>
+
+[cid:image004.png@01CE92A6.EC495B60]<https://www.xing.com/companies/example/neu-example>
+
+[cid:image005.jpg@01CE92A6.EC495B60]<http://www.youtube.com/example>
+
+[cid:image006.png@01CE92A6.EC495B60]<http://www.example.com/no_cache/privatkunden/aktuelles/news-presse/newsletter.html>
+
+Sitz der Gesellschaft: Max City, Amtsgericht Max City HRB Nr. 1234
+Geschäftsführer: Bob Smith
+Vorsitzender des Aufsichtsrats: Alex Marx

@@ -1,0 +1,58 @@
+Hallo Herr Lässig,
+
+ich habe das Ticket mal geteilt, damit wir die Themen von einander trennen können.
+
+Freundliche Grüße
+
+Günter Lässig
+Lokale Daten
+
+Music GmbH
+Baustraße 123, 12345 Max City
+Telefon 0123 5432114
+Telefax 0123 5432139
+E-Mail Günter.Lässig@example.com<mailto:Günter.Lässig@example.com>
+
+Example. Zusammen für eine bessere Welt.
+[cid:image001.png@01CE92A6.EC495B60]<http://www.example.com/>
+
+[cid:image002.png@01CE92A6.EC495B60]<http://www.facebook.com/example.com>
+
+[cid:image003.png@01CE92A6.EC495B60]<http://twitter.com/example>
+
+[cid:image004.png@01CE92A6.EC495B60]<https://www.xing.com/companies/example/neu-example>
+
+[cid:image005.jpg@01CE92A6.EC495B60]<http://www.youtube.com/example>
+
+[cid:image006.png@01CE92A6.EC495B60]<http://www.example.com/no_cache/privatkunden/aktuelles/news-presse/newsletter.html>
+
+Sitz der Gesellschaft: Max City, Amtsgericht Max City HRB Nr. 1234
+Geschäftsführer: Bob Smith
+Vorsitzender des Aufsichtsrats: Alex Marx
+Von: Werner Smith via Znuny Projects [mailto:projects@example.com]
+Gesendet: Freitag, 4. September 2015 09:33
+An: Günter Lässig
+Betreff: Texte einpflegen [Ticket#1114881]
+
+Guten Morgen Herr Lässig,
+
+ich würde Ihnen hier gern weiterhelfen.
+Mit den eventbasierten Benachrichtigungen können Sie Benachrichtigungen beim Öffnen und Schließen von Tickets versenden. Dabei wird die Systemadresse der Queue, in der das Ticket ist,
+als Absende-Adresse genutzt.
+
+Wie genau kann ich Ihnen jetzt weiterhelfen? Wenn Sie möchten, kann ich Sie heute Nachmittag kurz anrufen und Ihnen direkt die Auskunft geben.
+
+viele Grüße,
+Werner Smith
+
+--
+Enterprise Services for OTRS
+
+Znuny GmbH // Marienstraße 14 // 10117 Berlin // Germany
+
+P: +49 (0) 30 60 98 54 18-0
+F: +49 (0) 30 60 98 54 18-8
+W: http://example.com
+
+Location: Berlin - HRB 123456 B Amtsgericht Berlin-Charlottenburg
+Managing Director: Martin Edenhofer
