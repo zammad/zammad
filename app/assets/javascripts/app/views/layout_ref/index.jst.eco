@@ -4,6 +4,7 @@
 
 
   <ul>
+    <li><a href="#layout_ref/customer_chat">Customer Chat</a></li>
     <li><a href="#layout_ref/ticket_zoom">Ticket Zoom</a></li>
     <li><a href="#layout_ref/primary_email">Primary Email (New/Edit User)</a></li>
     <li><a href="#layout_ref/merge_customer">Merge Customer</a></li>

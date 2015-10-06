@@ -3513,51 +3513,6 @@ a.label:focus {
 .label-danger[href]:focus {
   background-color: #c9302c;
 }
-.badge {
-  display: inline-block;
-  min-width: 10px;
-  padding: 3px 7px;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  background-color: #777;
-  border-radius: 10px;
-}
-.badge:empty {
-  display: none;
-}
-.btn .badge {
-  position: relative;
-  top: -1px;
-}
-.btn-xs .badge {
-  top: 0;
-  padding: 1px 5px;
-}
-a.badge:hover,
-a.badge:focus {
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-}
-.list-group-item.active > .badge,
-.nav-pills > .active > a > .badge {
-  color: #337ab7;
-  background-color: #fff;
-}
-.list-group-item > .badge {
-  float: right;
-}
-.list-group-item > .badge + .badge {
-  margin-right: 5px;
-}
-.nav-pills > li > a > .badge {
-  margin-left: 3px;
-}
 .jumbotron {
   padding: 30px 15px;
   margin-bottom: 30px;
