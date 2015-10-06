@@ -593,6 +593,8 @@ class App.TicketZoom extends App.Controller
         # reset form after save
         @reset()
 
+        @autosaveStart()
+
         App.TaskManager.mute(@task_key)
 
         @fetch(ticket.id, true)
