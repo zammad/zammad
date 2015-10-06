@@ -1509,15 +1509,16 @@ class InputsRef extends App.ControllerContent
     # date picker
     @$('.js-datepicker3').datepicker(
       todayHighlight: true
-      startDate: new Date().toLocaleDateString('de-DE') # returns 25.09.2015
-      format: 'dd.mm.yyyy',
+      startDate: new Date()
+      format: App.i18n.timeFormat().date
       container: @$('.js-datepicker3').parent()
     )
 
     # date time picker
     @$('.js-datepicker4').datepicker(
       todayHighlight: true
-      startDate: new Date().toLocaleDateString('en-US') # returns 9/25/2015
+      startDate: new Date()
+      format: App.i18n.timeFormat().date
       container: @$('.js-datepicker4').parent()
     )
     @$('.js-timepicker4').timepicker()
