@@ -1675,7 +1675,7 @@ class PrimaryEmailRef extends App.ControllerContent
 App.Config.set( 'layout_ref/primary_email', PrimaryEmailRef, 'Routes' )
 
 
-class App.CustomerChatRef extends App.ControllerContent
+class App.CustomerChatRef extends App.Controller
   @extend Spine.Events
 
   questions: [
@@ -1757,6 +1757,11 @@ class App.CustomerChatRef extends App.ControllerContent
 
     # @testChat @chatWindows[0], 100
     @initQuiz()
+
+  show: (params) =>
+
+    # highlight navbar
+    @navupdate '#layout_ref/customer_chat'
 
   testChat: (chat, count) ->
     for i in [0..count]
@@ -1850,12 +1855,24 @@ class App.CustomerChatRef extends App.ControllerContent
     else
       @nextQuestion()
 
+class CustomerChatRouter extends App.ControllerPermanent
+  constructor: (params) ->
+    super
 
+    # check authentication
+    return if !@authenticate()
 
-App.Config.set( 'layout_ref/customer_chat', App.CustomerChatRef, 'Routes' )
+    App.TaskManager.execute(
+      key:        'CustomerChatRef'
+      controller: 'CustomerChatRef'
+      params:     {}
+      show:       true
+      persistent: true
+    )
 
-App.Config.set( 'Chat', { prio: 300, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', switch: true, counter: true, role: ['Agent'], class: 'chat' }, 'NavBar' )
-# App.Config.set( 'Chat', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
+App.Config.set( 'layout_ref/customer_chat', CustomerChatRouter, 'Routes' )
+App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
+App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', switch: true, counter: true, role: ['Agent'], class: 'chat' }, 'NavBar' )
 
 
 class chatWindowRef extends Spine.Controller
