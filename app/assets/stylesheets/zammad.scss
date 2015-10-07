@@ -2289,6 +2289,10 @@ footer {
     height: 22px;
   }
 
+  .main-navigation > li.active .zammad-switch label:after {
+    background: white;
+  }
+
   .main-navigation > li > a {
     padding: 0 15px;
     height: 48px;
