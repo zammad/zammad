@@ -15,8 +15,11 @@ class App.UiElement.ticket_perform_action
 
         # ignore passwords and relations
         if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
-          config = _.clone(row)
-          elements["#{groupKey}.#{config.name}"] = config
+
+          # ignore readonly attributes
+          if !row.readonly
+            config = _.clone(row)
+            elements["#{groupKey}.#{config.name}"] = config
 
     [defaults, groups, elements]
 

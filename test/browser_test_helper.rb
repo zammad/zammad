@@ -138,7 +138,7 @@ class TestCase < Test::Unit::TestCase
     end
     instance.find_elements( { css: '#login button' } )[0].click
 
-    sleep 4
+    sleep 5
     login = instance.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     if login != params[:username]
       screenshot( browser: instance, comment: 'login_failed' )
