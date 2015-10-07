@@ -62,6 +62,8 @@ gem 'browser'
 gem 'eventmachine'
 gem 'em-websocket'
 
+gem 'diffy'
+
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do

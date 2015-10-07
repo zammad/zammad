@@ -76,6 +76,7 @@ GEM
     delayed_job_active_record (4.1.0)
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
+    diffy (3.0.7)
     docile (1.1.5)
     eco (1.0.0)
       coffee-script
@@ -302,6 +303,7 @@ DEPENDENCIES
   coffee-script-source
   daemons
   delayed_job_active_record
+  diffy
   eco
   em-websocket
   eventmachine

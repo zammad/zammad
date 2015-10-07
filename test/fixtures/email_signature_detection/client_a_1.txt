@@ -1,5 +1,7 @@
 Hi,
 
+123
+
 uns liegt die fachliche Anforderung vor, dass eine Agent-AddNote-Benachrichtigung für die beiden o. g. TicketHistory-Typen versendet werden soll.
 
 Das Modul Custom/Kernel/System/Ticket/Article.pm sieht diese Benachrichtigungen nach meinem Verständnis bisher nicht vor. Dafür wäre doch eine Codeerweiterung erforderlich, oder?
