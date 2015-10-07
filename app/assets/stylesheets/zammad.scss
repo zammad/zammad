@@ -1833,8 +1833,8 @@ kbd {
   }
 
   .logotype {
-    margin-left: 8px;
-    margin-top: -5px;
+    margin-left: 7px;
+    margin-top: -3px;
     fill: hsl(225,9%,27%);
   }
 }
@@ -2272,77 +2272,79 @@ footer {
     display: none !important;
   }
 
-.main-navigation {
+.menu {
   padding: 0;
   margin: 0;
   list-style: none;
   flex-shrink: 0;
 }
 
-  .main-navigation .badge {
+  .menu .badge {
     background: $ok-color;
     color: hsl(233,10%,16%);
     margin-right: 8px;
   }
 
-  .main-navigation .zammad-switch {
+  .menu .zammad-switch {
     height: 22px;
   }
 
-  .main-navigation > li.active .zammad-switch label:after {
-    background: white;
-  }
-
-  .main-navigation > li > a {
+  .menu-item {
     padding: 0 15px;
     height: 48px;
     color: rgba(240, 250, 255, .25);
     border-bottom: 1px solid rgba(240, 250, 255, .05);
     text-decoration: none;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background: hsl(230,10%,13%);
+      border-bottom-color: rgba(240, 250, 255, .08);
+    }
+    
+    &.is-active,
+    &.is-hovered {
+      background: none;
+      color: white;
+    }
+
+    &.is-active .menu-item-icon,
+    &.is-active .dropdown-icon,
+    &.is-hovered .menu-item-icon {
+      fill: currentColor;
+    }
+
+    &.is-active,
+    &.is-hovered {
+      background: #389ed9;
+    }
+
+    &.is-active .zammad-switch label:after {
+      background: white;
+    }
+
+    .dropdown-icon {
+      fill: hsl(206,7%,37%);
+    }
+
+    .dropdown-menu {
+      left: 10px;
+      right: 15px;
+      min-width: 0;
+    }
   }
 
-  .main-navigation > li > a:hover {
-    background: hsl(230,10%,13%);
-    border-bottom-color: rgba(240, 250, 255, .08);
-  }
-
-  .main-navigation > li.active > a,
-  .main-navigation > li.is-hovered > a {
-    background: none;
-    color: white;
-  }
-
-  .main-navigation > li.active .nav-icon,
-  .main-navigation > li.active .dropdown-icon,
-  .main-navigation > li.is-hovered .nav-icon {
-    fill: currentColor;
-  }
-
-  .main-navigation li.active > a,
-  .main-navigation li.is-hovered > a {
-    background: #389ed9;
-  }
-
-  .main-navigation .dropdown-menu {
-    left: 10px;
-    right: 15px;
-    min-width: 0;
-  }
-
-  .main-navigation .nav-icon {
+  .menu-item-icon {
     margin-right: 15px;
     width: 24px;
     height: 24px;
     fill: hsl(206,7%,37%);
   }
 
-  .main-navigation .nav-item-name {
+  .menu-item-name {
     flex: 1;
     margin-top: 2px;
-  }
-
-  .main-navigation .dropdown-icon {
-    fill: hsl(206,7%,37%);
   }
 
 .tasks {
