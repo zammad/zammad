@@ -2289,6 +2289,12 @@ footer {
     height: 22px;
   }
 
+  .menu .dropdown-menu {
+    left: 10px;
+    right: 15px;
+    min-width: 0;
+  }
+
   .menu-item {
     padding: 0 15px;
     height: 48px;
@@ -2297,12 +2303,13 @@ footer {
     text-decoration: none;
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     &:hover {
       background: hsl(230,10%,13%);
       border-bottom-color: rgba(240, 250, 255, .08);
     }
-    
+
     &.is-active,
     &.is-hovered {
       background: none;
@@ -2325,13 +2332,7 @@ footer {
     }
 
     .dropdown-icon {
-      fill: hsl(206,7%,37%);
-    }
-
-    .dropdown-menu {
-      left: 10px;
-      right: 15px;
-      min-width: 0;
+      fill: currentColor;
     }
   }
 
