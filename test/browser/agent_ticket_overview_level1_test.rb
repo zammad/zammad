@@ -28,24 +28,24 @@ class AgentTicketOverviewLevel1Test < TestCase
     overview_create(
       browser: browser1,
       data: {
-        :name              => name1,
-        :role              => 'Agent',
-        :selector          => {
+        name: name1,
+        role: 'Agent',
+        selector: {
           'Priority' => '1 low',
         },
-        :prio              => 1000,
+        prio: 1000,
         'order::direction' => 'down',
       }
     )
     overview_create(
       browser: browser1,
       data: {
-        :name              => name2,
-        :role              => 'Agent',
-        :selector          => {
+        name: name2,
+        role: 'Agent',
+        selector: {
           'Priority' => '3 high',
         },
-        :prio              => 1001,
+        prio: 1001,
         'order::direction' => 'down',
       }
     )
