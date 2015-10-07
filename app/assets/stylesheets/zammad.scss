@@ -6776,11 +6776,16 @@ output {
   cursor: pointer;
   
   .icon {
-    fill: hsl(197,19%,78%);
+    fill: currentColor;
+    opacity: 0.5;
   }
 
   &:hover {
-    background: hsl(197,18%,96%);
+    background: hsl(210,8%,90%);
+    
+    .icon {
+      opacity: 1;
+    }
   }
 }
 
