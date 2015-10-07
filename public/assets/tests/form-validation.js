@@ -127,11 +127,10 @@ test( 'datetime validation check', function() {
   //equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
 
   // set new values
-  el.find('[data-name="datetime1"] [data-item="day"]').val(1).trigger('blur')
-  el.find('[data-name="datetime1"] [data-item="month"]').val(1).trigger('blur')
-  el.find('[data-name="datetime1"] [data-item="year"]').val(2015).trigger('blur')
-  el.find('[data-name="datetime1"] [data-item="hour"]').val(12).trigger('blur')
-  el.find('[data-name="datetime1"] [data-item="minute"]').val(42).trigger('blur')
+  el.find('[data-name="datetime1"] [data-item="date"]').val('01/01/2015').trigger('blur')
+  el.find('[data-name="datetime1"] [data-item="date"]').datepicker('setDate')
+  el.find('[data-name="datetime1"] [data-item="time"]').val('12:42').trigger('blur')
+  el.find('[data-name="datetime1"] [data-item="time"]').trigger('change')
 
   // check params
   timeStamp = new Date( Date.parse('2015-01-01T12:42:00.000Z') )
@@ -151,16 +150,12 @@ test( 'datetime validation check', function() {
   equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), false, 'check datetime1 has-error')
   equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
 
-  el.find('[data-name="datetime1"] [data-item="day"]').val('47').trigger('blur')
-  deepEqual( el.find('[data-name="datetime1"] [data-item="day"]').hasClass('has-error'), true )
-  el.find('[data-name="datetime1"] [data-item="month"]').val('1').trigger('blur')
-  deepEqual( el.find('[data-name="datetime1"] [data-item="month"]').hasClass('has-error'), false )
-  el.find('[data-name="datetime1"] [data-item="year"]').val('2015').trigger('blur')
-  deepEqual( el.find('[data-name="datetime1"] [data-item="year"]').hasClass('has-error'), false )
-  el.find('[data-name="datetime1"] [data-item="hour"]').val('12').trigger('blur')
-  deepEqual( el.find('[data-name="datetime1"] [data-item="hour"]').hasClass('has-error'), false )
-  el.find('[data-name="datetime1"] [data-item="minute"]').val('42').trigger('blur')
-  deepEqual( el.find('[data-name="datetime1"] [data-item="minute"]').hasClass('has-error'), false )
+  el.find('[data-name="datetime1"] [data-item="date"]').val('').trigger('blur')
+  el.find('[data-name="datetime1"] [data-item="date"]').datepicker('setDate')
+  el.find('[data-name="datetime1"] [data-item="time"]').val('12:42').trigger('blur')
+  el.find('[data-name="datetime1"] [data-item="time"]').trigger('change')
+
+  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true )
 
   params = App.ControllerForm.params( el )
   errors = form.validate(params)
@@ -169,10 +164,9 @@ test( 'datetime validation check', function() {
   }
   deepEqual( errors, test_errors, 'validation errors check' )
   App.ControllerForm.validate( { errors: errors, form: el } )
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), false, 'check datetime1 no has-error')
-  equal( el.find('[data-name="datetime1"] [data-item="day"]').hasClass('has-error'), true, 'check datetime1 no has-error')
-  equal( el.find('[data-name="datetime1"] [data-item="month"]').hasClass('has-error'), false, 'check datetime1 no has-error')
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
+
+  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 no has-error')
+  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
 
 });
 
@@ -186,7 +180,7 @@ test( 'date validation check', function() {
     el:    el,
     model: {
       configure_attributes: [
-        { name: 'date1', display: 'Date1', tag: 'date', null: false, default: defaults['time1'] },
+        { name: 'date2', display: 'Date2', tag: 'date', null: false, default: defaults['time1'] },
       ],
     },
     params: defaults,
@@ -197,29 +191,29 @@ test( 'date validation check', function() {
   // check params
   params = App.ControllerForm.params( el )
   test_params = {
-    date1: undefined,
+    date2: undefined,
   }
   deepEqual( params, test_params, 'params check' )
 
   errors = form.validate(params)
   test_errors = {
-    date1: 'is required',
+    date2: 'is required',
   }
   deepEqual( errors, test_errors, 'validation errors check' )
   App.ControllerForm.validate( { errors: errors, form: el } )
 
-  equal( el.find('[data-name="date1"]').closest('.form-group').hasClass('has-error'), true, 'check date1 has-error')
-  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date1 error message')
+  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
+  equal( el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date2 error message')
 
   // set new values
-  el.find('[data-name="date1"] [data-item="day"]').val('1').trigger('blur')
-  el.find('[data-name="date1"] [data-item="month"]').val('1').trigger('blur')
-  el.find('[data-name="date1"] [data-item="year"]').val('2015').trigger('blur')
+  el.find('[data-name="date2"] [data-item="date"]').val('01/01/2015').trigger('blur')
+  el.find('[data-name="date2"] [data-item="date"]').datepicker('setDate')
+  el.find('[data-name="date2"] [data-item="date"]').trigger('change')
 
   // check params
   params = App.ControllerForm.params( el )
   test_params = {
-    date1: '2015-01-01',
+    date2: '2015-01-01',
   }
   deepEqual( params, test_params, 'params check' )
 
@@ -228,37 +222,32 @@ test( 'date validation check', function() {
   test_errors = undefined
   deepEqual( errors, test_errors, 'validation errors check' )
   App.ControllerForm.validate( { errors: errors, form: el } )
-  equal( el.find('[data-name="date1"]').closest('.form-group').hasClass('has-error'), false, 'check date1 has-error')
-  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
+  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), false, 'check date1 has-error')
+  equal( el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
 
   // set invalid values
-  el.find('[data-name="date1"] [data-item="day"]').val('47').trigger('blur')
-  deepEqual( el.find('[data-name="date1"] [data-item="day"]').hasClass('has-error'), true )
-  el.find('[data-name="date1"] [data-item="month"]').val('1').trigger('blur')
-  deepEqual( el.find('[data-name="date1"] [data-item="month"]').hasClass('has-error'), false )
-  el.find('[data-name="date1"] [data-item="year"]').val('2015').trigger('blur')
-  deepEqual( el.find('[data-name="date1"] [data-item="year"]').hasClass('has-error'), false )
+  el.find('[data-name="date2"] [data-item="date"]').val('').trigger('blur')
+  el.find('[data-name="date2"] [data-item="date"]').datepicker('setDate')
+  el.find('[data-name="date2"] [data-item="date"]').trigger('change')
+  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
 
   // check params
   params = App.ControllerForm.params( el )
   test_params = {
-    date1: undefined,
+    date2: undefined,
   }
   deepEqual( params, test_params, 'params check' )
 
   // check errors
   errors = form.validate(params)
   test_errors = {
-    date1: 'is required',
+    date2: 'is required',
   }
   deepEqual( errors, test_errors, 'validation errors check' )
   App.ControllerForm.validate( { errors: errors, form: el } )
 
-  equal( el.find('[data-name="date1"]').closest('.form-group').hasClass('has-error'), false, 'check date1 no has-error')
-  equal( el.find('[data-name="date1"] [data-item="day"]').hasClass('has-error'), true, 'check date1 no has-error')
-  equal( el.find('[data-name="date1"] [data-item="month"]').hasClass('has-error'), false, 'check date1 no has-error')
-  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
-
+  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
+  equal( el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date2 error message')
 });
 
 test( "datetime selector check", function() {
@@ -284,10 +273,12 @@ test( "datetime selector check", function() {
   }
   deepEqual( params, test_params, 'params check' )
 
-  el.find('.js-today').click()
+  timeStamp = new Date()
+
+  el.find('.js-datepicker').datepicker('setDate', timeStamp)
+  el.find('.js-datepicker').trigger('blur')
 
   // check params
-  timeStamp = new Date()
   currentTime = timeStamp.toISOString()
   currentTime = currentTime.replace(/(\d\d\.\d\d\dZ)$/, '00.000Z')
   params = App.ControllerForm.params( el )
@@ -308,7 +299,7 @@ test( "date selector check", function() {
     el:    el,
     model: {
       configure_attributes: [
-        { name: 'date1', display: 'Datet1', tag: 'date', null: false, default: defaults['date1'] },
+        { name: 'date3', display: 'Datet1', tag: 'date', null: false, default: defaults['date3'] },
       ],
     },
     params: defaults,
@@ -317,11 +308,14 @@ test( "date selector check", function() {
   // check params
   params = App.ControllerForm.params( el )
   test_params = {
-    date1: undefined,
+    date3: undefined,
   }
   deepEqual( params, test_params, 'params check' )
 
-  el.find('.js-today').click()
+  timeStamp = new Date()
+
+  el.find('.js-datepicker').datepicker('setDate', timeStamp)
+  el.find('.js-datepicker').trigger('blur')
 
   // check params
   format = function (number) {
@@ -331,11 +325,10 @@ test( "date selector check", function() {
     return number
   }
 
-  timeStamp = new Date()
   currentTime = timeStamp.getFullYear() + '-' + format(timeStamp.getMonth()+1) + '-' + format(timeStamp.getDate())
   params = App.ControllerForm.params( el )
   test_params = {
-    date1: currentTime,
+    date3: currentTime,
   }
   deepEqual( params, test_params, 'params check' )
 

@@ -12,14 +12,14 @@
     <p>A date</p>
     <div class="date form-group">
       <div class="controls">
-        <input type="text" value="10/28/2015" class="form-control js-datepicker3">
+        <input type="text" value="<%- @Tdate('2014-10-28') %>" class="form-control js-datepicker3">
       </div>
     </div>
 
     <p>A date time</p>
-    <div class="date form-group formGroup--bundle">
-      <div class="controls">
-        <input type="text" value="10/28/2015" class="form-control js-datepicker4">
+    <div class="datetime form-group">
+      <div class="controls controls--bundle">
+        <input type="text" value="<%- @Tdate('2015-10-28') %>" class="form-control js-datepicker4">
         <div class="controls-label">at</div>
         <input type="text" value="08:00" class="form-control time js-timepicker4">
       </div>
