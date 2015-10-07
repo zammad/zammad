@@ -603,11 +603,9 @@ span[data-tooltip]:hover:before {
 }
 
 .status-field {
-  background: hsl(210,7%,95%);
-  color: hsl(0,0%,66%);
+  color: hsl(0,0%,60%);
   padding: 8px 10px 6px;
-  border: 1px solid hsl(0,0%,91%);
-  box-shadow: 0 1px rgba(0,0,0,.02) inset;
+  border: 1px solid hsl(0,0%,90%);
   
   &:not(:last-child):not(:only-child) {
     border-right: none;
