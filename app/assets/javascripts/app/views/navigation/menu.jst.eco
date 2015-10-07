@@ -1,9 +1,8 @@
 <% for item in @items: %>
   <% if item.child: %>
-  <li class="dropdown <% if @open_tab[item.target] : %>open<% end %>">
-    <a href="<%= item.target %>" class="dropdown-toggle" data-toggle="dropdown">
-        <%- @Icon(item.class, 'nav-icon') %>
-        <span class="nav-item-name flex">
+    <a href="<%= item.target %>" class="dropdown-toggle dropdown<%- ' open' if @open_tab[item.target] %>" data-toggle="dropdown">
+        <%- @Icon(item.class, 'menu-item-icon') %>
+        <span class="menu-item-name flex">
           <%- @T(item.name) %>
         </span>
         <%- @Icon('arrow-down', 'dropdown-icon') %>
@@ -21,22 +20,20 @@
     </ul>
   </li>
   <% else: %>
-    <li<% ' class="active"' if @active_tab[item.target] %>>
-      <a class="horizontal center" href="<%= item.target %>">
-        <%- @Icon(item.class, 'nav-icon') %>
-        <span class="nav-item-name">
-          <%- @T(item.name) %>
-        </span>
-        <% if item.counter: %>
-        <span class="counter badge badge--big"></span>
-        <% end %>
-        <% if item.switch: %>
-        <div class="zammad-switch zammad-switch--dark zammad-switch--small">
-           <input type="checkbox" id="<%- item.class %>-switch">
-           <label for="<%- item.class %>-switch"></label>
-        </div>
-        <% end %>
-      </a>
-    </li>
+    <a class="menu-item js-<%- item.class %>MenuItem<%- ' is-active' if @active_tab[item.target] %>" href="<%= item.target %>">
+      <%- @Icon(item.class, 'menu-item-icon') %>
+      <span class="menu-item-name">
+        <%- @T(item.name) %>
+      </span>
+      <% if item.counter: %>
+      <span class="counter badge badge--big"></span>
+      <% end %>
+      <% if item.switch: %>
+      <span class="zammad-switch zammad-switch--dark zammad-switch--small">
+         <input type="checkbox" id="<%- item.class %>-switch">
+         <label for="<%- item.class %>-switch"></label>
+      </span>
+      <% end %>
+    </a>
   <% end %>
 <% end %>

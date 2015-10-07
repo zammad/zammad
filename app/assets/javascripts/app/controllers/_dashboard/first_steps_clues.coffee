@@ -30,7 +30,7 @@ class App.FirstStepsClues extends App.Controller
       ]
     }
     {
-      container: '.main-navigation .overviews'
+      container: '.js-overviewsMenuItem'
       headline: 'Overviews'
       text: 'Here you find your ticket overviews for open, my assigned or escalated tickets.'
       #headline: 'Übersichten'
@@ -40,7 +40,7 @@ class App.FirstStepsClues extends App.Controller
       ]
     }
     {
-      container: '.main-navigation .dashboard'
+      container: '.js-dashboardMenuItem'
       headline: 'Dashboard'
       text: 'Here you see a quick overview about your and other agents performance.'
       #headline: 'Dashboard'

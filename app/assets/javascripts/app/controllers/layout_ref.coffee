@@ -1020,7 +1020,7 @@ class CluesRef extends App.ControllerContent
       ]
     }
     {
-      container: '.main-navigation .overviews'
+      container: '.js-overviewsMenuItem'
       headline: 'Übersichten'
       text: 'Hier findest du eine Liste aller Tickets.'
       actions: [
@@ -1028,7 +1028,7 @@ class CluesRef extends App.ControllerContent
       ]
     }
     {
-      container: '.main-navigation .dashboard'
+      container: '.js-dashboardMenuItem'
       headline: 'Dashboard'
       text: 'Hier siehst du auf einem Blick ob sich alle Agenten an die Spielregeln halten.'
       actions: [
