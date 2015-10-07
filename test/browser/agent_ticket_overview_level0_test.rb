@@ -31,8 +31,8 @@ class AgentTicketOverviewLevel0Test < TestCase
       }
     )
     sleep 6 # till overview is updated
-    click( css: '#navigation li.overviews a' )
-    click( css: '.content.active .sidebar a[href="#ticket/view/all_unassigned"]' )
+    click( text: 'Overviews' )
+    click( text: 'Unassigned & Open Tickets' )
     sleep 4 # till overview is rendered
 
     # select both via bulk action

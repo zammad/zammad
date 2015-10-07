@@ -57,19 +57,19 @@ class PreferencesTest < TestCase
 
     # check language in navbar
     watch_for(
-      css: '#navigation',
+      css: '.js-menu',
       value: 'Übersicht'
     )
 
     # check language in dashboard
-    click( css: '#navigation a[href="#dashboard"]' )
+    click( css: '.js-menu a[href="#dashboard"]' )
     watch_for(
       css: '.content.active',
       value: 'Meine Statistik'
     )
 
     # check language in overview
-    click( css: '#navigation a[href="#ticket/view"]' )
+    click( css: '.js-menu a[href="#ticket/view"]' )
     watch_for(
       css: '.content.active',
       value: 'Meine'
@@ -171,19 +171,19 @@ class PreferencesTest < TestCase
 
     # check language in navbar
     watch_for(
-      css: '#navigation',
+      css: '.js-menu',
       value: 'Overview'
     )
 
     # check language in dashboard
-    click( css: '#navigation a[href="#dashboard"]' )
+    click( css: '.js-menu a[href="#dashboard"]' )
     watch_for(
       css: '.content.active',
       value: 'My Stats'
     )
 
     # check language in overview
-    click( css: '#navigation a[href="#ticket/view"]' )
+    click( css: '.js-menu a[href="#ticket/view"]' )
     watch_for(
       css: '.content.active',
       value: 'My'
@@ -297,19 +297,19 @@ class PreferencesTest < TestCase
 
     # check language in navbar
     watch_for(
-      css: '#navigation',
+      css: '.js-menu',
       value: 'Übersicht'
     )
 
     # check language in dashboard
-    click( css: '#navigation a[href="#dashboard"]' )
+    click( css: '.js-menu a[href="#dashboard"]' )
     watch_for(
       css: '.content.active',
       value: 'Meine Statistik'
     )
 
     # check language in overview
-    click( css: '#navigation a[href="#ticket/view"]' )
+    click( css: '.js-menu a[href="#ticket/view"]' )
     watch_for(
       css: '.content.active',
       value: 'Meine'

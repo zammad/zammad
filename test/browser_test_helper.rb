@@ -1364,7 +1364,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    instance.find_elements( { css: '#navigation li.overviews a' } )[0].click
+    instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 1
     instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
     sleep 1
@@ -1446,7 +1446,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    instance.find_elements( { css: '#navigation li.overviews a' } )[0].click
+    instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 2
     overviews = {}
     instance.find_elements( { css: '.content.active .sidebar a[href]' } ).each {|element|
