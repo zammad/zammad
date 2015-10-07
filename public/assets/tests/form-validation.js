@@ -280,7 +280,7 @@ test( "datetime selector check", function() {
 
   // check params
   currentTime = timeStamp.toISOString()
-  currentTime = currentTime.replace(/(\d\d\.\d\d\dZ)$/, '00.000Z')
+  currentTime = currentTime.replace(/(\d\d.\d\d.\d\d\.\d\d\dZ)$/, '07:00:00.000Z')
   params = App.ControllerForm.params( el )
   test_params = {
     datetime1: currentTime,
