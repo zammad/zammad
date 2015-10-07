@@ -1779,7 +1779,6 @@ class App.CustomerChatRef extends App.Controller
 
   propagateLayoutChange: (event) =>
     # adjust scroll position on layoutChange
-    console.log "propagateLayoutChange", event
 
     for chat in @chatWindows
       chat.trigger 'layout-changed'
@@ -1904,7 +1903,7 @@ class chatWindowRef extends Spine.Controller
     @lastTimestamp
     @lastAddedType
     @render()
-    @sound.window.play()
+    #@sound.window.play()
 
     @on 'layout-change', @scrollToBottom
 
