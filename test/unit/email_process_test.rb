@@ -2028,8 +2028,7 @@ Some Text',
 
   def process(files)
     files.each { |file|
-      parser = Channel::EmailParser.new
-      result = parser.process( { trusted: file[:trusted] }, file[:data] )
+      result = Channel::EmailParser.new.process( { trusted: file[:trusted] }, file[:data] )
       if file[:success]
         if result && result.class == Array && result[1]
           assert( true )
