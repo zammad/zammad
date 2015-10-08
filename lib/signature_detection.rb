@@ -138,6 +138,7 @@ returns
     tickets = Ticket.where(created_by_id: user_id, create_article_type_id: type.id, create_article_sender_id: sender.id).limit(5).order(id: :desc)
     tickets.each {|ticket|
       article = ticket.articles.first
+      next if !article
       article_bodies.push article.body
     }
 
@@ -158,7 +159,7 @@ returns
 
   def self.rebuild_all_user
 
-    User.select('id').where(active: true).each {|local_user|
+    User.select('id').where(active: true).order(id: :desc).each {|local_user|
       rebuild_user(local_user.id)
     }
     true
