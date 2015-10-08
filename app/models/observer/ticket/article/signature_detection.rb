@@ -2,7 +2,7 @@
 
 require 'signature_detection'
 
-class Observer::Ticket::Article::EmailSignatureDetection < ActiveRecord::Observer
+class Observer::Ticket::Article::SignatureDetection < ActiveRecord::Observer
   observe 'ticket::_article'
 
   def before_create(record)
