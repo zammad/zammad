@@ -108,11 +108,25 @@ class ArticleViewItem extends App.Controller
       return
 
     # prepare html body
+    signatureDetected = false
     if @article.content_type is 'text/html'
       @article['html'] = @article.body
     else
-      @article['html'] = App.Utils.textCleanup( @article.body )
-      @article['html'] = App.Utils.text2html( @article.body )
+
+      # check if signature got detected in backend
+      body = @article.body
+      if @article.preferences && @article.preferences.signature_detection
+        signatureDetected = '########SIGNATURE########'
+        body = body.split("\n")
+        body.splice(@article.preferences.signature_detection, 0, signatureDetected)
+        body = body.join("\n")
+      body = App.Utils.textCleanup(body)
+      @article['html'] = App.Utils.text2html(body)
+
+    if signatureDetected
+      @article['html']  = @article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
+    else
+      @article['html'] = App.Utils.signatureIdentify( @article['html'] )
 
     @html App.view('ticket_zoom/article_view')(
       ticket:     @ticket
