@@ -16,14 +16,9 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
 
     fixture_files.keys.each do |filepath|
 
-      file_content = ''
-
       file = File.new("#{Rails.root}/test/fixtures/#{filepath}", 'r')
-      while (line = file.gets)
-        file_content += line
-      end
-      file.close
 
+      file_content = file.read
       fixture_files[filepath][:content] = file_content
       fixture_files_string_list.push(file_content)
     end
@@ -51,14 +46,9 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
 
     fixture_files.keys.each do |filepath|
 
-      file_content = ''
-
       file = File.new("#{Rails.root}/test/fixtures/#{filepath}", 'r')
-      while (line = file.gets)
-        file_content += line
-      end
-      file.close
 
+      file_content = file.read
       fixture_files[filepath][:content] = file_content
       fixture_files_string_list.push(file_content)
     end
@@ -72,6 +62,54 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
 
       assert_equal(expected_signature_position, SignatureDetection.find_signature_line(signature, fixture_files[filepath][:content]))
     end
+  end
+
+  test 'test case III - sender a - full cycle' do
+    raw_email_header = "From: Bob.Smith@music.com\nTo: test@zammad.org\nSubject: test\n\n"
+
+    # process email I
+    file = File.open("#{Rails.root}/test/fixtures/email_signature_detection/client_a_1.txt", 'rb')
+    raw_email = raw_email_header + file.read
+    ticket1, article1, user1, mail = Channel::EmailParser.new.process({}, raw_email)
+    assert(ticket1)
+    assert(article1)
+
+    # process email II
+    file = File.open("#{Rails.root}/test/fixtures/email_signature_detection/client_a_2.txt", 'rb')
+    raw_email = raw_email_header + file.read
+    ticket2, article2, user2, mail = Channel::EmailParser.new.process({}, raw_email)
+    assert(ticket2)
+    assert(article2)
+
+    # process background jobs (user signature detection & article signature detection)
+    Delayed::Worker.new.work_off
+
+    # check if user2 has a signature_detection value
+    user2 = User.find(user2.id)
+    assert(user2.preferences[:signature_detection])
+
+    # process email III
+    file = File.open("#{Rails.root}/test/fixtures/email_signature_detection/client_a_3.txt", 'rb')
+    raw_email = raw_email_header + file.read
+    ticket3, article3, user3, mail = Channel::EmailParser.new.process({}, raw_email)
+    assert(ticket3)
+    assert(article3)
+
+    # check if article3 has a signature_detection value
+    assert_equal(article3.preferences[:signature_detection], 6)
+
+    # relbuild all
+    SignatureDetection.rebuild_all_articles
+
+    article1 = Ticket::Article.find(article1.id)
+    assert_equal(article1.preferences[:signature_detection], 10)
+
+    article2 = Ticket::Article.find(article2.id)
+    assert_equal(article2.preferences[:signature_detection], 20)
+
+    article3 = Ticket::Article.find(article3.id)
+    assert_equal(article3.preferences[:signature_detection], 6)
+
   end
 
 end

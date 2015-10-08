@@ -190,7 +190,7 @@ class App.TicketZoomArticleActions extends App.Controller
           articleNew.cc = addAddresses(articleNew.cc, article.cc)
 
     # get current body
-    body = @el.closest('[data-name="body"]').html() || ''
+    body = @el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
 
     # check if quote need to be added
     selectedText = App.ClipBoard.getSelected()

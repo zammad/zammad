@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class Observer::Ticket::Article::EmailSignatureDetection < ActiveRecord::Observer
+require 'signature_detection'
+
+class Observer::Ticket::Article::SignatureDetection < ActiveRecord::Observer
   observe 'ticket::_article'
 
   def before_create(record)
@@ -17,6 +19,9 @@ class Observer::Ticket::Article::EmailSignatureDetection < ActiveRecord::Observe
     type = Ticket::Article::Type.lookup( id: record.type_id )
     return if type['name'] != 'email'
 
+    # add queue job to update current signature of user id
+    Delayed::Job.enqueue( Observer::Ticket::Article::SignatureDetection::BackgroundJob.new( record.created_by_id ) )
+
     # user
     user = User.lookup(id: record.created_by_id)
     return if !user
@@ -24,6 +29,5 @@ class Observer::Ticket::Article::EmailSignatureDetection < ActiveRecord::Observe
     return if !user.preferences[:signature_detection]
 
     record.preferences[:signature_detection] = SignatureDetection.find_signature_line(user.preferences[:signature_detection], record.body)
-
   end
 end

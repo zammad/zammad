@@ -95,28 +95,28 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind(
       'ui::ticket::setArticleType'
       (data) =>
-        if data.ticket.id is @ticket.id
-          #@setArticleType(data.type.name)
+        return if data.ticket.id isnt @ticket.id
+        #@setArticleType(data.type.name)
 
-          @openTextarea(null, true)
-          for key, value of data.article
-            if key is 'body'
-              @$('[data-name="' + key + '"]').html(value)
-            else
-              @$('[name="' + key + '"]').val(value)
+        @openTextarea(null, true)
+        for key, value of data.article
+          if key is 'body'
+            @$('[data-name="' + key + '"]').html(value)
+          else
+            @$('[name="' + key + '"]').val(value)
 
-          # preselect article type
-          @setArticleType( 'email' )
+        # preselect article type
+        @setArticleType('email')
     )
 
     # reset new article screen
     @bind(
       'ui::ticket::taskReset'
       (data) =>
-        if data.ticket_id is @ticket.id
-          @type     = 'note'
-          @defaults = {}
-          @render()
+        return if data.ticket_id isnt @ticket.id
+        @type     = 'note'
+        @defaults = {}
+        @render()
     )
 
   isIE10: ->
