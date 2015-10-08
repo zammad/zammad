@@ -18,7 +18,6 @@ returns
     possible_signatures = {}
 
     # loop all strings in array
-    #for main_string_index in 0 .. string_list.length - 1
     ( 0..string_list.length - 1 ).each {|main_string_index|
       break if main_string_index + 1 > string_list.length - 1
 
@@ -76,6 +75,7 @@ returns
             possible_signatures[match_content] ||= 0
             possible_signatures[match_content] += 1
 
+            break
           end
 
           match_block = nil
@@ -115,8 +115,56 @@ returns
     return if search_position.nil?
 
     # count new lines up to signature
-    search_newlines  = string[0..search_position].split("\n").length + 1
-
-    search_newlines
+    string[0..search_position].split("\n").length + 1
   end
+
+=begin
+
+this function will search for a signature string in all articles of a given user_id
+
+  signature = SignatureDetection.by_user_id(user_id)
+
+returns
+
+  signature = '...signature possible match...'
+
+=end
+
+  def self.by_user_id(user_id)
+
+    article_type = Ticket::Article::Type.lookup(name: 'email')
+    article_bodies = []
+    tickets = Ticket.where(created_by_id: user_id, create_article_type_id: article_type.id).limit(10).order(id: :desc)
+    tickets.each {|ticket|
+      article = ticket.articles.first
+      article_bodies.push article.body
+    }
+    find_signature( article_bodies )
+  end
+
+=begin
+
+rebuild signature for each user
+
+  SignatureDetection.rebuild_all
+
+returns
+
+  true/false
+
+=end
+
+  def self.rebuild_all
+
+    User.select('id').where(active: true).each {|local_user|
+      signature_detection = by_user_id(local_user.id)
+      next if !signature_detection
+      user = User.find(local_user.id)
+      next if user.preferences[:signature_detection] == signature_detection
+      user.preferences[:signature_detection] = signature_detection
+      user.save
+    }
+    true
+  end
+
 end
