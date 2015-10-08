@@ -23,6 +23,7 @@ class App.UiElement.datetime
     if attribute.value
       startDate = new Date(attribute.value)
     item.find('.js-datepicker').datepicker(
+      weekStart: 1
       autoclose: true
       todayBtn: 'linked'
       todayHighlight: true
