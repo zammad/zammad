@@ -147,7 +147,7 @@ returns
 
 rebuild signature for each user
 
-  SignatureDetection.rebuild_all
+  SignatureDetection.rebuild_all_user
 
 returns
 
@@ -155,7 +155,7 @@ returns
 
 =end
 
-  def self.rebuild_all
+  def self.rebuild_all_user
 
     User.select('id').where(active: true).each {|local_user|
 
