@@ -1240,6 +1240,10 @@ wait untill text in selector disabppears
         instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
       end
 
+      # click on click catcher
+      if params[:do_not_submit]
+        click( browser: instance, css: '.clickCatcher')
+      end
     end
 
     if data[:group]
