@@ -139,6 +139,7 @@ returns
       article = ticket.articles.first
       article_bodies.push article.body
     }
+
     find_signature( article_bodies )
   end
 
@@ -157,12 +158,44 @@ returns
   def self.rebuild_all
 
     User.select('id').where(active: true).each {|local_user|
+
       signature_detection = by_user_id(local_user.id)
       next if !signature_detection
+
       user = User.find(local_user.id)
       next if user.preferences[:signature_detection] == signature_detection
+
       user.preferences[:signature_detection] = signature_detection
       user.save
+    }
+    true
+  end
+
+=begin
+
+rebuild signature for all articles
+
+  SignatureDetection.rebuild_all_articles
+
+returns
+
+  true/false
+
+=end
+
+  def self.rebuild_all_articles
+
+    Ticket::Article.all.each {|article|
+
+      user = User.find(article.created_by_id)
+      next if !user.preferences[:signature_detection]
+
+      signature_line = find_signature_line(user.preferences[:signature_detection], article.body)
+      next if !signature_line
+      next if article.preferences[:signature_detection] == signature_line
+
+      article.preferences[:signature_detection] = signature_line
+      article.save
     }
     true
   end
