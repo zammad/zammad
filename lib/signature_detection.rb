@@ -158,16 +158,33 @@ returns
   def self.rebuild_all_user
 
     User.select('id').where(active: true).each {|local_user|
-
-      signature_detection = by_user_id(local_user.id)
-      next if !signature_detection
-
-      user = User.find(local_user.id)
-      next if user.preferences[:signature_detection] == signature_detection
-
-      user.preferences[:signature_detection] = signature_detection
-      user.save
+      rebuild_user(local_user.id)
     }
+    true
+  end
+
+=begin
+
+rebuild signature for user
+
+  SignatureDetection.rebuild_user
+
+returns
+
+  true/false
+
+=end
+
+  def self.rebuild_user(user_id)
+    signature_detection = by_user_id(user_id)
+    return if !signature_detection
+
+    user = User.find(user_id)
+    return if user.preferences[:signature_detection] == signature_detection
+
+    user.preferences[:signature_detection] = signature_detection
+    user.save
+
     true
   end
 

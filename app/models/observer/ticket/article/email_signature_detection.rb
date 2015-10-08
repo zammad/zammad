@@ -25,5 +25,7 @@ class Observer::Ticket::Article::EmailSignatureDetection < ActiveRecord::Observe
 
     record.preferences[:signature_detection] = SignatureDetection.find_signature_line(user.preferences[:signature_detection], record.body)
 
+    # add queue job to update current signature of user id
+    Delayed::Job.enqueue( Observer::Ticket::Article::EmailSignatureDetection::BackgroundJob.new( record.created_by_id ) )
   end
 end
