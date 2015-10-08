@@ -1193,13 +1193,9 @@ fieldset > .form-group {
   margin-bottom: 0;
 }
 
-.controls--bundle {
-  display: flex;
-
-  .controls-label {
-    margin: 11px 10px 0;
-    flex-shrink: 0;
-  }
+.controls-label {
+  margin: 11px 10px 0;
+  flex-shrink: 0;
 }
 
 input[type="radio"], 
@@ -6975,6 +6971,21 @@ body.fit {
 
 .flex {
   flex: 1;
+}
+
+/*
+
+  Firefox minimum content bugfix
+  
+  https://github.com/philipwalton/flexbugs#1-minimum-content-sizing-of-flex-items-not-honored
+
+  "By default, flex items won’t shrink below their minimum 
+  content size (the length of the longest word or fixed-size element). 
+  To change this, set the min-width or min-height property."
+  
+*/
+.flex-shrink-horizontal {
+  min-width: 0;
 }
 
 .flex-full {
