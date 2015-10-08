@@ -132,9 +132,10 @@ returns
 
   def self.by_user_id(user_id)
 
-    article_type = Ticket::Article::Type.lookup(name: 'email')
+    type = Ticket::Article::Type.lookup(name: 'email')
+    sender = Ticket::Article::Sender.lookup(name: 'Customer')
     article_bodies = []
-    tickets = Ticket.where(created_by_id: user_id, create_article_type_id: article_type.id).limit(10).order(id: :desc)
+    tickets = Ticket.where(created_by_id: user_id, create_article_type_id: type.id, create_article_sender_id: sender.id).limit(5).order(id: :desc)
     tickets.each {|ticket|
       article = ticket.articles.first
       article_bodies.push article.body
@@ -167,7 +168,7 @@ returns
 
 rebuild signature for user
 
-  SignatureDetection.rebuild_user
+  SignatureDetection.rebuild_user(user_id)
 
 returns
 
@@ -202,8 +203,9 @@ returns
 
   def self.rebuild_all_articles
 
-    Ticket::Article.all.each {|article|
-
+    article_type = Ticket::Article::Type.lookup(name: 'email')
+    Ticket::Article.select('id').where(type_id: article_type.id).order(id: :desc).each {|local_article|
+      article = Ticket::Article.find(local_article.id)
       user = User.find(article.created_by_id)
       next if !user.preferences[:signature_detection]
 
