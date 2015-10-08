@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
+require 'signature_detection'
+
 class Observer::Ticket::Article::EmailSignatureDetection < ActiveRecord::Observer
   observe 'ticket::_article'
 
