@@ -642,7 +642,7 @@ span[data-tooltip]:hover:before {
   border-radius: 9px;
   background: hsl(198,18%,86%);
   margin-right: 3px;
-  
+  flex-shrink: 0;
 
   &:empty {
     display: none;
@@ -2987,6 +2987,7 @@ footer {
 
   .nav-pills > li > a > .badge {
     margin-left: auto;
+    padding-left: 10px;
   }
 
   a.list-group-item.active > .badge,
