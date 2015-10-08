@@ -1198,6 +1198,7 @@ fieldset > .form-group {
 
   .controls-label {
     margin: 11px 10px 0;
+    flex-shrink: 0;
   }
 }
 
@@ -1267,6 +1268,7 @@ input.time {
   box-sizing: content-box;
   padding: 0 6px;
   line-height: 42px;
+  flex-shrink: 0;
   
   &.form-control--small {
     line-height: 31px;
@@ -6495,8 +6497,6 @@ output {
   color: white;
   padding: 0 14px 11px;
   position: absolute;
-  left: 0 !important;
-  top: 41px !important;
   min-width: 0;
   cursor: default;
   
@@ -6532,15 +6532,15 @@ output {
   .dow {
     text-transform: uppercase;
     font-size: 12px;
-    padding: 20px 5px 0;
+    padding: 5px 5px 0;
     text-align: center;
   }
 
   .day {
     width: 27px;
-    height: 27px;
+    height: 26px;
     border-radius: 100%;
-    padding: 0;
+    padding: 1px 0 0;
   }
 
   .month,
@@ -6581,7 +6581,7 @@ output {
 
   .today {
     text-align: center;
-    padding: 0;
+    padding: 2px 0 0;
     cursor: pointer;
     
     &.hidden {
