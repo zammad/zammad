@@ -1242,7 +1242,9 @@ wait untill text in selector disabppears
 
       # click on click catcher
       if params[:do_not_submit]
-        click( browser: instance, css: '.clickCatcher')
+        if instance.find_elements( { css: '.clickCatcher' } )[0]
+          click( browser: instance, css: '.clickCatcher')
+        end
       end
     end
 
