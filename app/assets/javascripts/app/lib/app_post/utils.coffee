@@ -551,9 +551,13 @@ class App.Utils
   # format decimal
   @decimal: (data, positions = 2) ->
 
-    data = data.toString()
-
     # input validation
+    return '' if data is undefined
+    return '' if data is null
+
+    if data.toString
+      data = data.toString()
+
     return data if data is ''
     return data if data.match(/[A-z]/)
 
@@ -566,17 +570,25 @@ class App.Utils
 
     # add .00
     if !result || !result[2]
-      return "#{data}." + format(0, positions)
+      return "#{data}.#{format(0, positions)}"
     length = result[2].length
     diff = positions - length
 
     # check length, add .00
-    return "#{result[1]}." + format(result[2], positions) if diff > 0
+    return "#{result[1]}.#{format(result[2], positions)}" if diff > 0
 
     # check length, remove longer positions
     "#{result[1]}.#{result[2].substr(0,positions)}"
 
   @formatTime: (num, digits) ->
-    while num.toString().length < digits
+
+    # input validation
+    return '' if num is undefined
+    return '' if num is null
+
+    if num.toString
+      num = num.toString()
+
+    while num.length < digits
       num = '0' + num
     num
