@@ -241,7 +241,7 @@ class App.Utils
 
     cleanup = (str) ->
       if str.match(/(<|>|&)/)
-        str = str.replace(/(<|>|&).+?$/, '').trim()
+        str = str.replace(/(.+?)(<|>|&).+?$/, "$1").trim()
       str
 
     # search for signature seperator "--\n"
@@ -424,10 +424,10 @@ class App.Utils
     # get first marker
     markers = _.sortBy(markers, 'lineCount')
     if markers[0].type is 'seperator'
-      regex = new RegExp( "\>(\s{0,10}#{quote(markers[0].line)})\s{0,10}\<" )
+      regex = new RegExp( "\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})\s{0,10}\<" )
       message.replace( regex, ">#{markerTemplate}\$1<" )
     else
-      regex = new RegExp( "\>(\s{0,10}#{quote(markers[0].line)})" )
+      regex = new RegExp( "\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})" )
       message.replace( regex, ">#{markerTemplate}\$1" )
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
