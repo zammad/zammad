@@ -240,9 +240,6 @@ class Package < ApplicationModel
     record.state = 'installed'
     record.save
 
-    # reload new files
-    Package.reload_classes
-
     # up migrations
     Package::Migration.migrate( meta[:name] )
 
@@ -294,11 +291,6 @@ class Package < ApplicationModel
 
     # prebuild assets
 
-    # reload new files (only if we are in uninstall modus)
-    if !data[:migration_not_down]
-      Package.reload_classes
-    end
-
     # delete package
     record = Package.find_by(
       name: meta[:name],
@@ -307,24 +299,6 @@ class Package < ApplicationModel
     record.destroy
 
     true
-  end
-
-  # reload .rb files in case they have changed
-  def self.reload_classes
-    %w(app lib).each {|dir|
-      Dir.glob( Rails.root.join( dir + '/**/*') ).each {|entry|
-
-        next if entry !~ /\.rb$/
-
-        begin
-          load entry
-        rescue => e
-          logger.error "TRIED TO RELOAD '#{entry}'"
-          logger.error 'ERROR: ' + e.inspect
-          logger.error 'Traceback: ' + e.backtrace.inspect
-        end
-      }
-    }
   end
 
   def self._parse(xml)
@@ -497,8 +471,6 @@ class Package < ApplicationModel
           Package::Migration.create( name: package.underscore, version: version )
         end
 
-        # reload new files
-        Package.reload_classes
       }
     end
   end
