@@ -184,7 +184,7 @@ class App.UiElement.ticket_selector
     item = ''
     if config && App.UiElement[config.tag]
       config['name'] = name
-      if attribute.value[groupAndAttribute]
+      if attribute.value && attribute.value[groupAndAttribute]
         config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
       if 'multiple' of config
         config.multiple = true
