@@ -1645,8 +1645,9 @@ Overview.create_if_not_exists(
       value: 'current_user.id',
     },
     'ticket.pending_time' => {
-      operator: 'after (relative)',
-      value: '1',
+      operator: 'within next (relative)',
+      value: 0,
+      range: 'minute',
     },
   },
   order: {
@@ -1722,8 +1723,9 @@ Overview.create_if_not_exists(
       value: [3],
     },
     'ticket.pending_time' => {
-      operator: 'after (relative)',
-      value: 1,
+      operator: 'within next (relative)',
+      value: 0,
+      range: 'minute',
     },
   },
   order: {
@@ -1745,8 +1747,9 @@ Overview.create_if_not_exists(
   role_id: overview_role.id,
   condition: {
     'ticket.escalation_time' => {
-      operator: 'before (relative)',
-      value: 5,
+      operator: 'within next (relative)',
+      value: '10',
+      range: 'minute',
     },
   },
   order: {
@@ -1770,7 +1773,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [ 1, 2, 3, 4, 6 ],
+      value: [ 1, 2, 3, 4, 6, 7 ],
     },
     'ticket.customer_id' => {
       operator: 'is',
@@ -1797,7 +1800,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [ 1, 2, 3, 4, 6 ],
+      value: [ 1, 2, 3, 4, 6, 7 ],
     },
     'ticket.organization_id' => {
       operator: 'is',
@@ -1948,6 +1951,31 @@ Network::Item::Comment.create(
 
 ObjectManager::Attribute.add(
   object: 'Ticket',
+  name: 'title',
+  display: 'Title',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 200,
+    null: false,
+    translate: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_top: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {},
+  },
+  pending_migration: false,
+  position: 15,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Ticket',
   name: 'customer_id',
   display: 'Customer',
   data_type: 'user_autocompletion',
@@ -2038,7 +2066,7 @@ ObjectManager::Attribute.add(
     },
   },
   pending_migration: false,
-  position: 20,
+  position: 25,
 )
 ObjectManager::Attribute.add(
   object: 'Ticket',
@@ -2209,31 +2237,6 @@ ObjectManager::Attribute.add(
   },
   pending_migration: false,
   position: 900,
-)
-
-ObjectManager::Attribute.add(
-  object: 'Ticket',
-  name: 'title',
-  display: 'Title',
-  data_type: 'input',
-  data_option: {
-    type: 'text',
-    maxlength: 200,
-    null: false,
-    translate: false,
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_top: {
-      '-all-' => {
-        null: false,
-      },
-    },
-    edit: {},
-  },
-  pending_migration: false,
-  position: 15,
 )
 
 ObjectManager::Attribute.add(
