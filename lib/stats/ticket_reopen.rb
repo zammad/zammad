@@ -70,7 +70,13 @@ class Stats::TicketReopen
     # check if close_time is already set / if not, ticket is not reopend
     return if !ticket.close_time
 
+    # only if state id has changed
     return if !changes['state_id']
+
+    # only if ticket is not created in closed state
+    return if !changes['state_id'][0]
+
+    # only if current owner is not 1
     return if ticket.owner_id == 1
 
     state_before      = Ticket::State.lookup(id: changes['state_id'][0])
