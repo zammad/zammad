@@ -108,25 +108,28 @@ class ArticleViewItem extends App.Controller
       return
 
     # prepare html body
-    signatureDetected = false
     if @article.content_type is 'text/html'
       @article['html'] = @article.body
-    else
-
-      # check if signature got detected in backend
-      body = @article.body
-      if @article.preferences && @article.preferences.signature_detection
-        signatureDetected = '########SIGNATURE########'
-        body = body.split("\n")
-        body.splice(@article.preferences.signature_detection, 0, signatureDetected)
-        body = body.join("\n")
-      body = App.Utils.textCleanup(body)
-      @article['html'] = App.Utils.text2html(body)
-
-    if signatureDetected
-      @article['html']  = @article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
-    else
       @article['html'] = App.Utils.signatureIdentify( @article['html'] )
+    else
+
+      # client signature detection
+      bodyHtml = App.Utils.text2html(@article.body)
+      @article['html'] = App.Utils.signatureIdentify(bodyHtml)
+
+      # if no signature detected or within frist 25 lines, check if signature got detected in backend
+      if @article['html'] is bodyHtml || (@article.preferences && @article.preferences.signature_detection < 25)
+        signatureDetected = false
+        body = @article.body
+        if @article.preferences && @article.preferences.signature_detection
+          signatureDetected = '########SIGNATURE########'
+          body = body.split("\n")
+          body.splice(@article.preferences.signature_detection, 0, signatureDetected)
+          body = body.join("\n")
+        if signatureDetected
+          body = App.Utils.textCleanup(body)
+          @article['html'] = App.Utils.text2html(body)
+          @article['html']  = @article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
 
     @html App.view('ticket_zoom/article_view')(
       ticket:     @ticket
