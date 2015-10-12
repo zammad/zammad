@@ -118,9 +118,9 @@ returns
       access_condition = [ 'group_id IN (?)', group_ids ]
     else
       if !user.organization || ( !user.organization.shared || user.organization.shared == false )
-        access_condition = [ 'customer_id = ?', user.id ]
+        access_condition = [ 'tickets.customer_id = ?', user.id ]
       else
-        access_condition = [ '( customer_id = ? OR organization_id = ? )', user.id, user.organization.id ]
+        access_condition = [ '( tickets.customer_id = ? OR tickets.organization_id = ? )', user.id, user.organization.id ]
       end
     end
     access_condition
@@ -289,16 +289,24 @@ returns
 
 get count of tickets and tickets which match on selector
 
-  ticket_count, tickets = Ticket.selectors(params[:condition], 6)
+  ticket_count, tickets = Ticket.selectors(params[:condition], limit, current_user)
 
 =end
 
-  def self.selectors(selectors, limit = 10)
-    return if !selectors
+  def self.selectors(selectors, limit = 10, current_user = nil)
+    fail 'no selectors given' if !selectors
     query, bind_params, tables = selector2sql(selectors)
     return [] if !query
-    ticket_count = Ticket.where(query, *bind_params).joins(tables).count
-    tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+
+    if !current_user
+      ticket_count = Ticket.where(query, *bind_params).joins(tables).count
+      tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+      return [ticket_count, tickets]
+    end
+
+    access_condition = Ticket.access_condition(current_user)
+    ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
+    tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
     [ticket_count, tickets]
   end
 
@@ -314,7 +322,16 @@ condition example
     'ticket.state_id' => {
       operator: 'is',
       value: [1,2,5]
-    }
+    },
+    'ticket.created_at' => {
+      operator: 'after (absolute)', # after,before
+      value: '2015-10-17T06:00:00.000Z',
+    },
+    'ticket.created_at' => {
+      operator: 'within next (relative)', # before,within,in,after
+      range: 'day', # minute|hour|day|month|year
+      value: '25',
+    },
   }
 
 =end
@@ -324,13 +341,27 @@ condition example
     query = ''
     bind_params = []
 
-    tables = []
+    tables = ''
     selectors.each {|attribute, selector|
       selector = attribute.split(/\./)
       next if !selector[1]
       next if selector[0] == 'ticket'
       next if tables.include?(selector[0])
-      tables.push selector[0].to_sym
+      if query != ''
+        query += ' AND '
+      end
+      if selector[0] == 'customer'
+        tables += ', users customers'
+        query += 'tickets.customer_id = customers.id'
+      elsif selector[0] == 'organization'
+        tables += ', organizations'
+        query += 'tickets.organization_id = organizations.id'
+      elsif selector[0] == 'owner'
+        tables += ', users owners'
+        query += 'tickets.owner_id = owners.id'
+      else
+        fail "invalid selector #{attribute.inspect}->#{selector.inspect}"
+      end
     }
 
     selectors.each {|attribute, selector_raw|
@@ -341,7 +372,7 @@ condition example
       fail "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
       selector = selector_raw.stringify_keys
       fail "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
-      return nil if !selector['value']
+      return nil if selector['value'].nil?
       return nil if selector['value'].respond_to?(:empty?) && selector['value'].empty?
       attributes = attribute.split(/\./)
       attribute = "#{attributes[0]}s.#{attributes[1]}"
@@ -365,12 +396,74 @@ condition example
       elsif selector['operator'] == 'after (absolute)'
         query += "#{attribute} >= ?"
         bind_params.push selector['value']
+      elsif selector['operator'] == 'within last (relative)'
+        query += "#{attribute} >= ?"
+        time = nil
+        if selector['range'] == 'minute'
+          time = Time.zone.now - selector['value'].to_i.minutes
+        elsif selector['range'] == 'hour'
+          time = Time.zone.now - selector['value'].to_i.hours
+        elsif selector['range'] == 'day'
+          time = Time.zone.now - selector['value'].to_i.days
+        elsif selector['range'] == 'month'
+          time = Time.zone.now - selector['value'].to_i.months
+        elsif selector['range'] == 'year'
+          time = Time.zone.now - selector['value'].to_i.years
+        else
+          fail "Unknown selector attributes '#{selector.inspect}'"
+        end
+        bind_params.push time
+      elsif selector['operator'] == 'within next (relative)'
+        query += "#{attribute} >= ?"
+        time = nil
+        if selector['range'] == 'minute'
+          time = Time.zone.now + selector['value'].to_i.minutes
+        elsif selector['range'] == 'hour'
+          time = Time.zone.now + selector['value'].to_i.hours
+        elsif selector['range'] == 'day'
+          time = Time.zone.now + selector['value'].to_i.days
+        elsif selector['range'] == 'month'
+          time = Time.zone.now + selector['value'].to_i.months
+        elsif selector['range'] == 'year'
+          time = Time.zone.now + selector['value'].to_i.years
+        else
+          fail "Unknown selector attributes '#{selector.inspect}'"
+        end
+        bind_params.push time
       elsif selector['operator'] == 'before (relative)'
         query += "#{attribute} <= ?"
-        bind_params.push Time.zone.now - selector['value'].to_i.minutes
+        time = nil
+        if selector['range'] == 'minute'
+          time = Time.zone.now - selector['value'].to_i.minutes
+        elsif selector['range'] == 'hour'
+          time = Time.zone.now - selector['value'].to_i.hours
+        elsif selector['range'] == 'day'
+          time = Time.zone.now - selector['value'].to_i.days
+        elsif selector['range'] == 'month'
+          time = Time.zone.now - selector['value'].to_i.months
+        elsif selector['range'] == 'year'
+          time = Time.zone.now - selector['value'].to_i.years
+        else
+          fail "Unknown selector attributes '#{selector.inspect}'"
+        end
+        bind_params.push time
       elsif selector['operator'] == 'after (relative)'
         query += "#{attribute} >= ?"
-        bind_params.push Time.zone.now + selector['value'].to_i.minutes
+        time = nil
+        if selector['range'] == 'minute'
+          time = Time.zone.now + selector['value'].to_i.minutes
+        elsif selector['range'] == 'hour'
+          time = Time.zone.now + selector['value'].to_i.hours
+        elsif selector['range'] == 'day'
+          time = Time.zone.now + selector['value'].to_i.days
+        elsif selector['range'] == 'month'
+          time = Time.zone.now + selector['value'].to_i.months
+        elsif selector['range'] == 'year'
+          time = Time.zone.now + selector['value'].to_i.years
+        else
+          fail "Unknown selector attributes '#{selector.inspect}'"
+        end
+        bind_params.push time
       else
         fail "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end

@@ -15,8 +15,8 @@ class App.UiElement.ticket_selector
         model: 'Organization'
 
     operators_type =
-      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)']
-      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)']
+      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
+      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
       'boolean$': ['is', 'is not']
       '^input$': ['contains', 'contains not']
       '^textarea$': ['contains', 'contains not']
@@ -82,14 +82,6 @@ class App.UiElement.ticket_selector
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute)
       @rebuildOperater(item, elementRow, groupAndAttribute, elements, undefined, attribute)
       @buildValue(item, elementRow, groupAndAttribute, elements, undefined, undefined, attribute)
-    )
-
-    # change operator
-    item.find('.js-operator select').bind('change', (e) =>
-      groupAndAttribute = $(e.target).find('.js-attributeSelector option:selected').attr('value')
-      operator = $(e.target).find('option:selected').attr('value')
-      elementRow = $(e.target).closest('.js-filterElement')
-      @buildValue(item, elementRow, groupAndAttribute, elements, undefined, operator, attribute)
     )
 
     # build inital params
@@ -174,11 +166,11 @@ class App.UiElement.ticket_selector
     )
 
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, operator, attribute) ->
+    console.log('buildValue', elementFull, elementRow, groupAndAttribute, elements, value, operator, attribute)
 
     # do nothing if item already exists
+    operator = elementRow.find('.js-operator option:selected').attr('value')
     name = "#{attribute.name}::#{groupAndAttribute}::value"
-    return if elementRow.find("[name=\"#{name}\"]").get(0)
-    return if elementRow.find("[data-name=\"#{name}\"]").get(0)
 
     # build new item
     attributeConfig = elements[groupAndAttribute]
@@ -192,7 +184,8 @@ class App.UiElement.ticket_selector
     item = ''
     if config && App.UiElement[config.tag]
       config['name'] = name
-      config['value'] = value
+      if attribute.value[groupAndAttribute]
+        config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
       if 'multiple' of config
         config.multiple = true
         config.nulloption = false
@@ -203,6 +196,12 @@ class App.UiElement.ticket_selector
         item = App.UiElement[tagSearch].render(config, {})
       else
         item = App.UiElement[config.tag].render(config, {})
+
+    if operator is 'before (relative)' || operator is 'within next (relative)' || operator is 'within last (relative)' || operator is 'after (relative)'
+      config['name'] = "#{attribute.name}::#{groupAndAttribute}"
+      config['value'] = _.clone(attribute.value[groupAndAttribute])
+      item = App.UiElement['time_range'].render(config, {})
+
     elementRow.find('.js-value').html(item)
 
   @buildAttributeSelector: (groups, elements) ->
@@ -264,6 +263,13 @@ class App.UiElement.ticket_selector
     # render new operator
     operator = @buildOperator(elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute)
     elementRow.find('.js-operator select').replaceWith(operator)
+
+    # render not value option
+    elementRow.find('.js-operator select').bind('change', (e) =>
+      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
+      operator = elementRow.find('.js-operator option:selected').attr('value')
+      @buildValue(elementFull, elementRow, groupAndAttribute, elements, undefined, operator, attribute)
+    )
 
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')
