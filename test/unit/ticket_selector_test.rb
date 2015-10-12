@@ -303,16 +303,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
-    assert_equal( ticket_count, 0 )
+    assert_equal( ticket_count, 2 )
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
     assert_equal( ticket_count, 0 )
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
-    assert_equal( ticket_count, 0 )
+    assert_equal( ticket_count, 1 )
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
-    assert_equal( ticket_count, 0 )
+    assert_equal( ticket_count, 1 )
 
     condition = {
       'ticket.group_id' => {
@@ -461,16 +461,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
-    assert_equal( ticket_count, 0 )
+    assert_equal( ticket_count, 2 )
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
     assert_equal( ticket_count, 0 )
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
-    assert_equal( ticket_count, 0 )
+    assert_equal( ticket_count, 1 )
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
-    assert_equal( ticket_count, 0 )
+    assert_equal( ticket_count, 1 )
 
     condition = {
       'ticket.group_id' => {

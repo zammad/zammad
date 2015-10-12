@@ -414,7 +414,7 @@ condition example
         end
         bind_params.push time
       elsif selector['operator'] == 'within next (relative)'
-        query += "#{attribute} >= ?"
+        query += "#{attribute} <= ?"
         time = nil
         if selector['range'] == 'minute'
           time = Time.zone.now + selector['value'].to_i.minutes
