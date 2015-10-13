@@ -5900,6 +5900,11 @@ label + .wizard-buttonList {
     margin-right: 5px;
   }
 
+  .controls-label {
+    margin-left: 0;
+    margin-right: 5px;
+  }
+
   select, 
   input {
     border-color: hsl(198,19%,86%);
