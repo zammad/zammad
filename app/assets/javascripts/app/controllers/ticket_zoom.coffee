@@ -394,11 +394,12 @@ class App.TicketZoom extends App.Controller
       currentStore  =
         ticket:  currentStoreTicket
         article:
-          to:       ''
-          cc:       ''
-          type:     'note'
-          body:     ''
-          internal: ''
+          to:          ''
+          cc:          ''
+          type:        'note'
+          body:        ''
+          internal:    ''
+          in_reply_to: ''
       currentParams =
         ticket:  @formParam( @el.find('.edit') )
         article: @formParam( @el.find('.article-add') )
