@@ -226,67 +226,6 @@ class App.ControllerForm extends App.Controller
 
     if App.UiElement[attribute.tag]
       item = App.UiElement[attribute.tag].render(attribute, @params, @)
-      ###
-        else if key is 'tickets.owner_id' || key is 'tickets.customer_id'
-          display = 'Owner'
-          name    = 'owner_id'
-          if key is 'customer_id'
-            display = 'Customer'
-            name    = 'customer_id'
-          attribute_config = {
-            name:       attribute.name + '::tickets.' + name
-            display:    display
-            tag:        'select'
-            multiple:   true
-            null:       false
-            nulloption: false
-            relation:   'User'
-            value:      value || null
-            remove:     true
-            filter:     ( all, type ) ->
-              return all if type isnt 'collection'
-              all = _.filter( all, (item) ->
-                return if item.id is 1
-                return item
-              )
-              all.unshift( {
-                id: ''
-                name:  '--'
-              } )
-              all.unshift( {
-                id: 1
-                name:  '*** not set ***'
-              } )
-              all.unshift( {
-                id: 'current_user.id'
-                name:  '*** current user ***'
-              } )
-              all
-          }
-        else if key is 'tickets.organization_id'
-          attribute_config = {
-            name:       attribute.name + '::tickets.organization_id'
-            display:    'Organization'
-            tag:        'select'
-            multiple:   true
-            null:       false
-            nulloption: false
-            relation:   'Organization'
-            value:      value || null
-            remove:     true
-            filter:     ( all, type ) ->
-              return all if type isnt 'collection'
-              all.unshift( {
-                id: ''
-                name:  '--'
-              } )
-              all.unshift( {
-                id: 'current_user.organization_id'
-                name:  '*** organization of current user ***'
-              } )
-              all
-          }
-        ###
     else
       throw "Invalid UiElement.#{attribute.tag}"
 

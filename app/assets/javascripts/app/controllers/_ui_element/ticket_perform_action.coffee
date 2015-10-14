@@ -57,7 +57,6 @@ class App.UiElement.ticket_perform_action
     )
 
     # build inital params
-    console.log('initial', params[attribute.name])
     if !_.isEmpty(params[attribute.name])
 
       selectorExists = false

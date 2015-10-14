@@ -621,6 +621,230 @@ class TicketSelectorTest < ActiveSupport::TestCase
     ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
     assert_equal( ticket_count, 0 )
 
+    # with owner/customer/org
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.owner_id' => {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: agent1.id,
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 0 )
+
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.owner_id' => {
+        operator: 'is',
+        pre_condition: 'set',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 0 )
+
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.owner_id' => {
+        operator: 'is not',
+        pre_condition: 'set',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 1 )
+
+    UserInfo.current_user_id = agent1.id
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.owner_id' => {
+        operator: 'is',
+        pre_condition: 'current_user.id',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 0 )
+
+    UserInfo.current_user_id = agent2.id
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.owner_id' => {
+        operator: 'is',
+        pre_condition: 'current_user.id',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 0 )
+
+    UserInfo.current_user_id = customer1.id
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.customer_id' => {
+        operator: 'is',
+        pre_condition: 'current_user.id',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 1 )
+
+    UserInfo.current_user_id = customer2.id
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.customer_id' => {
+        operator: 'is',
+        pre_condition: 'current_user.id',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal( ticket_count, 1 )
+
+    UserInfo.current_user_id = customer1.id
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.organization_id' => {
+        operator: 'is',
+        pre_condition: 'current_user.organization_id',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 0 )
+
+    UserInfo.current_user_id = customer2.id
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.organization_id' => {
+        operator: 'is',
+        pre_condition: 'current_user.organization_id',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal( ticket_count, 1 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal( ticket_count, 0 )
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal( ticket_count, 0 )
+
   end
 
 end

@@ -1615,7 +1615,7 @@ Overview.create_if_not_exists(
     },
     'ticket.owner_id' => {
       operator: 'is',
-      value: 'current_user.id',
+      pre_condition: 'current_user.id',
     },
   },
   order: {
@@ -1642,7 +1642,7 @@ Overview.create_if_not_exists(
     },
     'ticket.owner_id' => {
       operator: 'is',
-      value: 'current_user.id',
+      pre_condition: 'current_user.id',
     },
     'ticket.pending_time' => {
       operator: 'within next (relative)',
@@ -1777,7 +1777,7 @@ Overview.create_if_not_exists(
     },
     'ticket.customer_id' => {
       operator: 'is',
-      value: 'current_user.id',
+      pre_condition: 'current_user.id',
     },
   },
   order: {
@@ -1804,7 +1804,7 @@ Overview.create_if_not_exists(
     },
     'ticket.organization_id' => {
       operator: 'is',
-      value: 'current_user.organization_id',
+      pre_condition: 'current_user.organization_id',
     },
   },
   order: {

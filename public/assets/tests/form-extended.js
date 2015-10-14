@@ -2,7 +2,7 @@
 // form
 test( 'form checks', function() {
 
-  App.TicketPriority.refresh( [
+  App.TicketPriority.refresh([
     {
       id:         1,
       name:       '1 low',
@@ -31,7 +31,28 @@ test( 'form checks', function() {
       active:     true,
       created_at: '2014-06-10T10:17:54.000Z',
     },
-  ] )
+  ])
+
+  App.User.refresh([
+    {
+      id:         47,
+      login:      'bod@example.com',
+      email:      'bod@example.com',
+      firstname:  'Bob',
+      lastname:   'Smith',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+  ])
+
+  App.Organization.refresh([
+    {
+      id:         12,
+      name:      'Org 1',
+      active:     true,
+      created_at: '2014-06-10T11:19:34.000Z',
+    },
+  ])
 
   $('#forms').append('<hr><h1>form time check</h1><form id="form1"></form>')
 
@@ -98,6 +119,16 @@ test( 'form checks', function() {
         operator: 'before (absolute)',
         value: '2015-09-20T03:41:00.000Z',
       },
+      'ticket.organization_id': {
+        operator: 'is not',
+        pre_condition: 'specific',
+        value: 12,
+      },
+      'ticket.owner_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: 47,
+      },
     },
     executions: {
       'ticket.title': {
@@ -142,6 +173,17 @@ test( 'form checks', function() {
       'ticket.created_at': {
         operator: 'before (absolute)',
         value: '2015-09-20T03:41:00.000Z',
+      },
+      'ticket.organization_id': {
+        operator: 'is not',
+        pre_condition: 'specific',
+        value: '12',
+      },
+      'ticket.owner_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: '47',
+        value_completion: 'Bob Smith <bod@example.com>',
       },
     },
     executions: {
@@ -269,6 +311,17 @@ test( 'form checks', function() {
       'ticket.created_at': {
         operator: 'before (absolute)',
         value: '2015-09-20T03:41:00.000Z',
+      },
+      'ticket.organization_id': {
+        operator: 'is not',
+        pre_condition: 'specific',
+        value: '12',
+      },
+      'ticket.owner_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: '47',
+        value_completion: 'Bob Smith <bod@example.com>',
       },
     },
     executions: {
