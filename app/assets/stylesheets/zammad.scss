@@ -3103,7 +3103,7 @@ footer {
   }
 
   .popover--notifications {
-    min-height: 100px;
+    min-height: 91px;
     width: auto;
     max-width: 400px;
     min-width: 350px;
@@ -4945,6 +4945,7 @@ footer {
     line-height: 39px;
     padding: 0 15px;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .dropdown li:not(:first-child) {
