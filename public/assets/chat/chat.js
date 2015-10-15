@@ -222,7 +222,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
       return this.el.animate({
         bottom: -remainerHeight
-      }, 500, onCloseAnimationEnd);
+      }, 500, this.onCloseAnimationEnd);
     };
 
     ZammadChat.prototype.onCloseAnimationEnd = function() {
@@ -238,7 +238,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.show = function() {
       var remainerHeight;
       this.el.addClass('zammad-chat-is-visible');
-      remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
+      console.log(this.el.outerHeight(), this.el.find('.zammad-chat-header').outerHeight());
+      remainerHeight = this.el.outerHeight() - this.el.find('.zammad-chat-header').outerHeight();
       return this.el.css('bottom', -remainerHeight);
     };
 

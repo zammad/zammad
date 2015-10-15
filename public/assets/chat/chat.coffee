@@ -130,7 +130,7 @@ do($ = window.jQuery, window) ->
 
     close: ->
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
-      @el.animate { bottom: -remainerHeight }, 500, onCloseAnimationEnd
+      @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
 
     onCloseAnimationEnd: =>
       @el.removeClass('zammad-chat-is-open')
@@ -143,7 +143,7 @@ do($ = window.jQuery, window) ->
     show: ->
       @el.addClass('zammad-chat-is-visible')
 
-      remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
+      remainerHeight = @el.outerHeight() - @el.find('.zammad-chat-header').outerHeight()
 
       @el.css 'bottom', -remainerHeight
 
