@@ -520,7 +520,8 @@ span[data-tooltip]:hover:before {
   }
 }
 
-.btn + .btn {
+.btn + .btn,
+.btn + .buttonDropdown {
   margin-left: 10px;
 }
 
