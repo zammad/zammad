@@ -5,7 +5,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     'click .js-organization':                 'showOrganizationMembers'
     'click .js-back':                         'hideOrganizationMembers'
     'click .js-user':                         'selectUser'
-    'click .js-user-new':                     'newUser'
+    'click .js-userNew':                      'newUser'
     'focus input':                            'open'
 
   constructor: (params) ->
@@ -16,6 +16,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
     if !@attribute.source
       @attribute.source = @apiPath + '/search/user-organization'
     @build()
+
+    # set current value
+    if @attribute.value
+      @setUser(@attribute.value)
 
   element: =>
     @el

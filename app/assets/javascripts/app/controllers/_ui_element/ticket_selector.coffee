@@ -85,7 +85,6 @@ class App.UiElement.ticket_selector
     )
 
     # build inital params
-    console.log('initial', params[attribute.name])
     if !_.isEmpty(params[attribute.name])
 
       selectorExists = false
@@ -166,7 +165,6 @@ class App.UiElement.ticket_selector
     )
 
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, operator, attribute) ->
-    console.log('buildValue', elementFull, elementRow, groupAndAttribute, elements, value, operator, attribute)
 
     # do nothing if item already exists
     operator = elementRow.find('.js-operator option:selected').attr('value')
@@ -176,9 +174,16 @@ class App.UiElement.ticket_selector
     attributeConfig = elements[groupAndAttribute]
     config = _.clone(attributeConfig)
 
-    # force to use auto compition on user lookup
+    # force to use auto complition on user lookup
+    config.preCondition = false
     if config.relation is 'User'
+      config.preCondition = 'user'
       config.tag = 'user_autocompletion'
+    if config.relation is 'Organization'
+      config.tag = 'autocompletion_ajax'
+      config.preCondition = 'org'
+
+    @buildPreCondition(config, elementFull, elementRow, groupAndAttribute, attribute)
 
     # render ui element
     item = ''
@@ -203,6 +208,47 @@ class App.UiElement.ticket_selector
       item = App.UiElement['time_range'].render(config, {})
 
     elementRow.find('.js-value').html(item)
+
+  @buildPreCondition: (config, elementFull, elementRow, groupAndAttribute, attribute) ->
+    if !config.preCondition
+      elementRow.find('.js-preCondition').addClass('hide')
+      return
+
+    name = "#{attribute.name}::#{groupAndAttribute}::pre_condition"
+    preConditionCurrent = elementRow.find('.js-preCondition option:selected').attr('value')
+    if !preCondition && attribute.value && attribute.value[groupAndAttribute]
+      preCondition = attribute.value[groupAndAttribute].pre_condition
+    selection = $("<select class=\"form-control\" name=\"#{name}\" ></select>")
+    options = {}
+    if config.preCondition is 'user'
+      options =
+        'set': App.i18n.translateInline('set')
+        'current_user.id': App.i18n.translateInline('current user')
+        'specific': App.i18n.translateInline('specific user')
+    else if config.preCondition is 'org'
+      options =
+        'set': App.i18n.translateInline('set')
+        'current_user.organization_id': App.i18n.translateInline('current user organization')
+        'specific': App.i18n.translateInline('specific organization')
+    for key, value of options
+      selected = preConditionCurrent
+      if key is preCondition
+        selected = 'selected="selected"'
+      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
+    elementRow.find('.js-preCondition').removeClass('hide')
+    elementRow.find('.js-preCondition select').replaceWith(selection)
+
+    toggle = ->
+      preCondition = elementRow.find('.js-preCondition option:selected').attr('value')
+      if preCondition is 'specific'
+        elementRow.find('.js-value').removeClass('hide')
+      else
+        elementRow.find('.js-value').addClass('hide')
+    toggle()
+
+    elementRow.find('.js-preCondition select').bind('change', (e) =>
+      toggle()
+    )
 
   @buildAttributeSelector: (groups, elements) ->
     selection = $('<select class="form-control"></select>')

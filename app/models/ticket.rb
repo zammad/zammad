@@ -295,7 +295,7 @@ get count of tickets and tickets which match on selector
 
   def self.selectors(selectors, limit = 10, current_user = nil)
     fail 'no selectors given' if !selectors
-    query, bind_params, tables = selector2sql(selectors)
+    query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
 
     if !current_user
@@ -314,7 +314,7 @@ get count of tickets and tickets which match on selector
 
 generate condition query to search for tickets based on condition
 
-  query_condition, bind_condition = selector2sql(params[:condition])
+  query_condition, bind_condition = selector2sql(params[:condition], current_user)
 
 condition example
 
@@ -332,15 +332,31 @@ condition example
       range: 'day', # minute|hour|day|month|year
       value: '25',
     },
+    'ticket.owner_id' => {
+      operator: 'is', # is not
+      pre_condition: 'current_user.id',
+    },
+    'ticket.owner_id' => {
+      operator: 'is', # is not
+      pre_condition: 'specific',
+      value: 4711,
+    },
   }
 
 =end
 
-  def self.selector2sql(selectors)
+  def self.selector2sql(selectors, current_user = nil)
+    current_user_id = UserInfo.current_user_id
+    if current_user
+      current_user_id = current_user.id
+    end
     return if !selectors
+
+    # remember query and bind params
     query = ''
     bind_params = []
 
+    # get tables to join
     tables = ''
     selectors.each {|attribute, selector|
       selector = attribute.split(/\./)
@@ -364,24 +380,71 @@ condition example
       end
     }
 
+    # add conditions
     selectors.each {|attribute, selector_raw|
-      if query != ''
-        query += ' AND '
-      end
+
+      # validation
       fail "Invalid selector #{selector_raw.inspect}" if !selector_raw
       fail "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
       selector = selector_raw.stringify_keys
       fail "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
-      return nil if selector['value'].nil?
-      return nil if selector['value'].respond_to?(:empty?) && selector['value'].empty?
+
+      # validate value / allow empty but only if pre_condition eyists
+      if selector['value'].nil? || (selector['value'].respond_to?(:empty?) && selector['value'].empty?)
+        return nil if selector['pre_condition'].nil? || (selector['pre_condition'].respond_to?(:empty?) && selector['pre_condition'].empty?)
+      end
+
+      # validate pre_condition values
+      return nil if selector['pre_condition'] && selector['pre_condition'] !~ /^(set|current_user\.|specific)/
+
+      # get attributes
       attributes = attribute.split(/\./)
       attribute = "#{attributes[0]}s.#{attributes[1]}"
+
+      if query != ''
+        query += ' AND '
+      end
+
       if selector['operator'] == 'is'
-        query += "#{attribute} IN (?)"
-        bind_params.push selector['value']
+        if selector['pre_condition'] == 'set'
+          if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
+            query += "#{attribute} NOT IN (?)"
+            bind_params.push 1
+          else
+            query += "#{attribute} IS NOT NULL"
+          end
+        elsif selector['pre_condition'] == 'current_user.id'
+          fail "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
+          query += "#{attribute} IN (?)"
+          bind_params.push current_user_id
+        elsif selector['pre_condition'] == 'current_user.organization_id'
+          fail "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
+          query += "#{attribute} IN (?)"
+          user = User.lookup(id: current_user_id)
+          bind_params.push user.organization_id
+        else
+          query += "#{attribute} IN (?)"
+          bind_params.push selector['value']
+        end
       elsif selector['operator'] == 'is not'
-        query += "#{attribute} NOT IN (?)"
-        bind_params.push selector['value']
+        if selector['pre_condition'] == 'set'
+          if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
+            query += "#{attribute} IN (?)"
+            bind_params.push 1
+          else
+            query += "#{attribute} IS NULL"
+          end
+        elsif selector['pre_condition'] == 'current_user.id'
+          query += "#{attribute} NOT IN (?)"
+          bind_params.push current_user_id
+        elsif selector['pre_condition'] == 'current_user.organization_id'
+          query += "#{attribute} NOT IN (?)"
+          user = User.lookup(id: current_user_id)
+          bind_params.push user.organization_id
+        else
+          query += "#{attribute} NOT IN (?)"
+          bind_params.push selector['value']
+        end
       elsif selector['operator'] == 'contains'
         query += "#{attribute} LIKE (?)"
         value = "%#{selector['value']}%"
