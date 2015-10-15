@@ -50,14 +50,14 @@ class App.TicketZoomSidebar extends App.Controller
 
       if !@isRole('Customer')
         el.append('<div class="tags"></div>')
-        new App.WidgetTag(
+        @tagWidget = new App.WidgetTag(
           el:          el.find('.tags')
           object_type: 'Ticket'
           object:      ticket
           tags:        @tags
         )
         el.append('<div class="links"></div>')
-        new App.WidgetLink(
+        @linkWidget = new App.WidgetLink(
           el:          el.find('.links')
           object_type: 'Ticket'
           object:      ticket

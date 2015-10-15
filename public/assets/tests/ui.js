@@ -5,7 +5,10 @@ test( "check pretty date", function() {
 
   // past
   var result = App.PrettyDate.humanTime( current );
-  equal( result, '0 minutes ago', 'right now')
+  equal( result, 'just now', 'just now')
+
+  result = App.PrettyDate.humanTime( current - 15000 );
+  equal( result, 'just now', 'just now')
 
   result = App.PrettyDate.humanTime( current - 60000 );
   equal( result, '1 minute ago', '1 min ago')
@@ -60,7 +63,10 @@ test( "check pretty date", function() {
   // future
   current = new Date()
   result = App.PrettyDate.humanTime( current );
-  equal( result, '0 minutes ago', 'right now')
+  equal( result, 'just now', 'just now')
+
+  result = App.PrettyDate.humanTime( current.getTime() + 55000 );
+  equal( result, 'just now', 'just now')
 
   result = App.PrettyDate.humanTime( current.getTime() + 65000 );
   equal( result, 'in 1 minute', 'in 1 min')

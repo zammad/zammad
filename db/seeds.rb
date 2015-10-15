@@ -1572,6 +1572,21 @@ Ticket::Article::Sender.create_if_not_exists( id: 1, name: 'Agent' )
 Ticket::Article::Sender.create_if_not_exists( id: 2, name: 'Customer' )
 Ticket::Article::Sender.create_if_not_exists( id: 3, name: 'System' )
 
+Macro.create_if_not_exists(
+  name: 'Close & Tag as Spam',
+  perform: {
+    'ticket.state_id': {
+      value: Ticket::State.find_by(name: 'closed').id,
+    },
+    'ticket.tags': {
+      operator: 'add',
+      value: 'spam',
+    },
+  },
+  note: 'example macro',
+  active: true,
+)
+
 UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
   group_id: Group.where( name: 'Users' ).first.id,

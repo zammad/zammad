@@ -308,6 +308,12 @@ class App.TicketZoom extends App.Controller
         el:     @el.find('.ticket-meta')
       )
 
+      new App.TicketZoomAttributeBar(
+        ticket:   @ticket
+        el:       @el.find('.js-attributeBar')
+        callback: @submit
+      )
+
       @form_id = App.ControllerForm.formId()
 
       new App.TicketZoomArticleNew(
@@ -338,7 +344,7 @@ class App.TicketZoom extends App.Controller
         user_id: @ticket.customer_id
         size:    50
       )
-      new App.TicketZoomSidebar(
+      @sidebar = new App.TicketZoomSidebar(
         el:           @el.find('.tabsSidebar')
         sidebarState: @sidebarState
         ticket:       @ticket
@@ -462,7 +468,7 @@ class App.TicketZoom extends App.Controller
 
       resetButton.removeClass('hide')
 
-  submit: (e) =>
+  submit: (e, macro = {}) =>
     e.stopPropagation()
     e.preventDefault()
     ticketParams = @formParam( @$('.edit') )
@@ -476,6 +482,25 @@ class App.TicketZoom extends App.Controller
     # update ticket attributes
     for key, value of ticketParams
       ticket[key] = value
+
+    # apply macro
+    for key, content of macro
+      attributes = key.split('.')
+      if attributes[0] is 'ticket'
+
+        # apply tag changes
+        if attributes[1] is 'tags'
+          if @sidebar && @sidebar.tagWidget
+            tags = content.value.split(',')
+            for tag in tags
+              if content.operator is 'remove'
+                @sidebar.tagWidget.remove(tag)
+              else
+                @sidebar.tagWidget.add(tag)
+
+        # apply direct value changes
+        else
+          ticket[attributes[1]] = content.value
 
     # set defaults
     if !@isRole('Customer')

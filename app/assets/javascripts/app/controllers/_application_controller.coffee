@@ -528,6 +528,9 @@ class App.Controller extends Spine.Controller
           # replace new option list
           form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
 
+  stopPropagation: (e) ->
+    e.stopPropagation()
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super

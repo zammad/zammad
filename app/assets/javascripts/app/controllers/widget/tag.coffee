@@ -65,8 +65,10 @@ class App.WidgetTag extends App.Controller
     e.preventDefault()
     item = @$('[name="new_tag"]').val()
     return if !item
+    @add(item)
 
-    if _.contains(@tagList, item)
+  add: (item) =>
+    if _.contains(@tags, item)
       @render()
       return
 
@@ -89,6 +91,10 @@ class App.WidgetTag extends App.Controller
     e.preventDefault()
     item = $(e.target).parents('li').find('.js-tag').text()
     return if !item
+
+    @remove(item)
+
+  remove: (item) =>
 
     @tags = _.filter(@tags, (tagItem) -> return tagItem if tagItem isnt item )
     @render()

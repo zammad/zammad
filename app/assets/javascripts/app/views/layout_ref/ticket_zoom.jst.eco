@@ -634,7 +634,7 @@
     </div>
   </div>
   <div class="attributeBar">
-    <div class="btn js-reset hide">Discard your unsaved changes.</div>
+    <div class="btn js-reset">Discard your unsaved changes.</div>
     <div class="buttonDropdown dropdown dropup">
       <div class="btn btn--primary btn--split--first js-submit">Update</div>
       <div class="btn btn--primary btn--slim btn--split--last js-openDropdown"><%- @Icon('arrow-up') %></div>
