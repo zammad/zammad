@@ -80,7 +80,9 @@ do($ = window.jQuery, window) ->
       message = @el.find('.zammad-chat-input').val()
 
       if message
-        messageElement = @view('message') { message: message }
+        messageElement = @view('message')
+          message: message
+          from: 'customer'
 
         @maybeAddTimestamp()
 
@@ -106,7 +108,9 @@ do($ = window.jQuery, window) ->
 
       @lastAddedType = 'message--agent'
       unread = document.hidden ? " zammad-chat-message--unread" : ""
-      @el.find('.zammad-chat-body').append @view('message')({message: message})
+      @el.find('.zammad-chat-body').append @view('message')
+        message: message
+        from: 'agent'
       @scrollToBottom()
 
     toggle: =>
@@ -159,7 +163,7 @@ do($ = window.jQuery, window) ->
     maybeAddTimestamp: ->
       timestamp = Date.now()
 
-      if !@lastTimestamp or timestamp - @lastTimestamp > @showTimeEveryXMinutes * 60000
+      if !@lastTimestamp or (timestamp - @lastTimestamp) > @showTimeEveryXMinutes * 60000
         label = @T('Today')
         time = new Date().toTimeString().substr 0,5
         if @lastAddedType is 'timestamp'
@@ -181,7 +185,7 @@ do($ = window.jQuery, window) ->
           time: time
 
     addStatus: (label, time) ->
-      @el.find('.zammad-chat-body').append( @view('status')
+      @el.find('.zammad-chat-body').append @view('status')
         label: label
         time: time
 
