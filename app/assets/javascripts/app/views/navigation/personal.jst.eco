@@ -30,7 +30,7 @@
   <% else: %>
     <li class="settings <% if @active_tab[item.target] : %>active<% end %>">
       <a class="list-button fit horizontal centered" href="<%= item.target %>" title="<%- @Ti( item.name ) %>">
-        <%- @Icon('cog', 'user-menu-icon') %>
+        <%- @Icon(item.icon, 'user-menu-icon') %>
       </a>
     </li>
   <% end %>
