@@ -45,6 +45,27 @@ do($ = window.jQuery, window) ->
         input: @onInput
       ).autoGrow { extraLine: false }
 
+      if !window.WebSocket
+        console.log('no websockets available')
+        return
+
+      zammad_host = 'ws://localhost:6042'
+      @ws = new window.WebSocket(zammad_host)
+      console.log("connecting ws #{zammad_host}")
+
+      @ws.onopen = =>
+        console.log('ws connected')
+
+      @ws.onmessage = (e) =>
+        pipe = JSON.parse( e.data )
+        console.log 'debug', 'ws:onmessage', pipe
+
+      @ws.onclose = (e) =>
+        console.log 'debug', 'close websocket connection'
+
+      @ws.onerror = (e) =>
+        console.log 'debug', 'ws:onerror', e
+
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
         event.preventDefault()
