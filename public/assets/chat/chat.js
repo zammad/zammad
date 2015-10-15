@@ -114,9 +114,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.el = $(this.view('chat')());
       this.options.target.append(this.el);
       this.setAgentOnlineState(this.isOnline);
-      if (this.options.show) {
-        this.show();
-      }
       this.el.find('.zammad-chat-header').click(this.toggle);
       this.el.find('.zammad-chat-controls').on('submit', this.onSubmit);
       this.el.find('.zammad-chat-input').on({
@@ -238,7 +235,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.show = function() {
       var remainerHeight;
       this.el.addClass('zammad-chat-is-visible');
-      console.log(this.el.outerHeight(), this.el.find('.zammad-chat-header').outerHeight());
       remainerHeight = this.el.outerHeight() - this.el.find('.zammad-chat-header').outerHeight();
       return this.el.css('bottom', -remainerHeight);
     };

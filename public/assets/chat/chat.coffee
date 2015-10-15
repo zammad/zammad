@@ -38,8 +38,6 @@ do($ = window.jQuery, window) ->
 
       @setAgentOnlineState @isOnline
 
-      @show() if @options.show
-
       @el.find('.zammad-chat-header').click @toggle
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @el.find('.zammad-chat-input').on(
