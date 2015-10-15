@@ -3,7 +3,7 @@
   <a href="<%- @item.link %>" class="activity-body">
     <span class="activity-message">
       <span class="activity-text">
-        <%= @item.created_by.displayName() %> <%- @T( @item.type ) %> <%- @T( @item.object_name ) %><% if @item.title: %> (<%= @item.title %>)<% end %>
+        <%= @item.created_by.displayName() %> <%- @T( @item.type ) %> <%- @T( @item.object_name ) %><% if @item.title: %> <strong><%= @item.title %></strong><% end %>
       </span>
       <%- @humanTime(@item.created_at, false, 'activity-time') %>
     </span>
