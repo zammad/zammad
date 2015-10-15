@@ -4945,6 +4945,7 @@ footer {
     line-height: 39px;
     padding: 0 15px;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .dropdown li:not(:first-child) {
