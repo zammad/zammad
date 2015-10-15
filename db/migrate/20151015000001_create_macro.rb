@@ -11,6 +11,9 @@ class CreateMacro < ActiveRecord::Migration
     end
     add_index :macros, [:name], unique: true
 
+    # return if it's a new setup
+    return if !Setting.find_by(name: 'system_init_done')
+
     UserInfo.current_user_id = 1
     Macro.create_or_update(
       name: 'Close & Tag as Spam',
