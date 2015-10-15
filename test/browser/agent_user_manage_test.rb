@@ -29,7 +29,7 @@ class AgentUserManageTest < TestCase
     sleep 1
     sendkey( value: :arrow_down )
     sleep 0.5
-    click( css: '.active .newTicket .recipientList-entry.js-user-new' )
+    click( css: '.active .newTicket .recipientList-entry.js-userNew' )
     sleep 1
 
     set(
