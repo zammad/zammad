@@ -1,0 +1,9 @@
+<div class="zammad-chat-message zammad-chat-message--typing zammad-chat-message--agent">
+  <span class="zammad-chat-message-body">
+    <span class="zammad-chat-loading-animation">
+      <span class="zammad-chat-loading-circle"></span>
+      <span class="zammad-chat-loading-circle"></span>
+      <span class="zammad-chat-loading-circle"></span>
+    </span>
+  </span>
+</div>
