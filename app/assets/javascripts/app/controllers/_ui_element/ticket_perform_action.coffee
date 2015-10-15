@@ -8,6 +8,9 @@ class App.UiElement.ticket_perform_action
         name: 'Ticket'
         model: 'Ticket'
 
+    operators =
+      'ticket.tags': ['add', 'remove']
+
     # megre config
     elements = {}
     for groupKey, groupMeta of groups
@@ -21,11 +24,11 @@ class App.UiElement.ticket_perform_action
             config = _.clone(row)
             elements["#{groupKey}.#{config.name}"] = config
 
-    [defaults, groups, elements]
+    [defaults, groups, operators, elements]
 
   @render: (attribute, params = {}) ->
 
-    [defaults, groups, elements] = @defaults()
+    [defaults, groups, operators, elements] = @defaults()
 
     selector = @buildAttributeSelector(groups, elements)
 
@@ -53,6 +56,7 @@ class App.UiElement.ticket_perform_action
       elementRow = $(e.target).closest('.js-filterElement')
 
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute)
+      @buildOperator(item, elementRow, groupAndAttribute, elements, undefined, attribute, operators)
       @buildValue(item, elementRow, groupAndAttribute, elements, undefined, attribute)
     )
 
@@ -63,6 +67,7 @@ class App.UiElement.ticket_perform_action
       for groupAndAttribute, meta of params[attribute.name]
         selectorExists = true
         value = meta.value
+        operator = meta.operator
 
         # get selector rows
         elementFirst = item.find('.js-filterElement').first()
@@ -71,6 +76,7 @@ class App.UiElement.ticket_perform_action
         # clone, rebuild and append
         elementClone = elementFirst.clone(true)
         @rebuildAttributeSelectors(item, elementClone, groupAndAttribute)
+        @buildOperator(item, elementClone, groupAndAttribute, elements, value, attribute, operators, operator)
         @buildValue(item, elementClone, groupAndAttribute, elements, value, attribute)
         elementLast.after(elementClone)
 
@@ -92,6 +98,26 @@ class App.UiElement.ticket_perform_action
       item.find('.js-filterElement').first().remove()
 
     item
+
+  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, value, attribute, operators, operator) ->
+    name = "#{attribute.name}::#{groupAndAttribute}::operator"
+    if !operators[groupAndAttribute]
+      elementRow.find('.js-operator').html('')
+      return
+
+    # get current operator
+    if !operator
+      operator = elementRow.find('.js-operator select').val()
+
+    # build new operator
+    selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
+    for operatorKey in operators[groupAndAttribute]
+      operatorKeyName = App.i18n.translateInline(operatorKey)
+      selected = ''
+      if operatorKey is operator
+        selected = 'selected'
+      selection.append("<option value=\"#{operatorKey}\" #{selected}>#{operatorKeyName}</option>")
+    elementRow.find('.js-operator').html(selection)
 
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, attribute) ->
 
@@ -163,7 +189,7 @@ class App.UiElement.ticket_perform_action
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')
     return [none] if _.isEmpty(condition)
-    [defaults, groups, elements] = @defaults()
+    [defaults, groups, operators, elements] = @defaults()
     rules = []
     for attribute, value of condition
 

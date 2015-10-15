@@ -25,8 +25,5 @@
 
   <div class="tabsSidebar tabsSidebar--attributeBarSpacer vertical"></div>
 
-  <div class="attributeBar">
-    <div class="btn js-reset hide"><%- @T('Discard your unsaved changes.') %></div>
-    <div class="btn btn--primary js-submit"><%- @T('Update') %></div>
-  </div>
+  <div class="attributeBar js-attributeBar"></div>
 </div>

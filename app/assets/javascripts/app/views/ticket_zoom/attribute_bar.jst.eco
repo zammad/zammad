@@ -1,0 +1,14 @@
+<div class="btn js-reset hide"><%- @T('Discard your unsaved changes.') %></div>
+<% if @macroDisabled: %>
+<div class="btn btn--primary js-submit"><%- @T('Update') %></div>
+<% else: %>
+<div class="buttonDropdown dropdown dropup">
+  <div class="btn btn--primary btn--split--first js-submit"><%- @T('Update') %></div>
+  <div class="btn btn--primary btn--slim btn--split--last js-openDropdownMacro"><%- @Icon('arrow-up') %></div>
+  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
+    <% for macro in @macros: %>
+    <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- @T(macro.displayName()) %>
+    <% end %>
+  </ul>
+</div>
+<% end %>

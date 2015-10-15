@@ -137,6 +137,10 @@ test( 'form checks', function() {
       'ticket.priority_id': {
         value: 3,
       },
+      'ticket.tags': {
+        operator: 'remove',
+        value: 'tag1, tag2',
+      },
     },
   }
   new App.ControllerForm({
@@ -192,6 +196,10 @@ test( 'form checks', function() {
       },
       'ticket.priority_id': {
         value: '3',
+      },
+      'ticket.tags': {
+        operator: 'remove',
+        value: 'tag1, tag2',
       },
     },
     working_hours: {
@@ -327,6 +335,10 @@ test( 'form checks', function() {
     executions: {
       'ticket.priority_id': {
         value: '3',
+      },
+      'ticket.tags': {
+        operator: 'remove',
+        value: 'tag1, tag2',
       },
     },
   }
