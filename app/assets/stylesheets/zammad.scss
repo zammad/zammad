@@ -3120,7 +3120,9 @@ footer {
 
     .popover-content {
       flex: 1;
-      overflow-y: scroll;
+      padding-left: 0;
+      padding-right: 0;
+      overflow-y: auto;
     }
 
     &.is-overflowing .popover-notificationsHeader {
@@ -3373,11 +3375,37 @@ footer {
     margin-right: 26px;
   }
 
+  .activity-entries {
+    margin: 0 -17px;
+  }
+
   .activity-entry {
     display: flex;
+    padding: 0 17px;
     
     &.is-inactive {
-      opacity: 0.5;
+      // opacity: 0.5;
+    }
+
+    &.activity-entry--removeable {
+      padding-right: 0;
+    }
+
+    &:not(:hover) .activity-remove {
+      opacity: 0;
+    }
+
+    &:not(:last-child) .activity-body:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      border-bottom: 1px solid #f2f2f3;
+    }
+
+    &.activity-entry--removeable:not(:last-child) .activity-body:after {
+      right: 17px;
     }
   }
 
@@ -3388,7 +3416,6 @@ footer {
   }
 
   .activity-body {
-    color: #444a4f;
     padding: 16px 0 16px 2px;
     position: relative;
     display: flex;
@@ -3396,27 +3423,14 @@ footer {
     min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
   }
 
-  .activity-entry:not(:last-child) .activity-body:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 30px;
-    left: 0;
-    border-bottom: 1px solid #f2f2f3;
-  }
-
-  .activity-body:hover {
-    color: #444a4f;
-    text-decoration: none;
-  }
-
-    .activity-body:hover .activity-text {
-      text-decoration: underline;
-    }
-
   .activity-message {
+    color: #444a4f;
     flex: 1;
     min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
+    
+    &:hover .activity-text {
+      text-decoration: underline;
+    }
   }
 
   .activity-time {
@@ -3425,8 +3439,38 @@ footer {
     display: block;
   }
 
-  .activity .priority.icon:after {
-    background: white;
+  .activity-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 27px;
+    
+    .activity-remove-icon-holder {
+      width: 19px;
+      height: 19px;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: hsl(0,0%,80%);
+    }
+    
+    .icon {
+      fill: white;
+      width: 9px;
+      height: 9px;
+    }
+
+    &:hover {
+      .activity-remove-icon-holder {
+        background: #972e29;
+      }
+      .icon {
+        opacity: 1;
+      }
+    }
   }
 
 .form-inline {
@@ -3549,6 +3593,11 @@ footer {
 
 .ticketZoom {
   background: #f8f9fa;
+  /* 
+    force ticket zoom to show scrollbars 
+    because we offset the tabs bar when the os shows scrollbars
+  */
+  min-height: 101%;
 }
 
 .ticketZoom-controls {
