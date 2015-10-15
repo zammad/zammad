@@ -5822,6 +5822,7 @@ label + .wizard-buttonList {
   .tasks {
     margin-bottom: 10px;
     display: flex;
+    flex-basis: auto;
     flex-direction: column;
   }
 }
