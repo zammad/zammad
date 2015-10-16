@@ -6464,6 +6464,16 @@ output {
     }
   }
 
+  &.action--loading {
+    min-height: 300px;
+    align-items: center;
+    justify-content: center;
+    
+    .action-loading-label {
+      margin-left: 10px;
+    }
+  }
+
   .action-flow {
     display: flex;
     flex-wrap: wrap;
