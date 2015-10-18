@@ -1565,6 +1565,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/users"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
@@ -1621,6 +1622,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/slas"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a.js-new' } )[0].click
@@ -1665,6 +1667,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/text_modules"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
@@ -1711,7 +1714,9 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#channels/email"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#c-signature"]' } )[0].click
     sleep 8
     instance.find_elements( { css: '#content #c-signature a[data-type="new"]' } )[0].click
@@ -1758,6 +1763,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/groups"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
