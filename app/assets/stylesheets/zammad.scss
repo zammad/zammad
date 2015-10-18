@@ -1186,7 +1186,7 @@ fieldset > .form-group {
   float: left;
   
   .form-control {
-    min-width: auto;
+    min-width: initial;
   }
 }
 
@@ -4290,7 +4290,7 @@ footer {
 
 .tabsSidebar-sidebarSpacer {
   margin-right: $sidebarWidth;
-  transition: margin 500ms;
+  transition: marginRight 500ms;
 }
 
 .tabsSidebar-sidebarSpacer.is-closed {
@@ -6461,6 +6461,16 @@ output {
 
     & > *:not(.action-controls) {
       opacity: 0.33;
+    }
+  }
+
+  &.action--loading {
+    min-height: 300px;
+    align-items: center;
+    justify-content: center;
+    
+    .action-loading-label {
+      margin-left: 10px;
     }
   }
 

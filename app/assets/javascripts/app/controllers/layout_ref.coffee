@@ -2055,6 +2055,15 @@ class chatWindowRef extends Spine.Controller
   scrollToBottom: ->
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
+class AdminLoadRef extends App.ControllerContent
 
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/admin_loading')()
+
+App.Config.set( 'layout_ref/admin_loading', AdminLoadRef, 'Routes' )
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
