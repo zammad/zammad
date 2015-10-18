@@ -3932,6 +3932,10 @@ footer {
     justify-content: center;
   }
 
+.shortcut {
+  zIndex: 1000;
+}
+
 .shortcut .dropdown-menu > .active > a {
   background: none;
 }
@@ -3954,7 +3958,7 @@ footer {
     position: absolute;
     top: 43px;
     @extend .u-clickable, .zIndex-7;
-    
+
     &.is-hidden {
       display: none;
     }
