@@ -273,11 +273,9 @@ class AgentTicketActionLevel0Test < TestCase
       value: :arrow_down,
     )
 
-    sleep 1
-
-    click(
+    sendkey(
       browser: browser2,
-      css: '.active .shortcut > ul> li > a',
+      value: :enter,
     )
 
     watch_for(
