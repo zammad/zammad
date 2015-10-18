@@ -24,9 +24,15 @@ class App.UserOrganizationAutocompletion extends App.Controller
   element: =>
     @el
 
+  release: =>
+    return if !@catcher
+    @catcher.remove()
+
   open: =>
     @clearDelay('close')
     @el.addClass('open')
+    if @catcher
+      @catcher.remove()
     @catcher = new App.ClickCatcher
       holder:       @el.offsetParent()
       callback:     @close
