@@ -28,7 +28,6 @@ class User < ApplicationModel
   load 'user/assets.rb'
   include User::Assets
   extend User::Search
-  include User::SearchIndex
 
   before_create   :check_name, :check_email, :check_login, :check_password
   before_update   :check_password, :check_email, :check_login

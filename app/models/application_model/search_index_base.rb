@@ -18,11 +18,7 @@ returns
     return if !self.class.search_index_support_config
 
     # default ignored attributes
-    ignore_attributes = {
-      created_by_id: true,
-      updated_by_id: true,
-      active: true,
-    }
+    ignore_attributes = {}
     if self.class.search_index_support_config[:ignore_attributes]
       self.class.search_index_support_config[:ignore_attributes].each {|key, value|
         ignore_attributes[key] = value
@@ -37,7 +33,7 @@ returns
     attributes = data.attributes
     ignore_attributes.each {|key, value|
       next if value != true
-      attributes.delete( key.to_s )
+      attributes.delete(key.to_s)
     }
 
     # fill up with search data
@@ -45,15 +41,7 @@ returns
     return if !attributes
 
     # update backend
-    if self.class.column_names.include? 'active'
-      if active
-        SearchIndexBackend.add( self.class.to_s, attributes )
-      else
-        SearchIndexBackend.remove( self.class.to_s, id )
-      end
-    else
-      SearchIndexBackend.add( self.class.to_s, attributes )
-    end
+    SearchIndexBackend.add(self.class.to_s, attributes)
   end
 
 =begin
