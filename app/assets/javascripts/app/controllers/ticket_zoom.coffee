@@ -610,9 +610,6 @@ class App.TicketZoom extends App.Controller
     ticket.save(
       done: (r) =>
 
-        # enable form
-        @formEnable(e)
-
         # reset article - should not be resubmited on next ticket update
         ticket.article = undefined
 
@@ -624,6 +621,9 @@ class App.TicketZoom extends App.Controller
         App.TaskManager.mute(@task_key)
 
         @fetch(ticket.id, true)
+
+        # enable form
+        @formEnable(e)
     )
 
   bookmark: (e) ->
