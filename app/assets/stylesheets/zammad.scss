@@ -2880,7 +2880,7 @@ footer {
     }
   }
 
-  .icon {
+  .icon-logo {
     width: 100%;
     height: 100%;
   }
@@ -3382,6 +3382,11 @@ footer {
 
   .activity-entries {
     margin: 0 -17px;
+  }
+
+  .activity-placeholder {
+    @extend .u-textTruncate;
+    padding: 0 17px;
   }
 
   .activity-entry {

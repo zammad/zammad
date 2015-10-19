@@ -271,17 +271,12 @@ class App.TicketZoom extends App.Controller
     if not mainScrollHeigth > mainHeigth + headerHeight
       @scrollPageHeader.css('transform', "translateY(#{-headerHeight}px)")
 
-
     if scroll > headerHeight
       scroll = headerHeight
 
     if scroll is @scrollHeaderPos
       return
 
-    #marginTop: 0 .. headerHeight
-    @main.css('margin-top', scroll)
-    # translateY: 0 .. -headerHeight
-    @ticketZoom.css('transform', "translateY(-#{scroll}px)")
     # translateY: headerHeight .. 0
     @scrollPageHeader.css('transform', "translateY(#{scroll - headerHeight}px)")
 
@@ -295,11 +290,11 @@ class App.TicketZoom extends App.Controller
 
     if !@renderDone
       @renderDone = true
-      @html App.view('ticket_zoom')(
-        ticket:     @ticket
-        nav:        @nav
-        isCustomer: @isRole('Customer')
-      )
+      @html App.view('ticket_zoom')
+        ticket:         @ticket
+        nav:            @nav
+        isCustomer:     @isRole('Customer')
+        scrollbarWidth: App.Utils.getScrollBarWidth()
 
       new App.TicketZoomOverviewNavigator(
         el:          @$('.overview-navigator')

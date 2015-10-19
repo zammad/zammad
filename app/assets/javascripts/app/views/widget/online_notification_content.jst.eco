@@ -20,7 +20,7 @@
   </div>
   <% end %>
 <% else: %>
-  <div class="u-textTruncate">
+  <div class="activity-placeholder">
     <%- @T("No unread Notifications for you. :) ") %>
   </div>
 <% end %>
