@@ -265,6 +265,10 @@ blockquote {
     vertical-align: middle;
     margin-top: -3px;
   }
+
+  &.btn--icon--last .icon {
+    margin-left: 5px; // so far only used in ticket_zoom secondaryAction dropup
+  }
   
   &:focus {
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
@@ -397,6 +401,11 @@ blockquote {
     vertical-align: baseline;
     text-align: left;
     
+    .icon {
+      fill: currentColor;
+      opacity: 1;
+    }
+    
     &:active {
       color: hsl(203,65%,40%);
     }
@@ -467,7 +476,8 @@ blockquote {
 }
 
 .btn + .btn,
-.btn + .buttonDropdown {
+.btn + .buttonDropdown,
+.buttonDropdown + .buttonDropdown {
   margin-left: 10px;
 }
 
@@ -533,6 +543,7 @@ blockquote {
 
 .buttonDropdown {
   display: flex;
+  align-items: center;
   position: relative;
   user-select: none;
   
@@ -542,6 +553,11 @@ blockquote {
   
   &.is-open .dropdown-menu {
     display: block;
+  }
+
+  .btn--text {
+    padding-left: 3px;
+    padding-right: 3px;
   }
 }
 
