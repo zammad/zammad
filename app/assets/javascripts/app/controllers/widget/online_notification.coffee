@@ -165,6 +165,7 @@ class App.OnlineNotificationWidget extends App.Controller
       row = $(e.target).closest('.activity-entry')
       id = row.data('id')
       App.OnlineNotification.destroy(id)
+      @resetHeight()
     )
 
   createContainer: =>
@@ -196,3 +197,8 @@ class App.OnlineNotificationWidget extends App.Controller
   removeContainer: =>
     @counterUpdate(0)
     @toggle.popover('destroy')
+
+  resetHeight: ->
+    notificationsContainer = $('.js-notificationsContainer')
+    notificationsContainer.find('.popover-content').css('height', "auto")
+
