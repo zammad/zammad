@@ -71,7 +71,7 @@ export OTRSUSER=otrs
 #fi
 # useradd
 export ZUSER=zammad
-echo -n "Check OTRS user ... "
+echo -n "Check Zammad user ... "
 if id $ZUSER >/dev/null 2>&1; then
     echo "$ZUSER exists."
     # update home dir
