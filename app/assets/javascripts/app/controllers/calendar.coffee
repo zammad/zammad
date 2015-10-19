@@ -16,6 +16,7 @@ class Index extends App.ControllerContent
     #@load()
 
   load: =>
+    @startLoading()
     @ajax(
       id:   'calendar_index'
       type: 'GET'
@@ -29,6 +30,7 @@ class Index extends App.ControllerContent
         # load assets
         App.Collection.loadAssets(data.assets)
 
+        @stopLoading()
         @render(data)
     )
 

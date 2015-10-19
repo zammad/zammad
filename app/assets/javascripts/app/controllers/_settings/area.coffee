@@ -8,12 +8,14 @@ class App.SettingsArea extends App.Controller
     @load()
 
   load: ->
+    @startLoading()
     @ajax(
       id:    "setting_area_#{@area}"
       type:  'GET'
       url:   "#{@apiPath}/settings/area/#{@area}"
       processData: true
       success: (data, status, xhr) =>
+        @stopLoading()
         App.Collection.load( localStorage: false, type: 'Setting', data: data )
         @render()
     )

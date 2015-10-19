@@ -340,7 +340,7 @@
             Users
           </span> </td>
         <td class="noTruncate"> <span>
-            <span class="humanTimeFromNow undefined" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</span> </span>
+            <span class="humanTimeFromNow undefined" data-time="2015-01-12T12:58:42.000Z" title="01/12/2015 13:58">01/12/2015</span> </span>
         </td>
       </tr>
       <tr class="item" data-id="6" data-position="6" style="cursor: pointer;">
@@ -359,7 +359,7 @@
             Users
           </span> </td>
         <td class="noTruncate"> <span>
-            <span class="humanTimeFromNow undefined" data-time="2015-06-11T07:26:31.000Z" data-tooltip="06/11/2015 09:26">5 days 3 hours ago</span> </span>
+            <span class="humanTimeFromNow undefined" data-time="2015-06-11T07:26:31.000Z" title="06/11/2015 09:26">5 days 3 hours ago</span> </span>
         </td>
       </tr>
     </tbody>

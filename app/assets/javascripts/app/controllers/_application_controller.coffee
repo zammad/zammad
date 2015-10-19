@@ -531,6 +531,21 @@ class App.Controller extends Spine.Controller
   stopPropagation: (e) ->
     e.stopPropagation()
 
+  startLoading: (el) =>
+    return if @initLoadingDone && !el
+    @initLoadingDone = true
+    @stopLoading()
+    later = =>
+      if el
+        el.html App.view('generic/page_loading')()
+      else
+        @html App.view('generic/page_loading')()
+    @initLoadingDoneDelay = @delay(later, 2800)
+
+  stopLoading: =>
+    return if !@initLoadingDoneDelay
+    @clearDelay(@initLoadingDoneDelay)
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super

@@ -215,7 +215,7 @@ class App extends Spine.Controller
         if escalation
           cssClass += ' escalation'
         humanTime = App.PrettyDate.humanTime(time, escalation)
-        "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
+        "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
 
       # define icon helper
       params.Icon = (name, className = '') ->

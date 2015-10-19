@@ -20,11 +20,13 @@ class Index extends App.ControllerContent
 
   # fetch data, render view
   load: ->
+    @startLoading()
     @ajax(
       id:    'sessions'
       type:  'GET'
       url:   @apiPath + '/sessions'
       success: (data) =>
+        @stopLoading()
         @render(data)
     )
 

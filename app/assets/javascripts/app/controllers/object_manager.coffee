@@ -10,12 +10,14 @@ class Index extends App.ControllerTabs
     @title 'Objects', true
 
     # get data
+    @startLoading()
     @ajax(
       id:    'object_manager_attributes_list'
       type:  'GET'
       url:   @apiPath + '/object_manager_attributes_list'
       processData: true
       success: (data, status, xhr) =>
+        @stopLoading()
         @build(data.objects)
     )
 

@@ -15,16 +15,15 @@ class Index extends App.ControllerContent
     #@load()
 
   load: =>
+    @startLoading()
     @ajax(
       id:   'sla_index'
       type: 'GET'
       url:  @apiPath + '/slas'
       processData: true
       success: (data, status, xhr) =>
-
-        # load assets
         App.Collection.loadAssets(data.assets)
-
+        @stopLoading()
         @render(data)
     )
 

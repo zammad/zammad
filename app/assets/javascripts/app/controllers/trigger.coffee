@@ -47,16 +47,15 @@ class App.TriggerTime extends App.Controller
     #@load()
 
   load: =>
+    @startLoading()
     @ajax(
       id:   'trigger_time_index'
       type: 'GET'
       url:  @apiPath + '/jobs'
       processData: true
       success: (data, status, xhr) =>
-
-        # load assets
         #App.Collection.loadAssets(data.assets)
-
+        @stopLoading()
         @render(data)
     )
 
