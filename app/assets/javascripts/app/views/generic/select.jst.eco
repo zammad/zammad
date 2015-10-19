@@ -1,4 +1,4 @@
-<div class="u-positionOrigin">
+<div class="controls-select">
   <select id="<%= @attribute.id %>" class="form-control<%= " #{ @attribute.class }" if @attribute.class %>" name="<%= @attribute.name %>" <%= @attribute.multiple %> <%= @attribute.required %> <%= @attribute.autofocus %>>
 <% if @attribute.options: %>
 <% for row in @attribute.options: %>
