@@ -2155,12 +2155,27 @@ footer {
     0 -3px rgba(0,0,0,.01);
 }
 
+  .bulkAction-firstStep {
+    display: flex;
+    align-items: center;
+  }
+
+  .bulkAction-secondStep {
+    display: flex;
+    flex-direction: column;
+  }
+
   .bulkAction .btn {
-    margin: 0 10px;
+    margin: 0 16px;
+  }
+
+  .bulkAction .btn--text {
+    margin-right: 0;
   }
 
   .bulkAction-controls {
     margin-top: 10px;
+    margin-left: auto;
   }
 
 .show_toogle {
@@ -3558,10 +3573,12 @@ footer {
 
     .bulkAction-secondStep .form-inline textarea.form-control {
       display: block;
-      padding-left: 8px;
-      padding-right: 8px;
       width: 100%;
       resize: vertical;
+    }
+
+    .bulkAction-secondStep .form-inline .expanding-wrapper {
+      margin: 0 6px;
     }
 
     .bulkAction-secondStep .form-inline textarea.form-control:not(:focus) {
