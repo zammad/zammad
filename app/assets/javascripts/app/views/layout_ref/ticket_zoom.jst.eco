@@ -57,7 +57,7 @@
             <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
           </div>
           <div class="ticket-meta">
-            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="11.07.2014 12:10">11.07.2014</span> 
+            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="11.07.2014 12:10">11.07.2014</span> 
             </small>
           </div>
         </div>
@@ -127,7 +127,7 @@
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="2014-07-11 12:10">2014-07-11</time></small>
         </div>
 
         <div class="ticket-article-item agent note" data-id="23" id="article-23">      
@@ -167,7 +167,7 @@
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" title="2014-08-05 15:34">2014-08-05</time></small>
         </div>
 
         <div class="ticket-article-item customer phone" data-id="1" id="article-1">
@@ -216,7 +216,7 @@
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="2014-07-11 12:10">2014-07-11</time></small>
         </div>
 
         <div class="ticket-article-item agent note" data-id="23" id="article-23">      
@@ -296,7 +296,7 @@
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" title="2014-08-05 15:34">2014-08-05</time></small>
         </div>
       </div>
     </div>
@@ -524,7 +524,7 @@
               <li class="task">
                 <div class="icon-holder"></div>
                 <div class="task-text">
-                  <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a> <time class="humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">01/20/2015</time>
+                  <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a> <time class="humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" title="01/20/2015 12:47">01/20/2015</time>
                 </div>
                 <div class="list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
               </li>

@@ -90,7 +90,7 @@
           </div>
 
           <div class="ticket-meta">
-            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - created <span class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</span></small>
+            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - created <span class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" title="01/12/2015 13:58">01/12/2015</span></small>
           </div>
         </div>
       </div>
@@ -199,7 +199,7 @@
             <div class="article-content article-actions horizontal stretch">
               <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="reply" href="#">reply</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/1">split</a>
             </div>
-          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</time></small>
+          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" title="01/12/2015 13:58">01/12/2015</time></small>
         </div>
 
         <div class="ticket-article-item agent" data-id="2" id="article-2">
@@ -373,7 +373,7 @@
             <div class="article-content article-actions horizontal stretch">
               <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/2">split</a>
             </div>
-          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T14:02:35.000Z" data-tooltip="01/12/2015 15:02">01/12/2015</time></small>
+          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T14:02:35.000Z" title="01/12/2015 15:02">01/12/2015</time></small>
         </div>
 
         <div class="ticket-article-item agent" data-id="6" id="article-6">
@@ -437,7 +437,7 @@
             <div class="article-content article-actions horizontal stretch">
               <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/6">split</a>
             </div>
-          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-05-05T10:25:01.000Z" data-tooltip="05/05/2015 12:25">05/05/2015</time></small>
+          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-05-05T10:25:01.000Z" title="05/05/2015 12:25">05/05/2015</time></small>
         </div>
       </div>
 
@@ -797,7 +797,7 @@
                 <div class="task-text">
                   <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a>
 
-                  <div class="time humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">
+                  <div class="time humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" title="01/20/2015 12:47">
                     01/20/2015
                   </div>
                 </div>

@@ -44,7 +44,7 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'state' ), 'open')
   equal( App.viewPrint( ticket, 'state_id' ), 'open')
   equal( App.viewPrint( ticket, 'not_existing' ), '-')
-  equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " data-time="2014-11-07T23:43:08.000Z" data-tooltip="11/07/2014 23:43">11/07/2014</time>')
+  equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " data-time="2014-11-07T23:43:08.000Z" title="11/07/2014 23:43">11/07/2014</time>')
   equal( App.viewPrint( ticket, 'date' ), '02/07/2015')
   equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
 
@@ -55,7 +55,7 @@ test( "model ui basic tests", function() {
   equal( App.viewPrint( ticket, 'state' ), 'offen')
   equal( App.viewPrint( ticket, 'state_id' ), 'offen')
   equal( App.viewPrint( ticket, 'not_existing' ), '-')
-  equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " data-time="2014-11-07T23:43:08.000Z" data-tooltip="07.11.2014 23:43">07.11.2014</time>')
+  equal( App.viewPrint( ticket, 'updated_at' ), '<time class="humanTimeFromNow " data-time="2014-11-07T23:43:08.000Z" title="07.11.2014 23:43">07.11.2014</time>')
   equal( App.viewPrint( ticket, 'date' ), '07.02.2015')
   equal( App.viewPrint( ticket, 'textarea' ), '<div>some new</div><div>line</div>')
 
