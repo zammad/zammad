@@ -619,7 +619,7 @@ class App.Sidebar extends App.Controller
   render: =>
     @html App.view('generic/sidebar_tabs')
       items: @items
-      scrollbarWidth: @getScrollBarWidth()
+      scrollbarWidth: App.Utils.getScrollBarWidth()
 
     # init content callback
     for item in @items
@@ -634,21 +634,6 @@ class App.Sidebar extends App.Controller
           items: item.actions
           type:  'small'
         )
-
-  getScrollBarWidth: ->
-    $outer = $('<div>').css(
-      visibility: 'hidden'
-      width: 100
-      overflow: 'scroll'
-    ).appendTo('body')
-
-    widthWithScroll = $('<div>').css(
-      width: '100%'
-    ).appendTo($outer).outerWidth()
-
-    $outer.remove()
-
-    return 100 - widthWithScroll
 
   toggleDropdown: (e) ->
     e.stopPropagation()
