@@ -113,7 +113,7 @@ class App extends Spine.Controller
       if cssClass.match 'escalation'
         escalation = true
       humanTime = App.PrettyDate.humanTime(result, escalation)
-      result    = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{result}\" data-tooltip=\"#{timestamp}\">#{humanTime}</time>"
+      result    = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{result}\" title=\"#{timestamp}\">#{humanTime}</time>"
 
     if !isHtmlEscape && typeof result is 'string'
       result = App.Utils.htmlEscape(result)

@@ -239,60 +239,6 @@ blockquote {
   z-index: 1;
 }
 
-/* tooltip */
-a[data-tooltip],
-time[data-tooltip],
-span[data-tooltip] {
-  position: relative;
-}
-a[data-tooltip]:before,
-time[data-tooltip]:before,
-span[data-tooltip]:before,
-a[data-tooltip]:after,
-time[data-tooltip]:after,
-span[data-tooltip]:after {
-  content: "";
-  position: absolute;
-  transform: scale(0);
-  opacity: 0;
-  transition: transform 300ms cubic-bezier(0.34,1.6,0.71,1), opacity 300ms;
-}
-a[data-tooltip]:before,
-time[data-tooltip]:before,
-span[data-tooltip]:before {
-  left: 0;
-  top: -34px;
-  background-color: #c6c6c5;
-  color: #ffffff;
-  height: 26px;
-  line-height: 27px;
-  border-radius: 5px;
-  padding: 0 13px;
-  content: attr(data-tooltip);
-  white-space: nowrap;
-  transform-origin: 17px 26px;
-}
-a[data-tooltip]:after,
-time[data-tooltip]:after,
-span[data-tooltip]:after {
-  left: 13px;
-  top: -8px;
-  border-top: 7px solid #c6c6c5;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  transform-origin: 4px 0;
-}
-a[data-tooltip]:hover:after,
-a[data-tooltip]:hover:before,
-time[data-tooltip]:hover:after,
-time[data-tooltip]:hover:before,
-span[data-tooltip]:hover:after,
-span[data-tooltip]:hover:before {
-  transform: scale(1);
-  opacity: 1;
-  transition: transform 300ms 1.5s cubic-bezier(0.34,1.6,0.71,1), opacity 300ms 1.5s;
-}
-
 .textarea::placeholder,
 .form-control::placeholder,
 .token-input::placeholder {

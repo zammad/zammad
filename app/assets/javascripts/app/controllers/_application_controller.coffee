@@ -231,7 +231,7 @@ class App.Controller extends Spine.Controller
 
     # only do dom updates on changes
     return if time is currentVal
-    item.attr('data-tooltip', App.i18n.translateTimestamp(timestamp))
+    item.attr('title', App.i18n.translateTimestamp(timestamp))
     item.html(time)
 
   ticketPopups: (position = 'right') ->
