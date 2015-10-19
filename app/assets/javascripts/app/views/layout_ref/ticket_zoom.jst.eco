@@ -106,7 +106,7 @@
                 <div class="horizontal article-meta-row">
                   <div class="article-meta-key">Kanal</div>
                   <div class="article-meta-value">
-                    <svg class="article-meta-icon"><use xlink:href="#icon-phone" /></svg>
+                    <%- @Icon('phone', 'article-meta-icon') %>
                     phone
                   </div>
                 </div>
@@ -117,11 +117,11 @@
                   set to internal
                 </a>
                 <a href="#" data-type="reply" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                  <%- @Icon('reply', 'article-meta-icon') %>
                   reply
                 </a>
                 <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                  <%- @Icon('split', 'article-meta-icon') %>
                   split
                 </a>
               </div>
@@ -154,7 +154,7 @@
                 <div class="horizontal article-meta-row">
                   <div class="article-meta-key">Kanal</div>
                   <div class="article-meta-value">
-                    <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
+                    <%- @Icon('note', 'article-meta-icon') %>
                     note
                   </div>
                 </div>
@@ -206,11 +206,11 @@
                   set to internal
                 </a>
                 <a href="#" data-type="reply" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                  <%- @Icon('reply', 'article-meta-icon') %>
                   reply
                 </a>
                 <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                  <%- @Icon('split', 'article-meta-icon') %>
                   split
                 </a>
               </div>
@@ -283,7 +283,7 @@
                 <div class="horizontal article-meta-row">
                   <div class="article-meta-key">Kanal</div>
                   <div class="article-meta-value">
-                    <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
+                    <%- @Icon('note', 'article-meta-icon') %>
                     note
                   </div>
                 </div>

@@ -83,7 +83,7 @@
         Where <b>State</b> is <b>open</b>.<br>
         In <b>Folder</b> <b>Spam</b>.
       </div>
-      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <%- @Icon('arrow-right', 'action-flow-icon') %>
       <div class="action-block">
         <h3>Actions</h3>
         Set <b>State</b> to <b>closed</b>.
@@ -106,7 +106,7 @@
         Where <b>State</b> is <b>open</b>.<br>
         In <b>Folder</b> <b>Spam</b>.
       </div>
-      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <%- @Icon('arrow-right', 'action-flow-icon') %>
       <div class="action-block">
         <h3>Actions</h3>
         Set <b>State</b> to <b>closed</b>.

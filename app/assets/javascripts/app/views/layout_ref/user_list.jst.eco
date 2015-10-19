@@ -116,7 +116,7 @@
   </div>
 
   <div class="searchfield">
-    <svg class="icon icon-magnifier"><use xlink:href="#icon-magnifier" /></svg>
+    <%- @Icon('magnifier') %>
     <input class="js-search form-control" name="search" placeholder="Search for users" type="search">
   </div>
 
@@ -163,7 +163,7 @@
           <td><span>Niklas</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
 
@@ -175,7 +175,7 @@
           <td><span>Hubermeyerschmidt</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
 
@@ -187,7 +187,7 @@
           <td><span>Braun</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
 
@@ -199,7 +199,7 @@
           <td><span>Blanko</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
           </td>
         </tr>
       </tbody>

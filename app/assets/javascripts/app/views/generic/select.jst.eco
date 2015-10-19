@@ -7,6 +7,6 @@
 <% end %>
   </select>
   <% if not @attribute.multiple: %>
-    <%- @Icon('arrow-down', 'dropdown-arrow') %>
+    <%- @Icon('arrow-down') %>
   <% end %>
 </div>
