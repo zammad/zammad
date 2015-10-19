@@ -594,7 +594,7 @@ class App.Utils
     num
 
   @icon: (name, className = '') ->
-    path = if svgPolyfill then '' else 'assets/images/icons.svg'
+    path = if window.svgPolyfill then '' else 'assets/images/icons.svg'
     "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#{path}#icon-#{name}\" /></svg>"
 
   @getScrollBarWidth: ->
