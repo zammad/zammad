@@ -1,0 +1,4 @@
+<div class="page-loading">
+  <div class="small loading icon"></div>
+  <div class="page-loading-label"><%- @T('Loading...') %></div>
+</div>

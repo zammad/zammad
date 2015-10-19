@@ -49,6 +49,7 @@ class Index extends App.Controller
     @recent()
 
   renderResult: (user_ids = []) ->
+    @stopLoading()
 
     callbackHeader = (header) ->
       attribute =
@@ -126,6 +127,7 @@ class Index extends App.Controller
     @$('.tab.active').each( (i,d) ->
       role_ids.push $(d).data('id')
     )
+    @startLoading(@$('.table-overview'))
     App.Ajax.request(
       id:    'search'
       type:  'GET'
@@ -137,11 +139,10 @@ class Index extends App.Controller
         full:  1
       processData: true,
       success: (data, status, xhr) =>
-
-        # load assets
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @renderResult(data.user_ids)
+      done: =>
+        @stopLoading()
     )
 
   recent: =>
@@ -149,6 +150,7 @@ class Index extends App.Controller
     @$('.tab.active').each( (i,d) ->
       role_ids.push $(d).data('id')
     )
+    @startLoading(@$('.table-overview'))
     App.Ajax.request(
       id:    'search'
       type:  'GET'
@@ -159,11 +161,10 @@ class Index extends App.Controller
         full:  1
       processData: true,
       success: (data, status, xhr) =>
-
-        # load assets
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @renderResult(data.user_ids)
+      complete: =>
+        @stopLoading()
     )
 
   new: (e) ->

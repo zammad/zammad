@@ -32,7 +32,7 @@ class _delaySingleton extends Spine.Module
   constructor: ->
     @levelStack = {}
 
-  set: ( callback, timeout, key, level ) ->
+  set: ( callback, timeout, key, level ) =>
 
     if !level
       level = '_all'
@@ -59,9 +59,9 @@ class _delaySingleton extends Spine.Module
       level:    level
     }
 
-    return delay_id
+    key.toString()
 
-  clear: ( key, level ) ->
+  clear: ( key, level ) =>
 
     if !level
       level = '_all'
@@ -80,19 +80,19 @@ class _delaySingleton extends Spine.Module
     if _.isEmpty( @levelStack[ level ] )
       delete @levelStack[ level ]
 
-  clearLevel: (level) ->
+  clearLevel: (level) =>
     return if !@levelStack[ level ]
     for key, data of @levelStack[ level ]
       @clear( key, level )
     delete @levelStack[level]
 
-  reset: ->
+  reset: =>
     for level, items of @levelStack
       for key, data of items
         @clear( key, level )
       @levelStack[level] = {}
     true
 
-  _all: ->
+  _all: =>
     @levelStack
 

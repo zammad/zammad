@@ -244,12 +244,17 @@ class App.ChannelEmailAccountOverview extends App.Controller
     #@load()
 
   load: =>
+
+    @startLoading()
+
     @ajax(
       id:   'email_index'
       type: 'GET'
       url:  @apiPath + '/channels/email_index'
       processData: true
       success: (data, status, xhr) =>
+
+        @stopLoading()
 
         # load assets
         App.Collection.loadAssets(data.assets)
