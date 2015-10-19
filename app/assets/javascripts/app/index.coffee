@@ -219,7 +219,7 @@ class App extends Spine.Controller
 
       # define icon helper
       params.Icon = (name, className = '') ->
-        "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#icon-#{name}\" /></svg>"
+        App.Utils.icon(name, className)
 
       # define richtext helper
       params.RichText = ( string ) ->

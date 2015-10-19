@@ -51,6 +51,10 @@ class App.User extends App.Model
     if placement
       placement = "data-placement=\"#{placement}\""
 
+    # use system avatar for system actions
+    if @id is 1
+      return "<span class='avatar' style='background: white'>#{App.Utils.icon('logo')}</span>"
+
     # use generated avatar
     if !@image || @image is 'none' || unique
       return @uniqueAvatar(size, placement, cssClass, avatar, type)

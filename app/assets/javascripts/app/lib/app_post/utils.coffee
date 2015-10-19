@@ -592,3 +592,6 @@ class App.Utils
     while num.length < digits
       num = '0' + num
     num
+
+  @icon: (name, className = '') ->
+    "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#icon-#{name}\" /></svg>"
