@@ -3387,9 +3387,9 @@ footer {
   .activity-entry {
     display: flex;
     padding: 0 17px;
-    
+
     &.is-inactive {
-      // opacity: 0.5;
+      opacity: 0.5;
     }
 
     &.activity-entry--removeable {
