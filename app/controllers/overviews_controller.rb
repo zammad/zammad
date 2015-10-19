@@ -155,7 +155,7 @@ Response:
 {}
 
 Test:
-curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+curl http://localhost/api/v1/overviews/#{id}.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
 
 =end
 
