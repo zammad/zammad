@@ -83,14 +83,11 @@
     
   </ul>
   <div class="tab-content">
-    <div class="tab-pane active" id="c-account">
-      <h2>Email</h2>
+    <div class="tab-pane active" id="c-account"></div>
+  </div>
 
-      <div class="action action--loading">
-        <div class="small loading icon"></div>
-        <div class="action-loading-label">Collecting Email Settings..</div>
-      </div>
-
-    </div>
+  <div class="page-loading">
+    <div class="small loading icon"></div>
+    <div class="page-loading-label">Loading Email Settings</div>
   </div>
 </div>

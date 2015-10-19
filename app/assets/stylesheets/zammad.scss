@@ -1632,6 +1632,19 @@ kbd {
   }
 }
 
+
+.page-loading {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+.page-loading-label {
+  margin-left: 10px;
+  margin-top: 1px;
+}
+
 .dropdown-menu .count {
   padding-top: 1px;
   margin-left: 10px;
@@ -6412,16 +6425,6 @@ output {
 
     & > *:not(.action-controls) {
       opacity: 0.33;
-    }
-  }
-
-  &.action--loading {
-    min-height: 300px;
-    align-items: center;
-    justify-content: center;
-    
-    .action-loading-label {
-      margin-left: 10px;
     }
   }
 
