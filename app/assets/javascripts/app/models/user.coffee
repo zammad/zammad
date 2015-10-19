@@ -48,7 +48,7 @@ class App.User extends App.Model
   avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar, type = undefined) ->
     size   = parseInt(size, 10)
 
-    cssClass += " " if cssClass
+    cssClass += ' ' if cssClass
     cssClass += "size-#{ size }"
 
     if placement
@@ -65,6 +65,7 @@ class App.User extends App.Model
       vip = false
       data = " data-avatar-id=\"#{avatar.id}\""
 
+    # set vip flag, ignore if personal avatar is request
     vip = @vip
     if type is 'personal'
       vip = false
@@ -74,7 +75,9 @@ class App.User extends App.Model
     # use system avatar for system actions
     if @id is 1
       return App.view('avatar_system')()
-    else if !@image || @image is 'none' || unique
+
+    # generate uniq avatar
+    if !@image || @image is 'none' || unique
       width  = 300
       height = 226
 
@@ -90,13 +93,14 @@ class App.User extends App.Model
         x: x
         y: y
         initials: @initials()
-    else
-      return App.view('avatar')
-        data: data
-        cssClass: cssClass
-        placement: placement
-        vip: vip
-        url: @imageUrl()
+
+    # generate image based avatar
+    return App.view('avatar')
+      data: data
+      cssClass: cssClass
+      placement: placement
+      vip: vip
+      url: @imageUrl()
 
   imageUrl: ->
     return if !@image
