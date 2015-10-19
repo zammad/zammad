@@ -594,7 +594,8 @@ class App.Utils
     num
 
   @icon: (name, className = '') ->
-    "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#icon-#{name}\" /></svg>"
+    path = if svgPolyfill then '' else 'assets/images/icons.svg'
+    "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#{path}#icon-#{name}\" /></svg>"
 
   @getScrollBarWidth: ->
     $outer = $('<div>').css(
