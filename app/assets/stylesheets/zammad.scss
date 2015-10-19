@@ -1140,6 +1140,10 @@ fieldset > .form-group {
   margin-bottom: 0;
 }
 
+.controls-select {
+  position: relative;
+}
+
 .controls-label {
   margin: 11px 10px 0;
   flex-shrink: 0;
@@ -3531,6 +3535,10 @@ footer {
     display: block;
     border-radius: 0;
     background: none;
+  }
+
+  .form-inline .controls-select {
+    position: static;
   }
 
   .bulkAction-secondStep .form-group {
