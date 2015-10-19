@@ -27,7 +27,7 @@
         <%- rule %><br>
       <% end %>
     </div>
-    <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+    <%- @Icon('arrow-right', 'action-flow-icon') %>
     <div class="action-block action-block--flex">
       <div class="label"><%- @T('Escalation Times') %></div>
       <% if sla.first_response_time: %>

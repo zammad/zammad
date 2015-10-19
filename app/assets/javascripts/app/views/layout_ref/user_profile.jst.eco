@@ -4,9 +4,9 @@
     <div class="profile-section vertical centered">
       <div class="align-right profile-action dropdown dropdown--actions">
         <div class="dropdown-toggle" id="profileAction" data-toggle="dropdown">
-          <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
+          <%- @Icon('cog', 'dropdown-icon') %>
           <label>Aktion</label>
-          <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down') %>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="profileAction">
           <li role="presentation"><a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
@@ -146,14 +146,14 @@
         <div class="stat-title">Status</div>
         <div class="stat-graphic">
           <div class="stat-tickets vertical reverse end">
-            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
-            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
-            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
-            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
-            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
-            <svg class="one-ticket state-color supergood-state"><use xlink:href="#icon-one-ticket" /></svg>
+            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
+            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
+            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
+            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
+            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
+            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
           </div>
-          <svg class="total-tickets"><use xlink:href="#icon-total-tickets" /></svg>
+          <%- @Icon('total-tickets', 'total-tickets') %>
         </div>
         <!-- 
           Achtung: hier müssen wir schauen, dass wir das Widget genauso verwenden wie im Dashboard. Sonst gibt's Verwirrung.
@@ -164,7 +164,7 @@
       <div class="column mood stat-widget vertical">
         <div class="stat-title">Stimmung</div>
         <div class="stat-graphic">
-          <svg class="stat-icon mood-icon"><use xlink:href="#icon-mood-supergood" /></svg>
+          <%- @Icon('mood-supergood', 'stat-icon') %>
         </div>
         <div class="stat-label">3% of my tickets escalated.</div>
         <div class="stat-detail">Average: 17%</div>

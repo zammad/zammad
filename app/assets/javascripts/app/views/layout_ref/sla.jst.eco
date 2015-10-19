@@ -83,7 +83,7 @@
         Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
         Where <b>Priority</b> is <b>high</b>.
       </div>
-      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <%- @Icon('icon-arrow-right', 'action-flow-icon') %>
       <div class="action-block">
         <h3>Repsonse Times</h3>
         00:30 hours First Response Time<br>
@@ -108,7 +108,7 @@
         Where <b>Organization</b> equals to <b>Deutsche Bank</b>.<br>
         Where <b>Priority</b> is <b>high</b>.
       </div>
-      <svg class="action-flow-icon"><use xlink:href="#icon-arrow-right" /></svg>
+      <%- @Icon('icon-arrow-right', 'action-flow-icon') %>
       <div class="action-block">
         <h3>Repsonse Times</h3>
         00:30 hours First Response Time<br>

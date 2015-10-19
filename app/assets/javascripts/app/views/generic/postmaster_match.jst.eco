@@ -9,7 +9,7 @@
       <div class="controls">
         <div class="u-positionOrigin js-operator">
           <select></select>
-          <%- @Icon('arrow-down', 'dropdown-arrow') %>
+          <%- @Icon('arrow-down') %>
         </div>
       </div>
       <div class="controls js-value"></div>
