@@ -70,15 +70,15 @@ export OTRSUSER=otrs
 #    cat /opt/otrs/RELEASE|grep VERSION|sed 's/VERSION = //'|sed 's/ /-/g' > /tmp/otrs-old.tmp
 #fi
 # useradd
-export OTRSUSER=zammad
+export ZUSER=zammad
 echo -n "Check OTRS user ... "
-#if id $OTRSUSER >/dev/null 2>&1; then
-#    echo "$OTRSUSER exists."
-#    # update home dir
-#    usermod -d /opt/otrs $OTRSUSER
-#else
-#    useradd $OTRSUSER -d /opt/otrs/ -s /bin/bash -g zammad -c 'Zammad user' && echo "$OTRSUSER added."
-#fi
+if id $ZUSER >/dev/null 2>&1; then
+    echo "$ZUSER exists."
+    # update home dir
+    usermod -d /opt/zammads $ZUSER
+else
+    useradd $ZUSER -d /opt/zammad -s /bin/bash -g zammad -c 'Zammad user' && echo "$ZUSER added."
+fi
 
 
 %post
