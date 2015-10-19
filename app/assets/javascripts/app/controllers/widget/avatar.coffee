@@ -9,12 +9,7 @@ class App.WidgetAvatar extends App.Controller
     App.User.unsubscribe(@subscribeId)
 
   render: (user) =>
-    @html App.view('avatar')(
-      user:     user
-      size:     @size
-      position: @position
-      type:     @type
-    )
+    @html user.avatar @size, @position, undefined, false, false, @type
 
     # start user popups
     @userPopups(@position)

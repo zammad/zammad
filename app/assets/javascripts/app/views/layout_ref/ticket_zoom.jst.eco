@@ -18,8 +18,8 @@
                   <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
                 </span>
                 <%- @Ti(entry.name) %>
-                <span class="dropdown-activeSpacer visibility-change<%= ' is-active' if i is @activeColorIndex %>">
-                  <svg class="icon-checkmark" data-visible="active"><use xlink:href="#icon-checkmark" fill="white" /></svg>
+                <span class="dropdown-selectedSpacer<%= ' is-selected' if i is @activeColorIndex %>">
+                  <%- @Icon('checkmark') %>
                 </span>
               </a>
             <% end %>
@@ -634,8 +634,31 @@
     </div>
   </div>
   <div class="attributeBar">
-    <div class="btn js-reset">Discard your unsaved changes.</div>
-    <div class="buttonDropdown dropdown dropup">
+    <div class="btn js-reset hide">Discard your unsaved changes.</div>
+    <div class="buttonDropdown dropdown dropdown--actions dropup">
+      <div class="btn btn--text btn--icon--last" data-toggle="dropdown">
+        <span class="js-secondaryActionButtonLabel">Stay on Ticket</span> <%- @Icon('arrow-up') %>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="secondaryAction">
+        <li class="js-secondaryAction" role="menuitem">
+          <span class="js-secondaryActionLabel">Close tab</span>
+          <span class="dropdown-selectedSpacer js-selectedIcon is-selected">
+            <%- @Icon('checkmark') %>
+          </span>
+        <li class="js-secondaryAction" role="menuitem">
+          <span class="js-secondaryActionLabel">Next ticket in view</span>
+          <span class="dropdown-selectedSpacer js-selectedIcon">
+            <%- @Icon('checkmark') %>
+          </span>
+        <li class="js-secondaryAction" role="menuitem">
+          <span class="js-secondaryActionLabel">Stay on ticket</span>
+          <span class="dropdown-selectedSpacer js-selectedIcon">
+            <%- @Icon('checkmark') %>
+          </span>
+      </ul>
+    </div>
+
+    <div class="buttonDropdown dropdown dropup js-submitDropdown">
       <div class="btn btn--primary btn--split--first js-submit">Update</div>
       <div class="btn btn--primary btn--slim btn--split--last js-openDropdown"><%- @Icon('arrow-up') %></div>
       <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">

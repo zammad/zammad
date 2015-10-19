@@ -795,7 +795,7 @@ class TicketZoomRef extends App.ControllerContent
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
 
-    '.buttonDropdown': 'buttonDropdown'
+    '.js-submitDropdown': 'buttonDropdown'
 
   events:
     'click .js-highlight': 'toggleHighlight'
@@ -806,6 +806,7 @@ class TicketZoomRef extends App.ControllerContent
     'mouseup .js-dropdownAction': 'performTicketMacro'
     'mouseenter .js-dropdownAction': 'onActionMouseEnter'
     'mouseleave .js-dropdownAction': 'onActionMouseLeave'
+    'click .js-secondaryAction': 'chooseSecondaryAction'
 
   stopPropagation: (event) ->
     event.stopPropagation()
@@ -987,6 +988,12 @@ class TicketZoomRef extends App.ControllerContent
 
   onActionMouseLeave: (event) =>
     @$(event.currentTarget).removeClass('is-active')
+
+  chooseSecondaryAction: (event) =>
+    target = $(event.currentTarget)
+    target.siblings().find('.is-selected').removeClass('is-selected')
+    @$('.js-secondaryActionButtonLabel').text target.find('.js-secondaryActionLabel').text()
+    target.find('.js-selectedIcon').addClass('is-selected')
 
 
 

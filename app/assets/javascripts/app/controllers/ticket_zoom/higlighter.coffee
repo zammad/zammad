@@ -165,8 +165,8 @@ class App.TicketZoomHighlighter extends App.Controller
         #@articles.attr('data-highlightcolor', @colors[@activeColorIndex].name)
 
   pickColor: (e) =>
-    @$('.js-highlightColor .visibility-change.is-active').removeClass('is-active')
-    $(e.currentTarget).find('.visibility-change').addClass('is-active')
+    @$('.js-highlightColor .is-selected').removeClass('is-selected')
+    $(e.currentTarget).find('.js-selectedIcon').addClass('is-selected')
 
     @activeColorIndex = $(e.currentTarget).attr('data-key')
     @setColor()
