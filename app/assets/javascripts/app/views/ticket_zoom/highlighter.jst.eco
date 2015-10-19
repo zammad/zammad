@@ -13,8 +13,8 @@
           <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
         </span>
         <%- @Ti(entry.name) %>
-        <span class="dropdown-activeSpacer visibility-change<%= ' is-active' if i is @activeColorIndex %>">
-          <svg class="icon-checkmark" data-visible="active"><use xlink:href="#icon-checkmark" fill="white" /></svg>
+        <span class="dropdown-selectedSpacer js-selectedIcon<%= ' is-selected' if i is @activeColorIndex %>">
+          <%- @Icon('checkmark') %>
         </span>
       </a>
     <% end %>

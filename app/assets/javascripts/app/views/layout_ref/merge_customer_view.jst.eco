@@ -13,28 +13,6 @@
 
       <div class="dropdown dropdown--actions">
         <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown"></div>
-
-        <ul class="dropdown-menu dropdown-menu-right">
-          <li>
-            <a class="js-highlightColor" data-key="0" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #f7e7b2"></span></span> Yellow <span class="dropdown-activeSpacer visibility-change is-active"></span></a>
-          </li>
-
-          <li>
-            <a class="js-highlightColor" data-key="1" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #bce7b6"></span></span> Green <span class="dropdown-activeSpacer visibility-change"></span></a>
-          </li>
-
-          <li>
-            <a class="js-highlightColor" data-key="2" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #b3ddf9"></span></span> Blue <span class="dropdown-activeSpacer visibility-change"></span></a>
-          </li>
-
-          <li>
-            <a class="js-highlightColor" data-key="3" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #fea9c5"></span></span> Pink <span class="dropdown-activeSpacer visibility-change"></span></a>
-          </li>
-
-          <li>
-            <a class="js-highlightColor" data-key="4" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #eac5ee"></span></span> Purple <span class="dropdown-activeSpacer visibility-change"></span></a>
-          </li>
-        </ul>
       </div>
     </div>
 
@@ -49,28 +27,6 @@
 
           <div class="dropdown dropdown--actions">
             <div class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown"></div>
-
-            <ul class="dropdown-menu dropdown-menu-right">
-              <li>
-                <a class="js-highlightColor" data-key="0" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #f7e7b2"></span></span> Yellow <span class="dropdown-activeSpacer visibility-change is-active"></span></a>
-              </li>
-
-              <li>
-                <a class="js-highlightColor" data-key="1" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #bce7b6"></span></span> Green <span class="dropdown-activeSpacer visibility-change"></span></a>
-              </li>
-
-              <li>
-                <a class="js-highlightColor" data-key="2" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #b3ddf9"></span></span> Blue <span class="dropdown-activeSpacer visibility-change"></span></a>
-              </li>
-
-              <li>
-                <a class="js-highlightColor" data-key="3" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #fea9c5"></span></span> Pink <span class="dropdown-activeSpacer visibility-change"></span></a>
-              </li>
-
-              <li>
-                <a class="js-highlightColor" data-key="4" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #eac5ee"></span></span> Purple <span class="dropdown-activeSpacer visibility-change"></span></a>
-              </li>
-            </ul>
           </div>
         </div>
 

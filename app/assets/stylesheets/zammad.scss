@@ -5032,7 +5032,7 @@ footer {
     }
 
     .dropdown-iconSpacer,
-    .dropdown-activeSpacer {
+    .dropdown-selectedSpacer {
       display: flex;
       align-items: center;
     }
@@ -5041,10 +5041,19 @@ footer {
       width: 25px;
     }
 
-    .dropdown-activeSpacer {
+    .dropdown-selectedSpacer {
       width: 34px;
       margin-left: auto;
       justify-content: flex-end;
+      opacity: 0;
+      
+      .icon {
+        fill: white;
+      }
+      
+      &.is-selected {
+        opacity: 1;
+      }
     }
 
     a {
