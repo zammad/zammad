@@ -23,9 +23,9 @@ class ReportsController < ApplicationController
       created = aggs(start, stop, 'minute', 'created_at')
       closed = aggs(start, stop, 'minute', 'close_time')
     elsif params[:timeRange] == 'day'
-      start = Date.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").iso8601
-      start = "#{start}T00:00:00Z"
-      stop = "#{start}T23:59:59Z"
+      date = Date.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_s
+      start = "#{date}T00:00:00Z"
+      stop = "#{date}T23:59:59Z"
       created = aggs(start, stop, 'hour', 'created_at')
       closed = aggs(start, stop, 'hour', 'close_time')
     elsif params[:timeRange] == 'week'
@@ -61,9 +61,9 @@ class ReportsController < ApplicationController
       start = (Time.zone.now - 60.minutes).iso8601
       stop = Time.zone.now.iso8601
     elsif params[:timeRange] == 'day'
-      start = Date.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").iso8601
-      start = "#{start}T00:00:00Z"
-      stop = "#{start}T23:59:59Z"
+      date = Date.parse("#{params[:year]}-#{params[:month]}-#{params[:day]}").to_s
+      start = "#{date}T00:00:00Z"
+      stop = "#{date}T23:59:59Z"
     elsif params[:timeRange] == 'week'
       start = Date.commercial(params[:year], params[:week]).iso8601
       stop = Date.parse(start).end_of_week
@@ -86,10 +86,14 @@ class ReportsController < ApplicationController
   end
 
   def aggs(range_start, range_end, interval, field)
+    interval_es = interval
+    if interval == 'week'
+      interval_es = 'day'
+    end
     result = SearchIndexBackend.aggs(
       {
       },
-      [range_start, range_end, field, interval],
+      [range_start, range_end, field, interval_es],
       ['Ticket'],
     )
     data = []
@@ -119,12 +123,13 @@ class ReportsController < ApplicationController
         end
         next if !item['doc_count']
         next if item['key_as_string'] !~ /#{start_string}/
+        next if match
         match = true
         data.push [counter, item['doc_count']]
         if interval == 'month'
           start = start.next_month
         elsif interval == 'week'
-          start = start.next_week
+          start = start.next_day
         elsif interval == 'day'
           start = start.next_day
         elsif interval == 'hour'
@@ -138,7 +143,7 @@ class ReportsController < ApplicationController
       if interval == 'month'
         start = start.next_month
       elsif interval == 'week'
-        start = start.next_week
+        start = start.next_day
       elsif interval == 'day'
         start = start + 1.day
       elsif interval == 'hour'
