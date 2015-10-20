@@ -7,7 +7,11 @@
     <div class="js-avatar"></div>
     <div class="editControls-item is-hidden pop-select">
       <div class="editControls-iconHolder centered js-selectedArticleType">
-        <%- @Icon(@article.type, 'editControls-icon js-selectedType') %>
+        <% for articleType in @articleTypes: %>
+        <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
+        <%- @Icon(articleType.icon) %>
+        </div>
+        <% end %>
       </div>
       <div class="pop-selector is-hidden js-articleTypes">
         <% for articleType in @articleTypes: %>

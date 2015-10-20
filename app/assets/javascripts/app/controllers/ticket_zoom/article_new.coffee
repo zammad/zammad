@@ -330,11 +330,10 @@ class App.TicketZoomArticleNew extends App.Controller
     @el.find('.js-articleTypes').addClass('is-hidden')
 
   setArticleType: (type) ->
-    typeIcon = @$('.js-selectedType')
     @type = type
     @$('[name=type]').val(type)
     @articleNewEdit.attr('data-type', type)
-    typeIcon.find('use').attr 'xlink:href', "#icon-#{@type}"
+    @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{ type }']").removeClass('hide')
 
     # show/hide attributes
     for articleType in @articleTypes
