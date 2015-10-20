@@ -10,6 +10,9 @@ class CreateReport < ActiveRecord::Migration
     end
     add_index :report_profiles, [:name], unique: true
 
+    # return if it's a new setup
+    return if !Setting.find_by(name: 'system_init_done')
+
     Report::Profile.create_if_not_exists(
       name: '-all-',
       condition: {},
@@ -17,44 +20,7 @@ class CreateReport < ActiveRecord::Migration
       updated_by_id: 1,
       created_by_id: 1,
     )
-
-    Role.create_if_not_exists( name: 'Report', created_by_id: 1, updated_by_id: 1 )
-    Translation.create_if_not_exists(
-      locale: 'de-de',
-      source: 'Ticket Count',
-      target: 'Ticket Anzahl',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Translation.create_if_not_exists(
-      locale: 'de-de',
-      source: 'Ticket Count',
-      target: 'Ticket Anzahl',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Translation.create_if_not_exists(
-      locale: 'de-de',
-      source: 'Create Channels',
-      target: 'Erstellkanäle',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Translation.create_if_not_exists(
-      locale: 'de-de',
-      source: 'Times',
-      target: 'Zeiten',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    Translation.create_if_not_exists(
-      locale: 'de-de',
-      source: 'Communication',
-      target: 'Kommunikation',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
+    Role.create_if_not_exists(name: 'Report', created_by_id: 1, updated_by_id: 1)
   end
 
   def down
