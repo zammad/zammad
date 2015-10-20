@@ -6,7 +6,7 @@
 
 
   <h2>Tabs</h2>
-  <div class="tabs wide-tabs horizontal">
+  <div class="tabs wide-tabs">
     <div class="tab my-stats active">My Stats</div>
     <div class="tab my-groups">My Group</div>
     <div class="tab all-stats">All</div>

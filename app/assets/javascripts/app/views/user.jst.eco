@@ -18,7 +18,7 @@
 
 <div class="userSearch horizontal">
   <div class="userSearch-label"><%- @T('Roles') %>:</div>
-  <div class="tabs tabs-wide horizontal">
+  <div class="tabs tabs-wide">
     <% for role in @roles: %>
       <div class="tab" data-id="<%= role.id %>"><%- @T(role.displayName() ) %></div>
     <% end %>

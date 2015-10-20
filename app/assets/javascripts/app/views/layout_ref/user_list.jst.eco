@@ -125,7 +125,7 @@
       Roles:
     </div>
 
-    <div class="tabs tabs-wide horizontal">
+    <div class="tabs tabs-wide">
       <div class="tab" data-id="1">
         Admin
       </div>

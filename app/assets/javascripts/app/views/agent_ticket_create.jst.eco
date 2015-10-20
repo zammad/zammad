@@ -1,4 +1,4 @@
-<div class="tabsSidebar-holder flex horizontal">
+<div class="tabsSidebar-holder flex">
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="newTicket">
       <div class="box box--newTicket">
@@ -6,7 +6,7 @@
           <h1><%- @T( @head ) %></h1>
         </div>
 
-        <ul class="horizontal tabs type-tabs">
+        <ul class="tabs type-tabs">
 
           <li class="tab u-textTruncate" data-type="phone-in">
             <%- @Icon('received-calls', 'tab-icon') %>
