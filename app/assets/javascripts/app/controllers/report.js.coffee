@@ -186,24 +186,30 @@ class Download extends App.Controller
   render: ->
 
     reports = []
+
+    # select first backend, if no backend is selected
     $('.js-backendSelector:checked').each( (index, element) ->
       if $(element).hasClass('download')
         value = $(element).val()
         reports.push value
     )
 
+    # get used profiles
     profiles = []
     for key, value of @params.profileSelected
-      profiles.push App.ReportProfile.find(key)
-    console.log('reports', reports, 'profiles', profiles, @config.metric, @params.metric, @config.metric[@params.metric])
+      if value
+        if !@profileSelectedId
+          @profileSelectedId = key
+        profiles.push App.ReportProfile.find(key)
+
     @html App.view('report/download_header')(
       reports:  reports
       profiles: profiles
       metric:   @config.metric[@params.metric]
     )
 
-    @profileSelected = ''
-    @backendSelected  = ''
+    @backendSelected = ''
+
     active = false
     @el.find('.js-dataDownloadBackendSelector').each( (index, element) ->
       if $(element).parent().hasClass('active')
@@ -212,10 +218,11 @@ class Download extends App.Controller
     if !active
       @el.find('.js-dataDownloadBackendSelector').first().parent().addClass('active')
 
+    # rerender view after backend is selected
     @el.find('.js-dataDownloadBackendSelector').each( (index, element) =>
       if $(element).parent().hasClass('active')
-        @profileSelected = $(element).data('profile')
-        @backendSelected  = $(element).data('report')
+        @profileSelectedId = $(element).data('profile-id')
+        @backendSelected   = $(element).data('backend')
     )
 
     @tableUpdate()
@@ -225,8 +232,8 @@ class Download extends App.Controller
       e.preventDefault()
       @el.find('.js-dataDownloadBackendSelector').parent().removeClass('active')
       $(e.target).parent().addClass('active')
-      @profileSelected = $(e.target).data('profile')
-      @backendSelected = $(e.target).data('backend')
+      @profileSelectedId = $(e.target).data('profile-id')
+      @backendSelected   = $(e.target).data('backend')
 
     table = (tickets, count) =>
       url = '#ticket/zoom/'
@@ -248,14 +255,14 @@ class Download extends App.Controller
       type:  'POST'
       url:   @apiPath + '/reports/sets'
       data: JSON.stringify(
-        metric:    @params.metric
-        year:      @params.year
-        month:     @params.month
-        week:      @params.week
-        day:       @params.day
-        timeRange: @params.timeRange
-        profiles:  @params.profileSelected
-
+        metric:     @params.metric
+        year:       @params.year
+        month:      @params.month
+        week:       @params.week
+        day:        @params.day
+        timeRange:  @params.timeRange
+        profile_id: @profileSelectedId
+        backend:    @backendSelected
       )
       processData: true
       success: (data) =>
@@ -270,7 +277,7 @@ class Download extends App.Controller
             ticket = App.TicketReport.fullLocal( record.id )
             ticket_collection.push ticket
 
-        table( ticket_collection, data.count )
+        table(ticket_collection, data.count)
     )
 
 class TimeRangePicker extends App.Controller
@@ -485,4 +492,4 @@ class Sidebar extends App.Controller
     App.Event.trigger( 'ui:report:rerender' )
 
 App.Config.set( 'report', Index, 'Routes' )
-App.Config.set( 'Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', role: ['Admin'] }, 'NavBarRight' )
+App.Config.set( 'Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', role: ['Report'] }, 'NavBarRight' )
