@@ -1487,6 +1487,13 @@ Role.create_if_not_exists(
   updated_by_id: 1,
   created_by_id: 1
 )
+Role.create_if_not_exists(
+  id: 4,
+  name: 'Report',
+  note: 'Access the report area.',
+  created_by_id: 1,
+  updated_by_id: 1,
+)
 
 Group.create_if_not_exists(
   id: 1,
@@ -1860,6 +1867,14 @@ Channel.create_if_not_exists(
   },
   preferences: { online_service_disable: true },
   active: true,
+)
+
+Report::Profile.create_if_not_exists(
+  name: '-all-',
+  condition: {},
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
 )
 
 network = Network.create_if_not_exists(
