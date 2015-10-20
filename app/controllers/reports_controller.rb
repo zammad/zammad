@@ -117,7 +117,8 @@ class ReportsController < ApplicationController
       match = false
       result['aggregations']['time_buckets']['buckets'].each {|item|
         if interval == 'minute'
-          start_string = start.iso8601.sub(/:\d\d.+?$/, '')
+          item['key_as_string'] = item['key_as_string'].sub(/:\d\d.\d\d\dZ$/, '')
+          start_string = start.iso8601.sub(/:\d\dZ$/, '')
         else
           start_string = start.iso8601.sub(/:\d\d:\d\d.+?$/, '')
         end
