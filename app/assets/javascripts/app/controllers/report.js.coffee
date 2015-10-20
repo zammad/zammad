@@ -212,15 +212,15 @@ class Download extends App.Controller
 
     active = false
     @el.find('.js-dataDownloadBackendSelector').each( (index, element) ->
-      if $(element).parent().hasClass('active')
+      if $(element).parent().hasClass('is-active')
         active = true
     )
     if !active
-      @el.find('.js-dataDownloadBackendSelector').first().parent().addClass('active')
+      @el.find('.js-dataDownloadBackendSelector').first().parent().addClass('is-active')
 
     # rerender view after backend is selected
     @el.find('.js-dataDownloadBackendSelector').each( (index, element) =>
-      if $(element).parent().hasClass('active')
+      if $(element).parent().hasClass('is-active')
         @profileSelectedId = $(element).data('profile-id')
         @backendSelected   = $(element).data('backend')
     )
@@ -230,8 +230,8 @@ class Download extends App.Controller
   tableUpdate: (e) =>
     if e
       e.preventDefault()
-      @el.find('.js-dataDownloadBackendSelector').parent().removeClass('active')
-      $(e.target).parent().addClass('active')
+      @el.find('.js-dataDownloadBackendSelector').parent().removeClass('is-active')
+      $(e.target).parent().addClass('is-active')
       @profileSelectedId = $(e.target).data('profile-id')
       @backendSelected   = $(e.target).data('backend')
 
@@ -297,8 +297,8 @@ class TimeRangePicker extends App.Controller
     @html App.view('report/time_range_picker')()
 
     # select time slot
-    @el.find('.js-timeRange').removeClass('active')
-    @el.find('.js-timeRange[data-type="' + @ui.params.timeRange + '"]').addClass('active')
+    @el.find('.js-timeRange').removeClass('is-active')
+    @el.find('.js-timeRange[data-type="' + @ui.params.timeRange + '"]').addClass('is-active')
 
   select: (e) =>
     console.log('TS click')
@@ -336,35 +336,35 @@ class TimePicker extends App.Controller
     )
 
     # select time slot
-    @el.find('.time-slot').removeClass('active')
-    @el.find('.time-slot[data-type="' + @ui.params.timeRange + '"]').addClass('active')
+    @el.find('.time-slot').removeClass('is-active')
+    @el.find('.time-slot[data-type="' + @ui.params.timeRange + '"]').addClass('is-active')
 
   selectTimeDay: (e) =>
     e.preventDefault()
     @ui.params.day = $(e.target).data('type')
-    $(e.target).parent().parent().find('li').removeClass('active')
-    $(e.target).parent().addClass('active')
+    $(e.target).parent().parent().find('li').removeClass('is-active')
+    $(e.target).parent().addClass('is-active')
     App.Event.trigger( 'ui:report:rerender' )
 
   selectTimeMonth: (e) =>
     e.preventDefault()
     @ui.params.month = $(e.target).data('type')
-    $(e.target).parent().parent().find('li').removeClass('active')
-    $(e.target).parent().addClass('active')
+    $(e.target).parent().parent().find('li').removeClass('is-active')
+    $(e.target).parent().addClass('is-active')
     App.Event.trigger( 'ui:report:rerender' )
 
   selectTimeWeek: (e) =>
     e.preventDefault()
     @ui.params.week = $(e.target).data('type')
-    $(e.target).parent().parent().find('li').removeClass('active')
-    $(e.target).parent().addClass('active')
+    $(e.target).parent().parent().find('li').removeClass('is-active')
+    $(e.target).parent().addClass('is-active')
     App.Event.trigger( 'ui:report:rerender' )
 
   selectTimeYear: (e) =>
     e.preventDefault()
     @ui.params.year = $(e.target).data('type')
-    $(e.target).parent().parent().find('li').removeClass('active')
-    $(e.target).parent().addClass('active')
+    $(e.target).parent().parent().find('li').removeClass('is-active')
+    $(e.target).parent().addClass('is-active')
     App.Event.trigger( 'ui:report:rerender' )
 
   _timeSlotPicker: ->
