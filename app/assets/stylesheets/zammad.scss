@@ -408,6 +408,7 @@ blockquote {
     
     &:active {
       color: hsl(203,65%,40%);
+      background: none;
     }
 
     &.btn--secondary {
@@ -538,6 +539,30 @@ blockquote {
     & ~ [data-visible=normal] {
       display: none
     }
+  }
+}
+
+.btn-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  
+  &.btn-group--full {
+    display: flex;
+  }
+
+  & + .btn-group {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid hsl(240,2%,92%);  
+  }
+
+  .btn + .btn {
+    margin-left: 0;
+  }
+
+  .btn--text {
+    padding: 6px 10px 5px; /* reporting main.eco */
+    display: inline-block;
   }
 }
 
@@ -712,6 +737,18 @@ table {
   vertical-align: middle;
 }
 
+.checkbox-list {
+  list-style: none;
+  margin-bottom: 15px;
+  padding: 3px 12px;
+  font-size: 14px;
+  line-height: 25px;
+  color: hsl(60,1%,34%);
+  background: white;
+  border: 1px solid hsl(0, 0%, 90%);
+  border-radius: 3px;
+}
+
 .checkbox-replacement,
 .radio-replacement {
   padding: 0;
@@ -770,10 +807,6 @@ table {
 .hero-two .hero-right {
   width: 50%;
   float: right;
-}
-
-.panel-title {
-  font-size: 14px;
 }
 
 #task {
@@ -1627,6 +1660,10 @@ kbd {
   flex-wrap: wrap;
 }
 
+.page-header--center {
+  justify-content: center;
+}
+
 .page-header-title h1 {
   margin-top: 9px;
   margin-bottom: 7px;
@@ -1652,6 +1689,29 @@ kbd {
   }
 }
 
+.page-body--two-column {
+  display: flex;
+}
+
+.page-aside {
+  padding-right: 20px;
+  border-right: 1px solid hsl(0,0%,90%);
+  margin-right: 20px;
+  width: 240px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.page-main {
+  flex: 1;
+}
+
+.page-content {
+  background: white;
+  border: 1px solid hsl(240,3%,92%);
+  border-radius: 3px;
+  padding: 10px;
+}
 
 .page-loading {
   min-height: 500px;
@@ -1849,11 +1909,13 @@ ol.tabs li {
 }
 
 .tabs {
+  display: flex;
   padding: 0;
   margin-bottom: 20px;
   color: #b8b8b8;
   border: 1px solid rgba(0,8,14,.08);
   border-radius: 3px;
+  background: white;
 }
 
   .tabs-condensed .tab {
@@ -1866,8 +1928,8 @@ ol.tabs li {
   }
 
   .tab {
-    height: 40px;
-    padding: 10px 20px;
+    height: 35px;
+    padding: 8px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
     flex: 1 1 auto;
@@ -1893,8 +1955,12 @@ ol.tabs li {
     margin: 25px auto 20px;
     font-size: 15px;
     font-weight: 300;
-    background: white;
     border-radius: 8px;
+    
+    .tab {
+      height: 40px;
+      padding: 10px 20px;
+    }
   }
 
   .dashboard .wide-tabs {
@@ -2193,6 +2259,37 @@ footer {
     margin-top: 10px;
     margin-left: auto;
   }
+
+.panel {
+  box-shadow: none;
+  color: hsl(60,1%,34%);
+}
+
+.panel-default > .panel-heading {
+  padding-bottom: 8px;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 17px;
+  letter-spacing: 0.05em;
+  background: hsl(197, 20%, 93%);
+  background: hsl(197,20%,93%);
+  border-color: hsl(198,18%,86%);
+}
+
+.panel-title {
+  font-size: inherit;
+}
+
+.panel-group .panel-heading {
+  display: block;
+}
+
+.panel-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
 .show_toogle {
   font-size: 10px;

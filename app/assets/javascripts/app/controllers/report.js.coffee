@@ -71,7 +71,7 @@ class Index extends App.ControllerContent
     )
 
     new Sidebar(
-      el:     @el.find('.sidebar')
+      el:     @el.find('.js-aside')
       config: @config
       params: @params
     )
@@ -86,6 +86,8 @@ class Index extends App.ControllerContent
 class Graph extends App.ControllerContent
   constructor: ->
     super
+
+    return
 
     # rerender view
     @bind 'ui:report:rerender', =>
@@ -449,7 +451,7 @@ class Sidebar extends App.Controller
   events:
     'click .js-profileSelector': 'selectProfile'
     'click .js-backendSelector': 'selectBackend'
-    'click .panel-title':        'selectMetric'
+    'click .panel-heading':        'selectMetric'
 
   constructor: ->
     super

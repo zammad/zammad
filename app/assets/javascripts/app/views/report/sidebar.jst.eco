@@ -1,19 +1,22 @@
 <div class="panel-group" id="accordion">
   <% for key, metric of @metrics: %>
     <div class="panel panel-default" data-metric="<%= metric.name %>">
-      <div class="panel-heading">
-        <div class="panel-title">
-          <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= metric.name %>">
-            <%- @T(metric.display) %>
-          </a>
-        </div>
-      </div>
+      <a class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= metric.name %>">
+        <span class="panel-title">
+          <%- @T(metric.display) %>
+        </span>
+      </a>
       <div id="collapse-<%= metric.name %>" class="panel-collapse collapse <% if metric.name is @params.metric: %>in<% end %>">
         <div class="panel-body">
           <ul class="type area_select">
             <% for backend in metric.backend: %>
-              <li style="display: block; margin-left: -12px;"><input class="js-backendSelector" type="checkbox" value="<%= backend.name %>" <% if @params.backendSelected[backend.name]: %>checked<% end %>/>
-                <%- @T(backend.display) %>
+              <li>
+                <label class="inline-label checkbox-replacement">
+                  <input class="js-backendSelector" type="checkbox" value="<%= backend.name %>"<%- ' checked' if @params.backendSelected[backend.name] %>>
+                  <%- @Icon('checkbox', 'icon-unchecked') %>
+                  <%- @Icon('checkbox-checked', 'icon-checked') %>
+                  <span class="label-text"><%- @T(backend.display) %></span>
+                </label>
               </li>
             <% end %>
           </ul>
@@ -24,10 +27,15 @@
 </div>
 
 <h3><%- @T('Profiles') %></h3>
-<ul>
+<ul class="checkbox-list">
   <% for profile in @profiles: %>
-    <li style="display: block; margin-left: -12px;"><input class="js-profileSelector" type="radio" name="profile" value="<%= profile.id %>"  <% if @params.profileSelected[profile.id]: %>checked<% end %>/>
-      <%= profile.name %>
+    <li>
+      <label class="inline-label radio-replacement">
+        <input class="js-profileSelector" type="radio" value="<%= profile.id %>"<%- ' checked' if @params.profileSelected[profile.id] %>>
+        <%- @Icon('radio', 'icon-unchecked') %>
+        <%- @Icon('radio-checked', 'icon-checked') %>
+        <span class="label-text"><%= profile.name %></span>
+      </label>
     </li>
   <% end %>
 </ul>
