@@ -76,12 +76,18 @@ class ReportsController < ApplicationController
     end
 
     # get data
-
+    ticket_ids = []
+    assets = {}
+    Ticket.select('id').all.each {|ticket_part|
+      ticket = Ticket.lookup(id: ticket_part.id)
+      assets = ticket.assets(assets)
+      ticket_ids.push ticket_part.id
+    }
+    count = Ticket.count
     render json: {
-      data: {
-        start: start,
-        stop: stop,
-      }
+      ticket_ids: ticket_ids,
+      assets: assets,
+      count: count,
     }
   end
 

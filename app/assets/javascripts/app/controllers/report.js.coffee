@@ -188,11 +188,12 @@ class Download extends App.Controller
     reports = []
 
     # select first backend, if no backend is selected
-    $('.js-backendSelector:checked').each( (index, element) ->
-      if $(element).hasClass('download')
-        value = $(element).val()
-        reports.push value
-    )
+    @backendSelected = undefined
+    if @config.metric[@params.metric]
+      for backend in @config.metric[@params.metric].backend
+        console.log('bac', backend)
+        if backend.dataDownload && !@backendSelected
+          @backendSelected = backend.name
 
     # get used profiles
     profiles = []
@@ -203,26 +204,10 @@ class Download extends App.Controller
         profiles.push App.ReportProfile.find(key)
 
     @html App.view('report/download_header')(
-      reports:  reports
-      profiles: profiles
-      metric:   @config.metric[@params.metric]
-    )
-
-    @backendSelected = ''
-
-    active = false
-    @el.find('.js-dataDownloadBackendSelector').each( (index, element) ->
-      if $(element).parent().hasClass('is-active')
-        active = true
-    )
-    if !active
-      @el.find('.js-dataDownloadBackendSelector').first().parent().addClass('is-active')
-
-    # rerender view after backend is selected
-    @el.find('.js-dataDownloadBackendSelector').each( (index, element) =>
-      if $(element).parent().hasClass('is-active')
-        @profileSelectedId = $(element).data('profile-id')
-        @backendSelected   = $(element).data('backend')
+      reports:         reports
+      profiles:        profiles
+      backendSelected: @backendSelected
+      metric:          @config.metric[@params.metric]
     )
 
     @tableUpdate()
@@ -240,7 +225,7 @@ class Download extends App.Controller
       if App.Config.get('import_mode')
         url = App.Config.get('import_otrs_endpoint') + '/index.pl?Action=AgentTicketZoom;TicketID='
       if _.isEmpty(tickets)
-        @el.find('js-dataDownloadTable').html('')
+        @el.find('.js-dataDownloadTable').html('')
       else
         html = App.view('report/download_list')(
           tickets: tickets
@@ -248,7 +233,7 @@ class Download extends App.Controller
           url:     url
           download: @apiPath + '/reports/csvforset/' + name
         )
-        @el.find('js-dataDownloadTable').html(html)
+        @el.find('.js-dataDownloadTable').html(html)
 
     @startLoading()
     @ajax(
@@ -267,14 +252,11 @@ class Download extends App.Controller
       processData: true
       success: (data) =>
         @stopLoading()
-
-        # load ticket collection / do not save in localStorage
-        App.Collection.load( type: 'TicketReport', data: data.tickets, localStorage: true )
+        App.Collection.loadAssets(data.assets)
         ticket_collection = []
-
-        if data.tickets
-          for record in data.tickets
-            ticket = App.TicketReport.fullLocal( record.id )
+        if data.ticket_ids
+          for record_id in data.ticket_ids
+            ticket = App.Ticket.fullLocal( record_id )
             ticket_collection.push ticket
 
         table(ticket_collection, data.count)

@@ -1,7 +1,5 @@
 <i><%- @T('%s records', @count) %></i>
-<a href="<%-@download%>" target="_blank" data-type="attachment" id="downloadsetascsv">
-<i class="glyphicon glyphicon-download" title="<%- @Ti('Download') %>"></i>
-</a>
+  <a href="<%- @download %>" target="_blank" data-type="attachment" id="downloadsetascsv"><%- @Icon('download') %></a>
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -15,7 +13,7 @@
   <tbody>
 <% for ticket in @tickets: %>
     <tr>
-      <td><a target="_blank" href="<%= @url %><%= ticket.id %>"><%- @P(ticket, 'number') %></a></td>
+      <td><a <% if App.Config.get('import_mode'): %>target="_blank"<% end %> href="<%= @url %><%= ticket.id %>"><%- @P(ticket, 'number') %></a></td>
       <td><%- @P(ticket, 'title') %></td>
       <td><%- @P(ticket, 'state') %></td>
       <td><%- @P(ticket, 'group') %></td>
