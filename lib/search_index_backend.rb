@@ -44,7 +44,7 @@ create/update/delete index
     end
 
     Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-    #Rails.logger.info "-d '#{data[:data].to_json}'"
+    Rails.logger.debug "-d '#{data[:data].to_json}'"
 
     response = UserAgent.put(
       url,
@@ -76,7 +76,7 @@ add new object to search index
     return if !url
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    #Rails.logger.info "-d '#{data.to_json}'"
+    Rails.logger.debug "-d '#{data.to_json}'"
 
     response = UserAgent.post(
       url,
@@ -119,7 +119,7 @@ remove whole data from index
         password: Setting.get('es_password'),
       }
     )
-    #Rails.logger.info "# #{response.code.to_s}"
+    Rails.logger.info "# #{response.code}"
     return true if response.success?
     #Rails.logger.info "NOTICE: can't drop index: " + response.inspect
     false
@@ -194,7 +194,7 @@ return search result
     data['query']['bool']['must'].push condition
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    #Rails.logger.info " -d'#{data.to_json}'"
+    Rails.logger.debug " -d'#{data.to_json}'"
 
     response = UserAgent.get(
       url,
@@ -228,6 +228,124 @@ return search result
       ids.push data
     }
     ids
+  end
+
+=begin
+
+return aggregation result
+
+  result = SearchIndexBackend.aggs(
+    {
+      title: 'test',
+      state_id: 4,
+    },
+    ['2014-10-19', '2015-10-19', 'created_at', 'month'],
+    ['Ticket'],
+  )
+
+  # year, quarter, month, week, day, hour, minute, second
+
+  result = {
+    hits:{
+      total:4819,
+    },
+    aggregations:{
+      time_buckets:{
+         buckets:[
+            {
+               key_as_string:"2014-10-01T00:00:00.000Z",
+               key:1412121600000,
+               doc_count:420
+            },
+            {
+               key_as_string:"2014-11-01T00:00:00.000Z",
+               key:1414800000000,
+               doc_count:561
+            },
+            ...
+         ]
+      }
+    }
+  }
+
+=end
+
+  def self.aggs(query, range, index = nil)
+
+    url = build_url()
+    return if !url
+    if index
+      if index.class == Array
+        url += "/#{index.join(',')}/_search"
+      else
+        url += "/#{index}/_search"
+      end
+    else
+      url += '/_search'
+    end
+
+    and_data = []
+    if query && !query.empty?
+      bool = {
+        bool: {
+          must: {
+            term: query,
+          },
+        },
+      }
+      and_data.push bool
+    end
+    range_data = {}
+    range_data[range[2]] = {
+      from: range[0],
+      to: range[1],
+    }
+    range_data_and = {
+      range: range_data,
+    }
+    and_data.push range_data_and
+
+    data = {
+      query: {
+        filtered: {
+          filter: {
+            and: and_data,
+          }
+        }
+      },
+      size: 0,
+      aggs: {
+        time_buckets: {
+          date_histogram: {
+            field: range[2],
+            interval: range[3],
+          }
+        }
+      }
+    }
+
+    Rails.logger.info "# curl -X POST \"#{url}\" \\"
+    Rails.logger.debug " -d'#{data.to_json}'"
+
+    response = UserAgent.get(
+      url,
+      data,
+      {
+        json: true,
+        open_timeout: 5,
+        read_timeout: 14,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
+      }
+    )
+
+    Rails.logger.info "# #{response.code}"
+    if !response.success?
+      Rails.logger.error "ERROR: #{response.inspect}"
+      return []
+    end
+    Rails.logger.debug response.data.to_json
+    response.data
   end
 
 =begin

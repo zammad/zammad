@@ -1,0 +1,7 @@
+<div class="btn-group">
+  <button type="button" class="btn js-timeRange" data-type="year"><%- @T('Year') %></button>
+  <button type="button" class="btn js-timeRange" data-type="month"><%- @T('Month') %></button>
+  <button type="button" class="btn js-timeRange" data-type="week"><%- @T('Week') %></button>
+  <button type="button" class="btn js-timeRange" data-type="day"><%- @T('Day') %></button>
+  <button type="button" class="btn js-timeRange" data-type="realtime"><%- @T('Realtime') %></button>
+</div>

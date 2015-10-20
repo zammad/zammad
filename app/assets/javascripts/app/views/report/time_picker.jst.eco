@@ -1,0 +1,36 @@
+<div class="">
+  <% if @params.timeRange is 'day': %>
+    <div class="btn-group" role="group" aria-label="">
+      <% for item in @timeRangeDay: %>
+        <button type="button" class="btn btn-default js-timePickerDay <% if @params.day is item.value: %>active<% end %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></button>
+      <% end %>
+    </div>
+    <br>
+  <% end %>
+
+  <% if @params.timeRange is 'day' || @params.timeRange is 'month': %>
+    <div class="btn-group" role="group" aria-label="">
+      <% for item in @timeRangeMonth: %>
+        <button type="button" class="btn btn-default js-timePickerMonth <% if @params.month is item.value: %>active<% end %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></button>
+      <% end %>
+    </div>
+    <br>
+  <% end %>
+
+  <% if @params.timeRange is 'week': %>
+    <div class="btn-group" role="group" aria-label="">
+      <% for item in @timeRangeWeek: %>
+        <button type="button" class="btn btn-default js-timePickerWeek <% if @params.week is item.value: %>active<% end %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></button>
+      <% end %>
+    </div>
+    <br>
+  <% end %>
+
+  <% if @params.timeRange isnt 'realtime': %>
+    <div class="btn-group" role="group" aria-label="">
+      <% for item in @timeRangeYear: %>
+        <button type="button" class="btn btn-default js-timePickerYear <% if @params.year is item.value: %>active<% end %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></button>
+      <% end %>
+    </div>
+  <% end %>
+</div>

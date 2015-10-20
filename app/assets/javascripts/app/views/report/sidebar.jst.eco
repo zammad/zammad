@@ -1,0 +1,33 @@
+<div class="panel-group" id="accordion">
+  <% for key, metric of @metrics: %>
+    <div class="panel panel-default" data-metric="<%= metric.name %>">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= metric.name %>">
+            <%- @T(metric.display) %>
+          </a>
+        </div>
+      </div>
+      <div id="collapse-<%= metric.name %>" class="panel-collapse collapse <% if metric.name is @params.metric: %>in<% end %>">
+        <div class="panel-body">
+          <ul class="type area_select">
+            <% for backend in metric.backend: %>
+              <li style="display: block; margin-left: -12px;"><input class="js-backendSelector" type="checkbox" value="<%= backend.name %>" <% if @params.backendSelected[backend.name]: %>checked<% end %>/>
+                <%- @T(backend.display) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<h3><%- @T('Profiles') %></h3>
+<ul>
+  <% for profile in @profiles: %>
+    <li style="display: block; margin-left: -12px;"><input class="js-profileSelector" type="radio" name="profile" value="<%= profile.id %>"  <% if @params.profileSelected[profile.id]: %>checked<% end %>/>
+      <%= profile.name %>
+    </li>
+  <% end %>
+</ul>

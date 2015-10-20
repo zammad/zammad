@@ -1,0 +1,26 @@
+<i><%- @T('%s records', @count) %></i>
+<a href="<%-@download%>" target="_blank" data-type="attachment" id="downloadsetascsv">
+<i class="glyphicon glyphicon-download" title="<%- @Ti('Download') %>"></i>
+</a>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <td><%- @T('Number') %></td>
+      <td><%- @T('Title') %></td>
+      <td><%- @T('State') %></td>
+      <td><%- @T('Queue') %></td>
+      <td><%- @T('Created') %></td>
+    </tr>
+  </thead>
+  <tbody>
+<% for ticket in @tickets: %>
+    <tr>
+      <td><a target="_blank" href="<%= @url %><%= ticket.id %>"><%- @P(ticket, 'number') %></a></td>
+      <td><%- @P(ticket, 'title') %></td>
+      <td><%- @P(ticket, 'state') %></td>
+      <td><%- @P(ticket, 'group') %></td>
+      <td><%- @P(ticket, 'created_at') %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

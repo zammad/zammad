@@ -151,7 +151,7 @@ class ApplicationController < ActionController::Base
 
   def authentication_check_only(auth_param)
 
-    logger.debug 'authentication_check'
+    #logger.debug 'authentication_check'
     #logger.debug params.inspect
     #logger.debug session.inspect
     #logger.debug cookies.inspect

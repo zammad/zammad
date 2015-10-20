@@ -1,0 +1,29 @@
+<div class="sidebar"></div>
+
+<div class="main flex">
+
+  <div class="page-header clearfix">
+    <h1 class="pull-left"><%- @T( 'Reporting' ) %> <small></small></h1>
+    <div class="js-timeRangePicker pull-right" style="margin-top: 20px;"></div>
+  </div>
+
+  <div class="page-content"></div>
+
+  <div id="placeholder" class="" style="width:710px;height:450px;"></div>
+
+  <br>
+  <span class=" muted" id="download-chart" style="font-size: 8px;"></span>
+<!--
+<a href="<%-@download%>" target="_blank" data-type="attachment" class="pull-right" id="download-chart">
+<i class="icon-download" title="<%- @Ti('Download') %>"></i>
+</a>
+-->
+<!--
+      <div id="overview" style="margin-left:50px;margin-top:20px;width:400px;height:50px"></div>
+-->
+
+    <div class="js-timePicker"></div>
+    <br>
+    <div class="js-dataDownload"></div>
+  </div>
+</div>
