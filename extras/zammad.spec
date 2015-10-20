@@ -29,7 +29,7 @@ BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 <DESCRIPTION>
 
 %prep
-/usr/bin/getent passwd zammad || /usr/sbin/useradd -d /opt/zammad -s /bin/bash zammad  
+/usr/bin/getent passwd zammad || /usr/sbin/useradd -U -d /opt/zammad -s /bin/bash zammad  
 #%setup
 
 %build
