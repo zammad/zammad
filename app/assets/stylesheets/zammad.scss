@@ -13,7 +13,7 @@ $minWidth: 1024px;
 $sidebarWidth: 280px;
 $navigationWidth: 260px;
 
-$highlight-color: #3FA9F5;
+$highlight-color: hsl(205,90%,60%);
 
 html {
   height: 100%;
@@ -563,6 +563,12 @@ blockquote {
   .btn--text {
     padding: 6px 10px 5px; /* reporting main.eco */
     display: inline-block;
+    border-radius: 3px;
+    
+    &.is-selected {
+      background: hsl(203,65%,55%);
+      color: white;
+    }
   }
 }
 
