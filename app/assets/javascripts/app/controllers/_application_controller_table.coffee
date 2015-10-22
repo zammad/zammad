@@ -1,4 +1,6 @@
 class App.ControllerTable extends App.Controller
+    
+  minColWidth: 20
 
   constructor: (params) ->
     for key, value of params
@@ -294,6 +296,11 @@ class App.ControllerTable extends App.Controller
   onColResizeMousemove: (event) =>
     # use pixels while moving for max precision
     difference = event.pageX - @resizeStartX
+
+    if @resizeLeftStartWidth + difference < @minColWidth or 
+       @resizeRightStartWidth - difference < @minColWidth
+      return
+
     @resizeTargetLeft.width @resizeLeftStartWidth + difference
     @resizeTargetRight.width @resizeRightStartWidth - difference
 
@@ -307,4 +314,11 @@ class App.ControllerTable extends App.Controller
     @resizeTargetLeft.width leftPercentage + '%'
     @resizeTargetRight.width rightPercentage + '%'
 
+    leftColumnKey = @resizeTargetLeft.attr('data-column-key')
+    rightColumnKey = @resizeTargetRight.attr('data-column-key')
+
     # save table changed widths
+    # @storeColWidths [
+    #   { key: leftColumnKey, width: leftPercentage }
+    #   { key: rightColumnKey, width: rightPercentage }
+    # ]
