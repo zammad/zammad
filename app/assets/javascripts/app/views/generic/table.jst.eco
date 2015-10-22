@@ -14,7 +14,7 @@
       <th style="width: 22px"></th>
     <% end %>
     <% for item, i in @header: %>
-      <th<%= " class='#{ item.className }'" if item.className %><%= " style='#{ item.style }'" if item.style %>>
+      <th<%= " class='#{ item.className }'" if item.className %><%= " style='#{ item.style }'" if item.style %> data-column-key="<%= item.name %>">
         <div class="table-column-title">
           <%- @T( item.display ) %>
           <% if item.sortOrderIcon: %>
