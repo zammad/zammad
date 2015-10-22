@@ -699,6 +699,10 @@ table {
   box-sizing: content-box;
 }
 
+.table-column-title {
+  cursor: pointer;
+}
+
 .table > tbody > tr > td {
   padding: 11px 10px 7px;
   border: none;

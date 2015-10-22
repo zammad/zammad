@@ -255,6 +255,10 @@ class App.ControllerTable extends App.Controller
 
     # enable resize column
     table.on 'mousedown', '.js-col-resize', @onColResizeMousedown
+    table.on 'click', '.js-col-resize', @stopPropagation
+
+    # enable sort column
+    table.on 'click', '.js-sort', @sortByColumn
 
     # enable checkbox bulk selection
     if data.checkbox
@@ -283,6 +287,9 @@ class App.ControllerTable extends App.Controller
 
     return table
 
+  stopPropagation: (event) =>
+    event.stopPropagation()
+
   onColResizeMousedown: (event) =>
     @resizeTargetLeft = $(event.currentTarget).parents('th')
     @resizeTargetRight = @resizeTargetLeft.next()
@@ -308,17 +315,18 @@ class App.ControllerTable extends App.Controller
     $(document).off 'mousemove.resizeCol'
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()
-    leftPercentage = (@resizeTargetLeft.outerWidth() / resizeBaseWidth) * 100
-    rightPercentage = (@resizeTargetRight.outerWidth() / resizeBaseWidth) * 100
-
-    @resizeTargetLeft.width leftPercentage + '%'
-    @resizeTargetRight.width rightPercentage + '%'
+    leftWidth = @resizeTargetLeft.outerWidth()
+    rightWidth= @resizeTargetRight.outerWidth()
 
     leftColumnKey = @resizeTargetLeft.attr('data-column-key')
     rightColumnKey = @resizeTargetRight.attr('data-column-key')
 
     # save table changed widths
     # @storeColWidths [
-    #   { key: leftColumnKey, width: leftPercentage }
-    #   { key: rightColumnKey, width: rightPercentage }
+    #   { key: leftColumnKey, width: leftWidth }
+    #   { key: rightColumnKey, width: rightWidth }
     # ]
+
+  sortByColumn: (event) =>
+    column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
+    # sort

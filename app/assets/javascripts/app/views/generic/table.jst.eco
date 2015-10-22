@@ -15,7 +15,7 @@
     <% end %>
     <% for item, i in @header: %>
       <th<%= " class='#{ item.className }'" if item.className %><%= " style='#{ item.style }'" if item.style %> data-column-key="<%= item.name %>">
-        <div class="table-column-title">
+        <div class="table-column-title js-sort">
           <%- @T( item.display ) %>
           <% if item.sortOrderIcon: %>
             <%- @Icon(item.sortOrderIcon[0], item.sortOrderIcon[1]) %>
