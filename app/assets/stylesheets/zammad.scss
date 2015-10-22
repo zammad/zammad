@@ -699,8 +699,13 @@ table {
   box-sizing: content-box;
 }
 
-.table-column-title {
+.table-column-head {
   cursor: pointer;
+  display: flex;
+}
+
+.table-column-sortIcon {
+  margin-left: auto;
 }
 
 .table > tbody > tr > td {
