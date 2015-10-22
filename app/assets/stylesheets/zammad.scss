@@ -679,7 +679,7 @@ table {
   display: table-row;
 }
 
-.table th:not(.noTruncate),
+.table th:not(.noTruncate) .table-column-title,
 .table td:not(.noTruncate) {
   @extend .u-textTruncate;
 }
@@ -694,6 +694,9 @@ table {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  position: relative;
+  user-select: none;
+  box-sizing: content-box;
 }
 
 .table > tbody > tr > td {
@@ -711,6 +714,25 @@ table {
  
 .table-hover > tbody > tr:hover > th {
   background: rgba(0,8,14,.015);
+}
+
+.table-col-resize {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  cursor: col-resize;
+  padding: 10px;
+  margin-right: -10px;
+  z-index: 1;
+  
+  &:after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 100%;
+    background: hsl(210,7%,85%);
+  }
 }
 
 .table > thead:first-child > tr:first-child > th.no-padding,

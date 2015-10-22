@@ -1,4 +1,5 @@
 class App.ControllerTable extends App.Controller
+
   constructor: (params) ->
     for key, value of params
       @[key] = value
@@ -250,6 +251,9 @@ class App.ControllerTable extends App.Controller
         )
       )
 
+    # enable resize column
+    table.on 'mousedown', '.js-col-resize', @onColResizeMousedown
+
     # enable checkbox bulk selection
     if data.checkbox
 
@@ -259,7 +263,7 @@ class App.ControllerTable extends App.Controller
       )
 
       # bind on full bulk click
-      table.delegate('input[name="bulk_all"]', 'click', (e) ->
+      table.delegate('input[name="bulk_all"]', 'change', (e) ->
         e.stopPropagation()
         if $(e.target).prop('checked')
           $(e.target).parents('table').find('[name="bulk"]').each( ->
@@ -275,4 +279,32 @@ class App.ControllerTable extends App.Controller
           )
       )
 
-    table
+    return table
+
+  onColResizeMousedown: (event) =>
+    @resizeTargetLeft = $(event.currentTarget).parents('th')
+    @resizeTargetRight = @resizeTargetLeft.next()
+    @resizeStartX = event.pageX
+    @resizeLeftStartWidth = @resizeTargetLeft.width()
+    @resizeRightStartWidth = @resizeTargetRight.width()
+
+    $(document).on 'mousemove.resizeCol', @onColResizeMousemove
+    $(document).one 'mouseup', @onColResizeMouseup
+
+  onColResizeMousemove: (event) =>
+    # use pixels while moving for max precision
+    difference = event.pageX - @resizeStartX
+    @resizeTargetLeft.width @resizeLeftStartWidth + difference
+    @resizeTargetRight.width @resizeRightStartWidth - difference
+
+  onColResizeMouseup: =>
+    $(document).off 'mousemove.resizeCol'
+    # switch to percentage
+    resizeBaseWidth = @resizeTargetLeft.parents('table').width()
+    leftPercentage = (@resizeTargetLeft.outerWidth() / resizeBaseWidth) * 100
+    rightPercentage = (@resizeTargetRight.outerWidth() / resizeBaseWidth) * 100
+
+    @resizeTargetLeft.width leftPercentage + '%'
+    @resizeTargetRight.width rightPercentage + '%'
+
+    # save table changed widths

@@ -1,4 +1,4 @@
-<table class="table table-hover <% if @class: %><%- @class %><% end %>">
+<table class="table table-hover<%- @class if @class %>">
   <thead>
     <tr>
     <% if @checkbox: %>
@@ -13,15 +13,22 @@
     <% if @radio: %>
       <th style="width: 22px"></th>
     <% end %>
-<% for item in @header: %>
-      <th<% if item.className: %> class="<%= item.className %>"<% end %><% if item.style: %> style="<%= item.style %>"<% end %>>
-        <%- @T( item.display ) %>
-        <% if item.sortOrderIcon: %><%- @Icon(item.sortOrderIcon[0], item.sortOrderIcon[1]) %><% end %>
+    <% for item, i in @header: %>
+      <th<%= " class='#{ item.className }'" if item.className %><%= " style='#{ item.style }'" if item.style %>>
+        <div class="table-column-title">
+          <%- @T( item.display ) %>
+          <% if item.sortOrderIcon: %>
+            <%- @Icon(item.sortOrderIcon[0], item.sortOrderIcon[1]) %>
+          <% end %>
+        </div>
+        <% if i < @header.length - 1: %>
+          <div class="table-col-resize js-col-resize"></div>
+        <% end %>
       </th>
-<% end %>
-<% if @destroy: %>
+    <% end %>
+    <% if @destroy: %>
       <th><%- @T('Delete') %></th>
-<% end %>
+    <% end %>
     </tr>
   </thead>
   <tbody>
