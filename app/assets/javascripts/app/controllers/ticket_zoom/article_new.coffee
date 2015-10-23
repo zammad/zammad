@@ -368,62 +368,64 @@ class App.TicketZoomArticleNew extends App.Controller
       @removeTextareaCatcher()
 
   openTextarea: (event, withoutAnimation) =>
-    if !@articleNewEdit.hasClass('is-open')
-      duration = 300
+    if @articleNewEdit.hasClass('is-open')
+      return
+    
+    duration = 300
 
-      if withoutAnimation
-        duration = 0
+    if withoutAnimation
+      duration = 0
 
-      @articleNewEdit.addClass('is-open')
+    @articleNewEdit.addClass('is-open')
 
-      @textarea.velocity
-        properties:
-          minHeight: "#{ @textareaHeight.open - 38 }px"
-        options:
-          duration: duration
-          easing: 'easeOutQuad'
-          complete: => @addTextareaCatcher()
-
-      @textBubble.velocity
-        properties:
-          paddingBottom: 28
-        options:
-          duration: duration
-          easing: 'easeOutQuad'
-
-      # scroll to bottom
-      @textarea.velocity 'scroll',
-        container: @textarea.scrollParent()
-        offset: 99999
-        duration: 300
+    @textarea.velocity
+      properties:
+        minHeight: "#{ @textareaHeight.open - 38 }px"
+      options:
+        duration: duration
         easing: 'easeOutQuad'
-        queue: false
+        complete: => @addTextareaCatcher()
 
-      @editControlItem
-        .removeClass('is-hidden')
-        .velocity
-          properties:
-            opacity: [ 1, 0 ]
-            translateX: [ 0, 20 ]
-            translateZ: 0
-          options:
-            duration: 300
-            stagger: 50
-            drag: true
+    @textBubble.velocity
+      properties:
+        paddingBottom: 28
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
 
-      # move attachment text to the left bottom (bottom happens automatically)
-      @attachmentPlaceholder.velocity
+    # scroll to bottom
+    @textarea.velocity 'scroll',
+      container: @textarea.scrollParent()
+      offset: 99999
+      duration: 300
+      easing: 'easeOutQuad'
+      queue: false
+
+    @editControlItem
+      .removeClass('is-hidden')
+      .velocity
         properties:
-          translateX: -@attachmentInputHolder.position().left + 'px'
+          opacity: [ 1, 0 ]
+          translateX: [ 0, 20 ]
+          translateZ: 0
         options:
-          duration: duration
-          easing: 'easeOutQuad'
+          duration: 300
+          stagger: 50
+          drag: true
 
-      @attachmentHint.velocity
-        properties:
-          opacity: 0
-        options:
-          duration: duration
+    # move attachment text to the left bottom (bottom happens automatically)
+    @attachmentPlaceholder.velocity
+      properties:
+        translateX: -@attachmentInputHolder.position().left + 'px'
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
+
+    @attachmentHint.velocity
+      properties:
+        opacity: 0
+      options:
+        duration: duration
 
   addTextareaCatcher: =>
     if @articleNewEdit.is(':visible')
