@@ -594,6 +594,13 @@ class App.Utils
     num
 
   @icon: (name, className = '') ->
+    #
+    # reverse regex
+    # =============
+    #
+    # search: <svg class="icon icon-([^\s]+)\s([^"]*).*<\/svg>
+    # replace: <%- @Icon('$1', '$2') %>
+    #
     path = if window.svgPolyfill then '' else 'assets/images/icons.svg'
     "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#{path}#icon-#{name}\" /></svg>"
 
