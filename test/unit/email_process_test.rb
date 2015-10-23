@@ -1953,6 +1953,30 @@ Some Text',
           ],
         }
       },
+      {
+        data: IO.read('test/fixtures/mail35.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Darlehen bieten jetzt bewerben',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '',
+              lastname: '',
+              fullname: '"finances8@firstfinanceloanfirm.example.com"',
+              email: '"finances8@firstfinanceloanfirm.example.com"',
+            },
+          ],
+        }
+      },
     ]
     process(files)
   end
