@@ -2062,6 +2062,7 @@ class chatWindowRef extends Spine.Controller
   scrollToBottom: ->
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
+
 class AdminLoadRef extends App.ControllerContent
 
   constructor: ->
@@ -2072,5 +2073,103 @@ class AdminLoadRef extends App.ControllerContent
     @html App.view('layout_ref/admin_loading')()
 
 App.Config.set( 'layout_ref/admin_loading', AdminLoadRef, 'Routes' )
+
+
+class TwitterConversationRef extends App.ControllerContent
+  elements:
+    '.js-textarea':                       'textarea'
+    '.article-add':                       'articleNewEdit'
+    '.article-add .textBubble':           'textBubble'
+    '.editControls-item':                 'editControlItem'
+    '.js-letterCount':                    'letterCount'
+    '.js-signature':                      'signature'
+
+  events:
+    'input .js-textarea': 'updateLetterCount'
+
+  textareaHeight:
+    open:   88
+    closed: 20
+
+  maxTextLength: 140
+  warningTextLength: 10
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/twitter_conversation')()
+
+    @openTextarea null, true
+    @updateLetterCount()
+
+  updateLetterCount: (event) =>
+    textLength = @maxTextLength - @textarea.text().length - @signature.text().length - 2
+    className = switch 
+      when textLength < 0 then 'label-danger'
+      when textLength < @warningTextLength then 'label-warning'
+      else ''
+
+    @letterCount
+      .text textLength
+      .removeClass 'label-danger label-warning'
+      .addClass className
+
+  openTextarea: (event, withoutAnimation) =>
+    if @articleNewEdit.hasClass('is-open')
+      return
+
+    duration = 300
+
+    if withoutAnimation
+      duration = 0
+
+    @articleNewEdit.addClass('is-open')
+
+    @textarea.velocity
+      properties:
+        minHeight: "#{ @textareaHeight.open - 38 }px"
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
+        complete: => @addTextareaCatcher()
+
+    @textBubble.velocity
+      properties:
+        paddingBottom: 28
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
+
+    # scroll to bottom
+    @textarea.velocity 'scroll',
+      container: @textarea.scrollParent()
+      offset: 99999
+      duration: 300
+      easing: 'easeOutQuad'
+      queue: false
+
+    @editControlItem
+      .removeClass('is-hidden')
+      .velocity
+        properties:
+          opacity: [ 1, 0 ]
+          translateX: [ 0, 20 ]
+          translateZ: 0
+        options:
+          duration: 300
+          stagger: 50
+          drag: true
+
+  addTextareaCatcher: =>
+    if @articleNewEdit.is(':visible')
+      @textareaCatcher = new App.ClickCatcher
+        holder:      @articleNewEdit.offsetParent()
+        callback:    @closeTextarea
+        zIndexScale: 4
+
+App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
+
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

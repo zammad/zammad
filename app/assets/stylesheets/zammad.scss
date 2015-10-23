@@ -976,9 +976,9 @@ label,
 
 /* circumventing the label:not(.inline-label) selector because it's too strong */
 .inline-label,
-.label.label-success,
-.label.label-warning,
-.label.label-danger {
+.label-success,
+.label-warning,
+.label-danger {
   font-size: inherit;
   font-weight: inherit;
   text-align: inherit;
@@ -995,22 +995,26 @@ label,
   cursor: pointer;
 }
 
-.label.label-success,
-.label.label-warning,
-.label.label-danger {
+.label-success,
+.label-warning,
+.label-danger {
   background: none;
 }
 
-.label.label-success {
+.label-success {
   color: $supergood-color;
 }
 
-.label.label-warning {
+.label-warning {
   color: $ok-color;
 }
 
-.label.label-danger {
+.label-danger {
   color: $superbad-color;
+}
+
+.label-subtle {
+  color: hsl(0,0%,80%);
 }
 
 fieldset {
@@ -3915,6 +3919,23 @@ footer {
   .textBubble-content {
     overflow: hidden;
     position: relative;
+  }
+
+  .textBubble-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 -12px -28px;
+    padding: 6px 12px;
+    border-radius: 0 0 4px 4px;
+  }
+
+  .textBubble-control {
+    display: flex;
+  }
+
+  .textBubble-letterCount:not(.label-danger):not(.label-warning) {
+    color: hsl(0,0%,80%);
   }
 
   .textBubble-overflowContainer {
