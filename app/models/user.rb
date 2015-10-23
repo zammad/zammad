@@ -536,6 +536,7 @@ returns
 
     return if !email
     return if email.empty?
+    return if email !~ /@/
 
     # save/update avatar
     avatar = Avatar.auto_detection(

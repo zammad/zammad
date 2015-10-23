@@ -15,8 +15,8 @@
     <% end %>
     <% for item, i in @header: %>
       <th<%= " class='#{ item.className }'" if item.className %><%= " style='#{ item.style }'" if item.style %> data-column-key="<%= item.name %>">
-        <div class="table-column-head">
-          <div class="table-column-title js-sort">
+        <div class="table-column-head js-sort">
+          <div class="table-column-title">
           <%- @T( item.display ) %>
           </div>
           <div class="table-column-sortIcon">

@@ -1,15 +1,25 @@
 class App.ControllerTable extends App.Controller
-    
   minColWidth: 20
 
   constructor: (params) ->
     for key, value of params
       @[key] = value
 
-    @table = @tableGen(params)
+    # apply personal preferences
+    data = @preferencesGet()
+    if data['order']
+      for key, value of data['order']
+        @[key] = value
 
-    if @el
-      @el.append( @table )
+    @headerWidth = {}
+    if data['headerWidth']
+      for key, value of data['headerWidth']
+        @headerWidth[key] = value
+
+    @render()
+
+  render: =>
+    @html(@tableGen())
 
   ###
 
@@ -51,6 +61,7 @@ class App.ControllerTable extends App.Controller
       value
 
     new App.ControllerTable(
+      table_id: 'some_id_to_idientify_user_based_table_preferences'
       el:       element
       overview: ['host', 'user', 'adapter', 'active']
       model:    App.Channel
@@ -98,38 +109,38 @@ class App.ControllerTable extends App.Controller
 
   ###
 
-  tableGen: (data) ->
-    if !data.model
-      data.model = {}
-    overview   = data.overview || data.model.configure_overview || []
-    attributes = data.attributes || data.model.configure_attributes || {}
+  tableGen: =>
+    if !@model
+      @model = {}
+    overview   = @overview || @model.configure_overview || []
+    attributes = @attributes || @model.configure_attributes || {}
     attributes = App.Model.attributesGet(false, attributes)
-    destroy    = data.model.configure_delete
+    destroy    = @model.configure_delete
 
     # check if table is empty
-    if _.isEmpty(data.objects)
+    if _.isEmpty(@objects)
       table = App.view('generic/admin/empty')
-        explanation: data.explanation
+        explanation: @explanation
       return $(table)
 
     # group by
-    if data.groupBy
+    if @groupBy
 
       # remove group by attribute from header
       overview = _.filter(
         overview
         (item) ->
-          return item if item isnt data.groupBy
+          return item if item isnt @groupBy
           return
       )
 
       # get new order
       groupObjects = _.groupBy(
-        data.objects
+        @objects
         (item) ->
-          return '' if !item[data.groupBy]
-          return item[data.groupBy].displayName() if item[data.groupBy].displayName
-          item[data.groupBy]
+          return '' if !item[@groupBy]
+          return item[@groupBy].displayName() if item[@groupBy].displayName
+          item[@groupBy]
       )
       groupOrder = []
       for group, value of groupObjects
@@ -143,41 +154,71 @@ class App.ControllerTable extends App.Controller
       )
 
       # create new data array
-      data.objects = []
+      @objects = []
       for group in groupOrder
-        data.objects = data.objects.concat groupObjects[group]
+        @objects = @objects.concat groupObjects[group]
         groupObjects[group] = [] # release old array
 
     # get header data
-    header = []
+    headers = []
     for item in overview
       headerFound = false
       for attributeName, attribute of attributes
         if attributeName is item
           headerFound = true
-          header.push attribute
+          if @headerWidth[attribute.name]
+            attribute.style = "width: #{@headerWidth[attribute.name]}px"
+          headers.push attribute
         else
           rowWithoutId = item + '_id'
           if attributeName is rowWithoutId
             headerFound = true
-            header.push attribute
+            if @headerWidth[attribute.name]
+              attribute.style = "width: #{@headerWidth[attribute.name]}px"
+            headers.push attribute
+
+    if @orderDirection && @orderBy
+      for header in headers
+        if header.name is @orderBy
+          @objects = _.sortBy(
+            @objects
+            (item) ->
+              # if we need to sort translated col.
+              if header.translate
+                App.i18n.translateInline(item[header.name])
+              # if we need to sort a relation
+              if header.relation
+                if item[header.name]
+                  App[header.relation].find(item[header.name]).displayName()
+                else
+                  ''
+              else
+                item[header.name]
+          )
+          if @orderDirection is 'DESC'
+            header.sortOrderIcon = ['arrow-down', 'table-sort-arrow']
+            @objects = @objects.reverse()
+          else
+            header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
+        else
+          header.sortOrderIcon = undefined
 
     # execute header callback
-    if data.callbackHeader
-      for callback in data.callbackHeader
-        header = callback(header)
+    if @callbackHeader
+      for callback in @callbackHeader
+        headers = callback(headers)
 
     # get content
-    @log 'debug', 'table', 'header', header, 'overview', 'objects', data.objects
+    @log 'debug', 'table', 'header', headers, 'overview', 'objects', @objects
     table = App.view('generic/table')(
-      header:   header
-      objects:  data.objects
-      checkbox: data.checkbox
-      radio:    data.radio
-      groupBy:  data.groupBy
-      class:    data.class
+      header:   headers
+      objects:  @objects
+      checkbox: @checkbox
+      radio:    @radio
+      groupBy:  @groupBy
+      class:    @class
       destroy:  destroy
-      callbacks: data.callbackAttributes
+      callbacks: @callbackAttributes
     )
 
     # convert to jquery object
@@ -189,15 +230,15 @@ class App.ControllerTable extends App.Controller
       #mouseover: 'alias'
 
     # bind col.
-    if data.bindCol
-      for name, item of data.bindCol
+    if @bindCol
+      for name, item of @bindCol
         if item.events
           position = 0
-          if data.checkbox
+          if @checkbox
             position += 1
           hit      = false
 
-          for headerName in header
+          for headerName in headers
             if !hit
               position += 1
             if headerName.name is name || headerName.name is "#{name}_id"
@@ -216,9 +257,9 @@ class App.ControllerTable extends App.Controller
                 )
 
     # bind row
-    if data.bindRow
-      if data.bindRow.events
-        for event, callback of data.bindRow.events
+    if @bindRow
+      if @bindRow.events
+        for event, callback of @bindRow.events
           do (table, event, callback) ->
             if cursorMap[event]
               table.find('tbody > tr').css( 'cursor', cursorMap[event] )
@@ -229,9 +270,9 @@ class App.ControllerTable extends App.Controller
             )
 
     # bind bindCheckbox
-    if data.bindCheckbox
-      if data.bindCheckbox.events
-        for event, callback of data.bindCheckbox.events
+    if @bindCheckbox
+      if @bindCheckbox.events
+        for event, callback of @bindCheckbox.events
           do (table, event, callback) ->
             table.delegate('input[name="bulk"]', event, (e) ->
               e.stopPropagation()
@@ -241,27 +282,30 @@ class App.ControllerTable extends App.Controller
             )
 
     # bind on delete dialog
-    if data.model && destroy
+    if @model && destroy
       table.delegate('[data-type="destroy"]', 'click', (e) =>
         e.stopPropagation()
         e.preventDefault()
         itemId = $(e.target).parents('tr').data('id')
-        item   = data.model.find(itemId)
+        item   = @model.find(itemId)
         new App.ControllerGenericDestroyConfirm(
           item:      item
           container: @container
         )
       )
 
-    # enable resize column
-    table.on 'mousedown', '.js-col-resize', @onColResizeMousedown
-    table.on 'click', '.js-col-resize', @stopPropagation
+    # if we have a personalised table
+    if @table_id
 
-    # enable sort column
-    table.on 'click', '.js-sort', @sortByColumn
+      # enable resize column
+      table.on 'mousedown', '.js-col-resize', @onColResizeMousedown
+      table.on 'click', '.js-col-resize', @stopPropagation
+
+      # enable sort column
+      table.on 'click', '.js-sort', @sortByColumn
 
     # enable checkbox bulk selection
-    if data.checkbox
+    if @checkbox
 
       # click first tr>td, catch click
       table.delegate('tr > td:nth-child(1)', event, (e) ->
@@ -285,7 +329,7 @@ class App.ControllerTable extends App.Controller
           )
       )
 
-    return table
+    table
 
   stopPropagation: (event) =>
     event.stopPropagation()
@@ -304,7 +348,7 @@ class App.ControllerTable extends App.Controller
     # use pixels while moving for max precision
     difference = event.pageX - @resizeStartX
 
-    if @resizeLeftStartWidth + difference < @minColWidth or 
+    if @resizeLeftStartWidth + difference < @minColWidth or
        @resizeRightStartWidth - difference < @minColWidth
       return
 
@@ -316,17 +360,53 @@ class App.ControllerTable extends App.Controller
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()
     leftWidth = @resizeTargetLeft.outerWidth()
-    rightWidth= @resizeTargetRight.outerWidth()
+    rightWidth = @resizeTargetRight.outerWidth()
 
     leftColumnKey = @resizeTargetLeft.attr('data-column-key')
     rightColumnKey = @resizeTargetRight.attr('data-column-key')
 
     # save table changed widths
-    # @storeColWidths [
-    #   { key: leftColumnKey, width: leftWidth }
-    #   { key: rightColumnKey, width: rightWidth }
-    # ]
+    storeColWidths = [
+      { key: leftColumnKey, width: leftWidth }
+      { key: rightColumnKey, width: rightWidth }
+    ]
+
+    @log 'error', @table_id, 'leftColumnKey', leftColumnKey, leftWidth, 'rightColumnKey', rightColumnKey, rightWidth
+    @preferencesStore('headerWidth', leftColumnKey, leftWidth)
+    @preferencesStore('headerWidth', rightColumnKey, rightWidth)
 
   sortByColumn: (event) =>
     column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
+
     # sort
+    if @orderBy isnt column
+      @orderBy = column
+      @orderDirection = 'ASC'
+    else
+      if @orderDirection is 'ASC'
+        @orderDirection = 'DESC'
+      else
+        @orderDirection = 'ASC'
+
+    @log 'debug', @table_id, 'sortByColumn', @orderBy, 'direction', @orderDirection
+    @preferencesStore('order', 'orderBy', @orderBy)
+    @preferencesStore('order', 'orderDirection', @orderDirection)
+    @render()
+
+  preferencesStore: (type, key, value) ->
+    data = @preferencesGet()
+    if !data[type]
+      data[type] = {}
+    if !data[type][key]
+      data[type][key] = {}
+    data[type][key] = value
+    localStorage.setItem(@preferencesStoreKey(), JSON.stringify(data))
+
+  preferencesGet: =>
+    storeKey = @preferencesStoreKey()
+    data = localStorage.getItem(storeKey)
+    return {} if !data
+    JSON.parse(data)
+
+  preferencesStoreKey: =>
+    "tablePreferences:#{@table_id}"

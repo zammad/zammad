@@ -107,6 +107,44 @@ class AgentTicketActionLevel6Test < TestCase
       value: 'test 6 - ticket 1-1',
     )
 
+    # add attachment without body
+    @browser.execute_script( "App.TestHelper.attachmentUploadFake('.active .article-add .textBubble .attachments')" )
+
+    # submit form
+    click(
+      css: '.active .js-submit',
+    )
+    sleep 2
+
+    # check warning
+    alert = @browser.switch_to.alert
+    alert.dismiss()
+
+    ticket_update(
+      data: {
+        body: 'now submit should work',
+      },
+      do_not_submit: true,
+    )
+
+    # submit form
+    click(
+      css: '.active .js-submit',
+    )
+    sleep 2
+
+    # discard changes should gone away
+    watch_for_disappear(
+      css: '.content.active .js-reset',
+      value: '(Discard your unsaved changes.|Verwerfen der)',
+      no_quote: true,
+    )
+    ticket_verify(
+      data: {
+        body: '',
+      },
+    )
+
     #
     # ticket customer change checks
     #

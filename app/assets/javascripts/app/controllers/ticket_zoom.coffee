@@ -547,6 +547,15 @@ class App.TicketZoom extends App.Controller
     # validate article
     articleParams = @formParam( @$('.article-add') )
     console.log 'submit article', articleParams
+
+    # check if attachment exists but no body
+    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
+    if !articleParams['body'] && attachmentCount > 0
+      if !confirm( App.i18n.translateContent('Please fill also some text in!') )
+        @formEnable(e)
+        @autosaveStart()
+        return
+
     if articleParams['body']
       articleParams.from         = @Session.get().displayName()
       articleParams.ticket_id    = ticket.id
@@ -590,12 +599,11 @@ class App.TicketZoom extends App.Controller
 
       # check attachment
       if articleParams['body']
-        if App.Utils.checkAttachmentReference( articleParams['body'] )
-          if @$('.article-add .textBubble .attachments .attachment').length < 1
-            if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-              @formEnable(e)
-              @autosaveStart()
-              return
+        if App.Utils.checkAttachmentReference( articleParams['body'] ) && attachmentCount < 1
+          if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+            @formEnable(e)
+            @autosaveStart()
+            return
 
       article.load(articleParams)
       errors = article.validate()

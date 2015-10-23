@@ -273,19 +273,6 @@ class Table extends App.Controller
         headers.unshift(0)
         headers[0] = attribute
         headers
-      callbackSortOrderHeader = (headers) =>
-        return headers if !@overview
-        return headers if !@overview.order
-        return headers if !@overview.order.by
-        for header in headers
-          if header.name is @overview.order.by
-            if @overview.order.direction is 'DESC'
-              header.sortOrderIcon = ['arrow-down', 'table-sort-arrow']
-            else
-              header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
-          else
-            header.sortOrderIcon = undefined
-        headers
       callbackIcon = (value, object, attribute, header, refObject) ->
         value = ' '
         attribute.class  = object.iconClass()
@@ -294,12 +281,15 @@ class Table extends App.Controller
         value
 
       new App.ControllerTable(
-        overview:     @overview.view.s
-        el:           @$('.table-overview')
-        model:        App.Ticket
-        objects:      ticket_list_show
-        checkbox:     checkbox
-        groupBy:      @overview.group_by
+        table_id:       "ticket_overview_#{@overview_id}"
+        overview:       @overview.view.s
+        el:             @$('.table-overview')
+        model:          App.Ticket
+        objects:        ticket_list_show
+        checkbox:       checkbox
+        groupBy:        @overview.group_by
+        orderBy:        @overview.order.by
+        orderDirection: @overview.order.direction
         bindRow:
           events:
             'click':  openTicket
@@ -307,7 +297,7 @@ class Table extends App.Controller
         #  customer_id:
         #    events:
         #      'mouseover': popOver
-        callbackHeader: [ callbackIconHeader, callbackSortOrderHeader ]
+        callbackHeader: [ callbackIconHeader ]
         callbackAttributes:
           icon:
             [ callbackIcon ]
