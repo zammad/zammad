@@ -122,9 +122,6 @@ returns
 
       # save name of ref object
       attributes_new[ attribute_name ] = value
-      if !keep_attributes[ attribute_name_with_id.to_sym ]
-        attributes.delete(key)
-      end
     }
     attributes_new.merge(attributes)
   end
