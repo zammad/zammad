@@ -15,7 +15,7 @@
     <% end %>
     <% for item, i in @header: %>
       <th<%= " class='#{ item.className }'" if item.className %><%= " style='#{ item.style }'" if item.style %> data-column-key="<%= item.name %>">
-        <div class="table-column-head js-sort">
+        <div <% if @table_id: %>class="table-column-head js-sort"<% end %>>
           <div class="table-column-title">
           <%- @T( item.display ) %>
           </div>
@@ -25,7 +25,7 @@
           <% end %>
           </div>
         </div>
-        <% if i < @header.length - 1: %>
+        <% if @table_id && i < @header.length - 1: %>
           <div class="table-col-resize js-col-resize"></div>
         <% end %>
       </th>

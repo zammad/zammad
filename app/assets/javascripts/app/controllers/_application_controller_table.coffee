@@ -66,7 +66,7 @@ class App.ControllerTable extends App.Controller
       overview: ['host', 'user', 'adapter', 'active']
       model:    App.Channel
       objects:  data
-      groupBy:  'group'
+      groupBy:  'adapter'
       checkbox: false
       radio:    false
       class:    'some-css-class'
@@ -129,7 +129,7 @@ class App.ControllerTable extends App.Controller
       # remove group by attribute from header
       overview = _.filter(
         overview
-        (item) ->
+        (item) =>
           return item if item isnt @groupBy
           return
       )
@@ -137,7 +137,7 @@ class App.ControllerTable extends App.Controller
       # get new order
       groupObjects = _.groupBy(
         @objects
-        (item) ->
+        (item) =>
           return '' if !item[@groupBy]
           return item[@groupBy].displayName() if item[@groupBy].displayName
           item[@groupBy]
@@ -211,13 +211,14 @@ class App.ControllerTable extends App.Controller
     # get content
     @log 'debug', 'table', 'header', headers, 'overview', 'objects', @objects
     table = App.view('generic/table')(
-      header:   headers
-      objects:  @objects
-      checkbox: @checkbox
-      radio:    @radio
-      groupBy:  @groupBy
-      class:    @class
-      destroy:  destroy
+      table_id:  @table_id
+      header:    headers
+      objects:   @objects
+      checkbox:  @checkbox
+      radio:     @radio
+      groupBy:   @groupBy
+      class:     @class
+      destroy:   destroy
       callbacks: @callbackAttributes
     )
 
@@ -371,7 +372,7 @@ class App.ControllerTable extends App.Controller
       { key: rightColumnKey, width: rightWidth }
     ]
 
-    @log 'error', @table_id, 'leftColumnKey', leftColumnKey, leftWidth, 'rightColumnKey', rightColumnKey, rightWidth
+    @log 'debug', @table_id, 'leftColumnKey', leftColumnKey, leftWidth, 'rightColumnKey', rightColumnKey, rightWidth
     @preferencesStore('headerWidth', leftColumnKey, leftWidth)
     @preferencesStore('headerWidth', rightColumnKey, rightWidth)
 
@@ -400,12 +401,13 @@ class App.ControllerTable extends App.Controller
     if !data[type][key]
       data[type][key] = {}
     data[type][key] = value
+    @log 'debug', @table_id, 'preferencesStore', data
     localStorage.setItem(@preferencesStoreKey(), JSON.stringify(data))
 
   preferencesGet: =>
-    storeKey = @preferencesStoreKey()
-    data = localStorage.getItem(storeKey)
+    data = localStorage.getItem(@preferencesStoreKey())
     return {} if !data
+    @log 'debug', @table_id, 'preferencesGet', data
     JSON.parse(data)
 
   preferencesStoreKey: =>

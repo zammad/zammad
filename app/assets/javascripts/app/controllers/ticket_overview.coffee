@@ -281,7 +281,7 @@ class Table extends App.Controller
         value
 
       new App.ControllerTable(
-        table_id:       "ticket_overview_#{@overview_id}"
+        table_id:       "ticket_overview_#{@overview.id}"
         overview:       @overview.view.s
         el:             @$('.table-overview')
         model:          App.Ticket
