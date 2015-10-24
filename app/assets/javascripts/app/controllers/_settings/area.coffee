@@ -16,7 +16,7 @@ class App.SettingsArea extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
-        App.Collection.load( localStorage: false, type: 'Setting', data: data )
+        App.Collection.load( sessionStorage: false, type: 'Setting', data: data )
         @render()
     )
 
