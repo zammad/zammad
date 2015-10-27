@@ -707,6 +707,15 @@ table {
   margin-left: auto;
 }
 
+th.align-right {
+  .table-column-title {
+    margin-left: auto;
+  }
+  .table-column-sortIcon {
+    margin-left: 0;
+  }
+}
+
 .table > tbody > tr > td {
   padding: 11px 10px 7px;
   border: none;

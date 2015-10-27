@@ -266,10 +266,10 @@ class Table extends App.Controller
           @el.find('.bulkAction').removeClass('hide')
       callbackIconHeader = (headers) ->
         attribute =
-          name:       'icon'
-          display:    ''
+          name:        'icon'
+          display:     ''
           translation: false
-          style:      { width: '28px' }
+          width:       '28px'
           unresizable: true
         headers.unshift(0)
         headers[0] = attribute

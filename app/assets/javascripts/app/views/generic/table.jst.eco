@@ -14,12 +14,7 @@
       <th style="width: 22px"></th>
     <% end %>
     <% for item, i in @header: %>
-      <th
-        <%= " class='#{ item.className }'" if item.className %>
-        <% if item.style: %> style="<% for key, value of item.style: %>
-          <%= key %>: <%= value %>;
-        <% end %>"<% end %>
-       data-column-key="<%= item.name %>">
+      <th class="<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="width:<%= item.width %>" data-column-key="<%= item.name %>">
         <div <% if @table_id: %>class="table-column-head js-sort"<% end %>>
           <div class="table-column-title">
           <%- @T( item.display ) %>
@@ -30,7 +25,7 @@
           <% end %>
           </div>
         </div>
-        <% if @table_id && !item.unresizable && i < @header.length: %>
+        <% if @table_id && !item.unresizable && i < @header.length - 1: %>
           <div class="table-col-resize js-col-resize"></div>
         <% end %>
       </th>
@@ -56,7 +51,7 @@
   <%   end %>
   <% end %>
   <% position++ %>
-  <tr class="item<% if object.active is false: %> is-inactive<% end %>" data-id="<%= object.id %>" data-position="<%= position %>" >
+  <tr class="item<%= ' is-inactive' if object.active is false %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @checkbox: %>
       <td class="no-padding">
         <label class="checkbox-replacement">
@@ -90,7 +85,7 @@
       <%   end %>
       <% end %>
 
-      <td <% if item.parentClass: %>class="<%= item.parentClass %>"<% end %> <% if item.title: %>title="<%= item.title %>"<% end %>>
+      <td<%- " class='#{ item.parentClass }'" if item.parentClass %><%- " title='#{ item.title }'" if item.title %><%- " style='text-align:#{ item.align }'" if item.align %>>
         <% if item.name is 'icon': %>
           <%- @Icon('task-state', item.class) %>
         <% else: %>

@@ -176,7 +176,7 @@ class App.ControllerTable extends App.Controller
           # e.g. column: owner
           headerFound = true
           if @headerWidth[attribute.name]
-            attribute.style.width = "#{@headerWidth[attribute.name]}px"
+            attribute.width = "#{@headerWidth[attribute.name]}px"
           headers.push attribute
         else
           # e.g. column: owner_id
@@ -184,7 +184,7 @@ class App.ControllerTable extends App.Controller
           if attributeName is rowWithoutId
             headerFound = true
             if @headerWidth[attribute.name]
-              attribute.style.width = "#{@headerWidth[attribute.name]}px"
+              attribute.width = "#{@headerWidth[attribute.name]}px"
             headers.push attribute
 
     if @orderDirection && @orderBy
@@ -351,11 +351,11 @@ class App.ControllerTable extends App.Controller
     if difference > 0
       # convert percentages to pixels
       headers = _.map headers, (col) =>
-        unit = col.style.width.match(/[px|%]+/)[0]
+        unit = col.width.match(/[px|%]+/)[0]
 
         if unit is '%'
-          percentage = parseInt col.style.width, 10
-          col.style.width = percentage / 100 * @el.width() + "px"
+          percentage = parseInt col.width, 10
+          col.width = percentage / 100 * @el.width() + "px"
 
         return col
 
@@ -365,15 +365,15 @@ class App.ControllerTable extends App.Controller
       # make all cols evenly smaller
       headers = _.map headers, (col) =>
         if !col.unresizable
-          value = parseInt col.style.width, 10
-          col.style.width = Math.max(@minColWidth, value - shrinkBy)  + "px"
+          value = parseInt col.width, 10
+          col.width = Math.max(@minColWidth, value - shrinkBy)  + "px"
         return col
 
       # give left-over space from rounding to last column to get to 100%
       roundingLeftOver = @el.width() - @getHeaderWidths headers
       # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
       if roundingLeftOver > 0
-        headers[headers.length - 1].style.width = parseInt(headers[headers.length - 1].style.width, 10) + roundingLeftOver + "px"
+        headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + "px"
 
     return headers
 
@@ -384,9 +384,9 @@ class App.ControllerTable extends App.Controller
 
   getHeaderWidths: (headers) ->
     widths = _.reduce headers, (memo, col, i) => 
-      if col.style && col.style.width
-        value = parseInt col.style.width, 10
-        unit = col.style.width.match(/[px|%]+/)[0]
+      if col.style && col.width
+        value = parseInt col.width, 10
+        unit = col.width.match(/[px|%]+/)[0]
       else
         # !!! sets the width to default width if not set
         headers[i].style = { width: @baseColWidth+'px' }
@@ -423,9 +423,11 @@ class App.ControllerTable extends App.Controller
     # use pixels while moving for max precision
     difference = event.pageX - @resizeStartX
 
-    if @resizeLeftStartWidth + difference < @minColWidth or
-       @resizeRightStartWidth - difference < @minColWidth
-      return
+    if @resizeLeftStartWidth + difference < @minColWidth
+      difference = - (@resizeLeftStartWidth - @minColWidth)
+
+    if @resizeRightStartWidth - difference < @minColWidth
+      difference = @resizeRightStartWidth - @minColWidth
 
     @resizeTargetLeft.width @resizeLeftStartWidth + difference
     @resizeTargetRight.width @resizeRightStartWidth - difference
