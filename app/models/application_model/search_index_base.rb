@@ -84,14 +84,6 @@ returns
 
   def search_index_attribute_lookup(attributes, ref_object)
 
-    # default keep attributes
-    keep_attributes = {}
-    if self.class.search_index_support_config[:keep_attributes]
-      self.class.search_index_support_config[:keep_attributes].each {|key, value|
-        keep_attributes[key] = value
-      }
-    end
-
     attributes_new = {}
     attributes.each {|key, value|
       next if !value
