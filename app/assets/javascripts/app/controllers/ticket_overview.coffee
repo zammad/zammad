@@ -269,7 +269,8 @@ class Table extends App.Controller
           name:       'icon'
           display:    ''
           translation: false
-          style:      'width: 28px'
+          style:      { width: '28px' }
+          unresizable: true
         headers.unshift(0)
         headers[0] = attribute
         headers

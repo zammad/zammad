@@ -1,5 +1,9 @@
 class App.ControllerTable extends App.Controller
-  minColWidth: 20
+  minColWidth: 40
+  baseColWidth: 130
+
+  checkBoxColWidth: 40
+  radioColWidth: 22
 
   constructor: (params) ->
     for key, value of params
@@ -19,7 +23,7 @@ class App.ControllerTable extends App.Controller
     @render()
 
   render: =>
-    @html(@tableGen())
+    @html @tableGen()
 
   ###
 
@@ -164,17 +168,23 @@ class App.ControllerTable extends App.Controller
     for item in overview
       headerFound = false
       for attributeName, attribute of attributes
+
+        if !attribute.style
+          attribute.style = {}
+
         if attributeName is item
+          # e.g. column: owner
           headerFound = true
           if @headerWidth[attribute.name]
-            attribute.style = "width: #{@headerWidth[attribute.name]}px"
+            attribute.style.width = "#{@headerWidth[attribute.name]}px"
           headers.push attribute
         else
+          # e.g. column: owner_id
           rowWithoutId = item + '_id'
           if attributeName is rowWithoutId
             headerFound = true
             if @headerWidth[attribute.name]
-              attribute.style = "width: #{@headerWidth[attribute.name]}px"
+              attribute.style.width = "#{@headerWidth[attribute.name]}px"
             headers.push attribute
 
     if @orderDirection && @orderBy
@@ -207,6 +217,8 @@ class App.ControllerTable extends App.Controller
     if @callbackHeader
       for callback in @callbackHeader
         headers = callback(headers)
+
+    headers = @adjustHeaderWidths headers
 
     # get content
     @log 'debug', 'table', 'header', headers, 'overview', 'objects', @objects
@@ -332,6 +344,66 @@ class App.ControllerTable extends App.Controller
 
     table
 
+  adjustHeaderWidths: (headers) ->
+    widths = @getHeaderWidths headers
+    difference = widths - @el.width()
+
+    if difference > 0
+      # convert percentages to pixels
+      headers = _.map headers, (col) =>
+        unit = col.style.width.match(/[px|%]+/)[0]
+
+        if unit is '%'
+          percentage = parseInt col.style.width, 10
+          col.style.width = percentage / 100 * @el.width() + "px"
+
+        return col
+
+      widths = @getHeaderWidths headers
+      shrinkBy = Math.ceil (widths - @el.width()) / @getShrinkableHeadersCount(headers)
+
+      # make all cols evenly smaller
+      headers = _.map headers, (col) =>
+        if !col.unresizable
+          value = parseInt col.style.width, 10
+          col.style.width = Math.max(@minColWidth, value - shrinkBy)  + "px"
+        return col
+
+      # give left-over space from rounding to last column to get to 100%
+      roundingLeftOver = @el.width() - @getHeaderWidths headers
+      # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
+      if roundingLeftOver > 0
+        headers[headers.length - 1].style.width = parseInt(headers[headers.length - 1].style.width, 10) + roundingLeftOver + "px"
+
+    return headers
+
+  getShrinkableHeadersCount: (headers) ->
+    _.reduce headers, (memo, col) -> 
+      return if col.unresizable then memo else memo+1
+    , 0
+
+  getHeaderWidths: (headers) ->
+    widths = _.reduce headers, (memo, col, i) => 
+      if col.style && col.style.width
+        value = parseInt col.style.width, 10
+        unit = col.style.width.match(/[px|%]+/)[0]
+      else
+        # !!! sets the width to default width if not set
+        headers[i].style = { width: @baseColWidth+'px' }
+        value = @baseColWidth
+        unit = 'px'
+      
+      return if unit is 'px' then memo + value else memo
+    , 0
+
+    if @checkbox
+      widths += @checkBoxColWidth
+
+    if @radio
+      widths += @radioColWidth
+
+    return widths
+
   stopPropagation: (event) =>
     event.stopPropagation()
 
@@ -344,6 +416,8 @@ class App.ControllerTable extends App.Controller
 
     $(document).on 'mousemove.resizeCol', @onColResizeMousemove
     $(document).one 'mouseup', @onColResizeMouseup
+
+    @tableWidth = @el.width()
 
   onColResizeMousemove: (event) =>
     # use pixels while moving for max precision
@@ -374,7 +448,9 @@ class App.ControllerTable extends App.Controller
 
     @log 'debug', @table_id, 'leftColumnKey', leftColumnKey, leftWidth, 'rightColumnKey', rightColumnKey, rightWidth
     @preferencesStore('headerWidth', leftColumnKey, leftWidth)
-    @preferencesStore('headerWidth', rightColumnKey, rightWidth)
+
+    if rightColumnKey
+      @preferencesStore('headerWidth', rightColumnKey, rightWidth)
 
   sortByColumn: (event) =>
     column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')

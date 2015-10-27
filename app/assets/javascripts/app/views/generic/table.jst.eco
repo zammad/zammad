@@ -14,7 +14,12 @@
       <th style="width: 22px"></th>
     <% end %>
     <% for item, i in @header: %>
-      <th<%= " class='#{ item.className }'" if item.className %><%= " style='#{ item.style }'" if item.style %> data-column-key="<%= item.name %>">
+      <th
+        <%= " class='#{ item.className }'" if item.className %>
+        <% if item.style: %> style="<% for key, value of item.style: %>
+          <%= key %>: <%= value %>;
+        <% end %>"<% end %>
+       data-column-key="<%= item.name %>">
         <div <% if @table_id: %>class="table-column-head js-sort"<% end %>>
           <div class="table-column-title">
           <%- @T( item.display ) %>
@@ -25,7 +30,7 @@
           <% end %>
           </div>
         </div>
-        <% if @table_id && i < @header.length - 1: %>
+        <% if @table_id && !item.unresizable && i < @header.length: %>
           <div class="table-col-resize js-col-resize"></div>
         <% end %>
       </th>
