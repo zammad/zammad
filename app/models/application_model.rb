@@ -305,9 +305,9 @@ returns
 
 lookup model from cache (if exists) or retrieve it from db, id, name or login possible
 
-  result = Model.lookup( :id => 123 )
-  result = Model.lookup( :name => 'some name' )
-  result = Model.lookup( :login => 'some login' )
+  result = Model.lookup(id: 123)
+  result = Model.lookup(name: 'some name')
+  result = Model.lookup(login: 'some login')
 
 returns
 
@@ -681,10 +681,10 @@ class OwnModel < ApplicationModel
 serve methode to configure and enable search index support for this model
 
 class Model < ApplicationModel
-  search_index_support :ignore_attributes => {
-    :create_article_type_id   => true,
-    :create_article_sender_id => true,
-    :article_count            => true,
+  search_index_support ignore_attributes: {
+    create_article_type_id:   true,
+    create_article_sender_id: true,
+    article_count:            true,
   }
 
 end
@@ -748,7 +748,7 @@ reload search index with full data
 serve methode to configure and enable activity stream support for this model
 
 class Model < ApplicationModel
-  activity_stream_support :role => 'Admin'
+  activity_stream_support role: 'Admin'
 end
 
 =end
@@ -835,7 +835,7 @@ class Model < ApplicationModel
 end
 
 class Model < ApplicationModel
-  history_support :ignore_attributes => { :article_count => true }
+  history_support ignore_attributes: { article_count: true }
 end
 
 =end
@@ -1012,8 +1012,8 @@ return object and assets
 
   data = Model.full(123)
   data = {
-    :id     => 123,
-    :assets => assets,
+    id:     123,
+    assets: assets,
   }
 
 =end
