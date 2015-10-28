@@ -1,6 +1,7 @@
 class App.ControllerTable extends App.Controller
   minColWidth: 40
   baseColWidth: 130
+  minTableWidth: 612
 
   checkBoxColWidth: 40
   radioColWidth: 22
@@ -345,8 +346,13 @@ class App.ControllerTable extends App.Controller
     table
 
   adjustHeaderWidths: (headers) ->
+    availableWidth = @el.width() 
+
+    if availableWidth is 0
+      availableWidth = @minTableWidth
+
     widths = @getHeaderWidths headers
-    difference = widths - @el.width()
+    difference = widths - availableWidth
 
     if difference > 0
       # convert percentages to pixels
@@ -355,12 +361,12 @@ class App.ControllerTable extends App.Controller
 
         if unit is '%'
           percentage = parseInt col.width, 10
-          col.width = percentage / 100 * @el.width() + "px"
+          col.width = percentage / 100 * availableWidth + "px"
 
         return col
 
       widths = @getHeaderWidths headers
-      shrinkBy = Math.ceil (widths - @el.width()) / @getShrinkableHeadersCount(headers)
+      shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount(headers)
 
       # make all cols evenly smaller
       headers = _.map headers, (col) =>
@@ -370,7 +376,7 @@ class App.ControllerTable extends App.Controller
         return col
 
       # give left-over space from rounding to last column to get to 100%
-      roundingLeftOver = @el.width() - @getHeaderWidths headers
+      roundingLeftOver = availableWidth - @getHeaderWidths headers
       # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
       if roundingLeftOver > 0
         headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + "px"
