@@ -60,7 +60,7 @@ dedicated:
             # verify if update is needed
             update_needed = false
             translation_raw.each {|key, _value|
-              if translation_raw[key] == translation[key]
+              if translation_raw[key] != translation[key]
                 update_needed = true
                 break
               end
