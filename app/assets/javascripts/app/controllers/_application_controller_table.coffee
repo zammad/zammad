@@ -346,7 +346,7 @@ class App.ControllerTable extends App.Controller
     table
 
   adjustHeaderWidths: (headers) ->
-    availableWidth = @el.width() 
+    availableWidth = @el.width()
 
     if availableWidth is 0
       availableWidth = @minTableWidth
@@ -361,7 +361,7 @@ class App.ControllerTable extends App.Controller
 
         if unit is '%'
           percentage = parseInt col.width, 10
-          col.width = percentage / 100 * availableWidth + "px"
+          col.width = percentage / 100 * availableWidth + 'px'
 
         return col
 
@@ -372,33 +372,33 @@ class App.ControllerTable extends App.Controller
       headers = _.map headers, (col) =>
         if !col.unresizable
           value = parseInt col.width, 10
-          col.width = Math.max(@minColWidth, value - shrinkBy)  + "px"
+          col.width = Math.max(@minColWidth, value - shrinkBy) + 'px'
         return col
 
       # give left-over space from rounding to last column to get to 100%
       roundingLeftOver = availableWidth - @getHeaderWidths headers
       # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
       if roundingLeftOver > 0
-        headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + "px"
+        headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + 'px'
 
     return headers
 
   getShrinkableHeadersCount: (headers) ->
-    _.reduce headers, (memo, col) -> 
+    _.reduce headers, (memo, col) ->
       return if col.unresizable then memo else memo+1
     , 0
 
   getHeaderWidths: (headers) ->
-    widths = _.reduce headers, (memo, col, i) => 
+    widths = _.reduce headers, (memo, col, i) =>
       if col.width
         value = parseInt col.width, 10
         unit = col.width.match(/[px|%]+/)[0]
       else
         # !!! sets the width to default width if not set
-        headers[i].width = @baseColWidth+'px'
+        headers[i].width = @baseColWidth + 'px'
         value = @baseColWidth
         unit = 'px'
-      
+
       return if unit is 'px' then memo + value else memo
     , 0
 
