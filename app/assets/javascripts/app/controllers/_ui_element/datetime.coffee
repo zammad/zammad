@@ -10,6 +10,9 @@ class App.UiElement.datetime
       attribute: attribute
     ) )
 
+    # set our custom template
+    $.fn.datepicker.defaults.template = App.view('generic/datepicker')()
+
     # apply date widgets
     $.fn.datepicker.dates['custom'] =
       days: [App.i18n.translateInline('Sunday'), App.i18n.translateInline('Monday'), App.i18n.translateInline('Tuesday'), App.i18n.translateInline('Wednesday'), App.i18n.translateInline('Thursday'), App.i18n.translateInline('Friday'), App.i18n.translateInline('Saturday'), App.i18n.translateInline('Sunday')],
