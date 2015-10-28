@@ -384,12 +384,12 @@ class App.ControllerTable extends App.Controller
 
   getHeaderWidths: (headers) ->
     widths = _.reduce headers, (memo, col, i) => 
-      if col.style && col.width
+      if col.width
         value = parseInt col.width, 10
         unit = col.width.match(/[px|%]+/)[0]
       else
         # !!! sets the width to default width if not set
-        headers[i].style = { width: @baseColWidth+'px' }
+        headers[i].width = @baseColWidth+'px'
         value = @baseColWidth
         unit = 'px'
       
