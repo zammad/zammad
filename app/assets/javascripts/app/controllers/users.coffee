@@ -178,6 +178,7 @@ class Index extends App.Controller
         navupdate: '#users'
       genericObject: 'User'
       container: @el.closest('.content')
+      callback: @recent
     )
 
 App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
