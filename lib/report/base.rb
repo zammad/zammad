@@ -224,51 +224,6 @@ class Report::Base
     fail "UNKOWN :type (#{data[:type]})!"
   end
 
-  # :sender
-  # :type
-  # :start
-  # :end
-  # :condition
-  def self.article_type_and_sender(data)
-    query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    sender = Ticket::Article::Sender.lookup( name: data[:sender] )
-    type   = Ticket::Article::Type.lookup( name: data[:type] )
-    articles = Ticket::Article.joins('INNER JOIN tickets ON tickets.id = ticket_articles.ticket_id')
-               .where(query, *bind_params).joins(tables)
-               .where(
-                 'ticket_articles.created_at >= ? AND ticket_articles.created_at <= ? AND ticket_articles.type_id = ? AND ticket_articles.sender_id = ?',
-                 data[:start],
-                 data[:end],
-                 type.id,
-                 sender.id,
-               ).count
-    {
-      count: articles,
-    }
-  end
-
-  # :type
-  # :start
-  # :end
-  # :condition
-  def self.create_channel(data)
-    query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    article_type = Ticket::Article::Type.lookup( name: data[:type] )
-    tickets = Ticket.select('tickets.id')
-              .where( 'tickets.created_at >= ? AND tickets.created_at <= ? AND tickets.create_article_type_id = ?', data[:start], data[:end], article_type.id )
-              .where(query, *bind_params).joins(tables)
-    count = 0
-    ticket_ids = []
-    tickets.each {|ticket|
-      count += 1
-      ticket_ids.push ticket.id
-    }
-    {
-      count: count,
-      ticket_ids: ticket_ids,
-    }
-  end
-
   # :type
   # :start
   # :end

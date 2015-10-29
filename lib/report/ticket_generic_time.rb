@@ -1,13 +1,13 @@
 class Report::TicketGenericTime
 
 =begin
-  selector = {}
+
   result = Report::TicketGenericTime.aggs(
     range_start: '2015-01-01T00:00:00Z',
     range_end:   '2015-12-31T23:59:59Z',
     interval:    'month', # year, quarter, month, week, day, hour, minute, second
     selector:    selector, # ticket selector to get only a collection of tickets
-    params:      { field: 'created_at' },
+    params:      { field: 'created_at', selector: selector_sub },
   )
 
 returns
@@ -29,7 +29,12 @@ returns
       field: params[:params][:field],
     }
 
-    result_es = SearchIndexBackend.selectors(['Ticket'], params[:selector], nil, nil, aggs_interval)
+    selector = params[:selector].clone
+    if params[:params] && params[:params][:selector]
+      selector = selector.merge(params[:params][:selector])
+    end
+
+    result_es = SearchIndexBackend.selectors(['Ticket'], selector, nil, nil, aggs_interval)
 
     if params[:interval] == 'month'
       start = Date.parse(params[:range_start])
@@ -50,6 +55,18 @@ returns
     result = []
     (1..stop_interval).each {|_counter|
       match = false
+      if !result_es
+        fail "Invalid es result #{result_es.inspect}"
+      end
+      if !result_es['aggregations']
+        fail "Invalid es result, no aggregations #{result_es.inspect}"
+      end
+      if !result_es['aggregations']['time_buckets']
+        fail "Invalid es result, no time_buckets #{result_es.inspect}"
+      end
+      if !result_es['aggregations']['time_buckets']['buckets']
+        fail "Invalid es result, no buckets #{result_es.inspect}"
+      end
       result_es['aggregations']['time_buckets']['buckets'].each {|item|
         if params[:interval] == 'minute'
           item['key_as_string'] = item['key_as_string'].sub(/:\d\d.\d\d\dZ$/, '')
@@ -118,7 +135,12 @@ returns
       field: params[:params][:field],
     }
 
-    result = SearchIndexBackend.selectors(['Ticket'], params[:selector], nil, nil, aggs_interval)
+    selector = params[:selector].clone
+    if params[:params] && params[:params][:selector]
+      selector = selector.merge(params[:params][:selector])
+    end
+
+    result = SearchIndexBackend.selectors(['Ticket'], selector, nil, nil, aggs_interval)
     assets = {}
     result[:ticket_ids].each {|ticket_id|
       ticket_full = Ticket.find(ticket_id)

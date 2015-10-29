@@ -32,6 +32,7 @@ class Report
         display: 'Backlog',
         selected: true,
         dataDownload: false,
+        adapter: Report::TicketBacklog,
       },
       {
         name: 'first_solution',
@@ -169,12 +170,60 @@ class Report
         display: 'Web (in)',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: {
+          field: 'created_at',
+          selector: {
+            'create_article_type_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Type.lookup(name: 'web').id,
+            },
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
+            },
+          },
+        },
       },
       {
         name: 'twitter_in',
         display: 'Twitter (in)',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: {
+          field: 'created_at',
+          selector: {
+            'create_article_type_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Type.lookup(name: 'twitter status').id,
+            },
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
+            },
+          },
+        },
+      },
+      {
+        name: 'twitter_out',
+        display: 'Twitter (out)',
+        selected: true,
+        dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: {
+          field: 'created_at',
+          selector: {
+            'create_article_type_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Type.lookup(name: 'twitter status').id,
+            },
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Sender.lookup(name: 'Agent').id,
+            },
+          },
+        },
       },
     ]
     config[:metric][:create_channels][:backend] = backend
@@ -235,46 +284,81 @@ class Report
         display: 'Phone (in)',
         selected: true,
         dataDownload: false,
+        adapter: Report::ArticleByTypeSender,
+        params: {
+          type: 'phone',
+          sender: 'Customer',
+        },
       },
       {
         name: 'phone_out',
         display: 'Phone (out)',
         selected: true,
         dataDownload: false,
+        adapter: Report::ArticleByTypeSender,
+        params: {
+          type: 'phone',
+          sender: 'Agent',
+        },
       },
       {
         name: 'email_in',
         display: 'Email (in)',
         selected: true,
         dataDownload: false,
+        adapter: Report::ArticleByTypeSender,
+        params: {
+          type: 'email',
+          sender: 'Customer',
+        },
       },
       {
         name: 'email_out',
         display: 'Email (out)',
         selected: true,
         dataDownload: false,
+        adapter: Report::ArticleByTypeSender,
+        params: {
+          type: 'email',
+          sender: 'Agent',
+        },
       },
       {
         name: 'web_in',
         display: 'Web (in)',
         selected: true,
         dataDownload: false,
+        adapter: Report::ArticleByTypeSender,
+        params: {
+          type: 'web',
+          sender: 'Customer',
+        },
       },
       {
         name: 'twitter_in',
         display: 'Twitter (in)',
         selected: true,
         dataDownload: false,
+        adapter: Report::ArticleByTypeSender,
+        params: {
+          type: 'twitter status',
+          sender: 'Customer',
+        },
       },
       {
         name: 'twitter_out',
         display: 'Twitter (out)',
         selected: true,
         dataDownload: false,
+        adapter: Report::ArticleByTypeSender,
+        params: {
+          type: 'twitter status',
+          sender: 'Agent',
+        },
       },
     ]
     config[:metric][:communication][:backend] = backend
-
+=begin
     config[:metric][:sla] = {
       name: 'sla',
       display: 'SLAs',
@@ -331,7 +415,7 @@ class Report
       },
     ]
     config[:metric][:sla][:backend] = backend
-
+=end
     config[:metric].each {|metric_key, metric_value|
       metric_value[:backend].each {|metric_backend|
         metric_backend[:name] = "#{metric_key}::#{metric_backend[:name]}"

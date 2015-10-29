@@ -303,8 +303,7 @@ get count of tickets and tickets which match on selector
 
     Rails.logger.info "# #{response.code}"
     if !response.success?
-      Rails.logger.error "ERROR: #{response.inspect}"
-      return []
+      fail "ERROR: #{response.inspect}"
     end
     Rails.logger.debug response.data.to_json
 
@@ -410,6 +409,17 @@ get count of tickets and tickets which match on selector
     end
     if !filter_must_not.empty?
       data[:query][:filtered][:filter][:bool][:must_not] = filter_must_not
+    end
+
+    # add sort
+    if aggs_interval && aggs_interval[:field] && !aggs_interval[:interval]
+      sort = []
+      sort[0] = {}
+      sort[0][aggs_interval[:field]] = {
+        order: 'desc'
+      }
+      sort[1] = '_score'
+      data['sort'] = sort
     end
 
     data
