@@ -122,8 +122,6 @@
 		if (this.component && this.component.length === 0)
 			this.component = false;
 
-		console.log("bootstrap", this.o.template);
-
 		this.picker = $(this.o.template || DPGlobal.template);
 		this._buildEvents();
 		this._attachEvents();
