@@ -1097,7 +1097,7 @@ module Import::OTRS
     local_roles.each {|role|
       role_lookup = Role.lookup( name: role )
       next if !role_lookup
-      role_ids.push role_lookup.id
+      local_role_ids.push role_lookup.id
     }
     local_role_ids
   end
