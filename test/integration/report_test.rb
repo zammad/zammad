@@ -24,7 +24,7 @@ class ReportTest < ActiveSupport::TestCase
   # drop/create indexes
   #Rake::Task["searchindex:drop"].execute
   #Rake::Task["searchindex:create"].execute
-  #system('rake searchindex:rebuild')
+  system('rake searchindex:rebuild')
 
   Group.create_if_not_exists(
     name: 'Report Test',

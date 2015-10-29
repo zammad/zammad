@@ -245,15 +245,19 @@ class Download extends App.Controller
       if _.isEmpty(tickets)
         @el.find('.js-dataDownloadTable').html('')
       else
+        profile_id = 0
+        for key, value of @params.profileSelected
+          if value
+            profile_id = key
+        downloadUrl = "#{@apiPath}/reports/sets?sheet=true;metric=#{@params.metric};year=#{@params.year};month=#{@params.month};week=#{@params.week};day=#{@params.day};timeRange=#{@params.timeRange};profile_id=#{profile_id};downloadBackendSelected=#{@params.downloadBackendSelected}"
         html = App.view('report/download_list')(
-          tickets: tickets
-          count:   count
-          url:     url
-          download: @apiPath + '/reports/csvforset/' + name
+          tickets:  tickets
+          count:    count
+          url:      url
+          download: downloadUrl
         )
         @el.find('.js-dataDownloadTable').html(html)
 
-    @startLoading()
     @ajax(
       id: 'report_download'
       type:  'POST'
@@ -271,7 +275,6 @@ class Download extends App.Controller
       )
       processData: true
       success: (data) =>
-        @stopLoading()
         App.Collection.loadAssets(data.assets)
         ticket_collection = []
         if data.ticket_ids
