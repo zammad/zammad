@@ -157,14 +157,14 @@ class Graph extends App.ControllerContent
         xaxis.push [minute, '']
     else if @params.timeRange is 'day'
       for hour in [0..23]
-        xaxis.push [hour, hour]
+        xaxis.push [hour, hour+1]
     else if @params.timeRange is 'month'
-      for day in [1..31]
-        xaxis.push [day, day]
+      for day in [0..30]
+        xaxis.push [day, day+1]
     else if @params.timeRange is 'week'
-      xaxis = [[1, 'Mon'], [2, 'Tue'], [3, 'Wed'], [4, 'Thr'], [5, 'Fri'], [6, 'Sat'], [7, 'Sun'] ]
+      xaxis = [[0, 'Mon'], [1, 'Tue'], [2, 'Wed'], [3, 'Thr'], [4, 'Fri'], [5, 'Sat'], [6, 'Sun'] ]
     else
-      xaxis = [[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'Mai'], [6, 'Jun'], [7, 'Jul'], [8, 'Aug'], [9, 'Sep'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']]
+      xaxis = [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'Mai'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']]
 
     dataPlot = []
     for key, value of data
