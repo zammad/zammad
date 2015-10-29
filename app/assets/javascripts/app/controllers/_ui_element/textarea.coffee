@@ -26,7 +26,7 @@ class App.UiElement.textarea
             request:
               endpoint: App.Config.get('api_path') + '/ticket_attachment_upload'
               params:
-                form_id: @form_id
+                form_id: item.closest('form').find('[name=form_id]').val()
             text:
               uploadButton: App.Utils.icon('paperclip')
             template: '<div class="qq-uploader">' +

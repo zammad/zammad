@@ -57,7 +57,7 @@ class App.UiElement.richtext
         cancelContainer:        @cancelContainer,
         inputField:             item.find( 'input' ).get(0),
         key:                    'File',
-        data:                   { form_id: @form_id },
+        data:                   { form_id: item.closest('form').find('[name=form_id]').val() },
         maxSimultaneousUploads: 1,
         onFileAdded:            (file) =>
 
