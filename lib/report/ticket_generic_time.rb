@@ -135,12 +135,17 @@ returns
       field: params[:params][:field],
     }
 
+    limit = 1000
+    if !params[:sheet]
+      limit = 100
+    end
+
     selector = params[:selector].clone
     if params[:params] && params[:params][:selector]
       selector = selector.merge(params[:params][:selector])
     end
 
-    result = SearchIndexBackend.selectors(['Ticket'], selector, nil, nil, aggs_interval)
+    result = SearchIndexBackend.selectors(['Ticket'], selector, limit, nil, aggs_interval)
     assets = {}
     result[:ticket_ids].each {|ticket_id|
       ticket_full = Ticket.find(ticket_id)

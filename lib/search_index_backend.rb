@@ -269,7 +269,7 @@ get count of tickets and tickets which match on selector
 
 =end
 
-  def self.selectors(index = nil, selectors = nil, _limit = 10, current_user = nil, aggs_interval = nil)
+  def self.selectors(index = nil, selectors = nil, limit = 10, current_user = nil, aggs_interval = nil)
     fail 'no selectors given' if !selectors
 
     url = build_url()
@@ -284,7 +284,7 @@ get count of tickets and tickets which match on selector
       url += '/_search'
     end
 
-    data = selector2query(selectors, current_user, aggs_interval)
+    data = selector2query(selectors, current_user, aggs_interval, limit)
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
     Rails.logger.debug " -d'#{data.to_json}'"
@@ -320,7 +320,7 @@ get count of tickets and tickets which match on selector
     response.data
   end
 
-  def self.selector2query(selector, _current_user, aggs_interval)
+  def self.selector2query(selector, _current_user, aggs_interval, limit)
     filter_must = []
     filter_must_not = []
     query_must = []
@@ -351,7 +351,7 @@ get count of tickets and tickets which match on selector
     end
     data = {
       query: {},
-      size: 1000,
+      size: limit,
     }
 
     # add aggs to filter

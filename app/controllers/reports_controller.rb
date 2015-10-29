@@ -90,6 +90,7 @@ class ReportsController < ApplicationController
         interval:    get_params[:range],
         selector:    backend[:condition],
         params:      backend[:params],
+        sheet:       params[:sheet],
       )
 
       # generate sheet

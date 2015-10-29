@@ -64,18 +64,6 @@ class Report
         adapter: Report::TicketMoved,
         params: { type: 'out' },
       },
-      #{
-      #  name: 'sla_in',
-      #  display: 'SLA in',
-      #  selected: false,
-      #  dataDownload: true,
-      #},
-      #{
-      #  name: 'sla_out',
-      #  display: 'SLA out',
-      #  selected: false,
-      #  dataDownload: true,
-      #},
     ]
     config[:metric][:count][:backend] = backend
 
@@ -228,51 +216,6 @@ class Report
     ]
     config[:metric][:create_channels][:backend] = backend
 
-    config[:metric][:times] = {
-      name: 'times',
-      display: 'Times',
-      prio: 8000,
-    }
-    backend = [
-      {
-        name: 'first_response_average',
-        display: 'First Response average',
-        selected: true,
-        dataDownload: false,
-      },
-      {
-        name: 'first_response_max',
-        display: 'First Response max',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'first_response_min',
-        display: 'First Response min',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'solution_time_average',
-        display: 'Solution Time average',
-        selected: true,
-        dataDownload: false,
-      },
-      {
-        name: 'solution_time_max',
-        display: 'Solution Time max',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'solution_time_min',
-        display: 'Solution Time min',
-        selected: false,
-        dataDownload: true,
-      },
-    ]
-    config[:metric][:times][:backend] = backend
-
     config[:metric][:communication] = {
       name: 'communication',
       display: 'Communication',
@@ -358,64 +301,7 @@ class Report
       },
     ]
     config[:metric][:communication][:backend] = backend
-=begin
-    config[:metric][:sla] = {
-      name: 'sla',
-      display: 'SLAs',
-      prio: 6000,
-    }
-    backend = [
-      {
-        name: 'sla_out_1',
-        display: 'SLA (out) - <1h',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_out_2',
-        display: 'SLA (out) - <2h',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_out_4',
-        display: 'SLA (out) - <4h',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_out_8',
-        display: 'SLA (out) - <8h',
-        selected: true,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_in_1',
-        display: 'SLA (in) - <1h',
-        selected: true,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_in_2',
-        display: 'SLA (in) - <2h',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_in_4',
-        display: 'SLA (in) - <4h',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_in_8',
-        display: 'SLA (in) - <8h',
-        selected: false,
-        dataDownload: true,
-      },
-    ]
-    config[:metric][:sla][:backend] = backend
-=end
+
     config[:metric].each {|metric_key, metric_value|
       metric_value[:backend].each {|metric_backend|
         metric_backend[:name] = "#{metric_key}::#{metric_backend[:name]}"
