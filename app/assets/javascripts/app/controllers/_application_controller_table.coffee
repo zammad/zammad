@@ -128,42 +128,6 @@ class App.ControllerTable extends App.Controller
         explanation: @explanation
       return $(table)
 
-    # group by
-    if @groupBy
-
-      # remove group by attribute from header
-      overview = _.filter(
-        overview
-        (item) =>
-          return item if item isnt @groupBy
-          return
-      )
-
-      # get new order
-      groupObjects = _.groupBy(
-        @objects
-        (item) =>
-          return '' if !item[@groupBy]
-          return item[@groupBy].displayName() if item[@groupBy].displayName
-          item[@groupBy]
-      )
-      groupOrder = []
-      for group, value of groupObjects
-        groupOrder.push group
-
-      # sort new groups
-      groupOrder = _.sortBy(
-        groupOrder
-        (item) ->
-          item
-      )
-
-      # create new data array
-      @objects = []
-      for group in groupOrder
-        @objects = @objects.concat groupObjects[group]
-        groupObjects[group] = [] # release old array
-
     # get header data
     headers = []
     for item in overview
@@ -220,6 +184,42 @@ class App.ControllerTable extends App.Controller
         headers = callback(headers)
 
     headers = @adjustHeaderWidths headers
+
+    # group by
+    if @groupBy
+
+      # remove group by attribute from header
+      overview = _.filter(
+        overview
+        (item) =>
+          return item if item isnt @groupBy
+          return
+      )
+
+      # get new order
+      groupObjects = _.groupBy(
+        @objects
+        (item) =>
+          return '' if !item[@groupBy]
+          return item[@groupBy].displayName() if item[@groupBy].displayName
+          item[@groupBy]
+      )
+      groupOrder = []
+      for group, value of groupObjects
+        groupOrder.push group
+
+      # sort new groups
+      groupOrder = _.sortBy(
+        groupOrder
+        (item) ->
+          item
+      )
+
+      # create new data array
+      @objects = []
+      for group in groupOrder
+        @objects = @objects.concat groupObjects[group]
+        groupObjects[group] = [] # release old array
 
     # get content
     @log 'debug', 'table', 'header', headers, 'overview', 'objects', @objects
