@@ -350,7 +350,8 @@ get count of tickets and tickets which match on selector
       }
     end
     data = {
-      query: {}
+      query: {},
+      size: 1000,
     }
 
     # add aggs to filter
