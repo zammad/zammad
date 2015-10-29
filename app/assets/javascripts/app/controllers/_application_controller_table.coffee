@@ -134,23 +134,26 @@ class App.ControllerTable extends App.Controller
       headerFound = false
       for attributeName, attribute of attributes
 
-        if !attribute.style
-          attribute.style = {}
+        # remove group by attribute from header
+        if !@groupBy || @groupBy isnt item
 
-        if attributeName is item
-          # e.g. column: owner
-          headerFound = true
-          if @headerWidth[attribute.name]
-            attribute.width = "#{@headerWidth[attribute.name]}px"
-          headers.push attribute
-        else
-          # e.g. column: owner_id
-          rowWithoutId = item + '_id'
-          if attributeName is rowWithoutId
+          if !attribute.style
+            attribute.style = {}
+
+          if attributeName is item
+            # e.g. column: owner
             headerFound = true
             if @headerWidth[attribute.name]
               attribute.width = "#{@headerWidth[attribute.name]}px"
             headers.push attribute
+          else
+            # e.g. column: owner_id
+            rowWithoutId = item + '_id'
+            if attributeName is rowWithoutId
+              headerFound = true
+              if @headerWidth[attribute.name]
+                attribute.width = "#{@headerWidth[attribute.name]}px"
+              headers.push attribute
 
     if @orderDirection && @orderBy
       for header in headers
@@ -187,14 +190,6 @@ class App.ControllerTable extends App.Controller
 
     # group by
     if @groupBy
-
-      # remove group by attribute from header
-      overview = _.filter(
-        overview
-        (item) =>
-          return item if item isnt @groupBy
-          return
-      )
 
       # get new order
       groupObjects = _.groupBy(
