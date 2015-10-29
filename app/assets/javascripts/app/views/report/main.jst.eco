@@ -1,6 +1,6 @@
 <div class="main flex">
 
-  <div class="page-header page-header--center">
+  <div class="page-header">
     <div class="page-header-title">
       <h1><%- @T( 'Reporting' ) %> <small></small></h1>
     </div>
@@ -12,17 +12,9 @@
     <div class="page-main">
       <div class="js-timeRangePicker"></div>
       <div class="page-content">
-        
+
         <div id="placeholder" class="" style="height:350px;"></div>
         <span class=" muted" id="download-chart" style="font-size: 8px;"></span>
-      <!--
-      <a href="<%-@download%>" target="_blank" data-type="attachment" class="pull-right" id="download-chart">
-      <i class="icon-download" title="<%- @Ti('Download') %>"></i>
-      </a>
-      -->
-      <!--
-            <div id="overview" style="margin-left:50px;margin-top:20px;width:400px;height:50px"></div>
-      -->
 
         <div class="js-timePicker"></div>
         <div class="js-dataDownload"></div>

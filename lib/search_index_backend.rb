@@ -232,19 +232,18 @@ return search result
 
 =begin
 
-return aggregation result
+get count of tickets and tickets which match on selector
 
-  result = SearchIndexBackend.aggs(
-    {
-      title: 'test',
-      state_id: 4,
-    },
-    ['2014-10-19', '2015-10-19', 'created_at', 'month'],
-    ['Ticket'],
-  )
+  aggs_interval = {
+    from: '2015-01-01',
+    to: '2015-12-31',
+    interval: 'month', # year, quarter, month, week, day, hour, minute, second
+    field: 'created_at',
+  }
 
-  # year, quarter, month, week, day, hour, minute, second
+  result = SearchIndexBackend.selectors(index, params[:condition], limit, current_user, aggs_interval)
 
+  # for aggregations
   result = {
     hits:{
       total:4819,
@@ -270,7 +269,8 @@ return aggregation result
 
 =end
 
-  def self.aggs(query, range, index = nil)
+  def self.selectors(index = nil, selectors = nil, _limit = 10, current_user = nil, aggs_interval = nil)
+    fail 'no selectors given' if !selectors
 
     url = build_url()
     return if !url
@@ -284,45 +284,7 @@ return aggregation result
       url += '/_search'
     end
 
-    and_data = []
-    if query && !query.empty?
-      bool = {
-        bool: {
-          must: {
-            term: query,
-          },
-        },
-      }
-      and_data.push bool
-    end
-    range_data = {}
-    range_data[range[2]] = {
-      from: range[0],
-      to: range[1],
-    }
-    range_data_and = {
-      range: range_data,
-    }
-    and_data.push range_data_and
-
-    data = {
-      query: {
-        filtered: {
-          filter: {
-            and: and_data,
-          }
-        }
-      },
-      size: 0,
-      aggs: {
-        time_buckets: {
-          date_histogram: {
-            field: range[2],
-            interval: range[3],
-          }
-        }
-      }
-    }
+    data = selector2query(selectors, current_user, aggs_interval)
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
     Rails.logger.debug " -d'#{data.to_json}'"
@@ -345,7 +307,112 @@ return aggregation result
       return []
     end
     Rails.logger.debug response.data.to_json
+
+    if !aggs_interval || !aggs_interval[:interval]
+      ticket_ids = []
+      response.data['hits']['hits'].each {|item|
+        ticket_ids.push item['_id']
+      }
+      return {
+        count: response.data['hits']['total'],
+        ticket_ids: ticket_ids,
+      }
+    end
     response.data
+  end
+
+  def self.selector2query(selector, _current_user, aggs_interval)
+    filter_must = []
+    filter_must_not = []
+    query_must = []
+    query_must_not = []
+    if selector && !selector.empty?
+      selector.each {|key, data|
+        key_tmp = key.sub(/^.+?\./, '')
+        t = {}
+        if data['value'].class == Array
+          t[:terms] = {}
+          t[:terms][key_tmp] = data['value']
+        else
+          t[:term] = {}
+          t[:term][key_tmp] = data['value']
+        end
+        if data['operator'] == 'is'
+          filter_must.push t
+        elsif data['operator'] == 'is not'
+          filter_must_not.push t
+        elsif data['operator'] == 'contains'
+          query_must.push t
+        elsif data['operator'] == 'contains not'
+          query_must_not.push t
+        else
+          fail "unknown operator '#{data['operator']}'"
+        end
+      }
+    end
+    data = {
+      query: {}
+    }
+
+    # add aggs to filter
+    if aggs_interval
+      if aggs_interval[:interval]
+        data[:size] = 0
+        data[:aggs] = {
+          time_buckets: {
+            date_histogram: {
+              field: aggs_interval[:field],
+              interval: aggs_interval[:interval],
+            }
+          }
+        }
+      end
+      r = {}
+      r[:range] = {}
+      r[:range][aggs_interval[:field]] = {
+        from: aggs_interval[:from],
+        to: aggs_interval[:to],
+      }
+      filter_must.push r
+    end
+
+    if !query_must.empty? || !query_must_not.empty?
+      if !data[:query][:filtered]
+        data[:query][:filtered] = {}
+      end
+      if !data[:query][:filtered][:query]
+        data[:query][:filtered][:query] = {}
+      end
+      if !data[:query][:filtered][:query][:bool]
+        data[:query][:filtered][:query][:bool] = {}
+      end
+    end
+    if !query_must.empty?
+      data[:query][:filtered][:query][:bool][:must] = query_must
+    end
+    if !query_must_not.empty?
+      data[:query][:filtered][:query][:bool][:must_not] = query_must_not
+    end
+
+    if !filter_must.empty? || !filter_must.empty?
+      if !data[:query][:filtered]
+        data[:query][:filtered] = {}
+      end
+      if !data[:query][:filtered][:filter]
+        data[:query][:filtered][:filter] = {}
+      end
+      if !data[:query][:filtered][:filter][:bool]
+        data[:query][:filtered][:filter][:bool] = {}
+      end
+    end
+    if !filter_must.empty?
+      data[:query][:filtered][:filter][:bool][:must] = filter_must
+    end
+    if !filter_must_not.empty?
+      data[:query][:filtered][:filter][:bool][:must_not] = filter_must_not
+    end
+
+    data
   end
 
 =begin

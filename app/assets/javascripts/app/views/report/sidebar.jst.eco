@@ -31,7 +31,7 @@
   <% for profile in @profiles: %>
     <li>
       <label class="inline-label radio-replacement">
-        <input class="js-profileSelector" type="radio" value="<%= profile.id %>"<%- ' checked' if @params.profileSelected[profile.id] %>>
+        <input class="js-profileSelector" type="radio" name="profile_id" value="<%= profile.id %>"<%- ' checked' if @params.profileSelected[profile.id] %>>
         <%- @Icon('radio', 'icon-unchecked') %>
         <%- @Icon('radio-checked', 'icon-checked') %>
         <span class="label-text"><%= profile.name %></span>

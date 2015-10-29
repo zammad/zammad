@@ -16,12 +16,16 @@ class Report
         display: 'Created',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: { field: 'created_at' },
       },
       {
         name: 'closed',
         display: 'Closed',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: { field: 'close_time' },
       },
       {
         name: 'backlog',
@@ -32,39 +36,45 @@ class Report
       {
         name: 'first_solution',
         display: 'First Solution',
-        selected: true,
+        selected: false,
         dataDownload: true,
+        adapter: Report::TicketFirstSolution,
       },
       {
-        name: 'reopen',
+        name: 'reopened',
         display: 'Re-Open',
         selected: false,
         dataDownload: true,
+        adapter: Report::TicketReopened,
       },
       {
         name: 'movedin',
         display: 'Moved in',
         selected: false,
         dataDownload: true,
+        adapter: Report::TicketMoved,
+        params: { type: 'in' },
       },
       {
         name: 'movedout',
         display: 'Moved out',
         selected: false,
         dataDownload: true,
+        adapter: Report::TicketMoved,
+        params: { type: 'out' },
       },
-      {
-        name: 'sla_in',
-        display: 'SLA in',
-        selected: false,
-        dataDownload: true,
-      },
-      {
-        name: 'sla_out',
-        display: 'SLA out',
-        selected: false,
-        dataDownload: true,
-      },
+      #{
+      #  name: 'sla_in',
+      #  display: 'SLA in',
+      #  selected: false,
+      #  dataDownload: true,
+      #},
+      #{
+      #  name: 'sla_out',
+      #  display: 'SLA out',
+      #  selected: false,
+      #  dataDownload: true,
+      #},
     ]
     config[:metric][:count][:backend] = backend
 
@@ -79,24 +89,80 @@ class Report
         display: 'Phone (in)',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: {
+          field: 'created_at',
+          selector: {
+            'create_article_type_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Type.lookup(name: 'phone').id,
+            },
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
+            },
+          },
+        },
       },
       {
         name: 'phone_out',
         display: 'Phone (out)',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: {
+          field: 'created_at',
+          selector: {
+            'create_article_type_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Type.lookup(name: 'phone').id,
+            },
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Sender.lookup(name: 'Agent').id,
+            },
+          }
+        },
       },
       {
         name: 'email_in',
         display: 'Email (in)',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: {
+          field: 'created_at',
+          selector: {
+            'create_article_type_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Type.lookup(name: 'email').id,
+            },
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
+            },
+          },
+        },
       },
       {
         name: 'email_out',
         display: 'Email (out)',
         selected: true,
         dataDownload: true,
+        adapter: Report::TicketGenericTime,
+        params: {
+          field: 'created_at',
+          selector: {
+            'create_article_type_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Type.lookup(name: 'email').id,
+            },
+            'create_article_sender_id' => {
+              'operator' => 'is',
+              'value' => Ticket::Article::Sender.lookup(name: 'Agent').id,
+            },
+          },
+        },
       },
       {
         name: 'web_in',
@@ -218,19 +284,19 @@ class Report
       {
         name: 'sla_out_1',
         display: 'SLA (out) - <1h',
-        selected: true,
+        selected: false,
         dataDownload: true,
       },
       {
         name: 'sla_out_2',
         display: 'SLA (out) - <2h',
-        selected: true,
+        selected: false,
         dataDownload: true,
       },
       {
         name: 'sla_out_4',
         display: 'SLA (out) - <4h',
-        selected: true,
+        selected: false,
         dataDownload: true,
       },
       {
@@ -248,19 +314,19 @@ class Report
       {
         name: 'sla_in_2',
         display: 'SLA (in) - <2h',
-        selected: true,
+        selected: false,
         dataDownload: true,
       },
       {
         name: 'sla_in_4',
         display: 'SLA (in) - <4h',
-        selected: true,
+        selected: false,
         dataDownload: true,
       },
       {
         name: 'sla_in_8',
         display: 'SLA (in) - <8h',
-        selected: true,
+        selected: false,
         dataDownload: true,
       },
     ]

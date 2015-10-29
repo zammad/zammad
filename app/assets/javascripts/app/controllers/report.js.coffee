@@ -87,8 +87,6 @@ class Graph extends App.ControllerContent
   constructor: ->
     super
 
-    return
-
     # rerender view
     @bind 'ui:report:rerender', =>
       @render()
@@ -98,7 +96,14 @@ class Graph extends App.ControllerContent
   render: =>
 
     update = (data) =>
-      @draw(data.data)
+
+      # show only selected lines
+      dataNew = {}
+      for key, value of data.data
+        if @params.backendSelected[key] is true
+          dataNew[key] = value
+
+      @draw(dataNew)
       t = new Date
       @el.find('#download-chart').html(t.toString())
       new Download(
@@ -109,19 +114,20 @@ class Graph extends App.ControllerContent
       )
 
     url = @apiPath + '/reports/generate'
-    interval = 60000
+    interval = 5 * 60000
     if @params.timeRange is 'year'
-      interval = 30000
+      interval = 5 * 60000
     if @params.timeRange is 'month'
-      interval = 20000
+      interval = 60000
     if @params.timeRange is 'week'
-      interval = 20000
+      interval = 40000
     if @params.timeRange is 'day'
       interval = 20000
     if @params.timeRange is 'realtime'
       interval = 10000
 
     @ajax(
+      id: 'report_graph'
       type: 'POST'
       url:  url
       data: JSON.stringify(
@@ -137,7 +143,7 @@ class Graph extends App.ControllerContent
       processData: true
       success: (data) =>
         update(data)
-        @delay( @render, interval, 'report-update', 'page' )
+        @delay(@render, interval, 'report-update', 'page')
     )
 
   draw: (data) =>
@@ -162,10 +168,22 @@ class Graph extends App.ControllerContent
 
     dataPlot = []
     for key, value of data
+      realname = key
+      if @config.metric[@params.metric]
+        for backend in @config.metric[@params.metric].backend
+          if backend.name is key
+            realname = backend.display
+      content = []
+      count = 0
+      for i in xaxis
+        content.push [count, value[count]]
+        count += 1
+
       dataPlot.push {
-        data: value
-        label: key
+        data: content
+        label: App.i18n.translateInline(realname)
       }
+
     # plot
     $.plot( $('#placeholder'), dataPlot, {
       yaxis: { min: 0 },
@@ -190,12 +208,10 @@ class Download extends App.Controller
     reports = []
 
     # select first backend, if no backend is selected
-    @backendSelected = undefined
     if @config.metric[@params.metric]
       for backend in @config.metric[@params.metric].backend
-        console.log('bac', backend)
-        if backend.dataDownload && !@backendSelected
-          @backendSelected = backend.name
+        if backend.dataDownload && !@params.downloadBackendSelected
+          @params.downloadBackendSelected = backend.name
 
     # get used profiles
     profiles = []
@@ -206,10 +222,10 @@ class Download extends App.Controller
         profiles.push App.ReportProfile.find(key)
 
     @html App.view('report/download_header')(
-      reports:         reports
-      profiles:        profiles
-      backendSelected: @backendSelected
-      metric:          @config.metric[@params.metric]
+      reports:                 reports
+      profiles:                profiles
+      downloadBackendSelected: @params.downloadBackendSelected
+      metric:                  @config.metric[@params.metric]
     )
 
     @tableUpdate()
@@ -219,8 +235,8 @@ class Download extends App.Controller
       e.preventDefault()
       @el.find('.js-dataDownloadBackendSelector').parent().removeClass('active')
       $(e.target).parent().addClass('active')
-      @profileSelectedId = $(e.target).data('profile-id')
-      @backendSelected   = $(e.target).data('backend')
+      @profileSelectedId       = $(e.target).data('profile-id')
+      @params.downloadBackendSelected = $(e.target).data('backend')
 
     table = (tickets, count) =>
       url = '#ticket/zoom/'
@@ -239,17 +255,19 @@ class Download extends App.Controller
 
     @startLoading()
     @ajax(
+      id: 'report_download'
       type:  'POST'
       url:   @apiPath + '/reports/sets'
       data: JSON.stringify(
-        metric:     @params.metric
-        year:       @params.year
-        month:      @params.month
-        week:       @params.week
-        day:        @params.day
-        timeRange:  @params.timeRange
-        profile_id: @profileSelectedId
-        backend:    @backendSelected
+        metric:                  @params.metric
+        year:                    @params.year
+        month:                   @params.month
+        week:                    @params.week
+        day:                     @params.day
+        timeRange:               @params.timeRange
+        profiles:                @params.profileSelected
+        backends:                @params.backendSelected
+        downloadBackendSelected: @params.downloadBackendSelected
       )
       processData: true
       success: (data) =>
@@ -433,7 +451,7 @@ class Sidebar extends App.Controller
   events:
     'click .js-profileSelector': 'selectProfile'
     'click .js-backendSelector': 'selectBackend'
-    'click .panel-heading':        'selectMetric'
+    'click .panel-heading':      'selectMetric'
 
   constructor: ->
     super
@@ -459,11 +477,10 @@ class Sidebar extends App.Controller
 
   selectProfile: (e) =>
     profile_id = $(e.target).val()
-    active = $(e.target).prop('checked')
-    if active
-      @params.profileSelected[profile_id] = true
-    else
-      delete @params.profileSelected[profile_id]
+    console.log('llll', profile_id)
+    for key, value of @params.profileSelected
+      delete @params.profileSelected[key]
+    @params.profileSelected[profile_id] = true
     App.Event.trigger( 'ui:report:rerender' )
 
   selectBackend: (e) =>
