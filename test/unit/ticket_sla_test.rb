@@ -226,20 +226,58 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.close_time_in_min, nil, 'ticket.close_time_in_min verify 6' )
     assert_equal( ticket.close_time_diff_in_min, nil, 'ticket.close_time_diff_in_min verify 6' )
 
+    # set update time over time
+    ticket.update_attributes(
+      last_contact_customer: '2013-03-21 12:05:00 UTC',
+    )
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_time verify 6' )
+
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 6' )
+    assert_equal( ticket.first_response.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.first_response verify 6' )
+    assert_equal( ticket.first_response_in_min, 270, 'ticket.first_response_in_min verify 6' )
+    assert_equal( ticket.first_response_diff_in_min, -210, 'ticket.first_response_diff_in_min verify 6' )
+
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:05:00 UTC', 'ticket.update_time_escal_date verify 6' )
+    assert_equal( ticket.update_time_in_min, 155, 'ticket.update_time_in_min verify 6' )
+    assert_equal( ticket.update_time_diff_in_min, -35, 'ticket.update_time_diff_in_min verify 6' )
+
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.close_time_escal_date verify 6' )
+    assert_equal( ticket.close_time_in_min, nil, 'ticket.close_time_in_min verify 6' )
+    assert_equal( ticket.close_time_diff_in_min, nil, 'ticket.close_time_diff_in_min verify 6' )
+
+    # set update time over time
+    ticket.update_attributes(
+      last_contact_agent: '2013-03-21 12:10:00 UTC',
+    )
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_time verify 6' )
+
+    assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 6' )
+    assert_equal( ticket.first_response.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.first_response verify 6' )
+    assert_equal( ticket.first_response_in_min, 270, 'ticket.first_response_in_min verify 6' )
+    assert_equal( ticket.first_response_diff_in_min, -210, 'ticket.first_response_diff_in_min verify 6' )
+
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.update_time_escal_date verify 6' )
+    assert_equal( ticket.update_time_in_min, 160, 'ticket.update_time_in_min verify 6' )
+    assert_equal( ticket.update_time_diff_in_min, -40, 'ticket.update_time_diff_in_min verify 6' )
+
+    assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.close_time_escal_date verify 6' )
+    assert_equal( ticket.close_time_in_min, nil, 'ticket.close_time_in_min verify 6' )
+    assert_equal( ticket.close_time_diff_in_min, nil, 'ticket.close_time_diff_in_min verify 6' )
+
     # set close time in time
     ticket.update_attributes(
       close_time: '2013-03-21 11:30:00 UTC',
     )
-    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.escalation_time verify 7' )
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.escalation_time verify 7' )
 
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 7' )
     assert_equal( ticket.first_response.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.first_response verify 7' )
     assert_equal( ticket.first_response_in_min, 270, 'ticket.first_response_in_min verify 7' )
     assert_equal( ticket.first_response_diff_in_min, -210, 'ticket.first_response_diff_in_min verify 7' )
 
-    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.update_time_escal_date verify 7' )
-    assert_equal( ticket.update_time_in_min, 150, 'ticket.update_time_in_min verify 7' )
-    assert_equal( ticket.update_time_diff_in_min, -30, 'ticket.update_time_diff_in_min verify 7' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.update_time_escal_date verify 7' )
+    assert_equal( ticket.update_time_in_min, 160, 'ticket.update_time_in_min verify 7' )
+    assert_equal( ticket.update_time_diff_in_min, -40, 'ticket.update_time_diff_in_min verify 7' )
 
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.close_time_escal_date verify 7' )
     assert_equal( ticket.close_time_in_min, 120, 'ticket.close_time_in_min verify 7' )
@@ -249,16 +287,16 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update_attributes(
       close_time: '2013-03-21 13:00:00 UTC',
     )
-    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.escalation_time verify 8' )
+    assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.escalation_time verify 8' )
 
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 8' )
     assert_equal( ticket.first_response.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.first_response verify 8' )
     assert_equal( ticket.first_response_in_min, 270, 'ticket.first_response_in_min verify 8' )
     assert_equal( ticket.first_response_diff_in_min, -210, 'ticket.first_response_diff_in_min verify 8' )
 
-    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.update_time_escal_date verify 8' )
-    assert_equal( ticket.update_time_in_min, 150, 'ticket.update_time_in_min verify 8' )
-    assert_equal( ticket.update_time_diff_in_min, -30, 'ticket.update_time_diff_in_min verify 8' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.update_time_escal_date verify 8' )
+    assert_equal( ticket.update_time_in_min, 160, 'ticket.update_time_in_min verify 8' )
+    assert_equal( ticket.update_time_diff_in_min, -40, 'ticket.update_time_diff_in_min verify 8' )
 
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.close_time_escal_date verify 8' )
     assert_equal( ticket.close_time_in_min, 210, 'ticket.close_time_in_min verify 8' )
@@ -275,9 +313,9 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal( ticket.first_response_in_min, 270, 'ticket.first_response_in_min verify 9' )
     assert_equal( ticket.first_response_diff_in_min, -210, 'ticket.first_response_diff_in_min verify 9' )
 
-    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:00:00 UTC', 'ticket.update_time_escal_date verify 9' )
-    assert_equal( ticket.update_time_in_min, 150, 'ticket.update_time_in_min verify 9' )
-    assert_equal( ticket.update_time_diff_in_min, -30, 'ticket.update_time_diff_in_min verify 9' )
+    assert_equal( ticket.update_time_escal_date.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.update_time_escal_date verify 9' )
+    assert_equal( ticket.update_time_in_min, 160, 'ticket.update_time_in_min verify 9' )
+    assert_equal( ticket.update_time_diff_in_min, -40, 'ticket.update_time_diff_in_min verify 9' )
 
     assert_equal( ticket.close_time_escal_date.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.close_time_escal_date verify 9' )
     assert_equal( ticket.close_time_in_min, 210, 'ticket.close_time_in_min verify 9' )
