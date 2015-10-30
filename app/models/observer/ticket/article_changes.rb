@@ -70,12 +70,18 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
 
     # if sender is customer
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
+    ticket = record.ticket
     if sender.name == 'Customer'
 
+      # if customer is sending agains, ignore update of last contact (usecase of update escalation)
+      return true if ticket.last_contact_customer &&
+                     ticket.last_contact &&
+                     ticket.last_contact_customer == ticket.last_contact
+
       # check if last communication is done by agent, else do not set last_contact_customer
-      if record.ticket.last_contact_customer.nil? ||
-         record.ticket.last_contact_agent.nil? ||
-         record.ticket.last_contact_agent.to_i > record.ticket.last_contact_customer.to_i
+      if ticket.last_contact_customer.nil? ||
+         ticket.last_contact_agent.nil? ||
+         ticket.last_contact_agent.to_i > ticket.last_contact_customer.to_i
 
         # set last_contact customer
         record.ticket.last_contact_customer = record.created_at
