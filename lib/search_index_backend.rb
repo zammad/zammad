@@ -44,7 +44,7 @@ create/update/delete index
     end
 
     Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-    #Rails.logger.info "-d '#{data[:data].to_json}'"
+    Rails.logger.debug "-d '#{data[:data].to_json}'"
 
     response = UserAgent.put(
       url,
@@ -76,7 +76,7 @@ add new object to search index
     return if !url
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    #Rails.logger.info "-d '#{data.to_json}'"
+    Rails.logger.debug "-d '#{data.to_json}'"
 
     response = UserAgent.post(
       url,
@@ -119,7 +119,7 @@ remove whole data from index
         password: Setting.get('es_password'),
       }
     )
-    #Rails.logger.info "# #{response.code.to_s}"
+    Rails.logger.info "# #{response.code}"
     return true if response.success?
     #Rails.logger.info "NOTICE: can't drop index: " + response.inspect
     false
@@ -194,7 +194,7 @@ return search result
     data['query']['bool']['must'].push condition
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    #Rails.logger.info " -d'#{data.to_json}'"
+    Rails.logger.debug " -d'#{data.to_json}'"
 
     response = UserAgent.get(
       url,
@@ -228,6 +228,202 @@ return search result
       ids.push data
     }
     ids
+  end
+
+=begin
+
+get count of tickets and tickets which match on selector
+
+  aggs_interval = {
+    from: '2015-01-01',
+    to: '2015-12-31',
+    interval: 'month', # year, quarter, month, week, day, hour, minute, second
+    field: 'created_at',
+  }
+
+  result = SearchIndexBackend.selectors(index, params[:condition], limit, current_user, aggs_interval)
+
+  # for aggregations
+  result = {
+    hits:{
+      total:4819,
+    },
+    aggregations:{
+      time_buckets:{
+         buckets:[
+            {
+               key_as_string:"2014-10-01T00:00:00.000Z",
+               key:1412121600000,
+               doc_count:420
+            },
+            {
+               key_as_string:"2014-11-01T00:00:00.000Z",
+               key:1414800000000,
+               doc_count:561
+            },
+            ...
+         ]
+      }
+    }
+  }
+
+=end
+
+  def self.selectors(index = nil, selectors = nil, limit = 10, current_user = nil, aggs_interval = nil)
+    fail 'no selectors given' if !selectors
+
+    url = build_url()
+    return if !url
+    if index
+      if index.class == Array
+        url += "/#{index.join(',')}/_search"
+      else
+        url += "/#{index}/_search"
+      end
+    else
+      url += '/_search'
+    end
+
+    data = selector2query(selectors, current_user, aggs_interval, limit)
+
+    Rails.logger.info "# curl -X POST \"#{url}\" \\"
+    Rails.logger.debug " -d'#{data.to_json}'"
+
+    response = UserAgent.get(
+      url,
+      data,
+      {
+        json: true,
+        open_timeout: 5,
+        read_timeout: 14,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
+      }
+    )
+
+    Rails.logger.info "# #{response.code}"
+    if !response.success?
+      fail "ERROR: #{response.inspect}"
+    end
+    Rails.logger.debug response.data.to_json
+
+    if !aggs_interval || !aggs_interval[:interval]
+      ticket_ids = []
+      response.data['hits']['hits'].each {|item|
+        ticket_ids.push item['_id']
+      }
+      return {
+        count: response.data['hits']['total'],
+        ticket_ids: ticket_ids,
+      }
+    end
+    response.data
+  end
+
+  def self.selector2query(selector, _current_user, aggs_interval, limit)
+    filter_must = []
+    filter_must_not = []
+    query_must = []
+    query_must_not = []
+    if selector && !selector.empty?
+      selector.each {|key, data|
+        key_tmp = key.sub(/^.+?\./, '')
+        t = {}
+        if data['value'].class == Array
+          t[:terms] = {}
+          t[:terms][key_tmp] = data['value']
+        else
+          t[:term] = {}
+          t[:term][key_tmp] = data['value']
+        end
+        if data['operator'] == 'is'
+          filter_must.push t
+        elsif data['operator'] == 'is not'
+          filter_must_not.push t
+        elsif data['operator'] == 'contains'
+          query_must.push t
+        elsif data['operator'] == 'contains not'
+          query_must_not.push t
+        else
+          fail "unknown operator '#{data['operator']}'"
+        end
+      }
+    end
+    data = {
+      query: {},
+      size: limit,
+    }
+
+    # add aggs to filter
+    if aggs_interval
+      if aggs_interval[:interval]
+        data[:size] = 0
+        data[:aggs] = {
+          time_buckets: {
+            date_histogram: {
+              field: aggs_interval[:field],
+              interval: aggs_interval[:interval],
+            }
+          }
+        }
+      end
+      r = {}
+      r[:range] = {}
+      r[:range][aggs_interval[:field]] = {
+        from: aggs_interval[:from],
+        to: aggs_interval[:to],
+      }
+      filter_must.push r
+    end
+
+    if !query_must.empty? || !query_must_not.empty?
+      if !data[:query][:filtered]
+        data[:query][:filtered] = {}
+      end
+      if !data[:query][:filtered][:query]
+        data[:query][:filtered][:query] = {}
+      end
+      if !data[:query][:filtered][:query][:bool]
+        data[:query][:filtered][:query][:bool] = {}
+      end
+    end
+    if !query_must.empty?
+      data[:query][:filtered][:query][:bool][:must] = query_must
+    end
+    if !query_must_not.empty?
+      data[:query][:filtered][:query][:bool][:must_not] = query_must_not
+    end
+
+    if !filter_must.empty? || !filter_must.empty?
+      if !data[:query][:filtered]
+        data[:query][:filtered] = {}
+      end
+      if !data[:query][:filtered][:filter]
+        data[:query][:filtered][:filter] = {}
+      end
+      if !data[:query][:filtered][:filter][:bool]
+        data[:query][:filtered][:filter][:bool] = {}
+      end
+    end
+    if !filter_must.empty?
+      data[:query][:filtered][:filter][:bool][:must] = filter_must
+    end
+    if !filter_must_not.empty?
+      data[:query][:filtered][:filter][:bool][:must_not] = filter_must_not
+    end
+
+    # add sort
+    if aggs_interval && aggs_interval[:field] && !aggs_interval[:interval]
+      sort = []
+      sort[0] = {}
+      sort[0][aggs_interval[:field]] = {
+        order: 'desc'
+      }
+      sort[1] = '_score'
+      data['sort'] = sort
+    end
+
+    data
   end
 
 =begin

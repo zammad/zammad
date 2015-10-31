@@ -13,7 +13,7 @@
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
 </form>
 
-<ul class="main-navigation"></ul>
+<div class="menu js-menu"></div>
 
 <div class="tasks tasks-navigation"></div>
 

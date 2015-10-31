@@ -1,0 +1,59 @@
+Hi Roy,
+
+Du hast mich überzeugt. Ich habe in der Apache-Config entsprechende Anpassungen vorgenommen.
+
+Bitte nochmal testen und kurz zurückmelden, vielen Dank!
+
+Mit freundlichen Grüßen
+
+Bob Smith
+Berechtigungen und dez. Department
+________________________________
+
+Musik AG
+Berechtigungen und dez. Department (ITPBM)
+Kastanien 2
+12345 Hornhausen
+Tel.: +49 911 6760
+Fax: +49 911 85 6760
+Mobil: +49 173 911
+E-Mail: Bob.Smith@music.com
+http://www.music.com
+
+Musik AG | Kastanien 2 | 12345 Hornhausen
+Sitz der AG: Hornhausen, HRB xxxxx | USt.-ID: DE 111222333444
+Vorstand: Marc Smith, Weber Huber
+Aufsichtsrat: Max Mix (Vors.)
+Von: Roy Smith via Znuny Projects [mailto:projects@service.com]
+Gesendet: Montag, 28. September 2015 08:49
+An: Smith, Bob
+Betreff: VPN: hier Zugriff via Web [Ticket#1115094]
+
+Hallo Bob,
+
+mit der Umstellung des neuen VPNs hat ja alles soweit funktioniert.
+Allerdings hat mir ein Entwickler von uns mitgeteilt das er nicht mehr auf https://dwpwpt4unxe01.adm.music.com/otrs/index.pl kommt. Ist dort evtl. auch die IP-Adresse in der Konfiguration des Webservers hinterlegt worden? Dann müsste diese ja auch auf 217.110.104.196 geändert werden.
+Wenn ich damit richtig liege sind davon die Zugriffe auf
+- https://dwpwpt4unxe01.adm.music.com/otrs/index.pl
+- https://dwpwpt4unxt01.adm.music.com/otrs/index.pl
+- https://wpticket.music.com/wpticket/index.pl
+betroffen.
+
+Bist Du bitte so nett und kannst da überprüfen und ggf. eine Korrektur veranlassen?
+
+Danke und viele Grüße,
+Roy
+
+Roy Smith
+
+--
+Enterprise Services for OTRS
+
+Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany
+
+P: +49 (0) 30 60 98 54 18-0
+F: +49 (0) 30 60 98 54 18-8
+W: http://service.com
+
+Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg
+Managing Director: Martin Edenhofer

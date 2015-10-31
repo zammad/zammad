@@ -49,6 +49,7 @@ class Index extends App.Controller
     @recent()
 
   renderResult: (user_ids = []) ->
+    @stopLoading()
 
     callbackHeader = (header) ->
       attribute =
@@ -62,7 +63,7 @@ class Index extends App.Controller
     callbackAttributes = (value, object, attribute, header, refObject) ->
       text                  = App.i18n.translateInline('View from user\'s perspective')
       value                 = ' '
-      attribute.raw         = ' <span class="btn btn--primary btn--table switchView" title="' + text + '"><svg class="icon icon-switchView"><use xlink:href="#icon-switchView" /></svg> ' + text + '</span>'
+      attribute.raw         = ' <span class="btn btn--primary btn--table switchView" title="' + text + '">' + App.Utils.icon('switchView') + text + '</span>'
       attribute.class       = ''
       attribute.parentClass = 'actionCell no-padding'
       attribute.link        = ''
@@ -126,6 +127,7 @@ class Index extends App.Controller
     @$('.tab.active').each( (i,d) ->
       role_ids.push $(d).data('id')
     )
+    @startLoading(@$('.table-overview'))
     App.Ajax.request(
       id:    'search'
       type:  'GET'
@@ -137,11 +139,10 @@ class Index extends App.Controller
         full:  1
       processData: true,
       success: (data, status, xhr) =>
-
-        # load assets
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @renderResult(data.user_ids)
+      done: =>
+        @stopLoading()
     )
 
   recent: =>
@@ -149,6 +150,7 @@ class Index extends App.Controller
     @$('.tab.active').each( (i,d) ->
       role_ids.push $(d).data('id')
     )
+    @startLoading(@$('.table-overview'))
     App.Ajax.request(
       id:    'search'
       type:  'GET'
@@ -159,11 +161,10 @@ class Index extends App.Controller
         full:  1
       processData: true,
       success: (data, status, xhr) =>
-
-        # load assets
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @renderResult(data.user_ids)
+      complete: =>
+        @stopLoading()
     )
 
   new: (e) ->
@@ -177,6 +178,7 @@ class Index extends App.Controller
         navupdate: '#users'
       genericObject: 'User'
       container: @el.closest('.content')
+      callback: @recent
     )
 
 App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

@@ -795,9 +795,21 @@ class TicketZoomRef extends App.ControllerContent
     '.article-text': 'articles'
     '.js-highlight-icon': 'highlightIcon'
 
+    '.js-submitDropdown': 'buttonDropdown'
+
   events:
     'click .js-highlight': 'toggleHighlight'
     'click .js-highlightColor': 'pickColor'
+
+    'mousedown .js-openDropdown': 'toggleDropdown'
+    'click .js-openDropdown': 'stopPropagation'
+    'mouseup .js-dropdownAction': 'performTicketMacro'
+    'mouseenter .js-dropdownAction': 'onActionMouseEnter'
+    'mouseleave .js-dropdownAction': 'onActionMouseLeave'
+    'click .js-secondaryAction': 'chooseSecondaryAction'
+
+  stopPropagation: (event) ->
+    event.stopPropagation()
 
   colors: [
     {
@@ -895,7 +907,7 @@ class TicketZoomRef extends App.ControllerContent
     # don't go into highlight mode
     # just toggle the selected
     if !selection.isCollapsed
-      @toggleHighlightAtSelection $(selection.anchorNode).closest @articles.selector
+      @toggleHighlightAtSelection selection, $(selection.anchorNode).closest @articles.selector
     else
       # show color
       @highlightIcon.css('fill', @colors[@activeColorIndex].color)
@@ -919,7 +931,9 @@ class TicketZoomRef extends App.ControllerContent
     @setColor()
 
   onMouseUp: (e) =>
-    @toggleHighlightAtSelection $(e.currentTarget).closest @articles.selector
+    selection = rangy.getSelection()
+
+    @toggleHighlightAtSelection selection, $(e.currentTarget).closest @articles.selector
 
   #
   # toggle Highlight
@@ -930,20 +944,57 @@ class TicketZoomRef extends App.ControllerContent
   # - or highlights the selection
   # - clears the selection
 
-  toggleHighlightAtSelection: (article) ->
-    selection = rangy.getSelection()
+  toggleHighlightAtSelection: (selection, article) ->
 
     if @highlighter.selectionOverlapsHighlight selection
       @highlighter.unhighlightSelection()
-    else
-      @highlighter.highlightSelection @highlightClass,
-        selection: selection
-        containerElementId: article.get(0).id
+      return @storeHighlights()
 
-      # remove selection
-      selection.removeAllRanges()
+    # selection.anchorNode = element in which the selection started
+    # selection.focusNode = element in which the selection ended
+    # 
+    # check if the start node is inside of the article or the article itself
+    startNode = @$(selection.anchorNode)
+
+    if !(article.is(startNode) or article.contents().is(startNode))
+      return selection.removeAllRanges()
+
+    @highlighter.highlightSelection @highlightClass,
+      selection: selection
+      containerElementId: article.get(0).id
+
+    # remove selection
+    selection.removeAllRanges()
 
     @storeHighlights()
+
+  toggleDropdown: =>
+    if @buttonDropdown.hasClass 'is-open'
+      @closeDropdown()
+    else
+      @buttonDropdown.addClass 'is-open'
+      $(document).bind 'click.buttonDropdown', @closeDropdown
+
+  closeDropdown: =>
+    @buttonDropdown.removeClass 'is-open'
+    $(document).unbind 'click.buttonDropdown'
+
+  performTicketMacro: (event) =>
+    console.log "perform action", @$(event.currentTarget).text()
+    @closeDropdown()
+
+  onActionMouseEnter: (event) =>
+    @$(event.currentTarget).addClass('is-active')
+
+  onActionMouseLeave: (event) =>
+    @$(event.currentTarget).removeClass('is-active')
+
+  chooseSecondaryAction: (event) =>
+    target = $(event.currentTarget)
+    target.siblings().find('.is-selected').removeClass('is-selected')
+    @$('.js-secondaryActionButtonLabel').text target.find('.js-secondaryActionLabel').text()
+    target.find('.js-selectedIcon').addClass('is-selected')
+
 
 
 App.Config.set( 'layout_ref/ticket_zoom', TicketZoomRef, 'Routes' )
@@ -976,7 +1027,7 @@ class CluesRef extends App.ControllerContent
       ]
     }
     {
-      container: '.main-navigation .overviews'
+      container: '.js-overviewsMenuItem'
       headline: 'Übersichten'
       text: 'Hier findest du eine Liste aller Tickets.'
       actions: [
@@ -984,7 +1035,7 @@ class CluesRef extends App.ControllerContent
       ]
     }
     {
-      container: '.main-navigation .dashboard'
+      container: '.js-dashboardMenuItem'
       headline: 'Dashboard'
       text: 'Hier siehst du auf einem Blick ob sich alle Agenten an die Spielregeln halten.'
       actions: [
@@ -1456,10 +1507,28 @@ class InputsRef extends App.ControllerContent
     @$('.searchableAjaxSelectPlaceholder').replaceWith( searchableAjaxSelectObject.element() )
 
     # time and timeframe
-    @$('.time').timepicker()
+    @$('.js-timepicker1, .js-timepicker2').timepicker()
 
-    @$('.timeframe').timepicker
+    @$('.timeframe').timepicker(
       maxHours: 99
+    )
+
+    # date picker
+    @$('.js-datepicker3').datepicker(
+      todayHighlight: true
+      startDate: new Date()
+      format: App.i18n.timeFormat().date
+      container: @$('.js-datepicker3').parent()
+    )
+
+    # date time picker
+    @$('.js-datepicker4').datepicker(
+      todayHighlight: true
+      startDate: new Date()
+      format: App.i18n.timeFormat().date
+      container: @$('.js-datepicker4').parent()
+    )
+    @$('.js-timepicker4').timepicker()
 
 App.Config.set( 'layout_ref/inputs', InputsRef, 'Routes' )
 
@@ -1611,6 +1680,496 @@ class PrimaryEmailRef extends App.ControllerContent
     @html App.view('layout_ref/primary_email')()
 
 App.Config.set( 'layout_ref/primary_email', PrimaryEmailRef, 'Routes' )
+
+
+class App.CustomerChatRef extends App.Controller
+  @extend Spine.Events
+
+  questions: [
+    {
+      question: "Der dümmste Bauer hat die dicksten ..?"
+      answers: ["Kartoffeln"]
+    },
+    {
+      question: "Welchen Wein besang einst Udo Jürgens?"
+      answers: ["griechisch"]
+    },
+    {
+      question: "Was behandelt ein Logopäde?"
+      answers: ["Sprachstörung"]
+    },
+    {
+      question: "In welcher Stadt ist das Porsche Stammwerk?"
+      answers: ["Stuttgart"]
+    },
+    {
+      question: "Wer erfand den legendären C64-Computer?"
+      answers: ["Commodore"]
+    },
+    {
+      question: 'Im Englischen steht "Lost And Found" für ..?'
+      answers: ["Fundbüro"]
+    },
+    {
+      question: 'Welches Möbelstück ist und war besonders in Sigmund Freuds Arbeitszimmer bekannt?'
+      answers: ["Couch"]
+    },
+    {
+      question: 'Wenn es einem gut geht, lebt man "wie die Made im .."?'
+      answers: ["Speck"]
+    },
+    {
+      question: 'Von welcher Sportart handelt der US-amerikanische Film "Rocky"?'
+      answers: ["Boxen"]
+    },
+    {
+      question: 'Wo soll man hingehen, wenn man sich weit entfernen soll? Dahin wo ..?'
+      answers: ["Pfeffer", "wächst"]
+    },
+    {
+      question: 'Welches internationale Autokennzeichen hat Spanien?'
+      answers: ["ES"]
+    },
+    {
+      question: 'Wenn man sich ärgert sagt man "Verdammt und .."?'
+      answers: ["zugenäht"]
+    },
+    {
+      question: 'Bei welchem Spiel muss man ohne zu zittern Stäbchen sammeln?'
+      answers: ["Mikado"]
+    },
+    {
+      question: 'Wann wurde Znuny gegründet?'
+      answers: ["2012"]
+    }
+  ]
+
+  constructor: ->
+    super
+
+    @i = 0
+    @chatWindows = []
+    @totalQuestions = 7
+    @answered = 0
+    @correct = 0
+    @wrong = 0
+    @maxChats = 4;
+
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/customer_chat')()
+
+    @addChat()
+
+    # @testChat @chatWindows[0], 100
+    @initQuiz()
+
+  show: (params) =>
+
+    # highlight navbar
+    @navupdate '#layout_ref/customer_chat'
+
+  testChat: (chat, count) ->
+    for i in [0..count]
+      text = @questions[Math.floor(Math.random() * @questions.length)].question
+      chat.addMessage text, if i % 2 then 'customer' else 'agent'
+
+  addChat: ->
+    chat = new chatWindowRef
+      name: "Quizmaster-#{ ++@i }"
+
+    @on 'layout-has-changed', @propagateLayoutChange
+
+    @$('.chat-workspace').append(chat.el)
+    @chatWindows.push chat
+
+  propagateLayoutChange: (event) =>
+    # adjust scroll position on layoutChange
+
+    for chat in @chatWindows
+      chat.trigger 'layout-changed'
+
+  initQuiz: ->
+    @chatWindows[0].addStatusMessage('To start the quiz type <strong>Start</strong>')
+    @chatWindows[0].bind "answer", @startQuiz
+
+  startQuiz: (answer) =>
+    return false unless answer is "Start"
+
+    @chatWindows[0].unbind "answer"
+
+    @nextQuestion()
+
+  nextQuestion: ->
+    if not @questions.length
+      @currentChat.addStatusMessage("Du hast #{ @correct } von #{ @totalQuestions } Fragen richtig beantwortet!")
+      for chat in @chatWindows
+        chat.unbind "answer"
+        if chat is not @currentChat
+          chat.goOffline()
+      return
+
+    if @chatWindows.length < @maxChats and Math.random() < 0.2
+      @addChat()
+      randomWindowId = @chatWindows.length-1
+    else 
+      # maybe take a chat offline
+      if @chatWindows.length > 1 and Math.random() > 0.85
+        randomWindowId = Math.floor(Math.random()*@chatWindows.length)
+        [killedChat] = @chatWindows.splice randomWindowId, 1
+        killedChat.goOffline()
+
+      randomWindowId = Math.floor(Math.random()*@chatWindows.length)
+
+    randomQuestionId = Math.floor(Math.random()*@questions.length)
+
+    @currentQuestion = @questions.splice(randomQuestionId, 1)[0]
+
+    newChat = @chatWindows[randomWindowId]
+
+    messageDelay = 500
+
+    if newChat != @currentChat
+      @currentChat.unbind("answer") if @currentChat
+      @currentChat = newChat
+      @currentChat.bind "answer", @onQuestionAnswer
+      messageDelay = 1500
+
+    @currentChat.showWritingLoader()
+
+    setTimeout @currentChat.receiveMessage, messageDelay + Math.random() * 1000, @currentQuestion.question
+
+  onQuestionAnswer: (answer) =>
+    match = false
+
+    for text in @currentQuestion.answers
+      if answer.match( new RegExp(text,'i') )
+        match = true
+
+    @answered++
+
+    if match
+      @correct++
+      @currentChat.receiveMessage _.shuffle(['😀','😃','😊','😍','😎','😏','👍','😌','😇','👌'])[0]
+    else
+      @wrong++
+      @currentChat.receiveMessage _.shuffle(['👎','💩','😰','😩','😦','😧','😟','😠','😡','😞','😢','😒','😕'])[0]
+
+    if @answerd is @totalQuestions
+      @finishQuiz()
+    else
+      @nextQuestion()
+
+class CustomerChatRouter extends App.ControllerPermanent
+  constructor: (params) ->
+    super
+
+    # check authentication
+    return if !@authenticate()
+
+    App.TaskManager.execute(
+      key:        'CustomerChatRef'
+      controller: 'CustomerChatRef'
+      params:     {}
+      show:       true
+      persistent: true
+    )
+
+App.Config.set( 'layout_ref/customer_chat', CustomerChatRouter, 'Routes' )
+App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
+App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', switch: true, counter: true, role: ['Agent'], class: 'chat' }, 'NavBar' )
+
+
+class chatWindowRef extends Spine.Controller
+  @extend Spine.Events
+
+  className: 'chat-window'
+
+  events:
+    'keydown .js-customerChatInput': 'onKeydown'
+    'focus .js-customerChatInput':   'clearUnread'
+    'click':                         'clearUnread'
+    'click .js-send':                'sendMessage'
+    'click .js-close':               'close'
+
+  elements:
+    '.js-customerChatInput': 'input'
+    '.js-status':            'status'
+    '.js-body':              'body'
+    '.js-scrollHolder':      'scrollHolder'
+
+  sound:
+    message: new Audio('assets/sounds/chat_message.mp3')
+    window: new Audio('assets/sounds/chat_new.mp3')
+
+  constructor: ->
+    super
+
+    @showTimeEveryXMinutes = 1
+    @lastTimestamp
+    @lastAddedType
+    @render()
+    #@sound.window.play()
+
+    @on 'layout-change', @scrollToBottom
+
+  render: ->
+    @html App.view('layout_ref/customer_chat_window')
+      name: @options.name
+
+    @el.one 'transitionend', @onTransitionend
+
+    # make sure animation will run
+    setTimeout (=> @el.addClass('is-open')), 0
+
+    # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent' 
+
+  onTransitionend: (event) =>
+    # chat window is done with animation - adjust scroll-bars
+    # of sibling chat windows
+    @trigger 'layout-has-changed'
+
+    if event.data and event.data.callback
+      event.data.callback()
+
+  close: =>
+    @el.one 'transitionend', { callback: @release }, @onTransitionend
+    @el.removeClass('is-open')
+
+  release: =>
+    @trigger 'closed'
+    super
+
+  clearUnread: =>
+    @$('.chat-message--new').removeClass('chat-message--new')
+    @updateModified(false)
+
+  onKeydown: (event) =>
+    TABKEY = 9;
+    ENTERKEY = 13;
+
+    switch event.keyCode 
+      when TABKEY
+        allChatInputs = $('.js-customerChatInput').not('[disabled="disabled"]')
+        chatCount = allChatInputs.size()
+        index = allChatInputs.index(@input)
+
+        if chatCount > 1
+          switch index 
+            when chatCount-1
+              if !event.shiftKey
+                # State: tab without shift on last input
+                # Jump to first input
+                event.preventDefault()
+                allChatInputs.eq(0).focus()
+            when 0
+              if event.shiftKey
+                # State: tab with shift on first input
+                # Jump to last input
+                event.preventDefault()
+                allChatInputs.eq(chatCount-1).focus()
+
+      when ENTERKEY
+        if !event.shiftKey
+          event.preventDefault()
+          @sendMessage()
+
+  sendMessage: =>
+    return if !@input.html()
+
+    @addMessage @input.html(), 'agent'
+
+    @trigger "answer", @input.html()
+
+    @input.html('')
+
+  updateModified: (state) =>
+    @status.toggleClass('is-modified', state)
+
+  receiveMessage: (message) =>
+    isFocused = @input.is(':focus')
+
+    @removeWritingLoader()
+    @addMessage(message, 'customer', !isFocused)
+
+    if !isFocused
+      @updateModified(true) 
+      @sound.message.play()
+
+  addMessage: (message, sender, isNew) =>
+    @maybeAddTimestamp()
+
+    @lastAddedType = sender
+
+    @body.append App.view('layout_ref/customer_chat_message')
+      message: message
+      sender: sender
+      isNew: isNew
+      timestamp: Date.now()
+
+    @scrollToBottom()
+
+  showWritingLoader: =>
+    @maybeAddTimestamp()
+    @body.append App.view('layout_ref/customer_chat_loader')()
+
+    @scrollToBottom()
+
+  removeWritingLoader: =>
+    @$('.js-loader').remove()
+
+  goOffline: =>
+    @addStatusMessage("<strong>#{ @options.name }</strong>'s connection got closed")
+    @status.attr('data-status', 'offline')
+    @el.addClass('is-offline')
+    @input.attr('disabled', true)
+
+  maybeAddTimestamp: ->
+    timestamp = Date.now()
+
+    if !@lastTimestamp or timestamp - @lastTimestamp > @showTimeEveryXMinutes * 60000
+      label = 'Today'
+      time = new Date().toTimeString().substr(0,5)
+      if @lastAddedType is 'timestamp'
+        # update last time
+        @updateLastTimestamp label, time
+        @lastTimestamp = timestamp
+      else
+        @addTimestamp label, time 
+        @lastTimestamp = timestamp
+        @lastAddedType = 'timestamp'
+
+  addTimestamp: (label, time) =>
+    @body.append App.view('layout_ref/customer_chat_timestamp')
+      label: label
+      time: time
+
+  updateLastTimestamp: (label, time) ->
+    @body
+      .find('.js-timestamp')
+      .last()
+      .replaceWith App.view('layout_ref/customer_chat_timestamp')
+        label: label
+        time: time
+
+  addStatusMessage: (message) ->
+    @body.append App.view('layout_ref/customer_chat_status_message')
+      message: message
+
+    @scrollToBottom()
+
+  scrollToBottom: ->
+    @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+
+
+class AdminLoadRef extends App.ControllerContent
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/admin_loading')()
+
+App.Config.set( 'layout_ref/admin_loading', AdminLoadRef, 'Routes' )
+
+
+class TwitterConversationRef extends App.ControllerContent
+  elements:
+    '.js-textarea':                       'textarea'
+    '.article-add':                       'articleNewEdit'
+    '.article-add .textBubble':           'textBubble'
+    '.editControls-item':                 'editControlItem'
+    '.js-letterCount':                    'letterCount'
+    '.js-signature':                      'signature'
+
+  events:
+    'input .js-textarea': 'updateLetterCount'
+
+  textareaHeight:
+    open:   88
+    closed: 20
+
+  maxTextLength: 140
+  warningTextLength: 10
+
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/twitter_conversation')()
+
+    @openTextarea null, true
+    @updateLetterCount()
+
+  updateLetterCount: (event) =>
+    textLength = @maxTextLength - @textarea.text().length - @signature.text().length - 2
+    className = switch 
+      when textLength < 0 then 'label-danger'
+      when textLength < @warningTextLength then 'label-warning'
+      else ''
+
+    @letterCount
+      .text textLength
+      .removeClass 'label-danger label-warning'
+      .addClass className
+
+  openTextarea: (event, withoutAnimation) =>
+    if @articleNewEdit.hasClass('is-open')
+      return
+
+    duration = 300
+
+    if withoutAnimation
+      duration = 0
+
+    @articleNewEdit.addClass('is-open')
+
+    @textarea.velocity
+      properties:
+        minHeight: "#{ @textareaHeight.open - 38 }px"
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
+        complete: => @addTextareaCatcher()
+
+    @textBubble.velocity
+      properties:
+        paddingBottom: 28
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
+
+    # scroll to bottom
+    @textarea.velocity 'scroll',
+      container: @textarea.scrollParent()
+      offset: 99999
+      duration: 300
+      easing: 'easeOutQuad'
+      queue: false
+
+    @editControlItem
+      .removeClass('is-hidden')
+      .velocity
+        properties:
+          opacity: [ 1, 0 ]
+          translateX: [ 0, 20 ]
+          translateZ: 0
+        options:
+          duration: 300
+          stagger: 50
+          drag: true
+
+  addTextareaCatcher: =>
+    if @articleNewEdit.is(':visible')
+      @textareaCatcher = new App.ClickCatcher
+        holder:      @articleNewEdit.offsetParent()
+        callback:    @closeTextarea
+        zIndexScale: 4
+
+App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
 
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

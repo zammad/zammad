@@ -69,32 +69,6 @@ returns
         overview_selected     = overview
         overview_selected_raw = Marshal.load( Marshal.dump(overview.attributes) )
       end
-
-      # replace e.g. 'current_user.id' with current_user.id
-      overview.condition.each { |attribute, content|
-        next if !content
-        next if !content.respond_to?(:key?)
-        next if !content['value']
-        next if content['value'].class != String && content['value'].class != Array
-
-        if content['value'].class == String
-          parts = content['value'].split( '.', 2 )
-          next if !parts[0]
-          next if !parts[1]
-          next if parts[0] != 'current_user'
-          overview.condition[attribute]['value'] = data[:current_user][parts[1].to_sym]
-          next
-        end
-
-        content['value'].each {|item|
-          next if item.class != String
-          parts = item.split('.', 2)
-          next if !parts[0]
-          next if !parts[1]
-          next if parts[0] != 'current_user'
-          item = data[:current_user][parts[1].to_sym]
-        }
-      }
     }
 
     if data[:view] && !overview_selected
@@ -111,7 +85,7 @@ returns
       result = []
       overviews.each { |overview|
 
-        query_condition, bind_condition = Ticket.selector2sql(overview.condition)
+        query_condition, bind_condition = Ticket.selector2sql(overview.condition, data[:current_user])
 
         # get count
         count = Ticket.where( access_condition ).where( query_condition, *bind_condition ).count()
@@ -136,7 +110,7 @@ returns
         order_by = overview_selected.group_by + '_id, ' + order_by
       end
 
-      query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition)
+      query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition, data[:current_user])
 
       tickets = Ticket.select('id')
                 .where( access_condition )
@@ -160,7 +134,7 @@ returns
 
     # get tickets for overview
     data[:start_page] ||= 1
-    query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition)
+    query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition, data[:current_user])
     tickets = Ticket.where( access_condition )
               .where( query_condition, *bind_condition )
               .order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )

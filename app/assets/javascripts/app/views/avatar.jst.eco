@@ -1,1 +1,3 @@
-<%- @user.avatar(@size, @position, @class, false, false, @type) %>
+<span class="avatar <%- @cssClass %>" style="background-image: url(<%- @url %>)"<%- @placement %><%- @data %>>
+  <%- @Icon('crown') if @vip %>
+</span>

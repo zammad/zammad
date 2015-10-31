@@ -6,7 +6,7 @@
 
 
   <h2>Tabs</h2>
-  <div class="tabs wide-tabs horizontal">
+  <div class="tabs wide-tabs">
     <div class="tab my-stats active">My Stats</div>
     <div class="tab my-groups">My Group</div>
     <div class="tab all-stats">All</div>
@@ -30,15 +30,15 @@
 
   <h2>VIP Avatars</h2>
 
-  <div class="avatar avatar--vip" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></div>
+  <div class="avatar avatar--vip" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><%- @Icon('crown') %></div>
 
   <p><code>.avatar</code></p>
 
-  <div class="avatar avatar--vip size-50" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></div>
+  <div class="avatar avatar--vip size-50" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><%- @Icon('crown') %></div>
 
   <p><code>.avatar.size-50</code></p>
 
-  <div class="avatar avatar--vip size-80" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></div>
+  <div class="avatar avatar--vip size-80" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"><%- @Icon('crown') %></div>
 
   <p><code>.avatar.size-80</code></p>
 

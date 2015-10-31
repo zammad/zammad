@@ -1,0 +1,451 @@
+<div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer is-closed">
+  <div class="ticketZoom">
+    <div class="ticketZoom-controls">
+      <div class="highlighter">
+        <div class="btn btn--action btn--split--first js-highlight centered">
+          <%- @Icon('marker', 'js-highlight-icon') %>
+        </div>
+        <div class="dropdown dropdown--actions">
+          <div aria-expanded="true" class="btn btn--action btn--split--last btn--slim centered" data-toggle="dropdown">
+            <%- @Icon('arrow-down', '') %>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-right" role="menu">
+            <li role="presentation">
+              <a class="js-highlightColor" data-key="0" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #f7e7b2"></span></span> Yellow <span class="dropdown-selectedSpacer js-selectedIcon is-selected"><%- @Icon('checkmark', '') %></span></a>
+            </li>
+            <li role="presentation">
+              <a class="js-highlightColor" data-key="1" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #bce7b6"></span></span> Green <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+            </li>
+            <li role="presentation">
+              <a class="js-highlightColor" data-key="2" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #b3ddf9"></span></span> Blue <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+            </li>
+            <li role="presentation">
+              <a class="js-highlightColor" data-key="3" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #fea9c5"></span></span> Pink <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+            </li>
+            <li role="presentation">
+              <a class="js-highlightColor" data-key="4" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #eac5ee"></span></span> Purple <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="overview-navigator"></div>
+    </div>
+    <!-- conversation: https://twitter.com/sksk805/status/657439712068661248 -->
+    <div class="ticketZoom-header">
+      <div class="flex vertical center">
+        <div class="js-avatar">
+          <span class="avatar size-50 user-popover user-popover" data-id="2" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/550102263013056512/tq9PC8NT.jpeg)" title=""></span>
+        </div>
+        <div class="ticket-title">
+          <div class="ticket-title-update" contenteditable="true" data-placeholder="Enter Title...">
+            @DB_Bahn was sagen Sie als Arbeitgeber dazu, wenn ihre Mitarbeiter aufgrund von Verspätungen und Zugausfällen regelmäßig viel zu spät sind?
+          </div>
+        </div>
+        <div class="ticket-meta">
+          <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - created <time class="humanTimeFromNow" data-time="2015-10-05T12:56:33.000Z" title="10/05/2015 14:56">10/05/2015</time></small>
+        </div>
+      </div>
+    </div>
+    <div class="ticket-article">
+      <div class="ticket-article-item customer" data-id="1" id="article-1">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key u-textTruncate">
+                  From
+                </div>
+                <div class="article-meta-value flex contain-text">
+                  zander <span class="text-muted">&lt;@sksk805&gt;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1">
+          <div class="js-avatar">
+            <span class="avatar size-40 user-popover user-popover" data-id="2" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/550102263013056512/tq9PC8NT.jpeg)" title=""></span>
+          </div>
+          <div class="bubble-gap">
+            <div class="internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content" data-id="1" id="article-content-1">
+                  <a href="#">@DB_Bahn</a> was sagen Sie als Arbeitgeber dazu, wenn ihre Mitarbeiter aufgrund von Verspätungen und Zugausfällen regelmäßig viel zu spät sind?
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">
+                  Channel
+                </div>
+                <div class="article-meta-value">
+                  <%- @Icon('twitter', 'article-meta-icon') %>Twitter Mention
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="js-article-actions">
+          <div class="article-content article-actions horizontal stretch">
+            <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="reply" href="#"><%- @Icon('reply', 'article-action-icon') %>reply</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/1"><%- @Icon('split', 'article-action-icon') %>split</a>
+          </div>
+        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-05T12:56:33.000Z" title="10/05/2015 14:56">10/05/2015</time></small>
+      </div>
+      <div class="ticket-article-item agent" data-id="3" id="article-3">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key u-textTruncate">
+                  From
+                </div>
+                <div class="article-meta-value flex contain-text">
+                  Test Master Agent
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1">
+          <div class="js-avatar">
+            <span class="avatar size-40 user-popover user-popover" data-id="3" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/473728709908647936/gc_1Mzqc.jpeg)" title=""></span>
+          </div>
+          <div class="bubble-gap">
+            <div class="internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content" data-id="3" id="article-content-3">
+                  <a href="#">@sksk805</a> Sorry, ich bin Mitarbeiter vom Twitter-Team und keine Führungskraft. Ich komme allerdings auch mit der DB und bin pünktlich. /je
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">
+                  Channel
+                </div>
+                <div class="article-meta-value">
+                  <%- @Icon('twitter', 'article-meta-icon') %>Twitter Mention
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="js-article-actions">
+          <div class="article-content article-actions horizontal stretch">
+            <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/3"><%- @Icon('split', 'article-action-icon') %>split</a>
+          </div>
+        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+      </div>
+      <div class="ticket-article-item customer" data-id="4" id="article-4">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key u-textTruncate">
+                  From
+                </div>
+                <div class="article-meta-value flex contain-text">
+                  Test Master Agent
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1">
+          <div class="js-avatar">
+            <span class="avatar size-40 user-popover user-popover" data-id="2" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/550102263013056512/tq9PC8NT.jpeg)" title=""></span>
+          </div>
+          <div class="bubble-gap">
+            <div class="internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content" data-id="4" id="article-content-4">
+                  <a href="#">@DB_Bahn</a> ohne Witz? Das ist Ihre Antwort? Mal ganz unter uns...wie oft kommt ihre Bahn zu spät? Oder fahren Sie etwa heimlich Auto?
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">
+                  Channel
+                </div>
+                <div class="article-meta-value">
+                  <%- @Icon('note', 'article-meta-icon') %>note
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="js-article-actions">
+          <div class="article-content article-actions horizontal stretch">
+            <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/4"><%- @Icon('split', 'article-action-icon') %>split</a>
+          </div>
+        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:27.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+      </div>
+      <div class="ticket-article-item agent" data-id="3" id="article-3">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key u-textTruncate">
+                  From
+                </div>
+                <div class="article-meta-value flex contain-text">
+                  Test Master Agent
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1">
+          <div class="js-avatar">
+            <span class="avatar size-40 user-popover user-popover" data-id="3" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/473728709908647936/gc_1Mzqc.jpeg)" title=""></span>
+          </div>
+          <div class="bubble-gap">
+            <div class="internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content" data-id="3" id="article-content-3">
+                  <a href="#">@sksk805</a> Ich darf ehrlich antworten. :) Ich wähle aber meine Verbindung auch so, dass ich nicht gleich bei +5 Min. zu spät komme. ;) /je
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">
+                  Channel
+                </div>
+                <div class="article-meta-value">
+                  <%- @Icon('twitter', 'article-meta-icon') %>Twitter Mention
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="js-article-actions">
+          <div class="article-content article-actions horizontal stretch">
+            <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/3"><%- @Icon('split', 'article-action-icon') %>split</a>
+          </div>
+        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+      </div>
+      <div class="ticket-article-item customer" data-id="4" id="article-4">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key u-textTruncate">
+                  From
+                </div>
+                <div class="article-meta-value flex contain-text">
+                  Test Master Agent
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1">
+          <div class="js-avatar">
+            <span class="avatar size-40 user-popover user-popover" data-id="2" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/550102263013056512/tq9PC8NT.jpeg)" title=""></span>
+          </div>
+          <div class="bubble-gap">
+            <div class="internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content" data-id="4" id="article-content-4">
+                  <a href="#">@DB_Bahn</a> ich rede von 20min + und Zugausfällen. 5-10 Minuten plant man ja grundsätzlich ein
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">
+                  Channel
+                </div>
+                <div class="article-meta-value">
+                  <%- @Icon('note', 'article-meta-icon') %>note
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="js-article-actions">
+          <div class="article-content article-actions horizontal stretch">
+            <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/4"><%- @Icon('split', 'article-action-icon') %>split</a>
+          </div>
+        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:27.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+      </div>
+      <div class="ticket-article-item agent" data-id="3" id="article-3">
+        <div class="article-meta-clip top">
+          <div class="article-content-meta top hide">
+            <div class="article-meta top">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key u-textTruncate">
+                  From
+                </div>
+                <div class="article-meta-value flex contain-text">
+                  Test Master Agent
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-1">
+          <div class="js-avatar">
+            <span class="avatar size-40 user-popover user-popover" data-id="3" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/473728709908647936/gc_1Mzqc.jpeg)" title=""></span>
+          </div>
+          <div class="bubble-gap">
+            <div class="internal-border">
+              <div class="textBubble">
+                <div class="bubble-arrow"></div>
+                <div class="textBubble-content" data-id="3" id="article-content-3">
+                  <a href="#">@sksk805</a> Ist bei mir echt selten der Fall & bisher auch meist nur bei der Heimreise. Ich kann Ihren Ärger aber trotzdem gut verstehen. /je
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-meta-clip bottom">
+          <div class="article-content-meta bottom hide">
+            <div class="article-meta bottom">
+              <div class="horizontal article-meta-row">
+                <div class="article-meta-key">
+                  Channel
+                </div>
+                <div class="article-meta-value">
+                  <%- @Icon('twitter', 'article-meta-icon') %>Twitter Mention
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="js-article-actions">
+          <div class="article-content article-actions horizontal stretch">
+            <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/3"><%- @Icon('split', 'article-action-icon') %>split</a>
+          </div>
+        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+      </div>
+    </div>
+
+
+    <div class="article-new">
+      <form class="article-add is-public" data-type="twitter status">
+        <input name="type" type="hidden" value="twitter status"> <input name="internal" type="hidden" value=""> <input name="form_id" type="hidden" value=""> <input name="in_reply_to" type="hidden" value="">
+        <div class="editControls">
+          <div class="js-avatar">
+            <span class="avatar size-40 user-popover user-popover" data-id="3" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/473728709908647936/gc_1Mzqc.jpeg)" title=""></span>
+          </div>
+          <div class="editControls-item is-hidden pop-select">
+            <div class="editControls-iconHolder centered js-selectedArticleType">
+              <div class="editControls-icon js-selectableTypes hide" data-type="note">
+                <%- @Icon('note', '') %>
+              </div>
+              <div class="editControls-icon js-selectableTypes hide" data-type="email">
+                <%- @Icon('email', '') %>
+              </div>
+              <div class="editControls-icon js-selectableTypes hide" data-type="facebook">
+                <%- @Icon('facebook', '') %>
+              </div>
+              <div class="editControls-icon js-selectableTypes" data-type="twitter status">
+                <%- @Icon('twitter', '') %>
+              </div>
+              <div class="editControls-icon js-selectableTypes hide" data-type="twitter direct-message">
+                <%- @Icon('twitter', '') %>
+              </div>
+              <div class="editControls-icon js-selectableTypes hide" data-type="phone">
+                <%- @Icon('phone', '') %>
+              </div>
+            </div>
+            <div class="pop-selector is-hidden js-articleTypes">
+              <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="note">
+                <%- @Icon('note', 'pop-selectable-icon') %>
+              </div>
+              <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="email">
+                <%- @Icon('email', 'pop-selectable-icon') %>
+              </div>
+              <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="facebook">
+                <%- @Icon('facebook', 'pop-selectable-icon') %>
+              </div>
+              <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="twitter status">
+                <%- @Icon('twitter', 'pop-selectable-icon') %>
+              </div>
+              <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="twitter direct-message">
+                <%- @Icon('twitter', 'pop-selectable-icon') %>
+              </div>
+              <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="phone">
+                <%- @Icon('phone', 'pop-selectable-icon') %>
+              </div>
+            </div>
+          </div>
+          <div class="editControls-item is-hidden js-toggleVisibility">
+            <div class="editControls-iconHolder">
+              <div class="editControls-icon icon-internal" title="set to public">
+                <%- @Icon('lock', '') %>
+              </div>
+              <div class="editControls-icon icon-public" title="set to internal">
+                <%- @Icon('lock-open', '') %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="article-content zIndex-5 bubble-gap">
+          <div class="internal-border">
+            <div class="input form-group hide">
+              <div class="formGroup-label">
+                <label for="">To</label>
+              </div>
+              <div class="controls">
+                <input class="form-control" id="" name="to" required="required" type="text" value="">
+              </div>
+            </div>
+            <div class="input form-group hide">
+              <div class="formGroup-label">
+                <label for="">Cc</label>
+              </div>
+              <div class="controls">
+                <input class="form-control" id="" name="cc" type="text" value="">
+              </div>
+            </div>
+            <div class="textBubble">
+              <div class="bubble-arrow"></div>
+              <div class="js-textarea articleNewEdit-body" contenteditable="true" data-name="body"></div>
+              <div class="shortcut dropdown">
+                <ul class="dropdown-menu" style="width: 360px; max-height: 200px;">
+                  <li>
+                    <a>-</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="textBubble-footer">
+                <div class="textBubble-signatur"><span class="js-signature">/je</span></div>
+                <div class="textBubble-letterCount js-letterCount">140</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

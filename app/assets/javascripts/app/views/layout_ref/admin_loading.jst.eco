@@ -1,0 +1,93 @@
+<div class="sidebar NavBarAdmin">
+  <h2>Manage</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li class="">
+      <a href="#manage/users">Users</a>
+    <li>
+      <a href="#manage/groups">Groups</a>
+    <li>
+      <a href="#manage/organizations">Organizations</a>
+    <li>
+      <a href="#manage/overviews">Overviews</a>
+    <li>
+      <a href="#manage/text_modules">TextModules</a>
+
+    <li>
+      <a href="#manage/slas">SLAs</a>
+    <li>
+      <a href="#manage/schedulers">Schedulers</a>
+    <li>
+      <a href="#manage/triggers">Triggers</a>
+  </ul>
+
+  <h2>Channels</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#channels/web">Web</a>
+    <li class="active">
+      <a href="#channels/email">Email</a>
+    <li>
+      <a href="#channels/chat">Chat</a>
+    <li>
+      <a href="#channels/twitter">Twitter</a>
+    <li>
+      <a href="#channels/facebook">Facebook</a>
+  </ul>
+
+  <h2>Settings</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#settings/system">System</a>
+    <li>
+      <a href="#settings/security">Security</a>
+    <li>
+      <a href="#settings/import">Import</a>
+    <li>
+      <a href="#settings/ticket">Ticket</a>
+  </ul>
+
+  <h2>System</h2>
+
+  <ul class="nav nav-pills nav-stacked">
+    <li>
+      <a href="#system/package">Packages</a>
+    <li>
+      <a href="#system/object_manager">Objects</a>
+    <li>
+      <a href="#system/translation">Translations</a>
+    <li>
+      <a href="#system/maintenance">Maintenance</a>
+    <li>
+      <a href="#system/sessions">Sessions</a>
+  </ul>
+</div>
+
+<div class="main flex">
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1>Email <small></small></h1>
+    </div>
+  </div>
+  <ul class="nav nav-tabs" role="tablist">
+    
+      <li class="active"><a href="#c-account" role="tab" data-toggle="tab" aria-expanded="true">Accounts</a></li>
+    
+      <li><a href="#c-filter" role="tab" data-toggle="tab">Filter</a></li>
+    
+      <li><a href="#c-signature" role="tab" data-toggle="tab">Signatures</a></li>
+    
+      <li><a href="#c-setting" role="tab" data-toggle="tab">Settings</a></li>
+    
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="c-account"></div>
+  </div>
+
+  <div class="page-loading">
+    <div class="small loading icon"></div>
+    <div class="page-loading-label">Loading Email Settings</div>
+  </div>
+</div>

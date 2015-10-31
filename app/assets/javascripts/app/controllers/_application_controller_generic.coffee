@@ -419,8 +419,14 @@ class App.ControllerNavSidbar extends App.ControllerContent
 
       group.items = _.sortBy( itemsUnsorted, (item) -> return item.prio )
 
-    # set active item
+    # check last selected item
     selectedItem = undefined
+    selectedItemMeta = App.Config.get("Runtime::#{@configKey}")
+    keepLastMenuFor = 1000 * 60 * 10
+    if selectedItemMeta && selectedItemMeta.date && new Date < new Date( selectedItemMeta.date.getTime() + keepLastMenuFor )
+      selectedItem = selectedItemMeta.selectedItem
+
+    # set active item
     for group in @groupsSorted
       if group.items
         for item in group.items
@@ -441,15 +447,22 @@ class App.ControllerNavSidbar extends App.ControllerContent
         @render(selectedItem, true)
     )
 
-  render: (selectedItem, force) ->
-    if !$( '.' + @configKey )[0] || force
+  render: (selectedItem, force) =>
+
+    # remember latest selected item
+    selectedItemMeta =
+      selectedItem: selectedItem
+      date: new Date
+    App.Config.set("Runtime::#{@configKey}", selectedItemMeta)
+
+    if !$( ".#{@configKey}" )[0] || force
       @html App.view('generic/navbar_l2')(
         groups:     @groupsSorted
         className:  @configKey
       )
     if selectedItem
       @el.find('li').removeClass('active')
-      @el.find('a[href="' + selectedItem.target + '"]').parent().addClass('active')
+      @el.find("a[href=\"#{selectedItem.target}\"]").parent().addClass('active')
 
       new selectedItem.controller(
         el: @el.find('.main')
@@ -606,7 +619,7 @@ class App.Sidebar extends App.Controller
   render: =>
     @html App.view('generic/sidebar_tabs')
       items: @items
-      scrollbarWidth: @getScrollBarWidth()
+      scrollbarWidth: App.Utils.getScrollBarWidth()
 
     # init content callback
     for item in @items
@@ -621,21 +634,6 @@ class App.Sidebar extends App.Controller
           items: item.actions
           type:  'small'
         )
-
-  getScrollBarWidth: ->
-    $outer = $('<div>').css(
-      visibility: 'hidden'
-      width: 100
-      overflow: 'scroll'
-    ).appendTo('body')
-
-    widthWithScroll = $('<div>').css(
-      width: '100%'
-    ).appendTo($outer).outerWidth()
-
-    $outer.remove()
-
-    return 100 - widthWithScroll
 
   toggleDropdown: (e) ->
     e.stopPropagation()

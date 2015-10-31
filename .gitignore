@@ -15,6 +15,7 @@
 /tmp/websocket/*
 /tmp/cache*
 /tmp/pids/*
+/tmp/*.png
 /public/assets/*.*
 /public/assets/app/*
 /public/assets/custom/*

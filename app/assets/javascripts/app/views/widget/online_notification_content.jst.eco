@@ -1,21 +1,26 @@
 <% if @items.length: %>
   <% for item in @items: %>
-  <div class="activity-entry<% if item.seen: %> is-inactive<% end %>">
-    <a class="activity-avatar user-popover" data-id="<%= item.created_by_id %>" href="<%- item.created_by.uiUrl() %>">
+  <div class="activity-entry activity-entry--removeable<% if item.seen: %> is-inactive<% end %>" data-id="<%- item.id %>">
+    <a class="activity-avatar user-popover" data-id="<%= item.created_by_id %>" <% if item.created_by_id isnt 1: %>href="<%- item.created_by.uiUrl() %>"<% end %>>
       <%- item.created_by.avatar() %>
     </a>
-    <a href="<%- item.link %>" class="activity-body js-locationVerify">
-      <span class="activity-message">
+    <div class="activity-body">
+      <a class="activity-message js-locationVerify" href="<%- item.link %>">
         <span class="activity-text">
-          <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> (<%= item.title %>)<% end %>
+          <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> <strong><%= item.title %></strong><% end %>
         </span>
         <%- @humanTime(item.created_at, false, 'activity-time') %>
-      </span>
-    </a>
+      </a>
+      <div class="activity-remove js-remove">
+        <div class="activity-remove-icon-holder">
+          <%- @Icon('diagonal-cross') %>
+        </div>
+      </div>
+    </div>
   </div>
   <% end %>
 <% else: %>
-  <div class="u-textTruncate">
+  <div class="activity-placeholder">
     <%- @T("No unread Notifications for you. :) ") %>
   </div>
 <% end %>

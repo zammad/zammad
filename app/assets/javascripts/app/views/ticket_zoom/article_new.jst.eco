@@ -2,28 +2,33 @@
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @article.form_id %>">
+  <input type="hidden" name="in_reply_to" value="<%= @article.in_reply_to %>">
   <div class="editControls">
     <div class="js-avatar"></div>
     <div class="editControls-item is-hidden pop-select">
       <div class="editControls-iconHolder centered js-selectedArticleType">
-        <svg class="editControls-icon js-selectedType"><use xlink:href="#icon-<%= @article.type %>" /></svg>
+        <% for articleType in @articleTypes: %>
+        <div class="editControls-icon js-selectableTypes<%- ' hide' if articleType.icon != @article.icon %>" data-type="<%- articleType.name %>">
+        <%- @Icon(articleType.icon) %>
+        </div>
+        <% end %>
       </div>
       <div class="pop-selector is-hidden js-articleTypes">
         <% for articleType in @articleTypes: %>
         <div class="editControls-icon pop-selectable js-articleTypeItem" data-value="<%= articleType.name %>">
-          <svg class="pop-selectable-icon icon-<%= articleType.icon %>"><use xlink:href="#icon-<%= articleType.icon %>" /></svg>
+          <%- @Icon(articleType.icon, 'pop-selectable-icon') %>
         </div>
         <% end %>
       </div>
     </div>
     <div class="editControls-item is-hidden js-toggleVisibility">
       <div class="editControls-iconHolder">
-        <svg class="editControls-icon icon-internal" title="<%- @Ti("set to public") %>">
-          <use xlink:href="#icon-lock" />
-        </svg>
-        <svg class="editControls-icon icon-public" title="<%- @Ti("set to internal") %>">
-          <use xlink:href="#icon-lock-open" />
-        </svg>
+        <div class="editControls-icon icon-internal" title="<%- @Ti("set to public") %>">
+          <%- @Icon('lock') %>
+        </div>
+        <div class="editControls-icon icon-public" title="<%- @Ti("set to internal") %>">
+          <%- @Icon('lock-open') %>
+        </div>
       </div>
     </div>
   </div>
@@ -68,7 +73,7 @@
                 <%- @T('Uploading') %> (<span class="js-percentage">0</span>%) ...
               </div>
               <div class="attachmentUpload-cancel js-cancel">
-                <svg class="icon icon-diagonal-cross"><use xlink:href="#icon-diagonal-cross" /></svg><%- @T('Cancel Upload') %>
+                <%- @Icon('diagonal-cross') %><%- @T('Cancel Upload') %>
               </div>
             </div>
             <div class="attachmentUpload-progressBar" style="width: 0%"></div>

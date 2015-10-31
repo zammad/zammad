@@ -20,7 +20,7 @@ class App.TicketZoomArticleView extends App.Controller
     @el.append( all )
 
 class ArticleViewItem extends App.Controller
-  hasChangedAttributes: ['from', 'to', 'cc', 'subject', 'body', 'internal', 'preferences']
+  hasChangedAttributes: ['from', 'to', 'cc', 'subject', 'body', 'preferences']
 
   elements:
     '.textBubble-content':           'textBubbleContent'
@@ -59,29 +59,29 @@ class ArticleViewItem extends App.Controller
     App.TicketArticle.unsubscribe(@subscribeId)
 
   setHighlighter: =>
-    return if !@el.is(':visible')
+    return if @el.is(':hidden')
     # use delay do no ui blocking
     #@highligher.loadHighlights(@ticket_article_id)
     d = =>
       @highligher.loadHighlights(@ticket_article_id)
-    @delay(d, 800)
+    @delay(d, 200)
 
   hasChanged: (article) =>
 
     # if no last article exists, remember it and return true
-    if !@article_last_updated
-      @article_last_updated = {}
+    if !@articleAttributesLastUpdate
+      @articleAttributesLastUpdate = {}
       for item in @hasChangedAttributes
-        @article_last_updated[item] = article[item]
+        @articleAttributesLastUpdate[item] = article[item]
       return true
 
     # compare last and current article attributes
-    article_last_updated_check = {}
+    articleAttributesLastUpdateCheck = {}
     for item in @hasChangedAttributes
-      article_last_updated_check[item] = article[item]
-    diff = difference(@article_last_updated, article_last_updated_check)
+      articleAttributesLastUpdateCheck[item] = article[item]
+    diff = difference(@articleAttributesLastUpdate, articleAttributesLastUpdateCheck)
     return false if !diff || _.isEmpty( diff )
-    @article_last_updated = article_last_updated_check
+    @articleAttributesLastUpdate = articleAttributesLastUpdateCheck
     true
 
   render: (article) =>
@@ -90,23 +90,46 @@ class ArticleViewItem extends App.Controller
     @article = App.TicketArticle.fullLocal( @ticket_article_id )
 
     # set @el attributes
-    @el.addClass("ticket-article-item #{@article.sender.name.toLowerCase()}")
-    if @article.internal is true
-      @el.addClass('is-internal')
-    else
-      @el.removeClass('is-internal')
-    @el.attr('data-id',  @article.id)
-    @el.attr('id', "article-#{@article.id}")
+    if !article
+      @el.addClass("ticket-article-item #{@article.sender.name.toLowerCase()}")
+      @el.attr('data-id',  @article.id)
+      @el.attr('id', "article-#{@article.id}")
+
+    # set internal change directly in dom, without rerender while article
+    if !article || ( @lastArticle && @lastArticle.internal isnt @article.internal )
+      if @article.internal is true
+        @el.addClass('is-internal')
+      else
+        @el.removeClass('is-internal')
 
     # check if rerender is needed
-    return if !@hasChanged(@article)
+    if !@hasChanged(@article)
+      @lastArticle = @article.attributes()
+      return
 
     # prepare html body
     if @article.content_type is 'text/html'
       @article['html'] = @article.body
+      @article['html'] = App.Utils.signatureIdentify( @article['html'] )
     else
-      @article['html'] = App.Utils.textCleanup( @article.body )
-      @article['html'] = App.Utils.text2html( @article.body )
+
+      # client signature detection
+      bodyHtml = App.Utils.text2html(@article.body)
+      @article['html'] = App.Utils.signatureIdentify(bodyHtml)
+
+      # if no signature detected or within frist 25 lines, check if signature got detected in backend
+      if @article['html'] is bodyHtml || (@article.preferences && @article.preferences.signature_detection < 25)
+        signatureDetected = false
+        body = @article.body
+        if @article.preferences && @article.preferences.signature_detection
+          signatureDetected = '########SIGNATURE########'
+          body = body.split("\n")
+          body.splice(@article.preferences.signature_detection, 0, signatureDetected)
+          body = body.join("\n")
+        if signatureDetected
+          body = App.Utils.textCleanup(body)
+          @article['html'] = App.Utils.text2html(body)
+          @article['html']  = @article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
 
     @html App.view('ticket_zoom/article_view')(
       ticket:     @ticket
@@ -128,14 +151,16 @@ class ArticleViewItem extends App.Controller
 
     # set see more
     @shown = false
-    @setSeeMore()
+    a = =>
+      @setSeeMore()
+    @delay( a, 50 )
 
     # set highlighter
     @setHighlighter()
 
   # set see more options
   setSeeMore: =>
-    return if !@el.is(':visible')
+    return if @el.is(':hidden')
     return if @shown
     @shown = true
 

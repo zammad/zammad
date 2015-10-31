@@ -1,0 +1,1 @@
+<div class="zammad-chat-status"><strong><%= @label %></strong><%= @time %></div>

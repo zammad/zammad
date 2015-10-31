@@ -64,7 +64,7 @@ class AgentTicketActionsLevel3Test < TestCase
 
     click(
       browser: browser2,
-      css: '.active button.js-submit',
+      css: '.active .js-submit',
     )
 
     # discard changes should gone away
@@ -98,7 +98,7 @@ class AgentTicketActionsLevel3Test < TestCase
     # update ticket in instance 1
     click(
       browser: browser1,
-      css: '.active button.js-submit',
+      css: '.active .js-submit',
     )
 
     watch_for(
@@ -250,7 +250,7 @@ class AgentTicketActionsLevel3Test < TestCase
 
     click(
       browser: browser2,
-      css: '.active button.js-submit',
+      css: '.active .js-submit',
     )
 
     # discard changes should gone away

@@ -120,7 +120,7 @@
 
 
               </select>
-              <svg class="dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+              <%- @Icon('icon-arrow-down') %>
             </div>
               
               
@@ -212,7 +212,7 @@
                 
                 
                 <div class="help-message" title="Notes are visible to agents only, never to customers. ">
-                  <svg class="icon-help"><use xlink:href="#icon-help" /></svg>
+                  <%- @Icon('help') %>
                 </div>
                 
               </div>
@@ -279,7 +279,7 @@
 
 
               </select>
-              <svg class="dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+              <%- @Icon('icon-arrow-down') %>
             </div>
               
               
@@ -302,9 +302,9 @@
     <div class="profile-section vertical centered">
       <div class="align-right profile-action dropdown dropdown--actions">
         <div class="dropdown-toggle" id="profileAction" data-toggle="dropdown">
-          <svg class="dropdown-icon"><use xlink:href="#icon-cog" /></svg>
+          <%- @Icon('cog', 'dropdown-icon') %>
           <label>Aktion</label>
-          <svg class="icon-arrow-down"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down') %>
         </div>
         <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="profileAction">
           <li role="presentation"><a role="menuitem" tabindex="-1">Kontaktdaten bearbeiten</a>
@@ -355,7 +355,7 @@
     </div>
     <div class="profile-section">
       <!-- if user has organization -->
-      <div class="tabs wide-tabs horizontal">
+      <div class="tabs wide-tabs">
         <div class="tab js-userTickets active">Tickets von Doreen Kubiak</div>
         <div class="tab js-organizationTickets">Tickets von Steuerbüro C. Kaik</div>
       </div>

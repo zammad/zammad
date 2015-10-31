@@ -4,6 +4,10 @@ module ExtraCollection
   def session( collections, assets, user )
 
     # all ticket stuff
+    collections[ Macro.to_app_model ] = []
+    Macro.all.each {|item|
+      assets = item.assets(assets)
+    }
     collections[ Ticket::StateType.to_app_model ] = []
     Ticket::StateType.all.each {|item|
       assets = item.assets(assets)

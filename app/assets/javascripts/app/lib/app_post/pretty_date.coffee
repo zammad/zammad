@@ -26,6 +26,9 @@ class App.PrettyDate
       diff = diff.toString().replace('-', '')
       diff = parseFloat(diff)
 
+    if diff < 60
+      return App.i18n.translateInline('just now')
+
     if direction is 'past' && !escalation && diff > ( 60 * 60 * 24 * 14 )
       return App.i18n.translateDate(time)
 

@@ -258,23 +258,29 @@ class App.TicketZoom extends App.Controller
   positionPageHeaderStop: =>
     @main.unbind('scroll', @positionPageHeaderUpdate)
 
+  @scrollHeaderPos: undefined
+
   positionPageHeaderUpdate: =>
     headerHeight     = @scrollPageHeader.outerHeight()
     mainScrollHeigth = @main.prop('scrollHeight')
     mainHeigth       = @main.height()
 
-    # if page header is possible to use, show page header
-    top = 0
-    if mainScrollHeigth > mainHeigth + headerHeight
-      scroll = @main.scrollTop()
-      if scroll <= headerHeight
-        top = (scroll - headerHeight)
+    scroll = @main.scrollTop()
 
     # if page header is not possible to use - mainScrollHeigth to low - hide page header
-    else
-      top = -headerHeight
+    if not mainScrollHeigth > mainHeigth + headerHeight
+      @scrollPageHeader.css('transform', "translateY(#{-headerHeight}px)")
 
-    @scrollPageHeader.css('transform', "translateY(#{top}px)")
+    if scroll > headerHeight
+      scroll = headerHeight
+
+    if scroll is @scrollHeaderPos
+      return
+
+    # translateY: headerHeight .. 0
+    @scrollPageHeader.css('transform', "translateY(#{scroll - headerHeight}px)")
+
+    @scrollHeaderPos = scroll
 
   render: =>
 
@@ -284,11 +290,11 @@ class App.TicketZoom extends App.Controller
 
     if !@renderDone
       @renderDone = true
-      @html App.view('ticket_zoom')(
-        ticket:     @ticket
-        nav:        @nav
-        isCustomer: @isRole('Customer')
-      )
+      @html App.view('ticket_zoom')
+        ticket:         @ticket
+        nav:            @nav
+        isCustomer:     @isRole('Customer')
+        scrollbarWidth: App.Utils.getScrollBarWidth()
 
       new App.TicketZoomOverviewNavigator(
         el:          @$('.overview-navigator')
@@ -306,6 +312,12 @@ class App.TicketZoom extends App.Controller
       new App.TicketZoomMeta(
         ticket: @ticket
         el:     @el.find('.ticket-meta')
+      )
+
+      new App.TicketZoomAttributeBar(
+        ticket:   @ticket
+        el:       @el.find('.js-attributeBar')
+        callback: @submit
       )
 
       @form_id = App.ControllerForm.formId()
@@ -338,7 +350,7 @@ class App.TicketZoom extends App.Controller
         user_id: @ticket.customer_id
         size:    50
       )
-      new App.TicketZoomSidebar(
+      @sidebar = new App.TicketZoomSidebar(
         el:           @el.find('.tabsSidebar')
         sidebarState: @sidebarState
         ticket:       @ticket
@@ -394,11 +406,12 @@ class App.TicketZoom extends App.Controller
       currentStore  =
         ticket:  currentStoreTicket
         article:
-          to:       ''
-          cc:       ''
-          type:     'note'
-          body:     ''
-          internal: ''
+          to:          ''
+          cc:          ''
+          type:        'note'
+          body:        ''
+          internal:    ''
+          in_reply_to: ''
       currentParams =
         ticket:  @formParam( @el.find('.edit') )
         article: @formParam( @el.find('.article-add') )
@@ -461,7 +474,7 @@ class App.TicketZoom extends App.Controller
 
       resetButton.removeClass('hide')
 
-  submit: (e) =>
+  submit: (e, macro = {}) =>
     e.stopPropagation()
     e.preventDefault()
     ticketParams = @formParam( @$('.edit') )
@@ -475,6 +488,25 @@ class App.TicketZoom extends App.Controller
     # update ticket attributes
     for key, value of ticketParams
       ticket[key] = value
+
+    # apply macro
+    for key, content of macro
+      attributes = key.split('.')
+      if attributes[0] is 'ticket'
+
+        # apply tag changes
+        if attributes[1] is 'tags'
+          if @sidebar && @sidebar.tagWidget
+            tags = content.value.split(',')
+            for tag in tags
+              if content.operator is 'remove'
+                @sidebar.tagWidget.remove(tag)
+              else
+                @sidebar.tagWidget.add(tag)
+
+        # apply direct value changes
+        else
+          ticket[attributes[1]] = content.value
 
     # set defaults
     if !@isRole('Customer')
@@ -515,6 +547,15 @@ class App.TicketZoom extends App.Controller
     # validate article
     articleParams = @formParam( @$('.article-add') )
     console.log 'submit article', articleParams
+
+    # check if attachment exists but no body
+    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
+    if !articleParams['body'] && attachmentCount > 0
+      if !confirm( App.i18n.translateContent('Please fill also some text in!') )
+        @formEnable(e)
+        @autosaveStart()
+        return
+
     if articleParams['body']
       articleParams.from         = @Session.get().displayName()
       articleParams.ticket_id    = ticket.id
@@ -558,12 +599,11 @@ class App.TicketZoom extends App.Controller
 
       # check attachment
       if articleParams['body']
-        if App.Utils.checkAttachmentReference( articleParams['body'] )
-          if @$('.article-add .textBubble .attachments .attachment').length < 1
-            if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-              @formEnable(e)
-              @autosaveStart()
-              return
+        if App.Utils.checkAttachmentReference( articleParams['body'] ) && attachmentCount < 1
+          if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+            @formEnable(e)
+            @autosaveStart()
+            return
 
       article.load(articleParams)
       errors = article.validate()
@@ -584,18 +624,20 @@ class App.TicketZoom extends App.Controller
     ticket.save(
       done: (r) =>
 
-        # enable form
-        @formEnable(e)
-
         # reset article - should not be resubmited on next ticket update
         ticket.article = undefined
 
         # reset form after save
         @reset()
 
+        @autosaveStart()
+
         App.TaskManager.mute(@task_key)
 
         @fetch(ticket.id, true)
+
+        # enable form
+        @formEnable(e)
     )
 
   bookmark: (e) ->

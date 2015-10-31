@@ -29,7 +29,7 @@ BuildRoot:    %{_tmppath}/%{name}-%{version}-build
 <DESCRIPTION>
 
 %prep
-/usr/bin/getent passwd zammad || /usr/sbin/useradd -d /opt/zammad -s /bin/bash zammad  
+/usr/bin/getent passwd zammad || /usr/sbin/useradd -g zammad -d /opt/zammad -s /bin/bash zammad  
 #%setup
 
 %build
@@ -57,34 +57,24 @@ tar xfj ../../SOURCES/zammad-%{version}.tar.bz2 -C $DESTROOT
 # copy apache2-httpd.include.conf to /etc/httpd/conf.d/zzz_otrs.conf
 #install -m 644 scripts/apache2-httpd.include.conf $RPM_BUILD_ROOT/etc/httpd/conf.d/zzz_otrs.conf
 
-# set permission
-export OTRSUSER=otrs
-#useradd $OTRSUSER || :
-#useradd apache || :
-#groupadd apache || :
-#$RPM_BUILD_ROOT/opt/otrs/bin/otrs.SetPermissions.pl --web-group=apache
-
 %pre
 # remember about the installed version
 #if test -e /opt/otrs/RELEASE; then
 #    cat /opt/otrs/RELEASE|grep VERSION|sed 's/VERSION = //'|sed 's/ /-/g' > /tmp/otrs-old.tmp
 #fi
 # useradd
-export OTRSUSER=zammad
-echo -n "Check OTRS user ... "
-#if id $OTRSUSER >/dev/null 2>&1; then
-#    echo "$OTRSUSER exists."
-#    # update home dir
-#    usermod -d /opt/otrs $OTRSUSER
-#else
-#    useradd $OTRSUSER -d /opt/otrs/ -s /bin/bash -g zammad -c 'Zammad user' && echo "$OTRSUSER added."
-#fi
+export ZUSER=zammad
+echo -n "Check Zammad user ... "
+if id $ZUSER >/dev/null 2>&1; then
+    echo "$ZUSER exists."
+    # update home dir
+    usermod -d /opt/zammads $ZUSER
+else
+    useradd $ZUSER -U -d /opt/zammad -s /bin/bash -g zammad -c 'Zammad user' && echo "$ZUSER added."
+fi
 
 
 %post
-
-# run OTRS rebuild config, delete cache, if the system was already in use (i.e. upgrade).
-export OTRSUSER=zammad
 
 
 %clean

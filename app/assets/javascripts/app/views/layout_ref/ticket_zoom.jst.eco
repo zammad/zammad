@@ -18,8 +18,8 @@
                   <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
                 </span>
                 <%- @Ti(entry.name) %>
-                <span class="dropdown-activeSpacer visibility-change<%= ' is-active' if i is @activeColorIndex %>">
-                  <svg class="icon-checkmark" data-visible="active"><use xlink:href="#icon-checkmark" fill="white" /></svg>
+                <span class="dropdown-selectedSpacer<%= ' is-selected' if i is @activeColorIndex %>">
+                  <%- @Icon('checkmark') %>
                 </span>
               </a>
             <% end %>
@@ -57,7 +57,7 @@
             <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
           </div>
           <div class="ticket-meta">
-            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="11.07.2014 12:10">11.07.2014</span> 
+            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="11.07.2014 12:10">11.07.2014</span> 
             </small>
           </div>
         </div>
@@ -106,7 +106,7 @@
                 <div class="horizontal article-meta-row">
                   <div class="article-meta-key">Kanal</div>
                   <div class="article-meta-value">
-                    <svg class="article-meta-icon"><use xlink:href="#icon-phone" /></svg>
+                    <%- @Icon('phone', 'article-meta-icon') %>
                     phone
                   </div>
                 </div>
@@ -117,17 +117,17 @@
                   set to internal
                 </a>
                 <a href="#" data-type="reply" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                  <%- @Icon('reply', 'article-meta-icon') %>
                   reply
                 </a>
                 <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                  <%- @Icon('split', 'article-meta-icon') %>
                   split
                 </a>
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="2014-07-11 12:10">2014-07-11</time></small>
         </div>
 
         <div class="ticket-article-item agent note" data-id="23" id="article-23">      
@@ -154,7 +154,7 @@
                 <div class="horizontal article-meta-row">
                   <div class="article-meta-key">Kanal</div>
                   <div class="article-meta-value">
-                    <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
+                    <%- @Icon('note', 'article-meta-icon') %>
                     note
                   </div>
                 </div>
@@ -167,7 +167,7 @@
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" title="2014-08-05 15:34">2014-08-05</time></small>
         </div>
 
         <div class="ticket-article-item customer phone" data-id="1" id="article-1">
@@ -206,17 +206,17 @@
                   set to internal
                 </a>
                 <a href="#" data-type="reply" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-reply" /></svg>
+                  <%- @Icon('reply', 'article-meta-icon') %>
                   reply
                 </a>
                 <a href="#ticket/create/1/1" data-type="split" class="article-action u-clickable">
-                  <svg class="article-meta-icon"><use xlink:href="#icon-split" /></svg>
+                  <%- @Icon('split', 'article-meta-icon') %>
                   split
                 </a>
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" data-tooltip="2014-07-11 12:10">2014-07-11</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="2014-07-11 12:10">2014-07-11</time></small>
         </div>
 
         <div class="ticket-article-item agent note" data-id="23" id="article-23">      
@@ -283,7 +283,7 @@
                 <div class="horizontal article-meta-row">
                   <div class="article-meta-key">Kanal</div>
                   <div class="article-meta-value">
-                    <svg class="article-meta-icon"><use xlink:href="#icon-note" /></svg>
+                    <%- @Icon('note', 'article-meta-icon') %>
                     note
                   </div>
                 </div>
@@ -296,7 +296,7 @@
               </div>
             </div>
           </div>
-          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" data-tooltip="2014-08-05 15:34">2014-08-05</time></small>
+          <small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2014-08-05T13:34:01.000Z" title="2014-08-05 15:34">2014-08-05</time></small>
         </div>
       </div>
     </div>
@@ -452,20 +452,14 @@
                 </div><span class="help-inline"></span> <span class="help-block"></span>
               </div>
             </div>
-            <div class="formGroup-bundle">
-              <div class="date form-group flex">
-                <div class="formGroup-label">
-                  <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
-                </div>
-                <div class="controls">
-                  <input type="text" value="10/28/2015" class="form-control js-datepicker">
-                </div>
+            <div class="date form-group formGroup--bundle">
+              <div class="formGroup-label">
+                <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
               </div>
-              <div class="formGroup-bundle-label">at</div>
-              <div class="datetime form-group">
-                <div class="controls">
-                  <input type="text" value="08:00" class="form-control time js-timepicker">
-                </div>
+              <div class="controls">
+                <input type="text" value="10/28/2015" class="form-control js-datepicker">
+                <div class="controls-label">at</div>
+                <input type="text" value="08:00" class="form-control time js-timepicker">
               </div>
             </div>
             <div class="select form-group">
@@ -530,7 +524,7 @@
               <li class="task">
                 <div class="icon-holder"></div>
                 <div class="task-text">
-                  <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a> <time class="humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">01/20/2015</time>
+                  <a class="name ticket-popover" data-id="3" href="#ticket/zoom/3">Noch mehr Tickets bitte</a> <time class="humanTimeFromNow" data-time="2015-01-20T11:47:43.000Z" title="01/20/2015 12:47">01/20/2015</time>
                 </div>
                 <div class="list-item-delete js-delete" data-link-type="child" data-object="Ticket" data-object-id="3" data-type="remove"></div>
               </li>
@@ -640,50 +634,37 @@
     </div>
   </div>
   <div class="attributeBar">
-    <form class="form-inline is-closed hide" role="form">
-      <div class="form-group">
-        <label for="update_ticket_1_state_id123" class="input-group-addon u-clickable">State</label>
-        <select id="update_ticket_1_state_id123" class="form-control level-1" name="state_id">
-          <option value="4">closed</option>
-          <option value="1" selected="">new</option>
-          <option value="2">open</option>
-          <option value="3">pending</option>
-        </select>
-        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+    <div class="btn js-reset hide">Discard your unsaved changes.</div>
+    <div class="buttonDropdown dropdown dropdown--actions dropup">
+      <div class="btn btn--text btn--icon--last" data-toggle="dropdown">
+        <span class="js-secondaryActionButtonLabel">Stay on Ticket</span> <%- @Icon('arrow-up') %>
       </div>
-      <div class="form-group is-changed">
-        <label for="update_ticket_1_priority_id123" class="input-group-addon u-clickable">Priority</label>
-        <select id="update_ticket_1_priority_id123" class="form-control" name="priority_id">
-          <option value="1">1 low</option>
-          <option value="2" selected="">2 normal</option>
-          <option value="3">3 high</option>
-        </select>
-        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
-      </div>
-      <div class="form-group">
-        <label for="update_ticket_1_group_id123" class="input-group-addon u-clickable">Group</label>
-        <select id="update_ticket_1_group_id123" class="form-control" name="group_id">
-          <option value="4">FillGroup::450863</option>
-          <option value="3">FillGroup::918672</option>
-          <option value="2">Twitter</option>
-          <option value="1" selected="">Users</option>
-        </select>
-        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
-      </div>
-      <div class="form-group">
-        <label for="update_ticket_1_owner_id123" class="input-group-addon u-clickable">Owner</label>
-        <select id="update_ticket_1_owner_id123" class="form-control" name="owner_id">
-          <option value="">-</option>
-          <option value="3">Felix Niklas</option>
-        </select>
-        <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-arrow-down"></use></svg>
-      </div>
-    </form>
-    <form class="form-inline">
-    <div class="form-group">
-      <button type="submit" class="btn btn--primary js-submit pull-right">Update</button>
-      <button type="submit" class="btn js-reset pull-right hide">Discard your unsaved changes.</button>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="secondaryAction">
+        <li class="js-secondaryAction" role="menuitem">
+          <span class="js-secondaryActionLabel">Close tab</span>
+          <span class="dropdown-selectedSpacer js-selectedIcon is-selected">
+            <%- @Icon('checkmark') %>
+          </span>
+        <li class="js-secondaryAction" role="menuitem">
+          <span class="js-secondaryActionLabel">Next ticket in view</span>
+          <span class="dropdown-selectedSpacer js-selectedIcon">
+            <%- @Icon('checkmark') %>
+          </span>
+        <li class="js-secondaryAction" role="menuitem">
+          <span class="js-secondaryActionLabel">Stay on ticket</span>
+          <span class="dropdown-selectedSpacer js-selectedIcon">
+            <%- @Icon('checkmark') %>
+          </span>
+      </ul>
     </div>
-    </form>
+
+    <div class="buttonDropdown dropdown dropup js-submitDropdown">
+      <div class="btn btn--primary btn--split--first js-submit">Update</div>
+      <div class="btn btn--primary btn--slim btn--split--last js-openDropdown"><%- @Icon('arrow-up') %></div>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
+        <li class="js-dropdownAction" role="menuitem">Update &amp; Close
+        <li class="js-dropdownAction" role="menuitem">Remind me in 2 weeks
+      </ul>
+    </div>
   </div>
 </div>

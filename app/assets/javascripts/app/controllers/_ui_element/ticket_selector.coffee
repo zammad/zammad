@@ -15,8 +15,8 @@ class App.UiElement.ticket_selector
         model: 'Organization'
 
     operators_type =
-      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)']
-      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)']
+      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
+      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
       'boolean$': ['is', 'is not']
       '^input$': ['contains', 'contains not']
       '^textarea$': ['contains', 'contains not']
@@ -84,16 +84,7 @@ class App.UiElement.ticket_selector
       @buildValue(item, elementRow, groupAndAttribute, elements, undefined, undefined, attribute)
     )
 
-    # change operator
-    item.find('.js-operator select').bind('change', (e) =>
-      groupAndAttribute = $(e.target).find('.js-attributeSelector option:selected').attr('value')
-      operator = $(e.target).find('option:selected').attr('value')
-      elementRow = $(e.target).closest('.js-filterElement')
-      @buildValue(item, elementRow, groupAndAttribute, elements, undefined, operator, attribute)
-    )
-
     # build inital params
-    console.log('initial', params[attribute.name])
     if !_.isEmpty(params[attribute.name])
 
       selectorExists = false
@@ -176,23 +167,30 @@ class App.UiElement.ticket_selector
   @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, operator, attribute) ->
 
     # do nothing if item already exists
+    operator = elementRow.find('.js-operator option:selected').attr('value')
     name = "#{attribute.name}::#{groupAndAttribute}::value"
-    return if elementRow.find("[name=\"#{name}\"]").get(0)
-    return if elementRow.find("[data-name=\"#{name}\"]").get(0)
 
     # build new item
     attributeConfig = elements[groupAndAttribute]
     config = _.clone(attributeConfig)
 
-    # force to use auto compition on user lookup
+    # force to use auto complition on user lookup
+    config.preCondition = false
     if config.relation is 'User'
+      config.preCondition = 'user'
       config.tag = 'user_autocompletion'
+    if config.relation is 'Organization'
+      config.tag = 'autocompletion_ajax'
+      config.preCondition = 'org'
+
+    @buildPreCondition(config, elementFull, elementRow, groupAndAttribute, attribute)
 
     # render ui element
     item = ''
     if config && App.UiElement[config.tag]
       config['name'] = name
-      config['value'] = value
+      if attribute.value && attribute.value[groupAndAttribute]
+        config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
       if 'multiple' of config
         config.multiple = true
         config.nulloption = false
@@ -203,7 +201,54 @@ class App.UiElement.ticket_selector
         item = App.UiElement[tagSearch].render(config, {})
       else
         item = App.UiElement[config.tag].render(config, {})
+
+    if operator is 'before (relative)' || operator is 'within next (relative)' || operator is 'within last (relative)' || operator is 'after (relative)'
+      config['name'] = "#{attribute.name}::#{groupAndAttribute}"
+      config['value'] = _.clone(attribute.value[groupAndAttribute])
+      item = App.UiElement['time_range'].render(config, {})
+
     elementRow.find('.js-value').html(item)
+
+  @buildPreCondition: (config, elementFull, elementRow, groupAndAttribute, attribute) ->
+    if !config.preCondition
+      elementRow.find('.js-preCondition').addClass('hide')
+      return
+
+    name = "#{attribute.name}::#{groupAndAttribute}::pre_condition"
+    preConditionCurrent = elementRow.find('.js-preCondition option:selected').attr('value')
+    if !preCondition && attribute.value && attribute.value[groupAndAttribute]
+      preCondition = attribute.value[groupAndAttribute].pre_condition
+    selection = $("<select class=\"form-control\" name=\"#{name}\" ></select>")
+    options = {}
+    if config.preCondition is 'user'
+      options =
+        'set': App.i18n.translateInline('set')
+        'current_user.id': App.i18n.translateInline('current user')
+        'specific': App.i18n.translateInline('specific user')
+    else if config.preCondition is 'org'
+      options =
+        'set': App.i18n.translateInline('set')
+        'current_user.organization_id': App.i18n.translateInline('current user organization')
+        'specific': App.i18n.translateInline('specific organization')
+    for key, value of options
+      selected = preConditionCurrent
+      if key is preCondition
+        selected = 'selected="selected"'
+      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
+    elementRow.find('.js-preCondition').removeClass('hide')
+    elementRow.find('.js-preCondition select').replaceWith(selection)
+
+    toggle = ->
+      preCondition = elementRow.find('.js-preCondition option:selected').attr('value')
+      if preCondition is 'specific'
+        elementRow.find('.js-value').removeClass('hide')
+      else
+        elementRow.find('.js-value').addClass('hide')
+    toggle()
+
+    elementRow.find('.js-preCondition select').bind('change', (e) =>
+      toggle()
+    )
 
   @buildAttributeSelector: (groups, elements) ->
     selection = $('<select class="form-control"></select>')
@@ -264,6 +309,13 @@ class App.UiElement.ticket_selector
     # render new operator
     operator = @buildOperator(elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute)
     elementRow.find('.js-operator select').replaceWith(operator)
+
+    # render not value option
+    elementRow.find('.js-operator select').bind('change', (e) =>
+      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
+      operator = elementRow.find('.js-operator option:selected').attr('value')
+      @buildValue(elementFull, elementRow, groupAndAttribute, elements, undefined, operator, attribute)
+    )
 
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')

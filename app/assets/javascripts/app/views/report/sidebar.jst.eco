@@ -1,0 +1,41 @@
+<div class="panel-group" id="accordion">
+  <% for key, metric of @metrics: %>
+    <div class="panel panel-default" data-metric="<%= metric.name %>">
+      <a class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapse-<%= metric.name %>">
+        <span class="panel-title">
+          <%- @T(metric.display) %>
+        </span>
+      </a>
+      <div id="collapse-<%= metric.name %>" class="panel-collapse collapse <% if metric.name is @params.metric: %>in<% end %>">
+        <div class="panel-body">
+          <ul class="type area_select">
+            <% for backend in metric.backend: %>
+              <li>
+                <label class="inline-label checkbox-replacement">
+                  <input class="js-backendSelector" type="checkbox" value="<%= backend.name %>"<%- ' checked' if @params.backendSelected[backend.name] %>>
+                  <%- @Icon('checkbox', 'icon-unchecked') %>
+                  <%- @Icon('checkbox-checked', 'icon-checked') %>
+                  <span class="label-text"><%- @T(backend.display) %></span>
+                </label>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<h3><%- @T('Profiles') %></h3>
+<ul class="checkbox-list">
+  <% for profile in @profiles: %>
+    <li>
+      <label class="inline-label radio-replacement">
+        <input class="js-profileSelector" type="radio" name="profile_id" value="<%= profile.id %>"<%- ' checked' if @params.profileSelected[profile.id] %>>
+        <%- @Icon('radio', 'icon-unchecked') %>
+        <%- @Icon('radio-checked', 'icon-checked') %>
+        <span class="label-text"><%= profile.name %></span>
+      </label>
+    </li>
+  <% end %>
+</ul>

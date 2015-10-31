@@ -26,9 +26,9 @@ class App.UiElement.textarea
             request:
               endpoint: App.Config.get('api_path') + '/ticket_attachment_upload'
               params:
-                form_id: @form_id
+                form_id: item.closest('form').find('[name=form_id]').val()
             text:
-              uploadButton: '<svg class="icon icon-paperclip"><use xlink:href="#icon-paperclip"></use></svg>'
+              uploadButton: App.Utils.icon('paperclip')
             template: '<div class="qq-uploader">' +
                         '<pre class="btn qq-upload-icon qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
                         '<div class="btn btn-default qq-upload-icon2 qq-upload-button pull-right" style="">{uploadButtonText}</div>' +

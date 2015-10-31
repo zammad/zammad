@@ -1,4 +1,4 @@
-<li class="recipientList-entry recipientList--new js-user-new" data-user-id="new">
+<li class="recipientList-entry recipientList--new js-userNew" data-user-id="new">
   <div class="recipientList-iconSpacer">
     <%- @Icon('plus', 'recipientList-icon') %>
   </div>

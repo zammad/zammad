@@ -255,12 +255,14 @@ class TranslationList extends App.Controller
     )
 
   load: =>
+    @startLoading()
     @ajax(
       id:    'translations_admin'
       type:  'GET'
       url:   @apiPath + "/translations/admin/lang/#{@locale}"
       processData: true
       success: (data, status, xhr) =>
+        @stopLoading()
         @render(data)
     )
 

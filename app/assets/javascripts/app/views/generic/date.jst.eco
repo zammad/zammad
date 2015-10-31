@@ -1,15 +1,4 @@
-<div class="horizontal form-control" style="padding: 0 0 0 4px; line-height: 40px;" data-name="<%= @attribute.nameRaw %>">
-  <input type="hidden" name="<%= @attribute.name %>" value="<%= @attribute.value %>">
-  <input type="text" maxlength="2" data-item="day" value="<%= @day %>" placeholder="dd" style="width: 36px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
-  .
-  <input type="text" maxlength="2" data-item="month" value="<%= @month %>" placeholder="mm" style="width: 36px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
-  .
-  <input type="text" maxlength="4" data-item="year" value="<%= @year %>" placeholder="yyyy" style="width: 54px; padding: 6px 6px; border: 1px solid #ffffff; height: 39px;">
+<div class="u-positionOrigin" data-name="<%= @attribute.nameRaw %>">
+  <input type="hidden" value="<%= @attribute.value %>" name="<%= @attribute.name %>">
+  <input type="text" value="" class="form-control js-datepicker" data-item="date">
 </div>
-<% if !@attribute.disable_feature: %>
-  <small>
-    <a href="#" class="js-today"><%- @T('today') %></a> |
-    <a href="#" class="js-minus-day">-1</a> <a href="#" class="js-plus-day">+1</a> <%- @T('day') %> |
-    <a href="#" class="js-minus-week">-7</a> <a href="#" class="js-plus-week">+7</a> <%- @T('days') %>
-  </small>
-<% end %>

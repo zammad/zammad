@@ -1046,8 +1046,10 @@ module Import::OTRS
   end
 
   def self.get_roles_ids(user, groups, roles, _queues)
-    roles    = ['Agent']
-    role_ids = []
+    local_roles    = ['Agent']
+    local_role_ids = []
+
+    # apply group permissions
     user['GroupIDs'].each {|group_id, permissions|
       groups.each {|group_lookup|
 
@@ -1055,21 +1057,49 @@ module Import::OTRS
         next if !permissions
 
         if group_lookup['Name'] == 'admin' && permissions.include?('rw')
-          roles.push 'Admin'
+          local_roles.push 'Admin'
         end
 
         next if group_lookup['Name'] !~ /^(stats|report)/
         next if !( permissions.include?('ro') || permissions.include?('rw') )
 
-        roles.push 'Report'
+        local_roles.push 'Report'
       }
     }
-    roles.each {|role|
+
+    # apply role permissions
+    user['RoleIDs'].each {|role_id|
+
+      # get groups of role
+      roles.each {|role|
+        next if role['ID'] != role_id
+
+        # verify group names
+        role['GroupIDs'].each {|group_id, permissions|
+          groups.each {|group_lookup|
+
+            next if group_id != group_lookup['ID']
+            next if !permissions
+
+            if group_lookup['Name'] == 'admin' && permissions.include?('rw')
+              local_roles.push 'Admin'
+            end
+
+            next if group_lookup['Name'] !~ /^(stats|report)/
+            next if !( permissions.include?('ro') || permissions.include?('rw') )
+
+            local_roles.push 'Report'
+          }
+        }
+      }
+    }
+
+    local_roles.each {|role|
       role_lookup = Role.lookup( name: role )
       next if !role_lookup
-      role_ids.push role_lookup.id
+      local_role_ids.push role_lookup.id
     }
-    role_ids
+    local_role_ids
   end
 
   # sync customers

@@ -15,7 +15,7 @@
 </div>
 
 <div class="js-org <% if @user: %>hide<% end %>">
-  <div class="profile-ticketLists horizontal">
+  <div class="profile-ticketLists">
     <div class="profile-ticketList js-org-open-tickets"></div>
     <div class="profile-ticketList js-org-closed-tickets"></div>
   </div>

@@ -45,7 +45,7 @@ class CustomerTicketCreateTest < TestCase
       css: '.active [data-name="body"]',
       value: 'some body 1234 äöüß',
     )
-    click( css: '.active button.js-submit' )
+    click( css: '.active .js-submit' )
 
     watch_for(
       css: '.active div.ticket-article',

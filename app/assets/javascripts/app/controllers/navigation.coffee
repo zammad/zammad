@@ -52,11 +52,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
     # get active tabs to reactivate on rerender
     active_tab = {}
-    @$('.active').children('a').each( (i,d) ->
+    @$('.is-active').each( (i,d) ->
       href = $(d).attr('href')
       active_tab[href] = true
     )
-    @$('.main-navigation').html App.view('navigation/menu')(
+    @$('.js-menu').html App.view('navigation/menu')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab
@@ -353,8 +353,8 @@ class App.Navigation extends App.ControllerWidgetPermanent
         @addPrioCount newlist, item
 
   update: (url) =>
-    @$('li').removeClass('active')
-    @$("[href=\"#{url}\"]").parents('li').addClass('active')
+    @$('.is-active').removeClass('is-active')
+    @$("[href=\"#{url}\"]").addClass('is-active')
 
   recentViewNavbarItemsRebuild: =>
 

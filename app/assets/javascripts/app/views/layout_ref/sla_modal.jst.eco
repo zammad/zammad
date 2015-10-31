@@ -29,7 +29,7 @@
               <option>VIP</option>
             </optgroup>
           </select>
-          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down') %>
         </div>
       </div>
       <div class="controls">
@@ -42,7 +42,7 @@
             <option>is</option>
             <option>is not</option>
           </select>
-          <svg class="dropdown-arrow"><use xlink:href="#icon-arrow-down"></use></svg>
+          <%- @Icon('arrow-down') %>
         </div>
       </div>
       <input id="filter_value_1" type="text" class="form-control">
@@ -92,7 +92,7 @@
             Users
           </span> </td>
         <td class="noTruncate"> <span>
-            <span class="humanTimeFromNow undefined" data-time="2015-01-12T12:58:42.000Z" data-tooltip="01/12/2015 13:58">01/12/2015</span> </span>
+            <span class="humanTimeFromNow undefined" data-time="2015-01-12T12:58:42.000Z" title="01/12/2015 13:58">01/12/2015</span> </span>
         </td>
       </tr>
       <tr class="item" data-id="3" data-position="3" style="cursor: pointer;">
@@ -111,7 +111,7 @@
             Users
           </span> </td>
         <td class="noTruncate"> <span>
-            <span class="humanTimeFromNow undefined" data-time="2015-01-20T11:47:43.000Z" data-tooltip="01/20/2015 12:47">01/20/2015</span> </span>
+            <span class="humanTimeFromNow undefined" data-time="2015-01-20T11:47:43.000Z" title="01/20/2015 12:47">01/20/2015</span> </span>
         </td>
       </tr>
       <tr class="item" data-id="4" data-position="4" style="cursor: pointer;">
@@ -130,7 +130,7 @@
             Users
           </span> </td>
         <td class="noTruncate"> <span>
-            <span class="humanTimeFromNow undefined" data-time="2015-05-04T14:26:51.000Z" data-tooltip="05/04/2015 16:26">05/04/2015</span> </span>
+            <span class="humanTimeFromNow undefined" data-time="2015-05-04T14:26:51.000Z" title="05/04/2015 16:26">05/04/2015</span> </span>
         </td>
       </tr>
       <tr class="item" data-id="5" data-position="5" style="cursor: pointer;">
@@ -149,7 +149,7 @@
             Users
           </span> </td>
         <td class="noTruncate"> <span>
-            <span class="humanTimeFromNow undefined" data-time="2015-06-10T13:41:29.000Z" data-tooltip="06/10/2015 15:41">5 days 21 hours ago</span> </span>
+            <span class="humanTimeFromNow undefined" data-time="2015-06-10T13:41:29.000Z" title="06/10/2015 15:41">5 days 21 hours ago</span> </span>
         </td>
       </tr>
       <tr class="item" data-id="6" data-position="6" style="cursor: pointer;">
@@ -168,7 +168,7 @@
             Users
           </span> </td>
         <td class="noTruncate"> <span>
-            <span class="humanTimeFromNow undefined" data-time="2015-06-11T07:26:31.000Z" data-tooltip="06/11/2015 09:26">5 days 3 hours ago</span> </span>
+            <span class="humanTimeFromNow undefined" data-time="2015-06-11T07:26:31.000Z" title="06/11/2015 09:26">5 days 3 hours ago</span> </span>
         </td>
       </tr>
     </tbody>

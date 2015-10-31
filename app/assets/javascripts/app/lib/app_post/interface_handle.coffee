@@ -10,7 +10,7 @@ class App.Run extends App.Controller
       return
 
     # hide splash screen
-    $('#splash').hide()
+    $('.splash').hide()
 
     # init collections
     App.Collection.init()

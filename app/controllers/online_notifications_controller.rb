@@ -80,12 +80,26 @@ curl http://localhost/api/v1/online_notifications -v -u #{login}:#{password} -H 
 =end
 
   def update
-    notification = OnlineNotification.find(params[:id])
-    if notification.user_id != current_user.id
-      response_access_deny
-      return
-    end
+    return if !access?
     model_update_render(OnlineNotification, params)
+  end
+
+=begin
+
+Resource:
+DELETE /api/v1/online_notifications/{id}.json
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/v1/online_notifications/{id}.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+
+=end
+
+  def destroy
+    return if !access?
+    model_destory_render(OnlineNotification, params)
   end
 
 =begin
@@ -112,6 +126,17 @@ curl http://localhost/api/v1/online_notifications/mark_all_as_read -v -u #{login
       end
     end
     render json: {}, status: :ok
+  end
+
+  private
+
+  def access?
+    notification = OnlineNotification.find(params[:id])
+    if notification.user_id != current_user.id
+      response_access_deny
+      return false
+    end
+    true
   end
 
 end

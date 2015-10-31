@@ -1,0 +1,24 @@
+<div class="main flex">
+
+  <div class="page-header">
+    <div class="page-header-title">
+      <h1><%- @T( 'Reporting' ) %> <small></small></h1>
+    </div>
+  </div>
+
+  <div class="page-body page-body--two-column">
+    <div class="page-aside js-aside"></div>
+
+    <div class="page-main">
+      <div class="js-timeRangePicker"></div>
+      <div class="page-content">
+
+        <div id="placeholder" class="" style="height:350px;"></div>
+        <span class=" muted" id="download-chart" style="font-size: 8px;"></span>
+
+        <div class="js-timePicker"></div>
+        <div class="js-dataDownload"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="zammad-chat">
+  <div class="zammad-chat-header">
+    <div class="zammad-chat-header-controls">
+      <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online">Online</span>
+      <span class="zammad-chat-toggle">
+        <svg class="zammad-chat-toggle-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>
+        <svg class="zammad-chat-toggle-icon-close" viewBox="0 0 13 7"><path d="M6.554 4.214L2.246 0l-1.4 1.428 5 4.9.708.693.7-.7 4.9-4.9L10.74.008 6.553 4.214z" fill-rule="evenodd"/></svg>
+      </span>
+    </div>
+    <div class="zammad-chat-agent zammad-chat-is-hidden">
+      <img class="zammad-chat-agent-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/joshaustin/128.jpg">
+      <span class="zammad-chat-agent-sentence">
+        <span class="zammad-chat-agent-name">Adam</span> is helping you.
+      </span>
+    </div>
+    <div class="zammad-chat-welcome">
+      <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>
+      <span class="zammad-chat-welcome-text"><strong>Chat</strong> with us!</span>
+    </div>
+  </div>
+  <div class="zammad-chat-loader">
+    <span class="zammad-chat-loading-animation">
+      <span class="zammad-chat-loading-circle"></span>
+      <span class="zammad-chat-loading-circle"></span>
+      <span class="zammad-chat-loading-circle"></span>
+    </span>
+    <span class="zammad-chat-loader-text">Connecting</span>
+  </div>
+  <div class="zammad-chat-body"></div>
+  <form class="zammad-chat-controls">
+    <textarea class="zammad-chat-input" rows="1" placeholder="Compose your message..."></textarea>
+    <button type="submit" class="zammad-chat-send">Send</button>
+  </form>
+</div>

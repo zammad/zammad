@@ -95,28 +95,28 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind(
       'ui::ticket::setArticleType'
       (data) =>
-        if data.ticket.id is @ticket.id
-          #@setArticleType(data.type.name)
+        return if data.ticket.id isnt @ticket.id
+        #@setArticleType(data.type.name)
 
-          @openTextarea(null, true)
-          for key, value of data.article
-            if key is 'body'
-              @$('[data-name="' + key + '"]').html(value)
-            else
-              @$('[name="' + key + '"]').val(value)
+        @openTextarea(null, true)
+        for key, value of data.article
+          if key is 'body'
+            @$('[data-name="' + key + '"]').html(value)
+          else
+            @$('[name="' + key + '"]').val(value)
 
-          # preselect article type
-          @setArticleType( 'email' )
+        # preselect article type
+        @setArticleType('email')
     )
 
     # reset new article screen
     @bind(
       'ui::ticket::taskReset'
       (data) =>
-        if data.ticket_id is @ticket.id
-          @type     = 'note'
-          @defaults = {}
-          @render()
+        return if data.ticket_id isnt @ticket.id
+        @type     = 'note'
+        @defaults = {}
+        @render()
     )
 
   isIE10: ->
@@ -195,6 +195,10 @@ class App.TicketZoomArticleNew extends App.Controller
 
             @attachmentPlaceholder.removeClass('hide')
             @attachmentUpload.addClass('hide')
+
+            # reset progress bar
+            @progressBar.width(parseInt(0) + '%')
+            @progressText.text('')
 
             @renderAttachment(response.data)
             console.log('upload complete', response.data )
@@ -326,11 +330,10 @@ class App.TicketZoomArticleNew extends App.Controller
     @el.find('.js-articleTypes').addClass('is-hidden')
 
   setArticleType: (type) ->
-    typeIcon = @$('.js-selectedType')
     @type = type
     @$('[name=type]').val(type)
     @articleNewEdit.attr('data-type', type)
-    typeIcon.find('use').attr 'xlink:href', "#icon-#{@type}"
+    @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{ type }']").removeClass('hide')
 
     # show/hide attributes
     for articleType in @articleTypes
@@ -365,62 +368,64 @@ class App.TicketZoomArticleNew extends App.Controller
       @removeTextareaCatcher()
 
   openTextarea: (event, withoutAnimation) =>
-    if !@articleNewEdit.hasClass('is-open')
-      duration = 300
+    if @articleNewEdit.hasClass('is-open')
+      return
+    
+    duration = 300
 
-      if withoutAnimation
-        duration = 0
+    if withoutAnimation
+      duration = 0
 
-      @articleNewEdit.addClass('is-open')
+    @articleNewEdit.addClass('is-open')
 
-      @textarea.velocity
-        properties:
-          minHeight: "#{ @textareaHeight.open - 38 }px"
-        options:
-          duration: duration
-          easing: 'easeOutQuad'
-          complete: => @addTextareaCatcher()
-
-      @textBubble.velocity
-        properties:
-          paddingBottom: 28
-        options:
-          duration: duration
-          easing: 'easeOutQuad'
-
-      # scroll to bottom
-      @textarea.velocity 'scroll',
-        container: @textarea.scrollParent()
-        offset: 99999
-        duration: 300
+    @textarea.velocity
+      properties:
+        minHeight: "#{ @textareaHeight.open - 38 }px"
+      options:
+        duration: duration
         easing: 'easeOutQuad'
-        queue: false
+        complete: => @addTextareaCatcher()
 
-      @editControlItem
-        .removeClass('is-hidden')
-        .velocity
-          properties:
-            opacity: [ 1, 0 ]
-            translateX: [ 0, 20 ]
-            translateZ: 0
-          options:
-            duration: 300
-            stagger: 50
-            drag: true
+    @textBubble.velocity
+      properties:
+        paddingBottom: 28
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
 
-      # move attachment text to the left bottom (bottom happens automatically)
-      @attachmentPlaceholder.velocity
+    # scroll to bottom
+    @textarea.velocity 'scroll',
+      container: @textarea.scrollParent()
+      offset: 99999
+      duration: 300
+      easing: 'easeOutQuad'
+      queue: false
+
+    @editControlItem
+      .removeClass('is-hidden')
+      .velocity
         properties:
-          translateX: -@attachmentInputHolder.position().left + 'px'
+          opacity: [ 1, 0 ]
+          translateX: [ 0, 20 ]
+          translateZ: 0
         options:
-          duration: duration
-          easing: 'easeOutQuad'
+          duration: 300
+          stagger: 50
+          drag: true
 
-      @attachmentHint.velocity
-        properties:
-          opacity: 0
-        options:
-          duration: duration
+    # move attachment text to the left bottom (bottom happens automatically)
+    @attachmentPlaceholder.velocity
+      properties:
+        translateX: -@attachmentInputHolder.position().left + 'px'
+      options:
+        duration: duration
+        easing: 'easeOutQuad'
+
+    @attachmentHint.velocity
+      properties:
+        opacity: 0
+      options:
+        duration: duration
 
   addTextareaCatcher: =>
     if @articleNewEdit.is(':visible')

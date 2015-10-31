@@ -1487,6 +1487,13 @@ Role.create_if_not_exists(
   updated_by_id: 1,
   created_by_id: 1
 )
+Role.create_if_not_exists(
+  id: 4,
+  name: 'Report',
+  note: 'Access the report area.',
+  created_by_id: 1,
+  updated_by_id: 1,
+)
 
 Group.create_if_not_exists(
   id: 1,
@@ -1572,6 +1579,21 @@ Ticket::Article::Sender.create_if_not_exists( id: 1, name: 'Agent' )
 Ticket::Article::Sender.create_if_not_exists( id: 2, name: 'Customer' )
 Ticket::Article::Sender.create_if_not_exists( id: 3, name: 'System' )
 
+Macro.create_if_not_exists(
+  name: 'Close & Tag as Spam',
+  perform: {
+    'ticket.state_id': {
+      value: Ticket::State.find_by(name: 'closed').id,
+    },
+    'ticket.tags': {
+      operator: 'add',
+      value: 'spam',
+    },
+  },
+  note: 'example macro',
+  active: true,
+)
+
 UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
   group_id: Group.where( name: 'Users' ).first.id,
@@ -1615,7 +1637,7 @@ Overview.create_if_not_exists(
     },
     'ticket.owner_id' => {
       operator: 'is',
-      value: 'current_user.id',
+      pre_condition: 'current_user.id',
     },
   },
   order: {
@@ -1642,11 +1664,12 @@ Overview.create_if_not_exists(
     },
     'ticket.owner_id' => {
       operator: 'is',
-      value: 'current_user.id',
+      pre_condition: 'current_user.id',
     },
     'ticket.pending_time' => {
-      operator: 'after (relative)',
-      value: '1',
+      operator: 'within next (relative)',
+      value: 0,
+      range: 'minute',
     },
   },
   order: {
@@ -1722,8 +1745,9 @@ Overview.create_if_not_exists(
       value: [3],
     },
     'ticket.pending_time' => {
-      operator: 'after (relative)',
-      value: 1,
+      operator: 'within next (relative)',
+      value: 0,
+      range: 'minute',
     },
   },
   order: {
@@ -1745,8 +1769,9 @@ Overview.create_if_not_exists(
   role_id: overview_role.id,
   condition: {
     'ticket.escalation_time' => {
-      operator: 'before (relative)',
-      value: 5,
+      operator: 'within next (relative)',
+      value: '10',
+      range: 'minute',
     },
   },
   order: {
@@ -1770,11 +1795,11 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [ 1, 2, 3, 4, 6 ],
+      value: [ 1, 2, 3, 4, 6, 7 ],
     },
     'ticket.customer_id' => {
       operator: 'is',
-      value: 'current_user.id',
+      pre_condition: 'current_user.id',
     },
   },
   order: {
@@ -1797,11 +1822,11 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [ 1, 2, 3, 4, 6 ],
+      value: [ 1, 2, 3, 4, 6, 7 ],
     },
     'ticket.organization_id' => {
       operator: 'is',
-      value: 'current_user.organization_id',
+      pre_condition: 'current_user.organization_id',
     },
   },
   order: {
@@ -1842,6 +1867,14 @@ Channel.create_if_not_exists(
   },
   preferences: { online_service_disable: true },
   active: true,
+)
+
+Report::Profile.create_if_not_exists(
+  name: '-all-',
+  condition: {},
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
 )
 
 network = Network.create_if_not_exists(
@@ -1948,6 +1981,31 @@ Network::Item::Comment.create(
 
 ObjectManager::Attribute.add(
   object: 'Ticket',
+  name: 'title',
+  display: 'Title',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 200,
+    null: false,
+    translate: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_top: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {},
+  },
+  pending_migration: false,
+  position: 15,
+)
+
+ObjectManager::Attribute.add(
+  object: 'Ticket',
   name: 'customer_id',
   display: 'Customer',
   data_type: 'user_autocompletion',
@@ -2038,7 +2096,7 @@ ObjectManager::Attribute.add(
     },
   },
   pending_migration: false,
-  position: 20,
+  position: 25,
 )
 ObjectManager::Attribute.add(
   object: 'Ticket',
@@ -2209,31 +2267,6 @@ ObjectManager::Attribute.add(
   },
   pending_migration: false,
   position: 900,
-)
-
-ObjectManager::Attribute.add(
-  object: 'Ticket',
-  name: 'title',
-  display: 'Title',
-  data_type: 'input',
-  data_option: {
-    type: 'text',
-    maxlength: 200,
-    null: false,
-    translate: false,
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_top: {
-      '-all-' => {
-        null: false,
-      },
-    },
-    edit: {},
-  },
-  pending_migration: false,
-  position: 15,
 )
 
 ObjectManager::Attribute.add(

@@ -46,51 +46,61 @@ class App.User extends App.Model
       return '??'
 
   avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar, type = undefined) ->
-    cssClass += " size-#{size}"
+    size   = parseInt(size, 10)
+
+    cssClass += ' ' if cssClass
+    cssClass += "size-#{ size }"
 
     if placement
-      placement = "data-placement=\"#{placement}\""
+      placement = " data-placement='#{ placement }'"
 
-    # use generated avatar
-    if !@image || @image is 'none' || unique
-      return @uniqueAvatar(size, placement, cssClass, avatar, type)
+    if !avatar
+      if type is 'personal'
+        vip = false
+        data = " data-id=\"#{@id}\""
+      else
+        cssClass += ' user-popover'
+        data      = " data-id=\"#{@id}\""
+    else
+      vip = false
+      data = " data-avatar-id=\"#{avatar.id}\""
 
-    # use image as avatar
-    image = @imageUrl()
+    # set vip flag, ignore if personal avatar is request
     vip = @vip
     if type is 'personal'
       vip = false
     else
       cssClass += ' user-popover'
 
-    if vip
-      return "<span class=\"avatar #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg></span>"
-    "<span class=\"avatar #{cssClass}\" data-id=\"#{@id}\" style=\"background-image: url(#{image})\" #{placement}></span>"
+    # use system avatar for system actions
+    if @id is 1
+      return App.view('avatar_system')()
 
-  uniqueAvatar: (size, placement = '', cssClass = '', avatar, type) ->
-    width  = 300
-    height = 226
-    size   = parseInt(size, 10)
-    vip    = @vip
+    # generate uniq avatar
+    if !@image || @image is 'none' || unique
+      width  = 300
+      height = 226
 
-    rng = new Math.seedrandom(@id)
-    x   = rng() * (width - size)
-    y   = rng() * (height - size)
+      rng = new Math.seedrandom(@id)
+      x   = rng() * (width - size)
+      y   = rng() * (height - size)
 
-    if !avatar
-      if type is 'personal'
-        vip = false
-        data = "data-id=\"#{@id}\""
-      else
-        cssClass += ' user-popover'
-        data      = "data-id=\"#{@id}\""
-    else
-      vip = false
-      data = "data-avatar-id=\"#{avatar.id}\""
+      return App.view('avatar_unique')
+        data: data
+        cssClass: cssClass
+        placement: placement
+        vip: vip
+        x: x
+        y: y
+        initials: @initials()
 
-    if vip
-      return "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}><svg class='icon icon-crown'><use xlink:href='#icon-crown'></svg>#{ @initials() }</span>"
-    "<span class=\"avatar unique #{cssClass}\" #{data} style=\"background-position: -#{ x }px -#{ y }px;\" #{placement}>#{ @initials() }</span>"
+    # generate image based avatar
+    return App.view('avatar')
+      data: data
+      cssClass: cssClass
+      placement: placement
+      vip: vip
+      url: @imageUrl()
 
   imageUrl: ->
     return if !@image

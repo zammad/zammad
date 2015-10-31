@@ -82,6 +82,9 @@ returns
         }
       }
       config.hours = hours
+      if !hours || hours.empty?
+        fail "No congifure hours found in calendar #{calendar.inspect}"
+      end
 
       # get holidays
       holidays = []
@@ -123,11 +126,18 @@ returns
 
     # update time
     # calculate escalation
-    last_update = last_contact_agent
-    if !last_update
+    if !last_contact_customer && !last_contact_agent
       last_update = created_at
+    elsif !last_contact_customer && last_contact_agent
+      last_update = last_contact_agent
+    elsif last_contact_customer && !last_contact_agent
+      last_update = last_contact_customer
+    elsif last_contact_agent > last_contact_customer
+      last_update = last_contact_agent
+    elsif last_contact_agent < last_contact_customer
+      last_update = last_contact_customer
     end
-    if sla.update_time
+    if sla.update_time && last_update
       self.update_time_escal_date = biz.time(sla.update_time, :minutes).after(last_update)
       pending_time = pending_minutes(last_update, update_time_escal_date, biz)
       if pending_time && pending_time > 0
@@ -139,8 +149,8 @@ returns
     end
 
     # get update time in min
-    if last_contact_agent
-      self.update_time_in_min = pending_minutes(created_at, last_contact_agent, biz, 'business_minutes')
+    if last_update && last_update != created_at
+      self.update_time_in_min = pending_minutes(created_at, last_update, biz, 'business_minutes')
     end
 
     # set sla time

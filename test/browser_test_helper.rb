@@ -138,7 +138,7 @@ class TestCase < Test::Unit::TestCase
     end
     instance.find_elements( { css: '#login button' } )[0].click
 
-    sleep 4
+    sleep 5
     login = instance.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     if login != params[:username]
       screenshot( browser: instance, comment: 'login_failed' )
@@ -1076,7 +1076,7 @@ wait untill text in selector disabppears
       element.clear
 
       # workaround, sometimes focus is not triggered
-      element.send_keys( data[:customer] )
+      element.send_keys( data[:customer] + '*' )
       sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium
@@ -1240,6 +1240,12 @@ wait untill text in selector disabppears
         instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
       end
 
+      # click on click catcher
+      if params[:do_not_submit]
+        if instance.find_elements( { css: '.clickCatcher' } )[0]
+          click( browser: instance, css: '.clickCatcher')
+        end
+      end
     end
 
     if data[:group]
@@ -1291,7 +1297,7 @@ wait untill text in selector disabppears
       return true
     end
 
-    instance.find_elements( { css: '.content.active button.js-submit' } )[0].click
+    instance.find_elements( { css: '.content.active .js-submit' } )[0].click
 
     (1..10).each {
       begin
@@ -1364,7 +1370,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    instance.find_elements( { css: '#navigation li.overviews a' } )[0].click
+    instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 1
     instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
     sleep 1
@@ -1446,7 +1452,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    instance.find_elements( { css: '#navigation li.overviews a' } )[0].click
+    instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 2
     overviews = {}
     instance.find_elements( { css: '.content.active .sidebar a[href]' } ).each {|element|
@@ -1559,6 +1565,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/users"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
@@ -1615,6 +1622,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/slas"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a.js-new' } )[0].click
@@ -1659,6 +1667,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/text_modules"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
@@ -1705,7 +1714,9 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#channels/email"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#c-signature"]' } )[0].click
     sleep 8
     instance.find_elements( { css: '#content #c-signature a[data-type="new"]' } )[0].click
@@ -1752,6 +1763,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    sleep 1
     instance.find_elements( { css: 'a[href="#manage/groups"]' } )[0].click
     sleep 2
     instance.find_elements( { css: 'a[data-type="new"]' } )[0].click

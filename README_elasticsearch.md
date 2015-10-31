@@ -16,7 +16,7 @@
 
 * Configure Zammad
 
-  * rails r "Setting.set('es_url', 'http://172.0.0.1:9200')"
+  * rails r "Setting.set('es_url', 'http://127.0.0.1:9200')"
 
   # optional - es with http basic auth
   * rails r "Setting.set('es_user', 'elasticsearch')"

@@ -4,9 +4,26 @@
   <div style="max-width: 500px">
     <h2>Time</h2>
     <p>A time of the day</p>
-    <input type="text" value="14:40" class="time">
+    <input type="text" value="14:40" class="time js-timepicker1">
+
     <p>Add class <code>time--12</code> to activate AM/PM support</p>
-    <input type="text" value="2:40 PM" class="time time--12">
+    <input type="text" value="2:40 PM" class="time time--12 js-timepicker2">
+
+    <p>A date</p>
+    <div class="date form-group">
+      <div class="controls">
+        <input type="text" value="<%- @Tdate('2014-10-28') %>" class="form-control js-datepicker3">
+      </div>
+    </div>
+
+    <p>A date time</p>
+    <div class="datetime form-group">
+      <div class="controls controls--bundle">
+        <input type="text" value="<%- @Tdate('2015-10-28') %>" class="form-control js-datepicker4">
+        <div class="controls-label">at</div>
+        <input type="text" value="08:00" class="form-control time js-timepicker4">
+      </div>
+    </div>
 
     <h2>Timeframe</h2>
     <p>A time between 00:00 and 99:99 hours</p>

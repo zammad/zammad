@@ -1,0 +1,7 @@
+<div class="chat-message chat-message--customer chat-message--loader js-loader">
+  <div class="chat-loader">
+    <%- @Icon('loading') %>
+    <%- @Icon('loading') %>
+    <%- @Icon('loading') %>
+  </div>
+</div>

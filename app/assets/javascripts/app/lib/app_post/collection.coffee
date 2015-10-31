@@ -46,16 +46,16 @@ class _collectionSingleton extends Spine.Module
       @resetCollections( data )
 
     # find collections to load
-    @_loadObjectsFromLocalStore()
+    @_loadObjectsFromSessionStore()
 
-  _loadObjectsFromLocalStore: ->
+  _loadObjectsFromSessionStore: ->
     list = App.Store.list()
     for key in list
       parts = key.split('::')
       if parts[0] is 'collection'
-        data = App.Store.get( key )
-        data['type']         = parts[1]
-        data['localStorage'] = true
+        data                   = App.Store.get( key )
+        data['type']           = parts[1]
+        data['sessionStorage'] = true
 
         @log 'debug', 'load INIT', data
         @load( data )
@@ -64,7 +64,7 @@ class _collectionSingleton extends Spine.Module
     # load assets
     for type, collection of data
       @log 'debug', 'resetCollection:trigger', type, collection
-      @reset( localStorage: data.localStorage, type: type, data: collection )
+      @reset( sessionStorage: data.sessionStorage, type: type, data: collection )
 
   reset: (params) ->
 
@@ -87,7 +87,7 @@ class _collectionSingleton extends Spine.Module
   loadAssets: (assets) ->
     @log 'debug', 'loadAssets', assets
     for type, collections of assets
-      @load( localStorage: false, type: type, data: collections )
+      @load( sessionStorage: false, type: type, data: collections )
 
   load: (params) ->
 
@@ -100,14 +100,14 @@ class _collectionSingleton extends Spine.Module
       @log 'error', 'reset', "no such collection #{params.type}", params
       return
 
-    localStorage = params.localStorage
+    sessionStorage = params.sessionStorage
 
     # load full array once
     if _.isArray( params.data )
       appObject.refresh( params.data )
 
       # remember in store if not already requested from local storage
-      if !localStorage
+      if !sessionStorage
         for object in params.data
           @localStore( params.type, object )
       return
@@ -128,7 +128,7 @@ class _collectionSingleton extends Spine.Module
           appObject.refresh( object )
 
       # remember in store if not already requested from local storage
-      if !localStorage
+      if !sessionStorage
         @localStore( params.type, object)
 
   localDelete: (type) ->

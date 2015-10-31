@@ -1,7 +1,35 @@
-<div style="position: absolute; clip: rect(0, 0, 0, 0); z-index: -1;">
-  <%= inline_svg('icons.svg') %>
-</div>
+<!-- svgstore fallback -->
+<script>
+  /* 
+    detect if browser is 
+    - Chrome 14-20
+    - Android Browser 4.1+
+    - iOS 6-7
+    - Safari 6
+    - Edge 12
+    - IE 9-11
+  */
+  window.svgPolyfill = /\bEdge\/12\b|\bTrident\/[567]\b|\bVersion\/7.0 Safari\b/.test(navigator.userAgent) || (navigator.userAgent.match(/AppleWebKit\/(\d+)/) || [])[1] < 537;
+
+  (function (doc) {
+    if(!svgPolyfill)
+      return
+
+    var scripts = doc.getElementsByTagName('script')
+    var script = scripts[scripts.length - 1]
+    var xhr = new XMLHttpRequest()
+    xhr.onload = function () {
+      var div = doc.createElement('div')
+      div.innerHTML = this.responseText
+      div.style.style.cssText = 'position: absolute; clip: rect(0, 0, 0, 0); z-index: -1;'
+      script.parentNode.insertBefore(div, script)
+    }
+    xhr.open('get', 'assets/images/icons.svg', true)
+    xhr.send()
+  })(document)
+</script>
 <div id="app"></div>
-<div id="splash">
-  <div class="logo">booting...</div>
+<div class="splash">
+  <svg class="icon icon-logo"><use xlink:href="assets/images/icons.svg#icon-logo" /></svg>
+  <div class="splash-title">Loading...</div>
 </div>

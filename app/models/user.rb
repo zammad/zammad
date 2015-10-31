@@ -28,7 +28,6 @@ class User < ApplicationModel
   load 'user/assets.rb'
   include User::Assets
   extend User::Search
-  include User::SearchIndex
 
   before_create   :check_name, :check_email, :check_login, :check_password
   before_update   :check_password, :check_email, :check_login
@@ -537,6 +536,7 @@ returns
 
     return if !email
     return if email.empty?
+    return if email !~ /@/
 
     # save/update avatar
     avatar = Avatar.auto_detection(

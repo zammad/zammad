@@ -88,27 +88,11 @@ class App.OnlineNotificationWidget extends App.Controller
 
     notificationsContainer.find('.popover-content').css('height', "#{heightPopoverContentNew}px")
 
-    # close notification list on click
-    $('.js-notificationsContainer').on('click', (e) =>
-      @hidePopover()
-    )
-
-    # execute controller again of already open (because hash hasn't changed, we need to do it manually)
-    $('.js-locationVerify').on('click', (e) =>
-      newLocation = $(e.target).attr 'href'
-      if !newLocation
-        newLocation = $(e.target).closest('.js-locationVerify').attr 'href'
-      return if !newLocation
-      currentLocation = Spine.Route.getPath()
-      return if newLocation.replace(/#/, '') isnt currentLocation
-      @log 'debug', "execute controller again for '#{currentLocation}' because of same hash"
-      Spine.Route.matchRoutes(currentLocation)
-    )
-
     # mark all notifications as read
-    $('.js-markAllAsRead').on('click', (e) =>
+    notificationsContainer.find('.js-markAllAsRead').on('click', (e) =>
       e.preventDefault()
       @markAllAsRead()
+      @hidePopover()
     )
 
     # add clickCatcher
@@ -154,6 +138,36 @@ class App.OnlineNotificationWidget extends App.Controller
       $( App.view('widget/online_notification_content')(items: items) )
     )
 
+    notificationsContainer  = $('.js-notificationsContainer .popover-content')
+
+    # execute controller again of already open (because hash hasn't changed, we need to do it manually)
+    notificationsContainer.find('.js-locationVerify').on('click', (e) =>
+      newLocation = $(e.target).attr 'href'
+      if !newLocation
+        newLocation = $(e.target).closest('.js-locationVerify').attr 'href'
+      return if !newLocation
+      currentLocation = Spine.Route.getPath()
+      return if newLocation.replace(/#/, '') isnt currentLocation
+      @hidePopover()
+      @log 'debug', "execute controller again for '#{currentLocation}' because of same hash"
+      Spine.Route.matchRoutes(currentLocation)
+    )
+
+    # close notification list on click
+    notificationsContainer.find('.activity-entry').on('click', (e) =>
+      @hidePopover()
+    )
+
+    # remove
+    notificationsContainer.find('.js-remove').on('click', (e) =>
+      e.preventDefault()
+      e.stopPropagation()
+      row = $(e.target).closest('.activity-entry')
+      id = row.data('id')
+      App.OnlineNotification.destroy(id)
+      @resetHeight()
+    )
+
   createContainer: =>
     @removeContainer()
 
@@ -183,3 +197,8 @@ class App.OnlineNotificationWidget extends App.Controller
   removeContainer: =>
     @counterUpdate(0)
     @toggle.popover('destroy')
+
+  resetHeight: ->
+    notificationsContainer = $('.js-notificationsContainer')
+    notificationsContainer.find('.popover-content').css('height', "auto")
+

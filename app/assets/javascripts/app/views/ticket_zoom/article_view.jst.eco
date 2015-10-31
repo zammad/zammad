@@ -41,8 +41,8 @@
       <div class="textBubble">
         <div class="bubble-arrow"></div>
         <div class="textBubble-content" id="article-content-<%= @article.id %>" data-id="<%= @article.id %>">
-        <%- App.Utils.signatureIdentify( @article.html ) %>
-          <div class="textBubble-overflowContainer">
+          <%- @article.html %>
+          <div class="textBubble-overflowContainer hide">
             <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
           </div>
         </div>

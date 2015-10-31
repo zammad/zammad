@@ -24,7 +24,7 @@
 	
 	Zammad Edits:
 		- fix todayBtn toggle of display none and block: toggleClass instead
-		- [ICONS]: hardwire our icons
+		- allow custom template as options parameter
 
  */
 
@@ -122,7 +122,7 @@
 		if (this.component && this.component.length === 0)
 			this.component = false;
 
-		this.picker = $(DPGlobal.template);
+		this.picker = $(this.o.template || DPGlobal.template);
 		this._buildEvents();
 		this._attachEvents();
 
@@ -1868,9 +1868,9 @@
 			                '<th colspan="7" class="datepicker-title"></th>'+
 			              '</tr>'+
 							'<tr>'+
-								'<th class="prev"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"/></svg></th>'+
+								'<th class="prev">&#171;</th>'+
 								'<th colspan="5" class="datepicker-switch"></th>'+
-								'<th class="next"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"/></svg></th>'+
+								'<th class="next">&#187;</th>'+
 							'</tr>'+
 						'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',

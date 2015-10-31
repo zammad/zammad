@@ -2,6 +2,7 @@
 .icon-arrow-left { width: 7px; height: 13px; }
 .icon-arrow-right { width: 7px; height: 13px; }
 .icon-arrow-up { width: 13px; height: 7px; }
+.icon-chat { width: 24px; height: 24px; }
 .icon-checkbox-checked { width: 11px; height: 11px; }
 .icon-checkbox { width: 11px; height: 11px; }
 .icon-checkmark { width: 16px; height: 14px; }
@@ -31,7 +32,7 @@
 .icon-lock-open { width: 16px; height: 16px; }
 .icon-lock { width: 16px; height: 16px; }
 .icon-logo { width: 42px; height: 36px; }
-.icon-logotype { width: 84px; height: 16px; }
+.icon-logotype { width: 91px; height: 15px; }
 .icon-long-arrow-right { width: 11px; height: 11px; }
 .icon-magnifier { width: 15px; height: 15px; }
 .icon-marker { width: 17px; height: 19px; }
@@ -55,9 +56,6 @@
 .icon-phone { width: 17px; height: 17px; }
 .icon-plus-small { width: 16px; height: 16px; }
 .icon-plus { width: 20px; height: 20px; }
-.icon-priority-modified-inner-circle { width: 16px; height: 16px; }
-.icon-priority-modified-outer-circle { width: 16px; height: 16px; }
-.icon-priority { width: 16px; height: 16px; }
 .icon-radio-checked { width: 11px; height: 11px; }
 .icon-radio { width: 11px; height: 11px; }
 .icon-received-calls { width: 17px; height: 17px; }
@@ -65,13 +63,14 @@
 .icon-reopening { width: 68px; height: 47px; }
 .icon-reply-all { width: 16px; height: 16px; }
 .icon-reply { width: 16px; height: 16px; }
+.icon-report { width: 20px; height: 20px; }
 .icon-signout { width: 15px; height: 19px; }
 .icon-split { width: 16px; height: 16px; }
+.icon-status-modified-inner-circle { width: 16px; height: 16px; }
+.icon-status-modified-outer-circle { width: 16px; height: 16px; }
 .icon-status { width: 16px; height: 16px; }
 .icon-stopwatch { width: 77px; height: 83px; }
 .icon-switchView { width: 19px; height: 18px; }
-.icon-task-state-modified-inner-circle { width: 16px; height: 16px; }
-.icon-task-state-modified-outer-circle { width: 16px; height: 16px; }
 .icon-task-state { width: 16px; height: 16px; }
 .icon-team { width: 16px; height: 16px; }
 .icon-templates { width: 24px; height: 24px; }

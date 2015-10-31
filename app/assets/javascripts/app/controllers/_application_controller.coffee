@@ -231,7 +231,7 @@ class App.Controller extends Spine.Controller
 
     # only do dom updates on changes
     return if time is currentVal
-    item.attr('data-tooltip', App.i18n.translateTimestamp(timestamp))
+    item.attr('title', App.i18n.translateTimestamp(timestamp))
     item.html(time)
 
   ticketPopups: (position = 'right') ->
@@ -497,7 +497,7 @@ class App.Controller extends Spine.Controller
         item.object_name  = object.objectDisplayName()
         item.cssIcon      = object.iconActivity( @Session.get() )
 
-      item.created_by = App.User.retrieve( item.created_by_id )
+      item.created_by = App.User.find( item.created_by_id )
     items
 
   ws_send: (data) ->
@@ -527,6 +527,24 @@ class App.Controller extends Spine.Controller
 
           # replace new option list
           form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
+
+  stopPropagation: (e) ->
+    e.stopPropagation()
+
+  startLoading: (el) =>
+    return if @initLoadingDone && !el
+    @initLoadingDone = true
+    @stopLoading()
+    later = =>
+      if el
+        el.html App.view('generic/page_loading')()
+      else
+        @html App.view('generic/page_loading')()
+    @initLoadingDoneDelay = @delay(later, 2800)
+
+  stopLoading: =>
+    return if !@initLoadingDoneDelay
+    @clearDelay(@initLoadingDoneDelay)
 
 class App.ControllerPermanent extends App.Controller
   constructor: ->

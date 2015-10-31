@@ -1,12 +1,30 @@
 class App.ControllerTable extends App.Controller
+  minColWidth: 40
+  baseColWidth: 130
+  minTableWidth: 612
+
+  checkBoxColWidth: 40
+  radioColWidth: 22
+
   constructor: (params) ->
     for key, value of params
       @[key] = value
 
-    @table = @tableGen(params)
+    # apply personal preferences
+    data = @preferencesGet()
+    if data['order']
+      for key, value of data['order']
+        @[key] = value
 
-    if @el
-      @el.append( @table )
+    @headerWidth = {}
+    if data['headerWidth']
+      for key, value of data['headerWidth']
+        @headerWidth[key] = value
+
+    @render()
+
+  render: =>
+    @html @tableGen()
 
   ###
 
@@ -48,11 +66,12 @@ class App.ControllerTable extends App.Controller
       value
 
     new App.ControllerTable(
+      table_id: 'some_id_to_idientify_user_based_table_preferences'
       el:       element
       overview: ['host', 'user', 'adapter', 'active']
       model:    App.Channel
       objects:  data
-      groupBy:  'group'
+      groupBy:  'adapter'
       checkbox: false
       radio:    false
       class:    'some-css-class'
@@ -95,38 +114,90 @@ class App.ControllerTable extends App.Controller
 
   ###
 
-  tableGen: (data) ->
-    if !data.model
-      data.model = {}
-    overview   = data.overview || data.model.configure_overview || []
-    attributes = data.attributes || data.model.configure_attributes || {}
+  tableGen: =>
+    if !@model
+      @model = {}
+    overview   = @overview || @model.configure_overview || []
+    attributes = @attributes || @model.configure_attributes || {}
     attributes = App.Model.attributesGet(false, attributes)
-    destroy    = data.model.configure_delete
+    destroy    = @model.configure_delete
 
     # check if table is empty
-    if _.isEmpty(data.objects)
+    if _.isEmpty(@objects)
       table = App.view('generic/admin/empty')
-        explanation: data.explanation
+        explanation: @explanation
       return $(table)
 
-    # group by
-    if data.groupBy
+    # get header data
+    headers = []
+    for item in overview
+      headerFound = false
+      for attributeName, attribute of attributes
 
-      # remove group by attribute from header
-      overview = _.filter(
-        overview
-        (item) ->
-          return item if item isnt data.groupBy
-          return
-      )
+        # remove group by attribute from header
+        if !@groupBy || @groupBy isnt item
+
+          if !attribute.style
+            attribute.style = {}
+
+          if attributeName is item
+            # e.g. column: owner
+            headerFound = true
+            if @headerWidth[attribute.name]
+              attribute.width = "#{@headerWidth[attribute.name]}px"
+            headers.push attribute
+          else
+            # e.g. column: owner_id
+            rowWithoutId = item + '_id'
+            if attributeName is rowWithoutId
+              headerFound = true
+              if @headerWidth[attribute.name]
+                attribute.width = "#{@headerWidth[attribute.name]}px"
+              headers.push attribute
+
+    if @orderDirection && @orderBy
+      for header in headers
+        if header.name is @orderBy
+          @objects = _.sortBy(
+            @objects
+            (item) ->
+              # if we need to sort translated col.
+              if header.translate
+                App.i18n.translateInline(item[header.name])
+              # if we need to sort a relation
+              if header.relation
+                if item[header.name]
+                  App[header.relation].find(item[header.name]).displayName()
+                else
+                  ''
+              else
+                item[header.name]
+          )
+          if @orderDirection is 'DESC'
+            header.sortOrderIcon = ['arrow-down', 'table-sort-arrow']
+            @objects = @objects.reverse()
+          else
+            header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
+        else
+          header.sortOrderIcon = undefined
+
+    # execute header callback
+    if @callbackHeader
+      for callback in @callbackHeader
+        headers = callback(headers)
+
+    headers = @adjustHeaderWidths headers
+
+    # group by
+    if @groupBy
 
       # get new order
       groupObjects = _.groupBy(
-        data.objects
-        (item) ->
-          return '' if !item[data.groupBy]
-          return item[data.groupBy].displayName() if item[data.groupBy].displayName
-          item[data.groupBy]
+        @objects
+        (item) =>
+          return '' if !item[@groupBy]
+          return item[@groupBy].displayName() if item[@groupBy].displayName
+          item[@groupBy]
       )
       groupOrder = []
       for group, value of groupObjects
@@ -140,41 +211,23 @@ class App.ControllerTable extends App.Controller
       )
 
       # create new data array
-      data.objects = []
+      @objects = []
       for group in groupOrder
-        data.objects = data.objects.concat groupObjects[group]
+        @objects = @objects.concat groupObjects[group]
         groupObjects[group] = [] # release old array
 
-    # get header data
-    header = []
-    for item in overview
-      headerFound = false
-      for attributeName, attribute of attributes
-        if attributeName is item
-          headerFound = true
-          header.push attribute
-        else
-          rowWithoutId = item + '_id'
-          if attributeName is rowWithoutId
-            headerFound = true
-            header.push attribute
-
-    # execute header callback
-    if data.callbackHeader
-      for callback in data.callbackHeader
-        header = callback(header)
-
     # get content
-    @log 'debug', 'table', 'header', header, 'overview', 'objects', data.objects
+    @log 'debug', 'table', 'header', headers, 'overview', 'objects', @objects
     table = App.view('generic/table')(
-      header:   header
-      objects:  data.objects
-      checkbox: data.checkbox
-      radio:    data.radio
-      groupBy:  data.groupBy
-      class:    data.class
-      destroy:  destroy
-      callbacks: data.callbackAttributes
+      table_id:  @table_id
+      header:    headers
+      objects:   @objects
+      checkbox:  @checkbox
+      radio:     @radio
+      groupBy:   @groupBy
+      class:     @class
+      destroy:   destroy
+      callbacks: @callbackAttributes
     )
 
     # convert to jquery object
@@ -186,15 +239,15 @@ class App.ControllerTable extends App.Controller
       #mouseover: 'alias'
 
     # bind col.
-    if data.bindCol
-      for name, item of data.bindCol
+    if @bindCol
+      for name, item of @bindCol
         if item.events
           position = 0
-          if data.checkbox
+          if @checkbox
             position += 1
           hit      = false
 
-          for headerName in header
+          for headerName in headers
             if !hit
               position += 1
             if headerName.name is name || headerName.name is "#{name}_id"
@@ -213,9 +266,9 @@ class App.ControllerTable extends App.Controller
                 )
 
     # bind row
-    if data.bindRow
-      if data.bindRow.events
-        for event, callback of data.bindRow.events
+    if @bindRow
+      if @bindRow.events
+        for event, callback of @bindRow.events
           do (table, event, callback) ->
             if cursorMap[event]
               table.find('tbody > tr').css( 'cursor', cursorMap[event] )
@@ -226,9 +279,9 @@ class App.ControllerTable extends App.Controller
             )
 
     # bind bindCheckbox
-    if data.bindCheckbox
-      if data.bindCheckbox.events
-        for event, callback of data.bindCheckbox.events
+    if @bindCheckbox
+      if @bindCheckbox.events
+        for event, callback of @bindCheckbox.events
           do (table, event, callback) ->
             table.delegate('input[name="bulk"]', event, (e) ->
               e.stopPropagation()
@@ -238,20 +291,30 @@ class App.ControllerTable extends App.Controller
             )
 
     # bind on delete dialog
-    if data.model && destroy
+    if @model && destroy
       table.delegate('[data-type="destroy"]', 'click', (e) =>
         e.stopPropagation()
         e.preventDefault()
         itemId = $(e.target).parents('tr').data('id')
-        item   = data.model.find(itemId)
+        item   = @model.find(itemId)
         new App.ControllerGenericDestroyConfirm(
           item:      item
           container: @container
         )
       )
 
+    # if we have a personalised table
+    if @table_id
+
+      # enable resize column
+      table.on 'mousedown', '.js-col-resize', @onColResizeMousedown
+      table.on 'click', '.js-col-resize', @stopPropagation
+
+      # enable sort column
+      table.on 'click', '.js-sort', @sortByColumn
+
     # enable checkbox bulk selection
-    if data.checkbox
+    if @checkbox
 
       # click first tr>td, catch click
       table.delegate('tr > td:nth-child(1)', event, (e) ->
@@ -259,7 +322,7 @@ class App.ControllerTable extends App.Controller
       )
 
       # bind on full bulk click
-      table.delegate('input[name="bulk_all"]', 'click', (e) ->
+      table.delegate('input[name="bulk_all"]', 'change', (e) ->
         e.stopPropagation()
         if $(e.target).prop('checked')
           $(e.target).parents('table').find('[name="bulk"]').each( ->
@@ -276,3 +339,155 @@ class App.ControllerTable extends App.Controller
       )
 
     table
+
+  adjustHeaderWidths: (headers) ->
+    availableWidth = @el.width()
+
+    if availableWidth is 0
+      availableWidth = @minTableWidth
+
+    widths = @getHeaderWidths headers
+    difference = widths - availableWidth
+
+    if difference > 0
+      # convert percentages to pixels
+      headers = _.map headers, (col) =>
+        unit = col.width.match(/[px|%]+/)[0]
+
+        if unit is '%'
+          percentage = parseInt col.width, 10
+          col.width = percentage / 100 * availableWidth + 'px'
+
+        return col
+
+      widths = @getHeaderWidths headers
+      shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount(headers)
+
+      # make all cols evenly smaller
+      headers = _.map headers, (col) =>
+        if !col.unresizable
+          value = parseInt col.width, 10
+          col.width = Math.max(@minColWidth, value - shrinkBy) + 'px'
+        return col
+
+      # give left-over space from rounding to last column to get to 100%
+      roundingLeftOver = availableWidth - @getHeaderWidths headers
+      # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
+      if roundingLeftOver > 0
+        headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + 'px'
+
+    return headers
+
+  getShrinkableHeadersCount: (headers) ->
+    _.reduce headers, (memo, col) ->
+      return if col.unresizable then memo else memo+1
+    , 0
+
+  getHeaderWidths: (headers) ->
+    widths = _.reduce headers, (memo, col, i) =>
+      if col.width
+        value = parseInt col.width, 10
+        unit = col.width.match(/[px|%]+/)[0]
+      else
+        # !!! sets the width to default width if not set
+        headers[i].width = @baseColWidth + 'px'
+        value = @baseColWidth
+        unit = 'px'
+
+      return if unit is 'px' then memo + value else memo
+    , 0
+
+    if @checkbox
+      widths += @checkBoxColWidth
+
+    if @radio
+      widths += @radioColWidth
+
+    return widths
+
+  stopPropagation: (event) =>
+    event.stopPropagation()
+
+  onColResizeMousedown: (event) =>
+    @resizeTargetLeft = $(event.currentTarget).parents('th')
+    @resizeTargetRight = @resizeTargetLeft.next()
+    @resizeStartX = event.pageX
+    @resizeLeftStartWidth = @resizeTargetLeft.width()
+    @resizeRightStartWidth = @resizeTargetRight.width()
+
+    $(document).on 'mousemove.resizeCol', @onColResizeMousemove
+    $(document).one 'mouseup', @onColResizeMouseup
+
+    @tableWidth = @el.width()
+
+  onColResizeMousemove: (event) =>
+    # use pixels while moving for max precision
+    difference = event.pageX - @resizeStartX
+
+    if @resizeLeftStartWidth + difference < @minColWidth
+      difference = - (@resizeLeftStartWidth - @minColWidth)
+
+    if @resizeRightStartWidth - difference < @minColWidth
+      difference = @resizeRightStartWidth - @minColWidth
+
+    @resizeTargetLeft.width @resizeLeftStartWidth + difference
+    @resizeTargetRight.width @resizeRightStartWidth - difference
+
+  onColResizeMouseup: =>
+    $(document).off 'mousemove.resizeCol'
+    # switch to percentage
+    resizeBaseWidth = @resizeTargetLeft.parents('table').width()
+    leftWidth = @resizeTargetLeft.outerWidth()
+    rightWidth = @resizeTargetRight.outerWidth()
+
+    leftColumnKey = @resizeTargetLeft.attr('data-column-key')
+    rightColumnKey = @resizeTargetRight.attr('data-column-key')
+
+    # save table changed widths
+    storeColWidths = [
+      { key: leftColumnKey, width: leftWidth }
+      { key: rightColumnKey, width: rightWidth }
+    ]
+
+    @log 'debug', @table_id, 'leftColumnKey', leftColumnKey, leftWidth, 'rightColumnKey', rightColumnKey, rightWidth
+    @preferencesStore('headerWidth', leftColumnKey, leftWidth)
+
+    if rightColumnKey
+      @preferencesStore('headerWidth', rightColumnKey, rightWidth)
+
+  sortByColumn: (event) =>
+    column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
+
+    # sort
+    if @orderBy isnt column
+      @orderBy = column
+      @orderDirection = 'ASC'
+    else
+      if @orderDirection is 'ASC'
+        @orderDirection = 'DESC'
+      else
+        @orderDirection = 'ASC'
+
+    @log 'debug', @table_id, 'sortByColumn', @orderBy, 'direction', @orderDirection
+    @preferencesStore('order', 'orderBy', @orderBy)
+    @preferencesStore('order', 'orderDirection', @orderDirection)
+    @render()
+
+  preferencesStore: (type, key, value) ->
+    data = @preferencesGet()
+    if !data[type]
+      data[type] = {}
+    if !data[type][key]
+      data[type][key] = {}
+    data[type][key] = value
+    @log 'debug', @table_id, 'preferencesStore', data
+    localStorage.setItem(@preferencesStoreKey(), JSON.stringify(data))
+
+  preferencesGet: =>
+    data = localStorage.getItem(@preferencesStoreKey())
+    return {} if !data
+    @log 'debug', @table_id, 'preferencesGet', data
+    JSON.parse(data)
+
+  preferencesStoreKey: =>
+    "tablePreferences:#{@table_id}"

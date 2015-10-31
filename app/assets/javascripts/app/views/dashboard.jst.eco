@@ -1,5 +1,5 @@
 <div class="dashboard main flex center">
-  <div class="tabs wide-tabs horizontal">
+  <div class="tabs wide-tabs">
     <div class="tab active" data-area="stat-widgets"><%- @T('My Stats') %></div>
     <div class="tab" data-area="first-steps-widgets"><%- @T('First Steps') %></div>
   </div>

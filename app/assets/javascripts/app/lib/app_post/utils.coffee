@@ -241,7 +241,7 @@ class App.Utils
 
     cleanup = (str) ->
       if str.match(/(<|>|&)/)
-        str = str.replace(/(<|>|&).+?$/, '').trim()
+        str = str.replace(/(.+?)(<|>|&).+?$/, "$1").trim()
       str
 
     # search for signature seperator "--\n"
@@ -424,10 +424,10 @@ class App.Utils
     # get first marker
     markers = _.sortBy(markers, 'lineCount')
     if markers[0].type is 'seperator'
-      regex = new RegExp( "\>(\s{0,10}#{quote(markers[0].line)})\s{0,10}\<" )
+      regex = new RegExp( "\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})\s{0,10}\<" )
       message.replace( regex, ">#{markerTemplate}\$1<" )
     else
-      regex = new RegExp( "\>(\s{0,10}#{quote(markers[0].line)})" )
+      regex = new RegExp( "\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})" )
       message.replace( regex, ">#{markerTemplate}\$1" )
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
@@ -547,3 +547,74 @@ class App.Utils
     else
       size = size + ' Bytes'
     size
+
+  # format decimal
+  @decimal: (data, positions = 2) ->
+
+    # input validation
+    return '' if data is undefined
+    return '' if data is null
+
+    if data.toString
+      data = data.toString()
+
+    return data if data is ''
+    return data if data.match(/[A-z]/)
+
+    format = ( num, digits ) ->
+      while num.toString().length < digits
+        num = num + '0'
+      num
+
+    result = data.match(/^(.+?)\.(.+?)$/)
+
+    # add .00
+    if !result || !result[2]
+      return "#{data}.#{format(0, positions)}"
+    length = result[2].length
+    diff = positions - length
+
+    # check length, add .00
+    return "#{result[1]}.#{format(result[2], positions)}" if diff > 0
+
+    # check length, remove longer positions
+    "#{result[1]}.#{result[2].substr(0,positions)}"
+
+  @formatTime: (num, digits) ->
+
+    # input validation
+    return '' if num is undefined
+    return '' if num is null
+
+    if num.toString
+      num = num.toString()
+
+    while num.length < digits
+      num = '0' + num
+    num
+
+  @icon: (name, className = '') ->
+    #
+    # reverse regex
+    # =============
+    #
+    # search: <svg class="icon icon-([^\s]+)\s([^"]*).*<\/svg>
+    # replace: <%- @Icon('$1', '$2') %>
+    #
+    path = if window.svgPolyfill then '' else 'assets/images/icons.svg'
+    "<svg class=\"icon icon-#{name} #{className}\"><use xlink:href=\"#{path}#icon-#{name}\" /></svg>"
+
+  @getScrollBarWidth: ->
+    $outer = $('<div>').css(
+      visibility: 'hidden'
+      width: 100
+      overflow: 'scroll'
+    ).appendTo('body')
+
+    widthWithScroll = $('<div>').css(
+      width: '100%'
+    ).appendTo($outer).outerWidth()
+
+    $outer.remove()
+
+    return 100 - widthWithScroll

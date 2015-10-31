@@ -1953,6 +1953,30 @@ Some Text',
           ],
         }
       },
+      {
+        data: IO.read('test/fixtures/mail35.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Darlehen bieten jetzt bewerben',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '',
+              lastname: '',
+              fullname: '"finances8@firstfinanceloanfirm.example.com"',
+              email: '"finances8@firstfinanceloanfirm.example.com"',
+            },
+          ],
+        }
+      },
     ]
     process(files)
   end
@@ -2028,8 +2052,7 @@ Some Text',
 
   def process(files)
     files.each { |file|
-      parser = Channel::EmailParser.new
-      result = parser.process( { trusted: file[:trusted] }, file[:data] )
+      result = Channel::EmailParser.new.process( { trusted: file[:trusted] }, file[:data] )
       if file[:success]
         if result && result.class == Array && result[1]
           assert( true )

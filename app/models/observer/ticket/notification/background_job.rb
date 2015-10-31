@@ -229,11 +229,10 @@ class Observer::Ticket::Notification::BackgroundJob
   def template_create(user, ticket, article, _ticket_changes)
     article_content = ''
     if article
-      article_content = '&lt;snip&gt;
+      article_content = 'i18n(Information):
 <blockquote type="cite">
 #{article.body.text2html}
 </blockquote>
-&lt;/snip&gt;
 <br>
 <br>'
     end
@@ -295,11 +294,10 @@ State: i18n(#{ticket.state.name.text2html})<br>
     }
     article_content = ''
     if article
-      article_content = '&lt;snip&gt;
+      article_content = 'i18n(Information):
 <blockquote type="cite">
 #{article.body.text2html}
 </blockquote>
-&lt;/snip&gt;
 <br>
 <br>'
     end
@@ -312,7 +310,7 @@ Ticket (#{ticket.title.text2html}) wurde von "<b>#{ticket.updated_by.fullname.te
 </div>
 <br>
 <div>
-Änderungen:<br>
+i18n(Changes):<br>
 ' + changes + '
 </div>
 <br>
@@ -329,7 +327,7 @@ Ticket (#{ticket.title.text2html}) has been updated by "<b>#{ticket.updated_by.f
 </div>
 <br>
 <div>
-Changes:<br>
+i18n(Changes):<br>
 ' + changes + '
 </div>
 <br>
@@ -389,7 +387,7 @@ Changes:<br>
   def template_footer(_user, _ticket, _article)
     '
 <p>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">i18n(View this directly here)</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">i18n(View this in Zammad)</a>
 </p>
 <div class="footer">
   <a href="#{config.http_type}://#{config.fqdn}/#profile/notifications">i18n(Manage your notifications settings)</a>

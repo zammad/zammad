@@ -18,11 +18,7 @@ returns
     return if !self.class.search_index_support_config
 
     # default ignored attributes
-    ignore_attributes = {
-      created_by_id: true,
-      updated_by_id: true,
-      active: true,
-    }
+    ignore_attributes = {}
     if self.class.search_index_support_config[:ignore_attributes]
       self.class.search_index_support_config[:ignore_attributes].each {|key, value|
         ignore_attributes[key] = value
@@ -62,7 +58,7 @@ returns
       article_attributes = article.attributes
 
       # remove note needed attributes
-      ignore = %w(created_by_id updated_by_id updated_at references message_id_md5 message_id in_reply_to ticket_id)
+      ignore = %w(message_id_md5)
       ignore.each {|attribute|
         article_attributes.delete( attribute )
       }

@@ -1,0 +1,71 @@
+<div class="datepicker">
+    <div class="datepicker-days">
+        <table class=" table-condensed">
+            <thead>
+                <tr>
+                    <th colspan="7" class="datepicker-title"></th>
+                </tr>
+                <tr>
+                    <th class="prev"><%- @Icon('arrow-left') %></th>
+                    <th colspan="5" class="datepicker-switch"></th>
+                    <th class="next"><%- @Icon('arrow-right') %></th>
+                </tr>
+            </thead>
+        <tbody></tbody>
+        <tfoot>
+        <tr>
+            <th colspan="7" class="today"></th>
+        </tr>
+        <tr>
+            <th colspan="7" class="clear"></th>
+        </tr>
+        </tfoot>
+    </table>
+  </div>
+  <div class="datepicker-months">
+      <table class="table-condensed">
+          <thead>
+              <tr>
+                  <th colspan="7" class="datepicker-title"></th>
+              </tr>
+              <tr>
+                  <th class="prev"><%- @Icon('arrow-left') %></th>
+                  <th colspan="5" class="datepicker-switch"></th>
+                  <th class="next"><%- @Icon('arrow-right') %></th>
+              </tr>
+          </thead>
+          <tbody><tr><td colspan="7"></td></tr></tbody>
+          <tfoot>
+          <tr>
+              <th colspan="7" class="today"></th>
+          </tr>
+          <tr>
+              <th colspan="7" class="clear"></th>
+          </tr>
+          </tfoot>
+      </table>
+  </div>
+  <div class="datepicker-years">
+      <table class="table-condensed">
+          <thead>
+              <tr>
+                  <th colspan="7" class="datepicker-title"></th>
+              </tr>
+              <tr>
+                  <th class="prev"><%- @Icon('arrow-left') %></th>
+                  <th colspan="5" class="datepicker-switch"></th>
+                  <th class="next"><%- @Icon('arrow-right') %></th>
+              </tr>
+          </thead>
+          <tbody><tr><td colspan="7"></td></tr></tbody>
+          <tfoot>
+          <tr>
+              <th colspan="7" class="today"></th>
+          </tr>
+          <tr>
+              <th colspan="7" class="clear"></th>
+          </tr>
+          </tfoot>
+      </table>
+  </div>
+</div>
