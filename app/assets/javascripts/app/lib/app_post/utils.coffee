@@ -464,9 +464,9 @@ class App.Utils
 
     # do type convertation to compare it against form
     dataNow = clone(dataNowRaw)
-    @_formDiffNormalizer(dataNow)
+    #@_formDiffNormalizer(dataNow)
     dataLast = clone(dataLastRaw)
-    @_formDiffNormalizer(dataLast)
+    #@_formDiffNormalizer(dataLast)
 
     @_formDiffChanges( dataNow, dataLast )
 
