@@ -1,7 +1,7 @@
 <!-- svgstore fallback -->
 <script>
-  /* 
-    detect if browser is 
+  /*
+    detect if browser is
     - Chrome 14-20
     - Android Browser 4.1+
     - iOS 6-7
@@ -21,7 +21,7 @@
     xhr.onload = function () {
       var div = doc.createElement('div')
       div.innerHTML = this.responseText
-      div.style.style.cssText = 'position: absolute; clip: rect(0, 0, 0, 0); z-index: -1;'
+      div.style.cssText = 'position: absolute; clip: rect(0, 0, 0, 0); z-index: -1;'
       script.parentNode.insertBefore(div, script)
     }
     xhr.open('get', 'assets/images/icons.svg', true)
