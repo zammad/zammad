@@ -6,7 +6,7 @@ module Ticket::HistoryLog
 create log activity for this ticket
 
   ticket = Ticket.find(123)
-  result = ticket.history_create( 'created', user_id )
+  result = ticket.history_create('created', user_id)
 
 returns
 
@@ -21,6 +21,8 @@ returns
     data[:related_o_id]           = nil
     data[:related_history_object] = nil
     data[:created_by_id]          = user_id
+    data[:updated_at]             = updated_at
+    data[:created_at]             = updated_at
     History.add(data)
   end
 
