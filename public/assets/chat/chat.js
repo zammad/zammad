@@ -1,7 +1,7 @@
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
-window.zammadChatTemplates["chat"] = function (__obj) {
+window.zammadChatTemplates["agent"] = function (__obj) {
   if (!__obj) __obj = {};
   var __out = [], __capture = function(callback) {
     var out = __out, result;
@@ -40,7 +40,19 @@ window.zammadChatTemplates["chat"] = function (__obj) {
   }
   (function() {
     (function() {
-      __out.push('<div class="zammad-chat">\n  <div class="zammad-chat-header">\n    <div class="zammad-chat-header-controls">\n      <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online">Online</span>\n      <span class="zammad-chat-toggle">\n        <svg class="zammad-chat-toggle-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>\n        <svg class="zammad-chat-toggle-icon-close" viewBox="0 0 13 7"><path d="M6.554 4.214L2.246 0l-1.4 1.428 5 4.9.708.693.7-.7 4.9-4.9L10.74.008 6.553 4.214z" fill-rule="evenodd"/></svg>\n      </span>\n    </div>\n    <div class="zammad-chat-agent zammad-chat-is-hidden">\n      <img class="zammad-chat-agent-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/joshaustin/128.jpg">\n      <span class="zammad-chat-agent-sentence">\n        <span class="zammad-chat-agent-name">Adam</span> is helping you.\n      </span>\n    </div>\n    <div class="zammad-chat-welcome">\n      <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>\n      <span class="zammad-chat-welcome-text"><strong>Chat</strong> with us!</span>\n    </div>\n  </div>\n  <div class="zammad-chat-loader">\n    <span class="zammad-chat-loading-animation">\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n    </span>\n    <span class="zammad-chat-loader-text">Connecting</span>\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <textarea class="zammad-chat-input" rows="1" placeholder="Compose your message..."></textarea>\n    <button type="submit" class="zammad-chat-send">Send</button>\n  </form>\n</div>');
+      __out.push('<img class="zammad-chat-agent-avatar" src="');
+    
+      __out.push(__sanitize(this.agent.avatar));
+    
+      __out.push('">\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span> ');
+    
+      __out.push(this.agentPhrase);
+    
+      __out.push('\n</span>');
     
     }).call(this);
     
@@ -56,10 +68,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   ZammadChat = (function() {
     ZammadChat.prototype.defaults = {
       invitationPhrase: '<strong>Chat</strong> with us!',
-      agentPhrase: '%%agent%% is helping you',
+      agentPhrase: ' is helping you',
       show: true,
       target: $('body')
     };
+
+    ZammadChat.prototype._messageCount = 0;
 
     ZammadChat.prototype.isOpen = false;
 
@@ -92,7 +106,15 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.view = function(name) {
-      return window.zammadChatTemplates[name];
+      return (function(_this) {
+        return function(options) {
+          if (!options) {
+            options = {};
+          }
+          options.T = _this.T;
+          return window.zammadChatTemplates[name](options);
+        };
+      })(this);
     };
 
     function ZammadChat(el, options) {
@@ -102,6 +124,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.reconnect = bind(this.reconnect, this);
       this.onAgentTypingEnd = bind(this.onAgentTypingEnd, this);
       this.onAgentTypingStart = bind(this.onAgentTypingStart, this);
+      this.onQueue = bind(this.onQueue, this);
       this.onCloseAnimationEnd = bind(this.onCloseAnimationEnd, this);
       this.onOpenAnimationEnd = bind(this.onOpenAnimationEnd, this);
       this.toggle = bind(this.toggle, this);
@@ -109,9 +132,15 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.onSubmit = bind(this.onSubmit, this);
       this.onTypingEnd = bind(this.onTypingEnd, this);
       this.onInput = bind(this.onInput, this);
+      this.onReady = bind(this.onReady, this);
+      this.onWebSocketMessage = bind(this.onWebSocketMessage, this);
+      this.send = bind(this.send, this);
       this.checkForEnter = bind(this.checkForEnter, this);
+      this.view = bind(this.view, this);
+      this.T = bind(this.T, this);
+      var zammad_host;
       this.options = $.extend({}, this.defaults, options);
-      this.el = $(this.view('chat')());
+      this.el = $(this.view('chat')(this.options));
       this.options.target.append(this.el);
       this.setAgentOnlineState(this.isOnline);
       this.el.find('.zammad-chat-header').click(this.toggle);
@@ -122,12 +151,84 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       }).autoGrow({
         extraLine: false
       });
+      if (!window.WebSocket) {
+        console.log('Zammad Chat: Browser not supported');
+        return;
+      }
+      zammad_host = 'ws://localhost:6042';
+      this.ws = new window.WebSocket(zammad_host);
+      console.log("Connecting to " + zammad_host);
+      this.ws.onopen = (function(_this) {
+        return function() {
+          console.log('ws connected');
+          return _this.send("chat_status");
+        };
+      })(this);
+      this.ws.onmessage = this.onWebSocketMessage;
+      this.ws.onclose = (function(_this) {
+        return function(e) {
+          return console.log('debug', 'close websocket connection');
+        };
+      })(this);
+      this.ws.onerror = (function(_this) {
+        return function(e) {
+          return console.log('debug', 'ws:onerror', e);
+        };
+      })(this);
     }
 
     ZammadChat.prototype.checkForEnter = function(event) {
       if (!event.shiftKey && event.keyCode === 13) {
         event.preventDefault();
         return this.sendMessage();
+      }
+    };
+
+    ZammadChat.prototype.send = function(action, data) {
+      var pipe;
+      pipe = JSON.stringify({
+        action: action,
+        data: data
+      });
+      return this.ws.send(pipe);
+    };
+
+    ZammadChat.prototype.onWebSocketMessage = function(e) {
+      var pipe;
+      pipe = JSON.parse(e.data);
+      console.log('debug', 'ws:onmessage', pipe);
+      switch (pipe.action) {
+        case 'message':
+          return this.receiveMessage(pipe.data);
+        case 'typing_start':
+          return this.onAgentTypingStart();
+        case 'typing_end':
+          return this.onAgentTypingEnd();
+        case 'chat_init':
+          switch (pipe.data.state) {
+            case 'ok':
+              return this.onConnectionEstablished(pipe.data.agent);
+            case 'queue':
+              return this.onQueue(pipe.data.position);
+          }
+          break;
+        case 'chat_status':
+          switch (pipe.data.state) {
+            case 'ok':
+              return this.onReady();
+            case 'offline':
+              return console.log('Zammad Chat: No agent online');
+            case 'chat_disabled':
+              return console.log('Zammad Chat: Chat is disabled');
+            case 'no_seats_available':
+              return console.log('Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue);
+          }
+      }
+    };
+
+    ZammadChat.prototype.onReady = function() {
+      if (this.options.show) {
+        return this.show();
       }
     };
 
@@ -143,11 +244,13 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.onTypingStart = function() {
-      return this.isTyping = true;
+      this.isTyping = true;
+      return this.send('typing_start');
     };
 
     ZammadChat.prototype.onTypingEnd = function() {
-      return this.isTyping = false;
+      this.isTyping = false;
+      return this.send('typing_end');
     };
 
     ZammadChat.prototype.onSubmit = function(event) {
@@ -158,26 +261,32 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.sendMessage = function() {
       var message, messageElement;
       message = this.el.find('.zammad-chat-input').val();
-      if (message) {
-        messageElement = this.view('message')({
-          message: message,
-          from: 'customer'
-        });
-        this.maybeAddTimestamp();
-        if (this.el.find('.zammad-chat-message--typing').size()) {
-          this.lastAddedType = 'typing-placeholder';
-          this.el.find('.zammad-chat-message--typing').before(messageElement);
-        } else {
-          this.lastAddedType = 'message--customer';
-          this.el.find('.zammad-chat-body').append(messageElement);
-        }
-        this.el.find('.zammad-chat-input').val('');
-        this.scrollToBottom();
-        return this.isTyping = false;
+      if (!message) {
+        return;
       }
+      messageElement = this.view('message')({
+        message: message,
+        from: 'customer',
+        id: this._messageCount++
+      });
+      this.maybeAddTimestamp();
+      if (this.el.find('.zammad-chat-message--typing').size()) {
+        this.lastAddedType = 'typing-placeholder';
+        this.el.find('.zammad-chat-message--typing').before(messageElement);
+      } else {
+        this.lastAddedType = 'message--customer';
+        this.el.find('.zammad-chat-body').append(messageElement);
+      }
+      this.el.find('.zammad-chat-input').val('');
+      this.scrollToBottom();
+      this.isTyping = false;
+      return this.send('message', {
+        body: message,
+        id: this._messageCount
+      });
     };
 
-    ZammadChat.prototype.receiveMessage = function(message) {
+    ZammadChat.prototype.receiveMessage = function(data) {
       var ref, unread;
       this.onAgentTypingEnd();
       this.maybeAddTimestamp();
@@ -186,7 +295,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         " zammad-chat-message--unread": ""
       };
       this.el.find('.zammad-chat-body').append(this.view('message')({
-        message: message,
+        message: data.body,
+        id: data.id,
         from: 'agent'
       }));
       return this.scrollToBottom();
@@ -201,6 +311,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.open = function() {
+      this.showLoader();
       return this.el.addClass('zammad-chat-is-open').animate({
         bottom: 0
       }, 500, this.onOpenAnimationEnd);
@@ -208,9 +319,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.onOpenAnimationEnd = function() {
       this.isOpen = true;
-      setTimeout(this.onConnectionEstablished, 1180);
-      setTimeout(this.onAgentTypingStart, 2000);
-      setTimeout(this.receiveMessage, 5000, "Hello! How can I help you?");
       return this.connect();
     };
 
@@ -237,6 +345,14 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.el.addClass('zammad-chat-is-visible');
       remainerHeight = this.el.outerHeight() - this.el.find('.zammad-chat-header').outerHeight();
       return this.el.css('bottom', -remainerHeight);
+    };
+
+    ZammadChat.prototype.onQueue = function(position) {
+      console.log("onQueue", position);
+      this.inQueue = true;
+      return this.el.find('.zammad-chat-body').html(this.view('waiting')({
+        position: position
+      }));
     };
 
     ZammadChat.prototype.onAgentTypingStart = function() {
@@ -287,7 +403,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'));
     };
 
-    ZammadChat.prototype.connect = function() {};
+    ZammadChat.prototype.connect = function() {
+      return this.send('chat_init');
+    };
 
     ZammadChat.prototype.reconnect = function() {
       this.lastAddedType = 'status';
@@ -302,18 +420,27 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.disconnect = function() {
-      this.el.find('.zammad-chat-loader').removeClass('zammad-chat-is-hidden');
+      this.showLoader();
       this.el.find('.zammad-chat-welcome').removeClass('zammad-chat-is-hidden');
       this.el.find('.zammad-chat-agent').addClass('zammad-chat-is-hidden');
       return this.el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden');
     };
 
-    ZammadChat.prototype.onConnectionEstablished = function() {
-      this.el.find('.zammad-chat-loader').addClass('zammad-chat-is-hidden');
+    ZammadChat.prototype.onConnectionEstablished = function(agent) {
+      this.inQueue = false;
+      this.agent = agent;
+      this.el.find('.zammad-chat-agent').html(this.view('agent')({
+        agent: agent
+      }));
+      this.el.find('.zammad-chat-body').empty();
       this.el.find('.zammad-chat-welcome').addClass('zammad-chat-is-hidden');
       this.el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden');
       this.el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden');
       return this.el.find('.zammad-chat-input').focus();
+    };
+
+    ZammadChat.prototype.showLoader = function() {
+      return this.el.find('.zammad-chat-body').html(this.view('loader')());
     };
 
     ZammadChat.prototype.setAgentOnlineState = function(state) {
@@ -406,6 +533,116 @@ jQuery.fn.autoGrow = function(options) {
 
   });
 };
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["chat"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      __out.push('<div class="zammad-chat">\n  <div class="zammad-chat-header">\n    <div class="zammad-chat-header-controls">\n      <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online">Online</span>\n      <span class="zammad-chat-toggle">\n        <svg class="zammad-chat-toggle-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>\n        <svg class="zammad-chat-toggle-icon-close" viewBox="0 0 13 7"><path d="M6.554 4.214L2.246 0l-1.4 1.428 5 4.9.708.693.7-.7 4.9-4.9L10.74.008 6.553 4.214z" fill-rule="evenodd"/></svg>\n      </span>\n    </div>\n    <div class="zammad-chat-agent zammad-chat-is-hidden">\n      \n    </div>\n    <div class="zammad-chat-welcome">\n      <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>\n      <span class="zammad-chat-welcome-text">');
+    
+      __out.push(this.invitationPhrase);
+    
+      __out.push('</span>\n    </div>\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <textarea class="zammad-chat-input" rows="1" placeholder="Compose your message..."></textarea>\n    <button type="submit" class="zammad-chat-send">Send</button>\n  </form>\n</div>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["loader"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      __out.push('<div class="zammad-chat-modal">\n  <span class="zammad-chat-loading-animation">\n    <span class="zammad-chat-loading-circle"></span>\n    <span class="zammad-chat-loading-circle"></span>\n    <span class="zammad-chat-loading-circle"></span>\n  </span>\n  <span class="zammad-chat-modal-text">');
+    
+      __out.push(__sanitize(this.T('Connecting')));
+    
+      __out.push('</span>\n</div>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
@@ -567,6 +804,61 @@ window.zammadChatTemplates["typingIndicator"] = function (__obj) {
   (function() {
     (function() {
       __out.push('<div class="zammad-chat-message zammad-chat-message--typing zammad-chat-message--agent">\n  <span class="zammad-chat-message-body">\n    <span class="zammad-chat-loading-animation">\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n    </span>\n  </span>\n</div>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["waiting"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      __out.push('<div class="zammad-chat-modal">\n  <div class="zammad-chat-modal-text">\n    <span class="zammad-chat-loading-animation">\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n    </span>\n    Leider sind gerade alle Mitarbeiter belegt.<br>\n    Warteliste-Position: <strong>');
+    
+      __out.push(__sanitize(this.position));
+    
+      __out.push('</strong>\n  </div>\n</div>');
     
     }).call(this);
     

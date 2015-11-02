@@ -154,7 +154,7 @@ $baseTextColor: if($luminance < 0.2, white, black);
   to { opacity: 1; transform: scale(1); }
 }
 
-.zammad-chat-loader {
+.zammad-chat-modal {
   position: absolute;
   left: 0;
   right: 0;
@@ -170,13 +170,18 @@ $baseTextColor: if($luminance < 0.2, white, black);
   justify-content: center;
 }
 
-.zammad-chat-loader-text {
+.zammad-chat-modal-text {
   font-size: 1.3em;
+  line-height: 1.45;
+  
+  .zammad-chat-loading-animation {
+    font-size: 0.7em;
+  }
 }
 
-.zammad-chat-loader .zammad-chat-loading-animation {
+.zammad-chat-modal .zammad-chat-loading-animation {
   margin-right: 8px;
-  margin-left: -19px;
+  vertical-align: middle;
 }
 
 .zammad-chat-body {
@@ -230,6 +235,10 @@ $baseTextColor: if($luminance < 0.2, white, black);
 
 .zammad-chat-message--typing .zammad-chat-message-body {
   white-space: normal;
+}
+
+.zammad-chat-loading-animation {
+  display: inline-block;
 }
 
 .zammad-chat-loading-circle {
