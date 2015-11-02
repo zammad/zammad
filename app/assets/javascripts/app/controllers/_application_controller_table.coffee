@@ -10,6 +10,7 @@ class App.ControllerTable extends App.Controller
     '.js-tableHead': 'tableHead'
 
   constructor: (params) ->
+    super
     for key, value of params
       @[key] = value
 
