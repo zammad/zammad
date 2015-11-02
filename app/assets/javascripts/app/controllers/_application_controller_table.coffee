@@ -6,6 +6,9 @@ class App.ControllerTable extends App.Controller
   checkBoxColWidth: 40
   radioColWidth: 22
 
+  elements:
+    '.js-tableHead': 'tableHead'
+
   constructor: (params) ->
     for key, value of params
       @[key] = value
@@ -22,6 +25,10 @@ class App.ControllerTable extends App.Controller
         @headerWidth[key] = value
 
     @render()
+    $(window).on 'resize.table', @onResize
+
+  destroy: =>
+    $(window).off 'resize.table', @onResize
 
   render: =>
     @html @tableGen()
@@ -129,7 +136,7 @@ class App.ControllerTable extends App.Controller
       return $(table)
 
     # get header data
-    headers = []
+    @headers = []
     for item in overview
       headerFound = false
       for attributeName, attribute of attributes
@@ -145,7 +152,7 @@ class App.ControllerTable extends App.Controller
             headerFound = true
             if @headerWidth[attribute.name]
               attribute.width = "#{@headerWidth[attribute.name]}px"
-            headers.push attribute
+            @headers.push attribute
           else
             # e.g. column: owner_id
             rowWithoutId = item + '_id'
@@ -153,10 +160,10 @@ class App.ControllerTable extends App.Controller
               headerFound = true
               if @headerWidth[attribute.name]
                 attribute.width = "#{@headerWidth[attribute.name]}px"
-              headers.push attribute
+              @headers.push attribute
 
     if @orderDirection && @orderBy
-      for header in headers
+      for header in @headers
         if header.name is @orderBy
           @objects = _.sortBy(
             @objects
@@ -184,9 +191,9 @@ class App.ControllerTable extends App.Controller
     # execute header callback
     if @callbackHeader
       for callback in @callbackHeader
-        headers = callback(headers)
+        @headers = callback(@headers)
 
-    headers = @adjustHeaderWidths headers
+    @headers = @adjustHeaderWidths @headers
 
     # group by
     if @groupBy
@@ -217,10 +224,10 @@ class App.ControllerTable extends App.Controller
         groupObjects[group] = [] # release old array
 
     # get content
-    @log 'debug', 'table', 'header', headers, 'overview', 'objects', @objects
+    @log 'debug', 'table', 'header', @headers, 'overview', 'objects', @objects
     table = App.view('generic/table')(
       table_id:  @table_id
-      header:    headers
+      header:    @headers
       objects:   @objects
       checkbox:  @checkbox
       radio:     @radio
@@ -247,7 +254,7 @@ class App.ControllerTable extends App.Controller
             position += 1
           hit      = false
 
-          for headerName in headers
+          for headerName in @headers
             if !hit
               position += 1
             if headerName.name is name || headerName.name is "#{name}_id"
@@ -349,32 +356,31 @@ class App.ControllerTable extends App.Controller
     widths = @getHeaderWidths headers
     difference = widths - availableWidth
 
-    if difference > 0
-      # convert percentages to pixels
-      headers = _.map headers, (col) =>
-        unit = col.width.match(/[px|%]+/)[0]
+    # convert percentages to pixels
+    headers = _.map headers, (col) =>
+      unit = col.width.match(/[px|%]+/)[0]
 
-        if unit is '%'
-          percentage = parseInt col.width, 10
-          col.width = percentage / 100 * availableWidth + 'px'
+      if unit is '%'
+        percentage = parseInt col.width, 10
+        col.width = percentage / 100 * availableWidth + 'px'
 
-        return col
+      return col
 
-      widths = @getHeaderWidths headers
-      shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount(headers)
+    widths = @getHeaderWidths headers
+    shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount(headers)
 
-      # make all cols evenly smaller
-      headers = _.map headers, (col) =>
-        if !col.unresizable
-          value = parseInt col.width, 10
-          col.width = Math.max(@minColWidth, value - shrinkBy) + 'px'
-        return col
+    # make all cols evenly smaller
+    headers = _.map headers, (col) =>
+      if !col.unresizable
+        value = parseInt col.width, 10
+        col.width = Math.max(@minColWidth, value - shrinkBy) + 'px'
+      return col
 
-      # give left-over space from rounding to last column to get to 100%
-      roundingLeftOver = availableWidth - @getHeaderWidths headers
-      # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
-      if roundingLeftOver > 0
-        headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + 'px'
+    # give left-over space from rounding to last column to get to 100%
+    roundingLeftOver = availableWidth - @getHeaderWidths headers
+    # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
+    if roundingLeftOver > 0
+      headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + 'px'
 
     return headers
 
@@ -404,6 +410,12 @@ class App.ControllerTable extends App.Controller
       widths += @radioColWidth
 
     return widths
+
+  onResize: =>
+    @headers = @adjustHeaderWidths @headers
+
+    @tableHead.each (i, el) =>
+      el.style.width = @headers[i].width
 
   stopPropagation: (event) =>
     event.stopPropagation()
