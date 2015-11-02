@@ -447,6 +447,7 @@ class App.ControllerTable extends App.Controller
 
   onColResizeMouseup: =>
     $(document).off 'mousemove.resizeCol'
+
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()
     leftWidth = @resizeTargetLeft.outerWidth()
@@ -462,15 +463,20 @@ class App.ControllerTable extends App.Controller
     ]
 
     @log 'debug', @table_id, 'leftColumnKey', leftColumnKey, leftWidth, 'rightColumnKey', rightColumnKey, rightWidth
-    @preferencesStore('headerWidth', leftColumnKey, leftWidth)
 
+    # update store and runtime @headerWidth
+    @preferencesStore('headerWidth', leftColumnKey, leftWidth)
+    @headerWidth[leftColumnKey] = leftWidth
+
+    # update store and runtime @headerWidth
     if rightColumnKey
       @preferencesStore('headerWidth', rightColumnKey, rightWidth)
+      @headerWidth[rightColumnKey] = rightWidth
 
   sortByColumn: (event) =>
     column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
 
-    # sort
+    # sort, update runtime @orderBy and @orderDirection
     if @orderBy isnt column
       @orderBy = column
       @orderDirection = 'ASC'
@@ -481,6 +487,8 @@ class App.ControllerTable extends App.Controller
         @orderDirection = 'ASC'
 
     @log 'debug', @table_id, 'sortByColumn', @orderBy, 'direction', @orderDirection
+
+    # update store
     @preferencesStore('order', 'orderBy', @orderBy)
     @preferencesStore('order', 'orderDirection', @orderDirection)
     @render()
