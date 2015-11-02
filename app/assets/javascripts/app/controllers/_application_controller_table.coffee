@@ -10,8 +10,7 @@ class App.ControllerTable extends App.Controller
     '.js-tableHead': 'tableHead'
 
   constructor: (params) ->
-    for key, value of params
-      @[key] = value
+    super
 
     # apply personal preferences
     data = @preferencesGet()
@@ -108,7 +107,7 @@ class App.ControllerTable extends App.Controller
     new App.ControllerTable(
       el:       element
       overview: ['time', 'area', 'level', 'browser', 'location', 'data']
-      attributes: [
+      attribute_list: [
         { name: 'time',     display: 'Time',      tag: 'datetime' },
         { name: 'area',     display: 'Area',      type: 'text' },
         { name: 'level',    display: 'Level',     type: 'text' },
@@ -125,7 +124,7 @@ class App.ControllerTable extends App.Controller
     if !@model
       @model = {}
     overview   = @overview || @model.configure_overview || []
-    attributes = @attributes || @model.configure_attributes || {}
+    attributes = @attribute_list || @model.configure_attributes || {}
     attributes = App.Model.attributesGet(false, attributes)
     destroy    = @model.configure_delete
 
