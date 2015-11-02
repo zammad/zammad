@@ -27,7 +27,7 @@ class App.ControllerTable extends App.Controller
     @render()
     $(window).on 'resize.table', @onResize
 
-  destroy: =>
+  release: =>
     $(window).off 'resize.table', @onResize
 
   render: =>
