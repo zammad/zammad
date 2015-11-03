@@ -601,6 +601,19 @@ blockquote {
   padding: 8px 10px 6px;
   border: 1px solid hsl(0,0%,90%);
   
+  &.is-clickable {
+    background: hsl(203,65%,55%);
+    color: white;
+    cursor: pointer;
+    border-color: hsl(203,65%,45%);
+    box-shadow: 1px 0 hsl(203,65%,45%);
+    position: relative;
+  }
+
+  &.is-blinking {
+    animation: pulsate 667ms ease-in-out infinite alternate;
+  }
+  
   &:not(:last-child):not(:only-child) {
     border-right: none;
   }
@@ -618,8 +631,12 @@ blockquote {
   }
 
   .badge {
-    background: hsl(210,5%,77%);
+    background: hsla(210,50%,10%,.24);
   }
+}
+
+@keyframes pulsate {
+  to { filter: brightness(1.2); }
 }
 
 .badge {
@@ -7099,7 +7116,6 @@ output {
     fill: hsl(0,0%,90%);
     margin-left: -4px;
     vertical-align: middle;
-    animation: fadeInDown 300ms both;
     animation: ease-in-out load-fade 600ms infinite alternate;
   }
 
