@@ -19,7 +19,7 @@ class App.WidgetTag extends App.Controller
       @render()
       return
 
-    @tags = App.Store.get( @cacheKey ) || []
+    @tags = App.LocalStorage.get( @cacheKey ) || []
     if !_.isEmpty(@tags)
       @render()
       @delay(
@@ -42,7 +42,7 @@ class App.WidgetTag extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         @tags = data.tags
-        App.Store.write( @cacheKey, @tags )
+        App.LocalStorage.set( @cacheKey, @tags )
         @render()
     )
 

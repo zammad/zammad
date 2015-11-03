@@ -10,7 +10,7 @@ class App.DashboardActivityStream extends App.Controller
   fetch: =>
 
     # use cache of first page
-    cache = App.Store.get( 'activity_stream' )
+    cache = App.LocalStorage.get( 'activity_stream' )
     if cache
       @load( cache )
 
@@ -25,7 +25,7 @@ class App.DashboardActivityStream extends App.Controller
         }
         processData: true
         success: (data) =>
-          App.Store.write( 'activity_stream', data )
+          App.LocalStorage.set( 'activity_stream', data )
           @load(data)
       )
 

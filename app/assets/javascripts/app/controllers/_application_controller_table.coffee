@@ -500,13 +500,13 @@ class App.ControllerTable extends App.Controller
       data[type][key] = {}
     data[type][key] = value
     @log 'debug', @table_id, 'preferencesStore', data
-    localStorage.setItem(@preferencesStoreKey(), JSON.stringify(data))
+    App.LocalStorage.set(@preferencesStoreKey(), data)
 
   preferencesGet: =>
-    data = localStorage.getItem(@preferencesStoreKey())
+    data = App.LocalStorage.get(@preferencesStoreKey())
     return {} if !data
     @log 'debug', @table_id, 'preferencesGet', data
-    JSON.parse(data)
+    data
 
   preferencesStoreKey: =>
     "tablePreferences:#{@table_id}"
