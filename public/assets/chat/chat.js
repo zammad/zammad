@@ -198,11 +198,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       pipe = JSON.parse(e.data);
       console.log('debug', 'ws:onmessage', pipe);
       switch (pipe.action) {
-        case 'message':
+        case 'chat_message':
           return this.receiveMessage(pipe.data);
-        case 'typing_start':
+        case 'chat_typing_start':
           return this.onAgentTypingStart();
-        case 'typing_end':
+        case 'chat_typing_end':
           return this.onAgentTypingEnd();
         case 'chat_init':
           switch (pipe.data.state) {

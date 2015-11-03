@@ -88,11 +88,11 @@ do($ = window.jQuery, window) ->
       console.log 'debug', 'ws:onmessage', pipe
 
       switch pipe.action
-        when 'message'
+        when 'chat_message'
           @receiveMessage pipe.data
-        when 'typing_start'
+        when 'chat_typing_start'
           @onAgentTypingStart()
-        when 'typing_end'
+        when 'chat_typing_end'
           @onAgentTypingEnd()
         when 'chat_init'
           switch pipe.data.state
