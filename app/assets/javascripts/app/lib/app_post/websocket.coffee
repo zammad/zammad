@@ -290,7 +290,6 @@ class _webSocketSingleton extends App.Controller
       # fill collection
       if item['collection']
         @log 'debug', 'onmessage collection:' + item['collection']
-        App.Store.write( item['collection'], item['data'] )
 
       # fire event
       if item['event']
