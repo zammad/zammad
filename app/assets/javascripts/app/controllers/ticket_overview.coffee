@@ -1,4 +1,6 @@
 class App.TicketOverview extends App.Controller
+  className: 'overviews'
+  
   constructor: ->
     super
 
@@ -7,15 +9,18 @@ class App.TicketOverview extends App.Controller
   render: ->
     @html App.view('ticket_overview')()
 
-    @navBarController = new Navbar(
+    @navBarControllerVertical = new Navbar
+      el:   @el.find('.overview-header')
+      view: @view
+      vertical: true
+
+    @navBarController = new Navbar
       el:   @el.find('.sidebar')
       view: @view
-    )
 
-    @contentController = new Table(
-      el:   @el.find('.main')
+    @contentController = new Table
+      el:   @el.find('.overview-table')
       view: @view
-    )
 
   active: (state) =>
     @activeState = state
@@ -39,10 +44,14 @@ class App.TicketOverview extends App.Controller
 
     # build nav bar
     if @navBarController
-      @navBarController.update(
+      @navBarController.update
         view:        @view
         activeState: true
-      )
+
+    if @navBarControllerVertical
+      @navBarControllerVertical.update
+        view:        @view
+        activeState: true
 
     # do not rerender overview if current overview is requested again
     return if @viewLast is @view
@@ -59,6 +68,8 @@ class App.TicketOverview extends App.Controller
   hide: =>
     if @navBarController
       @navBarController.active(false)
+    if @navBarControllerVertical
+      @navBarControllerVertical.active(false)
 
   changed: ->
     false
@@ -658,6 +669,21 @@ class App.OverviewSettings extends App.ControllerModal
     )
 
 class Navbar extends App.Controller
+  elements:
+    '.js-tabsClone': 'clone'
+    '.js-tabClone': 'tabClone'
+    '.js-tabs': 'tabs'
+    '.js-tab': 'tab'
+    '.js-dropdown': 'dropdown'
+    '.js-toggle': 'dropdownToggle'
+    '.js-dropdownItem': 'dropdownItem'
+
+  events:
+    'click .js-tab': 'activate'
+    'click .js-dropdownItem': 'navigate'
+    'hide.bs.dropdown': 'onDropdownHide'
+    'show.bs.dropdown': 'onDropdownShow'
+
   constructor: ->
     super
 
@@ -676,6 +702,9 @@ class Navbar extends App.Controller
     @bind 'ui:rerender', =>
       @render()
 
+    if @options.vertical
+      $(window).on 'resize.navbar', @autoFoldTabs
+
     # init fetch via ajax
     ajaxInit = =>
 
@@ -684,6 +713,37 @@ class Navbar extends App.Controller
       @fetch()
 
     @delay( ajaxInit, 5000 )
+
+  navigate: (event) =>
+    location.hash = $(event.currentTarget).attr('data-target')
+
+  onDropdownShow: =>
+    @dropdownToggle.addClass('active')
+
+  onDropdownHide: =>
+    @dropdownToggle.removeClass('active')
+
+  activate: (event) =>
+    @tab.removeClass('active')
+    $(event.currentTarget).addClass('active')
+
+  release: =>
+    $(window).off 'resize.navbar', @autoFoldTabs
+
+  autoFoldTabs: =>
+    @html App.view("agent_ticket_view/navbar#{ if @options.vertical then '_vertical' }")
+      items: @data
+
+    while @clone.width() > @el.width()
+      @tabClone.not('.hide').last().addClass('hide')
+      @tab.not('.hide').last().addClass('hide')
+      @dropdownItem.filter('.hide').last().removeClass('hide')
+
+    # if all tabs are visible
+    # remove dropdown and dropdown button
+    if @dropdownItem.filter('.hide').size() is 0
+      @dropdown.remove()
+      @dropdownToggle.remove()
 
   fetch: =>
     #console.log('AJAX CALLL')
@@ -716,19 +776,18 @@ class Navbar extends App.Controller
       @title meta.title, true
 
   render: =>
-    #console.log('RENDER NAV')
     return if !@cache
-    data = _.clone(@cache)
+    @data = _.clone(@cache)
 
     # redirect to first view
-    if @activeState && !@view && !_.isEmpty(data)
-      view = data[0].link
+    if @activeState && !@view && !_.isEmpty(@data)
+      view = @data[0].link
       #console.log('REDIRECT', "ticket/view/#{view}")
       @navigate "ticket/view/#{view}", true
       return
 
     # add new views
-    for item in data
+    for item in @data
       item.target = '#ticket/view/' + item.link
       if item.link is @view
         item.active = true
@@ -736,9 +795,11 @@ class Navbar extends App.Controller
       else
         item.active = false
 
-    @html App.view('agent_ticket_view/navbar')(
-      items: data
-    )
+    @html App.view("agent_ticket_view/navbar#{ if @options.vertical then '_vertical' else '' }")
+      items: @data
+
+    if @options.vertical
+      @autoFoldTabs()
 
 class TicketOverviewRouter extends App.ControllerPermanent
   constructor: (params) ->

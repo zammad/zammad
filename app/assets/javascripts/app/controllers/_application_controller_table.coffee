@@ -24,13 +24,14 @@ class App.ControllerTable extends App.Controller
         @headerWidth[key] = value
 
     @render()
-    $(window).on 'resize.table', @onResize
+    $(window).on 'resize.table', @readjustHeaderWidths
 
   release: =>
-    $(window).off 'resize.table', @onResize
+    $(window).off 'resize.table', @readjustHeaderWidths
 
   render: =>
     @html @tableGen()
+    @readjustHeaderWidths()
 
   ###
 
@@ -347,6 +348,9 @@ class App.ControllerTable extends App.Controller
     table
 
   adjustHeaderWidths: (headers) ->
+    if !@headers
+      return
+
     availableWidth = @el.width()
 
     if availableWidth is 0
@@ -410,7 +414,7 @@ class App.ControllerTable extends App.Controller
 
     return widths
 
-  onResize: =>
+  readjustHeaderWidths: =>
     @headers = @adjustHeaderWidths @headers
 
     @tableHead.each (i, el) =>

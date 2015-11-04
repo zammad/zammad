@@ -15,6 +15,8 @@ $navigationWidth: 260px;
 
 $highlight-color: hsl(205,90%,60%);
 
+$largeScreenBreakpoint: 1280px;
+
 html {
   height: 100%;
 }
@@ -64,6 +66,12 @@ strong {
 
 .u-dontfold {
   flex-shrink: 0;
+}
+
+.u-invisible {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
 }
 
 a {
@@ -669,13 +677,15 @@ blockquote {
   &.badge--text {
     min-width: 0;
     padding: 0;
-    margin-right: 5px;
+    margin-right: 0;
     font-size: inherit;
-    font-weight: normal;
-    text-align: left;
+    font-weight: inherit;
+    text-align: inherit;
+    line-height: inherit;
     color: #d0d2d3;
     background: none;
     border-radius: 0;
+    vertical-align: baseline;
   }
 }
 
@@ -1994,18 +2004,49 @@ ol.tabs li {
   }
 
   .tab {
+    color: inherit;
     height: 35px;
     padding: 8px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
     flex: 1 1 auto;
     @extend .u-clickable;
+    white-space: nowrap;
+    
+    &.active {
+      color: white;
+      background: #444a4f;
+      box-shadow: none;
+      
+      .tab-badge {
+        color: hsl(204,3%,65%);
+      }
+    }
   }
 
-  .tab.active {
-    color: white;
-    background: #444a4f;
-    box-shadow: none;
+  .tab-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      
+    .arrow {
+      margin-left: 10px;
+      opacity: 0.75;
+    }
+    
+    .icon {
+      fill: hsl(0,0%,70%);
+    }
+    
+    &.active {
+      background: white;
+      
+      .icon {
+        fill: #444a4f;
+        opacity: 1;
+      }
+    }
   }
 
   .tab:first-child {
@@ -2017,15 +2058,26 @@ ol.tabs li {
     border-right: none;
   }
 
+  .tab-badge {
+    margin-left: 3px;
+    font-size: 0.95em;
+  }
+
   .wide-tabs {
-    margin: 25px auto 20px;
-    font-size: 15px;
-    font-weight: 300;
+    margin: 25px 0 20px;
+    font-size: 14px;
     border-radius: 8px;
+    display: inline-flex;
     
     .tab {
-      height: 40px;
-      padding: 10px 20px;
+      height: auto;
+      padding: 10px 24px;
+      flex-grow: 0;
+    }
+
+    .tab-dropdown {
+      padding-left: 18px;
+      padding-right: 15px;
     }
   }
 
@@ -2286,8 +2338,33 @@ footer {
   border-color: #eee;
 }
 
-.tableOverview {
-  padding: 10px 20px;
+.overviews {
+  .sidebar {
+    @media only screen and (max-width: $largeScreenBreakpoint) {
+      display: none;
+    }
+  }
+}
+
+.overview-header {
+  position: relative;
+  height: 92px;
+  display: none;
+  
+  .tabs {
+    margin-top: 20px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .dropdown {
+    min-width: 0;
+    width: 336px;
+  }
+
+  @media only screen and (max-width: $largeScreenBreakpoint) {
+    display: block;
+  }
 }
 
 .tableOverview-edit {
@@ -2295,12 +2372,20 @@ footer {
 }
 
 .bulkAction {
+  position: fixed;
+  bottom: 0;
+  left: $sidebarWidth + $navigationWidth;
+  right: 0;
   background: white;
   z-index: 1;
   box-shadow: 
     0 -1px rgba(0,0,0,.05),
     0 -2px rgba(0,0,0,.03),
     0 -3px rgba(0,0,0,.01);
+    
+  @media only screen and (max-width: $largeScreenBreakpoint) {
+    left: $navigationWidth;
+  }
 }
 
   .bulkAction-firstStep {
@@ -3044,8 +3129,7 @@ footer {
 }
 
 .sidebar {
-  width: 32%;
-  max-width: 280px;
+  width: 280px;
   padding: 20px;
   color: hsl(60,1%,34%);
   background: white;
@@ -3066,21 +3150,21 @@ footer {
   }
 }
 
-  .sidebar-block {
-    margin: 20px 0;
+.sidebar-block {
+  margin: 20px 0;
 
-    &:first-child {
-      margin-top: 0;
-    }
+  &:first-child {
+    margin-top: 0;
   }
-  .sidebar-block [contenteditable=true] {
-    white-space: normal; // do no u-textTruncate, we want to edit it inline
-  }
+}
+.sidebar-block [contenteditable=true] {
+  white-space: normal; // do no u-textTruncate, we want to edit it inline
+}
 
-  .main + .sidebar {
-    border-right: none;
-    border-left: 1px solid #e6e6e6;
-  }
+.main + .sidebar {
+  border-right: none;
+  border-left: 1px solid #e6e6e6;
+}
 
 .NavBarAdmin.sidebar,
 .NavBarProfile.sidebar, {
@@ -3147,6 +3231,7 @@ footer {
   .nav-pills > li > a > .badge {
     margin-left: auto;
     padding-left: 10px;
+    margin-right: 5px;
   }
 
   a.list-group-item.active > .badge,
@@ -5185,6 +5270,10 @@ footer {
     padding: 0 15px;
     cursor: pointer;
     white-space: nowrap;
+    
+    &:focus {
+      outline: none;
+    }
   }
 
   .dropdown li:not(:first-child) {
@@ -5257,6 +5346,13 @@ footer {
       display: flex;
       flex: 1;
       padding: 0 18px;
+    }
+  }
+
+  .dropdown.dropdown--wide {
+    li {
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
   }
 
@@ -7157,7 +7253,7 @@ output {
 
 */
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width: $largeScreenBreakpoint) {
   .sidebar.optional {
     display: none;
   }
