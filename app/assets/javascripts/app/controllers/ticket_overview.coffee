@@ -3,7 +3,6 @@ class App.TicketOverview extends App.Controller
 
   constructor: ->
     super
-
     @render()
 
   render: ->
@@ -29,7 +28,7 @@ class App.TicketOverview extends App.Controller
     @activeState
 
   url: =>
-    '#ticket/view/' + @view
+    "#ticket/view/#{@view}"
 
   show: (params) =>
 
@@ -77,9 +76,105 @@ class App.TicketOverview extends App.Controller
   release: ->
     # no
 
-  overview: (overview_id) =>
-    return if !@contentController
-    @contentController.meta(overview_id)
+class Navbar extends App.Controller
+  elements:
+    '.js-tabsClone': 'clone'
+    '.js-tabClone': 'tabClone'
+    '.js-tabs': 'tabs'
+    '.js-tab': 'tab'
+    '.js-dropdown': 'dropdown'
+    '.js-toggle': 'dropdownToggle'
+    '.js-dropdownItem': 'dropdownItem'
+
+  events:
+    'click .js-tab': 'activate'
+    'click .js-dropdownItem': 'navigateTo'
+    'hide.bs.dropdown': 'onDropdownHide'
+    'show.bs.dropdown': 'onDropdownShow'
+
+  constructor: ->
+    super
+
+    @bindId = App.OverviewIndexCollection.bind(@render)
+
+    # rerender view, e. g. on language change
+    @bind 'ui:rerender', =>
+      @render(App.OverviewIndexCollection.get())
+
+    if @vertical
+      $(window).on 'resize.navbar', @autoFoldTabs
+
+  navigateTo: (event) =>
+    location.hash = $(event.currentTarget).attr('data-target')
+
+  onDropdownShow: =>
+    @dropdownToggle.addClass('active')
+
+  onDropdownHide: =>
+    @dropdownToggle.removeClass('active')
+
+  activate: (event) =>
+    @tab.removeClass('active')
+    $(event.currentTarget).addClass('active')
+
+  release: =>
+    $(window).off 'resize.navbar', @autoFoldTabs
+    if @bindId
+      App.OverviewIndexCollection.unbind(@bindId)
+
+  autoFoldTabs: =>
+    items = App.OverviewIndexCollection.get()
+    @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' }")
+      items: items
+
+    while @clone.width() > @el.width()
+      @tabClone.not('.hide').last().addClass('hide')
+      @tab.not('.hide').last().addClass('hide')
+      @dropdownItem.filter('.hide').last().removeClass('hide')
+
+    # if all tabs are visible
+    # remove dropdown and dropdown button
+    if @dropdownItem.filter('.hide').size() is 0
+      @dropdown.remove()
+      @dropdownToggle.remove()
+
+  active: (state) =>
+    @activeState = state
+
+  update: (params = {}) ->
+    for key, value of params
+      @[key] = value
+    @render(App.OverviewIndexCollection.get())
+
+  render: (data) =>
+    return if !data
+
+    # set page title
+    if @activeState && @view && !@vertical
+      for item in data
+        if item.link is @view
+          @title item.name, true
+
+    # redirect to first view
+    if @activeState && !@view && !@vertical
+      view = data[0].link
+      @navigate "ticket/view/#{view}", true
+      return
+
+    # add new views
+    for item in data
+      item.target = "#ticket/view/#{item.link}"
+      if item.link is @view
+        item.active = true
+        activeOverview = item
+      else
+        item.active = false
+
+    @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' else '' }")
+      items: data
+
+    if @vertical
+      @autoFoldTabs()
 
 class Table extends App.Controller
   events:
@@ -89,34 +184,17 @@ class Table extends App.Controller
   constructor: ->
     super
 
-    @cache = {}
-
-    # rebuild ticket overview data
-    @bind 'ticket_overview_rebuild', (data) =>
-      #console.log('EVENT ticket_overview_rebuild', @view, data.view)
-
-      # remeber bulk attributes
-      @bulk = data.bulk
-
-      # fill cache
-      @cache[data.view] = data
-
-      # check if current view is updated
-      if @view is data.view
-        @render()
-
-    # force fetch ticket overview
-    @bind 'ticket_overview_fetch_force', =>
-      @fetch()
-
-    # force fetch ticket overview
-    @bind 'ticket_overview_local', =>
-      @render(true)
+    if @view
+      @bindId = App.OverviewCollection.bind(@view, @render)
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
-      @render()
+      @render(App.OverviewCollection.get(@view))
+
+  release: =>
+    if @bindId
+      App.OverviewCollection.unbind(@bindId)
 
   update: (params) =>
     for key, value of params
@@ -127,61 +205,26 @@ class Table extends App.Controller
 
     return if !@view
 
-    # fetch initial data
-    if !@cache || !@cache[@view]
-      @fetch()
-    else
-      @render()
+    if @view
+      if @bindId
+        App.OverviewCollection.unbind(@bindId)
+      @bindId = App.OverviewCollection.bind(@view, @render)
 
-  fetch: =>
-
-    # init fetch via ajax, all other updates on time via websockets
-    @ajax(
-      id:   'ticket_overview_' + @view + '_' + @view_mode
-      type: 'GET'
-      url:  @apiPath + '/ticket_overviews'
-      data:
-        view:      @view
-        view_mode: @view_mode
-      processData: true
-      success: (data) =>
-        if data.assets
-          App.Collection.loadAssets( data.assets )
-
-        # remeber bulk attributes
-        @bulk = data.bulk
-
-        @cache[data.view] = data
-        @render()
-      )
-
-  meta: (overview_id) =>
-    return if !@cache
-
-    # find requested overview data
-    for url, data of @cache
-      if data.overview.id is overview_id
-        return data
-    false
-
-  render: (overview_changed = false) =>
-    #console.log('RENDER', @cache, @view)
-    return if !@cache
-    return if !@cache[@view]
+  render: (data) =>
+    return if !data
 
     # use cache
-    overview      = @cache[@view].overview
-    tickets_count = @cache[@view].tickets_count
-    ticket_ids    = @cache[@view].ticket_ids
+    overview      = data.overview
+    tickets_count = data.tickets_count
+    ticket_ids    = data.ticket_ids
 
     # use cache if no local change
-    if !overview_changed
-      App.Overview.refresh( overview, { clear: true } )
+    App.Overview.refresh(overview, { clear: true })
 
     # get ticket list
     ticket_list_show = []
     for ticket_id in ticket_ids
-      ticket_list_show.push App.Ticket.fullLocal( ticket_id )
+      ticket_list_show.push App.Ticket.fullLocal(ticket_id)
 
     # if customer and no ticket exists, show the following message only
     if !ticket_list_show[0] && @isRole('Customer')
@@ -191,7 +234,7 @@ class Table extends App.Controller
     @selected = @bulkGetSelected()
 
     # set page title
-    @overview = App.Overview.find( overview.id )
+    @overview = App.Overview.find(overview.id)
 
     # render init page
     checkbox = true
@@ -513,7 +556,8 @@ class Table extends App.Controller
           if @bulk_count_index == @bulk_count
 
             # fetch overview data again
-            App.Event.trigger('ticket_overview_fetch_force')
+            App.OverviewIndexCollection.fetch()
+            App.OverviewCollection.fetch(@view)
       )
     )
     @el.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
@@ -640,7 +684,7 @@ class App.OverviewSettings extends App.ControllerModal
     e.preventDefault()
     params = @formParam(e.target)
 
-    # check if refetch is needed
+    # check if re-fetch is needed
     @reload_needed = false
     if @overview.order.by isnt params.order.by
       @overview.order.by = params.order.by
@@ -660,119 +704,15 @@ class App.OverviewSettings extends App.ControllerModal
 
         # fetch overview data again
         if @reload_needed
-          App.Event.trigger('ticket_overview_fetch_force')
+          App.OverviewIndexCollection.fetch()
+          App.OverviewCollection.fetch(@overview.link)
         else
-          App.Event.trigger('ticket_overview_local')
+          App.OverviewIndexCollection.trigger()
+          App.OverviewCollection.trigger(@overview.link)
 
         # hide modal
         @hide()
     )
-
-class Navbar extends App.Controller
-  elements:
-    '.js-tabsClone': 'clone'
-    '.js-tabClone': 'tabClone'
-    '.js-tabs': 'tabs'
-    '.js-tab': 'tab'
-    '.js-dropdown': 'dropdown'
-    '.js-toggle': 'dropdownToggle'
-    '.js-dropdownItem': 'dropdownItem'
-
-  events:
-    'click .js-tab': 'activate'
-    'click .js-dropdownItem': 'navigate'
-    'hide.bs.dropdown': 'onDropdownHide'
-    'show.bs.dropdown': 'onDropdownShow'
-
-  constructor: ->
-    super
-    console.log('RR', @vertical)
-
-    App.OverviewIndexCollection.bind(@render)
-
-    App.OverviewIndexCollection.fetch()
-
-    # force fetch ticket overview
-    #@bind 'ticket_overview_fetch_force', =>
-    #  @fetch()
-
-    # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', =>
-      @render(App.OverviewIndexCollection.get())
-
-    if @options.vertical
-      $(window).on 'resize.navbar', @autoFoldTabs
-
-  navigate: (event) =>
-    location.hash = $(event.currentTarget).attr('data-target')
-
-  onDropdownShow: =>
-    @dropdownToggle.addClass('active')
-
-  onDropdownHide: =>
-    @dropdownToggle.removeClass('active')
-
-  activate: (event) =>
-    @tab.removeClass('active')
-    $(event.currentTarget).addClass('active')
-
-  release: =>
-    $(window).off 'resize.navbar', @autoFoldTabs
-
-  autoFoldTabs: =>
-    items = App.OverviewIndexCollection.get()
-    @html App.view("agent_ticket_view/navbar#{ if @options.vertical then '_vertical' }")
-      items: items
-
-    while @clone.width() > @el.width()
-      @tabClone.not('.hide').last().addClass('hide')
-      @tab.not('.hide').last().addClass('hide')
-      @dropdownItem.filter('.hide').last().removeClass('hide')
-
-    # if all tabs are visible
-    # remove dropdown and dropdown button
-    if @dropdownItem.filter('.hide').size() is 0
-      @dropdown.remove()
-      @dropdownToggle.remove()
-
-  active: (state) =>
-    @activeState = state
-
-  update: (params = {}) ->
-    for key, value of params
-      @[key] = value
-    @render(App.OverviewIndexCollection.get())
-
-  render: (data) =>
-    return if !data
-
-    # set page title
-    if @activeState && @view
-      for item in data
-        if item.link is @view
-          @title item.name, true
-
-    # redirect to first view
-    if @activeState && !@view
-      view = data[0].link
-      #console.log('REDIRECT', "ticket/view/#{view}")
-      @navigate "ticket/view/#{view}", true
-      return
-
-    # add new views
-    for item in data
-      item.target = '#ticket/view/' + item.link
-      if item.link is @view
-        item.active = true
-        activeOverview = item
-      else
-        item.active = false
-
-    @html App.view("agent_ticket_view/navbar#{ if @options.vertical then '_vertical' else '' }")
-      items: data
-
-    if @options.vertical
-      @autoFoldTabs()
 
 class TicketOverviewRouter extends App.ControllerPermanent
   constructor: (params) ->

@@ -16,6 +16,11 @@ class App.OverviewIndexCollection
       _instance ?= new _Singleton
     _instance.unbind(callback)
 
+  @trigger: ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.trigger()
+
   @fetch: ->
     if _instance == undefined
       _instance ?= new _Singleton
@@ -26,14 +31,25 @@ class _Singleton
   constructor: ->
     @callbacks = {}
     @counter = 0
+
+    # websocket updates
     App.Event.bind 'ticket_overview_index', (data) =>
       @overview_index = data
+      @callback(data)
 
   get: ->
     @overview_index
 
-  bind: (callback) ->
+  bind: (callback, init = true) ->
     @counter += 1
+
+    # start init call if needed
+    if init
+      if @overview_index is undefined
+        @fetch()
+      else
+        @callback(@overview_index)
+
     @callbacks[@counter] = callback
 
   unbind: (callback) ->
@@ -52,8 +68,14 @@ class _Singleton
       success: (data) =>
         @fetchActive = false
         @overview_index = data
-        for counter, callback of @callbacks
-          callback(data)
+        @callback(data)
       error: =>
         @fetchActive = false
     )
+
+  trigger: =>
+    @callback(@get())
+
+  callback: (data) =>
+    for counter, callback of @callbacks
+      callback(data)
