@@ -696,6 +696,7 @@ table {
 
 .table {
   display: table;
+  color: hsl(198,19%,72%);
 }
 
 .table-fluid {
@@ -5311,6 +5312,10 @@ footer {
 
   .dropdown-menu > li > a span {
     display: block;
+  }
+
+  .dropdown-menu .badge {
+    padding-left: 10px;
   }
 
   .dropdown.dropdown--actions {
