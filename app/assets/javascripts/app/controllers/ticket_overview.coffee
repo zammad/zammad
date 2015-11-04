@@ -1,6 +1,6 @@
 class App.TicketOverview extends App.Controller
   className: 'overviews'
-  
+
   constructor: ->
     super
 
@@ -10,16 +10,16 @@ class App.TicketOverview extends App.Controller
     @html App.view('ticket_overview')()
 
     @navBarControllerVertical = new Navbar
-      el:   @el.find('.overview-header')
-      view: @view
+      el:       @$('.overview-header')
+      view:     @view
       vertical: true
 
     @navBarController = new Navbar
-      el:   @el.find('.sidebar')
+      el:   @$('.sidebar')
       view: @view
 
     @contentController = new Table
-      el:   @el.find('.overview-table')
+      el:   @$('.overview-table')
       view: @view
 
   active: (state) =>
@@ -686,33 +686,22 @@ class Navbar extends App.Controller
 
   constructor: ->
     super
+    console.log('RR', @vertical)
 
-    # rebuild ticket overview data
-    @bind 'ticket_overview_index', (data) =>
-      #console.log('EVENT ticket_overview_index')
-      @cache = data
-      @update()
+    App.OverviewIndexCollection.bind(@render)
 
+    App.OverviewIndexCollection.fetch()
 
     # force fetch ticket overview
-    @bind 'ticket_overview_fetch_force', =>
-      @fetch()
+    #@bind 'ticket_overview_fetch_force', =>
+    #  @fetch()
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
-      @render()
+      @render(App.OverviewIndexCollection.get())
 
     if @options.vertical
       $(window).on 'resize.navbar', @autoFoldTabs
-
-    # init fetch via ajax
-    ajaxInit = =>
-
-      # ignore if already pushed via websockets
-      return if @cache
-      @fetch()
-
-    @delay( ajaxInit, 5000 )
 
   navigate: (event) =>
     location.hash = $(event.currentTarget).attr('data-target')
@@ -731,8 +720,9 @@ class Navbar extends App.Controller
     $(window).off 'resize.navbar', @autoFoldTabs
 
   autoFoldTabs: =>
+    items = App.OverviewIndexCollection.get()
     @html App.view("agent_ticket_view/navbar#{ if @options.vertical then '_vertical' }")
-      items: @data
+      items: items
 
     while @clone.width() > @el.width()
       @tabClone.not('.hide').last().addClass('hide')
@@ -745,49 +735,32 @@ class Navbar extends App.Controller
       @dropdown.remove()
       @dropdownToggle.remove()
 
-  fetch: =>
-    #console.log('AJAX CALLL')
-    # init fetch via ajax, all other updates on time via websockets
-    @ajax(
-      id:    'ticket_overviews',
-      type:  'GET',
-      url:   @apiPath + '/ticket_overviews',
-      processData: true,
-      success: (data) =>
-        @cache = data
-        @update()
-      )
-
   active: (state) =>
     @activeState = state
 
   update: (params = {}) ->
     for key, value of params
       @[key] = value
-    @render()
+    @render(App.OverviewIndexCollection.get())
 
-    if @activeState
-      meta =
-        title: ''
-      if @cache
-        for item in @cache
-          if item.link is @view
-            meta.title = item.name
-      @title meta.title, true
+  render: (data) =>
+    return if !data
 
-  render: =>
-    return if !@cache
-    @data = _.clone(@cache)
+    # set page title
+    if @activeState && @view
+      for item in data
+        if item.link is @view
+          @title item.name, true
 
     # redirect to first view
-    if @activeState && !@view && !_.isEmpty(@data)
-      view = @data[0].link
+    if @activeState && !@view
+      view = data[0].link
       #console.log('REDIRECT', "ticket/view/#{view}")
       @navigate "ticket/view/#{view}", true
       return
 
     # add new views
-    for item in @data
+    for item in data
       item.target = '#ticket/view/' + item.link
       if item.link is @view
         item.active = true
@@ -796,7 +769,7 @@ class Navbar extends App.Controller
         item.active = false
 
     @html App.view("agent_ticket_view/navbar#{ if @options.vertical then '_vertical' else '' }")
-      items: @data
+      items: data
 
     if @options.vertical
       @autoFoldTabs()
