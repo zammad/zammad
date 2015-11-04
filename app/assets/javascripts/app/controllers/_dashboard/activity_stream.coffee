@@ -5,14 +5,14 @@ class App.DashboardActivityStream extends App.Controller
     @fetch()
 
     # bind to rebuild view event
-    @bind( 'activity_stream_rebuild', @load )
+    @bind('activity_stream_rebuild', @load)
 
   fetch: =>
 
     # use cache of first page
-    cache = App.LocalStorage.get( 'activity_stream' )
+    cache = App.LocalStorage.get('activity_stream')
     if cache
-      @load( cache )
+      @load(cache)
 
     # init fetch via ajax, all other updates on time via websockets
     else
@@ -25,15 +25,16 @@ class App.DashboardActivityStream extends App.Controller
         }
         processData: true
         success: (data) =>
-          App.LocalStorage.set( 'activity_stream', data )
           @load(data)
       )
 
   load: (data) =>
+
+    App.LocalStorage.set('activity_stream', data)
+
     items = data.activity_stream
 
-    # load assets
-    App.Collection.loadAssets( data.assets )
+    App.Collection.loadAssets(data.assets)
 
     @render(items)
 
@@ -51,7 +52,7 @@ class App.DashboardActivityStream extends App.Controller
 
     html = $('<div class="activity-entries"></div>')
     for item in items
-      html.append( @renderItem(item) )
+      html.append(@renderItem(item))
 
     @$('.activity-entries').remove()
     @el.append html
