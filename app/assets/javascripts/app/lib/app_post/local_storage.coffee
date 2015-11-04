@@ -1,20 +1,20 @@
 class App.LocalStorage
   _instance = undefined # Must be declared here to force the closure on the class
 
-  @set: (key, value) ->
+  @set: (key, value, user_id) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.set(key, value)
+    _instance.set(key, value, user_id)
 
-  @get: (args) ->
+  @get: (key, user_id) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.get(args)
+    _instance.get(key, user_id)
 
-  @delete: (args) ->
+  @delete: (key, user_id) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.delete(args)
+    _instance.delete(key)
 
   @clear: ->
     if _instance == undefined
@@ -31,22 +31,28 @@ class _storeSingleton
   constructor: ->
 
   # write to local storage
-  set: (key, value) ->
+  set: (key, value, user_id) ->
     try
-      localStorage.setItem(key, JSON.stringify( value ))
+      if user_id
+        key = "personal::#{user_id}::#{key}"
+      localStorage.setItem(key, JSON.stringify(value))
     catch e
       if e is QUOTA_EXCEEDED_ERR
         # do something nice to notify your users
-        App.Log.error 'App.LocalStore', 'Local storage quote exceeded!'
+        App.Log.error 'App.LocalStorage', 'Local storage quote exceeded!'
 
   # get item
-  get: (key) ->
+  get: (key, user_id) ->
+    if user_id
+      key = "personal::#{user_id}::#{key}"
     value = localStorage.getItem(key)
     return if !value
     JSON.parse(value)
 
   # delete item
-  delete: (key) ->
+  delete: (key, user_id) ->
+    if user_id
+      key = "personal::#{user_id}::#{key}"
     localStorage.removeItem(key)
 
   # clear local storage
@@ -55,6 +61,4 @@ class _storeSingleton
 
   # return list of all keys
   list: ->
-    for key of window.localStorage
-      list.push key
-    list
+    window.localStorage

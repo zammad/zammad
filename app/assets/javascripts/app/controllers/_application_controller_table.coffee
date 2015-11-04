@@ -500,10 +500,10 @@ class App.ControllerTable extends App.Controller
       data[type][key] = {}
     data[type][key] = value
     @log 'debug', @table_id, 'preferencesStore', data
-    App.LocalStorage.set(@preferencesStoreKey(), data)
+    App.LocalStorage.set(@preferencesStoreKey(), data, @Session.get('id'))
 
   preferencesGet: =>
-    data = App.LocalStorage.get(@preferencesStoreKey())
+    data = App.LocalStorage.get(@preferencesStoreKey(), @Session.get('id'))
     return {} if !data
     @log 'debug', @table_id, 'preferencesGet', data
     data
