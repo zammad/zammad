@@ -32,7 +32,7 @@ class App.TicketZoom extends App.Controller
       @overview_id = false
 
     @key = 'ticket::' + @ticket_id
-    cache = App.LocalStorage.get(@key)
+    cache = App.SessionStorage.get(@key)
     if cache
       @load(cache)
     update = =>
@@ -168,7 +168,7 @@ class App.TicketZoom extends App.Controller
         @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
         @load(data, force)
-        App.LocalStorage(@key, data)
+        App.SessionStorage(@key, data)
 
         if !@doNotLog
           @doNotLog = 1

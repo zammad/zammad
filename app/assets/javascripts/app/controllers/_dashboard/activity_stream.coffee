@@ -10,7 +10,7 @@ class App.DashboardActivityStream extends App.Controller
   fetch: =>
 
     # use cache of first page
-    cache = App.LocalStorage.get('activity_stream')
+    cache = App.SessionStorage.get('activity_stream')
     if cache
       @load(cache)
 
@@ -30,7 +30,7 @@ class App.DashboardActivityStream extends App.Controller
 
   load: (data) =>
 
-    App.LocalStorage.set('activity_stream', data)
+    App.SessionStorage.set('activity_stream', data)
 
     items = data.activity_stream
 

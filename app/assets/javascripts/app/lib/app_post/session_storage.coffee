@@ -6,15 +6,15 @@ class App.SessionStorage
       _instance ?= new _storeSingleton
     _instance.set(key, value)
 
-  @get: (args) ->
+  @get: (key) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.get(args)
+    _instance.get(key)
 
-  @delete: (args) ->
+  @delete: (key) ->
     if _instance == undefined
       _instance ?= new _storeSingleton
-    _instance.delete(args)
+    _instance.delete(key)
 
   @clear: ->
     if _instance == undefined
@@ -36,11 +36,11 @@ class _storeSingleton
   # write to local storage
   set: (key, value) ->
     try
-      sessionStorage.setItem(key, JSON.stringify( value ))
+      sessionStorage.setItem(key, JSON.stringify(value))
     catch e
       if e is QUOTA_EXCEEDED_ERR
         # do something nice to notify your users
-        App.Log.error 'App.LocalStore', 'Local storage quote exceeded!'
+        App.Log.error 'App.SessionStorage', 'Session storage quote exceeded!'
 
   # get item
   get: (key) ->
@@ -58,6 +58,4 @@ class _storeSingleton
 
   # return list of all keys
   list: ->
-    for key of window.sessionStorage
-      list.push key
-    list
+    window.sessionStorage
