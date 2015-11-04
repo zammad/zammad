@@ -27,7 +27,7 @@ body {
   font-weight: normal;
   background: hsl(210,14%,97%);
   height: 100%;
-  color: hsl(198,19%,72%);
+  color: hsl(60,1%,34%);
   word-wrap: break-word;
   overflow-wrap: break-word;
   display: flex;
@@ -41,7 +41,6 @@ use {
 
 p {
   margin: 14px 0;
-  color: hsl(60,1%,34%);
 
   &.subtle {
     color: hsl(60,1%,74%);
@@ -696,6 +695,9 @@ table {
 
 .table {
   display: table;
+}
+
+.table--light {
   color: hsl(198,19%,72%);
 }
 

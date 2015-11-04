@@ -302,6 +302,7 @@ class Table extends App.Controller
         groupBy:        @overview.group_by
         orderBy:        @overview.order.by
         orderDirection: @overview.order.direction
+        class: 'table--light'
         bindRow:
           events:
             'click':  openTicket
