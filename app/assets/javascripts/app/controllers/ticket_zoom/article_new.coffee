@@ -371,7 +371,7 @@ class App.TicketZoomArticleNew extends App.Controller
   openTextarea: (event, withoutAnimation) =>
     if @articleNewEdit.hasClass('is-open')
       return
-    
+
     duration = 300
 
     if withoutAnimation
@@ -517,7 +517,7 @@ class App.TicketZoomArticleNew extends App.Controller
         App.Ajax.request(
           type:  'DELETE'
           url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-          data:  JSON.stringify( { store_id: store_id } ),
+          data:  JSON.stringify( { store_id: store_id } )
           processData: false
         )
 
