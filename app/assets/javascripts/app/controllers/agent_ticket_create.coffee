@@ -134,7 +134,7 @@ class App.TicketCreate extends App.Controller
   fetch: (params) ->
 
     # use cache
-    cache = App.Store.get( 'ticket_create_attributes' )
+    cache = App.SessionStorage.get( 'ticket_create_attributes' )
 
     if cache && !params.ticket_id && !params.article_id
 
@@ -157,7 +157,7 @@ class App.TicketCreate extends App.Controller
         success: (data, status, xhr) =>
 
           # cache request
-          App.Store.write( 'ticket_create_attributes', data )
+          App.SessionStorage.set( 'ticket_create_attributes', data )
 
           # get edit form attributes
           @form_meta = data.form_meta

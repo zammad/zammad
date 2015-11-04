@@ -122,7 +122,7 @@ class Table extends App.Controller
     for key, value of params
       @[key] = value
 
-    @view_mode = localStorage.getItem( "mode:#{@view}" ) || 's'
+    @view_mode = App.LocalStorage.get("mode:#{@view}", @Session.get('id')) || 's'
     @log 'notice', 'view:', @view, @view_mode
 
     return if !@view
@@ -381,7 +381,7 @@ class Table extends App.Controller
   viewmode: (e) =>
     e.preventDefault()
     @view_mode = $(e.target).data('mode')
-    localStorage.setItem( "mode:#{@view}", @view_mode )
+    App.LocalStorage.set("mode:#{@view}", @view_mode, @Session.get('id'))
     @fetch()
     #@render()
 

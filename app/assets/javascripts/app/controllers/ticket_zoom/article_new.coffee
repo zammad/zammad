@@ -137,6 +137,7 @@ class App.TicketZoomArticleNew extends App.Controller
       ticket:       ticket
       articleTypes: @articleTypes
       article:      @defaults
+      form_id:      @form_id
       isCustomer:   @isRole('Customer')
     )
     @setArticleType(@type)
@@ -167,7 +168,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     html5Upload.initialize(
       uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload',
-      dropContainer:          @el.get(0),
+      dropContainer:          @$('.article-add').get(0),
       cancelContainer:        @cancelContainer,
       inputField:             @$('.article-attachment input').get(0),
       key:                    'File',

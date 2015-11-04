@@ -1,7 +1,7 @@
 <form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>" data-type="<%= @article.type %>">
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
-  <input type="hidden" name="form_id" value="<%= @article.form_id %>">
+  <input type="hidden" name="form_id" value="<%= @form_id %>">
   <input type="hidden" name="in_reply_to" value="<%= @article.in_reply_to %>">
   <div class="editControls">
     <div class="js-avatar"></div>

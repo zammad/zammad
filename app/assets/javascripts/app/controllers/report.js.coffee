@@ -23,9 +23,9 @@ class Index extends App.ControllerContent
     return @params if @params
 
     @params = {}
-    paramsRaw = localStorage.getItem('report::params')
+    paramsRaw = App.SessionStorage.get('report::params')
     if paramsRaw
-      @params = JSON.parse(paramsRaw)
+      @params = paramsRaw
       return @params
 
     @params.timeRange = 'year'
@@ -58,7 +58,7 @@ class Index extends App.ControllerContent
 
   storeParams: =>
     # store latest params
-    localStorage.setItem('report::params', JSON.stringify(@params))
+    App.SessionStorage.set('report::params', @params)
 
   render: (data = {}) =>
 

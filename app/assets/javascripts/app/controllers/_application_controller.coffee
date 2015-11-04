@@ -443,7 +443,7 @@ class App.Controller extends Spine.Controller
         }
         processData: true,
         success: (data, status, xhr) ->
-          App.Store.write( "user-ticket-popover::#{params.user_id}",  data )
+          App.SessionStorage.set( "user-ticket-popover::#{params.user_id}",  data )
 
           # load assets
           App.Collection.loadAssets( data.assets )
@@ -452,7 +452,7 @@ class App.Controller extends Spine.Controller
       )
 
     # get data
-    data = App.Store.get( "user-ticket-popover::#{params.user_id}" )
+    data = App.SessionStorage.get( "user-ticket-popover::#{params.user_id}" )
     if data
       show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       @delay(

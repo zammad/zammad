@@ -22,7 +22,7 @@ class Index extends App.ControllerContent
   fetch: (params) ->
 
     # use cache
-    cache = App.Store.get( 'ticket_create_attributes' )
+    cache = App.SessionStorage.get( 'ticket_create_attributes' )
 
     if cache
 
@@ -42,7 +42,7 @@ class Index extends App.ControllerContent
         success: (data, status, xhr) =>
 
           # cache request
-          App.Store.write( 'ticket_create_attributes', data )
+          App.SessionStorage.set( 'ticket_create_attributes', data )
 
           # get edit form attributes
           @form_meta = data.form_meta

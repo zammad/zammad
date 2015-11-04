@@ -6,18 +6,25 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @render()
 
     # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', (data) =>
+    @bind 'ui:rerender', =>
       @renderMenu()
       @renderPersonal()
 
+    # rerender menu
+    @bind 'menu:render', =>
+      @renderMenu()
+
+    # rerender menu
+    @bind 'personal:render', =>
+      @renderPersonal()
+
     # update selected item
-    @bind 'navupdate', (data) =>
-      @update( arguments[0] )
+    @bind 'navupdate', =>
+      @update(arguments[0])
 
     # rebuild nav bar with given user data
     @bind 'auth', (user) =>
       @log 'Navigation', 'debug', 'navbar rebuild', user
-
       @render()
 
     # fetch new recent viewed after collection change
@@ -43,6 +50,16 @@ class App.Navigation extends App.ControllerWidgetPermanent
   renderMenu: =>
     items = @getItems( navbar: @Config.get( 'NavBar' ) )
 
+    # apply counter and switch info from persistant controllers (if exists)
+    for item in items
+      if item.key
+        worker = App.TaskManager.worker(item.key)
+        if worker
+          if worker.counter
+            item.counter = worker.counter()
+          if worker.switch
+            item.switch = worker.switch()
+
     # get open tabs to repopen on rerender
     open_tab = {}
     @$('.open').children('a').each( (i,d) ->
@@ -56,10 +73,22 @@ class App.Navigation extends App.ControllerWidgetPermanent
       href = $(d).attr('href')
       active_tab[href] = true
     )
+
+    # render menu
     @$('.js-menu').html App.view('navigation/menu')(
       items:      items
       open_tab:   open_tab
       active_tab: active_tab
+    )
+
+    # bind on switch changes and execute it on controller
+    @$('.js-menu .js-switch').bind('change', (e) =>
+      val = $(e.target).prop('checked')
+      key = $(e.target).closest('.menu-item').data('key')
+      return if !key
+      worker = App.TaskManager.worker(key)
+      return if !worker
+      worker.switch(val)
     )
 
   renderPersonal: =>
@@ -197,7 +226,6 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
       # remove not needed popovers
       @delay( removePopovers, 280, 'removePopovers' )
-
 
     # observer search box
     @$('#global-search').bind( 'focusout', (e) =>
