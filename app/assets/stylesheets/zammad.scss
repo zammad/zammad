@@ -2064,16 +2064,24 @@ ol.tabs li {
     font-size: 0.95em;
   }
 
-  .wide-tabs {
-    margin: 25px 0 20px;
+  .tabs.tabs--inline {
+    display: inline-flex;
+    margin-left: 0;
+    margin-right: 0;
+    
+    .tab {
+      flex: none;
+    }
+  }
+
+  .tabs--big {
+    margin: 25px auto 20px;
     font-size: 14px;
     border-radius: 8px;
-    display: inline-flex;
     
     .tab {
       height: auto;
       padding: 10px 24px;
-      flex-grow: 0;
     }
 
     .tab-dropdown {
@@ -2082,23 +2090,16 @@ ol.tabs li {
     }
   }
 
-  .dashboard .wide-tabs {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    
-    .tab {
-      flex: 1;
-    }
-  }
-
-  .wide-tabs .tab:first-child {
+  .tabs--big .tab:first-child {
     border-radius: 8px 0 0 8px;
   }
 
-  .wide-tabs .tab:last-child {
+  .tabs--big .tab:last-child {
     border-radius: 0 8px 8px 0;
+  }
+
+  .dashboard .tabs--big {
+    width: 50%;
   }
 
 .separator {
@@ -4934,6 +4935,7 @@ footer {
 }
 
 .type-tabs .tab {
+  height: 40px;
   line-height: 42px;
   padding: 0 12px 0 12px;
   list-style: none;
