@@ -415,6 +415,14 @@ class App.TicketZoom extends App.Controller
       currentParams =
         ticket:  @formParam( @el.find('.edit') )
         article: @formParam( @el.find('.article-add') )
+
+      # add attachments if exist
+      attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
+      if attachmentCount > 0
+        currentParams.article.attachments = true
+      else
+        delete currentParams.article.attachments
+
       #console.log('lll', currentStore)
       # remove not needed attributes
       delete currentParams.article.form_id
@@ -649,6 +657,14 @@ class App.TicketZoom extends App.Controller
 
     # reset task
     @taskReset()
+
+    # reset/delete uploaded attachments
+    App.Ajax.request(
+      type:  'DELETE'
+      url:   App.Config.get('api_path') + '/ticket_attachment_upload'
+      data:  JSON.stringify( { form_id: @form_id } )
+      processData: false
+    )
 
     # reset edit ticket / reset new article
     App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id })
