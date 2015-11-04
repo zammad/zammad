@@ -57,7 +57,7 @@
     </div>
     <div class="profile-section">
       <!-- if user has organization -->
-      <div class="tabs wide-tabs">
+      <div class="tabs tabs--big">
         <div class="tab js-userTickets active">Tickets von Doreen Kubiak</div>
         <div class="tab js-organizationTickets">Tickets von Steuerbüro C. Kaik</div>
       </div>

@@ -1,4 +1,4 @@
-<table class="table table-hover<%- @class if @class %>">
+<table class="table table-hover<%- " #{@class}" if @class %>">
   <thead>
     <tr>
     <% if @checkbox: %>
