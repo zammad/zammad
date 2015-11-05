@@ -70,7 +70,7 @@ strong {
 .u-invisible {
   opacity: 0;
   pointer-events: none;
-  position: absolute;
+  position: absolute !important;
 }
 
 a {
@@ -270,7 +270,7 @@ blockquote {
   
   .icon {
     vertical-align: middle;
-    margin-top: -3px;
+    margin-top: -1px; // more negative margin top looks bad on the btn--quad plus in overviews
   }
 
   &.btn--icon--last .icon {
@@ -368,6 +368,7 @@ blockquote {
   &.btn--success {
     color: white;
     background: hsl(145,51%,45%);
+    
     &:active {
       background: hsl(145,51%,35%);
     }
@@ -379,6 +380,10 @@ blockquote {
       &:active {
         background: hsl(0,0%,98%);
       }
+    }
+
+    .icon {
+      fill: white;
     }
   }
 
@@ -453,6 +458,10 @@ blockquote {
         color: hsl(0,0%,75%);
       }
     }
+  }
+
+  &.btn--quad {
+    padding: 10px 12px 9px;
   }
 
   &.btn--split--first {
@@ -2083,7 +2092,7 @@ ol.tabs li {
     
     .tab {
       height: auto;
-      padding: 10px 24px;
+      padding: 10px 23px 9px;
     }
 
     .tab-dropdown {
@@ -2355,16 +2364,26 @@ footer {
       display: none;
     }
   }
+  .main {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 .overview-header {
   position: relative;
-  height: 92px;
+  margin: 20px 0 32px;
+  height: 41px;
   display: none;
+  align-items: center;
+  
+  .tabsHolder {
+    flex: 1;
+    margin-right: 20px;
+  }
   
   .tabs {
-    margin-top: 20px;
-    margin-bottom: 32px;
+    margin: 0;
     position: relative;
   }
 
@@ -2374,7 +2393,7 @@ footer {
   }
 
   @media only screen and (max-width: $largeScreenBreakpoint) {
-    display: block;
+    display: flex;
   }
 }
 

@@ -78,6 +78,7 @@ class App.TicketOverview extends App.Controller
 
 class Navbar extends App.Controller
   elements:
+    '.js-tabsHolder': 'tabsHolder'
     '.js-tabsClone': 'clone'
     '.js-tabClone': 'tabClone'
     '.js-tabs': 'tabs'
@@ -122,19 +123,25 @@ class Navbar extends App.Controller
     if @bindId
       App.OverviewIndexCollection.unbind(@bindId)
 
+  trimName: (name) ->
+    start = if name.indexOf('All') > -1 then 4 else 0;
+    shortname = name.substr start, name.indexOf('Tickets') - 1 - start
+    return shortname.charAt(0).toUpperCase() + shortname.slice(1);
+
   autoFoldTabs: =>
     items = App.OverviewIndexCollection.get()
     @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' }")
       items: items
+      trimName: @trimName
 
-    while @clone.width() > @el.width()
+    while @clone.width() > @tabsHolder.width()
       @tabClone.not('.hide').last().addClass('hide')
       @tab.not('.hide').last().addClass('hide')
       @dropdownItem.filter('.hide').last().removeClass('hide')
 
     # if all tabs are visible
     # remove dropdown and dropdown button
-    if @dropdownItem.filter('.hide').size() is 0
+    if @dropdownItem.not('.hide').size() is 0
       @dropdown.remove()
       @dropdownToggle.remove()
 
@@ -172,6 +179,7 @@ class Navbar extends App.Controller
 
     @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' else '' }")
       items: data
+      trimName: @trimName
 
     if @vertical
       @autoFoldTabs()
