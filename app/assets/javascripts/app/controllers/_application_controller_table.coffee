@@ -9,9 +9,6 @@ class App.ControllerTable extends App.Controller
   elements:
     '.js-tableHead': 'tableHead'
 
-  events:
-    'click .js-delete': 'deleteRow'
-
   constructor: (params) ->
     super
 
@@ -165,6 +162,7 @@ class App.ControllerTable extends App.Controller
                 attribute.width = "#{@headerWidth[attribute.name]}px"
               @headers.push attribute
 
+    # add destroy header and col binding
     if destroy
       @headers.push
         name: 'destroy'
@@ -173,6 +171,12 @@ class App.ControllerTable extends App.Controller
         unresizable: true
         parentClass: 'js-delete'
         icon: 'trash'
+
+      if !@bindCol
+        @bindCol = {}
+      @bindCol['destroy'] =
+        events:
+          click: @deleteRow
 
     if @orderDirection && @orderBy
       for header in @headers
@@ -274,7 +278,7 @@ class App.ControllerTable extends App.Controller
             for event, callback of item.events
               do (table, event, callback) ->
                 if cursorMap[event]
-                  table.find("tbody > tr > td:nth-child(#{position})").css( 'cursor', cursorMap[event] )
+                  table.find("tbody > tr > td:nth-child(#{position})").css('cursor', cursorMap[event])
                 table.on( event, "tbody > tr > td:nth-child(#{position})",
                   (e) ->
                     e.stopPropagation()
@@ -345,11 +349,10 @@ class App.ControllerTable extends App.Controller
     table
 
   # bind on delete dialog
-  deleteRow: (e) =>
+  deleteRow: (id, e) =>
     e.stopPropagation()
     e.preventDefault()
-    itemId = $(e.target).parents('tr').data('id')
-    item   = @model.find(itemId)
+    item = @model.find(id)
     new App.ControllerGenericDestroyConfirm
       item:      item
       container: @container
