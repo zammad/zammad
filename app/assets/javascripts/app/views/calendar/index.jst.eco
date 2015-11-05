@@ -63,10 +63,12 @@
     </div>
     <div class="action-block action-block--flex">
       <div class="label"><%- @T('Holidays') %></div>
-      <table class="table table-fluid">
+      <table class="table">
         <% if _.isEmpty(calendar.public_holidays_preview): %>-<% end %>
         <% for holiday, meta of calendar.public_holidays_preview: %>
-          <tr <% if !meta.active: %>class="is-inactive"<% end %>><td><%- @Tdate(holiday) %></td><td><%= meta.summary %></td></tr>
+          <tr <% if !meta.active: %>class="is-inactive"<% end %>>
+            <td style="width: 96px"><%- @Tdate(holiday) %>
+            <td><%= meta.summary %>
         <% end %>
       </table>
     </div>
