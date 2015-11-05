@@ -9,6 +9,9 @@ class App.ControllerTable extends App.Controller
   elements:
     '.js-tableHead': 'tableHead'
 
+  events:
+    'click .js-delete': 'deleteRow'
+
   constructor: (params) ->
     super
 
@@ -162,6 +165,15 @@ class App.ControllerTable extends App.Controller
                 attribute.width = "#{@headerWidth[attribute.name]}px"
               @headers.push attribute
 
+    if destroy
+      @headers.push
+        name: 'destroy'
+        display: 'Delete'
+        width: '70px'
+        unresizable: true
+        parentClass: 'js-delete'
+        icon: 'trash'
+
     if @orderDirection && @orderBy
       for header in @headers
         if header.name is @orderBy
@@ -192,8 +204,6 @@ class App.ControllerTable extends App.Controller
     if @callbackHeader
       for callback in @callbackHeader
         @headers = callback(@headers)
-
-    @headers = @adjustHeaderWidths @headers
 
     # group by
     if @groupBy
@@ -297,19 +307,6 @@ class App.ControllerTable extends App.Controller
               callback(id, checked, e)
             )
 
-    # bind on delete dialog
-    if @model && destroy
-      table.delegate('[data-type="destroy"]', 'click', (e) =>
-        e.stopPropagation()
-        e.preventDefault()
-        itemId = $(e.target).parents('tr').data('id')
-        item   = @model.find(itemId)
-        new App.ControllerGenericDestroyConfirm(
-          item:      item
-          container: @container
-        )
-      )
-
     # if we have a personalised table
     if @table_id
 
@@ -346,6 +343,16 @@ class App.ControllerTable extends App.Controller
       )
 
     table
+
+  # bind on delete dialog
+  deleteRow: (e) =>
+    e.stopPropagation()
+    e.preventDefault()
+    itemId = $(e.target).parents('tr').data('id')
+    item   = @model.find(itemId)
+    new App.ControllerGenericDestroyConfirm
+      item:      item
+      container: @container
 
   adjustHeaderWidths: (headers) ->
     if !@headers

@@ -30,9 +30,6 @@
         <% end %>
       </th>
     <% end %>
-    <% if @destroy: %>
-      <th><%- @T('Delete') %></th>
-    <% end %>
     </tr>
   </thead>
   <tbody>
@@ -88,6 +85,8 @@
       <td<%- " class='#{ item.parentClass }'" if item.parentClass %><%- " title='#{ item.title }'" if item.title %><%- " style='text-align:#{ item.align }'" if item.align %>>
         <% if item.name is 'icon': %>
           <%- @Icon('task-state', item.class) %>
+        <% else if item.icon: %>
+          <%- @Icon(item.icon) %>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
@@ -106,9 +105,6 @@
           <% if item.link: %></a><% end %>
         <% end %>
       </td>
-    <% end %>
-    <% if @destroy: %>
-      <td data-type="destroy"><%- @Icon('trash') %></td>
     <% end %>
   </tr>
 <% end %>
