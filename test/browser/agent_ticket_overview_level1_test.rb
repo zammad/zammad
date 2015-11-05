@@ -193,10 +193,9 @@ class AgentTicketOverviewLevel1Test < TestCase
     )
     sleep 8
 
-    match(
+    exists_not(
       browser: browser2,
       css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
-      value: '2',
     )
     match(
       browser: browser2,

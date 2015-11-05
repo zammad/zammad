@@ -32,6 +32,12 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
     sleep 6 # till overview is updated
     click( text: 'Overviews' )
+
+    # enable full overviews
+    execute(
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
     click( text: 'Unassigned & Open Tickets' )
     sleep 4 # till overview is rendered
 
