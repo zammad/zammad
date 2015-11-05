@@ -718,6 +718,15 @@ table {
   display: table-row;
 }
 
+.table--placeholder {
+  th {
+    text-align: center;
+  }
+  td {
+    height: 40px;
+  } 
+}
+
 .table th:not(.noTruncate) .table-column-title,
 .table td:not(.noTruncate) {
   @extend .u-textTruncate;

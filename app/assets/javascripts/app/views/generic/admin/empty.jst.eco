@@ -1,1 +1,6 @@
 <p><%= @T(@explanation) %></p>
+
+<table class="table table--placeholder">
+  <thead><tr><th><%= @T('Empty Table') %>
+  <tbody><tr><td>
+</table>
