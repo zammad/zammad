@@ -1494,6 +1494,13 @@ Role.create_if_not_exists(
   created_by_id: 1,
   updated_by_id: 1,
 )
+Role.create_if_not_exists(
+  id: 5,
+  name: 'Chat',
+  note: 'Access to chat feature.',
+  updated_by_id: 1,
+  created_by_id: 1
+)
 
 Group.create_if_not_exists(
   id: 1,
@@ -1653,9 +1660,36 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
+  name: 'Unassigned & Open',
+  link: 'all_unassigned',
+  prio: 1010,
+  role_id: overview_role.id,
+  condition: {
+    'ticket.state_id' => {
+      operator: 'is',
+      value: [1, 2, 3],
+    },
+    'ticket.owner_id' => {
+      operator: 'is',
+      value: 1,
+    },
+  },
+  order: {
+    by: 'created_at',
+    direction: 'ASC',
+  },
+  view: {
+    d: %w(title customer group created_at),
+    s: %w(title customer group created_at),
+    m: %w(number title customer group created_at),
+    view_mode_default: 's',
+  },
+)
+
+Overview.create_if_not_exists(
   name: 'My pending reached Tickets',
   link: 'my_pending_reached',
-  prio: 1010,
+  prio: 1020,
   role_id: overview_role.id,
   condition: {
     'ticket.state_id' => {
@@ -1685,34 +1719,7 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name: 'Unassigned & Open Tickets',
-  link: 'all_unassigned',
-  prio: 1020,
-  role_id: overview_role.id,
-  condition: {
-    'ticket.state_id' => {
-      operator: 'is',
-      value: [1, 2, 3],
-    },
-    'ticket.owner_id' => {
-      operator: 'is',
-      value: 1,
-    },
-  },
-  order: {
-    by: 'created_at',
-    direction: 'ASC',
-  },
-  view: {
-    d: %w(title customer group created_at),
-    s: %w(title customer group created_at),
-    m: %w(number title customer group created_at),
-    view_mode_default: 's',
-  },
-)
-
-Overview.create_if_not_exists(
-  name: 'All Open Tickets',
+  name: 'Open',
   link: 'all_open',
   prio: 1030,
   role_id: overview_role.id,
@@ -1735,9 +1742,9 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name: 'All pending reached Tickets',
+  name: 'Pending reached',
   link: 'all_pending_reached',
-  prio: 1035,
+  prio: 1040,
   role_id: overview_role.id,
   condition: {
     'ticket.state_id' => {
@@ -1763,9 +1770,9 @@ Overview.create_if_not_exists(
 )
 
 Overview.create_if_not_exists(
-  name: 'Escalated Tickets',
+  name: 'Escalated',
   link: 'all_escalated',
-  prio: 1040,
+  prio: 1050,
   role_id: overview_role.id,
   condition: {
     'ticket.escalation_time' => {
@@ -1790,7 +1797,7 @@ overview_role = Role.where( name: 'Customer' ).first
 Overview.create_if_not_exists(
   name: 'My Tickets',
   link: 'my_tickets',
-  prio: 1000,
+  prio: 1100,
   role_id: overview_role.id,
   condition: {
     'ticket.state_id' => {
@@ -1816,7 +1823,7 @@ Overview.create_if_not_exists(
 Overview.create_if_not_exists(
   name: 'My Organization Tickets',
   link: 'my_organization_tickets',
-  prio: 1100,
+  prio: 1200,
   role_id: overview_role.id,
   organization_shared: true,
   condition: {
