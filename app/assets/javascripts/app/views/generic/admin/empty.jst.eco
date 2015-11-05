@@ -2,5 +2,4 @@
 
 <table class="table table--placeholder">
   <thead><tr><th><%= @T('No Entries') %>
-  <tbody><tr><td>
 </table>
