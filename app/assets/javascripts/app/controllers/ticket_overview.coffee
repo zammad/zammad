@@ -118,7 +118,8 @@ class Navbar extends App.Controller
     $(event.currentTarget).addClass('active')
 
   release: =>
-    $(window).off 'resize.navbar', @autoFoldTabs
+    if @vertical
+      $(window).off 'resize.navbar', @autoFoldTabs
     if @bindId
       App.OverviewIndexCollection.unbind(@bindId)
 

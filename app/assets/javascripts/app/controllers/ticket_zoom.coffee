@@ -305,26 +305,28 @@ class App.TicketZoom extends App.Controller
       new App.TicketZoomTitle(
         ticket:      @ticket
         overview_id: @overview_id
-        el:          @el.find('.ticket-title')
+        el:          @$('.ticket-title')
         task_key:    @task_key
       )
 
       new App.TicketZoomMeta(
         ticket: @ticket
-        el:     @el.find('.ticket-meta')
+        el:     @$('.ticket-meta')
       )
 
       new App.TicketZoomAttributeBar(
-        ticket:   @ticket
-        el:       @el.find('.js-attributeBar')
-        callback: @submit
+        ticket:      @ticket
+        el:          @$('.js-attributeBar')
+        overview_id: @overview_id
+        callback:    @submit
+        task_key:    @task_key
       )
 
       @form_id = App.ControllerForm.formId()
 
       new App.TicketZoomArticleNew(
         ticket:    @ticket
-        el:        @el.find('.article-new')
+        el:        @$('.article-new')
         form_meta: @form_meta
         form_id:   @form_id
         defaults:  @taskGet('article')
@@ -338,7 +340,7 @@ class App.TicketZoom extends App.Controller
 
       @article_view = new App.TicketZoomArticleView(
         ticket:     @ticket
-        el:         @el.find('.ticket-article')
+        el:         @$('.ticket-article')
         ui:         @
         highligher: @highligher
       )
@@ -351,7 +353,7 @@ class App.TicketZoom extends App.Controller
         size:    50
       )
       @sidebar = new App.TicketZoomSidebar(
-        el:           @el.find('.tabsSidebar')
+        el:           @$('.tabsSidebar')
         sidebarState: @sidebarState
         ticket:       @ticket
         taskGet:      @taskGet
@@ -485,6 +487,9 @@ class App.TicketZoom extends App.Controller
   submit: (e, macro = {}) =>
     e.stopPropagation()
     e.preventDefault()
+
+    taskAction = @$('.js-secondaryActionButtonLabel').data('type')
+
     ticketParams = @formParam( @$('.edit') )
 
     # validate ticket
@@ -637,6 +642,44 @@ class App.TicketZoom extends App.Controller
 
         # reset form after save
         @reset()
+
+        if taskAction is 'closeNextInOverview'
+          if @overview_id
+            current_position = 0
+            overview = App.Overview.find(@overview_id)
+            list = App.OverviewCollection.get(overview.link)
+            for ticket_id in list.ticket_ids
+              current_position += 1
+              if ticket_id is @ticket_id
+                next = list.ticket_ids[current_position]
+                if next
+                  # close task
+                  App.TaskManager.remove(@task_key)
+
+                  # open task via task manager to get overview information
+                  App.TaskManager.execute(
+                    key:        'Ticket-' + next
+                    controller: 'TicketZoom'
+                    params:
+                      ticket_id:   next
+                      overview_id: @overview_id
+                    show:       true
+                  )
+                  @navigate "ticket/zoom/#{next}"
+                  return
+
+          # fallback, close task
+          taskAction = 'closeTab'
+
+        if taskAction is 'closeTab'
+          App.TaskManager.remove(@task_key)
+          nextTaskUrl = App.TaskManager.nextTaskUrl()
+          if nextTaskUrl
+            @navigate nextTaskUrl
+            return
+
+          @navigate '#'
+          return
 
         @autosaveStart()
 
