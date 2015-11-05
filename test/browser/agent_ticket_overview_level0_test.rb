@@ -38,7 +38,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       js: '$(".content.active .sidebar").css("display", "block")',
     )
 
-    click( text: 'Unassigned & Open Tickets' )
+    click( text: 'Unassigned & Open' )
     sleep 4 # till overview is rendered
 
     # select both via bulk action

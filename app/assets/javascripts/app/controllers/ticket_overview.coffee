@@ -739,4 +739,4 @@ class TicketOverviewRouter extends App.ControllerPermanent
 App.Config.set( 'ticket/view', TicketOverviewRouter, 'Routes' )
 App.Config.set( 'ticket/view/:view', TicketOverviewRouter, 'Routes' )
 App.Config.set( 'TicketOverview', { controller: 'TicketOverview', authentication: true }, 'permanentTask' )
-App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar' )
+App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Tickets', target: '#ticket/view', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar' )
