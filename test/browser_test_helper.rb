@@ -268,6 +268,26 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  execute(
+    :browser => browser1,
+    :js     => '.some_class',
+  )
+
+=end
+
+  def execute(params)
+    log('js', params)
+
+    instance = params[:browser] || @browser
+    if params[:js]
+      instance.execute_script(params[:js])
+      return
+    end
+    fail "Invalid execute params #{params.inspect}"
+  end
+
+=begin
+
   exists(
     :browser => browser1,
     :css     => '.some_class',
@@ -1372,6 +1392,10 @@ wait untill text in selector disabppears
 
     instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 1
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
     instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
     sleep 1
     instance.find_elements( { partial_link_text: params[:number] } )[0].click
@@ -1454,6 +1478,12 @@ wait untill text in selector disabppears
 
     instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 2
+
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
     overviews = {}
     instance.find_elements( { css: '.content.active .sidebar a[href]' } ).each {|element|
       url = element.attribute('href')
@@ -1466,6 +1496,7 @@ wait untill text in selector disabppears
       count          = instance.find_elements( { css: ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
       overviews[url] = count.to_i
     }
+    log('overview_counter', overviews)
     overviews
   end
 
