@@ -191,9 +191,8 @@ class AgentTicketOverviewLevel1Test < TestCase
         priority: '3 high',
       }
     )
-    sleep 8
 
-    exists_not(
+    watch_for_disappear(
       browser: browser2,
       css: '.active .ticketZoom .ticketZoom-controls .overview-navigator .pagination-counter .pagination-item-current',
     )
