@@ -14,7 +14,7 @@ class App.TicketZoomAttributeBar extends App.Controller
   constructor: ->
     super
 
-    @secondaryAction = @preferencesGet() || 'stayOnTab'
+    @secondaryAction = @preferencesGet() || 'closeTab'
     if !@overview_id && @secondaryAction is 'closeNextInOverview'
       @secondaryAction = 'closeTab'
 
