@@ -585,6 +585,28 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  task_type(
+    :browser => browser1,
+    :type    => 'stayOnTab',
+  )
+
+=end
+
+  def task_type(params)
+    log('task_type', params)
+
+    instance = params[:browser] || @browser
+
+    if params[:type]
+      instance.find_elements( { css: '.content.active .js-secondaryActionButtonLabel' } )[0].click
+      instance.find_elements( { css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]" } )[0].click
+      return
+    end
+    fail "Unknown params for task_type: #{params.inspect}"
+  end
+
+=begin
+
   cookie(
     :browser => browser1,
     :name    => '^_zammad.+?',
@@ -1311,6 +1333,11 @@ wait untill text in selector disabppears
         fail 'no discard message found'
       end
     end
+
+    task_type(
+      browser: instance,
+      type:    'stayOnTab',
+    )
 
     if params[:do_not_submit]
       assert( true, 'ticket updated without submit' )

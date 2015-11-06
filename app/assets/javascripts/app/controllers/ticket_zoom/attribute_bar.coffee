@@ -14,9 +14,9 @@ class App.TicketZoomAttributeBar extends App.Controller
   constructor: ->
     super
 
-    @secondaryAction = @preferencesGet() || 'closeTab'
-    if !@overview_id && @secondaryAction is 'closeNextInOverview'
-      @secondaryAction = 'closeTab'
+    @secondaryAction = 'closeTab'
+    if @overview_id
+      @secondaryAction = 'closeNextInOverview'
 
     @subscribeId = App.Macro.subscribe(@render)
     @render()
@@ -71,10 +71,3 @@ class App.TicketZoomAttributeBar extends App.Controller
     element.closest('.js-secondaryAction').find('.js-selectedIcon').addClass('is-selected')
     @secondaryActionButton.text(text)
     @secondaryActionButton.data('type', type)
-    App.LocalStorage.set(@preferencesStoreKey(), type, @Session.get('id'))
-
-  preferencesGet: =>
-    App.LocalStorage.get(@preferencesStoreKey(), @Session.get('id'))
-
-  preferencesStoreKey: =>
-    "ticketZoom:taskAktion:#{@ticket_id}"
