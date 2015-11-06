@@ -45,6 +45,11 @@ class CustomerTicketCreateTest < TestCase
       css: '.active [data-name="body"]',
       value: 'some body 1234 äöüß',
     )
+
+    task_type(
+      type: 'stayOnTab',
+    )
+
     click( css: '.active .js-submit' )
 
     watch_for(
