@@ -69,7 +69,7 @@ class App.TicketStats extends App.Controller
     limit = 5
     iconClass = ''
     if data.user_tickets_open_ids.length is 0 && data.user_tickets_closed_ids.length > 0
-      iconClass = 'mood icon supergood-state'
+      iconClass = 'mood icon supergood-color'
     new TicketStatsList(
       el:         @$('.js-user-open-tickets')
       user:       @user
@@ -93,7 +93,7 @@ class App.TicketStats extends App.Controller
 
     iconClass = ''
     if data.org_tickets_open_ids.length is 0 && data.org_tickets_closed_ids.length > 0
-      iconClass = 'mood icon supergood-state'
+      iconClass = 'mood icon supergood-color'
     new TicketStatsList(
       el:         @$('.js-org-open-tickets')
       user:       @user

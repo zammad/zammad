@@ -146,12 +146,12 @@
         <div class="stat-title">Status</div>
         <div class="stat-graphic">
           <div class="stat-tickets vertical reverse end">
-            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
-            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
-            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
-            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
-            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
-            <%- @Icon('one-ticket', 'one-ticket state-color supergood-state') %>
+            <%- @Icon('one-ticket', 'one-ticket supergood-color') %>
+            <%- @Icon('one-ticket', 'one-ticket supergood-color') %>
+            <%- @Icon('one-ticket', 'one-ticket supergood-color') %>
+            <%- @Icon('one-ticket', 'one-ticket supergood-color') %>
+            <%- @Icon('one-ticket', 'one-ticket supergood-color') %>
+            <%- @Icon('one-ticket', 'one-ticket supergood-color') %>
           </div>
           <%- @Icon('total-tickets', 'total-tickets') %>
         </div>

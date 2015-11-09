@@ -3498,13 +3498,11 @@ footer {
   height: 47px;
 }
 
-.state-color {
-  &.supergood-state { fill: $supergood-color;}
-  &.good-state      { fill: $good-color; }
-  &.ok-state        { fill: $ok-color; }
-  &.bad-state       { fill: $bad-color; }
-  &.superbad-state  { fill: $superbad-color; }
-}
+.supergood-color { fill: $supergood-color;}
+.good-color      { fill: $good-color; }
+.ok-color        { fill: $ok-color; }
+.bad-color       { fill: $bad-color; }
+.superbad-color  { fill: $superbad-color; }
 
 .stat-widgets {
   margin: 0 -7px 20px;
