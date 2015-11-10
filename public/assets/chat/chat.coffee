@@ -51,6 +51,8 @@ do($ = window.jQuery, window) ->
         input: @onInput
       ).autoGrow { extraLine: false }
 
+      @session_id = undefined
+
       if !window.WebSocket
         console.log('Zammad Chat: Browser not supported')
         return
@@ -61,7 +63,7 @@ do($ = window.jQuery, window) ->
 
       @ws.onopen = =>
         console.log('ws connected')
-        @send "chat_status"
+        @send 'chat_status'
 
       @ws.onmessage = @onWebSocketMessage
 
@@ -76,40 +78,52 @@ do($ = window.jQuery, window) ->
         event.preventDefault()
         @sendMessage()
 
-    send: (action, data) =>
+    send: (event, data) =>
+      console.log 'debug', 'ws:send', event, data
       pipe = JSON.stringify
-        action: action
+        event: event
         data: data
-
       @ws.send pipe
 
     onWebSocketMessage: (e) =>
-      pipe = JSON.parse( e.data )
-      console.log 'debug', 'ws:onmessage', pipe
+      pipes = JSON.parse( e.data )
+      console.log 'debug', 'ws:onmessage', pipes
 
-      switch pipe.action
-        when 'chat_message'
-          @receiveMessage pipe.data
-        when 'chat_typing_start'
-          @onAgentTypingStart()
-        when 'chat_typing_end'
-          @onAgentTypingEnd()
-        when 'chat_init'
-          switch pipe.data.state
-            when 'ok'
-              @onConnectionEstablished pipe.data.agent
-            when 'queue'
-              @onQueue pipe.data.position
-        when 'chat_status'
-          switch pipe.data.state 
-            when 'ok'
-              @onReady()
-            when 'offline'
-              console.log 'Zammad Chat: No agent online'
-            when 'chat_disabled'
-              console.log 'Zammad Chat: Chat is disabled'
-            when 'no_seats_available'
-              console.log 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+      for pipe in pipes
+        switch pipe.event
+          when 'chat_session_message'
+            return if pipe.data.self_written
+            @receiveMessage pipe.data
+          when 'chat_session_typing'
+            return if pipe.data.self_written
+            @onAgentTypingStart()
+            if @stopTypingId
+              clearTimeout(@stopTypingId)
+            delay = =>
+              @onAgentTypingEnd()
+            @stopTypingId = setTimeout(delay, 3000)
+          when 'chat_session_start'
+            switch pipe.data.state
+              when 'ok'
+                @onConnectionEstablished pipe.data.agent
+          when 'chat_session_init'
+            switch pipe.data.state
+              when 'ok'
+                @onConnectionEstablished pipe.data.agent
+              when 'queue'
+                @onQueue pipe.data.position
+                @session_id = pipe.data.session_id
+          when 'chat_status'
+            switch pipe.data.state
+              when 'online'
+                @onReady()
+                console.log 'Zammad Chat: ready'
+              when 'offline'
+                console.log 'Zammad Chat: No agent online'
+              when 'chat_disabled'
+                console.log 'Zammad Chat: Chat is disabled'
+              when 'no_seats_available'
+                console.log 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
 
     onReady: =>
       @show() if @options.show
@@ -119,22 +133,22 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-message--unread')
         .removeClass 'zammad-chat-message--unread'
 
-      clearTimeout(@inputTimeout) if @inputTimeout
-
-      # fire typingEnd after 5 seconds
-      @inputTimeout = setTimeout @onTypingEnd, 5000
-
-      @onTypingStart() if @isTyping
+      @onTypingStart()
 
     onTypingStart: ->
+
+      clearTimeout(@isTypingTimeout) if @isTypingTimeout
+
+      # fire typingEnd after 5 seconds
+      @isTypingTimeout = setTimeout @onTypingEnd, 1500
+
       # send typing start event
-      @isTyping = true
-      @send 'typing_start'
+      if !@isTyping
+        @isTyping = true
+        @send 'chat_session_typing', {session_id: @session_id}
 
     onTypingEnd: =>
-      # send typing end event
       @isTyping = false
-      @send 'typing_end'
 
     onSubmit: (event) =>
       event.preventDefault()
@@ -167,9 +181,10 @@ do($ = window.jQuery, window) ->
       @isTyping = false
 
       # send message event
-      @send 'message',
-        body: message
+      @send 'chat_session_message',
+        content: message
         id: @_messageCount
+        session_id: @session_id
 
     receiveMessage: (data) =>
       # hide writing indicator
@@ -180,7 +195,7 @@ do($ = window.jQuery, window) ->
       @lastAddedType = 'message--agent'
       unread = document.hidden ? " zammad-chat-message--unread" : ""
       @el.find('.zammad-chat-body').append @view('message')
-        message: data.body
+        message: data.message.content
         id: data.id
         from: 'agent'
       @scrollToBottom()
@@ -275,7 +290,7 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
 
     connect: ->
-      @send('chat_init')
+      @send('chat_session_init')
 
     reconnect: =>
       # set status to connecting

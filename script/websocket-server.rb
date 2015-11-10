@@ -136,6 +136,9 @@ EventMachine.run {
       # check if connection not already exists
       next if !@clients[client_id]
 
+      Sessions.touch(client_id)
+      @clients[client_id][:last_ping] = Time.now.utc.to_i
+
       # spool messages for new connects
       if data['spool']
         Sessions.spool_create(msg)
@@ -201,8 +204,6 @@ EventMachine.run {
 
       # remember ping, send pong back
       elsif data['action'] == 'ping'
-        Sessions.touch(client_id)
-        @clients[client_id][:last_ping] = Time.now.utc.to_i
         message = {
           action: 'pong',
         }
@@ -255,6 +256,12 @@ EventMachine.run {
             log 'notice', 'do not send broadcast to it self', client_id
           end
         }
+
+      elsif data['event']
+        message = Sessions::Event.run(data['event'], data, @clients[client_id][:session], client_id)
+        if message
+          websocket_send(client_id, message)
+        end
       end
     }
   end
