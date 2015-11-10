@@ -17,8 +17,6 @@ class App.TicketZoom extends App.Controller
       App.TaskManager.remove(@task_key)
       return
 
-    @navupdate '#'
-
     @form_meta            = undefined
     @ticket_id            = params.ticket_id
     @article_id           = params.article_id
@@ -104,7 +102,7 @@ class App.TicketZoom extends App.Controller
     # set all notifications to seen
     App.OnlineNotification.seen('Ticket', @ticket_id)
 
-    # if controller is executed twice, go to latest article
+    # if controller is executed twice, go to latest article (e. g. click on notification)
     if @activeState
       @scrollToBottom()
       return
@@ -113,13 +111,18 @@ class App.TicketZoom extends App.Controller
     # start autosave
     @autosaveStart()
 
+    # if ticket is shown the first time
     if !@shown
+      @shown = true
 
       # trigger shown to article
       App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
-      # observe content header position
-      @positionPageHeaderStart()
+      # scroll to end of page
+      @scrollToBottom()
+
+    # observe content header position
+    @positionPageHeaderStart()
 
   hide: =>
     @activeState = false
