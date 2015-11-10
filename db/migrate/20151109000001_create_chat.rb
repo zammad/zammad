@@ -58,6 +58,9 @@ class CreateChat < ActiveRecord::Migration
     end
     add_index :chat_agents, [:created_by_id], unique: true
 
+    # return if it's a new setup
+    return if !Setting.find_by(name: 'system_init_done')
+
     Role.create_if_not_exists(
       name: 'Chat',
       note: 'Access to chat feature.',
