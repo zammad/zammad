@@ -14,7 +14,7 @@
       <th style="width: 22px"></th>
     <% end %>
     <% for item, i in @header: %>
-      <th class="js-tableHead<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="width:<%= item.width %>" data-column-key="<%= item.name %>">
+      <th class="js-tableHead<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="width:<%= item.displayWidth %>px" data-column-key="<%= item.name %>">
         <div class="table-column-head<%= ' js-sort' if @table_id %>">
           <div class="table-column-title">
           <%- @T( item.display ) %>

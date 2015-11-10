@@ -151,7 +151,18 @@ class App.ControllerTable extends App.Controller
             # e.g. column: owner
             headerFound = true
             if @headerWidth[attribute.name]
-              attribute.width = "#{@headerWidth[attribute.name]}px"
+              attribute.displayWidth = @headerWidth[attribute.name]
+            else if !attribute.width
+              attribute.displayWidth = @baseColWidth
+            else
+              # convert percentages to pixels
+              value = parseInt attribute.width, 10
+              unit = attribute.width.match(/[px|%]+/)[0]
+
+              if unit is '%'
+                attribute.displayWidth = value / 100 * @el.width()
+              else
+                attribute.displayWidth = value
             @headers.push attribute
           else
             # e.g. column: owner_id
@@ -159,7 +170,18 @@ class App.ControllerTable extends App.Controller
             if attributeName is rowWithoutId
               headerFound = true
               if @headerWidth[attribute.name]
-                attribute.width = "#{@headerWidth[attribute.name]}px"
+                attribute.displayWidth = @headerWidth[attribute.name]
+              else if !attribute.width
+                attribute.displayWidth = @baseColWidth
+              else
+                # convert percentages to pixels
+                value = parseInt attribute.width, 10
+                unit = attribute.width.match(/[px|%]+/)[0]
+
+                if unit is '%'
+                  attribute.displayWidth = value / 100 * @el.width()
+                else
+                  attribute.displayWidth = value
               @headers.push attribute
 
     # add destroy header and col binding
@@ -168,6 +190,7 @@ class App.ControllerTable extends App.Controller
         name: 'destroy'
         display: 'Delete'
         width: '70px'
+        displayWidth: 70
         unresizable: true
         parentClass: 'js-delete'
         icon: 'trash'
@@ -238,7 +261,6 @@ class App.ControllerTable extends App.Controller
         groupObjects[group] = [] # release old array
 
     # get content
-    @log 'debug', 'table', 'header', @headers, 'overview', 'objects', @objects
     table = App.view('generic/table')(
       table_id:  @table_id
       header:    @headers
@@ -357,7 +379,7 @@ class App.ControllerTable extends App.Controller
       item:      item
       container: @container
 
-  adjustHeaderWidths: (headers) ->
+  adjustHeaderWidths: ->
     if !@headers
       return
 
@@ -366,54 +388,29 @@ class App.ControllerTable extends App.Controller
     if availableWidth is 0
       availableWidth = @minTableWidth
 
-    widths = @getHeaderWidths headers
-    difference = widths - availableWidth
-
-    # convert percentages to pixels
-    headers = _.map headers, (col) =>
-      unit = col.width.match(/[px|%]+/)[0]
-
-      if unit is '%'
-        percentage = parseInt col.width, 10
-        col.width = percentage / 100 * availableWidth + 'px'
-
-      return col
-
-    widths = @getHeaderWidths headers
-    shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount(headers)
+    widths = @getHeaderWidths()
+    shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount()
 
     # make all cols evenly smaller
-    headers = _.map headers, (col) =>
+    @headers = _.map @headers, (col) =>
       if !col.unresizable
-        value = parseInt col.width, 10
-        col.width = Math.max(@minColWidth, value - shrinkBy) + 'px'
+        col.displayWidth = Math.max(@minColWidth, col.displayWidth - shrinkBy)
       return col
 
     # give left-over space from rounding to last column to get to 100%
-    roundingLeftOver = availableWidth - @getHeaderWidths headers
+    roundingLeftOver = availableWidth - @getHeaderWidths()
     # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
     if roundingLeftOver > 0
-      headers[headers.length - 1].width = parseInt(headers[headers.length - 1].width, 10) + roundingLeftOver + 'px'
+      @headers[@headers.length - 1].displayWidth = @headers[@headers.length - 1].displayWidth + roundingLeftOver
 
-    return headers
-
-  getShrinkableHeadersCount: (headers) ->
-    _.reduce headers, (memo, col) ->
+  getShrinkableHeadersCount: ->
+    _.reduce @headers, (memo, col) ->
       return if col.unresizable then memo else memo+1
     , 0
 
-  getHeaderWidths: (headers) ->
-    widths = _.reduce headers, (memo, col, i) =>
-      if col.width
-        value = parseInt col.width, 10
-        unit = col.width.match(/[px|%]+/)[0]
-      else
-        # !!! sets the width to default width if not set
-        headers[i].width = @baseColWidth + 'px'
-        value = @baseColWidth
-        unit = 'px'
-
-      return if unit is 'px' then memo + value else memo
+  getHeaderWidths: ->
+    widths = _.reduce @headers, (memo, col, i) ->
+      return memo + col.displayWidth
     , 0
 
     if @checkbox
@@ -425,10 +422,10 @@ class App.ControllerTable extends App.Controller
     return widths
 
   readjustHeaderWidths: =>
-    @headers = @adjustHeaderWidths @headers
+    @adjustHeaderWidths()
 
     @tableHead.each (i, el) =>
-      el.style.width = @headers[i].width
+      el.style.width = @headers[i].displayWidth + "px"
 
   stopPropagation: (event) =>
     event.stopPropagation()
@@ -463,8 +460,8 @@ class App.ControllerTable extends App.Controller
 
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()
-    leftWidth = @resizeTargetLeft.outerWidth()
-    rightWidth = @resizeTargetRight.outerWidth()
+    leftWidth = @resizeTargetLeft.width()
+    rightWidth = @resizeTargetRight.width()
 
     leftColumnKey = @resizeTargetLeft.attr('data-column-key')
     rightColumnKey = @resizeTargetRight.attr('data-column-key')
@@ -475,16 +472,14 @@ class App.ControllerTable extends App.Controller
       { key: rightColumnKey, width: rightWidth }
     ]
 
-    @log 'debug', @table_id, 'leftColumnKey', leftColumnKey, leftWidth, 'rightColumnKey', rightColumnKey, rightWidth
-
     # update store and runtime @headerWidth
     @preferencesStore('headerWidth', leftColumnKey, leftWidth)
-    @headerWidth[leftColumnKey] = leftWidth
+    _.find(@headers, (column) -> column.name is leftColumnKey).displayWidth = leftWidth
 
     # update store and runtime @headerWidth
     if rightColumnKey
       @preferencesStore('headerWidth', rightColumnKey, rightWidth)
-      @headerWidth[rightColumnKey] = rightWidth
+      _.find(@headers, (column) -> column.name is rightColumnKey).displayWidth = rightWidth
 
   sortByColumn: (event) =>
     column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
@@ -499,8 +494,6 @@ class App.ControllerTable extends App.Controller
       else
         @orderDirection = 'ASC'
 
-    @log 'debug', @table_id, 'sortByColumn', @orderBy, 'direction', @orderDirection
-
     # update store
     @preferencesStore('order', 'orderBy', @orderBy)
     @preferencesStore('order', 'orderDirection', @orderDirection)
@@ -513,13 +506,12 @@ class App.ControllerTable extends App.Controller
     if !data[type][key]
       data[type][key] = {}
     data[type][key] = value
-    @log 'debug', @table_id, 'preferencesStore', data
+
     App.LocalStorage.set(@preferencesStoreKey(), data, @Session.get('id'))
 
   preferencesGet: =>
     data = App.LocalStorage.get(@preferencesStoreKey(), @Session.get('id'))
     return {} if !data
-    @log 'debug', @table_id, 'preferencesGet', data
     data
 
   preferencesStoreKey: =>
