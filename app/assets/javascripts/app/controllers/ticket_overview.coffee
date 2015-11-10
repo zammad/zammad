@@ -233,7 +233,7 @@ class Table extends App.Controller
       @html App.view('customer_not_ticket_exists')()
       return
 
-    @selected = @bulkGetSelected()
+    @selected = @getSelected()
 
     # set page title
     @overview = App.Overview.find(overview.id)
@@ -317,9 +317,9 @@ class Table extends App.Controller
         value
       callbackCheckbox = (id, checked, e) =>
         if @el.find('table').find('input[name="bulk"]:checked').length == 0
-          @el.find('.bulkAction').addClass('hide')
+          @bulkForm.hide()
         else
-          @el.find('.bulkAction').removeClass('hide')
+          @bulkForm.show()
       callbackIconHeader = (headers) ->
         attribute =
           name:        'icon'
@@ -375,7 +375,7 @@ class Table extends App.Controller
             'click':  callbackCheckbox
       )
 
-    @bulkSetSelected( @selected )
+    @setSelected( @selected )
 
     # start user popups
     @userPopups()
@@ -383,10 +383,13 @@ class Table extends App.Controller
     # start organization popups
     @organizationPopups()
 
+    @bulkForm = new BulkForm
+      holder: @el   
+
     # start bulk action observ
-    @el.find('.bulkAction').append( @bulk_form() )
+    @el.append( @bulkForm.el )
     if @el.find('.table-overview').find('input[name="bulk"]:checked').length isnt 0
-      @el.find('.bulkAction').removeClass('hide')
+      @bulkForm.show()
 
     # show/hide bulk action
     @el.find('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
@@ -394,13 +397,13 @@ class Table extends App.Controller
       if @el.find('.table-overview').find('input[name="bulk"]:checked').length == 0
 
         # hide
-        @el.find('.bulkAction').addClass('hide')
+        @bulkForm.hide()
 
-        @resetBulkForm()
+        @bulkForm.reset()
       else
 
         # show
-        @el.find('.bulkAction').removeClass('hide')
+        @bulkForm.show()
     )
 
     # deselect bulk_all if one item is uncheck observ
@@ -409,21 +412,21 @@ class Table extends App.Controller
         $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
     )
 
-    # bind bulk form buttons
-    @$('.js-confirm').click(@bulkFormConfirm)
-    @$('.js-cancel').click(@resetBulkForm)
+  getSelected: ->
+    @ticketIDs = []
+    @el.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
+      ticket_id = $(element).val()
+      @ticketIDs.push ticket_id
+    )
+    @ticketIDs
 
-  bulkFormConfirm: =>
-    @$('.js-action-step').addClass('hide')
-    @$('.js-confirm-step').removeClass('hide')
-
-    # need a delay because of the click event
-    setTimeout ( => @$('.textarea.form-group textarea').focus() ), 0
-
-  resetBulkForm: =>
-    @$('.js-action-step').removeClass('hide')
-    @$('.js-confirm-step').addClass('hide')
-
+  setSelected: (ticketIDs) ->
+    @el.find('.table-overview').find('[name="bulk"]').each( (index, element) ->
+      ticket_id = $(element).val()
+      for ticket_id_selected in ticketIDs
+        if ticket_id_selected is ticket_id
+          $(element).attr( 'checked', true )
+    )
 
   viewmode: (e) =>
     e.preventDefault()
@@ -432,13 +435,25 @@ class Table extends App.Controller
     @fetch()
     #@render()
 
-  articleTypeFilter = (items) ->
-    for item in items
-      if item.name is 'note'
-        return [item]
-    items
+  settings: (e) =>
+    e.preventDefault()
+    new App.OverviewSettings(
+      overview_id: @overview.id
+      view_mode:   @view_mode
+      container:   @el.closest('.content')
+    )
 
-  bulk_form: =>
+class BulkForm extends App.Controller
+  className: 'bulkAction hide'
+
+  events:
+    'submit form':       'submit'
+    'click .js-confirm': 'confirm'
+    'click .js-cancel':  'reset'
+
+  constructor: ->
+    super
+
     @configure_attributes_ticket = [
       { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
       { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
@@ -446,10 +461,18 @@ class Table extends App.Controller
       { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' }
     ]
 
-    # render init page
-    html = $( App.view('agent_ticket_view/bulk')() )
+    @holder = @options.holder
+    @visible = false
+
+    @render()
+
+  render: ->
+    @el.css 'right', App.Utils.getScrollBarWidth()
+
+    @html App.view('agent_ticket_view/bulk')()
+
     new App.ControllerForm(
-      el: html.find('#form-ticket-bulk')
+      el: @el.find('#form-ticket-bulk')
       model:
         configure_attributes: @configure_attributes_ticket
         className:            'create'
@@ -459,7 +482,7 @@ class Table extends App.Controller
     )
 
     new App.ControllerForm(
-      el: html.find('#form-ticket-bulk-comment')
+      el: @el.find('#form-ticket-bulk-comment')
       model:
         configure_attributes: [{ name: 'body',         display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
         className:            'create'
@@ -469,12 +492,12 @@ class Table extends App.Controller
     )
 
     @confirm_attributes = [
-      { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: articleTypeFilter, default: '9', translate: true, class: 'medium' }
+      { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @articleTypeFilter, default: '9', translate: true, class: 'medium' }
       { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
     ]
 
     new App.ControllerForm(
-      el: html.find('#form-ticket-bulk-typeVisibility')
+      el: @el.find('#form-ticket-bulk-typeVisibility')
       model:
         configure_attributes: @confirm_attributes
         className:            'create'
@@ -483,29 +506,54 @@ class Table extends App.Controller
       noFieldset: true
     )
 
-    html.bind('submit', (e) =>
-      e.preventDefault()
-      @bulk_submit(e)
-    )
-    return html
+  articleTypeFilter: (items) ->
+    for item in items
+      if item.name is 'note'
+        return [item]
+    items
 
-  bulkGetSelected: ->
-    @ticketIDs = []
-    @el.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
-      ticket_id = $(element).val()
-      @ticketIDs.push ticket_id
-    )
-    @ticketIDs
+  confirm: =>
+    @$('.js-action-step').addClass('hide')
+    @$('.js-confirm-step').removeClass('hide')
 
-  bulkSetSelected: (ticketIDs) ->
-    @el.find('.table-overview').find('[name="bulk"]').each( (index, element) ->
-      ticket_id = $(element).val()
-      for ticket_id_selected in ticketIDs
-        if ticket_id_selected is ticket_id
-          $(element).attr( 'checked', true )
-    )
+    @makeSpaceForTableRows()
 
-  bulk_submit: (e) =>
+    # need a delay because of the click event
+    setTimeout ( => @$('.textarea.form-group textarea').focus() ), 0
+
+  reset: =>    
+    @$('.js-action-step').removeClass('hide')
+    @$('.js-confirm-step').addClass('hide')
+
+    if @visible
+      @makeSpaceForTableRows()
+
+  show: =>
+    @el.removeClass('hide')
+    @visible = true
+    @makeSpaceForTableRows()
+
+  hide: =>
+    @el.addClass('hide')
+    @visible = false
+    @removeSpaceForTableRows()
+
+  makeSpaceForTableRows: =>
+    height = @el.height()
+    scrollParent = @holder.scrollParent()
+    isScrolledToBottom = scrollParent.prop('scrollHeight') is scrollParent.scrollTop() + scrollParent.outerHeight()
+
+    @holder.css 'margin-bottom', height
+
+    if isScrolledToBottom
+      scrollParent.scrollTop scrollParent.prop('scrollHeight') - scrollParent.outerHeight()
+
+  removeSpaceForTableRows: =>
+    @holder.css 'margin-bottom', 0
+
+  submit: (e) =>
+    e.preventDefault()
+
     @bulk_count = @el.find('.table-overview').find('[name="bulk"]:checked').length
     @bulk_count_index = 0
     @el.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
@@ -569,14 +617,6 @@ class Table extends App.Controller
       type: 'success'
       msg: App.i18n.translateContent('Bulk-Action executed!')
     }
-
-  settings: (e) =>
-    e.preventDefault()
-    new App.OverviewSettings(
-      overview_id: @overview.id
-      view_mode:   @view_mode
-      container:   @el.closest('.content')
-    )
 
 class App.OverviewSettings extends App.ControllerModal
   constructor: ->

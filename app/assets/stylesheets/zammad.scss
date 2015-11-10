@@ -2416,6 +2416,7 @@ footer {
   bottom: 0;
   left: $sidebarWidth + $navigationWidth;
   right: 0;
+  min-width: $minWidth - $sidebarWidth - $navigationWidth;
   background: white;
   z-index: 1;
   box-shadow: 
@@ -2425,6 +2426,7 @@ footer {
     
   @media only screen and (max-width: $largeScreenBreakpoint) {
     left: $navigationWidth;
+    min-width: $minWidth - $sidebarWidth;
   }
 }
 
