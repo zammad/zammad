@@ -64,7 +64,10 @@ class Index extends App.ControllerContent
         groupFilter = [groupFilter]
       @form_meta.filter.group_id = groupFilter
 
-    @html App.view('customer_ticket_create')( head: 'New Ticket' )
+    @html App.view('customer_ticket_create')(
+      head: 'New Ticket'
+      form_id: @form_id
+    )
 
     new App.ControllerForm(
       el:       @el.find('.ticket-form-top')
