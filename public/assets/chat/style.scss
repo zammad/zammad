@@ -208,7 +208,8 @@ $baseTextColor: if($luminance < 0.2, white, black);
   background: desaturate(lightenMax($themeColor, 50%, 97%), 50%);
   display: inline-block;
   max-width: 70%;
-  white-space: pre;
+  white-space: pre-line;
+  word-wrap: break-word;
   box-shadow:
     0 2px rgba(255,255,255,.15) inset,
     0 0 0 1px rgba(0,0,0,.08) inset,
