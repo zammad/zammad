@@ -44,7 +44,8 @@ do($ = window.jQuery, window) ->
 
       @setAgentOnlineState @isOnline
 
-      @el.find('.zammad-chat-header').click @toggle
+      @el.find('.js-chat-open').click @open
+      @el.find('.js-chat-close').click @close
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @el.find('.zammad-chat-input').on
         keydown: @checkForEnter
@@ -71,6 +72,8 @@ do($ = window.jQuery, window) ->
 
       @ws.onerror = (e) =>
         console.log 'debug', 'ws:onerror', e
+
+      @onReady()
 
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
@@ -202,25 +205,26 @@ do($ = window.jQuery, window) ->
         from: 'agent'
       @scrollToBottom()
 
-    toggle: =>
-      if @isOpen then @close() else @open()
+    open: =>
+      return if @isOpen
 
-    open: ->
       @showLoader()
 
       @el
         .addClass('zammad-chat-is-open')
         .animate { bottom: 0 }, 500, @onOpenAnimationEnd
 
-    onOpenAnimationEnd: =>
       @isOpen = true
+
+    onOpenAnimationEnd: =>
       #setTimeout @onQueue, 1180
       # setTimeout @onConnectionEstablished, 1180
       # setTimeout @onAgentTypingStart, 2000
       # setTimeout @receiveMessage, 5000, "Hello! How can I help you?"
       @connect()
 
-    close: ->
+    close: (event) =>
+      event.stopPropagation() if event
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
       @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
 
