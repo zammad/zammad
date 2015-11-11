@@ -7,7 +7,7 @@ class Sessions::Event::ChatBase
 
   end
 
-  def pre_check
+  def pre
 
     # check if feature is enabled
     if !Setting.get('chat')
@@ -19,6 +19,10 @@ class Sessions::Event::ChatBase
       }
     end
 
+    false
+  end
+
+  def post
     false
   end
 

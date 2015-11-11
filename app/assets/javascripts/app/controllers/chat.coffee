@@ -27,19 +27,24 @@ class App.CustomerChat extends App.Controller
 
     @render()
 
-    App.Event.bind(
+    @bind(
       'chat_status_agent'
       (data) =>
         @meta = data
         @updateMeta()
         @interval(@pushState, 20000, 'pushState')
     )
-    App.Event.bind(
+    @bind(
       'chat_session_start'
       (data) =>
         App.WebSocket.send(event:'chat_status_agent')
         if data.session
           @addChat(data.session)
+    )
+    @bind(
+      'ws:login'
+      ->
+        App.WebSocket.send(event:'chat_status_agent')
     )
 
     App.WebSocket.send(event:'chat_status_agent')
@@ -190,19 +195,27 @@ class chatWindow extends App.Controller
 
     @on 'layout-change', @scrollToBottom
 
-    App.Event.bind(
+    @bind(
       'chat_session_typing'
       (data) =>
         return if data.session_id isnt @session.session_id
         return if data.self_written
         @showWritingLoader()
     )
-    App.Event.bind(
+    @bind(
       'chat_session_message'
       (data) =>
         return if data.session_id isnt @session.session_id
         return if data.self_written
         @receiveMessage(data.message.content)
+    )
+    @bind(
+      'chat_session_left chat_session_closed'
+      (data) =>
+        return if data.session_id isnt @session.session_id
+        return if data.self_written
+        @addStatusMessage("#{data.realname} was leaving the conversation")
+        @goOffline()
     )
 
   render: ->
@@ -223,7 +236,7 @@ class chatWindow extends App.Controller
           @addMessage message.content, 'customer'
 
     # set focus
-    @input.get(0).focus()
+    #@input.get(0).focus()
 
   onTransitionend: (event) =>
     # chat window is done with animation - adjust scroll-bars
@@ -246,6 +259,7 @@ class chatWindow extends App.Controller
 
   release: =>
     @trigger 'closed'
+    @el.remove()
     super
 
   clearUnread: =>
@@ -360,7 +374,7 @@ class chatWindow extends App.Controller
     @$('.js-loader').remove()
 
   goOffline: =>
-    @addStatusMessage("<strong>#{ @options.name }</strong>'s connection got closed")
+    #@addStatusMessage("<strong>#{ @options.name }</strong>'s connection got closed")
     @status.attr('data-status', 'offline')
     @el.addClass('is-offline')
     @input.attr('disabled', true)

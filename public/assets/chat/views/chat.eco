@@ -8,7 +8,6 @@
       </span>
     </div>
     <div class="zammad-chat-agent zammad-chat-is-hidden">
-      
     </div>
     <div class="zammad-chat-welcome">
       <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>
@@ -17,7 +16,7 @@
   </div>
   <div class="zammad-chat-body"></div>
   <form class="zammad-chat-controls">
-    <textarea class="zammad-chat-input" rows="1" placeholder="Compose your message..."></textarea>
-    <button type="submit" class="zammad-chat-send">Send</button>
+    <textarea class="zammad-chat-input" rows="1" placeholder="<%- @T('Compose your message...') %>"></textarea>
+    <button type="submit" class="zammad-chat-send"><%- @T('Send') %></button>
   </form>
 </div>

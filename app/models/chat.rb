@@ -46,7 +46,7 @@ class Chat < ApplicationModel
   end
 
   def self.running_chat_count
-    Chat::Session.where(state: ['waiting']).count
+    Chat::Session.where(state: ['running']).count
   end
 
   def active_chat_count
@@ -129,19 +129,19 @@ class Chat::Session < ApplicationModel
   end
 
   def add_recipient(client_id, store = false)
-    if !self.preferences[:participants]
-      self.preferences[:participants] = []
+    if !preferences[:participants]
+      preferences[:participants] = []
     end
-    return self.preferences[:participants] if self.preferences[:participants].include?(client_id)
-    self.preferences[:participants].push client_id
+    return preferences[:participants] if preferences[:participants].include?(client_id)
+    preferences[:participants].push client_id
     if store
-      self.save
+      save
     end
-    self.preferences[:participants]
+    preferences[:participants]
   end
 
   def send_to_recipients(message, ignore_client_id)
-    self.preferences[:participants].each {|local_client_id|
+    preferences[:participants].each {|local_client_id|
       next if local_client_id == ignore_client_id
       Sessions.send(local_client_id, message)
     }

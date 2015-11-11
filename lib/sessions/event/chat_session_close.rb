@@ -16,15 +16,41 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       return {
         event: 'chat_status_close',
         data: {
-          state: "No such session id #{data['data']['session_id']}",
+          state: "No such session id #{@data['data']['session_id']}",
         },
       }
     end
 
-    chat_session.state = 'closed'
-    chat_session.save
+    realname = 'anonymous'
+    if @session && @session['id']
+      realname = User.find(@session['id']).fullname
+    end
 
-    # return new session
+    # notify about "leaving"
+    if @session && chat_session.user_id == @session['id']
+      message = {
+        event: 'chat_session_closed',
+        data: {
+          session_id: chat_session.session_id,
+          realname: realname,
+        },
+      }
+
+      # close session if host is closing it
+      chat_session.state = 'closed'
+      chat_session.save
+    else
+      message = {
+        event: 'chat_session_left',
+        data: {
+          session_id: chat_session.session_id,
+          realname: realname,
+        },
+      }
+    end
+    chat_session.send_to_recipients(message, @client_id)
+
+    # notifiy participients
     {
       event: 'chat_status_close',
       data: {

@@ -19,15 +19,35 @@ do($ = window.jQuery, window) ->
     inputTimeout: null
     isTyping: false
     isOnline: true
+    debug: true
+    host: 'ws://localhost:6042'
     strings:
       'Online': 'Online'
       'Offline': 'Offline'
-      'Connecting': 'Connecting'
+      'Connecting': 'Verbinden'
       'Connection re-established': 'Connection re-established'
-      'Today': 'Today'
+      'Today': 'Heute'
+      'Send': 'Senden'
+      'Compose your message...': 'Ihre Nachricht...'
+      'All colleges are busy.': 'Alle Kollegen sind belegt.'
+      'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.'
+      '': ''
+      '': ''
+      '': ''
 
-    T: (string) =>
-      return @strings[string]
+    T: (string, items...) =>
+      if !@strings[string]
+        @log 'notice', "Translation needed for '#{string}'"
+      translation = @strings[string] || string
+      if items
+        for item in items
+          translation = translation.replace(/%s/, item)
+
+      translation
+
+    log: (level, string...) =>
+      return if !@debug && level is 'debug'
+      console.log level, string
 
     view: (name) =>
       return (options) =>
@@ -42,8 +62,6 @@ do($ = window.jQuery, window) ->
       @el = $(@view('chat')(@options))
       @options.target.append @el
 
-      @setAgentOnlineState @isOnline
-
       @el.find('.js-chat-open').click @open
       @el.find('.js-chat-close').click @close
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
@@ -54,24 +72,10 @@ do($ = window.jQuery, window) ->
       @session_id = undefined
 
       if !window.WebSocket
-        console.log('Zammad Chat: Browser not supported')
+        @log 'notice', 'Chat: Browser not supported!'
         return
 
-      zammad_host = 'ws://localhost:6042'
-      @ws = new window.WebSocket(zammad_host)
-      console.log("Connecting to #{zammad_host}")
-
-      @ws.onopen = =>
-        console.log('ws connected')
-        @send 'chat_status_customer'
-
-      @ws.onmessage = @onWebSocketMessage
-
-      @ws.onclose = (e) =>
-        console.log 'debug', 'close websocket connection'
-
-      @ws.onerror = (e) =>
-        console.log 'debug', 'ws:onerror', e
+      @connect()
 
       @onReady()
 
@@ -81,7 +85,7 @@ do($ = window.jQuery, window) ->
         @sendMessage()
 
     send: (event, data) =>
-      console.log 'debug', 'ws:send', event, data
+      @log 'debug', 'ws:send', event, data
       pipe = JSON.stringify
         event: event
         data: data
@@ -89,7 +93,7 @@ do($ = window.jQuery, window) ->
 
     onWebSocketMessage: (e) =>
       pipes = JSON.parse( e.data )
-      console.log 'debug', 'ws:onmessage', pipes
+      @log 'debug', 'ws:onmessage', pipes
 
       for pipe in pipes
         switch pipe.event
@@ -110,17 +114,21 @@ do($ = window.jQuery, window) ->
               when 'queue'
                 @onQueue pipe.data.position
                 @session_id = pipe.data.session_id
+          when 'chat_session_closed'
+            @onSessionClosed pipe.data
+          when 'chat_session_left'
+            @onSessionClosed pipe.data
           when 'chat_status_customer'
             switch pipe.data.state
               when 'online'
                 @onReady()
-                console.log 'Zammad Chat: ready'
+                @log 'debug', 'Zammad Chat: ready'
               when 'offline'
-                console.log 'Zammad Chat: No agent online'
+                @log 'debug', 'Zammad Chat: No agent online'
               when 'chat_disabled'
-                console.log 'Zammad Chat: Chat is disabled'
+                @log 'debug', 'Zammad Chat: Chat is disabled'
               when 'no_seats_available'
-                console.log 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+                @log 'debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
 
     onReady: =>
       if @options.show
@@ -157,8 +165,7 @@ do($ = window.jQuery, window) ->
     sendMessage: ->
       message = @el.find('.zammad-chat-input').val()
 
-      if !message
-        return
+      return if !message
 
       messageElement = @view('message')
         message: message
@@ -216,7 +223,7 @@ do($ = window.jQuery, window) ->
       # setTimeout @onConnectionEstablished, 1180
       # setTimeout @onAgentTypingStart, 2000
       # setTimeout @receiveMessage, 5000, "Hello! How can I help you?"
-      @connect()
+      @session_init()
 
     close: (event) =>
       event.stopPropagation() if event
@@ -228,6 +235,8 @@ do($ = window.jQuery, window) ->
       @disconnect()
       @isOpen = false
 
+      @send 'chat_session_close', {session_id: @session_id}
+
     hide: ->
       @el.removeClass('zammad-chat-is-visible')
 
@@ -238,8 +247,16 @@ do($ = window.jQuery, window) ->
 
       @el.css 'bottom', -remainerHeight
 
+    disableInput: ->
+      @el.find('.zammad-chat-input').prop('disabled', true)
+      @el.find('.zammad-chat-send').prop('disabled', true)
+
+    enableInput: ->
+      @el.find('.zammad-chat-input').prop('disabled', false)
+      @el.find('.zammad-chat-send').prop('disabled', false)
+
     onQueue: (position) =>
-      console.log "onQueue", position
+      @log 'notice', 'onQueue', position
       @inQueue = true
 
       @el.find('.zammad-chat-body').html @view('waiting')
@@ -294,20 +311,48 @@ do($ = window.jQuery, window) ->
     scrollToBottom: ->
       @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
 
-    connect: ->
+    session_init: ->
       @send('chat_session_init')
+
+    connect: =>
+      @log 'notice', "Connecting to #{@host}"
+      @ws = new window.WebSocket(@host)
+      @ws.onopen = =>
+        @log 'debug', 'ws connected'
+        @send 'chat_status_customer'
+        @setAgentOnlineState(true)
+
+      @ws.onmessage = @onWebSocketMessage
+
+      @ws.onclose = (e) =>
+        @log 'debug', 'close websocket connection'
+        @reconnect()
+        @setAgentOnlineState(false)
+
+      @ws.onerror = (e) =>
+        @log 'debug', 'ws:onerror', e
 
     reconnect: =>
       # set status to connecting
+      @log 'notice', 'reconnecting'
+      @disableInput()
       @lastAddedType = 'status'
-      @el.find('.zammad-chat-agent-status').attr('data-status', 'connecting').text @T('Connecting')
+      @el.find('.zammad-chat-agent-status').attr('data-status', 'connecting').text @T('Reconnecting')
       @addStatus @T('Connection lost')
+
+      if @reconnectDelayId
+        clearTimeout(@reconnectDelayId)
+      @reconnectDelayId = setTimeout(@connect, 5000)
 
     onConnectionReestablished: =>
       # set status back to online
       @lastAddedType = 'status'
       @el.find('.zammad-chat-agent-status').attr('data-status', 'online').text @T('Online')
       @addStatus @T('Connection re-established')
+
+    onSessionClosed: (data) ->
+      @addStatus @T('Chat closed by %s', data.realname)
+      @disableInput()
 
     disconnect: ->
       @showLoader()
@@ -321,6 +366,8 @@ do($ = window.jQuery, window) ->
 
       @el.find('.zammad-chat-agent').html @view('agent')
         agent: agent
+
+      @enableInput()
 
       @el.find('.zammad-chat-body').empty()
       @el.find('.zammad-chat-welcome').addClass('zammad-chat-is-hidden')
