@@ -1788,13 +1788,13 @@ class App.CustomerChatRef extends App.Controller
 
     # read state
     if state is undefined
-      value = App.SessionStorage.get('chat')
+      value = App.SessionStorage.get('chat_layout_ref')
       if value is undefined
         value = false
       return value
 
     # write state
-    App.SessionStorage.set('chat', state)
+    App.SessionStorage.set('chat_layout_ref', state)
 
   updateNavMenu: =>
     delay = ->
