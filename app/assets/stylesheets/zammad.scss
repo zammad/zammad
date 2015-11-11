@@ -3009,6 +3009,7 @@ footer {
     }
 
     .user-menu > li:hover .list-button:before,
+    .user-menu > li.is-active .list-button:before,
     .user-menu > li.is-hovered .list-button:before {
       content: '';
       position: absolute;
@@ -3019,7 +3020,12 @@ footer {
       background: white;
     }
 
+    .user-menu > li.is-active .list-button:before {
+      background: $highlight-color;
+    }
+
     .user-menu li.add:hover .list-button:before,
+    .user-menu li.add.is-active .list-button:before,
     .user-menu li.add.is-hovered .list-button:before {
       background: #38ae6a;
     }
@@ -3034,14 +3040,17 @@ footer {
       fill: hsl(145,51%,45%);
     }
 
-    .user-menu > li.settings:hover .user-menu-icon,
-    .user-menu > li.settings.active .user-menu-icon {
+    .user-menu > li:hover .user-menu-icon {
       fill: hsl(232,10%,16%);
+    }
+
+    .user-menu > li.is-active .user-menu-icon {
+      fill: white;
     }
 
     .user-menu > li.add:hover .user-menu-icon.icon-plus,
     .user-menu > li.add.is-hovered .user-menu-icon.icon-plus,
-    .user-menu > li.add.active .user-menu-icon.icon-plus {
+    .user-menu > li.add.is-active .user-menu-icon.icon-plus {
       fill: white;
     }
 

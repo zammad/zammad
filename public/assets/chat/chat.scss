@@ -70,11 +70,15 @@ $baseTextColor: if($luminance < 0.2, white, black);
   cursor: pointer;
 }
 
+.zammad-chat.zammad-chat-is-open .zammad-chat-header {
+  cursor: default;
+}
+
 .zammad-chat-welcome-text {
   font-size: 1.2em;
 }
 
-.zammad-chat-toggle {
+.zammad-chat-header-icon {
   position: absolute;
   right: 0;
   top: 0;
@@ -82,20 +86,26 @@ $baseTextColor: if($luminance < 0.2, white, black);
   width: 3.4em;
   text-align: center;
   line-height: 3.5em;
+  cursor: pointer;
 }
 
-.zammad-chat-toggle-icon-open,
-.zammad-chat-toggle-icon-close {
+.zammad-chat-header-icon-open,
+.zammad-chat-header-icon-close {
   fill: currentColor;
-  height: 0.85em;
+  width: 1.6em;
+  vertical-align: middle;
 }
 
-.zammad-chat-toggle-icon-close,
-.zammad-chat.zammad-chat-is-open .zammad-chat-toggle-icon-open {
+.zammad-chat-header-icon-close {
+  width: 1.3em;
+}
+
+.zammad-chat-header-icon-close,
+.zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-open {
   display: none;
 }
 
-.zammad-chat.zammad-chat-is-open .zammad-chat-toggle-icon-close {
+.zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-close {
   display: inline;
 }
 
