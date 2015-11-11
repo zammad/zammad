@@ -9,8 +9,11 @@ class Sessions::Event
       return { error: "No such event #{event}" }
     end
 
+    instance = backend.new(data, session, client_id)
+    result = instance.pre_check
+    return result if result
     ActiveRecord::Base.establish_connection
-    result = backend.run(data, session, client_id)
+    result = instance.run
     ActiveRecord::Base.remove_connection
     result
   end

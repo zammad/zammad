@@ -32,6 +32,7 @@ class App.CustomerChat extends App.Controller
       (data) =>
         @meta = data
         @updateMeta()
+        @interval(@pushState, 20000, 'pushState')
     )
     App.Event.bind(
       'chat_session_start'
@@ -42,8 +43,6 @@ class App.CustomerChat extends App.Controller
     )
 
     App.WebSocket.send(event:'chat_status_agent')
-
-    @interval(@pushState, 16000)
 
   pushState: =>
     App.WebSocket.send(
@@ -59,13 +58,23 @@ class App.CustomerChat extends App.Controller
     @navupdate '#customer_chat'
 
   counter: =>
-    if @meta.waiting_chat_count
-      if @waitingChatCountLast isnt @meta.waiting_chat_count
-        @sounds.chat_new.play()
-        @waitingChatCountLast = @meta.waiting_chat_count
+    counter = 0
 
-      return @messageCounter + @meta.waiting_chat_count
-    @messageCounter
+    # get count of controller messages
+    if @meta.waiting_chat_count
+      counter += @meta.waiting_chat_count
+
+    # play on changes
+    if @lastWaitingChatCount isnt counter
+      @sounds.chat_new.play()
+      @lastWaitingChatCount = counter
+
+    # collect chat window messages
+    for key, value of @chatWindows
+      if value
+        counter += value.unreadMessages()
+
+    @messageCounter = counter
 
   switch: (state = undefined) =>
 
@@ -85,7 +94,7 @@ class App.CustomerChat extends App.Controller
   updateNavMenu: =>
     delay = ->
       App.Event.trigger('menu:render')
-    @delay(delay, 200)
+    @delay(delay, 200, 'updateNavMenu')
 
   updateMeta: =>
     if @meta.waiting_chat_count
@@ -107,7 +116,8 @@ class App.CustomerChat extends App.Controller
     chat = new chatWindow
       name: "#{session.created_at}"
       session: session
-      callback: @removeChat
+      removeCallback: @removeChat
+      messageCallback: @updateNavMenu
 
     @on 'layout-has-changed', @propagateLayoutChange
 
@@ -115,7 +125,6 @@ class App.CustomerChat extends App.Controller
     @chatWindows[session.session_id] = chat
 
   removeChat: (session_id) =>
-    console.log('removeChat', session_id, @chatWindows[session_id])
     delete @chatWindows[session_id]
 
   propagateLayoutChange: (event) =>
@@ -177,6 +186,7 @@ class chatWindow extends App.Controller
     @lastAddedType
     @isTyping = false
     @render()
+    @resetUnreadMessages()
 
     @on 'layout-change', @scrollToBottom
 
@@ -231,8 +241,8 @@ class chatWindow extends App.Controller
       data:
         session_id: @session.session_id
     )
-    if @callback
-      @callback(@session.session_id)
+    if @removeCallback
+      @removeCallback(@session.session_id)
 
   release: =>
     @trigger 'closed'
@@ -241,6 +251,7 @@ class chatWindow extends App.Controller
   clearUnread: =>
     @$('.chat-message--new').removeClass('chat-message--new')
     @updateModified(false)
+    @resetUnreadMessages()
 
   onKeydown: (event) =>
     TABKEY = 9;
@@ -304,8 +315,22 @@ class chatWindow extends App.Controller
     @addMessage(message, 'customer', !isFocused)
 
     if !isFocused
+      @addUnreadMessages()
       @updateModified(true)
       @sounds.message.play()
+
+  unreadMessages: =>
+    @unreadMessagesCounter
+
+  addUnreadMessages: =>
+    if @messageCallback
+      @messageCallback(@session.session_id)
+    @unreadMessagesCounter += 1
+
+  resetUnreadMessages: =>
+    if @messageCallback
+      @messageCallback(@session.session_id)
+    @unreadMessagesCounter = 0
 
   addMessage: (message, sender, isNew) =>
     @maybeAddTimestamp()

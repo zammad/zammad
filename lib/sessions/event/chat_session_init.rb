@@ -1,16 +1,6 @@
-class Sessions::Event::ChatSessionInit
+class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
 
-  def self.run(data, _session, client_id)
-
-    # check if feature is enabled
-    if !Setting.get('chat')
-      return {
-        event: 'chat_session_init',
-        data: {
-          state: 'chat_disabled',
-        },
-      }
-    end
+  def run
 
     chat_id = 1
     chat = Chat.find_by(id: chat_id)
@@ -29,17 +19,17 @@ class Sessions::Event::ChatSessionInit
       name: '',
       state: 'waiting',
       preferences: {
-        participants: [client_id],
+        participants: [@client_id],
       },
     )
 
-    # send update to agents
-    User.where(active: true).each {|user|
+    # send broadcast to agents
+    Chat::Agent.where(active: true).each {|item|
       data = {
         event: 'chat_status_agent',
-        data: Chat.agent_state(user.id),
+        data: Chat.agent_state(item.updated_by_id),
       }
-      Sessions.send_to(user.id, data)
+      Sessions.send_to(item.updated_by_id, data)
     }
 
     # return new session

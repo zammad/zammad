@@ -162,7 +162,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.ws.onopen = (function(_this) {
         return function() {
           console.log('ws connected');
-          return _this.send('chat_status');
+          return _this.send('chat_status_customer');
         };
       })(this);
       this.ws.onmessage = this.onWebSocketMessage;
@@ -196,7 +196,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.onWebSocketMessage = function(e) {
-      var delay, i, len, pipe, pipes;
+      var i, len, pipe, pipes;
       pipes = JSON.parse(e.data);
       console.log('debug', 'ws:onmessage', pipes);
       for (i = 0, len = pipes.length; i < len; i++) {
@@ -213,15 +213,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
               return;
             }
             this.onAgentTypingStart();
-            if (this.stopTypingId) {
-              clearTimeout(this.stopTypingId);
-            }
-            delay = (function(_this) {
-              return function() {
-                return _this.onAgentTypingEnd();
-              };
-            })(this);
-            this.stopTypingId = setTimeout(delay, 3000);
             break;
           case 'chat_session_start':
             switch (pipe.data.state) {
@@ -239,7 +230,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
                 this.session_id = pipe.data.session_id;
             }
             break;
-          case 'chat_status':
+          case 'chat_status_customer':
             switch (pipe.data.state) {
               case 'online':
                 this.onReady();
@@ -393,6 +384,10 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.onAgentTypingStart = function() {
+      if (this.stopTypingId) {
+        clearTimeout(this.stopTypingId);
+      }
+      this.stopTypingId = setTimeout(this.onAgentTypingEnd, 3000);
       if (this.el.find('.zammad-chat-message--typing').size()) {
         return;
       }

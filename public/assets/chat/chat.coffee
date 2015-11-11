@@ -64,7 +64,6 @@ do($ = window.jQuery, window) ->
         console.log('ws connected')
         @send 'chat_status_customer'
 
-
       @ws.onmessage = @onWebSocketMessage
 
       @ws.onclose = (e) =>

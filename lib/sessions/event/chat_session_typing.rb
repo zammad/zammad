@@ -1,18 +1,8 @@
-class Sessions::Event::ChatSessionTyping
+class Sessions::Event::ChatSessionTyping < Sessions::Event::ChatBase
 
-  def self.run(data, session, client_id)
+  def run
 
-    # check if feature is enabled
-    if !Setting.get('chat')
-      return {
-        event: 'chat_session_typing',
-        data: {
-          state: 'chat_disabled',
-        },
-      }
-    end
-
-    if !data['data'] || !data['data']['session_id']
+    if !@data['data'] || !@data['data']['session_id']
       return {
         event: 'chat_session_typing',
         data: {
@@ -21,7 +11,7 @@ class Sessions::Event::ChatSessionTyping
       }
     end
 
-    chat_session = Chat::Session.find_by(session_id: data['data']['session_id'])
+    chat_session = Chat::Session.find_by(session_id: @data['data']['session_id'])
     if !chat_session
       return {
         event: 'chat_session_typing',
@@ -32,8 +22,8 @@ class Sessions::Event::ChatSessionTyping
     end
 
     user_id = nil
-    if session
-      user_id = session['id']
+    if @session
+      user_id = @session['id']
     end
     message = {
       event: 'chat_session_typing',
@@ -44,10 +34,7 @@ class Sessions::Event::ChatSessionTyping
     }
 
     # send to participents
-    chat_session.preferences[:participants].each {|local_client_id|
-      next if local_client_id == client_id
-      Sessions.send(local_client_id, message)
-    }
+    chat_session.send_to_recipients(message, @client_id)
 
     # send chat_session_init to agent
     {

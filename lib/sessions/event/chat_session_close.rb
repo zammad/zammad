@@ -1,18 +1,8 @@
-class Sessions::Event::ChatSessionClose
+class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
 
-  def self.run(data, _session, _client_id)
+  def run
 
-    # check if feature is enabled
-    if !Setting.get('chat')
-      return {
-        event: 'chat_status_close',
-        data: {
-          state: 'chat_disabled',
-        },
-      }
-    end
-
-    if !data['data'] || !data['data']['session_id']
+    if !@data['data'] || !@data['data']['session_id']
       return {
         event: 'chat_status_close',
         data: {
@@ -21,7 +11,7 @@ class Sessions::Event::ChatSessionClose
       }
     end
 
-    chat_session = Chat::Session.find_by(session_id: data['data']['session_id'])
+    chat_session = Chat::Session.find_by(session_id: @data['data']['session_id'])
     if !chat_session
       return {
         event: 'chat_status_close',

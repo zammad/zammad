@@ -1,12 +1,5 @@
 class CreateChat < ActiveRecord::Migration
   def up
-=begin
-    ActiveRecord::Migration.drop_table :chats
-    ActiveRecord::Migration.drop_table :chat_topics
-    ActiveRecord::Migration.drop_table :chat_sessions
-    ActiveRecord::Migration.drop_table :chat_messages
-    ActiveRecord::Migration.drop_table :chat_agents
-=end
     create_table :chats do |t|
       t.string  :name,                   limit: 250,  null: true
       t.integer :max_queue,                           null: false, default: 5
