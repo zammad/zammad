@@ -6890,6 +6890,11 @@ output {
   }
 }
 
+  
+/* 
+  datepicker resets some css it potentially inherits when its rendered inside a table
+*/
+
 .datepicker {
   background: hsl(234,10%,19%);
   color: white;
@@ -6907,6 +6912,14 @@ output {
     &:hover {
       background: hsl(240,10%,14%);
     }
+  }
+
+  th {
+    background: none;
+  }
+
+  th, td {
+    border: none;
   }
 
   .next,
@@ -6938,7 +6951,7 @@ output {
     width: 27px;
     height: 26px;
     border-radius: 100%;
-    padding: 1px 0 0;
+    padding: 1px 0 0 !important;
   }
 
   .month,

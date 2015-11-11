@@ -1892,24 +1892,24 @@ class App.CustomerChatRef extends App.Controller
     else
       @nextQuestion()
 
-class CustomerChatRouter extends App.ControllerPermanent
-  constructor: (params) ->
-    super
+# class CustomerChatRouter extends App.ControllerPermanent
+#   constructor: (params) ->
+#     super
 
-    # check authentication
-    return if !@authenticate()
+#     # check authentication
+#     return if !@authenticate()
 
-    App.TaskManager.execute(
-      key:        'CustomerChatRef'
-      controller: 'CustomerChatRef'
-      params:     {}
-      show:       true
-      persistent: true
-    )
+#     App.TaskManager.execute(
+#       key:        'CustomerChatRef'
+#       controller: 'CustomerChatRef'
+#       params:     {}
+#       show:       true
+#       persistent: true
+#     )
 
-App.Config.set( 'layout_ref/customer_chat', CustomerChatRouter, 'Routes' )
-App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
-App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', role: ['Agent'], class: 'chat' }, 'NavBar' )
+# App.Config.set( 'layout_ref/customer_chat', CustomerChatRouter, 'Routes' )
+# App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
+# App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', role: ['Agent'], class: 'chat' }, 'NavBar' )
 
 
 class chatWindowRef extends Spine.Controller

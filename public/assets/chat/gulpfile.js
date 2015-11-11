@@ -11,7 +11,7 @@ var merge = require('merge-stream');
 var plumber = require('gulp-plumber');
  
 gulp.task('css', function(){
-  return gulp.src('style.scss')
+  return gulp.src('chat.scss')
     .pipe(sass.sync().on('error', gutil.log))
     .pipe(autoprefixer({
         browsers: ['last 4 versions'],
@@ -40,7 +40,7 @@ gulp.task('js', function(){
 });
 
 gulp.task('default', function(){
-  var cssWatcher = gulp.watch('style.scss', ['css']);
+  var cssWatcher = gulp.watch('chat.scss', ['css']);
   cssWatcher.on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });

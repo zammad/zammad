@@ -46,10 +46,9 @@ do($ = window.jQuery, window) ->
 
       @el.find('.zammad-chat-header').click @toggle
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
-      @el.find('.zammad-chat-input').on(
+      @el.find('.zammad-chat-input').on
         keydown: @checkForEnter
         input: @onInput
-      ).autoGrow { extraLine: false }
 
       @session_id = undefined
 
@@ -122,7 +121,10 @@ do($ = window.jQuery, window) ->
                 console.log 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
 
     onReady: =>
-      @show() if @options.show
+      if @options.show
+        @show()
+        @el.find('.zammad-chat-input').autoGrow
+          extraLine: false
 
     onInput: =>
       # remove unread-state from messages
