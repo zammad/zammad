@@ -170,12 +170,14 @@
   margin: 0.5em 0; }
 
 .zammad-chat-message-body {
-  padding: 0.6em 1em;
+  padding: 0.5em 1em;
+  line-height: 1.4;
   border-radius: 1em;
   background: #f6f8f9;
   display: inline-block;
   max-width: 70%;
-  white-space: pre;
+  white-space: pre-line;
+  word-wrap: break-word;
   box-shadow: 0 2px rgba(255, 255, 255, 0.15) inset, 0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px rgba(0, 0, 0, 0.02); }
 
 .zammad-chat-message--customer {
