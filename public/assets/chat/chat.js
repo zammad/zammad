@@ -150,8 +150,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.el.find('.zammad-chat-input').on({
         keydown: this.checkForEnter,
         input: this.onInput
-      }).autoGrow({
-        extraLine: false
       });
       this.session_id = void 0;
       if (!window.WebSocket) {
@@ -262,7 +260,10 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.onReady = function() {
       if (this.options.show) {
-        return this.show();
+        this.show();
+        return this.el.find('.zammad-chat-input').autoGrow({
+          extraLine: false
+        });
       }
     };
 
