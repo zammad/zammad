@@ -63,7 +63,8 @@ do($ = window.jQuery, window) ->
 
       @ws.onopen = =>
         console.log('ws connected')
-        @send 'chat_status'
+        @send 'chat_status_customer'
+
 
       @ws.onmessage = @onWebSocketMessage
 
@@ -97,11 +98,6 @@ do($ = window.jQuery, window) ->
           when 'chat_session_typing'
             return if pipe.data.self_written
             @onAgentTypingStart()
-            if @stopTypingId
-              clearTimeout(@stopTypingId)
-            delay = =>
-              @onAgentTypingEnd()
-            @stopTypingId = setTimeout(delay, 3000)
           when 'chat_session_start'
             switch pipe.data.state
               when 'ok'
@@ -113,7 +109,7 @@ do($ = window.jQuery, window) ->
               when 'queue'
                 @onQueue pipe.data.position
                 @session_id = pipe.data.session_id
-          when 'chat_status'
+          when 'chat_status_customer'
             switch pipe.data.state
               when 'online'
                 @onReady()
@@ -170,7 +166,7 @@ do($ = window.jQuery, window) ->
       # add message before message typing loader
       if @el.find('.zammad-chat-message--typing').size()
         @lastAddedType = 'typing-placeholder'
-        @el.find('.zammad-chat-message--typing').before messageElement 
+        @el.find('.zammad-chat-message--typing').before messageElement
       else
         @lastAddedType = 'message--customer'
         @el.find('.zammad-chat-body').append messageElement
@@ -245,6 +241,10 @@ do($ = window.jQuery, window) ->
         position: position
 
     onAgentTypingStart: =>
+      if @stopTypingId
+        clearTimeout(@stopTypingId)
+      @stopTypingId = setTimeout(@onAgentTypingEnd, 3000)
+
       # never display two typing indicators
       return if @el.find('.zammad-chat-message--typing').size()
 
