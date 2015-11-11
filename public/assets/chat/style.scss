@@ -203,7 +203,8 @@ $baseTextColor: if($luminance < 0.2, white, black);
 }
 
 .zammad-chat-message-body {
-  padding: 0.6em 1em;
+  padding: 0.5em 1em;
+  line-height: 1.4;
   border-radius: 1em;
   background: desaturate(lightenMax($themeColor, 50%, 97%), 50%);
   display: inline-block;
