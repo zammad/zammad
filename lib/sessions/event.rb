@@ -10,14 +10,19 @@ class Sessions::Event
       return { error: "No such event #{event}" }
     end
 
+    ActiveRecord::Base.establish_connection
     instance = backend.new(data, session, client_id)
     pre = instance.pre
-    return pre if pre
-    ActiveRecord::Base.establish_connection
+    if pre
+      ActiveRecord::Base.remove_connection
+      return pre
+    end
     result = instance.run
-    ActiveRecord::Base.remove_connection
     post = instance.post
-    return post if post
+    if post
+      ActiveRecord::Base.remove_connection
+      return post
+    end
     result
   end
 
