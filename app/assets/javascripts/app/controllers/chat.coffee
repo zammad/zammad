@@ -101,7 +101,7 @@ class App.CustomerChat extends App.Controller
     @delay(delay, 200, 'updateNavMenu')
 
   updateMeta: =>
-    if @meta.waiting_chat_count
+    if @meta.waiting_chat_count && @maxChats > @currentChatCount()
       @$('.js-acceptChat').addClass('is-clickable is-blinking')
     else
       @$('.js-acceptChat').removeClass('is-clickable is-blinking')
@@ -109,9 +109,11 @@ class App.CustomerChat extends App.Controller
     @$('.js-badgeChattingCustomers').text(@meta.running_chat_count)
     @$('.js-badgeActiveAgents').text(@meta.active_agents)
 
+    # reopen chats
     if @meta.active_sessions
       for session in @meta.active_sessions
         @addChat(session)
+    @meta.active_sessions = false
 
     @updateNavMenu()
 
@@ -140,19 +142,22 @@ class App.CustomerChat extends App.Controller
 
   removeChat: (session_id) =>
     delete @chatWindows[session_id]
+    @updateMeta()
 
   propagateLayoutChange: (event) =>
     # adjust scroll position on layoutChange
     for session_id, chat of @chatWindows
       chat.trigger 'layout-changed'
 
-  acceptChat: =>
+  currentChatCount: =>
     currentChats = 0
     for key, value of @chatWindows
       if @chatWindows[key]
         currentChats += 1
-    return if currentChats >= @maxChats
+    currentChats
 
+  acceptChat: =>
+    return if @currentChatCount() >= @maxChats
     App.WebSocket.send(event:'chat_session_start')
 
 class CustomerChatRouter extends App.ControllerPermanent
@@ -416,7 +421,7 @@ class chatWindow extends App.Controller
         time: time
 
   addStatusMessage: (message) ->
-    @body.append App.view('customer_chat/customer_chat_status_message')
+    @body.append App.view('customer_chat/chat_status_message')
       message: message
 
     @scrollToBottom()

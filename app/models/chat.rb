@@ -157,7 +157,7 @@ class Chat::Session < ApplicationModel
     preferences[:participants]
   end
 
-  def send_to_recipients(message, ignore_client_id)
+  def send_to_recipients(message, ignore_client_id = nil)
     preferences[:participants].each {|local_client_id|
       next if local_client_id == ignore_client_id
       Sessions.send(local_client_id, message)
