@@ -26,8 +26,14 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       realname = User.find(@session['id']).fullname
     end
 
-    # notify about "leaving"
-    if @session && chat_session.user_id == @session['id']
+    # check count of participents
+    participents_count = 0
+    if chat_session.preferences[:participents]
+      participents_count = chat_session.preferences[:participents].count
+    end
+
+    # notify about "closing"
+    if participents_count < 2 || (@session && chat_session.user_id == @session['id'])
       message = {
         event: 'chat_session_closed',
         data: {
@@ -39,6 +45,11 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       # close session if host is closing it
       chat_session.state = 'closed'
       chat_session.save
+
+      # set state update to all agents
+      broadcast_agent_state_update
+
+    # notify about "leaving"
     else
       message = {
         event: 'chat_session_left',

@@ -53,6 +53,8 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
       local_chat_session.send_to_recipients(data)
     }
 
+    broadcast_agent_state_update
+
     nil
   end
 end
