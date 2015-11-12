@@ -133,6 +133,8 @@ do($ = window.jQuery, window) ->
         @show()
 
     openSession: (session) =>
+      unfinishedMessage = sessionStorage.getItem 'unfinished_message'
+      
       for message in session
         console.log "message in session", message
         @renderMessage
@@ -140,13 +142,16 @@ do($ = window.jQuery, window) ->
           id: message.id
           from: if message.created_by_id then 'agent' else 'customer'
 
-      if sessionStorage.getItem 'unfinished_message'
-        @input.val( sessionStorage.getItem('unfinished_message') ).focus()
+      if unfinishedMessage
+        @input.val unfinishedMessage
 
       @show()
       @open
         showLoader: false
         animate: false
+
+      if unfinishedMessage
+        @input.focus()
 
     onInput: =>
       # remove unread-state from messages
@@ -199,7 +204,7 @@ do($ = window.jQuery, window) ->
         @lastAddedType = 'message--customer'
         @el.find('.zammad-chat-body').append messageElement
 
-      @el.find('.zammad-chat-input').val('')
+      @input.val('')
       @scrollToBottom()
 
       @isTyping = false
@@ -283,15 +288,15 @@ do($ = window.jQuery, window) ->
 
       @el.css 'bottom', -remainerHeight
 
-      @el.find('.zammad-chat-input').autoGrow
+      @input.autoGrow
         extraLine: false
 
     disableInput: ->
-      @el.find('.zammad-chat-input').prop('disabled', true)
+      @input.prop('disabled', true)
       @el.find('.zammad-chat-send').prop('disabled', true)
 
     enableInput: ->
-      @el.find('.zammad-chat-input').prop('disabled', false)
+      @input.prop('disabled', false)
       @el.find('.zammad-chat-send').prop('disabled', false)
 
     onQueueScreen: (data) =>
@@ -423,11 +428,15 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent').addClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden')
 
-    onConnectionEstablished: (agent) =>
+    setSessionId: (id) =>
+      @sessionId = id
+      sessionStorage.setItem 'sessionId', id
+
+    onConnectionEstablished: (data) =>
 
       # stop delay of initial queue position
       if @onInitialQueueDelayId
-        clearTimeout(@onInitialQueueDelayId)
+        clearTimeout @onInitialQueueDelayId
 
       @inQueue = false
       @agent = data.agent
@@ -442,7 +451,7 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-welcome').addClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden')
-      @el.find('.zammad-chat-input').focus()
+      @input.focus()
 
     showLoader: ->
       @el.find('.zammad-chat-body').html @view('loader')()
