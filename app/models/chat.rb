@@ -7,8 +7,9 @@ class Chat < ApplicationModel
   def customer_state(session_id = nil)
     return { state: 'chat_disabled' } if !Setting.get('chat')
 
+    # reconnect
     if session_id
-      chat_session = Chat::Session.find_by(session_id: session_id)
+      chat_session = Chat::Session.find_by(session_id: session_id, state: %w(waiting running))
       user = nil
       if chat_session && chat_session.user_id
         chat_user = User.find(chat_session.user_id)
@@ -22,13 +23,15 @@ class Chat < ApplicationModel
         }
       end
 
-      session = Chat.session_state(session_id)
-      if session
-        return {
-          state: 'reconnect',
-          session: session,
-          agent: user,
-        }
+      if chat_session
+        session = Chat.session_state(session_id)
+        if session && !session.empty?
+          return {
+            state: 'reconnect',
+            session: session,
+            agent: user,
+          }
+        end
       end
     end
 
