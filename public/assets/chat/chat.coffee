@@ -22,6 +22,7 @@ do($ = window.jQuery, window) ->
     initialQueueDelay: 10000,
     debug: true
     host: 'ws://localhost:6042'
+    wsReconnectEnable: true
     strings:
       'Online': 'Online'
       'Offline': 'Offline'
@@ -77,7 +78,7 @@ do($ = window.jQuery, window) ->
         @log 'notice', 'Chat: Browser not supported!'
         return
 
-      @connect()
+      @wsConnect()
 
       #@onReady()
 
@@ -116,14 +117,18 @@ do($ = window.jQuery, window) ->
           when 'chat_status_customer'
             switch pipe.data.state
               when 'online'
+                @sessionId = undefined
                 @onReady()
                 @log 'debug', 'Zammad Chat: ready'
               when 'offline'
                 @log 'debug', 'Zammad Chat: No agent online'
+                @wsClose()
               when 'chat_disabled'
                 @log 'debug', 'Zammad Chat: Chat is disabled'
+                @wsClose()
               when 'no_seats_available'
                 @log 'debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+                @wsClose()
               when 'reconnect'
                 @log 'debug', 'old messages', pipe.data.session
                 @reopenSession pipe.data
@@ -250,13 +255,21 @@ do($ = window.jQuery, window) ->
 
       @isOpen = true
 
-    onOpenAnimationEnd: =>
       if !@sessionId
         @session_init()
+
+    onOpenAnimationEnd: =>
+      #@showTimeout()
 
     close: (event) =>
       event.stopPropagation() if event
 
+      # only close if session_id exists
+      return if !@sessionId
+
+      # stop delay of initial queue position
+      if @onInitialQueueDelayId
+        clearTimeout(@onInitialQueueDelayId)
       #@ws.close()
 
       sessionStorage.removeItem 'sessionId'
@@ -300,6 +313,7 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-send').prop('disabled', false)
 
     onQueueScreen: (data) =>
+      @setSessionId data.session_id
 
       # delay initial queue position, show connecting first
       show = =>
@@ -318,7 +332,6 @@ do($ = window.jQuery, window) ->
     onQueue: (data) =>
       @log 'notice', 'onQueue', data.position
       @inQueue = true
-      @setSessionId data.session_id
 
       @el.find('.zammad-chat-body').html @view('waiting')
         position: data.position
@@ -381,7 +394,7 @@ do($ = window.jQuery, window) ->
     session_init: ->
       @send('chat_session_init')
 
-    connect: =>
+    wsConnect: =>
       @log 'notice', "Connecting to #{@host}"
       @ws = new window.WebSocket(@host)
       @ws.onopen = @onWebSocketOpen
@@ -390,15 +403,24 @@ do($ = window.jQuery, window) ->
 
       @ws.onclose = (e) =>
         @log 'debug', 'close websocket connection'
-        @reconnect()
+        if @wsReconnectEnable
+          @reconnect()
         @setAgentOnlineState(false)
 
       @ws.onerror = (e) =>
         @log 'debug', 'ws:onerror', e
 
+    wsClose: =>
+      @wsReconnectEnable = false
+      @ws.close()
+
+    wsReconnect: =>
+      if @reconnectDelayId
+        clearTimeout(@reconnectDelayId)
+      @reconnectDelayId = setTimeout(@wsConnect, 5000)
+
     onWebSocketOpen: =>
       @sessionId = sessionStorage.getItem('sessionId')
-
       @log 'debug', 'ws connected'
 
       @send 'chat_status_customer',
@@ -413,10 +435,7 @@ do($ = window.jQuery, window) ->
       @lastAddedType = 'status'
       @el.find('.zammad-chat-agent-status').attr('data-status', 'connecting').text @T('Reconnecting')
       @addStatus @T('Connection lost')
-
-      if @reconnectDelayId
-        clearTimeout(@reconnectDelayId)
-      @reconnectDelayId = setTimeout(@connect, 5000)
+      @wsReconnect()
 
     onConnectionReestablished: =>
       # set status back to online
