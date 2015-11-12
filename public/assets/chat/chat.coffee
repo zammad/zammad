@@ -303,7 +303,7 @@ do($ = window.jQuery, window) ->
 
       # delay initial queue position, show connecting first
       show = =>
-        @onQueue data.position
+        @onQueue data
       if @initialQueueDelay && !@onInitialQueueDelayId
         @onInitialQueueDelayId = setTimeout(show, @initialQueueDelay)
         return
