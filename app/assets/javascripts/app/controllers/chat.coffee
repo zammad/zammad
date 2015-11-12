@@ -10,6 +10,8 @@ class App.CustomerChat extends App.Controller
   constructor: ->
     super
 
+    return if !@isRole('Chat')
+
     @i = 0
     @chatWindows = {}
     @totalQuestions = 7
