@@ -108,7 +108,7 @@ do($ = window.jQuery, window) ->
           when 'chat_session_start'
             @onConnectionEstablished pipe.data
           when 'chat_session_queue'
-            @onQueue pipe.data
+            @onQueueScreen pipe.data
           when 'chat_session_closed'
             @onSessionClosed pipe.data
           when 'chat_session_left'
@@ -126,17 +126,19 @@ do($ = window.jQuery, window) ->
                 @log 'debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
               when 'reconnect'
                 @log 'debug', 'old messages', pipe.data.session
-                @openSession pipe.data.session
+                @reopenSession pipe.data
 
     onReady: =>
       if @options.show
         @show()
 
-    openSession: (session) =>
+    reopenSession: (data) =>
       unfinishedMessage = sessionStorage.getItem 'unfinished_message'
-      
-      for message in session
-        console.log "message in session", message
+
+      @onConnectionEstablished(data)
+
+      for message in data.session
+        @log 'debug', "message in session", message
         @renderMessage
           message: message.content
           id: message.id
@@ -438,8 +440,10 @@ do($ = window.jQuery, window) ->
         clearTimeout @onInitialQueueDelayId
 
       @inQueue = false
-      @agent = data.agent
-      @setSessionId data.session_id
+      if data.agent
+        @agent = data.agent
+      if data.session_id
+        @setSessionId data.session_id
 
       @el.find('.zammad-chat-agent').html @view('agent')
         agent: @agent

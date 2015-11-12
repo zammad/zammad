@@ -8,11 +8,28 @@ class Chat < ApplicationModel
     return { state: 'chat_disabled' } if !Setting.get('chat')
 
     if session_id
+      chat_session = Chat::Session.find_by(session_id: session_id)
+      user = nil
+      if chat_session && chat_session.user_id
+        chat_user = User.find(chat_session.user_id)
+        url = nil
+        if chat_user.image && chat_user.image != 'none'
+          url = "/api/v1/users/image/#{chat_user.image}"
+        end
+        user = {
+          name: chat_user.fullname,
+          avatar: url,
+        }
+      end
+
       session = Chat.session_state(session_id)
-      return {
-        state: 'reconnect',
-        session: session,
-      }
+      if session
+        return {
+          state: 'reconnect',
+          session: session,
+          agent: user,
+        }
+      end
     end
 
     if Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - 2.minutes).count > 0
@@ -31,8 +48,9 @@ class Chat < ApplicationModel
 
   def self.session_state(session_id)
     session_attributes = []
-    chat_session_id = Chat::Session.find_by(session_id: session_id)
-    Chat::Message.where(chat_session_id: chat_session_id.id).each { |message|
+    chat_session = Chat::Session.find_by(session_id: session_id)
+    return if !chat_session
+    Chat::Message.where(chat_session_id: chat_session.id).each { |message|
       session_attributes.push message.attributes
     }
     session_attributes
