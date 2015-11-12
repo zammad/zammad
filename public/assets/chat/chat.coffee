@@ -107,7 +107,7 @@ do($ = window.jQuery, window) ->
             @onConnectionEstablished pipe.data.agent
           when 'chat_session_queue'
             @sessionId = pipe.data.session_id
-            @onQueueScreen pipe.data.position
+            @onQueueScreen pipe.data
           when 'chat_session_closed'
             @onSessionClosed pipe.data
           when 'chat_session_left'
