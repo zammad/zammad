@@ -19,6 +19,7 @@ do($ = window.jQuery, window) ->
     inputTimeout: null
     isTyping: false
     isOnline: true
+    initialQueueDelay: 10000,
     debug: true
     host: 'ws://localhost:6042'
     strings:
@@ -92,9 +93,9 @@ do($ = window.jQuery, window) ->
 
     onWebSocketMessage: (e) =>
       pipes = JSON.parse( e.data )
-      @log 'debug', 'ws:onmessage', pipes
 
       for pipe in pipes
+        @log 'debug', 'ws:onmessage', pipe
         switch pipe.event
           when 'chat_session_message'
             return if pipe.data.self_written
@@ -104,10 +105,9 @@ do($ = window.jQuery, window) ->
             @onAgentTypingStart()
           when 'chat_session_start'
             @onConnectionEstablished pipe.data.agent
-            @sessionId = pipe.data.session_id
           when 'chat_session_queue'
-            @onQueue pipe.data.position
             @sessionId = pipe.data.session_id
+            @onQueueScreen pipe.data.position
           when 'chat_session_closed'
             @onSessionClosed pipe.data
           when 'chat_session_left'
@@ -254,6 +254,22 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-input').prop('disabled', false)
       @el.find('.zammad-chat-send').prop('disabled', false)
 
+    onQueueScreen: (data) =>
+
+      # delay initial queue position, show connecting first
+      show = =>
+        @onQueue data.position
+      if @initialQueueDelay && !@onInitialQueueDelayId
+        @onInitialQueueDelayId = setTimeout(show, @initialQueueDelay)
+        return
+
+      # stop delay of initial queue position
+      if @onInitialQueueDelayId
+        clearTimeout(@onInitialQueueDelayId)
+
+      # show queue position
+      show()
+
     onQueue: (position) =>
       @log 'notice', 'onQueue', position
       @inQueue = true
@@ -361,6 +377,11 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden')
 
     onConnectionEstablished: (agent) =>
+
+      # stop delay of initial queue position
+      if @onInitialQueueDelayId
+        clearTimeout(@onInitialQueueDelayId)
+
       @inQueue = false
       @agent = agent
 
