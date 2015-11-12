@@ -7118,7 +7118,6 @@ output {
 .chat-window {
   flex: 0 1 0;
   overflow: hidden;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   color: hsl(0,0%,33%);
@@ -7128,6 +7127,7 @@ output {
   &.is-open {
     flex: 1 0 25%;
     transform: scale(1);
+    padding: 10px;
   }
 
   &.is-offline {

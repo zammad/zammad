@@ -29,6 +29,8 @@ class App.CustomerChat extends App.Controller
 
     @render()
 
+    @on 'layout-has-changed', @propagateLayoutChange
+
     @bind(
       'chat_status_agent'
       (data) =>
@@ -126,16 +128,14 @@ class App.CustomerChat extends App.Controller
       removeCallback: @removeChat
       messageCallback: @updateNavMenu
 
-    @on 'layout-has-changed', @propagateLayoutChange
-
-    @$('.chat-workspace').append(chat.el)
+    @$('.chat-workspace').append chat.el
+    chat.render()
     @chatWindows[session.session_id] = chat
 
   removeChat: (session_id) =>
     delete @chatWindows[session_id]
 
   propagateLayoutChange: (event) =>
-
     # adjust scroll position on layoutChange
     for session_id, chat of @chatWindows
       chat.trigger 'layout-changed'
@@ -192,7 +192,6 @@ class chatWindow extends App.Controller
     @lastTimestamp
     @lastAddedType
     @isTyping = false
-    @render()
     @resetUnreadMessages()
 
     @on 'layout-change', @scrollToBottom
@@ -226,8 +225,9 @@ class chatWindow extends App.Controller
 
     @el.one 'transitionend', @onTransitionend
 
-    # make sure animation will run
-    setTimeout (=> @el.addClass('is-open')), 0
+    # force repaint
+    @el.prop('offsetHeight')
+    @el.addClass('is-open')
 
     # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent'
     if @session && @session.messages
