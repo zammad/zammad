@@ -138,7 +138,7 @@ do($ = window.jQuery, window) ->
       @onConnectionEstablished(data)
 
       for message in data.session
-        @log 'debug', "message in session", message
+        @log 'debug', 'message in session', message
         @renderMessage
           message: message.content
           id: message.id
@@ -149,6 +149,7 @@ do($ = window.jQuery, window) ->
 
       @show()
       @open()
+      @scrollToBottom()
 
       if unfinishedMessage
         @input.focus()
@@ -256,7 +257,7 @@ do($ = window.jQuery, window) ->
     close: (event) =>
       event.stopPropagation() if event
 
-      @ws.close()
+      #@ws.close()
 
       sessionStorage.removeItem 'sessionId'
       sessionStorage.removeItem 'unfinished_message'
@@ -274,6 +275,8 @@ do($ = window.jQuery, window) ->
 
       @send 'chat_session_close',
         session_id: @sessionId
+
+      @setSessionId undefined
 
     hide: ->
       @el.removeClass('zammad-chat-is-visible')
@@ -427,7 +430,10 @@ do($ = window.jQuery, window) ->
 
     setSessionId: (id) =>
       @sessionId = id
-      sessionStorage.setItem 'sessionId', id
+      if id is undefined
+        sessionStorage.removeItem 'sessionId'
+      else
+        sessionStorage.setItem 'sessionId', id
 
     onConnectionEstablished: (data) =>
 
