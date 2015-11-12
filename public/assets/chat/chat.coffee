@@ -66,7 +66,7 @@ do($ = window.jQuery, window) ->
 
       @input = @el.find('.zammad-chat-input')
 
-      @el.find('.js-chat-open').click @open
+      @el.find('.js-chat-open').click => @open()
       @el.find('.js-chat-close').click @close
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @input.on
@@ -146,9 +146,7 @@ do($ = window.jQuery, window) ->
         @input.val unfinishedMessage
 
       @show()
-      @open
-        showLoader: false
-        animate: false
+      @open()
 
       if unfinishedMessage
         @input.focus()
@@ -232,16 +230,16 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-body').append @view('message')(data)
       @scrollToBottom()
 
-    open: (options = { showLoader: true, animate: true }) =>
+    open: =>
       return if @isOpen
 
-      if options.showLoader
+      if !@sessionId
         @showLoader()
 
       @el
         .addClass('zammad-chat-is-open')
 
-      if options.animate
+      if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
       else
         @el.css 'bottom', 0
@@ -250,11 +248,8 @@ do($ = window.jQuery, window) ->
       @isOpen = true
 
     onOpenAnimationEnd: =>
-      #setTimeout @onQueue, 1180
-      # setTimeout @onConnectionEstablished, 1180
-      # setTimeout @onAgentTypingStart, 2000
-      # setTimeout @receiveMessage, 5000, "Hello! How can I help you?"
-      @session_init()
+      if !@sessionId
+        @session_init()
 
     close: (event) =>
       event.stopPropagation() if event
