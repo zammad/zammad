@@ -16,7 +16,7 @@ class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
       return {
         event: 'chat_session_message',
         data: {
-          state: "No such session id #{data['data']['session_id']}",
+          state: "No such session id #{@data['data']['session_id']}",
         },
       }
     end
