@@ -303,7 +303,7 @@ do($ = window.jQuery, window) ->
 
       # delay initial queue position, show connecting first
       show = =>
-        @onQueue data.position
+        @onQueue data
       if @initialQueueDelay && !@onInitialQueueDelayId
         @onInitialQueueDelayId = setTimeout(show, @initialQueueDelay)
         return
@@ -315,8 +315,8 @@ do($ = window.jQuery, window) ->
       # show queue position
       show()
 
-    onQueue: (position) =>
-      @log 'notice', 'onQueue', position
+    onQueue: (data) =>
+      @log 'notice', 'onQueue', data.position
       @inQueue = true
       @setSessionId data.session_id
 
