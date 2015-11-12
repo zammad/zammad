@@ -1,0 +1,1 @@
+<div class="zammad-chat-timestamp"><strong><%= @label %></strong> <%= @time %></div>
