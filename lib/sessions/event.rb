@@ -3,6 +3,7 @@ class Sessions::Event
 
   def self.run(event, data, session, client_id)
     adapter = "Sessions::Event::#{event.to_classname}"
+
     begin
       backend = load_adapter(adapter)
     rescue => e
@@ -10,11 +11,13 @@ class Sessions::Event
     end
 
     instance = backend.new(data, session, client_id)
-    result = instance.pre_check
-    return result if result
+    pre = instance.pre
+    return pre if pre
     ActiveRecord::Base.establish_connection
     result = instance.run
     ActiveRecord::Base.remove_connection
+    post = instance.post
+    return post if post
     result
   end
 
