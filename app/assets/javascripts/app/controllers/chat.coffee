@@ -12,12 +12,7 @@ class App.CustomerChat extends App.Controller
 
     return if !@isRole('Chat')
 
-    @i = 0
     @chatWindows = {}
-    @totalQuestions = 7
-    @answered = 0
-    @correct = 0
-    @wrong = 0
     @maxChats = 4
 
     @messageCounter = 0
@@ -134,6 +129,17 @@ class App.CustomerChat extends App.Controller
     chat.render()
     @chatWindows[session.session_id] = chat
 
+    if @windowCount() is 1
+      chat.focus()
+
+  windowCount: =>
+    count = 0
+
+    for chat of @chatWindows
+      count++ 
+
+    return count
+
   removeChat: (session_id) =>
     delete @chatWindows[session_id]
     @updateMeta()
@@ -242,8 +248,8 @@ class chatWindow extends App.Controller
         else
           @addMessage message.content, 'customer'
 
-    # set focus
-    #@input.get(0).focus()
+  focus: =>
+    @input.focus()
 
   onTransitionend: (event) =>
     # chat window is done with animation - adjust scroll-bars
