@@ -34,6 +34,7 @@ do($ = window.jQuery, window) ->
       '': ''
       '': ''
       '': ''
+    sessionId: undefined
 
     T: (string, items...) =>
       if !@strings[string]
@@ -69,8 +70,6 @@ do($ = window.jQuery, window) ->
         keydown: @checkForEnter
         input: @onInput
 
-      @session_id = undefined
-
       if !window.WebSocket
         @log 'notice', 'Chat: Browser not supported!'
         return
@@ -104,16 +103,11 @@ do($ = window.jQuery, window) ->
             return if pipe.data.self_written
             @onAgentTypingStart()
           when 'chat_session_start'
-            switch pipe.data.state
-              when 'ok'
-                @onConnectionEstablished pipe.data.agent
-          when 'chat_session_init'
-            switch pipe.data.state
-              when 'ok'
-                @onConnectionEstablished pipe.data.agent
-              when 'queue'
-                @onQueue pipe.data.position
-                @session_id = pipe.data.session_id
+            @onConnectionEstablished pipe.data.agent
+            @sessionId = pipe.data.session_id
+          when 'chat_session_queue'
+            @onQueue pipe.data.position
+            @sessionId = pipe.data.session_id
           when 'chat_session_closed'
             @onSessionClosed pipe.data
           when 'chat_session_left'
@@ -157,7 +151,7 @@ do($ = window.jQuery, window) ->
       if !@isTyping
         @isTyping = true
         @send 'chat_session_typing',
-          session_id: @session_id
+          session_id: @sessionId
 
     onTypingEnd: =>
       @isTyping = false
@@ -195,7 +189,7 @@ do($ = window.jQuery, window) ->
       @send 'chat_session_message',
         content: message
         id: @_messageCount
-        session_id: @session_id
+        session_id: @sessionId
 
     receiveMessage: (data) =>
       # hide writing indicator
@@ -240,7 +234,7 @@ do($ = window.jQuery, window) ->
       @isOpen = false
 
       @send 'chat_session_close',
-        session_id: @session_id
+        session_id: @sessionId
 
     hide: ->
       @el.removeClass('zammad-chat-is-visible')
@@ -325,7 +319,7 @@ do($ = window.jQuery, window) ->
       @ws.onopen = =>
         @log 'debug', 'ws connected'
         @send 'chat_status_customer',
-          session_id: @session_id
+          session_id: @sessionId
         @setAgentOnlineState(true)
 
       @ws.onmessage = @onWebSocketMessage

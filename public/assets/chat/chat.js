@@ -50,6 +50,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       '': ''
     };
 
+    ZammadChat.prototype.sessionId = void 0;
+
     ZammadChat.prototype.T = function() {
       var i, item, items, len, string, translation;
       string = arguments[0], items = 2 <= arguments.length ? slice.call(arguments, 1) : [];
@@ -121,7 +123,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         keydown: this.checkForEnter,
         input: this.onInput
       });
-      this.session_id = void 0;
       if (!window.WebSocket) {
         this.log('notice', 'Chat: Browser not supported!');
         return;
@@ -167,20 +168,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
             this.onAgentTypingStart();
             break;
           case 'chat_session_start':
-            switch (pipe.data.state) {
-              case 'ok':
-                this.onConnectionEstablished(pipe.data.agent);
-            }
+            this.onConnectionEstablished(pipe.data.agent);
+            this.sessionId = pipe.data.session_id;
             break;
-          case 'chat_session_init':
-            switch (pipe.data.state) {
-              case 'ok':
-                this.onConnectionEstablished(pipe.data.agent);
-                break;
-              case 'queue':
-                this.onQueue(pipe.data.position);
-                this.session_id = pipe.data.session_id;
-            }
+          case 'chat_session_queue':
+            this.onQueue(pipe.data.position);
+            this.sessionId = pipe.data.session_id;
             break;
           case 'chat_session_closed':
             this.onSessionClosed(pipe.data);
@@ -232,7 +225,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (!this.isTyping) {
         this.isTyping = true;
         return this.send('chat_session_typing', {
-          session_id: this.session_id
+          session_id: this.sessionId
         });
       }
     };
@@ -271,7 +264,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.send('chat_session_message', {
         content: message,
         id: this._messageCount,
-        session_id: this.session_id
+        session_id: this.sessionId
       });
     };
 
@@ -322,7 +315,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.disconnect();
       this.isOpen = false;
       return this.send('chat_session_close', {
-        session_id: this.session_id
+        session_id: this.sessionId
       });
     };
 
@@ -418,7 +411,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         return function() {
           _this.log('debug', 'ws connected');
           _this.send('chat_status_customer', {
-            session_id: _this.session_id
+            session_id: _this.sessionId
           });
           return _this.setAgentOnlineState(true);
         };
