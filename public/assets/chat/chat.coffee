@@ -347,22 +347,26 @@ do($ = window.jQuery, window) ->
           @lastTimestamp = timestamp
         else
           # add new timestamp
-          @addStatus label, time
+          @el.find('.zammad-chat-body').append @view('timestamp')
+            label: label
+            time: time
           @lastTimestamp = timestamp
           @lastAddedType = 'timestamp'
+          @scrollToBottom()
 
     updateLastTimestamp: (label, time) ->
       @el.find('.zammad-chat-body')
-        .find('.zammad-chat-status')
+        .find('.zammad-chat-timestamp')
         .last()
-        .replaceWith @view('status')
+        .replaceWith @view('timestamp')
           label: label
           time: time
 
-    addStatus: (label, time) ->
+    addStatus: (status) ->
       @el.find('.zammad-chat-body').append @view('status')
-        label: label
-        time: time
+        status: status
+
+      @scrollToBottom()
 
     scrollToBottom: ->
       @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
