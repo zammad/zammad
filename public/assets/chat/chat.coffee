@@ -66,7 +66,7 @@ do($ = window.jQuery, window) ->
 
       @input = @el.find('.zammad-chat-input')
 
-      @el.find('.js-chat-open').click @open
+      @el.find('.js-chat-open').click => @open()
       @el.find('.js-chat-close').click @close
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @input.on
