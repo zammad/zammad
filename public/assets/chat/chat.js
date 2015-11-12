@@ -1,497 +1,3 @@
-var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  slice = [].slice;
-
-(function($, window) {
-  var ZammadChat;
-  ZammadChat = (function() {
-    ZammadChat.prototype.defaults = {
-      invitationPhrase: '<strong>Chat</strong> with us!',
-      agentPhrase: ' is helping you',
-      show: true,
-      target: $('body')
-    };
-
-    ZammadChat.prototype._messageCount = 0;
-
-    ZammadChat.prototype.isOpen = false;
-
-    ZammadChat.prototype.blinkOnlineInterval = null;
-
-    ZammadChat.prototype.stopBlinOnlineStateTimeout = null;
-
-    ZammadChat.prototype.showTimeEveryXMinutes = 1;
-
-    ZammadChat.prototype.lastTimestamp = null;
-
-    ZammadChat.prototype.lastAddedType = null;
-
-    ZammadChat.prototype.inputTimeout = null;
-
-    ZammadChat.prototype.isTyping = false;
-
-    ZammadChat.prototype.isOnline = true;
-
-    ZammadChat.prototype.debug = true;
-
-    ZammadChat.prototype.host = 'ws://localhost:6042';
-
-    ZammadChat.prototype.strings = {
-      'Online': 'Online',
-      'Offline': 'Offline',
-      'Connecting': 'Verbinden',
-      'Connection re-established': 'Connection re-established',
-      'Today': 'Heute',
-      'Send': 'Senden',
-      'Compose your message...': 'Ihre Nachricht...',
-      'All colleges are busy.': 'Alle Kollegen sind belegt.',
-      'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.',
-      '': '',
-      '': '',
-      '': ''
-    };
-
-    ZammadChat.prototype.sessionId = void 0;
-
-    ZammadChat.prototype.T = function() {
-      var i, item, items, len, string, translation;
-      string = arguments[0], items = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-      if (!this.strings[string]) {
-        this.log('notice', "Translation needed for '" + string + "'");
-      }
-      translation = this.strings[string] || string;
-      if (items) {
-        for (i = 0, len = items.length; i < len; i++) {
-          item = items[i];
-          translation = translation.replace(/%s/, item);
-        }
-      }
-      return translation;
-    };
-
-    ZammadChat.prototype.log = function() {
-      var level, string;
-      level = arguments[0], string = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-      if (!this.debug && level === 'debug') {
-        return;
-      }
-      return console.log(level, string);
-    };
-
-    ZammadChat.prototype.view = function(name) {
-      return (function(_this) {
-        return function(options) {
-          if (!options) {
-            options = {};
-          }
-          options.T = _this.T;
-          return window.zammadChatTemplates[name](options);
-        };
-      })(this);
-    };
-
-    function ZammadChat(el, options) {
-      this.setAgentOnlineState = bind(this.setAgentOnlineState, this);
-      this.onConnectionEstablished = bind(this.onConnectionEstablished, this);
-      this.onConnectionReestablished = bind(this.onConnectionReestablished, this);
-      this.reconnect = bind(this.reconnect, this);
-      this.connect = bind(this.connect, this);
-      this.onAgentTypingEnd = bind(this.onAgentTypingEnd, this);
-      this.onAgentTypingStart = bind(this.onAgentTypingStart, this);
-      this.onQueue = bind(this.onQueue, this);
-      this.onCloseAnimationEnd = bind(this.onCloseAnimationEnd, this);
-      this.close = bind(this.close, this);
-      this.onOpenAnimationEnd = bind(this.onOpenAnimationEnd, this);
-      this.open = bind(this.open, this);
-      this.receiveMessage = bind(this.receiveMessage, this);
-      this.onSubmit = bind(this.onSubmit, this);
-      this.onTypingEnd = bind(this.onTypingEnd, this);
-      this.onInput = bind(this.onInput, this);
-      this.onReady = bind(this.onReady, this);
-      this.onWebSocketMessage = bind(this.onWebSocketMessage, this);
-      this.send = bind(this.send, this);
-      this.checkForEnter = bind(this.checkForEnter, this);
-      this.view = bind(this.view, this);
-      this.log = bind(this.log, this);
-      this.T = bind(this.T, this);
-      this.options = $.extend({}, this.defaults, options);
-      this.el = $(this.view('chat')(this.options));
-      this.options.target.append(this.el);
-      this.el.find('.js-chat-open').click(this.open);
-      this.el.find('.js-chat-close').click(this.close);
-      this.el.find('.zammad-chat-controls').on('submit', this.onSubmit);
-      this.el.find('.zammad-chat-input').on({
-        keydown: this.checkForEnter,
-        input: this.onInput
-      });
-      if (!window.WebSocket) {
-        this.log('notice', 'Chat: Browser not supported!');
-        return;
-      }
-      this.connect();
-      this.onReady();
-    }
-
-    ZammadChat.prototype.checkForEnter = function(event) {
-      if (!event.shiftKey && event.keyCode === 13) {
-        event.preventDefault();
-        return this.sendMessage();
-      }
-    };
-
-    ZammadChat.prototype.send = function(event, data) {
-      var pipe;
-      this.log('debug', 'ws:send', event, data);
-      pipe = JSON.stringify({
-        event: event,
-        data: data
-      });
-      return this.ws.send(pipe);
-    };
-
-    ZammadChat.prototype.onWebSocketMessage = function(e) {
-      var i, len, pipe, pipes;
-      pipes = JSON.parse(e.data);
-      this.log('debug', 'ws:onmessage', pipes);
-      for (i = 0, len = pipes.length; i < len; i++) {
-        pipe = pipes[i];
-        switch (pipe.event) {
-          case 'chat_session_message':
-            if (pipe.data.self_written) {
-              return;
-            }
-            this.receiveMessage(pipe.data);
-            break;
-          case 'chat_session_typing':
-            if (pipe.data.self_written) {
-              return;
-            }
-            this.onAgentTypingStart();
-            break;
-          case 'chat_session_start':
-            this.onConnectionEstablished(pipe.data.agent);
-            this.sessionId = pipe.data.session_id;
-            break;
-          case 'chat_session_queue':
-            this.onQueue(pipe.data.position);
-            this.sessionId = pipe.data.session_id;
-            break;
-          case 'chat_session_closed':
-            this.onSessionClosed(pipe.data);
-            break;
-          case 'chat_session_left':
-            this.onSessionClosed(pipe.data);
-            break;
-          case 'chat_status_customer':
-            switch (pipe.data.state) {
-              case 'online':
-                this.onReady();
-                this.log('debug', 'Zammad Chat: ready');
-                break;
-              case 'offline':
-                this.log('debug', 'Zammad Chat: No agent online');
-                break;
-              case 'chat_disabled':
-                this.log('debug', 'Zammad Chat: Chat is disabled');
-                break;
-              case 'no_seats_available':
-                this.log('debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue);
-                break;
-              case 'reconnect':
-                this.log('debug', 'old messages', pipe.data.session);
-            }
-        }
-      }
-    };
-
-    ZammadChat.prototype.onReady = function() {
-      if (this.options.show) {
-        this.show();
-        return this.el.find('.zammad-chat-input').autoGrow({
-          extraLine: false
-        });
-      }
-    };
-
-    ZammadChat.prototype.onInput = function() {
-      this.el.find('.zammad-chat-message--unread').removeClass('zammad-chat-message--unread');
-      return this.onTypingStart();
-    };
-
-    ZammadChat.prototype.onTypingStart = function() {
-      if (this.isTypingTimeout) {
-        clearTimeout(this.isTypingTimeout);
-      }
-      this.isTypingTimeout = setTimeout(this.onTypingEnd, 1500);
-      if (!this.isTyping) {
-        this.isTyping = true;
-        return this.send('chat_session_typing', {
-          session_id: this.sessionId
-        });
-      }
-    };
-
-    ZammadChat.prototype.onTypingEnd = function() {
-      return this.isTyping = false;
-    };
-
-    ZammadChat.prototype.onSubmit = function(event) {
-      event.preventDefault();
-      return this.sendMessage();
-    };
-
-    ZammadChat.prototype.sendMessage = function() {
-      var message, messageElement;
-      message = this.el.find('.zammad-chat-input').val();
-      if (!message) {
-        return;
-      }
-      messageElement = this.view('message')({
-        message: message,
-        from: 'customer',
-        id: this._messageCount++
-      });
-      this.maybeAddTimestamp();
-      if (this.el.find('.zammad-chat-message--typing').size()) {
-        this.lastAddedType = 'typing-placeholder';
-        this.el.find('.zammad-chat-message--typing').before(messageElement);
-      } else {
-        this.lastAddedType = 'message--customer';
-        this.el.find('.zammad-chat-body').append(messageElement);
-      }
-      this.el.find('.zammad-chat-input').val('');
-      this.scrollToBottom();
-      this.isTyping = false;
-      return this.send('chat_session_message', {
-        content: message,
-        id: this._messageCount,
-        session_id: this.sessionId
-      });
-    };
-
-    ZammadChat.prototype.receiveMessage = function(data) {
-      var ref, unread;
-      this.onAgentTypingEnd();
-      this.maybeAddTimestamp();
-      this.lastAddedType = 'message--agent';
-      unread = (ref = document.hidden) != null ? ref : {
-        " zammad-chat-message--unread": ""
-      };
-      this.el.find('.zammad-chat-body').append(this.view('message')({
-        message: data.message.content,
-        id: data.id,
-        from: 'agent'
-      }));
-      return this.scrollToBottom();
-    };
-
-    ZammadChat.prototype.open = function() {
-      if (this.isOpen) {
-        return;
-      }
-      this.showLoader();
-      this.el.addClass('zammad-chat-is-open').animate({
-        bottom: 0
-      }, 500, this.onOpenAnimationEnd);
-      return this.isOpen = true;
-    };
-
-    ZammadChat.prototype.onOpenAnimationEnd = function() {
-      return this.session_init();
-    };
-
-    ZammadChat.prototype.close = function(event) {
-      var remainerHeight;
-      if (event) {
-        event.stopPropagation();
-      }
-      remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
-      return this.el.animate({
-        bottom: -remainerHeight
-      }, 500, this.onCloseAnimationEnd);
-    };
-
-    ZammadChat.prototype.onCloseAnimationEnd = function() {
-      this.el.removeClass('zammad-chat-is-open');
-      this.disconnect();
-      this.isOpen = false;
-      return this.send('chat_session_close', {
-        session_id: this.sessionId
-      });
-    };
-
-    ZammadChat.prototype.hide = function() {
-      return this.el.removeClass('zammad-chat-is-visible');
-    };
-
-    ZammadChat.prototype.show = function() {
-      var remainerHeight;
-      this.el.addClass('zammad-chat-is-visible');
-      remainerHeight = this.el.outerHeight() - this.el.find('.zammad-chat-header').outerHeight();
-      return this.el.css('bottom', -remainerHeight);
-    };
-
-    ZammadChat.prototype.disableInput = function() {
-      this.el.find('.zammad-chat-input').prop('disabled', true);
-      return this.el.find('.zammad-chat-send').prop('disabled', true);
-    };
-
-    ZammadChat.prototype.enableInput = function() {
-      this.el.find('.zammad-chat-input').prop('disabled', false);
-      return this.el.find('.zammad-chat-send').prop('disabled', false);
-    };
-
-    ZammadChat.prototype.onQueue = function(position) {
-      this.log('notice', 'onQueue', position);
-      this.inQueue = true;
-      return this.el.find('.zammad-chat-body').html(this.view('waiting')({
-        position: position
-      }));
-    };
-
-    ZammadChat.prototype.onAgentTypingStart = function() {
-      if (this.stopTypingId) {
-        clearTimeout(this.stopTypingId);
-      }
-      this.stopTypingId = setTimeout(this.onAgentTypingEnd, 3000);
-      if (this.el.find('.zammad-chat-message--typing').size()) {
-        return;
-      }
-      this.maybeAddTimestamp();
-      this.el.find('.zammad-chat-body').append(this.view('typingIndicator')());
-      return this.scrollToBottom();
-    };
-
-    ZammadChat.prototype.onAgentTypingEnd = function() {
-      return this.el.find('.zammad-chat-message--typing').remove();
-    };
-
-    ZammadChat.prototype.maybeAddTimestamp = function() {
-      var label, time, timestamp;
-      timestamp = Date.now();
-      if (!this.lastTimestamp || (timestamp - this.lastTimestamp) > this.showTimeEveryXMinutes * 60000) {
-        label = this.T('Today');
-        time = new Date().toTimeString().substr(0, 5);
-        if (this.lastAddedType === 'timestamp') {
-          this.updateLastTimestamp(label, time);
-          return this.lastTimestamp = timestamp;
-        } else {
-          this.addStatus(label, time);
-          this.lastTimestamp = timestamp;
-          return this.lastAddedType = 'timestamp';
-        }
-      }
-    };
-
-    ZammadChat.prototype.updateLastTimestamp = function(label, time) {
-      return this.el.find('.zammad-chat-body').find('.zammad-chat-status').last().replaceWith(this.view('status')({
-        label: label,
-        time: time
-      }));
-    };
-
-    ZammadChat.prototype.addStatus = function(label, time) {
-      return this.el.find('.zammad-chat-body').append(this.view('status')({
-        label: label,
-        time: time
-      }));
-    };
-
-    ZammadChat.prototype.scrollToBottom = function() {
-      return this.el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'));
-    };
-
-    ZammadChat.prototype.session_init = function() {
-      return this.send('chat_session_init');
-    };
-
-    ZammadChat.prototype.connect = function() {
-      this.log('notice', "Connecting to " + this.host);
-      this.ws = new window.WebSocket(this.host);
-      this.ws.onopen = (function(_this) {
-        return function() {
-          _this.log('debug', 'ws connected');
-          _this.send('chat_status_customer', {
-            session_id: _this.sessionId
-          });
-          return _this.setAgentOnlineState(true);
-        };
-      })(this);
-      this.ws.onmessage = this.onWebSocketMessage;
-      this.ws.onclose = (function(_this) {
-        return function(e) {
-          _this.log('debug', 'close websocket connection');
-          _this.reconnect();
-          return _this.setAgentOnlineState(false);
-        };
-      })(this);
-      return this.ws.onerror = (function(_this) {
-        return function(e) {
-          return _this.log('debug', 'ws:onerror', e);
-        };
-      })(this);
-    };
-
-    ZammadChat.prototype.reconnect = function() {
-      this.log('notice', 'reconnecting');
-      this.disableInput();
-      this.lastAddedType = 'status';
-      this.el.find('.zammad-chat-agent-status').attr('data-status', 'connecting').text(this.T('Reconnecting'));
-      this.addStatus(this.T('Connection lost'));
-      if (this.reconnectDelayId) {
-        clearTimeout(this.reconnectDelayId);
-      }
-      return this.reconnectDelayId = setTimeout(this.connect, 5000);
-    };
-
-    ZammadChat.prototype.onConnectionReestablished = function() {
-      this.lastAddedType = 'status';
-      this.el.find('.zammad-chat-agent-status').attr('data-status', 'online').text(this.T('Online'));
-      return this.addStatus(this.T('Connection re-established'));
-    };
-
-    ZammadChat.prototype.onSessionClosed = function(data) {
-      this.addStatus(this.T('Chat closed by %s', data.realname));
-      return this.disableInput();
-    };
-
-    ZammadChat.prototype.disconnect = function() {
-      this.showLoader();
-      this.el.find('.zammad-chat-welcome').removeClass('zammad-chat-is-hidden');
-      this.el.find('.zammad-chat-agent').addClass('zammad-chat-is-hidden');
-      return this.el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden');
-    };
-
-    ZammadChat.prototype.onConnectionEstablished = function(agent) {
-      this.inQueue = false;
-      this.agent = agent;
-      this.el.find('.zammad-chat-agent').html(this.view('agent')({
-        agent: agent
-      }));
-      this.enableInput();
-      this.el.find('.zammad-chat-body').empty();
-      this.el.find('.zammad-chat-welcome').addClass('zammad-chat-is-hidden');
-      this.el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden');
-      this.el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden');
-      return this.el.find('.zammad-chat-input').focus();
-    };
-
-    ZammadChat.prototype.showLoader = function() {
-      return this.el.find('.zammad-chat-body').html(this.view('loader')());
-    };
-
-    ZammadChat.prototype.setAgentOnlineState = function(state) {
-      this.isOnline = state;
-      return this.el.find('.zammad-chat-agent-status').toggleClass('zammad-chat-is-online', state).text(state ? this.T('Online') : this.T('Offline'));
-    };
-
-    return ZammadChat;
-
-  })();
-  return $(document).ready(function() {
-    return window.zammadChat = new ZammadChat();
-  });
-})(window.jQuery, window);
-
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
@@ -556,6 +62,587 @@ window.zammadChatTemplates["agent"] = function (__obj) {
   __obj.safe = __objSafe, __obj.escape = __escape;
   return __out.join('');
 };
+
+var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  slice = [].slice;
+
+(function($, window) {
+  var ZammadChat;
+  ZammadChat = (function() {
+    ZammadChat.prototype.defaults = {
+      invitationPhrase: '<strong>Chat</strong> with us!',
+      agentPhrase: ' is helping you',
+      show: true,
+      target: $('body')
+    };
+
+    ZammadChat.prototype._messageCount = 0;
+
+    ZammadChat.prototype.isOpen = false;
+
+    ZammadChat.prototype.blinkOnlineInterval = null;
+
+    ZammadChat.prototype.stopBlinOnlineStateTimeout = null;
+
+    ZammadChat.prototype.showTimeEveryXMinutes = 1;
+
+    ZammadChat.prototype.lastTimestamp = null;
+
+    ZammadChat.prototype.lastAddedType = null;
+
+    ZammadChat.prototype.inputTimeout = null;
+
+    ZammadChat.prototype.isTyping = false;
+
+    ZammadChat.prototype.isOnline = true;
+
+    ZammadChat.prototype.initialQueueDelay = 10000;
+
+    ZammadChat.prototype.debug = true;
+
+    ZammadChat.prototype.host = 'ws://localhost:6042';
+
+    ZammadChat.prototype.strings = {
+      'Online': 'Online',
+      'Offline': 'Offline',
+      'Connecting': 'Verbinden',
+      'Connection re-established': 'Connection re-established',
+      'Today': 'Heute',
+      'Send': 'Senden',
+      'Compose your message...': 'Ihre Nachricht...',
+      'All colleges are busy.': 'Alle Kollegen sind belegt.',
+      'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.',
+      '': '',
+      '': '',
+      '': ''
+    };
+
+    ZammadChat.prototype.sessionId = void 0;
+
+    ZammadChat.prototype.T = function() {
+      var i, item, items, len, string, translation;
+      string = arguments[0], items = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+      if (!this.strings[string]) {
+        this.log('notice', "Translation needed for '" + string + "'");
+      }
+      translation = this.strings[string] || string;
+      if (items) {
+        for (i = 0, len = items.length; i < len; i++) {
+          item = items[i];
+          translation = translation.replace(/%s/, item);
+        }
+      }
+      return translation;
+    };
+
+    ZammadChat.prototype.log = function() {
+      var level, string;
+      level = arguments[0], string = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+      if (!this.debug && level === 'debug') {
+        return;
+      }
+      return console.log(level, string);
+    };
+
+    ZammadChat.prototype.view = function(name) {
+      return (function(_this) {
+        return function(options) {
+          if (!options) {
+            options = {};
+          }
+          options.T = _this.T;
+          return window.zammadChatTemplates[name](options);
+        };
+      })(this);
+    };
+
+    function ZammadChat(el, options) {
+      this.setAgentOnlineState = bind(this.setAgentOnlineState, this);
+      this.onConnectionEstablished = bind(this.onConnectionEstablished, this);
+      this.setSessionId = bind(this.setSessionId, this);
+      this.onConnectionReestablished = bind(this.onConnectionReestablished, this);
+      this.reconnect = bind(this.reconnect, this);
+      this.onWebSocketOpen = bind(this.onWebSocketOpen, this);
+      this.connect = bind(this.connect, this);
+      this.onAgentTypingEnd = bind(this.onAgentTypingEnd, this);
+      this.onAgentTypingStart = bind(this.onAgentTypingStart, this);
+      this.onQueue = bind(this.onQueue, this);
+      this.onQueueScreen = bind(this.onQueueScreen, this);
+      this.onCloseAnimationEnd = bind(this.onCloseAnimationEnd, this);
+      this.closeWindow = bind(this.closeWindow, this);
+      this.close = bind(this.close, this);
+      this.onOpenAnimationEnd = bind(this.onOpenAnimationEnd, this);
+      this.open = bind(this.open, this);
+      this.renderMessage = bind(this.renderMessage, this);
+      this.receiveMessage = bind(this.receiveMessage, this);
+      this.onSubmit = bind(this.onSubmit, this);
+      this.onTypingEnd = bind(this.onTypingEnd, this);
+      this.onInput = bind(this.onInput, this);
+      this.openSession = bind(this.openSession, this);
+      this.onReady = bind(this.onReady, this);
+      this.onWebSocketMessage = bind(this.onWebSocketMessage, this);
+      this.send = bind(this.send, this);
+      this.checkForEnter = bind(this.checkForEnter, this);
+      this.view = bind(this.view, this);
+      this.log = bind(this.log, this);
+      this.T = bind(this.T, this);
+      this.options = $.extend({}, this.defaults, options);
+      this.el = $(this.view('chat')(this.options));
+      this.options.target.append(this.el);
+      this.input = this.el.find('.zammad-chat-input');
+      this.el.find('.js-chat-open').click(this.open);
+      this.el.find('.js-chat-close').click(this.close);
+      this.el.find('.zammad-chat-controls').on('submit', this.onSubmit);
+      this.input.on({
+        keydown: this.checkForEnter,
+        input: this.onInput
+      });
+      if (!window.WebSocket || !sessionStorage) {
+        this.log('notice', 'Chat: Browser not supported!');
+        return;
+      }
+      this.connect();
+    }
+
+    ZammadChat.prototype.checkForEnter = function(event) {
+      if (!event.shiftKey && event.keyCode === 13) {
+        event.preventDefault();
+        return this.sendMessage();
+      }
+    };
+
+    ZammadChat.prototype.send = function(event, data) {
+      var pipe;
+      this.log('debug', 'ws:send', event, data);
+      pipe = JSON.stringify({
+        event: event,
+        data: data
+      });
+      return this.ws.send(pipe);
+    };
+
+    ZammadChat.prototype.onWebSocketMessage = function(e) {
+      var i, len, pipe, pipes;
+      pipes = JSON.parse(e.data);
+      for (i = 0, len = pipes.length; i < len; i++) {
+        pipe = pipes[i];
+        this.log('debug', 'ws:onmessage', pipe);
+        switch (pipe.event) {
+          case 'chat_session_message':
+            if (pipe.data.self_written) {
+              return;
+            }
+            this.receiveMessage(pipe.data);
+            break;
+          case 'chat_session_typing':
+            if (pipe.data.self_written) {
+              return;
+            }
+            this.onAgentTypingStart();
+            break;
+          case 'chat_session_start':
+            this.onConnectionEstablished(pipe.data);
+            break;
+          case 'chat_session_queue':
+            this.onQueue(pipe.data);
+            break;
+          case 'chat_session_closed':
+            this.onSessionClosed(pipe.data);
+            break;
+          case 'chat_session_left':
+            this.onSessionClosed(pipe.data);
+            break;
+          case 'chat_status_customer':
+            switch (pipe.data.state) {
+              case 'online':
+                this.onReady();
+                this.log('debug', 'Zammad Chat: ready');
+                break;
+              case 'offline':
+                this.log('debug', 'Zammad Chat: No agent online');
+                break;
+              case 'chat_disabled':
+                this.log('debug', 'Zammad Chat: Chat is disabled');
+                break;
+              case 'no_seats_available':
+                this.log('debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue);
+                break;
+              case 'reconnect':
+                this.log('debug', 'old messages', pipe.data.session);
+                this.openSession(pipe.data.session);
+            }
+        }
+      }
+    };
+
+    ZammadChat.prototype.onReady = function() {
+      if (this.options.show) {
+        return this.show();
+      }
+    };
+
+    ZammadChat.prototype.openSession = function(session) {
+      var i, len, message, unfinishedMessage;
+      unfinishedMessage = sessionStorage.getItem('unfinished_message');
+      for (i = 0, len = session.length; i < len; i++) {
+        message = session[i];
+        console.log("message in session", message);
+        this.renderMessage({
+          message: message.content,
+          id: message.id,
+          from: message.created_by_id ? 'agent' : 'customer'
+        });
+      }
+      if (unfinishedMessage) {
+        this.input.val(unfinishedMessage);
+      }
+      this.show();
+      this.open({
+        showLoader: false,
+        animate: false
+      });
+      if (unfinishedMessage) {
+        return this.input.focus();
+      }
+    };
+
+    ZammadChat.prototype.onInput = function() {
+      this.el.find('.zammad-chat-message--unread').removeClass('zammad-chat-message--unread');
+      sessionStorage.setItem('unfinished_message', this.input.val());
+      return this.onTypingStart();
+    };
+
+    ZammadChat.prototype.onTypingStart = function() {
+      if (this.isTypingTimeout) {
+        clearTimeout(this.isTypingTimeout);
+      }
+      this.isTypingTimeout = setTimeout(this.onTypingEnd, 1500);
+      if (!this.isTyping) {
+        this.isTyping = true;
+        return this.send('chat_session_typing', {
+          session_id: this.sessionId
+        });
+      }
+    };
+
+    ZammadChat.prototype.onTypingEnd = function() {
+      return this.isTyping = false;
+    };
+
+    ZammadChat.prototype.onSubmit = function(event) {
+      event.preventDefault();
+      return this.sendMessage();
+    };
+
+    ZammadChat.prototype.sendMessage = function() {
+      var message, messageElement;
+      message = this.input.val();
+      if (!message) {
+        return;
+      }
+      sessionStorage.removeItem('unfinished_message');
+      messageElement = this.view('message')({
+        message: message,
+        from: 'customer',
+        id: this._messageCount++
+      });
+      this.maybeAddTimestamp();
+      if (this.el.find('.zammad-chat-message--typing').size()) {
+        this.lastAddedType = 'typing-placeholder';
+        this.el.find('.zammad-chat-message--typing').before(messageElement);
+      } else {
+        this.lastAddedType = 'message--customer';
+        this.el.find('.zammad-chat-body').append(messageElement);
+      }
+      this.input.val('');
+      this.scrollToBottom();
+      this.isTyping = false;
+      return this.send('chat_session_message', {
+        content: message,
+        id: this._messageCount,
+        session_id: this.sessionId
+      });
+    };
+
+    ZammadChat.prototype.receiveMessage = function(data) {
+      this.onAgentTypingEnd();
+      this.maybeAddTimestamp();
+      return this.renderMessage({
+        message: data.message.content,
+        id: data.id,
+        from: 'agent'
+      });
+    };
+
+    ZammadChat.prototype.renderMessage = function(data) {
+      var ref, unread;
+      this.lastAddedType = "message--" + data.from;
+      unread = (ref = document.hidden) != null ? ref : {
+        " zammad-chat-message--unread": ""
+      };
+      this.el.find('.zammad-chat-body').append(this.view('message')(data));
+      return this.scrollToBottom();
+    };
+
+    ZammadChat.prototype.open = function(options) {
+      if (options == null) {
+        options = {
+          showLoader: true,
+          animate: true
+        };
+      }
+      if (this.isOpen) {
+        return;
+      }
+      if (options.showLoader) {
+        this.showLoader();
+      }
+      this.el.addClass('zammad-chat-is-open');
+      if (options.animate) {
+        this.el.animate({
+          bottom: 0
+        }, 500, this.onOpenAnimationEnd);
+      } else {
+        this.el.css('bottom', 0);
+        this.onOpenAnimationEnd();
+      }
+      return this.isOpen = true;
+    };
+
+    ZammadChat.prototype.onOpenAnimationEnd = function() {
+      return this.session_init();
+    };
+
+    ZammadChat.prototype.close = function(event) {
+      if (event) {
+        event.stopPropagation();
+      }
+      this.ws.close();
+      sessionStorage.removeItem('sessionId');
+      sessionStorage.removeItem('unfinished_message');
+      return this.closeWindow();
+    };
+
+    ZammadChat.prototype.closeWindow = function() {
+      var remainerHeight;
+      remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
+      return this.el.animate({
+        bottom: -remainerHeight
+      }, 500, this.onCloseAnimationEnd);
+    };
+
+    ZammadChat.prototype.onCloseAnimationEnd = function() {
+      this.el.removeClass('zammad-chat-is-open');
+      this.disconnect();
+      this.isOpen = false;
+      return this.send('chat_session_close', {
+        session_id: this.sessionId
+      });
+    };
+
+    ZammadChat.prototype.hide = function() {
+      return this.el.removeClass('zammad-chat-is-visible');
+    };
+
+    ZammadChat.prototype.show = function() {
+      var remainerHeight;
+      this.el.addClass('zammad-chat-is-visible');
+      remainerHeight = this.el.outerHeight() - this.el.find('.zammad-chat-header').outerHeight();
+      this.el.css('bottom', -remainerHeight);
+      return this.input.autoGrow({
+        extraLine: false
+      });
+    };
+
+    ZammadChat.prototype.disableInput = function() {
+      this.input.prop('disabled', true);
+      return this.el.find('.zammad-chat-send').prop('disabled', true);
+    };
+
+    ZammadChat.prototype.enableInput = function() {
+      this.input.prop('disabled', false);
+      return this.el.find('.zammad-chat-send').prop('disabled', false);
+    };
+
+    ZammadChat.prototype.onQueueScreen = function(data) {
+      var show;
+      show = (function(_this) {
+        return function() {
+          return _this.onQueue(data.position);
+        };
+      })(this);
+      if (this.initialQueueDelay && !this.onInitialQueueDelayId) {
+        this.onInitialQueueDelayId = setTimeout(show, this.initialQueueDelay);
+        return;
+      }
+      if (this.onInitialQueueDelayId) {
+        clearTimeout(this.onInitialQueueDelayId);
+      }
+      return show();
+    };
+
+    ZammadChat.prototype.onQueue = function(position) {
+      this.log('notice', 'onQueue', position);
+      this.inQueue = true;
+      this.setSessionId(data.session_id);
+      return this.el.find('.zammad-chat-body').html(this.view('waiting')({
+        position: data.position
+      }));
+    };
+
+    ZammadChat.prototype.onAgentTypingStart = function() {
+      if (this.stopTypingId) {
+        clearTimeout(this.stopTypingId);
+      }
+      this.stopTypingId = setTimeout(this.onAgentTypingEnd, 3000);
+      if (this.el.find('.zammad-chat-message--typing').size()) {
+        return;
+      }
+      this.maybeAddTimestamp();
+      this.el.find('.zammad-chat-body').append(this.view('typingIndicator')());
+      return this.scrollToBottom();
+    };
+
+    ZammadChat.prototype.onAgentTypingEnd = function() {
+      return this.el.find('.zammad-chat-message--typing').remove();
+    };
+
+    ZammadChat.prototype.maybeAddTimestamp = function() {
+      var label, time, timestamp;
+      timestamp = Date.now();
+      if (!this.lastTimestamp || (timestamp - this.lastTimestamp) > this.showTimeEveryXMinutes * 60000) {
+        label = this.T('Today');
+        time = new Date().toTimeString().substr(0, 5);
+        if (this.lastAddedType === 'timestamp') {
+          this.updateLastTimestamp(label, time);
+          return this.lastTimestamp = timestamp;
+        } else {
+          this.addStatus(label, time);
+          this.lastTimestamp = timestamp;
+          return this.lastAddedType = 'timestamp';
+        }
+      }
+    };
+
+    ZammadChat.prototype.updateLastTimestamp = function(label, time) {
+      return this.el.find('.zammad-chat-body').find('.zammad-chat-status').last().replaceWith(this.view('status')({
+        label: label,
+        time: time
+      }));
+    };
+
+    ZammadChat.prototype.addStatus = function(label, time) {
+      return this.el.find('.zammad-chat-body').append(this.view('status')({
+        label: label,
+        time: time
+      }));
+    };
+
+    ZammadChat.prototype.scrollToBottom = function() {
+      return this.el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'));
+    };
+
+    ZammadChat.prototype.session_init = function() {
+      return this.send('chat_session_init');
+    };
+
+    ZammadChat.prototype.connect = function() {
+      this.log('notice', "Connecting to " + this.host);
+      this.ws = new window.WebSocket(this.host);
+      this.ws.onopen = this.onWebSocketOpen;
+      this.ws.onmessage = this.onWebSocketMessage;
+      this.ws.onclose = (function(_this) {
+        return function(e) {
+          _this.log('debug', 'close websocket connection');
+          _this.reconnect();
+          return _this.setAgentOnlineState(false);
+        };
+      })(this);
+      return this.ws.onerror = (function(_this) {
+        return function(e) {
+          return _this.log('debug', 'ws:onerror', e);
+        };
+      })(this);
+    };
+
+    ZammadChat.prototype.onWebSocketOpen = function() {
+      this.sessionId = sessionStorage.getItem('sessionId');
+      this.log('debug', 'ws connected');
+      this.send('chat_status_customer', {
+        session_id: this.sessionId
+      });
+      return this.setAgentOnlineState(true);
+    };
+
+    ZammadChat.prototype.reconnect = function() {
+      this.log('notice', 'reconnecting');
+      this.disableInput();
+      this.lastAddedType = 'status';
+      this.el.find('.zammad-chat-agent-status').attr('data-status', 'connecting').text(this.T('Reconnecting'));
+      this.addStatus(this.T('Connection lost'));
+      if (this.reconnectDelayId) {
+        clearTimeout(this.reconnectDelayId);
+      }
+      return this.reconnectDelayId = setTimeout(this.connect, 5000);
+    };
+
+    ZammadChat.prototype.onConnectionReestablished = function() {
+      this.lastAddedType = 'status';
+      this.el.find('.zammad-chat-agent-status').attr('data-status', 'online').text(this.T('Online'));
+      return this.addStatus(this.T('Connection re-established'));
+    };
+
+    ZammadChat.prototype.onSessionClosed = function(data) {
+      this.addStatus(this.T('Chat closed by %s', data.realname));
+      return this.disableInput();
+    };
+
+    ZammadChat.prototype.disconnect = function() {
+      this.showLoader();
+      this.el.find('.zammad-chat-welcome').removeClass('zammad-chat-is-hidden');
+      this.el.find('.zammad-chat-agent').addClass('zammad-chat-is-hidden');
+      return this.el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden');
+    };
+
+    ZammadChat.prototype.setSessionId = function(id) {
+      this.sessionId = id;
+      return sessionStorage.setItem('sessionId', id);
+    };
+
+    ZammadChat.prototype.onConnectionEstablished = function(data) {
+      if (this.onInitialQueueDelayId) {
+        clearTimeout(this.onInitialQueueDelayId);
+      }
+      this.inQueue = false;
+      this.agent = data.agent;
+      this.setSessionId(data.session_id);
+      this.el.find('.zammad-chat-agent').html(this.view('agent')({
+        agent: this.agent
+      }));
+      this.enableInput();
+      this.el.find('.zammad-chat-body').empty();
+      this.el.find('.zammad-chat-welcome').addClass('zammad-chat-is-hidden');
+      this.el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden');
+      this.el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden');
+      return this.input.focus();
+    };
+
+    ZammadChat.prototype.showLoader = function() {
+      return this.el.find('.zammad-chat-body').html(this.view('loader')());
+    };
+
+    ZammadChat.prototype.setAgentOnlineState = function(state) {
+      this.isOnline = state;
+      return this.el.find('.zammad-chat-agent-status').toggleClass('zammad-chat-is-online', state).text(state ? this.T('Online') : this.T('Offline'));
+    };
+
+    return ZammadChat;
+
+  })();
+  return $(document).ready(function() {
+    return window.zammadChat = new ZammadChat();
+  });
+})(window.jQuery, window);
 
 /*!
  * ----------------------------------------------------------------------------
