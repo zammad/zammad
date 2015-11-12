@@ -36,15 +36,23 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
         session_id: chat_session.session_id,
       },
     }
-    chat_session.send_to_recipients(data, @client_id)
+    chat_session.send_to_recipients(data)
 
-    # send chat_session_init to agent
-    {
-      event: 'chat_session_start',
-      data: {
-        state: 'ok',
-        session: chat_session,
-      },
+    # send position update to other waiting sessions
+    position = 0
+    Chat::Session.where(state: 'waiting').order('created_at ASC').each {|local_chat_session|
+      position += 1
+      data = {
+        event: 'chat_session_queue',
+        data: {
+          state: 'queue',
+          position: position,
+          session_id: local_chat_session.session_id,
+        },
+      }
+      local_chat_session.send_to_recipients(data)
     }
+
+    nil
   end
 end

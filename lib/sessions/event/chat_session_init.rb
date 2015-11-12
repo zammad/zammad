@@ -34,7 +34,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
 
     # return new session
     {
-      event: 'chat_session_init',
+      event: 'chat_session_queue',
       data: {
         state: 'queue',
         position: Chat.waiting_chat_count,

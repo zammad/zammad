@@ -10,16 +10,13 @@ class Sessions::Event::ChatBase
   def pre
 
     # check if feature is enabled
-    if !Setting.get('chat')
-      return {
-        event: 'chat_error',
-        data: {
-          state: 'chat_disabled',
-        },
-      }
-    end
-
-    false
+    return if Setting.get('chat')
+    {
+      event: 'chat_error',
+      data: {
+        state: 'chat_disabled',
+      },
+    }
   end
 
   def post

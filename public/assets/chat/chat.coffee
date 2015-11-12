@@ -19,6 +19,7 @@ do($ = window.jQuery, window) ->
     inputTimeout: null
     isTyping: false
     isOnline: true
+    initialQueueDelay: 10000,
     debug: true
     host: 'ws://localhost:6042'
     strings:
@@ -94,9 +95,9 @@ do($ = window.jQuery, window) ->
 
     onWebSocketMessage: (e) =>
       pipes = JSON.parse( e.data )
-      @log 'debug', 'ws:onmessage', pipes
 
       for pipe in pipes
+        @log 'debug', 'ws:onmessage', pipe
         switch pipe.event
           when 'chat_session_message'
             return if pipe.data.self_written
@@ -293,8 +294,24 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-input').prop('disabled', false)
       @el.find('.zammad-chat-send').prop('disabled', false)
 
-    onQueue: (data) =>
-      @log 'notice', 'onQueue', data.position
+    onQueueScreen: (data) =>
+
+      # delay initial queue position, show connecting first
+      show = =>
+        @onQueue data.position
+      if @initialQueueDelay && !@onInitialQueueDelayId
+        @onInitialQueueDelayId = setTimeout(show, @initialQueueDelay)
+        return
+
+      # stop delay of initial queue position
+      if @onInitialQueueDelayId
+        clearTimeout(@onInitialQueueDelayId)
+
+      # show queue position
+      show()
+
+    onQueue: (position) =>
+      @log 'notice', 'onQueue', position
       @inQueue = true
       @setSessionId data.session_id
 
@@ -406,11 +423,12 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent').addClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden')
 
-    setSessionId: (id) =>
-      @sessionId = id
-      sessionStorage.setItem 'sessionId', id
+    onConnectionEstablished: (agent) =>
 
-    onConnectionEstablished: (data) =>
+      # stop delay of initial queue position
+      if @onInitialQueueDelayId
+        clearTimeout(@onInitialQueueDelayId)
+
       @inQueue = false
       @agent = data.agent
       @setSessionId data.session_id

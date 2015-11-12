@@ -220,7 +220,7 @@ class chatWindow extends App.Controller
     )
 
   render: ->
-    @html App.view('layout_ref/customer_chat_window')
+    @html App.view('customer_chat/chat_window')
       name: @options.name
 
     @el.one 'transitionend', @onTransitionend
@@ -353,7 +353,7 @@ class chatWindow extends App.Controller
 
     @lastAddedType = sender
 
-    @body.append App.view('layout_ref/customer_chat_message')
+    @body.append App.view('customer_chat/chat_message')
       message: message
       sender: sender
       isNew: isNew
@@ -365,7 +365,7 @@ class chatWindow extends App.Controller
     if !@isTyping
       @isTyping = true
       @maybeAddTimestamp()
-      @body.append App.view('layout_ref/customer_chat_loader')()
+      @body.append App.view('customer_chat/chat_loader')()
       @scrollToBottom()
 
     # clear old delay, set new
@@ -397,7 +397,7 @@ class chatWindow extends App.Controller
         @lastAddedType = 'timestamp'
 
   addTimestamp: (label, time) =>
-    @body.append App.view('layout_ref/customer_chat_timestamp')
+    @body.append App.view('customer_chat/chat_timestamp')
       label: label
       time: time
 
@@ -405,12 +405,12 @@ class chatWindow extends App.Controller
     @body
       .find('.js-timestamp')
       .last()
-      .replaceWith App.view('layout_ref/customer_chat_timestamp')
+      .replaceWith App.view('customer_chat/chat_timestamp')
         label: label
         time: time
 
   addStatusMessage: (message) ->
-    @body.append App.view('layout_ref/customer_chat_status_message')
+    @body.append App.view('customer_chat/customer_chat_status_message')
       message: message
 
     @scrollToBottom()
