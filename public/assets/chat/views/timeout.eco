@@ -1,0 +1,6 @@
+<div class="zammad-chat-modal">
+  <div class="zammad-chat-modal-text">
+    <%- @T('Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.', "#{ @delay } #{ @unit }", @agent) %><br>
+    <div class="zammad-chat-button"><%= @T('Start new conversation') %></div>
+  </div>
+</div>

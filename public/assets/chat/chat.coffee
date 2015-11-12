@@ -32,9 +32,9 @@ do($ = window.jQuery, window) ->
       'Compose your message...': 'Ihre Nachricht...'
       'All colleges are busy.': 'Alle Kollegen sind belegt.'
       'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.'
-      '': ''
-      '': ''
-      '': ''
+      'Start new conversation': 'Neue Konversation starten'
+      'Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.': 'Da sie in den letzten %s nichts geschrieben haben wurde ihre Konversation mit <strong>%s</strong> geschlossen.'
+      'minutes': 'Minuten'
     sessionId: undefined
 
     T: (string, items...) =>
@@ -138,7 +138,6 @@ do($ = window.jQuery, window) ->
       @onConnectionEstablished(data)
 
       for message in data.session
-        @log 'debug', "message in session", message
         @renderMessage
           message: message.content
           id: message.id
@@ -233,7 +232,8 @@ do($ = window.jQuery, window) ->
       @scrollToBottom()
 
     open: =>
-      return if @isOpen
+      if @isOpen
+        @show()
 
       if !@sessionId
         @showLoader()
@@ -365,6 +365,8 @@ do($ = window.jQuery, window) ->
           time: time
 
     addStatus: (status) ->
+      @maybeAddTimestamp()
+
       @el.find('.zammad-chat-body').append @view('status')
         status: status
 
@@ -434,7 +436,6 @@ do($ = window.jQuery, window) ->
       sessionStorage.setItem 'sessionId', id
 
     onConnectionEstablished: (data) =>
-
       # stop delay of initial queue position
       if @onInitialQueueDelayId
         clearTimeout @onInitialQueueDelayId
@@ -455,6 +456,12 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden')
       @input.focus()
+
+    showTimeout: ->
+      @el.find('.zammad-chat-body').html @view('timeout')
+        agent: @agent.name
+        delay: 10
+        unit: @T('minutes')
 
     showLoader: ->
       @el.find('.zammad-chat-body').html @view('loader')()

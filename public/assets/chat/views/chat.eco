@@ -17,6 +17,6 @@
   <div class="zammad-chat-body"></div>
   <form class="zammad-chat-controls">
     <textarea class="zammad-chat-input" rows="1" placeholder="<%- @T('Compose your message...') %>"></textarea>
-    <button type="submit" class="zammad-chat-send"><%- @T('Send') %></button>
+    <button type="submit" class="zammad-chat-button zammad-chat-send"><%- @T('Send') %></button>
   </form>
 </div>

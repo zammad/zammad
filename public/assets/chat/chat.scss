@@ -172,9 +172,9 @@ $baseTextColor: if($luminance < 0.2, white, black);
   top: 3.5em;
   margin-top: 1px;
   text-align: center;
-  background: radial-gradient(rgba(255,255,255,.75), rgba(255,255,255,1));
+  background: white;
   z-index: 1;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,6 +186,10 @@ $baseTextColor: if($luminance < 0.2, white, black);
   
   .zammad-chat-loading-animation {
     font-size: 0.7em;
+  }
+
+  .zammad-chat-button {
+    margin-top: 1em;
   }
 }
 
@@ -319,9 +323,8 @@ $baseTextColor: if($luminance < 0.2, white, black);
   color: desaturate(lightenMax($themeColor, 25%, 85%), 50%);
 }
 
-.zammad-chat-send {
+.zammad-chat-button {
   appearance: none;
-  float: right;
   font-family: inherit;
   font-size: inherit;
   background: $themeColor;
@@ -336,6 +339,12 @@ $baseTextColor: if($luminance < 0.2, white, black);
     0 0 0 1px darken($themeColor, 10%) inset,
     0 1px rgba(0,0,0,.1);
   outline: none;
+  font-size: 0.8em;
+  display: inline-block;
+}
+
+.zammad-chat-send {
+  float: right;
 }
 
 .zammad-chat-is-hidden {
@@ -363,7 +372,7 @@ $baseTextColor: if($luminance < 0.2, white, black);
   box-shadow: 0 0 0 1px rgba(0,0,0,.08) inset;
 }
 .zammad-chat--flat .zammad-chat-agent-status,
-.zammad-chat--flat .zammad-chat-send,
+.zammad-chat--flat .zammad-chat-button,
 .zammad-chat--flat .zammad-chat-status {
   box-shadow: none;
 }
