@@ -410,7 +410,7 @@ class chatWindow extends App.Controller
         time: time
 
   addStatusMessage: (message) ->
-    @body.append App.view('customer_chat/chat_status_message')
+    @body.append App.view('customer_chat/customer_chat_status_message')
       message: message
 
     @scrollToBottom()
