@@ -129,6 +129,9 @@ do($ = window.jQuery, window) ->
                 @log 'debug', 'Zammad Chat: Chat is disabled'
               when 'no_seats_available'
                 @log 'debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+              when 'reconnect'
+                # old messages
+                @log 'debug', 'old messages', pipe.data.session
 
     onReady: =>
       if @options.show
@@ -153,7 +156,8 @@ do($ = window.jQuery, window) ->
       # send typing start event
       if !@isTyping
         @isTyping = true
-        @send 'chat_session_typing', {session_id: @session_id}
+        @send 'chat_session_typing',
+          session_id: @session_id
 
     onTypingEnd: =>
       @isTyping = false
@@ -235,7 +239,8 @@ do($ = window.jQuery, window) ->
       @disconnect()
       @isOpen = false
 
-      @send 'chat_session_close', {session_id: @session_id}
+      @send 'chat_session_close',
+        session_id: @session_id
 
     hide: ->
       @el.removeClass('zammad-chat-is-visible')
@@ -319,7 +324,8 @@ do($ = window.jQuery, window) ->
       @ws = new window.WebSocket(@host)
       @ws.onopen = =>
         @log 'debug', 'ws connected'
-        @send 'chat_status_customer'
+        @send 'chat_status_customer',
+          session_id: @session_id
         @setAgentOnlineState(true)
 
       @ws.onmessage = @onWebSocketMessage

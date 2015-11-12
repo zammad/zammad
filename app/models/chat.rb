@@ -4,8 +4,16 @@ class Chat < ApplicationModel
   has_many            :chat_topics
   validates           :name, presence: true
 
-  def state
+  def customer_state(session_id = nil)
     return { state: 'chat_disabled' } if !Setting.get('chat')
+
+    if session_id
+      session = Chat.session_state(session_id)
+      return {
+        state: 'reconnect',
+        session: session,
+      }
+    end
 
     if Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - 2.minutes).count > 0
       if active_chat_count >= max_queue
@@ -19,6 +27,15 @@ class Chat < ApplicationModel
     end
 
     { state: 'offline' }
+  end
+
+  def self.session_state(session_id)
+    session_attributes = []
+    chat_session_id = Chat::Session.find_by(session_id: session_id)
+    Chat::Message.where(chat_session_id: chat_session_id.id).each { |message|
+      session_attributes.push message.attributes
+    }
+    session_attributes
   end
 
   def self.agent_state(user_id)
