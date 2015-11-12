@@ -17,6 +17,10 @@ class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
     session_id = nil
     if @data['data']['session_id']
       session_id = @data['data']['session_id']
+
+      # update recipients of existing sessions
+      chat_session = Chat::Session.find_by(session_id: session_id)
+      chat_session.add_recipient(@client_id, true)
     end
     {
       event: 'chat_status_customer',
