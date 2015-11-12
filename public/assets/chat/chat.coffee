@@ -315,8 +315,8 @@ do($ = window.jQuery, window) ->
       # show queue position
       show()
 
-    onQueue: (position) =>
-      @log 'notice', 'onQueue', position
+    onQueue: (data) =>
+      @log 'notice', 'onQueue', data.position
       @inQueue = true
       @setSessionId data.session_id
 
