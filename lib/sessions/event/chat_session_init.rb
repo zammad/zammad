@@ -24,13 +24,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
     )
 
     # send broadcast to agents
-    Chat::Agent.where(active: true).each {|item|
-      data = {
-        event: 'chat_status_agent',
-        data: Chat.agent_state(item.updated_by_id),
-      }
-      Sessions.send_to(item.updated_by_id, data)
-    }
+    broadcast_agent_state_update
 
     # return new session
     {

@@ -36,7 +36,6 @@ class App.CustomerChat extends App.Controller
     @bind(
       'chat_session_start'
       (data) =>
-        App.WebSocket.send(event:'chat_status_agent')
         if data.session
           @addChat(data.session)
     )
@@ -45,7 +44,6 @@ class App.CustomerChat extends App.Controller
       ->
         App.WebSocket.send(event:'chat_status_agent')
     )
-
     App.WebSocket.send(event:'chat_status_agent')
 
   pushState: =>
@@ -101,7 +99,7 @@ class App.CustomerChat extends App.Controller
     @delay(delay, 200, 'updateNavMenu')
 
   updateMeta: =>
-    if @meta.waiting_chat_count && @maxChats > @currentChatCount()
+    if @meta.waiting_chat_count && @maxChats > @windowCount()
       @$('.js-acceptChat').addClass('is-clickable is-blinking')
     else
       @$('.js-acceptChat').removeClass('is-clickable is-blinking')
@@ -134,11 +132,9 @@ class App.CustomerChat extends App.Controller
 
   windowCount: =>
     count = 0
-
     for chat of @chatWindows
-      count++ 
-
-    return count
+      count++
+    count
 
   removeChat: (session_id) =>
     delete @chatWindows[session_id]
@@ -149,15 +145,8 @@ class App.CustomerChat extends App.Controller
     for session_id, chat of @chatWindows
       chat.trigger 'layout-changed'
 
-  currentChatCount: =>
-    currentChats = 0
-    for key, value of @chatWindows
-      if @chatWindows[key]
-        currentChats += 1
-    currentChats
-
   acceptChat: =>
-    return if @currentChatCount() >= @maxChats
+    return if @windowCount() >= @maxChats
     App.WebSocket.send(event:'chat_session_start')
 
 class CustomerChatRouter extends App.ControllerPermanent

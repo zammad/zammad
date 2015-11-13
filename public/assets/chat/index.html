@@ -134,8 +134,11 @@
   }
 -->
 <script>
-  var chat = new ZammadChat();
-  chat.open();
+  var chat = new ZammadChat({
+    host: 'ws://localhost',
+    port: 6042,
+    debug: true
+  });
 
   $('.settings :input').on({
     change: function(){

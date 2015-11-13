@@ -10,13 +10,14 @@ do($ = window.jQuery, window) ->
     defaults:
       invitationPhrase: '<strong>Chat</strong> with us!'
       agentPhrase: ' is helping you'
-      show: false
+      show: true
       target: $('body')
       host: ''
       port: 6042
+      debug: false
 
     _messageCount: 0
-    isOpen: false
+    isOpen: true
     blinkOnlineInterval: null
     stopBlinOnlineStateTimeout: null
     showTimeEveryXMinutes: 1
@@ -26,7 +27,6 @@ do($ = window.jQuery, window) ->
     isTyping: false
     isOnline: true
     initialQueueDelay: 10000
-    debug: true
     wsReconnectEnable: true
     strings:
       'Online': 'Online'
@@ -54,7 +54,7 @@ do($ = window.jQuery, window) ->
       translation
 
     log: (level, string...) =>
-      return if !@debug && level is 'debug'
+      return if !@options.debug && level is 'debug'
       string.unshift(level)
       console.log.apply console, string
 
@@ -67,6 +67,12 @@ do($ = window.jQuery, window) ->
         return window.zammadChatTemplates[name](options)
 
     constructor: (options) ->
+
+      # check prerequisites
+      if !window.WebSocket or !sessionStorage
+        @log 'notice', 'Chat: Browser not supported!'
+        return
+
       @options = $.extend {}, @defaults, options
       @el = $(@view('chat')(@options))
       @options.target.append @el
@@ -80,13 +86,7 @@ do($ = window.jQuery, window) ->
         keydown: @checkForEnter
         input: @onInput
 
-      if !window.WebSocket or !sessionStorage
-        @log 'notice', 'Chat: Browser not supported!'
-        return
-
       @wsConnect()
-
-      #@onReady()
 
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
@@ -146,16 +146,22 @@ do($ = window.jQuery, window) ->
     reopenSession: (data) =>
       unfinishedMessage = sessionStorage.getItem 'unfinished_message'
 
-      @onConnectionEstablished(data)
+      # rerender chat history
+      if data.agent
+        @onConnectionEstablished(data)
 
-      for message in data.session
-        @renderMessage
-          message: message.content
-          id: message.id
-          from: if message.created_by_id then 'agent' else 'customer'
+        for message in data.session
+          @renderMessage
+            message: message.content
+            id: message.id
+            from: if message.created_by_id then 'agent' else 'customer'
 
-      if unfinishedMessage
-        @input.val unfinishedMessage
+        if unfinishedMessage
+          @input.val unfinishedMessage
+
+      # show wait list
+      if data.position
+        @onQueue data
 
       @show()
       @open()
@@ -276,7 +282,6 @@ do($ = window.jQuery, window) ->
       # stop delay of initial queue position
       if @onInitialQueueDelayId
         clearTimeout(@onInitialQueueDelayId)
-      #@ws.close()
 
       sessionStorage.removeItem 'sessionId'
       sessionStorage.removeItem 'unfinished_message'

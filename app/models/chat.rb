@@ -10,43 +10,56 @@ class Chat < ApplicationModel
     # reconnect
     if session_id
       chat_session = Chat::Session.find_by(session_id: session_id, state: %w(waiting running))
-      user = nil
-      if chat_session && chat_session.user_id
-        chat_user = User.find(chat_session.user_id)
-        url = nil
-        if chat_user.image && chat_user.image != 'none'
-          url = "/api/v1/users/image/#{chat_user.image}"
-        end
-        user = {
-          name: chat_user.fullname,
-          avatar: url,
-        }
-      end
 
       if chat_session
-        session = Chat.session_state(session_id)
-        if session && !session.empty?
+        if chat_session.state == 'running'
+          user = nil
+          if chat_session.user_id
+            chat_user = User.find(chat_session.user_id)
+            url = nil
+            if chat_user.image && chat_user.image != 'none'
+              url = "/api/v1/users/image/#{chat_user.image}"
+            end
+            user = {
+              name: chat_user.fullname,
+              avatar: url,
+            }
+
+            # get queue postion if needed
+            session = Chat.session_state(session_id)
+            if session
+              return {
+                state: 'reconnect',
+                session: session,
+                agent: user,
+              }
+            end
+          end
+        elsif chat_session.state == 'waiting'
           return {
             state: 'reconnect',
-            session: session,
-            agent: user,
+            position: chat_session.position,
           }
         end
       end
     end
 
-    if Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - 2.minutes).count > 0
-      if active_chat_count >= max_queue
-        return {
-          state: 'no_seats_available',
-          queue: seads_available,
-        }
-      else
-        return { state: 'online' }
-      end
+    # check if agents are available
+    available_agents = Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - 2.minutes).count
+    if available_agents == 0
+      return { state: 'offline' }
     end
 
-    { state: 'offline' }
+    # if all seads are used
+    if active_chat_count >= max_queue
+      return {
+        state: 'no_seats_available',
+        queue: seads_available,
+      }
+    end
+
+    # seads are available
+    { state: 'online' }
   end
 
   def self.session_state(session_id)
@@ -110,82 +123,4 @@ class Chat < ApplicationModel
   def seads_available(diff = 2.minutes)
     seads_total(diff) - active_chat_count
   end
-end
-
-class Chat::Topic < ApplicationModel
-end
-
-class Chat::Agent < ApplicationModel
-
-  def seads_available
-    concurrent - active_chat_count
-  end
-
-  def active_chat_count
-    Chat::Session.where(state: %w(waiting running), user_id: updated_by_id).count
-  end
-
-  def self.state(user_id, state = nil)
-    chat_agent = Chat::Agent.find_by(
-      updated_by_id: user_id
-    )
-    if state.nil?
-      return false if !chat_agent
-      return chat_agent.active
-    end
-    if chat_agent
-      chat_agent.active = state
-      chat_agent.updated_at = Time.zone.now
-      chat_agent.save
-    else
-      Chat::Agent.create(
-        active: state,
-        updated_by_id: user_id,
-        created_by_id: user_id,
-      )
-    end
-  end
-
-  def self.create_or_update(params)
-    chat_agent = Chat::Agent.find_by(
-      updated_by_id: params[:updated_by_id]
-    )
-    if chat_agent
-      chat_agent.update_attributes(params)
-    else
-      Chat::Agent.create(params)
-    end
-  end
-end
-
-class Chat::Session < ApplicationModel
-  before_create :generate_session_id
-  store         :preferences
-
-  def generate_session_id
-    self.session_id = Digest::MD5.hexdigest(Time.zone.now.to_s + rand(99_999_999_999_999).to_s)
-  end
-
-  def add_recipient(client_id, store = false)
-    if !preferences[:participants]
-      preferences[:participants] = []
-    end
-    return preferences[:participants] if preferences[:participants].include?(client_id)
-    preferences[:participants].push client_id
-    if store
-      save
-    end
-    preferences[:participants]
-  end
-
-  def send_to_recipients(message, ignore_client_id = nil)
-    preferences[:participants].each {|local_client_id|
-      next if local_client_id == ignore_client_id
-      Sessions.send(local_client_id, message)
-    }
-    true
-  end
-end
-
-class Chat::Message < ApplicationModel
 end
