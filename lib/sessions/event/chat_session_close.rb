@@ -21,7 +21,7 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       }
     end
 
-    realname = 'anonymous'
+    realname = 'Anonymous'
     if @session && @session['id']
       realname = User.find(@session['id']).fullname
     end
