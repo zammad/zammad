@@ -215,7 +215,7 @@ class chatWindow extends App.Controller
       (data) =>
         return if data.session_id isnt @session.session_id
         return if data.self_written
-        @addStatusMessage("#{data.realname} was leaving the conversation")
+        @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
         @goOffline()
     )
 
