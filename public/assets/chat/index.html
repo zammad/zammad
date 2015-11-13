@@ -2,6 +2,7 @@
 <meta charset="utf-8">
 <title>Zammad Chat</title>
 <link rel="stylesheet" href="chat.css">
+<link rel="stylesheet" href="znuny.css">
 <meta name="viewport" content="width=device-width">
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35738/livereload.js?snipver=1"></' + 'script>')</script>
 <style>
@@ -65,7 +66,7 @@
   }
 </style>
 
-<img class="mockup" width="100%" src="website.png">
+<img class="mockup" width="100%" src="znuny.png">
 
 <div class="settings">
   <table>
@@ -94,6 +95,9 @@
         <input type="number" value="12" min="11" max="18" data-option="fontSize">px
       <td>
         <label for="fontSize">Font Size</label>
+    <tr>
+      <td>
+      <td><button class="open-zammad-chat">Open Chat</button>
   </table>
 </div>
 
@@ -137,7 +141,10 @@
   var chat = new ZammadChat({
     host: 'ws://localhost',
     port: 6042,
-    debug: true
+    debug: true,
+    background: '#494d52',
+    flat: true,
+    show: false
   });
 
   $('.settings :input').on({

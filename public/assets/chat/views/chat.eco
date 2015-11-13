@@ -1,7 +1,7 @@
-<div class="zammad-chat">
-  <div class="zammad-chat-header js-chat-open">
+<div class="zammad-chat<%= ' zammad-chat--flat' if @flat %>">
+  <div class="zammad-chat-header js-chat-open"<%= " style='background: #{ @background }'" if @background %>>
     <div class="zammad-chat-header-controls">
-      <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online">Online</span>
+      <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online"></span>
       <span class="zammad-chat-header-icon">
         <svg class="zammad-chat-header-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>
         <svg class="zammad-chat-header-icon-close js-chat-close" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"/></svg>
@@ -11,12 +11,12 @@
     </div>
     <div class="zammad-chat-welcome">
       <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>
-      <span class="zammad-chat-welcome-text"><%- @invitationPhrase %></span>
+      <span class="zammad-chat-welcome-text"><%- @T('<strong>Chat</strong> with us!') %></span>
     </div>
   </div>
   <div class="zammad-chat-body"></div>
   <form class="zammad-chat-controls">
     <textarea class="zammad-chat-input" rows="1" placeholder="<%- @T('Compose your message...') %>"></textarea>
-    <button type="submit" class="zammad-chat-button zammad-chat-send"><%- @T('Send') %></button>
+    <button type="submit" class="zammad-chat-button zammad-chat-send"<%= " style='background: #{ @background }'" if @background %>><%- @T('Send') %></button>
   </form>
 </div>

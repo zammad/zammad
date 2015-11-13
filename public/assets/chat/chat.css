@@ -30,7 +30,7 @@
   background: #379ad7;
   color: white;
   line-height: 2.5em;
-  box-shadow: 0 -1px #247fb7, 0 1px rgba(255, 255, 255, 0.3) inset, 0 -1px #247fb7 inset, 0 1px 1px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.3) inset, 0 -1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.13);
   position: relative;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
@@ -89,8 +89,8 @@
   line-height: 2em;
   padding: 0 0.7em;
   border-radius: 1em;
-  background: #288ecc;
-  box-shadow: 0 0 0 1px #2582bb; }
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04); }
 
 .zammad-chat-agent-status:before {
   content: "";
@@ -101,7 +101,8 @@
   border-radius: 100%;
   position: relative;
   margin-right: 0.3em;
-  box-shadow: 0 0 0 1px #2582bb; }
+  vertical-align: middle;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04); }
 
 .zammad-chat-agent-status[data-status="online"]:before {
   background: #52c782; }
@@ -185,7 +186,7 @@
   padding: 0.5em 1em;
   line-height: 1.4;
   border-radius: 1em;
-  background: #f6f8f9;
+  background: #ededed;
   display: inline-block;
   max-width: 70%;
   white-space: pre-line;
@@ -223,7 +224,7 @@
   display: inline-block; }
 
 .zammad-chat-loading-circle {
-  background: #c5dded;
+  background: #d9d9d9;
   border-radius: 100%;
   height: 0.72em;
   width: 0.72em;
@@ -267,7 +268,7 @@
   -webkit-align-items: flex-start;
   -ms-flex-align: start;
   align-items: flex-start;
-  border-top: 1px solid #e3f0f7;
+  border-top: 1px solid #ededed;
   padding: 0;
   line-height: 1.4em;
   box-shadow: 0 1px rgba(0, 0, 0, 0.01), 0 -1px rgba(0, 0, 0, 0.02);
@@ -294,7 +295,7 @@
   max-height: 6em; }
 
 .zammad-chat-input::-webkit-input-placeholder {
-  color: #bdc9d0; }
+  color: #d9d9d9; }
 
 .zammad-chat-button {
   -webkit-appearance: none;
@@ -309,7 +310,7 @@
   cursor: pointer;
   border: none;
   border-radius: 1.5em;
-  box-shadow: 0 2px rgba(255, 255, 255, 0.25) inset, 0 0 0 1px #247fb7 inset, 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px rgba(255, 255, 255, 0.25) inset, 0 0 0 1px rgba(0, 0, 0, 0.1) inset, 0 1px rgba(0, 0, 0, 0.1);
   outline: none;
   display: inline-block; }
 
@@ -332,10 +333,10 @@
   border: none; }
 
 .zammad-chat--flat .zammad-chat-header {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13); }
+  box-shadow: none; }
 
 .zammad-chat--flat .zammad-chat-message-body {
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) inset; }
+  box-shadow: none; }
 
 .zammad-chat--flat .zammad-chat-agent-status,
 .zammad-chat--flat .zammad-chat-button,

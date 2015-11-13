@@ -8,13 +8,12 @@ do($ = window.jQuery, window) ->
   class ZammadChat
 
     defaults:
-      invitationPhrase: '<strong>Chat</strong> with us!'
-      agentPhrase: ' is helping you'
       show: true
       target: $('body')
       host: ''
       port: 6042
       debug: false
+      buttonSelector: '.open-zammad-chat'
 
     _messageCount: 0
     isOpen: true
@@ -25,14 +24,15 @@ do($ = window.jQuery, window) ->
     lastAddedType: null
     inputTimeout: null
     isTyping: false
-    isOnline: true
+    state: 'offline'
     initialQueueDelay: 10000
     wsReconnectEnable: true
     strings:
+      '<strong>Chat</strong> with us!': '<strong>Chatten</strong> sie mit uns!'
       'Online': 'Online'
       'Offline': 'Offline'
       'Connecting': 'Verbinden'
-      'Connection re-established': 'Connection re-established'
+      'Connection re-established': 'Verbindung wiederhergestellt'
       'Today': 'Heute'
       'Send': 'Senden'
       'Compose your message...': 'Ihre Nachricht...'
@@ -64,6 +64,8 @@ do($ = window.jQuery, window) ->
           options = {}
 
         options.T = @T
+        options.background = @options.background
+        options.flat = @options.flat
         return window.zammadChatTemplates[name](options)
 
     constructor: (options) ->
@@ -74,17 +76,19 @@ do($ = window.jQuery, window) ->
         return
 
       @options = $.extend {}, @defaults, options
-      @el = $(@view('chat')(@options))
+      @el = $(@view('chat')())
       @options.target.append @el
 
       @input = @el.find('.zammad-chat-input')
 
-      @el.find('.js-chat-open').click => @open()
+      @el.find('.js-chat-open').click @open
       @el.find('.js-chat-close').click @close
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @input.on
         keydown: @checkForEnter
         input: @onInput
+
+      $(@options.buttonSelector).click @open
 
       @wsConnect()
 
@@ -127,13 +131,13 @@ do($ = window.jQuery, window) ->
                 @onReady()
                 @log 'debug', 'Zammad Chat: ready'
               when 'offline'
-                @log 'debug', 'Zammad Chat: No agent online'
+                @onError 'Zammad Chat: No agent online'
                 @wsClose()
               when 'chat_disabled'
-                @log 'debug', 'Zammad Chat: Chat is disabled'
+                @onError 'Zammad Chat: Chat is disabled'
                 @wsClose()
               when 'no_seats_available'
-                @log 'debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+                @onError 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
                 @wsClose()
               when 'reconnect'
                 @log 'debug', 'old messages', pipe.data.session
@@ -142,6 +146,10 @@ do($ = window.jQuery, window) ->
     onReady: =>
       if @options.show
         @show()
+
+    onError: (message) =>
+      @log 'debug', message
+      $(@options.buttonSelector).hide()
 
     reopenSession: (data) =>
       unfinishedMessage = sessionStorage.getItem 'unfinished_message'
@@ -421,7 +429,6 @@ do($ = window.jQuery, window) ->
         @log 'debug', 'close websocket connection'
         if @wsReconnectEnable
           @reconnect()
-        @setAgentOnlineState(false)
 
       @ws.onerror = (e) =>
         @log 'debug', 'ws:onerror', e
@@ -442,21 +449,21 @@ do($ = window.jQuery, window) ->
       @send 'chat_status_customer',
         session_id: @sessionId
 
-      @setAgentOnlineState(true)
+      @setAgentOnlineState 'online'
 
     reconnect: =>
       # set status to connecting
       @log 'notice', 'reconnecting'
       @disableInput()
       @lastAddedType = 'status'
-      @el.find('.zammad-chat-agent-status').attr('data-status', 'connecting').text @T('Reconnecting')
+      @setAgentOnlineState 'connecting'
       @addStatus @T('Connection lost')
       @wsReconnect()
 
     onConnectionReestablished: =>
       # set status back to online
       @lastAddedType = 'status'
-      @el.find('.zammad-chat-agent-status').attr('data-status', 'online').text @T('Online')
+      @setAgentOnlineState 'online'
       @addStatus @T('Connection re-established')
 
     onSessionClosed: (data) ->
@@ -508,10 +515,11 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-body').html @view('loader')()
 
     setAgentOnlineState: (state) =>
-      @isOnline = state
+      @state = state
+      capitalizedState = state.charAt(0).toUpperCase() + state.slice(1)
       @el
         .find('.zammad-chat-agent-status')
-        .toggleClass('zammad-chat-is-online', state)
-        .text if state then @T('Online') else @T('Offline')
+        .attr('data-status', state)
+        .text @T(capitalizedState)
 
   window.ZammadChat = ZammadChat
