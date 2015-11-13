@@ -132,12 +132,15 @@ do($ = window.jQuery, window) ->
                 @log 'debug', 'Zammad Chat: ready'
               when 'offline'
                 @onError 'Zammad Chat: No agent online'
+                @hide()
                 @wsClose()
               when 'chat_disabled'
                 @onError 'Zammad Chat: Chat is disabled'
+                @hide()
                 @wsClose()
               when 'no_seats_available'
                 @onError 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+                @hide()
                 @wsClose()
               when 'reconnect'
                 @log 'debug', 'old messages', pipe.data.session
@@ -291,9 +294,6 @@ do($ = window.jQuery, window) ->
       if @onInitialQueueDelayId
         clearTimeout(@onInitialQueueDelayId)
 
-      sessionStorage.removeItem 'sessionId'
-      sessionStorage.removeItem 'unfinished_message'
-
       @closeWindow()
 
     closeWindow: =>
@@ -309,6 +309,10 @@ do($ = window.jQuery, window) ->
         session_id: @sessionId
 
       @setSessionId undefined
+      sessionStorage.removeItem 'unfinished_message'
+
+      # restart connection
+      @onWebSocketOpen()
 
     hide: ->
       @el.removeClass('zammad-chat-is-visible')

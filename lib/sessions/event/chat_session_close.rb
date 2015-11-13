@@ -49,6 +49,9 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       # set state update to all agents
       broadcast_agent_state_update
 
+      # send position update to other waiting sessions
+      broadcast_customer_state_update
+
     # notify about "leaving"
     else
       message = {

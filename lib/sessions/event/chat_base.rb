@@ -4,7 +4,6 @@ class Sessions::Event::ChatBase
     @data = data
     @session = session
     @client_id = client_id
-
   end
 
   def pre
@@ -32,6 +31,24 @@ class Sessions::Event::ChatBase
         data: Chat.agent_state(item.updated_by_id),
       }
       Sessions.send_to(item.updated_by_id, data)
+    }
+  end
+
+  def broadcast_customer_state_update
+
+    # send position update to other waiting sessions
+    position = 0
+    Chat::Session.where(state: 'waiting').order('created_at ASC').each {|local_chat_session|
+      position += 1
+      data = {
+        event: 'chat_session_queue',
+        data: {
+          state: 'queue',
+          position: position,
+          session_id: local_chat_session.session_id,
+        },
+      }
+      local_chat_session.send_to_recipients(data)
     }
   end
 

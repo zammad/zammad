@@ -39,20 +39,9 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     chat_session.send_to_recipients(data)
 
     # send position update to other waiting sessions
-    position = 0
-    Chat::Session.where(state: 'waiting').order('created_at ASC').each {|local_chat_session|
-      position += 1
-      data = {
-        event: 'chat_session_queue',
-        data: {
-          state: 'queue',
-          position: position,
-          session_id: local_chat_session.session_id,
-        },
-      }
-      local_chat_session.send_to_recipients(data)
-    }
+    broadcast_customer_state_update
 
+    # send state update to agents
     broadcast_agent_state_update
 
     nil

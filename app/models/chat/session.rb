@@ -35,4 +35,27 @@ class Chat::Session < ApplicationModel
     }
     position
   end
+
+  def self.messages_by_session_id(session_id)
+    chat_session = Chat::Session.find_by(session_id: session_id)
+    return if !chat_session
+    session_attributes = []
+    Chat::Message.where(chat_session_id: chat_session.id).each { |message|
+      session_attributes.push message.attributes
+    }
+    session_attributes
+  end
+
+  def self.active_chats_by_user_id(user_id)
+    actice_sessions = []
+    Chat::Session.where(state: 'running', user_id: user_id).order('created_at ASC').each {|session|
+      session_attributes = session.attributes
+      session_attributes['messages'] = []
+      Chat::Message.where(chat_session_id: session.id).each { |message|
+        session_attributes['messages'].push message.attributes
+      }
+      actice_sessions.push session_attributes
+    }
+    actice_sessions
+  end
 end
