@@ -1,14 +1,19 @@
 do($ = window.jQuery, window) ->
 
+  scripts = document.getElementsByTagName('script')
+  myScript = scripts[scripts.length - 1]
+  scriptHost = myScript.src.match(".*://([^:/]*).*")[1]
+
   # Define the plugin class
   class ZammadChat
 
     defaults:
       invitationPhrase: '<strong>Chat</strong> with us!'
       agentPhrase: ' is helping you'
-      show: true
+      show: false
       target: $('body')
-      host: 'ws://localhost:6042'
+      host: ''
+      port: 6042
 
     _messageCount: 0
     isOpen: false
@@ -61,7 +66,7 @@ do($ = window.jQuery, window) ->
         options.T = @T
         return window.zammadChatTemplates[name](options)
 
-    constructor: (el, options) ->
+    constructor: (options) ->
       @options = $.extend {}, @defaults, options
       @el = $(@view('chat')(@options))
       @options.target.append @el
@@ -395,9 +400,14 @@ do($ = window.jQuery, window) ->
     session_init: ->
       @send('chat_session_init')
 
+    detectHost: ->
+      @options.host = "ws://#{ scriptHost }"
+
     wsConnect: =>
-      @log 'notice', "Connecting to #{@options.host}"
-      @ws = new window.WebSocket(@options.host)
+      @detectHost() if !@options.host
+
+      @log 'notice', "Connecting to #{@options.host}:#{@options.port}"
+      @ws = new window.WebSocket("#{@options.host}:#{@options.port}")
       @ws.onopen = @onWebSocketOpen
 
       @ws.onmessage = @onWebSocketMessage
@@ -499,5 +509,4 @@ do($ = window.jQuery, window) ->
         .toggleClass('zammad-chat-is-online', state)
         .text if state then @T('Online') else @T('Offline')
 
-  $(document).ready ->
-    window.zammadChat = new ZammadChat()
+  window.ZammadChat = ZammadChat

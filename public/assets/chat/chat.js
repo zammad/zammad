@@ -2,14 +2,18 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   slice = [].slice;
 
 (function($, window) {
-  var ZammadChat;
+  var ZammadChat, myScript, scriptHost, scripts;
+  scripts = document.getElementsByTagName('script');
+  myScript = scripts[scripts.length - 1];
+  scriptHost = myScript.src.match(".*://([^:/]*).*")[1];
   ZammadChat = (function() {
     ZammadChat.prototype.defaults = {
       invitationPhrase: '<strong>Chat</strong> with us!',
       agentPhrase: ' is helping you',
-      show: true,
+      show: false,
       target: $('body'),
-      host: 'ws://localhost:6042'
+      host: '',
+      port: 6042
     };
 
     ZammadChat.prototype._messageCount = 0;
@@ -93,7 +97,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       })(this);
     };
 
-    function ZammadChat(el, options) {
+    function ZammadChat(options) {
       this.setAgentOnlineState = bind(this.setAgentOnlineState, this);
       this.onConnectionEstablished = bind(this.onConnectionEstablished, this);
       this.setSessionId = bind(this.setSessionId, this);
@@ -498,9 +502,16 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.send('chat_session_init');
     };
 
+    ZammadChat.prototype.detectHost = function() {
+      return this.options.host = "ws://" + scriptHost;
+    };
+
     ZammadChat.prototype.wsConnect = function() {
-      this.log('notice', "Connecting to " + this.options.host);
-      this.ws = new window.WebSocket(this.options.host);
+      if (!this.options.host) {
+        this.detectHost();
+      }
+      this.log('notice', "Connecting to " + this.options.host + ":" + this.options.port);
+      this.ws = new window.WebSocket(this.options.host + ":" + this.options.port);
       this.ws.onopen = this.onWebSocketOpen;
       this.ws.onmessage = this.onWebSocketMessage;
       this.ws.onclose = (function(_this) {
@@ -618,9 +629,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     return ZammadChat;
 
   })();
-  return $(document).ready(function() {
-    return window.zammadChat = new ZammadChat();
-  });
+  return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
 
 if (!window.zammadChatTemplates) {
