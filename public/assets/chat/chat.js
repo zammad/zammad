@@ -8,7 +8,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       invitationPhrase: '<strong>Chat</strong> with us!',
       agentPhrase: ' is helping you',
       show: true,
-      target: $('body')
+      target: $('body'),
+      host: 'ws://localhost:6042'
     };
 
     ZammadChat.prototype._messageCount = 0;
@@ -35,7 +36,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.debug = true;
 
-    ZammadChat.prototype.host = 'ws://localhost:6042';
+    ZammadChat.prototype.wsReconnectEnable = true;
 
     ZammadChat.prototype.strings = {
       'Online': 'Online',
@@ -98,7 +99,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.onConnectionReestablished = bind(this.onConnectionReestablished, this);
       this.reconnect = bind(this.reconnect, this);
       this.onWebSocketOpen = bind(this.onWebSocketOpen, this);
-      this.connect = bind(this.connect, this);
+      this.wsReconnect = bind(this.wsReconnect, this);
+      this.wsClose = bind(this.wsClose, this);
+      this.wsConnect = bind(this.wsConnect, this);
       this.onAgentTypingEnd = bind(this.onAgentTypingEnd, this);
       this.onAgentTypingStart = bind(this.onAgentTypingStart, this);
       this.onQueue = bind(this.onQueue, this);
@@ -140,7 +143,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.log('notice', 'Chat: Browser not supported!');
         return;
       }
-      this.connect();
+      this.wsConnect();
     }
 
     ZammadChat.prototype.checkForEnter = function(event) {
@@ -194,17 +197,21 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           case 'chat_status_customer':
             switch (pipe.data.state) {
               case 'online':
+                this.sessionId = void 0;
                 this.onReady();
                 this.log('debug', 'Zammad Chat: ready');
                 break;
               case 'offline':
                 this.log('debug', 'Zammad Chat: No agent online');
+                this.wsClose();
                 break;
               case 'chat_disabled':
                 this.log('debug', 'Zammad Chat: Chat is disabled');
+                this.wsClose();
                 break;
               case 'no_seats_available':
                 this.log('debug', 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue);
+                this.wsClose();
                 break;
               case 'reconnect':
                 this.log('debug', 'old messages', pipe.data.session);
@@ -338,18 +345,23 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.el.css('bottom', 0);
         this.onOpenAnimationEnd();
       }
-      return this.isOpen = true;
-    };
-
-    ZammadChat.prototype.onOpenAnimationEnd = function() {
+      this.isOpen = true;
       if (!this.sessionId) {
         return this.session_init();
       }
     };
 
+    ZammadChat.prototype.onOpenAnimationEnd = function() {};
+
     ZammadChat.prototype.close = function(event) {
       if (event) {
         event.stopPropagation();
+      }
+      if (!this.sessionId) {
+        return;
+      }
+      if (this.onInitialQueueDelayId) {
+        clearTimeout(this.onInitialQueueDelayId);
       }
       sessionStorage.removeItem('sessionId');
       sessionStorage.removeItem('unfinished_message');
@@ -400,6 +412,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.onQueueScreen = function(data) {
       var show;
+      this.setSessionId(data.session_id);
       show = (function(_this) {
         return function() {
           return _this.onQueue(data);
@@ -418,7 +431,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.onQueue = function(data) {
       this.log('notice', 'onQueue', data.position);
       this.inQueue = true;
-      this.setSessionId(data.session_id);
       return this.el.find('.zammad-chat-body').html(this.view('waiting')({
         position: data.position
       }));
@@ -485,15 +497,17 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.send('chat_session_init');
     };
 
-    ZammadChat.prototype.connect = function() {
-      this.log('notice', "Connecting to " + this.host);
-      this.ws = new window.WebSocket(this.host);
+    ZammadChat.prototype.wsConnect = function() {
+      this.log('notice', "Connecting to " + this.options.host);
+      this.ws = new window.WebSocket(this.options.host);
       this.ws.onopen = this.onWebSocketOpen;
       this.ws.onmessage = this.onWebSocketMessage;
       this.ws.onclose = (function(_this) {
         return function(e) {
           _this.log('debug', 'close websocket connection');
-          _this.reconnect();
+          if (_this.wsReconnectEnable) {
+            _this.reconnect();
+          }
           return _this.setAgentOnlineState(false);
         };
       })(this);
@@ -502,6 +516,18 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           return _this.log('debug', 'ws:onerror', e);
         };
       })(this);
+    };
+
+    ZammadChat.prototype.wsClose = function() {
+      this.wsReconnectEnable = false;
+      return this.ws.close();
+    };
+
+    ZammadChat.prototype.wsReconnect = function() {
+      if (this.reconnectDelayId) {
+        clearTimeout(this.reconnectDelayId);
+      }
+      return this.reconnectDelayId = setTimeout(this.wsConnect, 5000);
     };
 
     ZammadChat.prototype.onWebSocketOpen = function() {
@@ -519,10 +545,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.lastAddedType = 'status';
       this.el.find('.zammad-chat-agent-status').attr('data-status', 'connecting').text(this.T('Reconnecting'));
       this.addStatus(this.T('Connection lost'));
-      if (this.reconnectDelayId) {
-        clearTimeout(this.reconnectDelayId);
-      }
-      return this.reconnectDelayId = setTimeout(this.connect, 5000);
+      return this.wsReconnect();
     };
 
     ZammadChat.prototype.onConnectionReestablished = function() {

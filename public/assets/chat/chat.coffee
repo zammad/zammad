@@ -8,6 +8,7 @@ do($ = window.jQuery, window) ->
       agentPhrase: ' is helping you'
       show: true
       target: $('body')
+      host: 'ws://localhost:6042'
 
     _messageCount: 0
     isOpen: false
@@ -19,9 +20,8 @@ do($ = window.jQuery, window) ->
     inputTimeout: null
     isTyping: false
     isOnline: true
-    initialQueueDelay: 10000,
+    initialQueueDelay: 10000
     debug: true
-    host: 'ws://localhost:6042'
     wsReconnectEnable: true
     strings:
       'Online': 'Online'
@@ -395,8 +395,8 @@ do($ = window.jQuery, window) ->
       @send('chat_session_init')
 
     wsConnect: =>
-      @log 'notice', "Connecting to #{@host}"
-      @ws = new window.WebSocket(@host)
+      @log 'notice', "Connecting to #{@options.host}"
+      @ws = new window.WebSocket(@options.host)
       @ws.onopen = @onWebSocketOpen
 
       @ws.onmessage = @onWebSocketMessage
