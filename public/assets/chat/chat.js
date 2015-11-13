@@ -77,7 +77,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (!this.debug && level === 'debug') {
         return;
       }
-      return console.log(level, string);
+      string.unshift(level);
+      return console.log.apply(console, string);
     };
 
     ZammadChat.prototype.view = function(name) {

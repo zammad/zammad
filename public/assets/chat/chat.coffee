@@ -50,7 +50,8 @@ do($ = window.jQuery, window) ->
 
     log: (level, string...) =>
       return if !@debug && level is 'debug'
-      console.log level, string
+      string.unshift(level)
+      console.log.apply console, string
 
     view: (name) =>
       return (options) =>
