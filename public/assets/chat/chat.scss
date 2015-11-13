@@ -190,6 +190,7 @@ $baseTextColor: if($luminance < 0.2, white, black);
 
   .zammad-chat-button {
     margin-top: 1em;
+    font-size: 0.8em;
   }
 }
 
@@ -208,7 +209,7 @@ $baseTextColor: if($luminance < 0.2, white, black);
 .zammad-chat-timestamp {
   text-align: center;
   color: hsl(0,0%,60%);
-  font-size: 0.8em;
+  font-size: 0.9em;
   margin: 1em 0;
 }
 
@@ -339,7 +340,6 @@ $baseTextColor: if($luminance < 0.2, white, black);
     0 0 0 1px darken($themeColor, 10%) inset,
     0 1px rgba(0,0,0,.1);
   outline: none;
-  font-size: 0.8em;
   display: inline-block;
 }
 

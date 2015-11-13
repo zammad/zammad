@@ -393,11 +393,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.show = function() {
       var remainerHeight;
       this.el.addClass('zammad-chat-is-visible');
-      remainerHeight = this.el.outerHeight() - this.el.find('.zammad-chat-header').outerHeight();
-      this.el.css('bottom', -remainerHeight);
-      return this.input.autoGrow({
+      this.input.autoGrow({
         extraLine: false
       });
+      remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
+      return this.el.css('bottom', -remainerHeight);
     };
 
     ZammadChat.prototype.disableInput = function() {

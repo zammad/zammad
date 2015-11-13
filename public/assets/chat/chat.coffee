@@ -297,12 +297,12 @@ do($ = window.jQuery, window) ->
     show: ->
       @el.addClass('zammad-chat-is-visible')
 
-      remainerHeight = @el.outerHeight() - @el.find('.zammad-chat-header').outerHeight()
-
-      @el.css 'bottom', -remainerHeight
-
       @input.autoGrow
         extraLine: false
+
+      remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
+
+      @el.css 'bottom', -remainerHeight
 
     disableInput: ->
       @input.prop('disabled', true)
