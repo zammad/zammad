@@ -22,10 +22,11 @@ class Sessions::Event::ChatBase
     false
   end
 
-  def broadcast_agent_state_update
+  def broadcast_agent_state_update(ignore_user_id = nil)
 
     # send broadcast to agents
     Chat::Agent.where(active: true).each {|item|
+      next if item.updated_by_id == ignore_user_id
       data = {
         event: 'chat_status_agent',
         data: Chat.agent_state(item.updated_by_id),

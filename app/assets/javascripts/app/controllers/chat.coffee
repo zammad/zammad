@@ -10,11 +10,17 @@ class App.CustomerChat extends App.Controller
   constructor: ->
     super
 
-    return if !@isRole('Chat')
+    # access check
+    if !@isRole('Chat')
+      @renderScreenUnauthorized(objectName: 'Chat')
+      return
+    if !@Config.get('chat')
+      @renderScreenError(detail: 'Feature disabled!')
+      return
 
     @chatWindows = {}
     @maxChats = 4
-
+    @pushStateStarted = false
     @messageCounter = 0
     @meta =
       active: false
@@ -26,21 +32,28 @@ class App.CustomerChat extends App.Controller
 
     @on 'layout-has-changed', @propagateLayoutChange
 
+    # update navbar on new status
     @bind(
       'chat_status_agent'
       (data) =>
         @meta = data
         @updateMeta()
-        @interval(@pushState, 20000, 'pushState')
+        if !@pushStateStarted
+          @pushStateStarted = true
+          @interval(@pushState, 30000, 'pushState')
     )
+
+    # add new chat window
     @bind(
       'chat_session_start'
       (data) =>
         if data.session
           @addChat(data.session)
     )
+
+    # on new login or on
     @bind(
-      'ws:login'
+      'ws:login chat_agent_state'
       ->
         App.WebSocket.send(event:'chat_status_agent')
     )

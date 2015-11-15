@@ -201,18 +201,18 @@ class App.TicketZoom extends App.Controller
         if status is 401 || statusText is 'Unauthorized'
           @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
           @taskIconClass = 'diagonal-cross'
-          @html App.view('generic/error/unauthorized')( objectName: 'Ticket' )
+          @renderScreenUnauthorized(objectName: 'Ticket')
         else if status is 404 || statusText is 'Not Found'
           @taskHead      = '» ' + App.i18n.translateInline('Not Found') + ' «'
           @taskIconClass = 'diagonal-cross'
-          @html App.view('generic/error/not_found')( objectName: 'Ticket' )
+          @renderScreenNotFound(objectName: 'Ticket')
         else
           @taskHead      = '» ' + App.i18n.translateInline('Error') + ' «'
           @taskIconClass = 'diagonal-cross'
 
           if !detail
             detail = 'General communication error, maybe internet is not available!'
-          @html App.view('generic/error/generic')(
+          @renderScreenError(
             status:     status
             detail:     detail
             objectName: 'Ticket'

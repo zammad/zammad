@@ -546,6 +546,15 @@ class App.Controller extends Spine.Controller
     return if !@initLoadingDoneDelay
     @clearDelay(@initLoadingDoneDelay)
 
+  renderScreenError: (data) ->
+    @html App.view('generic/error/generic')(data)
+
+  renderScreenNotFound: (data) ->
+    @html App.view('generic/error/not_found')(data)
+
+  renderScreenUnauthorized: (data) ->
+    @html App.view('generic/error/unauthorized')(data)
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
