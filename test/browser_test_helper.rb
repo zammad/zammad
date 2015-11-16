@@ -1297,7 +1297,7 @@ wait untill text in selector disabppears
 
       # click on click catcher
       if params[:do_not_submit]
-        click_catcher_remove
+        click_catcher_remove(browser: instance)
       end
     end
 
