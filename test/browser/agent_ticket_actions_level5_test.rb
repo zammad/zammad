@@ -265,6 +265,7 @@ class AgentTicketActionLevel5Test < TestCase
     )
 
     # execute reply
+    click_catcher_remove
     sleep 5 # time to recognice form changes
     click(
       css: '.active [data-type="reply"]',

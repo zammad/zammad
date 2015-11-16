@@ -784,9 +784,9 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   file_upload(
-    :browser   => browser1,
-    :css       => '#content .text-1',
-    :value     => 'some text',
+    :browser => browser1,
+    :css     => '#content .text-1',
+    :value   => 'some text',
   )
 
 =end
@@ -805,6 +805,20 @@ class TestCase < Test::Unit::TestCase
     #element
     #@driver.find_element(id: 'file-submit').click
 
+  end
+
+=begin
+
+  click_catcher_remove(
+    :browser => browser1,
+  )
+
+=end
+
+  def click_catcher_remove(params = {})
+    instance = params[:browser] || @browser
+    return if !instance.find_elements( { css: '.clickCatcher' } )[0]
+    click( browser: instance, css: '.clickCatcher')
   end
 
 =begin
@@ -1276,7 +1290,6 @@ wait untill text in selector disabppears
 
       # it's not working stable via selenium, use js
       value = instance.find_elements( { css: '.content.active div[data-name=body]' } )[0].text
-      puts "V #{value.inspect}"
       if value != data[:body]
         body_quoted = quote( data[:body] )
         instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
@@ -1284,9 +1297,7 @@ wait untill text in selector disabppears
 
       # click on click catcher
       if params[:do_not_submit]
-        if instance.find_elements( { css: '.clickCatcher' } )[0]
-          click( browser: instance, css: '.clickCatcher')
-        end
+        click_catcher_remove
       end
     end
 
