@@ -118,8 +118,6 @@ class Widget extends App.ControllerModal
     @updateParams()
 
   updateParams: =>
-    console.log('id', @id)
-
     quote = (value) ->
       if value.replace
         value = value.replace('\'', '\\\'')
