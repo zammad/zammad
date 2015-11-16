@@ -697,6 +697,12 @@ blockquote {
   }
 }
 
+.key-value {
+  td:first-child {
+    padding-right: 10px;
+    color: #999;
+  }
+}
 
 table {
   table-layout: fixed;
@@ -7501,6 +7507,10 @@ body.fit {
 
 .align-right {
   margin-left: auto;
+}
+
+.space-left {
+  margin-left: 10px; 
 }
 
 .align-center {

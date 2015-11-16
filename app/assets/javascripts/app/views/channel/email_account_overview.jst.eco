@@ -43,13 +43,22 @@
   <% for channel in @account_channels: %>
   <div class="action" data-id="<%- channel.id %>">
     <div class="action-flow" style="width: 100%;">
-      <div class="action-block" style="width: 50%;">
-        <%- @Icon('status', channel.status_in + " inline") %> <%- @T('Inbound') %>:<br>
-        <a class="js-editInbound" href="#">
-        <%- @T('User') %>: <%= channel.options.inbound.options.user %><br>
-        <%- @T('Host') %>: <%= channel.options.inbound.options.host %><br>
-        <%- @T('Protocol') %>: <%= channel.options.inbound.adapter %>
-        </a>
+      <div class="action-block action-block--flex">
+        <div class="horizontal">
+          <h3><%- @Icon('status', channel.status_in + " inline") %> <%- @T('Inbound') %></h3>
+          <div class="js-editInbound btn btn--text space-left"><%- @T('Edit') %></div>
+        </div>
+        <table class="key-value">
+          <tr>
+            <td><%- @T('User') %>
+            <td><%= channel.options.inbound.options.user %>
+          <tr>
+            <td><%- @T('Host') %>
+            <td><%= channel.options.inbound.options.host %>
+          <tr>
+            <td><%- @T('Protocol') %>
+            <td><%= channel.options.inbound.adapter %>
+        </table>
 
         <% if !_.isEmpty(channel.last_log_in): %>
         <div class="alert alert--danger">
@@ -59,21 +68,28 @@
 
         <hr>
 
-        <div>
-          <%- @T('Destination Group') %>:<br>
-          <a href="#" class="js-channelGroupChange"><%= channel.group %></a>
-        </div>
-
+        <h3><%- @T('Destination Group') %></h3>
+        <a href="#" class="js-channelGroupChange"><%= channel.group %></a>
       </div>
-      <div class="action-block">
-        <%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %>:<br>
-        <a class="js-editOutbound" href="#">
-          <% if channel.options.outbound && channel.options.outbound.options: %>
-            <%- @T('User') %>: <%= channel.options.outbound.options.user %><br>
-            <%- @T('Host') %>: <%= channel.options.outbound.options.host %><br>
-          <% end %>
-          <%- @T('Protocol') %>: <%= channel.options.outbound.adapter %>
-        </a>
+      <div class="action-block action-block--flex">
+        <div class="horizontal">
+          <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
+          <div class="js-editOutbound btn btn--text space-left"><%- @T('Edit') %></div>
+        </div>
+        <table class="key-value">
+        <% if channel.options.outbound && channel.options.outbound.options: %>
+          <tr>
+            <td><%- @T('User') %>
+            <td><%= channel.options.outbound.options.user %>
+          <tr>
+            <td><%- @T('Host') %>
+            <td><%= channel.options.outbound.options.host %>
+        <% end %>
+          <tr>
+            <td><%- @T('Protocol') %>
+            <td><%= channel.options.outbound.adapter %>
+        </table>
+
         <% if !_.isEmpty(channel.last_log_out): %>
         <div class="alert alert--danger">
           <%= channel.last_log_out %>
@@ -82,14 +98,13 @@
 
         <hr>
 
-        <%- @T('Email Address') %>:
+        <h3><%- @T('Email Address') %></h3>
         <ul class="list">
         <% if !_.isEmpty(channel.email_addresses): %>
           <% for email_address in channel.email_addresses: %>
             <li class="list-item" data-id="<%= email_address.id %>">
-              <div class="list-item-name">
-                <a href="" class="js-emailAddressEdit"><%= email_address.realname %> &lt;<%= email_address.email %>&gt;</a>
-              </div>
+              <div class="list-item-name"><%= email_address.email %></div>
+              <div class="btn btn--text js-emailAddressEdit space-left"><%- @T('Edit') %></div>
               <% if channel.email_addresses.length > 1: %>
               <div class="list-item-delete js-emailAddressDelete">
                 <%- @Icon('diagonal-cross') %>
@@ -117,17 +132,26 @@
   <h2><%- @T('Email Notification') %></h2>
   <% for channel in @notification_channels: %>
     <div class="action" data-id="<%- channel.id %>">
-      <div class="action-flow" style="width: 100%;">
-      <div class="action-block" style="width: 50%;">
+      <div class="action-flow action-flow--row">
+        <div class="action-block action-block--flex">
+          <div class="horizontal">
+            <h3><%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %></h3>
+            <div class="btn btn--text js-editNotificationOutbound space-left"><%- @T('Edit') %></div>
+          </div>
 
-          <%- @Icon('status', channel.status_out + " inline") %> <%- @T('Outbound') %>:<br>
-          <a class="js-editNotificationOutbound" href="#">
-            <% if channel.options.outbound && channel.options.outbound.options: %>
-              <%- @T('User') %>: <%= channel.options.outbound.options.user %><br>
-              <%- @T('Host') %>: <%= channel.options.outbound.options.host %><br>
-            <% end %>
-            <%- @T('Protocol') %>: <%= channel.options.outbound.adapter %>
-          </a>
+          <table class="key-value">
+          <% if channel.options.outbound && channel.options.outbound.options: %>
+            <tr>
+              <td><%- @T('User') %>
+              <td><%= channel.options.outbound.options.user %>
+            <tr>
+              <td><%- @T('Host') %>
+              <td><%= channel.options.outbound.options.host %>
+          <% end %>
+            <tr>
+              <td><%- @T('Protocol') %>
+              <td><%= channel.options.outbound.adapter %>
+          </table>
 
           <% if channel.status_in is 'error': %>
             <div class="alert alert--danger"><%= channel.last_log_in %></div>
@@ -135,15 +159,12 @@
           <% if channel.status_out is 'error': %>
             <div class="alert alert--danger"><%= channel.last_log_out %></div>
           <% end %>
-
         </div>
-        <div class="action-block" style="width: 50%;">
-
-          <%- @T('Email Address') %>:
+        <div class="action-block action-block--flex">
+          <h3><%- @T('Email Address') %></h3>
           <ul class="list">
             <li class="list-item"><%= @config.notification_sender %>
           </ul>
-
         </div>
       </div>
     </div>
