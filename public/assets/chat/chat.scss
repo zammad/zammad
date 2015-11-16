@@ -9,10 +9,9 @@
   border-radius: 5px 5px 0 0;
   will-change: bottom;
   display: none;
-  flex-direction: column;
 }
 .zammad-chat.zammad-chat-is-open {
-  display: flex;
+  display: block;
 }
 
 .zammad-chat-icon {
@@ -104,7 +103,7 @@
   padding: 0 .7em;
   border-radius: 1em;
   background: rgba(0,0,0,.1);
-  box-shadow: 0 0 0 1px rgba(0,0,0,.04);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.04) inset;
 }
 
 .zammad-chat-agent-status:before {
@@ -117,7 +116,7 @@
   position: relative;
   margin-right: 0.3em;
   vertical-align: middle;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.04);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.04) inset;
 }
 
 .zammad-chat-agent-status[data-status="online"]:before {
@@ -138,19 +137,24 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
   top: 3.5em;
+  bottom: 0;
   margin-top: 1px;
   text-align: center;
   background: white;
   z-index: 1;
   padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.zammad-chat-modal-center {
+  display: table;
+  width: 100%;
+  height: 100%;
 }
 
 .zammad-chat-modal-text {
+  display: table-cell;
+  vertical-align: middle;
   font-size: 1.3em;
   line-height: 1.45;
   
@@ -262,8 +266,6 @@
 
 .zammad-chat-controls {
   overflow: hidden;
-  display: flex;
-  align-items: flex-start;
   border-top: 1px solid hsl(0,0%,93%);
   padding: 0;
   line-height: 1.4em;
@@ -276,6 +278,7 @@
 
 .zammad-chat-input {
   float: left;
+  width: 62%;
   font-family: inherit;
   line-height: inherit;
   font-size: inherit;
@@ -283,11 +286,11 @@
   border: none;
   background: none;
   box-shadow: none;
-  padding: 1em 2em;
+  padding: 1em 0;
   outline: none;
   resize: none;
-  flex: 1;
   max-height: 6em;
+  margin: 0 5%;
 }
 
 .zammad-chat-input::-webkit-input-placeholder {
@@ -315,6 +318,10 @@
 
 .zammad-chat-send {
   float: right;
+  width: 20%;
+  box-sizing: border-box;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 .zammad-chat-is-hidden {
@@ -359,6 +366,10 @@
     right: 0;
     width: auto;
     height: 100vh;
+    flex-direction: column;
+  }
+  .zammad-chat.zammad-chat-is-open {
+    display: flex;
   }
   .zammad-chat-body {
     height: auto;
