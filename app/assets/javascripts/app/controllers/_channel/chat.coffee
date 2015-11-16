@@ -9,8 +9,7 @@ class App.ChannelChat extends App.Controller
 
   constructor: ->
     super
-    @interval(@load, 30000)
-    #@load()
+    @load()
 
     @widgetDesignerPermanentParams =
       id: 'id'
