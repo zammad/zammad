@@ -81,7 +81,10 @@ class App.CustomerChat extends App.Controller
 
     # play on changes
     if @lastWaitingChatCount isnt counter
-      @sounds.chat_new.play()
+
+      # do not play sound on initial load
+      if counter > 0 && @lastWaitingChatCount isnt undefined
+        @sounds.chat_new.play()
       @lastWaitingChatCount = counter
 
     # collect chat window messages

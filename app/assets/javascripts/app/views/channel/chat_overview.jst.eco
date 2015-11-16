@@ -1,0 +1,44 @@
+
+<h2><%- @T('Channels') %></h2>
+
+<% if _.isEmpty(@chats): %>
+  <p><%- @T('You have no configured chat\'s right now.') %></p>
+<% else: %>
+  <% for chat in @chats: %>
+  <div class="action" data-id="<%- chat.id %>">
+
+    <div class="action-flow action-flow--row">
+      <div class="action-row">
+        <h2><%= chat.name %></h2>
+      </div>
+
+        <div class="action-block action-block--flex">
+          <div class="label"><%- @T('Note') %></div>
+          <%= chat.note %>
+        </div>
+
+        <div class="action-block action-block--flex">
+          <div class="label"><%- @T('At a glance') %></div>
+          <%- @T('Sessions last 24 h') %><%= chat.last_24_h %><br>
+          <%- @T('Sessions last week') %><%= chat.last_week %><br>
+          <%- @T('Sessions last month') %><%= chat.last_month %><br>
+        </div>
+
+        <div class="action-block action-block--flex">
+          <div class="label"><%- @T('Public') %></div>
+          <%= chat.public %>
+        </div>
+
+    </div>
+
+    <div class="action-controls">
+      <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+      <div class="btn js-edit"><%- @T('Edit') %></div>
+      <% if chat.public: %><div class="btn js-widget"><%- @T('Design Widget') %></div><% end %>
+    </div>
+
+  </div>
+  <% end %>
+<% end %>
+
+<a class="btn btn--success js-new"><%- @T('New') %></a>

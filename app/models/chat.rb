@@ -1,8 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Chat < ApplicationModel
-  has_many            :chat_topics
-  validates           :name, presence: true
+  validates :name, presence: true
 
   def customer_state(session_id = nil)
     return { state: 'chat_disabled' } if !Setting.get('chat')
@@ -68,6 +67,7 @@ class Chat < ApplicationModel
       waiting_chat_count: waiting_chat_count,
       running_chat_count: running_chat_count,
       active_sessions: Chat::Session.active_chats_by_user_id(user_id),
+      active_agents: active_agents,
       seads_available: seads_available,
       seads_total: seads_total,
       active: Chat::Agent.state(user_id)
@@ -92,6 +92,10 @@ class Chat < ApplicationModel
       agents[record.updated_by_id] = record.concurrent
     }
     agents
+  end
+
+  def self.active_agents(diff = 2.minutes)
+    Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).count
   end
 
   def self.seads_total(diff = 2.minutes)

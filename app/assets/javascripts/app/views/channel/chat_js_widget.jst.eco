@@ -1,0 +1,66 @@
+<div class="js-params">
+
+  <fieldset>
+    <div class="input form-group">
+      <div class="formGroup-label">
+        <label for="form-chat-title"><%- @T('Title of the Chat') %></label>
+      </div>
+      <div class="controls">
+        <input type="text" id="form-chat-title" name="title" value="&lt;strong&gt;Chat&lt;/strong&gt; with us!">
+      </div>
+    </div>
+    <div class="input form-group">
+      <div class="formGroup-label">
+        <label for="form-chat-background"><%- @T('Background color') %></label>
+      </div>
+      <div class="controls">
+        <input type="text" id="form-chat-background" name="background" value="">
+      </div>
+    </div>
+  </fieldset>
+
+  <br>
+
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th style="white-space: nowrap;"><%- @T('Option') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <label class="inline-label">
+            <span class="checkbox-replacement checkbox-replacement--inline">
+              <input type="checkbox" name="debug" value="true">
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </span>
+            <%- @T('Enable debugging for implementation.') %>
+          </label>
+      <tr>
+        <td>
+          <label class="inline-label">
+            <span class="checkbox-replacement checkbox-replacement--inline">
+              <input type="checkbox" name="flat" value="true">
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </span>
+            <%- @T('Flat design.') %>
+          </label>
+    </tbody>
+  </table>
+</div>
+
+<p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
+
+<pre>
+&lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(function() {
+  new ZammadChat({({
+<span class="js-modal-params"></span>
+  });
+});
+&lt;/script&gt;</pre>
