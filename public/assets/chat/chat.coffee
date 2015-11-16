@@ -15,6 +15,7 @@ do($ = window.jQuery, window) ->
       debug: false
       fontSize: undefined
       buttonSelector: '.open-zammad-chat'
+      hiddenButtonClass: 'is-inactive'
 
     _messageCount: 0
     isOpen: true
@@ -74,6 +75,7 @@ do($ = window.jQuery, window) ->
 
       # check prerequisites
       if !window.WebSocket or !sessionStorage
+        @state = 'unsupported'
         @log 'notice', 'Chat: Browser not supported!'
         return
 
@@ -89,8 +91,6 @@ do($ = window.jQuery, window) ->
       @input.on
         keydown: @checkForEnter
         input: @onInput
-
-      $(@options.buttonSelector).click @open
 
       @wsConnect()
 
@@ -134,14 +134,17 @@ do($ = window.jQuery, window) ->
                 @log 'debug', 'Zammad Chat: ready'
               when 'offline'
                 @onError 'Zammad Chat: No agent online'
+                @state = 'off'
                 @hide()
                 @wsClose()
               when 'chat_disabled'
                 @onError 'Zammad Chat: Chat is disabled'
+                @state = 'off'
                 @hide()
                 @wsClose()
               when 'no_seats_available'
                 @onError 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+                @state = 'off'
                 @hide()
                 @wsClose()
               when 'reconnect'
@@ -149,6 +152,8 @@ do($ = window.jQuery, window) ->
                 @reopenSession pipe.data
 
     onReady: =>
+      $(@options.buttonSelector).click(@open).removeClass(@hiddenButtonClass)
+
       if @options.show
         @show()
 
@@ -287,6 +292,7 @@ do($ = window.jQuery, window) ->
       #@showTimeout()
 
     close: (event) =>
+      return @state if @state is 'off' or @state is 'unsupported'
       event.stopPropagation() if event
 
       # only close if session_id exists
@@ -320,6 +326,8 @@ do($ = window.jQuery, window) ->
       @el.removeClass('zammad-chat-is-visible')
 
     show: ->
+      return @state if @state is 'off' or @state is 'unsupported'
+
       @el.addClass('zammad-chat-is-visible')
 
       @input.autoGrow
