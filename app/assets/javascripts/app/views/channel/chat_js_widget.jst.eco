@@ -17,6 +17,14 @@
         <input type="text" id="form-chat-background" name="background" value="">
       </div>
     </div>
+    <div class="input form-group">
+      <div class="formGroup-label">
+        <label for="form-chat-fontsize"><%- @T('Fontsize') %></label>
+      </div>
+      <div class="controls">
+        <input type="text" id="form-chat-fontsize" name="fontSize" value="12px">
+      </div>
+    </div>
   </fieldset>
 
   <br>
@@ -55,11 +63,11 @@
 <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
 
 <pre>
-&lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
+&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
-  new ZammadChat({({
+  new ZammadChat({
 <span class="js-modal-params"></span>
   });
 });
