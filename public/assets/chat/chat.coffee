@@ -13,6 +13,7 @@ do($ = window.jQuery, window) ->
       host: ''
       port: 6042
       debug: false
+      fontSize: undefined
       buttonSelector: '.open-zammad-chat'
 
     _messageCount: 0
@@ -66,6 +67,7 @@ do($ = window.jQuery, window) ->
         options.T = @T
         options.background = @options.background
         options.flat = @options.flat
+        options.fontSize = @options.fontSize
         return window.zammadChatTemplates[name](options)
 
     constructor: (options) ->

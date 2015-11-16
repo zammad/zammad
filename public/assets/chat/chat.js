@@ -1,64 +1,3 @@
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
-
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   slice = [].slice;
 
@@ -74,6 +13,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       host: '',
       port: 6042,
       debug: false,
+      fontSize: void 0,
       buttonSelector: '.open-zammad-chat'
     };
 
@@ -154,6 +94,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           options.T = _this.T;
           options.background = _this.options.background;
           options.flat = _this.options.flat;
+          options.fontSize = _this.options.fontSize;
           return window.zammadChatTemplates[name](options);
         };
       })(this);
@@ -268,14 +209,17 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
                 break;
               case 'offline':
                 this.onError('Zammad Chat: No agent online');
+                this.hide();
                 this.wsClose();
                 break;
               case 'chat_disabled':
                 this.onError('Zammad Chat: Chat is disabled');
+                this.hide();
                 this.wsClose();
                 break;
               case 'no_seats_available':
                 this.onError('Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue);
+                this.hide();
                 this.wsClose();
                 break;
               case 'reconnect':
@@ -438,8 +382,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (this.onInitialQueueDelayId) {
         clearTimeout(this.onInitialQueueDelayId);
       }
-      sessionStorage.removeItem('sessionId');
-      sessionStorage.removeItem('unfinished_message');
       return this.closeWindow();
     };
 
@@ -458,7 +400,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.send('chat_session_close', {
         session_id: this.sessionId
       });
-      return this.setSessionId(void 0);
+      this.setSessionId(void 0);
+      sessionStorage.removeItem('unfinished_message');
+      return this.onWebSocketOpen();
     };
 
     ZammadChat.prototype.hide = function() {
@@ -703,6 +647,67 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
 
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
 /*!
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
@@ -767,6 +772,7 @@ jQuery.fn.autoGrow = function(options) {
     mirror.style.fontFamily = jQuery(this).css('font-family');
     mirror.style.fontSize = jQuery(this).css('font-size');
     mirror.style.lineHeight = jQuery(this).css('line-height');
+    mirror.style.boxSizing = jQuery(this).css('box-sizing');
 
     // Style the textarea
     this.style.overflow = "hidden";
@@ -828,7 +834,13 @@ window.zammadChatTemplates["chat"] = function (__obj) {
         __out.push(__sanitize(' zammad-chat--flat'));
       }
     
-      __out.push('">\n  <div class="zammad-chat-header js-chat-open"');
+      __out.push('"');
+    
+      if (this.fontSize) {
+        __out.push(__sanitize(" style='font-size: " + this.fontSize + "px'"));
+      }
+    
+      __out.push('>\n  <div class="zammad-chat-header js-chat-open"');
     
       if (this.background) {
         __out.push(__sanitize(" style='background: " + this.background + "'"));
@@ -903,11 +915,11 @@ window.zammadChatTemplates["loader"] = function (__obj) {
   }
   (function() {
     (function() {
-      __out.push('<div class="zammad-chat-modal">\n  <span class="zammad-chat-loading-animation">\n    <span class="zammad-chat-loading-circle"></span>\n    <span class="zammad-chat-loading-circle"></span>\n    <span class="zammad-chat-loading-circle"></span>\n  </span>\n  <span class="zammad-chat-modal-text">');
+      __out.push('<div class="zammad-chat-modal">\n  <div class="zammad-chat-modal-center">\n    <div class="zammad-chat-modal-text">\n      <span class="zammad-chat-loading-animation">\n        <span class="zammad-chat-loading-circle"></span>\n        <span class="zammad-chat-loading-circle"></span>\n        <span class="zammad-chat-loading-circle"></span>\n      </span>\n      ');
     
       __out.push(__sanitize(this.T('Connecting')));
     
-      __out.push('</span>\n</div>');
+      __out.push('\n    </div>\n  </div>\n</div>');
     
     }).call(this);
     
@@ -1078,11 +1090,11 @@ window.zammadChatTemplates["timeout"] = function (__obj) {
   }
   (function() {
     (function() {
-      __out.push('<div class="zammad-chat-modal">\n  <div class="zammad-chat-modal-text">\n    ');
+      __out.push('<div class="zammad-chat-modal">\n  <div class="zammad-chat-modal-center">\n    <div class="zammad-chat-modal-text">\n      ');
     
       __out.push(this.T('Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.', this.delay + " " + this.unit, this.agent));
     
-      __out.push('<br>\n    <div class="zammad-chat-button"');
+      __out.push('<br>\n      <div class="zammad-chat-button"');
     
       if (this.background) {
         __out.push(__sanitize(" style='background: " + this.background + "'"));
@@ -1092,7 +1104,7 @@ window.zammadChatTemplates["timeout"] = function (__obj) {
     
       __out.push(__sanitize(this.T('Start new conversation')));
     
-      __out.push('</div>\n  </div>\n</div>');
+      __out.push('</div>\n    </div>\n  </div>\n</div>');
     
     }).call(this);
     
@@ -1253,15 +1265,15 @@ window.zammadChatTemplates["waiting"] = function (__obj) {
   }
   (function() {
     (function() {
-      __out.push('<div class="zammad-chat-modal">\n  <div class="zammad-chat-modal-text">\n    <span class="zammad-chat-loading-animation">\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n    </span>\n    ');
+      __out.push('<div class="zammad-chat-modal">\n  <div class="zammad-chat-modal-center">\n    <div class="zammad-chat-modal-text">\n      <span class="zammad-chat-loading-animation">\n        <span class="zammad-chat-loading-circle"></span>\n        <span class="zammad-chat-loading-circle"></span>\n        <span class="zammad-chat-loading-circle"></span>\n      </span>\n      ');
     
       __out.push(this.T('All colleges are busy.'));
     
-      __out.push('<br>\n    ');
+      __out.push('<br>\n      ');
     
       __out.push(this.T('You are on waiting list position <strong>%s</strong>.', this.position));
     
-      __out.push('\n  </div>\n</div>');
+      __out.push('\n    </div>\n  </div>\n</div>');
     
     }).call(this);
     

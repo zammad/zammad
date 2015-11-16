@@ -1,4 +1,4 @@
-<div class="zammad-chat<%= ' zammad-chat--flat' if @flat %>">
+<div class="zammad-chat<%= ' zammad-chat--flat' if @flat %>"<%= " style='font-size: #{ @fontSize }px'" if @fontSize %>>
   <div class="zammad-chat-header js-chat-open"<%= " style='background: #{ @background }'" if @background %>>
     <div class="zammad-chat-header-controls">
       <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online"></span>
