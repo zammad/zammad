@@ -1,36 +1,19 @@
-class App.ChannelChat extends App.ControllerTabs
-  header: 'Chat'
-  constructor: ->
-    super
-
-    @title 'Chat', true
-
-    @tabs = [
-      {
-        name:       'Chat Channels',
-        target:     'channels',
-        controller: App.ChannelChatOverview
-      },
-      {
-        name:       'Settings',
-        target:     'setting',
-        controller: App.SettingsArea, params: { area: 'Chat::Base' },
-      },
-    ]
-
-    @render()
-
-class App.ChannelChatOverview extends App.Controller
+class App.ChannelChat extends App.Controller
   events:
-    'click .js-new': 'new'
+    'click .js-add': 'new'
     'click .js-edit': 'edit'
-    'click .js-delete': 'delete'
+    'click .js-remove': 'remove'
     'click .js-widget': 'widget'
+    'change .js-params': 'updateParams'
+    'keyup .js-params': 'updateParams'
 
   constructor: ->
     super
     @interval(@load, 30000)
     #@load()
+
+    @widgetDesignerPermanentParams =
+      id: 'id'
 
   load: =>
     @startLoading()
@@ -51,8 +34,15 @@ class App.ChannelChatOverview extends App.Controller
     for chat_id in data.chat_ids
       chats.push App.Chat.find(chat_id)
 
-    @html App.view('channel/chat_overview')(
+    @html App.view('channel/chat')(
+      baseurl: window.location.origin
       chats: chats
+    )
+    @updateParams()
+
+    new App.SettingsArea(
+      el:   @$('.js-settings')
+      area: 'Chat::Base'
     )
 
   new: (e) =>
@@ -62,14 +52,14 @@ class App.ChannelChatOverview extends App.Controller
         object: 'Chat'
         objects: 'Chats'
       genericObject: 'Chat'
-      callback:      @load
-      container:     @el.closest('.content')
-      large:         true
+      callback:   @load
+      container:  @el.closest('.content')
+      large:      true
     )
 
   edit: (e) =>
     e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
+    id = $(e.target).closest('tr').data('id')
     new App.ControllerGenericEdit(
       id:        id
       genericObject: 'Chat'
@@ -79,9 +69,9 @@ class App.ChannelChatOverview extends App.Controller
       callback:  @load
     )
 
-  delete: (e) =>
+  remove: (e) =>
     e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
+    id   = $(e.target).closest('tr').data('id')
     item = App.Chat.find(id)
     new App.ControllerGenericDestroyConfirm(
       item:      item
@@ -96,26 +86,6 @@ class App.ChannelChatOverview extends App.Controller
       permanent:
         id: id
     )
-
-class Widget extends App.ControllerModal
-  events:
-    'change .js-params': 'updateParams'
-    'keyup .js-params': 'updateParams'
-
-  constructor: ->
-    super
-    @head  = 'Widget'
-    @close = true
-    @render()
-    @show()
-
-  render: ->
-    @content = $( App.view('channel/chat_js_widget')(
-      baseurl: window.location.origin
-    ))
-
-  onShown: =>
-    @updateParams()
 
   updateParams: =>
     quote = (value) ->

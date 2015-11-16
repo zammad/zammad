@@ -1,0 +1,141 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Chat') %> <small></small></h1>
+  </div>
+</div>
+<div>
+  <p><%- @T('With form you can add a formular to your web page witch directly generates a Ticket for you.') %></p>
+
+  <div class="js-settings"></div>
+
+  <hr>
+
+  <h2><%- @T('Topics') %></h2>
+
+<% if _.isEmpty(@chats): %>
+  <p><%- @T('You have no configured chat\'s right now.') %></p>
+<% else: %>
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th style="white-space: nowrap;"><%- @T('Name') %></th>
+        <th style="white-space: nowrap;"><%- @T('Note') %></th>
+        <th style="white-space: nowrap;"><%- @T('Max Queue') %></th>
+        <th style="white-space: nowrap;"><%- @T('Delete') %></th>
+      </tr>
+    </thead>
+    <tbody>
+<% for chat in @chats: %>
+      <tr data-id="<%= chat.id %>">
+        <td>
+          <label class="inline-label">
+            <a class="js-edit is-clickable"><%= chat.name %></a>
+          </label>
+        <td>
+          <label class="inline-label">
+            <%= chat.note %>
+          </label>
+        <td>
+          <label class="inline-label">
+            <%= chat.max_queue %>
+          </label>
+        <td>
+          <div class="settings-list-rowControls">
+            <div class="btn btn--text js-remove">
+              <%- @Icon('trash') %> <%- @T('Remove') %>
+            </div>
+          </div>
+<% end %>
+      <tr class="settings-list-controlRow">
+        <td>
+        <td>
+        <td>
+        <td>
+          <div class="btn btn--text js-add">
+            <%- @Icon('plus-small') %> <%- @T('Add') %>
+          </div>
+
+    </tbody>
+  </table>
+<% end %>
+  <hr>
+
+  <h2><%- @T('Widget Designer') %></h2>
+
+  <form class="js-params">
+
+    <fieldset>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-chat-title"><%- @T('Title of the Chat') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-chat-title" name="title" value="&lt;strong&gt;Chat&lt;/strong&gt; with us!">
+        </div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-chat-background"><%- @T('Background color') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-chat-background" name="background" value="">
+        </div>
+      </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for="form-chat-fontsize"><%- @T('Fontsize') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-chat-fontsize" name="fontSize" value="12px">
+        </div>
+      </div>
+    </fieldset>
+
+    <br>
+
+    <table class="settings-list">
+      <thead>
+        <tr>
+          <th style="white-space: nowrap;"><%- @T('Option') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="debug" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Enable debugging for implementation.') %>
+            </label>
+        <tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="flat" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Flat design.') %>
+            </label>
+      </tbody>
+    </table>
+  </div>
+
+  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
+
+<pre>
+&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(function() {
+  new ZammadChat({
+<span class="js-modal-params"></span>
+  });
+});
+&lt;/script&gt;</pre>
+  </form>
+
+</div>
