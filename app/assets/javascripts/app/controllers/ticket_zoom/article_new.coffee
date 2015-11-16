@@ -95,7 +95,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind(
       'ui::ticket::setArticleType'
       (data) =>
-        return if data.ticket.id isnt @ticket.id
+        return if data.ticket.id isnt @ticket_id
         #@setArticleType(data.type.name)
 
         @openTextarea(null, true)
@@ -113,7 +113,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind(
       'ui::ticket::taskReset'
       (data) =>
-        return if data.ticket_id isnt @ticket.id
+        return if data.ticket_id isnt @ticket_id
         @type     = 'note'
         @defaults = {}
         @render()
@@ -131,7 +131,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   render: ->
 
-    ticket = App.Ticket.fullLocal( @ticket.id )
+    ticket = App.Ticket.fullLocal( @ticket_id )
 
     @html App.view('ticket_zoom/article_new')(
       ticket:       ticket
@@ -343,16 +343,31 @@ class App.TicketZoomArticleNew extends App.Controller
         for name in articleType.attributes
           @$("[name=#{name}]").closest('.form-group').removeClass('hide')
 
-    # check if signature need to be added
-    body      = @$('[data-name=body]').html() || ''
+    # detect current signature (use current group_id, if not set, use ticket.group_id)
+    ticketCurrent = App.Ticket.find(@ticket_id)
+    group_id = ticketCurrent.group_id
+    task = App.TaskManager.get(@task_key)
+    if task && task.state && task.state.ticket && task.state.ticket.group_id
+      group_id = task.state.ticket.group_id
+    group = App.Group.find(group_id)
     signature = undefined
-    if @ticket.group.signature_id
-      signature = App.Signature.find( @ticket.group.signature_id )
+    if group && group.signature_id
+      signature = App.Signature.find(group.signature_id)
+
+    # add/replace signature
     if signature && signature.body && @type is 'email'
+
+      # if signature has changed, remove it
+      signature_id = @$('[data-signature=true]').data('signature-id')
+      if signature_id && signature_id.toString() isnt signature.id.toString()
+        @$('[data-name=body] [data-signature="true"]').remove()
+
+      # apply new signature
       signatureFinished = App.Utils.text2html(
-        App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: @ticket } )
+        App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: ticketCurrent } )
       )
-      if App.Utils.signatureCheck( body, signatureFinished )
+      body = @$('[data-name=body]').html() || ''
+      if App.Utils.signatureCheck(body, signatureFinished)
         if !App.Utils.lastLineEmpty(body)
           body = body + '<br>'
         body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
@@ -360,7 +375,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     # remove old signature
     else
-      @$('[data-name=body]').find('[data-signature=true]').remove()
+      @$('[data-name=body] [data-signature=true]').remove()
 
   detectEmptyTextarea: =>
     if !@textarea.text().trim()

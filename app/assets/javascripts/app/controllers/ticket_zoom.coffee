@@ -329,10 +329,12 @@ class App.TicketZoom extends App.Controller
 
       new App.TicketZoomArticleNew(
         ticket:    @ticket
+        ticket_id: @ticket.id
         el:        @$('.article-new')
         form_meta: @form_meta
         form_id:   @form_id
         defaults:  @taskGet('article')
+        task_key:  @task_key
         ui:        @
       )
 
