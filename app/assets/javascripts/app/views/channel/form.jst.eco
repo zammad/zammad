@@ -8,7 +8,9 @@
 
   <div class="js-settings"></div>
 
-  <h2><%- @T('Settings') %></h2>
+  <hr>
+
+  <h2><%- @T('Widget Designer') %></h2>
   <form class="js-params">
 
     <fieldset>
