@@ -30,7 +30,6 @@
   background: #379ad7;
   color: white;
   line-height: 2.5em;
-  height: 2.5em;
   box-shadow: 0 -1px rgba(0, 0, 0, 0.1), 0 1px rgba(255, 255, 255, 0.3) inset, 0 -1px rgba(0, 0, 0, 0.1) inset, 0 1px 1px rgba(0, 0, 0, 0.13);
   position: relative;
   border-radius: 5px 5px 0 0;
@@ -91,7 +90,7 @@
   padding: 0 0.7em;
   border-radius: 1em;
   background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04); }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
 
 .zammad-chat-agent-status:before {
   content: "";
@@ -103,7 +102,7 @@
   position: relative;
   margin-right: 0.3em;
   vertical-align: middle;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04); }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
 
 .zammad-chat-agent-status[data-status="online"]:before {
   background: #52c782; }
@@ -169,7 +168,7 @@
 
 .zammad-chat-body {
   padding: 0.5em 1em;
-  height: 300px;
+  height: 25em;
   overflow: auto;
   background: white; }
 
@@ -278,6 +277,7 @@
 
 .zammad-chat-input {
   float: left;
+  height: auto;
   font-family: inherit;
   line-height: inherit;
   font-size: inherit;

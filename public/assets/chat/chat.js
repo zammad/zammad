@@ -484,9 +484,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         return this.state;
       }
       this.el.addClass('zammad-chat-is-visible');
-      this.input.autoGrow({
-        extraLine: false
-      });
+      if (!this.inputInitialized) {
+        this.inputInitialized = true;
+        this.input.autoGrow({
+          extraLine: false
+        });
+      }
       remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
       return this.el.css('bottom', -remainerHeight);
     };
@@ -847,7 +850,7 @@ window.zammadChatTemplates["chat"] = function (__obj) {
       __out.push('"');
     
       if (this.fontSize) {
-        __out.push(__sanitize(" style='font-size: " + this.fontSize + "px'"));
+        __out.push(__sanitize(" style='font-size: " + this.fontSize + "'"));
       }
     
       __out.push('>\n  <div class="zammad-chat-header js-chat-open"');

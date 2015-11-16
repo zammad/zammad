@@ -330,8 +330,10 @@ do($ = window.jQuery, window) ->
 
       @el.addClass('zammad-chat-is-visible')
 
-      @input.autoGrow
-        extraLine: false
+      if !@inputInitialized
+        @inputInitialized = true
+        @input.autoGrow
+          extraLine: false
 
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
 
