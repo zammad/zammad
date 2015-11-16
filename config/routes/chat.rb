@@ -1,0 +1,11 @@
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
+
+  # groups
+  match api_path + '/chats',                to: 'chats#index',   via: :get
+  match api_path + '/chats/:id',            to: 'chats#show',    via: :get
+  match api_path + '/chats',                to: 'chats#create',  via: :post
+  match api_path + '/chats/:id',            to: 'chats#update',  via: :put
+  match api_path + '/chats/:id',            to: 'chats#destroy', via: :delete
+
+end
