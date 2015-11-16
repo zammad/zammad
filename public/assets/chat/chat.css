@@ -91,7 +91,7 @@
   padding: 0 0.7em;
   border-radius: 1em;
   background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04); }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
 
 .zammad-chat-agent-status:before {
   content: "";
@@ -103,7 +103,7 @@
   position: relative;
   margin-right: 0.3em;
   vertical-align: middle;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04); }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
 
 .zammad-chat-agent-status[data-status="online"]:before {
   background: #52c782; }
