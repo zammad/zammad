@@ -36,7 +36,6 @@ class ChatTest < ActiveSupport::TestCase
   test 'default test' do
 
     Chat.delete_all
-    Chat::Topic.delete_all
     Chat::Session.delete_all
     Chat::Message.delete_all
     Chat::Agent.delete_all
