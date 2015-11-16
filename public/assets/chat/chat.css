@@ -168,7 +168,7 @@
 
 .zammad-chat-body {
   padding: 0.5em 1em;
-  height: 300px;
+  height: 25em;
   overflow: auto;
   background: white; }
 
@@ -277,6 +277,7 @@
 
 .zammad-chat-input {
   float: left;
+  height: auto;
   font-family: inherit;
   line-height: inherit;
   font-size: inherit;
