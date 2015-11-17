@@ -101,11 +101,11 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   username = login(
-    :browser     => browser1,
-    :username    => 'someuser',
-    :password    => 'somepassword',
-    :url         => 'some url', # optional
-    :remember_me => true, # optional
+    browser:     browser1,
+    username:    'someuser',
+    password:    'somepassword',
+    url:         'some url', # optional
+    remember_me: true, # optional
   )
 
 =end
@@ -152,7 +152,7 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   logout(
-    :browser => browser1
+    browser: browser1
   )
 
 =end
@@ -181,8 +181,8 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   location(
-    :browser => browser1,
-    :url     => 'http://someurl',
+    browser: browser1,
+    url:     'http://someurl',
   )
 
 =end
@@ -198,8 +198,8 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   location_check(
-    :browser => browser1,
-    :url     => 'http://someurl',
+    browser: browser1,
+    url:     'http://someurl',
   )
 
 =end
@@ -218,7 +218,7 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   reload(
-    :browser => browser1,
+    browser: browser1,
   )
 
 =end
@@ -235,15 +235,15 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   click(
-    :browser => browser1,
-    :css     => '.some_class',
-    :fast    => false, # do not wait
+    browser: browser1,
+    css:     '.some_class',
+    fast:    false, # do not wait
   )
 
   click(
-    :browser => browser1,
-    :text    => '.partial_link_text',
-    :fast    => false, # do not wait
+    browser: browser1,
+    text:    '.partial_link_text',
+    fast:    false, # do not wait
   )
 
 =end
@@ -253,7 +253,16 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if params[:css]
-      instance.find_elements( { css: params[:css] } )[0].click
+
+      scroll_to(
+        browser:  instance,
+        css:      params[:css],
+        mute_log: true,
+      )
+
+      element = instance.find_elements( { css: params[:css] } )[0]
+      instance.mouse.move_to(element)
+      element.click
 
       # trigger also focus on input/select and textarea fields
       #if params[:css] =~ /(input|select|textarea)/
@@ -268,9 +277,31 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  scroll_to(
+    browser: browser1,
+    css:     '.some_class',
+  )
+
+=end
+
+  def scroll_to(params)
+    log('scroll_to', params)
+
+    instance = params[:browser] || @browser
+
+    execute(
+      browser:  instance,
+      js:       "\$('#{params[:css]}').get(0).scrollIntoView(true)",
+      mute_log: params[:mute_log]
+    )
+    sleep 0.4
+  end
+
+=begin
+
   execute(
-    :browser => browser1,
-    :js     => '.some_class',
+    browser: browser1,
+    js:      '.some_class',
   )
 
 =end
@@ -1521,6 +1552,10 @@ wait untill text in selector disabppears
       browser: instance,
       js: '$(".content.active .sidebar").css("display", "block")',
     )
+    #execute(
+    #  browser: instance,
+    #  js: '$(".content.active .overview-header").css("display", "none")',
+    #)
 
     overviews = {}
     instance.find_elements( { css: '.content.active .sidebar a[href]' } ).each {|element|
@@ -1892,6 +1927,7 @@ wait untill text in selector disabppears
 
   def log(method, params)
     return if !@@debug
+    return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"
   end
 end
