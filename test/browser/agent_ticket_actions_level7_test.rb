@@ -33,6 +33,7 @@ class AgentTicketActionLevel7Test < TestCase
     )
 
     # click reply
+    click_catcher_remove
     click( css: '.content.active [data-type="reply"]' )
 
     # check body
@@ -50,6 +51,7 @@ class AgentTicketActionLevel7Test < TestCase
     )
 
     # click reply
+    click_catcher_remove
     click( css: '.content.active [data-type="reply"]' )
 
     # check body
