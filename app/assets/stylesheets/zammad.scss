@@ -1832,7 +1832,7 @@ kbd {
 }
 
 .main--tabs .page-header {
-  background: hsl(200,12%,90%);
+  background: hsl(200,12%,95%);
   padding: 20px;
   overflow: hidden;
   margin: 0;
@@ -1844,10 +1844,10 @@ kbd {
 
 .page-tabs {
   display: flex;
-  margin: -20px -20px 50px;
+  margin: -20px -20px 30px;
   padding: 0 20px;
-  background: hsl(200,12%,90%);
-  border-bottom: 1px solid hsl(200,12%,87%);
+  background: hsl(200,12%,95%);
+  border-bottom: 1px solid hsl(200,12%,89%);
   
   .nav-tabs li.active {
     background: hsl(210,17%,98%);
@@ -5658,9 +5658,8 @@ footer {
 .nav-tabs li {
   margin: 0;
   border-radius: 3px 3px 0 0;
-  border: 1px solid hsl(200,12%,87%);
+  border: 1px solid hsl(200,12%,89%);
   border-bottom-color: transparent;
-  background: hsl(197,14%,93%);
   margin-left: -1px;
 }
 
