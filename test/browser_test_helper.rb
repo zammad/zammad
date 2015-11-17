@@ -1468,6 +1468,10 @@ wait untill text in selector disabppears
     )
     instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
     sleep 1
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "none")',
+    )
     instance.find_elements( { partial_link_text: params[:number] } )[0].click
     sleep 1
     number = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
