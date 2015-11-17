@@ -18,19 +18,20 @@ class App.TicketZoomArticleNew extends App.Controller
     #'.recipient-list .list-arrow':       'recipientListArrow'
 
   events:
-    'click .js-toggleVisibility':     'toggleVisibility'
-    'click .js-articleTypeItem':      'selectArticleType'
-    'click .js-selectedArticleType':  'showSelectableArticleType'
-    'click .recipient-picker':        'toggle_recipients'
-    'click .recipient-list':          'stopPropagation'
-    'click .list-entry-type div':     'change_type'
-    'submit .recipient-list form':    'add_recipient'
-    'focus .js-textarea':             'openTextarea'
-    'input .js-textarea':             'detectEmptyTextarea'
-    #'dragenter':                  'onDragenter'
-    #'dragleave':                  'onDragleave'
-    #'drop':                       'onFileDrop'
-    #'change input[type=file]':    'onFilePick'
+    'click .js-toggleVisibility':    'toggleVisibility'
+    'click .js-articleTypeItem':     'selectArticleType'
+    'click .js-selectedArticleType': 'showSelectableArticleType'
+    'click .recipient-picker':       'toggle_recipients'
+    'click .recipient-list':         'stopPropagation'
+    'click .js-mail-inputs':         'stopPropagation'
+    'click .js-writeArea':           'stopPropagation'
+    'click .list-entry-type div':    'change_type'
+    'submit .recipient-list form':   'add_recipient'
+    'focus .js-textarea':            'openTextarea'
+    #'dragenter':                    'onDragenter'
+    #'dragleave':                    'onDragleave'
+    #'drop':                         'onFileDrop'
+    #'change input[type=file]':      'onFilePick'
 
   constructor: ->
     super
@@ -129,6 +130,9 @@ class App.TicketZoomArticleNew extends App.Controller
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
+    @(window).off 'click.ticket-zoom-select-type'
+    $(window).on 'click.ticket-zoom-textarea'
+
   render: ->
 
     ticket = App.Ticket.fullLocal( @ticket_id )
@@ -182,7 +186,6 @@ class App.TicketZoomArticleNew extends App.Controller
             @attachmentPlaceholder.addClass('hide')
             @attachmentUpload.removeClass('hide')
             @cancelContainer.removeClass('hide')
-            console.log('upload start')
 
           onAborted: =>
             @attachmentPlaceholder.removeClass('hide')
@@ -202,7 +205,6 @@ class App.TicketZoomArticleNew extends App.Controller
             @progressText.text('')
 
             @renderAttachment(response.data)
-            console.log('upload complete', response.data )
 
           # Called during upload progress, first parameter
           # is decimal value from 0 to 100.
@@ -212,7 +214,6 @@ class App.TicketZoomArticleNew extends App.Controller
             # hide cancel on 90%
             if parseInt(progress) >= 90
               @cancelContainer.addClass('hide')
-            console.log('uploadProgress ', parseInt(progress))
         )
     )
 
@@ -293,10 +294,10 @@ class App.TicketZoomArticleNew extends App.Controller
   add_recipient: (e) ->
     e.stopPropagation()
     e.preventDefault()
-    console.log 'add recipient', e
     # store recipient
 
-  toggleVisibility: ->
+  toggleVisibility: (event) ->
+    event.stopPropagation()
     if @articleNewEdit.hasClass 'is-public'
       @articleNewEdit
         .removeClass 'is-public'
@@ -311,26 +312,24 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @$('[name=internal]').val ''
 
-  showSelectableArticleType: =>
+  showSelectableArticleType: (event) =>
+    event.stopPropagation()
     @el.find('.js-articleTypes').removeClass('is-hidden')
+    $(window).on 'click.ticket-zoom-select-type', @hideSelectableArticleType
 
-    @selectTypeCatcher = new App.ClickCatcher
-      holder:      @el.offsetParent()
-      callback:    @hideSelectableArticleType
-      zIndexScale: 6
-
-  selectArticleType: (e) =>
-    articleTypeToSet = $(e.target).closest('.pop-selectable').data('value')
+  selectArticleType: (event) =>
+    event.stopPropagation()
+    articleTypeToSet = $(event.target).closest('.pop-selectable').data('value')
     @setArticleType( articleTypeToSet )
     @hideSelectableArticleType()
 
-    @selectTypeCatcher.remove()
-    @selectTypeCatcher = null
+    $(window).off 'click.ticket-zoom-select-type'
 
   hideSelectableArticleType: =>
     @el.find('.js-articleTypes').addClass('is-hidden')
 
   setArticleType: (type) ->
+    wasScrolledToBottom = @isScrolledToBottom()
     @type = type
     @$('[name=type]').val(type)
     @articleNewEdit.attr('data-type', type)
@@ -377,11 +376,14 @@ class App.TicketZoomArticleNew extends App.Controller
     else
       @$('[data-name=body] [data-signature=true]').remove()
 
-  detectEmptyTextarea: =>
-    if !@textarea.text().trim()
-      @addTextareaCatcher()
-    else
-      @removeTextareaCatcher()
+    @scrollToBottom() if wasScrolledToBottom
+
+  isScrolledToBottom: ->
+    console.log 'isScrolledToBottom', @el.scrollParent().scrollTop() + @el.scrollParent().height(), @el.scrollParent().prop('scrollHeight')
+    return @el.scrollParent().scrollTop() + @el.scrollParent().height() is @el.scrollParent().prop('scrollHeight')
+
+  scrollToBottom: ->
+    @el.scrollParent().scrollTop @el.scrollParent().prop('scrollHeight')
 
   openTextarea: (event, withoutAnimation) =>
     if @articleNewEdit.hasClass('is-open')
@@ -400,7 +402,7 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
         easing: 'easeOutQuad'
-        complete: => @addTextareaCatcher()
+        complete: => $(window).on 'click.ticket-zoom-textarea', @closeTextarea
 
     @textBubble.velocity
       properties:
@@ -443,21 +445,9 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
 
-  addTextareaCatcher: =>
-    if @articleNewEdit.is(':visible')
-      @textareaCatcher = new App.ClickCatcher
-        holder:      @articleNewEdit.offsetParent()
-        callback:    @closeTextarea
-        zIndexScale: 4
-
-  removeTextareaCatcher: ->
-    return if !@textareaCatcher
-    @textareaCatcher.remove()
-    @textareaCatcher = null
-
   closeTextarea: =>
-    @removeTextareaCatcher()
     if !@textarea.text().trim() && !@attachments.length && not @isIE10()
+      $(window).off 'click.ticket-zoom-textarea'
 
       @textarea.velocity
         properties:
