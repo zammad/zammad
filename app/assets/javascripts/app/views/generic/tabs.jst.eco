@@ -2,6 +2,13 @@
   <div class="page-header-title">
     <h1><%- @T( @header ) %> <small><%- @T( @subHeader ) %></small></h1>
   </div>
+  <% if @addTab: %>
+  <div class="page-header-meta">
+    <div class="btn btn--success btn--quad">
+      <%- @Icon('plus') %>
+    </div>
+  </div>
+  <% end %>
 </div>
 <div class="page-content">
   <div class="page-tabs">
@@ -10,11 +17,6 @@
         <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
       <% end %>
     </ul>
-    <% if @addTab: %>
-    <div class="btn btn--success btn--quad">
-      <%- @Icon('plus') %>
-    </div>
-    <% end %>
   </div>
   <div class="tab-content"></div>
 </div>
