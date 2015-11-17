@@ -7,21 +7,27 @@ class App.ChannelChat extends App.ControllerTabs
 
     @title @header, true
 
-    @tabs = [
-      {
-        name:       'company.com/sales',
-        target:     'company-com-sales',
-        controller: App.ChannelChatDesigner,
-      },
-      {
-        name:       'company.com',
-        target:     'company-com',
-        controller: App.ChannelChatDesigner,
-      }
-    ]
+    @load()
 
-    @render()
-
+  load: =>
+    @tabs = []
+    @ajax(
+      id:   'chat_index'
+      type: 'GET'
+      url:  @apiPath + '/chats'
+      processData: true
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        for chat in App.Chat.all()
+          tab =
+            name: chat.name
+            target: "chat-#{chat.id}"
+            controller: App.ChannelChatDesigner
+            params:
+              model: chat
+          @tabs.push tab
+        @render()
+    )
 
 class App.ChannelChatDesigner extends App.Controller
   events:

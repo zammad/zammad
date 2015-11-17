@@ -2,6 +2,7 @@
 
 class Chat < ApplicationModel
   validates :name, presence: true
+  store     :preferences
 
   def customer_state(session_id = nil)
     return { state: 'chat_disabled' } if !Setting.get('chat')
