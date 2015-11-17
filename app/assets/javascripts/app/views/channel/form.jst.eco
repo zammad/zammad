@@ -3,7 +3,7 @@
     <h1><%- @T('Form') %> <small></small></h1>
   </div>
 </div>
-<div>
+<div class="page-content">
   <p><%- @T('With form you can add a formular to your web page witch directly generates a Ticket for you.') %></p>
 
   <div class="js-settings"></div>

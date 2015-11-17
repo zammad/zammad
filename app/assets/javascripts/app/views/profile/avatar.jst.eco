@@ -9,7 +9,7 @@
     <div class="btn btn--success fileUpload"><%- @T('Upload') %><input type="file" class="js-upload" accept="image/*"></div>
   </div>
 </div>
-<div class="avatar-gallery">
+<div class="page-content avatar-gallery">
   <% for avatar in @avatars: %>
   <div class="avatar-holder">
     <% if avatar.initial: %>

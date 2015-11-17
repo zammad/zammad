@@ -40,7 +40,7 @@ use {
 }
 
 p {
-  margin: 14px 0;
+  margin: 12px 0;
 
   &.subtle {
     color: hsl(60,1%,74%);
@@ -1793,6 +1793,21 @@ kbd {
   }
 }
 
+.page-content {
+  label,
+  .label {
+    color: hsl(197,18%,70%);
+  }
+  .help-text,
+  .help-block {
+    color: hsl(198,19%,72%);
+  }
+}
+
+.page-description p {
+  color: initial;
+}
+
 .page-body--two-column {
   display: flex;
 }
@@ -1808,13 +1823,6 @@ kbd {
 
 .page-main {
   flex: 1;
-}
-
-.page-content {
-  background: white;
-  border: 1px solid hsl(240,3%,92%);
-  border-radius: 3px;
-  padding: 10px;
 }
 
 .page-loading {
@@ -1845,7 +1853,7 @@ kbd {
 }
 
 .help-block:not(:empty) {
-  margin: 6px 2px 10px;
+  margin: 8px 2px 10px;
 }
 
 /* replace music icon with attachment */
@@ -2495,6 +2503,13 @@ footer {
   font-size: 10px;
   line-height: 12px;
   color: #999999;
+}
+
+.well {
+  background: white;
+  border: 1px solid hsl(240,3%,92%);
+  border-radius: 3px;
+  padding: 10px;
 }
 
 .well-muted {
@@ -6588,6 +6603,10 @@ output {
     color: hsl(198,18%,72%);
   }
 
+  .inline-label {
+    color: inherit;
+  }
+
   .btn--table {
     margin: 0;
   }
@@ -7417,7 +7436,6 @@ output {
   .tab {
     height: 39px;
     padding-top: 11px;
-    color: hsl(199,18%,72%);
     
     &.is-selected {
       background: linear-gradient(hsla(199,30%,40%,.08), hsla(199,30%,40%,.03));

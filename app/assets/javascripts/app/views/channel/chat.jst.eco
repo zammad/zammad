@@ -3,7 +3,7 @@
     <h1><%- @T('Chat Widget') %></h1>
   </div>
 </div>
-<div>
+<div class="page-content">
   <p><%- @T('You can embedd this widget into your web page to allow visitors to directly chat with you.') %></p>
   
   <h2><%- @T('Designer') %></h2>
@@ -197,6 +197,5 @@ $(function() {
     </tbody>
   </table>
 <% end %>
-  <hr>
 
 </div>

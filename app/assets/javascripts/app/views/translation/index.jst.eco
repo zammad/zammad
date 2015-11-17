@@ -9,5 +9,7 @@
     <div class="language"></div>
   </div>
 </div>
-<div class="js-ToDo"></div>
-<div class="js-List"></div>
+<div class="page-content">
+  <div class="js-ToDo"></div>
+  <div class="js-List"></div>
+</div>
