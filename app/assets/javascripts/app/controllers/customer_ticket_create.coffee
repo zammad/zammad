@@ -13,45 +13,14 @@ class Index extends App.ControllerContent
     # set title
     @title 'New Ticket'
     @form_id = App.ControllerForm.formId()
-    @form_meta = undefined
 
-    @fetch(params)
     @navupdate '#customer_ticket_new'
 
-  # get data / in case also ticket data for split
-  fetch: (params) ->
-
-    # use cache
-    cache = App.SessionStorage.get( 'ticket_create_attributes' )
-
-    if cache
-
-      # get edit form attributes
-      @form_meta = cache.form_meta
-
-      # load assets
-      App.Collection.loadAssets( cache.assets )
-
+    load = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
       @render()
-    else
-      @ajax(
-        id:    'ticket_create',
-        type:  'GET',
-        url:   @apiPath + '/ticket_create',
-        processData: true,
-        success: (data, status, xhr) =>
-
-          # cache request
-          App.SessionStorage.set( 'ticket_create_attributes', data )
-
-          # get edit form attributes
-          @form_meta = data.form_meta
-
-          # load assets
-          App.Collection.loadAssets( data.assets )
-
-          @render()
-      )
+    @bindId = App.TicketCreateCollection.one(load)
 
   render: (template = {}) ->
 
@@ -62,7 +31,7 @@ class Index extends App.ControllerContent
     if groupFilter
       if !_.isArray(groupFilter)
         groupFilter = [groupFilter]
-      @form_meta.filter.group_id = groupFilter
+      @formMeta.filter.group_id = groupFilter
 
     @html App.view('customer_ticket_create')(
       head: 'New Ticket'
@@ -77,7 +46,7 @@ class Index extends App.ControllerContent
       handlers: [
         @ticketFormChanges
       ]
-      filter:    @form_meta.filter
+      filter:    @formMeta.filter
       autofocus: true
       params:    defaults
     )
@@ -97,7 +66,7 @@ class Index extends App.ControllerContent
       handlers: [
         @ticketFormChanges
       ]
-      filter:     @form_meta.filter
+      filter:     @formMeta.filter
       params:     defaults
       noFieldset: true
     )
@@ -109,7 +78,7 @@ class Index extends App.ControllerContent
     #  handlers: [
     #    formChanges
     #  ]
-    #  filter:     @form_meta.filter
+    #  filter:    @formMeta.filter
     #  params:    defaults
     #)
 

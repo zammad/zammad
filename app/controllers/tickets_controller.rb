@@ -169,7 +169,7 @@ class TicketsController < ApplicationController
   def ticket_merge
 
     # check master ticket
-    ticket_master = Ticket.where( number: params[:master_ticket_number] ).first
+    ticket_master = Ticket.find_by(number: params[:master_ticket_number])
     if !ticket_master
       render json: {
         result: 'faild',
@@ -182,7 +182,7 @@ class TicketsController < ApplicationController
     return if !ticket_permission(ticket_master)
 
     # check slave ticket
-    ticket_slave = Ticket.where( id: params[:slave_ticket_id] ).first
+    ticket_slave = Ticket.find_by(id: params[:slave_ticket_id] )
     if !ticket_slave
       render json: {
         result: 'faild',
@@ -282,39 +282,31 @@ class TicketsController < ApplicationController
     }
   end
 
-  # GET /api/v1/ticket_create/1
+  # GET /api/v1/ticket_split
+  def ticket_split
+
+    # permission check
+    ticket = Ticket.find(params[:ticket_id])
+    return if !ticket_permission(ticket)
+    assets = ticket.assets({})
+
+    # get related articles
+    article = Ticket::Article.find(params[:article_id])
+    assets = article.assets(assets)
+
+    render json: {
+      assets: assets
+    }
+  end
+
+  # GET /api/v1/ticket_create
   def ticket_create
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
       user: current_user,
-      ticket_id: params[:ticket_id],
-      article_id: params[:article_id]
     )
-
-    assets = attributes_to_change[:assets]
-    # split data
-    split = {}
-    if params[:ticket_id] && params[:article_id]
-      ticket = Ticket.find( params[:ticket_id] )
-      split[:ticket_id] = ticket.id
-      assets = ticket.assets(assets)
-
-      # get related articles
-      article = Ticket::Article.find( params[:article_id] )
-      split[:article_id] = article.id
-      assets = article.assets(assets)
-    end
-
-    # return result
-    render json: {
-      split: split,
-      assets: assets,
-      form_meta: {
-        filter: attributes_to_change[:filter],
-        dependencies: attributes_to_change[:dependencies],
-      }
-    }
+    render json: attributes_to_change
   end
 
   # GET /api/v1/tickets/search
