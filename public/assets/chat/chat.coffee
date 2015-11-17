@@ -16,6 +16,7 @@ do($ = window.jQuery, window) ->
       fontSize: undefined
       buttonSelector: '.open-zammad-chat'
       hiddenButtonClass: 'is-inactive'
+      title: '<strong>Chat</strong> with us!'
 
     _messageCount: 0
     isOpen: true
@@ -30,7 +31,6 @@ do($ = window.jQuery, window) ->
     initialQueueDelay: 10000
     wsReconnectEnable: true
     strings:
-      '<strong>Chat</strong> with us!': '<strong>Chatten</strong> sie mit uns!'
       'Online': 'Online'
       'Offline': 'Offline'
       'Connecting': 'Verbinden'
@@ -80,7 +80,9 @@ do($ = window.jQuery, window) ->
         return
 
       @options = $.extend {}, @defaults, options
-      @el = $(@view('chat')())
+      @el = $(@view('chat')(
+        title: @options.title
+      ))
       @options.target.append @el
 
       @input = @el.find('.zammad-chat-input')

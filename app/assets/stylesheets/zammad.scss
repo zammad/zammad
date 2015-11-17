@@ -6529,6 +6529,7 @@ output {
   color: hsl(60,1%,34%);
   background: white;
   table-layout: auto;
+  margin-bottom: 20px;
   
   &.is-invalid {
     border-radius: 3px;
@@ -7327,16 +7328,16 @@ output {
   margin: 0 0 20px;
   border: 1px solid hsl(0,0%,90%);
   border-radius: 5px;
-  height: 500px;
   position: relative;
-  display: flex;
-  flex-direction: column;
 }
   
 .browser-body {
   position: relative;
   overflow: hidden;
-  flex: 1;
+  height: 450px;
+  width: 100%;
+  transition: 500ms;
+  background: #eee;
   
   iframe {
     position: absolute;
@@ -7351,17 +7352,21 @@ output {
 
 .browser-head {
   display: flex;
-  padding: 5px;
+  align-items: center;
+  padding: 10px;
   border-bottom: 1px solid hsl(0,0%,90%);
   
   .browser-input {
     flex: 1;
-    margin: 5px;
+    margin-right: 10px;
+    
+    input {
+      min-width: 0;
+    }
   }
 
   .browser-control {
     width: 39px;
-    margin: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -7370,11 +7375,22 @@ output {
   }
 }
 
-
 .chat-demo {
   .zammad-chat {
     position: absolute;
     transform-origin: right bottom;
+    transition: 500ms;
+    
+    .zammad-chat-body {
+      transition: 500ms; 
+    }
+    
+    &.is-fullscreen {
+      height: 100%;
+    }
+  }
+
+  .zammad-chat-header {
     pointer-events: auto;
   }
 
@@ -7391,6 +7407,22 @@ output {
 
 @keyframes slide-up {
   from { transform: translateY(100%); }
+}
+
+.select-tabs {
+  display: flex;
+  border: 1px solid hsla(206,100%,3%,0.08);
+  border-radius: 3px;
+  
+  .tab {
+    height: 39px;
+    padding-top: 11px;
+    color: hsl(199,18%,72%);
+    
+    &.is-selected {
+      background: linear-gradient(hsla(199,30%,40%,.08), hsla(199,30%,40%,.03));
+    }
+  }
 }
 
 /*

@@ -8,13 +8,16 @@
   
   <h2><%- @T('Designer') %></h2>
   
-  <div class="browser chat-demo">
+  <div class="browser chat-demo js-browser">
     <div class="browser-head">
       <form class="browser-input js-testurl" novalidate>
         <input type="url" class="js-testurl-input" placeholder="zammad.org">
       </form>
-      <div class="browser-control zoom-out js-zoom-out"><%- @Icon('zoom-out') %></div>
-      <div class="browser-control zoom-in js-zoom-in"><%- @Icon('zoom-in') %></div>
+      <div class="select-tabs js-selectBrowserWidth">
+        <div class="tab" data-value="375">iPhone 6</div>
+        <div class="tab is-selected" data-value="fit">Fit Width</div>
+        <div class="tab" data-value="1280">MacBook</div>
+      </div>
     </div>
     <div class="browser-body js-demo">
       <iframe class="js-iframe"></iframe>

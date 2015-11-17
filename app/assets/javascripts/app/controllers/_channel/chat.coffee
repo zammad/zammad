@@ -6,13 +6,13 @@ class App.ChannelChat extends App.Controller
     'click .js-widget': 'widget'
     'change .js-params': 'updateParams'
     'keyup .js-params': 'updateParams'
-    'submit .js-testurl': 'changeTestWebsite'
-    'blur .js-testurl-input': 'changeTestWebsite'
-    'click .js-zoom-in': 'zoomIn'
-    'click .js-zoom-out': 'zoomOut'
+    'submit .js-testurl': 'changeDemoWebsite'
+    'blur .js-testurl-input': 'changeDemoWebsite'
+    'click .js-selectBrowserWidth': 'selectBrowserWidth'
 
   elements:
     '.js-demo': 'demo'
+    '.js-browser': 'browser'
     '.js-iframe': 'iframe'
     '.js-chat': 'chat'
     '.js-testurl-input': 'urlInput'
@@ -58,27 +58,43 @@ class App.ChannelChat extends App.Controller
       area: 'Chat::Base'
     )
 
-  zoomOut: =>
-    if @demo.width() < 1024
-      percentage = @demo.width()/1024
+  selectBrowserWidth: (event) =>
+    tab = $(event.target).closest('[data-value]')
+
+    # select tab
+    tab.addClass('is-selected').siblings().removeClass('is-selected')
+    
+    value = tab.attr('data-value')
+    width = parseInt value, 10
+
+    # reset zoom
+    @chat.css('transform', "")
+    @demo.css('width', "")
+    @chat.removeClass('is-fullscreen')
+    @iframe.css
+      transform: ""
+      width: ""
+      height: ""
+
+    return if value is 'fit'
+
+    if width < @demo.width()
+      @chat.addClass('is-fullscreen')
+      @demo.css('width', "#{ width }px")
+    else
+      percentage = @demo.width()/width
       @chat.css('transform', "scale(#{ percentage })")
       @iframe.css
         transform: "scale(#{ percentage })"
         width: @demo.width() / percentage
         height: @demo.height() / percentage
 
-  zoomIn: =>
-    @chat.css('transform', "")
-    @iframe.css
-      transform: ""
-      width: ""
-      height: ""
-
-
-  changeTestWebsite: (event) =>
+  changeDemoWebsite: (event) =>
     event.preventDefault() if event
 
-    return if @urlInput.val() is @url
+    # fire both on enter and blur
+    # but cache url
+    return if @urlInput.val() is "" or @urlInput.val() is @url
     @url = @urlInput.val()
 
     src = @url

@@ -5,11 +5,26 @@
   bottom: 0;
   font-size: 12px;
   width: 33em;
+  height: 30em;
   box-shadow: 0 3px 10px rgba(0,0,0,.3);
   border-radius: 5px 5px 0 0;
   will-change: bottom;
   display: none;
   flex-direction: column;
+  
+  &.is-fullscreen {
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0 !important;
+  }
+
+  @media only screen and (max-width: 768px) {
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0 !important;
+  }
 }
 .zammad-chat.zammad-chat-is-open {
   display: flex;
@@ -37,6 +52,14 @@
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   cursor: pointer;
+  
+  @media only screen and (max-width: 768px) {
+    border-radius: 0 !important;
+  }
+}
+
+.zammad-chat.is-fullscreen .zammad-chat-header {
+  border-radius: 0 !important;
 }
 
 .zammad-chat.zammad-chat-is-open .zammad-chat-header {
@@ -171,9 +194,14 @@
 
 .zammad-chat-body {
   padding: 0.5em 1em;
-  height: 25em;
   overflow: auto;
   background: white;
+  flex: 1;
+  
+  @media only screen and (max-width: 768px) {
+    height: auto;
+    flex: 1;
+  }
 }
 
 .zammad-chat-timestamp {
@@ -346,27 +374,4 @@
 .zammad-chat--flat .zammad-chat-button,
 .zammad-chat--flat .zammad-chat-status {
   box-shadow: none;
-}
-
-/*
-
-  Mobile Design
-  
-*/
-
-@media only screen and (max-width: 768px) {
-  .zammad-chat {
-    left: 0;
-    right: 0;
-    width: auto;
-    height: 100vh;
-  }
-  .zammad-chat-body {
-    height: auto;
-    flex: 1;
-  }
-  .zammad-chat,
-  .zammad-chat-header {
-    border-radius: 0 !important;
-  }
 }

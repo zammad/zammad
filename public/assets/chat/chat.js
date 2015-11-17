@@ -76,7 +76,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       debug: false,
       fontSize: void 0,
       buttonSelector: '.open-zammad-chat',
-      hiddenButtonClass: 'is-inactive'
+      hiddenButtonClass: 'is-inactive',
+      title: '<strong>Chat</strong> with us!'
     };
 
     ZammadChat.prototype._messageCount = 0;
@@ -104,7 +105,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.wsReconnectEnable = true;
 
     ZammadChat.prototype.strings = {
-      '<strong>Chat</strong> with us!': '<strong>Chatten</strong> sie mit uns!',
       'Online': 'Online',
       'Offline': 'Offline',
       'Connecting': 'Verbinden',
@@ -201,7 +201,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         return;
       }
       this.options = $.extend({}, this.defaults, options);
-      this.el = $(this.view('chat')());
+      this.el = $(this.view('chat')({
+        title: this.options.title
+      }));
       this.options.target.append(this.el);
       this.input = this.el.find('.zammad-chat-input');
       this.el.find('.js-chat-open').click(this.open);
@@ -861,7 +863,7 @@ window.zammadChatTemplates["chat"] = function (__obj) {
     
       __out.push('>\n    <div class="zammad-chat-header-controls">\n      <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online"></span>\n      <span class="zammad-chat-header-icon">\n        <svg class="zammad-chat-header-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>\n        <svg class="zammad-chat-header-icon-close js-chat-close" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"/></svg>\n      </span>\n    </div>\n    <div class="zammad-chat-agent zammad-chat-is-hidden">\n    </div>\n    <div class="zammad-chat-welcome">\n      <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>\n      <span class="zammad-chat-welcome-text">');
     
-      __out.push(this.T('<strong>Chat</strong> with us!'));
+      __out.push(this.title);
     
       __out.push('</span>\n    </div>\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <textarea class="zammad-chat-input" rows="1" placeholder="');
     
