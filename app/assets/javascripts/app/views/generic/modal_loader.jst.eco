@@ -2,9 +2,6 @@
 
   <form class="modal-content setup wizard">
     <div class="modal-header">
-      <!--<div class="modal-close js-close">
-        <%- @Icon('diagonal-cross') %>
-      </div>-->
       <h1 class="modal-title"><%- @T(@head) %></h1>
     </div>
     <div class="modal-body">

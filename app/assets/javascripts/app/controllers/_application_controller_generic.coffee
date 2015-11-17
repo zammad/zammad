@@ -242,7 +242,7 @@ class App.ControllerModalLoading extends App.Controller
     @el.modal
       keyboard:  false
       show:      true
-      backdrop:  false
+      backdrop:  'static'
       container: @container
 
   render: ->
