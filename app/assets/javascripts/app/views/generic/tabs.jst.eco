@@ -10,13 +10,13 @@
   </div>
   <% end %>
 </div>
+<div class="page-tabs">
+  <ul class="nav nav-tabs" role="tablist">
+    <% for tab in @tabs: %>
+      <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
+    <% end %>
+  </ul>
+</div>
 <div class="page-content">
-  <div class="page-tabs">
-    <ul class="nav nav-tabs" role="tablist">
-      <% for tab in @tabs: %>
-        <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
-      <% end %>
-    </ul>
-  </div>
   <div class="tab-content"></div>
 </div>

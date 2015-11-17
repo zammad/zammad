@@ -1832,8 +1832,7 @@ kbd {
 }
 
 .main--tabs .page-header {
-  background: hsl(200,12%,95%);
-  padding: 20px;
+  padding: 20px 20px 0;
   overflow: hidden;
   margin: 0;
 }
@@ -1844,9 +1843,9 @@ kbd {
 
 .page-tabs {
   display: flex;
-  margin: -20px -20px 30px;
-  padding: 0 20px;
-  background: hsl(200,12%,95%);
+  margin: 0 0 30px;
+  padding: 20px 20px 0;
+  background: linear-gradient(hsla(200,12%,94%,0), hsl(200,12%,94%));
   border-bottom: 1px solid hsl(200,12%,89%);
   
   .nav-tabs li.active {
