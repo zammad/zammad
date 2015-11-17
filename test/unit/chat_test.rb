@@ -48,12 +48,6 @@ class ChatTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    chat_topic = Chat::Topic.create(
-      chat_id: chat.id,
-      name: 'default',
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
 
     # check if feature is disabled
     assert_equal('chat_disabled', chat.customer_state[:state])

@@ -31,7 +31,7 @@ class App.TicketCreate extends App.Controller
 
     @fetch(params)
 
-    # lisen if view need to be rerendert
+    # lisen if view need to be rerendered
     @bind 'ticket_create_rerender', (defaults) =>
       @log 'notice', 'error', defaults
       @render(defaults)
@@ -40,6 +40,10 @@ class App.TicketCreate extends App.Controller
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
       @render()
+
+    # bind on new ticket_create_attributes updates
+    @bind 'ticket_create_attributes', (data) =>
+      App.SessionStorage.set('ticket_create_attributes', data)
 
   changeFormType: (e) =>
     type = $(e.target).data('type')
@@ -134,7 +138,7 @@ class App.TicketCreate extends App.Controller
   fetch: (params) ->
 
     # use cache
-    cache = App.SessionStorage.get( 'ticket_create_attributes' )
+    cache = App.SessionStorage.get('ticket_create_attributes')
 
     if cache && !params.ticket_id && !params.article_id
 
@@ -142,7 +146,7 @@ class App.TicketCreate extends App.Controller
       @form_meta = cache.form_meta
 
       # load assets
-      App.Collection.loadAssets( cache.assets )
+      App.Collection.loadAssets(cache.assets)
 
       @render()
     else
@@ -157,13 +161,13 @@ class App.TicketCreate extends App.Controller
         success: (data, status, xhr) =>
 
           # cache request
-          App.SessionStorage.set( 'ticket_create_attributes', data )
+          App.SessionStorage.set('ticket_create_attributes', data)
 
           # get edit form attributes
           @form_meta = data.form_meta
 
           # load assets
-          App.Collection.loadAssets( data.assets )
+          App.Collection.loadAssets(data.assets)
 
           # split ticket
           if data.split && data.split.ticket_id && data.split.article_id

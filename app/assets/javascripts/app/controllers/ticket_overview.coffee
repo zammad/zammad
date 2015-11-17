@@ -278,13 +278,12 @@ class Table extends App.Controller
       )
       table = $(table)
       table.delegate('[name="bulk_all"]', 'click', (e) ->
-        console.log('OOOO',  $(e.target).attr('checked') )
         if $(e.target).attr('checked')
           $(e.target).closest('table').find('[name="bulk"]').attr('checked', true)
         else
           $(e.target).closest('table').find('[name="bulk"]').attr('checked', false)
       )
-      @el.find('.table-overview').append(table)
+      @$('.table-overview').append(table)
     else
       openTicket = (id,e) =>
 
@@ -316,7 +315,7 @@ class Table extends App.Controller
           id: refObject.id
         value
       callbackCheckbox = (id, checked, e) =>
-        if @el.find('table').find('input[name="bulk"]:checked').length == 0
+        if @$('table').find('input[name="bulk"]:checked').length == 0
           @bulkForm.hide()
         else
           @bulkForm.show()
@@ -384,44 +383,39 @@ class Table extends App.Controller
     @organizationPopups()
 
     @bulkForm = new BulkForm
-      holder: @el   
+      holder: @el
+      view: @view
 
     # start bulk action observ
     @el.append( @bulkForm.el )
-    if @el.find('.table-overview').find('input[name="bulk"]:checked').length isnt 0
+    if @$('.table-overview').find('input[name="bulk"]:checked').length isnt 0
       @bulkForm.show()
 
     # show/hide bulk action
-    @el.find('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
-      console.log('YES')
-      if @el.find('.table-overview').find('input[name="bulk"]:checked').length == 0
-
-        # hide
+    @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
+      if @$('.table-overview').find('input[name="bulk"]:checked').length == 0
         @bulkForm.hide()
-
         @bulkForm.reset()
       else
-
-        # show
         @bulkForm.show()
     )
 
     # deselect bulk_all if one item is uncheck observ
-    @el.find('.table-overview').delegate('[name="bulk"]', 'click', (e) ->
+    @$('.table-overview').delegate('[name="bulk"]', 'click', (e) ->
       if !$(e.target).attr('checked')
         $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
     )
 
   getSelected: ->
     @ticketIDs = []
-    @el.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
+    @$('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
       ticket_id = $(element).val()
       @ticketIDs.push ticket_id
     )
     @ticketIDs
 
   setSelected: (ticketIDs) ->
-    @el.find('.table-overview').find('[name="bulk"]').each( (index, element) ->
+    @$('.table-overview').find('[name="bulk"]').each( (index, element) ->
       ticket_id = $(element).val()
       for ticket_id_selected in ticketIDs
         if ticket_id_selected is ticket_id
@@ -448,6 +442,7 @@ class BulkForm extends App.Controller
 
   events:
     'submit form':       'submit'
+    'click .js-submit':  'submit'
     'click .js-confirm': 'confirm'
     'click .js-cancel':  'reset'
 
@@ -472,19 +467,19 @@ class BulkForm extends App.Controller
     @html App.view('agent_ticket_view/bulk')()
 
     new App.ControllerForm(
-      el: @el.find('#form-ticket-bulk')
+      el: @$('#form-ticket-bulk')
       model:
         configure_attributes: @configure_attributes_ticket
         className:            'create'
         labelClass:           'input-group-addon'
-      form_data:   @bulk
+      form_data:  @bulk
       noFieldset: true
     )
 
     new App.ControllerForm(
-      el: @el.find('#form-ticket-bulk-comment')
+      el: @$('#form-ticket-bulk-comment')
       model:
-        configure_attributes: [{ name: 'body',         display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
+        configure_attributes: [{ name: 'body', display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
         className:            'create'
         labelClass:           'input-group-addon'
       form_data:   @bulk
@@ -492,12 +487,12 @@ class BulkForm extends App.Controller
     )
 
     @confirm_attributes = [
-      { name: 'type_id',      display: 'Type',     tag: 'select',   multiple: false, null: true, relation: 'TicketArticleType', filter: @articleTypeFilter, default: '9', translate: true, class: 'medium' }
-      { name: 'internal',     display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
+      { name: 'type_id',  display: 'Type',       tag: 'select', multiple: false, null: true, relation: 'TicketArticleType', filter: @articleTypeFilter, default: '9', translate: true, class: 'medium' }
+      { name: 'internal', display: 'Visibility', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false }
     ]
 
     new App.ControllerForm(
-      el: @el.find('#form-ticket-bulk-typeVisibility')
+      el: @$('#form-ticket-bulk-typeVisibility')
       model:
         configure_attributes: @confirm_attributes
         className:            'create'
@@ -521,7 +516,7 @@ class BulkForm extends App.Controller
     # need a delay because of the click event
     setTimeout ( => @$('.textarea.form-group textarea').focus() ), 0
 
-  reset: =>    
+  reset: =>
     @$('.js-action-step').removeClass('hide')
     @$('.js-confirm-step').addClass('hide')
 
@@ -554,9 +549,9 @@ class BulkForm extends App.Controller
   submit: (e) =>
     e.preventDefault()
 
-    @bulk_count = @el.find('.table-overview').find('[name="bulk"]:checked').length
+    @bulk_count = @holder.find('.table-overview').find('[name="bulk"]:checked').length
     @bulk_count_index = 0
-    @el.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
+    @holder.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
       @log 'notice', '@bulk_count_index', @bulk_count, @bulk_count_index
       ticket_id = $(element).val()
       ticket = App.Ticket.find(ticket_id)
@@ -568,8 +563,6 @@ class BulkForm extends App.Controller
         if params[item] != ''
           ticket_update[item] = params[item]
 
-#      @log 'notice', 'update', params, ticket_update, ticket
-
       # validate article
       if params['body']
         article = new App.TicketArticle
@@ -577,9 +570,9 @@ class BulkForm extends App.Controller
         params.ticket_id = ticket.id
         params.form_id   = @form_id
 
-        sender            = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-        type              = App.TicketArticleType.find( params['type_id'] )
-        params.sender_id  = sender.id
+        sender           = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
+        type             = App.TicketArticleType.find( params['type_id'] )
+        params.sender_id = sender.id
 
         if !params['internal']
           params['internal'] = false
@@ -606,13 +599,14 @@ class BulkForm extends App.Controller
 
           # refresh view after all tickets are proceeded
           if @bulk_count_index == @bulk_count
+            @hide()
 
             # fetch overview data again
             App.OverviewIndexCollection.fetch()
             App.OverviewCollection.fetch(@view)
       )
     )
-    @el.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
+    @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
     App.Event.trigger 'notify', {
       type: 'success'
       msg: App.i18n.translateContent('Bulk-Action executed!')
