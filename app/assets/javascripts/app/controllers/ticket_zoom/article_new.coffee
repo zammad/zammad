@@ -379,7 +379,6 @@ class App.TicketZoomArticleNew extends App.Controller
     @scrollToBottom() if wasScrolledToBottom
 
   isScrolledToBottom: ->
-    console.log 'isScrolledToBottom', @el.scrollParent().scrollTop() + @el.scrollParent().height(), @el.scrollParent().prop('scrollHeight')
     return @el.scrollParent().scrollTop() + @el.scrollParent().height() is @el.scrollParent().prop('scrollHeight')
 
   scrollToBottom: ->
