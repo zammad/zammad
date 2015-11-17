@@ -9,11 +9,11 @@
   <h2><%- @T('Designer') %></h2>
 
   <div class="form-group">
-    <label class="formGroup-label">Preview Width</label>
+    <label class="formGroup-label"><%- @T('Preview Width') %></label>
     <div class="control">
       <div class="select-tabs js-selectBrowserWidth">
         <div class="tab" data-value="375">iPhone 6</div>
-        <div class="tab is-selected" data-value="fit">Fit Width</div>
+        <div class="tab is-selected" data-value="fit"><%- @T('Fit Width') %></div>
         <div class="tab" data-value="1280">MacBook</div>
       </div>
     </div>
@@ -32,7 +32,7 @@
         <div class="js-chat zammad-chat zammad-chat-is-visible zammad-chat-is-open" style="bottom: 0px;">
           <div class="zammad-chat-header js-chat-open js-backgroundColor">
             <div class="zammad-chat-header-controls">
-              <span class="zammad-chat-agent-status" data-status="online">Online</span>
+              <span class="zammad-chat-agent-status" data-status="online"><%- @T('Online') %></span>
               <span class="zammad-chat-header-icon">
                 <svg class="zammad-chat-header-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"></path></svg>
                 <svg class="zammad-chat-header-icon-close js-chat-close" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"></path></svg>
@@ -41,26 +41,26 @@
             <div class="zammad-chat-agent">
               <img class="zammad-chat-agent-avatar" src="/assets/images/chat-demo-avatar.png">
               <span class="zammad-chat-agent-sentence">
-                <span class="zammad-chat-agent-name">John Smith</span>
+                <span class="zammad-chat-agent-name"><%- @T('John Smith') %></span>
               </span>
             </div>
             <div class="zammad-chat-welcome zammad-chat-is-hidden">
               <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"></path></svg>
-              <span class="zammad-chat-welcome-text"><strong>Chatten</strong> sie mit uns!</span>
+              <span class="zammad-chat-welcome-text"><%- @T('<strong>Chat</strong> with us!') %></span>
             </div>
           </div>
           <div class="zammad-chat-body">
-            <div class="zammad-chat-timestamp"><strong>Heute</strong> 14:45</div>
+            <div class="zammad-chat-timestamp"><strong><%- @T('Today') %></strong> 14:45</div>
             <div class="zammad-chat-message zammad-chat-message--customer">
-              <span class="zammad-chat-message-body js-backgroundColor">Hello! I need help with your product.</span>
+              <span class="zammad-chat-message-body js-backgroundColor"><%- @T('Hello! I need help with your product.') %></span>
             </div>
             <div class="zammad-chat-message zammad-chat-message--agent">
-              <span class="zammad-chat-message-body">Hi! Which one of our products?</span>
+              <span class="zammad-chat-message-body"><%- @T('Hi! Which one of our products?') %></span>
             </div>
           </div>
           <form class="zammad-chat-controls">
             <textarea class="zammad-chat-input" rows="1" placeholder="Ihre Nachricht..."></textarea>
-            <button type="submit" class="zammad-chat-button zammad-chat-send js-backgroundColor">Senden</button>
+            <button type="submit" class="zammad-chat-button zammad-chat-send js-backgroundColor"><%- @T('Send') %></button>
           </form>
         </div>
       </div>
