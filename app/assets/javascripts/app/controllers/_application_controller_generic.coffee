@@ -368,6 +368,7 @@ class App.ControllerTabs extends App.Controller
       header: @header
       subHeader: @subHeader
       tabs: @tabs
+      addTab: @addTab
     )
 
     # insert content
@@ -381,8 +382,8 @@ class App.ControllerTabs extends App.Controller
         new tab.controller( params )
 
     # check if tabs need to be hidden
-    if @tabs.length <= 1
-      @el.find('.nav-tabs').addClass('hide')
+    # if @tabs.length <= 1
+    #   @el.find('.page-tabs').addClass('hide')
 
     # set last or first tab to active
     @lastActiveTab = @Config.get('lastTab')

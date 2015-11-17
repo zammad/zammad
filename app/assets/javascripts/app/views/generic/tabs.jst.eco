@@ -4,10 +4,17 @@
   </div>
 </div>
 <div class="page-content">
-  <ul class="nav nav-tabs" role="tablist">
-    <% for tab in @tabs: %>
-      <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
+  <div class="page-tabs">
+    <ul class="nav nav-tabs" role="tablist">
+      <% for tab in @tabs: %>
+        <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
+      <% end %>
+    </ul>
+    <% if @addTab: %>
+    <div class="btn btn--success btn--quad">
+      <%- @Icon('plus') %>
+    </div>
     <% end %>
-  </ul>
+  </div>
   <div class="tab-content"></div>
 </div>

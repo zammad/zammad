@@ -246,6 +246,29 @@ blockquote {
   z-index: 1;
 }
 
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 20px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background: hsl(197,20%,93%);
+  border: 1px solid hsl(198,18%,86%);
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05) inset;
+}
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  white-space: pre-wrap;
+  background-color: transparent;
+  border-radius: 0;
+}
+
 .textarea::placeholder,
 .form-control::placeholder,
 .token-input::placeholder {
@@ -1806,6 +1829,15 @@ kbd {
 
 .page-description p {
   color: initial;
+}
+
+.page-tabs {
+  display: flex;
+  margin: 28px 0 50px;
+  
+  .btn {
+    margin-left: auto;
+  }
 }
 
 .page-body--two-column {
@@ -5639,10 +5671,6 @@ footer {
   border-color: hsl(0,0%,90%);
 }
 
-.main .nav-tabs:first-child {
-  margin: 28px 0 50px;
-}
-
 .tab-content {
   margin-top: 20px;
 }
@@ -7438,7 +7466,7 @@ output {
     padding-top: 11px;
     
     &.is-selected {
-      background: linear-gradient(hsla(199,30%,40%,.08), hsla(199,30%,40%,.03));
+      background: linear-gradient(hsla(202,50%,20%,0.1), hsla(202,50%,20%,.03));
     }
   }
 }

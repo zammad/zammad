@@ -1,4 +1,29 @@
-class App.ChannelChat extends App.Controller
+class App.ChannelChat extends App.ControllerTabs
+  header: 'Chat Widget'
+  addTab: true
+
+  constructor: ->
+    super
+
+    @title @header, true
+
+    @tabs = [
+      {
+        name:       'company.com/sales',
+        target:     'company-com-sales',
+        controller: App.ChannelChatDesigner,
+      },
+      {
+        name:       'company.com',
+        target:     'company-com',
+        controller: App.ChannelChatDesigner,
+      }
+    ]
+
+    @render()
+
+
+class App.ChannelChatDesigner extends App.Controller
   events:
     'click .js-add': 'new'
     'click .js-edit': 'edit'

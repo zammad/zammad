@@ -4,7 +4,54 @@
   </div>
 </div>
 <div class="page-content">
-  <p><%- @T('You can embedd this widget into your web page to allow visitors to directly chat with you.') %></p>
+  <p><%- @T('You can create chat widgets for your webpages to allow visitors to chat with you.') %></p>
+
+  <% if _.isEmpty(@chats): %>
+  <p><%- @T('You have no configured chat\'s right now.') %></p>
+<% else: %>
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th style="white-space: nowrap;"><%- @T('Name') %></th>
+        <th style="white-space: nowrap;"><%- @T('Note') %></th>
+        <th style="white-space: nowrap;"><%- @T('Max Queue') %></th>
+        <th style="white-space: nowrap;"><%- @T('Delete') %></th>
+      </tr>
+    </thead>
+    <tbody>
+<% for chat in @chats: %>
+      <tr data-id="<%= chat.id %>">
+        <td>
+          <label class="inline-label">
+            <a class="js-edit is-clickable"><%= chat.name %></a>
+          </label>
+        <td>
+          <label class="inline-label">
+            <%= chat.note %>
+          </label>
+        <td>
+          <label class="inline-label">
+            <%= chat.max_queue %>
+          </label>
+        <td>
+          <div class="settings-list-rowControls">
+            <div class="btn btn--text js-remove">
+              <%- @Icon('trash') %> <%- @T('Remove') %>
+            </div>
+          </div>
+<% end %>
+      <tr class="settings-list-controlRow">
+        <td>
+        <td>
+        <td>
+        <td>
+          <div class="btn btn--text js-add">
+            <%- @Icon('plus-small') %> <%- @T('Add') %>
+          </div>
+
+    </tbody>
+  </table>
+<% end %>
   
   <h2><%- @T('Designer') %></h2>
 
@@ -129,11 +176,10 @@
             </label>
       </tbody>
     </table>
-  </div>
 
-  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
+    <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
 
-  <pre>
+    <pre>
 &lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
@@ -146,56 +192,5 @@ $(function() {
   </form>
 
   <div class="js-settings"></div>
-
-  <hr>
-
-  <h2><%- @T('Topics') %></h2>
-
-<% if _.isEmpty(@chats): %>
-  <p><%- @T('You have no configured chat\'s right now.') %></p>
-<% else: %>
-  <table class="settings-list">
-    <thead>
-      <tr>
-        <th style="white-space: nowrap;"><%- @T('Name') %></th>
-        <th style="white-space: nowrap;"><%- @T('Note') %></th>
-        <th style="white-space: nowrap;"><%- @T('Max Queue') %></th>
-        <th style="white-space: nowrap;"><%- @T('Delete') %></th>
-      </tr>
-    </thead>
-    <tbody>
-<% for chat in @chats: %>
-      <tr data-id="<%= chat.id %>">
-        <td>
-          <label class="inline-label">
-            <a class="js-edit is-clickable"><%= chat.name %></a>
-          </label>
-        <td>
-          <label class="inline-label">
-            <%= chat.note %>
-          </label>
-        <td>
-          <label class="inline-label">
-            <%= chat.max_queue %>
-          </label>
-        <td>
-          <div class="settings-list-rowControls">
-            <div class="btn btn--text js-remove">
-              <%- @Icon('trash') %> <%- @T('Remove') %>
-            </div>
-          </div>
-<% end %>
-      <tr class="settings-list-controlRow">
-        <td>
-        <td>
-        <td>
-        <td>
-          <div class="btn btn--text js-add">
-            <%- @Icon('plus-small') %> <%- @T('Add') %>
-          </div>
-
-    </tbody>
-  </table>
-<% end %>
 
 </div>
