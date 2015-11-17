@@ -45,6 +45,12 @@ class AgentTicketOverviewLevel0Test < TestCase
       css: '.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
+
+    # scroll to reply - needed for chrome
+    scroll_to(
+      position: 'top',
+      css:      '.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+    )
     click(
       css: '.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
