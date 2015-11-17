@@ -7329,6 +7329,8 @@ output {
   border: 1px solid hsl(0,0%,90%);
   border-radius: 5px;
   position: relative;
+  transition: 500ms;
+  width: 100%;
 }
   
 .browser-body {
@@ -7336,8 +7338,6 @@ output {
   overflow: hidden;
   height: 450px;
   width: 100%;
-  transition: 500ms;
-  background: #eee;
   
   iframe {
     position: absolute;

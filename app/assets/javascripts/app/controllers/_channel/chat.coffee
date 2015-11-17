@@ -69,7 +69,7 @@ class App.ChannelChat extends App.Controller
 
     # reset zoom
     @chat.css('transform', "")
-    @demo.css('width', "")
+    @browser.css('width', "")
     @chat.removeClass('is-fullscreen')
     @iframe.css
       transform: ""
@@ -80,7 +80,7 @@ class App.ChannelChat extends App.Controller
 
     if width < @demo.width()
       @chat.addClass('is-fullscreen')
-      @demo.css('width', "#{ width }px")
+      @browser.css('width', "#{ width }px")
     else
       percentage = @demo.width()/width
       @chat.css('transform', "scale(#{ percentage })")
