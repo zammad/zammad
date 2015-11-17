@@ -505,10 +505,10 @@ class App.Controller extends Spine.Controller
 
   # central method, is getting called on every ticket form change
   ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>
-    if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
-      dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+    if @formMeta.dependencies && @formMeta.dependencies[attribute.name]
+      dependency = @formMeta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
       if !dependency
-        dependency = @form_meta.dependencies[attribute.name][ params[attribute.name] ]
+        dependency = @formMeta.dependencies[attribute.name][ params[attribute.name] ]
       if dependency
         for fieldNameToChange of dependency
           filter = []

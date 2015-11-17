@@ -291,7 +291,7 @@ class TestCase < Test::Unit::TestCase
 
     execute(
       browser:  instance,
-      js:       "\$('#{params[:css]}').get(0).scrollIntoView(true)",
+      js:       "\$('#{params[:css]}').get(0).scrollIntoView(false)",
       mute_log: params[:mute_log]
     )
     sleep 0.4

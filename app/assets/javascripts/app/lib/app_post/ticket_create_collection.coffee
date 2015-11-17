@@ -1,8 +1,8 @@
 class _Singleton extends App._CollectionSingletonBase
-  event: 'ticket_overview_index'
-  restEndpoint: '/ticket_overviews'
+  event: 'ticket_create_attributes'
+  restEndpoint: '/ticket_create'
 
-class App.OverviewIndexCollection
+class App.TicketCreateCollection
   _instance = new _Singleton
 
   @get: ->

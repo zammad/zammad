@@ -27,10 +27,10 @@ returns
 
   def self.attributes_to_change(params)
     if params[:ticket_id]
-      params[:ticket] = Ticket.find( params[:ticket_id] )
+      params[:ticket] = Ticket.find(params[:ticket_id])
     end
     if params[:article_id]
-      params[:article] = Ticket::Article.find( params[:article_id] )
+      params[:article] = Ticket::Article.find(params[:article_id])
     end
 
     filter = {}
@@ -46,7 +46,7 @@ returns
       state_ids.push params[:ticket].state.id
     end
     state_types.each {|type|
-      state_type = Ticket::StateType.find_by( name: type )
+      state_type = Ticket::StateType.find_by(name: type)
 
       next if !state_type
 
@@ -59,7 +59,7 @@ returns
 
     # get priorities
     priority_ids = []
-    Ticket::Priority.where( active: true ).each { |priority|
+    Ticket::Priority.where(active: true).each { |priority|
       assets = priority.assets(assets)
       priority_ids.push priority.id
     }
@@ -99,8 +99,10 @@ returns
 
     {
       assets: assets,
-      filter: filter,
-      dependencies: dependencies,
+      form_meta: {
+        filter: filter,
+        dependencies: dependencies,
+      }
     }
   end
 

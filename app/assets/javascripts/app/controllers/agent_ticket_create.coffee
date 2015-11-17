@@ -12,11 +12,8 @@ class App.TicketCreate extends App.Controller
 
     # check authentication
     if !@authenticate()
-      App.TaskManager.remove( @task_key )
+      App.TaskManager.remove(@task_key)
       return
-
-    # set title
-    @form_meta = undefined
 
     # define default type
     @default_type = 'phone-in'
@@ -29,8 +26,6 @@ class App.TicketCreate extends App.Controller
     # update navbar highlighting
     @navupdate '#ticket/create/id/' + @id + split
 
-    @fetch(params)
-
     # lisen if view need to be rerendered
     @bind 'ticket_create_rerender', (defaults) =>
       @log 'notice', 'error', defaults
@@ -41,9 +36,11 @@ class App.TicketCreate extends App.Controller
       return if !@authenticate(true)
       @render()
 
-    # bind on new ticket_create_attributes updates
-    @bind 'ticket_create_attributes', (data) =>
-      App.SessionStorage.set('ticket_create_attributes', data)
+    load = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
+      @buildScreen(params)
+    @bindId = App.TicketCreateCollection.one(load)
 
   changeFormType: (e) =>
     type = $(e.target).data('type')
@@ -121,9 +118,6 @@ class App.TicketCreate extends App.Controller
     return false if !diff || _.isEmpty( diff )
     return true
 
-  release: ->
-    # nothing
-
   autosave: =>
     update = =>
       data = @formParam( @el.find('.ticket-create') )
@@ -135,59 +129,44 @@ class App.TicketCreate extends App.Controller
     @interval( update, 3000, @id )
 
   # get data / in case also ticket data for split
-  fetch: (params) ->
+  buildScreen: (params) =>
 
-    # use cache
-    cache = App.SessionStorage.get('ticket_create_attributes')
-
-    if cache && !params.ticket_id && !params.article_id
-
-      # get edit form attributes
-      @form_meta = cache.form_meta
-
-      # load assets
-      App.Collection.loadAssets(cache.assets)
-
+    if !params.ticket_id && !params.article_id
       @render()
-    else
-      @ajax(
-        id:    'ticket_create' + @task_key
-        type:  'GET'
-        url:   @apiPath + '/ticket_create'
-        data:
-          ticket_id: params.ticket_id
-          article_id: params.article_id
-        processData: true
-        success: (data, status, xhr) =>
+      return
 
-          # cache request
-          App.SessionStorage.set('ticket_create_attributes', data)
+    # fetch split ticket data
+    @ajax(
+      id:    'ticket_split' + @task_key
+      type:  'GET'
+      url:   @apiPath + '/ticket_split'
+      data:
+        ticket_id: params.ticket_id
+        article_id: params.article_id
+      processData: true
+      success: (data, status, xhr) =>
 
-          # get edit form attributes
-          @form_meta = data.form_meta
+        # load assets
+        App.Collection.loadAssets(data.assets)
 
-          # load assets
-          App.Collection.loadAssets(data.assets)
+        # prefill with split ticket
+        t = App.Ticket.find( params.ticket_id ).attributes()
+        a = App.TicketArticle.find( params.article_id )
 
-          # split ticket
-          if data.split && data.split.ticket_id && data.split.article_id
-            t = App.Ticket.find( params.ticket_id ).attributes()
-            a = App.TicketArticle.find( params.article_id )
+        # reset owner
+        t.owner_id               = 0
+        t.customer_id_completion = a.from
+        t.subject                = a.subject || t.title
 
-            # reset owner
-            t.owner_id               = 0
-            t.customer_id_completion = a.from
-            t.subject                = a.subject || t.title
+        # convert non text/html from text 2 html
+        if a.content_type.match(/\/html/)
+          t.body = a.body
+        else
+          t.body  = App.Utils.text2html( a.body )
 
-            # convert non text/html from text 2 html
-            if a.content_type.match(/\/html/)
-              t.body = a.body
-            else
-              t.body  = App.Utils.text2html( a.body )
-
-          # render page
-          @render( options: t )
-      )
+        # render page
+        @render( options: t )
+    )
 
   render: (template = {}) ->
 
@@ -259,7 +238,7 @@ class App.TicketCreate extends App.Controller
         @ticketFormChanges,
         signatureChanges,
       ]
-      filter:     @form_meta.filter
+      filter:     @formMeta.filter
       autofocus: true
       params:    params
     )
@@ -282,7 +261,7 @@ class App.TicketCreate extends App.Controller
         @ticketFormChanges,
         signatureChanges,
       ]
-      filter:     @form_meta.filter
+      filter:     @formMeta.filter
       params:     params
       noFieldset: true
     )
@@ -297,7 +276,7 @@ class App.TicketCreate extends App.Controller
         @ticketFormChanges,
         signatureChanges,
       ]
-      filter:   @form_meta.filter
+      filter:   @formMeta.filter
       params:   params
     )
 

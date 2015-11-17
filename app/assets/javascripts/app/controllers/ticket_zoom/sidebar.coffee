@@ -33,7 +33,7 @@ class App.TicketZoomSidebar extends App.Controller
           handlers: [
             @ticketFormChanges
           ]
-          filter:    @form_meta.filter
+          filter:    @formMeta.filter
           params:    defaults
           #bookmarkable: true
         )

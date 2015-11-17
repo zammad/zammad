@@ -39,17 +39,9 @@ class Sessions::Backend::TicketCreate
     # set new timeout
     Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
 
-    ticket_create_attributes = load
+    data = load
 
-    return if !ticket_create_attributes
-
-    data = {
-      assets: ticket_create_attributes[:assets],
-      form_meta: {
-        filter: ticket_create_attributes[:filter],
-        dependencies: ticket_create_attributes[:dependencies],
-      }
-    }
+    return if !data
 
     if !@client
       return {

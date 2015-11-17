@@ -17,7 +17,7 @@ class App.TicketZoom extends App.Controller
       App.TaskManager.remove(@task_key)
       return
 
-    @form_meta            = undefined
+    @formMeta             = undefined
     @ticket_id            = params.ticket_id
     @article_id           = params.article_id
     @sidebarState         = {}
@@ -235,7 +235,7 @@ class App.TicketZoom extends App.Controller
     @tags = data.tags
 
     # get edit form attributes
-    @form_meta = data.form_meta
+    @formMeta = data.form_meta
 
     # load assets
     App.Collection.loadAssets(data.assets)
@@ -331,7 +331,7 @@ class App.TicketZoom extends App.Controller
         ticket:    @ticket
         ticket_id: @ticket.id
         el:        @$('.article-new')
-        form_meta: @form_meta
+        formMeta:  @formMeta
         form_id:   @form_id
         defaults:  @taskGet('article')
         task_key:  @task_key
@@ -365,7 +365,7 @@ class App.TicketZoom extends App.Controller
         task_key:     @task_key
         tags:         @tags
         links:        @links
-        form_meta:    @form_meta
+        formMeta:     @formMeta
       )
 
     # show article
