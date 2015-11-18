@@ -16,15 +16,16 @@ class Index extends App.ControllerContent
     @ajax(
       id:    'packages',
       type:  'GET',
-      url:   @apiPath + '/packages',
+      url:   "#{@apiPath}/packages",
       processData: true,
       success: (data) =>
-        @render(data)
+        @packages = data
+        @render()
       )
 
-  render: (data) ->
+  render: ->
 
-    for item in data.packages
+    for item in @packages
       item.action = []
       if item.state == 'installed'
 #        item.action = ['uninstall', 'deactivate']
@@ -36,7 +37,7 @@ class Index extends App.ControllerContent
 
     @html App.view('package')(
       head:     'Dashboard'
-      packages: data.packages
+      packages: @packages
     )
 
   action: (e) ->
@@ -48,12 +49,12 @@ class Index extends App.ControllerContent
 
     if httpType
       @ajax(
-        id:    'packages',
-        type:  httpType,
-        url:   @apiPath + '/packages',
-        data:  JSON.stringify( { id: id } ),
-        processData: false,
-        success: (data) =>
+        id:    'packages'
+        type:  httpType
+        url:   "#{@apiPath}/packages",
+        data:  JSON.stringify( { id: id } )
+        processData: false
+        success: =>
           @load()
         )
 

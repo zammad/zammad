@@ -1,7 +1,6 @@
 class Index extends App.ControllerContent
-  divClass: 'lala'
   events:
-    'click [data-type="delete"]': 'destroy'
+    'click .js-delete': 'destroy'
 
   constructor: ->
     super
@@ -27,26 +26,25 @@ class Index extends App.ControllerContent
       url:   @apiPath + '/sessions'
       success: (data) =>
         @stopLoading()
-        @render(data)
+        App.Collection.loadAssets(data.assets)
+        @sessions = data.sessions
+        @render()
     )
 
-  render: (data) ->
-
-    # load assets
-    App.Collection.loadAssets( data.assets )
+  render: ->
 
     # fill users
-    for session in data.sessions
+    for session in @sessions
       if session.data && session.data.user_id
-        session.data.user = App.User.find( session.data.user_id )
+        session.data.user = App.User.find(session.data.user_id)
 
     @html App.view('session')(
-      sessions: data.sessions
+      sessions: @sessions
     )
 
   destroy: (e) ->
     e.preventDefault()
-    sessionId = $( e.target ).closest('a').data('session-id')
+    sessionId = $(e.target ).closest('a').data('session-id')
     @ajax(
       id:    'sessions/' + sessionId
       type:  'DELETE'
@@ -55,4 +53,4 @@ class Index extends App.ControllerContent
         @load()
     )
 
-App.Config.set( 'Session', { prio: 3700, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Session', { prio: 3700, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

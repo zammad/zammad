@@ -1,12 +1,11 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T('Translations') %> <small></small></h1>
+    <h1><%- @T('Translations') %> <small><%= @currentLanguage %></small></h1>
   </div>
   <div class="page-header-meta">
     <a class="btn btn--success js-syncChanges"><%- @T('Get latest translations') %></a>
     <a class="btn btn--danger hidden js-changes js-resetChanges"><%- @T('Reset changes') %></a>
     <a class="btn btn--primary hidden js-changes js-pushChanges"><%- @T('Push my changes') %></a>
-    <div class="language"></div>
   </div>
 </div>
 <div class="page-content">

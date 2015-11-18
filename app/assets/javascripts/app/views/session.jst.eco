@@ -21,7 +21,7 @@
         <td title="<%= session.data.remote_id %>"><% if session.data.geo && session.data.geo.country_name: %><%= session.data.geo.country_name %> <%= session.data.geo.city_name %><% else: %><%= session.data.remote_id %><% end %></td>
         <td><%- @humanTime(session.created_at) %></td>
         <td><%- @humanTime(session.updated_at) %></td>
-        <td><a href="#" data-session-id="<%- session.id %>" data-type="delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a></td>
+        <td><a href="#" data-session-id="<%- session.id %>" class="js-delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a></td>
       </tr>
       <% end %>
     </tbody>

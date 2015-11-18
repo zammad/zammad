@@ -154,50 +154,53 @@ reset translations to origin
 
 get list of translations
 
-  list = Translation.list('de-de')
+  list = Translation.lang('de-de')
 
 =end
 
-  def self.list(locale, admin = false)
+  def self.lang(locale, admin = false)
 
     # use cache if not admin page is requested
     if !admin
       data = cache_get(locale)
+      return data if data
     end
-    if !data
 
-      # show total translations as reference count
-      data = {
-        'total' => Translation.where(locale: 'de-de').count,
-      }
-      list = []
+    # show total translations as reference count
+    data = {
+      'total' => Translation.where(locale: 'de-de').count,
+    }
+    list = []
+    if admin
       translations = Translation.where(locale: locale.downcase).order(:source)
-      translations.each { |item|
-        if admin
-          translation_item = [
-            item.id,
-            item.source,
-            item.target,
-            item.target_initial,
-            item.format,
-          ]
-          list.push translation_item
-        else
-          translation_item = [
-            item.id,
-            item.source,
-            item.target,
-            item.format,
-          ]
-          list.push translation_item
-        end
-        data['list'] = list
-      }
-
-      # set cache
-      if !admin
-        cache_set(locale, data)
+    else
+      translations = Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
+    end
+    translations.each { |item|
+      if admin
+        translation_item = [
+          item.id,
+          item.source,
+          item.target,
+          item.target_initial,
+          item.format,
+        ]
+        list.push translation_item
+      else
+        translation_item = [
+          item.id,
+          item.source,
+          item.target,
+          item.format,
+        ]
+        list.push translation_item
       end
+      data['list'] = list
+    }
+
+    # set cache
+    if !admin
+      cache_set(locale, data)
     end
 
     data
@@ -214,13 +217,13 @@ translate strings in ruby context, e. g. for notifications
   def self.translate(locale, string)
 
     # translate string
-    records = Translation.where( locale: locale, source: string )
+    records = Translation.where(locale: locale, source: string)
     records.each {|record|
       return record.target if record.source == string
     }
 
     # fallback lookup in en
-    records = Translation.where( locale: 'en', source: string )
+    records = Translation.where(locale: 'en', source: string)
     records.each {|record|
       return record.target if record.source == string
     }
@@ -237,14 +240,14 @@ translate strings in ruby context, e. g. for notifications
   end
 
   def cache_clear
-    Cache.delete( 'TranslationMap::' + locale.downcase )
+    Cache.delete('TranslationMapOnlyContent::' + locale.downcase)
   end
 
   def self.cache_set(locale, data)
-    Cache.write( 'TranslationMap::' + locale.downcase, data )
+    Cache.write('TranslationMapOnlyContent::' + locale.downcase, data)
   end
 
   def self.cache_get(locale)
-    Cache.get( 'TranslationMap::' + locale.downcase )
+    Cache.get('TranslationMapOnlyContent::' + locale.downcase)
   end
 end
