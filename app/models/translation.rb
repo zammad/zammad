@@ -44,16 +44,17 @@ dedicated:
       )
       fail "Can't load translations from #{url}: #{result.error}" if !result.success?
 
+      translations = Translation.where(locale: locale).all
       ActiveRecord::Base.transaction do
         result.data.each {|translation_raw|
 
           # handle case insensitive sql
-          exists      = Translation.where(locale: translation_raw['locale'], format: translation_raw['format'], source: translation_raw['source'])
           translation = nil
-          exists.each {|item|
-            if item.source == translation_raw['source']
-              translation = item
-            end
+          translations.each {|item|
+            next if item.format != translation_raw['format']
+            next if item.source != translation_raw['source']
+            translation = item
+            break
           }
           if translation
 
