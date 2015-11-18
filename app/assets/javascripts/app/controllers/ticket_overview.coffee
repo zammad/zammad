@@ -128,6 +128,7 @@ class Navbar extends App.Controller
     items = App.OverviewIndexCollection.get()
     @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' }")
       items: items
+      isAgent: @isRole('Agent')
 
     while @clone.width() > @tabsHolder.width()
       @tabClone.not('.hide').last().addClass('hide')

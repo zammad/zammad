@@ -21,9 +21,11 @@
     <% end %>
   </div>
 </div>
+<% if @isAgent: %>
 <a class="btn btn--success btn--quad" href="#ticket/create">
   <%- @Icon('plus') %>
 </a>
+<% end %>
 <% if @items: %>
 <div class="tabs tabs--inline tabs--big tabs-clone u-invisible js-tabsClone">
   <% for item in @items: %>

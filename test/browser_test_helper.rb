@@ -254,14 +254,9 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     if params[:css]
 
-      scroll_to(
-        browser:  instance,
-        css:      params[:css],
-        mute_log: true,
-      )
-
       element = instance.find_elements( { css: params[:css] } )[0]
       instance.mouse.move_to(element)
+      sleep 0.2
       element.click
 
       # trigger also focus on input/select and textarea fields
@@ -278,8 +273,9 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   scroll_to(
-    browser: browser1,
-    css:     '.some_class',
+    browser:  browser1,
+    position: 'top', # botton
+    css:      '.some_class',
   )
 
 =end
@@ -289,12 +285,17 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
+    position = 'true'
+    if params[:position] == 'botton'
+      position = 'false'
+    end
+
     execute(
       browser:  instance,
-      js:       "\$('#{params[:css]}').get(0).scrollIntoView(false)",
+      js:       "\$('#{params[:css]}').get(0).scrollIntoView(#{position})",
       mute_log: params[:mute_log]
     )
-    sleep 0.4
+    sleep 0.2
   end
 
 =begin
@@ -1467,6 +1468,10 @@ wait untill text in selector disabppears
     )
     instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
     sleep 1
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "none")',
+    )
     instance.find_elements( { partial_link_text: params[:number] } )[0].click
     sleep 1
     number = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
