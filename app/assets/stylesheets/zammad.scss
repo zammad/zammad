@@ -1809,7 +1809,6 @@ kbd {
   margin-left: auto;
   padding-left: 9px;
   display: flex;
-  margin-right: 20px;
 
   .btn + .btn {
     margin-left: 9px;
@@ -2113,8 +2112,13 @@ ol.tabs li {
     border-radius: 3px 0 0 3px;
   }
 
-  .tab:last-child {
+  .tab:last-child:not(:only-child) {
     border-radius: 0 3px 3px 0;
+    border-right: none;
+  }
+
+  .tab:only-child {
+    border-radius: 3px;
     border-right: none;
   }
 
@@ -2141,20 +2145,24 @@ ol.tabs li {
     .tab {
       height: auto;
       padding: 10px 23px 9px;
+      
+      &:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+
+      &:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+
+      &:only-child {
+        border-radius: 8px;
+      }
     }
 
     .tab-dropdown {
       padding-left: 18px;
       padding-right: 15px;
     }
-  }
-
-  .tabs--big .tab:first-child {
-    border-radius: 8px 0 0 8px;
-  }
-
-  .tabs--big .tab:last-child {
-    border-radius: 0 8px 8px 0;
   }
 
   .dashboard .tabs--big {
