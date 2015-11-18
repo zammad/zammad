@@ -5632,7 +5632,6 @@ footer {
 
 .nav-tabs {
   display: flex;
-  justify-content: center;
   margin: 10px -20px 20px;
   padding: 0 20px 0 21px; /* margin-left: -1px */
   position: relative;
@@ -5672,12 +5671,7 @@ footer {
 }
 
 .tab-content {
-  margin: -40px 0 0;
-  padding: 39px 20px 20px;
-  border: 1px solid hsl(0,0%,90%);
-  border-top-color: hsl(0,0%,87%);
-  background: hsl(210,7%,95%);
-  border-radius: 12px;
+  margin-top: 25px;
   
   h2:first-child {
     margin-top: 0;
