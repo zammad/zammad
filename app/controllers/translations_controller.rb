@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TranslationsController < ApplicationController
-  before_action :authentication_check, except: [:load]
+  before_action :authentication_check, except: [:lang]
 
   # GET /translations/lang/:locale
   def lang
