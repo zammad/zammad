@@ -363,8 +363,6 @@ class App.ControllerTabs extends App.Controller
     super
 
   render: ->
-    @el.addClass 'main--tabs'
-
     @html App.view('generic/tabs')(
       header: @header
       subHeader: @subHeader

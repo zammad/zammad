@@ -1780,7 +1780,6 @@ kbd {
 .page-header {
   margin: 0 0 15px;
   padding: 0;
-  border: none;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -1810,6 +1809,7 @@ kbd {
   margin-left: auto;
   padding-left: 9px;
   display: flex;
+  margin-right: 20px;
 
   .btn + .btn {
     margin-left: 9px;
@@ -1829,35 +1829,6 @@ kbd {
 
 .page-description p {
   color: initial;
-}
-
-.main--tabs .page-header {
-  padding: 20px 20px 0;
-  overflow: hidden;
-  margin: 0;
-}
-
-.main--tabs .page-content {
-  padding: 20px;
-}
-
-.page-tabs {
-  display: flex;
-  margin: 0 0 30px;
-  padding: 20px 20px 0;
-  background: linear-gradient(hsla(200,12%,94%,0), hsl(200,12%,94%));
-  border-bottom: 1px solid hsl(200,12%,89%);
-  
-  .nav-tabs li.active {
-    background: hsl(210,17%,98%);
-    border-bottom-color: hsl(210,17%,98%);
-    margin-bottom: -1px;
-    padding-bottom: 1px;
-  }
-  
-  .btn {
-    margin-left: auto;
-  }
 }
 
 .page-body--two-column {
@@ -5649,21 +5620,51 @@ footer {
   margin: 0;
 }
 
+.nav {
+  list-style: none;
+  padding: 0;
+}
+
+.nav a {
+  padding: 10px 15px;
+  display: block;
+}
+
 .nav-tabs {
   display: flex;
-  margin-left: 1px;
+  margin: 10px 0 20px;
 }
 
 .nav-tabs li {
   margin: 0;
-  border-radius: 3px 3px 0 0;
-  border: 1px solid hsl(200,12%,89%);
-  border-bottom-color: transparent;
+  color: hsl(0,0%,70%);
+  border: 1px solid hsl(0,0%,90%);
   margin-left: -1px;
-}
+  background: white;
+  
+  &:first-child {
+    border-radius: 5px 0 0 5px;
+  }
+  
+  &:last-child {
+    border-radius: 0 5px 5px 0;
+  }
 
-.nav-tabs li.active {
-  position: relative;
+  &:only-child {
+    border-radius: 5px;
+  }
+  
+  &.active {
+    color: white;
+    background: hsl(206,7%,28%);
+    border-color: hsl(206,7%,28%);
+  }
+
+  a {
+    padding-bottom: 8px;
+    color: inherit;
+    color: inherit;
+  }
 }
 
 .tab-content {
