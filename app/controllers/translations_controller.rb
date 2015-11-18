@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class TranslationsController < ApplicationController
-  before_action :authentication_check, except: [:load]
+  before_action :authentication_check, except: [:lang]
 
   # GET /translations/lang/:locale
-  def load
-    render json: Translation.list( params[:locale] )
+  def lang
+    render json: Translation.lang(params[:locale])
   end
 
   # PUT /translations/push
@@ -36,7 +36,7 @@ class TranslationsController < ApplicationController
   # GET /translations/admin/lang/:locale
   def admin
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    render json: Translation.list( params[:locale], true )
+    render json: Translation.lang(params[:locale], true)
   end
 
   # GET /translations

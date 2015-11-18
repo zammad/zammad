@@ -170,7 +170,7 @@ class App.ControllerGenericIndex extends App.Controller
     # append content table
     params = _.extend(
       {
-        el:         @el.find('.table-overview')
+        el:         @$('.table-overview')
         model:      App[ @genericObject ]
         objects:    objects
         bindRow:
@@ -301,59 +301,15 @@ class App.ControllerDrox extends App.Controller
   inline: (data) ->
     @html App.view('generic/drox')(data)
     if data.text
-      @el.find('.drox-body').text(data.text)
+      @$('.drox-body').text(data.text)
     if data.html
-      @el.find('.drox-body').html(data.html)
+      @$('.drox-body').html(data.html)
 
   template: (data) ->
     drox = $( App.view('generic/drox')(data) )
     content = App.view(data.file)(data.params)
     drox.find('.drox-body').append(content)
     drox
-
-class App.ControllerLevel2 extends App.ControllerContent
-  events:
-    'click [data-toggle="tabnav"]': 'toggle',
-
-  constructor: ->
-    super
-
-  render: ->
-
-    # set title
-    @title @page.title
-    @navupdate @page.nav
-
-    @html App.view('generic/admin_level2/index')(
-      page:     @page
-      menus:    @menu
-      type:     @type
-      target:   @target
-    )
-
-    if !@target
-      @target = @menu[0]['target']
-
-    for menu in @menu
-      @el.find('.nav-tab-content').append('<div class="tabbable" id="' + menu.target + '"></div>')
-      if menu.controller && ( @toggleable is true || ( @toggleable is false && menu.target is @target ) )
-        params    = menu.params || {}
-        params.el = @el.find( '#' + menu.target )
-        new menu.controller( params )
-
-    @el.find('.tabbable').addClass('hide')
-    @el.find( '#' + @target ).removeClass('hide')
-    @el.find('[data-toggle="tabnav"][href*="/' + @target + '"]').parent().addClass('active')
-
-  toggle: (e) ->
-    return true if @toggleable is false
-    e.preventDefault()
-    target = $(e.target).data('target')
-    $(e.target).parents('ul').find('li').removeClass('active')
-    $(e.target).parents('li').addClass('active')
-    @el.find('.tabbable').addClass('hide')
-    @el.find('#' + target).removeClass('hide')
-#    window.scrollTo(0,0)
 
 class App.ControllerTabs extends App.Controller
   events:
@@ -372,24 +328,25 @@ class App.ControllerTabs extends App.Controller
 
     # insert content
     for tab in @tabs
-      @el.find('.tab-content').append("<div class=\"tab-pane\" id=\"#{tab.target}\"></div>")
+      @$('.tab-content').append("<div class=\"tab-pane\" id=\"#{tab.target}\"></div>")
       if tab.controller
         params = tab.params || {}
         params.name = tab.name
         params.target = tab.target
-        params.el = @el.find( "##{tab.target}" )
+        params.el = @$( "##{tab.target}" )
         new tab.controller( params )
 
-    # check if tabs need to be hidden
-    # if @tabs.length <= 1
-    #   @el.find('.page-tabs').addClass('hide')
+    # check if tabs need to be show / cant' use .tab(), because tabs are note shown (only one tab exists)
+    if @tabs.length <= 1
+      @$('.tab-pane').addClass('active')
+      return
 
     # set last or first tab to active
     @lastActiveTab = @Config.get('lastTab')
-    if @lastActiveTab &&  @el.find(".nav-tabs li a[href=#{@lastActiveTab}]")[0]
-      @el.find(".nav-tabs li a[href=#{@lastActiveTab}]").tab('show')
+    if @lastActiveTab &&  @$(".nav-tabs li a[href=#{@lastActiveTab}]")[0]
+      @$(".nav-tabs li a[href=#{@lastActiveTab}]").tab('show')
     else
-      @el.find('.nav-tabs li:first a').tab('show')
+      @$('.nav-tabs li:first a').tab('show')
 
   tabRemember: (e) =>
     @lastActiveTab = $(e.target).attr('href')
@@ -439,15 +396,22 @@ class App.ControllerNavSidbar extends App.ControllerContent
           else
             item.active = false
 
-    @render(selectedItem)
+    @renderContainer(selectedItem)
+    @renderNavBar(selectedItem)
 
     @bind(
       'ui:rerender'
       =>
-        @render(selectedItem, true)
+        @renderNavBar(selectedItem)
     )
 
-  render: (selectedItem, force) =>
+  renderContainer: =>
+    return if $( ".#{@configKey}" )[0]
+    @html App.view('generic/navbar_level2/index')(
+      className:  @configKey
+    )
+
+  renderNavBar: (selectedItem) =>
 
     # remember latest selected item
     selectedItemMeta =
@@ -455,17 +419,24 @@ class App.ControllerNavSidbar extends App.ControllerContent
       date: new Date
     App.Config.set("Runtime::#{@configKey}", selectedItemMeta)
 
-    if !$( ".#{@configKey}" )[0] || force
-      @html App.view('generic/navbar_l2')(
-        groups:     @groupsSorted
-        className:  @configKey
-      )
+    @$('.sidebar').html App.view('generic/navbar_level2/navbar')(
+      groups:     @groupsSorted
+      className:  @configKey
+    )
     if selectedItem
-      @el.find('li').removeClass('active')
-      @el.find("a[href=\"#{selectedItem.target}\"]").parent().addClass('active')
+      @$('li').removeClass('active')
+      @$("a[href=\"#{selectedItem.target}\"]").parent().addClass('active')
+      @executeController(selectedItem)
 
-      new selectedItem.controller(
-        el: @el.find('.main')
+  executeController: (selectedItem) =>
+
+      # in case of rerendering
+      if @activeController && @activeController.render
+        @activeController.render()
+        return
+
+      @activeController = new selectedItem.controller(
+        el: @$('.main')
       )
 
 class App.GenericHistory extends App.ControllerModal
@@ -580,7 +551,7 @@ class App.ActionRow extends App.Controller
 
     for item in @items
       do (item) =>
-        @el.find('[data-type="' + item.name + '"]').on(
+        @$('[data-type="' + item.name + '"]').on(
           'click',
           (e) ->
             e.preventDefault()
@@ -624,13 +595,13 @@ class App.Sidebar extends App.Controller
     # init content callback
     for item in @items
       if item.callback
-        item.callback( @el.find( '.sidebar[data-tab="' + item.name + '"] .sidebar-content' ) )
+        item.callback( @$( '.sidebar[data-tab="' + item.name + '"] .sidebar-content' ) )
 
     # add item acctions
     for item in @items
       if item.actions
         new App.ActionRow(
-          el:    @el.find('.sidebar[data-tab="' + item.name + '"] .js-actions')
+          el:    @$('.sidebar[data-tab="' + item.name + '"] .js-actions')
           items: item.actions
           type:  'small'
         )
@@ -675,13 +646,13 @@ class App.Sidebar extends App.Controller
     @tabs.removeClass('active')
 
     # add active state
-    @el.find('.tabsSidebar-tab[data-tab=' + name + ']').addClass('active')
+    @$('.tabsSidebar-tab[data-tab=' + name + ']').addClass('active')
 
     # hide all content tabs
     @sidebars.addClass('hide')
 
     # show active tab content
-    tabContent = @el.find('.sidebar[data-tab=' + name + ']')
+    tabContent = @$('.sidebar[data-tab=' + name + ']')
     tabContent.removeClass('hide')
 
     # remember current tab
