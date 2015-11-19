@@ -401,7 +401,7 @@ class chatWindow extends App.Controller
     timestamp = Date.now()
 
     if !@lastTimestamp or timestamp - @lastTimestamp > @showTimeEveryXMinutes * 60000
-      label = 'Today'
+      label = App.i18n.translateContent('today')
       time = new Date().toTimeString().substr(0,5)
       if @lastAddedType is 'timestamp'
         # update last time
