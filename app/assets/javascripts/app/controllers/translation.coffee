@@ -13,10 +13,14 @@ class Index extends App.ControllerContent
     @title 'Translations', true
     @locale = App.i18n.get()
     @render()
-    @bind(
-      'i18n:translation_update_todo i18n:translation_update_list i18n:translation_update',
-      =>
-        @load()
+    @bind('i18n:translation_update_todo', =>
+      @load('i18n:translation_update_todo')
+    )
+    @bind('i18n:translation_update_list', =>
+      @load('i18n:translation_update_list')
+    )
+    @bind('i18n:translation_update', =>
+      @load()
     )
 
   render: =>
@@ -30,7 +34,7 @@ class Index extends App.ControllerContent
     )
     @load()
 
-  load: =>
+  load: (event) =>
     @ajax(
       id:    'translations_admin'
       type:  'GET'
@@ -41,12 +45,6 @@ class Index extends App.ControllerContent
         @stringsNotTranslated = []
         @stringsTranslated    = []
         for item in data.list
-
-          # if item has changed
-          if item[2] isnt item[3]
-            @showAction()
-
-          # collect items
           if item[4] is 'time'
             @times.push item
           else
@@ -62,11 +60,12 @@ class Index extends App.ControllerContent
             updateOnServer: @updateOnServer
             getAttributes:  @getAttributes
           )
-        @translationToDo.update(
-          stringsNotTranslated: @stringsNotTranslated
-          stringsTranslated:    @stringsTranslated
-          times:                @times
-        )
+        if !event || event is 'i18n:translation_update_todo'
+          @translationToDo.update(
+            stringsNotTranslated: @stringsNotTranslated
+            stringsTranslated:    @stringsTranslated
+            times:                @times
+          )
         if !@translationList
           @translationList = new TranslationList(
             el:             @$('.js-List')
@@ -74,15 +73,14 @@ class Index extends App.ControllerContent
             updateOnServer: @updateOnServer
             getAttributes:  @getAttributes
           )
-        @translationList.update(
-          stringsNotTranslated: @stringsNotTranslated
-          stringsTranslated:    @stringsTranslated
-          times:                @times
-        )
+        if !event || event is 'i18n:translation_update_list'
+          @translationList.update(
+            stringsNotTranslated: @stringsNotTranslated
+            stringsTranslated:    @stringsTranslated
+            times:                @times
+          )
+        @toggleAction()
     )
-
-  showAction: =>
-    @$('.js-changes').removeClass('hidden')
 
   release: =>
     rerender = ->
@@ -91,8 +89,17 @@ class Index extends App.ControllerContent
     if @translationList.changes()
       App.Delay.set(rerender, 400)
 
+  showAction: =>
+    @$('.js-changes').removeClass('hidden')
+
   hideAction: =>
     @el.closest('.content').find('.js-changes').addClass('hidden')
+
+  toggleAction: =>
+    if @$('.js-Reset:visible').length > 0
+      @showAction()
+    else
+      @hideAction()
 
   pushChanges: =>
     @loader = new App.ControllerModalLoading(
@@ -186,9 +193,10 @@ class Index extends App.ControllerContent
       url:         url
       data:        JSON.stringify(params)
       processData: false
-      success: (data, status, xhr) ->
+      success: (data, status, xhr) =>
         if event
           App.Event.trigger(event)
+        @toggleAction()
     )
 
   getAttributes: (e) =>
