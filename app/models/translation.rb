@@ -195,8 +195,8 @@ get list of translations
         ]
         list.push translation_item
       end
-      data['list'] = list
     }
+    data['list'] = list
 
     # set cache
     if !admin
@@ -234,8 +234,8 @@ translate strings in ruby context, e. g. for notifications
   private
 
   def set_initial
-
     return if target_initial
+    return if target_initial == ''
     self.target_initial = target
   end
 
