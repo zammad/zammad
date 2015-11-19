@@ -41,9 +41,9 @@ class App.PrettyDate
       day = App.i18n.translateInline('d')
       if long
         if unit > 1 || unit is 0
-          day = App.i18n.translateContent('days')
+          day = App.i18n.translateInline('days')
         else
-          day = App.i18n.translateContent('day')
+          day = App.i18n.translateInline('day')
       string = unit + ' ' + day
       diff = diff - ( unit * 86400 )
       if unit >= 9 || diff < 3600 || count is 2
@@ -83,9 +83,9 @@ class App.PrettyDate
     minute = App.i18n.translateInline('m')
     if long
       if unit > 1 || unit is 0
-        minute = App.i18n.translateContent('minutes')
+        minute = App.i18n.translateInline('minutes')
       else
-        minute = App.i18n.translateContent('minute')
+        minute = App.i18n.translateInline('minute')
     if string isnt ''
       string = string + ' '
     string = string + unit + ' ' + minute

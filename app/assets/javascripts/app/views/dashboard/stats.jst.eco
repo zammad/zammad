@@ -30,8 +30,8 @@
       <div class="stats-row email-channel">
         <%- @Icon(channel.icon, 'stat-channel-icon') %>
         <div class="stat-bars">
-          <div class="stat-bar primary" style="height: <%- channel.inbound_in_percent %>%" title="<%- @T('Inbound') %>: <%- channel.inbound_in_percent %>% (<%- channel.inbound %>)"></div>
-          <div class="stat-bar secondary" style="height: <%- channel.outbound_in_percent %>%" title="<%- @T('Outbound') %>: <%- channel.outbound_in_percent %>% (<%- channel.outbound %>)"></div>
+          <div class="stat-bar primary" style="height: <%- channel.inbound_in_percent %>%" title="<%- @Ti('Inbound') %>: <%- channel.inbound_in_percent %>% (<%- channel.inbound %>)"></div>
+          <div class="stat-bar secondary" style="height: <%- channel.outbound_in_percent %>%" title="<%- @Ti('Outbound') %>: <%- channel.outbound_in_percent %>% (<%- channel.outbound %>)"></div>
         </div>
         <div class="stat-label"></div>
       </div>

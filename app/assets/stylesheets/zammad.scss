@@ -2564,6 +2564,10 @@ footer {
 .translation[contenteditable="true"] {
   display: inline;
 }
+.translation[contenteditable="true"]:hover,
+.translation[contenteditable="true"]:focus {
+  background: none;
+}
 .translation .icon-edit {
   display: none;
 }
