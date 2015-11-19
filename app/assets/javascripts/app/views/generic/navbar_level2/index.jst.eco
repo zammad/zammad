@@ -1,0 +1,2 @@
+<div class="sidebar <%= @className %>"></div>
+<div class="main flex"></div>

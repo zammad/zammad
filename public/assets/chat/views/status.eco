@@ -1,1 +1,1 @@
-<div class="zammad-chat-status"><strong><%= @label %></strong><%= @time %></div>
+<div class="zammad-chat-status"><%- @status %></div>

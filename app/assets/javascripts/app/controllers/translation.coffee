@@ -11,58 +11,107 @@ class Index extends App.ControllerContent
     return if !@authenticate()
 
     @title 'Translations', true
-
+    @locale = App.i18n.get()
     @render()
+    @bind('i18n:translation_update_todo', =>
+      @load('i18n:translation_update_todo')
+    )
+    @bind('i18n:translation_update_list', =>
+      @load('i18n:translation_update_list')
+    )
+    @bind('i18n:translation_update', =>
+      @load()
+    )
 
   render: =>
-    @html App.view('translation/index')()
-    options = {}
     locales = App.Locale.all()
+    currentLanguage = @locale
     for locale in locales
-      options[locale.locale] = locale.name
-    configure_attributes = [
-      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: options, default: App.i18n.get()  },
-    ]
-    load = (params) =>
-      @translationToDo = new TranslationToDo(
-        el:     @$('.js-ToDo')
-        locale: params.locale
-      )
-      @translationList = new TranslationList(
-        el:     @$('.js-List')
-        locale: params.locale
-      )
+      if locale.locale is @locale
+        currentLanguage = locale.name
+    @html App.view('translation/index')(
+      currentLanguage: currentLanguage
+    )
+    @load()
 
-    new App.ControllerForm(
-      el:        @$('.language')
-      model:     { configure_attributes: configure_attributes }
-      autofocus: false
-      handlers:  [load]
+  load: (event) =>
+    @ajax(
+      id:    'translations_admin'
+      type:  'GET'
+      url:   "#{@apiPath}/translations/admin/lang/#{@locale}"
+      processData: true
+      success: (data, status, xhr) =>
+        @times                = []
+        @stringsNotTranslated = []
+        @stringsTranslated    = []
+        for item in data.list
+          if item[4] is 'time'
+            @times.push item
+          else
+            if item[2] is ''
+              @stringsNotTranslated.push item
+            else
+              @stringsTranslated.push item
+
+        if !@translationToDo
+          @translationToDo = new TranslationToDo(
+            el:             @$('.js-ToDo')
+            locale:         @locale
+            updateOnServer: @updateOnServer
+            getAttributes:  @getAttributes
+          )
+        if !event || event is 'i18n:translation_update_todo'
+          @translationToDo.update(
+            stringsNotTranslated: @stringsNotTranslated
+            stringsTranslated:    @stringsTranslated
+            times:                @times
+          )
+        if !@translationList
+          @translationList = new TranslationList(
+            el:             @$('.js-List')
+            locale:         @locale
+            updateOnServer: @updateOnServer
+            getAttributes:  @getAttributes
+          )
+        if !event || event is 'i18n:translation_update_list'
+          @translationList.update(
+            stringsNotTranslated: @stringsNotTranslated
+            stringsTranslated:    @stringsTranslated
+            times:                @times
+          )
+        @toggleAction()
     )
 
   release: =>
     rerender = ->
       App.Event.trigger('ui:rerender')
-    if @translationToDo.changes() || @translationList.changes()
+      console.log('rr')
+    if @translationList.changes()
       App.Delay.set(rerender, 400)
+
+  showAction: =>
+    @$('.js-changes').removeClass('hidden')
 
   hideAction: =>
     @el.closest('.content').find('.js-changes').addClass('hidden')
 
-  pushChanges: =>
-    locale = @$('[name="locale"]').val()
+  toggleAction: =>
+    if @$('.js-Reset:visible').length > 0
+      @showAction()
+    else
+      @hideAction()
 
+  pushChanges: =>
     @loader = new App.ControllerModalLoading(
       head:      'Push my changes'
       message:   'Pushing translations to i18n.zammad.com'
       container: @el.closest('.content')
     )
-
     @ajax(
       id:          'translations'
       type:        'PUT'
       url:         "#{@apiPath}/translations/push"
-      data:        JSON.stringify(locale: locale)
+      data:        JSON.stringify(locale: @locale)
       processData: false
       success: (data, status, xhr) =>
         @loader.update('Thanks for contributing!')
@@ -73,23 +122,19 @@ class Index extends App.ControllerContent
     )
 
   resetChanges: =>
-    locale = @$('[name="locale"]').val()
-
     @loader = new App.ControllerModalLoading(
       head:      'Reset changes'
       message:   'Reseting changes...'
       container: @el.closest('.content')
     )
-
     @ajax(
       id:          'translations'
       type:        'POST'
       url:         "#{@apiPath}/translations/reset"
-      data:        JSON.stringify(locale: locale)
+      data:        JSON.stringify(locale: @locale)
       processData: false
       success: (data, status, xhr) =>
-        App.Event.trigger('i18n:translation_todo_reload')
-        App.Event.trigger('i18n:translation_list_reload')
+        App.Event.trigger('i18n:translation_update')
         @hideAction()
         @loader.hide()
       error: =>
@@ -97,17 +142,13 @@ class Index extends App.ControllerContent
     )
 
   syncChanges: =>
-    locale = @$('[name="locale"]').val()
-
     @loader = new App.ControllerModalLoading(
       head:      'Get latest translations'
       message:   'Getting latest translations from i18n.zammad.com'
       container: @el.closest('.content')
     )
-
     hide = =>
-      App.Event.trigger('i18n:translation_todo_reload')
-      App.Event.trigger('i18n:translation_list_reload')
+      App.Event.trigger('i18n:translation_update')
       @hideAction()
       @loader.hide(1)
 
@@ -130,20 +171,57 @@ class Index extends App.ControllerContent
         @_syncChanges(locale, locales, loader, hide)
       )
 
+  updateOnServer: (params, event) =>
+
+    # update runtime if same language is used
+    if App.i18n.get() is params.locale
+      App.i18n.setMap(params.source, params.target, params.format)
+
+    # remove not needed attributes
+    delete params.field
+
+    if params.id
+      method = 'PUT'
+      url    = "#{@apiPath}/translations/#{params.id}"
+    else
+      method = 'POST'
+      url    = "#{@apiPath}/translations"
+
+    @ajax(
+      id:          'translations'
+      type:        method
+      url:         url
+      data:        JSON.stringify(params)
+      processData: false
+      success: (data, status, xhr) =>
+        if event
+          App.Event.trigger(event)
+        @toggleAction()
+    )
+
+  getAttributes: (e) =>
+    field  = $(e.target).closest('tr').find('.js-Item')
+    params =
+      id:      field.data('id')
+      source:  field.data('source')
+      format:  field.data('format') || 'string'
+      initial: field.data('initial') || ''
+      target:  field.val()
+      locale:  @locale
+      field:   field
+
 class TranslationToDo extends App.Controller
-  hasChanges: false
   events:
     'click .js-create':  'create'
     'click .js-theSame': 'same'
 
   constructor: ->
     super
+
+  update: (data) =>
+    for key, value of data
+      @[key] = value
     @render()
-    @bind(
-      'i18n:translation_todo_reload',
-      =>
-        @render()
-    )
 
   render: =>
 
@@ -151,231 +229,100 @@ class TranslationToDo extends App.Controller
       @html App.view('translation/english')()
       return
 
-    if !App.i18n.getNotTranslated(@locale)
+    if !App.i18n.getNotTranslated(@locale) && _.isEmpty(@stringsNotTranslated)
       @html ''
       return
 
-    listNotTranslated = []
-    for key, value of App.i18n.getNotTranslated(@locale)
-      item = [ '', key, '', '']
-      listNotTranslated.push item
+    # add not translated items from runtime
+    if App.i18n.getNotTranslated(@locale)
+      for key, value of App.i18n.getNotTranslated(@locale)
+        found = false
+        for notTranslatedItem in @stringsNotTranslated
+          if key is notTranslatedItem[1]
+            found = true
+        if !found
+          item = [ '', key, '', '']
+          @stringsNotTranslated.push item
 
     @html App.view('translation/todo')(
-      list: listNotTranslated
+      list: @stringsNotTranslated
     )
-
-  showAction: =>
-    @el.closest('.content').find('.js-changes').removeClass('hidden')
-
-  changes: =>
-    @hasChanges
 
   create: (e) =>
     e.preventDefault()
-    @hasChanges = true
-    @showAction()
-    field  = $(e.target).closest('tr').find('.js-Item')
-    source = field.data('source')
-    target = field.val()
+    params = @getAttributes(e)
+    return if !params.target
 
     # remove from not translated list
     $(e.target).closest('tr').remove()
 
     # local update
-    App.i18n.removeNotTranslated( @locale, source )
-
-    # update runtime if same language is used
-    if App.i18n.get() is @locale
-      App.i18n.setMap( source, target, 'string' )
+    App.i18n.removeNotTranslated(params.locale, params.source)
 
     # remote update
-    params =
-      locale:         @locale
-      source:         source
-      target:         target
-      target_initial: ''
-
-    @ajax(
-      id:          'translations'
-      type:        'POST'
-      url:         @apiPath + '/translations'
-      data:        JSON.stringify(params)
-      processData: false
-      success: (data, status, xhr) ->
-        App.Event.trigger('i18n:translation_list_reload')
-    )
+    params.target_initial = ''
+    @updateOnServer(params, 'i18n:translation_update_list')
 
   same: (e) =>
     e.preventDefault()
     @hasChanges = true
-    @showAction()
-    field  = $(e.target).closest('tr').find('.js-Item')
-    source = field.data('source')
+    params = @getAttributes(e)
 
     # remove from not translated list
     $(e.target).closest('tr').remove()
 
     # local update
-    App.i18n.removeNotTranslated( @locale, source )
-
-    # update runtime if same language is used
-    if App.i18n.get() is @locale
-      App.i18n.setMap( source, source, 'string' )
+    App.i18n.removeNotTranslated(params.locale, params.source)
 
     # remote update
-    params =
-      locale:         @locale
-      source:         source
-      target:         source
-      target_initial: ''
-
-    @ajax(
-      id:          'translations'
-      type:        'POST'
-      url:         @apiPath + '/translations'
-      data:        JSON.stringify(params)
-      processData: false
-      success: (data, status, xhr) ->
-        App.Event.trigger('i18n:translation_list_reload')
-    )
+    params.target_initial = ''
+    params.target = params.source
+    @updateOnServer(params, 'i18n:translation_update_list')
 
 class TranslationList extends App.Controller
   hasChanges: false
   events:
-    'blur .js-translated input':          'update'
-    'click .js-translated .js-Reset':     'reset'
+    'blur .js-translated input':      'updateItem'
+    'click .js-translated .js-Reset': 'resetItem'
 
   constructor: ->
     super
-    @load()
-    @bind(
-      'i18n:translation_list_reload',
-      =>
-        @load()
-    )
 
-  load: =>
-    @startLoading()
-    @ajax(
-      id:    'translations_admin'
-      type:  'GET'
-      url:   @apiPath + "/translations/admin/lang/#{@locale}"
-      processData: true
-      success: (data, status, xhr) =>
-        @stopLoading()
-        @render(data)
-    )
+  update: (data) =>
+    for key, value of data
+      @[key] = value
+    @render()
 
-  render: (data = {}) =>
-    @strings = []
-    @times   = []
-    for item in data.list
-      if item[4] is 'time'
-        @times.push item
-      else
-        @strings.push item
-
+  render: =>
+    return if _.isEmpty(@stringsTranslated)
     @html App.view('translation/list')(
       times:   @times
-      strings: @strings
+      strings: @stringsTranslated
     )
-    ui = @
-    @changesAvailable = false
-    @$('.js-Item').each( (e) ->
-      id = $(@).data('id')
-      ui.updateRow(id)
-    )
-    if @changesAvailable
-      @showAction()
-
-  showAction: =>
-    @el.closest('.content').find('.js-changes').removeClass('hidden')
 
   changes: =>
     @hasChanges
 
-  reset: (e) ->
+  resetItem: (e) ->
     e.preventDefault()
     @hasChanges = true
-    field       = $(e.target).closest('tr').find('.js-Item')
-    id          = field.data('id')
-    source      = field.data('source')
-    initial     = field.data('initial')
-    format      = field.data('format')
-
-    # if it's translated by user it self, delete it
-    if !initial || initial is ''
-
-      # locale reset
-      $(e.target).closest('tr').remove()
-
-      # update runtime if same language is used
-      if App.i18n.get() is @locale
-        App.i18n.setMap( source, '', format )
-
-      # remote reset
-      params =
-        id: id
-      @ajax(
-        id:          'translations'
-        type:        'DELETE'
-        url:         @apiPath + '/translations/' + id
-        data:        JSON.stringify(params)
-        processData: false
-        success: =>
-          App.i18n.setNotTranslated( @locale, source )
-          App.Event.trigger('i18n:translation_todo_reload')
-      )
-      return
-
-
-    # update runtime if same language is used
-    if App.i18n.get() is @locale
-      App.i18n.setMap( source, initial, format )
-
-    # locale reset
-    field.val( initial )
-    @updateRow(id)
+    params = @getAttributes(e)
 
     # remote reset
-    params =
-      id:     id
-      target: initial
+    params.target = params.initial
+    @updateOnServer(params, 'i18n:translation_update')
 
-    @ajax(
-      id:          'translations'
-      type:        'PUT'
-      url:         @apiPath + '/translations/' + id
-      data:        JSON.stringify(params)
-      processData: false
-    )
-
-  update: (e) ->
+  updateItem: (e) ->
     e.preventDefault()
-    id     = $( e.target ).data('id')
-    source = $( e.target ).data('source')
-    format = $( e.target ).data('format')
-    target = $( e.target ).val()
+    @hasChanges = true
+    params = @getAttributes(e)
+    return if !params.target
 
     # local update
-    @updateRow(id)
-
-    # update runtime if same language is used
-    if App.i18n.get() is @locale
-      App.i18n.setMap( source, target, format )
+    @updateRow(params.id)
 
     # remote update
-    params =
-      id:     id
-      target: target
-
-    @ajax(
-      id:          'translations'
-      type:        'PUT'
-      url:         @apiPath + '/translations/' + id
-      data:        JSON.stringify(params)
-      processData: false
-    )
+    @updateOnServer(params)
 
   updateRow: (id) =>
     field   = @$("[data-id=#{id}]")
@@ -384,11 +331,10 @@ class TranslationList extends App.Controller
     reset   = field.closest('tr').find('.js-Reset')
     if current isnt initial
       @changesAvailable = true
-      @showAction()
-      reset.show()
+      reset.removeClass('hidden')
       reset.closest('tr').addClass('warning')
     else
-      reset.hide()
+      reset.addClass('hidden')
       reset.closest('tr').removeClass('warning')
 
-App.Config.set( 'Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

@@ -5,8 +5,8 @@
       </div>
       <div class="page-header-center">
         <div class="status-fields">
-          <div class="status-field">
-            <span class="badge">0</span> Waiting Customers
+          <div class="status-field is-clickable is-blinking">
+            <span class="badge">1</span> Waiting Customers
           </div>
           <div class="status-field">
             <span class="badge">15</span> Chatting Customers

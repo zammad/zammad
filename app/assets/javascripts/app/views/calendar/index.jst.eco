@@ -10,75 +10,80 @@
     <a class="btn btn--success js-new"><%- @T('New Calendar') %></a>
   </div>
 </div>
+<div class="page-content">
+  <% if _.isEmpty(@calendars): %>
+  <div class="page-description">
+    <%- @description %>
+  </div>
+  <% end %>
 
-<% if _.isEmpty(@calendars): %>
-<%- @description %>
-<% end %>
-
-<% for calendar in @calendars: %>
-<div class="action" data-id="<%- calendar.id %>">
-  <div class="action-flow action-flow--row">
-    <div class="action-row">
-      <div class="action-flow action-flow--noWrap">
-        <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @T('Last sync at') %>: <%= @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
-          <% if calendar.last_log: %>
-            <%- @Icon('status', 'error inline') %>
-          <% else: %>
-            <%- @Icon('status', 'ok inline') %>
-          <% end %></span><% end %> <%= calendar.name %></h2>
-        <% if calendar.default: %>
-          <div class="action-label">Default</div>
-        <% end %>
+  <% for calendar in @calendars: %>
+  <div class="action" data-id="<%- calendar.id %>">
+    <div class="action-flow action-flow--row">
+      <div class="action-row">
+        <div class="action-flow action-flow--noWrap">
+          <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @T('Last sync at') %>: <%= @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
+            <% if calendar.last_log: %>
+              <%- @Icon('status', 'error inline') %>
+            <% else: %>
+              <%- @Icon('status', 'ok inline') %>
+            <% end %></span><% end %> <%= calendar.name %></h2>
+          <% if calendar.default: %>
+            <div class="action-label">Default</div>
+          <% end %>
+        </div>
+      </div>
+      <% if calendar.last_log: %><div class="action-row"><div class="alert alert--danger"><%= calendar.last_log %></div></div><% end %>
+      <div class="action-row">
+        <div class="label"><%- @T('Time zone') %></div> <%= calendar.timezone %>
+      </div>
+      <div class="action-block action-block--flex">
+        <div class="label"><%- @T('Business Hours') %></div>
+        <table class="table table-fluid">
+          <tr>
+            <td><%- @T('Monday') %></td><td><% if !calendar.business_hours['mon'].active || _.isEmpty(calendar.business_hours['mon'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['mon'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
+          </tr>
+          <tr>
+            <td><%- @T('Tuesday') %></td><td><% if !calendar.business_hours['tue'].active || _.isEmpty(calendar.business_hours['tue'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['tue'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
+          </tr>
+          <tr>
+            <td><%- @T('Wednesday') %></td><td><% if !calendar.business_hours['wed'].active || _.isEmpty(calendar.business_hours['wed'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['wed'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
+          </tr>
+          <tr>
+            <td><%- @T('Thursday') %></td><td><% if !calendar.business_hours['thu'].active || _.isEmpty(calendar.business_hours['thu'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['thu'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
+          </tr>
+          <tr>
+            <td><%- @T('Friday') %></td><td><% if !calendar.business_hours['fri'].active || _.isEmpty(calendar.business_hours['fri'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['fri'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
+          </tr>
+          <tr>
+            <td><%- @T('Saturday') %></td><td><% if !calendar.business_hours['sat'].active || _.isEmpty(calendar.business_hours['sat'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['sat'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
+          </tr>
+          <tr>
+            <td><%- @T('Sunday') %></td><td><% if !calendar.business_hours['sun'].active || _.isEmpty(calendar.business_hours['sun'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['sun'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="action-block action-block--flex">
+        <div class="label"><%- @T('Holidays') %></div>
+        <table class="table">
+          <% if _.isEmpty(calendar.public_holidays_preview): %>-<% end %>
+          <% for holiday, meta of calendar.public_holidays_preview: %>
+            <tr <% if !meta.active: %>class="is-inactive"<% end %>>
+              <td style="width: 96px"><%- @Tdate(holiday) %>
+              <td><%= meta.summary %>
+          <% end %>
+        </table>
       </div>
     </div>
-    <% if calendar.last_log: %><div class="action-row"><div class="alert alert--danger"><%= calendar.last_log %></div></div><% end %>
-    <div class="action-row">
-      <div class="label"><%- @T('Time zone') %></div> <%= calendar.timezone %>
-    </div>
-    <div class="action-block action-block--flex">
-      <div class="label"><%- @T('Business Hours') %></div>
-      <table class="table table-fluid">
-        <tr>
-          <td><%- @T('Monday') %></td><td><% if !calendar.business_hours['mon'].active || _.isEmpty(calendar.business_hours['mon'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['mon'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
-        </tr>
-        <tr>
-          <td><%- @T('Tuesday') %></td><td><% if !calendar.business_hours['tue'].active || _.isEmpty(calendar.business_hours['tue'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['tue'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
-        </tr>
-        <tr>
-          <td><%- @T('Wednesday') %></td><td><% if !calendar.business_hours['wed'].active || _.isEmpty(calendar.business_hours['wed'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['wed'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
-        </tr>
-        <tr>
-          <td><%- @T('Thursday') %></td><td><% if !calendar.business_hours['thu'].active || _.isEmpty(calendar.business_hours['thu'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['thu'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
-        </tr>
-        <tr>
-          <td><%- @T('Friday') %></td><td><% if !calendar.business_hours['fri'].active || _.isEmpty(calendar.business_hours['fri'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['fri'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
-        </tr>
-        <tr>
-          <td><%- @T('Saturday') %></td><td><% if !calendar.business_hours['sat'].active || _.isEmpty(calendar.business_hours['sat'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['sat'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
-        </tr>
-        <tr>
-          <td><%- @T('Sunday') %></td><td><% if !calendar.business_hours['sun'].active || _.isEmpty(calendar.business_hours['sun'].timeframes): %>-<% else: %><% for frame in calendar.business_hours['sun'].timeframes: %><%= frame[0] %>-<%= frame[1] %> </td><td><% end %><% end %></td>
-        </tr>
-      </table>
-    </div>
-    <div class="action-block action-block--flex">
-      <div class="label"><%- @T('Holidays') %></div>
-      <table class="table table-fluid">
-        <% if _.isEmpty(calendar.public_holidays_preview): %>-<% end %>
-        <% for holiday, meta of calendar.public_holidays_preview: %>
-          <tr <% if !meta.active: %>class="is-inactive"<% end %>><td><%- @Tdate(holiday) %></td><td><%= meta.summary %></td></tr>
-        <% end %>
-      </table>
+    <div class="action-controls">
+      <% if !calendar.default: %>
+        <div class="sla-toggle btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+        <div class="sla-toggle btn btn--secondary js-default"><%- @T('Set as Default') %></div>
+      <% else: %>
+        <div class="btn btn--danger btn--secondary is-disabled"><%- @T('Delete') %></div>
+      <% end %>
+      <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
     </div>
   </div>
-  <div class="action-controls">
-    <% if !calendar.default: %>
-      <div class="sla-toggle btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
-      <div class="sla-toggle btn btn--secondary js-default"><%- @T('Set as Default') %></div>
-    <% else: %>
-      <div class="btn btn--danger btn--secondary is-disabled"><%- @T('Delete') %></div>
-    <% end %>
-    <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
-  </div>
+  <% end %>
 </div>
-<% end %>

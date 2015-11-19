@@ -3,7 +3,7 @@ class App.DashboardRss extends App.Controller
     super
 
     # bind to rebuild view event
-    @bind( 'rss_rebuild', @fetch )
+    @bind('rss_rebuild', @fetch)
 
     # refresh list ever 600 sec.
     @fetch()
@@ -11,7 +11,7 @@ class App.DashboardRss extends App.Controller
   fetch: =>
 
     # get data from cache
-    cache = App.Store.get( 'dashboard_rss' )
+    cache = App.SessionStorage.get('dashboard_rss')
     if cache
       cache.head = 'Heise ATOM'
       @render( cache )
@@ -34,7 +34,7 @@ class App.DashboardRss extends App.Controller
               message: data.message
             )
           else
-            App.Store.write( 'dashboard_rss', data )
+            App.SessionStorage.set('dashboard_rss', data)
             data.head = 'Heise ATOM'
             @render(data)
         error: =>

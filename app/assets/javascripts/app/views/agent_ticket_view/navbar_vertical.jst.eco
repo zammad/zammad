@@ -1,0 +1,42 @@
+<div class="tabsHolder js-tabsHolder">
+  <div class="tabs tabs--inline tabs--big js-tabs">
+    <% if @items: %>
+      <% for item in @items: %>
+        <a class="tab js-tab<%= ' active' if item.active %>" href="<%= item.target %>">
+          <span class="tab-name"><%- @T(item.name) %></span>
+          <span class="tab-badge"><%= item.count %></span>
+        </a>
+      <% end %>
+      <ul class="dropdown dropdown--actions dropdown--wide dropdown-menu dropdown-menu-right js-dropdown" role="menu" aria-labelledby="userAction">
+        <% for item in @items: %>
+          <li class="js-dropdownItem hide<%= ' active' if item.active %>" role="presentation" data-target="<%= item.target %>" role="menuitem" tabindex="-1">
+            <span class="flex u-textTruncate"><%- @T(item.name) %></span>
+            <span class="badge badge--text"><%= item.count %></span>
+        <% end %>
+      </ul>
+      <div class="tab tab-dropdown js-toggle" data-toggle="dropdown">
+        <%- @Icon('dropdown-list') %>
+        <%- @Icon('arrow-down', 'arrow') %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<% if @isAgent: %>
+<a class="btn btn--success btn--quad" href="#ticket/create">
+  <%- @Icon('plus') %>
+</a>
+<% end %>
+<% if @items: %>
+<div class="tabs tabs--inline tabs--big tabs-clone u-invisible js-tabsClone">
+  <% for item in @items: %>
+    <a class="tab js-tabClone<%= ' active' if item.active %>" href="<%= item.target %>">
+      <span class="tab-name"><%- @T(item.name) %></span>
+      <span class="tab-badge"><%= item.count %></span>
+    </a>
+  <% end %>
+  <div class="tab tab-dropdown js-toggle">
+    <%- @Icon('dropdown-list') %>
+    <%- @Icon('arrow-down', 'arrow') %>
+  </div>
+</div>
+<% end %>

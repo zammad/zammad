@@ -26,6 +26,7 @@ class App.TicketList extends App.Controller
         display:     ''
         translation: false
         width:       '28px'
+        displayWidth:28
         unresizable: true
       headers.unshift(0)
       headers[0] = attribute

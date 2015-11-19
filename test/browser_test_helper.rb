@@ -101,11 +101,11 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   username = login(
-    :browser     => browser1,
-    :username    => 'someuser',
-    :password    => 'somepassword',
-    :url         => 'some url', # optional
-    :remember_me => true, # optional
+    browser:     browser1,
+    username:    'someuser',
+    password:    'somepassword',
+    url:         'some url', # optional
+    remember_me: true, # optional
   )
 
 =end
@@ -152,7 +152,7 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   logout(
-    :browser => browser1
+    browser: browser1
   )
 
 =end
@@ -181,8 +181,8 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   location(
-    :browser => browser1,
-    :url     => 'http://someurl',
+    browser: browser1,
+    url:     'http://someurl',
   )
 
 =end
@@ -198,8 +198,8 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   location_check(
-    :browser => browser1,
-    :url     => 'http://someurl',
+    browser: browser1,
+    url:     'http://someurl',
   )
 
 =end
@@ -218,7 +218,7 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   reload(
-    :browser => browser1,
+    browser: browser1,
   )
 
 =end
@@ -235,15 +235,15 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   click(
-    :browser => browser1,
-    :css     => '.some_class',
-    :fast    => false, # do not wait
+    browser: browser1,
+    css:     '.some_class',
+    fast:    false, # do not wait
   )
 
   click(
-    :browser => browser1,
-    :text    => '.partial_link_text',
-    :fast    => false, # do not wait
+    browser: browser1,
+    text:    '.partial_link_text',
+    fast:    false, # do not wait
   )
 
 =end
@@ -253,7 +253,11 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if params[:css]
-      instance.find_elements( { css: params[:css] } )[0].click
+
+      element = instance.find_elements( { css: params[:css] } )[0]
+      instance.mouse.move_to(element)
+      sleep 0.2
+      element.click
 
       # trigger also focus on input/select and textarea fields
       #if params[:css] =~ /(input|select|textarea)/
@@ -264,6 +268,54 @@ class TestCase < Test::Unit::TestCase
       instance.find_elements( { partial_link_text: params[:text] } )[0].click
     end
     sleep 0.4 if !params[:fast]
+  end
+
+=begin
+
+  scroll_to(
+    browser:  browser1,
+    position: 'top', # botton
+    css:      '.some_class',
+  )
+
+=end
+
+  def scroll_to(params)
+    log('scroll_to', params)
+
+    instance = params[:browser] || @browser
+
+    position = 'true'
+    if params[:position] == 'botton'
+      position = 'false'
+    end
+
+    execute(
+      browser:  instance,
+      js:       "\$('#{params[:css]}').get(0).scrollIntoView(#{position})",
+      mute_log: params[:mute_log]
+    )
+    sleep 0.2
+  end
+
+=begin
+
+  execute(
+    browser: browser1,
+    js:      '.some_class',
+  )
+
+=end
+
+  def execute(params)
+    log('js', params)
+
+    instance = params[:browser] || @browser
+    if params[:js]
+      instance.execute_script(params[:js])
+      return
+    end
+    fail "Invalid execute params #{params.inspect}"
   end
 
 =begin
@@ -565,6 +617,28 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  task_type(
+    :browser => browser1,
+    :type    => 'stayOnTab',
+  )
+
+=end
+
+  def task_type(params)
+    log('task_type', params)
+
+    instance = params[:browser] || @browser
+
+    if params[:type]
+      instance.find_elements( { css: '.content.active .js-secondaryActionButtonLabel' } )[0].click
+      instance.find_elements( { css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]" } )[0].click
+      return
+    end
+    fail "Unknown params for task_type: #{params.inspect}"
+  end
+
+=begin
+
   cookie(
     :browser => browser1,
     :name    => '^_zammad.+?',
@@ -742,9 +816,9 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   file_upload(
-    :browser   => browser1,
-    :css       => '#content .text-1',
-    :value     => 'some text',
+    :browser => browser1,
+    :css     => '#content .text-1',
+    :value   => 'some text',
   )
 
 =end
@@ -763,6 +837,20 @@ class TestCase < Test::Unit::TestCase
     #element
     #@driver.find_element(id: 'file-submit').click
 
+  end
+
+=begin
+
+  click_catcher_remove(
+    :browser => browser1,
+  )
+
+=end
+
+  def click_catcher_remove(params = {})
+    instance = params[:browser] || @browser
+    return if !instance.find_elements( { css: '.clickCatcher' } )[0]
+    click( browser: instance, css: '.clickCatcher')
   end
 
 =begin
@@ -1234,7 +1322,6 @@ wait untill text in selector disabppears
 
       # it's not working stable via selenium, use js
       value = instance.find_elements( { css: '.content.active div[data-name=body]' } )[0].text
-      puts "V #{value.inspect}"
       if value != data[:body]
         body_quoted = quote( data[:body] )
         instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
@@ -1242,9 +1329,7 @@ wait untill text in selector disabppears
 
       # click on click catcher
       if params[:do_not_submit]
-        if instance.find_elements( { css: '.clickCatcher' } )[0]
-          click( browser: instance, css: '.clickCatcher')
-        end
+        click_catcher_remove(browser: instance)
       end
     end
 
@@ -1291,6 +1376,11 @@ wait untill text in selector disabppears
         fail 'no discard message found'
       end
     end
+
+    task_type(
+      browser: instance,
+      type:    'stayOnTab',
+    )
 
     if params[:do_not_submit]
       assert( true, 'ticket updated without submit' )
@@ -1372,8 +1462,16 @@ wait untill text in selector disabppears
 
     instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 1
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
     instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
     sleep 1
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "none")',
+    )
     instance.find_elements( { partial_link_text: params[:number] } )[0].click
     sleep 1
     number = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
@@ -1454,6 +1552,16 @@ wait untill text in selector disabppears
 
     instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
     sleep 2
+
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+    #execute(
+    #  browser: instance,
+    #  js: '$(".content.active .overview-header").css("display", "none")',
+    #)
+
     overviews = {}
     instance.find_elements( { css: '.content.active .sidebar a[href]' } ).each {|element|
       url = element.attribute('href')
@@ -1466,6 +1574,7 @@ wait untill text in selector disabppears
       count          = instance.find_elements( { css: ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
       overviews[url] = count.to_i
     }
+    log('overview_counter', overviews)
     overviews
   end
 
@@ -1823,6 +1932,7 @@ wait untill text in selector disabppears
 
   def log(method, params)
     return if !@@debug
+    return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"
   end
 end

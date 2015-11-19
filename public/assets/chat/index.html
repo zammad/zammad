@@ -1,13 +1,17 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>Zammad Chat</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="chat.css">
 <meta name="viewport" content="width=device-width">
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35738/livereload.js?snipver=1"></' + 'script>')</script>
 <style>
   body {
     margin: 0;
     font-family: sans-serif;
+  }
+
+  .mockup {
+    vertical-align: bottom;
   }
 
   .settings {
@@ -90,12 +94,18 @@
         <input type="number" value="12" min="11" max="18" data-option="fontSize">px
       <td>
         <label for="fontSize">Font Size</label>
+    <tr>
+      <td>
+      <td><button class="open-zammad-chat">Open Chat</button>
   </table>
 </div>
 
 <script src="jquery-2.1.4.min.js"></script>
+<!--
 <script src="node_modules/sass.js/dist/sass.js"></script>
+-->
 <script src="chat.js"></script>
+<!--
 <script>
   var sass = new Sass();
   var scss = '';
@@ -125,7 +135,13 @@
       }
     });
   }
-
+-->
+<script>
+  var chat = new ZammadChat({
+    host: 'ws://localhost',
+    port: 6042,
+    debug: true
+  });
 
   $('.settings :input').on({
     change: function(){

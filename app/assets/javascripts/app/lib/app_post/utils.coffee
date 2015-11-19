@@ -461,14 +461,12 @@ class App.Utils
 
   # diff = App.Utils.formDiff( dataNow, dataLast )
   @formDiff: ( dataNowRaw, dataLastRaw ) ->
-
-    # do type convertation to compare it against form
     dataNow = clone(dataNowRaw)
     @_formDiffNormalizer(dataNow)
     dataLast = clone(dataLastRaw)
     @_formDiffNormalizer(dataLast)
 
-    @_formDiffChanges( dataNow, dataLast )
+    @_formDiffChanges(dataNow, dataLast)
 
   @_formDiffChanges: (dataNow, dataLast, changes = {}) ->
     for dataNowkey, dataNowValue of dataNow
@@ -485,35 +483,20 @@ class App.Utils
 
   @_formDiffNormalizer: (data) ->
     return undefined if data is undefined
-    return if !@_formDiffNormalizerCheckConstructor( data )
 
-    if _.isArray( data )
+    if _.isArray(data)
       for i in [0...data.length]
-        if @_formDiffNormalizerCheckConstructor( data[i] )
-          data[i] = @_formDiffNormalizer( data[i] )
-        else
-          data[i] = undefined
-    else if _.isObject( data )
+        data[i] = @_formDiffNormalizer(data[i])
+    else if _.isObject(data)
       for key, value of data
-        if _.isArray( data[key] )
-          @_formDiffNormalizer( data[key] )
+        if _.isArray(data[key])
+          @_formDiffNormalizer(data[key])
         else if _.isObject( data[key] )
-          @_formDiffNormalizer( data[key] )
-        else if @_formDiffNormalizerCheckConstructor( data[key] )
-          data[key] = @_formDiffNormalizerItem( key, data[key] )
+          @_formDiffNormalizer(data[key])
+        else
+          data[key] = @_formDiffNormalizerItem(key, data[key])
     else
-      @_formDiffNormalizerItem( '', data )
-
-  @_formDiffNormalizerCheckConstructor: (data) ->
-    return true if !data
-    return true if !data.constructor
-    name = data.constructor.name
-    return true if !name
-    return true if name is 'Object'
-    return true if name is 'Array'
-    return true if name is 'String'
-    return true if name is 'Number'
-    false
+      @_formDiffNormalizerItem('', data)
 
   @_formDiffNormalizerItem: (key, value) ->
 

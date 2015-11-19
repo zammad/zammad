@@ -1,0 +1,1 @@
+<div class="chat-message chat-message--<%= @sender %><%= ' chat-message--new' if @isNew %>"><%- @message %></div>

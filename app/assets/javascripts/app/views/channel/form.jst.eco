@@ -3,12 +3,14 @@
     <h1><%- @T('Form') %> <small></small></h1>
   </div>
 </div>
-<div>
+<div class="page-content">
   <p><%- @T('With form you can add a formular to your web page witch directly generates a Ticket for you.') %></p>
 
   <div class="js-settings"></div>
 
-  <h2><%- @T('Settings') %></h2>
+  <hr>
+
+  <h2><%- @T('Widget Designer') %></h2>
   <form class="js-params">
 
     <fieldset>
@@ -43,22 +45,50 @@
     <table class="settings-list">
       <thead>
         <tr>
-          <th style="white-space: nowrap;"><%- @T('Option') %></th>
+          <th style="white-space: nowrap;"><%- @T('Options') %></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><label><input type="checkbox" name="debug" value="true"/> <%- @T('Enable debugging for implementation.') %></label></td>
-        </tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="debug" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Enable debugging for implementation.') %>
+            </label>
         <tr>
-          <td><label><input type="checkbox" name="showTitle" value="true"/> <%- @T('Show title in form.') %></label></td>
-        </tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="showTitle" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Show title in form.') %>
+            </label>
         <tr>
-          <td><label><input type="checkbox" name="modal" value="true" checked/> <%- @T('Start modal dialog for form.') %></label></td>
-        </tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="modal" value="true" checked>
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Start modal dialog for form.') %>
+            </label>
         <tr>
-          <td><label><input type="checkbox" name="noCSS" value="true"/> <%- @T('Load no CSS for form. You need to generate your own CSS for the form.') %></label></td>
-        </tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="noCSS" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Load no CSS for form. You need to generate your own CSS for the form.') %>
+            </label>
       </tbody>
     </table>
   </form>

@@ -5,32 +5,43 @@ class App.TicketZoomOverviewNavigator extends App.Controller
   constructor: ->
     super
 
+    return if !@overview_id
+
     # rebuild overview navigator if overview has changed
-    @bind 'ticket_overview_rebuild', (data) =>
-      execute = =>
-        @render()
-      @delay(execute, 1600, 'overview-navigator')
+    lateUpdate = =>
+      @delay(@render, 2600, 'overview-navigator')
+
+    @overview = App.Overview.find(@overview_id)
+    @bindId = App.OverviewCollection.bind(@overview.link, lateUpdate, false)
 
     @render()
 
-  render: (overview) =>
+  release: =>
+    App.OverviewCollection.unbind(@bindId)
+
+  render: =>
     if !@overview_id
       @html('')
       return
 
     # get overview data
-    worker = App.TaskManager.worker( 'TicketOverview' )
-    return if !worker
-    overview = worker.overview(@overview_id)
+    overview = App.OverviewCollection.get(@overview.link)
     return if !overview
     current_position = 0
+    found            = false
     next             = false
     previous         = false
     for ticket_id in overview.ticket_ids
       current_position += 1
       next              = overview.ticket_ids[current_position]
       previous          = overview.ticket_ids[current_position-2]
-      break if ticket_id is @ticket_id
+      if ticket_id is @ticket_id
+        found = true
+        break
+
+    if !found
+      @html('')
+      return
 
     # get next/previous ticket
     if next

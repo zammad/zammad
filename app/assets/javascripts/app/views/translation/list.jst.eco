@@ -9,16 +9,15 @@
     </tr>
   </thead>
   <tbody>
-   <% if @times: %>
-    <% for time in @times: %>
-      <tr>
-        <td title="<%= time[1] %>"><%= time[1] %></td>
-        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= time[2] %>" data-source="<%= time[1] %>" data-initial="<%= time[3] %>" data-id="<%= time[0] %>" data-format="<%= time[4] %>"></td>
-        <td title="<%= time[3] %>"><%= time[3]%></td>
-        <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
-      </tr>
-      <% end %>
-    <% end %>
+  <% for time in @times: %>
+    <% changed = false %>
+    <% changed = true if time[2] isnt time[3] %>
+    <tr <% if changed: %>class="warning"<% end %>>
+      <td title="<%= time[1] %>"><%= time[1] %>
+      <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= time[2] %>" data-source="<%= time[1] %>" data-initial="<%= time[3] %>" data-id="<%= time[0] %>" data-format="<%= time[4] %>">
+      <td title="<%= time[3] %>"><%= time[3]%>
+      <td><a href="#" class="js-Reset <% if !changed: %>hidden<% end %>"><%- @T('Reset') %></a>
+  <% end %>
   </tbody>
 </table>
 
@@ -33,15 +32,14 @@
     </tr>
   </thead>
   <tbody>
-    <% if @strings: %>
-      <% for item in @strings: %>
-      <tr>
-        <td title="<%= item[1] %>"><%= item[1] %></td>
-        <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= item[2] %>" data-source="<%= item[1] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>" data-format="<%= item[4] %>"></td>
-        <td title="<%= item[3] %>"><%= item[3]%></td>
-        <td><a href="#" class="js-Reset"><%- @T('Reset') %></a></td>
-      </tr>
-      <% end %>
+    <% for item in @strings: %>
+    <% changed = false %>
+    <% changed = true if item[2] isnt item[3] %>
+    <tr <% if changed: %>class="warning"<% end %>>
+      <td title="<%= item[1] %>"><%= item[1] %>
+      <td class="translationOverview-itemContainer"><input class="js-Item translationOverview-item form-control" value="<%= item[2] %>" data-source="<%= item[1] %>" data-initial="<%= item[3] %>" data-id="<%= item[0] %>" data-format="<%= item[4] %>">
+      <td title="<%= item[3] %>"><%= item[3]%>
+      <td><a href="#" class="js-Reset <% if !changed: %>hidden<% end %>"><%- @T('Reset') %></a>
     <% end %>
   </tbody>
 </table>

@@ -1,1 +1,5 @@
 <p><%= @T(@explanation) %></p>
+
+<table class="table table--placeholder">
+  <thead><tr><th><%- @T('No Entries') %>
+</table>

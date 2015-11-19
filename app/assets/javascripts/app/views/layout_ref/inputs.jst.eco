@@ -128,5 +128,9 @@
         </div>
       </div>
     </div>
+
+    <h2>Progress</h2>
+    <progress value="0.3"></progress>
+    <label>German</label>
   </div>
 </div>

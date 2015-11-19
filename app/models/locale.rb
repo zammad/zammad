@@ -7,6 +7,11 @@ class Locale < ApplicationModel
     if Rails.env.test?
       locales = Locale.where(active: true, locale: ['en-us', 'de-de'])
     end
+
+    # read used locales based on env, e. g. export Z_LOCALES='en-us:de-de'
+    if ENV['Z_LOCALES']
+      locales = Locale.where(active: true, locale: ENV['Z_LOCALES'].split(':') )
+    end
     locales
   end
 

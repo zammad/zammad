@@ -258,25 +258,29 @@ class AgentTicketActionLevel5Test < TestCase
       no_quote: true,
     )
 
-=begin
     # update group2
     select(
-      :css   => '.active [name="group_id"]',
-      :value => group_name2,
+      css: '.active [name="group_id"]',
+      value: group_name2,
+    )
+
+    # execute reply
+    sleep 5 # time to recognice form changes
+    click(
+      css: '.active [data-type="reply"]',
     )
 
     # check if signature exists
     match_not(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body1,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body1,
+      no_quote: true,
     )
     match(
-      :css      => '.active [data-name="body"]',
-      :value    => signature_body2,
-      :no_quote => true,
+      css: '.active [data-name="body"]',
+      value: signature_body2,
+      no_quote: true,
     )
-=end
 
     # discard changes
     sleep 2

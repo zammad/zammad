@@ -1757,6 +1757,12 @@ class App.CustomerChatRef extends App.Controller
 
     @render()
 
+    @interval(
+      =>
+        @updateNavMenu()
+      6800
+    )
+
   render: ->
     @html App.view('layout_ref/customer_chat')()
 
@@ -1765,10 +1771,35 @@ class App.CustomerChatRef extends App.Controller
     # @testChat @chatWindows[0], 100
     @initQuiz()
 
+    @updateNavMenu()
+
   show: (params) =>
 
     # highlight navbar
     @navupdate '#layout_ref/customer_chat'
+
+  randomCounter: (min, max) ->
+    parseInt(Math.random() * (max - min) + min)
+
+  counter: =>
+    @randomCounter(0,100)
+
+  switch: (state = undefined) =>
+
+    # read state
+    if state is undefined
+      value = App.SessionStorage.get('chat_layout_ref')
+      if value is undefined
+        value = false
+      return value
+
+    # write state
+    App.SessionStorage.set('chat_layout_ref', state)
+
+  updateNavMenu: =>
+    delay = ->
+      App.Event.trigger('menu:render')
+    @delay(delay, 200)
 
   testChat: (chat, count) ->
     for i in [0..count]
@@ -1876,10 +1907,9 @@ class CustomerChatRouter extends App.ControllerPermanent
       persistent: true
     )
 
-App.Config.set( 'layout_ref/customer_chat', CustomerChatRouter, 'Routes' )
-App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
-App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', switch: true, counter: true, role: ['Agent'], class: 'chat' }, 'NavBar' )
-
+#App.Config.set( 'layout_ref/customer_chat', CustomerChatRouter, 'Routes' )
+#App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
+#App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', role: ['Agent'], class: 'chat' }, 'NavBar' )
 
 class chatWindowRef extends Spine.Controller
   @extend Spine.Events

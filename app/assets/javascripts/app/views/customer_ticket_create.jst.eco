@@ -6,23 +6,25 @@
           <h1><%- @T( 'New Ticket' ) %></h1>
         </div>
 
-        <form role="form" class="ticket-create">
+        <div class="page-content">
+          <form role="form" class="ticket-create">
+            <input type="hidden" name="form_id" value="<%= @form_id %>"/>
 
-          <div class="ticket-form-top"></div>
-          <div class="article-form-top"></div>
+            <div class="ticket-form-top"></div>
+            <div class="article-form-top"></div>
 
-          <div class="formset-inset">
-            <div class="ticket-form-middle horizontal two-columns"></div>
-            <div class="ticket-form-bottom"></div>
-          </div>
+            <div class="formset-inset">
+              <div class="ticket-form-middle horizontal two-columns"></div>
+              <div class="ticket-form-bottom"></div>
+            </div>
 
 
-          <div class="form-controls">
-            <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-            <button type="submit" class="btn btn--success js-submit align-right"><%- @T( 'Create' ) %></button>
-          </div>
-        </form>
-
+            <div class="form-controls">
+              <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+              <button type="submit" class="btn btn--success js-submit align-right"><%- @T( 'Create' ) %></button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

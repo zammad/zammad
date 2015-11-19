@@ -140,9 +140,9 @@ class MaintenanceMessageTest < TestCase
       css: '#content textarea[name="message"]',
       value: message_html + ' #3',
     )
-    check(
+    click(
       browser: browser1,
-      css: '#content input[name="reload"][value="1"]',
+      css: '#content input[name="reload"] + .icon-checkbox.icon-unchecked',
     )
     click(
       browser: browser1,

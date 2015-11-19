@@ -443,7 +443,7 @@ class App.Controller extends Spine.Controller
         }
         processData: true,
         success: (data, status, xhr) ->
-          App.Store.write( "user-ticket-popover::#{params.user_id}",  data )
+          App.SessionStorage.set( "user-ticket-popover::#{params.user_id}",  data )
 
           # load assets
           App.Collection.loadAssets( data.assets )
@@ -452,7 +452,7 @@ class App.Controller extends Spine.Controller
       )
 
     # get data
-    data = App.Store.get( "user-ticket-popover::#{params.user_id}" )
+    data = App.SessionStorage.get( "user-ticket-popover::#{params.user_id}" )
     if data
       show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       @delay(
@@ -505,10 +505,10 @@ class App.Controller extends Spine.Controller
 
   # central method, is getting called on every ticket form change
   ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>
-    if @form_meta.dependencies && @form_meta.dependencies[attribute.name]
-      dependency = @form_meta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
+    if @formMeta.dependencies && @formMeta.dependencies[attribute.name]
+      dependency = @formMeta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
       if !dependency
-        dependency = @form_meta.dependencies[attribute.name][ params[attribute.name] ]
+        dependency = @formMeta.dependencies[attribute.name][ params[attribute.name] ]
       if dependency
         for fieldNameToChange of dependency
           filter = []
@@ -545,6 +545,15 @@ class App.Controller extends Spine.Controller
   stopLoading: =>
     return if !@initLoadingDoneDelay
     @clearDelay(@initLoadingDoneDelay)
+
+  renderScreenError: (data) ->
+    @html App.view('generic/error/generic')(data)
+
+  renderScreenNotFound: (data) ->
+    @html App.view('generic/error/not_found')(data)
+
+  renderScreenUnauthorized: (data) ->
+    @html App.view('generic/error/unauthorized')(data)
 
 class App.ControllerPermanent extends App.Controller
   constructor: ->

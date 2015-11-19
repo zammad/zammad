@@ -1,5 +1,6 @@
 class App.ControllerForm extends App.Controller
   constructor: (params) ->
+    super
     for key, value of params
       @[key] = value
 

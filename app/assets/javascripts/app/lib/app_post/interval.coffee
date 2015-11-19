@@ -16,10 +16,10 @@ class App.Interval
       _instance ?= new _intervalSingleton
     _instance.clearLevel( level )
 
-  @reset: ( level ) ->
+  @reset: ->
     if _instance == undefined
       _instance ?= new _intervalSingleton
-    _instance.reset( level )
+    _instance.reset()
 
   @_all: ->
     if _instance == undefined

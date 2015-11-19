@@ -1,7 +1,7 @@
 <form class="article-add <% if @article.internal: %>is-internal<% else: %>is-public<% end %>" data-type="<%= @article.type %>">
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
-  <input type="hidden" name="form_id" value="<%= @article.form_id %>">
+  <input type="hidden" name="form_id" value="<%= @form_id %>">
   <input type="hidden" name="in_reply_to" value="<%= @article.in_reply_to %>">
   <div class="editControls">
     <div class="js-avatar"></div>
@@ -45,16 +45,16 @@
         <div class="formGroup-label">
           <label for=""><%- @T('To') %></label>
         </div>
-        <div class="controls"><input id="" type="text" name="to" value="<%= @article.to %>" class="form-control" required="required"></div>
+        <div class="controls"><input id="" type="text" name="to" value="<%= @article.to %>" class="form-control js-mail-inputs" required="required"></div>
       </div>
       <div class="input form-group">
         <div class="formGroup-label">
           <label for=""><%- @T('Cc') %></label>
         </div>
-        <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control"></div>
+        <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control js-mail-inputs"></div>
       </div>
 
-      <div class="textBubble">
+      <div class="textBubble js-writeArea">
         <div class="bubble-arrow"></div>
         <div class="js-textarea articleNewEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
         <!-- .textBubble grows with textarea (and expanding clone) -->

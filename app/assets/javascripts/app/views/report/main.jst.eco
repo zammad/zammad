@@ -11,7 +11,7 @@
 
     <div class="page-main">
       <div class="js-timeRangePicker"></div>
-      <div class="page-content">
+      <div class="well">
 
         <div id="placeholder" class="" style="height:350px;"></div>
         <span class=" muted" id="download-chart" style="font-size: 8px;"></span>

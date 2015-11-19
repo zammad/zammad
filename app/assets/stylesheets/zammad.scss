@@ -15,6 +15,8 @@ $navigationWidth: 260px;
 
 $highlight-color: hsl(205,90%,60%);
 
+$largeScreenBreakpoint: 1280px;
+
 html {
   height: 100%;
 }
@@ -25,7 +27,7 @@ body {
   font-weight: normal;
   background: hsl(210,14%,97%);
   height: 100%;
-  color: hsl(198,19%,72%);
+  color: hsl(60,1%,34%);
   word-wrap: break-word;
   overflow-wrap: break-word;
   display: flex;
@@ -38,8 +40,7 @@ use {
 }
 
 p {
-  margin: 14px 0;
-  color: hsl(60,1%,34%);
+  margin: 12px 0;
 
   &.subtle {
     color: hsl(60,1%,74%);
@@ -64,6 +65,12 @@ strong {
 
 .u-dontfold {
   flex-shrink: 0;
+}
+
+.u-invisible {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute !important;
 }
 
 a {
@@ -239,6 +246,29 @@ blockquote {
   z-index: 1;
 }
 
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 20px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background: hsl(197,20%,93%);
+  border: 1px solid hsl(198,18%,86%);
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05) inset;
+}
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  white-space: pre-wrap;
+  background-color: transparent;
+  border-radius: 0;
+}
+
 .textarea::placeholder,
 .form-control::placeholder,
 .token-input::placeholder {
@@ -263,7 +293,7 @@ blockquote {
   
   .icon {
     vertical-align: middle;
-    margin-top: -3px;
+    margin-top: -1px; // more negative margin top looks bad on the btn--quad plus in overviews
   }
 
   &.btn--icon--last .icon {
@@ -361,6 +391,7 @@ blockquote {
   &.btn--success {
     color: white;
     background: hsl(145,51%,45%);
+    
     &:active {
       background: hsl(145,51%,35%);
     }
@@ -372,6 +403,10 @@ blockquote {
       &:active {
         background: hsl(0,0%,98%);
       }
+    }
+
+    .icon {
+      fill: white;
     }
   }
 
@@ -446,6 +481,10 @@ blockquote {
         color: hsl(0,0%,75%);
       }
     }
+  }
+
+  &.btn--quad {
+    padding: 10px 12px 9px;
   }
 
   &.btn--split--first {
@@ -601,6 +640,19 @@ blockquote {
   padding: 8px 10px 6px;
   border: 1px solid hsl(0,0%,90%);
   
+  &.is-clickable {
+    background: hsl(203,65%,55%);
+    color: white;
+    cursor: pointer;
+    border-color: hsl(203,65%,45%);
+    box-shadow: 1px 0 hsl(203,65%,45%);
+    position: relative;
+  }
+
+  &.is-blinking {
+    animation: pulsate 667ms ease-in-out infinite alternate;
+  }
+  
   &:not(:last-child):not(:only-child) {
     border-right: none;
   }
@@ -618,8 +670,12 @@ blockquote {
   }
 
   .badge {
-    background: hsl(210,5%,77%);
+    background: hsla(210,50%,10%,.24);
   }
+}
+
+@keyframes pulsate {
+  to { filter: brightness(1.2); }
 }
 
 .badge {
@@ -652,16 +708,24 @@ blockquote {
   &.badge--text {
     min-width: 0;
     padding: 0;
-    margin-right: 5px;
+    margin-right: 0;
     font-size: inherit;
-    font-weight: normal;
-    text-align: left;
+    font-weight: inherit;
+    text-align: inherit;
+    line-height: inherit;
     color: #d0d2d3;
     background: none;
     border-radius: 0;
+    vertical-align: baseline;
   }
 }
 
+.key-value {
+  td:first-child {
+    padding-right: 10px;
+    color: #999;
+  }
+}
 
 table {
   table-layout: fixed;
@@ -671,12 +735,25 @@ table {
   display: table;
 }
 
+.table--light {
+  color: hsl(198,19%,72%);
+}
+
 .table-fluid {
   table-layout: auto;
 }
 
 .table .table-row {
   display: table-row;
+}
+
+.table--placeholder {
+  th {
+    text-align: center;
+  }
+  td {
+    height: 40px;
+  } 
 }
 
 .table th:not(.noTruncate) .table-column-title,
@@ -933,8 +1010,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 23px;
-  line-height: 29px;
+  font-size: 24px;
+  line-height: 30px;
 }
 
 h2,
@@ -1703,7 +1780,6 @@ kbd {
 .page-header {
   margin: 0 0 15px;
   padding: 0;
-  border: none;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -1713,7 +1789,8 @@ kbd {
   justify-content: center;
 }
 
-.page-header-title h1 {
+.page-header-title h1,
+.page-header-title h2 {
   margin-top: 9px;
   margin-bottom: 7px;
 }
@@ -1738,6 +1815,21 @@ kbd {
   }
 }
 
+.page-content {
+  label,
+  .label {
+    color: hsl(197,18%,70%);
+  }
+  .help-text,
+  .help-block {
+    color: hsl(198,19%,72%);
+  }
+}
+
+.page-description p {
+  color: initial;
+}
+
 .page-body--two-column {
   display: flex;
 }
@@ -1753,13 +1845,6 @@ kbd {
 
 .page-main {
   flex: 1;
-}
-
-.page-content {
-  background: white;
-  border: 1px solid hsl(240,3%,92%);
-  border-radius: 3px;
-  padding: 10px;
 }
 
 .page-loading {
@@ -1782,6 +1867,7 @@ kbd {
 .help-block {
   margin: 0;
   color: #bcbcbc;
+  font-size: 12px;
   
   &.help-block--center {
     text-align: center;
@@ -1977,51 +2063,110 @@ ol.tabs li {
   }
 
   .tab {
+    color: inherit;
     height: 35px;
     padding: 8px 20px;
     text-align: center;
     border-right: 1px solid rgba(0,8,14,.08);
     flex: 1 1 auto;
     @extend .u-clickable;
+    white-space: nowrap;
+    
+    &.active {
+      color: white;
+      background: #444a4f;
+      box-shadow: none;
+      
+      .tab-badge {
+        color: hsl(204,3%,65%);
+      }
+    }
   }
 
-  .tab.active {
-    color: white;
-    background: #444a4f;
-    box-shadow: none;
+  .tab-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      
+    .arrow {
+      margin-left: 10px;
+      opacity: 0.75;
+    }
+    
+    .icon {
+      fill: hsl(0,0%,70%);
+    }
+    
+    &.active {
+      background: white;
+      
+      .icon {
+        fill: #444a4f;
+        opacity: 1;
+      }
+    }
   }
 
   .tab:first-child {
     border-radius: 3px 0 0 3px;
   }
 
-  .tab:last-child {
+  .tab:last-child:not(:only-child) {
     border-radius: 0 3px 3px 0;
     border-right: none;
   }
 
-  .wide-tabs {
-    margin: 25px auto 20px;
-    font-size: 15px;
-    font-weight: 300;
-    border-radius: 8px;
+  .tab:only-child {
+    border-radius: 3px;
+    border-right: none;
+  }
+
+  .tab-badge {
+    margin-left: 3px;
+    font-size: 0.95em;
+  }
+
+  .tabs.tabs--inline {
+    display: inline-flex;
+    margin-left: 0;
+    margin-right: 0;
     
     .tab {
-      height: 40px;
-      padding: 10px 20px;
+      flex: none;
     }
   }
 
-  .dashboard .wide-tabs {
-    width: 60%;
+  .tabs--big {
+    margin: 25px auto 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    
+    .tab {
+      height: auto;
+      padding: 10px 23px 9px;
+      
+      &:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+
+      &:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+
+      &:only-child {
+        border-radius: 8px;
+      }
+    }
+
+    .tab-dropdown {
+      padding-left: 18px;
+      padding-right: 15px;
+    }
   }
 
-  .wide-tabs .tab:first-child {
-    border-radius: 8px 0 0 8px;
-  }
-
-  .wide-tabs .tab:last-child {
-    border-radius: 0 8px 8px 0;
+  .dashboard .tabs--big {
+    width: 50%;
   }
 
 .separator {
@@ -2269,8 +2414,43 @@ footer {
   border-color: #eee;
 }
 
-.tableOverview {
-  padding: 10px 20px;
+.overviews {
+  .sidebar {
+    @media only screen and (max-width: $largeScreenBreakpoint) {
+      display: none;
+    }
+  }
+}
+
+.overview-header {
+  position: relative;
+  margin: 20px 0 32px;
+  height: 41px;
+  display: none;
+  align-items: center;
+  
+  .tabsHolder {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .tabs {
+    margin: 0;
+    position: relative;
+  }
+
+  .tabs-clone {
+    right: 0;
+  }
+
+  .dropdown {
+    min-width: 0;
+    width: 336px;
+  }
+
+  @media only screen and (max-width: $largeScreenBreakpoint) {
+    display: flex;
+  }
 }
 
 .tableOverview-edit {
@@ -2278,12 +2458,22 @@ footer {
 }
 
 .bulkAction {
+  position: fixed;
+  bottom: 0;
+  left: $sidebarWidth + $navigationWidth;
+  right: 0;
+  min-width: $minWidth - $sidebarWidth - $navigationWidth;
   background: white;
   z-index: 1;
   box-shadow: 
     0 -1px rgba(0,0,0,.05),
     0 -2px rgba(0,0,0,.03),
     0 -3px rgba(0,0,0,.01);
+    
+  @media only screen and (max-width: $largeScreenBreakpoint) {
+    left: $navigationWidth;
+    min-width: $minWidth - $sidebarWidth;
+  }
 }
 
   .bulkAction-firstStep {
@@ -2344,6 +2534,13 @@ footer {
   font-size: 10px;
   line-height: 12px;
   color: #999999;
+}
+
+.well {
+  background: white;
+  border: 1px solid hsl(240,3%,92%);
+  border-radius: 3px;
+  padding: 10px;
 }
 
 .well-muted {
@@ -2865,6 +3062,7 @@ footer {
     }
 
     .user-menu > li:hover .list-button:before,
+    .user-menu > li.is-active .list-button:before,
     .user-menu > li.is-hovered .list-button:before {
       content: '';
       position: absolute;
@@ -2875,7 +3073,12 @@ footer {
       background: white;
     }
 
+    .user-menu > li.is-active .list-button:before {
+      background: $highlight-color;
+    }
+
     .user-menu li.add:hover .list-button:before,
+    .user-menu li.add.is-active .list-button:before,
     .user-menu li.add.is-hovered .list-button:before {
       background: #38ae6a;
     }
@@ -2890,14 +3093,17 @@ footer {
       fill: hsl(145,51%,45%);
     }
 
-    .user-menu > li.settings:hover .user-menu-icon,
-    .user-menu > li.settings.active .user-menu-icon {
+    .user-menu > li:hover .user-menu-icon {
       fill: hsl(232,10%,16%);
+    }
+
+    .user-menu > li.is-active .user-menu-icon {
+      fill: white;
     }
 
     .user-menu > li.add:hover .user-menu-icon.icon-plus,
     .user-menu > li.add.is-hovered .user-menu-icon.icon-plus,
-    .user-menu > li.add.active .user-menu-icon.icon-plus {
+    .user-menu > li.add.is-active .user-menu-icon.icon-plus {
       fill: white;
     }
 
@@ -3027,8 +3233,7 @@ footer {
 }
 
 .sidebar {
-  width: 32%;
-  max-width: 280px;
+  width: 280px;
   padding: 20px;
   color: hsl(60,1%,34%);
   background: white;
@@ -3049,21 +3254,21 @@ footer {
   }
 }
 
-  .sidebar-block {
-    margin: 20px 0;
+.sidebar-block {
+  margin: 20px 0;
 
-    &:first-child {
-      margin-top: 0;
-    }
+  &:first-child {
+    margin-top: 0;
   }
-  .sidebar-block [contenteditable=true] {
-    white-space: normal; // do no u-textTruncate, we want to edit it inline
-  }
+}
+.sidebar-block [contenteditable=true] {
+  white-space: normal; // do no u-textTruncate, we want to edit it inline
+}
 
-  .main + .sidebar {
-    border-right: none;
-    border-left: 1px solid #e6e6e6;
-  }
+.main + .sidebar {
+  border-right: none;
+  border-left: 1px solid #e6e6e6;
+}
 
 .NavBarAdmin.sidebar,
 .NavBarProfile.sidebar, {
@@ -3130,6 +3335,7 @@ footer {
   .nav-pills > li > a > .badge {
     margin-left: auto;
     padding-left: 10px;
+    margin-right: 5px;
   }
 
   a.list-group-item.active > .badge,
@@ -3144,9 +3350,10 @@ footer {
   position: relative;
 }
 
-  .main.no-padding {
-    padding: 0;
-  }
+.main--tabs,
+.main.no-padding {
+  padding: 0;
+}
 
 .tooltip {
   font-family: inherit;
@@ -3356,13 +3563,11 @@ footer {
   height: 47px;
 }
 
-.state-color {
-  &.supergood-state { fill: $supergood-color;}
-  &.good-state      { fill: $good-color; }
-  &.ok-state        { fill: $ok-color; }
-  &.bad-state       { fill: $bad-color; }
-  &.superbad-state  { fill: $superbad-color; }
-}
+.supergood-color { fill: $supergood-color;}
+.good-color      { fill: $good-color; }
+.ok-color        { fill: $ok-color; }
+.bad-color       { fill: $bad-color; }
+.superbad-color  { fill: $superbad-color; }
 
 .stat-widgets {
   margin: 0 -7px 20px;
@@ -4824,6 +5029,7 @@ footer {
 }
 
 .type-tabs .tab {
+  height: 40px;
   line-height: 42px;
   padding: 0 12px 0 12px;
   list-style: none;
@@ -5168,6 +5374,10 @@ footer {
     padding: 0 15px;
     cursor: pointer;
     white-space: nowrap;
+    
+    &:focus {
+      outline: none;
+    }
   }
 
   .dropdown li:not(:first-child) {
@@ -5198,6 +5408,10 @@ footer {
 
   .dropdown-menu > li > a span {
     display: block;
+  }
+
+  .dropdown-menu .badge {
+    padding-left: 10px;
   }
 
   .dropdown.dropdown--actions {
@@ -5240,6 +5454,13 @@ footer {
       display: flex;
       flex: 1;
       padding: 0 18px;
+    }
+  }
+
+  .dropdown.dropdown--wide {
+    li {
+      padding-top: 12px;
+      padding-bottom: 12px;
     }
   }
 
@@ -5407,51 +5628,62 @@ footer {
   margin: 0;
 }
 
+.nav {
+  list-style: none;
+  padding: 0;
+}
+
+.nav a {
+  padding: 10px 15px;
+  display: block;
+}
+
 .nav-tabs {
-  border-bottom: none; 
+  display: flex;
+  margin: 10px -20px 20px;
+  padding: 0 20px 0 21px; /* margin-left: -1px */
+  position: relative;
 }
 
 .nav-tabs li {
   margin: 0;
-}
-
-.nav-tabs > li > a,
-.nav-tabs > li > a:hover,
-.nav-tabs > li > a:focus {
-  background: white;
-  border-radius: 0;
-  border: 1px solid hsl(0,0%,90%);
   color: hsl(0,0%,70%);
-  height: 40px;
-  margin: 0;
+  border: 1px solid hsl(0,0%,90%);
+  margin-left: -1px;
+  background: white;
+  position: relative;
+  
+  &:first-child {
+    border-radius: 7px 0 0 7px;
+  }
+  
+  &:last-child {
+    border-radius: 0 7px 7px 0;
+  }
+
+  &:only-child {
+    border-radius: 7px;
+  }
+  
+  &.active {
+    color: white;
+    background: hsl(206,7%,28%);
+    border-color: hsl(206,7%,28%);
+  }
+
+  a {
+    padding: 9px 25px;
+    color: inherit;
+    color: inherit;
+  }
 }
 
-.nav-tabs > li:not(:last-child):not(:only-child) > a {
-  border-right: none;
-}
-
-.nav-tabs > li:first-child > a {
-  border-radius: 5px 0 0 5px;
-}
-
-.nav-tabs > li:last-child > a {
-  border-radius: 0 5px 5px 0;
-}
-
-.nav-tabs > li:only-child > a {
-  border-radius: 5px;
-}
-
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus {
-  background: hsl(206,7%,28%);
-  color: white;
-  border-color: hsl(0,0%,90%);
-}
-
-.main .nav-tabs:first-child {
-  margin: 28px 0 50px;
+.tab-content {
+  margin-top: 25px;
+  
+  h2:first-child {
+    margin-top: 0;
+  }
 }
 
 .settings-entry {
@@ -6351,6 +6583,7 @@ output {
   color: hsl(60,1%,34%);
   background: white;
   table-layout: auto;
+  margin-bottom: 20px;
   
   &.is-invalid {
     border-radius: 3px;
@@ -6407,6 +6640,10 @@ output {
     font-size: 10px;
     letter-spacing: 0;
     color: hsl(198,18%,72%);
+  }
+
+  .inline-label {
+    color: inherit;
   }
 
   .btn--table {
@@ -6728,6 +6965,11 @@ output {
   }
 }
 
+  
+/* 
+  datepicker resets some css it potentially inherits when its rendered inside a table
+*/
+
 .datepicker {
   background: hsl(234,10%,19%);
   color: white;
@@ -6745,6 +6987,14 @@ output {
     &:hover {
       background: hsl(240,10%,14%);
     }
+  }
+
+  th {
+    background: none;
+  }
+
+  th, td {
+    border: none;
   }
 
   .next,
@@ -6776,7 +7026,7 @@ output {
     width: 27px;
     height: 26px;
     border-radius: 100%;
-    padding: 1px 0 0;
+    padding: 1px 0 0 !important;
   }
 
   .month,
@@ -6916,6 +7166,7 @@ output {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 0 14px;
   
   .page-header {
     margin: 15px 6px 5px;
@@ -6933,7 +7184,6 @@ output {
 .chat-window {
   flex: 0 1 0;
   overflow: hidden;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   color: hsl(0,0%,33%);
@@ -6943,6 +7193,7 @@ output {
   &.is-open {
     flex: 1 0 25%;
     transform: scale(1);
+    padding: 10px;
   }
 
   &.is-offline {
@@ -7070,7 +7321,7 @@ output {
 }
 
 .chat-message--customer.chat-message--new {
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .chat-message--agent {
@@ -7099,7 +7350,6 @@ output {
     fill: hsl(0,0%,90%);
     margin-left: -4px;
     vertical-align: middle;
-    animation: fadeInDown 300ms both;
     animation: ease-in-out load-fade 600ms infinite alternate;
   }
 
@@ -7132,6 +7382,106 @@ output {
   overflow: auto;
 }
 
+.browser {
+  margin: 0 0 20px;
+  border: 1px solid hsl(0,0%,90%);
+  border-radius: 5px;
+  position: relative;
+  transition: 500ms;
+  width: 100%;
+}
+  
+.browser-body {
+  position: relative;
+  overflow: hidden;
+  height: 450px;
+  width: 100%;
+  
+  iframe {
+    position: absolute;
+    border: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: left top;
+  }
+}
+
+.browser-head {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid hsl(0,0%,90%);
+  
+  .browser-input {
+    flex: 1;
+    margin-right: 10px;
+    
+    input {
+      min-width: 0;
+    }
+  }
+
+  .browser-control {
+    width: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    fill: hsl(202,8%,28%);
+    cursor: pointer;
+  }
+}
+
+.chat-demo {
+  .zammad-chat {
+    position: absolute;
+    transform-origin: right bottom;
+    transition: 500ms;
+    
+    .zammad-chat-body {
+      transition: 500ms; 
+    }
+    
+    &.is-fullscreen {
+      height: 100%;
+    }
+  }
+
+  .zammad-chat-header {
+    pointer-events: auto;
+  }
+
+  .chat-demo-animationHolder {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: slide-up 500ms;
+    pointer-events: none;
+  }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+}
+
+.select-tabs {
+  display: flex;
+  border: 1px solid hsla(206,100%,3%,0.08);
+  border-radius: 3px;
+  
+  .tab {
+    height: 39px;
+    padding-top: 11px;
+    
+    &.is-selected {
+      background: linear-gradient(hsla(202,50%,20%,0.1), hsla(202,50%,20%,.03));
+    }
+  }
+}
+
 /*
 
   ----------------
@@ -7140,7 +7490,7 @@ output {
 
 */
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width: $largeScreenBreakpoint) {
   .sidebar.optional {
     display: none;
   }
@@ -7317,6 +7667,10 @@ body.fit {
 
 .align-right {
   margin-left: auto;
+}
+
+.space-left {
+  margin-left: 10px; 
 }
 
 .align-center {

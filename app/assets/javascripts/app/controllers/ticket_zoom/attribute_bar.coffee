@@ -1,6 +1,7 @@
 class App.TicketZoomAttributeBar extends App.Controller
   elements:
-    '.buttonDropdown':   'buttonDropdown'
+    '.js-submitDropdown': 'buttonDropdown'
+    '.js-secondaryActionButtonLabel': 'secondaryActionButton'
 
   events:
     'mousedown .js-openDropdownMacro':    'toggleDropdownMacro'
@@ -8,9 +9,12 @@ class App.TicketZoomAttributeBar extends App.Controller
     'mouseup .js-dropdownActionMacro':    'performTicketMacro'
     'mouseenter .js-dropdownActionMacro': 'onActionMacroMouseEnter'
     'mouseleave .js-dropdownActionMacro': 'onActionMacroMouseLeave'
+    'click .js-secondaryAction':          'chooseSecondaryAction'
 
   constructor: ->
     super
+
+    @secondaryAction = 'stayOnTab'
 
     @subscribeId = App.Macro.subscribe(@render)
     @render()
@@ -25,7 +29,9 @@ class App.TicketZoomAttributeBar extends App.Controller
     @html App.view('ticket_zoom/attribute_bar')(
       macros: macros
       macroDisabled: macroDisabled
+      overview_id: @overview_id
     )
+    @setSecondaryAction()
 
   toggleDropdownMacro: =>
     if @buttonDropdown.hasClass 'is-open'
@@ -39,8 +45,8 @@ class App.TicketZoomAttributeBar extends App.Controller
     $(document).unbind 'click.buttonDropdown'
 
   performTicketMacro: (e) =>
-    macroId = $(e.target).data('id')
-    console.log "perform action", @$(e.currentTarget).text(), macroId
+    macroId = $(e.currentTarget).data('id')
+    console.log 'perform action', @$(e.currentTarget).text(), macroId
     macro = App.Macro.find(macroId)
 
     @callback(e, macro.perform)
@@ -51,3 +57,15 @@ class App.TicketZoomAttributeBar extends App.Controller
 
   onActionMacroMouseLeave: (e) =>
     @$(e.currentTarget).removeClass('is-active')
+
+  chooseSecondaryAction: (e) =>
+    type = $(e.currentTarget).find('.js-secondaryActionLabel').data('type')
+    @setSecondaryAction(type)
+
+  setSecondaryAction: (type = @secondaryAction) =>
+    element = @$(".js-secondaryActionLabel[data-type=#{type}]")
+    text = element.text()
+    @$('.js-secondaryAction .js-selectedIcon.is-selected').removeClass('is-selected')
+    element.closest('.js-secondaryAction').find('.js-selectedIcon').addClass('is-selected')
+    @secondaryActionButton.text(text)
+    @secondaryActionButton.data('type', type)

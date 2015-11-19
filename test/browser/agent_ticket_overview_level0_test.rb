@@ -30,20 +30,32 @@ class AgentTicketOverviewLevel0Test < TestCase
         body: 'overview count test #2',
       }
     )
-    sleep 6 # till overview is updated
     click( text: 'Overviews' )
-    click( text: 'Unassigned & Open Tickets' )
-    sleep 4 # till overview is rendered
+
+    # enable full overviews
+    execute(
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
+    click( text: 'Unassigned & Open' )
+    sleep 6 # till overview is rendered
 
     # select both via bulk action
     click(
       css: '.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
+
+    # scroll to reply - needed for chrome
+    scroll_to(
+      position: 'top',
+      css:      '.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+    )
     click(
       css: '.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
+
     exists(
       css: '.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
     )
@@ -62,7 +74,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     click(
       css: '.active .bulkAction .js-submit',
     )
-    sleep 6
+    sleep 4
 
     exists_not(
       css: '.active table tr td input[value="' + ticket1[:id] + '"]',
@@ -148,7 +160,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       css: '.modal input[value="article_count"]',
     )
     click( css: '.modal .js-submit' )
-    sleep 4
+    sleep 2
 
     # check if number and article count is gone
     match_not(
@@ -172,7 +184,7 @@ class AgentTicketOverviewLevel0Test < TestCase
         body: 'overview count test #3',
       }
     )
-    sleep 8
+    sleep 6
 
     # get new overview count
     overview_counter_new = overview_counter()
@@ -190,7 +202,7 @@ class AgentTicketOverviewLevel0Test < TestCase
         state: 'closed',
       }
     )
-    sleep 8
+    sleep 6
 
     # get current overview count
     overview_counter_after = overview_counter()

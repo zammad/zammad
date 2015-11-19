@@ -248,6 +248,11 @@ class AgentTicketActionsLevel3Test < TestCase
       no_quote: true,
     )
 
+    task_type(
+      browser: browser2,
+      type:    'stayOnTab',
+    )
+
     click(
       browser: browser2,
       css: '.active .js-submit',

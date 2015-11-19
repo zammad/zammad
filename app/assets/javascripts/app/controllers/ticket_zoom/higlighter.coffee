@@ -91,7 +91,7 @@ class App.TicketZoomHighlighter extends App.Controller
     articles.off('mousedown', @onMouseDown)
     articles.on('mousedown', @onMouseDown) #future: touchend
 
-  # for testing purposes the highlights get stored in localStorage
+  # for testing purposes the highlights get stored in atrticle preferences
   loadHighlights: (ticket_article_id) ->
     return if !@isRole('Agent')
     article = App.TicketArticle.find(ticket_article_id)

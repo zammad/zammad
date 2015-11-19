@@ -21,19 +21,19 @@
     </ul>
   </div>
   <% else: %>
-  <a class="menu-item js-<%- item.class %>MenuItem<%- ' is-active' if @active_tab[item.target] %>" href="<%= item.target %>">
+  <a class="menu-item js-<%- item.class %>MenuItem<%- ' is-active' if @active_tab[item.target] %>" href="<%= item.target %>" data-key="<%- item.key %>">
     <%- @Icon(item.class, 'menu-item-icon') %>
     <span class="menu-item-name">
       <%- @T(item.name) %>
     </span>
-    <% if item.counter: %>
-    <span class="counter badge badge--big"></span>
+    <% if item.counter isnt undefined && item.counter isnt 0: %>
+      <span class="counter badge badge--big"><%= item.counter %></span>
     <% end %>
-    <% if item.switch: %>
-    <span class="zammad-switch zammad-switch--dark zammad-switch--small">
-       <input type="checkbox" id="<%- item.class %>-switch">
-       <label for="<%- item.class %>-switch"></label>
-    </span>
+    <% if item.switch isnt undefined: %>
+      <span class="zammad-switch zammad-switch--dark zammad-switch--small">
+         <input type="checkbox" id="<%- item.class %>-switch" class="js-switch" <% if item.switch: %>checked<% end %>>
+         <label for="<%- item.class %>-switch"></label>
+      </span>
     <% end %>
   </a>
   <% end %>

@@ -18,19 +18,20 @@ class App.TicketZoomArticleNew extends App.Controller
     #'.recipient-list .list-arrow':       'recipientListArrow'
 
   events:
-    'click .js-toggleVisibility':     'toggleVisibility'
-    'click .js-articleTypeItem':      'selectArticleType'
-    'click .js-selectedArticleType':  'showSelectableArticleType'
-    'click .recipient-picker':        'toggle_recipients'
-    'click .recipient-list':          'stopPropagation'
-    'click .list-entry-type div':     'change_type'
-    'submit .recipient-list form':    'add_recipient'
-    'focus .js-textarea':             'openTextarea'
-    'input .js-textarea':             'detectEmptyTextarea'
-    #'dragenter':                  'onDragenter'
-    #'dragleave':                  'onDragleave'
-    #'drop':                       'onFileDrop'
-    #'change input[type=file]':    'onFilePick'
+    'click .js-toggleVisibility':    'toggleVisibility'
+    'click .js-articleTypeItem':     'selectArticleType'
+    'click .js-selectedArticleType': 'showSelectableArticleType'
+    'click .recipient-picker':       'toggle_recipients'
+    'click .recipient-list':         'stopPropagation'
+    'click .js-mail-inputs':         'stopPropagation'
+    'click .js-writeArea':           'stopPropagation'
+    'click .list-entry-type div':    'change_type'
+    'submit .recipient-list form':   'add_recipient'
+    'focus .js-textarea':            'openTextarea'
+    #'dragenter':                    'onDragenter'
+    #'dragleave':                    'onDragleave'
+    #'drop':                         'onFileDrop'
+    #'change input[type=file]':      'onFilePick'
 
   constructor: ->
     super
@@ -95,7 +96,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind(
       'ui::ticket::setArticleType'
       (data) =>
-        return if data.ticket.id isnt @ticket.id
+        return if data.ticket.id isnt @ticket_id
         #@setArticleType(data.type.name)
 
         @openTextarea(null, true)
@@ -113,7 +114,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind(
       'ui::ticket::taskReset'
       (data) =>
-        return if data.ticket_id isnt @ticket.id
+        return if data.ticket_id isnt @ticket_id
         @type     = 'note'
         @defaults = {}
         @render()
@@ -129,14 +130,18 @@ class App.TicketZoomArticleNew extends App.Controller
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
+    @(window).off 'click.ticket-zoom-select-type'
+    $(window).on 'click.ticket-zoom-textarea'
+
   render: ->
 
-    ticket = App.Ticket.fullLocal( @ticket.id )
+    ticket = App.Ticket.fullLocal( @ticket_id )
 
     @html App.view('ticket_zoom/article_new')(
       ticket:       ticket
       articleTypes: @articleTypes
       article:      @defaults
+      form_id:      @form_id
       isCustomer:   @isRole('Customer')
     )
     @setArticleType(@type)
@@ -167,7 +172,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     html5Upload.initialize(
       uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload',
-      dropContainer:          @el.get(0),
+      dropContainer:          @$('.article-add').get(0),
       cancelContainer:        @cancelContainer,
       inputField:             @$('.article-attachment input').get(0),
       key:                    'File',
@@ -181,7 +186,6 @@ class App.TicketZoomArticleNew extends App.Controller
             @attachmentPlaceholder.addClass('hide')
             @attachmentUpload.removeClass('hide')
             @cancelContainer.removeClass('hide')
-            console.log('upload start')
 
           onAborted: =>
             @attachmentPlaceholder.removeClass('hide')
@@ -201,7 +205,6 @@ class App.TicketZoomArticleNew extends App.Controller
             @progressText.text('')
 
             @renderAttachment(response.data)
-            console.log('upload complete', response.data )
 
           # Called during upload progress, first parameter
           # is decimal value from 0 to 100.
@@ -211,7 +214,6 @@ class App.TicketZoomArticleNew extends App.Controller
             # hide cancel on 90%
             if parseInt(progress) >= 90
               @cancelContainer.addClass('hide')
-            console.log('uploadProgress ', parseInt(progress))
         )
     )
 
@@ -292,10 +294,10 @@ class App.TicketZoomArticleNew extends App.Controller
   add_recipient: (e) ->
     e.stopPropagation()
     e.preventDefault()
-    console.log 'add recipient', e
     # store recipient
 
-  toggleVisibility: ->
+  toggleVisibility: (event) ->
+    event.stopPropagation()
     if @articleNewEdit.hasClass 'is-public'
       @articleNewEdit
         .removeClass 'is-public'
@@ -310,26 +312,24 @@ class App.TicketZoomArticleNew extends App.Controller
 
       @$('[name=internal]').val ''
 
-  showSelectableArticleType: =>
+  showSelectableArticleType: (event) =>
+    event.stopPropagation()
     @el.find('.js-articleTypes').removeClass('is-hidden')
+    $(window).on 'click.ticket-zoom-select-type', @hideSelectableArticleType
 
-    @selectTypeCatcher = new App.ClickCatcher
-      holder:      @el.offsetParent()
-      callback:    @hideSelectableArticleType
-      zIndexScale: 6
-
-  selectArticleType: (e) =>
-    articleTypeToSet = $(e.target).closest('.pop-selectable').data('value')
+  selectArticleType: (event) =>
+    event.stopPropagation()
+    articleTypeToSet = $(event.target).closest('.pop-selectable').data('value')
     @setArticleType( articleTypeToSet )
     @hideSelectableArticleType()
 
-    @selectTypeCatcher.remove()
-    @selectTypeCatcher = null
+    $(window).off 'click.ticket-zoom-select-type'
 
   hideSelectableArticleType: =>
     @el.find('.js-articleTypes').addClass('is-hidden')
 
   setArticleType: (type) ->
+    wasScrolledToBottom = @isScrolledToBottom()
     @type = type
     @$('[name=type]').val(type)
     @articleNewEdit.attr('data-type', type)
@@ -342,16 +342,31 @@ class App.TicketZoomArticleNew extends App.Controller
         for name in articleType.attributes
           @$("[name=#{name}]").closest('.form-group').removeClass('hide')
 
-    # check if signature need to be added
-    body      = @$('[data-name=body]').html() || ''
+    # detect current signature (use current group_id, if not set, use ticket.group_id)
+    ticketCurrent = App.Ticket.find(@ticket_id)
+    group_id = ticketCurrent.group_id
+    task = App.TaskManager.get(@task_key)
+    if task && task.state && task.state.ticket && task.state.ticket.group_id
+      group_id = task.state.ticket.group_id
+    group = App.Group.find(group_id)
     signature = undefined
-    if @ticket.group.signature_id
-      signature = App.Signature.find( @ticket.group.signature_id )
+    if group && group.signature_id
+      signature = App.Signature.find(group.signature_id)
+
+    # add/replace signature
     if signature && signature.body && @type is 'email'
+
+      # if signature has changed, remove it
+      signature_id = @$('[data-signature=true]').data('signature-id')
+      if signature_id && signature_id.toString() isnt signature.id.toString()
+        @$('[data-name=body] [data-signature="true"]').remove()
+
+      # apply new signature
       signatureFinished = App.Utils.text2html(
-        App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: @ticket } )
+        App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: ticketCurrent } )
       )
-      if App.Utils.signatureCheck( body, signatureFinished )
+      body = @$('[data-name=body]').html() || ''
+      if App.Utils.signatureCheck(body, signatureFinished)
         if !App.Utils.lastLineEmpty(body)
           body = body + '<br>'
         body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
@@ -359,18 +374,20 @@ class App.TicketZoomArticleNew extends App.Controller
 
     # remove old signature
     else
-      @$('[data-name=body]').find('[data-signature=true]').remove()
+      @$('[data-name=body] [data-signature=true]').remove()
 
-  detectEmptyTextarea: =>
-    if !@textarea.text().trim()
-      @addTextareaCatcher()
-    else
-      @removeTextareaCatcher()
+    @scrollToBottom() if wasScrolledToBottom
+
+  isScrolledToBottom: ->
+    return @el.scrollParent().scrollTop() + @el.scrollParent().height() is @el.scrollParent().prop('scrollHeight')
+
+  scrollToBottom: ->
+    @el.scrollParent().scrollTop @el.scrollParent().prop('scrollHeight')
 
   openTextarea: (event, withoutAnimation) =>
     if @articleNewEdit.hasClass('is-open')
       return
-    
+
     duration = 300
 
     if withoutAnimation
@@ -384,7 +401,7 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
         easing: 'easeOutQuad'
-        complete: => @addTextareaCatcher()
+        complete: => $(window).on 'click.ticket-zoom-textarea', @closeTextarea
 
     @textBubble.velocity
       properties:
@@ -427,21 +444,9 @@ class App.TicketZoomArticleNew extends App.Controller
       options:
         duration: duration
 
-  addTextareaCatcher: =>
-    if @articleNewEdit.is(':visible')
-      @textareaCatcher = new App.ClickCatcher
-        holder:      @articleNewEdit.offsetParent()
-        callback:    @closeTextarea
-        zIndexScale: 4
-
-  removeTextareaCatcher: ->
-    return if !@textareaCatcher
-    @textareaCatcher.remove()
-    @textareaCatcher = null
-
   closeTextarea: =>
-    @removeTextareaCatcher()
     if !@textarea.text().trim() && !@attachments.length && not @isIE10()
+      $(window).off 'click.ticket-zoom-textarea'
 
       @textarea.velocity
         properties:
@@ -516,7 +521,7 @@ class App.TicketZoomArticleNew extends App.Controller
         App.Ajax.request(
           type:  'DELETE'
           url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-          data:  JSON.stringify( { store_id: store_id } ),
+          data:  JSON.stringify( { store_id: store_id } )
           processData: false
         )
 

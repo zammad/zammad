@@ -1,11 +1,22 @@
-<div class="page-header">
+<div class="page-header page-header--tabs">
   <div class="page-header-title">
     <h1><%- @T( @header ) %> <small><%- @T( @subHeader ) %></small></h1>
   </div>
-</div>
-<ul class="nav nav-tabs" role="tablist">
-  <% for tab in @tabs: %>
-    <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
+  <% if @addTab: %>
+  <div class="page-header-meta">
+    <div class="btn btn--success btn--quad">
+      <%- @Icon('plus') %>
+    </div>
+  </div>
   <% end %>
-</ul>
-<div class="tab-content"></div>
+</div>
+<div class="page-content">
+  <% if @tabs.length > 1: %>
+    <ul class="nav nav-tabs" role="tablist">
+    <% for tab in @tabs: %>
+      <li><a href="#<%= tab.target %>" role="tab" data-toggle="tab"><%- @T( tab.name ) %></a></li>
+    <% end %>
+    </ul>
+  <% end %>
+  <div class="tab-content"></div>
+</div>

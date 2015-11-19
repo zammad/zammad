@@ -16,10 +16,10 @@ class App.Delay
       _instance ?= new _delaySingleton
     _instance.clearLevel( level )
 
-  @reset: ( level ) ->
+  @reset: ->
     if _instance == undefined
       _instance ?= new _delaySingleton
-    _instance.reset( level )
+    _instance.reset()
 
   @_all: ->
     if _instance == undefined

@@ -22,7 +22,12 @@ class Index extends App.ControllerContent
   getParams: =>
     return @params if @params
 
-    @params           = {}
+    @params = {}
+    paramsRaw = App.SessionStorage.get('report::params')
+    if paramsRaw
+      @params = paramsRaw
+      return @params
+
     @params.timeRange = 'year'
     current           = new Date()
     currentDay        = current.getDate()
@@ -48,7 +53,12 @@ class Index extends App.ControllerContent
       for profile in App.ReportProfile.all()
         if _.isEmpty( @params.profileSelected )
           @params.profileSelected[ profile.id ] = true
+
     @params
+
+  storeParams: =>
+    # store latest params
+    App.SessionStorage.set('report::params', @params)
 
   render: (data = {}) =>
 
@@ -74,6 +84,7 @@ class Index extends App.ControllerContent
       el:     @el.find('.js-aside')
       config: @config
       params: @params
+      ui:     @
     )
 
     new Graph(
@@ -102,6 +113,13 @@ class Graph extends App.ControllerContent
       for key, value of data.data
         if @params.backendSelected[key] is true
           dataNew[key] = value
+        @ui.storeParams()
+
+      if !@lastNewData
+        @lastNewData = {}
+
+      return if @lastNewData && JSON.stringify(dataNew) is JSON.stringify(@lastNewData)
+      @lastNewData = dataNew
 
       @draw(dataNew)
       t = new Date
@@ -212,6 +230,7 @@ class Download extends App.Controller
       for backend in @config.metric[@params.metric].backend
         if backend.dataDownload && !@params.downloadBackendSelected
           @params.downloadBackendSelected = backend.name
+      @ui.storeParams()
 
     # get used profiles
     profiles = []
@@ -237,6 +256,7 @@ class Download extends App.Controller
       $(e.target).parent().addClass('active')
       @profileSelectedId       = $(e.target).data('profile-id')
       @params.downloadBackendSelected = $(e.target).data('backend')
+      @ui.storeParams()
 
     table = (tickets, count) =>
       url = '#ticket/zoom/'
@@ -350,6 +370,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger( 'ui:report:rerender' )
+    @ui.storeParams()
 
   selectTimeMonth: (e) =>
     e.preventDefault()
@@ -357,6 +378,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger( 'ui:report:rerender' )
+    @ui.storeParams()
 
   selectTimeWeek: (e) =>
     e.preventDefault()
@@ -364,6 +386,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger( 'ui:report:rerender' )
+    @ui.storeParams()
 
   selectTimeYear: (e) =>
     e.preventDefault()
@@ -371,6 +394,7 @@ class TimePicker extends App.Controller
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
     App.Event.trigger( 'ui:report:rerender' )
+    @ui.storeParams()
 
   _timeSlotPicker: ->
     @timeRangeYear = []
@@ -477,6 +501,7 @@ class Sidebar extends App.Controller
     return if @params.metric is metric
     @params.metric = metric
     App.Event.trigger( 'ui:report:rerender' )
+    @ui.storeParams()
 
   selectProfile: (e) =>
     profile_id = $(e.target).val()
@@ -485,6 +510,7 @@ class Sidebar extends App.Controller
       delete @params.profileSelected[key]
     @params.profileSelected[profile_id] = true
     App.Event.trigger( 'ui:report:rerender' )
+    @ui.storeParams()
 
   selectBackend: (e) =>
     backend = $(e.target).val()
@@ -494,6 +520,7 @@ class Sidebar extends App.Controller
     else
       delete @params.backendSelected[backend]
     App.Event.trigger( 'ui:report:rerender' )
+    @ui.storeParams()
 
 App.Config.set( 'report', Index, 'Routes' )
 App.Config.set( 'Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', role: ['Report'] }, 'NavBarRight' )

@@ -1,0 +1,1 @@
+<div class="chat-timestamp js-timestamp"><span class="chat-timestamp-label"><%= @label %></span> <%= @time %></div>

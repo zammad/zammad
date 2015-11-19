@@ -10,19 +10,20 @@
     <% end %>
   </div>
 </div>
-
-<div class="searchfield">
-  <%- @Icon('magnifier') %>
-  <input class="js-search form-control" name="search" placeholder="<%- @Ti('Search for users') %>" type="search">
-</div>
-
-<div class="userSearch horizontal">
-  <div class="userSearch-label"><%- @T('Roles') %>:</div>
-  <div class="tabs tabs-wide">
-    <% for role in @roles: %>
-      <div class="tab" data-id="<%= role.id %>"><%- @T(role.displayName() ) %></div>
-    <% end %>
+<div class="page-content">
+  <div class="searchfield">
+    <%- @Icon('magnifier') %>
+    <input class="js-search form-control" name="search" placeholder="<%- @Ti('Search for users') %>" type="search">
   </div>
-</div>
 
-<div class="table-overview"></div>
+  <div class="userSearch horizontal">
+    <div class="userSearch-label"><%- @T('Roles') %>:</div>
+    <div class="tabs tabs-wide">
+      <% for role in @roles: %>
+        <div class="tab" data-id="<%= role.id %>"><%- @T(role.displayName() ) %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="table-overview"></div>
+</div>

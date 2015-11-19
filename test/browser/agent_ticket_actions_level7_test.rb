@@ -32,6 +32,12 @@ class AgentTicketActionLevel7Test < TestCase
       do_not_submit: true,
     )
 
+    # scroll to reply - needed for chrome
+    scroll_to(
+      position: 'botton',
+      css:      '.content.active [data-type="reply"]',
+    )
+
     # click reply
     click( css: '.content.active [data-type="reply"]' )
 
@@ -47,6 +53,12 @@ class AgentTicketActionLevel7Test < TestCase
       data: {
         body: 'keep me',
       },
+    )
+
+    # scroll to reply - needed for chrome
+    scroll_to(
+      position: 'botton',
+      css:      '.content.active [data-type="reply"]',
     )
 
     # click reply

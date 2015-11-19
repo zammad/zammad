@@ -16,6 +16,7 @@
       <h1><%- @T( @page.head ) %> <small><%- @T( @page.sub_head ) %></small></h1>
     </div>
   </div>
-  <div class="nav-tab-content"></div>
-
+  <div class="page-content">
+    <div class="nav-tab-content"></div>
+  </div>
 </div>

@@ -374,8 +374,8 @@ test( "events level", function() {
 
 });
 
-// local store
-test( "local store", function() {
+// session store
+test( "session store", function() {
 
   var tests = [
     'some 123äöüßadajsdaiosjdiaoidj',
@@ -384,17 +384,17 @@ test( "local store", function() {
   ];
 
   // write/get
-  App.Store.clear()
+  App.SessionStorage.clear()
   _.each(tests, function(test) {
-    App.Store.write( 'test1', test );
-    var item = App.Store.get( 'test1' );
+    App.SessionStorage.set( 'test1', test );
+    var item = App.SessionStorage.get( 'test1' );
     deepEqual( test, item, 'write/get - compare stored and actual data' )
   });
 
   // undefined/get
-  App.Store.clear()
+  App.SessionStorage.clear()
   _.each(tests, function(test) {
-    var item = App.Store.get( 'test1' );
+    var item = App.SessionStorage.get( 'test1' );
     deepEqual( undefined, item, 'undefined/get - compare not existing data and actual data' )
   });
 
@@ -405,16 +405,16 @@ test( "local store", function() {
     { key: '123äöüß', value: { key1: [1,2,3,4] }, key2: [1,2,'äöüß'] },
   ];
 
-  App.Store.clear()
+  App.SessionStorage.clear()
   _.each(tests, function(test) {
-    App.Store.write( test.key, test.value );
+    App.SessionStorage.set( test.key, test.value );
   });
 
   _.each(tests, function(test) {
-    var item = App.Store.get( test.key );
+    var item = App.SessionStorage.get( test.key );
     deepEqual( test.value, item, 'write/get/delete - compare stored and actual data' );
-    App.Store.delete( test.key );
-    item = App.Store.get( test.key );
+    App.SessionStorage.delete( test.key );
+    item = App.SessionStorage.get( test.key );
     deepEqual( undefined, item, 'write/get/delete - compare deleted data' );
   });
 

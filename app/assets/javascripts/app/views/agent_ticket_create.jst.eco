@@ -6,41 +6,43 @@
           <h1><%- @T( @head ) %></h1>
         </div>
 
-        <ul class="tabs type-tabs">
+        <div class="page-content">
+          <ul class="tabs type-tabs">
 
-          <li class="tab u-textTruncate" data-type="phone-in">
-            <%- @Icon('received-calls', 'tab-icon') %>
-            <%- @T('Received Call') %>
-          </li>
+            <li class="tab u-textTruncate" data-type="phone-in">
+              <%- @Icon('received-calls', 'tab-icon') %>
+              <%- @T('Received Call') %>
+            </li>
 
-          <li class="tab u-textTruncate" data-type="phone-out">
-            <%- @Icon('outbound-calls', 'tab-icon') %>
-            <%- @T('Outbound Call') %>
-          </li>
+            <li class="tab u-textTruncate" data-type="phone-out">
+              <%- @Icon('outbound-calls', 'tab-icon') %>
+              <%- @T('Outbound Call') %>
+            </li>
 
-         <li class="tab u-textTruncate" data-type="email-out">
-            <%- @Icon('email', 'tab-icon') %>
-            <%- @T('Send Email') %>
-          </li>
-        </ul>
+           <li class="tab u-textTruncate" data-type="email-out">
+              <%- @Icon('email', 'tab-icon') %>
+              <%- @T('Send Email') %>
+            </li>
+          </ul>
 
-        <form role="form" class="ticket-create">
-          <input type="hidden" name="formSenderType"/>
-          <input type="hidden" name="form_id" value="<%= @form_id %>"/>
+          <form role="form" class="ticket-create">
+            <input type="hidden" name="formSenderType"/>
+            <input type="hidden" name="form_id" value="<%= @form_id %>"/>
 
-          <div class="ticket-form-top"></div>
-          <div class="article-form-top"></div>
+            <div class="ticket-form-top"></div>
+            <div class="article-form-top"></div>
 
-          <div class="formset-inset">
-            <div class="ticket-form-middle horizontal two-columns"></div>
-            <div class="ticket-form-bottom"></div>
-          </div>
+            <div class="formset-inset">
+              <div class="ticket-form-middle horizontal two-columns"></div>
+              <div class="ticket-form-bottom"></div>
+            </div>
 
-          <div class="form-controls">
-            <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T('Cancel & Go Back') %></a>
-            <button type="submit" class="btn btn--success js-submit align-right"><%- @T('Create') %></button>
-          </div>
-        </form>
+            <div class="form-controls">
+              <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T('Cancel & Go Back') %></a>
+              <button type="submit" class="btn btn--success js-submit align-right"><%- @T('Create') %></button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

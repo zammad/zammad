@@ -14,4 +14,6 @@
   </div>
 </div>
 
-<div class="table-overview"></div>
+<div class="page-content">
+  <div class="table-overview"></div>
+</div>

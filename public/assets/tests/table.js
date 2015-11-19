@@ -546,7 +546,7 @@ test( "table test 4", function() {
   new App.ControllerTable({
     el:       el,
     overview: ['name', 'data', 'active'],
-    attributes: [
+    attribute_list: [
       { name: 'name',     display: 'Name',      type: 'text', style: 'width: 10%' },
       { name: 'data',     display: 'Data',      type: 'text' },
       { name: 'active',   display: 'Active',    type: 'text' },

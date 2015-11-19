@@ -2,7 +2,7 @@
   <div class="page-header-title"><h1><%- @T( 'Devices' ) %></h1></div>
 </div>
 
-<form>
+<form class="page-content">
 
   <p><%- @T('All computers and browsers that have access to your Zammad appear here.') %></p>
 

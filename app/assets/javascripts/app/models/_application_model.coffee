@@ -1,17 +1,8 @@
 class App.Model extends Spine.Model
-  @destroyBind: false
   @apiPath: App.Config.get('api_path')
 
   constructor: ->
     super
-
-    # delete object from local storage on destroy
-    if !@constructor.destroyBind
-      @bind( 'destroy', (e) ->
-        className = Object.getPrototypeOf(e).constructor.className
-        key = "collection::#{className}::#{e.id}"
-        App.Store.delete(key)
-      )
 
   uiUrl: ->
     '#'

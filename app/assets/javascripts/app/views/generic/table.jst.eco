@@ -1,4 +1,4 @@
-<table class="table table-hover<%- @class if @class %>">
+<table class="table table-hover<%- " #{@class}" if @class %>">
   <thead>
     <tr>
     <% if @checkbox: %>
@@ -14,7 +14,7 @@
       <th style="width: 22px"></th>
     <% end %>
     <% for item, i in @header: %>
-      <th class="<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="width:<%= item.width %>" data-column-key="<%= item.name %>">
+      <th class="js-tableHead<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="width:<%= item.displayWidth %>px" data-column-key="<%= item.name %>">
         <div class="table-column-head<%= ' js-sort' if @table_id %>">
           <div class="table-column-title">
           <%- @T( item.display ) %>
@@ -29,9 +29,6 @@
           <div class="table-col-resize js-col-resize"></div>
         <% end %>
       </th>
-    <% end %>
-    <% if @destroy: %>
-      <th><%- @T('Delete') %></th>
     <% end %>
     </tr>
   </thead>
@@ -88,6 +85,8 @@
       <td<%- " class='#{ item.parentClass }'" if item.parentClass %><%- " title='#{ item.title }'" if item.title %><%- " style='text-align:#{ item.align }'" if item.align %>>
         <% if item.name is 'icon': %>
           <%- @Icon('task-state', item.class) %>
+        <% else if item.icon: %>
+          <%- @Icon(item.icon) %>
         <% else: %>
           <% if item.link: %>
             <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
@@ -106,9 +105,6 @@
           <% if item.link: %></a><% end %>
         <% end %>
       </td>
-    <% end %>
-    <% if @destroy: %>
-      <td data-type="destroy"><%- @Icon('trash') %></td>
     <% end %>
   </tr>
 <% end %>
