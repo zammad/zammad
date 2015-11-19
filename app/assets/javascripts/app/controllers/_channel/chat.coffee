@@ -94,7 +94,6 @@ class App.ChannelChatDesigner extends App.Controller
 
     # select tab
     tab.addClass('is-selected').siblings().removeClass('is-selected')
-    
     value = tab.attr('data-value')
     width = parseInt value, 10
 

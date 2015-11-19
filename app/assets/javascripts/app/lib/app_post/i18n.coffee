@@ -89,50 +89,6 @@ class _i18nSingleton extends Spine.Module
     @dateFormat        = 'yyyy-mm-dd'
     @timestampFormat   = 'yyyy-mm-dd HH:MM'
 
-    # observe if text has been translated
-    $('body')
-      .delegate '.translation', 'focus', (e) ->
-        $this = $(e.target)
-        $this.data 'before', $this.html()
-        return $this
-      .delegate '.translation', 'blur', (e) =>
-        $this = $(e.target)
-        source = $this.attr('title')
-
-        # get new translation
-        translation_new = $this.html()
-        translation_new = ('' + translation_new)
-          .replace(/<.+?>/g, '')
-
-        # set new translation
-        $this.html(translation_new)
-
-        # update translation
-        return if $this.data('before') is translation_new
-        @log 'debug', 'translate Update', translation_new, $this.data, 'before'
-        $this.data 'before', translation_new
-
-        # update runtime translation mapString
-        @mapString[source] = translation_new
-
-        # replace rest in page
-        $(".translation[title='#{source}']").html(translation_new)
-
-        # update permanent translation mapString
-        translation = App.Translation.findByAttribute('source', source)
-        if translation
-          translation.updateAttribute('target', translation_new)
-        else
-          translation = new App.Translation
-          translation.load(
-            locale: @locale
-            source: source
-            target: translation_new
-         )
-          translation.save()
-
-        return $this
-
   get: ->
     @locale
 
@@ -211,18 +167,18 @@ class _i18nSingleton extends Spine.Module
             mapToLoad.push item
 
         @mapMeta.translated = mapToLoad.length
-
-        # load in collection if needed
-        if !_.isEmpty(mapToLoad)
-          App.Translation.refresh(mapToLoad, {clear: true} )
+        @mapMeta.mapToLoad  = mapToLoad
 
         App.Event.trigger('i18n:language:change')
     )
 
   translateInline: (string, args) =>
+    return string if !string
     App.Utils.htmlEscape(@translate(string, args))
 
   translateContent: (string, args) =>
+    return string if !string
+
     if App.Config.get('translation_inline')
       return '<span class="translation" onclick="arguments[0].stopPropagation(); return false" contenteditable="true" title="' + App.Utils.htmlEscape(string) + '">' + App.Utils.htmlEscape(@translate(string)) + '</span>'
 
