@@ -16,14 +16,9 @@ class Widget
   enable: ->
     App.Config.set( 'translation_inline', true )
     App.Event.trigger('ui:rerender')
-    $(document).bind('click.block', (e) ->
-      e.preventDefault()
-      e.stopPropagation()
-    )
 
   disable: ->
     App.Config.set( 'translation_inline', false )
     App.Event.trigger('ui:rerender')
-    $(document).unbind('click.block')
 
 App.Config.set( 'translation_inline', Widget, 'Widgets' )
