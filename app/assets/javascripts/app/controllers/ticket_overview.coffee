@@ -152,6 +152,13 @@ class Navbar extends App.Controller
   render: (data) =>
     return if !data
 
+    # do not show vertical navigation if only one tab exists
+    if @vertical
+      if data && data.length <= 1
+        @el.addClass('hidden')
+      else
+        @el.removeClass('hidden')
+
     # set page title
     if @activeState && @view && !@vertical
       for item in data

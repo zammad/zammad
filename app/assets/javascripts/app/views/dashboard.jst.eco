@@ -10,7 +10,7 @@
     <ul>
       <li><%- @T('Branding') %></li>
       <li><%- @T('Your Email Configuration') %></li>
-      <li><%- @T('Invite Agents/Colliges') %></li>
+      <li><%- @T('Invite Agents/Colleges') %></li>
     </ul>
     <% end %>
     <%- @T('How to use it') %>
