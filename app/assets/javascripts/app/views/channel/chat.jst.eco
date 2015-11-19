@@ -144,7 +144,7 @@
   <table class="settings-list">
     <thead>
       <tr>
-        <th style="white-space: nowrap;"><%- @T('Option') %></th>
+        <th style="white-space: nowrap;"><%- @T('Options') %></th>
       </tr>
     </thead>
     <tbody>

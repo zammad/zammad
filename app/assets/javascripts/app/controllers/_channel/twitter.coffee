@@ -90,4 +90,4 @@ class Index extends App.ControllerContent
       container:   @el.closest('.content')
     )
 
-App.Config.set( 'Twitter', { prio: 2900, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

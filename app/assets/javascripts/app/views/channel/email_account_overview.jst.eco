@@ -115,7 +115,7 @@
           <li class="list-item"><%- @T('none') %>
         <% end %>
         </ul>
-        <a class="text-muted js-emailAddressNew" href="#" title="<%- @Ti('New Email Address') %>">+ <%- @T('Add Email') %></a>
+        <a class="text-muted js-emailAddressNew" href="#">+ <%- @T('Add') %></a>
 
       </div>
     </div>
