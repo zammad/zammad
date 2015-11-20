@@ -3,6 +3,7 @@ class Index extends App.ControllerContent
     'click .js-new':         'new'
     'click .js-edit':        'edit'
     'click .js-delete':      'delete'
+    'click .js-create-app':  'createApp'
 
   constructor: ->
     super
@@ -45,6 +46,18 @@ class Index extends App.ControllerContent
       # accounts: accounts
       # showDescription: showDescription
       # description:     description
+
+  createApp: ->
+    modal = new App.ControllerModalNice
+      head: 'Connect Twitter App'
+      container: @el.parents('.content')
+      content: App.view('twitter/app_create')
+      shown: true
+      button: 'Connect'
+      cancel: true
+      onSubmit: () =>
+        @html App.view('twitter/list')()
+        modal.close()
 
   new: (e) ->
   #   e.preventDefault()
