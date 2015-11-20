@@ -1,0 +1,55 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Twitter') %> <small><%- @T('Accounts') %></small></h1>
+  </div>
+
+  <div class="page-header-meta">
+    <a class="btn js-config"><%- @T('Configure App') %></a>
+    <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="action">
+    <div class="action-block action-row">
+      <h2><%- @Icon('status', 'supergood-color inline') %> Zammad Community <span class="text-muted">@zammad_community</span></h2>
+    </div>
+    <div class="action-flow action-flow--row">
+      <div class="action-block">
+        <h3><%- @T('Search Terms') %></h3>
+        zammad
+      </div>
+      <%- @Icon('arrow-right', 'action-flow-icon') %>
+      <div class="action-block">
+        <h3><%- @T('Group') %></h3>
+        social network
+      </div>
+    </div>
+    <div class="action-flow action-flow--row">
+      <div class="action-block">
+        <h3><%- @T('Mentions') %></h3>
+        @zammad_community
+      </div>
+      <%- @Icon('arrow-right', 'action-flow-icon') %>
+      <div class="action-block">
+        <h3><%- @T('Group') %></h3>
+        social network
+      </div>
+    </div>
+    <div class="action-flow action-flow--row">
+      <div class="action-block">
+        <h3><%- @T('Direct Messages') %></h3>
+        @zammad_community
+      </div>
+      <%- @Icon('arrow-right', 'action-flow-icon') %>
+      <div class="action-block">
+        <h3><%- @T('Group') %></h3>
+        social network
+      </div>
+    </div>
+    <div class="action-controls">
+      <div class="sla-toggle btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+      <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
+    </div>
+  </div>
+</div>

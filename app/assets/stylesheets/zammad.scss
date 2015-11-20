@@ -1367,6 +1367,15 @@ textarea,
   &.form-control--multiline {
     height: auto;
   }
+
+  &[readonly] {
+    background: hsl(198,10%,95%);
+    
+    &:focus {
+      box-shadow: none;
+      border-color: hsl(0,0%,90%);
+    }
+  }
 }
 
 input[type=url] {
@@ -2665,11 +2674,17 @@ footer {
 
     &.is-active,
     &.is-hovered {
-      background: #389ed9;
+      background: hsl(202,68%,54%);
     }
 
-    &.is-active .zammad-switch label:after {
-      background: white;
+    &.is-active .zammad-switch {
+      input:not(:checked) + label { // switch background
+        background: hsl(202,68%,43%);
+      }
+      
+      label:after {
+        background: white;
+      }
     }
 
     .dropdown-icon {
@@ -6455,8 +6470,8 @@ output {
   border-radius: inherit;
   outline: none;
   cursor: pointer;
-  background: hsl(0,0%,90%);
-  transition: background 400ms;
+  background: white;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
 }
 
 .zammad-switch input {
@@ -6465,6 +6480,7 @@ output {
 
 .zammad-switch input:checked + label {
   background: $supergood-color;
+  transition: none;
 }
 
 .zammad-switch input:focus + label {
@@ -6473,26 +6489,10 @@ output {
   box-shadow: 0 0 0 3px hsl(201,62%,90%);
 }
 
-.zammad-switch label:after,
-.zammad-switch label:before {
+.zammad-switch label:after {
   content: "";
   position: absolute;
-  transition: 200ms;
-}
-
-.zammad-switch label:before {
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  left: 1px;
-  top: 1px;
-  border-radius: inherit;
-  background: hsl(210,17%,99%);
-  transform-origin: right;
-}
-
-.zammad-switch input:checked + label:before {
-  transform: scaleX(0);
-  opacity: 0;
+  transition: transform 200ms;
 }
 
 .zammad-switch label:after {
