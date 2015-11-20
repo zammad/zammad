@@ -78,6 +78,9 @@ class Object extends App.Controller
 
   render: (organization) =>
 
+    # update taskbar with new meta data
+    @metaTaskUpdate()
+
     # get display data
     organizationData = []
     for attributeName, attributeConfig of App.Organization.attributesGet('view')
