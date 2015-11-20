@@ -40,33 +40,23 @@ class App.TicketZoom extends App.Controller
     @interval(update, 1800000, 'pull_check')
 
     # fetch new data if triggered
-    @bind(
-      'Ticket:update Ticket:touch'
-      (data) =>
+    @bind('Ticket:update Ticket:touch', (data) =>
 
-        # check if current ticket has changed
-        return if data.id.toString() isnt @ticket_id.toString()
+      # check if current ticket has changed
+      return if data.id.toString() isnt @ticket_id.toString()
 
-        # check if we already have the request queued
-        #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
-        update = =>
-          @fetch( @ticket_id, false )
-        if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-          @delay( update, 1200, 'ticket-zoom-' + @ticket_id )
+      # check if we already have the request queued
+      #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
+      update = =>
+        @fetch(@ticket_id, false)
+      if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
+        @delay( update, 1200, 'ticket-zoom-' + @ticket_id )
     )
 
     # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', =>
-      return if !@authenticate(true)
-
-      # reset controllers state vars
-      @shown = false
-      @initDone = false
-      @activeState = false
-      @renderDone = false
-
-      # rerender view
-      @render()
+    @bind('ui:rerender', =>
+      @fetch(@ticket_id, true)
+    )
 
   meta: =>
 
@@ -343,7 +333,7 @@ class App.TicketZoom extends App.Controller
         ticket_id: @ticket.id
       )
 
-      @article_view = new App.TicketZoomArticleView(
+      @articleView = new App.TicketZoomArticleView(
         ticket:     @ticket
         el:         @$('.ticket-article')
         ui:         @
@@ -369,7 +359,7 @@ class App.TicketZoom extends App.Controller
       )
 
     # show article
-    @article_view.execute(
+    @articleView.execute(
       ticket_article_ids: @ticket_article_ids
     )
 
