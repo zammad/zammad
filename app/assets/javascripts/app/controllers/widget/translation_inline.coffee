@@ -34,7 +34,7 @@ class Widget extends App.Controller
     $('body')
       .on 'focus.translation', '.translation', (e) ->
         element = $(e.target)
-        element.data 'before', element.html()
+        element.data 'before', element.text()
         element
       .on 'blur.translation', '.translation', (e) =>
         console.log('blur')
@@ -42,12 +42,7 @@ class Widget extends App.Controller
         source = element.attr('title')
 
         # get new translation
-        translation_new = element.html()
-        translation_new = ('' + translation_new)
-          .replace(/<.+?>/g, '')
-
-        # set new translation
-        element.html(translation_new)
+        translation_new = element.text()
 
         # update translation
         return if element.data('before') is translation_new
@@ -58,7 +53,7 @@ class Widget extends App.Controller
         App.i18n.setMap(source, translation_new)
 
         # replace rest in page
-        $(".translation[title='#{source}']").html(translation_new)
+        $(".translation[title='#{source}']").text(translation_new)
 
         # update permanent translation mapString
         translation = App.Translation.findByAttribute('source', source)

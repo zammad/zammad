@@ -40,16 +40,19 @@ class ArticleViewItem extends App.Controller
     @render()
 
     # set expand of text area only once
-    @bind(
-      'ui::ticket::shown'
-      (data) =>
-        return if data.ticket_id.toString() isnt @ticket.id.toString()
+    @bind('ui::ticket::shown', (data) =>
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
 
-        # set highlighter
-        @setHighlighter()
+      # set highlighter
+      @setHighlighter()
 
-        # set see more
-        @setSeeMore()
+      # set see more
+      @setSeeMore()
+    )
+
+    # rerender, e. g. on language change
+    @bind('ui:rerender', =>
+      @render(undefined, true)
     )
 
     # subscribe to changes
@@ -84,7 +87,7 @@ class ArticleViewItem extends App.Controller
     @articleAttributesLastUpdate = articleAttributesLastUpdateCheck
     true
 
-  render: (article) =>
+  render: (article, force = false) =>
 
     # get articles
     @article = App.TicketArticle.fullLocal( @ticket_article_id )
@@ -103,7 +106,7 @@ class ArticleViewItem extends App.Controller
         @el.removeClass('is-internal')
 
     # check if rerender is needed
-    if !@hasChanged(@article)
+    if !force && !@hasChanged(@article)
       @lastArticle = @article.attributes()
       return
 

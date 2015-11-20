@@ -262,15 +262,16 @@ class App.ControllerTable extends App.Controller
 
     # get content
     table = App.view('generic/table')(
-      table_id:  @table_id
-      header:    @headers
-      objects:   @objects
-      checkbox:  @checkbox
-      radio:     @radio
-      groupBy:   @groupBy
-      class:     @class
-      destroy:   destroy
-      callbacks: @callbackAttributes
+      table_id:   @table_id
+      header:     @headers
+      attributes: attributes
+      objects:    @objects
+      checkbox:   @checkbox
+      radio:      @radio
+      groupBy:    @groupBy
+      class:      @class
+      destroy:    destroy
+      callbacks:  @callbackAttributes
     )
 
     # convert to jquery object
