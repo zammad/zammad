@@ -27,6 +27,11 @@ class App.Log
       _instance ?= new _Singleton
     _instance.config( type, regex )
 
+  @timeTrack: (message) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.timeTrack(message)
+
 class _Singleton
   constructor: ->
     @moduleColorsMap    = {}
@@ -116,3 +121,13 @@ class _Singleton
     @hue += goldenRatio
     @hue = @hue % 1
     @hue * 360
+
+  timeTrack: (message) =>
+    currentTime = new Date().getTime()
+    if !@lastTime
+      @lastTime = currentTime
+      console.log('timeTrack start', message)
+    else
+      diff = currentTime - @lastTime
+      @lastTime = currentTime
+      console.log('timeTrack start', message, diff)
