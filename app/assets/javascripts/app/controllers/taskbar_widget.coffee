@@ -81,7 +81,7 @@ class App.TaskbarWidget extends App.Controller
       throw 'No such key attributes found for task item'
 
     # check if input has changed
-    worker = App.TaskManager.worker( key )
+    worker = App.TaskManager.worker(key)
     if !force && worker && worker.changed
       if worker.changed()
         new Remove(
@@ -91,7 +91,7 @@ class App.TaskbarWidget extends App.Controller
         return
 
     # check if active task is closed
-    currentTask      = App.TaskManager.get( key )
+    currentTask      = App.TaskManager.get(key)
     tasks            = App.TaskManager.all()
     active_is_closed = false
     for task in tasks
@@ -99,7 +99,9 @@ class App.TaskbarWidget extends App.Controller
         active_is_closed = true
 
     # remove task
-    App.TaskManager.remove( key )
+    App.TaskManager.remove(key, false)
+
+    $(e.target).closest('.task').remove()
 
     # if we do not need to move to an other task
     return if !active_is_closed

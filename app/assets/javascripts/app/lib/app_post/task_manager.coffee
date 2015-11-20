@@ -24,10 +24,10 @@ class App.TaskManager
       _instance ?= new _taskManagerSingleton
     _instance.update( key, params )
 
-  @remove: ( key ) ->
+  @remove: (key, rerender = true) ->
     if _instance == undefined
       _instance ?= new _taskManagerSingleton
-    _instance.remove( key )
+    _instance.remove(key, rerender)
 
   @notify: ( key ) ->
     if _instance == undefined
@@ -77,23 +77,19 @@ class _taskManagerSingleton extends Spine.Module
     @tasksInitial()
 
     # render on login
-    App.Event.bind(
-      'auth:login'
-      =>
-        @tasksInitial()
+    App.Event.bind('auth:login', =>
+      @tasksInitial()
       'task'
     )
 
     # render on logout
-    App.Event.bind(
-      'auth:logout'
-      =>
-        @reset()
+    App.Event.bind('auth:logout', =>
+      @reset()
       'task'
     )
 
     # send updates to server
-    App.Interval.set( @taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task' )
+    App.Interval.set(@taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task')
 
   init: ->
     @workers           = {}
@@ -123,11 +119,11 @@ class _taskManagerSingleton extends Spine.Module
   domID: (key) ->
     "content_permanent_#{key}"
 
-  worker: ( key ) ->
+  worker: (key) ->
     return @workers[ key ] if @workers[ key ]
     return
 
-  execute: ( params ) ->
+  execute: (params) ->
 
     # input validation
     params.key = App.Utils.htmlAttributeCleanup(params.key)
@@ -159,7 +155,7 @@ class _taskManagerSingleton extends Spine.Module
       @activeTaskHistory.push _.clone(params)
 
     # check if task already exists in storage / e. g. from last session
-    task = @get( params.key )
+    task = @get(params.key)
 
     #console.log 'debug', 'execute', params, 'task', task
 
@@ -220,7 +216,8 @@ class _taskManagerSingleton extends Spine.Module
     # start worker for task if not exists
     @startController(params)
 
-    App.Event.trigger 'task:render'
+    if !params.init
+      App.Event.trigger 'task:render'
 
   startController: (params) =>
 
@@ -238,7 +235,7 @@ class _taskManagerSingleton extends Spine.Module
       @workersStarted[params.key] = true
 
       # create new controller instanz
-      @workers[params.key] = new App[params.controller]( params_app )
+      @workers[params.key] = new App[params.controller](params_app)
 
     # if controller is started hidden, call hide of controller
     if !params.show
@@ -246,9 +243,9 @@ class _taskManagerSingleton extends Spine.Module
 
     # hide all other controller / show current controller
     else
-      @showControllerHideOthers( params.key, params_app )
+      @showControllerHideOthers(params.key, params_app)
 
-  showControllerHideOthers: ( thisKey, params_app ) =>
+  showControllerHideOthers: (thisKey, params_app) =>
     for key of @workersStarted
       if key is thisKey
         @show(key, params_app)
@@ -269,7 +266,6 @@ class _taskManagerSingleton extends Spine.Module
     # execute controllers show
     if controller.show
       controller.show(params_app)
-      App.Event.trigger('ui:rerender:task')
 
     true
 
@@ -291,27 +287,27 @@ class _taskManagerSingleton extends Spine.Module
     true
 
   # get task
-  get: ( key ) =>
+  get: (key) =>
     for task in @allTasks
       if task.key is key
         return task
 
   # update task
-  update: ( key, params ) =>
-    task = @get( key )
+  update: (key, params) =>
+    task = @get(key)
     if !task
       throw "No such task with '#{key}' to update"
     for item, value of params
       task[item] = value
-    @taskUpdate( task )
+    @taskUpdate(task)
 
   # remove task certain task from tasks
-  remove: ( key ) =>
+  remove: (key, rerender) =>
 
     # remember started task
     delete @tasksStarted[key]
 
-    task = @get( key )
+    task = @get(key)
     return if !task
 
     # update @allTasks
@@ -327,44 +323,45 @@ class _taskManagerSingleton extends Spine.Module
     @release(key)
 
     # rerender taskbar
-    App.Event.trigger 'task:render'
+    if rerender
+      App.Event.trigger 'task:render'
 
     # destroy in backend storage
     @taskDestroy(task)
 
   # set notify of task
-  notify: ( key ) =>
-    task = @get( key )
+  notify: (key) =>
+    task = @get(key)
     if !task
       throw "No such task with '#{key}' to notify"
     task.notify = true
-    @taskUpdate( task )
+    @taskUpdate(task)
 
   # unset notify of task
-  mute: ( key ) =>
-    task = @get( key )
+  mute: (key) =>
+    task = @get(key)
     if !task
       throw "No such task with '#{key}' to mute"
     task.notify = false
-    @taskUpdate( task )
+    @taskUpdate(task)
 
   # set new order of tasks (needed for dnd)
-  reorder: ( order ) =>
+  reorder: (order) =>
     prio = 0
     for key in order
-      task = @get( key )
+      task = @get(key)
       if !task
         throw "No such task with '#{key}' of order"
       prio++
       if task.prio isnt prio
         task.prio = prio
-        @taskUpdate( task )
+        @taskUpdate(task)
 
   # release one task
   release: (key) =>
     try
-      @el.find( "##{@domID(key)}" ).html('')
-      @el.find( "##{@domID(key)}" ).remove()
+      @el.find("##{@domID(key)}").html('')
+      @el.find("##{@domID(key)}").remove()
     catch
       @log 'notice', "invalid key '#{key}'"
 
