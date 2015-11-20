@@ -146,20 +146,20 @@ class Index extends App.Controller
 App.Config.set( 'Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index }, 'NavBarProfile' )
 
 
-class ImageCropper extends App.ControllerModal
+class ImageCropper extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Save'
+  head: 'Crop Image'
+
   elements:
     '.imageCropper-image': 'image'
     '.imageCropper-holder': 'holder'
 
-  constructor: (options) ->
-    super
-    @head        = 'Crop Image'
-    @cancel      = true
-    @button      = 'Save'
-    @buttonClass = 'btn--success'
+  content: =>
+    App.view('profile/imageCropper')()
 
-    @show( App.view('profile/imageCropper')() )
-
+  post: =>
     @size = 256
 
     orientationTransform =
@@ -168,7 +168,7 @@ class ImageCropper extends App.ControllerModal
       6: 90
       8: -90
 
-    @angle = orientationTransform[ @options.orientation ]
+    @angle = orientationTransform[ @orientation ]
 
     if @angle == undefined
       @angle = 0
@@ -177,9 +177,9 @@ class ImageCropper extends App.ControllerModal
       @isOrientating = true
       image = new Image()
       image.addEventListener 'load', @orientateImage
-      image.src = @options.imageSource
+      image.src = @imageSource
     else
-      @image.attr src: @options.imageSource
+      @image.attr src: @imageSource
 
   orientateImage: (e) =>
     image  = e.currentTarget
@@ -215,14 +215,23 @@ class ImageCropper extends App.ControllerModal
       minContainerHeight: 300
       preview: '.imageCropper-preview'
 
-  onSubmit: (e) =>
-    e.preventDefault()
-    @options.callback( @image.cropper('getCroppedCanvas').toDataURL() )
+  onSubmit: =>
+    @callback( @image.cropper('getCroppedCanvas').toDataURL() )
     @image.cropper('destroy')
-    @hide()
+    @close()
 
 
-class Camera extends App.ControllerModal
+class Camera extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Save'
+  buttonClass: 'btn--success is-disabled'
+  centerButtons: [{
+    className: 'btn--success js-shoot is-disabled',
+    text: 'Shoot'
+  }]
+  head: 'Camera'
+
   elements:
     '.js-shoot':       'shootButton'
     '.js-submit':      'submitButton'
@@ -233,22 +242,13 @@ class Camera extends App.ControllerModal
   events:
     'click .js-shoot:not(.is-disabled)': 'onShootClick'
 
-  constructor: (options) ->
-    super
+  content: =>
+    App.view('profile/camera')()
+
+  post: =>
     @size            = 256
     @photoTaken      = false
     @backgroundColor = 'white'
-
-    @head          = 'Camera'
-    @cancel        = true
-    @button        = 'Save'
-    @buttonClass   = 'btn--success is-disabled'
-    @centerButtons = [{
-      className: 'btn--success js-shoot is-disabled',
-      text: 'Shoot'
-    }]
-
-    @show( App.view('profile/camera')() )
 
     @ctx = @preview.get(0).getContext('2d')
 
@@ -312,7 +312,7 @@ class Camera extends App.ControllerModal
       'ConstraintNotSatisfiedError': App.i18n.translateInline('No camera found.')
 
     alert convertToHumanReadable[error.name]
-    @hide()
+    @close()
 
   setupPreview: =>
     @video.attr 'height', @size
@@ -400,14 +400,13 @@ class Camera extends App.ControllerModal
     # reset video height
     @video.attr height: @size
 
-  onHide: =>
+  onClose: =>
     @stream.stop() if @stream
     @hidden = true
 
-  onSubmit: (e) =>
-    e.preventDefault()
+  onSubmit: =>
     # send picture to the callback
     console.log @cache.get(0).toDataURL()
     window.file = @cache.get(0).toDataURL()
-    @options.callback @cache.get(0).toDataURL()
-    @hide()
+    @callback @cache.get(0).toDataURL()
+    @close()

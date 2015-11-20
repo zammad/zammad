@@ -110,8 +110,11 @@ class Object extends App.Controller
     })
 
     # start action controller
-    showHistory = ->
-      new App.UserHistory( user_id: user.id )
+    showHistory = =>
+      new App.UserHistory(
+        user_id: user.id
+        container: @el.closest('.content')
+      )
 
     editUser = =>
       new App.ControllerGenericEdit(

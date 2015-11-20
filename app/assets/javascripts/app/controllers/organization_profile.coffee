@@ -108,7 +108,10 @@ class Object extends App.Controller
 
     # start action controller
     showHistory = ->
-      new App.OrganizationHistory( organization_id: organization.id )
+      new App.OrganizationHistory(
+        organization_id: organization.id
+        container: @el.closest('.content')
+      )
     editOrganization = =>
       new App.ControllerGenericEdit(
         id: organization.id

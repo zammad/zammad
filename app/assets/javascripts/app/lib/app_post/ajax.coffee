@@ -73,10 +73,10 @@ class _ajaxSingleton
       return if status is 502
 
       # show error message
-      new App.ErrorModal(
-        message: 'StatusCode: ' + status
-        detail:  detail
-        close:   true
+      new App.ControllerModalNice(
+        head:          'StatusCode: ' + status
+        contentInline: '<pre>' + App.Utils.htmlEscape(detail) + '</pre>'
+        buttonClose:   true
       )
     )
 

@@ -73,15 +73,13 @@ With Filters you can e. g. dispatch new Tickets into certain groups or set a cer
       container: @el.closest('.content')
     )
 
-class App.ChannelEmailFilterEdit extends App.ControllerModal
-  constructor: ->
-    super
+class App.ChannelEmailFilterEdit extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Postmaster Filter'
 
-    @head   = 'Postmaster Filter'
-    @button = true
-    @close  = true
-    @cancel = true
-
+  content: =>
     if @object
       @form = new App.ControllerForm(
         model:     App.PostmasterFilter,
@@ -94,8 +92,7 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
         autofocus: true,
       )
 
-    @content = @form.form
-    @show()
+    @form.form
 
   onSubmit: (e) =>
     e.preventDefault()
@@ -108,7 +105,7 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     object.load(params)
 
     # validate form
-    errors = @form.validate( params )
+    errors = @form.validate(params)
 
     # show errors in form
     if errors
@@ -122,9 +119,9 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     # save object
     object.save(
       done: =>
-        @hide()
+        @close()
       fail: =>
-        @hide()
+        @close()
     )
 
 class App.ChannelEmailSignature extends App.Controller
@@ -172,15 +169,13 @@ Once you have created a signature here, you need also to edit the groups where y
       container: @el.closest('.content')
     )
 
-class App.ChannelEmailSignatureEdit extends App.ControllerModal
-  constructor: ->
-    super
+class App.ChannelEmailSignatureEdit extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Signature'
 
-    @head   = 'Signature'
-    @button = true
-    @close  = true
-    @cancel = true
-
+  content: =>
     if @object
       @form = new App.ControllerForm(
         model:     App.Signature
@@ -193,12 +188,9 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
         autofocus: true
       )
 
-    @content = @form.form
-
-    @show()
+    @form.form
 
   onSubmit: (e) =>
-    e.preventDefault()
 
     # get params
     params = @formParam(e.target)
@@ -207,7 +199,7 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
     object.load(params)
 
     # validate form
-    errors = @form.validate( params )
+    errors = @form.validate(params)
 
     # show errors in form
     if errors
@@ -221,9 +213,9 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
     # save object
     object.save(
       done: =>
-        @hide()
+        @close()
       fail: =>
-        @hide()
+        @formEnable(e)
     )
 
 class App.ChannelEmailAccountOverview extends App.Controller
@@ -399,15 +391,13 @@ class App.ChannelEmailAccountOverview extends App.Controller
       channelDriver: @channelDriver
     )
 
-class App.ChannelEmailEdit extends App.ControllerModal
-  constructor: ->
-    super
+class App.ChannelEmailEdit extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Channel'
 
-    @head   = 'Channel'
-    @button = true
-    @close  = true
-    @cancel = true
-
+  content: =>
     configureAttributesBase = [
       { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
     ]
@@ -417,18 +407,15 @@ class App.ChannelEmailEdit extends App.ControllerModal
         className: ''
       params: @item
     )
-
-    @content = @form.form
-    @show()
+    @form.form
 
   onSubmit: (e) =>
-    e.preventDefault()
 
     # get params
     params = @formParam(e.target)
 
     # validate form
-    errors = @form.validate( params )
+    errors = @form.validate(params)
 
     # show errors in form
     if errors
@@ -448,9 +435,9 @@ class App.ChannelEmailEdit extends App.ControllerModal
       processData: true
       success: (data, status, xhr) =>
         @callback()
-        @hide()
+        @close()
       fail: =>
-        @enable(e)
+        @formEnable(e)
     )
 
 class App.ChannelEmailAccountWizard extends App.Wizard

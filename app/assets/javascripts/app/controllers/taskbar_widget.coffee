@@ -112,18 +112,16 @@ class App.TaskbarWidget extends App.Controller
 
     @navigate '#'
 
-class Remove extends App.ControllerModal
-  constructor: ->
-    super
-    @head        = 'Confirm'
-    @message     = 'Tab has changed, you really want to close it?'
-    @cancel      = true
-    @close       = true
-    @button      = 'Discared changes'
-    @buttonClass = 'btn--danger'
-    @show()
+class Remove extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Discared changes'
+  buttonClass: 'btn--danger'
+  head: 'Confirm'
+
+  content: =>
+    App.i18n.translateContent('Tab has changed, you really want to close it?')
 
   onSubmit: (e) =>
-    e.preventDefault()
-    @hide()
+    @close()
     @ui.remove(e, @key, true)

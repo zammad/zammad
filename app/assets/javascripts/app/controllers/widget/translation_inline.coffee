@@ -32,11 +32,12 @@ class Widget extends App.Controller
 
     # observe if text has been translated
     $('body')
-      .on '.translation', 'focus', (e) ->
+      .on 'focus.translation', '.translation', (e) ->
         element = $(e.target)
         element.data 'before', element.html()
         element
-      .on '.translation', 'blur', (e) =>
+      .on 'blur.translation', '.translation', (e) =>
+        console.log('blur')
         element = $(e.target)
         source = element.attr('title')
 
@@ -66,16 +67,17 @@ class Widget extends App.Controller
         else
           translation = new App.Translation
           translation.load(
-            locale: @locale
-            source: source
-            target: translation_new
+            locale:         App.i18n.get()
+            source:         source
+            target:         translation_new
+            initial_target: ''
           )
           translation.save()
 
         element
 
   disable: ->
-    $('body').off('.translation')
+    $('body').off('focus.translation blur.translation')
 
     # disable translation inline
     App.Config.set('translation_inline', false)

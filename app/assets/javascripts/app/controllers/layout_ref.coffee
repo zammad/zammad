@@ -413,23 +413,15 @@ class ContentSidebarRightSidebarOptional extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_right_sidebar_optional', ContentSidebarRightSidebarOptional, 'Routes' )
 
 
-class ModalForm extends App.ControllerModal
-  constructor: ->
-    super
-    @head  = '123 some title'
-    @cancel = true
-    @button = true
+class ModalForm extends App.ControllerModalNice
+  head: '123 some title'
 
-    @render()
-
-  render: ->
+  content: ->
     controller = new App.ControllerForm(
       model: App.User
       autofocus: true
     )
-    @content = controller.form
-
-    @show()
+    controller.form
 
   onHide: ->
     window.history.back()
@@ -442,21 +434,15 @@ class ModalForm extends App.ControllerModal
 App.Config.set( 'layout_ref/modal_form', ModalForm, 'Routes' )
 
 
-class ModalText extends App.ControllerModal
-  constructor: ->
-    super
-    @head = '123 some title'
+class ModalText extends App.ControllerModalNice
 
-    @render()
-
-  render: ->
-    @show( App.view('layout_ref/content')() )
+  content: ->
+    App.view('layout_ref/content')()
 
   onHide: ->
     window.history.back()
 
 App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
-
 
 
 class ContentSidebarTabsRight extends App.ControllerContent
@@ -1380,12 +1366,13 @@ class SlaRef extends App.ControllerContent
     checkbox.closest('tr').toggleClass('is-active', checkbox.prop('checked'))
 
   createNew: =>
-    @newItemModal = new App.ControllerModal
-      head: 'New Service Level Agreement (SLA)'
-      content: App.view('layout_ref/sla_modal')()
-      button: 'Create SLA'
+    @newItemModal = new App.ControllerModalNice
+      head: 'Service Level Agreement (SLA)'
+      headPrefox: 'New'
+      contentInline: App.view('layout_ref/sla_modal')()
+      buttonSubmit: 'Create SLA'
       shown: true
-      cancel: true
+      buttonCancel: true
       container: @el
       onShown: =>
         @$('.js-responseTime').timepicker
@@ -1419,12 +1406,13 @@ class SchedulersRef extends App.ControllerContent
       .text(if isInactive then 'Enable' else 'Disable')
 
   createNew: =>
-    new App.ControllerModal
-      head: 'New Scheduler'
-      content: App.view('layout_ref/scheduler_modal')()
-      button: 'Create Schedule'
+    new App.ControllerModalNice
+      head: 'Scheduler'
+      headPrefix: 'New'
+      buttonSubmit: 'Create'
+      buttonCancel: true
+      contentInline: App.view('layout_ref/scheduler_modal')()
       shown: true
-      cancel: true
       container: @el
 
   select: (event) =>
@@ -1655,13 +1643,13 @@ class MergeCustomerRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/merge_customer_view')
 
-    new App.ControllerModal
+    new App.ControllerModalNice
       large: true
-      head: "Merge #{@mergeSource.firstname} #{@mergeSource.lastname}"
-      content: App.view('layout_ref/merge_customer')()
-      button: 'Merge'
-      shown: true
-      cancel: true
+      head: "#{@mergeSource.firstname} #{@mergeSource.lastname}"
+      headPrefix: 'Merge'
+      contentInline: App.view('layout_ref/merge_customer')()
+      buttonSubmit: 'Merge'
+      buttonCancel: true
       container: @el
 
   onChange: ->

@@ -294,26 +294,22 @@ class App.UserOrganizationAutocompletion extends App.Controller
       container: @el.closest('.content')
     )
 
-class UserNew extends App.ControllerModal
-  constructor: ->
-    super
-    @head   = 'New User'
-    @cancel = true
-    @button = true
+class UserNew extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'User'
+  headPrefix: 'New'
 
+  content: ->
     controller = new App.ControllerForm(
-      model:      App.User
-      screen:     'edit'
-      autofocus:  true
+      model:     App.User
+      screen:    'edit'
+      autofocus: true
     )
+    controller.form
 
-    @content = controller.form
-
-    @show()
-
-  onSubmit: (e) ->
-
-    e.preventDefault()
+  onSubmit: (e) =>
     params = @formParam(e.target)
 
     # if no login is given, use emails as fallback
@@ -321,8 +317,8 @@ class UserNew extends App.ControllerModal
       params.login = params.email
 
     # find role_id
-    if !params.role_ids || _.isEmpty( params.role_ids )
-      role = App.Role.findByAttribute( 'name', 'Customer' )
+    if !params.role_ids || _.isEmpty(params.role_ids)
+      role = App.Role.findByAttribute('name', 'Customer')
       params.role_ids = role.id
     @log 'notice', 'updateAttributes', params
 
@@ -346,9 +342,9 @@ class UserNew extends App.ControllerModal
           ui.parent.close()
 
           # start customer info controller
-          ui.hide()
-        App.User.full( @id, callbackReload , true )
+          ui.close()
+        App.User.full(@id, callbackReload , true)
 
       fail: ->
-        ui.hide()
+        ui.close()
     )

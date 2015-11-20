@@ -40,6 +40,8 @@ dedicated:
         {},
         {
           json: true,
+          open_timeout: 6,
+          read_timeout: 16,
         }
       )
       fail "Can't load translations from #{url}: #{result.error}" if !result.success?
@@ -114,6 +116,8 @@ push translations to online
       },
       {
         json: true,
+        open_timeout: 6,
+        read_timeout: 16,
       }
     )
     fail "Can't push translations to #{url}: #{result.error}" if !result.success?

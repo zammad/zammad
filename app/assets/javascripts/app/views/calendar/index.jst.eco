@@ -22,20 +22,20 @@
     <div class="action-flow action-flow--row">
       <div class="action-row">
         <div class="action-flow action-flow--noWrap">
-          <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @T('Last sync at') %>: <%= @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
+          <h2><% if !_.isEmpty(calendar.ical_url): %><span title="<%- @Ti('Last sync at') %>: <%- @Ttimestamp(calendar.last_sync) %><% if calendar.last_log: %>: <%= calendar.last_log %><% end %>">
             <% if calendar.last_log: %>
               <%- @Icon('status', 'error inline') %>
             <% else: %>
               <%- @Icon('status', 'ok inline') %>
             <% end %></span><% end %> <%= calendar.name %></h2>
           <% if calendar.default: %>
-            <div class="action-label">Default</div>
+            <div class="action-label"><%- @T('Default') %></div>
           <% end %>
         </div>
       </div>
       <% if calendar.last_log: %><div class="action-row"><div class="alert alert--danger"><%= calendar.last_log %></div></div><% end %>
       <div class="action-row">
-        <div class="label"><%- @T('Time zone') %></div> <%= calendar.timezone %>
+        <div class="label"><%- @T('Timezone') %></div> <%= calendar.timezone %>
       </div>
       <div class="action-block action-block--flex">
         <div class="label"><%- @T('Business Hours') %></div>

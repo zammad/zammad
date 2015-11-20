@@ -39,13 +39,13 @@ class Widget extends App.Controller
           # only if new client id isnt own client id
           if data.taskbar_id isnt App.TaskManager.TaskbarId()
             @error = new App.SessionMessage(
-              head:        'Session'
-              message:     App.i18n.translateInline('A new session with your account was created. This session will be stopped to prevent a conflict.')
-              keyboard:    false
-              backdrop:    true
-              close:       false
-              button:      'Continue session'
-              forceReload: true
+              head:         'Session'
+              message:      'A new session with your account was created. This session will be stopped to prevent a conflict.'
+              keyboard:     false
+              backdrop:     true
+              buttonClose:  false
+              buttonSubmit: 'Continue session'
+              forceReload:  true
             )
             @disconnectClient()
       'maintenance'

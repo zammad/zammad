@@ -4,5 +4,5 @@
     <span class="zammad-chat-loading-circle"></span>
     <span class="zammad-chat-loading-circle"></span>
   </span>
-  <span class="zammad-chat-modal-text"><%= @T('Connecting') %></span>
+  <span class="zammad-chat-modal-text"><%- @T('Connecting') %></span>
 </div>

@@ -15,19 +15,21 @@ class Widget extends App.Controller
     if message.reload
       @disconnectClient()
       button = 'Continue session'
+    else
+      button = 'Close'
 
     # convert to html and linkify
     message.message = App.Utils.textCleanup( message.message )
     message.message = App.Utils.text2html( message.message )
 
     new App.SessionMessage(
-      head:        message.head
-      content:     message.message
-      keyboard:    true
-      backdrop:    true
-      close:       true
-      button:      button
-      forceReload: message.reload
+      head:          message.head
+      contentInline: message.message
+      keyboard:      true
+      backdrop:      true
+      buttonClose:   true
+      buttonSubmit:  button
+      forceReload:   message.reload
     )
 
 App.Config.set( 'maintenance', Widget, 'Widgets' )

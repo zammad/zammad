@@ -620,10 +620,15 @@ class BulkForm extends App.Controller
       msg: App.i18n.translateContent('Bulk-Action executed!')
     }
 
-class App.OverviewSettings extends App.ControllerModal
-  constructor: ->
-    super
+class App.OverviewSettings extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  headPrefix: 'Edit'
+
+  content: =>
     @overview = App.Overview.find(@overview_id)
+    @head     = @overview.name
 
     @configure_attributes_article = []
     if @view_mode is 'd'
@@ -715,19 +720,13 @@ class App.OverviewSettings extends App.ControllerModal
         owner:          'Owner'
     })
 
-    @head   = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @overview.name )
-    @close  = true
-    @cancel = true
-    @button = true
     controller = new App.ControllerForm(
       model:     { configure_attributes: @configure_attributes_article }
       autofocus: false
     )
-    @content = controller.form
-    @show()
+    controller.form
 
   onSubmit: (e) =>
-    e.preventDefault()
     params = @formParam(e.target)
 
     # check if re-fetch is needed
@@ -756,8 +755,8 @@ class App.OverviewSettings extends App.ControllerModal
           App.OverviewIndexCollection.trigger()
           App.OverviewCollection.trigger(@overview.link)
 
-        # hide modal
-        @hide()
+        # close modal
+        @close()
     )
 
 class TicketOverviewRouter extends App.ControllerPermanent
