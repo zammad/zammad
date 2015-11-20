@@ -14,8 +14,8 @@ do($ = window.jQuery, window) ->
       port: 6042
       debug: false
       fontSize: undefined
-      buttonSelector: '.open-zammad-chat'
-      hiddenButtonClass: 'is-inactive'
+      buttonClass: 'open-zammad-chat'
+      inactiveClass: 'is-inactive'
       title: '<strong>Chat</strong> with us!'
 
     _messageCount: 0
@@ -87,6 +87,9 @@ do($ = window.jQuery, window) ->
 
       @input = @el.find('.zammad-chat-input')
 
+      # disable open button
+      $(".#{ @options.buttonClass }").addClass @inactiveClass
+
       @el.find('.js-chat-open').click @open
       @el.find('.js-chat-close').click @close
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
@@ -154,14 +157,14 @@ do($ = window.jQuery, window) ->
                 @reopenSession pipe.data
 
     onReady: =>
-      $(@options.buttonSelector).click(@open).removeClass(@hiddenButtonClass)
+      $(".#{ @options.buttonClass }").click(@open).removeClass(@inactiveClass)
 
       if @options.show
         @show()
 
     onError: (message) =>
       @log 'debug', message
-      $(@options.buttonSelector).hide()
+      $(".#{ @options.buttonClass }").hide()
 
     reopenSession: (data) =>
       unfinishedMessage = sessionStorage.getItem 'unfinished_message'

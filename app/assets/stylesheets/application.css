@@ -11,6 +11,7 @@
  *= require ./sew.css
  *= require ./font.css
  *= require ./svg-dimensions.css
+ *= require ./highlighter-github.css
  *= require ./zammad.scss
  *
  *= require_tree ./custom/

@@ -1,35 +1,4 @@
-class App.ChannelChat extends App.ControllerTabs
-  header: 'Chat Widget'
-  addTab: true
-
-  constructor: ->
-    super
-
-    @title @header, true
-
-    @load()
-
-  load: =>
-    @tabs = []
-    @ajax(
-      id:   'chat_index'
-      type: 'GET'
-      url:  @apiPath + '/chats'
-      processData: true
-      success: (data, status, xhr) =>
-        App.Collection.loadAssets(data.assets)
-        for chat in App.Chat.all()
-          tab =
-            name: chat.name
-            target: "chat-#{chat.id}"
-            controller: App.ChannelChatDesigner
-            params:
-              model: chat
-          @tabs.push tab
-        @render()
-    )
-
-class App.ChannelChatDesigner extends App.Controller
+class App.ChannelChat extends App.Controller
   events:
     'click .js-add': 'new'
     'click .js-edit': 'edit'
@@ -48,6 +17,72 @@ class App.ChannelChatDesigner extends App.Controller
     '.js-chat': 'chat'
     '.js-testurl-input': 'urlInput'
     '.js-backgroundColor': 'chatBackground'
+    '.js-paramsBlock': 'paramsBlock'
+    '.js-code': 'code'
+
+  apiOptions: [
+    { 
+      name: 'channel'
+      default: "'default'"
+      type: 'String'
+      description: 'Name of the chat-channel.'
+    }
+    { 
+      name: 'show'
+      default: true
+      type: 'Boolean'
+      description: 'Show the chat when ready.'
+    }
+    { 
+      name: 'target'
+      default: "$('body')"
+      type: 'jQuery Object'
+      description: 'Where to append the chat to.'
+    }
+    { 
+      name: 'host'
+      default: "(Empty)"
+      type: 'String'
+      description: "If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host."
+      descriptionSubstitute: window.location.origin
+    }
+    { 
+      name: 'port'
+      default: 6042
+      type: 'Int'
+      description: ''
+    }
+    { 
+      name: 'debug'
+      default: false
+      type: 'Boolean'
+      description: 'Enables console logging.'
+    }
+    { 
+      name: 'fontSize'
+      default: "undefined"
+      type: 'String'
+      description: 'CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.'
+    }
+    { 
+      name: 'buttonClass'
+      default: "'open-zammad-chat'"
+      type: 'String'
+      description: 'Add this class to a button on your page that should open the chat.'
+    }
+    { 
+      name: 'inactiveClass'
+      default: "'is-inactive'"
+      type: 'String'
+      description: 'This class gets added to the button on initialization and gets removed once the chat connection got established.'
+    }
+    { 
+      name: 'title'
+      default: "'<strong>Chat</strong> with us!'"
+      type: 'String'
+      description: 'Welcome Title shown on the closed chat. Can contain HTML.'
+    }
+  ]
 
   constructor: ->
     super
@@ -80,14 +115,13 @@ class App.ChannelChatDesigner extends App.Controller
     @html App.view('channel/chat')(
       baseurl: window.location.origin
       chats: chats
+      apiOptions: @apiOptions
     )
+
+    @code.each (i, block) ->
+      hljs.highlightBlock block
 
     @updateParams()
-
-    new App.SettingsArea(
-      el:   @$('.js-settings')
-      area: 'Chat::Base'
-    )
 
   selectBrowserWidth: (event) =>
     tab = $(event.target).closest('[data-value]')
@@ -202,4 +236,8 @@ class App.ChannelChatDesigner extends App.Controller
           paramString += "    #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)
 
-App.Config.set( 'Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, role: ['Admin'] }, 'NavBarAdmin' )
+    # highlight
+    @paramsBlock.each (i, block) ->
+      hljs.highlightBlock block
+
+App.Config.set( 'Chat Widget', { prio: 4000, name: 'Chat Widget', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, role: ['Admin'] }, 'NavBarAdmin' )
