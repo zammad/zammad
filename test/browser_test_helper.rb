@@ -964,8 +964,8 @@ wait untill text in selector disabppears
 =begin
 
   tasks_close_all(
-    :browser         => browser1,
-    :discard_changes => true,
+    browser: browser1,
+    discard_changes: true,
   )
 
 =end
@@ -980,11 +980,8 @@ wait untill text in selector disabppears
       begin
         if instance.find_elements( { css: '.navigation .tasks .task:first-child' } )[0]
           instance.mouse.move_to( instance.find_elements( { css: '.navigation .tasks .task:first-child' } )[0] )
-          sleep 0.2
-
           click_element = instance.find_elements( { css: '.navigation .tasks .task:first-child .js-close' } )[0]
           if click_element
-            sleep 0.1
             click_element.click
 
             # accept task close warning

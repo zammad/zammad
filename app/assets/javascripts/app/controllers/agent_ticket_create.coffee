@@ -238,7 +238,7 @@ class App.TicketCreate extends App.Controller
         @ticketFormChanges,
         signatureChanges,
       ]
-      filter:     @formMeta.filter
+      filter:    @formMeta.filter
       autofocus: true
       params:    params
     )

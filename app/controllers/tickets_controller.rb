@@ -222,17 +222,17 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find( params[:id] )
-    return if !ticket_permission( ticket )
+    return if !ticket_permission(ticket)
 
     # get attributes to update
-    attributes_to_change = Ticket::ScreenOptions.attributes_to_change( user: current_user, ticket: ticket )
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(user: current_user, ticket: ticket)
 
     # get related users
     assets = attributes_to_change[:assets]
     assets = ticket.assets(assets)
 
     # get related articles
-    articles = Ticket::Article.where( ticket_id: params[:id] )
+    articles = Ticket::Article.where(ticket_id: params[:id])
 
     # get related users
     article_ids = []
@@ -275,10 +275,7 @@ class TicketsController < ApplicationController
       assets: assets,
       links: link_list,
       tags: tags,
-      form_meta: {
-        filter: attributes_to_change[:filter],
-        dependencies: attributes_to_change[:dependencies],
-      }
+      form_meta: attributes_to_change[:form_meta],
     }
   end
 
