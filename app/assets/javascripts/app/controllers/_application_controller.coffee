@@ -555,6 +555,13 @@ class App.Controller extends Spine.Controller
   renderScreenUnauthorized: (data) ->
     @html App.view('generic/error/unauthorized')(data)
 
+  metaTaskUpdate: =>
+    App.Delay.set(
+      -> App.Event.trigger 'task:render'
+      250
+      'meta-task-update'
+    )
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
@@ -745,7 +752,7 @@ class App.UpdateTastbar extends App.Controller
   update: (genericObject) ->
 
     # update taskbar with new meta data
-    App.Event.trigger 'task:render'
+    @metaTaskUpdate()
 
 class App.ControllerWidgetPermanent extends App.Controller
   constructor: (params) ->

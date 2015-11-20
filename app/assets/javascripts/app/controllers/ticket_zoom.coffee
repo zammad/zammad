@@ -208,8 +208,8 @@ class App.TicketZoom extends App.Controller
             objectName: 'Ticket'
           )
 
-        # update current task title
-        App.Event.trigger 'task:render'
+        # update taskbar with new meta data
+        @metaTaskUpdate()
     )
 
 
@@ -278,7 +278,8 @@ class App.TicketZoom extends App.Controller
   render: =>
 
     # update taskbar with new meta data
-    App.Event.trigger 'task:render'
+    @metaTaskUpdate()
+
     @formEnable( @$('.submit') )
 
     if !@renderDone

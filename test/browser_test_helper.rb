@@ -980,6 +980,7 @@ wait untill text in selector disabppears
       begin
         if instance.find_elements( { css: '.navigation .tasks .task:first-child' } )[0]
           instance.mouse.move_to( instance.find_elements( { css: '.navigation .tasks .task:first-child' } )[0] )
+          sleep 0.1
           click_element = instance.find_elements( { css: '.navigation .tasks .task:first-child .js-close' } )[0]
           if click_element
             click_element.click
