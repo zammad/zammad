@@ -80,10 +80,9 @@ job_integration_es:
 
 job_integration_otrs_5:
   stage: test
-  variables:
-    IMPORT_OTRS_ENDPOINT: "http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
   script:
     - export RAILS_ENV=test
+    - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
     - script/build/test_db_config.sh ci_zammad_otrs5
     - rake db:drop;
     - rake db:create
