@@ -66,6 +66,17 @@ job_integration_user_agent:
     - rake db:migrate
     - ruby -I test/ test/integration/user_agent_test.rb
 
+job_integration_es:
+  stage: test
+  script:
+    - export RAILS_ENV=test
+    - script/build/test_db_config.sh ci_zammad_es
+    - rake db:drop;
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/elasticsearch_test.rb
+    - ruby -I test/ test/controllers/search_controller_test.rb
+
 rubocop:
   stage: test
   script:
