@@ -36,6 +36,36 @@ job_integration_geo_ip:
     - rake db:migrate
     - ruby -I test/ test/integration/geo_ip_test.rb
 
+job_integration_geo_location:
+  stage: test
+  script:
+    - export RAILS_ENV=test
+    - script/build/test_db_config.sh ci_zammad_geo_location
+    - rake db:drop;
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/geo_location_test.rb
+
+job_integration_geo_calendar:
+  stage: test
+  script:
+    - export RAILS_ENV=test
+    - script/build/test_db_config.sh ci_zammad_geo_calendar
+    - rake db:drop;
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/geo_calendar_test.rb
+
+job_integration_user_agent:
+  stage: test
+  script:
+    - export RAILS_ENV=test
+    - script/build/test_db_config.sh ci_zammad_user_agent
+    - rake db:drop;
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/user_agent_test.rb
+
 rubocop:
   stage: test
   script:
