@@ -255,8 +255,8 @@ class TestCase < Test::Unit::TestCase
     if params[:css]
 
       element = instance.find_elements( { css: params[:css] } )[0]
-      instance.mouse.move_to(element)
-      sleep 0.2
+      #instance.mouse.move_to(element)
+      #sleep 0.2
       element.click
 
       # trigger also focus on input/select and textarea fields
