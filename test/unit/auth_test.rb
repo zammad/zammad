@@ -1,6 +1,11 @@
 # encoding: utf-8
 require 'test_helper'
 
+# set config
+if !ENV['LDAP_HOST']
+  fail "ERROR: Need LDAP_HOST - hint LDAP_HOST='ldap://ci.zammad.org'"
+end
+
 Setting.create_or_update(
   title: 'Authentication via LDAP',
   name: 'auth_ldap',
@@ -8,7 +13,7 @@ Setting.create_or_update(
   description: 'Enables user authentication via LDAP.',
   state: {
     adapter: 'Auth::Ldap',
-    host: 'localhost',
+    host: ENV['LDAP_HOST'],
     port: 389,
     bind_dn: 'cn=Manager,dc=example,dc=org',
     bind_pw: 'example',
