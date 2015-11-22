@@ -1,6 +1,6 @@
 #!/bin/bash
 DBNAME=$1
-DBFILE=config/database.yml2
+DBFILE=config/database.yml
 
 echo "Creating $DBFILE for tests with dbname $DBNAME"
 
