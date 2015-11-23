@@ -57,11 +57,13 @@
       </div>
     </div>
   </div>
-
+  
+  <label for="preview-iframe" class="formGroup-label"><%- @T('Preview') %></label>
   <div class="browser chat-demo js-browser">
     <div class="browser-head">
       <form class="browser-input js-testurl" novalidate>
-        <input type="url" class="js-testurl-input" placeholder="zammad.org">
+        <input type="url" class="js-testurl-input" id="preview-iframe" placeholder="zammad.org">
+        <span class="help-block"><%- @T("Because of security reasons some websites can't be displayed (for example google.com).") %></span>
       </form>
     </div>
     <div class="browser-body js-demo">
