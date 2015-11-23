@@ -3,6 +3,7 @@ before_script:
 
 stages:
   - test
+  - browser
 
 job_unit:
   stage: test
@@ -132,6 +133,28 @@ job_integration_otrs_31:
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb
+
+job_integration_autowizard:
+  stage: browser
+  script:
+    - export RAILS_ENV=production
+    - export Z_LOCALES=en-us:de-de
+    - export IP=`hostname -I`
+    - export BROWSER_URL=http://$IP:3011
+    - export REMOTE_URL=http://192.168.122.175:4444/wd/hub
+    - export BROWSER=firefox
+    - export RAILS_SERVE_STATIC_FILES=true
+    - script/build/test_db_config.sh ci_zammad_autowizard
+    - cp contrib/auto_wizard_example.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - pumactl start --pidfile tmp/pids/puma.pid -d -p 3011 -e $RAILS_ENV
+    - script/websocket-server.rb start -d
+    - script/scheduler.rb start
+    - ruby -I test/ test/integration/auto_wizard_test.rb
+    - script/scheduler.rb stop
+    - script/websocket-server.rb stop
+    - kill $(cat tmp/pids/puma.pid)
 
 rubocop:
   stage: test
