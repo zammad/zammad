@@ -11,7 +11,6 @@ class App.ChannelChat extends App.Controller
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
 
   elements:
-    '.js-demo': 'demo'
     '.js-browser': 'browser'
     '.js-iframe': 'iframe'
     '.js-chat': 'chat'
@@ -142,16 +141,16 @@ class App.ChannelChat extends App.Controller
 
     return if value is 'fit'
 
-    if width < @demo.width()
+    if width < @el.width()
       @chat.addClass('is-fullscreen')
       @browser.css('width', "#{ width }px")
     else
-      percentage = @demo.width()/width
+      percentage = @el.width()/width
       @chat.css('transform', "scale(#{ percentage })")
       @iframe.css
         transform: "scale(#{ percentage })"
-        width: @demo.width() / percentage
-        height: @demo.height() / percentage
+        width: @el.width() / percentage
+        height: @el.height() / percentage
 
   changeDemoWebsite: (event) =>
     event.preventDefault() if event
