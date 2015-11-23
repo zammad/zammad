@@ -6707,18 +6707,20 @@ output {
   .settings-list-action-cell {
     @extend .u-clickable;
     text-align: center;
+    color: hsl(198,19%,72%);
     background: hsl(197,22%,96%);
     line-height: 1;
+    padding-top: 11px;
+    padding-bottom: 9px;
     
     &:hover {
-      .icon {
-        fill: hsl(60,1%,34%);
-      }
+      color: hsl(60,1%,34%);
     }
     
     .icon {
-      fill: hsl(198,19%,72%);
+      fill: currentColor;
       vertical-align: top;
+      margin-top: -2px;
     }
   }
 

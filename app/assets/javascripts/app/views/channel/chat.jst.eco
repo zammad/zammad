@@ -41,7 +41,7 @@
   <% end %>
       <tr>
         <td colspan="4" class="settings-list-action-cell js-add">
-          <%- @Icon('plus-small') %>
+          <%- @Icon('plus-small') %> Add Channel
     </tbody>
   </table>
 
@@ -172,7 +172,7 @@
 
   <h2><%- @T('Usage') %></h2>
 
-  <p><%- @T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the `&lt;/body&gt;` closing tag.') %></p>
+  <p><%- marked(@T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the `</body>` closing tag.')) %></p>
 
   <h3>Requirements</h3>
   <p><%- @T("Zammad Chat requires jQuery. If you don't already use it on your website include it like this:") %></p>
@@ -213,7 +213,7 @@ $(function() {
       <li><%- @T('The chat is turned off.') %>
       <li><%- @T('There are too many people in queue for the chat.') %>
     </ol>
-    <%- marked(@T('When you turn on debubbing by setting the option `debug` to `true` the reason gets printed to the javascript console.')) %>
+    <%- marked(@T('When you turn on debugging by setting the option `debug` to `true` the reason gets printed to the javascript console.')) %>
   </p>
   
   <h3><%- @T('Options') %></h3>
