@@ -1,188 +1,239 @@
-<p><%- @T('You can create chat widgets for your webpages to allow visitors to chat with you.') %></p>
-
-<% if _.isEmpty(@chats): %>
-<p><%- @T('You have no configured chat\'s right now.') %></p>
-<% else: %>
-<table class="settings-list">
-  <thead>
-    <tr>
-      <th style="white-space: nowrap;"><%- @T('Name') %></th>
-      <th style="white-space: nowrap;"><%- @T('Note') %></th>
-      <th style="white-space: nowrap;"><%- @T('Max Queue') %></th>
-      <th style="white-space: nowrap;"><%- @T('Delete') %></th>
-    </tr>
-  </thead>
-  <tbody>
-<% for chat in @chats: %>
-    <tr data-id="<%= chat.id %>">
-      <td>
-        <label class="inline-label">
-          <a class="js-edit is-clickable"><%= chat.name %></a>
-        </label>
-      <td>
-        <label class="inline-label">
-          <%= chat.note %>
-        </label>
-      <td>
-        <label class="inline-label">
-          <%= chat.max_queue %>
-        </label>
-      <td>
-        <div class="settings-list-rowControls">
-          <div class="btn btn--text js-remove">
-            <%- @Icon('trash') %> <%- @T('Remove') %>
-          </div>
-        </div>
-<% end %>
-    <tr class="settings-list-controlRow">
-      <td>
-      <td>
-      <td>
-      <td>
-        <div class="btn btn--text js-add">
-          <%- @Icon('plus-small') %> <%- @T('Add') %>
-        </div>
-
-  </tbody>
-</table>
-<% end %>
-
-<h2><%- @T('Designer') %></h2>
-
-<div class="form-group">
-  <label class="formGroup-label"><%- @T('Preview Width') %></label>
-  <div class="control">
-    <div class="select-tabs js-selectBrowserWidth">
-      <div class="tab" data-value="375">iPhone 6</div>
-      <div class="tab is-selected" data-value="fit"><%- @T('Fit Width') %></div>
-      <div class="tab" data-value="1280">MacBook</div>
-    </div>
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Chat Widget') %> <small></small></h1>
   </div>
 </div>
+<div class="page-content">
+  <p><%- @T('You can create chat widgets for your webpages to allow visitors to chat with you.') %></p>
 
-<div class="browser chat-demo js-browser">
-  <div class="browser-head">
-    <form class="browser-input js-testurl" novalidate>
-      <input type="url" class="js-testurl-input" placeholder="zammad.org">
-    </form>
+  <h2><%- @T('Channels') %></h2>
+  <p><%- @T('You can create multiple chat channels.') %></p>
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th style="white-space: nowrap;"><%- @T('Name') %></th>
+        <th style="white-space: nowrap;"><%- @T('Note') %></th>
+        <th style="white-space: nowrap;"><%- @T('Max Queue') %></th>
+        <th style="white-space: nowrap;"><%- @T('Delete') %></th>
+      </tr>
+    </thead>
+    <tbody>
+  <% for chat in @chats: %>
+      <tr data-id="<%= chat.id %>">
+        <td>
+          <label class="inline-label">
+            <a class="js-edit is-clickable"><%= chat.name %></a>
+          </label>
+        <td>
+          <label class="inline-label">
+            <%= chat.note %>
+          </label>
+        <td>
+          <label class="inline-label">
+            <%= chat.max_queue %>
+          </label>
+        <td>
+          <div class="settings-list-rowControls">
+            <div class="btn btn--text js-remove">
+              <%- @Icon('trash') %> <%- @T('Remove') %>
+            </div>
+          </div>
+  <% end %>
+      <tr>
+        <td colspan="4" class="settings-list-action-cell js-add">
+          <%- @Icon('plus-small') %>
+    </tbody>
+  </table>
+
+  <h2><%- @T('Designer') %></h2>
+
+  <div class="form-group">
+    <label class="formGroup-label"><%- @T('Preview Width') %></label>
+    <div class="control">
+      <div class="select-tabs js-selectBrowserWidth">
+        <div class="tab" data-value="375">iPhone 6</div>
+        <div class="tab is-selected" data-value="fit"><%- @T('Fit Width') %></div>
+        <div class="tab" data-value="1280">MacBook</div>
+      </div>
+    </div>
   </div>
-  <div class="browser-body js-demo">
-    <iframe class="js-iframe"></iframe>
-    <style>@import "/assets/chat/chat.css";</style>
-    <div class="chat-demo-animationHolder">
-      <div class="js-chat zammad-chat zammad-chat-is-visible zammad-chat-is-open" style="bottom: 0px;">
-        <div class="zammad-chat-header js-chat-open js-backgroundColor">
-          <div class="zammad-chat-header-controls">
-            <span class="zammad-chat-agent-status" data-status="online"><%- @T('Online') %></span>
-            <span class="zammad-chat-header-icon">
-              <svg class="zammad-chat-header-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"></path></svg>
-              <svg class="zammad-chat-header-icon-close js-chat-close" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"></path></svg>
-            </span>
+
+  <div class="browser chat-demo js-browser">
+    <div class="browser-head">
+      <form class="browser-input js-testurl" novalidate>
+        <input type="url" class="js-testurl-input" placeholder="zammad.org">
+      </form>
+    </div>
+    <div class="browser-body js-demo">
+      <iframe class="js-iframe"></iframe>
+      <style>@import "/assets/chat/chat.css";</style>
+      <div class="chat-demo-animationHolder">
+        <div class="js-chat zammad-chat zammad-chat-is-visible zammad-chat-is-open" style="bottom: 0px;">
+          <div class="zammad-chat-header js-chat-open js-backgroundColor">
+            <div class="zammad-chat-header-controls">
+              <span class="zammad-chat-agent-status" data-status="online"><%- @T('Online') %></span>
+              <span class="zammad-chat-header-icon">
+                <svg class="zammad-chat-header-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"></path></svg>
+                <svg class="zammad-chat-header-icon-close js-chat-close" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"></path></svg>
+              </span>
+            </div>
+            <div class="zammad-chat-agent">
+              <img class="zammad-chat-agent-avatar" src="/assets/images/chat-demo-avatar.png">
+              <span class="zammad-chat-agent-sentence">
+                <span class="zammad-chat-agent-name"><%- @T('John Smith') %></span>
+              </span>
+            </div>
+            <div class="zammad-chat-welcome zammad-chat-is-hidden">
+              <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"></path></svg>
+              <span class="zammad-chat-welcome-text"><%- @T('<strong>Chat</strong> with us!') %></span>
+            </div>
           </div>
-          <div class="zammad-chat-agent">
-            <img class="zammad-chat-agent-avatar" src="/assets/images/chat-demo-avatar.png">
-            <span class="zammad-chat-agent-sentence">
-              <span class="zammad-chat-agent-name"><%- @T('John Smith') %></span>
-            </span>
+          <div class="zammad-chat-body">
+            <div class="zammad-chat-timestamp"><strong><%- @T('Today') %></strong> 14:45</div>
+            <div class="zammad-chat-message zammad-chat-message--customer">
+              <span class="zammad-chat-message-body js-backgroundColor"><%- @T('Hello! I need help with your product.') %></span>
+            </div>
+            <div class="zammad-chat-message zammad-chat-message--agent">
+              <span class="zammad-chat-message-body"><%- @T('Hi! Which one of our products?') %></span>
+            </div>
           </div>
-          <div class="zammad-chat-welcome zammad-chat-is-hidden">
-            <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"></path></svg>
-            <span class="zammad-chat-welcome-text"><%- @T('<strong>Chat</strong> with us!') %></span>
-          </div>
+          <form class="zammad-chat-controls">
+            <textarea class="zammad-chat-input" rows="1" placeholder="Ihre Nachricht..."></textarea>
+            <button type="submit" class="zammad-chat-button zammad-chat-send js-backgroundColor"><%- @T('Send') %></button>
+          </form>
         </div>
-        <div class="zammad-chat-body">
-          <div class="zammad-chat-timestamp"><strong><%- @T('Today') %></strong> 14:45</div>
-          <div class="zammad-chat-message zammad-chat-message--customer">
-            <span class="zammad-chat-message-body js-backgroundColor"><%- @T('Hello! I need help with your product.') %></span>
-          </div>
-          <div class="zammad-chat-message zammad-chat-message--agent">
-            <span class="zammad-chat-message-body"><%- @T('Hi! Which one of our products?') %></span>
-          </div>
-        </div>
-        <form class="zammad-chat-controls">
-          <textarea class="zammad-chat-input" rows="1" placeholder="Ihre Nachricht..."></textarea>
-          <button type="submit" class="zammad-chat-button zammad-chat-send js-backgroundColor"><%- @T('Send') %></button>
-        </form>
       </div>
     </div>
   </div>
-</div>
 
-<form class="js-params">
-  <fieldset>
-    <div class="input form-group formGroup--halfSize">
-      <div class="formGroup-label">
-        <label for="form-chat-title"><%- @T('Chat Title') %></label>
+  <form class="js-params">
+    <fieldset>
+      <div class="input form-group formGroup--halfSize">
+        <div class="formGroup-label">
+          <label for="form-chat-title"><%- @T('Chat Title') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-chat-title" name="title" value="&lt;strong&gt;Chat&lt;/strong&gt; with us!">
+        </div>
+        <span class="help-block"><%- @T('Shown when the chat is closed.') %></span>
       </div>
-      <div class="controls">
-        <input type="text" id="form-chat-title" name="title" value="&lt;strong&gt;Chat&lt;/strong&gt; with us!">
+      <div class="input form-group formGroup--halfSize">
+        <div class="formGroup-label">
+          <label for="form-chat-background"><%- @T('Background color') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-chat-background" name="background" value="">
+        </div>
+        <span class="help-block"><%- @T('Can be in any CSS color format.') %></span>
       </div>
-      <span class="help-block"><%- @T('Shown when the chat is closed.') %></span>
-    </div>
-    <div class="input form-group formGroup--halfSize">
-      <div class="formGroup-label">
-        <label for="form-chat-background"><%- @T('Background color') %></label>
+      <div class="input form-group formGroup--halfSize">
+        <div class="formGroup-label">
+          <label for="form-chat-fontsize"><%- @T('Font size') %></label>
+        </div>
+        <div class="controls">
+          <input type="text" id="form-chat-fontsize" name="fontSize" value="12px">
+        </div>
+        <span class="help-block"><%- @T('The default font size is 12px.') %></span>
       </div>
-      <div class="controls">
-        <input type="text" id="form-chat-background" name="background" value="">
-      </div>
-      <span class="help-block"><%- @T('Can be in any CSS color format.') %></span>
-    </div>
-    <div class="input form-group formGroup--halfSize">
-      <div class="formGroup-label">
-        <label for="form-chat-fontsize"><%- @T('Font size') %></label>
-      </div>
-      <div class="controls">
-        <input type="text" id="form-chat-fontsize" name="fontSize" value="12px">
-      </div>
-      <span class="help-block"><%- @T('The default font size is 12px.') %></span>
-    </div>
-  </fieldset>
+    </fieldset>
 
-  <br>
+    <br>
+
+    <table class="settings-list">
+      <thead>
+        <tr>
+          <th style="white-space: nowrap;"><%- @T('Options') %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="debug" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Enable debugging for implementation.') %>
+            </label>
+        <tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="flat" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Flat design.') %>
+            </label>
+      </tbody>
+    </table>
+  </form>
+
+  <h2><%- @T('Usage') %></h2>
+
+  <p><%- @T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the `&lt;/body&gt;` closing tag.') %></p>
+
+  <h3>Requirements</h3>
+  <p><%- @T("Zammad Chat requires jQuery. If you don't already use it on your website include it like this:") %></p>
+  <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-2.1.4.min.js"&gt;&lt;/script&gt;</code></pre>
+
+  <h3><%- @T('Auto-show chat') %></h3>
+  <p><%- @T('The chat will show up once the connection to the server got established and if there is someone online to chat with.') %></p>
+
+  <pre><code class="language-html js-paramsBlock">&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+$(function() {
+  new ZammadChat({
+<span class="js-modal-params"></span>
+  });
+});
+&lt;/script&gt;</code></pre>
+
+  <h3><%- @T('Manually open chat') %></h3>
+  <p><%- marked(@T('If you want to open the chat by the press of a button set the option `show` to `false` and add the class `open-zammad-chat` to the button.')) %></p>
+  <pre><code class="language-html js-paramsBlock">&lt;button class="open-zammad-chat"&gt;Chat with us&lt;/button&gt;
+
+&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+$(function() {
+  new ZammadChat({
+<span class="js-modal-params"></span>
+    show: false
+  });
+});
+&lt;/script&gt;</code></pre>
+
+  <h3><%- @T("Why doesn't the chat show up?") %></h3>
+  <p>
+    <%- @T('There can be several reasons for the chat to not show up:') %>
+    <ol>
+      <li><%- @T('The browser is outdated. It does not support WebSocket - the technology we use for the chat.') %>
+      <li><%- @T('The is no agent online.') %>
+      <li><%- @T('The chat is turned off.') %>
+      <li><%- @T('There are too many people in queue for the chat.') %>
+    </ol>
+    <%- marked(@T('When you turn on debubbing by setting the option `debug` to `true` the reason gets printed to the javascript console.')) %>
+  </p>
+  
+  <h3><%- @T('Options') %></h3>
 
   <table class="settings-list">
     <thead>
       <tr>
-        <th style="white-space: nowrap;"><%- @T('Options') %></th>
-      </tr>
+        <th><%- @T('Options') %>
+        <th><%- @T('Default') %>
+        <th><%- @T('Type') %>
+        <th><%- @T('Description') %>
     </thead>
     <tbody>
+    <% for option in @apiOptions: %>
       <tr>
-        <td>
-          <label class="inline-label">
-            <span class="checkbox-replacement checkbox-replacement--inline">
-              <input type="checkbox" name="debug" value="true">
-              <%- @Icon('checkbox', 'icon-unchecked') %>
-              <%- @Icon('checkbox-checked', 'icon-checked') %>
-            </span>
-            <%- @T('Enable debugging for implementation.') %>
-          </label>
-      <tr>
-        <td>
-          <label class="inline-label">
-            <span class="checkbox-replacement checkbox-replacement--inline">
-              <input type="checkbox" name="flat" value="true">
-              <%- @Icon('checkbox', 'icon-unchecked') %>
-              <%- @Icon('checkbox-checked', 'icon-checked') %>
-            </span>
-            <%- @T('Flat design.') %>
-          </label>
+        <td><%- @T(option.name) %>
+        <td style="white-space: nowrap;"><code class="language-javascript js-code"><%= option.default %></code>
+        <td style="white-space: nowrap;"><code class="language-javascript js-code"><%= option.type %></code>
+        <td><%- @T(option.description, option.descriptionSubstitute) %>
+    <% end %>
     </tbody>
   </table>
-
-  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
-
-  <pre>
-&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
-
-&lt;script&gt;
-$(function() {
-new ZammadChat({
-<span class="js-modal-params"></span>
-});
-});
-&lt;/script&gt;</pre>
-</form>
-
-<div class="js-settings"></div>
+</div>

@@ -255,10 +255,9 @@ pre {
   color: #333;
   word-break: break-all;
   word-wrap: break-word;
-  background: hsl(197,20%,93%);
-  border: 1px solid hsl(198,18%,86%);
+  background: white;
+  border: 1px solid hsl(0,0%,90%);
   border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.05) inset;
 }
 pre code {
   padding: 0;
@@ -267,6 +266,23 @@ pre code {
   white-space: pre-wrap;
   background-color: transparent;
   border-radius: 0;
+}
+
+.hljs,
+code {
+  background: none;
+  padding: 2px 4px;
+  font-size: 0.88em;
+}
+
+code:not(.hljs) {
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+pre code.hljs {
+  font-size: 1em;
 }
 
 .textarea::placeholder,
