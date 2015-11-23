@@ -1383,15 +1383,6 @@ textarea,
   &.form-control--multiline {
     height: auto;
   }
-
-  &[readonly] {
-    background: hsl(198,10%,95%);
-    
-    &:focus {
-      box-shadow: none;
-      border-color: hsl(0,0%,90%);
-    }
-  }
 }
 
 input[type=url] {
