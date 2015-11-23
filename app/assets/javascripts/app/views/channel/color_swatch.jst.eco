@@ -1,0 +1,1 @@
+<div class="color-swatch js-swatch" style="background: <%= @color %>" data-color="<%= @color %>"></div>

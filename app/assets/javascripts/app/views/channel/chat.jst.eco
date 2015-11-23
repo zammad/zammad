@@ -122,9 +122,10 @@
       <div class="input form-group formGroup--halfSize">
         <div class="formGroup-label">
           <label for="form-chat-background"><%- @T('Background color') %></label>
+          <div class="align-right horizontal js-swatches"></div>
         </div>
         <div class="controls">
-          <input type="text" id="form-chat-background" name="background" value="">
+          <input class="js-color" type="text" id="form-chat-background" name="background" value="">
         </div>
         <span class="help-block"><%- @T('Can be in any CSS color format.') %></span>
       </div>

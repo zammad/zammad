@@ -2327,6 +2327,11 @@ ol.tabs li {
   border-radius: 100%;
   width: 11px;
   height: 11px;
+  cursor: pointer;
+  
+  & + .color-swatch {
+    margin-left: 4px;
+  }
 }
 
 .icon-status {
