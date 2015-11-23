@@ -6683,20 +6683,20 @@ output {
     color: hsl(199,19%,80%);
     text-decoration: line-through;
   }
-
-  thead th:first-child {
+  
+  & > thead > tr > th:first-child {
     border-top-left-radius: 4px;
   }
 
-  thead th:last-child {
+  & > thead > tr > th:last-child {
     border-top-right-radius: 4px;
   }
 
-  tbody tr:last-child td:first-child {
+  & > tbody > tr:last-child > td:first-child {
     border-bottom-left-radius: 4px;
   }
 
-  tbody tr:last-child td:last-child {
+  & > tbody > tr:last-child > td:last-child {
     border-bottom-right-radius: 4px;
   }
 
@@ -6992,9 +6992,13 @@ output {
   
   .datepicker-switch {
     padding: 12px 0;
+    font-weight: bold;
     font-size: 15px;
     text-align: center;
     cursor: pointer;
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-transform: none;
     
     &:hover {
       background: hsl(240,10%,14%);
