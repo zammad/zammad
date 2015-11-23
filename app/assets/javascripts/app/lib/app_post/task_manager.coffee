@@ -64,7 +64,7 @@ class App.TaskManager
       _instance ?= new _taskManagerSingleton
     _instance.TaskbarId()
 
-class _taskManagerSingleton extends Spine.Module
+class _taskManagerSingleton extends App.Controller
   @include App.LogInclude
 
   constructor: (params = {}) ->
@@ -217,7 +217,7 @@ class _taskManagerSingleton extends Spine.Module
     @startController(params)
 
     if !params.init
-      App.Event.trigger 'task:render'
+      @metaTaskUpdate()
 
   startController: (params) =>
 
@@ -324,7 +324,7 @@ class _taskManagerSingleton extends Spine.Module
 
     # rerender taskbar
     if rerender
-      App.Event.trigger 'task:render'
+      @metaTaskUpdate()
 
     # destroy in backend storage
     @taskDestroy(task)
@@ -387,7 +387,7 @@ class _taskManagerSingleton extends Spine.Module
     App.Taskbar.deleteAll()
 
     # rerender task bar
-    App.Event.trigger 'task:render'
+    @metaTaskUpdate()
 
   nextTaskUrl: =>
 
@@ -418,7 +418,7 @@ class _taskManagerSingleton extends Spine.Module
   taskUpdate: (task) ->
     #@log 'notice', "UPDATE task #{task.id}", task
     @tasksToUpdate[ task.key ] = 'toUpdate'
-    App.Event.trigger 'task:render'
+    @metaTaskUpdate()
 
   taskUpdateLoop: =>
     return if @offlineModus

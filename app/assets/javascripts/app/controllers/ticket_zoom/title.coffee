@@ -51,7 +51,7 @@ class App.TicketZoomTitle extends App.Controller
       App.TaskManager.mute(@task_key)
 
       # update taskbar with new meta data
-      App.Event.trigger 'task:render'
+      @metaTaskUpdate()
 
   release: =>
     App.Ticket.unsubscribe(@subscribeId)

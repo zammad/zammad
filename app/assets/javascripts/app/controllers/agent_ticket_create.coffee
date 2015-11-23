@@ -302,6 +302,9 @@ class App.TicketCreate extends App.Controller
     # start auto save
     @autosave()
 
+    # update taskbar with new meta data
+    @metaTaskUpdate()
+
   localUserInfo: (e) =>
 
     params = App.ControllerForm.params( $(e.target).closest('form') )

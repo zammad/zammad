@@ -22,7 +22,7 @@ class App.TaskbarWidget extends App.Controller
     return if !@Session.get()
 
     tasks = App.TaskManager.all()
-    item_list = []
+    taskItems = []
     for task in tasks
 
       # collect meta data of task for task bar item
@@ -32,7 +32,7 @@ class App.TaskbarWidget extends App.Controller
         iconClass: 'loading'
         title: App.i18n.translateInline('Loading...')
         head:  App.i18n.translateInline('Loading...')
-      worker = App.TaskManager.worker( task.key  )
+      worker = App.TaskManager.worker(task.key)
       if worker
         meta = worker.meta()
 
@@ -45,14 +45,14 @@ class App.TaskbarWidget extends App.Controller
       item = {}
       item.task = task
       item.data = data
-      item_list.push item
+      taskItems.push item
 
       # set title
       if task.active
         @title data.title
 
     @html App.view('task_widget_tasks')(
-      item_list: item_list
+      taskItems: taskItems
     )
 
     dndOptions =
@@ -69,9 +69,9 @@ class App.TaskbarWidget extends App.Controller
           if !key
             throw 'No such key attributes found for task item'
           order.push key
-        App.TaskManager.reorder( order )
+        App.TaskManager.reorder(order)
 
-    @el.sortable( dndOptions )
+    @el.sortable(dndOptions)
 
   remove: (e, key = false, force = false) =>
     e.preventDefault()

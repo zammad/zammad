@@ -555,6 +555,13 @@ class App.Controller extends Spine.Controller
   renderScreenUnauthorized: (data) ->
     @html App.view('generic/error/unauthorized')(data)
 
+  metaTaskUpdate: =>
+    App.Delay.set(
+      -> App.Event.trigger 'task:render'
+      250
+      'meta-task-update'
+    )
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
@@ -723,13 +730,13 @@ class App.UpdateHeader extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = @genericObject.subscribe( @render )
+    @subscribeId = @genericObject.subscribe(@render)
 
   release: =>
     App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
 
   render: (genericObject) =>
-    @el.find( '.page-header h1' ).html( genericObject.displayName() )
+    @el.find('.page-header h1').html(genericObject.displayName())
 
 
 class App.UpdateTastbar extends App.Controller
@@ -737,15 +744,15 @@ class App.UpdateTastbar extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = @genericObject.subscribe( @update )
+    @subscribeId = @genericObject.subscribe(@update)
 
   release: =>
     App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
 
-  update: (genericObject) ->
+  update: (genericObject) =>
 
     # update taskbar with new meta data
-    App.Event.trigger 'task:render'
+    @metaTaskUpdate()
 
 class App.ControllerWidgetPermanent extends App.Controller
   constructor: (params) ->
