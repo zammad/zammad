@@ -1,10 +1,11 @@
 #!/bin/bash
-DBNAME=$1
+DBENV=$1
+DBNAME=$2
 DBFILE=config/database.yml
 
 echo "Creating $DBFILE for tests with dbname $DBNAME"
 
-echo "test:" > $DBFILE
+echo "$DBENV:" > $DBFILE
 echo "  adapter: mysql2" >> $DBFILE
 echo "  database: $DBNAME" >> $DBFILE
 echo "  pool: 50" >> $DBFILE

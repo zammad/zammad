@@ -5,11 +5,16 @@ stages:
   - test
   - browser
 
+rubocop:
+  stage: test
+  script:
+    - bundle exec rubocop
+
 job_unit:
   stage: test
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh ci_zammad_unit
+    - script/build/test_db_config.sh test ci_zammad_unit
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -21,7 +26,7 @@ job_integration_email_helper:
   stage: test
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh ci_zammad_email_helper
+    - script/build/test_db_config.sh test ci_zammad_email_helper
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -31,7 +36,7 @@ job_integration_geo_ip:
   stage: test
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh ci_zammad_geo_ip
+    - script/build/test_db_config.sh test ci_zammad_geo_ip
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -41,7 +46,7 @@ job_integration_geo_location:
   stage: test
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh ci_zammad_geo_location
+    - script/build/test_db_config.sh test ci_zammad_geo_location
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -51,7 +56,7 @@ job_integration_geo_calendar:
   stage: test
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh ci_zammad_geo_calendar
+    - script/build/test_db_config.sh test ci_zammad_geo_calendar
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -61,7 +66,7 @@ job_integration_user_agent:
   stage: test
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh ci_zammad_user_agent
+    - script/build/test_db_config.sh test ci_zammad_user_agent
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -71,7 +76,7 @@ job_integration_es:
   stage: test
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh ci_zammad_es
+    - script/build/test_db_config.sh test ci_zammad_es
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -84,7 +89,7 @@ job_integration_otrs_5:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh ci_zammad_otrs5
+    - script/build/test_db_config.sh test ci_zammad_otrs5
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -95,7 +100,7 @@ job_integration_otrs_4:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz383.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh ci_zammad_otrs4
+    - script/build/test_db_config.sh test ci_zammad_otrs4
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -106,7 +111,7 @@ job_integration_otrs_33:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh ci_zammad_otrs33
+    - script/build/test_db_config.sh test ci_zammad_otrs33
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -117,7 +122,7 @@ job_integration_otrs_32:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz382.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh ci_zammad_otrs32
+    - script/build/test_db_config.sh test ci_zammad_otrs32
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -128,7 +133,7 @@ job_integration_otrs_31:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz381.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh ci_zammad_otrs31
+    - script/build/test_db_config.sh test ci_zammad_otrs31
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -144,19 +149,10 @@ job_integration_autowizard:
     - export REMOTE_URL=http://192.168.122.175:4444/wd/hub
     - export BROWSER=firefox
     - export RAILS_SERVE_STATIC_FILES=true
-    - script/build/test_db_config.sh ci_zammad_autowizard
+    - script/build/test_db_config.sh production ci_zammad_autowizard
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
-    - pumactl start --pidfile tmp/pids/puma.pid -d -p 3011 -e $RAILS_ENV
-    - script/websocket-server.rb start -d
-    - script/scheduler.rb start
+    - script/build/test_startup.sh $RAILS_ENV 3011
     - ruby -I test/ test/integration/auto_wizard_test.rb
-    - script/scheduler.rb stop
-    - script/websocket-server.rb stop
-    - kill $(cat tmp/pids/puma.pid)
-
-rubocop:
-  stage: test
-  script:
-    - bundle exec rubocop
+    - script/build/test_shutdown.sh $RAILS_ENV 3011
