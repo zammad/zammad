@@ -41,7 +41,7 @@
   <% end %>
       <tr>
         <td colspan="4" class="settings-list-action-cell js-add">
-          <%- @Icon('plus-small') %>
+          <%- @Icon('plus-small') %> Add Channel
     </tbody>
   </table>
 
@@ -52,16 +52,18 @@
     <div class="control">
       <div class="select-tabs js-selectBrowserWidth">
         <div class="tab" data-value="375">iPhone 6</div>
-        <div class="tab is-selected" data-value="fit"><%- @T('Fit Width') %></div>
+        <div class="tab is-selected" data-value="fit"><%- @T('1:1') %></div>
         <div class="tab" data-value="1280">MacBook</div>
       </div>
     </div>
   </div>
-
+  
+  <label for="preview-iframe" class="formGroup-label"><%- @T('Preview') %></label>
   <div class="browser chat-demo js-browser">
     <div class="browser-head">
       <form class="browser-input js-testurl" novalidate>
-        <input type="url" class="js-testurl-input" placeholder="zammad.org">
+        <input type="url" class="js-testurl-input" id="preview-iframe" placeholder="zammad.org">
+        <span class="help-block"><%- @T("Because of security reasons some websites can't be displayed (for example google.com).") %></span>
       </form>
     </div>
     <div class="browser-body js-demo">
@@ -120,9 +122,10 @@
       <div class="input form-group formGroup--halfSize">
         <div class="formGroup-label">
           <label for="form-chat-background"><%- @T('Background color') %></label>
+          <div class="align-right horizontal js-swatches"></div>
         </div>
         <div class="controls">
-          <input type="text" id="form-chat-background" name="background" value="">
+          <input class="js-color" type="text" id="form-chat-background" name="background" value="">
         </div>
         <span class="help-block"><%- @T('Can be in any CSS color format.') %></span>
       </div>
@@ -172,7 +175,7 @@
 
   <h2><%- @T('Usage') %></h2>
 
-  <p><%- @T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the `&lt;/body&gt;` closing tag.') %></p>
+  <p><%- marked(@T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the `</body>` closing tag.')) %></p>
 
   <h3>Requirements</h3>
   <p><%- @T("Zammad Chat requires jQuery. If you don't already use it on your website include it like this:") %></p>
@@ -213,7 +216,7 @@ $(function() {
       <li><%- @T('The chat is turned off.') %>
       <li><%- @T('There are too many people in queue for the chat.') %>
     </ol>
-    <%- marked(@T('When you turn on debubbing by setting the option `debug` to `true` the reason gets printed to the javascript console.')) %>
+    <%- marked(@T('When you turn on debugging by setting the option `debug` to `true` the reason gets printed to the javascript console.')) %>
   </p>
   
   <h3><%- @T('Options') %></h3>

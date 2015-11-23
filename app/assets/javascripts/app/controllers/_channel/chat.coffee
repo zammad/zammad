@@ -9,9 +9,9 @@ class App.ChannelChat extends App.Controller
     'submit .js-testurl': 'changeDemoWebsite'
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
+    'click .js-swatch': 'useSwatchColor'
 
   elements:
-    '.js-demo': 'demo'
     '.js-browser': 'browser'
     '.js-iframe': 'iframe'
     '.js-chat': 'chat'
@@ -19,6 +19,8 @@ class App.ChannelChat extends App.Controller
     '.js-backgroundColor': 'chatBackground'
     '.js-paramsBlock': 'paramsBlock'
     '.js-code': 'code'
+    '.js-swatches': 'swatches'
+    '.js-color': 'colorField'
 
   apiOptions: [
     { 
@@ -142,16 +144,16 @@ class App.ChannelChat extends App.Controller
 
     return if value is 'fit'
 
-    if width < @demo.width()
+    if width < @el.width()
       @chat.addClass('is-fullscreen')
       @browser.css('width', "#{ width }px")
     else
-      percentage = @demo.width()/width
+      percentage = @el.width()/width
       @chat.css('transform', "scale(#{ percentage })")
       @iframe.css
         transform: "scale(#{ percentage })"
-        width: @demo.width() / percentage
-        height: @demo.height() / percentage
+        width: @el.width() / percentage
+        height: @el.height() / percentage
 
   changeDemoWebsite: (event) =>
     event.preventDefault() if event
@@ -166,6 +168,41 @@ class App.ChannelChat extends App.Controller
       src = "http://#{ src }"
 
     @iframe.attr 'src', src
+    @swatches.empty()
+
+    $.ajax
+      url: 'https://images.zammad.com/api/v1/webpage/colors'
+      data:
+        url: src
+        count: 6
+      success: @renderSwatches
+      dataType: 'json'
+
+  renderSwatches: (data, xhr, status) =>
+
+    # filter white
+    data = _.filter data, (color) =>
+      @getLuminance(color) < 0.85
+
+    htmlString = ""
+
+    for color in data
+      htmlString += App.view('channel/color_swatch')
+        color: color
+
+    @swatches.html htmlString
+
+  getLuminance: (hex) ->
+    # input: #ffffff, output: 1
+    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec hex
+    r = parseInt(result[1], 16)
+    g = parseInt(result[2], 16)
+    b = parseInt(result[3], 16)
+    return (0.2126*r + 0.7152*g + 0.0722*b)/255
+
+  useSwatchColor: (event) ->
+    @colorField.val $(event.currentTarget).attr('data-color')
+    @updateParams()
 
   new: (e) =>
     new App.ControllerGenericNew(

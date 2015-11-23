@@ -1383,15 +1383,6 @@ textarea,
   &.form-control--multiline {
     height: auto;
   }
-
-  &[readonly] {
-    background: hsl(198,10%,95%);
-    
-    &:focus {
-      box-shadow: none;
-      border-color: hsl(0,0%,90%);
-    }
-  }
 }
 
 input[type=url] {
@@ -2336,6 +2327,11 @@ ol.tabs li {
   border-radius: 100%;
   width: 11px;
   height: 11px;
+  cursor: pointer;
+  
+  & + .color-swatch {
+    margin-left: 4px;
+  }
 }
 
 .icon-status {
@@ -6692,20 +6688,20 @@ output {
     color: hsl(199,19%,80%);
     text-decoration: line-through;
   }
-
-  thead th:first-child {
+  
+  & > thead > tr > th:first-child {
     border-top-left-radius: 4px;
   }
 
-  thead th:last-child {
+  & > thead > tr > th:last-child {
     border-top-right-radius: 4px;
   }
 
-  tbody tr:last-child td:first-child {
+  & > tbody > tr:last-child > td:first-child {
     border-bottom-left-radius: 4px;
   }
 
-  tbody tr:last-child td:last-child {
+  & > tbody > tr:last-child > td:last-child {
     border-bottom-right-radius: 4px;
   }
 
@@ -6716,18 +6712,20 @@ output {
   .settings-list-action-cell {
     @extend .u-clickable;
     text-align: center;
+    color: hsl(198,19%,72%);
     background: hsl(197,22%,96%);
     line-height: 1;
+    padding-top: 11px;
+    padding-bottom: 9px;
     
     &:hover {
-      .icon {
-        fill: hsl(60,1%,34%);
-      }
+      color: hsl(60,1%,34%);
     }
     
     .icon {
-      fill: hsl(198,19%,72%);
+      fill: currentColor;
       vertical-align: top;
+      margin-top: -2px;
     }
   }
 
@@ -7001,9 +6999,13 @@ output {
   
   .datepicker-switch {
     padding: 12px 0;
+    font-weight: bold;
     font-size: 15px;
     text-align: center;
     cursor: pointer;
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-transform: none;
     
     &:hover {
       background: hsl(240,10%,14%);
@@ -7442,6 +7444,10 @@ output {
     input {
       min-width: 0;
     }
+  }
+
+  .help-block {
+    margin-bottom: -3px;
   }
 
   .browser-control {
