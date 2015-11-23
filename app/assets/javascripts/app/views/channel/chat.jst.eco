@@ -52,7 +52,7 @@
     <div class="control">
       <div class="select-tabs js-selectBrowserWidth">
         <div class="tab" data-value="375">iPhone 6</div>
-        <div class="tab is-selected" data-value="fit"><%- @T('Fit Width') %></div>
+        <div class="tab is-selected" data-value="fit"><%- @T('1:1') %></div>
         <div class="tab" data-value="1280">MacBook</div>
       </div>
     </div>
