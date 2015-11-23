@@ -2,11 +2,12 @@ before_script:
   - bundle install
 
 stages:
+  - pre
   - test
   - browser
 
 rubocop:
-  stage: test
+  stage: pre
   script:
     - bundle exec rubocop
 
@@ -150,9 +151,10 @@ job_integration_autowizard:
     - export BROWSER=firefox
     - export RAILS_SERVE_STATIC_FILES=true
     - script/build/test_db_config.sh production ci_zammad_autowizard
+    - script/build/test_db_config.sh test ci_zammad_autowizard_test
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV 3011
-    - ruby -I test/ test/integration/auto_wizard_test.rb
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3011 && exit 1
     - script/build/test_shutdown.sh $RAILS_ENV 3011
