@@ -16,10 +16,10 @@ class App.UiElement.datetime
     # apply date widgets
     $.fn.datepicker.dates['custom'] =
       days: [App.i18n.translateInline('Sunday'), App.i18n.translateInline('Monday'), App.i18n.translateInline('Tuesday'), App.i18n.translateInline('Wednesday'), App.i18n.translateInline('Thursday'), App.i18n.translateInline('Friday'), App.i18n.translateInline('Saturday'), App.i18n.translateInline('Sunday')],
-      daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       daysMin: [App.i18n.translateInline('Su'), App.i18n.translateInline('Mo'), App.i18n.translateInline('Tu'), App.i18n.translateInline('We'), App.i18n.translateInline('Th'), App.i18n.translateInline('Fr'), App.i18n.translateInline('Sa'), App.i18n.translateInline('Su')],
       months: [App.i18n.translateInline('January'), App.i18n.translateInline('February'), App.i18n.translateInline('March'), App.i18n.translateInline('April'), App.i18n.translateInline('May'), App.i18n.translateInline('June'), App.i18n.translateInline('July'), App.i18n.translateInline('August'), App.i18n.translateInline('September'), App.i18n.translateInline('October'), App.i18n.translateInline('November'), App.i18n.translateInline('December')],
-      monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       today: App.i18n.translateInline('today'),
       clear: App.i18n.translateInline('clear')
     currentDate = undefined

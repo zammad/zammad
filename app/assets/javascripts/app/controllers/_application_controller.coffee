@@ -555,10 +555,10 @@ class App.Controller extends Spine.Controller
   renderScreenUnauthorized: (data) ->
     @html App.view('generic/error/unauthorized')(data)
 
-  metaTaskUpdate: =>
+  metaTaskUpdate: ->
     App.Delay.set(
       -> App.Event.trigger 'task:render'
-      250
+      450
       'meta-task-update'
     )
 
@@ -638,7 +638,7 @@ class App.ControllerModalNice extends App.Controller
       @$('.modal-dialog').replaceWith(modal)
     @post()
 
-  post: =>
+  post: ->
     # nothing
 
   render: =>

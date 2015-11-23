@@ -4,7 +4,7 @@ class App.TicketCustomer extends App.ControllerModalNice
   buttonSubmit: true
   head: 'Change Customer'
 
-  content: =>
+  content: ->
     configure_attributes = [
       { name: 'customer_id', display: 'Customer', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: true },
     ]

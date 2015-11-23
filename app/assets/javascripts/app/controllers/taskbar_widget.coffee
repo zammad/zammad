@@ -121,7 +121,7 @@ class Remove extends App.ControllerModalNice
   buttonClass: 'btn--danger'
   head: 'Confirm'
 
-  content: =>
+  content: ->
     App.i18n.translateContent('Tab has changed, you really want to close it?')
 
   onSubmit: (e) =>

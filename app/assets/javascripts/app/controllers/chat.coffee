@@ -136,7 +136,7 @@ class App.CustomerChat extends App.Controller
 
   addChat: (session) ->
     return if @chatWindows[session.session_id]
-    chat = new chatWindow
+    chat = new ChatWindow
       name: "#{session.created_at}"
       session: session
       removeCallback: @removeChat
@@ -183,7 +183,7 @@ class CustomerChatRouter extends App.ControllerPermanent
       persistent: true
     )
 
-class chatWindow extends App.Controller
+class ChatWindow extends App.Controller
   @extend Spine.Events
 
   className: 'chat-window'
@@ -283,8 +283,8 @@ class chatWindow extends App.Controller
     @resetUnreadMessages()
 
   onKeydown: (event) =>
-    TABKEY = 9;
-    ENTERKEY = 13;
+    TABKEY = 9
+    ENTERKEY = 13
 
     if event.keyCode isnt TABKEY && event.keyCode isnt ENTERKEY
       App.WebSocket.send(

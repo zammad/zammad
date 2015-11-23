@@ -246,7 +246,7 @@ class Edit extends App.ControllerModalNice
 
     content.find('[name=data_type]').on(
       'change',
-      (e) =>
+      (e) ->
         dataType = $( e.target ).val()
         content.find('.js-middle > div').addClass('hide')
         content.find(".js-#{dataType}").removeClass('hide')

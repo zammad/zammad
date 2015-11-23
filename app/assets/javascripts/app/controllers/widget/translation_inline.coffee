@@ -36,7 +36,7 @@ class Widget extends App.Controller
         element = $(e.target)
         element.data 'before', element.text()
         element
-      .on 'blur.translation', '.translation', (e) =>
+      .on 'blur.translation', '.translation', (e) ->
         console.log('blur')
         element = $(e.target)
         source = element.attr('title')

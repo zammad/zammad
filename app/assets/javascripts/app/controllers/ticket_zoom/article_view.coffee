@@ -126,9 +126,11 @@ class ArticleViewItem extends App.Controller
         body = @article.body
         if @article.preferences && @article.preferences.signature_detection
           signatureDetected = '########SIGNATURE########'
+          # coffeelint: disable=no_unnecessary_double_quotes
           body = body.split("\n")
           body.splice(@article.preferences.signature_detection, 0, signatureDetected)
           body = body.join("\n")
+          # coffeelint: enable=no_unnecessary_double_quotes
         if signatureDetected
           body = App.Utils.textCleanup(body)
           @article['html'] = App.Utils.text2html(body)

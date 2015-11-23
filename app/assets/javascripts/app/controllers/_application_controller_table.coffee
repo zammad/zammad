@@ -426,9 +426,9 @@ class App.ControllerTable extends App.Controller
     @adjustHeaderWidths()
 
     @tableHead.each (i, el) =>
-      el.style.width = @headers[i].displayWidth + "px"
+      el.style.width = @headers[i].displayWidth + 'px'
 
-  stopPropagation: (event) =>
+  stopPropagation: (event) ->
     event.stopPropagation()
 
   onColResizeMousedown: (event) =>

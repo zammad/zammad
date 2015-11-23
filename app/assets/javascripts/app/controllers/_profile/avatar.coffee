@@ -156,7 +156,7 @@ class ImageCropper extends App.ControllerModalNice
     '.imageCropper-image': 'image'
     '.imageCropper-holder': 'holder'
 
-  content: =>
+  content: ->
     App.view('profile/imageCropper')()
 
   post: =>
@@ -242,7 +242,7 @@ class Camera extends App.ControllerModalNice
   events:
     'click .js-shoot:not(.is-disabled)': 'onShootClick'
 
-  content: =>
+  content: ->
     App.view('profile/camera')()
 
   post: =>

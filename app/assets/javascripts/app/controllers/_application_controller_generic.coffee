@@ -269,7 +269,7 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModalNice
   buttonClass: 'btn--danger'
   head: 'Confirm'
 
-  content: =>
+  content: ->
     App.i18n.translateContent('Sure to delete this object?')
 
   onSubmit: =>
@@ -422,14 +422,14 @@ class App.ControllerNavSidbar extends App.ControllerContent
 
   executeController: (selectedItem) =>
 
-      # in case of rerendering
-      if @activeController && @activeController.render
-        @activeController.render()
-        return
+    # in case of rerendering
+    if @activeController && @activeController.render
+      @activeController.render()
+      return
 
-      @activeController = new selectedItem.controller(
-        el: @$('.main')
-      )
+    @activeController = new selectedItem.controller(
+      el: @$('.main')
+    )
 
 class App.GenericHistory extends App.ControllerModalNice
   buttonClose: true

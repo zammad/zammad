@@ -16,7 +16,7 @@ class Index extends App.ControllerContent
     #@interval(@load, 60000)
     #@load()
 
-  load: =>
+  load: ->
     # @startLoading()
     # @ajax(
     #   id:   'twitter_index'
@@ -55,7 +55,7 @@ class Index extends App.ControllerContent
       shown: true
       button: 'Connect'
       cancel: true
-      onSubmit: () =>
+      onSubmit: =>
         @html App.view('twitter/list')()
         modal.close()
 
@@ -87,7 +87,7 @@ class Index extends App.ControllerContent
   #     large:         true
   #   )
 
-  delete: (e) =>
+  delete: (e) ->
   #   e.preventDefault()
   #   id   = $(e.target).closest('.action').data('id')
   #   item = App.Twitter.find(id)

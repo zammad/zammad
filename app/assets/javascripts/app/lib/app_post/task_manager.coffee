@@ -103,7 +103,7 @@ class _taskManagerSingleton extends App.Controller
 
     # sort by prio
     @allTasks = _(@allTasks).sortBy( (task) ->
-      return task.prio;
+      return task.prio
     )
     return @allTasks
 

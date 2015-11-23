@@ -294,7 +294,7 @@ class Download extends App.Controller
         downloadBackendSelected: @params.downloadBackendSelected
       )
       processData: true
-      success: (data) =>
+      success: (data) ->
         App.Collection.loadAssets(data.assets)
         ticket_collection = []
         if data.ticket_ids

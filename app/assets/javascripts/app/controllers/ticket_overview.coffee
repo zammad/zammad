@@ -105,7 +105,7 @@ class Navbar extends App.Controller
     if @vertical
       $(window).on 'resize.navbar', @autoFoldTabs
 
-  navigateTo: (event) =>
+  navigateTo: (event) ->
     location.hash = $(event.currentTarget).attr('data-target')
 
   onDropdownShow: =>
