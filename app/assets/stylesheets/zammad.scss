@@ -7439,10 +7439,22 @@ output {
   
   .browser-input {
     flex: 1;
-    margin-right: 10px;
+    position: relative;
     
     input {
       min-width: 0;
+      padding-right: 40px;
+    }
+
+    .loading.icon {
+      position: absolute;
+      right: 11px;
+      top: 11px;
+      display: none;
+    }
+
+    &.is-loading .loading.icon {
+      display: block;
     }
   }
 

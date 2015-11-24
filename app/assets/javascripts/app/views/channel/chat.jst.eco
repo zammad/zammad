@@ -63,7 +63,7 @@
     <div class="browser-head">
       <form class="browser-input js-testurl" novalidate>
         <input type="url" class="js-testurl-input" id="preview-iframe" placeholder="zammad.org">
-        <span class="help-block"><%- @T("Because of security reasons some websites can't be displayed (for example google.com).") %></span>
+        <div class="loading icon small"></div>
       </form>
     </div>
     <div class="browser-body js-demo">
