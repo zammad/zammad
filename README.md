@@ -1,12 +1,13 @@
 [![Build Status](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop (MySQL))](http://ci.zammad.org/job/Zammad%20Unittest%20Develop%20(MySQL)/)
 [![Build Status](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop (MariaDB Cluster))](http://ci.zammad.org/job/Zammad%20Unittest%20Develop%20(MariaDB%20Cluster)/)
+
 Welcome to Zammad
 =================
 
 Zammad is a web based open source helpdesk/ticket system with many features
 to manage customer telephone calls and e-mails. It is distributed under the
 GNU AFFERO General Public License (AGPL) and tested on Linux, Solaris, AIX,
-Windows, FreeBSD, OpenBSD and Mac OS 10.x. Do you receive many e-mails and
+FreeBSD, OpenBSD and Mac OS 10.x. Do you receive many e-mails and
 want to answer them with a team of agents? You're going to love Zammad!
 
 
