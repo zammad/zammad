@@ -67,6 +67,12 @@ class App.ChannelChat extends App.Controller
       description: 'CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.'
     }
     {
+      name: 'flat'
+      default: 'false'
+      type: 'boolean'
+      description: 'Removes the shadows for a flat look.'
+    }
+    {
       name: 'buttonClass'
       default: "'open-zammad-chat'"
       type: 'String'
@@ -267,6 +273,11 @@ class App.ChannelChat extends App.Controller
     if parseInt(params.fontSize, 10) > 2
       @chat.css('font-size', params.fontSize)
     @chatBackground.css('background', params.background)
+    if params.flat is 'on'
+      @chat.addClass('zammad-chat--flat')
+      params.flat = true
+    else
+      @chat.removeClass('zammad-chat--flat')
 
     if @permanent
       for key, value of @permanent
@@ -278,7 +289,7 @@ class App.ChannelChat extends App.Controller
           # coffeelint: disable=no_unnecessary_double_quotes
           paramString += ",\n"
           # coffeelint: enable=no_unnecessary_double_quotes
-        if value == 'true' || value == 'false' || _.isNumber(value)
+        if value == true || value == false || _.isNumber(value)
           paramString += "    #{key}: #{value}"
         else
           paramString += "    #{key}: '#{quote(value)}'"
