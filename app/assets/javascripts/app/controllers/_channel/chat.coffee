@@ -23,62 +23,62 @@ class App.ChannelChat extends App.Controller
     '.js-color': 'colorField'
 
   apiOptions: [
-    { 
+    {
       name: 'channel'
       default: "'default'"
       type: 'String'
       description: 'Name of the chat-channel.'
     }
-    { 
+    {
       name: 'show'
       default: true
       type: 'Boolean'
       description: 'Show the chat when ready.'
     }
-    { 
+    {
       name: 'target'
       default: "$('body')"
       type: 'jQuery Object'
       description: 'Where to append the chat to.'
     }
-    { 
+    {
       name: 'host'
-      default: "(Empty)"
+      default: '(Empty)'
       type: 'String'
       description: "If left empty, the host gets auto-detected - in this case %s. The auto-detection reads out the host from the <script> tag. If you don't include it via a <script> tag you need to specify the host."
       descriptionSubstitute: window.location.origin
     }
-    { 
+    {
       name: 'port'
       default: 6042
       type: 'Int'
       description: ''
     }
-    { 
+    {
       name: 'debug'
       default: false
       type: 'Boolean'
       description: 'Enables console logging.'
     }
-    { 
+    {
       name: 'fontSize'
-      default: "undefined"
+      default: 'undefined'
       type: 'String'
       description: 'CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.'
     }
-    { 
+    {
       name: 'buttonClass'
       default: "'open-zammad-chat'"
       type: 'String'
       description: 'Add this class to a button on your page that should open the chat.'
     }
-    { 
+    {
       name: 'inactiveClass'
       default: "'is-inactive'"
       type: 'String'
       description: 'This class gets added to the button on initialization and gets removed once the chat connection got established.'
     }
-    { 
+    {
       name: 'title'
       default: "'<strong>Chat</strong> with us!'"
       type: 'String'
@@ -134,13 +134,13 @@ class App.ChannelChat extends App.Controller
     width = parseInt value, 10
 
     # reset zoom
-    @chat.css('transform', "")
-    @browser.css('width', "")
+    @chat.css('transform', '')
+    @browser.css('width', '')
     @chat.removeClass('is-fullscreen')
     @iframe.css
-      transform: ""
-      width: ""
-      height: ""
+      transform: ''
+      width: ''
+      height: ''
 
     return if value is 'fit'
 
@@ -160,7 +160,7 @@ class App.ChannelChat extends App.Controller
 
     # fire both on enter and blur
     # but cache url
-    return if @urlInput.val() is "" or @urlInput.val() is @url
+    return if @urlInput.val() is '' or @urlInput.val() is @url
     @url = @urlInput.val()
 
     src = @url
@@ -174,7 +174,7 @@ class App.ChannelChat extends App.Controller
       url: 'https://images.zammad.com/api/v1/webpage/colors'
       data:
         url: src
-        count: 6
+        count: 20
       success: @renderSwatches
       dataType: 'json'
 
@@ -184,13 +184,20 @@ class App.ChannelChat extends App.Controller
     data = _.filter data, (color) =>
       @getLuminance(color) < 0.85
 
-    htmlString = ""
+    htmlString = ''
 
+    count = 0
+    countMax = 8
     for color in data
+      count += 1
       htmlString += App.view('channel/color_swatch')
         color: color
+      break if count == countMax
 
     @swatches.html htmlString
+
+    if data[0]
+      @useSwatchColor(undefined, data[0])
 
   getLuminance: (hex) ->
     # input: #ffffff, output: 1
@@ -200,8 +207,10 @@ class App.ChannelChat extends App.Controller
     b = parseInt(result[3], 16)
     return (0.2126*r + 0.7152*g + 0.0722*b)/255
 
-  useSwatchColor: (event) ->
-    @colorField.val $(event.currentTarget).attr('data-color')
+  useSwatchColor: (event, code) ->
+    if event
+      code = $(event.currentTarget).attr('data-color')
+    @colorField.val code
     @updateParams()
 
   new: (e) =>
@@ -238,7 +247,7 @@ class App.ChannelChat extends App.Controller
       callback:  @load
     )
 
-  widget: (e) =>
+  widget: (e) ->
     e.preventDefault()
     id = $(e.target).closest('.action').data('id')
     new Widget(
@@ -266,7 +275,9 @@ class App.ChannelChat extends App.Controller
     for key, value of params
       if value != ''
         if paramString != ''
+          # coffeelint: disable=no_unnecessary_double_quotes
           paramString += ",\n"
+          # coffeelint: enable=no_unnecessary_double_quotes
         if value == 'true' || value == 'false' || _.isNumber(value)
           paramString += "    #{key}: #{value}"
         else
