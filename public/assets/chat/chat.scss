@@ -26,7 +26,7 @@
     border-radius: 0 !important;
   }
 }
-.zammad-chat.zammad-chat-is-open {
+.zammad-chat.zammad-chat-is-visible {
   display: flex;
 }
 
@@ -62,7 +62,7 @@
   border-radius: 0 !important;
 }
 
-.zammad-chat.zammad-chat-is-open .zammad-chat-header {
+.zammad-chat.zammad-chat-is-visible .zammad-chat-header {
   cursor: default;
 }
 
@@ -93,11 +93,11 @@
 }
 
 .zammad-chat-header-icon-close,
-.zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-open {
+.zammad-chat.zammad-chat-is-visible .zammad-chat-header-icon-open {
   display: none;
 }
 
-.zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-close {
+.zammad-chat.zammad-chat-is-visible .zammad-chat-header-icon-close {
   display: inline;
 }
 
