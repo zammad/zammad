@@ -153,28 +153,6 @@
         </div>
       </div>
     </fieldset>
-
-    <br>
-
-    <table class="settings-list">
-      <thead>
-        <tr>
-          <th style="white-space: nowrap;"><%- @T('Options') %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <label class="inline-label">
-              <span class="checkbox-replacement checkbox-replacement--inline">
-                <input type="checkbox" name="debug" value="true">
-                <%- @Icon('checkbox', 'icon-unchecked') %>
-                <%- @Icon('checkbox-checked', 'icon-checked') %>
-              </span>
-              <%- @T('Enable debugging for implementation.') %>
-            </label>
-      </tbody>
-    </table>
   </form>
 
   <h2><%- @T('Usage') %></h2>
