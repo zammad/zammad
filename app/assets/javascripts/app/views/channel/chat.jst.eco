@@ -63,11 +63,14 @@
     <div class="browser-head">
       <form class="browser-input js-testurl" novalidate>
         <input type="url" class="js-testurl-input" id="preview-iframe" placeholder="zammad.org">
-        <div class="loading icon small"></div>
+        <div class="loading icon small muted"></div>
       </form>
     </div>
     <div class="browser-body js-demo">
-      <iframe class="js-iframe"></iframe>
+      <div class="browser-website js-website">
+        <iframe class="js-iframe" sandbox></iframe>
+        <img class="js-screenshot">
+      </div>
       <style>@import "/assets/chat/chat.css";</style>
       <div class="chat-demo-animationHolder">
         <div class="js-chat zammad-chat zammad-chat-is-visible zammad-chat-is-open" style="bottom: 0px;">
@@ -122,7 +125,7 @@
       <div class="input form-group formGroup--halfSize">
         <div class="formGroup-label">
           <label for="form-chat-background"><%- @T('Background color') %></label>
-          <div class="align-right horizontal js-swatches"></div>
+          <div class="align-right horizontal js-palette"></div>
         </div>
         <div class="controls">
           <input class="js-color" type="text" id="form-chat-background" name="background" value="">

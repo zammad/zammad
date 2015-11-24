@@ -9,7 +9,7 @@ class App.ChannelChat extends App.Controller
     'submit .js-testurl': 'changeDemoWebsite'
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
-    'click .js-swatch': 'useSwatchColor'
+    'click .js-swatch': 'usePaletteColor'
 
   elements:
     '.js-browser': 'browser'
@@ -19,8 +19,10 @@ class App.ChannelChat extends App.Controller
     '.js-backgroundColor': 'chatBackground'
     '.js-paramsBlock': 'paramsBlock'
     '.js-code': 'code'
-    '.js-swatches': 'swatches'
+    '.js-palette': 'palette'
     '.js-color': 'colorField'
+    '.js-screenshot': 'screenshot'
+    '.js-website': 'website'
 
   apiOptions: [
     {
@@ -140,10 +142,11 @@ class App.ChannelChat extends App.Controller
     width = parseInt value, 10
 
     # reset zoom
-    @chat.css('transform', '')
+    @chat
+      .css('transform', '')
+      .removeClass('is-fullscreen')
     @browser.css('width', '')
-    @chat.removeClass('is-fullscreen')
-    @iframe.css
+    @website.css
       transform: ''
       width: ''
       height: ''
@@ -156,7 +159,7 @@ class App.ChannelChat extends App.Controller
     else
       percentage = @el.width()/width
       @chat.css('transform', "scale(#{ percentage })")
-      @iframe.css
+      @website.css
         transform: "scale(#{ percentage })"
         width: @el.width() / percentage
         height: @el.height() / percentage
@@ -166,56 +169,67 @@ class App.ChannelChat extends App.Controller
 
     # fire both on enter and blur
     # but cache url
-    return if @urlInput.val() is '' or @urlInput.val() is @url
-    @url = @urlInput.val()
+    return if @urlInput.val() is '' or @urlInput.val() is @urlCache
+    @urlCache = @urlInput.val()
 
-    src = @url
-    if !src.startsWith('http')
-      src = "http://#{ src }"
+    @url = @urlCache
+    if !@url.startsWith('http')
+      @url = "http://#{ @url }"
 
     @urlInput.addClass('is-loading')
 
-    # clear swatches and iframe
-    @swatches.empty()
-    @iframe.attr('src', '').css('background-image', '')
+    # clear palette and iframe
+    @palette.empty()
+    @website.attr('data-mode', '')
+    @iframe.attr('src', '')
+    @screenshot.attr('src', '')
 
     $.ajax
-      url: 'https://images.zammad.com/api/v1/webpage/colors'
+      url: 'https://images.zammad.com/api/v1/webpage/combined'
       data:
-        url: src
+        url: @url
+        count: 20
       success: @renderDemoWebsite
       dataType: 'json'
 
   renderDemoWebsite: (data) =>
+    imageSource = data['data_url']
 
-    # @iframe.attr 'src', src
-    @renderSwatches data
+    if imageSource 
+      console.log "renderDemoWebsite", typeof imageSource, imageSource
+      @screenshot.attr 'src', imageSource
+      @website.attr('data-mode', 'screenshot')
+    else
+      @iframe.attr 'src', @url
+      @website.attr('data-mode', 'iframe')
+
+    @renderPalette data['palette']
 
     @urlInput.removeClass('is-loading')
 
-  renderSwatches: (swatches) ->
+  renderPalette: (palette) ->
 
-    swatches = _.map swatches, tinycolor
+    palette = _.map palette, tinycolor
 
     # filter white
-    swatches = _.filter swatches, (color) =>
-      0.25 < color.getLuminance() < 0.85
+    palette = _.filter palette, (color) =>
+      color.getLuminance() < 0.85
 
     htmlString = ''
 
     max = 8
-    for color, i in swatches
+    for color, i in palette
       htmlString += App.view('channel/color_swatch')
         color: color.toHexString()
       break if i is max
 
-    @swatches.html htmlString
+    @palette.html htmlString
 
     # auto use first color
-    if swatches[0]
-      @useSwatchColor undefined, swatches[0].toHexString()
+    if palette[0]
+      @usePaletteColor undefined, palette[0].toHexString()
 
-  useSwatchColor: (event, code) ->
+  usePaletteColor: (event, code) ->
     if event
       code = $(event.currentTarget).attr('data-color')
     @colorField.val code

@@ -2317,6 +2317,10 @@ ol.tabs li {
   height: 12px;
 }
 
+.loading.icon.muted {
+  background: hsl(195,20%,96%);
+}
+
 @keyframes rotateplane {
   0% { 
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
@@ -7431,6 +7435,18 @@ output {
   height: 450px;
   width: 100%;
   
+  .browser-website {
+    position: relative;
+    height: 100%;
+    transform-origin: left top;
+    overflow: auto;
+    
+    &[data-mode=screenshot] iframe,
+    &[data-mode=iframe] img {
+      display: none;
+    }
+  }
+  
   iframe {
     position: absolute;
     border: none;
@@ -7438,7 +7454,11 @@ output {
     top: 0;
     width: 100%;
     height: 100%;
-    transform-origin: left top;
+    background: white;
+  }
+
+  img {
+    vertical-align: bottom;
   }
 }
 
@@ -7455,6 +7475,10 @@ output {
     input {
       min-width: 0;
       padding-right: 40px;
+      
+      &.is-loading + .loading.icon {
+        display: block;
+      }
     }
 
     .loading.icon {
@@ -7462,10 +7486,6 @@ output {
       right: 11px;
       top: 11px;
       display: none;
-    }
-
-    &.is-loading .loading.icon {
-      display: block;
     }
   }
 
