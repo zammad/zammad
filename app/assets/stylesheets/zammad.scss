@@ -1383,6 +1383,12 @@ textarea,
   &.form-control--multiline {
     height: auto;
   }
+
+  &:focus,
+  &.focus {
+    border-color: hsl(200,71%,59%);
+    box-shadow: 0 0 0 3px hsl(201,62%,90%);
+  }
 }
 
 input[type=url] {
@@ -1417,8 +1423,6 @@ input.time.time--12 {
   width: 7.5ch;
 }
 
-  .form-control:focus,
-  .form-control.focus,
   .tokenfield.focus {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
@@ -6451,10 +6455,10 @@ output {
 }
 
 .zammad-switch {
+  overflow: hidden;
   width: 50px;
   height: 30px;
   border-radius: 15px;
-  overflow: hidden;
   
   &.zammad-switch--small {
     width: 40px;
@@ -6473,9 +6477,14 @@ output {
       background: hsl(234,10%,19%);
     }
   }
+
+  &.zammad-switch--green input:checked + label {
+    background: $supergood-color;
+  }
 }
 
 .zammad-switch label {
+  margin: 0;
   position: relative;
   width: 100%;
   height: 100%;
@@ -6483,44 +6492,46 @@ output {
   outline: none;
   cursor: pointer;
   background: white;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
+  user-select: none;
+  transition: background 200ms;
+
+  &:after {
+    content: "";
+    position: absolute;
+    transition: transform 200ms;
+    width: calc(60% - 2px);
+    height: calc(100% - 2px);
+    border-radius: inherit;
+    left: 1px;
+    top: 1px;
+    box-shadow: 
+      0 0 0 1px rgba(0,0,0,.05),
+      0 1px 3px rgba(0,0,0,.2);
+    background: white;
+  }
 }
 
 .zammad-switch input {
   display: none;
+
+  &:focus + label {
+    transition: none;
+    background: hsl(200,71%,59%);
+    box-shadow: 0 0 0 3px hsl(201,62%,90%);
+  }
+
+  &:checked + label {
+    background: hsl(200,71%,59%);
+  }
+
+  &:checked + label:after {
+    transform: translateX(70%);
+  }
 }
 
-.zammad-switch input:checked + label {
-  background: $supergood-color;
-  transition: none;
-}
-
-.zammad-switch input:focus + label {
-  transition: none;
-  background: hsl(200,71%,59%);
-  box-shadow: 0 0 0 3px hsl(201,62%,90%);
-}
-
-.zammad-switch label:after {
-  content: "";
-  position: absolute;
-  transition: transform 200ms;
-}
-
-.zammad-switch label:after {
-  width: calc(60% - 2px);
-  height: calc(100% - 2px);
-  border-radius: inherit;
-  left: 1px;
-  top: 1px;
-  box-shadow: 
-    0 0 0 1px rgba(0,0,0,.05),
-    0 1px 3px rgba(0,0,0,.2);
-  background: white;
-}
-
-.zammad-switch input:checked + label:after {
-  transform: translateX(70%);
+.controls .zammad-switch {
+  margin-top: 10px;
 }
 
 .horizontal-filter-text {
