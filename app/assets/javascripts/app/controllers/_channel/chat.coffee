@@ -173,45 +173,47 @@ class App.ChannelChat extends App.Controller
     if !src.startsWith('http')
       src = "http://#{ src }"
 
-    @iframe.attr 'src', src
+    @urlInput.addClass('is-loading')
+
+    # clear swatches and iframe
     @swatches.empty()
+    @iframe.attr('src', '').css('background-image', '')
 
     $.ajax
       url: 'https://images.zammad.com/api/v1/webpage/colors'
       data:
         url: src
-        count: 20
-      success: @renderSwatches
+      success: @renderDemoWebsite
       dataType: 'json'
 
-  renderSwatches: (data, xhr, status) =>
+  renderDemoWebsite: (data) =>
+
+    # @iframe.attr 'src', src
+    @renderSwatches data
+
+    @urlInput.removeClass('is-loading')
+
+  renderSwatches: (swatches) ->
+
+    swatches = _.map swatches, tinycolor
 
     # filter white
-    data = _.filter data, (color) =>
-      @getLuminance(color) < 0.85
+    swatches = _.filter swatches, (color) =>
+      0.25 < color.getLuminance() < 0.85
 
     htmlString = ''
 
-    count = 0
-    countMax = 8
-    for color in data
-      count += 1
+    max = 8
+    for color, i in swatches
       htmlString += App.view('channel/color_swatch')
-        color: color
-      break if count == countMax
+        color: color.toHexString()
+      break if i is max
 
     @swatches.html htmlString
 
-    if data[0]
-      @useSwatchColor(undefined, data[0])
-
-  getLuminance: (hex) ->
-    # input: #ffffff, output: 1
-    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec hex
-    r = parseInt(result[1], 16)
-    g = parseInt(result[2], 16)
-    b = parseInt(result[3], 16)
-    return (0.2126*r + 0.7152*g + 0.0722*b)/255
+    # auto use first color
+    if swatches[0]
+      @useSwatchColor undefined, swatches[0].toHexString()
 
   useSwatchColor: (event, code) ->
     if event
