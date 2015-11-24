@@ -10,6 +10,8 @@ class App.ChannelChat extends App.Controller
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
+    'click .js-toggle-chat': 'toggleChat'
+    'input .js-chatTitle': 'changeTitle'
 
   elements:
     '.js-browser': 'browser'
@@ -23,6 +25,7 @@ class App.ChannelChat extends App.Controller
     '.js-color': 'colorField'
     '.js-screenshot': 'screenshot'
     '.js-website': 'website'
+    '.js-chat-welcome': 'chatWelcome'
 
   apiOptions: [
     {
@@ -178,11 +181,11 @@ class App.ChannelChat extends App.Controller
 
     @urlInput.addClass('is-loading')
 
-    # clear palette and iframe
     @palette.empty()
-    @website.attr('data-mode', '')
-    @iframe.attr('src', '')
+
     @screenshot.attr('src', '')
+    @website.attr('data-mode', 'iframe')
+    @iframe.attr('src', @url)
 
     $.ajax
       url: 'https://images.zammad.com/api/v1/webpage/combined'
@@ -196,12 +199,9 @@ class App.ChannelChat extends App.Controller
     imageSource = data['data_url']
 
     if imageSource 
-      console.log "renderDemoWebsite", typeof imageSource, imageSource
       @screenshot.attr 'src', imageSource
+      @iframe.attr('src', '')
       @website.attr('data-mode', 'screenshot')
-    else
-      @iframe.attr 'src', @url
-      @website.attr('data-mode', 'iframe')
 
     @renderPalette data['palette']
 
@@ -234,6 +234,12 @@ class App.ChannelChat extends App.Controller
       code = $(event.currentTarget).attr('data-color')
     @colorField.val code
     @updateParams()
+
+  toggleChat: =>
+    @chat.toggleClass('is-open')
+
+  changeTitle: (event) ->
+    @chatWelcome.html $(event.currentTarget).val()
 
   new: (e) =>
     new App.ControllerGenericNew(
@@ -294,6 +300,7 @@ class App.ChannelChat extends App.Controller
       params.flat = true
     else
       @chat.removeClass('zammad-chat--flat')
+    @chatWelcome.html params.title
 
     if @permanent
       for key, value of @permanent

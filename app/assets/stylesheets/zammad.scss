@@ -7484,7 +7484,7 @@ output {
     .loading.icon {
       position: absolute;
       right: 11px;
-      top: 11px;
+      top: 10px;
       display: none;
     }
   }
@@ -7508,9 +7508,38 @@ output {
     position: absolute;
     transform-origin: right bottom;
     transition: 500ms;
+    bottom: -318px;
+
+    .zammad-chat-welcome {
+      display: block !important;
+    }
+
+    .zammad-chat-header-icon-open {
+      display: inline !important;
+    }
+
+    .zammad-chat-agent-status,
+    .zammad-chat-header-icon-close,
+    .zammad-chat-agent { 
+      display: none !important;
+    }
+
+    &.is-open {
+      bottom: 0;
+      
+      .zammad-chat-agent {
+        display: block !important;
+      }
+      
+      .zammad-chat-header-icon-close,
+      .zammad-chat-agent-status {
+        display: inline-block !important;
+      }
     
-    .zammad-chat-body {
-      transition: 500ms; 
+      .zammad-chat-welcome,
+      .zammad-chat-header-icon-open {
+        display: none !important;
+      }
     }
     
     &.is-fullscreen {
@@ -7533,7 +7562,7 @@ output {
     width: 100%;
     height: 100%;
     animation: slide-up 500ms;
-    pointer-events: none;
+    // pointer-events: none;
   }
 }
 
