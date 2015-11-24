@@ -105,7 +105,7 @@ class Navbar extends App.Controller
     if @vertical
       $(window).on 'resize.navbar', @autoFoldTabs
 
-  navigateTo: (event) =>
+  navigateTo: (event) ->
     location.hash = $(event.currentTarget).attr('data-target')
 
   onDropdownShow: =>
@@ -458,16 +458,23 @@ class BulkForm extends App.Controller
     super
 
     @configure_attributes_ticket = [
-      { name: 'state_id',     display: 'State',    tag: 'select',   multiple: false, null: true, relation: 'TicketState', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
-      { name: 'priority_id',  display: 'Priority', tag: 'select',   multiple: false, null: true, relation: 'TicketPriority', filter: @bulk, translate: true, nulloption: true, default: '', class: '', item_class: '' },
-      { name: 'group_id',     display: 'Group',    tag: 'select',   multiple: false, null: true, relation: 'Group', filter: @bulk, nulloption: true, class: '', item_class: ''  },
-      { name: 'owner_id',     display: 'Owner',    tag: 'select',   multiple: false, null: true, relation: 'User', filter: @bulk, nulloption: true, class: '', item_class: '' }
+      { name: 'state_id',    display: 'State',    tag: 'select', multiple: false, null: true, relation: 'TicketState', translate: true, nulloption: true, default: '' },
+      { name: 'priority_id', display: 'Priority', tag: 'select', multiple: false, null: true, relation: 'TicketPriority', translate: true, nulloption: true, default: '' },
+      { name: 'group_id',    display: 'Group',    tag: 'select', multiple: false, null: true, relation: 'Group', nulloption: true  },
+      { name: 'owner_id',    display: 'Owner',    tag: 'select', multiple: false, null: true, relation: 'User', nulloption: true }
     ]
 
     @holder = @options.holder
     @visible = false
 
-    @render()
+    load = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
+      @render()
+    @bindId = App.TicketCreateCollection.bind(load)
+
+  release: =>
+    App.TicketCreateCollection.unbind(@bindId)
 
   render: ->
     @el.css 'right', App.Utils.getScrollBarWidth()
@@ -480,7 +487,11 @@ class BulkForm extends App.Controller
         configure_attributes: @configure_attributes_ticket
         className:            'create'
         labelClass:           'input-group-addon'
-      form_data:  @bulk
+      handlers: [
+        @ticketFormChanges
+      ]
+      params:     {}
+      filter:     @formMeta.filter
       noFieldset: true
     )
 
@@ -490,7 +501,6 @@ class BulkForm extends App.Controller
         configure_attributes: [{ name: 'body', display: 'Comment', tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
         className:            'create'
         labelClass:           'input-group-addon'
-      form_data:   @bulk
       noFieldset: true
     )
 
@@ -505,7 +515,6 @@ class BulkForm extends App.Controller
         configure_attributes: @confirm_attributes
         className:            'create'
         labelClass:           'input-group-addon'
-      form_data:   @bulk
       noFieldset: true
     )
 
@@ -620,10 +629,15 @@ class BulkForm extends App.Controller
       msg: App.i18n.translateContent('Bulk-Action executed!')
     }
 
-class App.OverviewSettings extends App.ControllerModal
-  constructor: ->
-    super
+class App.OverviewSettings extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  headPrefix: 'Edit'
+
+  content: =>
     @overview = App.Overview.find(@overview_id)
+    @head     = @overview.name
 
     @configure_attributes_article = []
     if @view_mode is 'd'
@@ -715,19 +729,13 @@ class App.OverviewSettings extends App.ControllerModal
         owner:          'Owner'
     })
 
-    @head   = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @overview.name )
-    @close  = true
-    @cancel = true
-    @button = true
     controller = new App.ControllerForm(
       model:     { configure_attributes: @configure_attributes_article }
       autofocus: false
     )
-    @content = controller.form
-    @show()
+    controller.form
 
   onSubmit: (e) =>
-    e.preventDefault()
     params = @formParam(e.target)
 
     # check if re-fetch is needed
@@ -756,8 +764,8 @@ class App.OverviewSettings extends App.ControllerModal
           App.OverviewIndexCollection.trigger()
           App.OverviewCollection.trigger(@overview.link)
 
-        # hide modal
-        @hide()
+        # close modal
+        @close()
     )
 
 class TicketOverviewRouter extends App.ControllerPermanent

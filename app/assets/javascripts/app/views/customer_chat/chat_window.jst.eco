@@ -16,5 +16,5 @@
 </div>
 <div class="chat-controls">
   <div class="chat-input form-control form-control--small form-control--multiline js-customerChatInput" contenteditable="true"></div>
-  <div class="btn btn--primary btn--slim btn--small js-send"><%= @T('Send') %></div>
+  <div class="btn btn--primary btn--slim btn--small js-send"><%- @T('Send') %></div>
 </div>

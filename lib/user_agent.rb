@@ -11,16 +11,16 @@ class UserAgent
 
 get http/https calls
 
-  result = UserAgent.get( 'http://host/some_dir/some_file?param1=123' )
+  result = UserAgent.get('http://host/some_dir/some_file?param1=123')
 
   result = UserAgent.get(
     'http://host/some_dir/some_file?param1=123',
     {
-      :param1 => 'some value',
+      param1: 'some value',
     },
     {
-      :open_timeout => 2,
-      :read_timeout => 4,
+      open_timeout: 4,
+      read_timeout: 10,
     },
   )
 
@@ -34,7 +34,7 @@ get json object
     'http://host/some_dir/some_file?param1=123',
     {},
     {
-      :json => true,
+      json: true,
     }
   )
 
@@ -49,7 +49,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Get.new( uri, { 'User-Agent' => 'Zammad User Agent' } )
+    request = Net::HTTP::Get.new(uri, { 'User-Agent' => 'Zammad User Agent' })
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
@@ -77,12 +77,12 @@ post http/https calls
   result = UserAgent.post(
     'http://host/some_dir/some_file',
     {
-      :param1 => 1,
-      :param2 => 2,
+      param1: 1,
+      param2: 2,
     },
     {
-      :open_timeout => 2,
-      :read_timeout => 4,
+      open_timeout: 4,
+      read_timeout: 10,
     },
   )
 
@@ -97,7 +97,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Post.new( uri, { 'User-Agent' => 'Zammad User Agent' } )
+    request = Net::HTTP::Post.new(uri, { 'User-Agent' => 'Zammad User Agent' })
 
     # set params
     request = set_params(request, params, options)
@@ -125,12 +125,12 @@ put http/https calls
   result = UserAgent.put(
     'http://host/some_dir/some_file',
     {
-      :param1 => 1,
-      :param2 => 2,
+      param1: 1,
+      param2: 2,
     },
     {
-      :open_timeout => 2,
-      :read_timeout => 4,
+      open_timeout: 4,
+      read_timeout: 10,
     },
   )
 
@@ -145,7 +145,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Put.new( uri, { 'User-Agent' => 'Zammad User Agent' } )
+    request = Net::HTTP::Put.new(uri, { 'User-Agent' => 'Zammad User Agent' })
 
     # set params
     request = set_params(request, params, options)
@@ -173,8 +173,8 @@ delete http/https calls
   result = UserAgent.delete(
     'http://host/some_dir/some_file',
     {
-      :open_timeout => 2,
-      :read_timeout => 4,
+      open_timeout: 4,
+      read_timeout: 10,
     },
   )
 
@@ -189,7 +189,7 @@ returns
     http = get_http(uri, options)
 
     # prepare request
-    request = Net::HTTP::Delete.new( uri, { 'User-Agent' => 'Zammad User Agent' } )
+    request = Net::HTTP::Delete.new(uri, { 'User-Agent' => 'Zammad User Agent' })
 
     # http basic auth (if needed)
     request = set_basic_auth(request, options)
@@ -211,18 +211,18 @@ returns
 
 perform get http/https/ftp calls
 
-  result = UserAgent.request( 'ftp://host/some_dir/some_file.bin' )
+  result = UserAgent.request('ftp://host/some_dir/some_file.bin')
 
-  result = UserAgent.request( 'http://host/some_dir/some_file.bin' )
+  result = UserAgent.request('http://host/some_dir/some_file.bin')
 
-  result = UserAgent.request( 'https://host/some_dir/some_file.bin' )
+  result = UserAgent.request('https://host/some_dir/some_file.bin')
 
   # get request
   result = UserAgent.request(
     'http://host/some_dir/some_file?param1=123',
     {
-      :open_timeout => 2,
-      :read_timeout => 4,
+      open_timeout: 4,
+      read_timeout: 10,
     },
   )
 
@@ -239,7 +239,7 @@ returns
     when /ftp/
       ftp(uri, options)
     when /http|https/
-      get( url, {}, options )
+      get(url, {}, options)
     end
 
   end
@@ -276,7 +276,7 @@ returns
       end
     else
       if !params.empty?
-        request.set_form_data( params )
+        request.set_form_data(params)
       end
     end
     request
@@ -317,7 +317,7 @@ returns
     when Net::HTTPOK
       data = nil
       if options[:json] && !options[:jsonParseDisable] && response.body
-        data = JSON.parse( response.body )
+        data = JSON.parse(response.body)
       end
       return Result.new(
         data: data,
@@ -329,7 +329,7 @@ returns
     when Net::HTTPCreated
       data = nil
       if options[:json] && !options[:jsonParseDisable] && response.body
-        data = JSON.parse( response.body )
+        data = JSON.parse(response.body)
       end
       return Result.new(
         data: data,
@@ -355,14 +355,14 @@ returns
       Net::FTP.open(host) do |ftp|
         ftp.passive = true
         if options[:user] && options[:password]
-          ftp.login( options[:user], options[:password] )
+          ftp.login(options[:user], options[:password])
         else
           ftp.login
         end
         ftp.chdir(remote_dir) unless remote_dir == '.'
 
         begin
-          ftp.getbinaryfile( filename, temp_file )
+          ftp.getbinaryfile(filename, temp_file)
         rescue => e
           return Result.new(
             error: e.inspect,

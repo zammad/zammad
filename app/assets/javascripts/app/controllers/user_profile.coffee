@@ -81,6 +81,9 @@ class Object extends App.Controller
 
   render: (user) =>
 
+    # update taskbar with new meta data
+    @metaTaskUpdate()
+
     # get display data
     userData = []
     for attributeName, attributeConfig of App.User.attributesGet('view')
@@ -110,8 +113,11 @@ class Object extends App.Controller
     })
 
     # start action controller
-    showHistory = ->
-      new App.UserHistory( user_id: user.id )
+    showHistory = =>
+      new App.UserHistory(
+        user_id: user.id
+        container: @el.closest('.content')
+      )
 
     editUser = =>
       new App.ControllerGenericEdit(

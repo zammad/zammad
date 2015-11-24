@@ -78,6 +78,9 @@ class Object extends App.Controller
 
   render: (organization) =>
 
+    # update taskbar with new meta data
+    @metaTaskUpdate()
+
     # get display data
     organizationData = []
     for attributeName, attributeConfig of App.Organization.attributesGet('view')
@@ -108,7 +111,10 @@ class Object extends App.Controller
 
     # start action controller
     showHistory = ->
-      new App.OrganizationHistory( organization_id: organization.id )
+      new App.OrganizationHistory(
+        organization_id: organization.id
+        container: @el.closest('.content')
+      )
     editOrganization = =>
       new App.ControllerGenericEdit(
         id: organization.id

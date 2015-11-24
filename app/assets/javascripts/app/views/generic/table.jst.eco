@@ -41,7 +41,7 @@
 <% groupLast = '' %>
 <% for object in @objects: %>
   <% if @groupBy: %>
-  <%   groupByName = @P( object, @groupBy ) %>
+  <%   groupByName = @P( object, @groupBy, @attributes ) %>
   <%   if groupLast isnt groupByName: %>
   <tr class=""><td colspan="<%= length %>"><b><%= groupByName %></b></td></tr>
   <%     groupLast = groupByName %>
@@ -68,7 +68,7 @@
       </td>
     <% end %>
     <% for item in @header: %>
-      <% value = @P( object, item.name ) %>
+      <% value = @P( object, item.name, @attributes ) %>
       <% if @callbacks: %>
       <%   if item.name.substr(item.name.length-3, item.name.length) is '_id' && object[ item.name.substr(0, item.name.length-3) ]: %>
       <%     refObject = object[ item.name.substr(0, item.name.length-3) ] %>

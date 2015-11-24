@@ -47,9 +47,7 @@ returns
     end
     state_types.each {|type|
       state_type = Ticket::StateType.find_by(name: type)
-
       next if !state_type
-
       state_type.states.each {|state|
         assets = state.assets(assets)
         state_ids.push state.id
@@ -87,7 +85,7 @@ returns
     }
 
     dependencies = { group_id: { '' => { owner_id: [] } } }
-    Group.where( active: true ).each { |group|
+    Group.where(active: true).each { |group|
       assets = group.assets(assets)
       dependencies[:group_id][group.id] = { owner_id: [] }
       group.users.each {|user|

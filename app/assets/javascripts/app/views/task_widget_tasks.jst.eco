@@ -1,6 +1,6 @@
-<% for item in @item_list: %>
+<% for item in @taskItems: %>
   <a href="<%- item.data.url %>" title="<%= item.data.title %>" class="nav-tab task <%= item.data.class %><% if item.task.active: %> is-active<% end %><% if item.task.notify: %> is-modified<% end %>" data-key="<%- item.task.key %>">
-    <div class="nav-tab-icon" title="<%- @T(item.data.iconTitle) %>">
+    <div class="nav-tab-icon" title="<%- @Ti(item.data.iconTitle) %>">
       <% if item.data.type is 'task': %>
         <% if item.task.notify: %>
           <%- @Icon('status-modified-inner-circle', "icon-task-state #{item.data.iconClass}") %>

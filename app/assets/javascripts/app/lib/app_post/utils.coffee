@@ -93,6 +93,8 @@ class App.Utils
 
   # htmlEscaped = App.Utils.htmlEscape( rawText )
   @htmlEscape: ( ascii ) ->
+    return ascii if !ascii
+    return ascii if !ascii.replace
     ascii.replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')

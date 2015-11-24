@@ -4,12 +4,21 @@ class App.TicketZoomTitle extends App.Controller
 
   constructor: ->
     super
+    @render()
 
-    @ticket      = App.Ticket.fullLocal( @ticket.id )
-    @subscribeId = @ticket.subscribe(@render)
-    @render(@ticket)
+    # rerender, e. g. on language change
+    @bind('ui:rerender', =>
+      @render()
+    )
 
   render: (ticket) =>
+    if !ticket
+      ticket = App.Ticket.fullLocal(@ticket.id)
+
+    if !@subscribeId
+      @subscribeId = @ticket.subscribe(@render)
+
+    @title = ticket.title
 
     # check if render is needed
     if @lastTitle && @lastTitle is ticket.title
@@ -30,18 +39,19 @@ class App.TicketZoomTitle extends App.Controller
     title = $(e.target).ceg() || ''
 
     # update title
-    if title isnt @ticket.title
-      @ticket.title = title
+    if title isnt @title
+      ticket = App.Ticket.find(@ticket.id)
+      ticket.title = title
 
       # reset article - should not be resubmited on next ticket update
-      @ticket.article = undefined
+      ticket.article = undefined
 
-      @ticket.save()
+      ticket.save()
 
-      App.TaskManager.mute( @task_key )
+      App.TaskManager.mute(@task_key)
 
       # update taskbar with new meta data
-      App.Event.trigger 'task:render'
+      @metaTaskUpdate()
 
   release: =>
-    App.Ticket.unsubscribe( @subscribeId )
+    App.Ticket.unsubscribe(@subscribeId)

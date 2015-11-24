@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
     @bind('i18n:translation_update_list', =>
       @load('i18n:translation_update_list')
     )
-    @bind('i18n:translation_update', =>
+    @bind('i18n:translation_update ui:rerender', =>
       @load()
     )
 

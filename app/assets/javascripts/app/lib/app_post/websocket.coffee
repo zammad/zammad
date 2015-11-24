@@ -256,14 +256,7 @@ class _webSocketSingleton extends App.Controller
         message = =>
 
           # show reconnect message
-          @error = new App.ControllerModal(
-            head:    'Lost network connection!'
-            message: 'Trying to reconnect...'
-            backdrop: false
-            keyboard: false
-            close:    false
-            shown:    true
-          )
+          @error = new Modal()
         if !@tryToConnect
           App.Delay.set message, 7000, 'websocket-no-connection-try-reconnect-message', 'ws'
         @tryToConnect = true
@@ -380,3 +373,14 @@ class _webSocketSingleton extends App.Controller
         @_ajaxInit( force: true )
         @_ajaxReceiveWorking = false
     )
+
+class Modal extends App.ControllerModalNice
+  buttonClose: false
+  buttonCancel: false
+  buttonSubmit: false
+  backdrop: 'static'
+  keyboard: false
+  head: 'Lost network connection!'
+
+  content: ->
+    'Trying to reconnect...'

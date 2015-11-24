@@ -20,23 +20,9 @@ class TranslationSupport extends App.Controller
       meta    = App.i18n.meta()
       percent = parseInt( meta.translated / (meta.total / 100) )
       return if percent > 95
-      message = App.i18n.translateContent('Only %s% of this language is translated, help to improve Zammad and complete the translation.', percent)
-      if percent > 80
-        message = App.i18n.translateContent('Up to %s% of this language is translated, help to make Zammad even better and complete the translation.', percent)
 
       # show message
-      modal = new App.ControllerModal(
-        head:        App.i18n.translateContent('Help to improve Zammad!')
-        message:     message
-        cancel:      false
-        close:       true
-        shown:       true
-        button:      'Complete translations'
-        buttonClass: 'btn--success'
-        onSubmitCallback: =>
-          @navigate '#system/translation'
-          modal.hide()
-      )
+      new Modal(percent: percent)
 
     @bind 'i18n:language:change', =>
       @delay(check, 2500, 'translation_support')
@@ -45,3 +31,32 @@ class TranslationSupport extends App.Controller
       @delay(check, 2500, 'translation_support')
 
 App.Config.set( 'translaton_support', TranslationSupport, 'Widgets' )
+
+class Modal extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: 'No Thanks!'
+  buttonSubmit: 'Complete translations'
+  head: 'Help to improve Zammad!'
+  shown: false
+
+  constructor: ->
+    super
+    return if App.LocalStorage.get('translation_support_no', @Session.get('id'))
+    @render()
+
+  content: =>
+    better = false
+    if @percent > 80
+      better = true
+    App.view('translation/support')(
+      percent: @percent
+      better: better
+    )
+
+  onCancel: =>
+    App.LocalStorage.set('translation_support_no', true, @Session.get('id'))
+    @onClose()
+
+  onSubmit: =>
+    @navigate '#system/translation'
+    @onClose()
