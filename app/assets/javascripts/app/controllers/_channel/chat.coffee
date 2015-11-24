@@ -15,17 +15,19 @@ class App.ChannelChat extends App.Controller
 
   elements:
     '.js-browser': 'browser'
+    '.js-browserBody': 'browserBody'
     '.js-iframe': 'iframe'
+    '.js-screenshot': 'screenshot'
+    '.js-website': 'website'
     '.js-chat': 'chat'
+    '.js-chatHeader': 'chatHeader'
+    '.js-chat-welcome': 'chatWelcome'
     '.js-testurl-input': 'urlInput'
     '.js-backgroundColor': 'chatBackground'
     '.js-paramsBlock': 'paramsBlock'
     '.js-code': 'code'
     '.js-palette': 'palette'
     '.js-color': 'colorField'
-    '.js-screenshot': 'screenshot'
-    '.js-website': 'website'
-    '.js-chat-welcome': 'chatWelcome'
 
   apiOptions: [
     {
@@ -97,6 +99,10 @@ class App.ChannelChat extends App.Controller
     }
   ]
 
+  isOpen: true
+  browserWidth: 1280
+  chatHeight: 360
+
   constructor: ->
     super
     @load()
@@ -134,6 +140,7 @@ class App.ChannelChat extends App.Controller
     @code.each (i, block) ->
       hljs.highlightBlock block
 
+    @adjustBrowserWidth()
     @updateParams()
 
   selectBrowserWidth: (event) =>
@@ -141,31 +148,42 @@ class App.ChannelChat extends App.Controller
 
     # select tab
     tab.addClass('is-selected').siblings().removeClass('is-selected')
-    value = tab.attr('data-value')
-    width = parseInt value, 10
+    @browserWidth = tab.attr('data-value')
+    @adjustBrowserWidth()
+
+  adjustBrowserWidth: ->
+    width = parseInt @browserWidth, 10
 
     # reset zoom
     @chat
-      .css('transform', '')
       .removeClass('is-fullscreen')
+      .css 'transform', "translateY(#{ @getChatOffset() }px)"
     @browser.css('width', '')
     @website.css
       transform: ''
       width: ''
       height: ''
 
-    return if value is 'fit'
+    return if @browserWidth is 'fit'
 
     if width < @el.width()
-      @chat.addClass('is-fullscreen')
+      @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
       @browser.css('width', "#{ width }px")
     else
       percentage = @el.width()/width
-      @chat.css('transform', "scale(#{ percentage })")
+      @chat.css 'transform', "translateY(#{ @getChatOffset() * percentage }px) scale(#{ percentage })"
       @website.css
         transform: "scale(#{ percentage })"
         width: @el.width() / percentage
-        height: @el.height() / percentage
+        height: @browserBody.height() / percentage
+
+  getChatOffset: (fullscreen) ->
+    return 0 if @isOpen
+
+    if fullscreen
+      return @browserBody.height() - @chatHeader.outerHeight()
+    else
+      return @chatHeight - @chatHeader.outerHeight()
 
   changeDemoWebsite: (event) =>
     event.preventDefault() if event
@@ -237,6 +255,8 @@ class App.ChannelChat extends App.Controller
 
   toggleChat: =>
     @chat.toggleClass('is-open')
+    @isOpen = @chat.hasClass('is-open')
+    @adjustBrowserWidth()
 
   changeTitle: (event) ->
     @chatWelcome.html $(event.currentTarget).val()

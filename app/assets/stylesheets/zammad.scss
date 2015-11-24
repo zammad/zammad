@@ -7455,6 +7455,7 @@ output {
     width: 100%;
     height: 100%;
     background: white;
+    border-radius: 0 0 5px 5px;
   }
 
   img {
@@ -7508,7 +7509,8 @@ output {
     position: absolute;
     transform-origin: right bottom;
     transition: 500ms;
-    bottom: -318px;
+    user-select: none;
+    will-change: transform;
 
     .zammad-chat-welcome {
       display: block !important;
@@ -7524,9 +7526,7 @@ output {
       display: none !important;
     }
 
-    &.is-open {
-      bottom: 0;
-      
+    &.is-open {      
       .zammad-chat-agent {
         display: block !important;
       }
