@@ -65,7 +65,6 @@ if ARGV[0] != 'start' && ARGV[0] != 'stop'
 end
 
 if ARGV[0] == 'stop'
-
   puts "Stopping websocket server (pid:#{@options[:i]})"
 
   # read pid
@@ -76,8 +75,8 @@ if ARGV[0] == 'stop'
   Process.kill( 9, pid.to_i )
   exit
 end
-if ARGV[0] == 'start' && @options[:d]
 
+if ARGV[0] == 'start' && @options[:d]
   puts "Starting websocket server on #{@options[:b]}:#{@options[:p]} (secure:#{@options[:s]},pid:#{@options[:i]})"
 
   Daemons.daemonize
