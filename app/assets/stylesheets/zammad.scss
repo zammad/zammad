@@ -7515,6 +7515,10 @@ output {
     
     &.is-fullscreen {
       height: 100%;
+      
+      .zammad-chat-controls {
+        border-radius: 0 0 5px 5px;
+      }
     }
   }
 
