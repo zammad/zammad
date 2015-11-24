@@ -1,23 +1,23 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%= @T('Calendar') %></h1>
+    <h1><%- @T('Calendar') %></h1>
   </div>
 </div>
 <div class="page-content">
-  <h2><%= @T('Ticket Subscriptions') %></h2>
+  <h2><%- @T('Ticket Subscriptions') %></h2>
 
-  <p><%= @T('See your tickets from within your favorite calendar by adding the following url to your calendar app.') %></p>
+  <p><%- @T('See your tickets from within your favorite calendar by adding the following url to your calendar app.') %></p>
 
-  <h3><%= @T('URL') %></h3>
+  <h3><%- @T('URL') %></h3>
   <input class="form-control js-select" readonly value="<%= @baseurl %>/ical/tickets">
 
-  <h3><%= @T('Subscription Settings') %></h3>
+  <h3><%- @T('Subscription Settings') %></h3>
   <table class="settings-list">
     <thead>
       <tr>
-        <th style="white-space: nowrap;"><%= @T('Status Type') %>
-        <th colspan="2"><%= @T('Options') %>
-        <th width="100%"><%= @T('Direct URL') %>
+        <th style="white-space: nowrap;"><%- @T('Status Type') %>
+        <th colspan="2"><%- @T('Options') %>
+        <th width="100%"><%- @T('Direct URL') %>
       </tr>
     </thead>
     <tbody>
@@ -30,18 +30,18 @@
             <input type="checkbox" name="<%= stateType %>/own"<%= if options.own then ' checked' %>>
             <%- @Icon('checkbox', 'icon-unchecked') %>
             <%- @Icon('checkbox-checked', 'icon-checked') %>
-            <span class="label-text"><%= @T('own tickets') %></span>
+            <span class="label-text"><%- @T('own tickets') %></span>
           </label>
         <td>
           <label class="inline-label checkbox-replacement">
             <input type="checkbox" name="<%= stateType %>/not_assigned"<%= if options.not_assigned then ' checked' %>>
             <%- @Icon('checkbox', 'icon-unchecked') %>
             <%- @Icon('checkbox-checked', 'icon-checked') %>
-            <span class="label-text"><%= @T('not assigned tickets') %></span>
+            <span class="label-text"><%- @T('not assigned tickets') %></span>
           </label>
         <td>
-          <div class="btn btn--table btn--text js-showLink"><%= @T('Show') %></div>
-          <input class="form-control form-control--borderless js-select is-hidden" readonly value="<%= @baseurl %>/ical/tickets/<%= stateType %>">
+          <div class="btn btn--table btn--text js-showLink"><%- @T('Show') %></div>
+          <input class="form-control form-control--borderless js-select is-hidden" readonly value="<%- @baseurl %>/ical/tickets/<%= stateType %>">
       </tr>
       <% end %>
     </tbody>

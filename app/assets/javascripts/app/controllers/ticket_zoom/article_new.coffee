@@ -93,31 +93,32 @@ class App.TicketZoomArticleNew extends App.Controller
       @openTextarea(null, true)
 
     # set article type and expand text area
-    @bind(
-      'ui::ticket::setArticleType'
-      (data) =>
-        return if data.ticket.id isnt @ticket_id
-        #@setArticleType(data.type.name)
+    @bind('ui::ticket::setArticleType', (data) =>
+      return if data.ticket.id isnt @ticket_id
+      #@setArticleType(data.type.name)
 
-        @openTextarea(null, true)
-        for key, value of data.article
-          if key is 'body'
-            @$('[data-name="' + key + '"]').html(value)
-          else
-            @$('[name="' + key + '"]').val(value)
+      @openTextarea(null, true)
+      for key, value of data.article
+        if key is 'body'
+          @$('[data-name="' + key + '"]').html(value)
+        else
+          @$('[name="' + key + '"]').val(value)
 
-        # preselect article type
-        @setArticleType('email')
+      # preselect article type
+      @setArticleType('email')
     )
 
     # reset new article screen
-    @bind(
-      'ui::ticket::taskReset'
-      (data) =>
-        return if data.ticket_id isnt @ticket_id
-        @type     = 'note'
-        @defaults = {}
-        @render()
+    @bind('ui::ticket::taskReset', (data) =>
+      return if data.ticket_id isnt @ticket_id
+      @type     = 'note'
+      @defaults = {}
+      @render()
+    )
+
+    # rerender, e. g. on language change
+    @bind('ui:rerender', =>
+      @render()
     )
 
   isIE10: ->
@@ -135,7 +136,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
   render: ->
 
-    ticket = App.Ticket.fullLocal( @ticket_id )
+    ticket = App.Ticket.fullLocal(@ticket_id)
 
     @html App.view('ticket_zoom/article_new')(
       ticket:       ticket

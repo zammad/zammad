@@ -29,35 +29,38 @@ class App.CustomerChat extends App.Controller
       active_agents: 0
 
     @render()
-
     @on 'layout-has-changed', @propagateLayoutChange
 
     # update navbar on new status
-    @bind(
-      'chat_status_agent'
-      (data) =>
-        @meta = data
-        @updateMeta()
-        if !@pushStateStarted
-          @pushStateStarted = true
-          @interval(@pushState, 30000, 'pushState')
+    @bind('chat_status_agent', (data) =>
+      @meta = data
+      @updateMeta()
+      if !@pushStateStarted
+        @pushStateStarted = true
+        @interval(@pushState, 30000, 'pushState')
     )
 
     # add new chat window
-    @bind(
-      'chat_session_start'
-      (data) =>
-        if data.session
-          @addChat(data.session)
+    @bind('chat_session_start', (data) =>
+      if data.session
+        @addChat(data.session)
     )
 
     # on new login or on
-    @bind(
-      'ws:login chat_agent_state'
-      ->
-        App.WebSocket.send(event:'chat_status_agent')
+    @bind('ws:login chat_agent_state', ->
+      App.WebSocket.send(event:'chat_status_agent')
     )
     App.WebSocket.send(event:'chat_status_agent')
+
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      return if !@authenticate(true)
+      for session_id, chat of @chatWindows
+        chat.el.remove()
+      @chatWindows = {}
+      @render()
+      App.WebSocket.send(event:'chat_status_agent')
+    )
 
   pushState: =>
     App.WebSocket.send(
@@ -133,7 +136,7 @@ class App.CustomerChat extends App.Controller
 
   addChat: (session) ->
     return if @chatWindows[session.session_id]
-    chat = new chatWindow
+    chat = new ChatWindow
       name: "#{session.created_at}"
       session: session
       removeCallback: @removeChat
@@ -180,7 +183,7 @@ class CustomerChatRouter extends App.ControllerPermanent
       persistent: true
     )
 
-class chatWindow extends App.Controller
+class ChatWindow extends App.Controller
   @extend Spine.Events
 
   className: 'chat-window'
@@ -212,27 +215,21 @@ class chatWindow extends App.Controller
 
     @on 'layout-change', @scrollToBottom
 
-    @bind(
-      'chat_session_typing'
-      (data) =>
-        return if data.session_id isnt @session.session_id
-        return if data.self_written
-        @showWritingLoader()
+    @bind('chat_session_typing', (data) =>
+      return if data.session_id isnt @session.session_id
+      return if data.self_written
+      @showWritingLoader()
     )
-    @bind(
-      'chat_session_message'
-      (data) =>
-        return if data.session_id isnt @session.session_id
-        return if data.self_written
-        @receiveMessage(data.message.content)
+    @bind('chat_session_message', (data) =>
+      return if data.session_id isnt @session.session_id
+      return if data.self_written
+      @receiveMessage(data.message.content)
     )
-    @bind(
-      'chat_session_left chat_session_closed'
-      (data) =>
-        return if data.session_id isnt @session.session_id
-        return if data.self_written
-        @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
-        @goOffline()
+    @bind('chat_session_left chat_session_closed', (data) =>
+      return if data.session_id isnt @session.session_id
+      return if data.self_written
+      @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
+      @goOffline()
     )
 
   render: ->
@@ -286,8 +283,8 @@ class chatWindow extends App.Controller
     @resetUnreadMessages()
 
   onKeydown: (event) =>
-    TABKEY = 9;
-    ENTERKEY = 13;
+    TABKEY = 9
+    ENTERKEY = 13
 
     if event.keyCode isnt TABKEY && event.keyCode isnt ENTERKEY
       App.WebSocket.send(
@@ -401,7 +398,7 @@ class chatWindow extends App.Controller
     timestamp = Date.now()
 
     if !@lastTimestamp or timestamp - @lastTimestamp > @showTimeEveryXMinutes * 60000
-      label = App.i18n.translateContent('today')
+      label = App.i18n.translateInline('today')
       time = new Date().toTimeString().substr(0,5)
       if @lastAddedType is 'timestamp'
         # update last time

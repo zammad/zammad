@@ -19,7 +19,7 @@
           <label for="form-message-title"><%- @T('Title of the form') %></label>
         </div>
         <div class="controls">
-          <input type="text" id="form-message-title" name="messageTitle" value="<%- @T('Feedback Form') %>">
+          <input type="text" id="form-message-title" name="messageTitle" value="<%- @Ti('Feedback Form') %>">
         </div>
       </div>
       <div class="input form-group">
@@ -27,7 +27,7 @@
           <label for="form-message-submit"><%- @T('Name of form submit button') %></label>
         </div>
         <div class="controls">
-          <input type="text" id="form-message-submit" name="messageSubmit" value="<%- @T('Submit') %>">
+          <input type="text" id="form-message-submit" name="messageSubmit" value="<%- @Ti('Submit') %>">
         </div>
       </div>
       <div class="input form-group">
@@ -35,7 +35,7 @@
           <label for="form-message-thank-you"><%- @T('Message after sending form') %></label>
         </div>
         <div class="controls">
-          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @T('Thank you for your inquiry! We\'ll contact you soon as possible.') %></textarea>
+          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @Ti('Thank you for your inquiry! We\'ll contact you soon as possible.') %></textarea>
         </div>
       </div>
     </fieldset>

@@ -152,7 +152,7 @@ class App.Controller extends Spine.Controller
     shakeMe( element, position, 20 )
 
   isRole: (name) ->
-    roles = @Session.get( 'roles' )
+    roles = @Session.get('roles')
     return false if !roles
     for role in roles
       return true if role.name is name
@@ -555,6 +555,13 @@ class App.Controller extends Spine.Controller
   renderScreenUnauthorized: (data) ->
     @html App.view('generic/error/unauthorized')(data)
 
+  metaTaskUpdate: ->
+    App.Delay.set(
+      -> App.Event.trigger 'task:render'
+      450
+      'meta-task-update'
+    )
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
@@ -568,55 +575,79 @@ class App.ControllerContent extends App.Controller
     $('#content').removeClass('hide')
     @navShow()
 
-class App.ControllerModal extends App.Controller
-  elements:
-    '.modal-body': 'body'
+class App.ControllerModalNice extends App.Controller
+  backdrop: true
+  keyboard: true
+  large: false
+  head: '?'
+  container: null
+  buttonClass: 'btn--success'
+  centerButtons: []
+  buttonClose: true
+  buttonCancel: false
+  buttonSubmit: true
+  headPrefix: ''
+  shown: true
 
   events:
-    'submit form':                        'onSubmit'
-    'click .js-submit:not(.is-disabled)': 'onSubmit'
-    'click .js-cancel':                   'hide'
-    'click .js-close':                    'hide'
+    'submit form':                        'submit'
+    'click .js-submit:not(.is-disabled)': 'submit'
+    'click .js-cancel':                   'cancel'
+    'click .js-close':                    'close'
 
   className: 'modal fade'
 
-  constructor: (options = {}) ->
-    defaults =
-      backdrop: true
-      keyboard: true
-      close:    true
-      large:    false
-      head:     '?'
-      buttonClass: 'btn--success'
-      centerButtons: []
-      container: null
+  constructor: ->
+    @className += ' modal--large' if @large
+    super
 
-    options = _.extend( defaults, options )
-
-    @className += ' modal--large' if options.large
-
-    super(options)
-
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      @update()
+      'modal'
+    )
     if @shown
-      @show()
+      @render()
 
-  show: (content) ->
-    if @button is true
-      @button = 'Submit'
+  content: ->
+    'You need to implement a one @content()!'
 
-    @html App.view('modal')
+  update: =>
+    if @message
+      content = App.i18n.translateContent(@message)
+    else if @contentInline
+      content = @contentInline
+    else
+      content = @content()
+    modal = $(App.view('modal')
       head:          @head
+      headPrefix:    @headPrefix
       message:       @message
       detail:        @detail
-      close:         @close
-      cancel:        @cancel
-      button:        @button
+      buttonClose:   @buttonClose
+      buttonCancel:  @buttonCancel
+      buttonSubmit:  @buttonSubmit
       buttonClass:   @buttonClass
       centerButtons: @centerButtons
-      content:       content
+    )
+    modal.find('.modal-body').html content
+    if !@initRenderingDone
+      @initRenderingDone = true
+      @html modal
+    else
+      @$('.modal-dialog').replaceWith(modal)
+    @post()
 
-    if @content
-      @body.html @content
+  post: ->
+    # nothing
+
+  render: =>
+    if @buttonSubmit is true
+      @buttonSubmit = 'Submit'
+    if @buttonCancel is true
+      @buttonCancel = 'Cancel & Go Back'
+
+    @update()
 
     if @container
       @el.addClass('modal--local')
@@ -629,52 +660,57 @@ class App.ControllerModal extends App.Controller
     .on
       'show.bs.modal':   @onShow
       'shown.bs.modal':  @onShown
+      'hide.bs.modal':   @onClose
       'hidden.bs.modal': =>
-        @onHide()
+        @onClosed()
         # remove modal from dom
         $('.modal').remove()
 
-  hide: (e) =>
+  close: (e) =>
     if e
       e.preventDefault()
     @el.modal('hide')
 
-  onShown: ->
-    console.log('modal shown: do nothing')
-    # do nothing
-
   onShow: ->
-    console.log('modal rendered: do nothing')
     # do nothing
 
-  onHide: ->
-    console.log('modal removed: do nothing')
+  onShown: ->
     # do nothing
 
-  onSubmit: (e) =>
+  onClose: ->
+    # do nothing
+
+  onClosed: ->
+    # do nothing
+
+  onSubmit: ->
+    # do nothing
+
+  onCancel: ->
+    # do nothing
+
+  cancel: (e) =>
+    @close(e)
+    @onCancel(e)
+
+  submit: (e) =>
     e.preventDefault()
-    if @onSubmitCallback
-      @onSubmitCallback()
-    @log 'error', 'You need to implement your own "onSubmit" method!'
+    @onSubmit(e)
 
-class App.ErrorModal extends App.ControllerModal
-  constructor: ->
-    super
-    @show()
+class App.SessionMessage extends App.ControllerModalNice
+  onCancel: (e) =>
+    if @forceReload
+      @reload(e)
 
-class App.SessionMessage extends App.ControllerModal
-  constructor: ->
-    super
-    @show(@content)
-
-  # reload page on modal hidden
-  onHide: (e) =>
+  onClose: (e) =>
     if @forceReload
       @reload(e)
 
   onSubmit: (e) =>
     if @forceReload
       @reload(e)
+    else
+      @close()
 
   reload: (e) ->
     if e
@@ -694,13 +730,13 @@ class App.UpdateHeader extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = @genericObject.subscribe( @render )
+    @subscribeId = @genericObject.subscribe(@render)
 
   release: =>
     App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
 
   render: (genericObject) =>
-    @el.find( '.page-header h1' ).html( genericObject.displayName() )
+    @el.find('.page-header h1').html(genericObject.displayName())
 
 
 class App.UpdateTastbar extends App.Controller
@@ -708,15 +744,15 @@ class App.UpdateTastbar extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = @genericObject.subscribe( @update )
+    @subscribeId = @genericObject.subscribe(@update)
 
   release: =>
     App[ @genericObject.constructor.className ].unsubscribe(@subscribeId)
 
-  update: (genericObject) ->
+  update: (genericObject) =>
 
     # update taskbar with new meta data
-    App.Event.trigger 'task:render'
+    @metaTaskUpdate()
 
 class App.ControllerWidgetPermanent extends App.Controller
   constructor: (params) ->

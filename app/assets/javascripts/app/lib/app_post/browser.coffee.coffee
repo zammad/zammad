@@ -40,8 +40,11 @@ class App.Browser
     # disable id older
     if data.browser
       if map[data.browser.name] && data.browser.major < map[data.browser.name]
-        @message(data, map[data.browser.name])
-        console.log('Browser not supported')
+        new Modal(
+          data: data
+          version: map[data.browser.name]
+        )
+        App.Log.error('Browser', 'Browser not supported')
         return false
 
     # allow browser
@@ -73,12 +76,13 @@ class App.Browser
       localStorage.setItem('fingerprint', fingerprint)
     fingerprint
 
-  @message: (data, version) ->
-    new App.ControllerModal(
-      head:     'Browser too old!'
-      message:  "Your Browser is not supported (#{data.browser.name} #{data.browser.major} on #{data.os.name}). Please use a newer one (e. g. #{data.browser.name} #{version} or higher)."
-      close:    false
-      backdrop: false
-      keyboard: false
-      shown:    true
-    )
+class Modal extends App.ControllerModalNice
+  buttonClose: false
+  buttonCancel: false
+  buttonSubmit: false
+  backdrop: false
+  keyboard: false
+  head: 'Browser too old!'
+
+  content: ->
+    "Your Browser is not supported (#{@data.browser.name} #{@data.browser.major} on #{@data.os.name}). Please use a newer one (e. g. #{@data.browser.name} #{@version} or higher)."

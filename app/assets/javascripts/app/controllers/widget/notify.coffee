@@ -40,7 +40,7 @@ class App.Notify extends App.ControllerWidgetPermanent
       text:      data.msg
       type:      data.type
       template:  App.view('notify')
-                   type: data.type
+        type: data.type
       animation:
         open:    'animated fadeInDown'
         close:   'animated fadeOutDown'

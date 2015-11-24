@@ -200,5 +200,5 @@ class App.OnlineNotificationWidget extends App.Controller
 
   resetHeight: ->
     notificationsContainer = $('.js-notificationsContainer')
-    notificationsContainer.find('.popover-content').css('height', "auto")
+    notificationsContainer.find('.popover-content').css('height', 'auto')
 

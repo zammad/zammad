@@ -152,15 +152,14 @@ class Items extends App.ControllerContent
         @load()
     )
 
-class Edit extends App.ControllerModal
-  constructor: (params) ->
-    super
+class Edit extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Edit'
 
-    @head  = App.i18n.translateContent( 'Edit' )
-    @cancel = true
-    @button = true
-
-    @content = $( App.view('object_manager/edit')(
+  content: =>
+    content = $( App.view('object_manager/edit')(
       head:  @object
       items: []
     ) )
@@ -183,11 +182,11 @@ class Edit extends App.ControllerModal
       { name: 'data_type',  display: 'Format',  tag: 'select',    multiple: false, nulloption: true, null: false, options: options, translate: true },
     ]
     controller = new App.ControllerForm(
-      model:      { configure_attributes: configureAttributesTop, className: '' },
-      params:     item
-      #screen:     @screen || 'edit'
-      el:         @content.find('.js-top')
-      autofocus:  true
+      model:     { configure_attributes: configureAttributesTop, className: '' },
+      params:    item
+      #screen:   @screen || 'edit'
+      el:        content.find('.js-top')
+      autofocus: true
     )
 
     # input
@@ -201,10 +200,10 @@ class Edit extends App.ControllerModal
       { name: 'data_option::note',            display: 'Note',            tag: 'input', type: 'text', limit: 100, null: true },
     ]
     controller = new App.ControllerForm(
-      model:      { configure_attributes: configureAttributesInput, className: '' },
-      params:     item
-      el:         @content.find('.js-input')
-      autofocus:  true
+      model:     { configure_attributes: configureAttributesInput, className: '' },
+      params:    item
+      el:        content.find('.js-input')
+      autofocus: true
     )
 
     # textarea
@@ -215,10 +214,10 @@ class Edit extends App.ControllerModal
       { name: 'data_option::note',            display: 'autocomplete',    tag: 'input',  type: 'text', limit: 100, null: true },
     ]
     controller = new App.ControllerForm(
-      model:      { configure_attributes: configureAttributesTextarea, className: '' },
-      params:     item
-      el:         @content.find('.js-textarea')
-      autofocus:  true
+      model:     { configure_attributes: configureAttributesTextarea, className: '' },
+      params:    item
+      el:        content.find('.js-textarea')
+      autofocus: true
     )
 
     # select
@@ -233,7 +232,7 @@ class Edit extends App.ControllerModal
     controller = new App.ControllerForm(
       model:      { configure_attributes: configureAttributesSelect, className: '' },
       params:     item
-      el:         @content.find('.js-select')
+      el:         content.find('.js-select')
       autofocus:  true
     )
 
@@ -245,32 +244,26 @@ class Edit extends App.ControllerModal
         },
     ###
 
-    @content.find('[name=data_type]').on(
+    content.find('[name=data_type]').on(
       'change',
-      (e) =>
+      (e) ->
         dataType = $( e.target ).val()
-        @content.find('.js-middle > div').addClass('hide')
-        @content.find(".js-#{dataType}").removeClass('hide')
+        content.find('.js-middle > div').addClass('hide')
+        content.find(".js-#{dataType}").removeClass('hide')
     )
-    @content.find('[name=data_type]').trigger('change')
+    content.find('[name=data_type]').trigger('change')
 
 
     configureAttributesBottom = [
       { name: 'active', display: 'Active', tag: 'active', default: true },
     ]
     controller = new App.ControllerForm(
-      model:      { configure_attributes: configureAttributesBottom, className: '' },
-      params:     item
-      #screen:     @screen || 'edit'
-      el:         @content.find('.js-bottom')
+      model:   { configure_attributes: configureAttributesBottom, className: '' },
+      params:  item
+      #screen: @screen || 'edit'
+      el:      content.find('.js-bottom')
     )
 
-    #@content = controller.form
-
-
-    #@show(content)
-    @show()
-
-
+    controller.form
 
 App.Config.set( 'SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

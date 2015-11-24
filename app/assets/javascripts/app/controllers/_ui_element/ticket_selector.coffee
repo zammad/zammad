@@ -246,7 +246,7 @@ class App.UiElement.ticket_selector
         elementRow.find('.js-value').addClass('hide')
     toggle()
 
-    elementRow.find('.js-preCondition select').bind('change', (e) =>
+    elementRow.find('.js-preCondition select').bind('change', (e) ->
       toggle()
     )
 

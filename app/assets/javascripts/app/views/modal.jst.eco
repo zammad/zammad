@@ -2,38 +2,30 @@
   <form>
     <div class="modal-content">
       <div class="modal-header">
-  <% if @close: %>
+  <% if @buttonClose: %>
         <div class="modal-close js-close">
           <%- @Icon('diagonal-cross') %>
         </div>
   <% end %>
-        <h1 class="modal-title"><%- @T( @head ) %></h1>
+        <h1 class="modal-title"><% if @headPrefix: %><%- @T(@headPrefix) %>: <% end %><%- @T(@head) %></h1>
       </div>
       <div class="modal-body">
-      <% if @message: %>
-          <p><%= @message %></p>
-      <% end %>
-      <% if @detail: %>
-          <pre><%= @detail %></pre>
-      <% end %>
-      <% if @content: %>
-          <%- @content %>
-      <% end %>
+      <%- @content %>
       </div>
       <div class="modal-footer">
-  <% if @cancel: %>
+  <% if @buttonCancel: %>
         <div class="modal-leftFooter">
-          <a class="btn btn--text btn--subtle js-cancel align-left" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
+          <a class="btn btn--text btn--subtle js-cancel align-left" href="#/"><%- @T(@buttonCancel) %></a>
         </div>
   <% end %>
   <% for button in @centerButtons: %>
         <div class="modal-centerFooter">
-          <div class="btn <%= button.className %> align-center"><%- @T( button.text ) %></div>
+          <div class="btn <%= button.className %> align-center"><%- @T(button.text) %></div>
         </div>
   <% end %>
-  <% if @button: %>
+  <% if @buttonSubmit: %>
         <div class="modal-rightFooter">
-          <button type="submit" class="btn <%= @buttonClass %> js-submit align-right"><%- @T( @button ) %></button>
+          <button type="submit" class="btn <%= @buttonClass %> js-submit align-right"><%- @T(@buttonSubmit) %></button>
         </div>
   <% end %>
       </div>

@@ -65,9 +65,6 @@ if ARGV[0] != 'start' && ARGV[0] != 'stop'
 end
 
 if ARGV[0] == 'stop'
-  puts "Stopping websocket server"
-
-
   puts "Stopping websocket server (pid:#{@options[:i]})"
 
   # read pid

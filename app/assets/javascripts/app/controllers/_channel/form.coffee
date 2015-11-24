@@ -10,7 +10,7 @@ class App.ChannelForm extends App.Controller
     @render()
     @updateParams()
     new App.SettingsArea(
-      el:   @el.find('.js-settings')
+      el:   @$('.js-settings')
       area: 'Form::Base'
     )
 
@@ -21,16 +21,19 @@ class App.ChannelForm extends App.Controller
 
   updateParams: ->
     quote = (string) ->
-      string.replace('\'', '\\\'')
+      string = string.replace('\'', '\\\'')
+        .replace(/\</g, '&lt;')
+        .replace(/\>/g, '&gt;')
     params = @formParam(@$('.js-params'))
     paramString = ''
     for key, value of params
-      if paramString != ''
-        paramString += ",\n"
-      if value == 'true' || value == 'false'
-        paramString += "    #{key}: #{value}"
-      else
-        paramString += "    #{key}: '#{quote(value)}'"
+      if value != ''
+        if paramString != ''
+          paramString += ",\n"
+        if value == 'true' || value == 'false'
+          paramString += "    #{key}: #{value}"
+        else
+          paramString += "    #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)
 
 App.Config.set( 'Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, role: ['Admin'] }, 'NavBarAdmin' )

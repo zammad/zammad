@@ -413,23 +413,15 @@ class ContentSidebarRightSidebarOptional extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_right_sidebar_optional', ContentSidebarRightSidebarOptional, 'Routes' )
 
 
-class ModalForm extends App.ControllerModal
-  constructor: ->
-    super
-    @head  = '123 some title'
-    @cancel = true
-    @button = true
+class ModalForm extends App.ControllerModalNice
+  head: '123 some title'
 
-    @render()
-
-  render: ->
+  content: ->
     controller = new App.ControllerForm(
       model: App.User
       autofocus: true
     )
-    @content = controller.form
-
-    @show()
+    controller.form
 
   onHide: ->
     window.history.back()
@@ -442,21 +434,15 @@ class ModalForm extends App.ControllerModal
 App.Config.set( 'layout_ref/modal_form', ModalForm, 'Routes' )
 
 
-class ModalText extends App.ControllerModal
-  constructor: ->
-    super
-    @head = '123 some title'
+class ModalText extends App.ControllerModalNice
 
-    @render()
-
-  render: ->
-    @show( App.view('layout_ref/content')() )
+  content: ->
+    App.view('layout_ref/content')()
 
   onHide: ->
     window.history.back()
 
 App.Config.set( 'layout_ref/modal_text', ModalText, 'Routes' )
-
 
 
 class ContentSidebarTabsRight extends App.ControllerContent
@@ -857,7 +843,7 @@ class TicketZoomRef extends App.ControllerContent
 
     @$('.js-datepicker').datepicker
       todayHighlight: true
-      startDate: new Date().toLocaleDateString("en-US") # returns 9/25/2015
+      startDate: new Date().toLocaleDateString('en-US') # returns 9/25/2015
       container: @$('.js-datepicker').parent()
 
     @$('.js-timepicker').timepicker()
@@ -952,7 +938,7 @@ class TicketZoomRef extends App.ControllerContent
 
     # selection.anchorNode = element in which the selection started
     # selection.focusNode = element in which the selection ended
-    # 
+    #
     # check if the start node is inside of the article or the article itself
     startNode = @$(selection.anchorNode)
 
@@ -980,7 +966,7 @@ class TicketZoomRef extends App.ControllerContent
     $(document).unbind 'click.buttonDropdown'
 
   performTicketMacro: (event) =>
-    console.log "perform action", @$(event.currentTarget).text()
+    console.log 'perform action', @$(event.currentTarget).text()
     @closeDropdown()
 
   onActionMouseEnter: (event) =>
@@ -1380,12 +1366,13 @@ class SlaRef extends App.ControllerContent
     checkbox.closest('tr').toggleClass('is-active', checkbox.prop('checked'))
 
   createNew: =>
-    @newItemModal = new App.ControllerModal
-      head: 'New Service Level Agreement (SLA)'
-      content: App.view('layout_ref/sla_modal')()
-      button: 'Create SLA'
+    @newItemModal = new App.ControllerModalNice
+      head: 'Service Level Agreement (SLA)'
+      headPrefox: 'New'
+      contentInline: App.view('layout_ref/sla_modal')()
+      buttonSubmit: 'Create SLA'
       shown: true
-      cancel: true
+      buttonCancel: true
       container: @el
       onShown: =>
         @$('.js-responseTime').timepicker
@@ -1419,12 +1406,13 @@ class SchedulersRef extends App.ControllerContent
       .text(if isInactive then 'Enable' else 'Disable')
 
   createNew: =>
-    new App.ControllerModal
-      head: 'New Scheduler'
-      content: App.view('layout_ref/scheduler_modal')()
-      button: 'Create Schedule'
+    new App.ControllerModalNice
+      head: 'Scheduler'
+      headPrefix: 'New'
+      buttonSubmit: 'Create'
+      buttonCancel: true
+      contentInline: App.view('layout_ref/scheduler_modal')()
       shown: true
-      cancel: true
       container: @el
 
   select: (event) =>
@@ -1655,13 +1643,13 @@ class MergeCustomerRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/merge_customer_view')
 
-    new App.ControllerModal
+    new App.ControllerModalNice
       large: true
-      head: "Merge #{@mergeSource.firstname} #{@mergeSource.lastname}"
-      content: App.view('layout_ref/merge_customer')()
-      button: 'Merge'
-      shown: true
-      cancel: true
+      head: "#{@mergeSource.firstname} #{@mergeSource.lastname}"
+      headPrefix: 'Merge'
+      contentInline: App.view('layout_ref/merge_customer')()
+      buttonSubmit: 'Merge'
+      buttonCancel: true
       container: @el
 
   onChange: ->
@@ -1687,60 +1675,60 @@ class App.CustomerChatRef extends App.Controller
 
   questions: [
     {
-      question: "Der dümmste Bauer hat die dicksten ..?"
-      answers: ["Kartoffeln"]
+      question: 'Der dümmste Bauer hat die dicksten ..?'
+      answers: ['Kartoffeln']
     },
     {
-      question: "Welchen Wein besang einst Udo Jürgens?"
-      answers: ["griechisch"]
+      question: 'Welchen Wein besang einst Udo Jürgens?'
+      answers: ['griechisch']
     },
     {
-      question: "Was behandelt ein Logopäde?"
-      answers: ["Sprachstörung"]
+      question: 'Was behandelt ein Logopäde?'
+      answers: ['Sprachstörung']
     },
     {
-      question: "In welcher Stadt ist das Porsche Stammwerk?"
-      answers: ["Stuttgart"]
+      question: 'In welcher Stadt ist das Porsche Stammwerk?'
+      answers: ['Stuttgart']
     },
     {
-      question: "Wer erfand den legendären C64-Computer?"
-      answers: ["Commodore"]
+      question: 'Wer erfand den legendären C64-Computer?'
+      answers: ['Commodore']
     },
     {
       question: 'Im Englischen steht "Lost And Found" für ..?'
-      answers: ["Fundbüro"]
+      answers: ['Fundbüro']
     },
     {
       question: 'Welches Möbelstück ist und war besonders in Sigmund Freuds Arbeitszimmer bekannt?'
-      answers: ["Couch"]
+      answers: ['Couch']
     },
     {
       question: 'Wenn es einem gut geht, lebt man "wie die Made im .."?'
-      answers: ["Speck"]
+      answers: ['Speck']
     },
     {
       question: 'Von welcher Sportart handelt der US-amerikanische Film "Rocky"?'
-      answers: ["Boxen"]
+      answers: ['Boxen']
     },
     {
       question: 'Wo soll man hingehen, wenn man sich weit entfernen soll? Dahin wo ..?'
-      answers: ["Pfeffer", "wächst"]
+      answers: ['Pfeffer', 'wächst']
     },
     {
       question: 'Welches internationale Autokennzeichen hat Spanien?'
-      answers: ["ES"]
+      answers: ['ES']
     },
     {
       question: 'Wenn man sich ärgert sagt man "Verdammt und .."?'
-      answers: ["zugenäht"]
+      answers: ['zugenäht']
     },
     {
       question: 'Bei welchem Spiel muss man ohne zu zittern Stäbchen sammeln?'
-      answers: ["Mikado"]
+      answers: ['Mikado']
     },
     {
       question: 'Wann wurde Znuny gegründet?'
-      answers: ["2012"]
+      answers: ['2012']
     }
   ]
 
@@ -1753,7 +1741,7 @@ class App.CustomerChatRef extends App.Controller
     @answered = 0
     @correct = 0
     @wrong = 0
-    @maxChats = 4;
+    @maxChats = 4
 
     @render()
 
@@ -1784,7 +1772,7 @@ class App.CustomerChatRef extends App.Controller
   counter: =>
     @randomCounter(0,100)
 
-  switch: (state = undefined) =>
+  switch: (state = undefined) ->
 
     # read state
     if state is undefined
@@ -1807,7 +1795,7 @@ class App.CustomerChatRef extends App.Controller
       chat.addMessage text, if i % 2 then 'customer' else 'agent'
 
   addChat: ->
-    chat = new chatWindowRef
+    chat = new ChatWindowRef
       name: "Quizmaster-#{ ++@i }"
 
     @on 'layout-has-changed', @propagateLayoutChange
@@ -1823,12 +1811,12 @@ class App.CustomerChatRef extends App.Controller
 
   initQuiz: ->
     @chatWindows[0].addStatusMessage('To start the quiz type <strong>Start</strong>')
-    @chatWindows[0].bind "answer", @startQuiz
+    @chatWindows[0].bind 'answer', @startQuiz
 
   startQuiz: (answer) =>
-    return false unless answer is "Start"
+    return false unless answer is 'Start'
 
-    @chatWindows[0].unbind "answer"
+    @chatWindows[0].unbind 'answer'
 
     @nextQuestion()
 
@@ -1836,7 +1824,7 @@ class App.CustomerChatRef extends App.Controller
     if not @questions.length
       @currentChat.addStatusMessage("Du hast #{ @correct } von #{ @totalQuestions } Fragen richtig beantwortet!")
       for chat in @chatWindows
-        chat.unbind "answer"
+        chat.unbind 'answer'
         if chat is not @currentChat
           chat.goOffline()
       return
@@ -1844,7 +1832,7 @@ class App.CustomerChatRef extends App.Controller
     if @chatWindows.length < @maxChats and Math.random() < 0.2
       @addChat()
       randomWindowId = @chatWindows.length-1
-    else 
+    else
       # maybe take a chat offline
       if @chatWindows.length > 1 and Math.random() > 0.85
         randomWindowId = Math.floor(Math.random()*@chatWindows.length)
@@ -1862,9 +1850,9 @@ class App.CustomerChatRef extends App.Controller
     messageDelay = 500
 
     if newChat != @currentChat
-      @currentChat.unbind("answer") if @currentChat
+      @currentChat.unbind('answer') if @currentChat
       @currentChat = newChat
-      @currentChat.bind "answer", @onQuestionAnswer
+      @currentChat.bind 'answer', @onQuestionAnswer
       messageDelay = 1500
 
     @currentChat.showWritingLoader()
@@ -1911,7 +1899,7 @@ class CustomerChatRouter extends App.ControllerPermanent
 #App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
 #App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', role: ['Agent'], class: 'chat' }, 'NavBar' )
 
-class chatWindowRef extends Spine.Controller
+class ChatWindowRef extends Spine.Controller
   @extend Spine.Events
 
   className: 'chat-window'
@@ -1953,7 +1941,7 @@ class chatWindowRef extends Spine.Controller
     # make sure animation will run
     setTimeout (=> @el.addClass('is-open')), 0
 
-    # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent' 
+    # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent'
 
   onTransitionend: (event) =>
     # chat window is done with animation - adjust scroll-bars
@@ -1976,17 +1964,17 @@ class chatWindowRef extends Spine.Controller
     @updateModified(false)
 
   onKeydown: (event) =>
-    TABKEY = 9;
-    ENTERKEY = 13;
+    TABKEY = 9
+    ENTERKEY = 13
 
-    switch event.keyCode 
+    switch event.keyCode
       when TABKEY
         allChatInputs = $('.js-customerChatInput').not('[disabled="disabled"]')
         chatCount = allChatInputs.size()
         index = allChatInputs.index(@input)
 
         if chatCount > 1
-          switch index 
+          switch index
             when chatCount-1
               if !event.shiftKey
                 # State: tab without shift on last input
@@ -2010,7 +1998,7 @@ class chatWindowRef extends Spine.Controller
 
     @addMessage @input.html(), 'agent'
 
-    @trigger "answer", @input.html()
+    @trigger 'answer', @input.html()
 
     @input.html('')
 
@@ -2024,7 +2012,7 @@ class chatWindowRef extends Spine.Controller
     @addMessage(message, 'customer', !isFocused)
 
     if !isFocused
-      @updateModified(true) 
+      @updateModified(true)
       @sound.message.play()
 
   addMessage: (message, sender, isNew) =>
@@ -2066,7 +2054,7 @@ class chatWindowRef extends Spine.Controller
         @updateLastTimestamp label, time
         @lastTimestamp = timestamp
       else
-        @addTimestamp label, time 
+        @addTimestamp label, time
         @lastTimestamp = timestamp
         @lastAddedType = 'timestamp'
 
@@ -2136,7 +2124,7 @@ class TwitterConversationRef extends App.ControllerContent
 
   updateLetterCount: (event) =>
     textLength = @maxTextLength - @textarea.text().length - @signature.text().length - 2
-    className = switch 
+    className = switch
       when textLength < 0 then 'label-danger'
       when textLength < @warningTextLength then 'label-warning'
       else ''

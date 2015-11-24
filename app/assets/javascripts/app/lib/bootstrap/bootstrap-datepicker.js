@@ -25,6 +25,7 @@
 	Zammad Edits:
 		- fix todayBtn toggle of display none and block: toggleClass instead
 		- allow custom template as options parameter
+		- fix that place method doesn't think that the container is the window, but rather the real window is the window
 
  */
 
@@ -685,7 +686,7 @@
 				calendarHeight = this.picker.outerHeight(),
 				visualPadding = 10,
 				container = $(this.o.container),
-				windowWidth = container.width(),
+				windowWidth = $(window).width(),
 				scrollTop = container.scrollTop(),
 				appendOffset = container.offset();
 

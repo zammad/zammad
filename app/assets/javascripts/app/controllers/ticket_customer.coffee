@@ -1,29 +1,21 @@
-class App.TicketCustomer extends App.ControllerModal
-  constructor: ->
-    super
+class App.TicketCustomer extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Change Customer'
 
-    @head   = 'Change Customer'
-    @close  = true
-    @cancel = true
-    @button = true
-
+  content: ->
     configure_attributes = [
       { name: 'customer_id', display: 'Customer', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: true },
     ]
-
     controller = new App.ControllerForm(
       model:
         configure_attributes: configure_attributes,
       autofocus: true
     )
-
-    @content = controller.form
-
-    @show()
+    controller.form
 
   onSubmit: (e) =>
-    e.preventDefault()
-
     params = @formParam(e.target)
 
     @customer_id = params['customer_id']
@@ -31,7 +23,7 @@ class App.TicketCustomer extends App.ControllerModal
     callback = =>
 
       # close modal
-      @hide()
+      @close()
 
       # update ticket
       @ticket.updateAttributes(

@@ -19,6 +19,11 @@ class App.TicketZoomAttributeBar extends App.Controller
     @subscribeId = App.Macro.subscribe(@render)
     @render()
 
+    # rerender, e. g. on language change
+    @bind('ui:rerender', =>
+      @render()
+    )
+
   release: =>
     App.Macro.unsubscribe(@subscribeId)
 

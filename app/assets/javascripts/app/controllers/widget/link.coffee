@@ -1,7 +1,7 @@
 class App.WidgetLink extends App.Controller
   events:
-    'click .js-add': 'add',
-    'click .js-remove': 'remove',
+    'click .js-add': 'add'
+    'click .js-delete': 'delete'
 
   constructor: ->
     super
@@ -16,25 +16,20 @@ class App.WidgetLink extends App.Controller
     # fetch item on demand
     # get data
     @ajax(
-      id:    'links_' + @object.id + '_' + @object_type,
-      type:  'GET',
-      url:   @apiPath + '/links',
-      data:  {
-        link_object:       @object_type,
-        link_object_value: @object.id,
-      }
-      processData: true,
+      id:    "links_#{@object.id}_#{@object_type}"
+      type:  'GET'
+      url:   "#{@apiPath}/links"
+      data:
+        link_object:       @object_type
+        link_object_value: @object.id
+      processData: true
       success: (data, status, xhr) =>
         @links = data.links
-
-        # load assets
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @render()
     )
 
   render: =>
-
     list = {}
     for item in @links
       if !list[ item['link_type'] ]
@@ -51,7 +46,7 @@ class App.WidgetLink extends App.Controller
       links: list
     )
 
-  remove: (e) =>
+  delete: (e) =>
     e.preventDefault()
     link_type   = $(e.target).data('link-type')
     link_object_source = $(e.target).data('object')
@@ -61,17 +56,16 @@ class App.WidgetLink extends App.Controller
 
     # get data
     @ajax(
-      id:    'links_remove_' + @object.id + '_' + @object_type,
-      type:  'GET',
-      url:   @apiPath + '/links/remove',
-      data:  {
-        link_type:                 link_type,
-        link_object_source:        link_object_source,
-        link_object_source_value:  link_object_source_value,
-        link_object_target:        link_object_target,
-        link_object_target_value:  link_object_target_value,
-      }
-      processData: true,
+      id:   "links_remove_#{@object.id}_#{@object_type}"
+      type: 'GET'
+      url:  "#{@apiPath}/links/remove"
+      data:
+        link_type:                link_type
+        link_object_source:       link_object_source
+        link_object_source_value: link_object_source_value
+        link_object_target:       link_object_target
+        link_object_target_value: link_object_target_value
+      processData: true
       success: (data, status, xhr) =>
         @fetch()
     )
@@ -86,42 +80,37 @@ class App.WidgetLink extends App.Controller
       container:      @container
     )
 
-class App.LinkAdd extends App.ControllerModal
+class App.LinkAdd extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Link'
+  shown: false
+
   constructor: ->
     super
-    @head   = 'Links'
-    @button = true
-    @cancel = true
-
     @ticket = @object
-
     @fetch()
 
   fetch: ->
-
-    # merge tickets
     @ajax(
       id:    'ticket_related'
       type:  'GET'
-      url:   @apiPath + '/ticket_related/' + @ticket.id
-      processData: true,
+      url:   "#{@apiPath}/ticket_related/#{@ticket.id}"
+      processData: true
       success: (data, status, xhr) =>
-
-        # load assets
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @ticket_ids_by_customer    = data.ticket_ids_by_customer
         @ticket_ids_recent_viewed  = data.ticket_ids_recent_viewed
         @render()
     )
 
-
-  render: ->
-    @content = $ App.view('link/add')(
-      link_object:    @link_object,
-      link_object_id: @link_object_id,
-      object:         @object,
-    )
+  content: =>
+    content = $( App.view('link/add')(
+      link_object:    @link_object
+      link_object_id: @link_object_id
+      object:         @object
+    ))
 
     list = []
     for ticket_id in @ticket_ids_by_customer
@@ -129,11 +118,11 @@ class App.LinkAdd extends App.ControllerModal
         ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:       @content.find('#ticket-merge-customer-tickets'),
+      el:       content.find('#ticket-merge-customer-tickets')
       overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
-      model:    App.Ticket,
-      objects:  list,
-      radio:    true,
+      model:    App.Ticket
+      objects:  list
+      radio:    true
     )
 
     list = []
@@ -142,28 +131,26 @@ class App.LinkAdd extends App.ControllerModal
         ticketItem = App.Ticket.fullLocal( ticket_id )
         list.push ticketItem
     new App.ControllerTable(
-      el:       @content.find('#ticket-merge-recent-tickets'),
+      el:       content.find('#ticket-merge-recent-tickets')
       overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
-      model:    App.Ticket,
-      objects:  list,
-      radio:    true,
+      model:    App.Ticket
+      objects:  list
+      radio:    true
     )
 
-    @content.delegate('[name="ticket_number"]', 'focus', (e) ->
+    content.delegate('[name="ticket_number"]', 'focus', (e) ->
       $(e.target).parents().find('[name="radio"]').prop( 'checked', false )
     )
 
-    @content.delegate('[name="radio"]', 'click', (e) ->
+    content.delegate('[name="radio"]', 'click', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal( ticket_id )
         $(e.target).parents().find('[name="ticket_number"]').val( ticket.number )
     )
-
-    @show()
+    content
 
   onSubmit: (e) =>
-    e.preventDefault()
     params = @formParam(e.target)
 
     if !params['ticket_number']
@@ -175,18 +162,17 @@ class App.LinkAdd extends App.ControllerModal
 
     # get data
     @ajax(
-      id:    'links_add_' + @object.id + '_' + @object_type,
-      type:  'GET',
-      url:   @apiPath + '/links/add',
-      data:  {
-        link_type:                params['link_type'],
-        link_object_target:       'Ticket',
-        link_object_target_value: @object.id,
-        link_object_source:       'Ticket',
-        link_object_source_number: params['ticket_number'],
-      }
-      processData: true,
+      id:    "links_add_#{@object.id}_#{@object_type}"
+      type:  'GET'
+      url:   "#{@apiPath}/links/add"
+      data:
+        link_type:                params['link_type']
+        link_object_target:       'Ticket'
+        link_object_target_value: @object.id
+        link_object_source:       'Ticket'
+        link_object_source_number: params['ticket_number']
+      processData: true
       success: (data, status, xhr) =>
-        @hide()
+        @close()
         @parent.fetch()
     )

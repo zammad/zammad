@@ -18,7 +18,7 @@ class App.UiElement.textarea
     if attribute.upload
 
       # add file uploader
-      u = =>
+      u = ->
 
         # only add upload item if html element exists
         if $('#' + fileUploaderId )[0]

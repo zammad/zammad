@@ -1,25 +1,21 @@
-class App.ControllerGenericNew extends App.ControllerModal
-  constructor: (params) ->
-    super
+class App.ControllerGenericNew extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  headPrefix: 'New'
 
-    @head   = App.i18n.translateContent( 'New' ) + ': ' + App.i18n.translateContent( @pageData.object )
-    @cancel = true
-    @button = true
-
+  content: =>
+    @head = @pageData.object
     controller = new App.ControllerForm(
       model:     App[ @genericObject ]
       params:    @item
       screen:    @screen || 'edit'
       autofocus: true
     )
-
-    @content = controller.form
-
-    @show()
+    controller.form
 
   onSubmit: (e) ->
-    e.preventDefault()
-    params = @formParam( e.target )
+    params = @formParam(e.target)
 
     object = new App[ @genericObject ]
     object.load(params)
@@ -40,22 +36,23 @@ class App.ControllerGenericNew extends App.ControllerModal
       done: ->
         if ui.callback
           item = App[ ui.genericObject ].fullLocal(@id)
-          ui.callback( item )
-        ui.hide()
+          ui.callback(item)
+        ui.close()
 
       fail: ->
         ui.log 'errors'
-        ui.hide()
+        ui.close()
     )
 
-class App.ControllerGenericEdit extends App.ControllerModal
-  constructor: (params) ->
-    super
-    @item = App[ @genericObject ].find( params.id )
+class App.ControllerGenericEdit extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  headPrefix: 'Edit'
 
-    @head  = App.i18n.translateContent( 'Edit' ) + ': ' + App.i18n.translateContent( @pageData.object )
-    @cancel = true
-    @button = true
+  content: =>
+    @item = App[ @genericObject ].find( @id )
+    @head = @pageData.object
 
     controller = new App.ControllerForm(
       model:      App[ @genericObject ]
@@ -63,12 +60,9 @@ class App.ControllerGenericEdit extends App.ControllerModal
       screen:     @screen || 'edit'
       autofocus:  true
     )
-    @content = controller.form
-
-    @show()
+    controller.form
 
   onSubmit: (e) ->
-    e.preventDefault()
     params = @formParam(e.target)
     @item.load(params)
 
@@ -88,12 +82,12 @@ class App.ControllerGenericEdit extends App.ControllerModal
       done: ->
         if ui.callback
           item = App[ ui.genericObject ].fullLocal(@id)
-          ui.callback( item )
-        ui.hide()
+          ui.callback(item)
+        ui.close()
 
       fail: ->
         ui.log 'errors'
-        ui.hide()
+        ui.close()
     )
 
 class App.ControllerGenericIndex extends App.Controller
@@ -214,19 +208,17 @@ class App.ControllerGenericIndex extends App.Controller
       container:   @container
     )
 
-class App.ControllerGenericDescription extends App.ControllerModal
-  constructor: ->
-    super
-    @head       = 'Description'
-    @cancel     = false
-    @button     = 'Close'
-    description = marked(@description)
+class App.ControllerGenericDescription extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: false
+  buttonSubmit: 'Close'
+  head: 'Description'
 
-    @show(description)
+  content: =>
+    marked(@description)
 
-  onSubmit: (e) ->
-    e.preventDefault()
-    @hide()
+  onSubmit: =>
+    @close()
 
 class App.ControllerModalLoading extends App.Controller
   className: 'modal fade'
@@ -270,25 +262,25 @@ class App.ControllerModalLoading extends App.Controller
       return
     App.Delay.set(remove, delay * 1000)
 
-class App.ControllerGenericDestroyConfirm extends App.ControllerModal
-  constructor: ->
-    super
-    @head    = 'Confirm'
-    @cancel  = true
-    @button  = 'Yes'
-    @message = 'Sure to delete this object?'
-    @show()
+class App.ControllerGenericDestroyConfirm extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'yes'
+  buttonClass: 'btn--danger'
+  head: 'Confirm'
 
-  onSubmit: (e) ->
-    e.preventDefault()
+  content: ->
+    App.i18n.translateContent('Sure to delete this object?')
+
+  onSubmit: =>
     @item.destroy(
       done: =>
         if @callback
           @callback()
-        @hide()
+        @close()
       fail: =>
         @log 'errors'
-        @hide()
+        @close()
     )
 
 class App.ControllerDrox extends App.Controller
@@ -430,49 +422,44 @@ class App.ControllerNavSidbar extends App.ControllerContent
 
   executeController: (selectedItem) =>
 
-      # in case of rerendering
-      if @activeController && @activeController.render
-        @activeController.render()
-        return
+    # in case of rerendering
+    if @activeController && @activeController.render
+      @activeController.render()
+      return
 
-      @activeController = new selectedItem.controller(
-        el: @$('.main')
-      )
+    @activeController = new selectedItem.controller(
+      el: @$('.main')
+    )
 
-class App.GenericHistory extends App.ControllerModal
+class App.GenericHistory extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: false
+  buttonSubmit: false
+  head: 'History'
+  shown: false
+
   constructor: ->
     super
-    @head  = 'History'
-    @close = true
+    @fetch()
 
-  render: ->
+  content: =>
+    localItem = @reworkItems(@items)
 
-    localItem = @reworkItems( @items )
-
-    @content = $ App.view('generic/history')(
+    content = $ App.view('generic/history')(
       items: localItem
     )
-
-    @onShow()
-
-    @content.find('a[data-type="sortorder"]').bind(
-      'click',
-      (e) =>
-        e.preventDefault()
-        @sortorder()
+    content.find('a[data-type="sortorder"]').bind('click', (e) =>
+      e.preventDefault()
+      @sortorder()
     )
-    if !@isShown
-      @isShown = true
-      @show()
+    content
 
-  onShow: =>
-    # enable user popups
+  onShown: =>
     @userPopups()
 
   sortorder: =>
     @items = @items.reverse()
-
-    @render()
+    @update()
 
   T: (name) ->
     App.i18n.translateInline(name)

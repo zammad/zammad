@@ -22,7 +22,7 @@ class App.TaskbarWidget extends App.Controller
     return if !@Session.get()
 
     tasks = App.TaskManager.all()
-    item_list = []
+    taskItems = []
     for task in tasks
 
       # collect meta data of task for task bar item
@@ -32,7 +32,7 @@ class App.TaskbarWidget extends App.Controller
         iconClass: 'loading'
         title: App.i18n.translateInline('Loading...')
         head:  App.i18n.translateInline('Loading...')
-      worker = App.TaskManager.worker( task.key  )
+      worker = App.TaskManager.worker(task.key)
       if worker
         meta = worker.meta()
 
@@ -45,14 +45,14 @@ class App.TaskbarWidget extends App.Controller
       item = {}
       item.task = task
       item.data = data
-      item_list.push item
+      taskItems.push item
 
       # set title
       if task.active
         @title data.title
 
     @html App.view('task_widget_tasks')(
-      item_list: item_list
+      taskItems: taskItems
     )
 
     dndOptions =
@@ -69,9 +69,9 @@ class App.TaskbarWidget extends App.Controller
           if !key
             throw 'No such key attributes found for task item'
           order.push key
-        App.TaskManager.reorder( order )
+        App.TaskManager.reorder(order)
 
-    @el.sortable( dndOptions )
+    @el.sortable(dndOptions)
 
   remove: (e, key = false, force = false) =>
     e.preventDefault()
@@ -81,7 +81,7 @@ class App.TaskbarWidget extends App.Controller
       throw 'No such key attributes found for task item'
 
     # check if input has changed
-    worker = App.TaskManager.worker( key )
+    worker = App.TaskManager.worker(key)
     if !force && worker && worker.changed
       if worker.changed()
         new Remove(
@@ -91,7 +91,7 @@ class App.TaskbarWidget extends App.Controller
         return
 
     # check if active task is closed
-    currentTask      = App.TaskManager.get( key )
+    currentTask      = App.TaskManager.get(key)
     tasks            = App.TaskManager.all()
     active_is_closed = false
     for task in tasks
@@ -99,7 +99,9 @@ class App.TaskbarWidget extends App.Controller
         active_is_closed = true
 
     # remove task
-    App.TaskManager.remove( key )
+    App.TaskManager.remove(key, false)
+
+    $(e.target).closest('.task').remove()
 
     # if we do not need to move to an other task
     return if !active_is_closed
@@ -112,18 +114,16 @@ class App.TaskbarWidget extends App.Controller
 
     @navigate '#'
 
-class Remove extends App.ControllerModal
-  constructor: ->
-    super
-    @head        = 'Confirm'
-    @message     = 'Tab has changed, you really want to close it?'
-    @cancel      = true
-    @close       = true
-    @button      = 'Discared changes'
-    @buttonClass = 'btn--danger'
-    @show()
+class Remove extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Discared changes'
+  buttonClass: 'btn--danger'
+  head: 'Confirm'
+
+  content: ->
+    App.i18n.translateContent('Tab has changed, you really want to close it?')
 
   onSubmit: (e) =>
-    e.preventDefault()
-    @hide()
+    @close()
     @ui.remove(e, @key, true)

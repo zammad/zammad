@@ -1,73 +1,64 @@
-class App.TicketMerge extends App.ControllerModal
+class App.TicketMerge extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Merge'
+  shown: false
+
   constructor: ->
     super
-    @head = 'Merge'
-    @button = true
-    @cancel = true
     @fetch()
 
   fetch: ->
-
-    # merge tickets
     @ajax(
       id:    'ticket_related'
       type:  'GET'
-      url:   @apiPath + '/ticket_related/' + @ticket.id
-      processData: true,
+      url:   "#{@apiPath}/ticket_related/#{@ticket.id}"
+      processData: true
       success: (data, status, xhr) =>
-
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @ticket_ids_by_customer    = data.ticket_ids_by_customer
         @ticket_ids_recent_viewed  = data.ticket_ids_recent_viewed
         @render()
     )
 
-  render: ->
-
-    @content = $( App.view('agent_ticket_merge')() )
+  content: =>
+    content = $( App.view('agent_ticket_merge')() )
 
     new App.TicketList(
-      el:         @content.find('#ticket-merge-customer-tickets')
+      el:         content.find('#ticket-merge-customer-tickets')
       ticket_ids: @ticket_ids_by_customer
       radio:      true
     )
 
     new App.TicketList(
-      el:         @content.find('#ticket-merge-recent-tickets'),
+      el:         content.find('#ticket-merge-recent-tickets')
       ticket_ids: @ticket_ids_recent_viewed
       radio:      true
     )
 
-    @content.delegate('[name="master_ticket_number"]', 'focus', (e) ->
+    content.delegate('[name="master_ticket_number"]', 'focus', (e) ->
       $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
-    @content.delegate('[name="radio"]', 'click', (e) ->
+    content.delegate('[name="radio"]', 'click', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
-        ticket    = App.Ticket.fullLocal( ticket_id )
-        $(e.target).parents().find('[name="master_ticket_number"]').val( ticket.number )
+        ticket    = App.Ticket.fullLocal(ticket_id)
+        $(e.target).parents().find('[name="master_ticket_number"]').val(ticket.number)
     )
 
-    @show()
+    content
 
   onSubmit: (e) =>
-    e.preventDefault()
-
-    # disable form
     @formDisable(e)
-
     params = @formParam(e.target)
 
     # merge tickets
     @ajax(
-      id:    'ticket_merge',
-      type:  'GET',
-      url:   @apiPath +  '/ticket_merge/' + @ticket.id + '/' + params['master_ticket_number'],
-      data:  {
-#        view: @view
-      }
+      id:    'ticket_merge'
+      type:  'GET'
+      url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params['master_ticket_number']}"
       processData: true,
       success: (data, status, xhr) =>
 
@@ -78,7 +69,7 @@ class App.TicketMerge extends App.ControllerModal
           App.Collection.load( type: 'Ticket', data: [data.slave_ticket] )
 
           # hide dialog
-          @hide()
+          @close()
 
           # view ticket
           @log 'notice', 'nav...', App.Ticket.find( data.master_ticket['id'] )
@@ -105,4 +96,3 @@ class App.TicketMerge extends App.ControllerModal
       error: =>
         @formEnable(e)
     )
-

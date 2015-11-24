@@ -1,22 +1,11 @@
 class App.TicketHistory extends App.GenericHistory
-  constructor: ->
-    super
-    @fetch()
-
-  fetch: ->
-
-    # get data
+  fetch: =>
     @ajax(
-      id:    'ticket_history',
-      type:  'GET',
-      url:   @apiPath + '/ticket_history/' + @ticket_id,
+      id:    'ticket_history'
+      type:  'GET'
+      url:   "#{@apiPath}/ticket_history/#{@ticket_id}"
       success: (data, status, xhr) =>
-
-        # load assets
-        App.Collection.loadAssets( data.assets )
-
+        App.Collection.loadAssets(data.assets)
         @items = data.history
-
-        # render page
         @render()
     )
