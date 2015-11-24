@@ -13,6 +13,7 @@ do($ = window.jQuery, window) ->
       host: ''
       port: 6042
       debug: false
+      flat: false
       fontSize: undefined
       buttonClass: 'open-zammad-chat'
       inactiveClass: 'is-inactive'
