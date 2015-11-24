@@ -63,7 +63,7 @@
     <div class="browser-head">
       <form class="browser-input js-testurl" novalidate>
         <input type="url" class="js-testurl-input" id="preview-iframe" placeholder="zammad.org">
-        <span class="help-block"><%- @T("Because of security reasons some websites can't be displayed (for example google.com).") %></span>
+        <div class="loading icon small"></div>
       </form>
     </div>
     <div class="browser-body js-demo">
@@ -138,6 +138,17 @@
         </div>
         <span class="help-block"><%- @T('The default font size is 12px.') %></span>
       </div>
+      <div class="switch form-group formGroup--halfSize">
+        <div class="formGroup-label">
+            <label for="form-chat-flat"><%- @T('Flat Design') %></label>
+          </div>
+        <div class="controls">
+          <div class="zammad-switch">
+             <input name="flat" type="checkbox" id="form-chat-flat">
+             <label for="form-chat-flat"></label>
+          </div>          
+        </div>
+      </div>
     </fieldset>
 
     <br>
@@ -158,16 +169,6 @@
                 <%- @Icon('checkbox-checked', 'icon-checked') %>
               </span>
               <%- @T('Enable debugging for implementation.') %>
-            </label>
-        <tr>
-          <td>
-            <label class="inline-label">
-              <span class="checkbox-replacement checkbox-replacement--inline">
-                <input type="checkbox" name="flat" value="true">
-                <%- @Icon('checkbox', 'icon-unchecked') %>
-                <%- @Icon('checkbox-checked', 'icon-checked') %>
-              </span>
-              <%- @T('Flat design.') %>
             </label>
       </tbody>
     </table>
