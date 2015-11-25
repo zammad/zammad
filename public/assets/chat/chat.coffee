@@ -8,7 +8,7 @@ do($ = window.jQuery, window) ->
   class ZammadChat
 
     defaults:
-      chat_id: undefined
+      chatId: undefined
       show: true
       target: $('body')
       host: ''
@@ -80,9 +80,9 @@ do($ = window.jQuery, window) ->
         @log 'notice', 'Chat: Browser not supported!'
         return
 
-      if !options.chat_id
+      if !options.chatId
         @state = 'unsupported'
-        @log 'error', 'Chat: need chat id as option!'
+        @log 'error', 'Chat: need chatId as option!'
         return
 
       @options = $.extend {}, @defaults, options
@@ -111,7 +111,7 @@ do($ = window.jQuery, window) ->
         @sendMessage()
 
     send: (event, data = {}) =>
-      data.chat_id = @options.chat_id
+      data.chat_id = @options.chatId
       @log 'debug', 'ws:send', event, data
       pipe = JSON.stringify
         event: event
@@ -447,7 +447,7 @@ do($ = window.jQuery, window) ->
       protocol = 'ws://'
       if window.location.protocol is 'https:'
         protocol = 'wss://'
-      @options.host = "#{ protocol }#{ scriptHost }"
+      @options.host = "#{ protocol }#{ scriptHost }/ws"
 
     wsConnect: =>
       @detectHost() if !@options.host
