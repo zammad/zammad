@@ -1,9 +1,5 @@
 class App.ChannelChat extends App.Controller
   events:
-    'click .js-add': 'new'
-    'click .js-edit': 'edit'
-    'click .js-remove': 'remove'
-    'click .js-widget': 'widget'
     'change .js-params': 'updateParams'
     'input .js-params': 'updateParams'
     'submit .js-demo-head': 'onUrlSubmit'
@@ -11,6 +7,7 @@ class App.ChannelChat extends App.Controller
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
     'click .js-toggle-chat': 'toggleChat'
+    'click .js-chatSetting': 'toggleChatSetting'
 
   elements:
     '.js-browser': 'browser'
@@ -27,12 +24,13 @@ class App.ChannelChat extends App.Controller
     '.js-code': 'code'
     '.js-palette': 'palette'
     '.js-color': 'colorField'
+    '.js-chatSetting': 'chatSetting'
 
   apiOptions: [
     {
       name: 'chatId'
       default: '1'
-      type: 'Integer'
+      type: 'Number'
       description: 'Identifier of the chat-topic.'
     }
     {
@@ -75,7 +73,7 @@ class App.ChannelChat extends App.Controller
     {
       name: 'flat'
       default: 'false'
-      type: 'boolean'
+      type: 'Boolean'
       description: 'Removes the shadows for a flat look.'
     }
     {
@@ -93,7 +91,7 @@ class App.ChannelChat extends App.Controller
     {
       name: 'cssAutoload'
       default: 'true'
-      type: 'boolean'
+      type: 'Boolean'
       description: 'Automatically loads the chat.css file. If you want to use your own css, just set it to false.'
     }
     {
@@ -110,7 +108,7 @@ class App.ChannelChat extends App.Controller
 
   constructor: ->
     super
-
+    @title 'Chat'
     if @Session.get('email')
       @previewUrl = "www.#{@Session.get('email').replace(/^.+?\@/, '')}"
 
@@ -135,16 +133,15 @@ class App.ChannelChat extends App.Controller
     )
 
   render: (data = {}) =>
-
-    chats = []
-    for chat_id in data.chat_ids
-      chats.push App.Chat.find(chat_id)
-
     @html App.view('channel/chat')(
       baseurl: window.location.origin
-      chats: chats
       apiOptions: @apiOptions
       previewUrl: @previewUrl
+      chatSetting: @Config.get('chat')
+    )
+
+    new Topics(
+      el: @$('.js-topics')
     )
 
     @code.each (i, block) ->
@@ -276,47 +273,12 @@ class App.ChannelChat extends App.Controller
     @isOpen = @chat.hasClass('is-open')
     @updatePreview()
 
-  new: (e) =>
-    new App.ControllerGenericNew(
-      pageData:
-        title: 'Chats'
-        object: 'Chat'
-        objects: 'Chats'
-      genericObject: 'Chat'
-      callback:   @load
-      container:  @el.closest('.content')
-      large:      true
-    )
-
-  edit: (e) =>
-    e.preventDefault()
-    id = $(e.target).closest('tr').data('id')
-    new App.ControllerGenericEdit(
-      id:        id
-      genericObject: 'Chat'
-      pageData:
-        object: 'Chat'
-      container: @el.closest('.content')
-      callback:  @load
-    )
-
-  remove: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('tr').data('id')
-    item = App.Chat.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item:      item
-      container: @el.closest('.content')
-      callback:  @load
-    )
-
-  widget: (e) ->
-    e.preventDefault()
-    id = $(e.target).closest('.action').data('id')
-    new Widget(
-      permanent:
-        id: id
-    )
+  toggleChatSetting: =>
+    value = @chatSetting.prop('checked')
+    setting = App.Setting.findByAttribute('name', 'chat')
+    setting.state_current = { value: value }
+    setting.save()
+    @Config.set('chat', value)
 
   updateParams: =>
     quote = (value) ->
@@ -360,3 +322,52 @@ class App.ChannelChat extends App.Controller
       hljs.highlightBlock block
 
 App.Config.set( 'Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, role: ['Admin'] }, 'NavBarAdmin' )
+
+class Topics extends App.Controller
+  events:
+    'click .js-add': 'new'
+    'click .js-edit': 'edit'
+    'click .js-remove': 'remove'
+
+  constructor: ->
+    super
+    @render()
+
+  render: =>
+    @html App.view('channel/topics')(
+      chats: App.Chat.all()
+    )
+
+  new: (e) =>
+    new App.ControllerGenericNew(
+      pageData:
+        title: 'Chats'
+        object: 'Chat'
+        objects: 'Chats'
+      genericObject: 'Chat'
+      callback:   @render
+      container:  @el.closest('.content')
+      large:      true
+    )
+
+  edit: (e) =>
+    e.preventDefault()
+    id = $(e.target).closest('tr').data('id')
+    new App.ControllerGenericEdit(
+      id:        id
+      genericObject: 'Chat'
+      pageData:
+        object: 'Chat'
+      container: @el.closest('.content')
+      callback:  @render
+    )
+
+  remove: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('tr').data('id')
+    item = App.Chat.find(id)
+    new App.ControllerGenericDestroyConfirm(
+      item:      item
+      container: @el.closest('.content')
+      callback:  @render
+    )

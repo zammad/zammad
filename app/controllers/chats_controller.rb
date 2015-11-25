@@ -11,6 +11,8 @@ class ChatsController < ApplicationController
       chat_ids.push chat.id
       assets = chat.assets(assets)
     }
+    setting = Setting.find_by(name: 'chat')
+    assets = setting.assets(assets)
     render json: {
       chat_ids: chat_ids,
       assets: assets,

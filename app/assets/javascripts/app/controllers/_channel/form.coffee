@@ -3,21 +3,29 @@ class App.ChannelForm extends App.Controller
   events:
     'change form.js-params': 'updateParams'
     'keyup form.js-params': 'updateParams'
+    'click .js-formSetting': 'toggleFormSetting'
+
+  elements:
+    '.js-paramsBlock': 'paramsBlock'
+    '.js-formSetting': 'formSetting'
 
   constructor: ->
     super
     @title 'Form'
-    @render()
-    @updateParams()
-    new App.SettingsArea(
-      el:   @$('.js-settings')
-      area: 'Form::Base'
-    )
+    @subscribeId = App.Setting.subscribe(@render, initFetch: true)
 
-  render: ->
+  render: =>
+    App.Setting.unsubscribe(@subscribeId)
+    setting = App.Setting.findByAttribute('name', 'form_ticket_create')
     @html App.view('channel/form')(
       baseurl: window.location.origin
+      formSetting: setting.state_current.value
     )
+
+    @paramsBlock.each (i, block) ->
+      hljs.highlightBlock block
+
+    @updateParams()
 
   updateParams: ->
     quote = (string) ->
@@ -35,5 +43,11 @@ class App.ChannelForm extends App.Controller
         else
           paramString += "    #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)
+
+  toggleFormSetting: =>
+    value = @formSetting.prop('checked')
+    setting = App.Setting.findByAttribute('name', 'form_ticket_create')
+    setting.state_current = { value: value }
+    setting.save()
 
 App.Config.set( 'Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, role: ['Admin'] }, 'NavBarAdmin' )
