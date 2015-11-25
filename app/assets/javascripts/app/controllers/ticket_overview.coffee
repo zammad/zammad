@@ -78,7 +78,6 @@ class App.TicketOverview extends App.Controller
 
 class Navbar extends App.Controller
   elements:
-    '.js-tabsHolder': 'tabsHolder'
     '.js-tabsClone': 'clone'
     '.js-tabClone': 'tabClone'
     '.js-tabs': 'tabs'
@@ -130,7 +129,9 @@ class Navbar extends App.Controller
       items: items
       isAgent: @isRole('Agent')
 
-    while @clone.width() > @tabsHolder.width()
+    console.log @el.width(), @clone.width()
+
+    while @clone.width() > @el.width()
       @tabClone.not('.hide').last().addClass('hide')
       @tab.not('.hide').last().addClass('hide')
       @dropdownItem.filter('.hide').last().removeClass('hide')

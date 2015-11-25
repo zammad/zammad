@@ -10,19 +10,24 @@ class App.ChannelChat extends App.Controller
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
+    'click .js-toggle-chat': 'toggleChat'
+    'input .js-chatTitle': 'changeTitle'
 
   elements:
     '.js-browser': 'browser'
+    '.js-browserBody': 'browserBody'
     '.js-iframe': 'iframe'
+    '.js-screenshot': 'screenshot'
+    '.js-website': 'website'
     '.js-chat': 'chat'
+    '.js-chatHeader': 'chatHeader'
+    '.js-chat-welcome': 'chatWelcome'
     '.js-testurl-input': 'urlInput'
     '.js-backgroundColor': 'chatBackground'
     '.js-paramsBlock': 'paramsBlock'
     '.js-code': 'code'
     '.js-palette': 'palette'
     '.js-color': 'colorField'
-    '.js-screenshot': 'screenshot'
-    '.js-website': 'website'
 
   apiOptions: [
     {
@@ -94,6 +99,10 @@ class App.ChannelChat extends App.Controller
     }
   ]
 
+  isOpen: true
+  browserWidth: 1280
+  chatHeight: 360
+
   constructor: ->
     super
     @load()
@@ -131,6 +140,7 @@ class App.ChannelChat extends App.Controller
     @code.each (i, block) ->
       hljs.highlightBlock block
 
+    @adjustBrowserWidth()
     @updateParams()
 
   selectBrowserWidth: (event) =>
@@ -138,31 +148,42 @@ class App.ChannelChat extends App.Controller
 
     # select tab
     tab.addClass('is-selected').siblings().removeClass('is-selected')
-    value = tab.attr('data-value')
-    width = parseInt value, 10
+    @browserWidth = tab.attr('data-value')
+    @adjustBrowserWidth()
+
+  adjustBrowserWidth: ->
+    width = parseInt @browserWidth, 10
 
     # reset zoom
     @chat
-      .css('transform', '')
       .removeClass('is-fullscreen')
+      .css 'transform', "translateY(#{ @getChatOffset() }px)"
     @browser.css('width', '')
     @website.css
       transform: ''
       width: ''
       height: ''
 
-    return if value is 'fit'
+    return if @browserWidth is 'fit'
 
     if width < @el.width()
-      @chat.addClass('is-fullscreen')
+      @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
       @browser.css('width', "#{ width }px")
     else
       percentage = @el.width()/width
-      @chat.css('transform', "scale(#{ percentage })")
+      @chat.css 'transform', "translateY(#{ @getChatOffset() * percentage }px) scale(#{ percentage })"
       @website.css
         transform: "scale(#{ percentage })"
         width: @el.width() / percentage
-        height: @el.height() / percentage
+        height: @browserBody.height() / percentage
+
+  getChatOffset: (fullscreen) ->
+    return 0 if @isOpen
+
+    if fullscreen
+      return @browserBody.height() - @chatHeader.outerHeight()
+    else
+      return @chatHeight - @chatHeader.outerHeight()
 
   changeDemoWebsite: (event) =>
     event.preventDefault() if event
@@ -178,11 +199,11 @@ class App.ChannelChat extends App.Controller
 
     @urlInput.addClass('is-loading')
 
-    # clear palette and iframe
     @palette.empty()
-    @website.attr('data-mode', '')
-    @iframe.attr('src', '')
+
     @screenshot.attr('src', '')
+    @website.attr('data-mode', 'iframe')
+    @iframe.attr('src', @url)
 
     $.ajax
       url: 'https://images.zammad.com/api/v1/webpage/combined'
@@ -196,12 +217,9 @@ class App.ChannelChat extends App.Controller
     imageSource = data['data_url']
 
     if imageSource 
-      console.log "renderDemoWebsite", typeof imageSource, imageSource
       @screenshot.attr 'src', imageSource
+      @iframe.attr('src', '')
       @website.attr('data-mode', 'screenshot')
-    else
-      @iframe.attr 'src', @url
-      @website.attr('data-mode', 'iframe')
 
     @renderPalette data['palette']
 
@@ -234,6 +252,14 @@ class App.ChannelChat extends App.Controller
       code = $(event.currentTarget).attr('data-color')
     @colorField.val code
     @updateParams()
+
+  toggleChat: =>
+    @chat.toggleClass('is-open')
+    @isOpen = @chat.hasClass('is-open')
+    @adjustBrowserWidth()
+
+  changeTitle: (event) ->
+    @chatWelcome.html $(event.currentTarget).val()
 
   new: (e) =>
     new App.ControllerGenericNew(
@@ -294,6 +320,7 @@ class App.ChannelChat extends App.Controller
       params.flat = true
     else
       @chat.removeClass('zammad-chat--flat')
+    @chatWelcome.html params.title
 
     if @permanent
       for key, value of @permanent

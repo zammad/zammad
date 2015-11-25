@@ -1,4 +1,4 @@
-<div class="tabsHolder js-tabsHolder">
+<div class="tabsHolder">
   <div class="tabs tabs--inline tabs--big js-tabs">
     <% if @items: %>
       <% for item in @items: %>

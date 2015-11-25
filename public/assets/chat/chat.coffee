@@ -289,7 +289,7 @@ do($ = window.jQuery, window) ->
         @showLoader()
 
       @el
-        .addClass('zammad-chat-is-open')
+        .addClass('zammad-chat-is-visible')
 
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
@@ -323,7 +323,7 @@ do($ = window.jQuery, window) ->
       @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
 
     onCloseAnimationEnd: =>
-      @el.removeClass('zammad-chat-is-open')
+      @el.removeClass('zammad-chat-is-visible')
       @disconnect()
       @isOpen = false
 
