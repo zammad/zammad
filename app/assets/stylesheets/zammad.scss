@@ -2332,13 +2332,18 @@ ol.tabs li {
 }
 
 .color-swatch {
-  border-radius: 100%;
-  width: 11px;
-  height: 11px;
+  padding: 2px;
+  margin: -2px 0;
   cursor: pointer;
   
-  & + .color-swatch {
-    margin-left: 4px;
+  /* :after technique for bigger click area */
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 11px;
+    width: 11px;
+    border-radius: 100%;
+    background: currentColor;
   }
 }
 
@@ -7440,7 +7445,7 @@ output {
     position: relative;
     height: 100%;
     transform-origin: left top;
-    overflow: auto;
+    overflow: hidden;
     
     &[data-mode=screenshot] iframe,
     &[data-mode=iframe] img {
@@ -7466,13 +7471,13 @@ output {
 
 .browser-head {
   display: flex;
-  align-items: center;
   padding: 10px;
   border-bottom: 1px solid hsl(0,0%,90%);
   
   .browser-input {
-    flex: 1;
     position: relative;
+    flex: 1;
+    margin-right: 10px;
     
     input {
       min-width: 0;
