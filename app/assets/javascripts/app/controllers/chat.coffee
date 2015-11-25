@@ -233,6 +233,7 @@ class ChatWindow extends App.Controller
     @lastTimestamp
     @lastAddedType
     @isTyping = false
+    @isAgentTyping = false
     @resetUnreadMessages()
 
     @on 'layout-change', @scrollToBottom
@@ -319,6 +320,10 @@ class ChatWindow extends App.Controller
     ENTERKEY = 13
 
     if event.keyCode isnt TABKEY && event.keyCode isnt ENTERKEY
+
+      # send typing start event only every 1.4 seconds
+      return if @isAgentTyping && @isAgentTyping > new Date(new Date().getTime() - 1400)
+      @isAgentTyping = new Date()
       App.WebSocket.send(
         event:'chat_session_typing'
         data:
@@ -413,7 +418,7 @@ class ChatWindow extends App.Controller
       @scrollToBottom()
 
     # clear old delay, set new
-    @delay(@removeWritingLoader, 1800, 'typing')
+    @delay(@removeWritingLoader, 2000, 'typing')
 
   removeWritingLoader: =>
     @isTyping = false
