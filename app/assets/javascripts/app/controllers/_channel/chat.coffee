@@ -5,13 +5,12 @@ class App.ChannelChat extends App.Controller
     'click .js-remove': 'remove'
     'click .js-widget': 'widget'
     'change .js-params': 'updateParams'
-    'keyup .js-params': 'updateParams'
-    'submit .js-demo-head': 'changeDemoWebsite'
+    'input .js-params': 'updateParams'
+    'submit .js-demo-head': 'onUrlSubmit'
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
     'click .js-toggle-chat': 'toggleChat'
-    'input .js-chatTitle': 'changeTitle'
 
   elements:
     '.js-browser': 'browser'
@@ -101,7 +100,6 @@ class App.ChannelChat extends App.Controller
 
   isOpen: true
   browserWidth: 1280
-  chatHeight: 360
 
   constructor: ->
     super
@@ -140,11 +138,11 @@ class App.ChannelChat extends App.Controller
     @code.each (i, block) ->
       hljs.highlightBlock block
 
-    @adjustBrowserWidth()
+    @updatePreview()
     @updateParams()
 
-    # bind adjustBrowserWidth with parameter animate = false
-    $(window).on 'resize.chat-designer', => @adjustBrowserWidth false
+    # bind updatePreview with parameter animate = false
+    $(window).on 'resize.chat-designer', => @updatePreview false
 
   release: ->
     $(window).off 'resize.chat-designer'
@@ -155,9 +153,9 @@ class App.ChannelChat extends App.Controller
     # select tab
     tab.addClass('is-selected').siblings().removeClass('is-selected')
     @browserWidth = tab.attr('data-value')
-    @adjustBrowserWidth()
+    @updatePreview()
 
-  adjustBrowserWidth: (animate =  true) =>
+  updatePreview: (animate =  true) =>
     width = parseInt @browserWidth, 10
 
     # reset zoom
@@ -190,13 +188,14 @@ class App.ChannelChat extends App.Controller
     if fullscreen
       return @browserBody.height() - @chatHeader.outerHeight()
     else
-      return @chatHeight - @chatHeader.outerHeight()
+      return @chat.height() - @chatHeader.outerHeight()
 
-  changeDemoWebsite: (event) =>
+  onUrlSubmit: (event) ->
     event.preventDefault() if event
+    @urlInput.focus()
+    @changeDemoWebsite()
 
-    # fire both on enter and blur
-    # but cache url
+  changeDemoWebsite: ->
     return if @urlInput.val() is '' or @urlInput.val() is @urlCache
     @urlCache = @urlInput.val()
 
@@ -204,7 +203,7 @@ class App.ChannelChat extends App.Controller
     if !@url.startsWith('http')
       @url = "http://#{ @url }"
 
-    @urlInput.addClass('is-loading').focus()
+    @urlInput.addClass('is-loading')
 
     @palette.empty()
 
@@ -263,10 +262,7 @@ class App.ChannelChat extends App.Controller
   toggleChat: =>
     @chat.toggleClass('is-open')
     @isOpen = @chat.hasClass('is-open')
-    @adjustBrowserWidth()
-
-  changeTitle: (event) ->
-    @chatWelcome.html $(event.currentTarget).val()
+    @updatePreview()
 
   new: (e) =>
     new App.ControllerGenericNew(
@@ -328,6 +324,8 @@ class App.ChannelChat extends App.Controller
     else
       @chat.removeClass('zammad-chat--flat')
     @chatWelcome.html params.title
+
+    @updatePreview false
 
     if @permanent
       for key, value of @permanent
