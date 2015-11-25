@@ -6,7 +6,7 @@ class App.ChannelChat extends App.Controller
     'click .js-widget': 'widget'
     'change .js-params': 'updateParams'
     'keyup .js-params': 'updateParams'
-    'submit .js-testurl': 'changeDemoWebsite'
+    'submit .js-demo-head': 'changeDemoWebsite'
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
@@ -204,7 +204,7 @@ class App.ChannelChat extends App.Controller
     if !@url.startsWith('http')
       @url = "http://#{ @url }"
 
-    @urlInput.addClass('is-loading')
+    @urlInput.addClass('is-loading').focus()
 
     @palette.empty()
 
