@@ -7462,6 +7462,7 @@ output {
     height: 100%;
     background: white;
     border-radius: 0 0 5px 5px;
+    pointer-events: none;
   }
 
   img {
