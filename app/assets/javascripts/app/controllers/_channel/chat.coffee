@@ -30,10 +30,10 @@ class App.ChannelChat extends App.Controller
 
   apiOptions: [
     {
-      name: 'channel'
-      default: "'default'"
-      type: 'String'
-      description: 'Name of the chat-channel.'
+      name: 'chatId'
+      default: '1'
+      type: 'Integer'
+      description: 'Identifier of the chat-topic.'
     }
     {
       name: 'show'
@@ -55,16 +55,16 @@ class App.ChannelChat extends App.Controller
       descriptionSubstitute: window.location.origin
     }
     {
-      name: 'port'
-      default: 6042
-      type: 'Int'
-      description: ''
-    }
-    {
       name: 'debug'
       default: false
       type: 'Boolean'
       description: 'Enables console logging.'
+    }
+    {
+      name: 'title'
+      default: "'<strong>Chat</strong> with us!'"
+      type: 'String'
+      description: 'Welcome Title shown on the closed chat. Can contain HTML.'
     }
     {
       name: 'fontSize'
@@ -91,18 +91,29 @@ class App.ChannelChat extends App.Controller
       description: 'This class gets added to the button on initialization and gets removed once the chat connection got established.'
     }
     {
-      name: 'title'
-      default: "'<strong>Chat</strong> with us!'"
+      name: 'cssAutoload'
+      default: 'true'
+      type: 'boolean'
+      description: 'Automatically loads the chat.css file. If you want to use your own css, just set it to false.'
+    }
+    {
+      name: 'cssUrl'
+      default: 'undefined'
       type: 'String'
-      description: 'Welcome Title shown on the closed chat. Can contain HTML.'
+      description: 'Location of an external chat.css file.'
     }
   ]
 
   isOpen: true
   browserWidth: 1280
+  previewUrl: ''
 
   constructor: ->
     super
+
+    if @Session.get('email')
+      @previewUrl = "www.#{@Session.get('email').replace(/^.+?\@/, '')}"
+
     @load()
 
     @widgetDesignerPermanentParams =
@@ -133,6 +144,7 @@ class App.ChannelChat extends App.Controller
       baseurl: window.location.origin
       chats: chats
       apiOptions: @apiOptions
+      previewUrl: @previewUrl
     )
 
     @code.each (i, block) ->
@@ -222,7 +234,7 @@ class App.ChannelChat extends App.Controller
   renderDemoWebsite: (data) =>
     imageSource = data['data_url']
 
-    if imageSource 
+    if imageSource
       @screenshot.attr 'src', imageSource
       @iframe.attr('src', '')
       @website.attr('data-mode', 'screenshot')
@@ -236,7 +248,7 @@ class App.ChannelChat extends App.Controller
     palette = _.map palette, tinycolor
 
     # filter white
-    palette = _.filter palette, (color) =>
+    palette = _.filter palette, (color) ->
       color.getLuminance() < 0.85
 
     htmlString = ''
@@ -347,4 +359,4 @@ class App.ChannelChat extends App.Controller
     @paramsBlock.each (i, block) ->
       hljs.highlightBlock block
 
-App.Config.set( 'Chat Widget', { prio: 4000, name: 'Chat Widget', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, role: ['Admin'] }, 'NavBarAdmin' )

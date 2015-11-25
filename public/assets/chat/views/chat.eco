@@ -11,7 +11,7 @@
     </div>
     <div class="zammad-chat-welcome">
       <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>
-      <span class="zammad-chat-welcome-text"><%- @title %></span>
+      <span class="zammad-chat-welcome-text"><%- @T(@title) %></span>
     </div>
   </div>
   <div class="zammad-chat-body"></div>

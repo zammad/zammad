@@ -1,64 +1,3 @@
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
-
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   slice = [].slice;
 
@@ -75,6 +14,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       host: '',
       debug: false,
       flat: false,
+      lang: void 0,
+      cssAutoload: true,
+      cssUrl: void 0,
       fontSize: void 0,
       buttonClass: 'open-zammad-chat',
       inactiveClass: 'is-inactive',
@@ -105,37 +47,48 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.wsReconnectEnable = true;
 
-    ZammadChat.prototype.strings = {
-      'Online': 'Online',
-      'Offline': 'Offline',
-      'Connecting': 'Verbinden',
-      'Connection re-established': 'Verbindung wiederhergestellt',
-      'Today': 'Heute',
-      'Send': 'Senden',
-      'Compose your message...': 'Ihre Nachricht...',
-      'All colleges are busy.': 'Alle Kollegen sind belegt.',
-      'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.',
-      'Start new conversation': 'Neue Konversation starten',
-      'Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.': 'Da sie in den letzten %s nichts geschrieben haben wurde ihre Konversation mit <strong>%s</strong> geschlossen.',
-      'minutes': 'Minuten'
+    ZammadChat.prototype.translations = {
+      de: {
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> mit uns!',
+        'Online': 'Online',
+        'Online': 'Online',
+        'Offline': 'Offline',
+        'Connecting': 'Verbinden',
+        'Connection re-established': 'Verbindung wiederhergestellt',
+        'Today': 'Heute',
+        'Send': 'Senden',
+        'Compose your message...': 'Ihre Nachricht...',
+        'All colleges are busy.': 'Alle Kollegen sind belegt.',
+        'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.',
+        'Start new conversation': 'Neue Konversation starten',
+        'Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.': 'Da sie in den letzten %s nichts geschrieben haben wurde ihre Konversation mit <strong>%s</strong> geschlossen.',
+        'minutes': 'Minuten'
+      }
     };
 
     ZammadChat.prototype.sessionId = void 0;
 
     ZammadChat.prototype.T = function() {
-      var i, item, items, len, string, translation;
+      var i, item, items, len, string, translations;
       string = arguments[0], items = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-      if (!this.strings[string]) {
-        this.log('notice', "Translation needed for '" + string + "'");
+      if (this.options.lang && this.options.lang !== 'en') {
+        if (!this.translations[this.options.lang]) {
+          this.log('notice', "Translation '" + this.options.lang + "' needed!");
+        } else {
+          translations = this.translations[this.options.lang];
+          if (!translations[string]) {
+            this.log('notice', "Translation needed for '" + string + "'");
+          }
+          string = translations[string] || string;
+        }
       }
-      translation = this.strings[string] || string;
       if (items) {
         for (i = 0, len = items.length; i < len; i++) {
           item = items[i];
-          translation = translation.replace(/%s/, item);
+          string = string.replace(/%s/, item);
         }
       }
-      return translation;
+      return string;
     };
 
     ZammadChat.prototype.log = function() {
@@ -205,6 +158,13 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.log('error', 'Chat: need chatId as option!');
         return;
       }
+      if (!this.options.lang) {
+        this.options.lang = $('html').attr('lang');
+      }
+      if (this.options.lang) {
+        this.options.lang = this.options.lang.replace(/-.+?$/, '');
+        this.log('debug', "lang: " + this.options.lang);
+      }
       this.el = $(this.view('chat')({
         title: this.options.title
       }));
@@ -219,6 +179,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         input: this.onInput
       });
       this.wsConnect();
+      this.loadCss();
     }
 
     ZammadChat.prototype.checkForEnter = function(event) {
@@ -730,11 +691,90 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.el.find('.zammad-chat-agent-status').attr('data-status', state).text(this.T(capitalizedState));
     };
 
+    ZammadChat.prototype.loadCss = function() {
+      var newSS, styles, url;
+      if (!this.options.cssAutoload) {
+        return;
+      }
+      url = this.options.cssUrl;
+      if (!url) {
+        url = this.options.host.replace(/^wss/i, 'https').replace(/^ws/i, 'http').replace(/\/ws/i, '');
+        url += '/assets/chat/chat.css';
+      }
+      this.log('debug', "load css from '" + url + "'");
+      styles = "@import url('" + url + "');";
+      newSS = document.createElement('link');
+      newSS.rel = 'stylesheet';
+      newSS.href = 'data:text/css,' + escape(styles);
+      return document.getElementsByTagName('head')[0].appendChild(newSS);
+    };
+
     return ZammadChat;
 
   })();
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
+
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
 
 /*!
  * ----------------------------------------------------------------------------
@@ -875,7 +915,7 @@ window.zammadChatTemplates["chat"] = function (__obj) {
     
       __out.push('>\n    <div class="zammad-chat-header-controls">\n      <span class="zammad-chat-agent-status zammad-chat-is-hidden" data-status="online"></span>\n      <span class="zammad-chat-header-icon">\n        <svg class="zammad-chat-header-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"/></svg>\n        <svg class="zammad-chat-header-icon-close js-chat-close" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"/></svg>\n      </span>\n    </div>\n    <div class="zammad-chat-agent zammad-chat-is-hidden">\n    </div>\n    <div class="zammad-chat-welcome">\n      <svg class="zammad-chat-icon" viewBox="0 0 24 24"><path d="M2 5C2 4 3 3 4 3h16c1 0 2 1 2 2v10C22 16 21 17 20 17H4C3 17 2 16 2 15V5zM12 17l6 4v-4h-6z" fill-rule="evenodd"/></svg>\n      <span class="zammad-chat-welcome-text">');
     
-      __out.push(this.title);
+      __out.push(this.T(this.title));
     
       __out.push('</span>\n    </div>\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <textarea class="zammad-chat-input" rows="1" placeholder="');
     

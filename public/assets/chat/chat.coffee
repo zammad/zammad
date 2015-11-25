@@ -14,6 +14,9 @@ do($ = window.jQuery, window) ->
       host: ''
       debug: false
       flat: false
+      lang: undefined,
+      cssAutoload: true,
+      cssUrl: undefined,
       fontSize: undefined
       buttonClass: 'open-zammad-chat'
       inactiveClass: 'is-inactive'
@@ -31,30 +34,37 @@ do($ = window.jQuery, window) ->
     state: 'offline'
     initialQueueDelay: 10000
     wsReconnectEnable: true
-    strings:
-      'Online': 'Online'
-      'Offline': 'Offline'
-      'Connecting': 'Verbinden'
-      'Connection re-established': 'Verbindung wiederhergestellt'
-      'Today': 'Heute'
-      'Send': 'Senden'
-      'Compose your message...': 'Ihre Nachricht...'
-      'All colleges are busy.': 'Alle Kollegen sind belegt.'
-      'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.'
-      'Start new conversation': 'Neue Konversation starten'
-      'Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.': 'Da sie in den letzten %s nichts geschrieben haben wurde ihre Konversation mit <strong>%s</strong> geschlossen.'
-      'minutes': 'Minuten'
+    translations:
+      de:
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> mit uns!'
+        'Online': 'Online'
+        'Online': 'Online'
+        'Offline': 'Offline'
+        'Connecting': 'Verbinden'
+        'Connection re-established': 'Verbindung wiederhergestellt'
+        'Today': 'Heute'
+        'Send': 'Senden'
+        'Compose your message...': 'Ihre Nachricht...'
+        'All colleges are busy.': 'Alle Kollegen sind belegt.'
+        'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.'
+        'Start new conversation': 'Neue Konversation starten'
+        'Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.': 'Da sie in den letzten %s nichts geschrieben haben wurde ihre Konversation mit <strong>%s</strong> geschlossen.'
+        'minutes': 'Minuten'
     sessionId: undefined
 
     T: (string, items...) =>
-      if !@strings[string]
-        @log 'notice', "Translation needed for '#{string}'"
-      translation = @strings[string] || string
+      if @options.lang && @options.lang isnt 'en'
+        if !@translations[@options.lang]
+          @log 'notice', "Translation '#{@options.lang}' needed!"
+        else
+          translations = @translations[@options.lang]
+          if !translations[string]
+            @log 'notice', "Translation needed for '#{string}'"
+          string = translations[string] || string
       if items
         for item in items
-          translation = translation.replace(/%s/, item)
-
-      translation
+          string = string.replace(/%s/, item)
+      string
 
     log: (level, string...) =>
       return if !@options.debug && level is 'debug'
@@ -80,11 +90,17 @@ do($ = window.jQuery, window) ->
         @state = 'unsupported'
         @log 'notice', 'Chat: Browser not supported!'
         return
-
       if !@options.chatId
         @state = 'unsupported'
         @log 'error', 'Chat: need chatId as option!'
         return
+
+      # detect language
+      if !@options.lang
+        @options.lang = $('html').attr('lang')
+      if @options.lang
+        @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
+        @log 'debug', "lang: #{@options.lang}"
 
       @el = $(@view('chat')(
         title: @options.title
@@ -104,6 +120,8 @@ do($ = window.jQuery, window) ->
         input: @onInput
 
       @wsConnect()
+
+      @loadCss()
 
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
@@ -547,5 +565,22 @@ do($ = window.jQuery, window) ->
         .find('.zammad-chat-agent-status')
         .attr('data-status', state)
         .text @T(capitalizedState)
+
+    loadCss: ->
+      return if !@options.cssAutoload
+      url = @options.cssUrl
+      if !url
+        url = @options.host
+          .replace(/^wss/i, 'https')
+          .replace(/^ws/i, 'http')
+          .replace(/\/ws/i, '')
+        url += '/assets/chat/chat.css'
+
+      @log 'debug', "load css from '#{url}'"
+      styles = "@import url('#{url}');"
+      newSS = document.createElement('link')
+      newSS.rel = 'stylesheet'
+      newSS.href = 'data:text/css,' + escape(styles)
+      document.getElementsByTagName('head')[0].appendChild(newSS)
 
   window.ZammadChat = ZammadChat

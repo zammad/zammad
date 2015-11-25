@@ -11,6 +11,7 @@
   <table class="settings-list">
     <thead>
       <tr>
+        <th style="white-space: nowrap;"><%- @T('chatId') %></th>
         <th style="white-space: nowrap;"><%- @T('Name') %></th>
         <th style="white-space: nowrap;"><%- @T('Note') %></th>
         <th style="white-space: nowrap;"><%- @T('Max. clients in waitlist') %></th>
@@ -20,6 +21,10 @@
     <tbody>
   <% for chat in @chats: %>
       <tr data-id="<%= chat.id %>">
+        <td>
+          <label class="inline-label">
+            <%= chat.id %>
+          </label>
         <td>
           <label class="inline-label">
             <a class="js-edit is-clickable"><%= chat.name %></a>
@@ -40,7 +45,7 @@
           </div>
   <% end %>
       <tr>
-        <td colspan="4" class="settings-list-action-cell js-add">
+        <td colspan="5" class="settings-list-action-cell js-add">
           <%- @Icon('plus-small') %> <%- @T('Add') %>
     </tbody>
   </table>
@@ -62,7 +67,7 @@
   <div class="browser chat-demo js-browser">
     <form class="browser-head js-demo-head" novalidate>
       <div class="browser-input">
-        <input type="url" class="js-testurl-input" id="preview-iframe" placeholder="zammad.org">
+        <input type="url" class="js-testurl-input" id="preview-iframe" value="<%= @previewUrl %>" placeholder="www.zammad.org">
         <div class="loading icon small muted"></div>
       </div>
       <input type="submit" class="btn" value="<%- @T('Load') %>">
