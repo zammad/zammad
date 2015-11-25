@@ -209,23 +209,15 @@ do($ = window.jQuery, window) ->
 
       sessionStorage.setItem 'unfinished_message', @input.val()
 
-      @onTypingStart()
+      @onTyping()
 
-    onTypingStart: ->
+    onTyping: ->
 
-      clearTimeout(@isTypingTimeout) if @isTypingTimeout
-
-      # fire typingEnd after 5 seconds
-      @isTypingTimeout = setTimeout @onTypingEnd, 1500
-
-      # send typing start event
-      if !@isTyping
-        @isTyping = true
-        @send 'chat_session_typing',
-          session_id: @sessionId
-
-    onTypingEnd: =>
-      @isTyping = false
+      # send typing start event only every 1.5 seconds
+      return if @isTyping && @isTyping > new Date(new Date().getTime() - 1500)
+      @isTyping = new Date()
+      @send 'chat_session_typing',
+        session_id: @sessionId
 
     onSubmit: (event) =>
       event.preventDefault()
@@ -255,8 +247,6 @@ do($ = window.jQuery, window) ->
 
       @input.val('')
       @scrollToBottom()
-
-      @isTyping = false
 
       # send message event
       @send 'chat_session_message',
