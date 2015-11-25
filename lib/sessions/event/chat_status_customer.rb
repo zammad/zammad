@@ -1,17 +1,7 @@
 class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
 
   def run
-
-    chat_id = 1
-    chat = Chat.find_by(id: chat_id)
-    if !chat
-      return {
-        event: 'chat_status_customer',
-        data: {
-          state: 'no_such_chat',
-        },
-      }
-    end
+    return if !check_chat_exists
 
     # check if it's a chat sessin reconnect
     session_id = nil
@@ -24,7 +14,7 @@ class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
     end
     {
       event: 'chat_status_customer',
-      data: chat.customer_state(session_id),
+      data: current_chat.customer_state(session_id),
     }
   end
 end

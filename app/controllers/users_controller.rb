@@ -572,10 +572,11 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
       return
     end
     if params[:user]
+      user = User.find(current_user.id)
       params[:user].each {|key, value|
-        current_user.preferences[key.to_sym] = value
+        user.preferences[key.to_sym] = value
       }
-      current_user.save
+      user.save
     end
     render json: { message: 'ok' }, status: :ok
   end

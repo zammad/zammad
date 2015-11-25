@@ -1,21 +1,11 @@
 class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
 
   def run
-
-    chat_id = 1
-    chat = Chat.find_by(id: chat_id)
-    if !chat
-      return {
-        event: 'chat_session_init',
-        data: {
-          state: 'no_such_chat',
-        },
-      }
-    end
+    return if !check_chat_exists
 
     # create chat session
     chat_session = Chat::Session.create(
-      chat_id: chat_id,
+      chat_id: @data['data']['chat_id'],
       name: '',
       state: 'waiting',
       preferences: {

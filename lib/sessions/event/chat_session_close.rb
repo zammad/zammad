@@ -2,24 +2,7 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
 
   def run
 
-    if !@data['data'] || !@data['data']['session_id']
-      return {
-        event: 'chat_status_close',
-        data: {
-          state: 'Need session_id.',
-        },
-      }
-    end
-
-    chat_session = Chat::Session.find_by(session_id: @data['data']['session_id'])
-    if !chat_session
-      return {
-        event: 'chat_status_close',
-        data: {
-          state: "No such session id #{@data['data']['session_id']}",
-        },
-      }
-    end
+    return if !check_chat_session_exists
 
     realname = 'Anonymous'
     if @session && @session['id']
@@ -28,6 +11,7 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
 
     # check count of participents
     participents_count = 0
+    chat_session = current_chat_session
     if chat_session.preferences[:participents]
       participents_count = chat_session.preferences[:participents].count
     end

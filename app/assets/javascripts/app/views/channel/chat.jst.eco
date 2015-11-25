@@ -1,19 +1,19 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T('Chat Widget') %> <small></small></h1>
+    <h1><%- @T('Chat') %> <small></small></h1>
   </div>
 </div>
 <div class="page-content">
   <p><%- @T('You can create chat widgets for your webpages to allow visitors to chat with you.') %></p>
 
-  <h2><%- @T('Channels') %></h2>
-  <p><%- @T('You can create multiple chat channels.') %></p>
+  <h2><%- @T('Topics') %></h2>
+  <p><%- @T('You can create multiple chat topics.') %></p>
   <table class="settings-list">
     <thead>
       <tr>
         <th style="white-space: nowrap;"><%- @T('Name') %></th>
         <th style="white-space: nowrap;"><%- @T('Note') %></th>
-        <th style="white-space: nowrap;"><%- @T('Max Queue') %></th>
+        <th style="white-space: nowrap;"><%- @T('Max. clients in waitlist') %></th>
         <th style="white-space: nowrap;"><%- @T('Delete') %></th>
       </tr>
     </thead>
@@ -41,7 +41,7 @@
   <% end %>
       <tr>
         <td colspan="4" class="settings-list-action-cell js-add">
-          <%- @Icon('plus-small') %> Add Channel
+          <%- @Icon('plus-small') %> <%- @T('Add') %>
     </tbody>
   </table>
 
@@ -57,7 +57,7 @@
       </div>
     </div>
   </div>
-  
+
   <label for="preview-iframe" class="formGroup-label"><%- @T('Preview') %></label>
   <div class="browser chat-demo js-browser">
     <div class="browser-head">
@@ -149,7 +149,7 @@
           <div class="zammad-switch">
              <input name="flat" type="checkbox" id="form-chat-flat">
              <label for="form-chat-flat"></label>
-          </div>          
+          </div>
         </div>
       </div>
     </fieldset>
@@ -222,7 +222,7 @@ $(function() {
     </ol>
     <%- marked(@T('When you turn on debugging by setting the option `debug` to `true` the reason gets printed to the javascript console.')) %>
   </p>
-  
+
   <h3><%- @T('Options') %></h3>
 
   <table class="settings-list">

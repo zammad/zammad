@@ -1,25 +1,8 @@
 class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
 
   def run
-
-    if !@data['data'] || !@data['data']['session_id']
-      return {
-        event: 'chat_session_message',
-        data: {
-          state: 'Need session_id.',
-        },
-      }
-    end
-
-    chat_session = Chat::Session.find_by(session_id: @data['data']['session_id'])
-    if !chat_session
-      return {
-        event: 'chat_session_message',
-        data: {
-          state: "No such session id #{@data['data']['session_id']}",
-        },
-      }
-    end
+    return if !check_chat_session_exists
+    chat_session = current_chat_session
 
     user_id = nil
     if @session
