@@ -278,8 +278,7 @@ do($ = window.jQuery, window) ->
       if !@sessionId
         @showLoader()
 
-      @el
-        .addClass('zammad-chat-is-visible')
+      @el.addClass('zammad-chat-is-open')
 
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
@@ -309,6 +308,7 @@ do($ = window.jQuery, window) ->
       @closeWindow()
 
     closeWindow: =>
+      @el.removeClass('zammad-chat-is-open')
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
       @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
 
@@ -327,12 +327,12 @@ do($ = window.jQuery, window) ->
       @onWebSocketOpen()
 
     hide: ->
-      @el.removeClass('zammad-chat-is-visible')
+      @el.removeClass('zammad-chat-is-shown')
 
     show: ->
       return @state if @state is 'off' or @state is 'unsupported'
 
-      @el.addClass('zammad-chat-is-visible')
+      @el.addClass('zammad-chat-is-shown')
 
       if !@inputInitialized
         @inputInitialized = true

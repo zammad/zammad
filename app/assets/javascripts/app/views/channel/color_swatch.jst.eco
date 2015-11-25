@@ -1,1 +1,1 @@
-<div class="color-swatch js-swatch" style="background: <%= @color %>" data-color="<%= @color %>"></div>
+<div class="color-swatch js-swatch" style="color: <%= @color %>" data-color="<%= @color %>"></div>

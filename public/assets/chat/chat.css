@@ -25,7 +25,7 @@
       height: 100vh;
       border-radius: 0 !important; } }
 
-.zammad-chat.zammad-chat-is-visible {
+.zammad-chat.zammad-chat-is-shown {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex; }
@@ -54,7 +54,7 @@
 .zammad-chat.is-fullscreen .zammad-chat-header {
   border-radius: 0 !important; }
 
-.zammad-chat.zammad-chat-is-visible .zammad-chat-header {
+.zammad-chat.zammad-chat-is-open .zammad-chat-header {
   cursor: default; }
 
 .zammad-chat-welcome-text {
@@ -80,10 +80,10 @@
   width: 1.3em; }
 
 .zammad-chat-header-icon-close,
-.zammad-chat.zammad-chat-is-visible .zammad-chat-header-icon-open {
+.zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-open {
   display: none; }
 
-.zammad-chat.zammad-chat-is-visible .zammad-chat-header-icon-close {
+.zammad-chat.zammad-chat-is-open .zammad-chat-header-icon-close {
   display: inline; }
 
 .zammad-chat-agent {
@@ -105,7 +105,7 @@
   margin: 0 1em;
   display: inline-block;
   line-height: 2em;
-  padding: 0 .7em;
+  padding: 0 0.7em;
   border-radius: 1em;
   background: rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }

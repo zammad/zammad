@@ -6,7 +6,7 @@ class App.ChannelChat extends App.Controller
     'click .js-widget': 'widget'
     'change .js-params': 'updateParams'
     'keyup .js-params': 'updateParams'
-    'submit .js-testurl': 'changeDemoWebsite'
+    'submit .js-demo-head': 'changeDemoWebsite'
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
@@ -143,6 +143,12 @@ class App.ChannelChat extends App.Controller
     @adjustBrowserWidth()
     @updateParams()
 
+    # bind adjustBrowserWidth with parameter animate = false
+    $(window).on 'resize.chat-designer', => @adjustBrowserWidth false
+
+  release: ->
+    $(window).off 'resize.chat-designer'
+
   selectBrowserWidth: (event) =>
     tab = $(event.target).closest('[data-value]')
 
@@ -151,12 +157,13 @@ class App.ChannelChat extends App.Controller
     @browserWidth = tab.attr('data-value')
     @adjustBrowserWidth()
 
-  adjustBrowserWidth: ->
+  adjustBrowserWidth: (animate =  true) =>
     width = parseInt @browserWidth, 10
 
     # reset zoom
     @chat
       .removeClass('is-fullscreen')
+      .toggleClass('no-transition', !animate)
       .css 'transform', "translateY(#{ @getChatOffset() }px)"
     @browser.css('width', '')
     @website.css
@@ -197,7 +204,7 @@ class App.ChannelChat extends App.Controller
     if !@url.startsWith('http')
       @url = "http://#{ @url }"
 
-    @urlInput.addClass('is-loading')
+    @urlInput.addClass('is-loading').focus()
 
     @palette.empty()
 
