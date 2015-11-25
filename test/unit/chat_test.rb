@@ -200,7 +200,7 @@ class ChatTest < ActiveSupport::TestCase
 
     # check customer state
     assert_equal('no_seats_available', chat.customer_state[:state])
-    assert_equal(0, chat.customer_state[:queue])
+    assert_equal(5, chat.customer_state[:queue])
 
     # check agent1 state
     agent_state = Chat.agent_state(agent1.id)
@@ -225,7 +225,7 @@ class ChatTest < ActiveSupport::TestCase
 
     # check customer state
     assert_equal('no_seats_available', chat.customer_state[:state])
-    assert_equal(-2, chat.customer_state[:queue])
+    assert_equal(5, chat.customer_state[:queue])
 
     # check agent1 state
     agent_state = Chat.agent_state(agent1.id)
@@ -250,7 +250,7 @@ class ChatTest < ActiveSupport::TestCase
 
     # check customer state
     assert_equal('no_seats_available', chat.customer_state[:state])
-    assert_equal(-1, chat.customer_state[:queue])
+    assert_equal(5, chat.customer_state[:queue])
 
     # check agent1 state
     agent_state = Chat.agent_state(agent1.id)

@@ -18,7 +18,7 @@ class Chat < ApplicationModel
             chat_user = User.find(chat_session.user_id)
             url = nil
             if chat_user.image && chat_user.image != 'none'
-              url = "/api/v1/users/image/#{chat_user.image}"
+              url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
             end
             user = {
               name: chat_user.fullname,
