@@ -1,7 +1,7 @@
 class App.Auth
 
   @login: (params) ->
-    App.Log.notice 'Auth', 'login', params
+    App.Log.debug 'Auth', 'login', params
     params.data['fingerprint'] = App.Browser.fingerprint()
     App.Ajax.request(
       id:     'login'
