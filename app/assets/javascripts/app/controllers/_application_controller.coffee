@@ -443,26 +443,12 @@ class App.Controller extends Spine.Controller
         }
         processData: true,
         success: (data, status, xhr) ->
-          App.SessionStorage.set( "user-ticket-popover::#{params.user_id}",  data )
-
-          # load assets
           App.Collection.loadAssets( data.assets )
-
           show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
       )
 
     # get data
-    data = App.SessionStorage.get( "user-ticket-popover::#{params.user_id}" )
-    if data
-      show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
-      @delay(
-        ->
-          fetch(params)
-        1000
-        'fetch'
-      )
-    else
-      fetch(params)
+    fetch(params)
 
   userTicketPopupsDestroy: =>
     if @userTicketPopupsList
