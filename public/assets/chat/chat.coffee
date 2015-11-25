@@ -2,16 +2,16 @@ do($ = window.jQuery, window) ->
 
   scripts = document.getElementsByTagName('script')
   myScript = scripts[scripts.length - 1]
-  scriptHost = myScript.src.match(".*://([^:/]*).*")[1]
+  scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
 
   # Define the plugin class
   class ZammadChat
 
     defaults:
+      chat_id: undefined
       show: true
       target: $('body')
       host: ''
-      port: 6042
       debug: false
       flat: false
       fontSize: undefined
@@ -80,6 +80,11 @@ do($ = window.jQuery, window) ->
         @log 'notice', 'Chat: Browser not supported!'
         return
 
+      if !options.chat_id
+        @state = 'unsupported'
+        @log 'error', 'Chat: need chat id as option!'
+        return
+
       @options = $.extend {}, @defaults, options
       @el = $(@view('chat')(
         title: @options.title
@@ -105,7 +110,8 @@ do($ = window.jQuery, window) ->
         event.preventDefault()
         @sendMessage()
 
-    send: (event, data) =>
+    send: (event, data = {}) =>
+      data.chat_id = @options.chat_id
       @log 'debug', 'ws:send', event, data
       pipe = JSON.stringify
         event: event
@@ -118,6 +124,8 @@ do($ = window.jQuery, window) ->
       for pipe in pipes
         @log 'debug', 'ws:onmessage', pipe
         switch pipe.event
+          when 'chat_error'
+            @log 'error', pipe.data
           when 'chat_session_message'
             return if pipe.data.self_written
             @receiveMessage pipe.data
@@ -149,7 +157,7 @@ do($ = window.jQuery, window) ->
                 @hide()
                 @wsClose()
               when 'no_seats_available'
-                @onError 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+                @onError "Zammad Chat: Too many clients in queue. Clients in queue: #{pipe.data.queue}"
                 @state = 'off'
                 @hide()
                 @wsClose()
@@ -269,7 +277,7 @@ do($ = window.jQuery, window) ->
 
     renderMessage: (data) =>
       @lastAddedType = "message--#{ data.from }"
-      unread = document.hidden ? " zammad-chat-message--unread" : ""
+      unread = document.hidden ? ' zammad-chat-message--unread' : ''
       @el.find('.zammad-chat-body').append @view('message')(data)
       @scrollToBottom()
 
@@ -294,7 +302,7 @@ do($ = window.jQuery, window) ->
       if !@sessionId
         @session_init()
 
-    onOpenAnimationEnd: =>
+    onOpenAnimationEnd: ->
       #@showTimeout()
 
     close: (event) =>
@@ -436,13 +444,16 @@ do($ = window.jQuery, window) ->
       @send('chat_session_init')
 
     detectHost: ->
-      @options.host = "ws://#{ scriptHost }"
+      protocol = 'ws://'
+      if window.location.protocol is 'https:'
+        protocol = 'wss://'
+      @options.host = "#{ protocol }#{ scriptHost }"
 
     wsConnect: =>
       @detectHost() if !@options.host
 
-      @log 'notice', "Connecting to #{@options.host}:#{@options.port}"
-      @ws = new window.WebSocket("#{@options.host}:#{@options.port}")
+      @log 'notice', "Connecting to #{@options.host}"
+      @ws = new window.WebSocket("#{@options.host}")
       @ws.onopen = @onWebSocketOpen
 
       @ws.onmessage = @onWebSocketMessage
@@ -491,6 +502,7 @@ do($ = window.jQuery, window) ->
     onSessionClosed: (data) ->
       @addStatus @T('Chat closed by %s', data.realname)
       @disableInput()
+      @setAgentOnlineState 'offline'
 
     disconnect: ->
       @showLoader()
@@ -526,6 +538,8 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden')
       @input.focus()
+
+      @setAgentOnlineState 'online'
 
     showTimeout: ->
       @el.find('.zammad-chat-body').html @view('timeout')
