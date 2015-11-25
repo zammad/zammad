@@ -119,7 +119,6 @@ class App.CustomerChat extends App.Controller
           type: 'error'
           msg:  App.i18n.translateContent('To be able to chat you need to select min. one chat topic in settings!')
         )
-        return
 
     @meta.active = state
 
@@ -148,7 +147,6 @@ class App.CustomerChat extends App.Controller
     if @meta.active_sessions
       for session in @meta.active_sessions
         @addChat(session)
-        console.log('updateMeta aC', session)
     @meta.active_sessions = false
 
     @updateNavMenu()
@@ -281,7 +279,8 @@ class ChatWindow extends App.Controller
         if preferences.chat && preferences.chat.phrase
           phrases = preferences.chat.phrase[@session.chat_id]
           if phrases
-            @sendMessage phrases
+            @input.html(phrases)
+            @sendMessage()
 
   focus: =>
     @input.focus()
@@ -352,12 +351,10 @@ class ChatWindow extends App.Controller
           event.preventDefault()
           @sendMessage()
 
-  sendMessage: (content) =>
-    if !content
-      content = @input.html()
+  sendMessage: =>
+    content = @input.html()
     return if !content
 
-    console.log('send', content, @session.session_id)
     App.WebSocket.send(
       event:'chat_session_message'
       data:

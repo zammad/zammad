@@ -452,7 +452,7 @@ do($ = window.jQuery, window) ->
     wsConnect: =>
       @detectHost() if !@options.host
 
-      @log 'notice', "Connecting to #{@options.host}"
+      @log 'debug', "Connecting to #{@options.host}"
       @ws = new window.WebSocket("#{@options.host}")
       @ws.onopen = @onWebSocketOpen
 
