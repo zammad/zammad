@@ -5,13 +5,13 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   var ZammadChat, myScript, scriptHost, scripts;
   scripts = document.getElementsByTagName('script');
   myScript = scripts[scripts.length - 1];
-  scriptHost = myScript.src.match(".*://([^:/]*).*")[1];
+  scriptHost = myScript.src.match('.*://([^:/]*).*')[1];
   ZammadChat = (function() {
     ZammadChat.prototype.defaults = {
+      chat_id: void 0,
       show: true,
       target: $('body'),
       host: '',
-      port: 6042,
       debug: false,
       flat: false,
       fontSize: void 0,
@@ -119,7 +119,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.onCloseAnimationEnd = bind(this.onCloseAnimationEnd, this);
       this.closeWindow = bind(this.closeWindow, this);
       this.close = bind(this.close, this);
-      this.onOpenAnimationEnd = bind(this.onOpenAnimationEnd, this);
       this.open = bind(this.open, this);
       this.renderMessage = bind(this.renderMessage, this);
       this.receiveMessage = bind(this.receiveMessage, this);
@@ -138,6 +137,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (!window.WebSocket || !sessionStorage) {
         this.state = 'unsupported';
         this.log('notice', 'Chat: Browser not supported!');
+        return;
+      }
+      if (!options.chat_id) {
+        this.state = 'unsupported';
+        this.log('error', 'Chat: need chat id as option!');
         return;
       }
       this.options = $.extend({}, this.defaults, options);
@@ -166,6 +170,10 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.send = function(event, data) {
       var pipe;
+      if (data == null) {
+        data = {};
+      }
+      data.chat_id = this.options.chat_id;
       this.log('debug', 'ws:send', event, data);
       pipe = JSON.stringify({
         event: event,
@@ -181,6 +189,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         pipe = pipes[i];
         this.log('debug', 'ws:onmessage', pipe);
         switch (pipe.event) {
+          case 'chat_error':
+            this.log('error', pipe.data);
+            break;
           case 'chat_session_message':
             if (pipe.data.self_written) {
               return;
@@ -225,7 +236,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
                 this.wsClose();
                 break;
               case 'no_seats_available':
-                this.onError('Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue);
+                this.onError("Zammad Chat: Too many clients in queue. Clients in queue: " + pipe.data.queue);
                 this.state = 'off';
                 this.hide();
                 this.wsClose();
@@ -351,7 +362,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       var ref, unread;
       this.lastAddedType = "message--" + data.from;
       unread = (ref = document.hidden) != null ? ref : {
-        " zammad-chat-message--unread": ""
+        ' zammad-chat-message--unread': ''
       };
       this.el.find('.zammad-chat-body').append(this.view('message')(data));
       return this.scrollToBottom();
@@ -535,15 +546,20 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.detectHost = function() {
-      return this.options.host = "ws://" + scriptHost;
+      var protocol;
+      protocol = 'ws://';
+      if (window.location.protocol === 'https:') {
+        protocol = 'wss://';
+      }
+      return this.options.host = "" + protocol + scriptHost;
     };
 
     ZammadChat.prototype.wsConnect = function() {
       if (!this.options.host) {
         this.detectHost();
       }
-      this.log('notice', "Connecting to " + this.options.host + ":" + this.options.port);
-      this.ws = new window.WebSocket(this.options.host + ":" + this.options.port);
+      this.log('notice', "Connecting to " + this.options.host);
+      this.ws = new window.WebSocket("" + this.options.host);
       this.ws.onopen = this.onWebSocketOpen;
       this.ws.onmessage = this.onWebSocketMessage;
       this.ws.onclose = (function(_this) {
@@ -599,7 +615,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.onSessionClosed = function(data) {
       this.addStatus(this.T('Chat closed by %s', data.realname));
-      return this.disableInput();
+      this.disableInput();
+      return this.setAgentOnlineState('offline');
     };
 
     ZammadChat.prototype.disconnect = function() {
@@ -637,7 +654,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.el.find('.zammad-chat-welcome').addClass('zammad-chat-is-hidden');
       this.el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden');
       this.el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden');
-      return this.input.focus();
+      this.input.focus();
+      return this.setAgentOnlineState('online');
     };
 
     ZammadChat.prototype.showTimeout = function() {
