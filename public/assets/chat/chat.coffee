@@ -73,6 +73,7 @@ do($ = window.jQuery, window) ->
         return window.zammadChatTemplates[name](options)
 
     constructor: (options) ->
+      @options = $.extend {}, @defaults, options
 
       # check prerequisites
       if !window.WebSocket or !sessionStorage
@@ -80,12 +81,11 @@ do($ = window.jQuery, window) ->
         @log 'notice', 'Chat: Browser not supported!'
         return
 
-      if !options.chatId
+      if !@options.chatId
         @state = 'unsupported'
         @log 'error', 'Chat: need chatId as option!'
         return
 
-      @options = $.extend {}, @defaults, options
       @el = $(@view('chat')(
         title: @options.title
       ))
