@@ -143,6 +143,12 @@ class App.ChannelChat extends App.Controller
     @adjustBrowserWidth()
     @updateParams()
 
+    # bind adjustBrowserWidth with parameter animate = false
+    $(window).on 'resize.chat-designer', => @adjustBrowserWidth false
+
+  release: ->
+    $(window).off 'resize.chat-designer'
+
   selectBrowserWidth: (event) =>
     tab = $(event.target).closest('[data-value]')
 
@@ -151,12 +157,13 @@ class App.ChannelChat extends App.Controller
     @browserWidth = tab.attr('data-value')
     @adjustBrowserWidth()
 
-  adjustBrowserWidth: ->
+  adjustBrowserWidth: (animate =  true) =>
     width = parseInt @browserWidth, 10
 
     # reset zoom
     @chat
       .removeClass('is-fullscreen')
+      .toggleClass('no-transition', !animate)
       .css 'transform', "translateY(#{ @getChatOffset() }px)"
     @browser.css('width', '')
     @website.css

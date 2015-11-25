@@ -7512,6 +7512,10 @@ output {
     transition: 500ms;
     user-select: none;
     will-change: transform;
+    
+    &.no-transition {
+      transition: none;
+    }
 
     .zammad-chat-welcome {
       display: block !important;
