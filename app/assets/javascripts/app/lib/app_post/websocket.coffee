@@ -203,7 +203,7 @@ class _webSocketSingleton extends App.Controller
       # close error message show up (because try so connect again) if exists
       App.Delay.clear('websocket-no-connection-try-reconnect-message', 'ws')
       if @error
-        @error.hide()
+        @error.close()
         @error        = false
         @tryToConnect = false
 
