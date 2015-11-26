@@ -13,27 +13,17 @@ class App.WidgetTag extends App.Controller
   constructor: ->
     super
 
-    @cacheKey = "tags::#{@object_type}::#{@object.id}"
+    @key = "tags::#{@object_type}::#{@object.id}"
 
     if @tags
       @render()
       return
 
-    @tags = App.SessionStorage.get( @cacheKey ) || []
-    if !_.isEmpty(@tags)
-      @render()
-      @delay(
-        =>
-          @fetch()
-        1000
-        'fetch'
-      )
-    else
-      @fetch()
+    @fetch()
 
   fetch: =>
     @ajax(
-      id:    @cacheKey
+      id:    @key
       type:  'GET'
       url:   @apiPath + '/tags'
       data:
@@ -42,7 +32,6 @@ class App.WidgetTag extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         @tags = data.tags
-        App.SessionStorage.set( @cacheKey, @tags )
         @render()
     )
 

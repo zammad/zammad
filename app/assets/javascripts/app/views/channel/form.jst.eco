@@ -6,15 +6,19 @@
 <div class="page-content">
   <p><%- @T('With form you can add a formular to your web page witch directly generates a Ticket for you.') %></p>
 
-  <div class="js-settings"></div>
+  <h2><%- @T('Enable') %>/<%- @T('Disable') %></h2>
+  <form>
+    <div class="zammad-switch">
+       <input name="form_ticket_create" type="checkbox" id="setting-form" class="js-formSetting" <% if @formSetting: %>checked<% end %>>
+       <label for="setting-form"></label>
+    </div>
+  </form>
 
-  <hr>
-
-  <h2><%- @T('Widget Designer') %></h2>
+  <h2><%- @T('Designer') %></h2>
   <form class="js-params">
 
     <fieldset>
-      <div class="input form-group">
+      <div class="input form-group formGroup--halfSize">
         <div class="formGroup-label">
           <label for="form-message-title"><%- @T('Title of the form') %></label>
         </div>
@@ -22,7 +26,7 @@
           <input type="text" id="form-message-title" name="messageTitle" value="<%- @Ti('Feedback Form') %>">
         </div>
       </div>
-      <div class="input form-group">
+      <div class="input form-group formGroup--halfSize">
         <div class="formGroup-label">
           <label for="form-message-submit"><%- @T('Name of form submit button') %></label>
         </div>
@@ -95,8 +99,7 @@
 
   <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
 
-  <pre>
-&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
+  <pre><code class="language-html js-paramsBlock">&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
 
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
 
@@ -106,5 +109,5 @@ $(function() {
 <span class="js-modal-params"></span>
   });
 });
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
 </div>

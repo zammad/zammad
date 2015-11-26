@@ -6,44 +6,17 @@
 <div class="page-content">
   <p><%- @T('You can create chat widgets for your webpages to allow visitors to chat with you.') %></p>
 
+  <h2><%- @T('Enable') %>/<%- @T('Disable') %></h2>
+  <form>
+    <div class="zammad-switch">
+       <input name="chat" type="checkbox" id="setting-chat" class="js-chatSetting" <% if @chatSetting: %>checked<% end %>>
+       <label for="setting-chat"></label>
+    </div>
+  </form>
+
   <h2><%- @T('Topics') %></h2>
   <p><%- @T('You can create multiple chat topics.') %></p>
-  <table class="settings-list">
-    <thead>
-      <tr>
-        <th style="white-space: nowrap;"><%- @T('Name') %></th>
-        <th style="white-space: nowrap;"><%- @T('Note') %></th>
-        <th style="white-space: nowrap;"><%- @T('Max. clients in waitlist') %></th>
-        <th style="white-space: nowrap;"><%- @T('Delete') %></th>
-      </tr>
-    </thead>
-    <tbody>
-  <% for chat in @chats: %>
-      <tr data-id="<%= chat.id %>">
-        <td>
-          <label class="inline-label">
-            <a class="js-edit is-clickable"><%= chat.name %></a>
-          </label>
-        <td>
-          <label class="inline-label">
-            <%= chat.note %>
-          </label>
-        <td>
-          <label class="inline-label">
-            <%= chat.max_queue %>
-          </label>
-        <td>
-          <div class="settings-list-rowControls">
-            <div class="btn btn--text js-remove">
-              <%- @Icon('trash') %> <%- @T('Remove') %>
-            </div>
-          </div>
-  <% end %>
-      <tr>
-        <td colspan="4" class="settings-list-action-cell js-add">
-          <%- @Icon('plus-small') %> <%- @T('Add') %>
-    </tbody>
-  </table>
+  <div class="js-topics"></div>
 
   <h2><%- @T('Designer') %></h2>
 
@@ -62,7 +35,7 @@
   <div class="browser chat-demo js-browser">
     <form class="browser-head js-demo-head" novalidate>
       <div class="browser-input">
-        <input type="url" class="js-testurl-input" id="preview-iframe" placeholder="zammad.org">
+        <input type="url" class="js-testurl-input" id="preview-iframe" value="<%= @previewUrl %>" placeholder="www.zammad.org">
         <div class="loading icon small muted"></div>
       </div>
       <input type="submit" class="btn" value="<%- @T('Load') %>">
@@ -119,7 +92,7 @@
           <label for="form-chat-title"><%- @T('Chat Title') %></label>
         </div>
         <div class="controls">
-          <input class="js-chatTitle" type="text" id="form-chat-title" name="title" value="&lt;strong&gt;Chat&lt;/strong&gt; with us!">
+          <input class="js-chatTitle" type="text" id="form-chat-title" name="title" placeholder="&lt;strong&gt;Chat&lt;/strong&gt; with us!">
         </div>
         <span class="help-block"><%- @T('Shown when the chat is closed.') %></span>
       </div>
