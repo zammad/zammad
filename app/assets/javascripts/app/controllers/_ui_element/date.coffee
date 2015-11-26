@@ -87,10 +87,13 @@ class App.UiElement.date
   @validation: (item, attribute, runtime) ->
 
     # remove old validation
-    item.closest('.form-group').removeClass('has-error')
-    item.find('.has-error').removeClass('has-error')
-    item.find('.help-inline').html('')
-    item.closest('.form-group').find('.help-inline').html('')
+    if attribute.validationContainer is 'self'
+      item.find('.js-datepicker').removeClass('has-error')
+    else
+      item.closest('.form-group').removeClass('has-error')
+      item.find('.has-error').removeClass('has-error')
+      item.find('.help-inline').html('')
+      item.closest('.form-group').find('.help-inline').html('')
 
     timestamp = item.find("[name=\"#{attribute.name}\"]").val()
 
@@ -103,10 +106,13 @@ class App.UiElement.date
       timeObject = new Date( Date.parse( timestamp ) )
 
 
-    formGroup = item.closest('.form-group')
     App.Log.debug 'UiElement.date.validation', errors
     return if _.isEmpty(errors)
 
     # show invalid options
-    for key, value of errors
-      formGroup.addClass('has-error')
+    if attribute.validationContainer is 'self'
+      item.find('.js-datepicker').addClass('has-error')
+    else
+      formGroup = item.closest('.form-group')
+      for key, value of errors
+        formGroup.addClass('has-error')

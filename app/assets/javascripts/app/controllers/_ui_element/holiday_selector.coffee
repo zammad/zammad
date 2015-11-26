@@ -16,6 +16,8 @@ class App.UiElement.holiday_selector
     attributeDatepicket =
       name: "#{attribute.name}_date"
       disable_feature: true
+      class: 'form-control--small'
+      validationContainer: 'self'
     datePicker = App.UiElement.date.render(attributeDatepicket)
     item.find('.js-datePicker').html(datePicker)
 

@@ -1,4 +1,4 @@
 <div class="u-positionOrigin" data-name="<%= @attribute.nameRaw %>">
   <input type="hidden" value="<%= @attribute.value %>" name="<%= @attribute.name %>">
-  <input type="text" value="" class="form-control js-datepicker" data-item="date">
+  <input type="text" value="" class="form-control js-datepicker <%= @attribute.class %>" data-item="date">
 </div>
