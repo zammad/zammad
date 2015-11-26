@@ -296,6 +296,7 @@
   align-items: flex-start;
   border-top: 1px solid #ededed;
   padding: 0;
+  margin: 0;
   line-height: 1.4em;
   box-shadow: 0 1px rgba(0, 0, 0, 0.01), 0 -1px rgba(0, 0, 0, 0.02);
   position: relative;
