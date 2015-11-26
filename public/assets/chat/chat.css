@@ -105,7 +105,7 @@
   margin: 0 1em;
   display: inline-block;
   line-height: 2em;
-  padding: 0 0.7em;
+  padding: 0 .7em;
   border-radius: 1em;
   background: rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
@@ -316,6 +316,7 @@
   box-shadow: none;
   padding: 1em 2em;
   outline: none;
+  box-shadow: none;
   resize: none;
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -352,9 +353,7 @@
   display: block; }
 
 /*
-
   # Flat Design
-  
 */
 .zammad-chat--flat .zammad-chat-header,
 .zammad-chat--flat .zammad-chat-body {
