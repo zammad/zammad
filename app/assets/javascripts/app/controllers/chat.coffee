@@ -294,6 +294,12 @@ class ChatWindow extends App.Controller
     if event.data and event.data.callback
       event.data.callback()
 
+    @$('.js-customerChatInput').ce({
+      mode:      'richtext'
+      multiline: true
+      maxlength: 40000
+    })
+
   close: =>
     @el.one 'transitionend', { callback: @release }, @onTransitionend
     @el.removeClass('is-open')

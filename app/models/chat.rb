@@ -5,7 +5,6 @@ class Chat < ApplicationModel
   store     :preferences
 
   def customer_state(session_id = nil)
-    return { state: 'chat_disabled' } if !Setting.get('chat')
 
     # reconnect
     if session_id
@@ -63,7 +62,6 @@ class Chat < ApplicationModel
   end
 
   def self.agent_state(user_id)
-    return { state: 'chat_disabled' } if !Setting.get('chat')
     assets = {}
     Chat.where(active: true).each {|chat|
       assets = chat.assets(assets)
