@@ -308,7 +308,7 @@ Hof
       # spam email
       {
         data: IO.read('test/fixtures/mail15.box'),
-        body_md5: 'd41d8cd98f00b204e9800998ecf8427e',
+        body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         attachments: [
           # :preferences=>{"Message-ID"=>"<temp@test>", "Content-Type"=>"application/octet-stream; name=\"\xBC\xA8\xD0\xA7\xB9\xDC\xC0\xED,\xBE\xBF\xBE\xB9\xCB\xAD\xB4\xED\xC1\xCB.xls\"", "Mime-Type"=>"application/octet-stream", "Charset"=>"UTF-8"}}
           # mutt c1abb5fb77a9d2ab2017749a7987c074
@@ -466,14 +466,14 @@ Freemont and pulling out several minutes.
       },
       {
         data: IO.read('test/fixtures/mail24.box'),
-        body_md5: 'd41d8cd98f00b204e9800998ecf8427e',
+        body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'oracle@IG0-1-DB01.example.com',
           from_email: 'oracle@IG0-1-DB01.example.com',
           from_display_name: '',
           subject: 'Regelsets im Test-Status gefunden: 1',
           to: 'support@example.com',
-          body: '',
+          body: 'no visible content',
         },
         attachments: [
           {
@@ -672,9 +672,24 @@ Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen I
           to: 'info@znuny.inc',
         },
       },
+      {
+        data: IO.read('test/fixtures/mail34.box'),
+        body_md5: 'b6e46176404ec81b3ab412fe71dff0f0',
+        params: {
+          from: 'Bay <memberbay+12345@members.somewhat>',
+          from_email: 'memberbay+12345@members.somewhat',
+          from_display_name: 'Bay',
+          subject: 'strange email with empty text/plain',
+          to: 'bay@example.com',
+          body: 'some html text',
+        },
+      },
     ]
 
+    count = 0
     files.each { |file|
+      count += 1
+      #p "Count: #{count}"
       parser = Channel::EmailParser.new
       data = parser.parse( file[:data] )
 
