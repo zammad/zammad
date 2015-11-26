@@ -116,7 +116,7 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
 
     html
 
@@ -138,7 +138,7 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
 
     html
 
@@ -155,7 +155,7 @@ class App.Utils
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('a, font, small, time').replaceWith( ->
+    html.find('a, font, small, time, form').replaceWith( ->
       $(@).contents()
     )
 
@@ -179,7 +179,7 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('form, font, hr, img, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('font, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
 
     html
 
