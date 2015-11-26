@@ -264,6 +264,7 @@ do($ = window.jQuery, window) ->
         message: message
         from: 'customer'
         id: @_messageCount++
+        unreadClass: ''
 
       @maybeAddTimestamp()
 
@@ -299,7 +300,7 @@ do($ = window.jQuery, window) ->
 
     renderMessage: (data) =>
       @lastAddedType = "message--#{ data.from }"
-      unread = document.hidden ? ' zammad-chat-message--unread' : ''
+      data.unreadClass = if document.hidden then ' zammad-chat-message--unread' else ''
       @el.find('.zammad-chat-body').append @view('message')(data)
       @scrollToBottom()
 
