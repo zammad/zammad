@@ -1660,11 +1660,11 @@ wait untill text in selector disabppears
   user_create(
     :browser => browser2,
     :data => {
-      #:login     => 'some login' + random,
-      :firstname => 'Manage Firstname' + random,
-      :lastname  => 'Manage Lastname' + random,
-      :email     => user_email,
-      :password  => 'some-pass',
+      #login:    'some login' + random,
+      firstname: 'Manage Firstname' + random,
+      lastname:  'Manage Lastname' + random,
+      email:     user_email,
+      password:  'some-pass',
     },
   )
 
@@ -1699,8 +1699,7 @@ wait untill text in selector disabppears
     element.send_keys( data[:password] )
     instance.find_elements( { css: '.modal input[name="role_ids"][value="3"]' } )[0].click
     instance.find_elements( { css: '.modal button.js-submit' } )[0].click
-
-    sleep 2
+    sleep 3.5
     set(
       browser: instance,
       css: '.content .js-search',

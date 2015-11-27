@@ -118,10 +118,14 @@ class AgentTicketActionLevel0Test < TestCase
     )
 
     # check if text module exists in instance2, for ready to use
+    click(
+      browser: browser2,
+      css:     '#global-search',
+    )
     set(
       browser: browser2,
       css: '.active div[data-name=body]',
-      value: 'test ::' + random
+      value: 'test ::' + random,
     )
     watch_for(
       browser: browser2,
