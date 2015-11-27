@@ -11,11 +11,6 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
 
-  unset MAILBOX_AUTO1
-  unset MAILBOX_AUTO2
-  unset MAILBOX_MANUAL1
-  unset MAILBOX_MANUAL2
-
 elif [ "$LEVEL" == '2' ]; then
   echo "slicing level 2"
 
@@ -35,11 +30,6 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/switch_to_user_test.rb
-
-  unset MAILBOX_AUTO1
-  unset MAILBOX_AUTO2
-  unset MAILBOX_MANUAL1
-  unset MAILBOX_MANUAL2
 
 elif [ "$LEVEL" == '3' ]; then
   echo "slicing level 3"

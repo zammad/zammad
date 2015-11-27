@@ -170,6 +170,10 @@ job_integration_browser_ff_1:
     - export REMOTE_URL=http://192.168.122.175:4445/wd/hub
     - export BROWSER=firefox
     - export RAILS_SERVE_STATIC_FILES=true
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
     - script/build/test_db_config.sh production ci_zammad_browser_ff_1
     - script/build/test_db_config.sh test ci_zammad_browser_ff_1_test
     - script/build/test_slice_tests.sh 1
