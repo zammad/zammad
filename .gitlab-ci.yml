@@ -173,7 +173,6 @@ job_integration_browser_ff:
     - script/build/test_db_config.sh production ci_zammad_browser_ff
     - script/build/test_db_config.sh test ci_zammad_browser_ff_test
     - RAILS_ENV=test rake db:create
-    - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV 3021 3022
