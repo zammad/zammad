@@ -145,9 +145,9 @@ job_integration_autowizard:
   script:
     - export RAILS_ENV=production
     - export Z_LOCALES=en-us:de-de
-    - export IP=`hostname -I`
+    - export IP=$(ip -f inet -o addr show eth0|cut -d\  -f 7 | cut -d/ -f 1)
     - export BROWSER_URL=http://$IP:3011
-    - export REMOTE_URL=http://192.168.122.135:4444/wd/hub
+    - export REMOTE_URL=http://192.168.122.175:4444/wd/hub
     - export BROWSER=firefox
     - export RAILS_SERVE_STATIC_FILES=true
     - script/build/test_db_config.sh production ci_zammad_autowizard
