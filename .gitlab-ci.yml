@@ -156,6 +156,26 @@ job_integration_autowizard:
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3011
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3011 && exit 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3011
+    - script/build/test_startup.sh $RAILS_ENV 3011 3012
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3011 3012 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3011 3012
+
+job_integration_browser_ff:
+  stage: browser
+  script:
+    - export RAILS_ENV=production
+    - export Z_LOCALES=en-us:de-de
+    - export IP=$(ip -f inet -o addr show eth0|cut -d\  -f 7 | cut -d/ -f 1)
+    - export BROWSER_URL=http://$IP:3021
+    - export REMOTE_URL=http://192.168.122.175:4445/wd/hub
+    - export BROWSER=firefox
+    - export RAILS_SERVE_STATIC_FILES=true
+    - script/build/test_db_config.sh production ci_zammad_browser_ff
+    - script/build/test_db_config.sh test ci_zammad_browser_ff_test
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_example.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV 3021 3022
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3021 3022 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3021 3022
