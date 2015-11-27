@@ -361,13 +361,13 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   set(
-    :browser         => browser1,
-    :css             => '.some_class',
-    :value           => true,
-    :slow            => false,
-    :blur            => true,
-    :clear           => true, # todo | default: true
-    :contenteditable => true
+    browser:         browser1,
+    css:             '.some_class',
+    value:           true,
+    slow:            false,
+    blur:            true,
+    clear:           true, # todo | default: true
+    contenteditable: true
   )
 
 =end
@@ -417,9 +417,9 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   select(
-    :browser => browser1,
-    :css     => '.some_class',
-    :value   => 'Some Value',
+    browser: browser1,
+    css:     '.some_class',
+    value:   'Some Value',
   )
 
 =end
@@ -446,8 +446,8 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   check(
-    :browser => browser1,
-    :css     => '.some_class',
+    browser: browser1,
+    css:     '.some_class',
   )
 
 =end
@@ -465,8 +465,8 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   uncheck(
-    :browser => browser1,
-    :css     => '.some_class',
+    browser: browser1,
+    css:     '.some_class',
   )
 
 =end
@@ -484,8 +484,9 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   sendkey(
-    :browser => browser1,
-    :value   => :enter,
+    browser: browser1,
+    value:   :enter,
+    slow:    false,
   )
 
 =end
@@ -501,7 +502,11 @@ class TestCase < Test::Unit::TestCase
       return
     end
     instance.action.send_keys(params[:value]).perform
-    sleep 0.5
+    if params[:slow]
+      sleep 1
+    else
+      sleep 0.6
+    end
   end
 
 =begin

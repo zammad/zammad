@@ -45,6 +45,7 @@ class AgentTicketActionLevel0Test < TestCase
     )
     sendkey(
       value: :arrow_down,
+      slow: true,
     )
     click( css: '.active .shortcut > ul> li > a' )
 
@@ -130,6 +131,7 @@ class AgentTicketActionLevel0Test < TestCase
     sendkey(
       browser: browser2,
       value: :arrow_down,
+      slow: true,
     )
     click(
       browser: browser2,
@@ -167,6 +169,7 @@ class AgentTicketActionLevel0Test < TestCase
     sendkey(
       browser: browser2,
       value: :arrow_down,
+      slow: true,
     )
     click(
       browser: browser2,
@@ -210,6 +213,7 @@ class AgentTicketActionLevel0Test < TestCase
     sendkey(
       browser: browser2,
       value: :arrow_down,
+      slow: true,
     )
 
     click(
