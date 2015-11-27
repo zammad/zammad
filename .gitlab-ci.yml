@@ -221,3 +221,23 @@ job_integration_browser_ff_2:
     - script/build/test_startup.sh $RAILS_ENV 3021 3022
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3021 3022 1
     - script/build/test_shutdown.sh $RAILS_ENV 3021 3022
+
+job_integration_browser_ff_3:
+  stage: browser
+  tags:
+    - browser-ff
+  script:
+    - export BROWSER_URL=http://$IP:3031
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_db_config.sh production ci_zammad_browser_ff_3
+    - script/build/test_db_config.sh test ci_zammad_browser_ff_3_test
+    - script/build/test_slice_tests.sh 3
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV 3031 3032
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3031 3032 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3031 3032
