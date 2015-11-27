@@ -160,7 +160,7 @@ job_integration_autowizard:
     - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3011 3012 1
     - script/build/test_shutdown.sh $RAILS_ENV 3011 3012
 
-job_integration_browser_ff:
+job_integration_browser_ff_1:
   stage: browser
   script:
     - export RAILS_ENV=production
@@ -170,8 +170,9 @@ job_integration_browser_ff:
     - export REMOTE_URL=http://192.168.122.175:4445/wd/hub
     - export BROWSER=firefox
     - export RAILS_SERVE_STATIC_FILES=true
-    - script/build/test_db_config.sh production ci_zammad_browser_ff
-    - script/build/test_db_config.sh test ci_zammad_browser_ff_test
+    - script/build/test_db_config.sh production ci_zammad_browser_ff_1
+    - script/build/test_db_config.sh test ci_zammad_browser_ff_1_test
+    - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
