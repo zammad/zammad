@@ -142,34 +142,26 @@ job_integration_otrs_31:
 
 job_integration_autowizard:
   stage: browser
+  tags:
+    - browser-ff
   script:
-    - export RAILS_ENV=production
-    - export Z_LOCALES=en-us:de-de
-    - export IP=$(ip -f inet -o addr show eth0|cut -d\  -f 7 | cut -d/ -f 1)
-    - export BROWSER_URL=http://$IP:3011
-    - export REMOTE_URL=http://192.168.122.175:4444/wd/hub
-    - export BROWSER=firefox
-    - export RAILS_SERVE_STATIC_FILES=true
+    - export BROWSER_URL=http://$IP:3001
     - script/build/test_db_config.sh production ci_zammad_autowizard
     - script/build/test_db_config.sh test ci_zammad_autowizard_test
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3011 3012
+    - script/build/test_startup.sh $RAILS_ENV 3001 3002
     - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3011 3012 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3011 3012
+    - script/build/test_shutdown.sh $RAILS_ENV 3001 3002
 
 job_integration_browser_ff_1:
   stage: browser
+  tags:
+    - browser-ff
   script:
-    - export RAILS_ENV=production
-    - export Z_LOCALES=en-us:de-de
-    - export IP=$(ip -f inet -o addr show eth0|cut -d\  -f 7 | cut -d/ -f 1)
-    - export BROWSER_URL=http://$IP:3021
-    - export REMOTE_URL=http://192.168.122.175:4445/wd/hub
-    - export BROWSER=firefox
-    - export RAILS_SERVE_STATIC_FILES=true
+    - export BROWSER_URL=http://$IP:3011
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -177,6 +169,26 @@ job_integration_browser_ff_1:
     - script/build/test_db_config.sh production ci_zammad_browser_ff_1
     - script/build/test_db_config.sh test ci_zammad_browser_ff_1_test
     - script/build/test_slice_tests.sh 1
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV 3011 3012
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3011 3012 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3011 3012
+
+job_integration_browser_ff_2:
+  stage: browser
+  tags:
+    - browser-ff
+  script:
+    - export BROWSER_URL=http://$IP:3021
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_db_config.sh production ci_zammad_browser_ff_2
+    - script/build/test_db_config.sh test ci_zammad_browser_ff_2_test
+    - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
