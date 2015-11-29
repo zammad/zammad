@@ -241,3 +241,63 @@ job_integration_browser_ff_3:
     - script/build/test_startup.sh $RAILS_ENV 3031 3032
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3031 3032 1
     - script/build/test_shutdown.sh $RAILS_ENV 3031 3032
+
+job_integration_browser_chrome_1:
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
+    - export BROWSER_URL=http://$IP:3041
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_db_config.sh production ci_zammad_browser_chrome_1
+    - script/build/test_db_config.sh test ci_zammad_browser_chrome_1_test
+    - script/build/test_slice_tests.sh 1
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV 3041 3042
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3041 3042 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3041 3042
+
+job_integration_browser_chrome_2:
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
+    - export BROWSER_URL=http://$IP:3051
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_db_config.sh production ci_zammad_browser_chrome_2
+    - script/build/test_db_config.sh test ci_zammad_browser_chrome_2_test
+    - script/build/test_slice_tests.sh 2
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV 3051 3052
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3051 3052 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3051 3052
+
+job_integration_browser_chrome_3:
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
+    - export BROWSER_URL=http://$IP:3061
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_db_config.sh production ci_zammad_browser_chrome_3
+    - script/build/test_db_config.sh test ci_zammad_browser_chrome_3_test
+    - script/build/test_slice_tests.sh 3
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV 3061 3062
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3061 3062 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3061 3062
