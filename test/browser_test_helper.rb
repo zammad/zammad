@@ -1349,8 +1349,9 @@ wait untill text in selector disabppears
       #sleep 0.5
       element.send_keys( :arrow_down )
       sleep 0.6
+      element.send_keys( :enter )
       #instance.find_elements( { css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active' } )[0].click
-      #sleep 0.3
+      sleep 0.3
 
       click( browser: instance, css: '.modal .js-submit' )
 
