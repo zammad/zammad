@@ -37,7 +37,7 @@ class AgentTicketActionLevel0Test < TestCase
 
     set(
       css: '.active div[data-name=body]',
-      value: 'test ::' + random
+      value: 'test ::' + random,
     )
     watch_for(
       css: '.active .shortcut',
@@ -118,10 +118,6 @@ class AgentTicketActionLevel0Test < TestCase
     )
 
     # check if text module exists in instance2, for ready to use
-    click(
-      browser: browser2,
-      css:     '#global-search',
-    )
     set(
       browser: browser2,
       css: '.active div[data-name=body]',
@@ -135,7 +131,6 @@ class AgentTicketActionLevel0Test < TestCase
     sendkey(
       browser: browser2,
       value: :arrow_down,
-      slow: true,
     )
     click(
       browser: browser2,
@@ -147,22 +142,11 @@ class AgentTicketActionLevel0Test < TestCase
       css: '.active div[data-name=body]',
       value: 'some content ' + random,
     )
-    sleep 2
 
-    set(
-      browser: browser2,
-      css: '.active .newTicket input[name="customer_id_completion"]',
-      value: 'nicole',
-    )
-    sleep 4
-    sendkey(
-      browser: browser2,
-      value: :arrow_down,
-    )
-
-    click(
-      browser: browser2,
-      css: '.active .newTicket .recipientList-entry.js-user.is-active',
+    ticket_customer_select(
+      browser:  browser2,
+      css: '.active .newTicket',
+      customer: 'nicole',
     )
 
     set(
@@ -207,19 +191,16 @@ class AgentTicketActionLevel0Test < TestCase
       css: '.active div[data-name=body]',
       value: 'test',
     )
-
     set(
       browser: browser2,
       css: '.active div[data-name=body]',
       value: '::' + random,
     )
-
     sendkey(
       browser: browser2,
       value: :arrow_down,
-      slow: true,
     )
-
+    sleep 1
     click(
       browser: browser2,
       css: '.active .shortcut > ul> li > a',
@@ -246,20 +227,12 @@ class AgentTicketActionLevel0Test < TestCase
     )
     sleep 1
 
-    set(
-      browser: browser2,
-      css: '.modal [name="customer_id_completion"]',
-      value: firstname,
+    ticket_customer_select(
+      browser:  browser2,
+      css: '.modal',
+      customer: firstname,
     )
-    sleep 4
-    sendkey(
-      browser: browser2,
-      value: :arrow_down,
-    )
-    click(
-      browser: browser2,
-      css: '.modal .recipientList-entry.js-user.is-active',
-    )
+
     click(
       browser: browser2,
       css: '.modal-content .js-submit',

@@ -111,6 +111,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def login(params)
+    switch_window_focus(params)
     log('login', params)
     instance = params[:browser] || @browser
 
@@ -158,6 +159,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def logout(params = {})
+    switch_window_focus(params)
     log('logout', params)
 
     instance = params[:browser] || @browser
@@ -188,6 +190,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def location(params)
+    switch_window_focus(params)
     log('location', params)
 
     instance = params[:browser] || @browser
@@ -205,6 +208,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def location_check(params)
+    switch_window_focus(params)
     log('location_check', params)
 
     instance = params[:browser] || @browser
@@ -224,6 +228,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def reload(params = {})
+    switch_window_focus(params)
     log('reload', params)
 
     instance = params[:browser] || @browser
@@ -249,6 +254,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def click(params)
+    switch_window_focus(params)
     log('click', params)
 
     instance = params[:browser] || @browser
@@ -281,6 +287,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def scroll_to(params)
+    switch_window_focus(params)
     log('scroll_to', params)
 
     instance = params[:browser] || @browser
@@ -308,6 +315,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def execute(params)
+    switch_window_focus(params)
     log('js', params)
 
     instance = params[:browser] || @browser
@@ -321,13 +329,14 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   exists(
-    :browser => browser1,
-    :css     => '.some_class',
+    browser: browser1,
+    css: '.some_class',
   )
 
 =end
 
   def exists(params)
+    switch_window_focus(params)
     log('exists', params)
 
     instance = params[:browser] || @browser
@@ -341,13 +350,14 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   exists_not(
-    :browser => browser1,
-    :css     => '.some_class',
+    browser: browser1,
+    css: '.some_class',
   )
 
 =end
 
   def exists_not(params)
+    switch_window_focus(params)
     log('exists_not', params)
 
     instance = params[:browser] || @browser
@@ -373,18 +383,13 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def set(params)
+    switch_window_focus(params)
     log('set', params)
 
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { css: params[:css] } )[0]
     #element.click
-
-    # trigger also focus on input/select and textarea fields
-    #if params[:css] =~ /(input|select|textarea)/
-    #  instance.execute_script( "$('#{params[:css]}').trigger('focus')" )
-    #  sleep 0.2
-    #end
 
     element.clear
 
@@ -402,15 +407,6 @@ class TestCase < Test::Unit::TestCase
       instance.execute_script( "$('#{params[:css]}').blur()" )
     end
 
-    # it's not working stable via selenium, use js
-    if params[:contenteditable]
-      value = instance.find_elements( { css: params[:css] } )[0].text
-      if value != params[:value]
-        body_quoted = quote( params[:value] )
-        instance.execute_script( "$('#{params[:css]}').focus().html('#{body_quoted}').trigger('focusout')" )
-      end
-    end
-
     sleep 0.5
   end
 
@@ -425,6 +421,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def select(params)
+    switch_window_focus(params)
     log('select', params)
 
     instance = params[:browser] || @browser
@@ -453,6 +450,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def check(params)
+    switch_window_focus(params)
     log('check', params)
 
     instance = params[:browser] || @browser
@@ -472,6 +470,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def uncheck(params)
+    switch_window_focus(params)
     log('uncheck', params)
 
     instance = params[:browser] || @browser
@@ -492,6 +491,7 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def sendkey(params)
+    switch_window_focus(params)
     log('sendkey', params)
 
     instance = params[:browser] || @browser
@@ -512,17 +512,18 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   match(
-    :browser          => browser1,
-    :css              => '#content .text-1',
-    :value            => 'some test for browser and some other for browser',
-    :attribute        => 'some_attribute', # match on attribute
-    :should_not_match => true,
-    :no_quote         => false, # use regex
+    browser: browser1,
+    css: '#content .text-1',
+    value: 'some test for browser and some other for browser',
+    attribute: 'some_attribute', # match on attribute
+    should_not_match: true,
+    no_quote: false, # use regex
   )
 
 =end
 
   def match(params, fallback = false)
+    switch_window_focus(params)
     log('match', params)
 
     instance = params[:browser] || @browser
@@ -603,17 +604,18 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   match_not(
-    :browser          => browser1,
-    :css              => '#content .text-1',
-    :value            => 'some test for browser and some other for browser',
-    :attribute        => 'some_attribute', # match on attribute
-    :should_not_match => true,
-    :no_quote         => false, # use regex
+    browser: browser1,
+    css: '#content .text-1',
+    value: 'some test for browser and some other for browser',
+    attribute: 'some_attribute', # match on attribute
+    should_not_match: true,
+    no_quote: false, # use regex
   )
 
 =end
 
   def match_not(params)
+    switch_window_focus(params)
     log('match_not', params)
 
     params[:should_not_match] = true
@@ -623,13 +625,14 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   task_type(
-    :browser => browser1,
-    :type    => 'stayOnTab',
+    browser: browser1,
+    type: 'stayOnTab',
   )
 
 =end
 
   def task_type(params)
+    switch_window_focus(params)
     log('task_type', params)
 
     instance = params[:browser] || @browser
@@ -645,21 +648,22 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   cookie(
-    :browser => browser1,
-    :name    => '^_zammad.+?',
-    :value   => '.+?',
-    :expires => nil,
+    browser: browser1,
+    name: '^_zammad.+?',
+    value: '.+?',
+    expires: nil,
   )
 
   cookie(
-    :browser          => browser1,
-    :name             => '^_zammad.+?',
-    :should_not_exist => true,
+    browser: browser1,
+    name: '^_zammad.+?',
+    should_not_exist: true,
   )
 
 =end
 
   def cookie(params)
+    switch_window_focus(params)
     log('cookie', params)
 
     instance = params[:browser] || @browser
@@ -700,13 +704,14 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   verify_title(
-    :browser => browser1,
-    :value   => 'some title',
+    browser: browser1,
+    value: 'some title',
   )
 
 =end
 
   def verify_title(params = {})
+    switch_window_focus(params)
     log('verify_title', params)
 
     instance = params[:browser] || @browser
@@ -722,16 +727,17 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   verify_task(
-    :browser => browser1,
-    :data    => {
-      :title    => 'some title',
-      :modified => true, # optional
+    browser: browser1,
+    data: {
+      title:    'some title',
+      modified: true, # optional
     }
   )
 
 =end
 
   def verify_task(params = {}, fallback = false)
+    switch_window_focus(params)
     log('verify_task', params)
 
     instance = params[:browser] || @browser
@@ -795,15 +801,16 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   open_task(
-    :browser => browser1,
-    :data    => {
-      :title => 'some title',
+    browser: browser1,
+    data: {
+      title: 'some title',
     }
   )
 
 =end
 
   def open_task(params = {}, _fallback = false)
+    switch_window_focus(params)
     log('open_task', params)
 
     instance = params[:browser] || @browser
@@ -821,14 +828,15 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   file_upload(
-    :browser => browser1,
-    :css     => '#content .text-1',
-    :value   => 'some text',
+    browser: browser1,
+    css:     '#content .text-1',
+    value:   'some text',
   )
 
 =end
 
   def file_upload(params = {})
+    switch_window_focus(params)
     log('file_upload', params)
 
     instance = params[:browser] || @browser
@@ -847,12 +855,15 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   click_catcher_remove(
-    :browser => browser1,
+    browser: browser1,
   )
 
 =end
 
   def click_catcher_remove(params = {})
+    switch_window_focus(params)
+    log('click_catcher_remove', params)
+
     instance = params[:browser] || @browser
     return if !instance.find_elements( { css: '.clickCatcher' } )[0]
     click( browser: instance, css: '.clickCatcher')
@@ -861,16 +872,17 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   watch_for(
-    :browser   => browser1,
-    :css       => '#content .text-1',
-    :value     => 'some text',
-    :attribute => 'some_attribute' # optional
-    :timeout   => '16', # in sec, default 16
+    browser:   browser1,
+    css:       '#content .text-1',
+    value:     'some text',
+    attribute: 'some_attribute' # optional
+    timeout:   '16', # in sec, default 16
   )
 
 =end
 
   def watch_for(params = {})
+    switch_window_focus(params)
     log('watch_for', params)
 
     instance = params[:browser] || @browser
@@ -914,23 +926,24 @@ class TestCase < Test::Unit::TestCase
 wait untill selector disabppears
 
   watch_for_disappear(
-    :browser => browser1,
-    :css     => '#content .text-1',
-    :timeout => '16', # in sec, default 16
+    browser: browser1,
+    css:     '#content .text-1',
+    timeout: '16', # in sec, default 16
   )
 
 wait untill text in selector disabppears
 
   watch_for_disappear(
-    :browser => browser1,
-    :css     => '#content .text-1',
-    :value   => 'some value as regexp',
-    :timeout => '16', # in sec, default 16
+    browser: browser1,
+    css:     '#content .text-1',
+    value:   'some value as regexp',
+    timeout: '16', # in sec, default 16
   )
 
 =end
 
   def watch_for_disappear(params = {})
+    switch_window_focus(params)
     log('watch_for_disappear', params)
 
     instance = params[:browser] || @browser
@@ -976,6 +989,7 @@ wait untill text in selector disabppears
 =end
 
   def tasks_close_all(params = {})
+    switch_window_focus(params)
     log('tasks_close_all', params)
 
     instance = params[:browser] || @browser
@@ -1009,15 +1023,49 @@ wait untill text in selector disabppears
 
 =begin
 
+  ticket_customer_select(
+    browser:  browser1,
+    css:      '#content .text-1',
+    customer: '',
+  )
+
+=end
+
+  def ticket_customer_select(params = {})
+    switch_window_focus(params)
+    log('ticket_customer_select', params)
+
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { css: params[:css] + ' input[name="customer_id_completion"]' } )[0]
+    element.click
+    element.clear
+
+    # workaround, sometimes focus is not triggered
+    element.send_keys( params[:customer] + '*' )
+    sleep 3.5
+
+    # check if pulldown is open, it's not working stable via selenium
+    #instance.execute_script( "$('#{params[:css]} .js-recipientDropdown').addClass('open')" )
+    #sleep 0.5
+    element.send_keys( :arrow_down )
+    #sleep 0.3
+    #instance.find_elements( { css: params[:css] + ' .recipientList-entry.js-user.is-active' } )[0].click
+    sleep 0.6
+    assert( true, 'ticket_customer_select' )
+  end
+
+=begin
+
   username = overview_create(
-    :browser => browser1,
-    :data    => {
-      :name              => name,
-      :role              => 'Agent',
-      :selector          => {
+    browser: browser1,
+    data: {
+      name:     name,
+      role:     'Agent',
+      selector: {
         'Priority': '1 low',
       },
-      :prio              => 1000,
+      prio: 1000,
       'order::direction' => 'down',
     }
   )
@@ -1025,6 +1073,7 @@ wait untill text in selector disabppears
 =end
 
   def overview_create(params)
+    switch_window_focus(params)
     log('overview_create', params)
 
     instance = params[:browser] || @browser
@@ -1090,26 +1139,27 @@ wait untill text in selector disabppears
 =begin
 
   ticket = ticket_create(
-    :browser => browser1,
-    :data    => {
-      :customer => 'nico',
-      :group    => 'Users',
-      :priority => '2 normal',
-      :title    => 'overview #1',
-      :body     => 'overview #1',
+    browser: browser1,
+    data: {
+      customer: 'nico',
+      group:    'Users',
+      priority: '2 normal',
+      title:    'overview #1',
+      body:     'overview #1',
     },
-    :do_not_submit => true,
+    do_not_submit: true,
   )
 
   returns (in case of submitted)
     {
-      :id     => 123,
-      :number => '100001',
+      id:     123,
+      number: '100001',
     }
 
 =end
 
   def ticket_create(params)
+    switch_window_focus(params)
     log('ticket_create', params)
 
     instance = params[:browser] || @browser
@@ -1171,11 +1221,11 @@ wait untill text in selector disabppears
       sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium
-      instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
-      sleep 0.5
+      #instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
+      #sleep 0.5
       element.send_keys( :arrow_down )
-      sleep 0.3
-      instance.find_elements( { css: '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
+      #sleep 0.3
+      #instance.find_elements( { css: '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
       sleep 0.6
     end
 
@@ -1224,21 +1274,22 @@ wait untill text in selector disabppears
 =begin
 
   ticket_update(
-    :browser => browser1,
-    :data    => {
-      :title    => '',
-      :customer => 'some_customer@example.com',
-      :body     => 'some body',
-      :group    => 'some group',
-      :priority => '1 low',
-      :state    => 'closed',
+    browser: browser1,
+    data: {
+      title:    '',
+      customer: 'some_customer@example.com',
+      body:     'some body',
+      group:    'some group',
+      priority: '1 low',
+      state:    'closed',
     },
-    :do_not_submit => true,
+    do_not_submit: true,
   )
 
 =end
 
   def ticket_update(params)
+    switch_window_focus(params)
     log('ticket_update', params)
 
     instance = params[:browser] || @browser
@@ -1292,12 +1343,12 @@ wait untill text in selector disabppears
       sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium
-      instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')" )
-      sleep 0.5
+      #instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')" )
+      #sleep 0.5
       element.send_keys( :arrow_down )
-      sleep 0.3
-      instance.find_elements( { css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active' } )[0].click
-      sleep 0.3
+      sleep 0.6
+      #instance.find_elements( { css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active' } )[0].click
+      #sleep 0.3
 
       click( browser: instance, css: '.modal .js-submit' )
 
@@ -1411,18 +1462,19 @@ wait untill text in selector disabppears
 =begin
 
   ticket_verify(
-    :browser => browser1,
-    :data    => {
-      :title => 'some title',
-      :body  => 'some body',
-##      :group => 'some group',
-##      :state => 'closed',
+    browser: browser1,
+    data: {
+      title: 'some title',
+      body:  'some body',
+##      group: 'some group',
+##      state: 'closed',
     },
   )
 
 =end
 
   def ticket_verify(params)
+    switch_window_focus(params)
     log('ticket_verify', params)
 
     instance = params[:browser] || @browser
@@ -1451,14 +1503,15 @@ wait untill text in selector disabppears
 =begin
 
   ticket_open_by_overview(
-    :browser => browser2,
-    :number  => ticket1[:number],
-    :link    => "#ticket/view/#{name}",
+    browser: browser2,
+    number:  ticket1[:number],
+    link:    "#ticket/view/#{name}",
   )
 
 =end
 
   def ticket_open_by_overview(params)
+    switch_window_focus(params)
     log('ticket_open_by_overview', params)
 
     instance = params[:browser] || @browser
@@ -1490,13 +1543,14 @@ wait untill text in selector disabppears
 =begin
 
   ticket_open_by_search(
-    :browser => browser2,
-    :number  => ticket1[:number],
+    browser: browser2,
+    number:  ticket1[:number],
   )
 
 =end
 
   def ticket_open_by_search(params)
+    switch_window_focus(params)
     log('ticket_open_by_search', params)
 
     instance = params[:browser] || @browser
@@ -1538,7 +1592,7 @@ wait untill text in selector disabppears
 =begin
 
   overview_count = overview_counter(
-    :browser => browser2,
+    browser: browser2,
   )
 
   returns
@@ -1549,6 +1603,7 @@ wait untill text in selector disabppears
 =end
 
   def overview_counter(params = {})
+    switch_window_focus(params)
     log('overview_counter', params)
 
     instance = params[:browser] || @browser
@@ -1584,13 +1639,14 @@ wait untill text in selector disabppears
 =begin
 
   organization_open_by_search(
-    :browser => browser2,
-    :value   => 'some value',
+    browser: browser2,
+    value:   'some value',
   )
 
 =end
 
   def organization_open_by_search(params = {})
+    switch_window_focus(params)
     log('organization_open_by_search', params)
 
     instance = params[:browser] || @browser
@@ -1627,13 +1683,14 @@ wait untill text in selector disabppears
 =begin
 
   user_open_by_search(
-    :browser => browser2,
-    :value   => 'some value',
+    browser: browser2,
+    value: 'some value',
   )
 
 =end
 
   def user_open_by_search(params = {})
+    switch_window_focus(params)
     log('user_open_by_search', params)
 
     instance = params[:browser] || @browser
@@ -1658,8 +1715,8 @@ wait untill text in selector disabppears
 =begin
 
   user_create(
-    :browser => browser2,
-    :data => {
+    browser: browser2,
+    data: {
       #login:    'some login' + random,
       firstname: 'Manage Firstname' + random,
       lastname:  'Manage Lastname' + random,
@@ -1671,6 +1728,7 @@ wait untill text in selector disabppears
 =end
 
   def user_create(params = {})
+    switch_window_focus(params)
     log('user_create', params)
 
     instance = params[:browser] || @browser
@@ -1717,16 +1775,17 @@ wait untill text in selector disabppears
 =begin
 
   sla_create(
-    :browser => browser2,
-    :data => {
-       :name                        => 'some sla' + random,
-       :first_response_time_in_text => 61
+    browser: browser2,
+    data: {
+       name: 'some sla' + random,
+       first_response_time_in_text: 61
     },
   )
 
 =end
 
   def sla_create(params = {})
+    switch_window_focus(params)
     log('sla_create', params)
 
     instance = params[:browser] || @browser
@@ -1761,17 +1820,18 @@ wait untill text in selector disabppears
 =begin
 
   text_module_create(
-    :browser => browser2,
-    :data => {
-      :name     => 'some sla' + random,
-      :keywords => 'some keywords',
-      :content  => 'some content',
+    browser: browser2,
+    data: {
+      name:     'some sla' + random,
+      keywords: 'some keywords',
+      content:  'some content',
     },
   )
 
 =end
 
   def text_module_create(params = {})
+    switch_window_focus(params)
     log('text_module_create', params)
 
     instance = params[:browser] || @browser
@@ -1809,16 +1869,17 @@ wait untill text in selector disabppears
 =begin
 
   signature_create(
-    :browser => browser2,
-    :data => {
-      :name => 'some sla' + random,
-      :body => 'some body',
+    browser: browser2,
+    data: {
+      name: 'some sla' + random,
+      body: 'some body',
     },
   )
 
 =end
 
   def signature_create(params = {})
+    switch_window_focus(params)
     log('signature_create', params)
 
     instance = params[:browser] || @browser
@@ -1855,11 +1916,11 @@ wait untill text in selector disabppears
 =begin
 
   group_create(
-    :browser => browser2,
-    :data => {
-      :name      => 'some sla' + random,
-      :signature => 'some signature bame',
-      :member    => [
+    browser: browser2,
+    data: {
+      name:      'some sla' + random,
+      signature: 'some signature bame',
+      member:    [
         'some_user_login',
       ],
     },
@@ -1868,6 +1929,7 @@ wait untill text in selector disabppears
 =end
 
   def group_create(params = {})
+    switch_window_focus(params)
     log('group_create', params)
 
     instance = params[:browser] || @browser
@@ -1930,6 +1992,15 @@ wait untill text in selector disabppears
     string_quoted.gsub!(/</, '&lt;')
     string_quoted.gsub!(/>/, '&gt;')
     string_quoted
+  end
+
+  def switch_window_focus(params)
+    instance = params[:browser] || @browser
+    if instance != @last_used_browser
+      log('switch browser window focus', {})
+      instance.switch_to.window(instance.window_handles.first)
+    end
+    @last_used_browser = instance
   end
 
   def log(method, params)
