@@ -1049,7 +1049,8 @@ wait untill text in selector disabppears
     #instance.execute_script( "$('#{params[:css]} .js-recipientDropdown').addClass('open')" )
     #sleep 0.5
     element.send_keys( :arrow_down )
-    #sleep 0.3
+    sleep 0.3
+    element.send_keys( :enter )
     #instance.find_elements( { css: params[:css] + ' .recipientList-entry.js-user.is-active' } )[0].click
     sleep 0.6
     assert( true, 'ticket_customer_select' )
@@ -1224,7 +1225,8 @@ wait untill text in selector disabppears
       #instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
       #sleep 0.5
       element.send_keys( :arrow_down )
-      #sleep 0.3
+      sleep 0.3
+      element.send_keys( :enter )
       #instance.find_elements( { css: '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
       sleep 0.6
     end
