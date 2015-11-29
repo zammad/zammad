@@ -13,6 +13,13 @@ rubocop:
   script:
     - bundle exec rubocop
 
+coffeelint:
+  stage: pre
+  tags:
+    - zammad
+  script:
+    - coffeelint app/
+
 job_unit:
   stage: test
   tags:
@@ -166,14 +173,14 @@ job_integration_otrs_31:
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb
 
-job_integration_autowizard:
+job_integration_autowizard_ff:
   stage: browser
   tags:
     - browser-ff
   script:
     - export BROWSER_URL=http://$IP:3001
-    - script/build/test_db_config.sh production ci_zammad_autowizard
-    - script/build/test_db_config.sh test ci_zammad_autowizard_test
+    - script/build/test_db_config.sh production ci_zammad_autowizard_ff
+    - script/build/test_db_config.sh test ci_zammad_autowizard_ff_test
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
@@ -241,6 +248,22 @@ job_integration_browser_ff_3:
     - script/build/test_startup.sh $RAILS_ENV 3031 3032
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3031 3032 1
     - script/build/test_shutdown.sh $RAILS_ENV 3031 3032
+
+job_integration_autowizard_chrome:
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
+    - export BROWSER_URL=http://$IP:3071
+    - script/build/test_db_config.sh production ci_zammad_autowizard_chrome
+    - script/build/test_db_config.sh test ci_zammad_autowizard_chrome_test
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_example.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV 3071 3072
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3071 3072 1
+    - script/build/test_shutdown.sh $RAILS_ENV 3071 3072
 
 job_integration_browser_chrome_1:
   stage: browser
