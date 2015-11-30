@@ -1,0 +1,10 @@
+---
+:warnings_remove: []
+:warnings_add:
+- :merge_conflict
+- :debugger
+- :pry
+- :local
+- :rubocop
+- :coffeelint
+- :yaml
