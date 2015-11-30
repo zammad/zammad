@@ -370,13 +370,13 @@ class TicketsController < ApplicationController
     # lookup open user tickets
     limit                      = 100
     assets                     = {}
-    access_condition           = Ticket.access_condition( current_user )
+    access_condition           = Ticket.access_condition(current_user)
     now                        = Time.zone.now
     user_tickets_open_ids      = []
     user_tickets_closed_ids    = []
     user_ticket_volume_by_year = []
     if params[:user_id]
-      user = User.find( params[:user_id] )
+      user = User.lookup(id: params[:user_id])
       condition = {
         'ticket.state_id' => {
           operator: 'is',

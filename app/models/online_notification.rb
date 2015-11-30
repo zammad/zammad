@@ -190,7 +190,7 @@ cleanup old online notifications
   def self.cleanup
     OnlineNotification.where('created_at < ?', Time.zone.now - 6.months).delete_all
     OnlineNotification.where('seen = ? AND created_at < ?', true, Time.zone.now - 4.hours).delete_all
-    OnlineNotification.where('seen = ? AND updated_at < ?', true, Time.zone.now - 1.hours).delete_all
+    OnlineNotification.where('seen = ? AND updated_at < ?', true, Time.zone.now - 1.hour).delete_all
 
     # notify all agents
     User.of_role('Agent').each {|user|

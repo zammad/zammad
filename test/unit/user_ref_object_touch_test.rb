@@ -76,7 +76,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
 
     # check if organization has been touched
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 4.second.ago
+    if organization1.updated_at > 4.seconds.ago
       assert( true, 'organization1.updated_at has been updated' )
     else
       assert( false, 'organization1.updated_at has not been updated' )
@@ -89,21 +89,21 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
 
     # check if customer1, customer2 and organization has been touched
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 4.second.ago
+    if customer1.updated_at > 4.seconds.ago
       assert( true, 'customer1.updated_at has been updated' )
     else
       assert( false, 'customer1.updated_at has not been updated' )
     end
 
     customer2 = User.find(customer2.id)
-    if customer2.updated_at > 4.second.ago
+    if customer2.updated_at > 4.seconds.ago
       assert( true, 'customer2.updated_at has been updated' )
     else
       assert( false, 'customer2.updated_at has not been updated' )
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 4.second.ago
+    if organization1.updated_at > 4.seconds.ago
       assert( true, 'organization1.updated_at has been updated' )
     else
       assert( false, 'organization1.updated_at has not been updated' )

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -86,7 +86,10 @@ group :development, :test do
   gem 'rb-fsevent',        require: false
 
   # code QA
+  gem 'pre-commit'
   gem 'rubocop'
+  gem 'coffeelint'
+
 end
 
 gem 'puma'

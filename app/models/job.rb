@@ -26,7 +26,7 @@ class Job < ApplicationModel
     jobs.each do |job|
 
       # only execute jobs, older then 1 min, to give admin posibility to change
-      next if job.updated_at > Time.zone.now - 1.minutes
+      next if job.updated_at > Time.zone.now - 1.minute
 
       # check if jobs need to be executed
       # ignore if job was running within last 10 min.

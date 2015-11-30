@@ -1888,31 +1888,31 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage"]' })[0].click
     sleep 1
-    instance.find_elements( { css: 'a[href="#channels/email"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#channels/email"]' })[0].click
     sleep 1
-    instance.find_elements( { css: 'a[href="#c-signature"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#c-signature"]' })[0].click
     sleep 8
-    instance.find_elements( { css: '#content #c-signature a[data-type="new"]' } )[0].click
+    instance.find_elements({ css: '#content #c-signature a[data-type="new"]' })[0].click
     sleep 2
-    element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
+    element = instance.find_elements({ css: '.modal input[name=name]' })[0]
     element.clear
-    element.send_keys( data[:name] )
-    element = instance.find_elements( { css: '.modal textarea[name=body]' } )[0]
+    element.send_keys(data[:name])
+    element = instance.find_elements({ css: '.modal textarea[name=body]' })[0]
     element.clear
-    element.send_keys( data[:body] )
-    instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+    element.send_keys(data[:body])
+    instance.find_elements({ css: '.modal button.js-submit' })[0].click
     (1..12).each {
-      element = instance.find_elements( { css: 'body' } )[0]
+      element = instance.find_elements({ css: 'body' })[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, 'signature created' )
+        assert(true, 'signature created')
         return true
       end
       sleep 1
     }
-    screenshot( browser: instance, comment: 'signature_create_failed' )
+    screenshot(browser: instance, comment: 'signature_create_failed')
     fail 'signature creation failed'
   end
 
@@ -1938,54 +1938,55 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
-    sleep 1
-    instance.find_elements( { css: 'a[href="#manage/groups"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage"]' })[0].click
+    sleep 0.5
+    instance.find_elements({ css: 'a[href="#manage/groups"]' })[0].click
     sleep 2
-    instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
+    instance.find_elements({ css: 'a[data-type="new"]' })[0].click
     sleep 2
-    element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
+    element = instance.find_elements({ css: '.modal input[name=name]' })[0]
     element.clear
-    element.send_keys( data[:name] )
-    element = instance.find_elements( { css: '.modal select[name="email_address_id"]' } )[0]
+    element.send_keys(data[:name])
+    element = instance.find_elements({ css: '.modal select[name="email_address_id"]' })[0]
     dropdown = Selenium::WebDriver::Support::Select.new(element)
-    dropdown.select_by( :index, 1 )
-    #dropdown.select_by( :text, action[:group])
+    dropdown.select_by(:index, 1)
+    #dropdown.select_by(:text, action[:group])
     if data[:signature]
-      element = instance.find_elements( { css: '.modal select[name="signature_id"]' } )[0]
+      element = instance.find_elements({ css: '.modal select[name="signature_id"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data[:signature])
+      dropdown.select_by(:text, data[:signature])
     end
-    instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+    instance.find_elements({ css: '.modal button.js-submit' })[0].click
     (1..12).each {
-      element = instance.find_elements( { css: 'body' } )[0]
+      element = instance.find_elements({ css: 'body' })[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, 'group created' )
+        assert(true, 'group created')
 
         # add member
         if data[:member]
           data[:member].each {|login|
-            instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
-            instance.find_elements( { css: 'a[href="#manage/users"]' } )[0].click
-            sleep 2
-            element = instance.find_elements( { css: '#content [name="search"]' } )[0]
+            instance.find_elements({ css: 'a[href="#manage"]' })[0].click
+            sleep 0.5
+            instance.find_elements({ css: 'a[href="#manage/users"]' })[0].click
+            sleep 3
+            element = instance.find_elements({ css: '#content [name="search"]' })[0]
             element.clear
-            element.send_keys( login )
-            sleep 2
-            #instance.find_elements( { :css => '#content table [data-id]' } )[0].click
-            instance.execute_script( '$("#content table [data-id] td").first().click()' )
-            sleep 2
-            #instance.find_elements( { :css => 'label:contains(" ' + action[:name] + '")' } )[0].click
-            instance.execute_script( '$(\'label:contains(" ' + data[:name] + '")\').first().click()' )
-            instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+            element.send_keys(login)
+            sleep 3
+            #instance.find_elements({ :css => '#content table [data-id]' })[0].click
+            instance.execute_script('$("#content table [data-id] td").first().click()')
+            sleep 3
+            #instance.find_elements({ :css => 'label:contains(" ' + action[:name] + '")' })[0].click
+            instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
+            instance.find_elements({ css: '.modal button.js-submit' })[0].click
           }
         end
       end
       sleep 1
       return true
     }
-    screenshot( browser: instance, comment: 'group_create_failed' )
+    screenshot(browser: instance, comment: 'group_create_failed')
     fail 'group creation failed'
   end
 

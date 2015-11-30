@@ -119,7 +119,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # verify access
-    return if !check_access(params[:channel_id]) if params[:channel_id]
+    return if params[:channel_id] && !check_access(params[:channel_id])
 
     # connection test
     render json: EmailHelper::Probe.outbound(params, params[:email])
@@ -131,7 +131,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # verify access
-    return if !check_access(params[:channel_id]) if params[:channel_id]
+    return if params[:channel_id] && !check_access(params[:channel_id])
 
     # connection test
     result = EmailHelper::Probe.inbound(params)
@@ -152,7 +152,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     channel_id = params[:channel_id]
 
     # verify access
-    return if !check_access(channel_id) if channel_id
+    return if channel_id && !check_access(channel_id)
 
     # check account duplicate
     return if email_account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)

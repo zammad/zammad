@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
   def current_user
     return @_current_user if @_current_user
     return if !session[:user_id]
-    @_current_user = User.find( session[:user_id] )
+    @_current_user = User.lookup(id: session[:user_id])
   end
 
   def current_user_set(user)
@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
     # check if remote ip need to be updated
     if !session[:remote_id] || session[:remote_id] != request.remote_ip
       session[:remote_id]  = request.remote_ip
-      session[:geo]        = Service::GeoIp.location( request.remote_ip )
+      session[:geo]        = Service::GeoIp.location(request.remote_ip)
     end
 
     # fill user agent
@@ -159,7 +159,7 @@ class ApplicationController < ActionController::Base
     # already logged in, early exit
     if session.id && session[:user_id]
 
-      userdata = User.find(session[:user_id])
+      userdata = User.lookup(id: session[:user_id])
       current_user_set(userdata)
 
       return {
@@ -183,7 +183,7 @@ class ApplicationController < ActionController::Base
     authenticate_with_http_basic do |username, password|
       logger.debug "http basic auth check '#{username}'"
 
-      userdata = User.authenticate( username, password )
+      userdata = User.authenticate(username, password)
 
       next if !userdata
 
@@ -223,7 +223,7 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def authentication_check( auth_param = {} )
+  def authentication_check(auth_param = {} )
     result = authentication_check_only(auth_param)
 
     # check if basic_auth fallback is possible
@@ -247,19 +247,19 @@ class ApplicationController < ActionController::Base
     true
   end
 
-  def role?( role_name )
+  def role?(role_name)
     return false if !current_user
-    current_user.role?( role_name )
+    current_user.role?(role_name)
   end
 
   def ticket_permission(ticket)
-    return true if ticket.permission( current_user: current_user )
+    return true if ticket.permission(current_user: current_user)
     response_access_deny
     false
   end
 
-  def deny_if_not_role( role_name )
-    return false if role?( role_name )
+  def deny_if_not_role(role_name)
+    return false if role?(role_name)
     response_access_deny
     true
   end
@@ -282,7 +282,7 @@ class ApplicationController < ActionController::Base
 
     # config
     config = {}
-    Setting.select('name').where( frontend: true ).each { |setting|
+    Setting.select('name').where(frontend: true ).each { |setting|
       config[setting.name] = Setting.get(setting.name)
     }
 
@@ -301,13 +301,13 @@ class ApplicationController < ActionController::Base
   def model_create_render (object, params)
 
     # create object
-    generic_object = object.new( object.param_cleanup( params[object.to_app_model_url], true ) )
+    generic_object = object.new(object.param_cleanup(params[object.to_app_model_url], true ))
 
     # save object
     generic_object.save!
 
     # set relations
-    generic_object.param_set_associations( params )
+    generic_object.param_set_associations(params)
 
     model_create_render_item(generic_object)
   rescue => e
@@ -323,15 +323,15 @@ class ApplicationController < ActionController::Base
   def model_update_render (object, params)
 
     # find object
-    generic_object = object.find( params[:id] )
+    generic_object = object.find(params[:id])
 
     # save object
-    generic_object.update_attributes!( object.param_cleanup( params[object.to_app_model_url] ) )
+    generic_object.update_attributes!(object.param_cleanup(params[object.to_app_model_url]))
 
     # set relations
-    generic_object.param_set_associations( params )
+    generic_object.param_set_associations(params)
 
-    model_update_render_item( generic_object )
+    model_update_render_item(generic_object)
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
@@ -343,7 +343,7 @@ class ApplicationController < ActionController::Base
   end
 
   def model_destory_render (object, params)
-    generic_object = object.find( params[:id] )
+    generic_object = object.find(params[:id])
     generic_object.destroy
     model_destory_render_item()
   rescue => e
@@ -359,12 +359,12 @@ class ApplicationController < ActionController::Base
   def model_show_render (object, params)
 
     if params[:full]
-      generic_object_full = object.full( params[:id] )
+      generic_object_full = object.full(params[:id])
       render json: generic_object_full, status: :ok
       return
     end
 
-    generic_object = object.find( params[:id] )
+    generic_object = object.find(params[:id])
     model_show_render_item(generic_object)
   rescue => e
     logger.error e.message
@@ -378,7 +378,7 @@ class ApplicationController < ActionController::Base
 
   def model_index_render (object, _params)
     generic_objects = object.all
-    model_index_render_result( generic_objects )
+    model_index_render_result(generic_objects)
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
