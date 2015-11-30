@@ -275,7 +275,7 @@ returns
     events = {}
     cal.events.each {|event|
       next if event.dtstart < Time.zone.now - 1.year
-      next if event.dtstart > Time.zone.now + 3.year
+      next if event.dtstart > Time.zone.now + 3.years
       day = "#{event.dtstart.year}-#{format('%02d', event.dtstart.month)}-#{format('%02d', event.dtstart.day)}"
       comment = event.summary || event.description
       comment = Encode.conv( 'utf8', comment.to_s.force_encoding('utf-8') )

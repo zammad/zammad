@@ -23,7 +23,7 @@ class Sessions::Backend::Rss
     rss_items = Rss.fetch( url, 8 )
 
     # set new timeout
-    Sessions::CacheIn.set( collection_key, rss_items, { expires_in: 1.hours } )
+    Sessions::CacheIn.set( collection_key, rss_items, { expires_in: 1.hour } )
 
     rss_items
   end

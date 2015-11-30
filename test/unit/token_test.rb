@@ -37,7 +37,7 @@ class TokenTest < ActiveSupport::TestCase
         create: {
           user_id: 2,
           action: 'PasswordReset',
-          created_at: 2.day.ago,
+          created_at: 2.days.ago,
         },
         action: 'PasswordReset',
         result: nil,
@@ -48,7 +48,7 @@ class TokenTest < ActiveSupport::TestCase
         create: {
           user_id: 2,
           action: 'iCal',
-          created_at: 2.day.ago,
+          created_at: 2.days.ago,
           persistent: true,
         },
         action: 'iCal',
