@@ -20,7 +20,7 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     chat_session.save
 
     # send chat_session_init to client
-    chat_user = User.find(chat_session.user_id)
+    chat_user = User.lookup(id: chat_session.user_id)
     url = nil
     if chat_user.image && chat_user.image != 'none'
       url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"

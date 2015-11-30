@@ -1,9 +1,8 @@
 module SessionHelper
-  def self.default_collections(user)
+  def self.default_collections(user, assets = {})
 
     # auto population collections, store all here
     default_collection = {}
-    assets             = {}
 
     # load collections to deliver from external files
     dir = File.expand_path('../../', __FILE__)

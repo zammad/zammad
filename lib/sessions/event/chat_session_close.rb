@@ -6,7 +6,7 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
 
     realname = 'Anonymous'
     if @session && @session['id']
-      realname = User.find(@session['id']).fullname
+      realname = User.lookup(id: @session['id']).fullname
     end
 
     # check count of participents

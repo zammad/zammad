@@ -15,7 +15,7 @@ class Chat < ApplicationModel
         if chat_session.state == 'running'
           user = nil
           if chat_session.user_id
-            chat_user = User.find(chat_session.user_id)
+            chat_user = User.lookup(id: chat_session.user_id)
             url = nil
             if chat_user.image && chat_user.image != 'none'
               url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"

@@ -235,10 +235,6 @@ job_integration_browser_ff_3:
     - browser-ff
   script:
     - export BROWSER_URL=http://$IP:3031
-    - unset MAILBOX_AUTO1
-    - unset MAILBOX_AUTO2
-    - unset MAILBOX_MANUAL1
-    - unset MAILBOX_MANUAL2
     - script/build/test_db_config.sh production ci_zammad_browser_ff_3
     - script/build/test_db_config.sh test ci_zammad_browser_ff_3_test
     - script/build/test_slice_tests.sh 3

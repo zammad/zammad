@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     session[:switched_from_user_id] = nil
 
     # authenticate user
-    user = User.authenticate( params[:username], params[:password] )
+    user = User.authenticate(params[:username], params[:password])
 
     # auth failed
     if !user
@@ -34,13 +34,14 @@ class SessionsController < ApplicationController
     return if !user_device_log(user, 'session')
 
     # log new session
-    user.activity_stream_log( 'session started', user.id, true )
-
-    # auto population of default collections
-    collections, assets = SessionHelper.default_collections(user)
+    user.activity_stream_log('session started', user.id, true)
 
     # add session user assets
+    assets = {}
     assets = user.assets(assets)
+
+    # auto population of default collections
+    collections, assets = SessionHelper.default_collections(user, assets)
 
     # get models
     models = SessionHelper.models(user)
@@ -78,7 +79,7 @@ class SessionsController < ApplicationController
         config: config_frontend,
         models: models,
         collections: {
-          Locale.to_app_model => Locale.where( active: true )
+          Locale.to_app_model => Locale.where(active: true)
         },
       }
       return
@@ -86,16 +87,17 @@ class SessionsController < ApplicationController
 
     # Save the user ID in the session so it can be used in
     # subsequent requests
-    user = User.find( user_id )
+    user = User.find(user_id)
 
     # log device
     return if !user_device_log(user, 'session')
 
-    # auto population of default collections
-    collections, assets = SessionHelper.default_collections(user)
-
     # add session user assets
+    assets = {}
     assets = user.assets(assets)
+
+    # auto population of default collections
+    collections, assets = SessionHelper.default_collections(user, assets)
 
     # get models
     models = SessionHelper.models(user)
@@ -148,7 +150,7 @@ class SessionsController < ApplicationController
     current_user_set(authorization.user)
 
     # log new session
-    authorization.user.activity_stream_log( 'session started', authorization.user.id, true )
+    authorization.user.activity_stream_log('session started', authorization.user.id, true)
 
     # remember last login date
     authorization.user.update_last_login
@@ -171,7 +173,7 @@ class SessionsController < ApplicationController
       current_user_set(user)
 
       # log new session
-      user.activity_stream_log( 'session started', user.id, true )
+      user.activity_stream_log('session started', user.id, true)
 
       # remember last login date
       user.update_last_login
@@ -194,7 +196,7 @@ class SessionsController < ApplicationController
       return false
     end
 
-    user = User.lookup( id: params[:id] )
+    user = User.find(params[:id])
     if !user
       render(
         json: {},
@@ -207,7 +209,7 @@ class SessionsController < ApplicationController
     session[:switched_from_user_id] = current_user.id
 
     # log new session
-    user.activity_stream_log( 'switch to', current_user.id, true )
+    user.activity_stream_log('switch to', current_user.id, true)
 
     # set session user
     current_user_set(user)
@@ -224,7 +226,7 @@ class SessionsController < ApplicationController
       return false
     end
 
-    user = User.lookup( id: session[:switched_from_user_id] )
+    user = User.lookup(id: session[:switched_from_user_id])
     if !user
       render(
         json: {},
@@ -243,7 +245,7 @@ class SessionsController < ApplicationController
     current_user_set(user)
 
     # log end session
-    current_session_user.activity_stream_log( 'ended switch to', user.id, true )
+    current_session_user.activity_stream_log('ended switch to', user.id, true)
 
     redirect_to '/#'
   end
@@ -256,8 +258,8 @@ class SessionsController < ApplicationController
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']
-        user = User.lookup( id: session.data['user_id'] )
-        assets = user.assets( assets )
+        user = User.lookup(id: session.data['user_id'])
+        assets = user.assets(assets)
       end
     }
     render json: {
@@ -268,7 +270,7 @@ class SessionsController < ApplicationController
 
   def delete
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    SessionHelper.destroy( params[:id] )
+    SessionHelper.destroy(params[:id])
     render json: {}
   end
 
