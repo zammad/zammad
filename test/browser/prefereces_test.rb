@@ -273,7 +273,7 @@ class PreferencesTest < TestCase
     click( css: 'a[href="#current_user"]' )
     click( css: 'a[href="#profile"]' )
     click( css: 'a[href="#profile/language"]' )
-    sleep 10
+    sleep 4
     select(
       css: '.language_item select[name="locale"]',
       value: 'Deutsch',
@@ -284,11 +284,11 @@ class PreferencesTest < TestCase
       css: 'body',
       value: 'Sprache',
     )
-    sleep 16
+    sleep 6
 
     # check if language is still used after reload
     reload()
-    sleep 4
+    sleep 2
 
     watch_for(
       css: 'body',

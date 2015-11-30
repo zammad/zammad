@@ -35,9 +35,9 @@ returns if user has no permissions to search
 search user
 
   result = User.search(
-    :query        => 'some search term'
-    :limit        => 15,
-    :current_user => user_model,
+    query: 'some search term'
+    limit: 15,
+    current_user: user_model,
   )
 
 returns
@@ -71,11 +71,11 @@ returns
       query.delete! '*'
       if params[:role_ids]
         users = User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where(
-          '(users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
+          '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
         ).order('firstname').limit(limit)
       else
         users = User.where(
-          '(firstname LIKE ? or lastname LIKE ? or email LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%",
+          '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
         ).order('firstname').limit(limit)
       end
       users
