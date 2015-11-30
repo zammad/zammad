@@ -1383,6 +1383,12 @@ textarea,
   &.form-control--multiline {
     height: auto;
   }
+
+  &:focus,
+  &.focus {
+    border-color: hsl(200,71%,59%);
+    box-shadow: 0 0 0 3px hsl(201,62%,90%);
+  }
 }
 
 input[type=url] {
@@ -1417,8 +1423,6 @@ input.time.time--12 {
   width: 7.5ch;
 }
 
-  .form-control:focus,
-  .form-control.focus,
   .tokenfield.focus {
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
@@ -2313,6 +2317,10 @@ ol.tabs li {
   height: 12px;
 }
 
+.loading.icon.muted {
+  background: hsl(195,20%,96%);
+}
+
 @keyframes rotateplane {
   0% { 
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
@@ -2324,13 +2332,18 @@ ol.tabs li {
 }
 
 .color-swatch {
-  border-radius: 100%;
-  width: 11px;
-  height: 11px;
+  padding: 2px;
+  margin: -2px 0;
   cursor: pointer;
   
-  & + .color-swatch {
-    margin-left: 4px;
+  /* :after technique for bigger click area */
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 11px;
+    width: 11px;
+    border-radius: 100%;
+    background: currentColor;
   }
 }
 
@@ -2453,6 +2466,7 @@ footer {
   .tabsHolder {
     flex: 1;
     margin-right: 20px;
+    min-width: 0; /* Firefox bug fix */
   }
   
   .tabs {
@@ -6451,10 +6465,10 @@ output {
 }
 
 .zammad-switch {
+  overflow: hidden;
   width: 50px;
   height: 30px;
   border-radius: 15px;
-  overflow: hidden;
   
   &.zammad-switch--small {
     width: 40px;
@@ -6473,9 +6487,14 @@ output {
       background: hsl(234,10%,19%);
     }
   }
+
+  &.zammad-switch--green input:checked + label {
+    background: $supergood-color;
+  }
 }
 
 .zammad-switch label {
+  margin: 0;
   position: relative;
   width: 100%;
   height: 100%;
@@ -6483,44 +6502,46 @@ output {
   outline: none;
   cursor: pointer;
   background: white;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.2) inset;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
+  user-select: none;
+  transition: background 200ms;
+
+  &:after {
+    content: "";
+    position: absolute;
+    transition: transform 200ms;
+    width: calc(60% - 2px);
+    height: calc(100% - 2px);
+    border-radius: inherit;
+    left: 1px;
+    top: 1px;
+    box-shadow: 
+      0 0 0 1px rgba(0,0,0,.05),
+      0 1px 3px rgba(0,0,0,.2);
+    background: white;
+  }
 }
 
 .zammad-switch input {
   display: none;
+
+  &:focus + label {
+    transition: none;
+    background: hsl(200,71%,59%);
+    box-shadow: 0 0 0 3px hsl(201,62%,90%);
+  }
+
+  &:checked + label {
+    background: hsl(200,71%,59%);
+  }
+
+  &:checked + label:after {
+    transform: translateX(70%);
+  }
 }
 
-.zammad-switch input:checked + label {
-  background: $supergood-color;
-  transition: none;
-}
-
-.zammad-switch input:focus + label {
-  transition: none;
-  background: hsl(200,71%,59%);
-  box-shadow: 0 0 0 3px hsl(201,62%,90%);
-}
-
-.zammad-switch label:after {
-  content: "";
-  position: absolute;
-  transition: transform 200ms;
-}
-
-.zammad-switch label:after {
-  width: calc(60% - 2px);
-  height: calc(100% - 2px);
-  border-radius: inherit;
-  left: 1px;
-  top: 1px;
-  box-shadow: 
-    0 0 0 1px rgba(0,0,0,.05),
-    0 1px 3px rgba(0,0,0,.2);
-  background: white;
-}
-
-.zammad-switch input:checked + label:after {
-  transform: translateX(70%);
+.controls .zammad-switch {
+  margin-top: 10px;
 }
 
 .horizontal-filter-text {
@@ -7420,6 +7441,18 @@ output {
   height: 450px;
   width: 100%;
   
+  .browser-website {
+    position: relative;
+    height: 100%;
+    transform-origin: left top;
+    overflow: hidden;
+    
+    &[data-mode=screenshot] iframe,
+    &[data-mode=iframe] img {
+      display: none;
+    }
+  }
+  
   iframe {
     position: absolute;
     border: none;
@@ -7427,22 +7460,40 @@ output {
     top: 0;
     width: 100%;
     height: 100%;
-    transform-origin: left top;
+    background: white;
+    border-radius: 0 0 5px 5px;
+    pointer-events: none;
+  }
+
+  img {
+    vertical-align: bottom;
   }
 }
 
 .browser-head {
   display: flex;
-  align-items: center;
   padding: 10px;
   border-bottom: 1px solid hsl(0,0%,90%);
   
   .browser-input {
+    position: relative;
     flex: 1;
     margin-right: 10px;
     
     input {
       min-width: 0;
+      padding-right: 40px;
+      
+      &.is-loading + .loading.icon {
+        display: block;
+      }
+    }
+
+    .loading.icon {
+      position: absolute;
+      right: 11px;
+      top: 10px;
+      display: none;
     }
   }
 
@@ -7465,13 +7516,49 @@ output {
     position: absolute;
     transform-origin: right bottom;
     transition: 500ms;
+    user-select: none;
+    will-change: transform;
     
-    .zammad-chat-body {
-      transition: 500ms; 
+    &.no-transition {
+      transition: none;
+    }
+
+    .zammad-chat-welcome {
+      display: block !important;
+    }
+
+    .zammad-chat-header-icon-open {
+      display: inline !important;
+    }
+
+    .zammad-chat-agent-status,
+    .zammad-chat-header-icon-close,
+    .zammad-chat-agent { 
+      display: none !important;
+    }
+
+    &.is-open {      
+      .zammad-chat-agent {
+        display: block !important;
+      }
+      
+      .zammad-chat-header-icon-close,
+      .zammad-chat-agent-status {
+        display: inline-block !important;
+      }
+    
+      .zammad-chat-welcome,
+      .zammad-chat-header-icon-open {
+        display: none !important;
+      }
     }
     
     &.is-fullscreen {
       height: 100%;
+      
+      .zammad-chat-controls {
+        border-radius: 0 0 5px 5px;
+      }
     }
   }
 

@@ -3,6 +3,7 @@ class Sessions::Event::ChatStatusAgent < Sessions::Event::ChatBase
   def run
 
     # check if user has permissions
+    return if !agent_permission_check
 
     # renew timestamps
     state = Chat::Agent.state(@session['id'])

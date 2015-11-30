@@ -1,0 +1,41 @@
+<table class="settings-list">
+  <thead>
+    <tr>
+      <th style="white-space: nowrap;"><%- @T('chatId') %></th>
+      <th style="white-space: nowrap;"><%- @T('Name') %></th>
+      <th style="white-space: nowrap;"><%- @T('Note') %></th>
+      <th style="white-space: nowrap;"><%- @T('Max. clients in waitlist') %></th>
+      <th style="white-space: nowrap;"><%- @T('Delete') %></th>
+    </tr>
+  </thead>
+  <tbody>
+<% for chat in @chats: %>
+    <tr data-id="<%= chat.id %>">
+      <td>
+        <label class="inline-label">
+          <%= chat.id %>
+        </label>
+      <td>
+        <label class="inline-label">
+          <a class="js-edit is-clickable"><%= chat.name %></a>
+        </label>
+      <td>
+        <label class="inline-label">
+          <%= chat.note %>
+        </label>
+      <td>
+        <label class="inline-label">
+          <%= chat.max_queue %>
+        </label>
+      <td>
+        <div class="settings-list-rowControls">
+          <div class="btn btn--text js-remove">
+            <%- @Icon('trash') %> <%- @T('Remove') %>
+          </div>
+        </div>
+<% end %>
+    <tr>
+      <td colspan="5" class="settings-list-action-cell js-add">
+        <%- @Icon('plus-small') %> <%- @T('Add') %>
+  </tbody>
+</table>

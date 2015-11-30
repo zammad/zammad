@@ -134,9 +134,10 @@ class Channel::EmailParser
         if !data[:body].valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
         end
+      end
 
       # html attachment/body may exists and will be converted to text
-      else
+      if !mail.text_part || !data[:body] || data[:body] == ''
         filename = '-no name-'
         if mail.html_part && mail.html_part.body
           filename = 'message.html'

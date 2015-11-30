@@ -1,71 +1,73 @@
 <!doctype html>
-<meta charset="utf-8">
-<title>Zammad Chat</title>
-<link rel="stylesheet" href="chat.css">
-<link rel="stylesheet" href="znuny.css">
-<meta name="viewport" content="width=device-width">
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35738/livereload.js?snipver=1"></' + 'script>')</script>
-<style>
-  body {
-    margin: 0;
-    font-family: sans-serif;
-  }
-
-  .mockup {
-    vertical-align: bottom;
-  }
-
-  .settings {
-    position: fixed;
-    left: 20px;
-    top: 20px;
-    background: white;
-    font-size: 14px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 3px 10px rgba(0,0,0,.3);
-  }
-
-  .settings input {
-    vertical-align: middle;
-  }
-  .settings input + input {
-    margin-right: 3px;
-  }
-
-  table td:first-child {
-    text-align: right;
-    padding-right: 0;
-  }
-
-  td {
-    padding: 5px;
-  }
-
-  h2 {
-    font-size: 1em;
-    margin: 0;
-  }
-
-  @media only screen and (max-width: 768px) {
-    .settings {
-      display: none;
+<html lang="de-de">
+<head>
+  <meta charset="utf-8">
+  <title>Zammad Chat</title>
+  <link rel="stylesheet" href="znuny.css">
+  <meta name="viewport" content="width=device-width">
+  <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35738/livereload.js?snipver=1"></' + 'script>')</script>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
     }
-  }
 
-  .Box {
-    background: hsl(0,0%,91%);
-    width: 26px;
-    height: 24px;
-    color: hsl(0,0%,47%);
-    float: left;
-  }
-  .Box.Active {
-    background: hsl(0,0%,36%);
-    color: white;
-  }
-</style>
+    .mockup {
+      vertical-align: bottom;
+    }
 
+    .settings {
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      background: white;
+      font-size: 14px;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.3);
+    }
+
+    .settings input {
+      vertical-align: middle;
+    }
+    .settings input + input {
+      margin-right: 3px;
+    }
+
+    table td:first-child {
+      text-align: right;
+      padding-right: 0;
+    }
+
+    td {
+      padding: 5px;
+    }
+
+    h2 {
+      font-size: 1em;
+      margin: 0;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .settings {
+        display: none;
+      }
+    }
+
+    .Box {
+      background: hsl(0,0%,91%);
+      width: 26px;
+      height: 24px;
+      color: hsl(0,0%,47%);
+      float: left;
+    }
+    .Box.Active {
+      background: hsl(0,0%,36%);
+      color: white;
+    }
+  </style>
+</head>
+<body>
 <img class="mockup" width="100%" src="znuny.png">
 
 <div class="settings">
@@ -105,8 +107,9 @@
 <script src="chat.js"></script>
 <script>
   var chat = new ZammadChat({
-    host: 'ws://localhost',
-    port: 6042,
+    chatId: 1,
+    host: 'ws://localhost:6042',
+    cssUrl: 'http://localhost:3000/assets/chat/chat.css',
     debug: true,
     background: '#494d52',
     flat: true,
@@ -145,3 +148,5 @@
     }
   });
 </script>
+</body>
+</html>

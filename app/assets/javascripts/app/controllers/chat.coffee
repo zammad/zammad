@@ -3,6 +3,7 @@ class App.CustomerChat extends App.Controller
 
   events:
     'click .js-acceptChat': 'acceptChat'
+    'click .js-settings': 'settings'
 
   sounds:
     chat_new: new Audio('assets/sounds/chat_new.mp3')
@@ -19,7 +20,11 @@ class App.CustomerChat extends App.Controller
       return
 
     @chatWindows = {}
-    @maxChats = 4
+    @maxChatWindows = 4
+    preferences = @Session.get('preferences')
+    if preferences && preferences.chat && preferences.chat.max_windows
+      @maxChatWindows = parseInt(preferences.chat.max_windows)
+
     @pushStateStarted = false
     @messageCounter = 0
     @meta =
@@ -33,6 +38,8 @@ class App.CustomerChat extends App.Controller
 
     # update navbar on new status
     @bind('chat_status_agent', (data) =>
+      if data.assets
+        App.Collection.loadAssets(data.assets)
       @meta = data
       @updateMeta()
       if !@pushStateStarted
@@ -42,6 +49,7 @@ class App.CustomerChat extends App.Controller
 
     # add new chat window
     @bind('chat_session_start', (data) =>
+      console.log('chat_session_start', data)
       if data.session
         @addChat(data.session)
     )
@@ -103,6 +111,15 @@ class App.CustomerChat extends App.Controller
     if state is undefined
       return @meta.active
 
+    # check if min one chat is active
+    if state
+      preferences = @Session.get('preferences')
+      if !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
+        @notify(
+          type: 'error'
+          msg:  App.i18n.translateContent('To be able to chat you need to select min. one chat topic in settings!')
+        )
+
     @meta.active = state
 
     # write state
@@ -118,7 +135,7 @@ class App.CustomerChat extends App.Controller
     @delay(delay, 200, 'updateNavMenu')
 
   updateMeta: =>
-    if @meta.waiting_chat_count && @maxChats > @windowCount()
+    if @meta.waiting_chat_count && @maxChatWindows > @windowCount()
       @$('.js-acceptChat').addClass('is-clickable is-blinking')
     else
       @$('.js-acceptChat').removeClass('is-clickable is-blinking')
@@ -165,8 +182,13 @@ class App.CustomerChat extends App.Controller
       chat.trigger 'layout-changed'
 
   acceptChat: =>
-    return if @windowCount() >= @maxChats
+    return if @windowCount() >= @maxChatWindows
     App.WebSocket.send(event:'chat_session_start')
+
+  settings: ->
+    new Setting(
+      maxChatWindows: @maxChatWindows
+    )
 
 class CustomerChatRouter extends App.ControllerPermanent
   constructor: (params) ->
@@ -211,6 +233,7 @@ class ChatWindow extends App.Controller
     @lastTimestamp
     @lastAddedType
     @isTyping = false
+    @isAgentTyping = false
     @resetUnreadMessages()
 
     @on 'layout-change', @scrollToBottom
@@ -243,12 +266,22 @@ class ChatWindow extends App.Controller
     @el.addClass('is-open')
 
     # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent'
-    if @session && @session.messages
-      for message in @session.messages
-        if message.created_by_id
-          @addMessage message.content, 'agent'
-        else
-          @addMessage message.content, 'customer'
+    if @session
+      if @session.messages
+        for message in @session.messages
+          if message.created_by_id
+            @addMessage message.content, 'agent'
+          else
+            @addMessage message.content, 'customer'
+
+      # send init reply
+      if !@session.messages || _.isEmpty(@session.messages)
+        preferences = @Session.get('preferences')
+        if preferences.chat && preferences.chat.phrase
+          phrases = preferences.chat.phrase[@session.chat_id]
+          if phrases
+            @input.html(phrases)
+            @sendMessage()
 
   focus: =>
     @input.focus()
@@ -260,6 +293,12 @@ class ChatWindow extends App.Controller
 
     if event.data and event.data.callback
       event.data.callback()
+
+    @$('.js-customerChatInput').ce({
+      mode:      'richtext'
+      multiline: true
+      maxlength: 40000
+    })
 
   close: =>
     @el.one 'transitionend', { callback: @release }, @onTransitionend
@@ -287,6 +326,10 @@ class ChatWindow extends App.Controller
     ENTERKEY = 13
 
     if event.keyCode isnt TABKEY && event.keyCode isnt ENTERKEY
+
+      # send typing start event only every 1.4 seconds
+      return if @isAgentTyping && @isAgentTyping > new Date(new Date().getTime() - 1400)
+      @isAgentTyping = new Date()
       App.WebSocket.send(
         event:'chat_session_typing'
         data:
@@ -323,7 +366,6 @@ class ChatWindow extends App.Controller
     content = @input.html()
     return if !content
 
-    #@trigger "answer", @input.html()
     App.WebSocket.send(
       event:'chat_session_message'
       data:
@@ -382,7 +424,7 @@ class ChatWindow extends App.Controller
       @scrollToBottom()
 
     # clear old delay, set new
-    @delay(@removeWritingLoader, 1800, 'typing')
+    @delay(@removeWritingLoader, 2000, 'typing')
 
   removeWritingLoader: =>
     @isTyping = false
@@ -431,6 +473,63 @@ class ChatWindow extends App.Controller
   scrollToBottom: ->
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
+class Setting extends App.ControllerModalNice
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: true
+  head: 'Settings'
+
+  content: =>
+
+    preferences = @Session.get('preferences')
+    if !preferences
+      preferences = {}
+    if !preferences.chat
+      preferences.chat = {}
+    if !preferences.chat.active
+      preferences.chat.active = {}
+    if !preferences.chat.phrase
+      preferences.chat.phrase = {}
+    if !preferences.chat.max_windows
+      preferences.chat.max_windows = @maxChatWindows
+
+    App.view('customer_chat/setting')(
+      chats: App.Chat.all()
+      preferences: preferences
+    )
+
+  submit: (e) =>
+    e.preventDefault()
+    params = @formParam(e.target)
+
+    @formDisable(e)
+
+    # get data
+    @ajax(
+      id:          'preferences'
+      type:        'PUT'
+      url:         "#{@apiPath}/users/preferences"
+      data:        JSON.stringify({user:params})
+      processData: true
+      success:     @success
+      error:       @error
+    )
+
+  success: (data, status, xhr) =>
+    App.User.full(
+      App.Session.get('id'),
+      =>
+        @close()
+      ,
+      true
+    )
+
+  error: (xhr, status, error) =>
+    data = JSON.parse(xhr.responseText)
+    @notify(
+      type: 'error'
+      msg:  App.i18n.translateContent(data.message)
+    )
 
 App.Config.set( 'customer_chat', CustomerChatRouter, 'Routes' )
 App.Config.set( 'CustomerChat', { controller: 'CustomerChat', authentication: true }, 'permanentTask' )

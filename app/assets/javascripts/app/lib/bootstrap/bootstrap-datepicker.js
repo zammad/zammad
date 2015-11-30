@@ -21,12 +21,11 @@
  * ========================================================= */
 
  /*
-	
 	Zammad Edits:
 		- fix todayBtn toggle of display none and block: toggleClass instead
 		- allow custom template as options parameter
 		- fix that place method doesn't think that the container is the window, but rather the real window is the window
-
+		- added rerender method to show correct today if task is longer open the 24 hours
  */
 
 (function(factory){
@@ -762,6 +761,11 @@
 		},
 
 		_allow_update: true,
+		rerender: function(){
+			this.fill();
+			this.element.change();
+			return this;
+		},
 		update: function(){
 			if (!this._allow_update)
 				return this;

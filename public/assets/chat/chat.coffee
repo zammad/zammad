@@ -2,21 +2,27 @@ do($ = window.jQuery, window) ->
 
   scripts = document.getElementsByTagName('script')
   myScript = scripts[scripts.length - 1]
-  scriptHost = myScript.src.match(".*://([^:/]*).*")[1]
+  scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
 
   # Define the plugin class
   class ZammadChat
 
     defaults:
+      chatId: undefined
       show: true
       target: $('body')
       host: ''
-      port: 6042
       debug: false
+      flat: false
+      lang: undefined
+      cssAutoload: true
+      cssUrl: undefined
       fontSize: undefined
       buttonClass: 'open-zammad-chat'
       inactiveClass: 'is-inactive'
       title: '<strong>Chat</strong> with us!'
+      idleTimeout: 8
+      inactiveTimeout: 20
 
     _messageCount: 0
     isOpen: true
@@ -30,30 +36,37 @@ do($ = window.jQuery, window) ->
     state: 'offline'
     initialQueueDelay: 10000
     wsReconnectEnable: true
-    strings:
-      'Online': 'Online'
-      'Offline': 'Offline'
-      'Connecting': 'Verbinden'
-      'Connection re-established': 'Verbindung wiederhergestellt'
-      'Today': 'Heute'
-      'Send': 'Senden'
-      'Compose your message...': 'Ihre Nachricht...'
-      'All colleges are busy.': 'Alle Kollegen sind belegt.'
-      'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.'
-      'Start new conversation': 'Neue Konversation starten'
-      'Since you didn\'t respond in the last %s your conversation with <strong>%s</strong> got closed.': 'Da sie in den letzten %s nichts geschrieben haben wurde ihre Konversation mit <strong>%s</strong> geschlossen.'
-      'minutes': 'Minuten'
+    translations:
+      de:
+        '<strong>Chat</strong> with us!': '<strong>Chat</strong> mit uns!'
+        'Online': 'Online'
+        'Online': 'Online'
+        'Offline': 'Offline'
+        'Connecting': 'Verbinden'
+        'Connection re-established': 'Verbindung wiederhergestellt'
+        'Today': 'Heute'
+        'Send': 'Senden'
+        'Compose your message...': 'Ihre Nachricht...'
+        'All colleges are busy.': 'Alle Kollegen sind belegt.'
+        'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.'
+        'Start new conversation': 'Neue Konversation starten'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.'
     sessionId: undefined
 
     T: (string, items...) =>
-      if !@strings[string]
-        @log 'notice', "Translation needed for '#{string}'"
-      translation = @strings[string] || string
+      if @options.lang && @options.lang isnt 'en'
+        if !@translations[@options.lang]
+          @log 'notice', "Translation '#{@options.lang}' needed!"
+        else
+          translations = @translations[@options.lang]
+          if !translations[string]
+            @log 'notice', "Translation needed for '#{string}'"
+          string = translations[string] || string
       if items
         for item in items
-          translation = translation.replace(/%s/, item)
-
-      translation
+          string = string.replace(/%s/, item)
+      string
 
     log: (level, string...) =>
       return if !@options.debug && level is 'debug'
@@ -72,14 +85,29 @@ do($ = window.jQuery, window) ->
         return window.zammadChatTemplates[name](options)
 
     constructor: (options) ->
+      @options = $.extend {}, @defaults, options
 
       # check prerequisites
+      if !$
+        @state = 'unsupported'
+        @log 'notice', 'Chat: no jquery found!'
+        return
       if !window.WebSocket or !sessionStorage
         @state = 'unsupported'
         @log 'notice', 'Chat: Browser not supported!'
         return
+      if !@options.chatId
+        @state = 'unsupported'
+        @log 'error', 'Chat: need chatId as option!'
+        return
 
-      @options = $.extend {}, @defaults, options
+      # detect language
+      if !@options.lang
+        @options.lang = $('html').attr('lang')
+      if @options.lang
+        @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
+        @log 'debug', "lang: #{@options.lang}"
+
       @el = $(@view('chat')(
         title: @options.title
       ))
@@ -99,12 +127,15 @@ do($ = window.jQuery, window) ->
 
       @wsConnect()
 
+      @loadCss()
+
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
         event.preventDefault()
         @sendMessage()
 
-    send: (event, data) =>
+    send: (event, data = {}) =>
+      data.chat_id = @options.chatId
       @log 'debug', 'ws:send', event, data
       pipe = JSON.stringify
         event: event
@@ -117,6 +148,10 @@ do($ = window.jQuery, window) ->
       for pipe in pipes
         @log 'debug', 'ws:onmessage', pipe
         switch pipe.event
+          when 'chat_error'
+            @log 'notice', pipe.data
+            if pipe.data && pipe.data.state is 'chat_disabled'
+              @wsClose()
           when 'chat_session_message'
             return if pipe.data.self_written
             @receiveMessage pipe.data
@@ -148,7 +183,7 @@ do($ = window.jQuery, window) ->
                 @hide()
                 @wsClose()
               when 'no_seats_available'
-                @onError 'Zammad Chat: Too many clients in queue. Clients in queue: ', pipe.data.queue
+                @onError "Zammad Chat: Too many clients in queue. Clients in queue: #{pipe.data.queue}"
                 @state = 'off'
                 @hide()
                 @wsClose()
@@ -167,6 +202,8 @@ do($ = window.jQuery, window) ->
       $(".#{ @options.buttonClass }").hide()
 
     reopenSession: (data) =>
+      @inactiveTimeoutStart()
+
       unfinishedMessage = sessionStorage.getItem 'unfinished_message'
 
       # rerender chat history
@@ -200,23 +237,16 @@ do($ = window.jQuery, window) ->
 
       sessionStorage.setItem 'unfinished_message', @input.val()
 
-      @onTypingStart()
+      @onTyping()
 
-    onTypingStart: ->
+    onTyping: ->
 
-      clearTimeout(@isTypingTimeout) if @isTypingTimeout
-
-      # fire typingEnd after 5 seconds
-      @isTypingTimeout = setTimeout @onTypingEnd, 1500
-
-      # send typing start event
-      if !@isTyping
-        @isTyping = true
-        @send 'chat_session_typing',
-          session_id: @sessionId
-
-    onTypingEnd: =>
-      @isTyping = false
+      # send typing start event only every 1.5 seconds
+      return if @isTyping && @isTyping > new Date(new Date().getTime() - 1500)
+      @isTyping = new Date()
+      @send 'chat_session_typing',
+        session_id: @sessionId
+      @inactiveTimeoutStart()
 
     onSubmit: (event) =>
       event.preventDefault()
@@ -224,8 +254,9 @@ do($ = window.jQuery, window) ->
 
     sendMessage: ->
       message = @input.val()
-
       return if !message
+
+      @inactiveTimeoutStart()
 
       sessionStorage.removeItem 'unfinished_message'
 
@@ -233,6 +264,7 @@ do($ = window.jQuery, window) ->
         message: message
         from: 'customer'
         id: @_messageCount++
+        unreadClass: ''
 
       @maybeAddTimestamp()
 
@@ -247,8 +279,6 @@ do($ = window.jQuery, window) ->
       @input.val('')
       @scrollToBottom()
 
-      @isTyping = false
-
       # send message event
       @send 'chat_session_message',
         content: message
@@ -256,6 +286,8 @@ do($ = window.jQuery, window) ->
         session_id: @sessionId
 
     receiveMessage: (data) =>
+      @inactiveTimeoutStart()
+
       # hide writing indicator
       @onAgentTypingEnd()
 
@@ -268,7 +300,7 @@ do($ = window.jQuery, window) ->
 
     renderMessage: (data) =>
       @lastAddedType = "message--#{ data.from }"
-      unread = document.hidden ? " zammad-chat-message--unread" : ""
+      data.unreadClass = if document.hidden then ' zammad-chat-message--unread' else ''
       @el.find('.zammad-chat-body').append @view('message')(data)
       @scrollToBottom()
 
@@ -279,8 +311,7 @@ do($ = window.jQuery, window) ->
       if !@sessionId
         @showLoader()
 
-      @el
-        .addClass('zammad-chat-is-open')
+      @el.addClass('zammad-chat-is-open')
 
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
@@ -291,10 +322,10 @@ do($ = window.jQuery, window) ->
       @isOpen = true
 
       if !@sessionId
-        @session_init()
+        @sessionInit()
 
     onOpenAnimationEnd: =>
-      #@showTimeout()
+      @idleTimeoutStop()
 
     close: (event) =>
       return @state if @state is 'off' or @state is 'unsupported'
@@ -303,37 +334,45 @@ do($ = window.jQuery, window) ->
       # only close if session_id exists
       return if !@sessionId
 
+      # send close
+      @send 'chat_session_close',
+        session_id: @sessionId
+
+      # stop timer
+      @inactiveTimeoutStop()
+
+      # delete input store
+      sessionStorage.removeItem 'unfinished_message'
+
       # stop delay of initial queue position
       if @onInitialQueueDelayId
         clearTimeout(@onInitialQueueDelayId)
 
-      @closeWindow()
+      if event
+        @closeWindow()
+
+      @setSessionId undefined
 
     closeWindow: =>
+      @el.removeClass('zammad-chat-is-open')
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
       @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
 
     onCloseAnimationEnd: =>
-      @el.removeClass('zammad-chat-is-open')
+      @el.removeClass('zammad-chat-is-visible')
       @disconnect()
       @isOpen = false
-
-      @send 'chat_session_close',
-        session_id: @sessionId
-
-      @setSessionId undefined
-      sessionStorage.removeItem 'unfinished_message'
 
       # restart connection
       @onWebSocketOpen()
 
     hide: ->
-      @el.removeClass('zammad-chat-is-visible')
+      @el.removeClass('zammad-chat-is-shown')
 
     show: ->
       return @state if @state is 'off' or @state is 'unsupported'
 
-      @el.addClass('zammad-chat-is-visible')
+      @el.addClass('zammad-chat-is-shown')
 
       if !@inputInitialized
         @inputInitialized = true
@@ -431,17 +470,20 @@ do($ = window.jQuery, window) ->
     scrollToBottom: ->
       @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
 
-    session_init: ->
+    sessionInit: ->
       @send('chat_session_init')
 
     detectHost: ->
-      @options.host = "ws://#{ scriptHost }"
+      protocol = 'ws://'
+      if window.location.protocol is 'https:'
+        protocol = 'wss://'
+      @options.host = "#{ protocol }#{ scriptHost }/ws"
 
     wsConnect: =>
       @detectHost() if !@options.host
 
-      @log 'notice', "Connecting to #{@options.host}:#{@options.port}"
-      @ws = new window.WebSocket("#{@options.host}:#{@options.port}")
+      @log 'debug', "Connecting to #{@options.host}"
+      @ws = new window.WebSocket("#{@options.host}")
       @ws.onopen = @onWebSocketOpen
 
       @ws.onmessage = @onWebSocketMessage
@@ -464,6 +506,7 @@ do($ = window.jQuery, window) ->
       @reconnectDelayId = setTimeout(@wsConnect, 5000)
 
     onWebSocketOpen: =>
+      @idleTimeoutStart()
       @sessionId = sessionStorage.getItem('sessionId')
       @log 'debug', 'ws connected'
 
@@ -490,6 +533,8 @@ do($ = window.jQuery, window) ->
     onSessionClosed: (data) ->
       @addStatus @T('Chat closed by %s', data.realname)
       @disableInput()
+      @setAgentOnlineState 'offline'
+      @inactiveTimeoutStop()
 
     disconnect: ->
       @showLoader()
@@ -526,11 +571,16 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden')
       @input.focus()
 
+      @setAgentOnlineState 'online'
+
     showTimeout: ->
       @el.find('.zammad-chat-body').html @view('timeout')
         agent: @agent.name
-        delay: 10
-        unit: @T('minutes')
+        delay: @options.inactiveTimeout
+      @close()
+      reload = ->
+        location.reload()
+      @el.find('.js-restart').click reload
 
     showLoader: ->
       @el.find('.zammad-chat-body').html @view('loader')()
@@ -542,5 +592,49 @@ do($ = window.jQuery, window) ->
         .find('.zammad-chat-agent-status')
         .attr('data-status', state)
         .text @T(capitalizedState)
+
+    loadCss: ->
+      return if !@options.cssAutoload
+      url = @options.cssUrl
+      if !url
+        url = @options.host
+          .replace(/^wss/i, 'https')
+          .replace(/^ws/i, 'http')
+          .replace(/\/ws/i, '')
+        url += '/assets/chat/chat.css'
+
+      @log 'debug', "load css from '#{url}'"
+      styles = "@import url('#{url}');"
+      newSS = document.createElement('link')
+      newSS.rel = 'stylesheet'
+      newSS.href = 'data:text/css,' + escape(styles)
+      document.getElementsByTagName('head')[0].appendChild(newSS)
+
+    inactiveTimeoutStart: =>
+      @inactiveTimeoutStop()
+      delay = =>
+        @log 'debug', "Inactive timeout of #{@options.inactiveTimeout} minutes, show timeout screen."
+        @state = 'off'
+        @setAgentOnlineState 'offline'
+        @showTimeout()
+        @wsClose()
+      @inactiveTimeoutStopDelayId = setTimeout(delay, @options.inactiveTimeout * 1000 * 60)
+
+    inactiveTimeoutStop: =>
+      return if !@inactiveTimeoutStopDelayId
+      clearTimeout(@inactiveTimeoutStopDelayId)
+
+    idleTimeoutStart: =>
+      @idleTimeoutStop()
+      delay = =>
+        @log 'debug', "Idle timeout of #{@options.idleTimeout} minutes, hide widget"
+        @state = 'off'
+        @hide()
+        @wsClose()
+      @idleTimeoutStopDelayId = setTimeout(delay, @options.idleTimeout * 1000 * 60)
+
+    idleTimeoutStop: =>
+      return if !@idleTimeoutStopDelayId
+      clearTimeout(@idleTimeoutStopDelayId)
 
   window.ZammadChat = ZammadChat

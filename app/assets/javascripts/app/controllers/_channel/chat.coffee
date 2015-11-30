@@ -1,33 +1,37 @@
 class App.ChannelChat extends App.Controller
   events:
-    'click .js-add': 'new'
-    'click .js-edit': 'edit'
-    'click .js-remove': 'remove'
-    'click .js-widget': 'widget'
     'change .js-params': 'updateParams'
-    'keyup .js-params': 'updateParams'
-    'submit .js-testurl': 'changeDemoWebsite'
+    'input .js-params': 'updateParams'
+    'submit .js-demo-head': 'onUrlSubmit'
     'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
-    'click .js-swatch': 'useSwatchColor'
+    'click .js-swatch': 'usePaletteColor'
+    'click .js-toggle-chat': 'toggleChat'
+    'click .js-chatSetting': 'toggleChatSetting'
 
   elements:
     '.js-browser': 'browser'
+    '.js-browserBody': 'browserBody'
     '.js-iframe': 'iframe'
+    '.js-screenshot': 'screenshot'
+    '.js-website': 'website'
     '.js-chat': 'chat'
+    '.js-chatHeader': 'chatHeader'
+    '.js-chat-welcome': 'chatWelcome'
     '.js-testurl-input': 'urlInput'
     '.js-backgroundColor': 'chatBackground'
     '.js-paramsBlock': 'paramsBlock'
     '.js-code': 'code'
-    '.js-swatches': 'swatches'
+    '.js-palette': 'palette'
     '.js-color': 'colorField'
+    '.js-chatSetting': 'chatSetting'
 
   apiOptions: [
     {
-      name: 'channel'
-      default: "'default'"
-      type: 'String'
-      description: 'Name of the chat-channel.'
+      name: 'chatId'
+      default: '1'
+      type: 'Number'
+      description: 'Identifier of the chat-topic.'
     }
     {
       name: 'show'
@@ -49,22 +53,28 @@ class App.ChannelChat extends App.Controller
       descriptionSubstitute: window.location.origin
     }
     {
-      name: 'port'
-      default: 6042
-      type: 'Int'
-      description: ''
-    }
-    {
       name: 'debug'
       default: false
       type: 'Boolean'
       description: 'Enables console logging.'
     }
     {
+      name: 'title'
+      default: "'<strong>Chat</strong> with us!'"
+      type: 'String'
+      description: 'Welcome Title shown on the closed chat. Can contain HTML.'
+    }
+    {
       name: 'fontSize'
       default: 'undefined'
       type: 'String'
       description: 'CSS font-size with a unit like 12px, 1.5em. If left to undefined it inherits the font-size of the website.'
+    }
+    {
+      name: 'flat'
+      default: 'false'
+      type: 'Boolean'
+      description: 'Removes the shadows for a flat look.'
     }
     {
       name: 'buttonClass'
@@ -79,15 +89,29 @@ class App.ChannelChat extends App.Controller
       description: 'This class gets added to the button on initialization and gets removed once the chat connection got established.'
     }
     {
-      name: 'title'
-      default: "'<strong>Chat</strong> with us!'"
+      name: 'cssAutoload'
+      default: 'true'
+      type: 'Boolean'
+      description: 'Automatically loads the chat.css file. If you want to use your own css, just set it to false.'
+    }
+    {
+      name: 'cssUrl'
+      default: 'undefined'
       type: 'String'
-      description: 'Welcome Title shown on the closed chat. Can contain HTML.'
+      description: 'Location of an external chat.css file.'
     }
   ]
 
+  isOpen: true
+  browserWidth: 1280
+  previewUrl: ''
+
   constructor: ->
     super
+    @title 'Chat'
+    if @Session.get('email')
+      @previewUrl = "www.#{@Session.get('email').replace(/^.+?\@/, '')}"
+
     @load()
 
     @widgetDesignerPermanentParams =
@@ -109,151 +133,152 @@ class App.ChannelChat extends App.Controller
     )
 
   render: (data = {}) =>
-
-    chats = []
-    for chat_id in data.chat_ids
-      chats.push App.Chat.find(chat_id)
-
     @html App.view('channel/chat')(
       baseurl: window.location.origin
-      chats: chats
       apiOptions: @apiOptions
+      previewUrl: @previewUrl
+      chatSetting: @Config.get('chat')
+    )
+
+    new Topics(
+      el: @$('.js-topics')
     )
 
     @code.each (i, block) ->
       hljs.highlightBlock block
 
+    @updatePreview()
     @updateParams()
+
+    # bind updatePreview with parameter animate = false
+    $(window).on 'resize.chat-designer', => @updatePreview false
+
+  release: ->
+    $(window).off 'resize.chat-designer'
 
   selectBrowserWidth: (event) =>
     tab = $(event.target).closest('[data-value]')
 
     # select tab
     tab.addClass('is-selected').siblings().removeClass('is-selected')
-    value = tab.attr('data-value')
-    width = parseInt value, 10
+    @browserWidth = tab.attr('data-value')
+    @updatePreview()
+
+  updatePreview: (animate =  true) =>
+    width = parseInt @browserWidth, 10
 
     # reset zoom
-    @chat.css('transform', '')
+    @chat
+      .removeClass('is-fullscreen')
+      .toggleClass('no-transition', !animate)
+      .css 'transform', "translateY(#{ @getChatOffset() }px)"
     @browser.css('width', '')
-    @chat.removeClass('is-fullscreen')
-    @iframe.css
+    @website.css
       transform: ''
       width: ''
       height: ''
 
-    return if value is 'fit'
+    return if @browserWidth is 'fit'
 
     if width < @el.width()
-      @chat.addClass('is-fullscreen')
+      @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
       @browser.css('width', "#{ width }px")
     else
       percentage = @el.width()/width
-      @chat.css('transform', "scale(#{ percentage })")
-      @iframe.css
+      @chat.css 'transform', "translateY(#{ @getChatOffset() * percentage }px) scale(#{ percentage })"
+      @website.css
         transform: "scale(#{ percentage })"
         width: @el.width() / percentage
-        height: @el.height() / percentage
+        height: @browserBody.height() / percentage
 
-  changeDemoWebsite: (event) =>
+  getChatOffset: (fullscreen) ->
+    return 0 if @isOpen
+
+    if fullscreen
+      return @browserBody.height() - @chatHeader.outerHeight()
+    else
+      return @chat.height() - @chatHeader.outerHeight()
+
+  onUrlSubmit: (event) ->
     event.preventDefault() if event
+    @urlInput.focus()
+    @changeDemoWebsite()
 
-    # fire both on enter and blur
-    # but cache url
-    return if @urlInput.val() is '' or @urlInput.val() is @url
-    @url = @urlInput.val()
+  changeDemoWebsite: ->
+    return if @urlInput.val() is '' or @urlInput.val() is @urlCache
+    @urlCache = @urlInput.val()
 
-    src = @url
-    if !src.startsWith('http')
-      src = "http://#{ src }"
+    @url = @urlCache
+    if !@url.startsWith('http')
+      @url = "http://#{ @url }"
 
-    @iframe.attr 'src', src
-    @swatches.empty()
+    @urlInput.addClass('is-loading')
+
+    @palette.empty()
+
+    @screenshot.attr('src', '')
+    @website.attr('data-mode', 'iframe')
+    @iframe.attr('src', @url)
 
     $.ajax
-      url: 'https://images.zammad.com/api/v1/webpage/colors'
+      url: 'https://images.zammad.com/api/v1/webpage/combined'
       data:
-        url: src
+        url: @url
         count: 20
-      success: @renderSwatches
+      success: @renderDemoWebsite
       dataType: 'json'
 
-  renderSwatches: (data, xhr, status) =>
+  renderDemoWebsite: (data) =>
+    imageSource = data['data_url']
+
+    if imageSource
+      @screenshot.attr 'src', imageSource
+      @iframe.attr('src', '')
+      @website.attr('data-mode', 'screenshot')
+
+    @renderPalette data['palette']
+
+    @urlInput.removeClass('is-loading')
+
+  renderPalette: (palette) ->
+
+    palette = _.map palette, tinycolor
 
     # filter white
-    data = _.filter data, (color) =>
-      @getLuminance(color) < 0.85
+    palette = _.filter palette, (color) ->
+      color.getLuminance() < 0.85
 
     htmlString = ''
 
-    count = 0
-    countMax = 8
-    for color in data
-      count += 1
+    max = 8
+    for color, i in palette
       htmlString += App.view('channel/color_swatch')
-        color: color
-      break if count == countMax
+        color: color.toHexString()
+      break if i is max
 
-    @swatches.html htmlString
+    @palette.html htmlString
 
-    if data[0]
-      @useSwatchColor(undefined, data[0])
+    # auto use first color
+    if palette[0]
+      @usePaletteColor undefined, palette[0].toHexString()
 
-  getLuminance: (hex) ->
-    # input: #ffffff, output: 1
-    result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec hex
-    r = parseInt(result[1], 16)
-    g = parseInt(result[2], 16)
-    b = parseInt(result[3], 16)
-    return (0.2126*r + 0.7152*g + 0.0722*b)/255
-
-  useSwatchColor: (event, code) ->
+  usePaletteColor: (event, code) ->
     if event
       code = $(event.currentTarget).attr('data-color')
     @colorField.val code
     @updateParams()
 
-  new: (e) =>
-    new App.ControllerGenericNew(
-      pageData:
-        title: 'Chats'
-        object: 'Chat'
-        objects: 'Chats'
-      genericObject: 'Chat'
-      callback:   @load
-      container:  @el.closest('.content')
-      large:      true
-    )
+  toggleChat: =>
+    @chat.toggleClass('is-open')
+    @isOpen = @chat.hasClass('is-open')
+    @updatePreview()
 
-  edit: (e) =>
-    e.preventDefault()
-    id = $(e.target).closest('tr').data('id')
-    new App.ControllerGenericEdit(
-      id:        id
-      genericObject: 'Chat'
-      pageData:
-        object: 'Chat'
-      container: @el.closest('.content')
-      callback:  @load
-    )
-
-  remove: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('tr').data('id')
-    item = App.Chat.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item:      item
-      container: @el.closest('.content')
-      callback:  @load
-    )
-
-  widget: (e) ->
-    e.preventDefault()
-    id = $(e.target).closest('.action').data('id')
-    new Widget(
-      permanent:
-        id: id
-    )
+  toggleChatSetting: =>
+    value = @chatSetting.prop('checked')
+    setting = App.Setting.findByAttribute('name', 'chat')
+    setting.state_current = { value: value }
+    setting.save()
+    @Config.set('chat', value)
 
   updateParams: =>
     quote = (value) ->
@@ -267,6 +292,14 @@ class App.ChannelChat extends App.Controller
     if parseInt(params.fontSize, 10) > 2
       @chat.css('font-size', params.fontSize)
     @chatBackground.css('background', params.background)
+    if params.flat is 'on'
+      @chat.addClass('zammad-chat--flat')
+      params.flat = true
+    else
+      @chat.removeClass('zammad-chat--flat')
+    @chatWelcome.html params.title
+
+    @updatePreview false
 
     if @permanent
       for key, value of @permanent
@@ -278,7 +311,7 @@ class App.ChannelChat extends App.Controller
           # coffeelint: disable=no_unnecessary_double_quotes
           paramString += ",\n"
           # coffeelint: enable=no_unnecessary_double_quotes
-        if value == 'true' || value == 'false' || _.isNumber(value)
+        if value == true || value == false || _.isNumber(value)
           paramString += "    #{key}: #{value}"
         else
           paramString += "    #{key}: '#{quote(value)}'"
@@ -288,4 +321,53 @@ class App.ChannelChat extends App.Controller
     @paramsBlock.each (i, block) ->
       hljs.highlightBlock block
 
-App.Config.set( 'Chat Widget', { prio: 4000, name: 'Chat Widget', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, role: ['Admin'] }, 'NavBarAdmin' )
+
+class Topics extends App.Controller
+  events:
+    'click .js-add': 'new'
+    'click .js-edit': 'edit'
+    'click .js-remove': 'remove'
+
+  constructor: ->
+    super
+    @render()
+
+  render: =>
+    @html App.view('channel/topics')(
+      chats: App.Chat.all()
+    )
+
+  new: (e) =>
+    new App.ControllerGenericNew(
+      pageData:
+        title: 'Chats'
+        object: 'Chat'
+        objects: 'Chats'
+      genericObject: 'Chat'
+      callback:   @render
+      container:  @el.closest('.content')
+      large:      true
+    )
+
+  edit: (e) =>
+    e.preventDefault()
+    id = $(e.target).closest('tr').data('id')
+    new App.ControllerGenericEdit(
+      id:        id
+      genericObject: 'Chat'
+      pageData:
+        object: 'Chat'
+      container: @el.closest('.content')
+      callback:  @render
+    )
+
+  remove: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('tr').data('id')
+    item = App.Chat.find(id)
+    new App.ControllerGenericDestroyConfirm(
+      item:      item
+      container: @el.closest('.content')
+      callback:  @render
+    )

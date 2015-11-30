@@ -1,0 +1,34 @@
+<table class="settings-list">
+  <thead>
+    <tr>
+      <th><%- @T('Topic') %>
+      <th width="100%"><%- @T('Greeting') %>
+      <th><%- @T('Enabled') %>
+    </th></tr>
+  </thead>
+<% for chat in @chats: %>
+    <tr>
+      <td><%= chat.name %>
+      <td><label class="inline-label"><input name="chat::phrase::<%- chat.id %>" value="<%= @preferences.chat.phrase[chat.id] %>" class="form-control form-control--small" placeholder="<%- @T('Hello, my name is %s, what can I do for you?', App.Session.get('firstname')) %>"/></label>
+      <td>
+        <label class="inline-label checkbox-replacement">
+            <input type="checkbox" name="chat::active::<%- chat.id %>" <% if @preferences.chat.active[chat.id]: %>checked<% end %>>
+            <%- @Icon('checkbox', 'icon-unchecked') %>
+            <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+<% end %>
+  </tbody>
+
+  <div class="select form-group">
+    <label for="a"><%- @T('Max. concurrent chats') %></label>
+    <div class="u-positionOrigin">
+      <select id="a" class="form-control" name="chat::max_windows">
+        <% for count in [1..20]: %>
+          <option value="<%- count %>" <% if parseInt(@preferences.chat.max_windows) is count: %>selected<% end %>><%- count %></option>
+        <% end %>
+      </select>
+      <%- @Icon('arrow-down', 'dropdown-arrow') %>
+    </div>
+  </div>
+
+</table>

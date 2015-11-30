@@ -18,7 +18,7 @@ class Chat < ApplicationModel
             chat_user = User.find(chat_session.user_id)
             url = nil
             if chat_user.image && chat_user.image != 'none'
-              url = "/api/v1/users/image/#{chat_user.image}"
+              url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
             end
             user = {
               name: chat_user.fullname,
@@ -51,10 +51,10 @@ class Chat < ApplicationModel
     end
 
     # if all seads are used
-    if Chat.active_chat_count >= max_queue
+    if Chat.waiting_chat_count >= max_queue
       return {
         state: 'no_seats_available',
-        queue: Chat.seads_available,
+        queue: Chat.waiting_chat_count,
       }
     end
 
@@ -64,6 +64,10 @@ class Chat < ApplicationModel
 
   def self.agent_state(user_id)
     return { state: 'chat_disabled' } if !Setting.get('chat')
+    assets = {}
+    Chat.where(active: true).each {|chat|
+      assets = chat.assets(assets)
+    }
     {
       waiting_chat_count: waiting_chat_count,
       running_chat_count: running_chat_count,
@@ -71,7 +75,8 @@ class Chat < ApplicationModel
       active_agents: active_agents,
       seads_available: seads_available,
       seads_total: seads_total,
-      active: Chat::Agent.state(user_id)
+      active: Chat::Agent.state(user_id),
+      assets: assets,
     }
   end
 

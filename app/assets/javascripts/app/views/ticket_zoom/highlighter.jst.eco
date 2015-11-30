@@ -10,7 +10,7 @@
     <li role="presentation">
       <a role="menuitem" tabindex="-1" class="js-highlightColor" data-key="<%= i %>">
         <span class="dropdown-iconSpacer">
-          <span class="color-swatch icon" style="background: <%= entry.color %>"></span>
+          <span class="color-swatch icon" style="color: <%= entry.color %>"></span>
         </span>
         <%- @Ti(entry.name) %>
         <span class="dropdown-selectedSpacer js-selectedIcon<%= ' is-selected' if i is @activeColorIndex %>">

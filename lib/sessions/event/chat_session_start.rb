@@ -1,6 +1,7 @@
 class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
 
   def run
+    agent_permission_check
 
     # find first in waiting list
     chat_session = Chat::Session.where(state: 'waiting').order('created_at ASC').first
@@ -22,7 +23,7 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     chat_user = User.find(chat_session.user_id)
     url = nil
     if chat_user.image && chat_user.image != 'none'
-      url = "/api/v1/users/image/#{chat_user.image}"
+      url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/users/image/#{chat_user.image}"
     end
     user = {
       name: chat_user.fullname,
@@ -34,6 +35,7 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
         state: 'ok',
         agent: user,
         session_id: chat_session.session_id,
+        chat_id: chat_session.chat_id,
       },
     }
     chat_session.send_to_recipients(data)

@@ -246,7 +246,7 @@ test("htmlRemoveTags", function() {
   result = App.Utils.htmlRemoveTags($(source))
   equal(result.html(), should, source)
 
-  source = "<div><form class=\"xxx\">test 123</form></div>"
+  source = "<div><form class=\"xxx\">test 123</form><svg><use xlink:href=\"assets/images/icons.svg#icon-status\"></svg></div>"
   //should = "<div>test 123</div>"
   should = "test 123"
   result = App.Utils.htmlRemoveRichtext($(source))
@@ -345,7 +345,7 @@ test("htmlRemoveRichtext", function() {
   result = App.Utils.htmlRemoveRichtext($(source))
   equal(result.html(), should, source)
 
-  source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
+  source = "<div><font size=\"3\" color=\"red\">This is some text!</font><svg><use xlink:href=\"assets/images/icons.svg#icon-status\"></svg></div>"
   //should = "<div>This is some text!</div>"
   should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext($(source))
@@ -400,31 +400,31 @@ test("htmlCleanup", function() {
   source = "<div><div class=\"xxx\"><br></div></div>"
   //should = "<div><div><br></div></div>"
   should = "<div><br></div>"
-  result = App.Utils.htmlRemoveRichtext($(source))
+  result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
   source = "<div><form class=\"xxx\">test 123</form></div>"
   //should = "<div>test 123<br></div>"
   should = "test 123"
-  result = App.Utils.htmlRemoveRichtext($(source))
+  result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
   source = "<div><form class=\"xxx\">test 123</form> some other value</div>"
   //should = "<div>test 123 some other value</div>"
   should = "test 123 some other value"
-  result = App.Utils.htmlRemoveRichtext($(source))
+  result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
   source = "<div><form class=\"xxx\">test 123</form> some other value<input value=\"should not be shown\"></div>"
   //should = "<div>test 123 some other value</div>"
   should = "test 123 some other value"
-  result = App.Utils.htmlRemoveRichtext($(source))
+  result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
-  source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
+  source = "<div><font size=\"3\" color=\"red\">This is some text!</font><svg><use xlink:href=\"assets/images/icons.svg#icon-status\"></svg></div>"
   //should = "<div>This is some text!</div>"
   should = "This is some text!"
-  result = App.Utils.htmlRemoveRichtext($(source))
+  result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
   source = "<div><p>some link to somewhere from word<w:sdt>abc</w:sdt></p><o:p></o:p></a>"

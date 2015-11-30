@@ -11,7 +11,7 @@
   will-change: bottom;
   display: none;
   flex-direction: column;
-  
+
   &.is-fullscreen {
     right: 0;
     width: 100%;
@@ -26,7 +26,7 @@
     border-radius: 0 !important;
   }
 }
-.zammad-chat.zammad-chat-is-open {
+.zammad-chat.zammad-chat-is-shown {
   display: flex;
 }
 
@@ -43,7 +43,7 @@
   background: hsl(203,67%,53%);
   color: white;
   line-height: 2.5em;
-  box-shadow: 
+  box-shadow:
     0 -1px rgba(0,0,0,.1),
     0 1px rgba(255,255,255,.3) inset,
     0 -1px rgba(0,0,0,.1) inset,
@@ -52,7 +52,7 @@
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   cursor: pointer;
-  
+
   @media only screen and (max-width: 768px) {
     border-radius: 0 !important;
   }
@@ -294,8 +294,9 @@
   align-items: flex-start;
   border-top: 1px solid hsl(0,0%,93%);
   padding: 0;
+  margin: 0;
   line-height: 1.4em;
-  box-shadow: 
+  box-shadow:
     0 1px rgba(0,0,0,.01),
     0 -1px rgba(0,0,0,.02);
   position: relative;
@@ -303,20 +304,22 @@
 }
 
 .zammad-chat-input {
+  margin: 0;
+  padding: 1em 2em;
   float: left;
+  width: auto;
   height: auto;
+  max-height: 6em;
   font-family: inherit;
   line-height: inherit;
   font-size: inherit;
   appearance: none;
-  border: none;
+  border: none !important;
   background: none;
-  box-shadow: none;
-  padding: 1em 2em;
+  box-shadow: none !important;
   outline: none;
   resize: none;
   flex: 1;
-  max-height: 6em;
 }
 
 .zammad-chat-input::-webkit-input-placeholder {
@@ -327,9 +330,10 @@
   appearance: none;
   font-family: inherit;
   font-size: inherit;
+  line-height: initial;
   background: hsl(203,67%,53%);
   color: white;
-  padding: 0.6em 1.2em;
+  padding: 0.5em 1.2em;
   margin: 0.5em 1em 0.5em;
   cursor: pointer;
   border: none;
@@ -355,9 +359,7 @@
 }
 
 /*
-
   # Flat Design
-  
 */
 
 .zammad-chat--flat .zammad-chat-header,

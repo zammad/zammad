@@ -15,22 +15,60 @@ class App.UiElement.date
 
     # apply date widgets
     $.fn.datepicker.dates['custom'] =
-      days: [App.i18n.translateInline('Sunday'), App.i18n.translateInline('Monday'), App.i18n.translateInline('Tuesday'), App.i18n.translateInline('Wednesday'), App.i18n.translateInline('Thursday'), App.i18n.translateInline('Friday'), App.i18n.translateInline('Saturday'), App.i18n.translateInline('Sunday')],
-      daysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      daysMin: [App.i18n.translateInline('Su'), App.i18n.translateInline('Mo'), App.i18n.translateInline('Tu'), App.i18n.translateInline('We'), App.i18n.translateInline('Th'), App.i18n.translateInline('Fr'), App.i18n.translateInline('Sa'), App.i18n.translateInline('Su')],
-      months: [App.i18n.translateInline('January'), App.i18n.translateInline('February'), App.i18n.translateInline('March'), App.i18n.translateInline('April'), App.i18n.translateInline('May'), App.i18n.translateInline('June'), App.i18n.translateInline('July'), App.i18n.translateInline('August'), App.i18n.translateInline('September'), App.i18n.translateInline('October'), App.i18n.translateInline('November'), App.i18n.translateInline('December')],
+      days: [
+        App.i18n.translateInline('Sunday'),
+        App.i18n.translateInline('Monday'),
+        App.i18n.translateInline('Tuesday'),
+        App.i18n.translateInline('Wednesday'),
+        App.i18n.translateInline('Thursday'),
+        App.i18n.translateInline('Friday'),
+        App.i18n.translateInline('Saturday'),
+        App.i18n.translateInline('Sunday'),
+      ],
+      daysMin: [
+        App.i18n.translateInline('Sun'),
+        App.i18n.translateInline('Mon'),
+        App.i18n.translateInline('Tue'),
+        App.i18n.translateInline('Wed'),
+        App.i18n.translateInline('Thu'),
+        App.i18n.translateInline('Fri'),
+        App.i18n.translateInline('Sat'),
+        App.i18n.translateInline('Sun')
+      ],
+      daysShort: [
+        App.i18n.translateInline('Sun'),
+        App.i18n.translateInline('Mon'),
+        App.i18n.translateInline('Tue'),
+        App.i18n.translateInline('Wed'),
+        App.i18n.translateInline('Thu'),
+        App.i18n.translateInline('Fri'),
+        App.i18n.translateInline('Sat'),
+        App.i18n.translateInline('Sun')
+      ],
+      months: [
+        App.i18n.translateInline('January'),
+        App.i18n.translateInline('February'),
+        App.i18n.translateInline('March'),
+        App.i18n.translateInline('April'),
+        App.i18n.translateInline('May'),
+        App.i18n.translateInline('June'),
+        App.i18n.translateInline('July'),
+        App.i18n.translateInline('August'),
+        App.i18n.translateInline('September'),
+        App.i18n.translateInline('October'),
+        App.i18n.translateInline('November'),
+        App.i18n.translateInline('December'),
+      ],
       monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       today: App.i18n.translateInline('today'),
       clear: App.i18n.translateInline('clear')
     currentDate = undefined
-    if attribute.value
-      startDate = new Date(attribute.value)
+
     item.find('.js-datepicker').datepicker(
       weekStart: 1
       autoclose: true
       todayBtn: 'linked'
       todayHighlight: true
-      #startDate: startDate
       format: App.i18n.timeFormat().date
       container: item
       language: 'custom'
@@ -39,8 +77,11 @@ class App.UiElement.date
     # set initial date time
     @setNewTimeInitial(item, attribute)
 
-    # observer changes
-    item.find('input').bind('keyup blur focus change', (e) =>
+    # observer changes / update needed to forece rerender to get correct today shown
+    item.find('input').bind('focus', (e) ->
+      item.find('.js-datepicker').datepicker('rerender')
+    )
+    item.find('input').bind('keyup blur change', (e) =>
       @setNewTime(item, attribute, 0)
       @validation(item, attribute, true)
     )
@@ -87,10 +128,13 @@ class App.UiElement.date
   @validation: (item, attribute, runtime) ->
 
     # remove old validation
-    item.closest('.form-group').removeClass('has-error')
-    item.find('.has-error').removeClass('has-error')
-    item.find('.help-inline').html('')
-    item.closest('.form-group').find('.help-inline').html('')
+    if attribute.validationContainer is 'self'
+      item.find('.js-datepicker').removeClass('has-error')
+    else
+      item.closest('.form-group').removeClass('has-error')
+      item.find('.has-error').removeClass('has-error')
+      item.find('.help-inline').html('')
+      item.closest('.form-group').find('.help-inline').html('')
 
     timestamp = item.find("[name=\"#{attribute.name}\"]").val()
 
@@ -103,10 +147,13 @@ class App.UiElement.date
       timeObject = new Date( Date.parse( timestamp ) )
 
 
-    formGroup = item.closest('.form-group')
     App.Log.debug 'UiElement.date.validation', errors
     return if _.isEmpty(errors)
 
     # show invalid options
-    for key, value of errors
-      formGroup.addClass('has-error')
+    if attribute.validationContainer is 'self'
+      item.find('.js-datepicker').addClass('has-error')
+    else
+      formGroup = item.closest('.form-group')
+      for key, value of errors
+        formGroup.addClass('has-error')

@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="page-header-meta">
-        <div class="btn btn--action" data-type="settings"><%- @T('Settings') %></div>
+        <div class="btn btn--action js-settings"><%- @T('Settings') %></div>
       </div>
     </div>
   <div class="chat-workspace"></div>

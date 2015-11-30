@@ -13,6 +13,9 @@
  * https://sites.fastspring.com/technoreply/instant/autogrowtextareaplugin
  *
  * Date: October 15, 2012
+ *
+ * Zammad modification: remove overflow:hidden when maximum height is reached
+ *
  */
 
 jQuery.fn.autoGrow = function(options) {
@@ -38,8 +41,13 @@ jQuery.fn.autoGrow = function(options) {
         (settings.extraLine? '.<br/>.' : '')
       ;
 
-      if (jQuery(textarea).height() != jQuery(mirror).height())
+      if (jQuery(textarea).height() != jQuery(mirror).height()) {
         jQuery(textarea).height(jQuery(mirror).height());
+
+        var maxHeight = parseInt(jQuery(textarea).css('max-height'), 10);
+        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden'
+        jQuery(textarea).css('overflow', overflow);
+      }
     }
 
     var growTextarea = function () {

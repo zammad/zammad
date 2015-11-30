@@ -11,19 +11,19 @@
           </div>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li role="presentation">
-              <a class="js-highlightColor" data-key="0" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #f7e7b2"></span></span> Yellow <span class="dropdown-selectedSpacer js-selectedIcon is-selected"><%- @Icon('checkmark', '') %></span></a>
+              <a class="js-highlightColor" data-key="0" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="color: #f7e7b2"></span></span> Yellow <span class="dropdown-selectedSpacer js-selectedIcon is-selected"><%- @Icon('checkmark', '') %></span></a>
             </li>
             <li role="presentation">
-              <a class="js-highlightColor" data-key="1" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #bce7b6"></span></span> Green <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+              <a class="js-highlightColor" data-key="1" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="color: #bce7b6"></span></span> Green <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
             </li>
             <li role="presentation">
-              <a class="js-highlightColor" data-key="2" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #b3ddf9"></span></span> Blue <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+              <a class="js-highlightColor" data-key="2" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="color: #b3ddf9"></span></span> Blue <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
             </li>
             <li role="presentation">
-              <a class="js-highlightColor" data-key="3" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #fea9c5"></span></span> Pink <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+              <a class="js-highlightColor" data-key="3" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="color: #fea9c5"></span></span> Pink <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
             </li>
             <li role="presentation">
-              <a class="js-highlightColor" data-key="4" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="background: #eac5ee"></span></span> Purple <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
+              <a class="js-highlightColor" data-key="4" role="menuitem" tabindex="-1"><span class="dropdown-iconSpacer"><span class="color-swatch icon" style="color: #eac5ee"></span></span> Purple <span class="dropdown-selectedSpacer js-selectedIcon"><%- @Icon('checkmark', '') %></span></a>
             </li>
           </ul>
         </div>

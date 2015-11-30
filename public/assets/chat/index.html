@@ -1,7 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>Zammad Chat</title>
-<link rel="stylesheet" href="chat.css">
 <meta name="viewport" content="width=device-width">
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35738/livereload.js?snipver=1"></' + 'script>')</script>
 <style>
@@ -138,8 +137,9 @@
 -->
 <script>
   var chat = new ZammadChat({
-    host: 'ws://localhost',
-    port: 6042,
+    chatId: 1,
+    host: 'ws://localhost:6042',
+    cssUrl: 'http://localhost:3000/assets/chat/chat.css',
     debug: true
   });
 
