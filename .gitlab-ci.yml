@@ -10,21 +10,21 @@ stages:
 rubocop:
   stage: pre
   tags:
-    - zammad
+    - core
   script:
     - bundle exec rubocop
 
 coffeelint:
   stage: pre
   tags:
-    - zammad
+    - core
   script:
     - coffeelint app/
 
 job_unit:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - rake db:drop;
@@ -37,7 +37,7 @@ job_unit:
 job_integration_email_helper:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - rake db:drop;
@@ -48,7 +48,7 @@ job_integration_email_helper:
 job_integration_geo_ip:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - rake db:drop;
@@ -59,7 +59,7 @@ job_integration_geo_ip:
 job_integration_geo_location:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - rake db:drop;
@@ -70,7 +70,7 @@ job_integration_geo_location:
 job_integration_geo_calendar:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - rake db:drop;
@@ -81,7 +81,7 @@ job_integration_geo_calendar:
 job_integration_user_agent:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - rake db:drop;
@@ -92,7 +92,7 @@ job_integration_user_agent:
 job_integration_es:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - rake db:drop;
@@ -105,7 +105,7 @@ job_integration_es:
 job_integration_otrs_5:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -117,7 +117,7 @@ job_integration_otrs_5:
 job_integration_otrs_4:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz383.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -129,7 +129,7 @@ job_integration_otrs_4:
 job_integration_otrs_33:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -141,7 +141,7 @@ job_integration_otrs_33:
 job_integration_otrs_32:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz382.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -153,7 +153,7 @@ job_integration_otrs_32:
 job_integration_otrs_31:
   stage: test
   tags:
-    - zammad
+    - core
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz381.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
