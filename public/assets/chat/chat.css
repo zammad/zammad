@@ -32,6 +32,7 @@
 
 .zammad-chat-icon {
   height: 2em;
+  width: 2em;
   fill: currentColor;
   vertical-align: top;
   margin-right: 5px;
