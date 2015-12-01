@@ -32,9 +32,6 @@ time rake db:migrate
 echo "rake db:seed"
 time rake db:seed
 
-# modify production.rb to serve assets
-sed -i -e 's/config.serve_static_assets = false/config.serve_static_assets = true/' config/environments/production.rb
-
 # set system to develop mode
 rails r "Setting.set('developer_mode', true)"
 
