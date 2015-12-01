@@ -503,7 +503,7 @@ class TestCase < Test::Unit::TestCase
     end
     instance.action.send_keys(params[:value]).perform
     if params[:slow]
-      sleep 1
+      sleep 2
     else
       sleep 0.6
     end
