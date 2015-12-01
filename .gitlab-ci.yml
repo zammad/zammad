@@ -1,5 +1,6 @@
 before_script:
   - bundle install
+  - script/build/test_db_config.sh
 
 stages:
   - pre
@@ -26,7 +27,6 @@ job_unit:
     - zammad
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh test ci_zammad_unit
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -40,7 +40,6 @@ job_integration_email_helper:
     - zammad
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh test ci_zammad_email_helper
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -52,7 +51,6 @@ job_integration_geo_ip:
     - zammad
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh test ci_zammad_geo_ip
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -64,7 +62,6 @@ job_integration_geo_location:
     - zammad
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh test ci_zammad_geo_location
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -76,7 +73,6 @@ job_integration_geo_calendar:
     - zammad
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh test ci_zammad_geo_calendar
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -88,7 +84,6 @@ job_integration_user_agent:
     - zammad
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh test ci_zammad_user_agent
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -100,7 +95,6 @@ job_integration_es:
     - zammad
   script:
     - export RAILS_ENV=test
-    - script/build/test_db_config.sh test ci_zammad_es
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -115,7 +109,6 @@ job_integration_otrs_5:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh test ci_zammad_otrs5
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -128,7 +121,6 @@ job_integration_otrs_4:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz383.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh test ci_zammad_otrs4
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -141,7 +133,6 @@ job_integration_otrs_33:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh test ci_zammad_otrs33
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -154,7 +145,6 @@ job_integration_otrs_32:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz382.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh test ci_zammad_otrs32
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -167,7 +157,6 @@ job_integration_otrs_31:
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz381.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - script/build/test_db_config.sh test ci_zammad_otrs31
     - rake db:drop;
     - rake db:create
     - rake db:migrate
@@ -179,8 +168,6 @@ job_integration_autowizard_ff:
     - browser-ff
   script:
     - export BROWSER_URL=http://$IP:3001
-    - script/build/test_db_config.sh production ci_zammad_autowizard_ff
-    - script/build/test_db_config.sh test ci_zammad_autowizard_ff_test
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
@@ -199,8 +186,6 @@ job_integration_browser_ff_1:
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
-    - script/build/test_db_config.sh production ci_zammad_browser_ff_1
-    - script/build/test_db_config.sh test ci_zammad_browser_ff_1_test
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
@@ -219,8 +204,6 @@ job_integration_browser_ff_2:
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
-    - script/build/test_db_config.sh production ci_zammad_browser_ff_2
-    - script/build/test_db_config.sh test ci_zammad_browser_ff_2_test
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
@@ -235,8 +218,6 @@ job_integration_browser_ff_3:
     - browser-ff
   script:
     - export BROWSER_URL=http://$IP:3031
-    - script/build/test_db_config.sh production ci_zammad_browser_ff_3
-    - script/build/test_db_config.sh test ci_zammad_browser_ff_3_test
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
@@ -251,8 +232,6 @@ job_integration_autowizard_chrome:
     - browser-chrome
   script:
     - export BROWSER_URL=http://$IP:3071
-    - script/build/test_db_config.sh production ci_zammad_autowizard_chrome
-    - script/build/test_db_config.sh test ci_zammad_autowizard_chrome_test
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
@@ -271,8 +250,6 @@ job_integration_browser_chrome_1:
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
-    - script/build/test_db_config.sh production ci_zammad_browser_chrome_1
-    - script/build/test_db_config.sh test ci_zammad_browser_chrome_1_test
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
@@ -291,8 +268,6 @@ job_integration_browser_chrome_2:
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
-    - script/build/test_db_config.sh production ci_zammad_browser_chrome_2
-    - script/build/test_db_config.sh test ci_zammad_browser_chrome_2_test
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
@@ -311,8 +286,6 @@ job_integration_browser_chrome_3:
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
-    - script/build/test_db_config.sh production ci_zammad_browser_chrome_3
-    - script/build/test_db_config.sh test ci_zammad_browser_chrome_3_test
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
