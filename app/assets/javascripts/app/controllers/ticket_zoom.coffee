@@ -284,14 +284,15 @@ class App.TicketZoom extends App.Controller
 
     if !@renderDone
       @renderDone = true
-      @html App.view('ticket_zoom')
+      elLocal = $(App.view('ticket_zoom')
         ticket:         @ticket
         nav:            @nav
         isCustomer:     @isRole('Customer')
         scrollbarWidth: App.Utils.getScrollBarWidth()
+      )
 
       new App.TicketZoomOverviewNavigator(
-        el:          @$('.overview-navigator')
+        el:          elLocal.find('.overview-navigator')
         ticket_id:   @ticket.id
         overview_id: @overview_id
       )
@@ -299,18 +300,18 @@ class App.TicketZoom extends App.Controller
       new App.TicketZoomTitle(
         ticket:      @ticket
         overview_id: @overview_id
-        el:          @$('.ticket-title')
+        el:          elLocal.find('.ticket-title')
         task_key:    @task_key
       )
 
       new App.TicketZoomMeta(
         ticket: @ticket
-        el:     @$('.ticket-meta')
+        el:     elLocal.find('.ticket-meta')
       )
 
       new App.TicketZoomAttributeBar(
         ticket:      @ticket
-        el:          @$('.js-attributeBar')
+        el:          elLocal.find('.js-attributeBar')
         overview_id: @overview_id
         callback:    @submit
         task_key:    @task_key
@@ -321,7 +322,7 @@ class App.TicketZoom extends App.Controller
       new App.TicketZoomArticleNew(
         ticket:    @ticket
         ticket_id: @ticket.id
-        el:        @$('.article-new')
+        el:        elLocal.find('.article-new')
         formMeta:  @formMeta
         form_id:   @form_id
         defaults:  @taskGet('article')
@@ -330,16 +331,18 @@ class App.TicketZoom extends App.Controller
       )
 
       @highligher = new App.TicketZoomHighlighter(
-        el:        @$('.highlighter')
+        el:        elLocal.find('.highlighter')
         ticket_id: @ticket.id
       )
 
       @articleView = new App.TicketZoomArticleView(
         ticket:     @ticket
-        el:         @$('.ticket-article')
+        el:         elLocal.find('.ticket-article')
         ui:         @
         highligher: @highligher
       )
+
+      @html elLocal
 
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
