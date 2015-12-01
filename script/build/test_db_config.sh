@@ -7,9 +7,9 @@ fi
 
 DBNAME=$RNAME
 DBFILE=config/database.yml
-DB_PRODUCTION="$DBNAME_production"
-DB_TEST="$DBNAME_test"
-DB_DEVELOPMENT="$DBNAME_development"
+DB_PRODUCTION=$DBNAME"_production"
+DB_TEST=$DBNAME"_test"
+DB_DEVELOPMENT=$DBNAME"_development"
 
 echo "Creating $DBFILE for tests with $DBNAME"
 
