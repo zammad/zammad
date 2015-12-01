@@ -1,12 +1,16 @@
 class App.TicketZoomArticleView extends App.Controller
   constructor: ->
     super
-
     @article_controller = {}
+    @run()
 
-  execute: (params) ->
+  execute: (params) =>
+    @ticket_article_ids = params.ticket_article_ids
+    @run()
+
+  run: =>
     all = []
-    for ticket_article_id in params.ticket_article_ids
+    for ticket_article_id in @ticket_article_ids
       if !@article_controller[ticket_article_id]
         el = $('<div></div>')
         @article_controller[ticket_article_id] = new ArticleViewItem(
@@ -17,7 +21,7 @@ class App.TicketZoomArticleView extends App.Controller
           highligher:        @highligher
         )
         all.push el
-    @el.append( all )
+    @el.append(all)
 
 class ArticleViewItem extends App.Controller
   hasChangedAttributes: ['from', 'to', 'cc', 'subject', 'body', 'preferences']
@@ -27,15 +31,15 @@ class ArticleViewItem extends App.Controller
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
-    'click .show_toogle':          'show_toogle'
-    'click .textBubble':           'toggle_meta_with_delay'
-    'click .textBubble a':         'stopPropagation'
-    'click .js-unfold':            'unfold'
+    'click .textBubble':   'toggleMetaWithDelay'
+    'click .textBubble a': 'stopPropagation'
+    'click .js-unfold':    'unfold'
 
   constructor: ->
     super
 
     @seeMore = false
+    @force = true
 
     @render()
 
@@ -52,7 +56,8 @@ class ArticleViewItem extends App.Controller
 
     # rerender, e. g. on language change
     @bind('ui:rerender', =>
-      @render(undefined, true)
+      @force = true
+      @render(undefined)
     )
 
     # subscribe to changes
@@ -87,10 +92,10 @@ class ArticleViewItem extends App.Controller
     @articleAttributesLastUpdate = articleAttributesLastUpdateCheck
     true
 
-  render: (article, force = false) =>
+  render: (article) =>
 
     # get articles
-    @article = App.TicketArticle.fullLocal( @ticket_article_id )
+    @article = App.TicketArticle.fullLocal(@ticket_article_id)
 
     # set @el attributes
     if !article
@@ -106,9 +111,10 @@ class ArticleViewItem extends App.Controller
         @el.removeClass('is-internal')
 
     # check if rerender is needed
-    if !force && !@hasChanged(@article)
+    if !@force && !@hasChanged(@article)
       @lastArticle = @article.attributes()
       return
+    @force = false
 
     # prepare html body
     if @article.content_type is 'text/html'
@@ -199,32 +205,20 @@ class ArticleViewItem extends App.Controller
     else
       bubbleOvervlowContainer.addClass('hide')
 
-  show_toogle: (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    #$(e.target).hide()
-    if $(e.target).next('div')[0]
-      if $(e.target).next('div').hasClass('hide')
-        $(e.target).next('div').removeClass('hide')
-        $(e.target).text( App.i18n.translateContent('Fold in') )
-      else
-        $(e.target).text( App.i18n.translateContent('See more') )
-        $(e.target).next('div').addClass('hide')
-
   stopPropagation: (e) ->
     e.stopPropagation()
 
-  toggle_meta_with_delay: (e) =>
+  toggleMetaWithDelay: (e) =>
     # allow double click select
     # by adding a delay to the toggle
 
-    if @lastClick and +new Date - @lastClick < 100
+    if @lastClick and +new Date - @lastClick < 80
       clearTimeout(@toggleMetaTimeout)
     else
-      @toggleMetaTimeout = setTimeout(@toggle_meta, 100, e)
+      @toggleMetaTimeout = setTimeout(@toggleMeta, 80, e)
       @lastClick = +new Date
 
-  toggle_meta: (e) =>
+  toggleMeta: (e) =>
     e.preventDefault()
 
     animSpeed      = 300
