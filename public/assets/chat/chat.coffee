@@ -21,7 +21,7 @@ do($ = window.jQuery, window) ->
       buttonClass: 'open-zammad-chat'
       inactiveClass: 'is-inactive'
       title: '<strong>Chat</strong> with us!'
-      idleTimeout: 8
+      idleTimeout: 4
       inactiveTimeout: 20
 
     _messageCount: 0
@@ -613,28 +613,32 @@ do($ = window.jQuery, window) ->
     inactiveTimeoutStart: =>
       @inactiveTimeoutStop()
       delay = =>
-        @log 'debug', "Inactive timeout of #{@options.inactiveTimeout} minutes, show timeout screen."
+        @log 'debug', "Inactive timeout of #{@options.inactiveTimeout} minutes, show timeout screen.", new Date
         @state = 'off'
         @setAgentOnlineState 'offline'
         @showTimeout()
         @wsClose()
+      @log 'debug', "Start inactive timeout in #{@options.inactiveTimeout} minutes", new Date
       @inactiveTimeoutStopDelayId = setTimeout(delay, @options.inactiveTimeout * 1000 * 60)
 
     inactiveTimeoutStop: =>
       return if !@inactiveTimeoutStopDelayId
+      @log 'debug', "Stop inactive timeout of #{@options.inactiveTimeout} minutes at", new Date
       clearTimeout(@inactiveTimeoutStopDelayId)
 
     idleTimeoutStart: =>
       @idleTimeoutStop()
       delay = =>
-        @log 'debug', "Idle timeout of #{@options.idleTimeout} minutes, hide widget"
+        @log 'debug', "Idle timeout of #{@options.idleTimeout} minutes, hide widget", new Date
         @state = 'off'
         @hide()
         @wsClose()
+      @log 'debug', "Start idle timeout in #{@options.idleTimeout} minutes", new Date
       @idleTimeoutStopDelayId = setTimeout(delay, @options.idleTimeout * 1000 * 60)
 
     idleTimeoutStop: =>
       return if !@idleTimeoutStopDelayId
+      @log 'debug', "Stop idle timeout of #{@options.idleTimeout} minutes at", new Date
       clearTimeout(@idleTimeoutStopDelayId)
 
   window.ZammadChat = ZammadChat
