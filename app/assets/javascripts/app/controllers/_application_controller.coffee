@@ -544,7 +544,7 @@ class App.Controller extends Spine.Controller
   metaTaskUpdate: ->
     App.Delay.set(
       -> App.Event.trigger 'task:render'
-      450
+      App.TaskManager.renderDelay()
       'meta-task-update'
     )
 
