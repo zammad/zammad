@@ -95,10 +95,11 @@ job_integration_es:
     - core
   script:
     - export RAILS_ENV=test
+    - export ES_INDEX="estest.local_zammad_"$RNAME
+    - export ES_URL="http://localhost:9200"
     - rake db:drop;
     - rake db:create
     - rake db:migrate
-    - export ES_INDEX="estest.local_zammad_"$RNAME
     - ruby -I test/ test/integration/elasticsearch_test.rb
     - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb

@@ -1,7 +1,7 @@
 class App.TicketZoomArticleActions extends App.Controller
   events:
-    'click [data-type=public]':   'public_internal'
-    'click [data-type=internal]': 'public_internal'
+    'click [data-type=public]':   'publicInternal'
+    'click [data-type=internal]': 'publicInternal'
     'click [data-type=reply]':    'reply'
     'click [data-type=replyAll]': 'replyAll'
 
@@ -20,8 +20,9 @@ class App.TicketZoomArticleActions extends App.Controller
     else
       @html ''
 
-  public_internal: (e) ->
+  publicInternal: (e) ->
     e.preventDefault()
+    articleContainer = $(e.target).closest('.ticket-article-item')
     article_id = $(e.target).parents('[data-id]').data('id')
 
     # storage update
@@ -35,9 +36,9 @@ class App.TicketZoomArticleActions extends App.Controller
 
     # runntime update
     if internal
-      $(e.target).closest('.ticket-article-item').addClass('is-internal')
+      articleContainer.addClass('is-internal')
     else
-      $(e.target).closest('.ticket-article-item').removeClass('is-internal')
+      articleContainer.removeClass('is-internal')
 
     @render()
 

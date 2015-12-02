@@ -336,13 +336,12 @@ class App.TicketZoom extends App.Controller
       )
 
       @articleView = new App.TicketZoomArticleView(
-        ticket:     @ticket
-        el:         elLocal.find('.ticket-article')
-        ui:         @
-        highligher: @highligher
+        ticket:             @ticket
+        el:                 elLocal.find('.ticket-article')
+        ui:                 @
+        highligher:         @highligher
+        ticket_article_ids: @ticket_article_ids
       )
-
-      @html elLocal
 
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
@@ -351,8 +350,12 @@ class App.TicketZoom extends App.Controller
         user_id: @ticket.customer_id
         size:    50
       )
+      if elLocal
+        el = elLocal
+      else
+        el = @el
       @sidebar = new App.TicketZoomSidebar(
-        el:           @$('.tabsSidebar')
+        el:           el.find('.tabsSidebar')
         sidebarState: @sidebarState
         ticket:       @ticket
         taskGet:      @taskGet
@@ -362,10 +365,15 @@ class App.TicketZoom extends App.Controller
         formMeta:     @formMeta
       )
 
+    # render init page
+    if elLocal
+      @html elLocal
+
     # show article
-    @articleView.execute(
-      ticket_article_ids: @ticket_article_ids
-    )
+    else
+      @articleView.execute(
+        ticket_article_ids: @ticket_article_ids
+      )
 
     # scroll to article if given
     if @article_id && document.getElementById( 'article-' + @article_id )
