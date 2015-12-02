@@ -542,9 +542,11 @@ class App.Controller extends Spine.Controller
     @html App.view('generic/error/unauthorized')(data)
 
   metaTaskUpdate: ->
+    delay = App.TaskManager.renderDelay()
+    return if !delay
     App.Delay.set(
       -> App.Event.trigger 'task:render'
-      App.TaskManager.renderDelay()
+      delay
       'meta-task-update'
     )
 

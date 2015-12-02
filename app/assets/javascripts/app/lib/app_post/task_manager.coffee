@@ -496,10 +496,17 @@ class _taskManagerSingleton extends App.Controller
           'task'
         )
 
-    # set new renderDelayTime
+    # handle init task rendering at loading time, prevent multible, not needed dom operations
+    @initTaskRenderInterval = App.Interval.set(
+      ->
+        App.Event.trigger('task:render')
+      1200
+    )
     App.Delay.set(
       =>
+        App.Interval.clear(@initTaskRenderInterval)
         @renderDelayTime = 20
+        App.Event.trigger('task:render')
       task_count * 450
     )
 
