@@ -4,24 +4,24 @@ class App.OrganizationProfile extends App.Controller
 
     # check authentication
     if !@authenticate()
-      App.TaskManager.remove( @task_key )
+      App.TaskManager.remove(@task_key)
       return
 
     # fetch new data if needed
-    App.Organization.full( @organization_id, @render )
+    App.Organization.full(@organization_id, @render)
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
-      @render( App.Organization.fullLocal( @organization_id ) )
+      @render(App.Organization.fullLocal(@organization_id))
 
   meta: =>
     meta =
       url: @url()
       id:  @organization_id
 
-    if App.Organization.exists( @organization_id )
-      organization = App.Organization.find( @organization_id )
+    if App.Organization.exists(@organization_id)
+      organization = App.Organization.find(@organization_id)
 
       meta.head       = organization.displayName()
       meta.title      = organization.displayName()
@@ -33,7 +33,7 @@ class App.OrganizationProfile extends App.Controller
     '#organization/profile/' + @organization_id
 
   show: =>
-    App.OnlineNotification.seen( 'Organization', @organization_id )
+    App.OnlineNotification.seen('Organization', @organization_id)
     @navupdate '#'
 
   changed: ->
@@ -43,21 +43,23 @@ class App.OrganizationProfile extends App.Controller
 
     if !@doNotLog
       @doNotLog = 1
-      @recentView( 'Organization', @organization_id )
+      @recentView('Organization', @organization_id)
 
-    @html App.view('organization_profile/index')(
+    elLocal = $(App.view('organization_profile/index')(
       organization: organization
-    )
+    ))
 
     new Object(
-      el:           @$('.js-object-container')
+      el:           elLocal.find('.js-object-container')
       organization: organization
     )
 
     new App.TicketStats(
-      el:           @$('.js-ticket-stats')
+      el:           elLocal.find('.js-ticket-stats')
       organization: organization
     )
+
+    @html elLocal
 
     new App.UpdateTastbar(
       genericObject: organization
@@ -71,7 +73,7 @@ class Object extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.Organization.full( @organization.id, @render, false, true )
+    @subscribeId = App.Organization.full(@organization.id, @render, false, true)
 
   release: =>
     App.Organization.unsubscribe(@subscribeId)
@@ -87,12 +89,12 @@ class Object extends App.Controller
 
       # check if value for _id exists
       name    = attributeName
-      nameNew = name.substr( 0, name.length - 3 )
+      nameNew = name.substr(0, name.length - 3)
       if nameNew of organization
         name = nameNew
 
       # add to show if value exists
-      if ( organization[name] || attributeConfig.tag is 'richtext' ) && attributeConfig.shown
+      if (organization[name] || attributeConfig.tag is 'richtext') && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
         if name isnt 'name'
@@ -148,11 +150,11 @@ class Object extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    org   = App.Organization.find( @organization.id )
+    org   = App.Organization.find(@organization.id)
     if org[name] isnt value
       data = {}
       data[name] = value
-      org.updateAttributes( data )
+      org.updateAttributes(data)
       @log 'notice', 'update', name, value, org
 
 
@@ -171,4 +173,4 @@ class Router extends App.ControllerPermanent
       show:       true
     )
 
-App.Config.set( 'organization/profile/:organization_id', Router, 'Routes' )
+App.Config.set('organization/profile/:organization_id', Router, 'Routes')
