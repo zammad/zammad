@@ -365,7 +365,7 @@ class App.TicketZoom extends App.Controller
         formMeta:     @formMeta
       )
 
-    # render init page
+    # render init content
     if elLocal
       @html elLocal
 

@@ -26,30 +26,31 @@ class App.TaskbarWidget extends App.Controller
     for task in tasks
 
       # collect meta data of task for task bar item
-      data =
-        url:   '#'
-        id:    false
+      meta =
+        url:       '#'
+        id:        false
         iconClass: 'loading'
-        title: App.i18n.translateInline('Loading...')
-        head:  App.i18n.translateInline('Loading...')
+        title:     App.i18n.translateInline('Loading...')
+        head:      App.i18n.translateInline('Loading...')
+        active:    false
       worker = App.TaskManager.worker(task.key)
       if worker
-        meta = worker.meta()
+        data = worker.meta()
 
         # apply meta data of controller
-        if meta
-          for key, value of meta
-            data[key] = value
+        if data
+          for key, value of data
+            meta[key] = value
 
       # collect new task bar items
       item = {}
       item.task = task
-      item.data = data
+      item.meta = meta
       taskItems.push item
 
       # set title
       if task.active
-        @title data.title
+        @title meta.title
 
     @html App.view('task_widget_tasks')(
       taskItems: taskItems

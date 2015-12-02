@@ -5,64 +5,43 @@ class App.TaskManager
     _instance ?= new _taskManagerSingleton( params )
 
   @all: ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.all()
 
   @execute: ( params ) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.execute( params )
 
   @get: ( key ) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.get( key )
 
   @update: ( key, params ) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.update( key, params )
 
   @remove: (key, rerender = true) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.remove(key, rerender)
 
   @notify: ( key ) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.notify( key )
 
   @mute: ( key ) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.mute( key )
 
   @reorder: ( order ) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.reorder( order )
 
   @reset: ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.reset()
 
   @worker: ( key ) ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.worker( key )
 
   @nextTaskUrl: ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.nextTaskUrl()
 
   @TaskbarId: ->
-    if _instance == undefined
-      _instance ?= new _taskManagerSingleton
     _instance.TaskbarId()
+
+  @renderDelay: ->
+    _instance.renderDelay()
 
 class _taskManagerSingleton extends App.Controller
   @include App.LogInclude
@@ -98,6 +77,7 @@ class _taskManagerSingleton extends App.Controller
     @allTasks          = []
     @tasksToUpdate     = {}
     @activeTaskHistory = []
+    @renderDelayTime   = 600
 
   all: ->
 
@@ -511,9 +491,19 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          task_count * 600
+          task_count * 450
           undefined
           'task'
         )
 
+    # set new renderDelayTime
+    App.Delay.set(
+      =>
+        @renderDelayTime = 20
+      task_count * 450
+    )
+
     App.Event.trigger 'taskbar:ready'
+
+  renderDelay: =>
+    @renderDelayTime

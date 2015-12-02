@@ -21,6 +21,9 @@ class App.Run extends App.Controller
     # create web socket connection
     App.WebSocket.connect()
 
+    # init tasks
+    App.TaskManager.init()
+
     # start frontend time update
     @frontendTimeUpdate()
 

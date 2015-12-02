@@ -382,6 +382,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   update: (url) =>
     @$('.is-active').removeClass('is-active')
+    return if !url || url is '#'
     @$("[href=\"#{url}\"]").addClass('is-active')
 
   recentViewNavbarItemsRebuild: =>
