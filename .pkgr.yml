@@ -10,7 +10,7 @@ group: "zammad"
 after_install: packaging/hooks/postinstall.sh
 
 env:
-  - RAILS_ENV=development
+  - RAILS_ENV=production
   - RAILS_GROUPS=assets
 
 notifications: false
