@@ -11,7 +11,10 @@ after_install: packaging/hooks/postinstall.sh
 
 before:
   - pwd
+  - ls -l
+  - ls -l config/
   - cp config/database.yml.unittest config/database.yml
+  - cat config/database.yml
 
 env:
   - RAILS_ENV=production
