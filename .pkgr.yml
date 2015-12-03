@@ -9,11 +9,9 @@ group: "zammad"
 
 after_install: packaging/hooks/postinstall.sh
 
-before_precompile:
+before:
+  - pwd
   - cp config/database.yml.unittest config/database.yml
-
-after_precompile:
-  - rm -f config/database.yml
 
 env:
   - RAILS_ENV=production
