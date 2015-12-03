@@ -9,10 +9,10 @@ group: "zammad"
 
 after_install: packaging/hooks/postinstall.sh
 
-before:
+before_precompile:
   - cp config/database.yml.unittest config/database.yml
 
-after:
+after_precompile:
   - rm -f config/database.yml
 
 env:
