@@ -1,0 +1,17 @@
+targets:
+  centos-7:
+    dependencies:
+      - httpd
+      - mariadb-server
+
+user: "zammad"
+group: "zammad"
+
+after_install: packaging/hooks/postinstall.sh
+
+env:
+  - RAILS_ENV=development
+  - RAILS_GROUPS=assets
+
+notifications: false
+
