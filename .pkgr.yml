@@ -2,7 +2,7 @@ targets:
   centos-6:
     dependencies:
       - httpd
-      - mariadb-server
+      - mysql-server
 
 user: "zammad"
 group: "zammad"
