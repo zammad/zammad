@@ -1,5 +1,5 @@
 targets:
-  centos-7:
+  centos-6:
     dependencies:
       - httpd
       - mariadb-server
