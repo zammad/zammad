@@ -11,7 +11,7 @@ after_install: packaging/hooks/postinstall.sh
 
 before:
   - cp config/database.yml.pkgr config/database.yml
-  - cat config/database.yml
+  - uname -a
 
 env:
   - RAILS_ENV=production
