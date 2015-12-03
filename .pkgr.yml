@@ -10,9 +10,10 @@ group: "zammad"
 after_install: packaging/hooks/postinstall.sh
 
 before:
-  - cp config/database.yml.unittest config/database.yml
+  - cp config/database.yml.pkgr config/database.yml
   - cat config/database.yml
   - env
+  - gem install sqlite3
 
 env:
   - RAILS_ENV=production

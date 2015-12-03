@@ -1,0 +1,6 @@
+production:
+  adapter: sqlite3
+  database: db/test.sqlite3
+  timeout: 12000
+  pool: 50
+
