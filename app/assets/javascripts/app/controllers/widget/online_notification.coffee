@@ -38,7 +38,7 @@ class App.OnlineNotificationWidget extends App.Controller
       @createContainer()
       @subscribeId = App.OnlineNotification.subscribe( @updateContent )
 
-  release: =>
+  release: ->
     @removeContainer()
     $(window).off 'click.notifications'
     App.OnlineNotification.unsubscribe( @subscribeId )

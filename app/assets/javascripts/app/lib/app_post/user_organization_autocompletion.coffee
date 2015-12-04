@@ -25,7 +25,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
   element: =>
     @el
 
-  release: =>
+  release: ->
     $(window).off 'click.UserOrganizationAutocompletion'
 
   open: =>
