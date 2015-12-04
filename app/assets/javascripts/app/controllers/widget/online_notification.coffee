@@ -1,6 +1,6 @@
 class App.OnlineNotificationWidget extends App.Controller
   elements:
-    '.js-toggleNavigation': 'toggle'
+    '.js-toggleNotifications': 'toggle'
 
   constructor: ->
     super

@@ -6,7 +6,7 @@
       <%- @Icon('diagonal-cross') %>
     </div>
   </div>
-  <div class="logo js-toggleNavigation">
+  <div class="logo js-toggleNotifications">
     <%- @Icon('logo') %>
     <div class="activity-counter js-counter"></div>
   </div>
