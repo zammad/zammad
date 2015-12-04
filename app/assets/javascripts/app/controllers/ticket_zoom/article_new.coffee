@@ -113,9 +113,6 @@ class App.TicketZoomArticleNew extends App.Controller
   isIE10: ->
     Function('/*@cc_on return document.documentMode===10@*/')()
 
-  stopPropagation: (e) ->
-    e.stopPropagation()
-
   release: =>
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
