@@ -40,6 +40,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
   release: =>
     @removeContainer()
+    $(window).off 'click.notifications'
     App.OnlineNotification.unsubscribe( @subscribeId )
 
   access: ->
@@ -64,11 +65,6 @@ class App.OnlineNotificationWidget extends App.Controller
       data: JSON.stringify( '' )
       processData: true
     )
-
-  removeClickCatcher: =>
-    return if !@clickCatcher
-    @clickCatcher.remove()
-    @clickCatcher = null
 
   onShow: =>
     @updateContent()
@@ -95,14 +91,11 @@ class App.OnlineNotificationWidget extends App.Controller
       @hidePopover()
     )
 
-    # add clickCatcher
-    @clickCatcher = new App.ClickCatcher
-      holder:      @el.offsetParent()
-      callback:    @hidePopover
-      zIndexScale: 4
+    notificationsContainer.on 'click', @stopPropagation
+    $(window).on 'click.notifications', @hidePopover
 
   onHide: =>
-    @removeClickCatcher()
+    $(window).off 'click.notifications'
 
   hidePopover: =>
     @toggle.popover('hide')
