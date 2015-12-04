@@ -33,12 +33,6 @@
     </div>
   </div>
   <div class="article-content zIndex-5 bubble-gap">
-<!--
-    <label class="recipients"><%- @T('Recipients') %>
-      <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_normal.jpg)"></div>
-      <div class="avatar" style="background-image: url(https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p_bigger.jpg)"></div>
-    </label>
--->
     <div class="internal-border">
 
       <div class="input form-group">
