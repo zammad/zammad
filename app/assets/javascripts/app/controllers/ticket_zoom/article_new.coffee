@@ -12,10 +12,6 @@ class App.TicketZoomArticleNew extends App.Controller
     '.js-cancel':                         'cancelContainer'
     '.textBubble':                        'textBubble'
     '.editControls-item':                 'editControlItem'
-    #'.editControls':                     'editControls'
-    #'.recipient-picker':                 'recipientPicker'
-    #'.recipient-list':                   'recipientList'
-    #'.recipient-list .list-arrow':       'recipientListArrow'
 
   events:
     'click .js-toggleVisibility':    'toggleVisibility'
@@ -25,10 +21,6 @@ class App.TicketZoomArticleNew extends App.Controller
     'click .js-writeArea':           'stopPropagation'
     'click .list-entry-type div':    'change_type'
     'focus .js-textarea':            'openTextarea'
-    #'dragenter':                    'onDragenter'
-    #'dragleave':                    'onDragleave'
-    #'drop':                         'onFileDrop'
-    #'change input[type=file]':      'onFilePick'
 
   constructor: ->
     super
