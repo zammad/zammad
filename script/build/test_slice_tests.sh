@@ -8,6 +8,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_ticket_*.rb
+  rm test/browser/chat_test.rb
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
 
@@ -40,7 +41,6 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_ticket_*.rb
   rm test/browser/auth_test.rb
-  rm test/browser/chat_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/maintenance_message_test.rb
   rm test/browser/manage_test.rb
