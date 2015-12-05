@@ -384,13 +384,13 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   set(
-    browser:         browser1,
-    css:             '.some_class',
-    value:           true,
-    slow:            false,
-    blur:            true,
-    clear:           true, # todo | default: true
-    contenteditable: true
+    browser:  browser1,
+    css:      '.some_class',
+    value:    true,
+    slow:     false,
+    blur:     true,
+    clear:    true, # todo | default: true
+    no_click: true,
   )
 
 =end
@@ -402,7 +402,9 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { css: params[:css] } )[0]
-    element.click
+    if !params[:no_click]
+      element.click
+    end
     element.clear
 
     if !params[:slow]
