@@ -402,8 +402,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     element = instance.find_elements( { css: params[:css] } )[0]
-    #element.click
-
+    element.click
     element.clear
 
     if !params[:slow]
