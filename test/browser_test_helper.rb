@@ -195,6 +195,11 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     instance.get( params[:url] )
+
+    # check if reload was successfull
+    if !instance.find_elements( { css: 'body' } )[0] || instance.find_elements( { css: 'body' } )[0].text =~ /unavailable or too busy/i
+      instance.navigate.refresh
+    end
     screenshot( browser: instance, comment: 'location' )
   end
 
@@ -234,6 +239,11 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     screenshot( browser: instance, comment: 'reload_before' )
     instance.navigate.refresh
+
+    # check if reload was successfull
+    if !instance.find_elements( { css: 'body' } )[0] || instance.find_elements( { css: 'body' } )[0].text =~ /unavailable or too busy/i
+      instance.navigate.refresh
+    end
     screenshot( browser: instance, comment: 'reload_after' )
   end
 
@@ -241,14 +251,16 @@ class TestCase < Test::Unit::TestCase
 
   click(
     browser: browser1,
-    css:     '.some_class',
-    fast:    false, # do not wait
+    css:  '.some_class',
+    fast: false, # do not wait
+    wait: 1, # wait 1 sec.
   )
 
   click(
     browser: browser1,
-    text:    '.partial_link_text',
-    fast:    false, # do not wait
+    text: '.partial_link_text',
+    fast: false, # do not wait
+    wait: 1, # wait 1 sec.
   )
 
 =end
@@ -274,6 +286,7 @@ class TestCase < Test::Unit::TestCase
       instance.find_elements( { partial_link_text: params[:text] } )[0].click
     end
     sleep 0.4 if !params[:fast]
+    sleep params[:wait] if params[:wait]
   end
 
 =begin
@@ -437,6 +450,35 @@ class TestCase < Test::Unit::TestCase
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, params[:value])
       puts "select2 - #{params.inspect}"
+    end
+  end
+
+=begin
+
+  switch(
+    browser: browser1,
+    css:  '.some_class',
+    type: 'on', # 'off'
+  )
+
+=end
+
+  def switch(params)
+    switch_window_focus(params)
+    log('switch', params)
+
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements( { css: "#{params[:css]} input[type=checkbox]" } )[0]
+    checked = element.attribute('checked')
+    if !checked
+      if params[:type] == 'on'
+        instance.find_elements( { css: "#{params[:css]} label" } )[0].click
+      end
+    else
+      if params[:type] == 'off'
+        instance.find_elements( { css: "#{params[:css]} label" } )[0].click
+      end
     end
   end
 
