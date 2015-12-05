@@ -94,7 +94,7 @@ class App.OnlineNotificationWidget extends App.Controller
     notificationsContainer.on 'click', @stopPropagation
     $(window).on 'click.notifications', @hidePopover
 
-  onHide: =>
+  onHide: ->
     $(window).off 'click.notifications'
 
   hidePopover: =>
