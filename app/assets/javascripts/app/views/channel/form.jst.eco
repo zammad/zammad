@@ -8,8 +8,8 @@
 
   <h2><%- @T('Enable') %>/<%- @T('Disable') %></h2>
   <form>
-    <div class="zammad-switch">
-       <input name="form_ticket_create" type="checkbox" id="setting-form" class="js-formSetting" <% if @formSetting: %>checked<% end %>>
+    <div class="zammad-switch js-formSetting">
+       <input name="form_ticket_create" type="checkbox" id="setting-form" <% if @formSetting: %>checked<% end %>>
        <label for="setting-form"></label>
     </div>
   </form>

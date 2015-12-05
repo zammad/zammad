@@ -11,14 +11,6 @@ class App.CustomerChat extends App.Controller
   constructor: ->
     super
 
-    # access check
-    if !@isRole('Chat')
-      @renderScreenUnauthorized(objectName: 'Chat')
-      return
-    if !@Config.get('chat')
-      @renderScreenError(detail: 'Feature disabled!')
-      return
-
     @chatWindows = {}
     @maxChatWindows = 4
     preferences = @Session.get('preferences')
@@ -49,7 +41,6 @@ class App.CustomerChat extends App.Controller
 
     # add new chat window
     @bind('chat_session_start', (data) =>
-      console.log('chat_session_start', data)
       if data.session
         @addChat(data.session)
     )
@@ -78,6 +69,13 @@ class App.CustomerChat extends App.Controller
     )
 
   render: ->
+    if !@isRole('Chat')
+      @renderScreenUnauthorized(objectName: 'Chat')
+      return
+    if !@Config.get('chat')
+      @renderScreenError(detail: 'Feature disabled!')
+      return
+
     @html App.view('customer_chat/index')()
 
   show: (params) =>

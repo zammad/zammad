@@ -18,6 +18,18 @@ class Chat::Session < ApplicationModel
     preferences[:participants]
   end
 
+  def recipients_active?
+    return true if !preferences
+    return true if !preferences[:participants]
+    count = 0
+    preferences[:participants].each {|client_id|
+      next if !Sessions.session_exists?(client_id)
+      count += 1
+    }
+    return true if count >= 2
+    false
+  end
+
   def send_to_recipients(message, ignore_client_id = nil)
     preferences[:participants].each {|local_client_id|
       next if local_client_id == ignore_client_id

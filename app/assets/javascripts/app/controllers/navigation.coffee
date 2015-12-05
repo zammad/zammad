@@ -82,7 +82,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     )
 
     # bind on switch changes and execute it on controller
-    @$('.js-menu .js-switch').bind('change', (e) ->
+    @$('.js-menu .js-switch input').bind('change', (e) ->
       val = $(e.target).prop('checked')
       key = $(e.target).closest('.menu-item').data('key')
       return if !key

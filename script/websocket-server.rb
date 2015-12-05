@@ -257,6 +257,7 @@ EventMachine.run {
         }
 
       elsif data['event']
+        log 'notice', "execute event '#{data['event']}'", client_id
         message = Sessions::Event.run(data['event'], data, @clients[client_id][:session], client_id)
         if message
           websocket_send(client_id, message)

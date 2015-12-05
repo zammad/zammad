@@ -30,8 +30,8 @@
       <span class="counter badge badge--big"><%= item.counter %></span>
     <% end %>
     <% if item.switch isnt undefined: %>
-      <span class="zammad-switch zammad-switch--dark zammad-switch--small zammad-switch--green">
-         <input type="checkbox" id="<%- item.class %>-switch" class="js-switch" <% if item.switch: %>checked<% end %>>
+      <span class="zammad-switch zammad-switch--dark zammad-switch--small zammad-switch--green js-switch">
+         <input type="checkbox" id="<%- item.class %>-switch" <% if item.switch: %>checked<% end %>>
          <label for="<%- item.class %>-switch"></label>
       </span>
     <% end %>
