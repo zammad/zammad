@@ -1884,7 +1884,7 @@ Report::Profile.create_if_not_exists(
   created_by_id: 1,
 )
 
-chat = Chat.create(
+chat = Chat.create_if_not_exists(
   name: 'default',
   max_queue: 5,
   note: '',
