@@ -3,6 +3,8 @@ RAILS_ENV=$1
 APP_PORT=$2
 WS_PORT=$3
 
+export ZAMMAD_SETTING_TTL=15
+
 rails r "Setting.set('developer_mode', true)"
 rails r "Setting.set('websocket_port', '$WS_PORT')"
 
