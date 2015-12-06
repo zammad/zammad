@@ -81,6 +81,11 @@ if ARGV[0] == 'start' && @options[:d]
 
   Daemons.daemonize
 
+  Dir.chdir dir
+  name = 'websocket-server'
+  $stdout.reopen( dir + '/log/' + name + '_out.log', 'w')
+  $stderr.reopen( dir + '/log/' + name + '_err.log', 'w')
+
   # create pid file
   daemon_pid = File.new( @options[:i].to_s, 'w' )
   daemon_pid.sync = true
