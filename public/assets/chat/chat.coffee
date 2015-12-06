@@ -21,7 +21,7 @@ do($ = window.jQuery, window) ->
       @options = $.extend {}, @defaults, options
 
     debug: (items...) =>
-      return if !@options.debug && level is 'debug'
+      return if !@options.debug
       @log('debug', items)
 
     notice: (items...) =>
@@ -29,9 +29,6 @@ do($ = window.jQuery, window) ->
 
     error: (items...) =>
       @log('error', items)
-      return if !@options.debug && level is 'debug'
-      items.unshift(level)
-      console.log.apply console, string
 
     log: (level, items) =>
       items.unshift('||')
