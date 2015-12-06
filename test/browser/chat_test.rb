@@ -345,6 +345,7 @@ class ChatTest < TestCase
       css: '.active .chat-window',
       value: 'my name is customer',
     )
+    sleep 1
     exists(
       browser: agent,
       css: '.active .chat-window .chat-status.is-modified',
