@@ -43,7 +43,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html",
+      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
     )
     sleep 4
     exists_not(
@@ -191,7 +191,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html",
+      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
     )
     watch_for(
       browser: customer,
@@ -297,7 +297,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html",
+      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
     )
     watch_for(
       browser: customer,
@@ -387,7 +387,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html",
+      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
     )
     watch_for(
       browser: customer,

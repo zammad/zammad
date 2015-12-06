@@ -89,7 +89,7 @@
         <label for="flat">Flat Design</label>
     <tr>
       <td>
-        <input type="color" id="color" value="#AE99D6" data-option="color"> 
+        <input type="color" id="color" value="#AE99D6" data-option="color">
       <td>
         <label for="color">Color</label>
     <tr>
@@ -118,10 +118,32 @@
 <script src="jquery-2.1.4.min.js"></script>
 <script src="chat.js"></script>
 <script>
+  function getSearchParameters() {
+        var prmstr = window.location.search.substr(1);
+        return prmstr != null && prmstr != '' ? transformToAssocArray(prmstr) : {};
+  }
+  function transformToAssocArray( prmstr ) {
+      var params = {};
+      var prmarr = prmstr.split('&');
+      for ( var i = 0; i < prmarr.length; i++) {
+          var tmparr = prmarr[i].split('=');
+          params[tmparr[0]] = tmparr[1];
+      }
+      return params;
+  }
+  var hostname = window.location.hostname;
+  var port = window.location.port;
+  var params = getSearchParameters();
+  var host = 'ws://localhost:6042'
+  if (params['port']) {
+    host = 'ws://' + hostname + ':' + params['port']
+  }
+  cssUrl = 'http://' + hostname + ':' + port + '/assets/chat/chat.css'
+
   var chat = new ZammadChat({
     chatId: 1,
-    host: 'ws://localhost:6042',
-    cssUrl: 'http://localhost:3000/assets/chat/chat.css',
+    host: host,
+    cssUrl: cssUrl,
     debug: true,
     background: '#494d52',
     flat: true,
