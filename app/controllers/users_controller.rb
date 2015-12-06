@@ -85,7 +85,7 @@ class UsersController < ApplicationController
         group_ids = []
         role_ids  = []
         if count <= 2
-          Role.where( name: [ Z_ROLENAME_ADMIN, 'Agent'] ).each { |role|
+          Role.where( name: [ Z_ROLENAME_ADMIN, 'Agent', 'Chat'] ).each { |role|
             role_ids.push role.id
           }
           Group.all().each { |group|
