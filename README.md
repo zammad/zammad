@@ -1,5 +1,4 @@
-[![Build Status](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop (MySQL))](http://ci.zammad.org/job/Zammad%20Unittest%20Develop%20(MySQL)/)
-[![Build Status](http://ci.zammad.org/buildStatus/icon?job=Zammad Unittest Develop (MariaDB Cluster))](http://ci.zammad.org/job/Zammad%20Unittest%20Develop%20(MariaDB%20Cluster)/)
+[![build status](http://source.zammad.com/ci/projects/2/status.png?ref=develop)](http://source.zammad.com/ci/projects/2?ref=develop)
 
 Welcome to Zammad
 =================
