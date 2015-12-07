@@ -507,6 +507,8 @@ class ChatTest < TestCase
       browser: customer,
       url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
     )
+
+    # no customer action, hide widget
     watch_for(
       browser: customer,
       css: '.zammad-chat',
@@ -517,6 +519,8 @@ class ChatTest < TestCase
       css: '.zammad-chat',
       timeout: 75,
     )
+
+    # no agent action, show sorry screen
     reload(
       browser: customer,
     )
@@ -539,6 +543,59 @@ class ChatTest < TestCase
       css: '.zammad-chat',
       value: '(takes longer|dauert länger)',
       timeout: 90,
+    )
+
+    # no customer action, show sorry screen
+    reload(
+      browser: customer,
+    )
+    exists(
+      browser: customer,
+      css: '.zammad-chat',
+    )
+    click(
+      browser: customer,
+      css: '.js-chat-open',
+    )
+
+    agent = browser_instance
+    login(
+      browser: agent,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all(
+      browser: agent,
+    )
+    click(
+      browser: agent,
+      css: 'a[href="#customer_chat"]',
+    )
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
+    click(
+      browser: agent,
+      css: '.active .js-acceptChat',
+    )
+    set(
+      browser: agent,
+      css: '.active .chat-window .js-customerChatInput',
+      value: 'agent is asking',
+    )
+    click(
+      browser: agent,
+      css: '.active .chat-window .js-send',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: 'agent is asking',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: '(Since you didn\'t respond|Da Sie in den letzten)',
+      timeout: 150,
     )
 
   end
