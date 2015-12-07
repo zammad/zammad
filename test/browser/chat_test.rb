@@ -326,6 +326,12 @@ class ChatTest < TestCase
       browser: agent,
       css: '.active .chat-window .chat-status.is-modified',
     )
+
+    # keep focus outside of chat window to check .chat-status.is-modified later
+    click(
+      browser: agent,
+      css: '#global-search',
+    )
     watch_for(
       browser: customer,
       css: '.zammad-chat .zammad-chat-agent-status',
@@ -345,7 +351,6 @@ class ChatTest < TestCase
       css: '.active .chat-window',
       value: 'my name is customer',
     )
-    sleep 1
     exists(
       browser: agent,
       css: '.active .chat-window .chat-status.is-modified',
