@@ -550,6 +550,25 @@ class App.Controller extends Spine.Controller
       'meta-task-update'
     )
 
+  locationVerify: (e, callback) =>
+    newLocation = $(e.currentTarget).attr 'href'
+    @log 'debug', "new location #{newLocation}"
+    return if !newLocation
+    currentLocation = Spine.Route.getPath()
+    @log 'debug', "current location #{currentLocation}"
+    return if newLocation.replace(/#/, '') isnt currentLocation
+    @locationExecute(newLocation, callback)
+
+  locationExecute: (location, callback) =>
+    if callback
+      callback()
+    location = location.replace(/#/, '')
+    @log 'debug', "execute controller again for '#{location}' because of same hash"
+    Spine.Route.matchRoutes(location)
+
+  logoUrl: ->
+    "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super

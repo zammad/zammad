@@ -7,7 +7,7 @@
     <div class="activity-body">
       <a class="activity-message js-locationVerify" href="<%- item.link %>">
         <span class="activity-text">
-          <%= item.created_by.displayName() %> <%- @T( item.type ) %> <%- @T( item.object_name ) %><% if item.title: %> <strong><%= item.title %></strong><% end %>
+          <%= item.created_by.displayName() %> <%- @T( "#{item.type}d" ) %> <%- @T( item.object_name ) %><% if item.title: %> <strong><%= item.title %></strong><% end %>
         </span>
         <%- @humanTime(item.created_at, false, 'activity-time') %>
       </a>

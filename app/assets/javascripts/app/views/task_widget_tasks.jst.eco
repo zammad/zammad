@@ -1,5 +1,5 @@
 <% for item in @taskItems: %>
-  <a href="<%- item.meta.url %>" title="<%= item.meta.title %>" class="nav-tab task <%= item.meta.class %><% if item.task.active: %> is-active<% end %><% if item.task.notify: %> is-modified<% end %>" data-key="<%- item.task.key %>">
+  <a href="<%- item.meta.url %>" title="<%= item.meta.title %>" class="nav-tab task js-locationVerify <%= item.meta.class %><% if item.task.active: %> is-active<% end %><% if item.task.notify: %> is-modified<% end %>" data-key="<%- item.task.key %>">
     <div class="nav-tab-icon" title="<%- @Ti(item.meta.iconTitle) %>">
       <% if item.meta.type is 'task': %>
         <% if item.task.notify: %>

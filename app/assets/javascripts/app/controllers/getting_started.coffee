@@ -305,13 +305,10 @@ class Base extends App.Wizard
     else
       url = "#{http_type}://#{fqdn}"
 
-    logoFile = App.Config.get('product_logo')
-    logoUrl  = App.Config.get('image_path') + "/#{logoFile}"
-
     organization = App.Config.get('organization')
     @html App.view('getting_started/base')(
       url:          url
-      logoUrl:      logoUrl
+      logoUrl:      @logoUrl()
       organization: organization
     )
     @$('input, select').first().focus()

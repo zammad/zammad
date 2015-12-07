@@ -502,13 +502,28 @@ class ChatTest < TestCase
   end
 
   def test_timeouts
+    agent = browser_instance
+    login(
+      browser: agent,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all(
+      browser: agent,
+    )
+    click(
+      browser: agent,
+      css: 'a[href="#customer_chat"]',
+    )
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
+
+    # no customer action, hide widget
     customer = browser_instance
     location(
       browser: customer,
       url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
     )
-
-    # no customer action, hide widget
     watch_for(
       browser: customer,
       css: '.zammad-chat',
@@ -557,22 +572,11 @@ class ChatTest < TestCase
       browser: customer,
       css: '.js-chat-open',
     )
-
-    agent = browser_instance
-    login(
+    watch_for(
       browser: agent,
-      username: 'master@example.com',
-      password: 'test',
-      url: browser_url,
+      css: '.js-chatMenuItem .counter',
+      value: '1',
     )
-    tasks_close_all(
-      browser: agent,
-    )
-    click(
-      browser: agent,
-      css: 'a[href="#customer_chat"]',
-    )
-    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
     click(
       browser: agent,
       css: '.active .js-acceptChat',

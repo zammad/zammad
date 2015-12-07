@@ -94,6 +94,10 @@ class App.CustomerChat extends App.Controller
       # do not play sound on initial load
       if counter > 0 && @lastWaitingChatCount isnt undefined
         @sounds.chat_new.play()
+        @notifyDesktop(
+          title: "#{counter} #{App.i18n.translateInline('Waiting Customers')}",
+          url: '#customer_chat'
+        )
       @lastWaitingChatCount = counter
 
     # collect chat window messages
@@ -152,7 +156,6 @@ class App.CustomerChat extends App.Controller
   addChat: (session) ->
     return if @chatWindows[session.session_id]
     chat = new ChatWindow
-      name: "#{session.created_at}"
       session: session
       removeCallback: @removeChat
       messageCallback: @updateNavMenu
@@ -234,6 +237,9 @@ class ChatWindow extends App.Controller
     @isAgentTyping = false
     @resetUnreadMessages()
 
+    chat = App.Chat.find(@session.chat_id)
+    @name = "#{chat.displayName()} [##{@session.id}]"
+
     @on 'layout-change', @scrollToBottom
 
     @bind('chat_session_typing', (data) =>
@@ -252,10 +258,14 @@ class ChatWindow extends App.Controller
       @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
       @goOffline()
     )
+    @bind('chat_focus', (data) =>
+      return if data.session_id isnt @session.session_id
+      @focus()
+    )
 
   render: ->
     @html App.view('customer_chat/chat_window')
-      name: @options.name
+      name: @name
 
     @el.one 'transitionend', @onTransitionend
 
@@ -389,6 +399,13 @@ class ChatWindow extends App.Controller
       @addUnreadMessages()
       @updateModified(true)
       @sounds.message.play()
+      @notifyDesktop(
+        title: @name
+        body: message
+        url: '#customer_chat'
+        callback: =>
+          App.Event.trigger('chat_focus', { session_id: @session.session_id })
+      )
 
   unreadMessages: =>
     @unreadMessagesCounter

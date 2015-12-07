@@ -150,11 +150,9 @@ class App.SettingsAreaLogo extends App.Controller
     @render()
 
   render: ->
-    logoFile = App.Config.get('product_logo')
-    logoUrl  = App.Config.get('image_path') + "/#{logoFile}"
     @html App.view('settings/logo')(
       setting: @setting
-      logoUrl: logoUrl
+      logoUrl: @logoUrl()
     )
 
   onLogoPick: (event) =>

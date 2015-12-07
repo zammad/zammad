@@ -1,4 +1,6 @@
 class App.OnlineNotificationWidget extends App.Controller
+  alreadyShown: {}
+
   elements:
     '.js-toggleNotifications': 'toggle'
 
@@ -102,6 +104,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
   fetch: =>
     load = (items) =>
+      @fetchedData = true
       App.OnlineNotification.refresh( items, { clear: true } )
       @updateContent()
     App.OnlineNotification.fetchFull(load)
@@ -133,17 +136,21 @@ class App.OnlineNotificationWidget extends App.Controller
 
     notificationsContainer  = $('.js-notificationsContainer .popover-content')
 
+    # generate desktop notifications
+    for item in items
+      if !@alreadyShown[item.id]
+        @alreadyShown[item.id] = true
+        if @fetchedData
+          word = "#{item.type}d"
+          title = "#{item.created_by.displayName()} #{App.i18n.translateInline(word)} #{App.i18n.translateInline(item.object_name)} #{item.title}"
+          @notifyDesktop(
+            url: item.link
+            title: title
+          )
+
     # execute controller again of already open (because hash hasn't changed, we need to do it manually)
     notificationsContainer.find('.js-locationVerify').on('click', (e) =>
-      newLocation = $(e.target).attr 'href'
-      if !newLocation
-        newLocation = $(e.target).closest('.js-locationVerify').attr 'href'
-      return if !newLocation
-      currentLocation = Spine.Route.getPath()
-      return if newLocation.replace(/#/, '') isnt currentLocation
-      @hidePopover()
-      @log 'debug', "execute controller again for '#{currentLocation}' because of same hash"
-      Spine.Route.matchRoutes(currentLocation)
+      @locationVerify(e, @hidePopover)
     )
 
     # close notification list on click
