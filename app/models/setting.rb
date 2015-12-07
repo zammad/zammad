@@ -17,7 +17,7 @@ class Setting < ApplicationModel
   @@change_id      = nil # rubocop:disable Style/ClassVars
   @@lookup_at      = nil # rubocop:disable Style/ClassVars
   if ENV['ZAMMAD_SETTING_TTL']
-    @@lookup_timeout = ENV['ZAMMAD_SETTING_TTL'].to_i # rubocop:disable Style/ClassVars
+    @@lookup_timeout = ENV['ZAMMAD_SETTING_TTL'].to_i.seconds # rubocop:disable Style/ClassVars
   else
     @@lookup_timeout = 2.minutes # rubocop:disable Style/ClassVars
   end
