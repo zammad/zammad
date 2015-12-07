@@ -389,6 +389,118 @@ class ChatTest < TestCase
     )
   end
 
+  def test_basic_usecase3
+    agent = browser_instance
+    login(
+      browser: agent,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all(
+      browser: agent,
+    )
+    click(
+      browser: agent,
+      css: 'a[href="#customer_chat"]',
+    )
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
+
+    # set chat preferences
+    click(
+      browser: agent,
+      css: '.active .js-settings',
+    )
+    set(
+      browser: agent,
+      css: '.modal [name="chat::phrase::1"]',
+      value: 'Hi Stranger!;My Greeting',
+    )
+    click(
+      browser: agent,
+      css: '.modal .js-submit',
+    )
+
+    customer = browser_instance
+    location(
+      browser: customer,
+      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      timeout: 5,
+    )
+    click(
+      browser: customer,
+      css: '.js-chat-open',
+    )
+    exists(
+      browser: customer,
+      css: '.zammad-chat-is-shown',
+    )
+    watch_for(
+      browser: agent,
+      css: '.active .js-badgeWaitingCustomers',
+      value: '1',
+    )
+    click(
+      browser: agent,
+      css: '.active .js-acceptChat',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: 'Hi Stranger|My Greeting',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat .zammad-chat-agent-status',
+      value: 'online',
+    )
+    set(
+      browser: agent,
+      css: '.active .chat-window .js-customerChatInput',
+      value: 'my name is me',
+    )
+    click(
+      browser: agent,
+      css: '.active .chat-window .js-send',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: 'my name is me',
+    )
+    set(
+      browser: customer,
+      css: '.zammad-chat .zammad-chat-input',
+      value: 'my name is customer',
+    )
+    click(
+      browser: customer,
+      css: '.zammad-chat .zammad-chat-send',
+    )
+    watch_for(
+      browser: agent,
+      css: '.active .chat-window',
+      value: 'my name is customer',
+    )
+    click(
+      browser: agent,
+      css: '.active .chat-window .js-customerChatInput',
+    )
+    click(
+      browser: customer,
+      css: '.js-chat-close',
+    )
+    watch_for(
+      browser: agent,
+      css: '.active .chat-window',
+      value: 'has left the conversation',
+    )
+  end
+
   def test_timeouts
     customer = browser_instance
     location(

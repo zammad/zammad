@@ -85,15 +85,7 @@ do($ = window.jQuery, window) ->
       for key, value of params
         @options[key] = value
 
-    detectHost: ->
-      protocol = 'ws://'
-      if window.location.protocol is 'https:'
-        protocol = 'wss://'
-      @options.host = "#{ protocol }#{ scriptHost }/ws"
-
     connect: =>
-      @detectHost() if !@options.host
-
       @log.debug "Connecting to #{@options.host}"
       @ws = new window.WebSocket("#{@options.host}")
       @ws.onopen = (e) =>
@@ -231,6 +223,9 @@ do($ = window.jQuery, window) ->
       if @options.lang
         @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
         @log.debug "lang: #{@options.lang}"
+
+      # detect host
+      @detectHost() if !@options.host
 
       @loadCss()
 
@@ -543,7 +538,6 @@ do($ = window.jQuery, window) ->
       # delay initial queue position, show connecting first
       show = =>
         @onQueue data
-        console.log('onQueueScreen')
         @waitingListTimeout.start()
 
       if @initialQueueDelay && !@onInitialQueueDelayId
@@ -624,19 +618,19 @@ do($ = window.jQuery, window) ->
     scrollToBottom: ->
       @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
 
-    detectHost: ->
-      protocol = 'ws://'
-      if window.location.protocol is 'https:'
-        protocol = 'wss://'
-      @options.host = "#{ protocol }#{ scriptHost }/ws"
-
     destroy: (params = {}) =>
       @log.debug 'destroy widget'
-      console.log('el', @el)
       if params.hide
         if @el
           @el.remove()
+
+      # stop all timer
+      @waitingListTimeout.stop()
+      @inactiveTimeout.stop()
+      @idleTimeout.stop()
       @wsReconnectStop()
+
+      # stop ws connection
       @io.close()
 
     wsReconnectStart: =>
@@ -731,6 +725,12 @@ do($ = window.jQuery, window) ->
         .find('.zammad-chat-agent-status')
         .attr('data-status', state)
         .text @T(capitalizedState)
+
+    detectHost: ->
+      protocol = 'ws://'
+      if window.location.protocol is 'https:'
+        protocol = 'wss://'
+      @options.host = "#{ protocol }#{ scriptHost }/ws"
 
     loadCss: ->
       return if !@options.cssAutoload

@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th><%- @T('Topic') %>
-      <th width="100%"><%- @T('Greeting') %>
+      <th width="100%"><%- @T('Greeting') %> (<%- @T('Separate multiple values by ;') %>)
       <th><%- @T('Enabled') %>
     </th></tr>
   </thead>

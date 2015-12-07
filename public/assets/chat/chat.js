@@ -159,19 +159,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return results;
     };
 
-    Io.prototype.detectHost = function() {
-      var protocol;
-      protocol = 'ws://';
-      if (window.location.protocol === 'https:') {
-        protocol = 'wss://';
-      }
-      return this.options.host = "" + protocol + scriptHost + "/ws";
-    };
-
     Io.prototype.connect = function() {
-      if (!this.options.host) {
-        this.detectHost();
-      }
       this.log.debug("Connecting to " + this.options.host);
       this.ws = new window.WebSocket("" + this.options.host);
       this.ws.onopen = (function(_this) {
@@ -397,6 +385,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (this.options.lang) {
         this.options.lang = this.options.lang.replace(/-.+?$/, '');
         this.log.debug("lang: " + this.options.lang);
+      }
+      if (!this.options.host) {
+        this.detectHost();
       }
       this.loadCss();
       this.io = new Io(this.options);
@@ -749,7 +740,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       show = (function(_this) {
         return function() {
           _this.onQueue(data);
-          console.log('onQueueScreen');
           return _this.waitingListTimeout.start();
         };
       })(this);
@@ -837,26 +827,19 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'));
     };
 
-    ZammadChat.prototype.detectHost = function() {
-      var protocol;
-      protocol = 'ws://';
-      if (window.location.protocol === 'https:') {
-        protocol = 'wss://';
-      }
-      return this.options.host = "" + protocol + scriptHost + "/ws";
-    };
-
     ZammadChat.prototype.destroy = function(params) {
       if (params == null) {
         params = {};
       }
       this.log.debug('destroy widget');
-      console.log('el', this.el);
       if (params.hide) {
         if (this.el) {
           this.el.remove();
         }
       }
+      this.waitingListTimeout.stop();
+      this.inactiveTimeout.stop();
+      this.idleTimeout.stop();
       this.wsReconnectStop();
       return this.io.close();
     };
@@ -965,6 +948,15 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.state = state;
       capitalizedState = state.charAt(0).toUpperCase() + state.slice(1);
       return this.el.find('.zammad-chat-agent-status').attr('data-status', state).text(this.T(capitalizedState));
+    };
+
+    ZammadChat.prototype.detectHost = function() {
+      var protocol;
+      protocol = 'ws://';
+      if (window.location.protocol === 'https:') {
+        protocol = 'wss://';
+      }
+      return this.options.host = "" + protocol + scriptHost + "/ws";
     };
 
     ZammadChat.prototype.loadCss = function() {

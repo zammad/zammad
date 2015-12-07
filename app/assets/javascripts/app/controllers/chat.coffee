@@ -278,7 +278,9 @@ class ChatWindow extends App.Controller
         if preferences.chat && preferences.chat.phrase
           phrases = preferences.chat.phrase[@session.chat_id]
           if phrases
-            @input.html(phrases)
+            phrasesArray = phrases.split(';')
+            phrase = phrasesArray[_.random(0, phrasesArray.length-1)]
+            @input.html(phrase)
             @sendMessage()
 
   focus: =>
