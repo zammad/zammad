@@ -150,7 +150,8 @@ class App.OnlineNotificationWidget extends App.Controller
 
     # execute controller again of already open (because hash hasn't changed, we need to do it manually)
     notificationsContainer.find('.js-locationVerify').on('click', (e) =>
-      @locationVerify(e, @hidePopover)
+      @locationVerify(e)
+      @hidePopover()
     )
 
     # close notification list on click

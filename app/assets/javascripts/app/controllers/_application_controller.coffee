@@ -550,21 +550,25 @@ class App.Controller extends Spine.Controller
       'meta-task-update'
     )
 
-  locationVerify: (e, callback) =>
+  locationVerify: (e) =>
     newLocation = $(e.currentTarget).attr 'href'
-    @log 'debug', "new location #{newLocation}"
+    @log 'debug', "new location '#{newLocation}'"
     return if !newLocation
-    currentLocation = Spine.Route.getPath()
-    @log 'debug', "current location #{currentLocation}"
-    return if newLocation.replace(/#/, '') isnt currentLocation
-    @locationExecute(newLocation, callback)
+    @locationExecuteOrNavigate(newLocation)
 
-  locationExecute: (location, callback) =>
-    if callback
-      callback()
-    location = location.replace(/#/, '')
-    @log 'debug', "execute controller again for '#{location}' because of same hash"
-    Spine.Route.matchRoutes(location)
+  locationExecuteOrNavigate: (newLocation) =>
+    currentLocation = Spine.Route.getPath()
+    @log 'debug', "current location '#{currentLocation}'"
+    if newLocation.replace(/#/, '') isnt currentLocation
+      @log 'debug', "navigate to location '#{newLocation}'"
+      @navigate(newLocation)
+      return
+    @locationExecute(newLocation)
+
+  locationExecute: (newLocation) =>
+    newLocation = newLocation.replace(/#/, '')
+    @log 'debug', "execute controller again for '#{newLocation}' because of same hash"
+    Spine.Route.matchRoutes(newLocation)
 
   logoUrl: ->
     "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"

@@ -29,14 +29,16 @@ class App.Notify extends App.ControllerWidgetPermanent
       counter = @desktopNotifyCounter
       notification = new window.Notification(data.title, data)
       @desktopNotify[counter] = notification
+      @log 'debug', 'notifyDesktop', data, counter
 
       notification.onclose = (e) =>
         delete @desktopNotify[counter]
 
       notification.onclick = (e) =>
         window.focus()
+        @log 'debug', 'notifyDesktop.click', data
         if data.url
-          @locationExecute(data.url)
+          @locationExecuteOrNavigate(data.url)
         if data.callback
           data.callback()
 
