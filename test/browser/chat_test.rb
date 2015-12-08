@@ -490,6 +490,28 @@ class ChatTest < TestCase
       browser: agent,
       css: '.active .chat-window .js-customerChatInput',
     )
+    reload(
+      browser: customer,
+    )
+    exists(
+      browser: customer,
+      css: '.zammad-chat',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: 'Hi Stranger|My Greeting',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: 'my name is me',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: 'my name is customer',
+    )
     click(
       browser: customer,
       css: '.js-chat-close',
@@ -581,6 +603,7 @@ class ChatTest < TestCase
       browser: agent,
       css: '.active .js-acceptChat',
     )
+    sleep 2
     set(
       browser: agent,
       css: '.active .chat-window .js-customerChatInput',
