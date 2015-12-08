@@ -19,7 +19,7 @@ module Sessions
 
 start new session
 
-  Sessions.create( client_id, session_data, { :type => 'websocket' } )
+  Sessions.create( client_id, session_data, { type: 'websocket' } )
 
 returns
 
@@ -27,7 +27,7 @@ returns
 
 =end
 
-  def self.create( client_id, session, meta )
+  def self.create(client_id, session, meta)
     path         = "#{@path}/#{client_id}"
     path_tmp     = "#{@path}/tmp/#{client_id}"
     session_file = "#{path_tmp}/session"
@@ -42,17 +42,17 @@ returns
 
     # store session data in session file
     FileUtils.mkpath path_tmp
-    File.open( session_file, 'wb' ) { |file|
+    File.open(session_file, 'wb') { |file|
       file.write content
     }
 
     # destory old session if needed
-    if File.exist?( path )
+    if File.exist?(path)
       Sessions.destory(client_id)
     end
 
     # move to destination directory
-    FileUtils.mv( path_tmp, path )
+    FileUtils.mv(path_tmp, path)
 
     # send update to browser
     if session && session['id']
@@ -82,12 +82,12 @@ returns
     path = "#{@path}/"
 
     # just make sure that spool path exists
-    if !File.exist?( path )
+    if !File.exist?(path)
       FileUtils.mkpath path
     end
 
     data = []
-    Dir.foreach( path ) do |entry|
+    Dir.foreach(path) do |entry|
       next if entry == '.'
       next if entry == '..'
       next if entry == 'tmp'
@@ -124,21 +124,21 @@ returns
 
   {
     '4711' => {
-      :user => {
+      user: {
         'id' => 123,
       },
-      :meta => {
-        :type      => 'websocket',
-        :last_ping => time_of_last_ping,
+      meta: {
+        type: 'websocket',
+        last_ping: time_of_last_ping,
       }
     },
     '4712' => {
-      :user => {
+      user: {
         'id' => 124,
       },
-      :meta => {
-        :type      => 'ajax',
-        :last_ping => time_of_last_ping,
+      meta: {
+        type: 'ajax',
+        last_ping: time_of_last_ping,
       }
     },
   }
@@ -168,7 +168,7 @@ returns
 
 =end
 
-  def self.destory( client_id )
+  def self.destory(client_id)
     path = "#{@path}/#{client_id}"
     FileUtils.rm_rf path
   end
@@ -191,7 +191,7 @@ returns
     clients.each { |client_id, client|
       if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.now.utc.to_i
         list_of_closed_sessions.push client_id
-        Sessions.destory( client_id )
+        Sessions.destory(client_id)
       end
     }
     list_of_closed_sessions
@@ -209,7 +209,7 @@ returns
 
 =end
 
-  def self.touch( client_id )
+  def self.touch(client_id)
     data = get(client_id)
     return false if !data
     path = "#{@path}/#{client_id}"
@@ -230,18 +230,18 @@ get session data
 returns
 
   {
-    :user => {
+    user: {
       'id' => 123,
     },
-    :meta => {
-      :type      => 'websocket',
-      :last_ping => time_of_last_ping,
+    meta: {
+      type: 'websocket',
+      last_ping: time_of_last_ping,
     }
   }
 
 =end
 
-  def self.get( client_id )
+  def self.get(client_id)
     session_dir  = "#{@path}/#{client_id}"
     session_file = "#{session_dir}/session"
     data         = nil
@@ -260,11 +260,11 @@ returns
       return
     end
     begin
-      File.open( session_file, 'rb' ) { |file|
-        file.flock( File::LOCK_EX )
+      File.open(session_file, 'rb') { |file|
+        file.flock(File::LOCK_EX)
         all = file.read
-        file.flock( File::LOCK_UN )
-        data_json = JSON.parse( all )
+        file.flock(File::LOCK_UN)
+        data_json = JSON.parse(all)
         if data_json
           data        = symbolize_keys(data_json)
           data[:user] = data_json['user'] # for compat. reasons
@@ -291,13 +291,13 @@ returns
 
 =end
 
-  def self.send( client_id, data )
+  def self.send(client_id, data)
     path     = "#{@path}/#{client_id}/"
     filename = "send-#{Time.now.utc.to_f}"
     check    = true
     count    = 0
     while check
-      if File.exist?( path + filename )
+      if File.exist?(path + filename)
         count += 1
         filename = "#{filename}-#{count}"
       else
@@ -305,14 +305,14 @@ returns
       end
     end
     return false if !File.directory? path
-    File.open( path + 'a-' + filename, 'wb' ) { |file|
-      file.flock( File::LOCK_EX )
+    File.open(path + 'a-' + filename, 'wb') { |file|
+      file.flock(File::LOCK_EX)
       file.write data.to_json
-      file.flock( File::LOCK_UN )
+      file.flock(File::LOCK_UN)
       file.close
     }
-    return false if !File.exist?( path + 'a-' + filename )
-    FileUtils.mv( path + 'a-' + filename, path + filename )
+    return false if !File.exist?(path + 'a-' + filename)
+    FileUtils.mv(path + 'a-' + filename, path + filename)
     true
   end
 
@@ -328,7 +328,7 @@ returns
 
 =end
 
-  def self.send_to( user_id, data )
+  def self.send_to(user_id, data)
 
     # list all current clients
     client_list = sessions
@@ -338,14 +338,14 @@ returns
       next if !session[:user]
       next if !session[:user]['id']
       next if session[:user]['id'].to_i != user_id.to_i
-      Sessions.send( client_id, data )
+      Sessions.send(client_id, data)
     }
     true
   end
 
 =begin
 
-send message to all client
+send message to all authenticated client
 
   Sessions.broadcast(data)
 
@@ -355,12 +355,16 @@ returns
 
 =end
 
-  def self.broadcast( data )
+  def self.broadcast(data)
 
     # list all current clients
     client_list = sessions
     client_list.each {|client_id|
-      Sessions.send( client_id, data )
+      session = Sessions.get(client_id)
+      next if !session
+      next if !session[:user]
+      next if !session[:user]['id']
+      Sessions.send(client_id, data)
     }
     true
   end
@@ -386,7 +390,7 @@ returns
 
 =end
 
-  def self.queue( client_id )
+  def self.queue(client_id)
     path  = "#{@path}/#{client_id}/"
     data  = []
     files = []
@@ -397,23 +401,23 @@ returns
     }
     files.sort.each {|entry|
       filename = "#{path}/#{entry}"
-      if /^send/.match( entry )
-        data.push Sessions.queue_file_read( path, entry )
+      if /^send/.match(entry)
+        data.push Sessions.queue_file_read(path, entry)
       end
     }
     data
   end
 
-  def self.queue_file_read( path, filename )
+  def self.queue_file_read(path, filename)
     file_old = "#{path}#{filename}"
     file_new = "#{path}a-#{filename}"
-    FileUtils.mv( file_old, file_new )
+    FileUtils.mv(file_old, file_new)
     all = ''
-    File.open( file_new, 'rb' ) { |file|
+    File.open(file_new, 'rb') { |file|
       all = file.read
     }
-    File.delete( file_new )
-    JSON.parse( all )
+    File.delete(file_new)
+    JSON.parse(all)
   end
 
   def self.cleanup
@@ -423,7 +427,7 @@ returns
     FileUtils.rm_rf path
   end
 
-  def self.spool_create( msg )
+  def self.spool_create(msg)
     path = "#{@path}/spool/"
     FileUtils.mkpath path
     file_path = path + "/#{Time.now.utc.to_f}-#{rand(99_999)}"
@@ -436,25 +440,25 @@ returns
     }
   end
 
-  def self.spool_list( timestamp, current_user_id )
+  def self.spool_list(timestamp, current_user_id)
     path = "#{@path}/spool/"
     FileUtils.mkpath path
     data      = []
     to_delete = []
     files     = []
-    Dir.foreach( path ) {|entry|
+    Dir.foreach(path) {|entry|
       next if entry == '.'
       next if entry == '..'
       files.push entry
     }
     files.sort.each {|entry|
       filename = "#{path}/#{entry}"
-      next if !File.exist?( filename )
-      File.open( filename, 'rb' ) { |file|
+      next if !File.exist?(filename)
+      File.open(filename, 'rb') { |file|
         all   = file.read
-        spool = JSON.parse( all )
+        spool = JSON.parse(all)
         begin
-          message_parsed = JSON.parse( spool['msg'] )
+          message_parsed = JSON.parse(spool['msg'])
         rescue => e
           log('error', "can't parse spool message: #{message}, #{e.inspect}")
           next
@@ -506,7 +510,7 @@ returns
   def self.jobs
 
     # just make sure that spool path exists
-    if !File.exist?( @path )
+    if !File.exist?(@path)
       FileUtils.mkpath @path
     end
 
@@ -519,7 +523,7 @@ returns
         next if @@client_threads[client_id]
 
         # get current user
-        session_data = Sessions.get( client_id )
+        session_data = Sessions.get(client_id)
         next if !session_data
         next if !session_data[:user]
         next if !session_data[:user]['id']
