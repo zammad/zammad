@@ -291,7 +291,7 @@ class ChatWindow extends App.Controller
             phrasesArray = phrases.split(';')
             phrase = phrasesArray[_.random(0, phrasesArray.length-1)]
             @input.html(phrase)
-            @sendMessage()
+            @sendMessage(1600)
 
   focus: =>
     @input.focus()
@@ -372,16 +372,27 @@ class ChatWindow extends App.Controller
           event.preventDefault()
           @sendMessage()
 
-  sendMessage: =>
+  sendMessage: (delay) =>
     content = @input.html()
     return if !content
 
-    App.WebSocket.send(
-      event:'chat_session_message'
-      data:
-        content: content
-        session_id: @session.session_id
-    )
+    send = =>
+      App.WebSocket.send(
+        event:'chat_session_message'
+        data:
+          content: content
+          session_id: @session.session_id
+      )
+    if !delay
+      send()
+    else
+      # show key enter and send phrase
+      App.WebSocket.send(
+        event:'chat_session_typing'
+        data:
+          session_id: @session.session_id
+      )
+      @delay(send, delay)
 
     @addMessage content, 'agent'
     @input.html('')

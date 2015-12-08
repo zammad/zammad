@@ -11,6 +11,7 @@
   will-change: bottom;
   display: none;
   flex-direction: column;
+  z-index: 999;
 
   &.is-fullscreen {
     right: 0;
@@ -177,7 +178,7 @@
 .zammad-chat-modal-text {
   font-size: 1.3em;
   line-height: 1.45;
-  
+
   .zammad-chat-loading-animation {
     font-size: 0.7em;
   }
@@ -198,7 +199,7 @@
   overflow: auto;
   background: white;
   flex: 1;
-  
+
   @media only screen and (max-width: 768px) {
     height: auto;
     flex: 1;
@@ -349,6 +350,11 @@
 
 .zammad-chat-send {
   float: right;
+}
+
+.zammad-chat-button:disabled,
+.zammad-chat-input:disabled {
+  opacity: 0.3;
 }
 
 .zammad-chat-is-hidden {

@@ -128,7 +128,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (!this.intervallId) {
         return;
       }
-      this.log.debug("Stop timeout of " + this.options.timeout + " minutes at");
+      this.log.debug("Stop timeout of " + this.options.timeout + " minutes");
       return clearInterval(this.intervallId);
     };
 
@@ -164,7 +164,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.ws = new window.WebSocket("" + this.options.host);
       this.ws.onopen = (function(_this) {
         return function(e) {
-          _this.log.debug('on open', e);
+          _this.log.debug('onOpen', e);
           return _this.options.onOpen(e);
         };
       })(this);
@@ -172,7 +172,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         return function(e) {
           var pipes;
           pipes = JSON.parse(e.data);
-          _this.log.debug('on message', e.data);
+          _this.log.debug('onMessage', e.data);
           if (_this.options.onMessage) {
             return _this.options.onMessage(pipes);
           }
@@ -180,15 +180,24 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       })(this);
       this.ws.onclose = (function(_this) {
         return function(e) {
-          _this.log.debug('close websocket connection');
-          if (_this.options.onClose) {
-            return _this.options.onClose(e);
+          _this.log.debug('close websocket connection', e);
+          if (_this.manualClose) {
+            _this.log.debug('manual close, onClose callback');
+            _this.manualClose = false;
+            if (_this.options.onClose) {
+              return _this.options.onClose(e);
+            }
+          } else {
+            _this.log.debug('error close, onError callback');
+            if (_this.options.onError) {
+              return _this.options.onError('Connection lost...');
+            }
           }
         };
       })(this);
       return this.ws.onerror = (function(_this) {
         return function(e) {
-          _this.log.debug('onerror', e);
+          _this.log.debug('onError', e);
           if (_this.options.onError) {
             return _this.options.onError(e);
           }
@@ -197,11 +206,14 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     Io.prototype.close = function() {
+      this.log.debug('close websocket manually');
+      this.manualClose = true;
       return this.ws.close();
     };
 
     Io.prototype.reconnect = function() {
-      this.ws.close();
+      this.log.debug('reconnect');
+      this.close();
       return this.connect();
     };
 
@@ -238,7 +250,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       buttonClass: 'open-zammad-chat',
       inactiveClass: 'is-inactive',
       title: '<strong>Chat</strong> with us!',
-      idleTimeout: 8,
+      idleTimeout: 6,
       idleTimeoutIntervallCheck: 0.5,
       inactiveTimeout: 8,
       inactiveTimeoutIntervallCheck: 0.5,
@@ -250,7 +262,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype._messageCount = 0;
 
-    ZammadChat.prototype.isOpen = true;
+    ZammadChat.prototype.isOpen = false;
 
     ZammadChat.prototype.blinkOnlineInterval = null;
 
@@ -336,26 +348,24 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.setSessionId = bind(this.setSessionId, this);
       this.onConnectionReestablished = bind(this.onConnectionReestablished, this);
       this.reconnect = bind(this.reconnect, this);
-      this.wsReconnectStop = bind(this.wsReconnectStop, this);
-      this.wsReconnectStart = bind(this.wsReconnectStart, this);
       this.destroy = bind(this.destroy, this);
       this.onLeaveTemporary = bind(this.onLeaveTemporary, this);
       this.onAgentTypingEnd = bind(this.onAgentTypingEnd, this);
       this.onAgentTypingStart = bind(this.onAgentTypingStart, this);
       this.onQueue = bind(this.onQueue, this);
       this.onQueueScreen = bind(this.onQueueScreen, this);
+      this.onWebSocketClose = bind(this.onWebSocketClose, this);
       this.onCloseAnimationEnd = bind(this.onCloseAnimationEnd, this);
-      this.closeWindow = bind(this.closeWindow, this);
       this.close = bind(this.close, this);
+      this.sessionClose = bind(this.sessionClose, this);
       this.onOpenAnimationEnd = bind(this.onOpenAnimationEnd, this);
       this.open = bind(this.open, this);
       this.renderMessage = bind(this.renderMessage, this);
       this.receiveMessage = bind(this.receiveMessage, this);
       this.onSubmit = bind(this.onSubmit, this);
       this.onInput = bind(this.onInput, this);
-      this.reopenSession = bind(this.reopenSession, this);
+      this.onReopenSession = bind(this.onReopenSession, this);
       this.onError = bind(this.onError, this);
-      this.onReady = bind(this.onReady, this);
       this.onWebSocketMessage = bind(this.onWebSocketMessage, this);
       this.send = bind(this.send, this);
       this.checkForEnter = bind(this.checkForEnter, this);
@@ -393,31 +403,42 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.io = new Io(this.options);
       this.io.set({
         onOpen: this.render,
-        onClose: this.hide,
-        onMessage: this.onWebSocketMessage
+        onClose: this.onWebSocketClose,
+        onMessage: this.onWebSocketMessage,
+        onError: this.onError
       });
       this.io.connect();
     }
 
     ZammadChat.prototype.render = function() {
-      this.el = $(this.view('chat')({
-        title: this.options.title
-      }));
-      this.options.target.append(this.el);
-      this.input = this.el.find('.zammad-chat-input');
+      if (!this.el || !$('.zammad-chat').get(0)) {
+        this.el = $(this.view('chat')({
+          title: this.options.title
+        }));
+        this.options.target.append(this.el);
+        this.input = this.el.find('.zammad-chat-input');
+        this.el.find('.js-chat-open').click(this.open);
+        this.el.find('.js-chat-close').click(this.close);
+        this.el.find('.zammad-chat-controls').on('submit', this.onSubmit);
+        this.input.on({
+          keydown: this.checkForEnter,
+          input: this.onInput
+        });
+        $(window).on('beforeunload', (function(_this) {
+          return function() {
+            return _this.onLeaveTemporary();
+          };
+        })(this));
+        $(window).bind('hashchange', (function(_this) {
+          return function() {
+            if (_this.isOpen) {
+              return;
+            }
+            return _this.idleTimeout.start();
+          };
+        })(this));
+      }
       $("." + this.options.buttonClass).addClass(this.inactiveClass);
-      this.el.find('.js-chat-open').click(this.open);
-      this.el.find('.js-chat-close').click(this.close);
-      this.el.find('.zammad-chat-controls').on('submit', this.onSubmit);
-      this.input.on({
-        keydown: this.checkForEnter,
-        input: this.onInput
-      });
-      $(window).on('beforeunload', (function(_this) {
-        return function() {
-          return _this.onLeaveTemporary();
-        };
-      })(this));
       this.setAgentOnlineState('online');
       this.log.debug('widget rendered');
       this.startTimeoutObservers();
@@ -453,7 +474,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
             this.log.notice(pipe.data);
             if (pipe.data && pipe.data.state === 'chat_disabled') {
               this.destroy({
-                hide: true
+                remove: true
               });
             }
             break;
@@ -489,28 +510,15 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
                 break;
               case 'offline':
                 this.onError('Zammad Chat: No agent online');
-                this.state = 'off';
-                this.destroy({
-                  hide: true
-                });
                 break;
               case 'chat_disabled':
                 this.onError('Zammad Chat: Chat is disabled');
-                this.state = 'off';
-                this.destroy({
-                  hide: true
-                });
                 break;
               case 'no_seats_available':
                 this.onError("Zammad Chat: Too many clients in queue. Clients in queue: " + pipe.data.queue);
-                this.state = 'off';
-                this.destroy({
-                  hide: true
-                });
                 break;
               case 'reconnect':
-                this.log.debug('old messages', pipe.data.session);
-                this.reopenSession(pipe.data);
+                this.onReopenSession(pipe.data);
             }
         }
       }
@@ -526,11 +534,23 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.onError = function(message) {
       this.log.debug(message);
-      return $("." + this.options.buttonClass).hide();
+      this.addStatus(message);
+      $("." + this.options.buttonClass).hide();
+      if (this.isOpen) {
+        this.disableInput();
+        return this.destroy({
+          remove: false
+        });
+      } else {
+        return this.destroy({
+          remove: true
+        });
+      }
     };
 
-    ZammadChat.prototype.reopenSession = function(data) {
+    ZammadChat.prototype.onReopenSession = function(data) {
       var i, len, message, ref, unfinishedMessage;
+      this.log.debug('old messages', data.session);
       this.inactiveTimeout.start();
       unfinishedMessage = sessionStorage.getItem('unfinished_message');
       if (data.agent) {
@@ -631,10 +651,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.open = function() {
-      this.log.debug('open widget');
       if (this.isOpen) {
-        this.show();
+        this.log.debug('widget already open, block');
+        return;
       }
+      this.isOpen = true;
+      this.log.debug('open widget');
       if (!this.sessionId) {
         this.showLoader();
       }
@@ -643,13 +665,10 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.el.animate({
           bottom: 0
         }, 500, this.onOpenAnimationEnd);
+        return this.send('chat_session_init');
       } else {
         this.el.css('bottom', 0);
-        this.onOpenAnimationEnd();
-      }
-      this.isOpen = true;
-      if (!this.sessionId) {
-        return this.send('chat_session_init');
+        return this.onOpenAnimationEnd();
       }
     };
 
@@ -657,17 +676,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.idleTimeout.stop();
     };
 
-    ZammadChat.prototype.close = function(event) {
-      this.log.debug('close widget');
-      if (this.state === 'off' || this.state === 'unsupported') {
-        return this.state;
-      }
-      if (event) {
-        event.stopPropagation();
-      }
-      if (!this.sessionId) {
-        return;
-      }
+    ZammadChat.prototype.sessionClose = function() {
       this.send('chat_session_close', {
         session_id: this.sessionId
       });
@@ -677,14 +686,24 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (this.onInitialQueueDelayId) {
         clearTimeout(this.onInitialQueueDelayId);
       }
-      if (event) {
-        this.closeWindow();
-      }
       return this.setSessionId(void 0);
     };
 
-    ZammadChat.prototype.closeWindow = function() {
+    ZammadChat.prototype.close = function(event) {
       var remainerHeight;
+      if (!this.isOpen) {
+        this.log.debug('can\'t close widget, it\'s not open');
+        return;
+      }
+      if (!this.sessionId) {
+        this.log.debug('can\'t close widget without sessionId');
+        return;
+      }
+      this.log.debug('close widget');
+      if (event) {
+        event.stopPropagation();
+      }
+      this.sessionClose();
       this.el.removeClass('zammad-chat-is-open');
       remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
       return this.el.animate({
@@ -702,7 +721,10 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.io.reconnect();
     };
 
-    ZammadChat.prototype.hide = function() {
+    ZammadChat.prototype.onWebSocketClose = function() {
+      if (this.isOpen) {
+        return;
+      }
       if (this.el) {
         return this.el.removeClass('zammad-chat-is-shown');
       }
@@ -710,8 +732,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.show = function() {
       var remainerHeight;
-      if (this.state === 'off' || this.state === 'unsupported') {
-        return this.state;
+      if (this.state === 'offline') {
+        return;
       }
       this.el.addClass('zammad-chat-is-shown');
       if (!this.inputInitialized) {
@@ -809,6 +831,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.updateLastTimestamp = function(label, time) {
+      if (!this.el) {
+        return;
+      }
       return this.el.find('.zammad-chat-body').find('.zammad-chat-timestamp').last().replaceWith(this.view('timestamp')({
         label: label,
         time: time
@@ -816,6 +841,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.addStatus = function(status) {
+      if (!this.el) {
+        return;
+      }
       this.maybeAddTimestamp();
       this.el.find('.zammad-chat-body').append(this.view('status')({
         status: status
@@ -831,31 +859,21 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (params == null) {
         params = {};
       }
-      this.log.debug('destroy widget');
-      if (params.hide) {
-        if (this.el) {
-          this.el.remove();
-        }
+      this.log.debug('destroy widget', params);
+      this.setAgentOnlineState('offline');
+      if (params.remove && this.el) {
+        this.el.remove();
       }
-      this.waitingListTimeout.stop();
-      this.inactiveTimeout.stop();
-      this.idleTimeout.stop();
-      this.wsReconnectStop();
+      if (this.waitingListTimeout) {
+        this.waitingListTimeout.stop();
+      }
+      if (this.inactiveTimeout) {
+        this.inactiveTimeout.stop();
+      }
+      if (this.idleTimeout) {
+        this.idleTimeout.stop();
+      }
       return this.io.close();
-    };
-
-    ZammadChat.prototype.wsReconnectStart = function() {
-      this.wsReconnectStop();
-      if (this.reconnectDelayId) {
-        clearTimeout(this.reconnectDelayId);
-      }
-      return this.reconnectDelayId = setTimeout(this.io.connect(), 5000);
-    };
-
-    ZammadChat.prototype.wsReconnectStop = function() {
-      if (this.reconnectDelayId) {
-        return clearTimeout(this.reconnectDelayId);
-      }
     };
 
     ZammadChat.prototype.reconnect = function() {
@@ -920,11 +938,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         agent: this.agent.name,
         delay: this.options.inactiveTimeout
       }));
-      this.close();
       reload = function() {
         return location.reload();
       };
-      return this.el.find('.js-restart').click(reload);
+      this.el.find('.js-restart').click(reload);
+      return this.sessionClose();
     };
 
     ZammadChat.prototype.showWaitingListTimeout = function() {
@@ -932,11 +950,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.el.find('.zammad-chat-body').html(this.view('waiting_list_timeout')({
         delay: this.options.watingListTimeout
       }));
-      this.close();
       reload = function() {
         return location.reload();
       };
-      return this.el.find('.js-restart').click(reload);
+      this.el.find('.js-restart').click(reload);
+      return this.sessionClose();
     };
 
     ZammadChat.prototype.showLoader = function() {
@@ -946,6 +964,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.setAgentOnlineState = function(state) {
       var capitalizedState;
       this.state = state;
+      if (!this.el) {
+        return;
+      }
       capitalizedState = state.charAt(0).toUpperCase() + state.slice(1);
       return this.el.find('.zammad-chat-agent-status').attr('data-status', state).text(this.T(capitalizedState));
     };
@@ -986,9 +1007,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         callback: (function(_this) {
           return function() {
             _this.log.debug('Idle timeout reached, hide widget', new Date);
-            _this.state = 'off';
             return _this.destroy({
-              hide: true
+              remove: true
             });
           };
         })(this)
@@ -1001,11 +1021,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         callback: (function(_this) {
           return function() {
             _this.log.debug('Inactive timeout reached, show timeout screen.', new Date);
-            _this.state = 'off';
-            _this.setAgentOnlineState('offline');
             _this.showCustomerTimeout();
             return _this.destroy({
-              hide: false
+              remove: false
             });
           };
         })(this)
@@ -1018,11 +1036,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         callback: (function(_this) {
           return function() {
             _this.log.debug('Waiting list timeout reached, show timeout screen.', new Date);
-            _this.state = 'off';
-            _this.setAgentOnlineState('offline');
             _this.showWaitingListTimeout();
             return _this.destroy({
-              hide: false
+              remove: false
             });
           };
         })(this)
@@ -1034,67 +1050,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   })(Base);
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
-
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
 
 /*!
  * ----------------------------------------------------------------------------
@@ -1181,6 +1136,67 @@ jQuery.fn.autoGrow = function(options) {
 
   });
 };
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }

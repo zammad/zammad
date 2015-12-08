@@ -387,6 +387,42 @@ class ChatTest < TestCase
       css: '.zammad-chat',
       value: 'Chat closed by',
     )
+    click(
+      browser: customer,
+      css: '.zammad-chat .js-chat-close',
+    )
+    watch_for_disappear(
+      browser: customer,
+      css: '.zammad-chat-is-open',
+    )
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
+    sleep 2
+    click(
+      browser: customer,
+      css: '.js-chat-open',
+    )
+    exists(
+      browser: customer,
+      css: '.zammad-chat-is-shown',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: '(waiting|warte)',
+    )
+    click(
+      browser: agent,
+      css: '.active .js-acceptChat',
+    )
+    sleep 2
+    exists_not(
+      browser: agent,
+      css: '.active .chat-window .chat-status.is-modified',
+    )
+    exists(
+      browser: agent,
+      css: '.active .chat-window .chat-status',
+    )
   end
 
   def test_basic_usecase3
@@ -579,7 +615,7 @@ class ChatTest < TestCase
       browser: customer,
       css: '.zammad-chat',
       value: '(takes longer|dauert länger)',
-      timeout: 90,
+      timeout: 120,
     )
 
     # no customer action, show sorry screen
@@ -623,6 +659,55 @@ class ChatTest < TestCase
       css: '.zammad-chat',
       value: '(Since you didn\'t respond|Da Sie in den letzten)',
       timeout: 150,
+    )
+
+    agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
+    sleep 2
+    click(
+      browser: customer,
+      css: '.js-restart',
+    )
+    sleep 5
+    click(
+      browser: customer,
+      css: '.js-chat-open',
+    )
+    exists(
+      browser: customer,
+      css: '.zammad-chat-is-shown',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: '(waiting|warte)',
+    )
+    click(
+      browser: agent,
+      css: '.active .js-acceptChat',
+    )
+    sleep 2
+    exists(
+      browser: agent,
+      css: '.active .chat-window .chat-status',
+    )
+    set(
+      browser: agent,
+      css: '.active .chat-window .js-customerChatInput',
+      value: 'my name is me',
+    )
+    click(
+      browser: agent,
+      css: '.active .chat-window .js-send',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat .zammad-chat-agent-status',
+      value: 'online',
+    )
+    watch_for(
+      browser: customer,
+      css: '.zammad-chat',
+      value: 'my name is me',
     )
 
   end
