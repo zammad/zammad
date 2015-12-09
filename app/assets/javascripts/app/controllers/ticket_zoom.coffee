@@ -571,10 +571,19 @@ class App.TicketZoom extends App.Controller
     # check if attachment exists but no body
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
     if !articleParams['body'] && attachmentCount > 0
-      if !confirm( App.i18n.translateContent('Please fill also some text in!') )
-        @formEnable(e)
-        @autosaveStart()
-        return
+      new App.ControllerModalNice(
+        head: 'Text missing'
+        buttonCancel: 'Cancel'
+        buttonCancelClass: 'btn--danger'
+        buttonSubmit: false
+        message: 'Please fill also some text in!'
+        shown: true
+        small: true
+        container: @el.closest('.content')
+      )
+      @formEnable(e)
+      @autosaveStart()
+      return
 
     if articleParams['body']
       articleParams.from         = @Session.get().displayName()

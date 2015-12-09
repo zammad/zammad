@@ -590,12 +590,14 @@ class App.ControllerModalNice extends App.Controller
   backdrop: true
   keyboard: true
   large: false
+  small: false
   head: '?'
   container: null
   buttonClass: 'btn--success'
   centerButtons: []
   buttonClose: true
   buttonCancel: false
+  buttonCancelClass: 'btn--text btn--subtle'
   buttonSubmit: true
   headPrefix: ''
   shown: true
@@ -609,7 +611,6 @@ class App.ControllerModalNice extends App.Controller
   className: 'modal fade'
 
   constructor: ->
-    @className += ' modal--large' if @large
     super
 
     # rerender view, e. g. on langauge change
@@ -631,15 +632,16 @@ class App.ControllerModalNice extends App.Controller
     else
       content = @content()
     modal = $(App.view('modal')
-      head:          @head
-      headPrefix:    @headPrefix
-      message:       @message
-      detail:        @detail
-      buttonClose:   @buttonClose
-      buttonCancel:  @buttonCancel
-      buttonSubmit:  @buttonSubmit
-      buttonClass:   @buttonClass
-      centerButtons: @centerButtons
+      head:              @head
+      headPrefix:        @headPrefix
+      message:           @message
+      detail:            @detail
+      buttonClose:       @buttonClose
+      buttonCancel:      @buttonCancel
+      buttonCancelClass: @buttonCancelClass
+      buttonSubmit:      @buttonSubmit
+      buttonClass:       @buttonClass
+      centerButtons:     @centerButtons
     )
     modal.find('.modal-body').html content
     if !@initRenderingDone
@@ -662,6 +664,10 @@ class App.ControllerModalNice extends App.Controller
 
     if @container
       @el.addClass('modal--local')
+    if @large
+      @el.addClass('modal--large')
+    if @small
+      @el.addClass('modal--small')
 
     @el.modal
       keyboard:  @keyboard
