@@ -83,13 +83,6 @@ class App.Content extends App.ControllerWidgetPermanent
             if typeof params[i] isnt 'object'
               params_only[i] = params[i]
 
-          # tell server what we are calling right now
-          App.WebSocket.send(
-            action:     'active_controller',
-            controller: route,
-            params:     params_only,
-          )
-
           # remember history
           # needed to mute "redirect" url to support browser back
           history = App.Config.get('History')
