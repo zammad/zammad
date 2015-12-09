@@ -91,15 +91,21 @@ do($ = window.jQuery, window) ->
       @ws.onopen = (e) =>
         @log.debug 'onOpen', e
         @options.onOpen(e)
+        @ping()
 
       @ws.onmessage = (e) =>
         pipes = JSON.parse(e.data)
         @log.debug 'onMessage', e.data
+        for pipe in pipes
+          if pipe.event is 'pong'
+            @ping()
         if @options.onMessage
           @options.onMessage(pipes)
 
       @ws.onclose = (e) =>
         @log.debug 'close websocket connection', e
+        if @pingDelayId
+          clearTimeout(@pingDelayId)
         if @manualClose
           @log.debug 'manual close, onClose callback'
           @manualClose = false
@@ -131,6 +137,11 @@ do($ = window.jQuery, window) ->
         event: event
         data: data
       @ws.send msg
+
+    ping: =>
+      localPing = =>
+        @send('ping')
+      @pingDelayId = setTimeout(localPing, 29000)
 
   class ZammadChat extends Base
     defaults:

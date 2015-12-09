@@ -141,6 +141,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     Io.prototype.logPrefix = 'io';
 
     function Io(options) {
+      this.ping = bind(this.ping, this);
       this.send = bind(this.send, this);
       this.reconnect = bind(this.reconnect, this);
       this.close = bind(this.close, this);
@@ -165,14 +166,21 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.ws.onopen = (function(_this) {
         return function(e) {
           _this.log.debug('onOpen', e);
-          return _this.options.onOpen(e);
+          _this.options.onOpen(e);
+          return _this.ping();
         };
       })(this);
       this.ws.onmessage = (function(_this) {
         return function(e) {
-          var pipes;
+          var i, len, pipe, pipes;
           pipes = JSON.parse(e.data);
           _this.log.debug('onMessage', e.data);
+          for (i = 0, len = pipes.length; i < len; i++) {
+            pipe = pipes[i];
+            if (pipe.event === 'pong') {
+              _this.ping();
+            }
+          }
           if (_this.options.onMessage) {
             return _this.options.onMessage(pipes);
           }
@@ -181,6 +189,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.ws.onclose = (function(_this) {
         return function(e) {
           _this.log.debug('close websocket connection', e);
+          if (_this.pingDelayId) {
+            clearTimeout(_this.pingDelayId);
+          }
           if (_this.manualClose) {
             _this.log.debug('manual close, onClose callback');
             _this.manualClose = false;
@@ -228,6 +239,16 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         data: data
       });
       return this.ws.send(msg);
+    };
+
+    Io.prototype.ping = function() {
+      var localPing;
+      localPing = (function(_this) {
+        return function() {
+          return _this.send('ping');
+        };
+      })(this);
+      return this.pingDelayId = setTimeout(localPing, 29000);
     };
 
     return Io;
@@ -1051,6 +1072,67 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
 
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
 /*!
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
@@ -1136,67 +1218,6 @@ jQuery.fn.autoGrow = function(options) {
 
   });
 };
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
-
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
