@@ -80,7 +80,7 @@ class Sessions::Backend::Collections::Base
     @client.log "push assets for push_collection #{items.first.class} for user #{@user.id}"
     @client.send(
       data: assets,
-      event: [ 'loadAssets' ],
+      event: 'loadAssets',
     )
 
     @client.log "push push_collection #{items.first.class} for user #{@user.id}"

@@ -1,5 +1,4 @@
 class Widget extends App.Controller
-
   constructor: ->
     super
     @bind()
@@ -14,13 +13,14 @@ class Widget extends App.Controller
 
         # broadcast to other browser instance
         App.WebSocket.send(
-          action: 'broadcast'
-          event:  'session:takeover'
+          event: 'broadcast'
           spool:  true
           recipient:
             user_id: [ App.Session.get( 'id' ) ]
           data:
-            taskbar_id: App.TaskManager.TaskbarId()
+            event: 'session:takeover'
+            data:
+              taskbar_id: App.TaskManager.TaskbarId()
         )
       'maintenance'
     )
@@ -51,4 +51,4 @@ class Widget extends App.Controller
       'maintenance'
     )
 
-App.Config.set( 'session_taken_over', Widget, 'Widgets' )
+App.Config.set('session_taken_over', Widget, 'Widgets')

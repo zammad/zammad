@@ -1,12 +1,17 @@
-class Sessions::Event::ChatBase
+class Sessions::Event::ChatBase < Sessions::Event::Base
 
-  def initialize(data, session, client_id)
-    @data = data
-    @session = session
-    @client_id = client_id
+  def initialize(params)
+    super(params)
+    return if !@is_web_socket
+    ActiveRecord::Base.establish_connection
   end
 
-  def pre
+  def destroy
+    return if !@is_web_socket
+    ActiveRecord::Base.remove_connection
+  end
+
+  def run
 
     # check if feature is enabled
     return if Setting.get('chat')
@@ -16,10 +21,6 @@ class Sessions::Event::ChatBase
         state: 'chat_disabled',
       },
     }
-  end
-
-  def post
-    false
   end
 
   def broadcast_agent_state_update(ignore_user_id = nil)
@@ -99,11 +100,11 @@ class Sessions::Event::ChatBase
   end
 
   def current_chat_session
-    Chat::Session.find_by(session_id: @data['data']['session_id'])
+    Chat::Session.find_by(session_id: @payload['data']['session_id'])
   end
 
   def check_chat_session_exists
-    if !@data['data'] || !@data['data']['session_id']
+    if !@payload['data'] || !@payload['data']['session_id']
       error = {
         event: 'chat_error',
         data: {
@@ -117,7 +118,7 @@ class Sessions::Event::ChatBase
     error = {
       event: 'chat_error',
       data: {
-        state: "No such session id #{@data['data']['session_id']}",
+        state: "No such session id #{@payload['data']['session_id']}",
       },
     }
     Sessions.send(@client_id, error)
@@ -125,7 +126,7 @@ class Sessions::Event::ChatBase
   end
 
   def current_chat
-    Chat.find_by(id: @data['data']['chat_id'])
+    Chat.find_by(id: @payload['data']['chat_id'])
   end
 
   def check_chat_exists

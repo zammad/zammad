@@ -427,10 +427,11 @@ returns
     FileUtils.rm_rf path
   end
 
-  def self.spool_create(msg)
+  def self.spool_create(data)
+    msg = JSON.generate(data)
     path = "#{@path}/spool/"
     FileUtils.mkpath path
-    file_path = path + "/#{Time.now.utc.to_f}-#{rand(99_999)}"
+    file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
     File.open( file_path, 'wb' ) { |file|
       data = {
         msg: msg,
@@ -483,18 +484,27 @@ returns
 
               next if current_user_id != user_id
 
+              message = message_parsed
+              if message_parsed['event'] == 'broadcast'
+                message = message_parsed['data']
+              end
+
               item = {
                 type: 'direct',
-                message: message_parsed,
+                message: message,
               }
               data.push item
             }
 
           # spool to every client
           else
+            message = message_parsed
+            if message_parsed['event'] == 'broadcast'
+              message = message_parsed['data']
+            end
             item = {
               type: 'broadcast',
-              message: message_parsed,
+              message: message,
             }
             data.push item
           end

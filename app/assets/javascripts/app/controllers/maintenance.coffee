@@ -20,10 +20,10 @@ class Index extends App.ControllerContent
     params = @formParam(e.target)
     App.Event.trigger(
       'ws:send'
-        action: 'broadcast'
-        event:  'session:maintenance'
-        spool:  false
-        data:   params
+        event: 'broadcast'
+        data:
+          event: 'session:maintenance'
+          data:  params
     )
     @notify
       type:      'success'

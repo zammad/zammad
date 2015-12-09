@@ -68,7 +68,7 @@ class _webSocketSingleton extends App.Controller
 
     # get spool messages after successful ws login
     App.Event.bind(
-      'ws:login', (data) =>
+      'ws:login', =>
         @spool()
       'ws'
     )
@@ -106,7 +106,7 @@ class _webSocketSingleton extends App.Controller
       if @ws.readyState isnt 1
         @queue.push data
       else
-        string = JSON.stringify( data )
+        string = JSON.stringify(data)
         @ws.send(string)
 
   auth: (data) =>
@@ -114,7 +114,7 @@ class _webSocketSingleton extends App.Controller
 
     # logon websocket
     data =
-      action: 'login'
+      event: 'login'
       session_id: App.Config.get('session_id')
       fingerprint: App.Browser.fingerprint()
     @send(data)
@@ -125,7 +125,7 @@ class _webSocketSingleton extends App.Controller
 
     # build data to send to server
     data =
-      action: 'spool'
+      event: 'spool'
     if @lastSpoolMessage
       data['timestamp'] = @lastSpoolMessage
 
@@ -137,10 +137,7 @@ class _webSocketSingleton extends App.Controller
     App.Delay.set reset, 60000, 'reset-spool-sent-finished-if-not-returned', 'ws'
 
     # ask for spool messages
-    App.Event.trigger(
-      'ws:send'
-      data
-    )
+    @send(data)
 
   close: ( params = {} ) =>
     if params['force']
@@ -154,7 +151,7 @@ class _webSocketSingleton extends App.Controller
     return if @backend is 'ajax'
 
     @log 'debug', 'send websocket ping'
-    @send( { action: 'ping' } )
+    @send(event: 'ping')
 
     # check if ping is back within 2 min
     App.Delay.clear 'websocket-ping-check', 'ws'
@@ -166,10 +163,10 @@ class _webSocketSingleton extends App.Controller
   pong: ->
     return if @backend is 'ajax'
 
-    @log 'debug', 'received websocket ping'
+    @log 'debug', 'received websocket pong'
 
     # test again after 1 min
-    App.Delay.set @ping, 60000, 'websocket-pong', 'ws'
+    App.Delay.set(@ping, 60000, 'websocket-pong', 'ws')
 
   connect: =>
 
@@ -216,10 +213,10 @@ class _webSocketSingleton extends App.Controller
       @queue = []
 
       # send ping to check connection
-      App.Delay.set @ping, 60000, 'websocket-send-ping-to-heck-connection', 'ws'
+      App.Delay.set(@ping, 60000, 'websocket-send-ping-to-heck-connection', 'ws')
 
     @ws.onmessage = (e) =>
-      pipe = JSON.parse( e.data )
+      pipe = JSON.parse(e.data)
       @log 'debug', 'ws:onmessage', pipe
       @_receiveMessage(pipe)
 
@@ -271,28 +268,20 @@ class _webSocketSingleton extends App.Controller
 
     # go through all blocks
     for item in data
+      @log 'debug', 'onmessage', item
 
       # set timestamp to get spool messages later
       if item['spool']
         @lastSpoolMessage = Math.round( +new Date()/1000 )
 
       # reset reconnect loop
-      if item['action'] is 'pong'
+      if item['event'] is 'pong'
         @pong()
-
-      # fill collection
-      if item['collection']
-        @log 'debug', 'onmessage collection:' + item['collection']
 
       # fire event
       if item['event']
-        if typeof item['event'] is 'object'
-          for event in item['event']
-            @log 'debug', 'onmessage event:' + event
-            App.Event.trigger( event, item['data'] )
-        else
-          @log 'debug', 'onmessage event:' + item['event']
-          App.Event.trigger( item['event'], item['data'] )
+        @log 'debug', "onmessage event: #{item['event']}"
+        App.Event.trigger(item['event'], item['data'])
 
   _ajaxInit: (data = {}) =>
 
@@ -304,7 +293,7 @@ class _webSocketSingleton extends App.Controller
       id:    'ws-login'
       type:  'POST'
       url:   @Config.get('api_path') + '/message_send'
-      data:  JSON.stringify({ data: { action: 'login' }  })
+      data:  JSON.stringify(data: { event: 'login' })
       processData: false
       queue: false
       success: (data) =>
@@ -319,8 +308,8 @@ class _webSocketSingleton extends App.Controller
 
         # try reconnect on error after x sec.
         reconnect = =>
-          @_ajaxInit( force: true )
-        App.Delay.set reconnect, 10000, '_ajaxInit-reconnect-on-error', 'ws'
+          @_ajaxInit(force: true)
+        App.Delay.set(reconnect, 10000, '_ajaxInit-reconnect-on-error', 'ws')
     )
 
   _ajaxSend: (data) =>
@@ -338,7 +327,7 @@ class _webSocketSingleton extends App.Controller
       App.Ajax.request(
         type:  'POST'
         url:   @Config.get('api_path') + '/message_send'
-        data:  JSON.stringify({ client_id: @client_id, data: data })
+        data:  JSON.stringify(client_id: @client_id, data: data)
         processData: false
         queue: true
         success: (data) =>
@@ -358,19 +347,19 @@ class _webSocketSingleton extends App.Controller
       id:    'message_receive',
       type:  'POST'
       url:   @Config.get('api_path') + '/message_receive'
-      data:  JSON.stringify({ client_id: @client_id })
+      data:  JSON.stringify(client_id: @client_id)
       processData: false
       success: (data) =>
         @log 'debug', 'ajax:onmessage', data
         @_receiveMessage(data)
         if data && data.error
           @client_id = undefined
-          @_ajaxInit( force: true )
+          @_ajaxInit(force: true)
         @_ajaxReceiveWorking = false
         @_ajaxReceive()
       error: (data) =>
         @client_id = undefined
-        @_ajaxInit( force: true )
+        @_ajaxInit(force: true)
         @_ajaxReceiveWorking = false
     )
 

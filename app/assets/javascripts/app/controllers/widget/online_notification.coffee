@@ -142,7 +142,7 @@ class App.OnlineNotificationWidget extends App.Controller
         @alreadyShown[item.id] = true
         if @fetchedData
           word = "#{item.type}d"
-          title = "#{item.created_by.displayName()} #{App.i18n.translateInline(word)} #{App.i18n.translateInline(item.object_name)} #{item.title}"
+          title = "#{item.created_by.displayName()} #{App.i18n.translateInline(word)} #{App.i18n.translateInline(item.object_name)} \"#{item.title}\""
           @notifyDesktop(
             url: item.link
             title: title

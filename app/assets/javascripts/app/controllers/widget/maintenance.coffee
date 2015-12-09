@@ -7,7 +7,7 @@ class Widget extends App.Controller
       'session:maintenance'
       (data) =>
         console.log('session:maintenance', data)
-        @showMessage( data )
+        @showMessage(data)
       'maintenance'
     )
 
@@ -19,8 +19,8 @@ class Widget extends App.Controller
       button = 'Close'
 
     # convert to html and linkify
-    message.message = App.Utils.textCleanup( message.message )
-    message.message = App.Utils.text2html( message.message )
+    message.message = App.Utils.textCleanup(message.message)
+    message.message = App.Utils.text2html(message.message)
 
     new App.SessionMessage(
       head:          message.head
@@ -32,4 +32,4 @@ class Widget extends App.Controller
       forceReload:   message.reload
     )
 
-App.Config.set( 'maintenance', Widget, 'Widgets' )
+App.Config.set('maintenance', Widget, 'Widgets')

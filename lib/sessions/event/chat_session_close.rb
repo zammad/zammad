@@ -1,6 +1,7 @@
 class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
 
   def run
+    return super if super
 
     return if !check_chat_session_exists
 
@@ -57,4 +58,5 @@ class Sessions::Event::ChatSessionClose < Sessions::Event::ChatBase
       },
     }
   end
+
 end

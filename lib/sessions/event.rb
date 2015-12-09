@@ -1,28 +1,18 @@
 class Sessions::Event
   include ApplicationLib
 
-  def self.run(event, data, session, client_id)
-    adapter = "Sessions::Event::#{event.to_classname}"
+  def self.run(params)
+    adapter = "Sessions::Event::#{params[:event].to_classname}"
 
     begin
       backend = load_adapter(adapter)
     rescue => e
-      return { error: "No such event #{event}" }
+      return { error: "No such event #{params[:event]}" }
     end
 
-    ActiveRecord::Base.establish_connection
-    instance = backend.new(data, session, client_id)
-    pre = instance.pre
-    if pre
-      ActiveRecord::Base.remove_connection
-      return pre
-    end
+    instance = backend.new(params)
     result = instance.run
-    post = instance.post
-    if post
-      ActiveRecord::Base.remove_connection
-      return post
-    end
+    instance.destroy
     result
   end
 

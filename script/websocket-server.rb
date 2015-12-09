@@ -122,7 +122,7 @@ EventMachine.run {
         @clients.delete client_id
       end
 
-      Sessions.destory( client_id )
+      Sessions.destory(client_id)
     }
 
     # manage messages
@@ -145,128 +145,24 @@ EventMachine.run {
 
       # spool messages for new connects
       if data['spool']
-        Sessions.spool_create(msg)
+        Sessions.spool_create(data)
       end
 
-      # get spool messages and send them to new client connection
-      if data['action'] == 'spool'
-
-        # error handling
-        if data['timestamp']
-          log 'notice', "request spool data > '#{Time.at(data['timestamp']).utc.iso8601}'", client_id
-        else
-          log 'notice', 'request spool with init data', client_id
-        end
-
-        if @clients[client_id] && @clients[client_id][:session] && @clients[client_id][:session]['id']
-          spool = Sessions.spool_list( data['timestamp'], @clients[client_id][:session]['id'] )
-          spool.each { |item|
-
-            # create new msg to push to client
-            if item[:type] == 'direct'
-              log 'notice', "send spool to (user_id=#{@clients[client_id][:session]['id']})", client_id
-              websocket_send(client_id, item[:message])
-            else
-              log 'notice', 'send spool', client_id
-              websocket_send(client_id, item[:message])
-            end
-          }
-        else
-          log 'error', "can't send spool, session not authenticated", client_id
-        end
-
-        # send spool:sent event to client
-        log 'notice', 'send spool:sent event', client_id
-        message = {
-          event: 'spool:sent',
-          data: {
-            timestamp: Time.now.utc.to_i,
-          },
-        }
-        websocket_send(client_id, message)
-      end
-
-      # get session
-      if data['action'] == 'login'
-
-        # get user_id
-        if data && data['session_id']
-          ActiveRecord::Base.establish_connection
-          session = ActiveRecord::SessionStore::Session.find_by( session_id: data['session_id'] )
-          ActiveRecord::Base.remove_connection
-        end
-
-        if session && session.data && session.data['user_id']
-          new_session_data = { 'id' => session.data['user_id'] }
-        else
-          new_session_data = {}
-        end
-
-        @clients[client_id][:session] = new_session_data
-
-        Sessions.create( client_id, new_session_data, { type: 'websocket' } )
-
-      # remember ping, send pong back
-      elsif data['action'] == 'ping'
-        message = {
-          action: 'pong',
-        }
-        websocket_send(client_id, message)
-
-      # broadcast
-      elsif data['action'] == 'broadcast'
-
-        # list all current clients
-        client_list = Sessions.list
-        client_list.each {|local_client_id, local_client|
-          if local_client_id != client_id
-
-            # broadcast to recipient list
-            if data['recipient']
-              if data['recipient'].class != Hash
-                log 'error', "recipient attribute isn't a hash '#{data['recipient'].inspect}'"
-              else
-                if !data['recipient'].key?('user_id')
-                  log 'error', "need recipient.user_id attribute '#{data['recipient'].inspect}'"
-                else
-                  if data['recipient']['user_id'].class != Array
-                    log 'error', "recipient.user_id attribute isn't an array '#{data['recipient']['user_id'].inspect}'"
-                  else
-                    data['recipient']['user_id'].each { |user_id|
-
-                      next if local_client[:user]['id'].to_i != user_id.to_i
-
-                      log 'notice', "send broadcast from (#{client_id}) to (user_id=#{user_id})", local_client_id
-                      if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                        websocket_send(local_client_id, data)
-                      else
-                        Sessions.send(local_client_id, data)
-                      end
-                    }
-                  end
-                end
-              end
-
-              # broadcast every client
-            else
-              log 'notice', "send broadcast from (#{client_id})", local_client_id
-              if local_client[:meta][:type] == 'websocket' && @clients[ local_client_id ]
-                websocket_send(local_client_id, data)
-              else
-                Sessions.send(local_client_id, data)
-              end
-            end
-          else
-            log 'notice', 'do not send broadcast to it self', client_id
-          end
-        }
-
-      elsif data['event']
-        log 'notice', "execute event '#{data['event']}'", client_id
-        message = Sessions::Event.run(data['event'], data, @clients[client_id][:session], client_id)
+      if data['event']
+        log 'debug', "execute event '#{data['event']}'", client_id
+        message = Sessions::Event.run(
+          event: data['event'],
+          payload: data,
+          session: @clients[client_id][:session],
+          client_id: client_id,
+          clients: @clients,
+          options: @options,
+        )
         if message
           websocket_send(client_id, message)
         end
+      else
+        log 'error', "unknown message '#{data.inspect}'", client_id
       end
     }
   end
@@ -375,7 +271,7 @@ EventMachine.run {
     }
   end
 
-  def log( level, data, client_id = '-' )
+  def log(level, data, client_id = '-')
     if !@options[:v]
       return if level == 'debug'
     end

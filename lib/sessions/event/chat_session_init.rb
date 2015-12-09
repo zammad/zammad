@@ -1,11 +1,12 @@
 class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
 
   def run
+    return super if super
     return if !check_chat_exists
 
     # create chat session
     chat_session = Chat::Session.create(
-      chat_id: @data['data']['chat_id'],
+      chat_id: @payload['data']['chat_id'],
       name: '',
       state: 'waiting',
       preferences: {
@@ -26,4 +27,5 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
       },
     }
   end
+
 end
