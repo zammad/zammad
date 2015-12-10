@@ -1,4 +1,4 @@
-[![build status](http://source.zammad.com/ci/projects/2/status.png?ref=develop)](http://source.zammad.com/ci/projects/2?ref=develop)
+[![build status](http://source.zammad.com/ci/projects/2/status.png?ref=master)](http://source.zammad.com/ci/projects/2?ref=master)
 
 Welcome to Zammad
 =================
