@@ -22,6 +22,9 @@
 </table>
 
 <h2><%- @T('Words') %></h2>
+<% if _.isEmpty(@strings) && !@notSourceTranslation: %>
+<div><%- @T('English is the source language, so we have nothing to translate.') %></div>
+<% else: %>
 <table class="translationOverview js-translated table table-striped table-hover">
   <thead>
     <tr>
@@ -43,3 +46,4 @@
     <% end %>
   </tbody>
 </table>
+<% end %>
