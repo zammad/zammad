@@ -1,4 +1,4 @@
-class UpdateChat < ActiveRecord::Migration
+class UpdateChat4 < ActiveRecord::Migration
   def up
     Scheduler.create_or_update(
       name: 'Closed chat sessions where participients are offline.',
