@@ -29,7 +29,7 @@ class App.PrettyDate
     if diff < 60
       return App.i18n.translateInline('just now')
 
-    if direction is 'past' && !escalation && diff > ( 60 * 60 * 24 * 14 )
+    if direction is 'past' && !escalation && diff > ( 60 * 60 * 24 * 7 )
       return App.i18n.translateDate(time)
 
     # days
