@@ -151,7 +151,7 @@ optional you can parse the max oldest chat sessions
 
   def self.cleanup_close(diff = 5.minutes)
     Chat::Session.where.not(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each {|chat_session|
-      return if chat_session.recipients_active?
+      next if chat_session.recipients_active?
       chat_session.state = 'closed'
       chat_session.save
       message = {
