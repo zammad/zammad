@@ -252,10 +252,16 @@ class ChatWindow extends App.Controller
       return if data.self_written
       @receiveMessage(data.message.content)
     )
-    @bind('chat_session_left chat_session_closed', (data) =>
+    @bind('chat_session_left', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
+      @goOffline()
+    )
+    @bind('chat_session_closed', (data) =>
+      return if data.session_id isnt @session.session_id
+      return if data.self_written
+      @addStatusMessage("<strong>#{data.realname}</strong> has closed the conversation")
       @goOffline()
     )
     @bind('chat_focus', (data) =>
