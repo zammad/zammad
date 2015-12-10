@@ -53,12 +53,9 @@ class Index extends App.ControllerContent
       if @Config.get( provider.config ) is true || @Config.get( provider.config ) is 'true'
         auth_providers.push provider
 
-    logoFile = App.Config.get('product_logo')
-    logoUrl  = App.Config.get('image_path') + "/#{logoFile}"
-
     @html App.view('login')(
       item:           data
-      logoUrl:        logoUrl
+      logoUrl:        @logoUrl()
       auth_providers: auth_providers
     )
 

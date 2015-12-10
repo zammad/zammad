@@ -1,6 +1,7 @@
 class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
 
   def run
+    return super if super
     return if !check_chat_session_exists
     chat_session = current_chat_session
 
@@ -10,7 +11,7 @@ class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
     end
     chat_message = Chat::Message.create(
       chat_session_id: chat_session.id,
-      content: @data['data']['content'],
+      content: @payload['data']['content'],
       created_by_id: user_id,
     )
     message = {
@@ -35,4 +36,5 @@ class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
     }
 
   end
+
 end

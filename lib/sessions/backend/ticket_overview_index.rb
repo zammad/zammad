@@ -58,7 +58,7 @@ class Sessions::Backend::TicketOverviewIndex
 
     @client.log "push overview_index for user #{@user.id}"
     @client.send(
-      event: ['ticket_overview_index'],
+      event: 'ticket_overview_index',
       data: data,
     )
   end

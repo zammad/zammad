@@ -40,7 +40,7 @@ class ChatTest < ActiveSupport::TestCase
     Chat::Message.delete_all
     Chat::Agent.delete_all
     Setting.set('chat', false)
-    chat = Chat.create(
+    chat = Chat.create_or_update(
       name: 'default',
       max_queue: 5,
       note: '',

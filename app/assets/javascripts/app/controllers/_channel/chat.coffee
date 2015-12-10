@@ -24,7 +24,7 @@ class App.ChannelChat extends App.Controller
     '.js-code': 'code'
     '.js-palette': 'palette'
     '.js-color': 'colorField'
-    '.js-chatSetting': 'chatSetting'
+    '.js-chatSetting input': 'chatSetting'
 
   apiOptions: [
     {
@@ -279,6 +279,8 @@ class App.ChannelChat extends App.Controller
     setting.state_current = { value: value }
     setting.save()
     @Config.set('chat', value)
+    delay = -> App.Event.trigger('ui:rerender')
+    @delay(delay, 200)
 
   updateParams: =>
     quote = (value) ->

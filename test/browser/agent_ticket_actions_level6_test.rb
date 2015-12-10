@@ -117,8 +117,14 @@ class AgentTicketActionLevel6Test < TestCase
     sleep 2
 
     # check warning
-    alert = @browser.switch_to.alert
-    alert.dismiss()
+    match(
+      css: '.active .modal',
+      value: 'missing',
+    )
+    click(
+      css: '.active .modal .js-cancel',
+    )
+    sleep 2
 
     ticket_update(
       data: {

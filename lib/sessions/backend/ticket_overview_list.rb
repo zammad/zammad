@@ -107,7 +107,7 @@ class Sessions::Backend::TicketOverviewList
         # send update to browser
         @client.send(
           data: assets,
-          event: [ 'loadAssets' ]
+          event: 'loadAssets'
         )
         @client.send(
           data: {
@@ -120,7 +120,7 @@ class Sessions::Backend::TicketOverviewList
               owner_id: [],
             },
           },
-          event: [ 'ticket_overview_rebuild' ],
+          event: 'ticket_overview_rebuild',
         )
       end
     }

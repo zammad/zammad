@@ -5,8 +5,145 @@ do($ = window.jQuery, window) ->
   scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
 
   # Define the plugin class
-  class ZammadChat
+  class Base
+    defaults:
+      debug: false
 
+    constructor: (options) ->
+      @options = $.extend {}, @defaults, options
+      @log = new Log(debug: @options.debug, logPrefix: @options.logPrefix || @logPrefix)
+
+  class Log
+    defaults:
+      debug: false
+
+    constructor: (options) ->
+      @options = $.extend {}, @defaults, options
+
+    debug: (items...) =>
+      return if !@options.debug
+      @log('debug', items)
+
+    notice: (items...) =>
+      @log('notice', items)
+
+    error: (items...) =>
+      @log('error', items)
+
+    log: (level, items) =>
+      items.unshift('||')
+      items.unshift(level)
+      items.unshift(@options.logPrefix)
+      console.log.apply console, items
+
+      return if !@options.debug
+      logString = ''
+      for item in items
+        logString += ' '
+        if typeof item is 'object'
+          logString += JSON.stringify(item)
+        else if item && item.toString
+          logString += item.toString()
+        else
+          logString += item
+      $('.js-chatLogDisplay').prepend('<div>' + logString + '</div>')
+
+  class Timeout extends Base
+    timeoutStartedAt: null
+    logPrefix: 'timeout'
+    defaults:
+      debug: false
+      timeout: 4
+      timeoutIntervallCheck: 0.5
+
+    constructor: (options) ->
+      super(options)
+
+    start: =>
+      @stop()
+      timeoutStartedAt = new Date
+      check = =>
+        timeLeft = new Date - new Date(timeoutStartedAt.getTime() + @options.timeout * 1000 * 60)
+        @log.debug "Timeout check for #{@options.timeout} minutes (left #{timeLeft/1000} sec.)"#, new Date
+        return if timeLeft < 0
+        @stop()
+        @options.callback()
+      @log.debug "Start timeout in #{@options.timeout} minutes"#, new Date
+      @intervallId = setInterval(check, @options.timeoutIntervallCheck * 1000 * 60)
+
+    stop: =>
+      return if !@intervallId
+      @log.debug "Stop timeout of #{@options.timeout} minutes"#, new Date
+      clearInterval(@intervallId)
+
+  class Io extends Base
+    logPrefix: 'io'
+    constructor: (options) ->
+      super(options)
+
+    set: (params) =>
+      for key, value of params
+        @options[key] = value
+
+    connect: =>
+      @log.debug "Connecting to #{@options.host}"
+      @ws = new window.WebSocket("#{@options.host}")
+      @ws.onopen = (e) =>
+        @log.debug 'onOpen', e
+        @options.onOpen(e)
+        @ping()
+
+      @ws.onmessage = (e) =>
+        pipes = JSON.parse(e.data)
+        @log.debug 'onMessage', e.data
+        for pipe in pipes
+          if pipe.event is 'pong'
+            @ping()
+        if @options.onMessage
+          @options.onMessage(pipes)
+
+      @ws.onclose = (e) =>
+        @log.debug 'close websocket connection', e
+        if @pingDelayId
+          clearTimeout(@pingDelayId)
+        if @manualClose
+          @log.debug 'manual close, onClose callback'
+          @manualClose = false
+          if @options.onClose
+            @options.onClose(e)
+        else
+          @log.debug 'error close, onError callback'
+          if @options.onError
+            @options.onError('Connection lost...')
+
+      @ws.onerror = (e) =>
+        @log.debug 'onError', e
+        if @options.onError
+          @options.onError(e)
+
+    close: =>
+      @log.debug 'close websocket manually'
+      @manualClose = true
+      @ws.close()
+
+    reconnect: =>
+      @log.debug 'reconnect'
+      @close()
+      @connect()
+
+    send: (event, data = {}) =>
+      @log.debug 'send', event, data
+      msg = JSON.stringify
+        event: event
+        data: data
+      @ws.send msg
+
+    ping: =>
+      localPing = =>
+        @send('ping')
+      @pingDelayId = setTimeout(localPing, 29000)
+
+  class ZammadChat extends Base
     defaults:
       chatId: undefined
       show: true
@@ -21,11 +158,16 @@ do($ = window.jQuery, window) ->
       buttonClass: 'open-zammad-chat'
       inactiveClass: 'is-inactive'
       title: '<strong>Chat</strong> with us!'
-      idleTimeout: 4
-      inactiveTimeout: 20
+      idleTimeout: 6
+      idleTimeoutIntervallCheck: 0.5
+      inactiveTimeout: 8
+      inactiveTimeoutIntervallCheck: 0.5
+      waitingListTimeout: 4
+      waitingListTimeoutIntervallCheck: 0.5
 
+    logPrefix: 'chat'
     _messageCount: 0
-    isOpen: true
+    isOpen: false
     blinkOnlineInterval: null
     stopBlinOnlineStateTimeout: null
     showTimeEveryXMinutes: 1
@@ -35,7 +177,6 @@ do($ = window.jQuery, window) ->
     isTyping: false
     state: 'offline'
     initialQueueDelay: 10000
-    wsReconnectEnable: true
     translations:
       de:
         '<strong>Chat</strong> with us!': '<strong>Chat</strong> mit uns!'
@@ -57,21 +198,16 @@ do($ = window.jQuery, window) ->
     T: (string, items...) =>
       if @options.lang && @options.lang isnt 'en'
         if !@translations[@options.lang]
-          @log 'notice', "Translation '#{@options.lang}' needed!"
+          @log.notice "Translation '#{@options.lang}' needed!"
         else
           translations = @translations[@options.lang]
           if !translations[string]
-            @log 'notice', "Translation needed for '#{string}'"
+            @log.notice "Translation needed for '#{string}'"
           string = translations[string] || string
       if items
         for item in items
           string = string.replace(/%s/, item)
       string
-
-    log: (level, string...) =>
-      return if !@options.debug && level is 'debug'
-      string.unshift(level)
-      console.log.apply console, string
 
     view: (name) =>
       return (options) =>
@@ -86,19 +222,20 @@ do($ = window.jQuery, window) ->
 
     constructor: (options) ->
       @options = $.extend {}, @defaults, options
+      super(@options)
 
       # check prerequisites
       if !$
         @state = 'unsupported'
-        @log 'notice', 'Chat: no jquery found!'
+        @log.notice 'Chat: no jquery found!'
         return
       if !window.WebSocket or !sessionStorage
         @state = 'unsupported'
-        @log 'notice', 'Chat: Browser not supported!'
+        @log.notice 'Chat: Browser not supported!'
         return
       if !@options.chatId
         @state = 'unsupported'
-        @log 'error', 'Chat: need chatId as option!'
+        @log.error 'Chat: need chatId as option!'
         return
 
       # detect language
@@ -106,28 +243,60 @@ do($ = window.jQuery, window) ->
         @options.lang = $('html').attr('lang')
       if @options.lang
         @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
-        @log 'debug', "lang: #{@options.lang}"
+        @log.debug "lang: #{@options.lang}"
 
-      @el = $(@view('chat')(
-        title: @options.title
-      ))
-      @options.target.append @el
+      # detect host
+      @detectHost() if !@options.host
 
-      @input = @el.find('.zammad-chat-input')
+      @loadCss()
+
+      @io = new Io(@options)
+      @io.set(
+        onOpen: @render
+        onClose: @onWebSocketClose
+        onMessage: @onWebSocketMessage
+        onError: @onError
+      )
+      @io.connect()
+
+    render: =>
+      if !@el || !$('.zammad-chat').get(0)
+        @el = $(@view('chat')(
+          title: @options.title
+        ))
+        @options.target.append @el
+
+        @input = @el.find('.zammad-chat-input')
+
+        # start bindings
+        @el.find('.js-chat-open').click @open
+        @el.find('.js-chat-close').click @close
+        @el.find('.zammad-chat-controls').on 'submit', @onSubmit
+        @input.on
+          keydown: @checkForEnter
+          input: @onInput
+        $(window).on('beforeunload', =>
+          @onLeaveTemporary()
+        )
+        $(window).bind('hashchange', =>
+          return if @isOpen
+          @idleTimeout.start()
+        )
 
       # disable open button
       $(".#{ @options.buttonClass }").addClass @inactiveClass
 
-      @el.find('.js-chat-open').click @open
-      @el.find('.js-chat-close').click @close
-      @el.find('.zammad-chat-controls').on 'submit', @onSubmit
-      @input.on
-        keydown: @checkForEnter
-        input: @onInput
+      @setAgentOnlineState 'online'
 
-      @wsConnect()
+      @log.debug 'widget rendered'
 
-      @loadCss()
+      @startTimeoutObservers()
+      @idleTimeout.start()
+
+      # get current chat status
+      @sessionId = sessionStorage.getItem('sessionId')
+      @send 'chat_status_customer',
+        session_id: @sessionId
 
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
@@ -136,22 +305,16 @@ do($ = window.jQuery, window) ->
 
     send: (event, data = {}) =>
       data.chat_id = @options.chatId
-      @log 'debug', 'ws:send', event, data
-      pipe = JSON.stringify
-        event: event
-        data: data
-      @ws.send pipe
+      @io.send(event, data)
 
-    onWebSocketMessage: (e) =>
-      pipes = JSON.parse( e.data )
-
+    onWebSocketMessage: (pipes) =>
       for pipe in pipes
-        @log 'debug', 'ws:onmessage', pipe
+        @log.debug 'ws:onmessage', pipe
         switch pipe.event
           when 'chat_error'
-            @log 'notice', pipe.data
+            @log.notice pipe.data
             if pipe.data && pipe.data.state is 'chat_disabled'
-              @wsClose()
+              @destroy(remove: true)
           when 'chat_session_message'
             return if pipe.data.self_written
             @receiveMessage pipe.data
@@ -171,38 +334,35 @@ do($ = window.jQuery, window) ->
               when 'online'
                 @sessionId = undefined
                 @onReady()
-                @log 'debug', 'Zammad Chat: ready'
               when 'offline'
                 @onError 'Zammad Chat: No agent online'
-                @state = 'off'
-                @hide()
-                @wsClose()
               when 'chat_disabled'
                 @onError 'Zammad Chat: Chat is disabled'
-                @state = 'off'
-                @hide()
-                @wsClose()
               when 'no_seats_available'
                 @onError "Zammad Chat: Too many clients in queue. Clients in queue: #{pipe.data.queue}"
-                @state = 'off'
-                @hide()
-                @wsClose()
               when 'reconnect'
-                @log 'debug', 'old messages', pipe.data.session
-                @reopenSession pipe.data
+                @onReopenSession pipe.data
 
-    onReady: =>
+    onReady: ->
+      @log.debug 'widget ready for use'
       $(".#{ @options.buttonClass }").click(@open).removeClass(@inactiveClass)
 
       if @options.show
         @show()
 
     onError: (message) =>
-      @log 'debug', message
+      @log.debug message
+      @addStatus(message)
       $(".#{ @options.buttonClass }").hide()
+      if @isOpen
+        @disableInput()
+        @destroy(remove: false)
+      else
+        @destroy(remove: true)
 
-    reopenSession: (data) =>
-      @inactiveTimeoutStart()
+    onReopenSession: (data) =>
+      @log.debug 'old messages', data.session
+      @inactiveTimeout.start()
 
       unfinishedMessage = sessionStorage.getItem 'unfinished_message'
 
@@ -246,7 +406,7 @@ do($ = window.jQuery, window) ->
       @isTyping = new Date()
       @send 'chat_session_typing',
         session_id: @sessionId
-      @inactiveTimeoutStart()
+      @inactiveTimeout.start()
 
     onSubmit: (event) =>
       event.preventDefault()
@@ -256,7 +416,7 @@ do($ = window.jQuery, window) ->
       message = @input.val()
       return if !message
 
-      @inactiveTimeoutStart()
+      @inactiveTimeout.start()
 
       sessionStorage.removeItem 'unfinished_message'
 
@@ -286,7 +446,7 @@ do($ = window.jQuery, window) ->
         session_id: @sessionId
 
     receiveMessage: (data) =>
-      @inactiveTimeoutStart()
+      @inactiveTimeout.start()
 
       # hide writing indicator
       @onAgentTypingEnd()
@@ -306,7 +466,11 @@ do($ = window.jQuery, window) ->
 
     open: =>
       if @isOpen
-        @show()
+        @log.debug 'widget already open, block'
+        return
+
+      @isOpen = true
+      @log.debug 'open widget'
 
       if !@sessionId
         @showLoader()
@@ -315,31 +479,22 @@ do($ = window.jQuery, window) ->
 
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
+        @send('chat_session_init')
       else
         @el.css 'bottom', 0
         @onOpenAnimationEnd()
 
-      @isOpen = true
-
-      if !@sessionId
-        @sessionInit()
-
     onOpenAnimationEnd: =>
-      @idleTimeoutStop()
+      @idleTimeout.stop()
 
-    close: (event) =>
-      return @state if @state is 'off' or @state is 'unsupported'
-      event.stopPropagation() if event
-
-      # only close if session_id exists
-      return if !@sessionId
-
+    sessionClose: =>
       # send close
       @send 'chat_session_close',
         session_id: @sessionId
 
       # stop timer
-      @inactiveTimeoutStop()
+      @inactiveTimeout.stop()
+      @waitingListTimeout.stop()
 
       # delete input store
       sessionStorage.removeItem 'unfinished_message'
@@ -348,29 +503,46 @@ do($ = window.jQuery, window) ->
       if @onInitialQueueDelayId
         clearTimeout(@onInitialQueueDelayId)
 
-      if event
-        @closeWindow()
-
       @setSessionId undefined
 
-    closeWindow: =>
+    close: (event) =>
+      if !@isOpen
+        @log.debug 'can\'t close widget, it\'s not open'
+        return
+      if !@sessionId
+        @log.debug 'can\'t close widget without sessionId'
+        return
+
+      @log.debug 'close widget'
+
+      event.stopPropagation() if event
+
+      @sessionClose()
+
+      # close window
       @el.removeClass('zammad-chat-is-open')
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
       @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
 
     onCloseAnimationEnd: =>
       @el.removeClass('zammad-chat-is-visible')
-      @disconnect()
+
+      @showLoader()
+      @el.find('.zammad-chat-welcome').removeClass('zammad-chat-is-hidden')
+      @el.find('.zammad-chat-agent').addClass('zammad-chat-is-hidden')
+      @el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden')
+
       @isOpen = false
 
-      # restart connection
-      @onWebSocketOpen()
+      @io.reconnect()
 
-    hide: ->
-      @el.removeClass('zammad-chat-is-shown')
+    onWebSocketClose: =>
+      return if @isOpen
+      if @el
+        @el.removeClass('zammad-chat-is-shown')
 
     show: ->
-      return @state if @state is 'off' or @state is 'unsupported'
+      return if @state is 'offline'
 
       @el.addClass('zammad-chat-is-shown')
 
@@ -397,6 +569,8 @@ do($ = window.jQuery, window) ->
       # delay initial queue position, show connecting first
       show = =>
         @onQueue data
+        @waitingListTimeout.start()
+
       if @initialQueueDelay && !@onInitialQueueDelayId
         @onInitialQueueDelayId = setTimeout(show, @initialQueueDelay)
         return
@@ -409,7 +583,7 @@ do($ = window.jQuery, window) ->
       show()
 
     onQueue: (data) =>
-      @log 'notice', 'onQueue', data.position
+      @log.notice 'onQueue', data.position
       @inQueue = true
 
       @el.find('.zammad-chat-body').html @view('waiting')
@@ -432,6 +606,11 @@ do($ = window.jQuery, window) ->
     onAgentTypingEnd: =>
       @el.find('.zammad-chat-message--typing').remove()
 
+    onLeaveTemporary: =>
+      return if !@sessionId
+      @send 'chat_session_leave_temporary',
+        session_id: @sessionId
+
     maybeAddTimestamp: ->
       timestamp = Date.now()
 
@@ -452,6 +631,7 @@ do($ = window.jQuery, window) ->
           @scrollToBottom()
 
     updateLastTimestamp: (label, time) ->
+      return if !@el
       @el.find('.zammad-chat-body')
         .find('.zammad-chat-timestamp')
         .last()
@@ -460,6 +640,7 @@ do($ = window.jQuery, window) ->
           time: time
 
     addStatus: (status) ->
+      return if !@el
       @maybeAddTimestamp()
 
       @el.find('.zammad-chat-body').append @view('status')
@@ -470,59 +651,32 @@ do($ = window.jQuery, window) ->
     scrollToBottom: ->
       @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
 
-    sessionInit: ->
-      @send('chat_session_init')
+    destroy: (params = {}) =>
+      @log.debug 'destroy widget', params
 
-    detectHost: ->
-      protocol = 'ws://'
-      if window.location.protocol is 'https:'
-        protocol = 'wss://'
-      @options.host = "#{ protocol }#{ scriptHost }/ws"
+      @setAgentOnlineState 'offline'
 
-    wsConnect: =>
-      @detectHost() if !@options.host
+      if params.remove && @el
+        @el.remove()
 
-      @log 'debug', "Connecting to #{@options.host}"
-      @ws = new window.WebSocket("#{@options.host}")
-      @ws.onopen = @onWebSocketOpen
+      # stop all timer
+      if @waitingListTimeout
+        @waitingListTimeout.stop()
+      if @inactiveTimeout
+        @inactiveTimeout.stop()
+      if @idleTimeout
+        @idleTimeout.stop()
 
-      @ws.onmessage = @onWebSocketMessage
-
-      @ws.onclose = (e) =>
-        @log 'debug', 'close websocket connection'
-        if @wsReconnectEnable
-          @reconnect()
-
-      @ws.onerror = (e) =>
-        @log 'debug', 'ws:onerror', e
-
-    wsClose: =>
-      @wsReconnectEnable = false
-      @ws.close()
-
-    wsReconnect: =>
-      if @reconnectDelayId
-        clearTimeout(@reconnectDelayId)
-      @reconnectDelayId = setTimeout(@wsConnect, 5000)
-
-    onWebSocketOpen: =>
-      @idleTimeoutStart()
-      @sessionId = sessionStorage.getItem('sessionId')
-      @log 'debug', 'ws connected'
-
-      @send 'chat_status_customer',
-        session_id: @sessionId
-
-      @setAgentOnlineState 'online'
+      # stop ws connection
+      @io.close()
 
     reconnect: =>
       # set status to connecting
-      @log 'notice', 'reconnecting'
+      @log.notice 'reconnecting'
       @disableInput()
       @lastAddedType = 'status'
       @setAgentOnlineState 'connecting'
       @addStatus @T('Connection lost')
-      @wsReconnect()
 
     onConnectionReestablished: =>
       # set status back to online
@@ -534,13 +688,7 @@ do($ = window.jQuery, window) ->
       @addStatus @T('Chat closed by %s', data.realname)
       @disableInput()
       @setAgentOnlineState 'offline'
-      @inactiveTimeoutStop()
-
-    disconnect: ->
-      @showLoader()
-      @el.find('.zammad-chat-welcome').removeClass('zammad-chat-is-hidden')
-      @el.find('.zammad-chat-agent').addClass('zammad-chat-is-hidden')
-      @el.find('.zammad-chat-agent-status').addClass('zammad-chat-is-hidden')
+      @inactiveTimeout.stop()
 
     setSessionId: (id) =>
       @sessionId = id
@@ -573,25 +721,44 @@ do($ = window.jQuery, window) ->
 
       @setAgentOnlineState 'online'
 
-    showTimeout: ->
-      @el.find('.zammad-chat-body').html @view('timeout')
+      @waitingListTimeout.stop()
+      @idleTimeout.stop()
+      @inactiveTimeout.start()
+
+    showCustomerTimeout: ->
+      @el.find('.zammad-chat-body').html @view('customer_timeout')
         agent: @agent.name
         delay: @options.inactiveTimeout
-      @close()
       reload = ->
         location.reload()
       @el.find('.js-restart').click reload
+      @sessionClose()
+
+    showWaitingListTimeout: ->
+      @el.find('.zammad-chat-body').html @view('waiting_list_timeout')
+        delay: @options.watingListTimeout
+      reload = ->
+        location.reload()
+      @el.find('.js-restart').click reload
+      @sessionClose()
 
     showLoader: ->
       @el.find('.zammad-chat-body').html @view('loader')()
 
     setAgentOnlineState: (state) =>
       @state = state
+      return if !@el
       capitalizedState = state.charAt(0).toUpperCase() + state.slice(1)
       @el
         .find('.zammad-chat-agent-status')
         .attr('data-status', state)
         .text @T(capitalizedState)
+
+    detectHost: ->
+      protocol = 'ws://'
+      if window.location.protocol is 'https:'
+        protocol = 'wss://'
+      @options.host = "#{ protocol }#{ scriptHost }/ws"
 
     loadCss: ->
       return if !@options.cssAutoload
@@ -603,42 +770,42 @@ do($ = window.jQuery, window) ->
           .replace(/\/ws/i, '')
         url += '/assets/chat/chat.css'
 
-      @log 'debug', "load css from '#{url}'"
+      @log.debug "load css from '#{url}'"
       styles = "@import url('#{url}');"
       newSS = document.createElement('link')
       newSS.rel = 'stylesheet'
       newSS.href = 'data:text/css,' + escape(styles)
       document.getElementsByTagName('head')[0].appendChild(newSS)
 
-    inactiveTimeoutStart: =>
-      @inactiveTimeoutStop()
-      delay = =>
-        @log 'debug', "Inactive timeout of #{@options.inactiveTimeout} minutes, show timeout screen.", new Date
-        @state = 'off'
-        @setAgentOnlineState 'offline'
-        @showTimeout()
-        @wsClose()
-      @log 'debug', "Start inactive timeout in #{@options.inactiveTimeout} minutes", new Date
-      @inactiveTimeoutStopDelayId = setTimeout(delay, @options.inactiveTimeout * 1000 * 60)
-
-    inactiveTimeoutStop: =>
-      return if !@inactiveTimeoutStopDelayId
-      @log 'debug', "Stop inactive timeout of #{@options.inactiveTimeout} minutes at", new Date
-      clearTimeout(@inactiveTimeoutStopDelayId)
-
-    idleTimeoutStart: =>
-      @idleTimeoutStop()
-      delay = =>
-        @log 'debug', "Idle timeout of #{@options.idleTimeout} minutes, hide widget", new Date
-        @state = 'off'
-        @hide()
-        @wsClose()
-      @log 'debug', "Start idle timeout in #{@options.idleTimeout} minutes", new Date
-      @idleTimeoutStopDelayId = setTimeout(delay, @options.idleTimeout * 1000 * 60)
-
-    idleTimeoutStop: =>
-      return if !@idleTimeoutStopDelayId
-      @log 'debug', "Stop idle timeout of #{@options.idleTimeout} minutes at", new Date
-      clearTimeout(@idleTimeoutStopDelayId)
+    startTimeoutObservers: =>
+      @idleTimeout = new Timeout(
+        logPrefix: 'idleTimeout'
+        debug: @options.debug
+        timeout: @options.idleTimeout
+        timeoutIntervallCheck: @options.idleTimeoutIntervallCheck
+        callback: =>
+          @log.debug 'Idle timeout reached, hide widget', new Date
+          @destroy(remove: true)
+      )
+      @inactiveTimeout = new Timeout(
+        logPrefix: 'inactiveTimeout'
+        debug: @options.debug
+        timeout: @options.inactiveTimeout
+        timeoutIntervallCheck: @options.inactiveTimeoutIntervallCheck
+        callback: =>
+          @log.debug 'Inactive timeout reached, show timeout screen.', new Date
+          @showCustomerTimeout()
+          @destroy(remove: false)
+      )
+      @waitingListTimeout = new Timeout(
+        logPrefix: 'waitingListTimeout'
+        debug: @options.debug
+        timeout: @options.waitingListTimeout
+        timeoutIntervallCheck: @options.waitingListTimeoutIntervallCheck
+        callback: =>
+          @log.debug 'Waiting list timeout reached, show timeout screen.', new Date
+          @showWaitingListTimeout()
+          @destroy(remove: false)
+      )
 
   window.ZammadChat = ZammadChat

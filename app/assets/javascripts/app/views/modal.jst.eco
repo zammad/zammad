@@ -15,7 +15,7 @@
       <div class="modal-footer">
   <% if @buttonCancel: %>
         <div class="modal-leftFooter">
-          <a class="btn btn--text btn--subtle js-cancel align-left" href="#/"><%- @T(@buttonCancel) %></a>
+          <a class="btn <%= @buttonCancelClass %> js-cancel align-left" href="#/"><%- @T(@buttonCancel) %></a>
         </div>
   <% end %>
   <% for button in @centerButtons: %>

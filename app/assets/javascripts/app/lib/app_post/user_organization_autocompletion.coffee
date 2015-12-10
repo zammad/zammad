@@ -7,6 +7,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     'click .js-user':                         'selectUser'
     'click .js-userNew':                      'newUser'
     'focus input':                            'open'
+    'click':                                  'stopPropagation'
 
   constructor: (params) ->
     super
@@ -24,27 +25,21 @@ class App.UserOrganizationAutocompletion extends App.Controller
   element: =>
     @el
 
-  release: =>
-    return if !@catcher
-    @catcher.remove()
+  release: ->
+    $(window).off 'click.UserOrganizationAutocompletion'
 
   open: =>
     @clearDelay('close')
     @el.addClass('open')
-    if @catcher
-      @catcher.remove()
-    @catcher = new App.ClickCatcher
-      holder:       @el.offsetParent()
-      callback:     @close
-      zIndexScale:  1
+
+    $(window).on 'click.UserOrganizationAutocompletion', @close
 
   close: =>
     execute = =>
       @el.removeClass('open')
     @delay( execute, 400, 'close' )
 
-    if @catcher
-      @catcher.remove()
+    $(window).off 'click.UserOrganizationAutocompletion'
 
   selectUser: (e) ->
     userId = $(e.target).parents('.recipientList-entry').data('user-id')

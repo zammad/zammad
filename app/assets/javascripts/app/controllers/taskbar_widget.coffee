@@ -1,6 +1,7 @@
 class App.TaskbarWidget extends App.Controller
   events:
     'click .js-close': 'remove'
+    'click .js-locationVerify': 'location'
 
   constructor: ->
     super
@@ -73,6 +74,10 @@ class App.TaskbarWidget extends App.Controller
         App.TaskManager.reorder(order)
 
     @el.sortable(dndOptions)
+
+  location: (e) =>
+    return if !$(e.currentTarget).hasClass('is-modified')
+    @locationVerify(e)
 
   remove: (e, key = false, force = false) =>
     e.preventDefault()

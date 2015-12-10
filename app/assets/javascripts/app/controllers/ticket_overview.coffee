@@ -6,20 +6,22 @@ class App.TicketOverview extends App.Controller
     @render()
 
   render: ->
-    @html App.view('ticket_overview')()
+    elLocal = $(App.view('ticket_overview')())
 
     @navBarControllerVertical = new Navbar
-      el:       @$('.overview-header')
+      el:       elLocal.find('.overview-header')
       view:     @view
       vertical: true
 
     @navBarController = new Navbar
-      el:   @$('.sidebar')
+      el:   elLocal.first()
       view: @view
 
     @contentController = new Table
-      el:   @$('.overview-table')
+      el:   elLocal.find('.overview-table')
       view: @view
+
+    @html elLocal
 
   active: (state) =>
     @activeState = state

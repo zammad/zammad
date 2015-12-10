@@ -7,7 +7,7 @@ class App.ChannelForm extends App.Controller
 
   elements:
     '.js-paramsBlock': 'paramsBlock'
-    '.js-formSetting': 'formSetting'
+    '.js-formSetting input': 'formSetting'
 
   constructor: ->
     super

@@ -169,21 +169,25 @@ job_integration_autowizard_ff:
   tags:
     - browser-ff
   script:
-    - export BROWSER_URL=http://$IP:3001
+    - export BROWSER_PORT=3001
+    - export WS_PORT=3002
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3001 3002
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3011 3012 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3001 3002
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_browser_ff_1:
   stage: browser
   tags:
     - browser-ff
   script:
-    - export BROWSER_URL=http://$IP:3011
+    - export BROWSER_PORT=3011
+    - export WS_PORT=3012
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -192,16 +196,18 @@ job_integration_browser_ff_1:
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3011 3012
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3011 3012 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3011 3012
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_browser_ff_2:
   stage: browser
   tags:
     - browser-ff
   script:
-    - export BROWSER_URL=http://$IP:3021
+    - export BROWSER_PORT=3021
+    - export WS_PORT=3022
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -210,44 +216,50 @@ job_integration_browser_ff_2:
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3021 3022
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3021 3022 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3021 3022
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_browser_ff_3:
   stage: browser
   tags:
     - browser-ff
   script:
-    - export BROWSER_URL=http://$IP:3031
+    - export BROWSER_PORT=3031
+    - export WS_PORT=3032
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3031 3032
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3031 3032 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3031 3032
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_autowizard_chrome:
   stage: browser
   tags:
     - browser-chrome
   script:
-    - export BROWSER_URL=http://$IP:3071
+    - export BROWSER_PORT=3071
+    - export WS_PORT=3072
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3071 3072
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV 3071 3072 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3071 3072
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_browser_chrome_1:
   stage: browser
   tags:
     - browser-chrome
   script:
-    - export BROWSER_URL=http://$IP:3041
+    - export BROWSER_PORT=3041
+    - export WS_PORT=3042
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -256,16 +268,18 @@ job_integration_browser_chrome_1:
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3041 3042
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3041 3042 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3041 3042
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_browser_chrome_2:
   stage: browser
   tags:
     - browser-chrome
   script:
-    - export BROWSER_URL=http://$IP:3051
+    - export BROWSER_PORT=3051
+    - export WS_PORT=3052
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -274,16 +288,18 @@ job_integration_browser_chrome_2:
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3051 3052
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3051 3052 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3051 3052
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_browser_chrome_3:
   stage: browser
   tags:
     - browser-chrome
   script:
-    - export BROWSER_URL=http://$IP:3061
+    - export BROWSER_PORT=3061
+    - export WS_PORT=3062
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -292,6 +308,6 @@ job_integration_browser_chrome_3:
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV 3061 3062
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV 3061 3062 1
-    - script/build/test_shutdown.sh $RAILS_ENV 3061 3062
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT

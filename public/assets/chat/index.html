@@ -22,6 +22,7 @@
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 3px 10px rgba(0,0,0,.3);
+    width: 500px;
   }
 
   .settings input {
@@ -34,6 +35,12 @@
   table td:first-child {
     text-align: right;
     padding-right: 0;
+  }
+
+  table td.log {
+    text-align: left;
+    padding-right: 0;
+    word-break: break-all;
   }
 
   td {
@@ -96,6 +103,11 @@
     <tr>
       <td>
       <td><button class="open-zammad-chat">Open Chat</button>
+    <tr>
+      <td class="log"><h2>Log</h2>
+      <td>
+    <tr>
+      <td colspan="2" class="log js-chatLogDisplay">
   </table>
 </div>
 

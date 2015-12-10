@@ -12,26 +12,15 @@ class App.TicketZoomArticleNew extends App.Controller
     '.js-cancel':                         'cancelContainer'
     '.textBubble':                        'textBubble'
     '.editControls-item':                 'editControlItem'
-    #'.editControls':                     'editControls'
-    #'.recipient-picker':                 'recipientPicker'
-    #'.recipient-list':                   'recipientList'
-    #'.recipient-list .list-arrow':       'recipientListArrow'
 
   events:
     'click .js-toggleVisibility':    'toggleVisibility'
     'click .js-articleTypeItem':     'selectArticleType'
     'click .js-selectedArticleType': 'showSelectableArticleType'
-    'click .recipient-picker':       'toggle_recipients'
-    'click .recipient-list':         'stopPropagation'
     'click .js-mail-inputs':         'stopPropagation'
     'click .js-writeArea':           'stopPropagation'
     'click .list-entry-type div':    'change_type'
-    'submit .recipient-list form':   'add_recipient'
     'focus .js-textarea':            'openTextarea'
-    #'dragenter':                    'onDragenter'
-    #'dragleave':                    'onDragleave'
-    #'drop':                         'onFileDrop'
-    #'change input[type=file]':      'onFilePick'
 
   constructor: ->
     super
@@ -123,9 +112,6 @@ class App.TicketZoomArticleNew extends App.Controller
 
   isIE10: ->
     Function('/*@cc_on return document.documentMode===10@*/')()
-
-  stopPropagation: (e) ->
-    e.stopPropagation()
 
   release: =>
     if @subscribeIdTextModule
@@ -231,71 +217,9 @@ class App.TicketZoomArticleNew extends App.Controller
         )
       @subscribeIdTextModule = ticket.subscribe( callback )
 
-  toggle_recipients: =>
-    if !@pickRecipientsCatcher
-      @show_recipients()
-    else
-      @hide_recipients()
-
-  show_recipients: ->
-    padding = 15
-
-    @recipientPicker.addClass('is-open')
-    @recipientList.removeClass('hide')
-
-    pickerDimensions = @recipientPicker.get(0).getBoundingClientRect()
-    availableHeight = @recipientPicker.scrollParent().outerHeight()
-
-    top = pickerDimensions.height/2 - @recipientList.height()/2
-    bottomDistance = availableHeight - padding - (pickerDimensions.top + top + @recipientList.height())
-
-    if bottomDistance < 0
-      top += bottomDistance
-
-    arrowCenter = -top + pickerDimensions.height/2
-
-    @recipientListArrow.css('top', arrowCenter)
-    @recipientList.css('top', top)
-
-    $.Velocity.hook(@recipientList, 'transformOriginX', '0')
-    $.Velocity.hook(@recipientList, 'transformOriginY', "#{ arrowCenter }px")
-
-    @recipientList.velocity
-      properties:
-        scale: [ 1, 0 ]
-        opacity: [ 1, 0 ]
-      options:
-        speed: 300
-        easing: [ 0.34, 1.61, 0.7, 1 ]
-
-    @pickRecipientsCatcher = new App.ClickCatcher
-      holder: @el.offsetParent()
-      callback: @hide_recipients
-      zIndexScale: 6
-
-  hide_recipients: =>
-    @pickRecipientsCatcher.remove()
-    @pickRecipientsCatcher = null
-
-    @recipientPicker.removeClass('is-open')
-
-    @recipientList.velocity
-      properties:
-        scale: [ 0, 1 ]
-        opacity: [ 0, 1 ]
-      options:
-        speed: 300
-        easing: [ 500, 20 ]
-        complete: -> @recipientList.addClass('hide')
-
   change_type: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
     # store $(this).data('value')
-
-  add_recipient: (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    # store recipient
 
   toggleVisibility: (event) ->
     event.stopPropagation()

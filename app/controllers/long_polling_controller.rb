@@ -17,77 +17,31 @@ class LongPollingController < ApplicationController
     if !params['data']
       params['data'] = {}
     end
+    session_data = {}
+    if current_user.id
+      session_data = { 'id' => current_user.id }
+    end
 
     # spool messages for new connects
     if params['data']['spool']
-      msg = JSON.generate( params['data'] )
-      Sessions.spool_create(msg)
+      Sessions.spool_create(params['data'])
     end
-
-    # get spool messages and send them to new client connection
-    if params['data']['action'] == 'spool'
-
-      # error handling
-      if params['data']['timestamp']
-        log "request spool data > '#{Time.zone.at( params['data']['timestamp'] )}'", client_id
-      else
-        log 'request spool init data', client_id
+    if params['data']['event'] == 'login'
+      Sessions.create(client_id, session_data, { type: 'ajax' })
+    elsif params['data']['event']
+      message = Sessions::Event.run(
+        event: params['data']['event'],
+        payload: params['data'],
+        session: session_data,
+        client_id: client_id,
+        clients: {},
+        options: {},
+      )
+      if message
+        Sessions.send(client_id, message)
       end
-
-      if current_user
-        spool = Sessions.spool_list( params['data']['timestamp'], current_user.id )
-        spool.each { |item|
-          if item[:type] == 'direct'
-            log "send spool to (user_id=#{current_user.id})", client_id
-            Sessions.send( client_id, item[:message] )
-          else
-            log 'send spool', client_id
-            Sessions.send( client_id, item[:message] )
-          end
-        }
-      end
-
-      # send spool:sent event to client
-      sleep 0.2
-      log 'send spool:sent event', client_id
-      Sessions.send( client_id, { event: 'spool:sent', data: { timestamp: Time.zone.now.utc.to_i } } )
-    end
-
-    # receive message
-    if params['data']['action'] == 'login'
-      user_id = session[:user_id]
-      user = {}
-      if user_id
-        user = User.find( user_id ).attributes
-      end
-      log "send auth login (user_id #{user_id})", client_id
-      Sessions.create( client_id, user, { type: 'ajax' } )
-
-      # broadcast
-    elsif params['data']['action'] == 'broadcast'
-
-      # list all current clients
-      client_list = Sessions.list
-      client_list.each {|local_client_id, local_client|
-        if local_client_id != client_id
-
-          # broadcast to recipient list
-          if params['data']['recipient'] && params['data']['recipient']['user_id']
-            params['data']['recipient']['user_id'].each { |loop_user_id|
-              if local_client[:user]['id'].to_s == loop_user_id.to_s
-                log "send broadcast from (#{client_id}) to (user_id #{loop_user_id})", local_client_id
-                Sessions.send( local_client_id, params['data'] )
-              end
-            }
-            # broadcast every client
-          else
-            log "send broadcast from (#{client_id})", local_client_id
-            Sessions.send( local_client_id, params['data'] )
-          end
-        else
-          log 'do not send broadcast to it self', client_id
-        end
-      }
+    else
+      log "unknown message '#{params['data'].inspect}'", client_id
     end
 
     if new_connection
@@ -116,13 +70,16 @@ class LongPollingController < ApplicationController
         sleep 0.25
       }
       #sleep 1
-      Sessions.touch( client_id )
+      Sessions.touch(client_id)
 
       # set max loop time to 24 sec. because of 30 sec. timeout of mod_proxy
-      count = 12
+      count = 3
+      if Rails.env.production?
+        count = 12
+      end
       loop do
         count = count - 1
-        queue = Sessions.queue( client_id )
+        queue = Sessions.queue(client_id)
         if queue && queue[0]
           logger.debug "send #{queue.inspect} to #{client_id}"
           render json: queue
@@ -133,7 +90,7 @@ class LongPollingController < ApplicationController
         }
         #sleep 2
         if count == 0
-          render json: { action: 'pong' }
+          render json: { event: 'pong' }
           return
         end
       end
@@ -154,7 +111,7 @@ class LongPollingController < ApplicationController
   def client_id_verify
     return if !params[:client_id]
     sessions = Sessions.sessions
-    return if !sessions.include?( params[:client_id].to_s )
+    return if !sessions.include?(params[:client_id].to_s)
     params[:client_id].to_s
   end
 

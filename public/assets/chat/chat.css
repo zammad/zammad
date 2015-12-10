@@ -12,7 +12,8 @@
   display: none;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
-  flex-direction: column; }
+  flex-direction: column;
+  z-index: 999; }
   .zammad-chat.is-fullscreen {
     right: 0;
     width: 100%;
@@ -106,7 +107,7 @@
   margin: 0 1em;
   display: inline-block;
   line-height: 2em;
-  padding: 0 0.7em;
+  padding: 0 .7em;
   border-radius: 1em;
   background: rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
@@ -348,6 +349,10 @@
 
 .zammad-chat-send {
   float: right; }
+
+.zammad-chat-button:disabled,
+.zammad-chat-input:disabled {
+  opacity: 0.3; }
 
 .zammad-chat-is-hidden {
   display: none; }

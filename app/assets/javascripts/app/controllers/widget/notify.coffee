@@ -1,4 +1,7 @@
 class App.Notify extends App.ControllerWidgetPermanent
+  desktopNotify: {}
+  desktopNotifyCounter: 0
+
   events:
     'click .alert': 'destroy'
 
@@ -12,17 +15,50 @@ class App.Notify extends App.ControllerWidgetPermanent
       @log 'notify:removeall', @
       @destroyAll()
 
-    @bind 'notifyDesktop', (data) ->
+    @bind 'notifyDesktop', (data) =>
+      return if !window.Notification
+
       if !data['icon']
-        data['icon'] = 'unknown'
-      notify.createNotification( data.msg, data )
+        data['icon'] = @logoUrl()
+
+      timeout = 60000 * 60 * 24
+      if document.hasFocus()
+        timeout = 4000
+
+      @desktopNotifyCounter += 1
+      counter = @desktopNotifyCounter
+      notification = new window.Notification(data.title, data)
+      @desktopNotify[counter] = notification
+      @log 'debug', 'notifyDesktop', data, counter
+
+      notification.onclose = (e) =>
+        delete @desktopNotify[counter]
+
+      notification.onclick = (e) =>
+        window.focus()
+        @log 'debug', 'notifyDesktop.click', data
+        if data.url
+          @locationExecuteOrNavigate(data.url)
+        if data.callback
+          data.callback()
+
+      if data.timeout || timeout
+        App.Delay.set(
+          -> notification.close()
+          data.timeout || timeout
+        )
 
     # request desktop notification after login
     @bind 'auth', (data) ->
       if !_.isEmpty(data)
-        notify.requestPermission()
+        return if !window.Notification
+        window.Notification.requestPermission()
 
-    notify.config( pageVisibility: false )
+    $(window).focus(
+      =>
+        for counter, notification of @desktopNotify
+          notification.close()
+    )
 
   render: (data) ->
 
@@ -53,4 +89,4 @@ class App.Notify extends App.ControllerWidgetPermanent
   destroyAll: ->
     $.noty.closeAll()
 
-App.Config.set( 'notify', App.Notify, 'Widgets' )
+App.Config.set('notify', App.Notify, 'Widgets')

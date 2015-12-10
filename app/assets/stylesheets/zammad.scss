@@ -5255,7 +5255,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     svg {
       fill: white;
     }
@@ -5274,6 +5274,9 @@ footer {
 }
 .modal--large .modal-dialog {
   max-width: 740px;
+}
+.modal--small .modal-dialog {
+  max-width: 440px;
 }
 .modal-dialog.wizard {
   max-width: 460px;
@@ -5708,11 +5711,10 @@ footer {
   &.active {
     color: white;
     background: hsl(206,7%,28%);
-    border-color: hsl(206,7%,28%);
   }
 
   a {
-    padding: 9px 25px;
+    padding: 10px 24px 8px;
     color: inherit;
     color: inherit;
   }

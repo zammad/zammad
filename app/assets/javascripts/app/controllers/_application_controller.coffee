@@ -542,11 +542,36 @@ class App.Controller extends Spine.Controller
     @html App.view('generic/error/unauthorized')(data)
 
   metaTaskUpdate: ->
+    delay = App.TaskManager.renderDelay()
+    return if !delay
     App.Delay.set(
       -> App.Event.trigger 'task:render'
-      App.TaskManager.renderDelay()
+      delay
       'meta-task-update'
     )
+
+  locationVerify: (e) =>
+    newLocation = $(e.currentTarget).attr 'href'
+    @log 'debug', "new location '#{newLocation}'"
+    return if !newLocation
+    @locationExecuteOrNavigate(newLocation)
+
+  locationExecuteOrNavigate: (newLocation) =>
+    currentLocation = Spine.Route.getPath()
+    @log 'debug', "current location '#{currentLocation}'"
+    if newLocation.replace(/#/, '') isnt currentLocation
+      @log 'debug', "navigate to location '#{newLocation}'"
+      @navigate(newLocation)
+      return
+    @locationExecute(newLocation)
+
+  locationExecute: (newLocation) =>
+    newLocation = newLocation.replace(/#/, '')
+    @log 'debug', "execute controller again for '#{newLocation}' because of same hash"
+    Spine.Route.matchRoutes(newLocation)
+
+  logoUrl: ->
+    "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"
 
 class App.ControllerPermanent extends App.Controller
   constructor: ->
@@ -565,12 +590,14 @@ class App.ControllerModalNice extends App.Controller
   backdrop: true
   keyboard: true
   large: false
+  small: false
   head: '?'
   container: null
   buttonClass: 'btn--success'
   centerButtons: []
   buttonClose: true
   buttonCancel: false
+  buttonCancelClass: 'btn--text btn--subtle'
   buttonSubmit: true
   headPrefix: ''
   shown: true
@@ -584,7 +611,6 @@ class App.ControllerModalNice extends App.Controller
   className: 'modal fade'
 
   constructor: ->
-    @className += ' modal--large' if @large
     super
 
     # rerender view, e. g. on langauge change
@@ -606,15 +632,16 @@ class App.ControllerModalNice extends App.Controller
     else
       content = @content()
     modal = $(App.view('modal')
-      head:          @head
-      headPrefix:    @headPrefix
-      message:       @message
-      detail:        @detail
-      buttonClose:   @buttonClose
-      buttonCancel:  @buttonCancel
-      buttonSubmit:  @buttonSubmit
-      buttonClass:   @buttonClass
-      centerButtons: @centerButtons
+      head:              @head
+      headPrefix:        @headPrefix
+      message:           @message
+      detail:            @detail
+      buttonClose:       @buttonClose
+      buttonCancel:      @buttonCancel
+      buttonCancelClass: @buttonCancelClass
+      buttonSubmit:      @buttonSubmit
+      buttonClass:       @buttonClass
+      centerButtons:     @centerButtons
     )
     modal.find('.modal-body').html content
     if !@initRenderingDone
@@ -637,6 +664,10 @@ class App.ControllerModalNice extends App.Controller
 
     if @container
       @el.addClass('modal--local')
+    if @large
+      @el.addClass('modal--large')
+    if @small
+      @el.addClass('modal--small')
 
     @el.modal
       keyboard:  @keyboard

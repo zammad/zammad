@@ -44,6 +44,7 @@ class CustomerTicketCreateTest < TestCase
     set(
       css: '.active [data-name="body"]',
       value: 'some body 1234 äöüß',
+      no_click: true,
     )
 
     task_type(

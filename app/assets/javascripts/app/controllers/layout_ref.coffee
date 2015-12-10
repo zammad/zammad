@@ -208,6 +208,9 @@ class LayoutRefCommunicationReply extends App.ControllerContent
 
     @$('[contenteditable]').textmodule()
 
+  release: =>
+    @remove_textarea_catcher()
+
   detect_empty_textarea: =>
     if !@textarea.text()
       @add_textarea_catcher()
@@ -267,15 +270,10 @@ class LayoutRefCommunicationReply extends App.ControllerContent
           duration: duration
 
   add_textarea_catcher: ->
-    @textareaCatcher = new App.ClickCatcher
-      holder: @articleNewEdit.offsetParent()
-      callback: @close_textarea
-      zIndexScale: 4
+    $(window).on 'click.LayoutRefCommunicationReply-textarea', @close_textarea
 
   remove_textarea_catcher: ->
-    return if !@textareaCatcher
-    @textareaCatcher.remove()
-    @textareaCatcher = null
+    $(window).off 'click.LayoutRefCommunicationReply-textarea'
 
   close_textarea: =>
     @remove_textarea_catcher()
@@ -2151,7 +2149,6 @@ class TwitterConversationRef extends App.ControllerContent
       options:
         duration: duration
         easing: 'easeOutQuad'
-        complete: => @addTextareaCatcher()
 
     @textBubble.velocity
       properties:
@@ -2179,13 +2176,6 @@ class TwitterConversationRef extends App.ControllerContent
           duration: 300
           stagger: 50
           drag: true
-
-  addTextareaCatcher: =>
-    if @articleNewEdit.is(':visible')
-      @textareaCatcher = new App.ClickCatcher
-        holder:      @articleNewEdit.offsetParent()
-        callback:    @closeTextarea
-        zIndexScale: 4
 
 App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
 

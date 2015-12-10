@@ -4,16 +4,16 @@ class App.UserProfile extends App.Controller
 
     # check authentication
     if !@authenticate()
-      App.TaskManager.remove( @task_key )
+      App.TaskManager.remove(@task_key)
       return
 
     # fetch new data if needed
-    @subscribeId = App.User.full( @user_id, @render )
+    @subscribeId = App.User.full(@user_id, @render)
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
-      @render( App.User.fullLocal( @user_id ) )
+      @render(App.User.fullLocal(@user_id))
 
   release: =>
     App.User.unsubscribe(@subscribeId)
@@ -23,8 +23,8 @@ class App.UserProfile extends App.Controller
       url: @url()
       id:  @user_id
 
-    if App.User.exists( @user_id )
-      user = App.User.find( @user_id )
+    if App.User.exists(@user_id)
+      user = App.User.find(@user_id)
 
       meta.head       = user.displayName()
       meta.title      = user.displayName()
@@ -35,7 +35,7 @@ class App.UserProfile extends App.Controller
     '#user/profile/' + @user_id
 
   show: =>
-    App.OnlineNotification.seen( 'User', @user_id )
+    App.OnlineNotification.seen('User', @user_id)
     @navupdate '#'
 
   changed: ->
@@ -45,21 +45,23 @@ class App.UserProfile extends App.Controller
 
     if !@doNotLog
       @doNotLog = 1
-      @recentView( 'User', @user_id )
+      @recentView('User', @user_id)
 
-    @html App.view('user_profile/index')(
+    elLocal = $(App.view('user_profile/index')(
       user: user
-    )
+    ))
 
     new Object(
-      el:   @$('.js-object-container')
+      el:   elLocal.find('.js-object-container')
       user: user
     )
 
     new App.TicketStats(
-      el:   @$('.js-ticket-stats')
+      el:   elLocal.find('.js-ticket-stats')
       user: user
     )
+
+    @html elLocal
 
     new App.UpdateTastbar(
       genericObject: user
@@ -74,7 +76,7 @@ class Object extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.User.full( @user.id, @render, false, true )
+    @subscribeId = App.User.full(@user.id, @render, false, true)
 
   release: =>
     App.User.unsubscribe(@subscribeId)
@@ -90,12 +92,12 @@ class Object extends App.Controller
 
       # check if value for _id exists
       name    = attributeName
-      nameNew = name.substr( 0, name.length - 3 )
+      nameNew = name.substr(0, name.length - 3)
       if nameNew of user
         name = nameNew
 
       # add to show if value exists
-      if ( user[name] || attributeConfig.tag is 'richtext' ) && attributeConfig.shown
+      if (user[name] || attributeConfig.tag is 'richtext') && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
         if name isnt 'firstname' && name isnt 'lastname' && name isnt 'organization'
@@ -152,11 +154,11 @@ class Object extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    user  = App.User.find( @user.id )
+    user  = App.User.find(@user.id)
     if user[name] isnt value
       data = {}
       data[name] = value
-      user.updateAttributes( data )
+      user.updateAttributes(data)
       @log 'notice', 'update', name, value, user
 
 class Router extends App.ControllerPermanent
@@ -174,5 +176,4 @@ class Router extends App.ControllerPermanent
       show:       true
     )
 
-
-App.Config.set( 'user/profile/:user_id', Router, 'Routes' )
+App.Config.set('user/profile/:user_id', Router, 'Routes')

@@ -11,14 +11,6 @@ class App.CustomerChat extends App.Controller
   constructor: ->
     super
 
-    # access check
-    if !@isRole('Chat')
-      @renderScreenUnauthorized(objectName: 'Chat')
-      return
-    if !@Config.get('chat')
-      @renderScreenError(detail: 'Feature disabled!')
-      return
-
     @chatWindows = {}
     @maxChatWindows = 4
     preferences = @Session.get('preferences')
@@ -49,7 +41,6 @@ class App.CustomerChat extends App.Controller
 
     # add new chat window
     @bind('chat_session_start', (data) =>
-      console.log('chat_session_start', data)
       if data.session
         @addChat(data.session)
     )
@@ -78,6 +69,13 @@ class App.CustomerChat extends App.Controller
     )
 
   render: ->
+    if !@isRole('Chat')
+      @renderScreenUnauthorized(objectName: 'Chat')
+      return
+    if !@Config.get('chat')
+      @renderScreenError(detail: 'Feature disabled!')
+      return
+
     @html App.view('customer_chat/index')()
 
   show: (params) =>
@@ -96,6 +94,10 @@ class App.CustomerChat extends App.Controller
       # do not play sound on initial load
       if counter > 0 && @lastWaitingChatCount isnt undefined
         @sounds.chat_new.play()
+        @notifyDesktop(
+          title: "#{counter} #{App.i18n.translateInline('Waiting Customers')}",
+          url: '#customer_chat'
+        )
       @lastWaitingChatCount = counter
 
     # collect chat window messages
@@ -154,7 +156,6 @@ class App.CustomerChat extends App.Controller
   addChat: (session) ->
     return if @chatWindows[session.session_id]
     chat = new ChatWindow
-      name: "#{session.created_at}"
       session: session
       removeCallback: @removeChat
       messageCallback: @updateNavMenu
@@ -236,6 +237,9 @@ class ChatWindow extends App.Controller
     @isAgentTyping = false
     @resetUnreadMessages()
 
+    chat = App.Chat.find(@session.chat_id)
+    @name = "#{chat.displayName()} [##{@session.id}]"
+
     @on 'layout-change', @scrollToBottom
 
     @bind('chat_session_typing', (data) =>
@@ -254,10 +258,14 @@ class ChatWindow extends App.Controller
       @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
       @goOffline()
     )
+    @bind('chat_focus', (data) =>
+      return if data.session_id isnt @session.session_id
+      @focus()
+    )
 
   render: ->
     @html App.view('customer_chat/chat_window')
-      name: @options.name
+      name: @name
 
     @el.one 'transitionend', @onTransitionend
 
@@ -280,8 +288,10 @@ class ChatWindow extends App.Controller
         if preferences.chat && preferences.chat.phrase
           phrases = preferences.chat.phrase[@session.chat_id]
           if phrases
-            @input.html(phrases)
-            @sendMessage()
+            phrasesArray = phrases.split(';')
+            phrase = phrasesArray[_.random(0, phrasesArray.length-1)]
+            @input.html(phrase)
+            @sendMessage(1600)
 
   focus: =>
     @input.focus()
@@ -362,16 +372,27 @@ class ChatWindow extends App.Controller
           event.preventDefault()
           @sendMessage()
 
-  sendMessage: =>
+  sendMessage: (delay) =>
     content = @input.html()
     return if !content
 
-    App.WebSocket.send(
-      event:'chat_session_message'
-      data:
-        content: content
-        session_id: @session.session_id
-    )
+    send = =>
+      App.WebSocket.send(
+        event:'chat_session_message'
+        data:
+          content: content
+          session_id: @session.session_id
+      )
+    if !delay
+      send()
+    else
+      # show key enter and send phrase
+      App.WebSocket.send(
+        event:'chat_session_typing'
+        data:
+          session_id: @session.session_id
+      )
+      @delay(send, delay)
 
     @addMessage content, 'agent'
     @input.html('')
@@ -389,6 +410,13 @@ class ChatWindow extends App.Controller
       @addUnreadMessages()
       @updateModified(true)
       @sounds.message.play()
+      @notifyDesktop(
+        title: @name
+        body: message
+        url: '#customer_chat'
+        callback: =>
+          App.Event.trigger('chat_focus', { session_id: @session.session_id })
+      )
 
   unreadMessages: =>
     @unreadMessagesCounter

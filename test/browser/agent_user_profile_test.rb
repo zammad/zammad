@@ -29,8 +29,6 @@ class AgentUserProfileTest < TestCase
     set(
       css: '.active [data-name="note"]',
       value: 'some note 123',
-      contenteditable: true,
-
     )
     click( css: '.empty-search' )
     sleep 2
@@ -108,7 +106,6 @@ class AgentUserProfileTest < TestCase
       browser: browser1,
       css: '.active [data-name="note"]',
       value: message,
-      contenteditable: true,
     )
     click(
       browser: browser1,

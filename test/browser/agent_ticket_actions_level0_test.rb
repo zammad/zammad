@@ -190,11 +190,13 @@ class AgentTicketActionLevel0Test < TestCase
       browser: browser2,
       css: '.active div[data-name=body]',
       value: 'test',
+      no_click: true,
     )
     set(
       browser: browser2,
       css: '.active div[data-name=body]',
       value: '::' + random,
+      no_click: true,
     )
     sendkey(
       browser: browser2,
@@ -247,6 +249,7 @@ class AgentTicketActionLevel0Test < TestCase
       browser: browser2,
       css: '.active div[data-name=body]',
       value: '::' + random,
+      no_click: true,
     )
 
     sendkey(

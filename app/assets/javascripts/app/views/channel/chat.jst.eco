@@ -8,8 +8,8 @@
 
   <h2><%- @T('Enable') %>/<%- @T('Disable') %></h2>
   <form>
-    <div class="zammad-switch">
-       <input name="chat" type="checkbox" id="setting-chat" class="js-chatSetting" <% if @chatSetting: %>checked<% end %>>
+    <div class="zammad-switch js-chatSetting">
+       <input name="chat" type="checkbox" id="setting-chat" <% if @chatSetting: %>checked<% end %>>
        <label for="setting-chat"></label>
     </div>
   </form>

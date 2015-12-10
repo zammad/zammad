@@ -1,0 +1,21 @@
+targets:
+  centos-6:
+    dependencies:
+      - httpd
+      - mysql-server
+
+user: "zammad"
+group: "zammad"
+
+after_install: packaging/hooks/postinstall.sh
+
+before:
+  - cp config/database.yml.pkgr config/database.yml
+  - uname -a
+
+env:
+  - RAILS_ENV=production
+  - RAILS_GROUPS=assets
+
+notifications: false
+
