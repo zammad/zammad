@@ -40,7 +40,11 @@ module Channel::EmailBuild
       next if key.to_s == 'attachments'
       next if key.to_s == 'body'
       next if key.to_s == 'content_type'
-      mail[key.to_s] = value.to_s
+      if value && value.class != Array
+        mail[key.to_s] = value.to_s
+      else
+        mail[key.to_s] = value
+      end
     end
 
     # add html part

@@ -4,11 +4,11 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
   end
 
   def perform
-    record = Ticket::Article.find( @article_id )
+    record = Ticket::Article.find(@article_id)
 
     # build subject
-    ticket  = Ticket.lookup( id: record.ticket_id )
-    subject = ticket.subject_build( record.subject )
+    ticket  = Ticket.lookup(id: record.ticket_id)
+    subject = ticket.subject_build(record.subject)
 
     # send email
     if !ticket.group.email_address_id
@@ -16,6 +16,24 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     elsif !ticket.group.email_address.channel_id
       fail "Can't send email, no channel definde for email_address id '#{ticket.group.email_address_id}'"
     end
+
+    # get references headers
+    references = []
+    if record.in_reply_to
+      references.push record.in_reply_to
+    end
+
+    # add all other article message_ids
+    Ticket::Article.where(ticket_id: record.ticket_id).each {|article|
+      if article.in_reply_to && !article.in_reply_to.empty?
+        references.push article.in_reply_to
+      end
+      next if !article.message_id
+      next if !article.message_id.empty?
+      next if article.id == @article_id
+      references.push article.message_id
+    }
+
     channel = ticket.group.email_address.channel
 
     # get linked channel and send
@@ -23,6 +41,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
       {
         message_id: record.message_id,
         in_reply_to: record.in_reply_to,
+        references: references,
         from: record.from,
         to: record.to,
         cc: record.cc,
