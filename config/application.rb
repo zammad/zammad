@@ -41,7 +41,8 @@ module Zammad
       'observer::_user::_ref_object_touch',
       'observer::_user::_ticket_organization',
       'observer::_user::_geo',
-      'observer::_organization::_ref_object_touch'
+      'observer::_organization::_ref_object_touch',
+      'observer::_sla::_ticket_rebuild_escalation'
 
     # REST api path
     config.api_path = '/api/v1'

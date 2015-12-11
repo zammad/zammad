@@ -207,17 +207,17 @@ returns
 
   def escalation_calculation_get_sla
     sla_selected = nil
-    sla_list = Cache.get( 'SLA::List::Active' )
+    sla_list = Cache.get('SLA::List::Active')
     if sla_list.nil?
       sla_list = Sla.all.order(:name)
-      Cache.write( 'SLA::List::Active', sla_list, { expires_in: 1.hour } )
+      Cache.write('SLA::List::Active', sla_list, { expires_in: 1.hour })
     end
     sla_list.each {|sla|
       if !sla.condition || sla.condition.empty?
         sla_selected = sla
       elsif sla.condition
         query_condition, bind_condition = Ticket.selector2sql(sla.condition)
-        ticket = Ticket.where( query_condition, *bind_condition ).find_by(id: id)
+        ticket = Ticket.where(query_condition, *bind_condition).find_by(id: id)
         next if !ticket
         sla_selected = sla
         break
