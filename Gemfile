@@ -33,7 +33,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 
-gem 'twitter', '~> 5.13.0'
+gem 'twitter'
 gem 'koala'
 gem 'mail', '~> 2.5.0'
 
