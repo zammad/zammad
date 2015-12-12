@@ -283,8 +283,8 @@ class CreateBase < ActiveRecord::Migration
       t.integer :related_history_object_id,         null: true
       t.integer :id_to,                             null: true
       t.integer :id_from,                           null: true
-      t.string :value_from,            limit: 250,  null: true
-      t.string :value_to,              limit: 250,  null: true
+      t.string :value_from,            limit: 500,  null: true
+      t.string :value_to,              limit: 500,  null: true
       t.integer :created_by_id,                     null: false
       t.timestamps                                  null: false
     end
@@ -296,8 +296,8 @@ class CreateBase < ActiveRecord::Migration
     add_index :histories, [:history_type_id]
     add_index :histories, [:id_to]
     add_index :histories, [:id_from]
-    add_index :histories, [:value_from]
-    add_index :histories, [:value_to]
+    add_index :histories, [:value_from], length: 255
+    add_index :histories, [:value_to], length: 255
 
     create_table :history_types do |t|
       t.string :name,                   limit: 250, null: false
