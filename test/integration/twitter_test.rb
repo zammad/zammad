@@ -141,6 +141,7 @@ class TwitterTest < ActiveSupport::TestCase
     article = Ticket::Article.find_by( message_id: tweet.id )
 
     assert(article, "article tweet '#{tweet.id}' imported")
+    assert_equal('armin_theo', article.from, 'ticket article inbound from')
     assert_equal(2, article.ticket.articles.count, 'ticket article inbound count')
     assert_equal(reply_text.utf8_to_3bytesutf8, ticket.articles.last.body, 'ticket article inbound body')
   end

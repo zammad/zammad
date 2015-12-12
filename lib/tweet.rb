@@ -97,9 +97,8 @@ class Tweet
     Rails.logger.debug group_id.inspect
 
     if tweet.class.to_s == 'Twitter::DirectMessage'
-
       article = Ticket::Article.find_by(
-        from:    'me_bauer',
+        from:    tweet.in_reply_to_screen_name,
         type_id: Ticket::Article::Type.find_by( name: 'twitter direct-message' ).id,
       )
 
@@ -156,7 +155,7 @@ class Tweet
     end
 
     Ticket::Article.create(
-      from:        user.login,
+      from:        tweet.in_reply_to_screen_name,
       to:          to,
       body:        tweet.text,
       message_id:  tweet.id,
