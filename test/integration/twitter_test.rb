@@ -242,7 +242,7 @@ class TwitterTest < ActiveSupport::TestCase
 
       break if article
 
-      sleep 10
+      sleep 15
     }
 
     assert(article, "inbound article '#{text}' created")
