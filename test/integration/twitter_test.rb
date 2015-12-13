@@ -91,8 +91,8 @@ class TwitterTest < ActiveSupport::TestCase
       title:         text[0, 40],
       customer_id:   user.id,
       group_id:      2,
-      state:         Ticket::State.find_by( name: 'new' ),
-      priority:      Ticket::Priority.find_by( name: '2 normal' ),
+      state:         Ticket::State.find_by(name: 'new'),
+      priority:      Ticket::Priority.find_by(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -135,13 +135,25 @@ class TwitterTest < ActiveSupport::TestCase
     )
 
     # fetch check system account
-    Channel.fetch
+    sleep 10
 
-    # check if follow up article has been created
-    article = Ticket::Article.find_by( message_id: tweet.id )
+    # fetch check system account
+    article = nil
+    (1..2).each {
+      Channel.fetch
+
+      # check if follow up article has been created
+      article = Ticket::Article.find_by(message_id: tweet.id)
+
+      break if article
+
+      sleep 10
+    }
 
     assert(article, "article tweet '#{tweet.id}' imported")
     assert_equal('armin_theo', article.from, 'ticket article inbound from')
+    assert_equal(nil, article.to, 'ticket article inbound to')
+    assert_equal(tweet.id.to_s, article.message_id, 'ticket article inbound message_id')
     assert_equal(2, article.ticket.articles.count, 'ticket article inbound count')
     assert_equal(reply_text.utf8_to_3bytesutf8, ticket.articles.last.body, 'ticket article inbound body')
   end
@@ -161,11 +173,11 @@ class TwitterTest < ActiveSupport::TestCase
     tweet = client.update(
       text,
     )
-    sleep 15
+    sleep 10
 
     # fetch check system account
     article = nil
-    (1..3).each {
+    (1..2).each {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -190,7 +202,8 @@ class TwitterTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert(article, "outbound article created, text: #{reply_text}")
-    sleep 2
+    assert_equal(nil, article.to, 'ticket article outbound to')
+    sleep 5
     tweet_found = false
     client.user_timeline('armin_theo').each { |local_tweet|
       next if local_tweet.id.to_s != article.message_id.to_s
@@ -209,7 +222,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = armin_theo_token
       config.access_token_secret = armin_theo_token_secret
     end
-    dms = client.direct_messages(count: 200)
+    dms = client.direct_messages(count: 40)
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
@@ -219,11 +232,10 @@ class TwitterTest < ActiveSupport::TestCase
       access_token:        me_bauer_token,
       access_token_secret: me_bauer_token_secret
     )
-    dms = client.direct_messages(count: 200)
+    dms = client.direct_messages(count: 40)
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
-
     hash  = '#citheo44' + rand(9999).to_s
     text  = 'How about the details? ' + hash
     dm = client.create_direct_message(
@@ -231,6 +243,7 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "dm with ##{hash} created")
+    sleep 10
 
     # fetch check system account
     article = nil
@@ -242,7 +255,7 @@ class TwitterTest < ActiveSupport::TestCase
 
       break if article
 
-      sleep 15
+      sleep 10
     }
 
     assert(article, "inbound article '#{text}' created")
@@ -275,6 +288,7 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "second dm with ##{hash} created")
+    sleep 10
 
     # fetch check system account
     article = nil
@@ -282,7 +296,7 @@ class TwitterTest < ActiveSupport::TestCase
       Channel.fetch
 
       # check if ticket and article has been created
-      article = Ticket::Article.find_by( message_id: dm.id )
+      article = Ticket::Article.find_by(message_id: dm.id)
 
       break if article
 
@@ -290,6 +304,7 @@ class TwitterTest < ActiveSupport::TestCase
     }
 
     assert(article, "inbound article '#{text}' created")
+    assert_equal(article.ticket.id, ticket.id, 'still the same ticket')
     ticket = article.ticket
     assert(ticket, 'ticket of inbound article exists')
     assert(ticket.articles, 'ticket.articles exists')

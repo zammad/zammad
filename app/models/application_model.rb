@@ -109,7 +109,7 @@ returns
     self.class.reflect_on_all_associations.map { |assoc|
       real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
 
-      next if !params.key?( real_key.to_sym )
+      next if !params.key?(real_key.to_sym)
 
       list_of_items = params[ real_key.to_sym ]
       if params[ real_key.to_sym ].class != Array
@@ -117,9 +117,9 @@ returns
       end
       list = []
       list_of_items.each {|item|
-        list.push( assoc.klass.find(item) )
+        list.push(assoc.klass.find(item))
       }
-      send( assoc.name.to_s + '=', list )
+      send(assoc.name.to_s + '=', list)
     }
   end
 
@@ -142,8 +142,8 @@ returns
     attributes = self.attributes
     self.class.reflect_on_all_associations.map { |assoc|
       real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      if self.respond_to?( real_key )
-        attributes[ real_key ] = send( real_key )
+      if self.respond_to?(real_key)
+        attributes[ real_key ] = send(real_key)
       end
     }
     attributes
@@ -164,10 +164,10 @@ returns
   def self.param_validation(data)
 
     # we do want to set this via database
-    data.delete( :updated_at )
-    data.delete( :created_at )
-    data.delete( :updated_by_id )
-    data.delete( :created_by_id )
+    data.delete(:updated_at)
+    data.delete(:created_at)
+    data.delete(:updated_by_id)
+    data.delete(:created_by_id)
     if data.respond_to?('permit!')
       data.permit!
     end
@@ -245,7 +245,7 @@ returns
       if changes.key?('name')
         name = changes['name'][0]
         key = "#{self.class}::#{name}"
-        Cache.delete( key.to_s )
+        Cache.delete(key.to_s)
       end
       if changes.key?('login')
         name = changes['login'][0]
@@ -317,34 +317,34 @@ returns
 
   def self.lookup(data)
     if data[:id]
-      cache = cache_get( data[:id] )
+      cache = cache_get(data[:id])
       return cache if cache
 
-      record = find_by( id: data[:id] )
-      cache_set( data[:id], record )
+      record = find_by(id: data[:id])
+      cache_set(data[:id], record)
       return record
     elsif data[:name]
-      cache = cache_get( data[:name] )
+      cache = cache_get(data[:name])
       return cache if cache
 
       # do lookup with == to handle case insensitive databases
-      records = where( name: data[:name] )
+      records = where(name: data[:name])
       records.each {|loop_record|
         if loop_record.name == data[:name]
-          cache_set( data[:name], loop_record )
+          cache_set(data[:name], loop_record)
           return loop_record
         end
       }
       return
     elsif data[:login]
-      cache = cache_get( data[:login] )
+      cache = cache_get(data[:login])
       return cache if cache
 
       # do lookup with == to handle case insensitive databases
-      records = where( login: data[:login] )
+      records = where(login: data[:login])
       records.each {|loop_record|
         if loop_record.login == data[:login]
-          cache_set( data[:login], loop_record )
+          cache_set( data[:login], loop_record)
           return loop_record
         end
       }
@@ -358,7 +358,7 @@ returns
 
 create model if not exists (check exists based on id, name, login, email or locale)
 
-  result = Model.create_if_not_exists( attributes )
+  result = Model.create_if_not_exists(attributes)
 
 returns
 
@@ -368,33 +368,33 @@ returns
 
   def self.create_if_not_exists(data)
     if data[:id]
-      record = find_by( id: data[:id] )
+      record = find_by(id: data[:id])
       return record if record
     elsif data[:name]
 
       # do lookup with == to handle case insensitive databases
-      records = where( name: data[:name] )
+      records = where(name: data[:name])
       records.each {|loop_record|
         return loop_record if loop_record.name == data[:name]
       }
     elsif data[:login]
 
       # do lookup with == to handle case insensitive databases
-      records = where( login: data[:login] )
+      records = where(login: data[:login])
       records.each {|loop_record|
         return loop_record if loop_record.login == data[:login]
       }
     elsif data[:email]
 
       # do lookup with == to handle case insensitive databases
-      records = where( email: data[:email] )
+      records = where(email: data[:email])
       records.each {|loop_record|
         return loop_record if loop_record.email == data[:email]
       }
     elsif data[:locale] && data[:source]
 
       # do lookup with == to handle case insensitive databases
-      records = where( locale: data[:locale], source: data[:source] )
+      records = where(locale: data[:locale], source: data[:source])
       records.each {|loop_record|
         return loop_record if loop_record.source == data[:source]
       }
@@ -406,7 +406,7 @@ returns
 
 create or update model (check exists based on id, name, login, email or locale)
 
-  result = Model.create_or_update( attributes )
+  result = Model.create_or_update(attributes)
 
 returns
 
@@ -416,64 +416,64 @@ returns
 
   def self.create_or_update(data)
     if data[:id]
-      record = find_by( id: data[:id] )
+      record = find_by(id: data[:id])
       if record
-        record.update_attributes( data )
+        record.update_attributes(data)
         return record
       end
-      record = new( data )
+      record = new(data)
       record.save
       return record
     elsif data[:name]
 
       # do lookup with == to handle case insensitive databases
-      records = where( name: data[:name] )
+      records = where(name: data[:name])
       records.each {|loop_record|
         if loop_record.name == data[:name]
-          loop_record.update_attributes( data )
+          loop_record.update_attributes(data)
           return loop_record
         end
       }
-      record = new( data )
+      record = new(data)
       record.save
       return record
     elsif data[:login]
 
       # do lookup with == to handle case insensitive databases
-      records = where( login: data[:login] )
+      records = where(login: data[:login])
       records.each {|loop_record|
         if loop_record.login.downcase == data[:login].downcase
-          loop_record.update_attributes( data )
+          loop_record.update_attributes(data)
           return loop_record
         end
       }
-      record = new( data )
+      record = new(data)
       record.save
       return record
     elsif data[:email]
 
       # do lookup with == to handle case insensitive databases
-      records = where( email: data[:email] )
+      records = where(email: data[:email])
       records.each {|loop_record|
         if loop_record.email.downcase == data[:email].downcase
-          loop_record.update_attributes( data )
+          loop_record.update_attributes(data)
           return loop_record
         end
       }
-      record = new( data )
+      record = new(data)
       record.save
       return record
     elsif data[:locale]
 
       # do lookup with == to handle case insensitive databases
-      records = where( locale: data[:locale] )
+      records = where(locale: data[:locale])
       records.each {|loop_record|
         if loop_record.locale.downcase == data[:locale].downcase
-          loop_record.update_attributes( data )
+          loop_record.update_attributes(data)
           return loop_record
         end
       }
-      record = new( data )
+      record = new(data)
       record.save
       return record
     else
@@ -511,9 +511,9 @@ end
     expires_in = 31_536_000 # 1 year
 
     if updated_at.nil?
-      Cache.delete( key )
+      Cache.delete(key)
     else
-      Cache.write( key, updated_at, { expires_in: expires_in } )
+      Cache.write(key, updated_at, { expires_in: expires_in })
     end
   end
 
@@ -555,10 +555,10 @@ end
 =end
 
   def self.notify_clients_support
-    after_create    :notify_clients_after_create
-    after_update    :notify_clients_after_update
-    after_touch     :notify_clients_after_touch
-    after_destroy   :notify_clients_after_destroy
+    after_create  :notify_clients_after_create
+    after_update  :notify_clients_after_update
+    after_touch   :notify_clients_after_touch
+    after_destroy :notify_clients_after_destroy
   end
 
 =begin
@@ -723,7 +723,7 @@ delete search index object, will be executed automatically
 
   def search_index_destroy
     return if !self.class.search_index_support_config
-    SearchIndexBackend.remove( self.class.to_s, id )
+    SearchIndexBackend.remove(self.class.to_s, id)
   end
 
 =begin
@@ -768,7 +768,7 @@ log object create activity stream, if configured - will be executed automaticall
 
   def activity_stream_create
     return if !self.class.activity_stream_support_config
-    activity_stream_log( 'created', self['created_by_id'] )
+    activity_stream_log('created', self['created_by_id'])
   end
 
 =begin
@@ -809,7 +809,7 @@ log object update activity stream, if configured - will be executed automaticall
 
     return if !log
 
-    activity_stream_log( 'updated', self['updated_by_id'] )
+    activity_stream_log('updated', self['updated_by_id'])
   end
 
 =begin
@@ -823,7 +823,7 @@ delete object activity stream, will be executed automatically
 
   def activity_stream_destroy
     return if !self.class.activity_stream_support_config
-    ActivityStream.remove( self.class.to_s, id )
+    ActivityStream.remove(self.class.to_s, id)
   end
 
 =begin
@@ -856,7 +856,7 @@ log object create history, if configured - will be executed automatically
   def history_create
     return if !self.class.history_support_config
     #logger.debug 'create ' + self.changes.inspect
-    history_log( 'created', created_by_id )
+    history_log('created', created_by_id)
 
   end
 
@@ -953,7 +953,7 @@ log object update history with all updated attributes, if configured - will be e
         id_to: value_id[1],
       }
       #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
-      history_log( 'updated', updated_by_id, data )
+      history_log('updated', updated_by_id, data)
     }
   end
 
@@ -968,7 +968,7 @@ delete object history, will be executed automatically
 
   def history_destroy
     return if !self.class.history_support_config
-    History.remove( self.class.to_s, id )
+    History.remove(self.class.to_s, id)
   end
 
 =begin
@@ -985,7 +985,7 @@ returns
 =end
 
   def attachments
-    Store.list( object: self.class.to_s, o_id: id )
+    Store.list(object: self.class.to_s, o_id: id)
   end
 
 =begin
@@ -1049,14 +1049,14 @@ get assets of object list
   def self.assets_of_object_list(list, assets = {})
     list.each {|item|
       require item['object'].to_filename
-      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      record = Kernel.const_get(item['object']).find(item['o_id'])
       assets = record.assets(assets)
       if item['created_by_id']
-        user = User.find( item['created_by_id'] )
+        user = User.find(item['created_by_id'])
         assets = user.assets(assets)
       end
       if item['updated_by_id']
-        user = User.find( item['updated_by_id'] )
+        user = User.find(item['updated_by_id'])
         assets = user.assets(assets)
       end
     }
@@ -1103,7 +1103,7 @@ delete object recent viewed list, will be executed automatically
 =end
 
   def recent_view_destroy
-    RecentView.log_destroy( self.class.to_s, id )
+    RecentView.log_destroy(self.class.to_s, id)
   end
 
 =begin

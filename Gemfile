@@ -14,7 +14,6 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sqlite3'
   gem 'sass-rails' #, github: 'rails/sass-rails'
   gem 'coffee-rails'
   gem 'coffee-script-source'
@@ -53,7 +52,6 @@ gem 'therubyracer'
 
 # e. g. for mysql you need to load mysql
 gem 'mysql2', '~> 0.3.20'
-#gem 'sqlite3'
 
 gem 'net-ldap'
 
