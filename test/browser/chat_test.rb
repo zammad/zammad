@@ -273,7 +273,7 @@ class ChatTest < TestCase
     watch_for(
       browser: agent,
       css: '.active .chat-window',
-      value: 'has left the conversation',
+      value: 'has closed the conversation',
     )
   end
 
@@ -555,7 +555,7 @@ class ChatTest < TestCase
     watch_for(
       browser: agent,
       css: '.active .chat-window',
-      value: 'has left the conversation',
+      value: 'has closed the conversation',
     )
   end
 

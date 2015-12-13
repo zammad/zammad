@@ -45,6 +45,18 @@ job_integration_email_helper:
     - rake db:migrate
     - ruby -I test/ test/integration/email_helper_test.rb
 
+job_integration_twitter:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:drop;
+    - rake db:create
+    - rake db:migrate
+    - rake db:seed
+    - ruby -I test/ test/integration/twitter_test.rb
+
 job_integration_geo_ip:
   stage: test
   tags:

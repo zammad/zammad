@@ -387,7 +387,7 @@ i18n(Changes):<br>
   def template_footer(_user, _ticket, _article)
     '
 <p>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">i18n(View this in Zammad)</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">i18n(View this in Zammad)</a>
 </p>
 <div class="footer">
   <a href="#{config.http_type}://#{config.fqdn}/#profile/notifications">i18n(Manage your notifications settings)</a>

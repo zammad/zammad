@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
     @bind('i18n:translation_update_list', =>
       @load('i18n:translation_update_list')
     )
-    @bind('i18n:translation_update ui:rerender', =>
+    @bind('i18n:translation_update', =>
       @load()
     )
 
@@ -32,7 +32,7 @@ class Index extends App.ControllerContent
     @html App.view('translation/index')(
       currentLanguage: currentLanguage
     )
-    @load()
+    @load('render')
 
   load: (event) =>
     @ajax(
@@ -53,27 +53,27 @@ class Index extends App.ControllerContent
             else
               @stringsTranslated.push item
 
-        if !@translationToDo
+        if !@translationToDo || event is 'render'
           @translationToDo = new TranslationToDo(
             el:             @$('.js-ToDo')
             locale:         @locale
             updateOnServer: @updateOnServer
             getAttributes:  @getAttributes
           )
-        if !event || event is 'i18n:translation_update_todo'
+        if !event || event is 'i18n:translation_update_todo'|| event is 'render'
           @translationToDo.update(
             stringsNotTranslated: @stringsNotTranslated
             stringsTranslated:    @stringsTranslated
             times:                @times
           )
-        if !@translationList
+        if !@translationList || event is 'render'
           @translationList = new TranslationList(
             el:             @$('.js-List')
             locale:         @locale
             updateOnServer: @updateOnServer
             getAttributes:  @getAttributes
           )
-        if !event || event is 'i18n:translation_update_list'
+        if !event || event is 'i18n:translation_update_list'|| event is 'render'
           @translationList.update(
             stringsNotTranslated: @stringsNotTranslated
             stringsTranslated:    @stringsTranslated
@@ -85,7 +85,6 @@ class Index extends App.ControllerContent
   release: =>
     rerender = ->
       App.Event.trigger('ui:rerender')
-      console.log('rr')
     if @translationList.changes()
       App.Delay.set(rerender, 400)
 
@@ -225,10 +224,6 @@ class TranslationToDo extends App.Controller
 
   render: =>
 
-    if !App.i18n.notTranslatedFeatureEnabled(@locale)
-      @html App.view('translation/english')()
-      return
-
     if !App.i18n.getNotTranslated(@locale) && _.isEmpty(@stringsNotTranslated)
       @html ''
       return
@@ -294,10 +289,11 @@ class TranslationList extends App.Controller
     @render()
 
   render: =>
-    return if _.isEmpty(@stringsTranslated)
+    return if _.isEmpty(@stringsTranslated) && _.isEmpty(@times)
     @html App.view('translation/list')(
-      times:   @times
-      strings: @stringsTranslated
+      times:                @times
+      strings:              @stringsTranslated
+      notSourceTranslation: App.i18n.notTranslatedFeatureEnabled(@locale)
     )
 
   changes: =>

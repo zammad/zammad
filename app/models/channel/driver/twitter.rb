@@ -5,7 +5,7 @@ class Channel::Driver::Twitter
   def fetch (_adapter_options, channel)
 
     @channel = channel
-    @tweet   = Tweet.new( @channel[:options][:auth] )
+    @tweet   = Tweet.new(@channel[:options][:auth])
     @sync    = @channel[:options][:sync]
 
     Rails.logger.debug 'twitter fetch started'
@@ -21,8 +21,8 @@ class Channel::Driver::Twitter
 
   def send(article, _notification = false)
 
-    @channel = Channel.find_by( area: 'Twitter::Account', active: true )
-    @tweet   = Tweet.new( @channel[:options][:auth] )
+    @channel = Channel.find_by(area: 'Twitter::Account', active: true)
+    @tweet   = Tweet.new(@channel[:options][:auth])
 
     tweet = @tweet.from_article(article)
     disconnect
@@ -49,12 +49,12 @@ class Channel::Driver::Twitter
       Rails.logger.debug " - searching for '#{search[:term]}'"
 
       counter = 0
-      @tweet.client.search( search[:term], result_type: result_type ).collect { |tweet|
+      @tweet.client.search(search[:term], result_type: result_type).collect { |tweet|
 
         break if search[:limit] && search[:limit] <= counter
-        break if Ticket::Article.find_by( message_id: tweet.id.to_s )
+        break if Ticket::Article.find_by(message_id: tweet.id)
 
-        @tweet.to_group( tweet, search[:group_id] )
+        @tweet.to_group(tweet, search[:group_id])
 
         counter += 1
       }
@@ -72,9 +72,9 @@ class Channel::Driver::Twitter
     @tweet.client.mentions_timeline.each { |tweet|
 
       break if @sync[:mentions][:limit] && @sync[:mentions][:limit] <= counter
-      break if Ticket::Article.find_by( message_id: tweet.id.to_s )
+      break if Ticket::Article.find_by(message_id: tweet.id)
 
-      @tweet.to_group( tweet, @sync[:mentions][:group_id] )
+      @tweet.to_group(tweet, @sync[:mentions][:group_id])
 
       counter += 1
     }
@@ -91,9 +91,9 @@ class Channel::Driver::Twitter
     @tweet.client.direct_messages.each { |tweet|
 
       break if @sync[:direct_messages][:limit] && @sync[:direct_messages][:limit] <= counter
-      break if Ticket::Article.find_by( message_id: tweet.id.to_s )
+      break if Ticket::Article.find_by(message_id: tweet.id)
 
-      @tweet.to_group( tweet, @sync[:direct_messages][:group_id] )
+      @tweet.to_group(tweet, @sync[:direct_messages][:group_id])
 
       counter += 1
     }

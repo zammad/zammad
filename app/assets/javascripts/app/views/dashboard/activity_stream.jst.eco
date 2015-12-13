@@ -8,7 +8,9 @@
       <%- @humanTime(@item.created_at, false, 'activity-time') %>
     </span>
     <span class="activity-icon">
-      <span class="<%- @item.cssIcon %> icon"></span>
+      <% if @item.cssIcon: %>
+      <%- @Icon(@item.cssIcon) %>
+      <% end %>
     </span>
   </a>
 </div>

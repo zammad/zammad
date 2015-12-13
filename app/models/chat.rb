@@ -115,4 +115,55 @@ class Chat < ApplicationModel
   def self.seads_available(diff = 2.minutes)
     seads_total(diff) - active_chat_count
   end
+
+=begin
+
+cleanup old chat messages
+
+  Chat.cleanup
+
+optional you can parse the max oldest chat entries
+
+  Chat.cleanup(3.months)
+
+=end
+
+  def self.cleanup(diff = 3.months)
+    Chat::Session.where(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each {|chat_session|
+      Chat::Message.where(chat_session_id: chat_session.id).delete_all
+      chat_session.destroy
+    }
+
+    true
+  end
+
+=begin
+
+close chat sessions where participients are offline
+
+  Chat.cleanup_close
+
+optional you can parse the max oldest chat sessions
+
+  Chat.cleanup_close(5.minutes)
+
+=end
+
+  def self.cleanup_close(diff = 5.minutes)
+    Chat::Session.where.not(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each {|chat_session|
+      next if chat_session.recipients_active?
+      chat_session.state = 'closed'
+      chat_session.save
+      message = {
+        event: 'chat_session_closed',
+        data: {
+          session_id: chat_session.session_id,
+          realname: 'System',
+        },
+      }
+      chat_session.send_to_recipients(message)
+    }
+    true
+  end
+
 end

@@ -17,7 +17,7 @@ class App.CustomerChat extends App.Controller
     if preferences && preferences.chat && preferences.chat.max_windows
       @maxChatWindows = parseInt(preferences.chat.max_windows)
 
-    @pushStateStarted = false
+    @pushStateIntervalOn = undefined
     @messageCounter = 0
     @meta =
       active: false
@@ -34,9 +34,8 @@ class App.CustomerChat extends App.Controller
         App.Collection.loadAssets(data.assets)
       @meta = data
       @updateMeta()
-      if !@pushStateStarted
-        @pushStateStarted = true
-        @interval(@pushState, 30000, 'pushState')
+      if @pushStateIntervalOn is undefined
+        @startPushState()
     )
 
     # add new chat window
@@ -60,6 +59,15 @@ class App.CustomerChat extends App.Controller
       @render()
       App.WebSocket.send(event:'chat_status_agent')
     )
+
+  startPushState: =>
+    return if @pushStateIntervalOn
+    @pushStateIntervalOn = true
+    @interval(@pushState, 55000, 'pushState')
+
+  stopPushState: =>
+    @pushStateIntervalOn = false
+    @clearInterval('pushState')
 
   pushState: =>
     App.WebSocket.send(
@@ -113,23 +121,20 @@ class App.CustomerChat extends App.Controller
     if state is undefined
       return @meta.active
 
+    @meta.active = state
+
     # check if min one chat is active
     if state
+      @startPushState()
       preferences = @Session.get('preferences')
       if !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
         @notify(
           type: 'error'
           msg:  App.i18n.translateContent('To be able to chat you need to select min. one chat topic in settings!')
         )
-
-    @meta.active = state
-
-    # write state
-    App.WebSocket.send(
-      event:'chat_agent_state'
-      data:
-        active: @meta.active
-    )
+    else
+      @stopPushState()
+      @pushState()
 
   updateNavMenu: =>
     delay = ->
@@ -252,10 +257,16 @@ class ChatWindow extends App.Controller
       return if data.self_written
       @receiveMessage(data.message.content)
     )
-    @bind('chat_session_left chat_session_closed', (data) =>
+    @bind('chat_session_left', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
+      @goOffline()
+    )
+    @bind('chat_session_closed', (data) =>
+      return if data.session_id isnt @session.session_id
+      return if data.self_written
+      @addStatusMessage("<strong>#{data.realname}</strong> has closed the conversation")
       @goOffline()
     )
     @bind('chat_focus', (data) =>
@@ -492,9 +503,10 @@ class ChatWindow extends App.Controller
         label: label
         time: time
 
-  addStatusMessage: (message) ->
+  addStatusMessage: (message, args) ->
     @body.append App.view('customer_chat/chat_status_message')
       message: message
+      args: args
 
     @scrollToBottom()
 

@@ -18,7 +18,7 @@ class LongPollingController < ApplicationController
       params['data'] = {}
     end
     session_data = {}
-    if current_user.id
+    if current_user && current_user.id
       session_data = { 'id' => current_user.id }
     end
 
