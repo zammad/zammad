@@ -1829,11 +1829,13 @@ kbd {
   margin-left: auto;
   padding-left: 20px;
   display: flex;
+  justify-content: flex-end;
   flex: 1;
+  min-width: 0; /* firefox flexbug */
   
   .btn {
     overflow: hidden;
-    text-overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
