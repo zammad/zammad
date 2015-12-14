@@ -61,13 +61,8 @@ class TestCase < Test::Unit::TestCase
     )
 
     # avoid "Cannot read property 'get_Current' of undefined" issues
-    begin
-      browser_instance_preferences(local_browser)
-    rescue
-      # just try again
-      sleep 10
-      browser_instance_preferences(local_browser)
-    end
+    sleep 5
+    browser_instance_preferences(local_browser)
 
     local_browser
   end
