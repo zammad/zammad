@@ -1827,8 +1827,15 @@ kbd {
 
 .page-header-meta {
   margin-left: auto;
-  padding-left: 9px;
+  padding-left: 20px;
   display: flex;
+  flex: 1;
+  
+  .btn {
+    overflow: hidden;
+    text-overflow: hidden;
+    white-space: nowrap;
+  }
 
   .btn + .btn {
     margin-left: 9px;
