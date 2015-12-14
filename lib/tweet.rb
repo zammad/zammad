@@ -68,6 +68,24 @@ class Tweet
       user = User.create(user_data)
     end
 
+    if user_data[:image_source]
+      avatar = Avatar.add(
+        object: 'User',
+        o_id: user.id,
+        url: user_data[:image_source],
+        source: 'twitter',
+        deletable: true,
+        updated_by_id: user.id,
+        created_by_id: user.id,
+      )
+
+      # update user link
+      if avatar && user.image != avatar.store_hash
+        user.image = avatar.store_hash
+        user.save
+      end
+    end
+
     # create or update authorization
     auth_data = {
       uid:      tweet_user.id,
@@ -80,8 +98,6 @@ class Tweet
     else
       Authorization.create(auth_data)
     end
-
-    UserInfo.current_user_id = user.id
 
     user
   end
@@ -111,6 +127,8 @@ class Tweet
         return ticket if ticket
       end
     end
+
+    UserInfo.current_user_id = user.id
 
     Ticket.create(
       customer_id: user.id,
@@ -148,11 +166,13 @@ class Tweet
       from = tweet.sender.screen_name
     elsif tweet.class == Twitter::Tweet
       article_type = 'twitter status'
-      from = tweet.in_reply_to_screen_name
+      from = tweet.user.screen_name
       in_reply_to = tweet.in_reply_to_status_id
     else
       fail "Unknown tweet type '#{tweet.class}'"
     end
+
+    UserInfo.current_user_id = user.id
 
     Ticket::Article.create(
       from:        from,

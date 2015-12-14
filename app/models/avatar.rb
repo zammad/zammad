@@ -8,12 +8,11 @@ class Avatar < ApplicationModel
 add an avatar based on auto detection (email address)
 
   Avatar.auto_detection(
-    :object        => 'User',
-    :o_id          => user.id,
-    :url           => 'somebody@example.com',
-    :source        => 'web',
-    :updated_by_id => 1,
-    :created_by_id => 1,
+    object: 'User',
+    o_id: user.id,
+    url: 'somebody@example.com',
+    updated_by_id: 1,
+    created_by_id: 1,
   )
 
 =end
@@ -41,20 +40,20 @@ add an avatar based on auto detection (email address)
 add a avatar
 
   Avatar.add(
-    :object  => 'User',
-    :o_id    => user.id,
-    :default => true,
-    :full    => {
-      :content   => '...',
-      :mime_type => 'image/png',
+    object: 'User',
+    o_id: user.id,
+    default: true,
+    full: {
+      content: '...',
+      mime_type: 'image/png',
     },
-    :resize           => {
-      :content   => '...',
-      :mime_type => 'image/png',
+    resize: {
+      content: '...',
+      mime_type: 'image/png',
     },
-    :source        => 'web',
-    :updated_by_id => 1,
-    :created_by_id => 1,
+    source: 'web',
+    updated_by_id: 1,
+    created_by_id: 1,
   )
 
 =end
@@ -214,7 +213,7 @@ add a avatar
 
 set avatars as default
 
-  Avatar.set_default( 'User', 123, avatar_id )
+  Avatar.set_default('User', 123, avatar_id)
 
 =end
 
@@ -238,12 +237,12 @@ set avatars as default
 
 remove all avatars of an object
 
-  Avatar.remove( 'User', 123 )
+  Avatar.remove('User', 123)
 
 =end
 
-  def self.remove( object_name, o_id )
-    object_id = ObjectLookup.by_name( object_name )
+  def self.remove(object_name, o_id)
+    object_id = ObjectLookup.by_name(object_name)
     Avatar.where(
       object_lookup_id: object_id,
       o_id: o_id,
@@ -264,12 +263,12 @@ remove all avatars of an object
 
 remove one avatars of an object
 
-  Avatar.remove_one( 'User', 123, avatar_id )
+  Avatar.remove_one('User', 123, avatar_id)
 
 =end
 
-  def self.remove_one( object_name, o_id, avatar_id )
-    object_id = ObjectLookup.by_name( object_name )
+  def self.remove_one(object_name, o_id, avatar_id)
+    object_id = ObjectLookup.by_name(object_name)
     Avatar.where(
       object_lookup_id: object_id,
       o_id: o_id,
@@ -281,16 +280,16 @@ remove one avatars of an object
 
 return all avatars of an user
 
-  avatars = Avatar.list( 'User', 123 )
+  avatars = Avatar.list('User', 123)
 
 =end
 
   def self.list(object_name, o_id)
-    object_id = ObjectLookup.by_name( object_name )
+    object_id = ObjectLookup.by_name(object_name)
     avatars = Avatar.where(
       object_lookup_id: object_id,
       o_id: o_id,
-    ).order( 'initial DESC, deletable ASC, created_at ASC, id DESC' )
+    ).order('initial DESC, deletable ASC, created_at ASC, id DESC')
 
     # add initial avatar
     add_init_avatar(object_id, o_id)
@@ -300,7 +299,7 @@ return all avatars of an user
       data = avatar.attributes
       if avatar.store_resize_id
         file            = Store.find(avatar.store_resize_id)
-        data['content'] = "data:#{file.preferences['Mime-Type']};base64,#{Base64.strict_encode64( file.content )}"
+        data['content'] = "data:#{file.preferences['Mime-Type']};base64,#{Base64.strict_encode64(file.content)}"
       end
       avatar_list.push data
     end
@@ -311,7 +310,7 @@ return all avatars of an user
 
 get default avatar image of user by hash
 
-  store = Avatar.get_by_hash( hash )
+  store = Avatar.get_by_hash(hash)
 
 returns:
 
@@ -331,7 +330,7 @@ returns:
 
 get default avatar of user by user id
 
-  avatar = Avatar.get_default( 'User', user_id )
+  avatar = Avatar.get_default('User', user_id)
 
 returns:
 
@@ -340,7 +339,7 @@ returns:
 =end
 
   def self.get_default(object_name, o_id)
-    object_id = ObjectLookup.by_name( object_name )
+    object_id = ObjectLookup.by_name(object_name)
     Avatar.find_by(
       object_lookup_id: object_id,
       o_id: o_id,
@@ -352,7 +351,7 @@ returns:
     avatars = Avatar.where(
       object_lookup_id: object_id,
       o_id: o_id,
-    ).order( 'created_at ASC, id DESC' )
+    ).order('created_at ASC, id DESC')
     avatars.each do |avatar|
       next if avatar.id == avatar_id
       avatar.default = false

@@ -84,7 +84,6 @@ class App.TicketZoomArticleNew extends App.Controller
     # set article type and expand text area
     @bind('ui::ticket::setArticleType', (data) =>
       return if data.ticket.id isnt @ticket_id
-      #@setArticleType(data.type.name)
 
       @openTextarea(null, true)
       for key, value of data.article
@@ -94,7 +93,7 @@ class App.TicketZoomArticleNew extends App.Controller
           @$('[name="' + key + '"]').val(value)
 
       # preselect article type
-      @setArticleType('email')
+      @setArticleType(data.type.name)
     )
 
     # reset new article screen

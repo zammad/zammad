@@ -243,7 +243,7 @@ class AgentTicketActionLevel5Test < TestCase
 
     # execute reply
     click(
-      css: '.active [data-type="reply"]',
+      css: '.active [data-type="emailReply"]',
     )
 
     # check if signature exists
@@ -267,7 +267,7 @@ class AgentTicketActionLevel5Test < TestCase
     # execute reply
     sleep 5 # time to recognice form changes
     click(
-      css: '.active [data-type="reply"]',
+      css: '.active [data-type="emailReply"]',
     )
 
     # check if signature exists

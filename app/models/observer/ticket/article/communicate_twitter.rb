@@ -1,8 +1,5 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-# http://stem.ps/rails/2015/01/25/ruby-gotcha-toplevel-constant-referenced-by.html
-require 'channel/driver/twitter'
-
 class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
   observe 'ticket::_article'
 
@@ -28,9 +25,26 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     tweet = channel.deliver(
       type:        type['name'],
       to:          record.to,
-      body:        record.body,
+      body:        record.body.html2text,
       in_reply_to: record.in_reply_to
     )
+
+    # fill article with tweet info
+    record.from = tweet.user.screen_name
+    if tweet.user_mentions
+      to = ''
+      twitter_mention_ids = []
+      tweet.user_mentions.each {|user|
+        if to != ''
+          to += ' '
+        end
+        to += "@#{user.screen_name}"
+        twitter_mention_ids.push user.id
+      }
+      record.to = to
+      record.preferences[:twitter_mention_ids] = twitter_mention_ids
+    end
+
     record.message_id = tweet.id
     record.save
   end
