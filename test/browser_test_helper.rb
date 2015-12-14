@@ -59,11 +59,7 @@ class TestCase < Test::Unit::TestCase
       url: ENV['REMOTE_URL'],
       desired_capabilities: caps,
     )
-
-    # avoid "Cannot read property 'get_Current' of undefined" issues
-    sleep 5
     browser_instance_preferences(local_browser)
-
     local_browser
   end
 
