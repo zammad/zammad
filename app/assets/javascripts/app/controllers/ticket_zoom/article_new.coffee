@@ -18,8 +18,8 @@ class App.TicketZoomArticleNew extends App.Controller
     'click .js-articleTypeItem':     'selectArticleType'
     'click .js-selectedArticleType': 'showSelectableArticleType'
     'click .js-mail-inputs':         'stopPropagation'
-    'click .js-writeArea':           'stopPropagation'
-    'click .list-entry-type div':    'change_type'
+    'click .js-writeArea':           'propagateOpenTextarea'
+    'click .list-entry-type div':    'changeType'
     'focus .js-textarea':            'openTextarea'
 
   constructor: ->
@@ -216,9 +216,8 @@ class App.TicketZoomArticleNew extends App.Controller
         )
       @subscribeIdTextModule = ticket.subscribe( callback )
 
-  change_type: (e) ->
+  changeType: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
-    # store $(this).data('value')
 
   toggleVisibility: (event) ->
     event.stopPropagation()
@@ -308,7 +307,12 @@ class App.TicketZoomArticleNew extends App.Controller
   scrollToBottom: ->
     @el.scrollParent().scrollTop @el.scrollParent().prop('scrollHeight')
 
+  propagateOpenTextarea: (event) ->
+    event.stopPropagation()
+    @textarea.focus()
+
   openTextarea: (event, withoutAnimation) =>
+    event.stopPropagation()
     if @articleNewEdit.hasClass('is-open')
       return
 
