@@ -41,13 +41,13 @@ class TestCase < Test::Unit::TestCase
       @browsers = {}
     end
     if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
-      local_browser = Selenium::WebDriver.for( browser.to_sym, profile: profile )
+      local_browser = Selenium::WebDriver.for(browser.to_sym, profile: profile)
       browser_instance_preferences(local_browser)
       @browsers[local_browser.hash] = local_browser
       return local_browser
     end
 
-    caps = Selenium::WebDriver::Remote::Capabilities.send( browser )
+    caps = Selenium::WebDriver::Remote::Capabilities.send(browser)
     if ENV['BROWSER_OS']
       caps.platform = ENV['BROWSER_OS']
     end
@@ -59,8 +59,16 @@ class TestCase < Test::Unit::TestCase
       url: ENV['REMOTE_URL'],
       desired_capabilities: caps,
     )
-    browser_instance_preferences(local_browser)
-    @browsers[local_browser.hash] = local_browser
+
+    # avoid "Cannot read property 'get_Current' of undefined" issues
+    begin
+      browser_instance_preferences(local_browser)
+    rescue
+      # just try again
+      sleep 10
+      browser_instance_preferences(local_browser)
+    end
+
     local_browser
   end
 
