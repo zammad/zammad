@@ -6,11 +6,15 @@ class Channel::Driver::Smtp
 
   instance = Channel::Driver::Smtp.new
   instance.send(
-    host:                 'some.host',
-    port:                 25,
-    enable_starttls_auto: true, # optional
-    user:                 'someuser',
-    password:             'somepass'
+    {
+      host:                 'some.host',
+      port:                 25,
+      enable_starttls_auto: true, # optional
+      user:                 'someuser',
+      password:             'somepass'
+    },
+    mail_attributes,
+    notification
   )
 
 =end

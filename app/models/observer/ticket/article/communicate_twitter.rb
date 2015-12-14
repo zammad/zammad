@@ -12,22 +12,27 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # if sender is customer, do not communication
-    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
+    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return if sender.nil?
     return if sender['name'] == 'Customer'
 
     # only apply on tweets
-    type = Ticket::Article::Type.lookup( id: record.type_id )
-    return if type['name'] !~ /\Atwitter/
+    type = Ticket::Article::Type.lookup(id: record.type_id)
+    return if type['name'] !~ /\Atwitter/i
 
-    twitter = Channel::Driver::Twitter.new
-    tweet   = twitter.send({
-                             type:        type['name'],
-                             to:          record.to,
-                             body:        record.body,
-                             in_reply_to: record.in_reply_to
-                           })
+    ticket = Ticket.lookup(id: record.ticket_id)
+    fail "Can't find ticket.preferences for Ticket.find(#{record.ticket_id})" if !ticket.preferences
+    fail "Can't find ticket.preferences['channel_id'] for Ticket.find(#{record.ticket_id})" if !ticket.preferences['channel_id']
+    channel = Channel.lookup(id: ticket.preferences['channel_id'])
+    fail "Channel.find(#{channel.id}) isn't a twitter channel!" if channel.options[:adapter] !~ /\Atwitter/i
+    tweet = channel.deliver(
+      type:        type['name'],
+      to:          record.to,
+      body:        record.body,
+      in_reply_to: record.in_reply_to
+    )
     record.message_id = tweet.id
     record.save
   end
+
 end

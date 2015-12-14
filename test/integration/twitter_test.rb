@@ -48,7 +48,7 @@ class TwitterTest < ActiveSupport::TestCase
   # add channel
   current = Channel.where(area: 'Twitter::Account')
   current.each(&:destroy)
-  Channel.create(
+  channel = Channel.create(
     area: 'Twitter::Account',
     options: {
       adapter: 'twitter',
@@ -93,6 +93,9 @@ class TwitterTest < ActiveSupport::TestCase
       group_id:      2,
       state:         Ticket::State.find_by(name: 'new'),
       priority:      Ticket::Priority.find_by(name: '2 normal'),
+      preferences: {
+        channel_id: channel.id,
+      },
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -173,7 +176,7 @@ class TwitterTest < ActiveSupport::TestCase
     tweet = client.update(
       text,
     )
-    sleep 10
+    sleep 15
 
     # fetch check system account
     article = nil
@@ -243,7 +246,7 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "dm with ##{hash} created")
-    sleep 10
+    sleep 15
 
     # fetch check system account
     article = nil
@@ -288,7 +291,7 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "second dm with ##{hash} created")
-    sleep 10
+    sleep 15
 
     # fetch check system account
     article = nil
@@ -321,6 +324,7 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "third dm with ##{hash} created")
+    sleep 15
 
     # fetch check system account
     article = nil

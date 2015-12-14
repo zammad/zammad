@@ -1,12 +1,55 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
 
+=begin
+
+fetch tweets from twitter account
+
+  options = {
+    adapter: 'twitter',
+    auth: {
+      consumer_key:       consumer_key,
+      consumer_secret:    consumer_secret,
+      oauth_token:        armin_theo_token,
+      oauth_token_secret: armin_theo_token_secret,
+    },
+    sync: {
+      search: [
+        {
+          term: '#citheo42',
+          group_id: 2,
+        },
+        {
+          term: '#citheo24',
+          group_id: 1,
+        },
+      ],
+      mentions: {
+        group_id: 2,
+      },
+      direct_messages: {
+        group_id: 2,
+      }
+    }
+  }
+
+  instance = Channel::Driver::Twitter.new
+  result = instance.fetch(options, channel)
+
+returns
+
+  {
+    result: 'ok',
+  }
+
+=end
+
 class Channel::Driver::Twitter
 
-  def fetch (_adapter_options, channel)
+  def fetch (options, channel)
 
+    @tweet   = Tweet.new(options[:auth])
+    @sync    = options[:sync]
     @channel = channel
-    @tweet   = Tweet.new(@channel[:options][:auth])
-    @sync    = @channel[:options][:sync]
 
     Rails.logger.debug 'twitter fetch started'
 
@@ -17,16 +60,39 @@ class Channel::Driver::Twitter
     disconnect
 
     Rails.logger.debug 'twitter fetch completed'
+
+    {
+      result: 'ok',
+    }
   end
 
-  def send(article, _notification = false)
+=begin
 
-    @channel = Channel.find_by(area: 'Twitter::Account', active: true)
-    @tweet   = Tweet.new(@channel[:options][:auth])
+  instance = Channel::Driver::Twitter.new
+  instance.send(
+    {
+      adapter: 'twitter',
+      auth: {
+        consumer_key:       consumer_key,
+        consumer_secret:    consumer_secret,
+        oauth_token:        armin_theo_token,
+        oauth_token_secret: armin_theo_token_secret,
+      },
+    },
+    twitter_attributes,
+    notification
+  )
 
-    tweet = @tweet.from_article(article)
+=end
+
+  def send(options, article, _notification = false)
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
+    @tweet = Tweet.new(options[:auth])
+    tweet  = @tweet.from_article(article)
     disconnect
-
     tweet
   end
 
@@ -54,7 +120,7 @@ class Channel::Driver::Twitter
         break if search[:limit] && search[:limit] <= counter
         break if Ticket::Article.find_by(message_id: tweet.id)
 
-        @tweet.to_group(tweet, search[:group_id])
+        @tweet.to_group(tweet, search[:group_id], @channel)
 
         counter += 1
       }
@@ -74,7 +140,7 @@ class Channel::Driver::Twitter
       break if @sync[:mentions][:limit] && @sync[:mentions][:limit] <= counter
       break if Ticket::Article.find_by(message_id: tweet.id)
 
-      @tweet.to_group(tweet, @sync[:mentions][:group_id])
+      @tweet.to_group(tweet, @sync[:mentions][:group_id], @channel)
 
       counter += 1
     }
@@ -93,7 +159,7 @@ class Channel::Driver::Twitter
       break if @sync[:direct_messages][:limit] && @sync[:direct_messages][:limit] <= counter
       break if Ticket::Article.find_by(message_id: tweet.id)
 
-      @tweet.to_group(tweet, @sync[:direct_messages][:group_id])
+      @tweet.to_group(tweet, @sync[:direct_messages][:group_id], @channel)
 
       counter += 1
     }

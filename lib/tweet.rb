@@ -86,7 +86,7 @@ class Tweet
     user
   end
 
-  def to_ticket(tweet, user, group_id)
+  def to_ticket(tweet, user, group_id, channel)
 
     Rails.logger.debug 'Create ticket from tweet...'
     Rails.logger.debug tweet.inspect
@@ -118,6 +118,9 @@ class Tweet
       group_id:    group_id,
       state_id:    Ticket::State.find_by(name: 'new').id,
       priority_id: Ticket::Priority.find_by(name: '2 normal').id,
+      preferences: {
+        channel_id: channel.id
+      },
     )
   end
 
@@ -164,7 +167,7 @@ class Tweet
     )
   end
 
-  def to_group(tweet, group_id)
+  def to_group(tweet, group_id, channel)
 
     Rails.logger.debug 'import tweet'
 
@@ -177,19 +180,19 @@ class Tweet
       # check if parent exists
       user = to_user(tweet)
       if tweet.class == Twitter::DirectMessage
-        ticket = to_ticket(tweet, user, group_id)
+        ticket = to_ticket(tweet, user, group_id, channel)
         to_article(tweet, user, ticket)
       elsif tweet.class == Twitter::Tweet
-        if tweet.in_reply_to_status_id
+        if tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
           existing_article = Ticket::Article.find_by(message_id: tweet.in_reply_to_status_id)
           if existing_article
             ticket = existing_article.ticket
           else
             parent_tweet = @client.status(tweet.in_reply_to_status_id)
-            ticket       = to_group(parent_tweet, group_id)
+            ticket       = to_group(parent_tweet, group_id, channel)
           end
         else
-          ticket = to_ticket(tweet, user, group_id)
+          ticket = to_ticket(tweet, user, group_id, channel)
         end
         to_article(tweet, user, ticket)
       else
