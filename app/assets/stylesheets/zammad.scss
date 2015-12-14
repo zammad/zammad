@@ -1809,10 +1809,19 @@ kbd {
   justify-content: center;
 }
 
-.page-header-title h1,
-.page-header-title h2 {
-  margin-top: 9px;
-  margin-bottom: 7px;
+.page-header-title {
+  display: flex;
+  align-items: center;
+  
+  .zammad-switch {
+    margin-right: 9px;
+  }
+
+  h1,
+  h2 {
+    margin-top: 9px;
+    margin-bottom: 7px;
+  }
 }
 
 .page-header-center {
