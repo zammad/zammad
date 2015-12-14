@@ -30,19 +30,30 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     )
 
     # fill article with tweet info
-    record.from = tweet.user.screen_name
-    if tweet.user_mentions
-      to = ''
-      twitter_mention_ids = []
-      tweet.user_mentions.each {|user|
-        if to != ''
-          to += ' '
-        end
-        to += "@#{user.screen_name}"
-        twitter_mention_ids.push user.id
-      }
-      record.to = to
-      record.preferences[:twitter_mention_ids] = twitter_mention_ids
+
+    # direct message
+    if tweet.class == Twitter::DirectMessage
+      record.from = "@#{tweet.sender.screen_name}"
+      record.to = "@#{tweet.recipient.screen_name}"
+
+    # regular tweet
+    elsif tweet.class == Twitter::Tweet
+      record.from = "@#{tweet.user.screen_name}"
+      if tweet.user_mentions
+        to = ''
+        twitter_mention_ids = []
+        tweet.user_mentions.each {|user|
+          if to != ''
+            to += ' '
+          end
+          to += "@#{user.screen_name}"
+          twitter_mention_ids.push user.id
+        }
+        record.to = to
+        record.preferences[:twitter_mention_ids] = twitter_mention_ids
+      end
+    else
+      fail "Unknown tweet type '#{tweet.class}'"
     end
 
     record.message_id = tweet.id

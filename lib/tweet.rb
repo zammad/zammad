@@ -110,22 +110,16 @@ class Tweet
     Rails.logger.debug group_id.inspect
 
     if tweet.class == Twitter::DirectMessage
-      article = Ticket::Article.find_by(
-        from:    tweet.sender.screen_name,
-        type_id: Ticket::Article::Type.find_by(name: 'twitter direct-message').id,
-      )
-      if article
-        ticket = Ticket.find_by(
-          id:          article.ticket_id,
-          customer_id: user.id,
-          state:       Ticket::State.where.not(
-            state_type_id: Ticket::StateType.where(
-              name: %w(closed merged removed),
-            )
+      ticket = Ticket.find_by(
+        create_article_type: Ticket::Article::Type.lookup(name: 'twitter direct-message'),
+        customer_id:         user.id,
+        state:               Ticket::State.where.not(
+          state_type_id: Ticket::StateType.where(
+            name: %w(closed merged removed),
           )
         )
-        return ticket if ticket
-      end
+      )
+      return ticket if ticket
     end
 
     UserInfo.current_user_id = user.id
@@ -134,8 +128,8 @@ class Tweet
       customer_id: user.id,
       title:       "#{tweet.text[0, 37]}...",
       group_id:    group_id,
-      state_id:    Ticket::State.find_by(name: 'new').id,
-      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
+      state:       Ticket::State.find_by(name: 'new'),
+      priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
         channel_id: channel.id
       },
@@ -162,11 +156,11 @@ class Tweet
     in_reply_to = nil
     if tweet.class == Twitter::DirectMessage
       article_type = 'twitter direct-message'
-      to = tweet.recipient.screen_name
-      from = tweet.sender.screen_name
+      to = "@#{tweet.recipient.screen_name}"
+      from = "@#{tweet.sender.screen_name}"
     elsif tweet.class == Twitter::Tweet
       article_type = 'twitter status'
-      from = tweet.user.screen_name
+      from = "@#{tweet.user.screen_name}"
       in_reply_to = tweet.in_reply_to_status_id
     else
       fail "Unknown tweet type '#{tweet.class}'"

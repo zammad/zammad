@@ -100,7 +100,6 @@ class TwitterTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert(ticket, "outbound ticket created, text: #{text}")
-
     article = Ticket::Article.create(
       ticket_id:     ticket.id,
       body:          text,
@@ -111,6 +110,8 @@ class TwitterTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert(article, "outbound article created, text: #{text}")
+    assert_equal('@armin_theo', article.from, 'ticket article from')
+    assert_equal('', article.to, 'ticket article to')
 
     # reply by me_bauer
     client = Twitter::REST::Client.new do |config|
@@ -139,23 +140,20 @@ class TwitterTest < ActiveSupport::TestCase
 
     # fetch check system account
     sleep 10
-
-    # fetch check system account
     article = nil
     (1..2).each {
       Channel.fetch
 
       # check if follow up article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
-
       break if article
-
       sleep 10
     }
 
     assert(article, "article tweet '#{tweet.id}' imported")
-    assert_equal('armin_theo', article.from, 'ticket article inbound from')
-    assert_equal(nil, article.to, 'ticket article inbound to')
+    assert_equal('@me_bauer', article.from, 'ticket article from')
+    #assert_equal('@armin_theo', article.to, 'ticket article to')
+    assert_equal(nil, article.to, 'ticket article to')
     assert_equal(tweet.id.to_s, article.message_id, 'ticket article inbound message_id')
     assert_equal(2, article.ticket.articles.count, 'ticket article inbound count')
     assert_equal(reply_text.utf8_to_3bytesutf8, ticket.articles.last.body, 'ticket article inbound body')
@@ -176,25 +174,25 @@ class TwitterTest < ActiveSupport::TestCase
     tweet = client.update(
       text,
     )
-    sleep 15
 
     # fetch check system account
+    sleep 15
     article = nil
     (1..2).each {
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
-
       break if article
-
       sleep 10
     }
     assert(article)
+    assert_equal('@me_bauer', article.from, 'ticket article from')
+    assert_equal(nil, article.to, 'ticket article to')
     ticket = article.ticket
 
     # send reply
-    reply_text = '@armin_theo on my side #weather' + rand(9999).to_s
+    reply_text = '@me_bauer on my side #weather' + rand(9999).to_s
     article = Ticket::Article.create(
       ticket_id:     ticket.id,
       body:          reply_text,
@@ -205,10 +203,12 @@ class TwitterTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert(article, "outbound article created, text: #{reply_text}")
-    assert_equal(nil, article.to, 'ticket article outbound to')
+    assert_equal('@armin_theo', article.from, 'ticket article from')
+    assert_equal('@me_bauer', article.to, 'ticket article to')
     sleep 5
     tweet_found = false
     client.user_timeline('armin_theo').each { |local_tweet|
+      sleep 10
       next if local_tweet.id.to_s != article.message_id.to_s
       tweet_found = true
       break
@@ -246,22 +246,22 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "dm with ##{hash} created")
-    sleep 15
 
     # fetch check system account
+    sleep 15
     article = nil
     (1..2).each {
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
-
       break if article
-
       sleep 10
     }
 
     assert(article, "inbound article '#{text}' created")
+    assert_equal('@me_bauer', article.from, 'ticket article from')
+    assert_equal('@armin_theo', article.to, 'ticket article to')
     ticket = article.ticket
     assert(ticket, 'ticket of inbound article exists')
     assert(ticket.articles, 'ticket.articles exists')
@@ -279,11 +279,12 @@ class TwitterTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket.state = Ticket::State.find_by(name: 'pending reminder')
-    ticket.save
-
     assert(outbound_article, 'outbound article created')
     assert_equal(2, outbound_article.ticket.articles.count, 'ticket article outbound count')
+    assert_equal('@armin_theo', outbound_article.from, 'ticket article from')
+    assert_equal('@me_bauer', outbound_article.to, 'ticket article to')
+    ticket.state = Ticket::State.find_by(name: 'pending reminder')
+    ticket.save
 
     text  = 'Ok. ' + hash
     dm = client.create_direct_message(
@@ -291,22 +292,22 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "second dm with ##{hash} created")
-    sleep 15
 
     # fetch check system account
+    sleep 15
     article = nil
     (1..2).each {
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
-
       break if article
-
       sleep 10
     }
 
     assert(article, "inbound article '#{text}' created")
+    assert_equal('@me_bauer', article.from, 'ticket article inbound from')
+    assert_equal('@armin_theo', article.to, 'ticket article inbound to')
     assert_equal(article.ticket.id, ticket.id, 'still the same ticket')
     ticket = article.ticket
     assert(ticket, 'ticket of inbound article exists')
@@ -324,22 +325,22 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "third dm with ##{hash} created")
-    sleep 15
 
     # fetch check system account
+    sleep 15
     article = nil
     (1..2).each {
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
-
       break if article
-
       sleep 10
     }
 
     assert(article, "inbound article '#{text}' created")
+    assert_equal('@me_bauer', article.from, 'ticket article inbound from')
+    assert_equal('@armin_theo', article.to, 'ticket article inbound to')
     ticket = article.ticket
     assert(ticket, 'ticket of inbound article exists')
     assert(ticket.articles, 'ticket.articles exists')

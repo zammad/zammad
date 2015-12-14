@@ -312,7 +312,8 @@ class App.TicketZoomArticleNew extends App.Controller
     @textarea.focus()
 
   openTextarea: (event, withoutAnimation) =>
-    event.stopPropagation()
+    if event
+      event.stopPropagation()
     if @articleNewEdit.hasClass('is-open')
       return
 
