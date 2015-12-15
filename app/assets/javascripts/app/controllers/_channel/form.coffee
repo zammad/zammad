@@ -27,6 +27,9 @@ class App.ChannelForm extends App.Controller
 
     @updateParams()
 
+  release: =>
+    App.Setting.unsubscribe(@subscribeId)
+
   updateParams: ->
     quote = (string) ->
       string = string.replace('\'', '\\\'')
