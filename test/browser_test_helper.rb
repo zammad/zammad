@@ -900,23 +900,6 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
-  click_catcher_remove(
-    browser: browser1,
-  )
-
-=end
-
-  def click_catcher_remove(params = {})
-    switch_window_focus(params)
-    log('click_catcher_remove', params)
-
-    instance = params[:browser] || @browser
-    return if !instance.find_elements({ css: '.clickCatcher' })[0]
-    click(browser: instance, css: '.clickCatcher')
-  end
-
-=begin
-
   watch_for(
     browser:   browser1,
     css:       '#content .text-1',
