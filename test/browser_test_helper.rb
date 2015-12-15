@@ -881,8 +881,8 @@ class TestCase < Test::Unit::TestCase
 
   file_upload(
     browser: browser1,
-    css:     '#content .text-1',
-    value:   'some text',
+    css:     '.active .attachmentPlaceholder-inputHolder input'
+    files:   ['path/in/home/some_file.ext'], # 'test/fixtures/test1.pdf'
   )
 
 =end
@@ -893,15 +893,9 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    filename = 'some-file.txt'
-    file = File.join(Dir.pwd, filename)
-    #file = 'some test lalal'
-
-    instance.find_elements({ css: params[:css] })[0].send_keys file
-    #instance.find_elements({ :css => params[:css] })[0]
-    #element
-    #@driver.find_element(id: 'file-submit').click
-
+    params[:files].each {|file|
+      instance.find_elements({ css: params[:css] })[0].send_keys "#{Rails.root}/#{file}"
+    }
   end
 
 =begin

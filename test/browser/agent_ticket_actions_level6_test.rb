@@ -39,7 +39,10 @@ class AgentTicketActionLevel6Test < TestCase
     #alert = alert.text
 
     # add attachment, attachment check should quiet
-    @browser.execute_script( "App.TestHelper.attachmentUploadFake('.active .richtext .attachments')" )
+    file_upload(
+      css:   '.active .attachmentPlaceholder-inputHolder input',
+      files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
+    )
 
     # submit form
     click( css: '.content.active .js-submit' )
@@ -48,10 +51,18 @@ class AgentTicketActionLevel6Test < TestCase
     # no warning
     #alert = @browser.switch_to.alert
 
-    # check if ticket is shown
+    # check if ticket is shown and attachment exists
     location_check( url: '#ticket/zoom/' )
     sleep 2
     ticket_number = @browser.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
+    match(
+      css: '.active .ticket-article-item:nth-child(1) .attachments',
+      value: 'upload2.jpg',
+    )
+    match(
+      css: '.active .ticket-article-item:nth-child(1) .attachments',
+      value: 'upload1.txt',
+    )
 
     #
     # attachment checks - update ticket
@@ -76,7 +87,10 @@ class AgentTicketActionLevel6Test < TestCase
     alert.dismiss()
 
     # add attachment, attachment check should quiet
-    @browser.execute_script( "App.TestHelper.attachmentUploadFake('.active .article-add .textBubble .attachments')" )
+    file_upload(
+      css:   '.active .attachmentPlaceholder-inputHolder input',
+      files: ['test/fixtures/upload1.txt'],
+    )
 
     # submit form
     click(
@@ -106,9 +120,20 @@ class AgentTicketActionLevel6Test < TestCase
       css: '.active div.ticket-article',
       value: 'test 6 - ticket 1-1',
     )
+    match_not(
+      css: '.active .ticket-article-item:nth-child(2) .attachments',
+      value: 'upload2.jpg',
+    )
+    match(
+      css: '.active .ticket-article-item:nth-child(2) .attachments',
+      value: 'upload1.txt',
+    )
 
     # add attachment without body
-    @browser.execute_script( "App.TestHelper.attachmentUploadFake('.active .article-add .textBubble .attachments')" )
+    file_upload(
+      css:   '.active .attachmentPlaceholder-inputHolder input',
+      files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
+    )
 
     # submit form
     click(
@@ -150,7 +175,14 @@ class AgentTicketActionLevel6Test < TestCase
         body: '',
       },
     )
-
+    match(
+      css: '.active .ticket-article-item:nth-child(3) .attachments',
+      value: 'upload2.jpg',
+    )
+    match(
+      css: '.active .ticket-article-item:nth-child(3) .attachments',
+      value: 'upload1.txt',
+    )
     #
     # ticket customer change checks
     #
