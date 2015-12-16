@@ -9,7 +9,7 @@ module ApplicationLib
 
 load adapter based on setting option
 
-  result = self.load_adapter_by_setting( 'some_setting_with_class_name' )
+  result = self.load_adapter_by_setting('some_setting_with_class_name')
 
 returns
 
@@ -18,7 +18,7 @@ returns
 =end
 
     def load_adapter_by_setting(setting)
-      adapter = Setting.get( setting )
+      adapter = Setting.get(setting)
       return if !adapter
 
       # load backend
@@ -29,7 +29,7 @@ returns
 
 load adapter
 
-  result = self.load_adapter( 'Some::Classname' )
+  result = self.load_adapter('Some::Classname')
 
 returns
 

@@ -32,7 +32,10 @@ class String
 
   def to_filename
     camel_cased_word = "#{self}"
-    camel_cased_word.gsub(/::/, '/').downcase
+    camel_cased_word.gsub(/::/, '/')
+      .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+      .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+      .tr('-', '_').downcase
   end
 
 =begin
