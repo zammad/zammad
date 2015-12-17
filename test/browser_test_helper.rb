@@ -19,7 +19,6 @@ class TestCase < Test::Unit::TestCase
       browser_profile['general.useragent.locale'] = 'en-US'
     elsif browser == 'chrome'
       browser_profile = Selenium::WebDriver::Chrome::Profile.new
-
       browser_profile['intl.accept_languages'] = 'en'
     end
     browser_profile
@@ -896,6 +895,7 @@ class TestCase < Test::Unit::TestCase
     params[:files].each {|file|
       instance.find_elements({ css: params[:css] })[0].send_keys "#{Rails.root}/#{file}"
     }
+    sleep 2 * params[:files].count
   end
 
 =begin
