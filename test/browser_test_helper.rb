@@ -41,8 +41,8 @@ class TestCase < Test::Unit::TestCase
     end
     if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
       local_browser = Selenium::WebDriver.for(browser.to_sym, profile: profile)
-      browser_instance_preferences(local_browser)
       @browsers[local_browser.hash] = local_browser
+      browser_instance_preferences(local_browser)
       return local_browser
     end
 
@@ -81,13 +81,18 @@ class TestCase < Test::Unit::TestCase
   def browser_instance_preferences(local_browser)
     local_browser.manage.window.resize_to(1024, 800)
     if ENV['REMOTE_URL'] !~ /saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i
-      if @browsers.size < 1
+      if @browsers.count == 1
         local_browser.manage.window.move_to(0, 0)
       else
         local_browser.manage.window.move_to(1024, 0)
       end
     end
     local_browser.manage.timeouts.implicit_wait = 3 # seconds
+
+    local_browser.file_detector = lambda do |args|
+      str = args.first.to_s
+      str if File.exist?(str)
+    end
   end
 
   def teardown
