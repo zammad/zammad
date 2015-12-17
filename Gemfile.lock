@@ -275,7 +275,7 @@ GEM
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
     slop (3.6.0)
-    spring (1.5.0)
+    spring (1.6.0)
     sprockets (3.5.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -307,10 +307,6 @@ GEM
       memoizable (~> 0.4.0)
       naught (~> 1.0)
       simple_oauth (~> 0.3.0)
-    twitter_oauth (0.4.94)
-      json (>= 1.8.0)
-      mime-types (>= 1.16)
-      oauth (>= 0.4.7)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -373,7 +369,6 @@ DEPENDENCIES
   test-unit
   therubyracer
   twitter
-  twitter_oauth
   uglifier
   writeexcel
 
