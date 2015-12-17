@@ -1381,10 +1381,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Import User for http basic authentiation',
+  title: 'Import User for http basic authentication',
   name: 'import_otrs_user',
   area: 'Import::OTRS',
-  description: 'Defines http basic authentiation user (only if OTRS is protected via http basic auth).',
+  description: 'Defines http basic authentication user (only if OTRS is protected via http basic auth).',
   options: {
     form: [
       {
@@ -1400,16 +1400,72 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Import Password for http basic authentiation',
+  title: 'Import Password for http basic authentication',
   name: 'import_otrs_password',
   area: 'Import::OTRS',
-  description: 'Defines http basic authentiation password (only if OTRS is protected via http basic auth).',
+  description: 'Defines http basic authentication password (only if OTRS is protected via http basic auth).',
   options: {
     form: [
       {
         display: '',
         null: true,
         name: 'import_otrs_password',
+        tag: 'input',
+      },
+    ],
+  },
+  state: '',
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Import Endpoint',
+  name: 'import_zendesk_endpoint',
+  area: 'Import::Zendesk',
+  description: 'Defines Zendesk endpoint to import users, ticket, states and articles.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'import_zendesk_endpoint',
+        tag: 'input',
+      },
+    ],
+  },
+  state: 'https://yours.zendesk.com/api/v2',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Import Key for requesting the Zendesk API',
+  name: 'import_zendesk_endpoint_key',
+  area: 'Import::Zendesk',
+  description: 'Defines Zendesk endpoint auth key.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'import_zendesk_endpoint_key',
+        tag: 'input',
+      },
+    ],
+  },
+  state: '',
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Import User for requesting the Zendesk API',
+  name: 'import_zendesk_endpoint_username',
+  area: 'Import::Zendesk',
+  description: 'Defines Zendesk endpoint auth key.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'import_zendesk_endpoint_username',
         tag: 'input',
       },
     ],
