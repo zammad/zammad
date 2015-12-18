@@ -122,7 +122,7 @@ class TranslationTest < TestCase
       value: 'Übersichten123',
     )
     sleep 1
-    click(css: '#global-search')
+    click(css: 'a[href="#dashboard"]')
     sleep 5
 
     @browser.action.key_down(:control)
@@ -207,7 +207,7 @@ class TranslationTest < TestCase
       value: 'Overviews123',
     )
     sleep 1
-    click(css: '#global-search')
+    click(css: 'a[href="#dashboard"]')
     sleep 5
 
     @browser.action.key_down(:control)
