@@ -69,6 +69,12 @@ class TestCase < Test::Unit::TestCase
       browser_instance_preferences(local_browser)
     end
 
+    # upload files from remote dir
+    local_browser.file_detector = lambda do |args|
+      str = args.first.to_s
+      str if File.file?(str)
+    end
+
     local_browser
   end
 
@@ -88,11 +94,6 @@ class TestCase < Test::Unit::TestCase
       end
     end
     local_browser.manage.timeouts.implicit_wait = 3 # seconds
-
-    local_browser.file_detector = lambda do |args|
-      str = args.first.to_s
-      str if File.exist?(str)
-    end
   end
 
   def teardown
@@ -129,37 +130,37 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     if params[:url]
-      instance.get(params[:url] )
+      instance.get(params[:url])
     end
 
-    element = instance.find_elements({ css: '#login input[name="username"]' } )[0]
+    element = instance.find_elements({ css: '#login input[name="username"]' })[0]
     if !element
-      screenshot(browser: instance, comment: 'login_failed' )
+      screenshot(browser: instance, comment: 'login_failed')
       fail 'No login box found'
     end
 
-    screenshot(browser: instance, comment: 'login' )
+    screenshot(browser: instance, comment: 'login')
 
     element.clear
-    element.send_keys(params[:username] )
+    element.send_keys(params[:username])
 
-    element = instance.find_elements({ css: '#login input[name="password"]' } )[0]
+    element = instance.find_elements({ css: '#login input[name="password"]' })[0]
     element.clear
-    element.send_keys(params[:password] )
+    element.send_keys(params[:password])
 
     if params[:remember_me]
-      instance.find_elements({ css: '#login .checkbox-replacement' } )[0].click
+      instance.find_elements({ css: '#login .checkbox-replacement' })[0].click
     end
-    instance.find_elements({ css: '#login button' } )[0].click
+    instance.find_elements({ css: '#login button' })[0].click
 
     sleep 5
-    login = instance.find_elements({ css: '.user-menu .user a' } )[0].attribute('title')
+    login = instance.find_elements({ css: '.user-menu .user a' })[0].attribute('title')
     if login != params[:username]
-      screenshot(browser: instance, comment: 'login_failed' )
+      screenshot(browser: instance, comment: 'login_failed')
       fail 'login failed'
     end
-    screenshot(browser: instance, comment: 'login_ok' )
-    assert(true, 'login ok' )
+    screenshot(browser: instance, comment: 'login_ok')
+    assert(true, 'login ok')
     login
   end
 
@@ -177,19 +178,19 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    instance.find_elements({ css: 'a[href="#current_user"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#current_user"]' })[0].click
     sleep 0.1
-    instance.find_elements({ css: 'a[href="#logout"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#logout"]' })[0].click
     (1..6).each {
       sleep 1
-      login = instance.find_elements({ css: '#login' } )[0]
+      login = instance.find_elements({ css: '#login' })[0]
 
       next if !login
-      screenshot(browser: instance, comment: 'logout_ok' )
-      assert(true, 'logout ok' )
+      screenshot(browser: instance, comment: 'logout_ok')
+      assert(true, 'logout ok')
       return
     }
-    screenshot(browser: instance, comment: 'logout_failed' )
+    screenshot(browser: instance, comment: 'logout_failed')
     fail 'no login box found, seems logout was not successfully!'
   end
 
