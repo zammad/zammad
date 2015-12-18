@@ -513,7 +513,7 @@ class ChatWindow extends App.Controller
   scrollToBottom: ->
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
-class Setting extends App.ControllerModalNice
+class Setting extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

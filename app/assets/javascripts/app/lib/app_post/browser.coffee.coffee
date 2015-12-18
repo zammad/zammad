@@ -76,7 +76,7 @@ class App.Browser
       localStorage.setItem('fingerprint', fingerprint)
     fingerprint
 
-class Modal extends App.ControllerModalNice
+class Modal extends App.ControllerModal
   buttonClose: false
   buttonCancel: false
   buttonSubmit: false

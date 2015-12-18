@@ -289,7 +289,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
       container: @el.closest('.content')
     )
 
-class UserNew extends App.ControllerModalNice
+class UserNew extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

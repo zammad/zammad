@@ -631,7 +631,7 @@ class BulkForm extends App.Controller
       msg: App.i18n.translateContent('Bulk-Action executed!')
     }
 
-class App.OverviewSettings extends App.ControllerModalNice
+class App.OverviewSettings extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

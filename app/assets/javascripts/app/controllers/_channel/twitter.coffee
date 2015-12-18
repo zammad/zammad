@@ -17,17 +17,17 @@ class Index extends App.ControllerContent
     #@load()
 
   load: ->
-    # @startLoading()
-    # @ajax(
-    #   id:   'twitter_index'
-    #   type: 'GET'
-    #   url:  @apiPath + '/twitter'
-    #   processData: true
-    #   success: (data, status, xhr) =>
-    #     App.Collection.loadAssets(data.assets)
-    #     @stopLoading()
-    #     @render(data)
-    # )
+    @startLoading()
+    @ajax(
+      id:   'twitter_index'
+      type: 'GET'
+      url:  @apiPath + '/channels/twitter_index'
+      processData: true
+      success: (data, status, xhr) =>
+        @stopLoading()
+        App.Collection.loadAssets(data.assets)
+        @render(data)
+    )
 
   render: =>
     # accounts = App.Twitter.search(
@@ -48,7 +48,7 @@ class Index extends App.ControllerContent
       # description:     description
 
   createApp: ->
-    modal = new App.ControllerModalNice
+    modal = new App.ControllerModal
       head: 'Connect Twitter App'
       container: @el.parents('.content')
       content: App.view('twitter/app_create')

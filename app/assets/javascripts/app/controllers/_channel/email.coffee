@@ -73,7 +73,7 @@ With Filters you can e. g. dispatch new Tickets into certain groups or set a cer
       container: @el.closest('.content')
     )
 
-class App.ChannelEmailFilterEdit extends App.ControllerModalNice
+class App.ChannelEmailFilterEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -169,7 +169,7 @@ Once you have created a signature here, you need also to edit the groups where y
       container: @el.closest('.content')
     )
 
-class App.ChannelEmailSignatureEdit extends App.ControllerModalNice
+class App.ChannelEmailSignatureEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -245,12 +245,8 @@ class App.ChannelEmailAccountOverview extends App.Controller
       url:  @apiPath + '/channels/email_index'
       processData: true
       success: (data, status, xhr) =>
-
         @stopLoading()
-
-        # load assets
         App.Collection.loadAssets(data.assets)
-
         @render(data)
     )
 
@@ -391,7 +387,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       channelDriver: @channelDriver
     )
 
-class App.ChannelEmailEdit extends App.ControllerModalNice
+class App.ChannelEmailEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

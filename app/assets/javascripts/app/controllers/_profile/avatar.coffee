@@ -146,7 +146,7 @@ class Index extends App.Controller
 App.Config.set( 'Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index }, 'NavBarProfile' )
 
 
-class ImageCropper extends App.ControllerModalNice
+class ImageCropper extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'Save'
@@ -221,7 +221,7 @@ class ImageCropper extends App.ControllerModalNice
     @close()
 
 
-class Camera extends App.ControllerModalNice
+class Camera extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'Save'

@@ -1,4 +1,4 @@
-class App.ControllerGenericNew extends App.ControllerModalNice
+class App.ControllerGenericNew extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -44,7 +44,7 @@ class App.ControllerGenericNew extends App.ControllerModalNice
         ui.close()
     )
 
-class App.ControllerGenericEdit extends App.ControllerModalNice
+class App.ControllerGenericEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -208,7 +208,7 @@ class App.ControllerGenericIndex extends App.Controller
       container:   @container
     )
 
-class App.ControllerGenericDescription extends App.ControllerModalNice
+class App.ControllerGenericDescription extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
   buttonSubmit: 'Close'
@@ -262,7 +262,7 @@ class App.ControllerModalLoading extends App.Controller
       return
     App.Delay.set(remove, delay * 1000)
 
-class App.ControllerGenericDestroyConfirm extends App.ControllerModalNice
+class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'yes'
@@ -431,7 +431,7 @@ class App.ControllerNavSidbar extends App.ControllerContent
       el: @$('.main')
     )
 
-class App.GenericHistory extends App.ControllerModalNice
+class App.GenericHistory extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
   buttonSubmit: false

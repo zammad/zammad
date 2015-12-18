@@ -32,7 +32,7 @@ class TranslationSupport extends App.Controller
 
 App.Config.set( 'translaton_support', TranslationSupport, 'Widgets' )
 
-class Modal extends App.ControllerModalNice
+class Modal extends App.ControllerModal
   buttonClose: true
   buttonCancel: 'No Thanks!'
   buttonSubmit: 'Complete translations'
@@ -55,8 +55,8 @@ class Modal extends App.ControllerModalNice
 
   onCancel: =>
     App.LocalStorage.set('translation_support_no', true, @Session.get('id'))
-    @onClose()
+    @close()
 
   onSubmit: =>
     @navigate '#system/translation'
-    @onClose()
+    @close()

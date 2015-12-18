@@ -363,7 +363,7 @@ class _webSocketSingleton extends App.Controller
         @_ajaxReceiveWorking = false
     )
 
-class Modal extends App.ControllerModalNice
+class Modal extends App.ControllerModal
   buttonClose: false
   buttonCancel: false
   buttonSubmit: false

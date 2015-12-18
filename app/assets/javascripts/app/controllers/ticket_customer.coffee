@@ -1,4 +1,4 @@
-class App.TicketCustomer extends App.ControllerModalNice
+class App.TicketCustomer extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

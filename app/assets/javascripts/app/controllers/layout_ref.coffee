@@ -411,7 +411,7 @@ class ContentSidebarRightSidebarOptional extends App.ControllerContent
 App.Config.set( 'layout_ref/content_sidebar_right_sidebar_optional', ContentSidebarRightSidebarOptional, 'Routes' )
 
 
-class ModalForm extends App.ControllerModalNice
+class ModalForm extends App.ControllerModal
   head: '123 some title'
 
   content: ->
@@ -432,7 +432,7 @@ class ModalForm extends App.ControllerModalNice
 App.Config.set( 'layout_ref/modal_form', ModalForm, 'Routes' )
 
 
-class ModalText extends App.ControllerModalNice
+class ModalText extends App.ControllerModal
 
   content: ->
     App.view('layout_ref/content')()
@@ -1364,7 +1364,7 @@ class SlaRef extends App.ControllerContent
     checkbox.closest('tr').toggleClass('is-active', checkbox.prop('checked'))
 
   createNew: =>
-    @newItemModal = new App.ControllerModalNice
+    @newItemModal = new App.ControllerModal
       head: 'Service Level Agreement (SLA)'
       headPrefox: 'New'
       contentInline: App.view('layout_ref/sla_modal')()
@@ -1404,7 +1404,7 @@ class SchedulersRef extends App.ControllerContent
       .text(if isInactive then 'Enable' else 'Disable')
 
   createNew: =>
-    new App.ControllerModalNice
+    new App.ControllerModal
       head: 'Scheduler'
       headPrefix: 'New'
       buttonSubmit: 'Create'
@@ -1641,7 +1641,7 @@ class MergeCustomerRef extends App.ControllerContent
   render: ->
     @html App.view('layout_ref/merge_customer_view')
 
-    new App.ControllerModalNice
+    new App.ControllerModal
       large: true
       head: "#{@mergeSource.firstname} #{@mergeSource.lastname}"
       headPrefix: 'Merge'
