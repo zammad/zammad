@@ -347,8 +347,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if params[:js]
-      instance.execute_script(params[:js])
-      return
+      return instance.execute_script(params[:js])
     end
     fail "Invalid execute params #{params.inspect}"
   end

@@ -28,13 +28,13 @@ class App.Run extends App.Controller
     @frontendTimeUpdate()
 
     # start navbars
-    @setupWidget( 'Navigations', 'nav', @el )
+    @setupWidget('Navigations', 'nav', @el)
 
     # start widgets
-    @setupWidget( 'Widgets', 'widget', @el )
+    @setupWidget('Widgets', 'widget', @el)
 
     # bind to fill selected text into
-    App.ClipBoard.bind( @el )
+    App.ClipBoard.bind(@el)
 
     App.Event.trigger('app:ready')
 
@@ -99,4 +99,4 @@ class App.Content extends App.ControllerWidgetPermanent
 
     Spine.Route.setup()
 
-App.Config.set( 'content', App.Content, 'Widgets' )
+App.Config.set('content', App.Content, 'Widgets')

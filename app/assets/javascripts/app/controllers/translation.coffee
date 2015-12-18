@@ -180,8 +180,12 @@ class Index extends App.ControllerContent
     delete params.field
 
     if params.id
-      method = 'PUT'
-      url    = "#{@apiPath}/translations/#{params.id}"
+      if params.target is ''
+        method = 'DELETE'
+        url    = "#{@apiPath}/translations/#{params.id}"
+      else
+        method = 'PUT'
+        url    = "#{@apiPath}/translations/#{params.id}"
     else
       method = 'POST'
       url    = "#{@apiPath}/translations"
