@@ -53,12 +53,15 @@ class TranslationTest < TestCase
       css: '#content input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
+    sleep 5 # wait until nofify is gone
     click(css: '#global-search')
+    sleep 4 # wait till rerender
 
     click(css: 'a[href="#dashboard"]')
+    sleep 2 # wait till nav is rendered
+
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/translation"]')
-    sleep 4
 
     match(
       css: '#content .sidebar',
@@ -84,6 +87,7 @@ class TranslationTest < TestCase
     )
 
     click(css: 'a[href="#dashboard"]')
+    sleep 4 # wait till rerender
 
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/translation"]')

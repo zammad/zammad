@@ -18,8 +18,12 @@ class TestCase < Test::Unit::TestCase
       browser_profile['intl.accept_languages']    = 'en-US'
       browser_profile['general.useragent.locale'] = 'en-US'
     elsif browser == 'chrome'
-      browser_profile = Selenium::WebDriver::Chrome::Profile.new
-      browser_profile['intl.accept_languages'] = 'en'
+
+      # profile are only working on remote selenium
+      if ENV['REMOTE_URL']
+        browser_profile = Selenium::WebDriver::Chrome::Profile.new
+        browser_profile['intl.accept_languages'] = 'en'
+      end
     end
     browser_profile
   end
