@@ -89,8 +89,6 @@ module Import::Zendesk
     statistic
   end
 
-  private
-
   def initialize_client
     return nil if @client
 
