@@ -499,7 +499,7 @@ module Import::Zendesk
       local_ticket_fields = {
         title:           zendesk_ticket.subject,
         note:            zendesk_ticket.description,
-        group_id:        @zendesk_group_mapping[ zendesk_ticket.group_id ] || 1, # TODO
+        group_id:        @zendesk_group_mapping[ zendesk_ticket.group_id ] || 1,
         customer_id:     @zendesk_user_mapping[ zendesk_ticket.requester_id ],
         organization_id: @zendesk_organization_mapping[ zendesk_ticket.organization_id ],
         state:           Ticket::State.lookup( name: mapping_state( zendesk_ticket.status ) ),
@@ -524,11 +524,11 @@ module Import::Zendesk
 
       # TODO: zendesk_ticket.external_id ?
       if zendesk_ticket.via.channel == 'web'
-        local_ticket_fields[:create_article_type_id] = article_type_note.id # TODO
+        local_ticket_fields[:create_article_type_id] = article_type_web.id
       elsif zendesk_ticket.via.channel == 'email'
         local_ticket_fields[:create_article_type_id] = article_type_email.id
       elsif zendesk_ticket.via.channel == 'sample_ticket'
-        local_ticket_fields[:create_article_type_id] = article_type_note.id # TODO
+        local_ticket_fields[:create_article_type_id] = article_type_note.id
       elsif zendesk_ticket.via.channel == 'twitter'
 
         # TODO
@@ -599,15 +599,15 @@ module Import::Zendesk
 
         if zendesk_article.via.channel == 'web'
           local_article_fields[:message_id] = zendesk_article.id
-          local_article_fields[:type_id]    = article_type_note.id # TODO
+          local_article_fields[:type_id]    = article_type_web.id
         elsif zendesk_article.via.channel == 'email'
           local_article_fields[:from]       = zendesk_article.via.source.from.address
-          local_article_fields[:to]         = zendesk_article.via.source.to.address # TODO: or zendesk_article.via.from.original_recipients=[\"martin.edenhofer42@gmail.com\", \"support@znunyhelp.zendesk.com\"]
+          local_article_fields[:to]         = zendesk_article.via.source.to.address # Notice zendesk_article.via.from.original_recipients=[\"another@gmail.com\", \"support@example.zendesk.com\"]
           local_article_fields[:message_id] = zendesk_article.id
           local_article_fields[:type_id]    = article_type_email.id
         elsif zendesk_article.via.channel == 'sample_ticket'
           local_article_fields[:message_id] = zendesk_article.id
-          local_article_fields[:type_id]    = article_type_note.id # TODO
+          local_article_fields[:type_id]    = article_type_note.id
         elsif zendesk_article.via.channel == 'twitter'
           local_article_fields[:message_id] = zendesk_article.id
 
@@ -689,7 +689,7 @@ module Import::Zendesk
       # TODO
       next if !macro.active
 
-      # "url"=>"https://znunyhelp.zendesk.com/api/v2/macros/59511191.json"
+      # "url"=>"https://example.zendesk.com/api/v2/macros/59511191.json"
       # "id"=>59511191
       # "title"=>"Herabstufen und informieren"
       # "active"=>true
@@ -738,7 +738,7 @@ module Import::Zendesk
 
     @client.views.all { |view|
 
-      # "url"         => "https://znunyhelp.zendesk.com/api/v2/views/59511071.json"
+      # "url"         => "https://example.zendesk.com/api/v2/views/59511071.json"
       # "id"          => 59511071
       # "title"       => "Ihre Tickets"
       # "active"      => true
@@ -867,7 +867,7 @@ module Import::Zendesk
 
     @client.automations.all { |automation|
 
-      # "url"        => "https://znunyhelp.zendesk.com/api/v2/automations/60037892.json"
+      # "url"        => "https://example.zendesk.com/api/v2/automations/60037892.json"
       # "id"         => 60037892
       # "title"      => "Ticket aus Facebook-Nachricht 1 ..."
       # "active"     => true
