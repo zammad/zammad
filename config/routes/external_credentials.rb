@@ -9,6 +9,7 @@ Zammad::Application.routes.draw do
   match api_path + '/external_credentials/:id',                to: 'external_credentials#destroy', via: :delete
 
   # callback URL
+  match api_path + '/external_credentials/:provider/app_verify',   to: 'external_credentials#app_verify',   via: :post
   match api_path + '/external_credentials/:provider/link_account', to: 'external_credentials#link_account', via: :get
   match api_path + '/external_credentials/:provider/callback',     to: 'external_credentials#callback',     via: :get
 

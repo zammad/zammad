@@ -11,9 +11,15 @@ class ExternalCredential::Twitter
 
   def self.request_account_to_link(callback_url, credentials = {})
     external_credential = ExternalCredential.find_by(name: 'twitter')
+    if !credentials[:consumer_key]
+      credentials[:consumer_key] = external_credential.credentials['consumer_key']
+    end
+    if !credentials[:consumer_secret]
+      credentials[:consumer_secret] = external_credential.credentials['consumer_secret']
+    end
     consumer = OAuth::Consumer.new(
-      credentials[:consumer_key] || external_credential.credentials[:consumer_key],
-      credentials[:consumer_secret] || external_credential.credentials[:consumer_secret], {
+      credentials[:consumer_key],
+      credentials[:consumer_secret], {
         site: 'https://api.twitter.com'
       })
     request_token = consumer.get_request_token(oauth_callback: callback_url)
@@ -25,7 +31,6 @@ class ExternalCredential::Twitter
 
   def self.link_account(request_token, params)
     fail if request_token.params[:oauth_token] != params[:oauth_token]
-
     external_credential = ExternalCredential.find_by(name: 'twitter')
     access_token = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
     client = Twitter::REST::Client.new(
@@ -44,6 +49,7 @@ class ExternalCredential::Twitter
         user: {
           id: user.id,
           screen_name: user.screen_name,
+          name: user.name,
         },
         auth: {
           external_credential_id: external_credential.id,

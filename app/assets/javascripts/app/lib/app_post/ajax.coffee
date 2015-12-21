@@ -77,6 +77,7 @@ class _ajaxSingleton
         head:          'StatusCode: ' + status
         contentInline: '<pre>' + App.Utils.htmlEscape(detail) + '</pre>'
         buttonClose:   true
+        buttonSubmit:  false
       )
     )
 

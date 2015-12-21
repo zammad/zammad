@@ -654,6 +654,9 @@ class App.ControllerModal extends App.Controller
   post: ->
     # nothing
 
+  element: =>
+    @el
+
   render: =>
     if @buttonSubmit is true
       @buttonSubmit = 'Submit'
@@ -687,6 +690,11 @@ class App.ControllerModal extends App.Controller
     if e
       e.preventDefault()
     @el.modal('hide')
+
+  formParams: =>
+    if @container
+      return @formParam(@container.find('.modal form'))
+    return @formParam(@$('.modal form'))
 
   onShow: ->
     # do nothing

@@ -4,47 +4,60 @@
   </div>
 
   <div class="page-header-meta">
-    <a class="btn js-config"><%- @T('Configure App') %></a>
+    <a class="btn js-configApp"><%- @T('Configure App') %></a>
     <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
   </div>
 </div>
 
 <div class="page-content">
-  <div class="action">
+<% for channel in @channels: %>
+  <div class="action" data-id="<%= channel.id %>">
     <div class="action-block action-row">
-      <h2><%- @Icon('status', 'supergood-color inline') %> Zammad Community <span class="text-muted">@zammad_community</span></h2>
+      <h2><%- @Icon('status', 'supergood-color inline') %> <%= channel.options.user.name %> <span class="text-muted">@<%= channel.options.user.screen_name %></span></h2>
     </div>
     <div class="action-flow action-flow--row">
       <div class="action-block">
         <h3><%- @T('Search Terms') %></h3>
-        zammad
+        <% if channel.options.sync.search: %>
+          <% for search in channel.options.sync.search: %>
+            <%= search.term %><br>
+          <% end %>
+        <% end %>
       </div>
       <%- @Icon('arrow-right', 'action-flow-icon') %>
       <div class="action-block">
         <h3><%- @T('Group') %></h3>
-        social network
+        <% if channel.options.sync.search: %>
+          <% for search in channel.options.sync.search: %>
+            <%= search.groupName %><br>
+          <% end %>
+        <% end %>
       </div>
     </div>
     <div class="action-flow action-flow--row">
       <div class="action-block">
         <h3><%- @T('Mentions') %></h3>
-        @zammad_community
+        @<%= channel.options.user.screen_name %>
       </div>
       <%- @Icon('arrow-right', 'action-flow-icon') %>
       <div class="action-block">
         <h3><%- @T('Group') %></h3>
-        social network
+        <% if channel.options.sync.mentions: %>
+          <%= channel.options.sync.mentions.groupName %>
+        <% end %>
       </div>
     </div>
     <div class="action-flow action-flow--row">
       <div class="action-block">
         <h3><%- @T('Direct Messages') %></h3>
-        @zammad_community
+        @<%= channel.options.user.screen_name %>
       </div>
       <%- @Icon('arrow-right', 'action-flow-icon') %>
       <div class="action-block">
         <h3><%- @T('Group') %></h3>
-        social network
+        <% if channel.options.sync.direct_messages: %>
+          <%= channel.options.sync.direct_messages.groupName %>
+        <% end %>
       </div>
     </div>
     <div class="action-controls">
@@ -52,4 +65,5 @@
       <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
     </div>
   </div>
+<% end %>
 </div>

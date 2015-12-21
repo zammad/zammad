@@ -206,4 +206,4 @@ class Verify extends App.ControllerContent
           removeAll: true
       @formEnable( @$('form') )
 
-App.Config.set( 'password_reset_verify/:token', Verify, 'Routes' )
+App.Config.set('password_reset_verify/:token', Verify, 'Routes')

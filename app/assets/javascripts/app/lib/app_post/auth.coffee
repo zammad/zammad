@@ -115,7 +115,6 @@ class App.Auth
 
     # store user data
     sessionUser = App.User.fullLocal(data.session.id)
-    console.log('set', sessionUser)
     App.Session.set(sessionUser)
 
     # trigger auth ok with new session data

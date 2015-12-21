@@ -47,6 +47,8 @@ class Channel::Driver::Twitter
 
   def fetch (options, channel)
 
+    options = check_external_credential(options)
+
     @tweet   = Tweet.new(options[:auth])
     @sync    = options[:sync]
     @channel = channel
@@ -89,6 +91,8 @@ class Channel::Driver::Twitter
 
     # return if we run import mode
     return if Setting.get('import_mode')
+
+    options = check_external_credential(options)
 
     @tweet = Tweet.new(options[:auth])
     tweet  = @tweet.from_article(article)
@@ -164,4 +168,15 @@ class Channel::Driver::Twitter
       counter += 1
     }
   end
+
+  def check_external_credential(options)
+    if options[:auth] && options[:auth][:external_credential_id]
+      external_credential = ExternalCredential.find_by(id: options[:auth][:external_credential_id])
+      fail "No such ExternalCredential.find(#{options[:auth][:external_credential_id]})" if !external_credential
+      options[:auth][:consumer_key] = external_credential.credentials['consumer_key']
+      options[:auth][:consumer_secret] = external_credential.credentials['consumer_secret']
+    end
+    options
+  end
+
 end

@@ -45,6 +45,28 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     model_destory_render(Channel, params)
   end
 
+  def twitter_index
+    assets = {}
+    ExternalCredential.where(name: 'twitter').each {|external_credential|
+      assets = external_credential.assets(assets)
+    }
+    channel_ids = []
+    Channel.order(:id).each {|channel|
+      next if channel.area != 'Twitter::Account'
+      assets = channel.assets(assets)
+      channel_ids.push channel.id
+    }
+    render json: {
+      assets: assets,
+      channel_ids: channel_ids,
+    }
+  end
+
+  def twitter_verify
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    model_update_render(Channel, params)
+  end
+
   def email_index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     system_online_service = Setting.get('system_online_service')
