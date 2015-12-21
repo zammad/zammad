@@ -229,9 +229,15 @@ class _i18nSingleton extends Spine.Module
 
   setMap: (source, target, format = 'string') =>
     if format is 'time'
-      @mapTime[source] = target
+      if target is ''
+        delete @mapTime[source]
+      else
+        @mapTime[source] = target
     else
-      @mapString[source] = target
+      if target is ''
+        delete @mapString[source]
+      else
+        @mapString[source] = target
 
   notTranslatedFeatureEnabled: (locale) ->
     if locale.substr(0,2) is 'en'

@@ -1,1 +1,0 @@
-<div><%- @T('English is the source language, so we have nothing to translate.') %></div>

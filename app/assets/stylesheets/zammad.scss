@@ -920,6 +920,7 @@ th.align-right {
 .table .checkbox-replacement,
 .table .radio-replacement {
   height: 40px;
+  width: 40px;
 }
 
 .table-overview tbody .icon-checkbox,
@@ -1809,10 +1810,19 @@ kbd {
   justify-content: center;
 }
 
-.page-header-title h1,
-.page-header-title h2 {
-  margin-top: 9px;
-  margin-bottom: 7px;
+.page-header-title {
+  display: flex;
+  align-items: center;
+  
+  .zammad-switch {
+    margin-right: 9px;
+  }
+
+  h1,
+  h2 {
+    margin-top: 9px;
+    margin-bottom: 7px;
+  }
 }
 
 .page-header-center {
@@ -1827,8 +1837,17 @@ kbd {
 
 .page-header-meta {
   margin-left: auto;
-  padding-left: 9px;
+  padding-left: 20px;
   display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 0; /* firefox flexbug */
+  
+  .btn {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   .btn + .btn {
     margin-left: 9px;
@@ -4570,6 +4589,7 @@ footer {
     border-radius: 5px;
     padding-left: 12px;
     padding-right: 12px;
+    cursor: text;
   }
 
     .article-new .textBubble [contenteditable],

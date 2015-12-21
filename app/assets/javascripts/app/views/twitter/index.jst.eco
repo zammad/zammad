@@ -9,6 +9,6 @@
     <p>
       Lorem ipsum Consequat ex dolore ullamco dolor ut eu eiusmod voluptate. Lorem ipsum Non aliquip Ut veniam cupidatat velit deserunt. Lorem ipsum Id reprehenderit deserunt esse eiusmod exercitation. Lorem ipsum Voluptate mollit sed Ut nulla consequat enim. Lorem ipsum Adipisicing ullamco dolor elit officia pariatur ex ea laboris Ut exercitation proident sed. Lorem ipsum In officia reprehenderit sed nulla incididunt aute incididunt ad quis tempor. Lorem ipsum Dolore est id minim dolore et labore incididunt commodo. Lorem ipsum Excepteur non consectetur anim ut nostrud amet et. Lorem ipsum Sunt nostrud nulla officia aute laborum enim in pariatur sit enim et.
     </p>
-    <div class="btn btn--success js-create-app"><%- @T('Connect Twitter App') %></div>
+    <div class="btn btn--success js-configApp"><%- @T('Connect Twitter App') %></div>
   </div>
 </div>

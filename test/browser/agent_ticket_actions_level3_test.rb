@@ -106,7 +106,7 @@ class AgentTicketActionsLevel3Test < TestCase
       css: '.active div.ticket-article',
       value: 'some level 3 <b>body</b> in instance 2',
     )
-
+    sleep 1
     match_not(
       browser: browser1,
       css: '.content.active .js-reset',

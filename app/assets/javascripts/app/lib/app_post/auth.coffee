@@ -63,11 +63,11 @@ class App.Auth
 
       # update config
       for key, value of data.config
-        App.Config.set( key, value )
+        App.Config.set(key, value)
 
       # refresh default collections
       if data.collections
-        App.Collection.resetCollections( data.collections )
+        App.Collection.resetCollections(data.collections)
 
       # empty session
       App.Session.init()
@@ -81,18 +81,18 @@ class App.Auth
 
       # set locale
       locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
-      App.i18n.set( locale )
+      App.i18n.set(locale)
 
       # rebuild navbar with new navbar items
-      App.Event.trigger( 'auth' )
-      App.Event.trigger( 'auth:logout' )
-      App.Event.trigger( 'ui:rerender' )
+      App.Event.trigger('auth')
+      App.Event.trigger('auth:logout')
+      App.Event.trigger('ui:rerender')
 
       return false
 
     # clear local store
     if type isnt 'check'
-      App.Event.trigger( 'clearStore' )
+      App.Event.trigger('clearStore')
 
     # update model definition
     if data.models
@@ -103,33 +103,33 @@ class App.Auth
 
     # update config
     for key, value of data.config
-      App.Config.set( key, value )
+      App.Config.set(key, value)
 
     # refresh default collections
     if data.collections
-      App.Collection.resetCollections( data.collections )
+      App.Collection.resetCollections(data.collections)
 
     # load assets
     if data.assets
-      App.Collection.loadAssets( data.assets )
+      App.Collection.loadAssets(data.assets)
 
     # store user data
     sessionUser = App.User.fullLocal(data.session.id)
-    App.Session.set( sessionUser )
+    App.Session.set(sessionUser)
 
     # trigger auth ok with new session data
-    App.Event.trigger( 'auth', data.session )
+    App.Event.trigger('auth', data.session)
 
     # init of i18n
-    preferences = App.Session.get( 'preferences' )
+    preferences = App.Session.get('preferences')
     if preferences && preferences.locale
       locale = preferences.locale
     if !locale
       locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
-    App.i18n.set( locale )
+    App.i18n.set(locale)
 
-    App.Event.trigger( 'auth:login', data.session )
-    App.Event.trigger( 'ui:rerender' )
+    App.Event.trigger('auth:login', data.session)
+    App.Event.trigger('ui:rerender')
 
 
   @_logout: (data) ->
@@ -138,10 +138,10 @@ class App.Auth
     # empty session
     App.Session.init()
 
-    App.Event.trigger( 'auth' )
-    App.Event.trigger( 'auth:logout' )
-    App.Event.trigger( 'ui:rerender' )
-    App.Event.trigger( 'clearStore' )
+    App.Event.trigger('auth')
+    App.Event.trigger('auth:logout')
+    App.Event.trigger('ui:rerender')
+    App.Event.trigger('clearStore')
 
   @_loginError: ->
     App.Log.error 'Auth', '_loginError:error'
@@ -150,7 +150,7 @@ class App.Auth
     App.Session.init()
 
     # rebuild navbar
-    App.Event.trigger( 'auth' )
-    App.Event.trigger( 'auth:logout' )
-    App.Event.trigger( 'ui:rerender' )
-    App.Event.trigger( 'clearStore' )
+    App.Event.trigger('auth')
+    App.Event.trigger('auth:logout')
+    App.Event.trigger('ui:rerender')
+    App.Event.trigger('clearStore')

@@ -1,4 +1,4 @@
-class App.TicketMerge extends App.ControllerModalNice
+class App.TicketMerge extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

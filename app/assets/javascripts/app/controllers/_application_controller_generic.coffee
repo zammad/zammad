@@ -1,4 +1,4 @@
-class App.ControllerGenericNew extends App.ControllerModalNice
+class App.ControllerGenericNew extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -44,7 +44,7 @@ class App.ControllerGenericNew extends App.ControllerModalNice
         ui.close()
     )
 
-class App.ControllerGenericEdit extends App.ControllerModalNice
+class App.ControllerGenericEdit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true
@@ -208,7 +208,7 @@ class App.ControllerGenericIndex extends App.Controller
       container:   @container
     )
 
-class App.ControllerGenericDescription extends App.ControllerModalNice
+class App.ControllerGenericDescription extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
   buttonSubmit: 'Close'
@@ -262,12 +262,13 @@ class App.ControllerModalLoading extends App.Controller
       return
     App.Delay.set(remove, delay * 1000)
 
-class App.ControllerGenericDestroyConfirm extends App.ControllerModalNice
+class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'yes'
   buttonClass: 'btn--danger'
   head: 'Confirm'
+  small: true
 
   content: ->
     App.i18n.translateContent('Sure to delete this object?')
@@ -275,9 +276,9 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModalNice
   onSubmit: =>
     @item.destroy(
       done: =>
+        @close()
         if @callback
           @callback()
-        @close()
       fail: =>
         @log 'errors'
         @close()
@@ -348,6 +349,8 @@ class App.ControllerNavSidbar extends App.ControllerContent
   constructor: (params) ->
     super
 
+    @params = params
+
     # get groups
     groups = App.Config.get(@configKey)
     groupsUnsorted = []
@@ -385,6 +388,9 @@ class App.ControllerNavSidbar extends App.ControllerContent
           else if @target && item.target is window.location.hash
             item.active = true
             selectedItem = item
+          else if @target && window.location.hash.match(item.target)
+            item.active = true
+            selectedItem = item
           else
             item.active = false
 
@@ -400,7 +406,7 @@ class App.ControllerNavSidbar extends App.ControllerContent
   renderContainer: =>
     return if $( ".#{@configKey}" )[0]
     @html App.view('generic/navbar_level2/index')(
-      className:  @configKey
+      className: @configKey
     )
 
   renderNavBar: (selectedItem) =>
@@ -427,11 +433,10 @@ class App.ControllerNavSidbar extends App.ControllerContent
       @activeController.render()
       return
 
-    @activeController = new selectedItem.controller(
-      el: @$('.main')
-    )
+    @params.el = @$('.main')
+    @activeController = new selectedItem.controller(@params)
 
-class App.GenericHistory extends App.ControllerModalNice
+class App.GenericHistory extends App.ControllerModal
   buttonClose: true
   buttonCancel: false
   buttonSubmit: false

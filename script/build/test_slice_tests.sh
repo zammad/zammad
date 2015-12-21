@@ -28,9 +28,10 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
+  rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
-  rm test/browser/switch_to_user_test.rb
+  rm test/browser/translation_test.rb
 
 elif [ "$LEVEL" == '3' ]; then
   echo "slicing level 3"
@@ -45,9 +46,10 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/maintenance_message_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
+  rm test/browser/switch_to_user_test.rb
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
-  rm test/browser/switch_to_user_test.rb
+  rm test/browser/translation_test.rb
 
 else
   echo "ERROR: Invalid level $LEVEL - 1, 2 or 3 is available"

@@ -81,7 +81,7 @@ GEM
     delayed_job_active_record (4.1.0)
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
-    diffy (3.0.7)
+    diffy (3.1.0)
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -130,6 +130,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (0.7.0)
     icalendar (2.3.0)
+    inflection (1.0.0)
     json (1.8.3)
     jwt (1.5.2)
     koala (2.2.0)
@@ -159,7 +160,7 @@ GEM
     naught (1.1.0)
     nenv (0.2.0)
     net-ldap (0.12.1)
-    nokogiri (1.6.7)
+    nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
       nenv (~> 0.1)
@@ -259,6 +260,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    scrub_rb (1.0.1)
     selenium-webdriver (2.48.1)
       childprocess (~> 0.5)
       multi_json (~> 1.0)
@@ -275,7 +277,7 @@ GEM
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
     slop (3.6.0)
-    spring (1.5.0)
+    spring (1.6.0)
     sprockets (3.5.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -317,6 +319,13 @@ GEM
     unf_ext (0.0.7.1)
     websocket (1.2.2)
     writeexcel (1.0.5)
+    zendesk_api (1.13.1)
+      faraday (~> 0.9)
+      hashie (>= 1.2, < 4.0, != 3.3.0)
+      inflection
+      mime-types
+      multipart-post (~> 2.0)
+      scrub_rb (~> 1.0.1)
 
 PLATFORMS
   ruby
@@ -371,6 +380,7 @@ DEPENDENCIES
   twitter
   uglifier
   writeexcel
+  zendesk_api
 
 BUNDLED WITH
    1.10.6

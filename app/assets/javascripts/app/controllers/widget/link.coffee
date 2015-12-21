@@ -80,7 +80,7 @@ class App.WidgetLink extends App.Controller
       container:      @container
     )
 
-class App.LinkAdd extends App.ControllerModalNice
+class App.LinkAdd extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

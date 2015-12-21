@@ -35,11 +35,11 @@ class AgentTicketActionLevel7Test < TestCase
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'botton',
-      css:      '.content.active [data-type="reply"]',
+      css:      '.content.active [data-type="emailReply"]',
     )
 
     # click reply
-    click( css: '.content.active [data-type="reply"]' )
+    click( css: '.content.active [data-type="emailReply"]' )
 
     # check body
     watch_for(
@@ -58,11 +58,11 @@ class AgentTicketActionLevel7Test < TestCase
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'botton',
-      css:      '.content.active [data-type="reply"]',
+      css:      '.content.active [data-type="emailReply"]',
     )
 
     # click reply
-    click( css: '.content.active [data-type="reply"]' )
+    click( css: '.content.active [data-type="emailReply"]' )
 
     # check body
     watch_for(

@@ -586,7 +586,7 @@ class App.ControllerContent extends App.Controller
     $('#content').removeClass('hide')
     @navShow()
 
-class App.ControllerModalNice extends App.Controller
+class App.ControllerModal extends App.Controller
   backdrop: true
   keyboard: true
   large: false
@@ -654,6 +654,9 @@ class App.ControllerModalNice extends App.Controller
   post: ->
     # nothing
 
+  element: =>
+    @el
+
   render: =>
     if @buttonSubmit is true
       @buttonSubmit = 'Submit'
@@ -688,6 +691,11 @@ class App.ControllerModalNice extends App.Controller
       e.preventDefault()
     @el.modal('hide')
 
+  formParams: =>
+    if @container
+      return @formParam(@container.find('.modal form'))
+    return @formParam(@$('.modal form'))
+
   onShow: ->
     # do nothing
 
@@ -714,7 +722,7 @@ class App.ControllerModalNice extends App.Controller
     e.preventDefault()
     @onSubmit(e)
 
-class App.SessionMessage extends App.ControllerModalNice
+class App.SessionMessage extends App.ControllerModal
   onCancel: (e) =>
     if @forceReload
       @reload(e)

@@ -116,6 +116,17 @@ job_integration_es:
     - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb
 
+job_integration_zendesk:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:drop;
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/zendesk_import_test.rb
+
 job_integration_otrs_5:
   stage: test
   tags:

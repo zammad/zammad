@@ -1,18 +1,14 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T('Chat') %> <small></small></h1>
+    <div class="zammad-switch zammad-switch--small js-chatSetting">
+       <input name="chat" type="checkbox" id="setting-chat" <% if @chatSetting: %>checked<% end %>>
+       <label for="setting-chat"></label>
+    </div>
+    <h1><%- @T('Chat') %></h1>
   </div>
 </div>
 <div class="page-content">
   <p><%- @T('You can create chat widgets for your webpages to allow visitors to chat with you.') %></p>
-
-  <h2><%- @T('Enable') %>/<%- @T('Disable') %></h2>
-  <form>
-    <div class="zammad-switch js-chatSetting">
-       <input name="chat" type="checkbox" id="setting-chat" <% if @chatSetting: %>checked<% end %>>
-       <label for="setting-chat"></label>
-    </div>
-  </form>
 
   <h2><%- @T('Topics') %></h2>
   <p><%- @T('You can create multiple chat topics.') %></p>

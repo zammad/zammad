@@ -9,8 +9,12 @@ Zammad::Application.routes.draw do
   match api_path + '/channels/email_verify',          to: 'channels#email_verify',        via: :post
   match api_path + '/channels/email_notification',    to: 'channels#email_notification',  via: :post
 
+  # twitter helper
+  match api_path + '/channels/twitter_index',         to: 'channels#twitter_index',       via: :get
+  match api_path + '/channels/twitter_verify/:id',    to: 'channels#twitter_verify',      via: :post
+
   # channels
-  match api_path + '/channels/group/:id',             to: 'channels#group_update', via: :post
-  match api_path + '/channels/:id',                   to: 'channels#destroy', via: :delete
+  match api_path + '/channels/group/:id',             to: 'channels#group_update',        via: :post
+  match api_path + '/channels/:id',                   to: 'channels#destroy',             via: :delete
 
 end

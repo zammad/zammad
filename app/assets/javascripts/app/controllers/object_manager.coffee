@@ -152,7 +152,7 @@ class Items extends App.ControllerContent
         @load()
     )
 
-class Edit extends App.ControllerModalNice
+class Edit extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: true

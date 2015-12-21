@@ -24,10 +24,10 @@ class Channel::Driver::Facebook
     @channel  = Channel.find_by( area: 'Facebook::Inbound', active: true )
     @facebook = Facebook.new( @channel[:options] )
 
-    tweet = @facebook.from_article(article)
+    post = @facebook.from_article(article)
     disconnect
 
-    tweet
+    post
   end
 
   def disconnect
@@ -42,11 +42,11 @@ class Channel::Driver::Facebook
 
     counter = 0
     feed    = @facebook.client.get_connections('me', 'feed')
-    feed.each { |f|
+    feed.each { |feed_item|
 
       break if @sync[:limit] && @sync[:limit] <= counter
 
-      post = @facebook.client.get_object( f['id'] )
+      post = @facebook.client.get_object( feed_item['id'] )
 
       @facebook.to_group( post, @sync[:group_id] )
 

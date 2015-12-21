@@ -571,7 +571,7 @@ class App.TicketZoom extends App.Controller
     # check if attachment exists but no body
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
     if !articleParams['body'] && attachmentCount > 0
-      new App.ControllerModalNice(
+      new App.ControllerModal(
         head: 'Text missing'
         buttonCancel: 'Cancel'
         buttonCancelClass: 'btn--danger'

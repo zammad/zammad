@@ -9,7 +9,7 @@ class Channel::EmailParser
 
 =begin
 
-  mail = parse( msg_as_string )
+  mail = parse(msg_as_string)
 
   mail = {
     from:              'Some Name <some@example.com>',
@@ -60,9 +60,9 @@ class Channel::EmailParser
 
 =end
 
-  def parse (msg)
+  def parse(msg)
     data = {}
-    mail = Mail.new( msg )
+    mail = Mail.new(msg)
 
     # set all headers
     mail.header.fields.each { |field|
@@ -70,7 +70,7 @@ class Channel::EmailParser
       next if !field.name
 
       # full line, encode, ready for storage
-      data[field.name.to_s.downcase.to_sym] = Encode.conv( 'utf8', field.to_s )
+      data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
 
       # if we need to access the lines by objects later again
       data[ "raw-#{field.name.downcase}".to_sym ] = field
@@ -101,11 +101,11 @@ class Channel::EmailParser
 
     # set extra headers
     begin
-      data[:from_email]        = Mail::Address.new( from ).address
-      data[:from_local]        = Mail::Address.new( from ).local
-      data[:from_domain]       = Mail::Address.new( from ).domain
-      data[:from_display_name] = Mail::Address.new( from ).display_name ||
-                                 ( Mail::Address.new( from ).comments && Mail::Address.new( from ).comments[0] )
+      data[:from_email]        = Mail::Address.new(from).address
+      data[:from_local]        = Mail::Address.new(from).local
+      data[:from_domain]       = Mail::Address.new(from).domain
+      data[:from_display_name] = Mail::Address.new(from).display_name ||
+                                 (Mail::Address.new(from).comments && Mail::Address.new(from).comments[0])
     rescue
       data[:from_email]  = from
       data[:from_local]  = from
@@ -113,7 +113,7 @@ class Channel::EmailParser
     end
 
     # do extra decoding because we needed to use field.value
-    data[:from_display_name] = Mail::Field.new( 'X-From', data[:from_display_name] ).to_s
+    data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
 
     # compat headers
     data[:message_id] = data['message-id'.to_sym]
@@ -129,7 +129,7 @@ class Channel::EmailParser
       # text attachment/body exists
       if mail.text_part
         data[:body] = mail.text_part.body.decoded
-        data[:body] = Encode.conv( mail.text_part.charset, data[:body] )
+        data[:body] = Encode.conv(mail.text_part.charset, data[:body])
 
         if !data[:body].valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
@@ -142,7 +142,7 @@ class Channel::EmailParser
         if mail.html_part && mail.html_part.body
           filename = 'message.html'
           data[:body] = mail.html_part.body.to_s
-          data[:body] = Encode.conv( mail.html_part.charset.to_s, data[:body] )
+          data[:body] = Encode.conv(mail.html_part.charset.to_s, data[:body])
           data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
           if !data[:body].force_encoding('UTF-8').valid_encoding?
@@ -181,11 +181,11 @@ class Channel::EmailParser
 
           # protect process to work fine with spam emails, see test/fixtures/mail15.box
           begin
-            attachs = _get_attachment( part, data[:attachments], mail )
-            data[:attachments].concat( attachs )
+            attachs = _get_attachment(part, data[:attachments], mail)
+            data[:attachments].concat(attachs)
           rescue
-            attachs = _get_attachment( part, data[:attachments], mail )
-            data[:attachments].concat( attachs )
+            attachs = _get_attachment(part, data[:attachments], mail)
+            data[:attachments].concat(attachs)
           end
         }
       end
@@ -196,7 +196,7 @@ class Channel::EmailParser
       # text part only
       if !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.downcase == 'text/plain'
         data[:body] = mail.body.decoded
-        data[:body] = Encode.conv( mail.charset, data[:body] )
+        data[:body] = Encode.conv(mail.charset, data[:body])
 
         if !data[:body].force_encoding('UTF-8').valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
@@ -208,7 +208,7 @@ class Channel::EmailParser
         if mail.mime_type.to_s.downcase == 'text/html'
           filename = 'message.html'
           data[:body] = mail.body.decoded
-          data[:body] = Encode.conv( mail.charset, data[:body] )
+          data[:body] = Encode.conv(mail.charset, data[:body])
           data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
           if !data[:body].valid_encoding?
@@ -240,9 +240,9 @@ class Channel::EmailParser
     end
 
     # strip not wanted chars
-    data[:body].gsub!( /\n\r/, "\n" )
-    data[:body].gsub!( /\r\n/, "\n" )
-    data[:body].gsub!( /\r/, "\n" )
+    data[:body].gsub!(/\n\r/, "\n")
+    data[:body].gsub!(/\r\n/, "\n")
+    data[:body].gsub!(/\r/, "\n")
 
     # remember original mail instance
     data[:mail_instance] = mail
@@ -250,14 +250,14 @@ class Channel::EmailParser
     data
   end
 
-  def _get_attachment( file, attachments, mail )
+  def _get_attachment(file, attachments, mail)
 
     # check if sub parts are available
     if !file.parts.empty?
       a = []
       file.parts.each {|p|
-        attachment = _get_attachment( p, attachments, mail )
-        a.concat( attachment )
+        attachment = _get_attachment(p, attachments, mail)
+        a.concat(attachment)
       }
       return a
     end
@@ -341,7 +341,7 @@ retrns
 =end
 
   def process(channel, msg)
-    mail = parse( msg )
+    mail = parse(msg)
 
     # run postmaster pre filter
     filters = {
@@ -353,7 +353,7 @@ retrns
       '1000' => Channel::Filter::Database,
     }
 
-    # filter( channel, mail )
+    # filter(channel, mail)
     filters.each {|_prio, backend|
       begin
         backend.run(channel, mail)
@@ -379,10 +379,10 @@ retrns
 
       # create sender
       if mail[ 'x-zammad-customer-login'.to_sym ]
-        user = User.find_by( login: mail[ 'x-zammad-customer-login'.to_sym ] )
+        user = User.find_by(login: mail[ 'x-zammad-customer-login'.to_sym ])
       end
       if !user
-        user = User.find_by( email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email] )
+        user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email])
       end
       if !user
         user = user_create(
@@ -422,8 +422,8 @@ retrns
 
       # set ticket state to open if not new
       if ticket
-        state      = Ticket::State.find( ticket.state_id )
-        state_type = Ticket::StateType.find( state.state_type_id )
+        state      = Ticket::State.find(ticket.state_id)
+        state_type = Ticket::StateType.find(state.state_type_id)
 
         # if tickte is merged, find linked ticket
         if state_type.name == 'merged'
@@ -440,16 +440,23 @@ retrns
       # create new ticket
       if !ticket
 
-        # set attributes
+        preferences = {}
+        if channel[:id]
+          preferences = {
+            channel_id: channel[:id]
+          }
+        end
+
         ticket = Ticket.new(
           group_id: channel[:group_id] || 1,
           customer_id: user.id,
           title: mail[:subject] || '',
-          state_id: Ticket::State.find_by( name: 'new' ).id,
-          priority_id: Ticket::Priority.find_by( name: '2 normal' ).id,
+          state_id: Ticket::State.find_by(name: 'new').id,
+          priority_id: Ticket::Priority.find_by(name: '2 normal').id,
+          preferences: preferences,
         )
 
-        set_attributes_by_x_headers( ticket, 'ticket', mail )
+        set_attributes_by_x_headers(ticket, 'ticket', mail)
 
         # create ticket
         ticket.save
@@ -460,8 +467,8 @@ retrns
       # set attributes
       article = Ticket::Article.new(
         ticket_id: ticket.id,
-        type_id: Ticket::Article::Type.find_by( name: 'email' ).id,
-        sender_id: Ticket::Article::Sender.find_by( name: 'Customer' ).id,
+        type_id: Ticket::Article::Type.find_by(name: 'email').id,
+        sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
         body: mail[:body],
         from: mail[:from],
         to: mail[:to],
@@ -472,7 +479,7 @@ retrns
       )
 
       # x-headers lookup
-      set_attributes_by_x_headers( article, 'article', mail )
+      set_attributes_by_x_headers(article, 'article', mail)
 
       # create article
       article.save
@@ -505,13 +512,13 @@ retrns
 
     # run postmaster post filter
     filters = {
-      #      '0010' => Channel::Filter::Trusted,
+      # '0010' => Channel::Filter::Trusted,
     }
 
     # filter( channel, mail )
     filters.each {|_prio, backend|
       begin
-        backend.run( channel, mail, ticket, article, user )
+        backend.run(channel, mail, ticket, article, user)
       rescue => e
         Rails.logger.error "can't run postmaster post filter #{backend}"
         Rails.logger.error e.inspect
@@ -525,11 +532,11 @@ retrns
   def user_create(data)
 
     # return existing
-    user = User.find_by( login: data[:email].downcase )
+    user = User.find_by(login: data[:email].downcase)
     return user if user
 
     # create new user
-    roles = Role.where( name: 'Customer' )
+    roles = Role.where(name: 'Customer')
 
     # fillup
     %w(firstname lastname).each { |item|
@@ -551,7 +558,7 @@ retrns
     user
   end
 
-  def set_attributes_by_x_headers( item_object, header_name, mail )
+  def set_attributes_by_x_headers(item_object, header_name, mail)
 
     # loop all x-zammad-hedaer-* headers
     item_object.attributes.each {|key, _value|
@@ -577,12 +584,12 @@ retrns
             item = assoc.class_name.constantize
 
             if item.respond_to?(:name)
-              if item.lookup( name: mail[ header.to_sym ] )
-                item_object[key] = item.lookup( name: mail[ header.to_sym ] ).id
+              if item.lookup(name: mail[ header.to_sym ])
+                item_object[key] = item.lookup(name: mail[ header.to_sym ]).id
               end
             elsif item.respond_to?(:login)
-              if item.lookup( login: mail[ header.to_sym ] )
-                item_object[key] = item.lookup( login: mail[ header.to_sym ] ).id
+              if item.lookup(login: mail[ header.to_sym ])
+                item_object[key] = item.lookup(login: mail[ header.to_sym ]).id
               end
             end
           }

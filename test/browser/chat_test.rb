@@ -590,7 +590,7 @@ class ChatTest < TestCase
     watch_for_disappear(
       browser: customer,
       css: '.zammad-chat',
-      timeout: 75,
+      timeout: 95,
     )
 
     # no agent action, show sorry screen

@@ -128,6 +128,7 @@ returns
       'Channels'       => 'Channel',
       'EmailAddresses' => 'EmailAddress',
       'Signatures'     => 'Signature',
+      'Groups'         => 'Group',
     }
     model_map.each {|map_name, model|
       next if !auto_wizard_hash[map_name]

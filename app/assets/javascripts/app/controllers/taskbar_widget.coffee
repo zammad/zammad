@@ -120,7 +120,7 @@ class App.TaskbarWidget extends App.Controller
 
     @navigate '#'
 
-class Remove extends App.ControllerModalNice
+class Remove extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'Discared changes'

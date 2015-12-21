@@ -68,6 +68,24 @@ class Tweet
       user = User.create(user_data)
     end
 
+    if user_data[:image_source]
+      avatar = Avatar.add(
+        object: 'User',
+        o_id: user.id,
+        url: user_data[:image_source],
+        source: 'twitter',
+        deletable: true,
+        updated_by_id: user.id,
+        created_by_id: user.id,
+      )
+
+      # update user link
+      if avatar && user.image != avatar.store_hash
+        user.image = avatar.store_hash
+        user.save
+      end
+    end
+
     # create or update authorization
     auth_data = {
       uid:      tweet_user.id,
@@ -81,12 +99,10 @@ class Tweet
       Authorization.create(auth_data)
     end
 
-    UserInfo.current_user_id = user.id
-
     user
   end
 
-  def to_ticket(tweet, user, group_id)
+  def to_ticket(tweet, user, group_id, channel)
 
     Rails.logger.debug 'Create ticket from tweet...'
     Rails.logger.debug tweet.inspect
@@ -94,30 +110,29 @@ class Tweet
     Rails.logger.debug group_id.inspect
 
     if tweet.class == Twitter::DirectMessage
-      article = Ticket::Article.find_by(
-        from:    tweet.sender.screen_name,
-        type_id: Ticket::Article::Type.find_by(name: 'twitter direct-message').id,
-      )
-      if article
-        ticket = Ticket.find_by(
-          id:          article.ticket_id,
-          customer_id: user.id,
-          state:       Ticket::State.where.not(
-            state_type_id: Ticket::StateType.where(
-              name: %w(closed merged removed),
-            )
+      ticket = Ticket.find_by(
+        create_article_type: Ticket::Article::Type.lookup(name: 'twitter direct-message'),
+        customer_id:         user.id,
+        state:               Ticket::State.where.not(
+          state_type_id: Ticket::StateType.where(
+            name: %w(closed merged removed),
           )
         )
-        return ticket if ticket
-      end
+      )
+      return ticket if ticket
     end
+
+    UserInfo.current_user_id = user.id
 
     Ticket.create(
       customer_id: user.id,
       title:       "#{tweet.text[0, 37]}...",
       group_id:    group_id,
-      state_id:    Ticket::State.find_by(name: 'new').id,
-      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
+      state:       Ticket::State.find_by(name: 'new'),
+      priority:    Ticket::Priority.find_by(name: '2 normal'),
+      preferences: {
+        channel_id: channel.id
+      },
     )
   end
 
@@ -141,15 +156,17 @@ class Tweet
     in_reply_to = nil
     if tweet.class == Twitter::DirectMessage
       article_type = 'twitter direct-message'
-      to = tweet.recipient.screen_name
-      from = tweet.sender.screen_name
+      to = "@#{tweet.recipient.screen_name}"
+      from = "@#{tweet.sender.screen_name}"
     elsif tweet.class == Twitter::Tweet
       article_type = 'twitter status'
-      from = tweet.in_reply_to_screen_name
+      from = "@#{tweet.user.screen_name}"
       in_reply_to = tweet.in_reply_to_status_id
     else
       fail "Unknown tweet type '#{tweet.class}'"
     end
+
+    UserInfo.current_user_id = user.id
 
     Ticket::Article.create(
       from:        from,
@@ -164,7 +181,7 @@ class Tweet
     )
   end
 
-  def to_group(tweet, group_id)
+  def to_group(tweet, group_id, channel)
 
     Rails.logger.debug 'import tweet'
 
@@ -177,19 +194,19 @@ class Tweet
       # check if parent exists
       user = to_user(tweet)
       if tweet.class == Twitter::DirectMessage
-        ticket = to_ticket(tweet, user, group_id)
+        ticket = to_ticket(tweet, user, group_id, channel)
         to_article(tweet, user, ticket)
       elsif tweet.class == Twitter::Tweet
-        if tweet.in_reply_to_status_id
+        if tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
           existing_article = Ticket::Article.find_by(message_id: tweet.in_reply_to_status_id)
           if existing_article
             ticket = existing_article.ticket
           else
             parent_tweet = @client.status(tweet.in_reply_to_status_id)
-            ticket       = to_group(parent_tweet, group_id)
+            ticket       = to_group(parent_tweet, group_id, channel)
           end
         else
-          ticket = to_ticket(tweet, user, group_id)
+          ticket = to_ticket(tweet, user, group_id, channel)
         end
         to_article(tweet, user, ticket)
       else

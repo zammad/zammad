@@ -1,21 +1,31 @@
 class Widget extends App.Controller
   constructor: ->
     super
+    @rebind()
+    App.Event.bind('auth', => @rebind())
+    App.Event.bind('i18n:inline_translation', => @toogle())
+
+  rebind: =>
+    $(document).off('keydown.translation')
 
     # only admins can do this
     return if !@isRole('Admin')
 
     # bind on key down
     # if ctrl+alt+t is pressed, enable translation_inline and fire ui:rerender
-    $(document).on('keydown', (e) =>
+    $(document).on('keydown.translation', (e) =>
       if e.altKey && e.ctrlKey && e.keyCode is 84
-        if @active
-          @disable()
-          @active = false
-        else
-          @enable()
-          @active = true
+        @toogle()
     )
+
+  toogle: =>
+    if @active
+      @disable()
+      @active = false
+      return
+
+    @enable()
+    @active = true
 
   enable: ->
     # load in collection if needed
@@ -37,7 +47,6 @@ class Widget extends App.Controller
         element.data 'before', element.text()
         element
       .on 'blur.translation', '.translation', (e) ->
-        console.log('blur')
         element = $(e.target)
         source = element.attr('title')
 
@@ -65,7 +74,7 @@ class Widget extends App.Controller
             locale:         App.i18n.get()
             source:         source
             target:         translation_new
-            initial_target: ''
+            target_initial: ''
           )
           translation.save()
 
@@ -80,4 +89,4 @@ class Widget extends App.Controller
     # rerender controllers
     App.Event.trigger('ui:rerender')
 
-App.Config.set( 'translation_inline', Widget, 'Widgets' )
+App.Config.set('translation_inline', Widget, 'Widgets')

@@ -1,9 +1,11 @@
 class App.TicketZoomArticleActions extends App.Controller
   events:
-    'click [data-type=public]':   'publicInternal'
-    'click [data-type=internal]': 'publicInternal'
-    'click [data-type=reply]':    'reply'
-    'click [data-type=replyAll]': 'replyAll'
+    'click [data-type=public]':                    'publicInternal'
+    'click [data-type=internal]':                  'publicInternal'
+    'click [data-type=emailReply]':                'emailReply'
+    'click [data-type=emailReplyAll]':             'emailReplyAll'
+    'click [data-type=twitterStatusReply]':        'twitterStatusReply'
+    'click [data-type=twitterDirectMessageReply]': 'twitterDirectMessageReply'
 
   constructor: ->
     super
@@ -68,7 +70,7 @@ class App.TicketZoomArticleActions extends App.Controller
     if article.type.name is 'email' || article.type.name is 'phone' || article.type.name is 'web'
       actions.push {
         name: 'reply'
-        type: 'reply'
+        type: 'emailReply'
         icon: 'reply'
         href: '#'
       }
@@ -90,10 +92,18 @@ class App.TicketZoomArticleActions extends App.Controller
       if recipients.length > 1
         actions.push {
           name: 'reply all'
-          type: 'replyAll'
+          type: 'emailReplyAll'
           icon: 'reply-all'
           href: '#'
         }
+    if article.type.name is 'twitter status'
+      actions.push {
+        name: 'reply'
+        type: 'twitterStatusReply'
+        icon: 'reply'
+        href: '#'
+      }
+
     actions.push {
       name: 'split'
       type: 'split'
@@ -102,19 +112,83 @@ class App.TicketZoomArticleActions extends App.Controller
     }
     actions
 
-  replyAll: (e) =>
-    @reply(e, true)
-
-  reply: (e, all = false) =>
+  twitterStatusReply: (e) =>
     e.preventDefault()
 
     # get reference article
     article_id = $(e.target).parents('[data-id]').data('id')
-    article    = App.TicketArticle.fullLocal( article_id )
-    type       = App.TicketArticleType.find( article.type_id )
-    customer   = App.User.find( article.created_by_id )
+    article    = App.TicketArticle.fullLocal(article_id)
+    type       = App.TicketArticleType.find(article.type_id)
+    customer   = App.User.find(article.created_by_id)
 
-    @el.closest('.article-add').ScrollTo()
+    @scrollToCompose()
+
+    # empty form
+    articleNew = {
+      to:          ''
+      cc:          ''
+      body:        ''
+      in_reply_to: ''
+    }
+
+    if article.message_id
+      articleNew.in_reply_to = article.message_id
+
+    # get current body
+    body = @el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
+    articleNew.body = body
+
+    to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
+    recipient = "@#{to}&nbsp;"
+
+    if !body
+      articleNew.body = recipient
+
+    if body && !body.match("@#{to}")
+      articleNew.body = "#{recipient}#{articleNew.body}"
+
+
+    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
+
+  twitterDirectMessageReply: (e) =>
+    e.preventDefault()
+
+    # get reference article
+    article_id = $(e.target).parents('[data-id]').data('id')
+    article    = App.TicketArticle.fullLocal(article_id)
+    type       = App.TicketArticleType.find(article.type_id)
+    customer   = App.User.find(article.created_by_id)
+
+    @scrollToCompose()
+
+    # empty form
+    articleNew = {
+      to:          ''
+      cc:          ''
+      body:        ''
+      in_reply_to: ''
+    }
+
+    if article.message_id
+      articleNew.in_reply_to = article.message_id
+
+    articleNew.to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
+
+    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
+
+  emailReplyAll: (e) =>
+    @emailReply(e, true)
+
+  emailReply: (e, all = false) =>
+    e.preventDefault()
+
+    # get reference article
+    article_id = $(e.target).parents('[data-id]').data('id')
+    article    = App.TicketArticle.fullLocal(article_id)
+    type       = App.TicketArticleType.find(article.type_id)
+    customer   = App.User.find(article.created_by_id)
+
+    @scrollToCompose()
 
     # empty form
     articleNew = {
@@ -129,19 +203,7 @@ class App.TicketZoomArticleActions extends App.Controller
     if article.message_id
       articleNew.in_reply_to = article.message_id
 
-    if type.name is 'twitter status'
-
-      # set to in body
-      to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
-      articleNew.body = '@' + to
-
-    else if type.name is 'twitter direct-message'
-
-      # show to
-      to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
-      articleNew.to = to
-
-    else if type.name is 'email' || type.name is 'phone' || type.name is 'web'
+    if type.name is 'email' || type.name is 'phone' || type.name is 'web'
 
       if article.sender.name is 'Agent'
         articleNew.to = article.to
@@ -198,10 +260,10 @@ class App.TicketZoomArticleActions extends App.Controller
     if selectedText
 
       # clean selection
-      selectedText = App.Utils.textCleanup( selectedText )
+      selectedText = App.Utils.textCleanup(selectedText)
 
       # convert to html
-      selectedText = App.Utils.text2html( selectedText )
+      selectedText = App.Utils.text2html(selectedText)
       if selectedText
         selectedText = "<div><br><br/></div><div><blockquote type=\"cite\">#{selectedText}</blockquote></div><div><br></div>"
 
@@ -210,4 +272,10 @@ class App.TicketZoomArticleActions extends App.Controller
 
     articleNew.body = body
 
+    type = App.TicketArticleType.findByAttribute(name:'email')
+
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
+
+  scrollToCompose: =>
+    @el.closest('.content').find('.article-add').ScrollTo()
+

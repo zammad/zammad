@@ -14,6 +14,7 @@ class Ticket < ApplicationModel
   include Ticket::SearchIndex
   extend Ticket::Search
 
+  store           :preferences
   before_create   :check_generate, :check_defaults, :check_title
   before_update   :check_defaults, :check_title, :reset_pending_time
   before_destroy  :destroy_dependencies

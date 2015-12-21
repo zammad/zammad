@@ -15,6 +15,6 @@ process emails from STDIN
 
     msg = ARGF.read
 
-    process( {}, msg )
+    process({}, msg)
   end
 end

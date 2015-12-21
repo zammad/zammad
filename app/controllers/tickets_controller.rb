@@ -3,13 +3,6 @@
 class TicketsController < ApplicationController
   before_action :authentication_check
 
-  # GET /api/v1/tickets
-  def index
-    @tickets = Ticket.all
-
-    render json: @tickets
-  end
-
   # GET /api/v1/tickets/1
   def show
     @ticket = Ticket.find( params[:id] )

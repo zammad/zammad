@@ -32,6 +32,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 
+gem 'zendesk_api'
+
 gem 'twitter'
 gem 'koala'
 gem 'mail', '~> 2.5.0'

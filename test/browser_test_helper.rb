@@ -18,9 +18,12 @@ class TestCase < Test::Unit::TestCase
       browser_profile['intl.accept_languages']    = 'en-US'
       browser_profile['general.useragent.locale'] = 'en-US'
     elsif browser == 'chrome'
-      browser_profile = Selenium::WebDriver::Chrome::Profile.new
 
-      browser_profile['intl.accept_languages'] = 'en'
+      # profile are only working on remote selenium
+      if ENV['REMOTE_URL']
+        browser_profile = Selenium::WebDriver::Chrome::Profile.new
+        browser_profile['intl.accept_languages'] = 'en'
+      end
     end
     browser_profile
   end
@@ -41,13 +44,13 @@ class TestCase < Test::Unit::TestCase
       @browsers = {}
     end
     if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
-      local_browser = Selenium::WebDriver.for( browser.to_sym, profile: profile )
-      browser_instance_preferences(local_browser)
+      local_browser = Selenium::WebDriver.for(browser.to_sym, profile: profile)
       @browsers[local_browser.hash] = local_browser
+      browser_instance_preferences(local_browser)
       return local_browser
     end
 
-    caps = Selenium::WebDriver::Remote::Capabilities.send( browser )
+    caps = Selenium::WebDriver::Remote::Capabilities.send(browser)
     if ENV['BROWSER_OS']
       caps.platform = ENV['BROWSER_OS']
     end
@@ -59,21 +62,36 @@ class TestCase < Test::Unit::TestCase
       url: ENV['REMOTE_URL'],
       desired_capabilities: caps,
     )
-    browser_instance_preferences(local_browser)
     @browsers[local_browser.hash] = local_browser
+
+    # avoid "Cannot read property 'get_Current' of undefined" issues
+    begin
+      browser_instance_preferences(local_browser)
+    rescue
+      # just try again
+      sleep 10
+      browser_instance_preferences(local_browser)
+    end
+
+    # upload files from remote dir
+    local_browser.file_detector = lambda do |args|
+      str = args.first.to_s
+      str if File.file?(str)
+    end
+
     local_browser
   end
 
   def browser_instance_close(local_browser)
     return if !@browsers[local_browser.hash]
-    @browsers.delete( local_browser.hash )
+    @browsers.delete(local_browser.hash)
     local_browser.quit
   end
 
   def browser_instance_preferences(local_browser)
     local_browser.manage.window.resize_to(1024, 800)
     if ENV['REMOTE_URL'] !~ /saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i
-      if @browsers.size < 1
+      if @browsers.count == 1
         local_browser.manage.window.move_to(0, 0)
       else
         local_browser.manage.window.move_to(1024, 0)
@@ -85,7 +103,7 @@ class TestCase < Test::Unit::TestCase
   def teardown
     return if !@browsers
     @browsers.each { |_hash, local_browser|
-      screenshot( browser: local_browser, comment: 'teardown' )
+      screenshot(browser: local_browser, comment: 'teardown')
       browser_instance_close(local_browser)
     }
   end
@@ -116,37 +134,37 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     if params[:url]
-      instance.get( params[:url] )
+      instance.get(params[:url])
     end
 
-    element = instance.find_elements( { css: '#login input[name="username"]' } )[0]
+    element = instance.find_elements({ css: '#login input[name="username"]' })[0]
     if !element
-      screenshot( browser: instance, comment: 'login_failed' )
+      screenshot(browser: instance, comment: 'login_failed')
       fail 'No login box found'
     end
 
-    screenshot( browser: instance, comment: 'login' )
+    screenshot(browser: instance, comment: 'login')
 
     element.clear
-    element.send_keys( params[:username] )
+    element.send_keys(params[:username])
 
-    element = instance.find_elements( { css: '#login input[name="password"]' } )[0]
+    element = instance.find_elements({ css: '#login input[name="password"]' })[0]
     element.clear
-    element.send_keys( params[:password] )
+    element.send_keys(params[:password])
 
     if params[:remember_me]
-      instance.find_elements( { css: '#login .checkbox-replacement' } )[0].click
+      instance.find_elements({ css: '#login .checkbox-replacement' })[0].click
     end
-    instance.find_elements( { css: '#login button' } )[0].click
+    instance.find_elements({ css: '#login button' })[0].click
 
     sleep 5
-    login = instance.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
+    login = instance.find_elements({ css: '.user-menu .user a' })[0].attribute('title')
     if login != params[:username]
-      screenshot( browser: instance, comment: 'login_failed' )
+      screenshot(browser: instance, comment: 'login_failed')
       fail 'login failed'
     end
-    screenshot( browser: instance, comment: 'login_ok' )
-    assert( true, 'login ok' )
+    screenshot(browser: instance, comment: 'login_ok')
+    assert(true, 'login ok')
     login
   end
 
@@ -164,19 +182,19 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    instance.find_elements( { css: 'a[href="#current_user"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#current_user"]' })[0].click
     sleep 0.1
-    instance.find_elements( { css: 'a[href="#logout"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#logout"]' })[0].click
     (1..6).each {
       sleep 1
-      login = instance.find_elements( { css: '#login' } )[0]
+      login = instance.find_elements({ css: '#login' })[0]
 
       next if !login
-      screenshot( browser: instance, comment: 'logout_ok' )
-      assert( true, 'logout ok' )
+      screenshot(browser: instance, comment: 'logout_ok')
+      assert(true, 'logout ok')
       return
     }
-    screenshot( browser: instance, comment: 'logout_failed' )
+    screenshot(browser: instance, comment: 'logout_failed')
     fail 'no login box found, seems logout was not successfully!'
   end
 
@@ -194,13 +212,13 @@ class TestCase < Test::Unit::TestCase
     log('location', params)
 
     instance = params[:browser] || @browser
-    instance.get( params[:url] )
+    instance.get(params[:url])
 
     # check if reload was successfull
-    if !instance.find_elements( { css: 'body' } )[0] || instance.find_elements( { css: 'body' } )[0].text =~ /unavailable or too busy/i
+    if !instance.find_elements({ css: 'body' })[0] || instance.find_elements({ css: 'body' })[0].text =~ /unavailable or too busy/i
       instance.navigate.refresh
     end
-    screenshot( browser: instance, comment: 'location' )
+    screenshot(browser: instance, comment: 'location')
   end
 
 =begin
@@ -218,10 +236,10 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if instance.current_url !~ /#{Regexp.quote(params[:url])}/
-      screenshot( browser: instance, comment: 'location_check_failed' )
+      screenshot(browser: instance, comment: 'location_check_failed')
       fail "url #{instance.current_url} is not matching #{params[:url]}"
     end
-    assert( true, "url #{instance.current_url} is matching #{params[:url]}" )
+    assert(true, "url #{instance.current_url} is matching #{params[:url]}")
   end
 
 =begin
@@ -237,14 +255,14 @@ class TestCase < Test::Unit::TestCase
     log('reload', params)
 
     instance = params[:browser] || @browser
-    screenshot( browser: instance, comment: 'reload_before' )
+    screenshot(browser: instance, comment: 'reload_before')
     instance.navigate.refresh
 
     # check if reload was successfull
-    if !instance.find_elements( { css: 'body' } )[0] || instance.find_elements( { css: 'body' } )[0].text =~ /unavailable or too busy/i
+    if !instance.find_elements({ css: 'body' })[0] || instance.find_elements({ css: 'body' })[0].text =~ /unavailable or too busy/i
       instance.navigate.refresh
     end
-    screenshot( browser: instance, comment: 'reload_after' )
+    screenshot(browser: instance, comment: 'reload_after')
   end
 
 =begin
@@ -272,18 +290,18 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     if params[:css]
 
-      element = instance.find_elements( { css: params[:css] } )[0]
+      element = instance.find_elements({ css: params[:css] })[0]
       #instance.mouse.move_to(element)
       #sleep 0.2
       element.click
 
       # trigger also focus on input/select and textarea fields
       #if params[:css] =~ /(input|select|textarea)/
-      #  instance.execute_script( "$('#{params[:css]}').trigger('focus')" )
+      #  instance.execute_script("$('#{params[:css]}').trigger('focus')")
       #  sleep 0.2
       #end
     else
-      instance.find_elements( { partial_link_text: params[:text] } )[0].click
+      instance.find_elements({ partial_link_text: params[:text] })[0].click
     end
     sleep 0.4 if !params[:fast]
     sleep params[:wait] if params[:wait]
@@ -333,8 +351,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if params[:js]
-      instance.execute_script(params[:js])
-      return
+      return instance.execute_script(params[:js])
     end
     fail "Invalid execute params #{params.inspect}"
   end
@@ -353,8 +370,8 @@ class TestCase < Test::Unit::TestCase
     log('exists', params)
 
     instance = params[:browser] || @browser
-    if !instance.find_elements( { css: params[:css] } )[0]
-      screenshot( browser: instance, comment: 'exists_failed' )
+    if !instance.find_elements({ css: params[:css] } )[0]
+      screenshot(browser: instance, comment: 'exists_failed')
       fail "#{params[:css]} dosn't exist, but should"
     end
     true
@@ -374,8 +391,8 @@ class TestCase < Test::Unit::TestCase
     log('exists_not', params)
 
     instance = params[:browser] || @browser
-    if instance.find_elements( { css: params[:css] } )[0]
-      screenshot( browser: instance, comment: 'exists_not_failed' )
+    if instance.find_elements({ css: params[:css] } )[0]
+      screenshot(browser: instance, comment: 'exists_not_failed')
       fail "#{params[:css]} exists but should not"
     end
     true
@@ -401,16 +418,16 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { css: params[:css] } )[0]
+    element = instance.find_elements({ css: params[:css] })[0]
     if !params[:no_click]
       element.click
     end
     element.clear
 
     if !params[:slow]
-      element.send_keys( params[:value] )
+      element.send_keys(params[:value])
     else
-      element.send_keys( '' )
+      element.send_keys('')
       keys = params[:value].to_s.split('')
       keys.each {|key|
         instance.action.send_keys(key).perform
@@ -418,7 +435,7 @@ class TestCase < Test::Unit::TestCase
     end
 
     if params[:blur]
-      instance.execute_script( "$('#{params[:css]}').blur()" )
+      instance.execute_script("$('#{params[:css]}').blur()")
     end
 
     sleep 0.5
@@ -441,13 +458,13 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     begin
-      element  = instance.find_elements( { css: params[:css] } )[0]
+      element  = instance.find_elements({ css: params[:css] })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, params[:value])
       puts "select - #{params.inspect}"
     rescue
       # just try again
-      element  = instance.find_elements( { css: params[:css] } )[0]
+      element  = instance.find_elements({ css: params[:css] })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, params[:value])
       puts "select2 - #{params.inspect}"
@@ -470,15 +487,15 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { css: "#{params[:css]} input[type=checkbox]" } )[0]
+    element = instance.find_elements({ css: "#{params[:css]} input[type=checkbox]" })[0]
     checked = element.attribute('checked')
     if !checked
       if params[:type] == 'on'
-        instance.find_elements( { css: "#{params[:css]} label" } )[0].click
+        instance.find_elements({ css: "#{params[:css]} label" })[0].click
       end
     else
       if params[:type] == 'off'
-        instance.find_elements( { css: "#{params[:css]} label" } )[0].click
+        instance.find_elements({ css: "#{params[:css]} label" })[0].click
       end
     end
   end
@@ -498,7 +515,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { css: params[:css] } )[0]
+    element = instance.find_elements({ css: params[:css] })[0]
     checked = element.attribute('checked')
     element.click if !checked
   end
@@ -518,7 +535,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { css: params[:css] } )[0]
+    element = instance.find_elements({ css: params[:css] })[0]
     checked = element.attribute('checked')
     element.click if checked
   end
@@ -570,7 +587,7 @@ class TestCase < Test::Unit::TestCase
     log('match', params)
 
     instance = params[:browser] || @browser
-    element  = instance.find_elements( { css: params[:css] } )[0]
+    element  = instance.find_elements({ css: params[:css] })[0]
 
     if params[:css] =~ /select/
       dropdown = Selenium::WebDriver::Support::Select.new(element)
@@ -598,7 +615,7 @@ class TestCase < Test::Unit::TestCase
     # match on attribute
     begin
       if params[:attribute]
-        text = element.attribute( params[:attribute] )
+        text = element.attribute(params[:attribute])
       elsif params[:css] =~ /(input|textarea)/i
         text = element.attribute('value')
       else
@@ -681,8 +698,8 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     if params[:type]
-      instance.find_elements( { css: '.content.active .js-secondaryActionButtonLabel' } )[0].click
-      instance.find_elements( { css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]" } )[0].click
+      instance.find_elements({ css: '.content.active .js-secondaryActionButtonLabel' })[0].click
+      instance.find_elements({ css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]" })[0].click
       return
     end
     fail "Unknown params for task_type: #{params.inspect}"
@@ -712,7 +729,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
 
     if !browser_support_cookies
-      assert( true, "'#{params[:value]}' ups browser is not supporting reading cookies, go ahead")
+      assert(true, "'#{params[:value]}' ups browser is not supporting reading cookies, go ahead")
       return true
     end
 
@@ -722,13 +739,13 @@ class TestCase < Test::Unit::TestCase
       # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
       next if cookie[:name] !~ /#{params[:name]}/i
 
-      if params.key?( :value ) && cookie[:value].to_s =~ /#{params[:value]}/i
-        assert( true, "matching value '#{params[:value]}' in cookie '#{cookie}'" )
+      if params.key?(:value ) && cookie[:value].to_s =~ /#{params[:value]}/i
+        assert(true, "matching value '#{params[:value]}' in cookie '#{cookie}'")
       else
         fail "not matching value '#{params[:value]}' in cookie '#{cookie}'"
       end
-      if params.key?( :expires ) && cookie[:expires].to_s =~ /#{params[:expires]}/i
-        assert( true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie}'" )
+      if params.key?(:expires) && cookie[:expires].to_s =~ /#{params[:expires]}/i
+        assert(true, "matching expires '#{params[:expires].inspect}' in cookie '#{cookie}'")
       else
         fail "not matching expires '#{params[:expires]}' in cookie '#{cookie}'"
       end
@@ -738,7 +755,7 @@ class TestCase < Test::Unit::TestCase
       fail "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies}'"
     }
     if params[:should_not_exist]
-      assert( true, "cookie with name '#{params[:name]}' is not existing" )
+      assert(true, "cookie with name '#{params[:name]}' is not existing")
       return
     end
     fail "not matching name '#{params[:name]}' in cookie '#{cookies}'"
@@ -761,7 +778,7 @@ class TestCase < Test::Unit::TestCase
 
     title = instance.title
     if title =~ /#{params[:value]}/i
-      assert( true, "matching '#{params[:value]}' in title '#{title}'" )
+      assert(true, "matching '#{params[:value]}' in title '#{title}'")
     else
       fail "not matching '#{params[:value]}' in title '#{title}'"
     end
@@ -792,9 +809,9 @@ class TestCase < Test::Unit::TestCase
 
       # verify title
       if data[:title]
-        title = instance.find_elements( { css: '.tasks .is-active' } )[0].text.strip
+        title = instance.find_elements({ css: '.tasks .is-active' })[0].text.strip
         if title =~ /#{data[:title]}/i
-          assert( true, "matching '#{data[:title]}' in title '#{title}'" )
+          assert(true, "matching '#{data[:title]}' in title '#{title}'")
         else
           fail "not matching '#{data[:title]}' in title '#{title}'"
         end
@@ -802,8 +819,8 @@ class TestCase < Test::Unit::TestCase
       puts "tv #{params.inspect}"
       # verify modified
       if data.key?(:modified)
-        exists      = instance.find_elements( { css: '.tasks .is-active' } )[0]
-        is_modified = instance.find_elements( { css: '.tasks .is-modified' } )[0]
+        exists      = instance.find_elements({ css: '.tasks .is-active' })[0]
+        is_modified = instance.find_elements({ css: '.tasks .is-modified' })[0]
         puts "m #{data[:modified].inspect}"
         if exists
           puts ' exists'
@@ -813,7 +830,7 @@ class TestCase < Test::Unit::TestCase
         end
         if data[:modified] == true
           if is_modified
-            assert( true, "task '#{data[:title]}' is modifed" )
+            assert(true, "task '#{data[:title]}' is modifed")
           elsif !exists
             fail "task '#{data[:title]}' not exists, should not modified"
           else
@@ -821,7 +838,7 @@ class TestCase < Test::Unit::TestCase
           end
         else
           if !is_modified
-            assert( true, "task '#{data[:title]}' is modifed" )
+            assert(true, "task '#{data[:title]}' is modifed")
           elsif !exists
             fail "task '#{data[:title]}' not exists, should be not modified"
           else
@@ -859,9 +876,9 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    element = instance.find_elements( { partial_link_text: data[:title] } )[0]
+    element = instance.find_elements({ partial_link_text: data[:title] })[0]
     if !element
-      screenshot( browser: instance, comment: 'open_task_failed' )
+      screenshot(browser: instance, comment: 'open_task_failed')
       fail "no task with title '#{data[:title]}' found"
     end
     element.click
@@ -872,8 +889,8 @@ class TestCase < Test::Unit::TestCase
 
   file_upload(
     browser: browser1,
-    css:     '#content .text-1',
-    value:   'some text',
+    css:     '.active .attachmentPlaceholder-inputHolder input'
+    files:   ['path/in/home/some_file.ext'], # 'test/fixtures/test1.pdf'
   )
 
 =end
@@ -884,32 +901,10 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    filename = 'some-file.txt'
-    file = File.join(Dir.pwd, filename)
-    #file = 'some test lalal'
-
-    instance.find_elements( { css: params[:css] } )[0].send_keys file
-    #instance.find_elements( { :css => params[:css] } )[0]
-    #element
-    #@driver.find_element(id: 'file-submit').click
-
-  end
-
-=begin
-
-  click_catcher_remove(
-    browser: browser1,
-  )
-
-=end
-
-  def click_catcher_remove(params = {})
-    switch_window_focus(params)
-    log('click_catcher_remove', params)
-
-    instance = params[:browser] || @browser
-    return if !instance.find_elements( { css: '.clickCatcher' } )[0]
-    click( browser: instance, css: '.clickCatcher')
+    params[:files].each {|file|
+      instance.find_elements({ css: params[:css] })[0].send_keys "#{Rails.root}/#{file}"
+    }
+    sleep 2 * params[:files].count
   end
 
 =begin
@@ -937,20 +932,20 @@ class TestCase < Test::Unit::TestCase
     loops = (timeout).to_i * 2
     text = ''
     (1..loops).each {
-      element = instance.find_elements( { css: params[:css] } )[0]
+      element = instance.find_elements({ css: params[:css] })[0]
       if element #&& element.displayed?
         begin
 
           # match pn attribute
           if params[:attribute]
-            text = element.attribute( params[:attribute] )
+            text = element.attribute(params[:attribute])
           elsif params[:css] =~ /(input|textarea)/i
             text = element.attribute('value')
           else
             text = element.text
           end
           if text =~ /#{params[:value]}/i
-            assert( true, "'#{params[:value]}' found in '#{text}'" )
+            assert(true, "'#{params[:value]}' found in '#{text}'")
             sleep 0.5
             return true
           end
@@ -960,7 +955,7 @@ class TestCase < Test::Unit::TestCase
       end
       sleep 0.5
     }
-    screenshot( browser: instance, comment: 'watch_for_failed' )
+    screenshot(browser: instance, comment: 'watch_for_failed')
     fail "'#{params[:value]}' found in '#{text}'"
   end
 
@@ -998,17 +993,17 @@ wait untill text in selector disabppears
     loops = (timeout).to_i
     text  = ''
     (1..loops).each {
-      element = instance.find_elements( { css: params[:css] } )[0]
+      element = instance.find_elements({ css: params[:css] })[0]
       if !element #|| element.displayed?
-        assert( true, 'not found' )
+        assert(true, 'not found')
         sleep 1
         return true
       end
       if params[:value]
         begin
-          text = instance.find_elements( { css: params[:css] } )[0].text
+          text = instance.find_elements({ css: params[:css] })[0].text
           if text !~ /#{params[:value]}/i
-            assert( true, "not matching '#{params[:value]}' in text '#{text}'" )
+            assert(true, "not matching '#{params[:value]}' in text '#{text}'")
             sleep 1
             return true
           end
@@ -1018,7 +1013,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( browser: instance, comment: 'disappear_failed' )
+    screenshot(browser: instance, comment: 'disappear_failed')
     fail "#{params[:css]}) still exsists"
   end
 
@@ -1040,17 +1035,17 @@ wait untill text in selector disabppears
     (1..100).each do
       sleep 1
       begin
-        if instance.find_elements( { css: '.navigation .tasks .task:first-child' } )[0]
-          instance.mouse.move_to( instance.find_elements( { css: '.navigation .tasks .task:first-child' } )[0] )
+        if instance.find_elements({ css: '.navigation .tasks .task:first-child' })[0]
+          instance.mouse.move_to(instance.find_elements({ css: '.navigation .tasks .task:first-child' })[0])
           sleep 0.1
-          click_element = instance.find_elements( { css: '.navigation .tasks .task:first-child .js-close' } )[0]
+          click_element = instance.find_elements({ css: '.navigation .tasks .task:first-child .js-close' })[0]
           if click_element
             click_element.click
 
             # accept task close warning
             if params[:discard_changes]
               sleep 1
-              instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+              instance.find_elements({ css: '.modal button.js-submit' })[0].click
             end
           end
         else
@@ -1061,7 +1056,7 @@ wait untill text in selector disabppears
       end
     end
     sleep 1
-    assert( true, 'all tasks closed' )
+    assert(true, 'all tasks closed')
   end
 
 =begin
@@ -1080,23 +1075,23 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { css: params[:css] + ' input[name="customer_id_completion"]' } )[0]
+    element = instance.find_elements({ css: params[:css] + ' input[name="customer_id_completion"]' })[0]
     element.click
     element.clear
 
     # workaround, sometimes focus is not triggered
-    element.send_keys( params[:customer] + '*' )
+    element.send_keys(params[:customer] + '*')
     sleep 3.5
 
     # check if pulldown is open, it's not working stable via selenium
-    #instance.execute_script( "$('#{params[:css]} .js-recipientDropdown').addClass('open')" )
+    #instance.execute_script("$('#{params[:css]} .js-recipientDropdown').addClass('open')")
     #sleep 0.5
-    element.send_keys( :arrow_down )
+    element.send_keys(:arrow_down)
     sleep 0.3
-    element.send_keys( :enter )
-    #instance.find_elements( { css: params[:css] + ' .recipientList-entry.js-user.is-active' } )[0].click
+    element.send_keys(:enter)
+    #instance.find_elements({ css: params[:css] + ' .recipientList-entry.js-user.is-active' })[0].click
     sleep 0.6
-    assert( true, 'ticket_customer_select' )
+    assert(true, 'ticket_customer_select')
   end
 
 =begin
@@ -1123,29 +1118,29 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
-    instance.find_elements( { css: 'a[href="#manage/overviews"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage"]' })[0].click
+    instance.find_elements({ css: 'a[href="#manage/overviews"]' })[0].click
     sleep 0.2
-    instance.find_elements( { css: '#content a[data-type="new"]' } )[0].click
+    instance.find_elements({ css: '#content a[data-type="new"]' })[0].click
     sleep 2
 
     if data[:name]
-      element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
+      element = instance.find_elements({ css: '.modal input[name=name]' })[0]
       element.clear
       element.send_keys(data[:name])
     end
     if data[:role]
-      element = instance.find_elements( { css: '.modal select[name="role_id"]' } )[0]
+      element = instance.find_elements({ css: '.modal select[name="role_id"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, data[:role])
     end
 
     if data[:selector]
       data[:selector].each {|key, value|
-        element = instance.find_elements( { css: '.modal .ticket_selector .js-attributeSelector select' } )[0]
+        element = instance.find_elements({ css: '.modal .ticket_selector .js-attributeSelector select' })[0]
         dropdown = Selenium::WebDriver::Support::Select.new(element)
         dropdown.select_by(:text, key)
-        element = instance.find_elements( { css: '.modal .ticket_selector .js-value select' } )[0]
+        element = instance.find_elements({ css: '.modal .ticket_selector .js-value select' })[0]
         dropdown = Selenium::WebDriver::Support::Select.new(element)
         dropdown.deselect_all
         dropdown.select_by(:text, value)
@@ -1153,22 +1148,22 @@ wait untill text in selector disabppears
     end
 
     if data[:prio]
-      element = instance.find_elements( { css: '.modal input[name=prio]' } )[0]
+      element = instance.find_elements({ css: '.modal input[name=prio]' })[0]
       element.clear
       element.send_keys(data[:prio])
     end
     if data['order::direction']
-      element = instance.find_elements( { css: '.modal select[name="order::direction"]' } )[0]
+      element = instance.find_elements({ css: '.modal select[name="order::direction"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       dropdown.select_by(:text, data['order::direction'])
     end
 
-    instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+    instance.find_elements({ css: '.modal button.js-submit' })[0].click
     (1..12).each {
-      element = instance.find_elements( { css: 'body' } )[0]
+      element = instance.find_elements({ css: 'body' })[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, 'overview created' )
+        assert(true, 'overview created')
         overview = {
           name: name,
         }
@@ -1176,7 +1171,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( browser: instance, comment: 'overview_create_failed' )
+    screenshot(browser: instance, comment: 'overview_create_failed')
     fail 'overview creation failed'
   end
 
@@ -1209,68 +1204,68 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements( { css: 'a[href="#new"]' } )[0].click
-    instance.find_elements( { css: 'a[href="#ticket/create"]' } )[0].click
-    element = instance.find_elements( { css: '.active .newTicket' } )[0]
+    instance.find_elements({ css: 'a[href="#new"]' })[0].click
+    instance.find_elements({ css: 'a[href="#ticket/create"]' })[0].click
+    element = instance.find_elements({ css: '.active .newTicket' })[0]
     if !element
-      screenshot( browser: instance, comment: 'ticket_create_failed' )
+      screenshot(browser: instance, comment: 'ticket_create_failed')
       fail 'no ticket create screen found!'
     end
     sleep 1
 
     # check count of agents, should be only 1 / - selection on init screen
-    count = instance.find_elements( { css: '.active .newTicket select[name="owner_id"] option' } ).count
-    assert_equal( 1, count, 'check if owner selection is empty per default'  )
+    count = instance.find_elements({ css: '.active .newTicket select[name="owner_id"] option' }).count
+    assert_equal(1, count, 'check if owner selection is empty per default' )
 
     if data[:group]
-      element = instance.find_elements( { css: '.active .newTicket select[name="group_id"]' } )[0]
+      element = instance.find_elements({ css: '.active .newTicket select[name="group_id"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data[:group])
+      dropdown.select_by(:text, data[:group])
       sleep 0.2
     end
     if data[:priority]
-      element = instance.find_elements( { css: '.active .newTicket select[name="priority_id"]' } )[0]
+      element = instance.find_elements({ css: '.active .newTicket select[name="priority_id"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data[:priority])
+      dropdown.select_by(:text, data[:priority])
       sleep 0.2
     end
     if data[:title]
-      element = instance.find_elements( { css: '.active .newTicket input[name="title"]' } )[0]
+      element = instance.find_elements({ css: '.active .newTicket input[name="title"]' })[0]
       element.clear
-      element.send_keys( data[:title] )
+      element.send_keys(data[:title])
       sleep 0.2
     end
     if data[:body]
-      #instance.execute_script( '$(".active .newTicket div[data-name=body]").focus()' )
+      #instance.execute_script('$(".active .newTicket div[data-name=body]").focus()')
       sleep 0.5
-      element = instance.find_elements( { css: '.active .newTicket div[data-name=body]' } )[0]
+      element = instance.find_elements({ css: '.active .newTicket div[data-name=body]' })[0]
       element.clear
-      element.send_keys( data[:body] )
+      element.send_keys(data[:body])
 
       # it's not working stable via selenium, use js
-      value = instance.find_elements( { css: '.content .newTicket div[data-name=body]' } )[0].text
+      value = instance.find_elements({ css: '.content .newTicket div[data-name=body]' })[0].text
       #puts "V #{value.inspect}"
       if value != data[:body]
-        body_quoted = quote( data[:body] )
-        instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
+        body_quoted = quote(data[:body])
+        instance.execute_script("$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')")
       end
     end
     if data[:customer]
-      element = instance.find_elements( { css: '.active .newTicket input[name="customer_id_completion"]' } )[0]
+      element = instance.find_elements({ css: '.active .newTicket input[name="customer_id_completion"]' })[0]
       element.click
       element.clear
 
       # workaround, sometimes focus is not triggered
-      element.send_keys( data[:customer] + '*' )
+      element.send_keys(data[:customer] + '*')
       sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium
-      #instance.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
+      #instance.execute_script("$('.active .newTicket .js-recipientDropdown').addClass('open')")
       #sleep 0.5
-      element.send_keys( :arrow_down )
+      element.send_keys(:arrow_down)
       sleep 0.3
-      element.send_keys( :enter )
-      #instance.find_elements( { css: '.active .newTicket .recipientList-entry.js-user.is-active' } )[0].click
+      element.send_keys(:enter)
+      #instance.find_elements({ css: '.active .newTicket .recipientList-entry.js-user.is-active' })[0].click
       sleep 0.6
     end
 
@@ -1283,22 +1278,22 @@ wait untill text in selector disabppears
     end
 
     if params[:do_not_submit]
-      assert( true, 'ticket created without submit' )
+      assert(true, 'ticket created without submit')
       return
     end
     sleep 0.8
-    #instance.execute_script( '$(".content.active .newTicket form").submit();' )
-    instance.find_elements( { css: '.active .newTicket button.js-submit' } )[0].click
+    #instance.execute_script('$(".content.active .newTicket form").submit();')
+    instance.find_elements({ css: '.active .newTicket button.js-submit' })[0].click
     sleep 1
     (1..10).each {
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
-        assert( true, 'ticket created' )
+        assert(true, 'ticket created')
         sleep 2.5
         id = instance.current_url
-        id.gsub!(//, )
+        id.gsub!(//,)
         id.gsub!(%r{^.+?/(\d+)$}, '\\1')
 
-        element = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0]
+        element = instance.find_elements({ css: '.active .ticketZoom-header .ticket-number' })[0]
         if element
           number = element.text
           ticket = {
@@ -1306,13 +1301,13 @@ wait untill text in selector disabppears
             number: number,
           }
           sleep 3 # wait until notify is gone
-          screenshot( browser: instance, comment: 'ticket_create_ok' )
+          screenshot(browser: instance, comment: 'ticket_create_ok')
           return ticket
         end
       end
       sleep 1
     }
-    screenshot( browser: instance, comment: 'ticket_create_failed' )
+    screenshot(browser: instance, comment: 'ticket_create_failed')
     fail "ticket creation failed, can't get zoom url (current url is '#{instance.current_url}')"
   end
 
@@ -1341,18 +1336,18 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      #element = instance.find_elements( { :css => '.content.active .ticketZoom-header .ticket-title-update' } )[0]
+      #element = instance.find_elements({ :css => '.content.active .ticketZoom-header .ticket-title-update' })[0]
       #element.clear
       #sleep 0.5
-      #element = instance.find_elements( { :css => '.content.active .ticketZoom-header .ticket-title-update' } )[0]
-      #element.send_keys( data[:title] )
+      #element = instance.find_elements({ :css => '.content.active .ticketZoom-header .ticket-title-update' })[0]
+      #element.send_keys(data[:title])
       #sleep 0.5
-      #element.send_keys( :tab )
+      #element.send_keys(:tab)
 
-      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").focus()' )
-      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").text("' + data[:title] + '")' )
-      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").blur()' )
-      instance.execute_script( '$(".content.active .ticketZoom-header .ticket-title-update").trigger("blur")' )
+      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").focus()')
+      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").text("' + data[:title] + '")')
+      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").blur()')
+      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").trigger("blur")')
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
@@ -1369,34 +1364,34 @@ wait untill text in selector disabppears
     if data[:customer]
 
       # select tab
-      click( browser: instance, css: '.active .tabsSidebar-tab[data-tab="customer"]')
+      click(browser: instance, css: '.active .tabsSidebar-tab[data-tab="customer"]')
 
-      click( browser: instance, css: '.active div[data-tab="customer"] .js-actions .icon-arrow-down' )
-      click( browser: instance, css: '.active div[data-tab="customer"] .js-actions [data-type="customer-change"]' )
+      click(browser: instance, css: '.active div[data-tab="customer"] .js-actions .icon-arrow-down')
+      click(browser: instance, css: '.active div[data-tab="customer"] .js-actions [data-type="customer-change"]')
       watch_for(
         browser: instance,
         css: '.modal',
         value: 'change',
       )
 
-      element = instance.find_elements( { css: '.modal input[name="customer_id_completion"]' } )[0]
+      element = instance.find_elements({ css: '.modal input[name="customer_id_completion"]' })[0]
       element.click
       element.clear
 
       # workaround, sometimes focus is not triggered
-      element.send_keys( data[:customer] )
+      element.send_keys(data[:customer])
       sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium
-      #instance.execute_script( "$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')" )
+      #instance.execute_script("$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')")
       #sleep 0.5
-      element.send_keys( :arrow_down )
+      element.send_keys(:arrow_down)
       sleep 0.6
-      element.send_keys( :enter )
-      #instance.find_elements( { css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active' } )[0].click
+      element.send_keys(:enter)
+      #instance.find_elements({ css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active' })[0].click
       sleep 0.3
 
-      click( browser: instance, css: '.modal .js-submit' )
+      click(browser: instance, css: '.modal .js-submit')
 
       watch_for_disappear(
         browser: instance,
@@ -1410,47 +1405,43 @@ wait untill text in selector disabppears
       )
 
       # select tab
-      click( browser: instance, css: '.active .tabsSidebar-tab[data-tab="ticket"]')
+      click(browser: instance, css: '.active .tabsSidebar-tab[data-tab="ticket"]')
 
     end
     if data[:body]
-      #instance.execute_script( '$(".content.active div[data-name=body]").focus()' )
+      #instance.execute_script('$(".content.active div[data-name=body]").focus()')
       sleep 0.5
-      element = instance.find_elements( { css: '.content.active div[data-name=body]' } )[0]
+      element = instance.find_elements({ css: '.content.active div[data-name=body]' })[0]
       element.clear
-      element.send_keys( data[:body] )
+      element.send_keys(data[:body])
 
       # it's not working stable via selenium, use js
-      value = instance.find_elements( { css: '.content.active div[data-name=body]' } )[0].text
+      value = instance.find_elements({ css: '.content.active div[data-name=body]' })[0].text
       if value != data[:body]
-        body_quoted = quote( data[:body] )
-        instance.execute_script( "$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')" )
+        body_quoted = quote(data[:body])
+        instance.execute_script("$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')")
       end
 
-      # click on click catcher
-      if params[:do_not_submit]
-        click_catcher_remove(browser: instance)
-      end
     end
 
     if data[:group]
-      element = instance.find_elements( { css: '.active .sidebar select[name="group_id"]' } )[0]
+      element = instance.find_elements({ css: '.active .sidebar select[name="group_id"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data[:group])
+      dropdown.select_by(:text, data[:group])
       sleep 0.2
     end
 
     if data[:priority]
-      element = instance.find_elements( { css: '.active .sidebar select[name="priority_id"]' } )[0]
+      element = instance.find_elements({ css: '.active .sidebar select[name="priority_id"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data[:priority])
+      dropdown.select_by(:text, data[:priority])
       sleep 0.2
     end
 
     if data[:state]
-      element = instance.find_elements( { css: '.active .sidebar select[name="state_id"]' } )[0]
+      element = instance.find_elements({ css: '.active .sidebar select[name="state_id"]' })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by( :text, data[:state])
+      dropdown.select_by(:text, data[:state])
       sleep 0.2
     end
 
@@ -1461,7 +1452,7 @@ wait untill text in selector disabppears
         break if found
 
         begin
-          text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
+          text = instance.find_elements({ css: '.content.active .js-reset' })[0].text
           if text =~ /(Discard your unsaved changes.|Verwerfen der)/
             found = true
           end
@@ -1471,7 +1462,7 @@ wait untill text in selector disabppears
         sleep 1
       }
       if !found
-        screenshot( browser: instance, comment: 'ticket_update_discard_message_failed' )
+        screenshot(browser: instance, comment: 'ticket_update_discard_message_failed')
 
         fail 'no discard message found'
       end
@@ -1483,17 +1474,17 @@ wait untill text in selector disabppears
     )
 
     if params[:do_not_submit]
-      assert( true, 'ticket updated without submit' )
+      assert(true, 'ticket updated without submit')
       return true
     end
 
-    instance.find_elements( { css: '.content.active .js-submit' } )[0].click
+    instance.find_elements({ css: '.content.active .js-submit' })[0].click
 
     (1..10).each {
       begin
-        text = instance.find_elements( { css: '.content.active .js-reset' } )[0].text
+        text = instance.find_elements({ css: '.content.active .js-reset' })[0].text
         if !text || text.empty?
-          screenshot( browser: instance, comment: 'ticket_update_ok' )
+          screenshot(browser: instance, comment: 'ticket_update_ok')
           return true
         end
       rescue
@@ -1501,7 +1492,7 @@ wait untill text in selector disabppears
       end
       sleep 1
     }
-    screenshot( browser: instance, comment: 'ticket_update_failed' )
+    screenshot(browser: instance, comment: 'ticket_update_failed')
     fail 'unable to update ticket'
   end
 
@@ -1527,18 +1518,18 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      title = instance.find_elements( { css: '.content.active .ticketZoom-header .ticket-title-update' } )[0].text.strip
+      title = instance.find_elements({ css: '.content.active .ticketZoom-header .ticket-title-update' })[0].text.strip
       if title =~ /#{data[:title]}/i
-        assert( true, "matching '#{data[:title]}' in title '#{title}'" )
+        assert(true, "matching '#{data[:title]}' in title '#{title}'")
       else
         fail "not matching '#{data[:title]}' in title '#{title}'"
       end
     end
 
     if data[:body]
-      body = instance.find_elements( { css: '.content.active [data-name="body"]' } )[0].text.strip
+      body = instance.find_elements({ css: '.content.active [data-name="body"]' })[0].text.strip
       if body =~ /#{data[:body]}/i
-        assert( true, "matching '#{data[:body]}' in body '#{body}'" )
+        assert(true, "matching '#{data[:body]}' in body '#{body}'")
       else
         fail "not matching '#{data[:body]}' in body '#{body}'"
       end
@@ -1562,27 +1553,27 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
+    instance.find_elements({ css: '.js-overviewsMenuItem' })[0].click
     sleep 1
     execute(
       browser: instance,
       js: '$(".content.active .sidebar").css("display", "block")',
     )
-    instance.find_elements( { css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" } )[0].click
+    instance.find_elements({ css: ".content.active .sidebar a[href=\"#{params[:link]}\"]" })[0].click
     sleep 1
     execute(
       browser: instance,
       js: '$(".content.active .sidebar").css("display", "none")',
     )
-    instance.find_elements( { partial_link_text: params[:number] } )[0].click
+    instance.find_elements({ partial_link_text: params[:number] })[0].click
     sleep 1
-    number = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
+    number = instance.find_elements({ css: '.active .ticketZoom-header .ticket-number' })[0].text
     if number !~ /#{params[:number]}/
-      screenshot( browser: instance, comment: 'ticket_open_by_overview_failed' )
+      screenshot(browser: instance, comment: 'ticket_open_by_overview_failed')
       fail "unable to search/find ticket #{params[:number]}!"
     end
     sleep 1
-    assert( true, "ticket #{params[:number]} found" )
+    assert(true, "ticket #{params[:number]} found")
     true
   end
 
@@ -1602,33 +1593,33 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
 
     # search by number
-    element = instance.find_elements( { css: '#global-search' } )[0]
+    element = instance.find_elements({ css: '#global-search' })[0]
     element.click
     element.clear
-    element.send_keys( params[:number] )
+    element.send_keys(params[:number])
     sleep 3
 
     # empty search box by x
-    instance.find_elements( { css: '.search .empty-search' } )[0].click
+    instance.find_elements({ css: '.search .empty-search' })[0].click
     sleep 0.5
-    text = instance.find_elements( { css: '#global-search' } )[0].attribute('value')
+    text = instance.find_elements({ css: '#global-search' })[0].attribute('value')
     if !text
       fail '#global-search is not empty!'
     end
 
     # search by number again
-    element = instance.find_elements( { css: '#global-search' } )[0]
+    element = instance.find_elements({ css: '#global-search' })[0]
     element.click
     element.clear
-    element.send_keys( params[:number] )
+    element.send_keys(params[:number])
     sleep 1
 
     # open ticket
-    #instance.find_element( { partial_link_text: params[:number] } ).click
-    instance.execute_script( "$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()" )
-    number = instance.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
+    #instance.find_element({ partial_link_text: params[:number] } ).click
+    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    number = instance.find_elements({ css: '.active .ticketZoom-header .ticket-number' })[0].text
     if number !~ /#{params[:number]}/
-      screenshot( browser: instance, comment: 'ticket_open_by_search_failed' )
+      screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
       fail "unable to search/find ticket #{params[:number]}!"
     end
     sleep 1
@@ -1654,7 +1645,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    instance.find_elements( { css: '.js-overviewsMenuItem' } )[0].click
+    instance.find_elements({ css: '.js-overviewsMenuItem' })[0].click
     sleep 2
 
     execute(
@@ -1667,7 +1658,7 @@ wait untill text in selector disabppears
     #)
 
     overviews = {}
-    instance.find_elements( { css: '.content.active .sidebar a[href]' } ).each {|element|
+    instance.find_elements({ css: '.content.active .sidebar a[href]' }).each {|element|
       url = element.attribute('href')
       url.gsub!(%r{(http|https)://.+?/(.+?)$}, '\\2')
       overviews[url] = 0
@@ -1675,7 +1666,7 @@ wait untill text in selector disabppears
       #puts element.inspect
     }
     overviews.each {|url, _value|
-      count          = instance.find_elements( { css: ".content.active .sidebar a[href=\"#{url}\"] .badge" } )[0].text
+      count          = instance.find_elements({ css: ".content.active .sidebar a[href=\"#{url}\"] .badge" })[0].text
       overviews[url] = count.to_i
     }
     log('overview_counter', overviews)
@@ -1697,31 +1688,31 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { css: '#global-search' } )[0]
+    element = instance.find_elements({ css: '#global-search' })[0]
 
     element.click
     element.clear
-    element.send_keys( params[:value] )
+    element.send_keys(params[:value])
     sleep 3
-    instance.find_elements( { css: '.search .empty-search' } )[0].click
+    instance.find_elements({ css: '.search .empty-search' })[0].click
     sleep 0.5
-    text = instance.find_elements( { css: '#global-search' } )[0].attribute('value')
+    text = instance.find_elements({ css: '#global-search' })[0].attribute('value')
     if !text
       fail '#global-search is not empty!'
     end
-    element = instance.find_elements( { css: '#global-search' } )[0]
+    element = instance.find_elements({ css: '#global-search' })[0]
     element.click
     element.clear
-    element.send_keys( params[:value] )
+    element.send_keys(params[:value])
     sleep 2
-    #instance.find_element( { partial_link_text: params[:value] } ).click
-    instance.execute_script( "$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()" )
-    name = instance.find_elements( { css: '.active h1' } )[0].text
+    #instance.find_element({ partial_link_text: params[:value] } ).click
+    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    name = instance.find_elements({ css: '.active h1' })[0].text
     if name !~ /#{params[:value]}/
-      screenshot( browser: instance, comment: 'organization_open_by_search_failed' )
+      screenshot(browser: instance, comment: 'organization_open_by_search_failed')
       fail "unable to search/find org #{params[:value]}!"
     end
-    assert( true, "org #{params[:value]} found" )
+    assert(true, "org #{params[:value]} found")
     sleep 2
     true
   end
@@ -1741,19 +1732,19 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements( { css: '#global-search' } )[0]
+    element = instance.find_elements({ css: '#global-search' })[0]
     element.click
     element.clear
-    element.send_keys( params[:value] )
+    element.send_keys(params[:value])
     sleep 3
-    #instance.find_element( { partial_link_text: params[:value] } ).click
-    instance.execute_script( "$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()" )
-    name = instance.find_elements( { css: '.active h1' } )[0].text
+    #instance.find_element({ partial_link_text: params[:value] }).click
+    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    name = instance.find_elements({ css: '.active h1' })[0].text
     if name !~ /#{params[:value]}/
-      screenshot( browser: instance, comment: 'user_open_by_search_failed' )
+      screenshot(browser: instance, comment: 'user_open_by_search_failed')
       fail "unable to search/find user #{params[:value]}!"
     end
-    assert( true, "user #{params[:term]} found" )
+    assert(true, "user #{params[:term]} found")
     sleep 2
     true
   end
@@ -1780,29 +1771,29 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage"]' })[0].click
     sleep 1
-    instance.find_elements( { css: 'a[href="#manage/users"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage/users"]' })[0].click
     sleep 2
-    instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
+    instance.find_elements({ css: 'a[data-type="new"]' })[0].click
     sleep 2
-    element = instance.find_elements( { css: '.modal input[name=firstname]' } )[0]
+    element = instance.find_elements({ css: '.modal input[name=firstname]' })[0]
     element.clear
-    element.send_keys( data[:firstname] )
-    element = instance.find_elements( { css: '.modal input[name=lastname]' } )[0]
+    element.send_keys(data[:firstname])
+    element = instance.find_elements({ css: '.modal input[name=lastname]' })[0]
     element.clear
-    element.send_keys( data[:lastname] )
-    element = instance.find_elements( { css: '.modal input[name=email]' } )[0]
+    element.send_keys(data[:lastname])
+    element = instance.find_elements({ css: '.modal input[name=email]' })[0]
     element.clear
-    element.send_keys( data[:email] )
-    element = instance.find_elements( { css: '.modal input[name=password]' } )[0]
+    element.send_keys(data[:email])
+    element = instance.find_elements({ css: '.modal input[name=password]' })[0]
     element.clear
-    element.send_keys( data[:password] )
-    element = instance.find_elements( { css: '.modal input[name=password_confirm]' } )[0]
+    element.send_keys(data[:password])
+    element = instance.find_elements({ css: '.modal input[name=password_confirm]' })[0]
     element.clear
-    element.send_keys( data[:password] )
-    instance.find_elements( { css: '.modal input[name="role_ids"][value="3"]' } )[0].click
-    instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+    element.send_keys(data[:password])
+    instance.find_elements({ css: '.modal input[name="role_ids"][value="3"]' })[0].click
+    instance.find_elements({ css: '.modal button.js-submit' })[0].click
     sleep 3.5
     set(
       browser: instance,
@@ -1815,7 +1806,7 @@ wait untill text in selector disabppears
       value: data[:lastname],
     )
 
-    assert( true, 'user created' )
+    assert(true, 'user created')
   end
 
 =begin
@@ -1837,29 +1828,29 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage"]' })[0].click
     sleep 1
-    instance.find_elements( { css: 'a[href="#manage/slas"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage/slas"]' })[0].click
     sleep 2
-    instance.find_elements( { css: 'a.js-new' } )[0].click
+    instance.find_elements({ css: 'a.js-new' })[0].click
     sleep 2
-    element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
+    element = instance.find_elements({ css: '.modal input[name=name]' })[0]
     element.clear
-    element.send_keys( data[:name] )
-    element = instance.find_elements( { css: '.modal input[name=first_response_time_in_text]' } )[0]
+    element.send_keys(data[:name])
+    element = instance.find_elements({ css: '.modal input[name=first_response_time_in_text]' })[0]
     element.clear
-    element.send_keys( data[:first_response_time_in_text] )
-    instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+    element.send_keys(data[:first_response_time_in_text])
+    instance.find_elements({ css: '.modal button.js-submit' })[0].click
     (1..8).each {
-      element = instance.find_elements( { css: 'body' } )[0]
+      element = instance.find_elements({ css: 'body' })[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, 'sla created' )
+        assert(true, 'sla created')
         return true
       end
       sleep 1
     }
-    screenshot( browser: instance, comment: 'sla_create_failed' )
+    screenshot(browser: instance, comment: 'sla_create_failed')
     fail 'sla creation failed'
   end
 
@@ -1883,32 +1874,32 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements( { css: 'a[href="#manage"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage"]' })[0].click
     sleep 1
-    instance.find_elements( { css: 'a[href="#manage/text_modules"]' } )[0].click
+    instance.find_elements({ css: 'a[href="#manage/text_modules"]' })[0].click
     sleep 2
-    instance.find_elements( { css: 'a[data-type="new"]' } )[0].click
+    instance.find_elements({ css: 'a[data-type="new"]' })[0].click
     sleep 2
-    element = instance.find_elements( { css: '.modal input[name=name]' } )[0]
+    element = instance.find_elements({ css: '.modal input[name=name]' })[0]
     element.clear
-    element.send_keys( data[:name] )
-    element = instance.find_elements( { css: '.modal input[name=keywords]' } )[0]
+    element.send_keys(data[:name])
+    element = instance.find_elements({ css: '.modal input[name=keywords]' })[0]
     element.clear
-    element.send_keys( data[:keywords] )
-    element = instance.find_elements( { css: '.modal textarea[name=content]' } )[0]
+    element.send_keys(data[:keywords])
+    element = instance.find_elements({ css: '.modal textarea[name=content]' })[0]
     element.clear
-    element.send_keys( data[:content] )
-    instance.find_elements( { css: '.modal button.js-submit' } )[0].click
+    element.send_keys(data[:content])
+    instance.find_elements({ css: '.modal button.js-submit' })[0].click
     (1..8).each {
-      element = instance.find_elements( { css: 'body' } )[0]
+      element = instance.find_elements({ css: 'body' })[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
-        assert( true, 'text module created' )
+        assert(true, 'text module created')
         return true
       end
       sleep 1
     }
-    screenshot( browser: instance, comment: 'text_module_create_failed' )
+    screenshot(browser: instance, comment: 'text_module_create_failed')
     fail 'text module creation failed'
   end
 
