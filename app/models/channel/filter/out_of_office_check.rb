@@ -2,7 +2,7 @@
 
 module Channel::Filter::OutOfOfficeCheck
 
-  def self.run( _channel, mail )
+  def self.run(_channel, mail)
 
     mail[ 'x-zammad-out-of-office'.to_sym ] = false
 

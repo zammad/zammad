@@ -2,7 +2,7 @@
 
 module Channel::Filter::FollowUpCheck
 
-  def self.run( _channel, mail )
+  def self.run(_channel, mail)
 
     return if mail[ 'x-zammad-ticket-id'.to_sym ]
 
@@ -39,7 +39,7 @@ module Channel::Filter::FollowUpCheck
     end
 
     # get ticket# from references
-    if setting.include?('references')
+    if setting.include?('references') || mail[ 'x-zammad-is-auto-response'.to_sym ] == true
 
       # get all references 'References' + 'In-Reply-To'
       references = ''

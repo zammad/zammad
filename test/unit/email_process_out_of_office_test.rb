@@ -7,10 +7,10 @@ class EmailProcessOutOfOfficeTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'ooo check - ms',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'closed' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -22,8 +22,8 @@ class EmailProcessOutOfOfficeTest < ActiveSupport::TestCase
       message_id: '<20150830145601.30.608881@edenhofer.zammad.com>',
       body: 'some message bounce check',
       internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -93,10 +93,10 @@ Some Text"
 
     ticket = Ticket.create(
       title: 'ooo check - zimbra',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'closed' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -108,8 +108,8 @@ Some Text"
       message_id: '<20150830145601.30.608881@edenhofer.zammad.com>',
       body: 'some message bounce check',
       internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -171,10 +171,10 @@ Some Text"
 
     ticket = Ticket.create(
       title: 'ooo check - cloud',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'closed' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -186,8 +186,8 @@ Some Text"
       message_id: '<20150830145601.30.608881@edenhofer.zammad.com>',
       body: 'some message bounce check',
       internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -239,4 +239,5 @@ Some Text"
     assert_equal('closed', ticket.state.name)
 
   end
+
 end
