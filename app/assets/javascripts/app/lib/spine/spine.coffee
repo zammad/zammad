@@ -367,7 +367,7 @@ class Model extends Module
     records[id] = records[@id]
     delete records[@id] unless @cid is @id
     @id = id
-    @save()
+    #@save()
 
   remove: (options = {}) ->
     # Remove record from model
