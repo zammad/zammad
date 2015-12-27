@@ -96,41 +96,54 @@
 
     // just paste text
     this.$element.on('paste', function (e) {
+      e.preventDefault()
       _this.log('paste')
 
       // check existing + paste text for limit
-      var text
-      if (window.clipboardData) { // IE
-        text = window.clipboardData.getData('Text')
+      var text = e.originalEvent.clipboardData.getData('text/html')
+      var docType = 'html'
+      if (!text || text.length === 0) {
+          docType = 'text'
+          text = e.originalEvent.clipboardData.getData('text/plain')
       }
-      else {
-        text = (e.originalEvent || e).clipboardData.getData('text/plain')
+      if (!text || text.length === 0) {
+          docType = 'text2'
+          text = e.originalEvent.clipboardData.getData('text')
       }
+      _this.log('paste', docType, text)
 
-      if ( !_this.maxLengthOk( text.length) ) {
-        e.preventDefault()
+      if (!_this.maxLengthOk(text.length)) {
         return
       }
 
-      // use setTimeout() with 0 to execute it right after paste event
-      if ( _this.options.mode === 'textonly' ) {
-        if ( !_this.options.multiline ) {
-          setTimeout($.proxy(function(){
-            App.Utils.htmlRemoveTags(this.$element)
-          }, _this), 0)
+      if (docType == 'html') {
+        text = '<div>' + text + '</div>' // to prevent multible dom object. we need it at level 0
+        if (_this.options.mode === 'textonly') {
+          if (!_this.options.multiline) {
+            text = App.Utils.htmlRemoveTags(text)
+          }
+          else {
+            text = App.Utils.htmlRemoveRichtext(text)
+          }
         }
         else {
-          setTimeout($.proxy(function(){
-            App.Utils.htmlRemoveRichtext(this.$element)
-          }, _this), 0)
+          text = App.Utils.htmlCleanup(text)
+        }
+        text = text.html()
+
+        // as fallback, take text
+        if (!text) {
+          text = App.Utils.text2html(text.text())
         }
       }
       else {
-        setTimeout($.proxy(function(){
-          App.Utils.htmlCleanup(this.$element)
-        }, _this), 0)
+        text = App.Utils.text2html(text)
       }
 
+      // cleanup
+      text = App.Utils.removeEmptyLines(text)
+      _this.log('insert', test)
+      document.execCommand('insertHTML', false, text)
       return true
     })
 
