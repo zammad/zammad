@@ -95,10 +95,15 @@ class Base
       # 2 reasons not to stringify: if already a string, or if intend to have ajax processData
       if typeof settings.data isnt 'string' and settings.processData isnt true
         settings.data = JSON.stringify(settings.data)
+      # enable promise callbacks to access the request's settings object
+      resolve = ->
+        deferred.resolve.apply this, [arguments..., settings]
+      reject = ->
+        deferred.reject.apply this, [arguments..., settings]
       jqXHR = $.ajax(settings)
-                .done(deferred.resolve)
-                .fail(deferred.reject)
-                .then(next, next)
+      jqXHR.done(resolve)
+      jqXHR.fail(reject)
+      jqXHR.then(next, next)
       if parallel
         Queue.dequeue()
 
@@ -129,8 +134,8 @@ class Collection extends Base
         url: options.url or Ajax.getURL(record)
         parallel: options.parallel
       }
-    ).done(@recordsResponse)
-     .fail(@failResponse)
+    ).done(@recordsResponse(options))
+      .fail(@failResponse(options))
 
   all: (params, options = {}) ->
     @ajaxQueue(
@@ -139,8 +144,8 @@ class Collection extends Base
         url: options.url or Ajax.getURL(@model)
         parallel: options.parallel
       }
-    ).done(@recordsResponse)
-     .fail(@failResponse)
+    ).done(@recordsResponse(options))
+      .fail(@failResponse(options))
 
   fetch: (params = {}, options = {}) ->
     if id = params.id
@@ -153,11 +158,15 @@ class Collection extends Base
 
   # Private
 
-  recordsResponse: (data, status, xhr) =>
-    @model.trigger('ajaxSuccess', null, status, xhr)
+  recordsResponse: (options) =>
+    (data, status, xhr, settings) =>
+      @model.trigger('ajaxSuccess', null, status, xhr, settings)
+      options.done?.call(@model, settings)
 
-  failResponse: (xhr, statusText, error) =>
-    @model.trigger('ajaxError', null, xhr, statusText, error)
+  failResponse: (options) =>
+    (xhr, statusText, error, settings) =>
+      @model.trigger('ajaxError', null, xhr, statusText, error, settings)
+      options.fail?.call(@model, settings)
 
 class Singleton extends Base
   constructor: (@record) ->
@@ -171,7 +180,7 @@ class Singleton extends Base
         parallel: options.parallel
       }, @record
     ).done(@recordResponse(options))
-     .fail(@failResponse(options))
+      .fail(@failResponse(options))
 
   create: (params, options = {}) ->
     @ajaxQueue(
@@ -183,7 +192,7 @@ class Singleton extends Base
         parallel: options.parallel
       }
     ).done(@recordResponse(options))
-     .fail(@failResponse(options))
+      .fail(@failResponse(options))
 
   update: (params, options = {}) ->
     @ajaxQueue(
@@ -195,7 +204,7 @@ class Singleton extends Base
         parallel: options.parallel
       }, @record
     ).done(@recordResponse(options))
-     .fail(@failResponse(options))
+      .fail(@failResponse(options))
 
   destroy: (params, options = {}) ->
     @ajaxQueue(
@@ -205,25 +214,31 @@ class Singleton extends Base
         parallel: options.parallel
       }, @record
     ).done(@recordResponse(options))
-     .fail(@failResponse(options))
+      .fail(@failResponse(options))
 
   # Private
 
-  recordResponse: (options = {}) =>
-    (data, status, xhr) =>
+  recordResponse: (options) =>
+    (data, status, xhr, settings) =>
+      if data? and Object.getOwnPropertyNames(data).length and not @record.destroyed
+        @record.refresh(data, ajax: false)
+      @record.trigger('ajaxSuccess', @record, @model.fromJSON(data), status, xhr, settings)
+      options.done?.call(@record, settings)
 
-      Ajax.disable =>
-        unless data is undefined or Object.getOwnPropertyNames(data).length == 0 or @record.destroyed
-          # Update with latest data
-          @record.refresh(data)
+  failResponse: (options) =>
+    (xhr, statusText, error, settings) =>
+      switch settings.type
+        when 'POST' then @createFailed()
+        when 'DELETE' then @destroyFailed()
+      @record.trigger('ajaxError', @record, xhr, statusText, error, settings)
+      options.fail?.call(@record, settings)
 
-      @record.trigger('ajaxSuccess', @record, @model.fromJSON(data), status, xhr)
-      options.done?.apply(@record)
+  createFailed: ->
+    @record.remove(clear: true)
 
-  failResponse: (options = {}) =>
-    (xhr, statusText, error) =>
-      @record.trigger('ajaxError', @record, xhr, statusText, error)
-      options.fail?.apply(@record)
+  destroyFailed: ->
+    @record.destroyed = false
+    @record.constructor.refresh(@record)
 
 # Ajax endpoint
 Model.host = ''
@@ -231,9 +246,9 @@ Model.host = ''
 GenerateURL =
   include: (args...) ->
     args.unshift(encodeURIComponent(@id))
-    Ajax.generateURL(@, args...)
+    Ajax.generateURL(this, args...)
   extend: (args...) ->
-    Ajax.generateURL(@, args...)
+    Ajax.generateURL(this, args...)
 
 Include =
   ajax: -> new Singleton(this)

@@ -2,7 +2,7 @@
 
 module Channel::Filter::BounceCheck
 
-  def self.run( _channel, mail )
+  def self.run(_channel, mail)
 
     return if !mail[:mail_instance]
     return if !mail[:mail_instance].bounced?

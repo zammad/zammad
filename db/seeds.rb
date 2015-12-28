@@ -796,9 +796,9 @@ Setting.create_if_not_exists(
         name: 'ticket_hook_position',
         tag: 'select',
         options: {
-          'left'  => 'Left',
-          'right' => 'Right',
-          'none'  => 'None',
+          'left'  => 'left',
+          'right' => 'right',
+          'none'  => 'none',
         },
       },
     ],

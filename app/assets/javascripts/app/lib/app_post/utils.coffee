@@ -1,24 +1,24 @@
 # coffeelint: disable=no_unnecessary_double_quotes
 class App.Utils
 
-  # textCleand = App.Utils.textCleanup( rawText )
-  @textCleanup: ( ascii ) ->
+  # textCleand = App.Utils.textCleanup(rawText)
+  @textCleanup: (ascii) ->
     $.trim( ascii )
       .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
       .replace(/\r/g, "\n")           # cleanup
       .replace(/[ ]\n/g, "\n")        # remove tailing spaces
       .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
-  # htmlEscapedAndLinkified = App.Utils.text2html( rawText )
-  @text2html: ( ascii ) ->
+  # htmlEscapedAndLinkified = App.Utils.text2html(rawText)
+  @text2html: (ascii) ->
     ascii = @textCleanup(ascii)
     #ascii = @htmlEscape(ascii)
     ascii = @linkify(ascii)
     ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
     ascii.replace(/<div><\/div>/g, '<div><br></div>')
 
-  # rawText = App.Utils.html2text( html )
-  @html2text: ( html ) ->
+  # rawText = App.Utils.html2text(html)
+  @html2text: (html) ->
 
     # remove not needed new lines
     html = html.replace(/>\n/g, '>')
@@ -37,11 +37,11 @@ class App.Utils
       .replace(/\r/g, "\n")           # cleanup
       .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
-  # htmlEscapedAndLinkified = App.Utils.linkify( rawText )
+  # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
   @linkify: (ascii) ->
-    window.linkify( ascii )
+    window.linkify(ascii)
 
-  # wrappedText = App.Utils.wrap( rawText, maxLineLength )
+  # wrappedText = App.Utils.wrap(rawText, maxLineLength)
   @wrap: (ascii, max = 82) ->
     result        = ''
     counter_lines = 0
@@ -80,19 +80,19 @@ class App.Utils
         result += "\n"
     result
 
-  # quotedText = App.Utils.quote( rawText )
+  # quotedText = App.Utils.quote(rawText)
   @quote: (ascii, max = 82) ->
     ascii = @textCleanup(ascii)
     ascii = @wrap(ascii, max)
-    $.trim( ascii )
+    $.trim(ascii)
       .replace /^(.*)$/mg, (match) ->
         if match
           '> ' + match
         else
           '>'
 
-  # htmlEscaped = App.Utils.htmlEscape( rawText )
-  @htmlEscape: ( ascii ) ->
+  # htmlEscaped = App.Utils.htmlEscape(rawText)
+  @htmlEscape: (ascii) ->
     return ascii if !ascii
     return ascii if !ascii.replace
     ascii.replace(/&/g, '&amp;')
@@ -101,8 +101,9 @@ class App.Utils
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;')
 
-  # textWithoutTags = App.Utils.htmlRemoveTags( html )
+  # textWithoutTags = App.Utils.htmlRemoveTags(html)
   @htmlRemoveTags: (html) ->
+    html = @_checkTypeOf(html)
 
     # remove comments
     @_removeComments(html)
@@ -111,17 +112,18 @@ class App.Utils
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
 
     html
 
-  # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext( html )
+  # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext(html)
   @htmlRemoveRichtext: (html) ->
+    html = @_checkTypeOf(html)
 
     # remove comments
     @_removeComments(html)
@@ -133,17 +135,18 @@ class App.Utils
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
 
     html
 
-  # cleanHtmlWithRichText = App.Utils.htmlCleanup( html )
+  # cleanHtmlWithRichText = App.Utils.htmlCleanup(html)
   @htmlCleanup: (html) ->
+    html = @_checkTypeOf(html)
 
     # remove comments
     @_removeComments(html)
@@ -155,7 +158,7 @@ class App.Utils
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('a, font, small, time, form').replaceWith( ->
+    html.find('a, font, small, time, form, label').replaceWith( ->
       $(@).contents()
     )
 
@@ -179,16 +182,22 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('font, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe').remove()
+    html.find('font, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
 
     html
 
+  @_checkTypeOf: (item) ->
+    return item if typeof item isnt 'string'
+    return $(item) if item.substr(0,9) isnt '<!DOCTYPE' && item.substr(0,5) isnt '<html'
+    $("<div>#{item}</div>")
+
   @_removeAttributes: (html) ->
     html.find('*')
-      .removeAttr( 'style' )
-      .removeAttr( 'class' )
-      .removeAttr( 'title' )
-      .removeAttr( 'lang' )
+      .removeAttr('style')
+      .removeAttr('class')
+      .removeAttr('title')
+      .removeAttr('lang')
+      .removeAttr('type')
     html
 
   @_removeComments: (html) ->
@@ -201,37 +210,38 @@ class App.Utils
   @_removeWordMarkup: (html) ->
     match = false
     htmlTmp = html.get(0).outerHTML
-    regex = new RegExp('<(/w|w)\:[A-Za-z]{3}>')
+    regex = new RegExp('<(/w|w)\:[A-Za-z]')
     if htmlTmp.match(regex)
       match = true
       htmlTmp = htmlTmp.replace(regex, '')
-    regex = new RegExp('<(/o|o)\:[A-Za-z]{1}>')
+    regex = new RegExp('<(/o|o)\:[A-Za-z]')
     if htmlTmp.match(regex)
       match = true
       htmlTmp = htmlTmp.replace(regex, '')
     if match
-      html.html(htmlTmp)
+      return window.word_filter(html)
+    html
 
-  # signatureNeeded = App.Utils.signatureCheck( message, signature )
+  # signatureNeeded = App.Utils.signatureCheck(message, signature)
   @signatureCheck: (message, signature) ->
-    messageText   = $( '<div>' + message + '</div>' ).text().trim()
+    messageText   = $('<div>' + message + '</div>').text().trim()
     messageText   = messageText.replace(/(\n|\r|\t)/g, '')
-    signatureText = $( '<div>' + signature + '</div>' ).text().trim()
+    signatureText = $('<div>' + signature + '</div>').text().trim()
     signatureText = signatureText.replace(/(\n|\r|\t)/g, '')
 
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
 
     #console.log('SC', messageText, signatureText, quote(signatureText))
-    regex = new RegExp( quote(signatureText), 'mi' )
+    regex = new RegExp(quote(signatureText), 'mi')
     if messageText.match(regex)
       false
     else
       true
 
-  # messageWithMarker = App.Utils.signatureIdentify( message, false )
+  # messageWithMarker = App.Utils.signatureIdentify(message, false)
   @signatureIdentify: (message, test = false) ->
-    textToSearch = @html2text( message )
+    textToSearch = @html2text(message)
 
     # count lines, if we do have lower the 10, ignore this
     textToSearchInLines = textToSearch.split("\n")
@@ -450,19 +460,23 @@ class App.Utils
       value
     )
 
-  # true|false = App.Utils.lastLineEmpty( message )
+  # true|false = App.Utils.lastLineEmpty(message)
   @lastLineEmpty: (message) ->
     messageCleanup = message.replace(/>\s+</g, '><').replace(/(\n|\r|\t)/g, '').trim()
     return true if messageCleanup.match(/<(br|\s+?|\/)>$/im)
     return true if messageCleanup.match(/<div(|\s.+?)><\/div>$/im)
     false
 
-  # cleanString = App.Utils.htmlAttributeCleanup( string )
+  # string = App.Utils.removeEmptyLines(stringWithEmptyLines)
+  @removeEmptyLines: (string) ->
+    string.replace(/^\s*[\r\n]/gm, '')
+
+  # cleanString = App.Utils.htmlAttributeCleanup(string)
   @htmlAttributeCleanup: (string) ->
     string.replace(/((?![-a-zA-Z0-9_]+).|\n|\r|\t)/gm, '')
 
-  # diff = App.Utils.formDiff( dataNow, dataLast )
-  @formDiff: ( dataNowRaw, dataLastRaw ) ->
+  # diff = App.Utils.formDiff(dataNow, dataLast)
+  @formDiff: (dataNowRaw, dataLastRaw) ->
     dataNow = clone(dataNowRaw)
     @_formDiffNormalizer(dataNow)
     dataLast = clone(dataLastRaw)

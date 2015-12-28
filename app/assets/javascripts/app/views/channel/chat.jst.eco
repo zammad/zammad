@@ -64,7 +64,7 @@
             </div>
           </div>
           <div class="zammad-chat-body">
-            <div class="zammad-chat-timestamp"><strong><%- @T('Today') %></strong> 14:45</div>
+            <div class="zammad-chat-timestamp"><strong><%- @T('today') %></strong> 14:45</div>
             <div class="zammad-chat-message zammad-chat-message--customer">
               <span class="zammad-chat-message-body js-backgroundColor"><%- @T('Hello! I need help with your product.') %></span>
             </div>

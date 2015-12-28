@@ -2,10 +2,11 @@
 
 module Channel::Filter::AutoResponseCheck
 
-  def self.run( _channel, mail )
+  def self.run(_channel, mail)
 
     # if header is available, do not generate auto response
     mail[ 'x-zammad-send-auto-response'.to_sym ] = false
+    mail[ 'x-zammad-is-auto-response'.to_sym ] = true
 
     return if mail[ 'x-loop'.to_sym ] && mail[ 'x-loop'.to_sym ] =~ /(yes|true)/i
     return if mail[ 'precedence'.to_sym ] && mail[ 'precedence'.to_sym ] =~ /bulk/i
@@ -13,6 +14,7 @@ module Channel::Filter::AutoResponseCheck
     return if mail[ 'x-auto-response-suppress'.to_sym ] && mail[ 'x-auto-response-suppress'.to_sym ] =~ /all/i
 
     mail[ 'x-zammad-send-auto-response'.to_sym ] = true
+    mail[ 'x-zammad-is-auto-response'.to_sym ] = false
 
   end
 end

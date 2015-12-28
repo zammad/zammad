@@ -2045,7 +2045,7 @@ class ChatWindowRef extends Spine.Controller
     timestamp = Date.now()
 
     if !@lastTimestamp or timestamp - @lastTimestamp > @showTimeEveryXMinutes * 60000
-      label = 'Today'
+      label = 'today'
       time = new Date().toTimeString().substr(0,5)
       if @lastAddedType is 'timestamp'
         # update last time

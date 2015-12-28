@@ -7,10 +7,10 @@ class EmailProcessFollowUpTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'follow up check',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -22,8 +22,8 @@ class EmailProcessFollowUpTest < ActiveSupport::TestCase
       message_id: '<20150830145601.30.608882@edenhofer.zammad.com>',
       body: 'some message article',
       internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Agent').first,
-      type: Ticket::Article::Type.where(name: 'email').first,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -125,6 +125,50 @@ no reference "
     sleep 1
     ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references2)
     assert_not_equal(ticket.id, ticket_p.id)
+  end
+
+  test 'process with follow up check - with auto responses and no T# in subject_build' do
+
+    ticket = Ticket.create(
+      title: 'follow up - with references follow up check',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article = Ticket::Article.create(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'follow up with references follow up check',
+      message_id: '<20151222145601.30.608881@edenhofer.zammad.com>',
+      body: 'some message with references follow up check',
+      internal: false,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sleep 1
+
+    # auto response without T# in subject, find follow up by references header
+    email_raw_string = "From: bob@example.com
+To: customer@example.com
+Subject: =?ISO-8859-1?Q?AUTO=3A_Bob_Smith_ist_au=DFer_Haus=2E_=2F_is_out_of?=
+ =?ISO-8859-1?Q?_office=2E_=28R=FCckkehr_am_28=2E12=2E2015=29?=
+In-Reply-To: <20251222081758.116249.983698@portal.znuny.com>
+References: <OF9D1FD72A.878EF84E-ONC1257F22.003D7BB4-C1257F22.003F4503@example.com> <20151222145601.30.608881@edenhofer.zammad.com> <20251222081758.116249.983698@portal.znuny.com>
+Message-ID: <OFD563742F.FC05EEAF-ONC1257F23.002DAE02@example.com>
+Auto-Submitted: auto-replied
+
+Some Text"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.id, ticket_p.id)
+    assert_equal('open', ticket.state.name)
   end
 
 end
