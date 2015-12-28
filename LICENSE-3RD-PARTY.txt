@@ -4,6 +4,21 @@ Source: http://benalman.com/code/test/js-linkify/
 Copyright: 2009 "Cowboy" Ben Alman
 License: MIT license
 -----------------------------------------------------------------------------
+bootstrap
+Source: https://github.com/twbs/bootstrap
+Copyright: 2011-2015 Twitter, Inc.
+License: MIT license
+-----------------------------------------------------------------------------
+bootstrap-datepicker.js
+Source: https://github.com/eternicode/bootstrap-datepicker
+Copyright: Stefan Petre, Andrew Rowls
+License: Apache License, Version 2.0
+-----------------------------------------------------------------------------
+bootstrap-timepicker.js
+Source: https://github.com/jdewit/bootstrap-timepicker
+Copyright: 2013 Joris de Wit
+License: MIT license
+-----------------------------------------------------------------------------
 bootstrap-tokenfield.js
 Source: https://github.com/sliptree/bootstrap-tokenfield
 Copyright 2013-2014 Sliptree and other contributors
@@ -16,7 +31,7 @@ License: MIT license
 -----------------------------------------------------------------------------
 desktop-notify.js
 Source: https://github.com/ttsvetko/HTML5-Desktop-Notifications
-Copyright: Tsvetan Tsvetkov (tsekach@gmail.com)
+Copyright: Tsvetan Tsvetkov <tsekach@gmail.com>
 License: Apache License, Version 2.0
 -----------------------------------------------------------------------------
 email-addresses.js
@@ -29,20 +44,31 @@ Source: https://github.com/bgrins/ExpandingTextareas
 Copyright: Brian Grinstead (https://github.com/bgrins)
 License: MIT license
 -----------------------------------------------------------------------------
+Exif.js
+Source: https://github.com/exif-js/exif-js
+Copyright: Jacob Seidelin, Roald de Vries
+License: MIT license
+-----------------------------------------------------------------------------
+jquery.flot.js
+Source: https://github.com/dnschnur/flot
+Copyright: Ole Laursen, IOLA
+License: MIT license
+-----------------------------------------------------------------------------
 highlight.pack.js
 Source: https://highlightjs.org
 Copyright: 2006 Ivan Sagalaev (https://github.com/isagalaev)
 License: BSD License
 -----------------------------------------------------------------------------
 jquery-scrollto.js
-Source:
-Copyright:
-License:
+Source: https://github.com/balupton/jquery-scrollto
+Copyright: Bevry Pty Ltd <us@bevry.me>
+           Benjamin Lupton <b@lupton.cc>
+License: MIT license
 -----------------------------------------------------------------------------
 jquery.fineuploader-3.0.js
 Source: http://github.com/Valums-File-Uploader/file-uploader
-Copyright: 2010 Andrew Valums ( andrew(at)valums.com )
-           2012 Ray Nicholus ( fineuploader(at)garstasio.com )
+Copyright: 2010 Andrew Valums <andrew(at)valums.com>
+           2012 Ray Nicholus <fineuploader(at)garstasio.com>
 License: MIT license, GNU GPL 2 or later, GNU LGPL 2 or later
 -----------------------------------------------------------------------------
 jquery.noty.js
@@ -52,8 +78,8 @@ License: MIT license
 -----------------------------------------------------------------------------
 jquery.sew.js
 Source: https://github.com/tactivos/jquery-sew
-Copyright: @leChanteaux (santiago at mural.ly)
-           Mural.ly Dev Team (dev at mural.ly)
+Copyright: @leChanteaux <santiago at mural.ly>
+           Mural.ly Dev Team <dev at mural.ly>
 License: dfyw
 -----------------------------------------------------------------------------
 marked.js
@@ -92,21 +118,6 @@ Source: https://github.com/julianshapiro/velocity
 Copyright: 2014 The jQuery Foundation
 License: MIT license
 -----------------------------------------------------------------------------
-bootstrap
-Source: https://github.com/twbs/bootstrap
-Copyright: 2011-2015 Twitter, Inc.
-License: MIT license
------------------------------------------------------------------------------
-bootstrap-datepicker.js
-Source: https://github.com/eternicode/bootstrap-datepicker
-Copyright: Stefan Petre, Andrew Rowls
-License: Apache License, Version 2.0
------------------------------------------------------------------------------
-bootstrap-timepicker.js
-Source: https://github.com/jdewit/bootstrap-timepicker
-Copyright: 2013 Joris de Wit
-License: MIT license
------------------------------------------------------------------------------
 jquery.js
 Source: http://jquery.com/
 Copyright 2005, 2014 jQuery Foundation, Inc.
@@ -124,7 +135,7 @@ License: MIT license
 -----------------------------------------------------------------------------
 spine.js
 Source: http://spinejs.com
-Copyright: 2011 Alex MacCaw (info@eribium.org)
+Copyright: 2011 Alex MacCaw <info@eribium.org>
 License: MIT license
 -----------------------------------------------------------------------------
 rangy.js
