@@ -142,7 +142,7 @@
 
       // cleanup
       text = App.Utils.removeEmptyLines(text)
-      _this.log('insert', test)
+      _this.log('insert', text)
       document.execCommand('insertHTML', false, text)
       return true
     })
