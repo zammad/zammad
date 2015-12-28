@@ -184,7 +184,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 10
+      sleep 15
     }
     assert(article)
     assert_equal('@me_bauer', article.from, 'ticket article from')
