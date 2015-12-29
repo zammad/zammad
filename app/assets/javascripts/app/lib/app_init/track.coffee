@@ -5,10 +5,10 @@ class App.Track
   @init: ->
     _instance ?= new _trackSingleton
 
-  @log: ( area, level, args ) ->
+  @log: (area, level, args) ->
     if _instance == undefined
       _instance ?= new _trackSingleton
-    _instance.log( area, level, args )
+    _instance.log(area, level, args)
 
   @send: ->
     if _instance == undefined
@@ -28,7 +28,7 @@ class _trackSingleton
 #    @url     = 'http://localhost:3005/api/v1/ui'
     @url     = 'https://log.zammad.com/api/v1/ui'
 
-    @log( 'start', 'notice', {} )
+    @log('start', 'notice', {})
 
     # start initial submit 30 sec. later to avoid ie10 cookie issues
     delay = =>
@@ -55,7 +55,7 @@ class _trackSingleton
           clickY:  e.pageY
           screenX: w
           screenY: h
-        @log( 'click', 'notice', info )
+        @log('click', 'notice', info)
     )
 
     # log ajax calls
@@ -99,12 +99,12 @@ class _trackSingleton
     $(window).bind(
       'beforeunload'
       =>
-        @log( 'good bye', 'notice', {} )
+        @log('good bye', 'notice', {})
         @send(false)
         return
     )
 
-  log: ( facility, level, args ) ->
+  log: (facility, level, args) ->
     return if App.Config.get('developer_mode')
     return if !App.Config.get('ui_send_client_stats')
     info =
@@ -119,7 +119,7 @@ class _trackSingleton
     return if App.Config.get('developer_mode')
     return if !App.Config.get('ui_send_client_stats')
     return if _.isEmpty @data
-    newData = _.clone( @data )
+    newData = _.clone(@data)
     @data = []
     newDataNew = []
     for item in newData
@@ -195,7 +195,7 @@ class _trackSingleton
       }
     }
   }
-  var methods = ['log', 'warn', 'error']
+  var methods = ['debug', 'log', 'warn', 'error']
   for (var i = 0; i < methods.length; i++)
     intercept(methods[i])
 }).call(this);
