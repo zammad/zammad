@@ -121,23 +121,29 @@
         if (_this.options.mode === 'textonly') {
           if (!_this.options.multiline) {
             text = App.Utils.htmlRemoveTags(text)
+            _this.log('htmlRemoveTags', text)
           }
           else {
+            _this.log('htmlRemoveRichtext', text)
             text = App.Utils.htmlRemoveRichtext(text)
           }
         }
         else {
+          _this.log('htmlCleanup', text)
           text = App.Utils.htmlCleanup(text)
         }
         text = text.html()
+        _this.log('text.html()', text)
 
         // as fallback, take text
         if (!text) {
           text = App.Utils.text2html(text.text())
+          _this.log('text2html', text)
         }
       }
       else {
         text = App.Utils.text2html(text)
+        _this.log('text2html', text)
       }
 
       // cleanup
@@ -250,6 +256,9 @@
 
   // log method
   Plugin.prototype.log = function() {
+    if (App && App.Log) {
+      App.Log.debug('contenteditable', arguments)
+    }
     if (this.options.debug) {
       console.log(this._name, arguments)
     }

@@ -143,6 +143,11 @@ var qq = function(element) {
 };
 
 qq.log = function(message, level) {
+    // -start- add logger
+    if (App && App.Log) {
+      App.Log.debug(this._name, arguments)
+    }
+    // -end- add logger
     if (window.console) {
         if (!level || level === 'info') {
             window.console.log(message);
