@@ -24,7 +24,6 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
     # rebuild nav bar with given user data
     @bind 'auth', (user) =>
-      @log 'Navigation', 'debug', 'navbar rebuild', user
       @render()
 
     # fetch new recent viewed after collection change
