@@ -112,10 +112,6 @@
       }
       _this.log('paste', docType, text)
 
-      if (!_this.maxLengthOk(text.length)) {
-        return
-      }
-
       if (docType == 'html') {
         text = '<div>' + text + '</div>' // to prevent multible dom object. we need it at level 0
         if (_this.options.mode === 'textonly') {
@@ -144,6 +140,10 @@
       else {
         text = App.Utils.text2html(text)
         _this.log('text2html', text)
+      }
+
+      if (!_this.maxLengthOk(text.length)) {
+        return
       }
 
       // cleanup
@@ -201,6 +201,7 @@
     }
     this.log('maxLengthOk', length, this.options.maxlength)
     if ( length > this.options.maxlength ) {
+      this.log('maxLengthOk, text too long')
 
       // try to set error on framework form
       var parent = this.$element.parent().parent()
