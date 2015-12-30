@@ -202,7 +202,6 @@ job_integration_twitter_ff:
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-http://192.168.122.75:3041/api/v1/external_credentials/twitter/callback
 
 job_integration_facebook_ff:
   stage: browser
@@ -219,7 +218,6 @@ job_integration_facebook_ff:
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-http://192.168.122.75:3051/api/v1/external_credentials/facebook/callback
 
 job_integration_autowizard_ff:
   stage: browser
