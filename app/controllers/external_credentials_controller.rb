@@ -34,13 +34,12 @@ class ExternalCredentialsController < ApplicationController
     return
   rescue => e
     render json: { error: e.message }, status: :ok
-
   end
 
   def link_account
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     provider = params[:provider].downcase
-    attributes = ExternalCredential.request_account_to_link(provider, callback_url(provider))
+    attributes = ExternalCredential.request_account_to_link(provider)
     session[:request_token] = attributes[:request_token]
     redirect_to attributes[:authorize_url]
   end
@@ -56,11 +55,11 @@ class ExternalCredentialsController < ApplicationController
   private
 
   def callback_url(provider)
-    "#{Setting.get('http_type')}://#{Setting.get('fqdn')}#{Rails.configuration.api_path}/external_credentials/#{provider}/callback"
+    ExternalCredential.callback_url(provider)
   end
 
   def app_url(provider, channel_id)
-    "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/#{provider}/#{channel_id}"
+    ExternalCredential.app_url(provider, channel_id)
   end
 
 end

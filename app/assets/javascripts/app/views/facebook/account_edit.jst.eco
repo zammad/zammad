@@ -1,0 +1,20 @@
+<div class="alert alert--danger hidden" role="alert"></div>
+<fieldset>
+
+  <%- @T('Wall') %>
+  <div class="js-wall">
+    <%= @channel.options.user.name %> -> <div data-page-id="<%= @channel.options.user.id %>" class="js-groups"></div>
+  </div>
+
+  <hr>
+
+  <%- @T('Pages') %>
+  <div class="js-pages">
+    <% if @channel.options.pages: %>
+      <% for page in @channel.options.pages: %>
+        <%= page.name %> -> <div data-page-id="<%= page.id %>" class="js-groups"></div><br>
+      <% end %>
+    <% end %>
+  </div>
+
+</fieldset>

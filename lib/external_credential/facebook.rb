@@ -1,0 +1,87 @@
+class ExternalCredential::Facebook
+
+  def self.app_verify(params)
+    request_account_to_link(params)
+    params
+  end
+
+  def self.request_account_to_link(credentials = {})
+    external_credential = ExternalCredential.find_by(name: 'facebook')
+    if !credentials[:application_id]
+      credentials[:application_id] = external_credential.credentials['application_id']
+    end
+    if !credentials[:application_secret]
+      credentials[:application_secret] = external_credential.credentials['application_secret']
+    end
+
+    oauth = Koala::Facebook::OAuth.new(
+      credentials[:application_id],
+      credentials[:application_secret],
+      ExternalCredential.callback_url('facebook'),
+    )
+    oauth.get_app_access_token.inspect
+    state = rand(999_999_999_999).to_s
+    {
+      request_token: state,
+      authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages', state: state),
+    }
+  end
+
+  def self.link_account(_request_token, params)
+    #    fail if request_token.params[:oauth_token] != params[:state]
+    external_credential = ExternalCredential.find_by(name: 'facebook')
+    fail 'No such account' if !external_credential
+    oauth = Koala::Facebook::OAuth.new(
+      external_credential.credentials['application_id'],
+      external_credential.credentials['application_secret'],
+      ExternalCredential.callback_url('facebook'),
+    )
+
+    access_token = oauth.get_access_token(params[:code])
+    client = Koala::Facebook::API.new(access_token)
+    user = client.get_object('me')
+    #p client.get_connections('me', 'accounts').inspect
+    pages = []
+    client.get_connections('me', 'accounts').each { |page|
+      pages.push(
+        id:           page['id'],
+        name:         page['name'],
+        access_token: page['access_token'],
+        perms:        page['perms'],
+      )
+    }
+
+    # check if account already exists
+    Channel.where(area: 'Facebook::Account').each {|channel|
+      next if !channel.options
+      next if !channel.options['user']
+      next if !channel.options['user']['id']
+      next if channel.options['user']['id'] != user['id']
+      channel.options['auth']['access_token'] = access_token
+      channel.options['pages'] = pages
+      channel.save
+      return channel
+    }
+
+    # create channel
+    Channel.create(
+      area: 'Facebook::Account',
+      options: {
+        adapter: 'facebook',
+        auth: {
+          access_token: access_token
+        },
+        user: user,
+        pages: pages,
+        sync: {
+          wall: {},
+          pages: [],
+        }
+      },
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+  end
+
+end

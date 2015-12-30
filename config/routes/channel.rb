@@ -13,6 +13,10 @@ Zammad::Application.routes.draw do
   match api_path + '/channels/twitter_index',         to: 'channels#twitter_index',       via: :get
   match api_path + '/channels/twitter_verify/:id',    to: 'channels#twitter_verify',      via: :post
 
+  # facebook helper
+  match api_path + '/channels/facebook_index',        to: 'channels#facebook_index',      via: :get
+  match api_path + '/channels/facebook_verify/:id',   to: 'channels#facebook_verify',     via: :post
+
   # channels
   match api_path + '/channels/group/:id',             to: 'channels#group_update',        via: :post
   match api_path + '/channels/:id',                   to: 'channels#destroy',             via: :delete

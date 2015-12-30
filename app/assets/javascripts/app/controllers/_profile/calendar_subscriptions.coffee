@@ -37,10 +37,6 @@ class CalendarSubscriptions extends App.Controller
     $(e.currentTarget).next().removeClass('is-hidden')
     $(e.currentTarget).remove()
 
-  selectAll: (e) ->
-    e.currentTarget.focus()
-    e.currentTarget.select()
-
   onOptionsChange: =>
     @setAllPreferencesToFalse()
 

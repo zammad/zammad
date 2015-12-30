@@ -486,9 +486,6 @@ class App.Controller extends Spine.Controller
       item.created_by = App.User.find( item.created_by_id )
     items
 
-  ws_send: (data) ->
-    App.Event.trigger( 'ws:send', JSON.stringify(data) )
-
   # central method, is getting called on every ticket form change
   ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>
     if @formMeta.dependencies && @formMeta.dependencies[attribute.name]
@@ -572,6 +569,10 @@ class App.Controller extends Spine.Controller
 
   logoUrl: ->
     "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"
+
+  selectAll: (e) ->
+    e.currentTarget.focus()
+    e.currentTarget.select()
 
 class App.ControllerPermanent extends App.Controller
   constructor: ->
