@@ -191,7 +191,6 @@ job_integration_twitter_ff:
   stage: browser
   tags:
     - browser-ff
-    - twitter
   script:
     - export BROWSER_PORT=3041
     - export WS_PORT=3042
@@ -208,7 +207,6 @@ job_integration_facebook_ff:
   stage: browser
   tags:
     - browser-ff
-    - facebook
   script:
     - export BROWSER_PORT=3051
     - export WS_PORT=3052
@@ -291,6 +289,38 @@ job_integration_browser_ff_3:
     - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+job_integration_twitter_chrome:
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
+    - export BROWSER_PORT=4041
+    - export WS_PORT=4042
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+job_integration_facebook_chrome:
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
+    - export BROWSER_PORT=4051
+    - export WS_PORT=4052
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_autowizard_chrome:
