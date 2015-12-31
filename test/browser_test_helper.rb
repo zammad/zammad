@@ -142,6 +142,13 @@ class TestCase < Test::Unit::TestCase
     if !element
 
       if params[:auto_wizard]
+        watch_for(
+          browser: instance,
+          css:     'body',
+          value:   'auto wizard is enabled',
+          timeout: 10,
+        )
+        location( url: "#{browser_url}/#getting_started/auto_wizard" )
         sleep 10
         login = instance.find_elements({ css: '.user-menu .user a' })[0].attribute('title')
         if login != params[:username]
