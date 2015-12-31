@@ -29,6 +29,7 @@ class TwitterBrowserTest < TestCase
       username: 'master@example.com',
       password: 'test',
       url: browser_url,
+      auto_wizard: true,
     )
     tasks_close_all()
 

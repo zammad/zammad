@@ -124,6 +124,7 @@ class TestCase < Test::Unit::TestCase
     password:    'somepassword',
     url:         'some url', # optional
     remember_me: true, # optional
+    auto_wizard: false, # optional, in case of auto wizard, skip login
   )
 
 =end
@@ -139,6 +140,17 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements({ css: '#login input[name="username"]' })[0]
     if !element
+
+      if params[:auto_wizard]
+        sleep 10
+        login = instance.find_elements({ css: '.user-menu .user a' })[0].attribute('title')
+        if login != params[:username]
+          screenshot(browser: instance, comment: 'auto wizard login failed')
+          fail 'auto wizard login failed'
+        end
+        assert(true, 'auto wizard login ok')
+        return
+      end
       screenshot(browser: instance, comment: 'login_failed')
       fail 'No login box found'
     end

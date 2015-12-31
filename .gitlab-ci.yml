@@ -197,6 +197,7 @@ job_integration_twitter_ff:
     - export WS_PORT=3042
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -213,6 +214,7 @@ job_integration_facebook_ff:
     - export WS_PORT=3052
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
     - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
