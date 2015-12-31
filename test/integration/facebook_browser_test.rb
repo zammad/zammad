@@ -100,7 +100,7 @@ class FacebookBrowserTest < TestCase
 
     watch_for(
       css: 'body',
-      value: 'Facebook Login',
+      value: '(Facebook Login|Log into Facebook)',
     )
 
     set(
