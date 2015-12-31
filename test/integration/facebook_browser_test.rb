@@ -129,7 +129,7 @@ class FacebookBrowserTest < TestCase
       value: 'Dashboard',
     )
 
-    #click(css: '#content .modal .js-close')
+    click(css: '#content .modal .js-close')
 
     watch_for(
       css: '#content',
@@ -153,7 +153,7 @@ class FacebookBrowserTest < TestCase
     #  value: 'Search Terms',
     #)
 
-    #click(css: '#content .modal .js-close')
+    click(css: '#content .modal .js-close')
 
     watch_for(
       css: '#content',
