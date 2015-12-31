@@ -104,10 +104,12 @@ class TwitterBrowserTest < TestCase
     set(
       css: '#username_or_email',
       value: twitter_user_loign,
+      no_click: true, # <label> other element would receive the click
     )
     set(
       css: '#password',
       value: twitter_pw,
+      no_click: true, # <label> other element would receive the click
     )
     click(css: '#allow')
 
