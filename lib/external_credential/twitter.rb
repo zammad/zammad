@@ -69,6 +69,7 @@ class ExternalCredential::Twitter
           oauth_token_secret:     access_token.secret,
         },
         sync: {
+          limit: 20,
           search: [],
           mentions: {},
           direct_messages: {}

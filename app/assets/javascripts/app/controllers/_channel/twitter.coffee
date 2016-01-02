@@ -141,8 +141,9 @@ class Index extends App.ControllerContent
       groupSelection(group_id, placeholder, 'search')
       content.find('.js-searchTermList').append(placeholder)
 
-    for item in channel.options.sync.search
-      placeholderAdd(item.term, item.group_id, 'search')
+    if channel.options && channel.options.sync && channel.options.sync.search
+      for item in channel.options.sync.search
+        placeholderAdd(item.term, item.group_id, 'search')
 
     content.find('.js-searchTermAdd').on('click', ->
       placeholderAdd('', '')

@@ -121,7 +121,7 @@ class Channel::Driver::Twitter
       counter = 0
       @tweet.client.search(search[:term], result_type: result_type).collect { |tweet|
 
-        break if search[:limit] && search[:limit] <= counter
+        break if @sync[:limit] && @sync[:limit] <= counter
         break if Ticket::Article.find_by(message_id: tweet.id)
 
         @tweet.to_group(tweet, search[:group_id], @channel)
@@ -141,7 +141,7 @@ class Channel::Driver::Twitter
     counter = 0
     @tweet.client.mentions_timeline.each { |tweet|
 
-      break if @sync[:mentions][:limit] && @sync[:mentions][:limit] <= counter
+      break if @sync[:limit] && @sync[:limit] <= counter
       break if Ticket::Article.find_by(message_id: tweet.id)
 
       @tweet.to_group(tweet, @sync[:mentions][:group_id], @channel)
@@ -160,7 +160,7 @@ class Channel::Driver::Twitter
     counter = 0
     @tweet.client.direct_messages.each { |tweet|
 
-      break if @sync[:direct_messages][:limit] && @sync[:direct_messages][:limit] <= counter
+      break if @sync[:limit] && @sync[:limit] <= counter
       break if Ticket::Article.find_by(message_id: tweet.id)
 
       @tweet.to_group(tweet, @sync[:direct_messages][:group_id], @channel)
