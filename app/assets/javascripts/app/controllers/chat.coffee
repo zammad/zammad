@@ -127,11 +127,31 @@ class App.CustomerChat extends App.Controller
     if state
       @startPushState()
       preferences = @Session.get('preferences')
-      if !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
-        @notify(
-          type: 'error'
-          msg:  App.i18n.translateContent('To be able to chat you need to select min. one chat topic in settings!')
-        )
+      if App.Chat.first() && !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
+
+        # if we only have one chat, avtice it automatically
+        if App.Chat.count() < 2
+          preferences.chat = {}
+          preferences.chat.active = {}
+          preferences.chat.active[App.Chat.first().id] = 'on'
+
+          # update user preferences
+          @ajax(
+            id:          'preferences'
+            type:        'PUT'
+            url:         "#{@apiPath}/users/preferences"
+            data:        JSON.stringify(user: {chat: preferences.chat})
+            processData: true
+            success:     @success
+            error:       @error
+          )
+
+        # if we have more chats, let decide the user
+        else
+          msg = 'To be able to chat you need to select min. one chat topic below!'
+
+          # open modal settings
+          @settings(settings: msg)
     else
       @stopPushState()
       @pushState()
@@ -191,9 +211,10 @@ class App.CustomerChat extends App.Controller
     return if @windowCount() >= @maxChatWindows
     App.WebSocket.send(event:'chat_session_start')
 
-  settings: ->
+  settings: (errors = {}) ->
     new Setting(
       maxChatWindows: @maxChatWindows
+      errors: errors
     )
 
 class CustomerChatRouter extends App.ControllerPermanent
@@ -536,6 +557,7 @@ class Setting extends App.ControllerModal
     App.view('customer_chat/setting')(
       chats: App.Chat.all()
       preferences: preferences
+      errors: @errors
     )
 
   submit: (e) =>
@@ -544,7 +566,7 @@ class Setting extends App.ControllerModal
 
     @formDisable(e)
 
-    # get data
+    # update user preferences
     @ajax(
       id:          'preferences'
       type:        'PUT'
