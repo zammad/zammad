@@ -4,6 +4,12 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
     return super if super
     return if !check_chat_exists
 
+    # geo ip lookup
+    geo_ip = nil
+    if @remote_id
+      geo_ip = Service::GeoIp.location(@remote_id)
+    end
+
     # create chat session
     chat_session = Chat::Session.create(
       chat_id: @payload['data']['chat_id'],
@@ -12,6 +18,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
       preferences: {
         participants: [@client_id],
         remote_id: @remote_id,
+        geo_ip: geo_ip,
       },
     )
 
