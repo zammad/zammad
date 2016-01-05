@@ -11,6 +11,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
       state: 'waiting',
       preferences: {
         participants: [@client_id],
+        remote_id: @remote_id,
       },
     )
 
