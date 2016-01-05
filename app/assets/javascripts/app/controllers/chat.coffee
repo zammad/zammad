@@ -213,7 +213,7 @@ class App.CustomerChat extends App.Controller
 
   settings: (errors = {}) ->
     new Setting(
-      maxChatWindows: @maxChatWindows
+      windowSpace: @
       errors: errors
     )
 
@@ -256,7 +256,7 @@ class ChatWindow extends App.Controller
   constructor: ->
     super
 
-    @showTimeEveryXMinutes = 1
+    @showTimeEveryXMinutes = 2
     @lastTimestamp
     @lastAddedType
     @isTyping = false
@@ -552,7 +552,7 @@ class Setting extends App.ControllerModal
     if !preferences.chat.phrase
       preferences.chat.phrase = {}
     if !preferences.chat.max_windows
-      preferences.chat.max_windows = @maxChatWindows
+      preferences.chat.max_windows = @windowSpace.maxChatWindows
 
     App.view('customer_chat/setting')(
       chats: App.Chat.all()
@@ -565,6 +565,9 @@ class Setting extends App.ControllerModal
     params = @formParam(e.target)
 
     @formDisable(e)
+
+    # update runtime
+    @windowSpace.maxChatWindows = params.chat.max_windows
 
     # update user preferences
     @ajax(
