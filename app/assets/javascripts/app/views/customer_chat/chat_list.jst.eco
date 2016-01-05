@@ -1,0 +1,9 @@
+<% if _.isEmpty(@chat_sessions): %>
+<%- @T('none') %>
+<% else: %>
+<ul>
+<% for chat_session in @chat_sessions: %>
+  <li><%= chat_session.name %> <% if chat_session.geo_data: %>- <%= chat_session.geo_data %><% end %> - <% if chat_session.user_id: %><%= chat_session.user.displayName() %> -<% end %> <small class=""><%- @humanTime(chat_session.created_at) %></small>
+<% end %>
+</ul>
+<% end %>

@@ -5,13 +5,13 @@
       </div>
       <div class="page-header-center">
         <div class="status-fields">
-          <div class="status-field js-acceptChat">
+          <div class="status-field js-acceptChat js-waitingCustomers">
             <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting Customers') %>
           </div>
-          <div class="status-field">
+          <div class="status-field js-chattingCustomers">
             <span class="badge js-badgeChattingCustomers"></span> <%- @T('Chatting Customers') %>
           </div>
-          <div class="status-field">
+          <div class="status-field js-activeAgents">
             <span class="badge js-badgeActiveAgents"></span> <%- @T('Active Agents') %>
           </div>
         </div>

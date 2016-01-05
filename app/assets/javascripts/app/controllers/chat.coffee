@@ -22,8 +22,11 @@ class App.CustomerChat extends App.Controller
     @meta =
       active: false
       waiting_chat_count: 0
+      waiting_chat_session_list: []
       running_chat_count: 0
-      active_agents: 0
+      running_chat_session_list: []
+      active_agent_count: 0
+      active_agent_ids: []
 
     @render()
     @on 'layout-has-changed', @propagateLayoutChange
@@ -86,7 +89,65 @@ class App.CustomerChat extends App.Controller
 
     @html App.view('customer_chat/index')()
 
+    chatSessionList = (list) ->
+      for chat_session in list
+        chat = App.Chat.find(chat_session.chat_id)
+        chat_session.name = "#{chat.displayName()} [##{chat_session.id}]"
+        chat_session.geo_data = ''
+        if chat_session.preferences && chat_session.preferences.geo_ip
+          if chat_session.preferences.geo_ip.country_name
+            chat_session.geo_data += chat_session.preferences.geo_ip.country_name
+          if chat_session.preferences.geo_ip.city_name
+            chat_session.geo_data += " #{chat_session.preferences.geo_ip.city_name}"
+        if chat_session.user_id
+          chat_session.user = App.User.find(chat_session.user_id)
+      App.view('customer_chat/chat_list')(
+        chat_sessions: list
+      )
+
+    @el.find('.js-waitingCustomers').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      animation:  false
+      delay:      100
+      title: ->
+        App.i18n.translateContent('Waiting Customers')
+      content: =>
+        chatSessionList(@meta.waiting_chat_session_list)
+    )
+
+    @el.find('.js-chattingCustomers').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      animation:  false
+      delay:      100
+      title: ->
+        App.i18n.translateContent('Chatting Customers')
+      content: =>
+        chatSessionList(@meta.running_chat_session_list)
+    )
+
+    @el.find('.js-activeAgents').popover(
+      trigger:    'hover'
+      container:  'body'
+      html:       true
+      animation:  false
+      delay:      100
+      title: ->
+        App.i18n.translateContent('Active Agents')
+      content: =>
+        users = []
+        for user_id in @meta.active_agent_ids
+          users.push App.User.find(user_id)
+        App.view('customer_chat/user_list')(
+          users: users
+        )
+    )
+
   show: (params) =>
+    @title 'Customer Chat', true
     @navupdate '#customer_chat'
 
   counter: =>
@@ -168,7 +229,7 @@ class App.CustomerChat extends App.Controller
       @$('.js-acceptChat').removeClass('is-clickable is-blinking')
     @$('.js-badgeWaitingCustomers').text(@meta.waiting_chat_count)
     @$('.js-badgeChattingCustomers').text(@meta.running_chat_count)
-    @$('.js-badgeActiveAgents').text(@meta.active_agents)
+    @$('.js-badgeActiveAgents').text(@meta.active_agent_count)
 
     # reopen chats
     if @meta.active_sessions
@@ -265,11 +326,12 @@ class ChatWindow extends App.Controller
 
     chat = App.Chat.find(@session.chat_id)
     @name = "#{chat.displayName()} [##{@session.id}]"
+    @title = ''
     if @session && @session.preferences && @session.preferences.geo_ip
       if @session.preferences.geo_ip.country_name
-        @name += " #{@session.preferences.geo_ip.country_name}"
+        @title += @session.preferences.geo_ip.country_name
       if @session.preferences.geo_ip.city_name
-        @name += " #{@session.preferences.geo_ip.city_name}"
+        @title += " #{@session.preferences.geo_ip.city_name}"
 
     @on 'layout-change', @scrollToBottom
 
@@ -303,6 +365,7 @@ class ChatWindow extends App.Controller
   render: ->
     @html App.view('customer_chat/chat_window')
       name: @name
+      title: @title
 
     @el.one 'transitionend', @onTransitionend
 
@@ -412,6 +475,7 @@ class ChatWindow extends App.Controller
   sendMessage: (delay) =>
     content = @input.html()
     return if !content
+    return if @el.hasClass('is-offline')
 
     send = =>
       App.WebSocket.send(

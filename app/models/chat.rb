@@ -68,10 +68,25 @@ class Chat < ApplicationModel
     Chat.where(active: true).each {|chat|
       assets = chat.assets(assets)
     }
+    active_agent_ids = []
+    active_agents.each {|user|
+      active_agent_ids.push user.id
+      assets = user.assets(assets)
+    }
+    runningchat_session_list_local = running_chat_session_list
+    runningchat_session_list_local.each {|session|
+      next if !session['user_id']
+      user = User.lookup(id: session['user_id'])
+      next if !user
+      assets = user.assets(assets)
+    }
     {
       waiting_chat_count: waiting_chat_count,
+      waiting_chat_session_list: waiting_chat_session_list,
       running_chat_count: running_chat_count,
-      active_agents: active_agents,
+      running_chat_session_list: runningchat_session_list_local,
+      active_agent_count: active_agent_count,
+      active_agent_ids: active_agent_ids,
       seads_available: seads_available,
       seads_total: seads_total,
       active: Chat::Agent.state(user_id),
@@ -81,28 +96,33 @@ class Chat < ApplicationModel
 
   def self.agent_state_with_sessions(user_id)
     return { state: 'chat_disabled' } if !Setting.get('chat')
-    assets = {}
-    Chat.where(active: true).each {|chat|
-      assets = chat.assets(assets)
-    }
-    {
-      waiting_chat_count: waiting_chat_count,
-      running_chat_count: running_chat_count,
-      active_sessions: Chat::Session.active_chats_by_user_id(user_id),
-      active_agents: active_agents,
-      seads_available: seads_available,
-      seads_total: seads_total,
-      active: Chat::Agent.state(user_id),
-      assets: assets,
-    }
+    result = agent_state(user_id)
+    result[:active_sessions] = Chat::Session.active_chats_by_user_id(user_id)
+    result
   end
 
   def self.waiting_chat_count
     Chat::Session.where(state: ['waiting']).count
   end
 
+  def self.waiting_chat_session_list
+    sessions = []
+    Chat::Session.where(state: ['waiting']).each {|session|
+      sessions.push session.attributes
+    }
+    sessions
+  end
+
   def self.running_chat_count
     Chat::Session.where(state: ['running']).count
+  end
+
+  def self.running_chat_session_list
+    sessions = []
+    Chat::Session.where(state: ['running']).each {|session|
+      sessions.push session.attributes
+    }
+    sessions
   end
 
   def self.active_chat_count
@@ -117,8 +137,18 @@ class Chat < ApplicationModel
     agents
   end
 
-  def self.active_agents(diff = 2.minutes)
+  def self.active_agent_count(diff = 2.minutes)
     Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).count
+  end
+
+  def self.active_agents(diff = 2.minutes)
+    users = []
+    Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each {|record|
+      user = User.lookup(id: record.updated_by_id)
+      next if !user
+      users.push user
+    }
+    users
   end
 
   def self.seads_total(diff = 2.minutes)
