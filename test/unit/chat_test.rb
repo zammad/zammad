@@ -58,7 +58,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('offline', chat.customer_state[:state])
 
     # check agent state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(0, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -78,7 +78,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('online', chat.customer_state[:state])
 
     # check agent state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(0, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -97,7 +97,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('online', chat.customer_state[:state])
 
     # check agent state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(1, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -117,7 +117,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('online', chat.customer_state[:state])
 
     # check agent1 state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(1, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -126,7 +126,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # check agent2 state
-    agent_state = Chat.agent_state(agent2.id)
+    agent_state = Chat.agent_state_with_sessions(agent2.id)
     assert_equal(1, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -143,7 +143,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('online', chat.customer_state[:state])
 
     # check agent1 state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(2, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -152,7 +152,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # check agent2 state
-    agent_state = Chat.agent_state(agent2.id)
+    agent_state = Chat.agent_state_with_sessions(agent2.id)
     assert_equal(2, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -178,7 +178,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('no_seats_available', chat.customer_state[:state])
 
     # check agent1 state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(6, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -187,7 +187,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # check agent2 state
-    agent_state = Chat.agent_state(agent2.id)
+    agent_state = Chat.agent_state_with_sessions(agent2.id)
     assert_equal(6, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -203,7 +203,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(5, chat.customer_state[:queue])
 
     # check agent1 state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(1, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -212,7 +212,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # check agent2 state
-    agent_state = Chat.agent_state(agent2.id)
+    agent_state = Chat.agent_state_with_sessions(agent2.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(1, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -228,7 +228,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(5, chat.customer_state[:queue])
 
     # check agent1 state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(1, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -237,7 +237,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # check agent2 state
-    agent_state = Chat.agent_state(agent2.id)
+    agent_state = Chat.agent_state_with_sessions(agent2.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(1, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -253,7 +253,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(5, chat.customer_state[:queue])
 
     # check agent1 state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -262,7 +262,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # check agent2 state
-    agent_state = Chat.agent_state(agent2.id)
+    agent_state = Chat.agent_state_with_sessions(agent2.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -277,7 +277,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('online', chat.customer_state[:state])
 
     # check agent1 state
-    agent_state = Chat.agent_state(agent1.id)
+    agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(3, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])
@@ -286,7 +286,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(true, agent_state[:active])
 
     # check agent2 state
-    agent_state = Chat.agent_state(agent2.id)
+    agent_state = Chat.agent_state_with_sessions(agent2.id)
     assert_equal(3, agent_state[:waiting_chat_count])
     assert_equal(0, agent_state[:running_chat_count])
     assert_equal([], agent_state[:active_sessions])

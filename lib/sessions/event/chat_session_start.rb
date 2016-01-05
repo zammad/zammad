@@ -39,13 +39,23 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
         chat_id: chat_session.chat_id,
       },
     }
-    chat_session.send_to_recipients(data)
+    # send to customer
+    chat_session.send_to_recipients(data, @client_id)
+
+    # send to agent
+    data = {
+      event: 'chat_session_start',
+      data: {
+        session: chat_session.attributes,
+      },
+    }
+    Sessions.send(@client_id, data)
+
+    # send state update with sessions to agents
+    broadcast_agent_state_update
 
     # send position update to other waiting sessions
     broadcast_customer_state_update
-
-    # send state update to agents
-    broadcast_agent_state_update
 
     nil
   end

@@ -71,6 +71,23 @@ class Chat < ApplicationModel
     {
       waiting_chat_count: waiting_chat_count,
       running_chat_count: running_chat_count,
+      active_agents: active_agents,
+      seads_available: seads_available,
+      seads_total: seads_total,
+      active: Chat::Agent.state(user_id),
+      assets: assets,
+    }
+  end
+
+  def self.agent_state_with_sessions(user_id)
+    return { state: 'chat_disabled' } if !Setting.get('chat')
+    assets = {}
+    Chat.where(active: true).each {|chat|
+      assets = chat.assets(assets)
+    }
+    {
+      waiting_chat_count: waiting_chat_count,
+      running_chat_count: running_chat_count,
       active_sessions: Chat::Session.active_chats_by_user_id(user_id),
       active_agents: active_agents,
       seads_available: seads_available,

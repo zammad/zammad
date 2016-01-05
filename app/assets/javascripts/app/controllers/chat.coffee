@@ -265,6 +265,11 @@ class ChatWindow extends App.Controller
 
     chat = App.Chat.find(@session.chat_id)
     @name = "#{chat.displayName()} [##{@session.id}]"
+    if @session && @session.preferences && @session.preferences.geo_ip
+      if @session.preferences.geo_ip.country_name
+        @name += " #{@session.preferences.geo_ip.country_name}"
+      if @session.preferences.geo_ip.city_name
+        @name += " #{@session.preferences.geo_ip.city_name}"
 
     @on 'layout-change', @scrollToBottom
 
