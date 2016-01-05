@@ -18,7 +18,7 @@
       <tr>
         <td><% if session.data.user: %><%= session.data.user.displayName() %><% end %></td>
         <td title="<%= session.data.user_agent %>"><%= session.data.user_agent %></td>
-        <td title="<%= session.data.remote_id %>"><% if session.data.geo && session.data.geo.country_name: %><%= session.data.geo.country_name %> <%= session.data.geo.city_name %><% else: %><%= session.data.remote_id %><% end %></td>
+        <td title="<%= session.data.remote_ip %>"><% if session.data.geo && session.data.geo.country_name: %><%= session.data.geo.country_name %> <%= session.data.geo.city_name %><% else: %><%= session.data.remote_ip %><% end %></td>
         <td><%- @humanTime(session.created_at) %></td>
         <td><%- @humanTime(session.updated_at) %></td>
         <td><a href="#" data-session-id="<%- session.id %>" class="js-delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a></td>

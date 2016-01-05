@@ -6,8 +6,8 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
 
     # geo ip lookup
     geo_ip = nil
-    if @remote_id
-      geo_ip = Service::GeoIp.location(@remote_id)
+    if @remote_ip
+      geo_ip = Service::GeoIp.location(@remote_ip)
     end
 
     # create chat session
@@ -17,7 +17,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
       state: 'waiting',
       preferences: {
         participants: [@client_id],
-        remote_id: @remote_id,
+        remote_ip: @remote_ip,
         geo_ip: geo_ip,
       },
     )

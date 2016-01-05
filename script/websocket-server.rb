@@ -111,7 +111,7 @@ EventMachine.run {
           last_ping:   Time.now.utc.to_i,
           error_count: 0,
           headers:     headers,
-          remote_id:   remote_ip,
+          remote_ip:   remote_ip,
         }
       end
     }
@@ -158,7 +158,7 @@ EventMachine.run {
           event: data['event'],
           payload: data,
           session: @clients[client_id][:session],
-          remote_ip: @clients[client_id][:remote_id],
+          remote_ip: @clients[client_id][:remote_ip],
           client_id: client_id,
           clients: @clients,
           options: @options,
