@@ -1,3 +1,4 @@
+<div class="buttonDropdown btn js-reset hide"><%- @T('Discard your unsaved changes.') %></div>
 <div class="buttonDropdown dropdown dropdown--actions dropup">
   <div class="btn btn--text btn--icon--last" data-toggle="dropdown">
     <span class="js-secondaryActionButtonLabel"></span> <%- @Icon('arrow-up') %>
@@ -22,7 +23,6 @@
       </span>
   </ul>
 </div>
-<div class="buttonDropdown btn js-reset hide"><%- @T('Discard your unsaved changes.') %></div>
 <% if @macroDisabled: %>
   <div class="btn btn--primary js-submit"><%- @T('Update') %></div>
 <% else: %>
