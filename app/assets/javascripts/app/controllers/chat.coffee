@@ -18,6 +18,7 @@ class App.CustomerChat extends App.Controller
       @maxChatWindows = parseInt(preferences.chat.max_windows)
 
     @pushStateIntervalOn = undefined
+    @idleTimeout = parseInt(@Config.get('chat_agent_idle_timeout') || 120)
     @messageCounter = 0
     @meta =
       active: false
@@ -107,10 +108,10 @@ class App.CustomerChat extends App.Controller
 
     @el.find('.js-waitingCustomers').popover(
       trigger:    'hover'
-      container:  'body'
       html:       true
       animation:  false
       delay:      100
+      placement:  'bottom'
       title: ->
         App.i18n.translateContent('Waiting Customers')
       content: =>
@@ -119,10 +120,10 @@ class App.CustomerChat extends App.Controller
 
     @el.find('.js-chattingCustomers').popover(
       trigger:    'hover'
-      container:  'body'
       html:       true
       animation:  false
       delay:      100
+      placement:  'bottom'
       title: ->
         App.i18n.translateContent('Chatting Customers')
       content: =>
@@ -131,10 +132,10 @@ class App.CustomerChat extends App.Controller
 
     @el.find('.js-activeAgents').popover(
       trigger:    'hover'
-      container:  'body'
       html:       true
       animation:  false
       delay:      100
+      placement:  'bottom'
       title: ->
         App.i18n.translateContent('Active Agents')
       content: =>
@@ -225,8 +226,11 @@ class App.CustomerChat extends App.Controller
   updateMeta: =>
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()
       @$('.js-acceptChat').addClass('is-clickable is-blinking')
+      @idleTimeoutStart()
     else
       @$('.js-acceptChat').removeClass('is-clickable is-blinking')
+      @idleTimeoutStop()
+
     @$('.js-badgeWaitingCustomers').text(@meta.waiting_chat_count)
     @$('.js-badgeChattingCustomers').text(@meta.running_chat_count)
     @$('.js-badgeActiveAgents').text(@meta.active_agent_count)
@@ -271,12 +275,28 @@ class App.CustomerChat extends App.Controller
   acceptChat: =>
     return if @windowCount() >= @maxChatWindows
     App.WebSocket.send(event:'chat_session_start')
+    @idleTimeoutStop()
 
   settings: (errors = {}) ->
     new Setting(
       windowSpace: @
       errors: errors
     )
+
+  idleTimeoutStart: =>
+    return if @idleTimeoutId
+    switchOff = =>
+      @switch(false)
+      @notify(
+        type: 'notice'
+        msg:  App.i18n.translateContent('Chat not answered, set to offline automatically.')
+      )
+    @idleTimeoutId = @delay(switchOff, @idleTimeout * 1000)
+
+  idleTimeoutStop: =>
+    return if !@idleTimeoutId
+    @clearDelay(@idleTimeoutId)
+    @idleTimeoutId = undefined
 
 class CustomerChatRouter extends App.ControllerPermanent
   constructor: (params) ->

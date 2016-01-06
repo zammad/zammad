@@ -23,7 +23,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
     )
 
     # send broadcast to agents
-    broadcast_agent_state_update
+    Chat.broadcast_agent_state_update
 
     # return new session
     {

@@ -52,10 +52,10 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
     Sessions.send(@client_id, data)
 
     # send state update with sessions to agents
-    broadcast_agent_state_update
+    Chat.broadcast_agent_state_update
 
     # send position update to other waiting sessions
-    broadcast_customer_state_update
+    Chat.broadcast_customer_state_update
 
     nil
   end

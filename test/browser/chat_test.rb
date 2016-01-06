@@ -576,6 +576,11 @@ class ChatTest < TestCase
     )
     agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
+    exists(
+      browser: agent,
+      css: '#navigation .js-switch input[checked]'
+    )
+
     # no customer action, hide widget
     customer = browser_instance
     location(
@@ -616,6 +621,17 @@ class ChatTest < TestCase
       css: '.zammad-chat',
       value: '(takes longer|dauert länger)',
       timeout: 120,
+    )
+
+    # check if agent is offline, idle timeout, chat not answered
+    exists_not(
+      browser: agent,
+      css: '#navigation .js-switch input[checked]'
+    )
+    switch(
+      browser: agent,
+      css: '#navigation .js-switch',
+      type: 'on',
     )
 
     # no customer action, show sorry screen

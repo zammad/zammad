@@ -165,6 +165,57 @@ class Chat < ApplicationModel
 
 =begin
 
+broadcast new agent status to all agents
+
+  Chat.broadcast_agent_state_update
+
+optional you can ignore it for dedecated user
+
+  Chat.broadcast_agent_state_update(ignore_user_id)
+
+=end
+
+  def self.broadcast_agent_state_update(ignore_user_id = nil)
+
+    # send broadcast to agents
+    Chat::Agent.where('active = ? OR updated_at > ?', true, Time.zone.now - 15.minutes).each {|item|
+      next if item.updated_by_id == ignore_user_id
+      data = {
+        event: 'chat_status_agent',
+        data: Chat.agent_state(item.updated_by_id),
+      }
+      Sessions.send_to(item.updated_by_id, data)
+    }
+  end
+
+=begin
+
+broadcast new customer queue position to all waiting customers
+
+  Chat.broadcast_customer_state_update
+
+=end
+
+  def self.broadcast_customer_state_update
+
+    # send position update to other waiting sessions
+    position = 0
+    Chat::Session.where(state: 'waiting').order('created_at ASC').each {|local_chat_session|
+      position += 1
+      data = {
+        event: 'chat_session_queue',
+        data: {
+          state: 'queue',
+          position: position,
+          session_id: local_chat_session.session_id,
+        },
+      }
+      local_chat_session.send_to_recipients(data)
+    }
+  end
+
+=begin
+
 cleanup old chat messages
 
   Chat.cleanup
