@@ -38,7 +38,7 @@ class App.CustomerChat extends App.Controller
         App.Collection.loadAssets(data.assets)
       @meta = data
       @updateMeta()
-      if @pushStateIntervalOn is undefined
+      if data.active is true
         @startPushState()
     )
 
@@ -213,7 +213,14 @@ class App.CustomerChat extends App.Controller
           msg = 'To be able to chat you need to select min. one chat topic below!'
 
           # open modal settings
-          @settings(settings: msg)
+          @settings(
+            errors:
+              settings: msg
+            active: @meta.active
+          )
+
+          @meta.active = false
+          @pushState()
     else
       @stopPushState()
       @pushState()
@@ -277,10 +284,11 @@ class App.CustomerChat extends App.Controller
     App.WebSocket.send(event:'chat_session_start')
     @idleTimeoutStop()
 
-  settings: (errors = {}) ->
+  settings: (params = {}) ->
     new Setting(
       windowSpace: @
-      errors: errors
+      errors: params.errors
+      active: params.active
     )
 
   idleTimeoutStart: =>
@@ -646,7 +654,7 @@ class Setting extends App.ControllerModal
     App.view('customer_chat/setting')(
       chats: App.Chat.all()
       preferences: preferences
-      errors: @errors
+      errors: @errors || {}
     )
 
   submit: (e) =>
@@ -670,6 +678,11 @@ class Setting extends App.ControllerModal
     )
 
   success: (data, status, xhr) =>
+    if @active is true || @active is false
+      @windowSpace.meta.active = @active
+      @windowSpace.pushState()
+    else
+      App.WebSocket.send(event:'chat_status_agent')
     App.User.full(
       App.Session.get('id'),
       =>

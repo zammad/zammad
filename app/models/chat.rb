@@ -178,7 +178,7 @@ optional you can ignore it for dedecated user
   def self.broadcast_agent_state_update(ignore_user_id = nil)
 
     # send broadcast to agents
-    Chat::Agent.where('active = ? OR updated_at > ?', true, Time.zone.now - 15.minutes).each {|item|
+    Chat::Agent.where('active = ? OR updated_at > ?', true, Time.zone.now - 8.hours).each {|item|
       next if item.updated_by_id == ignore_user_id
       data = {
         event: 'chat_status_agent',
