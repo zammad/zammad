@@ -17,12 +17,24 @@ class TwitterBrowserTest < TestCase
     if !ENV['TWITTER_USER_LOGIN']
       fail "ERROR: Need TWITTER_USER_LOGIN - hint TWITTER_USER_LOGIN='1234'"
     end
-    twitter_user_loign = ENV['TWITTER_USER_LOGIN']
+    twitter_user_login = ENV['TWITTER_USER_LOGIN']
 
     if !ENV['TWITTER_USER_PW']
       fail "ERROR: Need TWITTER_USER_PW - hint TWITTER_USER_PW='1234'"
     end
-    twitter_pw = ENV['TWITTER_USER_PW']
+    twitter_user_pw = ENV['TWITTER_USER_PW']
+
+    if !ENV['TWITTER_CUSTOMER_TOKEN']
+      fail "ERROR: Need TWITTER_CUSTOMER_TOKEN - hint TWITTER_CUSTOMER_TOKEN='1234'"
+    end
+    twitter_customer_token = ENV['TWITTER_CUSTOMER_TOKEN']
+
+    if !ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
+      fail "ERROR: Need TWITTER_CUSTOMER_TOKEN_SECRET - hint TWITTER_CUSTOMER_TOKEN_SECRET='1234'"
+    end
+    twitter_customer_token_secret = ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
+
+    hash  = "#sweetcheck#{rand(99_999)}"
 
     @browser = browser_instance
     login(
@@ -103,12 +115,12 @@ class TwitterBrowserTest < TestCase
 
     set(
       css: '#username_or_email',
-      value: twitter_user_loign,
+      value: twitter_user_login,
       no_click: true, # <label> other element would receive the click
     )
     set(
       css: '#password',
-      value: twitter_pw,
+      value: twitter_user_pw,
       no_click: true, # <label> other element would receive the click
     )
     click(css: '#allow')
@@ -123,11 +135,20 @@ class TwitterBrowserTest < TestCase
       value: 'Search Terms',
     )
 
-    click(css: '#content .modal .js-close')
+    # add hash tag to search
+    click(css: '#content .modal .js-searchTermAdd')
+    set(css: '#content .modal [name="search::term"]', value: hash)
+    select(css: '#content .modal [name="search::group_id"]', value: 'Users')
+    click(css: '#content .modal .js-submit')
+    sleep 5
 
     watch_for(
       css: '#content',
-      value: 'Armin Theo',
+      value: 'Bob Mutschler',
+    )
+    watch_for(
+      css: '#content',
+      value: "@#{twitter_user_login}",
     )
     exists(
       css: '#content .main .action:nth-child(1)'
@@ -152,7 +173,11 @@ class TwitterBrowserTest < TestCase
 
     watch_for(
       css: '#content',
-      value: 'Armin Theo',
+      value: 'Bob Mutschler',
+    )
+    watch_for(
+      css: '#content',
+      value: "@#{twitter_user_login}",
     )
     exists(
       css: '#content .main .action:nth-child(1)'
@@ -160,6 +185,25 @@ class TwitterBrowserTest < TestCase
     exists_not(
       css: '#content .main .action:nth-child(2)'
     )
+
+    # start tweet from customer
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = twitter_customer_token
+      config.access_token_secret = twitter_customer_token_secret
+    end
+
+    text  = "Today... #{hash}"
+    tweet = client.update(
+      text,
+    )
+
+    # watch till tweet is in app
+
+    # reply via app
+
+    # watch till tweet reached customer
 
   end
 

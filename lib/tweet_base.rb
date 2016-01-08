@@ -1,27 +1,11 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
 
 require 'twitter'
+load 'lib/http/uri.rb'
 
-class Tweet
+class TweetBase
 
   attr_accessor :client
-
-  def initialize(auth)
-
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = auth[:consumer_key]
-      config.consumer_secret     = auth[:consumer_secret]
-      config.access_token        = auth[:oauth_token]
-      config.access_token_secret = auth[:oauth_token_secret]
-    end
-
-  end
-
-  def disconnect
-
-    return if !@client
-    @client = nil
-  end
 
   def user(tweet)
 
@@ -161,6 +145,16 @@ class Tweet
     elsif tweet.class == Twitter::Tweet
       article_type = 'twitter status'
       from = "@#{tweet.user.screen_name}"
+      if tweet.user_mentions
+        tweet.user_mentions.each {|local_user|
+          if !to
+            to = ''
+          else
+            to + ', '
+          end
+          to += "@#{local_user.screen_name}"
+        }
+      end
       in_reply_to = tweet.in_reply_to_status_id
     else
       fail "Unknown tweet type '#{tweet.class}'"
@@ -187,6 +181,9 @@ class Tweet
 
     ticket = nil
     # use transaction
+    if @connection_type == 'stream'
+      ActiveRecord::Base.connection.reconnect!
+    end
     ActiveRecord::Base.transaction do
 
       UserInfo.current_user_id = 1
@@ -217,6 +214,9 @@ class Tweet
       Observer::Ticket::Notification.transaction
     end
 
+    if @connection_type == 'stream'
+      ActiveRecord::Base.connection.close
+    end
     ticket
   end
 
@@ -248,6 +248,34 @@ class Tweet
 
     Rails.logger.debug tweet.inspect
     tweet
+  end
+
+  def tweet_limit_reached(tweet)
+    max_count = 60
+    if @connection_type == 'stream'
+      max_count = 15
+    end
+    type_id = Ticket::Article::Type.lookup(name: 'twitter status').id
+    created_at = Time.zone.now - 15.minutes
+    if Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count > max_count
+      Rails.logger.info "Tweet limit reached, ignored tweed id (#{tweet.id})"
+      return true
+    end
+    false
+  end
+
+  def direct_message_limit_reached(tweet)
+    max_count = 100
+    if @connection_type == 'stream'
+      max_count = 40
+    end
+    type_id = Ticket::Article::Type.lookup(name: 'twitter direct-message').id
+    created_at = Time.zone.now - 15.minutes
+    if Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count > max_count
+      Rails.logger.info "Tweet direct message limit reached, ignored tweed id (#{tweet.id})"
+      return true
+    end
+    false
   end
 
 end

@@ -152,11 +152,16 @@ class TwitterTest < ActiveSupport::TestCase
 
     assert(article, "article tweet '#{tweet.id}' imported")
     assert_equal('@me_bauer', article.from, 'ticket article from')
-    #assert_equal('@armin_theo', article.to, 'ticket article to')
-    assert_equal(nil, article.to, 'ticket article to')
+    assert_equal('@armin_theo', article.to, 'ticket article to')
     assert_equal(tweet.id.to_s, article.message_id, 'ticket article inbound message_id')
     assert_equal(2, article.ticket.articles.count, 'ticket article inbound count')
     assert_equal(reply_text.utf8_to_3bytesutf8, ticket.articles.last.body, 'ticket article inbound body')
+
+    channel = Channel.find(channel.id)
+    assert_equal('', channel.last_log_out)
+    assert_equal('ok', channel.status_out)
+    assert_equal('', channel.last_log_in)
+    assert_equal('ok', channel.status_in)
   end
 
   test 'b new inbound and reply' do
@@ -214,6 +219,12 @@ class TwitterTest < ActiveSupport::TestCase
       break
     }
     assert(tweet_found, "found outbound '#{reply_text}' tweet '#{article.message_id}'")
+
+    channel = Channel.find(channel.id)
+    assert_equal('', channel.last_log_out)
+    assert_equal('ok', channel.status_out)
+    assert_equal('', channel.last_log_in)
+    assert_equal('ok', channel.status_in)
   end
 
   test 'c new by direct message inbound' do
@@ -346,6 +357,12 @@ class TwitterTest < ActiveSupport::TestCase
     assert(ticket.articles, 'ticket.articles exists')
     assert_equal(1, ticket.articles.count, 'ticket article inbound count')
     assert_equal(ticket.state.name, 'new')
+
+    channel = Channel.find(channel.id)
+    assert_equal('', channel.last_log_out)
+    assert_equal('ok', channel.status_out)
+    assert_equal('', channel.last_log_in)
+    assert_equal('ok', channel.status_in)
   end
 
 end
