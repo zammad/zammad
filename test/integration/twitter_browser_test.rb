@@ -5,34 +5,34 @@ class TwitterBrowserTest < TestCase
   def test_add_config
 
     # app config
-    if !ENV['TWITTER_CONSUMER_KEY']
-      fail "ERROR: Need TWITTER_CONSUMER_KEY - hint TWITTER_CONSUMER_KEY='1234'"
+    if !ENV['TWITTER_BT_CONSUMER_KEY']
+      fail "ERROR: Need TWITTER_BT_CONSUMER_KEY - hint TWITTER_BT_CONSUMER_KEY='1234'"
     end
-    consumer_key = ENV['TWITTER_CONSUMER_KEY']
-    if !ENV['TWITTER_CONSUMER_SECRET']
-      fail "ERROR: Need TWITTER_CONSUMER_SECRET - hint TWITTER_CONSUMER_SECRET='1234'"
+    consumer_key = ENV['TWITTER_BT_CONSUMER_KEY']
+    if !ENV['TWITTER_BT_CONSUMER_SECRET']
+      fail "ERROR: Need TWITTER_BT_CONSUMER_SECRET - hint TWITTER_BT_CONSUMER_SECRET='1234'"
     end
-    consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
+    consumer_secret = ENV['TWITTER_BT_CONSUMER_SECRET']
 
-    if !ENV['TWITTER_USER_LOGIN']
-      fail "ERROR: Need TWITTER_USER_LOGIN - hint TWITTER_USER_LOGIN='1234'"
+    if !ENV['TWITTER_BT_USER_LOGIN']
+      fail "ERROR: Need TWITTER_BT_USER_LOGIN - hint TWITTER_BT_USER_LOGIN='1234'"
     end
-    twitter_user_login = ENV['TWITTER_USER_LOGIN']
+    twitter_user_login = ENV['TWITTER_BT_USER_LOGIN']
 
-    if !ENV['TWITTER_USER_PW']
-      fail "ERROR: Need TWITTER_USER_PW - hint TWITTER_USER_PW='1234'"
+    if !ENV['TWITTER_BT_USER_PW']
+      fail "ERROR: Need TWITTER_BT_USER_PW - hint TWITTER_BT_USER_PW='1234'"
     end
-    twitter_user_pw = ENV['TWITTER_USER_PW']
+    twitter_user_pw = ENV['TWITTER_BT_USER_PW']
 
-    if !ENV['TWITTER_CUSTOMER_TOKEN']
-      fail "ERROR: Need TWITTER_CUSTOMER_TOKEN - hint TWITTER_CUSTOMER_TOKEN='1234'"
+    if !ENV['TWITTER_BT_CUSTOMER_TOKEN']
+      fail "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN - hint TWITTER_BT_CUSTOMER_TOKEN='1234'"
     end
-    twitter_customer_token = ENV['TWITTER_CUSTOMER_TOKEN']
+    twitter_customer_token = ENV['TWITTER_BT_CUSTOMER_TOKEN']
 
-    if !ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
-      fail "ERROR: Need TWITTER_CUSTOMER_TOKEN_SECRET - hint TWITTER_CUSTOMER_TOKEN_SECRET='1234'"
+    if !ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
+      fail "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN_SECRET - hint TWITTER_BT_CUSTOMER_TOKEN_SECRET='1234'"
     end
-    twitter_customer_token_secret = ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
+    twitter_customer_token_secret = ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
 
     hash  = "#sweetcheck#{rand(99_999)}"
 

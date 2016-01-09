@@ -49,7 +49,15 @@ class Channel::Driver::Twitter
 
     options = check_external_credential(options)
 
-    # check if stream scheduler is already running and return
+    # only fetch once a hour
+    if Rails.env.production? || Rails.env.development?
+      if channel.preferences && channel.preferences[:last_fetch] && channel.preferences[:last_fetch] > Time.zone.now - 1.hour
+        return {
+          result: 'ok',
+          notice: '',
+        }
+      end
+    end
 
     @rest_client = TweetRest.new(options[:auth])
     @sync        = options[:sync]
@@ -108,11 +116,64 @@ class Channel::Driver::Twitter
     @rest_client.disconnect if @rest_client
   end
 
+=begin
+
+create stream endpoint form twitter account
+
+  options = {
+    adapter: 'twitter',
+    auth: {
+      consumer_key:       consumer_key,
+      consumer_secret:    consumer_secret,
+      oauth_token:        armin_theo_token,
+      oauth_token_secret: armin_theo_token_secret,
+    },
+    sync: {
+      search: [
+        {
+          term: '#citheo42',
+          group_id: 2,
+        },
+        {
+          term: '#citheo24',
+          group_id: 1,
+        },
+      ],
+      mentions: {
+        group_id: 2,
+      },
+      direct_messages: {
+        group_id: 2,
+      }
+    }
+  }
+
+  instance = Channel::Driver::Twitter.new
+  stream_instance = instance.stream_instance(channel)
+
+returns
+
+  instance_of_stream_handle
+
+=end
+
   def stream_instance(channel)
     @channel = channel
     options = @channel.options
     @stream_client = TweetStream.new(options[:auth])
   end
+
+=begin
+
+stream tweets from twitter account
+
+  stream_instance.stream
+
+returns
+
+  # endless loop
+
+=end
 
   def stream
     hashtags = []
@@ -133,7 +194,7 @@ class Channel::Driver::Twitter
       # check direct message
       if tweet.class == Twitter::DirectMessage
         if @channel.options['sync']['direct_messages']['group_id'] != ''
-          next if direct_message_limit_reached(tweet)
+          next if @stream_client.direct_message_limit_reached(tweet)
           @stream_client.to_group(tweet, @channel.options['sync']['direct_messages']['group_id'], @channel)
         end
         next
