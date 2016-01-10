@@ -35,7 +35,6 @@ class TweetBase
 
     # create or update user
     user_data = {
-      login:        tweet_user.screen_name,
       image_source: tweet_user.profile_image_url.to_s,
     }
     if auth
@@ -45,6 +44,7 @@ class TweetBase
       end
       user.update_attributes(user_data)
     else
+      user_data[:login]     = tweet_user.screen_name
       user_data[:firstname] = tweet_user.name
       user_data[:note] = tweet_user.description
       user_data[:active] = true
