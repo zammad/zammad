@@ -199,10 +199,16 @@ class TweetBase
           if existing_article
             ticket = existing_article.ticket
           else
-            parent_tweet = @client.status(tweet.in_reply_to_status_id)
-            ticket       = to_group(parent_tweet, group_id, channel)
+            begin
+              parent_tweet = @client.status(tweet.in_reply_to_status_id)
+              ticket       = to_group(parent_tweet, group_id, channel)
+            rescue Twitter::Error::NotFound
+              # just ignore if tweet has already gone
+              Rails.logger.info "Can't import tweet (#{tweet.in_reply_to_status_id}), tweet not found"
+            end
           end
-        else
+        end
+        if !ticket
           ticket = to_ticket(tweet, user, group_id, channel)
         end
         to_article(tweet, user, ticket)
