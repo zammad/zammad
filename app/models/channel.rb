@@ -37,7 +37,7 @@ fetch one account
 
 =end
 
-  def fetch
+  def fetch(force = false)
 
     adapter         = options[:adapter]
     adapter_options = options
@@ -56,6 +56,7 @@ fetch one account
 
       driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
       driver_instance = driver_class.new
+      return if !force && !driver_instance.fetchable?(self)
       result = driver_instance.fetch(adapter_options, self)
       self.status_in   = result[:result]
       self.last_log_in = result[:notice]

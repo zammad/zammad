@@ -8,7 +8,7 @@ class Channel::Driver::Pop3 < Channel::EmailParser
 
 fetch emails from Pop3 account
 
-  instance = Channel::Driver::Imap.new
+  instance = Channel::Driver::Pop3.new
   result = instance.fetch(params[:inbound][:options], channel, 'verify', subject_looking_for)
 
 returns
@@ -21,7 +21,7 @@ returns
 
 check if connect to Pop3 account is possible, return count of mails in mailbox
 
-  instance = Channel::Driver::Imap.new
+  instance = Channel::Driver::Pop3.new
   result = instance.fetch(params[:inbound][:options], channel, 'check')
 
 returns
@@ -33,7 +33,7 @@ returns
 
 verify Pop3 account, check if search email is in there
 
-  instance = Channel::Driver::Imap.new
+  instance = Channel::Driver::Pop3.new
   result = instance.fetch(params[:inbound][:options], channel, 'verify', subject_looking_for)
 
 returns
@@ -160,6 +160,17 @@ returns
       fetched: count_fetched,
       notice: notice,
     }
+  end
+
+=begin
+
+  instance = Channel::Driver::Pop3.new
+  instance.fetchable?(channel)
+
+=end
+
+  def fetchable?(_channel)
+    true
   end
 
   def disconnect

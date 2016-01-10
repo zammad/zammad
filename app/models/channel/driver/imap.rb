@@ -4,6 +4,10 @@ require 'net/imap'
 
 class Channel::Driver::Imap < Channel::EmailParser
 
+  def fetchable?(_channel)
+    true
+  end
+
 =begin
 
 fetch emails from IMAP account

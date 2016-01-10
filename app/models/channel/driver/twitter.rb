@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
 
+class Channel::Driver::Twitter
+
 =begin
 
 fetch tweets from twitter account
@@ -43,21 +45,9 @@ returns
 
 =end
 
-class Channel::Driver::Twitter
-
   def fetch (options, channel)
 
     options = check_external_credential(options)
-
-    # only fetch once a hour
-    if Rails.env.production? || Rails.env.development?
-      if channel.preferences && channel.preferences[:last_fetch] && channel.preferences[:last_fetch] > Time.zone.now - 1.hour
-        return {
-          result: 'ok',
-          notice: '',
-        }
-      end
-    end
 
     @rest_client = TweetRest.new(options[:auth])
     @sync        = options[:sync]
@@ -77,6 +67,23 @@ class Channel::Driver::Twitter
       result: 'ok',
       notice: '',
     }
+  end
+
+=begin
+
+  instance = Channel::Driver::Twitter.new
+  instance.fetchable?(channel)
+
+=end
+
+  def fetchable?(channel)
+    return true if Rails.env.test?
+
+    # only fetch once a hour
+    return true if !channel.preferences
+    return true if !channel.preferences[:last_fetch]
+    return false if channel.preferences[:last_fetch] > Time.zone.now - 1.hour
+    true
   end
 
 =begin
