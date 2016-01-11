@@ -115,7 +115,8 @@ class TweetBase
       state:       Ticket::State.find_by(name: 'new'),
       priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
-        channel_id: channel.id
+        channel_id: channel.id,
+        channel_screen_name: channel.options['user']['screen_name'],
       },
     )
   end
