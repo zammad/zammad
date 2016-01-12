@@ -6,7 +6,7 @@
   <h2><%- @T('Enter your %s App Keys', 'Twitter') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="consumer_key">Twitter API Key <span>*</span></label>
+      <label for="consumer_key">Twitter Consumer Key <span>*</span></label>
     </div>
     <div class="controls">
       <input id="consumer_key" type="text" name="consumer_key" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.consumer_key %><% end %>" class="form-control" required autocomplete="off" >
@@ -14,7 +14,7 @@
   </div>
   <div class="input form-group">
     <div class="formGroup-label">
-      <label for="consumer_secret">Twitter API Secret <span>*</span></label>
+      <label for="consumer_secret">Twitter Consumer Secret <span>*</span></label>
     </div>
     <div class="controls">
       <input id="consumer_secret" type="text" name="consumer_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.consumer_secret %><% end %>" class="form-control" required autocomplete="off" >
