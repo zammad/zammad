@@ -1,0 +1,9 @@
+<% if _.isEmpty(@users): %>
+<%- @T('none') %>
+<% else: %>
+<ul>
+<% for user in @users: %>
+  <li><%= user.displayName() %>
+<% end %>
+</ul>
+<% end %>

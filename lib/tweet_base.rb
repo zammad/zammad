@@ -1,27 +1,11 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
 
 require 'twitter'
+load 'lib/http/uri.rb'
 
-class Tweet
+class TweetBase
 
   attr_accessor :client
-
-  def initialize(auth)
-
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = auth[:consumer_key]
-      config.consumer_secret     = auth[:consumer_secret]
-      config.access_token        = auth[:oauth_token]
-      config.access_token_secret = auth[:oauth_token_secret]
-    end
-
-  end
-
-  def disconnect
-
-    return if !@client
-    @client = nil
-  end
 
   def user(tweet)
 
@@ -51,20 +35,33 @@ class Tweet
 
     # create or update user
     user_data = {
-      login:        tweet_user.screen_name,
       image_source: tweet_user.profile_image_url.to_s,
     }
     if auth
       user = User.find(auth.user_id)
-      if (!user_data[:note] || user_data[:note].empty?) && tweet_user.description
-        user_data[:note] = tweet_user.description
-      end
+      map = {
+        note: 'description',
+        web: 'website',
+        address: 'location',
+      }
+
+      # ignore if value is already set
+      map.each {|target, source|
+        next if user[target] && !user[target].empty?
+        new_value = tweet_user.send(source).to_s
+        next if !new_value || new_value.empty?
+        user_data[target] = new_value
+      }
       user.update_attributes(user_data)
     else
+      user_data[:login]     = tweet_user.screen_name
       user_data[:firstname] = tweet_user.name
-      user_data[:note] = tweet_user.description
-      user_data[:active] = true
-      user_data[:roles] = Role.where(name: 'Customer')
+      user_data[:web]       = tweet_user.website.to_s
+      user_data[:note]      = tweet_user.description
+      user_data[:address]   = tweet_user.location
+      user_data[:active]    = true
+      user_data[:roles]     = Role.where(name: 'Customer')
+
       user = User.create(user_data)
     end
 
@@ -131,7 +128,8 @@ class Tweet
       state:       Ticket::State.find_by(name: 'new'),
       priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
-        channel_id: channel.id
+        channel_id: channel.id,
+        channel_screen_name: channel.options['user']['screen_name'],
       },
     )
   end
@@ -161,6 +159,16 @@ class Tweet
     elsif tweet.class == Twitter::Tweet
       article_type = 'twitter status'
       from = "@#{tweet.user.screen_name}"
+      if tweet.user_mentions
+        tweet.user_mentions.each {|local_user|
+          if !to
+            to = ''
+          else
+            to + ', '
+          end
+          to += "@#{local_user.screen_name}"
+        }
+      end
       in_reply_to = tweet.in_reply_to_status_id
     else
       fail "Unknown tweet type '#{tweet.class}'"
@@ -187,6 +195,9 @@ class Tweet
 
     ticket = nil
     # use transaction
+    if @connection_type == 'stream'
+      ActiveRecord::Base.connection.reconnect!
+    end
     ActiveRecord::Base.transaction do
 
       UserInfo.current_user_id = 1
@@ -202,10 +213,16 @@ class Tweet
           if existing_article
             ticket = existing_article.ticket
           else
-            parent_tweet = @client.status(tweet.in_reply_to_status_id)
-            ticket       = to_group(parent_tweet, group_id, channel)
+            begin
+              parent_tweet = @client.status(tweet.in_reply_to_status_id)
+              ticket       = to_group(parent_tweet, group_id, channel)
+            rescue Twitter::Error::NotFound
+              # just ignore if tweet has already gone
+              Rails.logger.info "Can't import tweet (#{tweet.in_reply_to_status_id}), tweet not found"
+            end
           end
-        else
+        end
+        if !ticket
           ticket = to_ticket(tweet, user, group_id, channel)
         end
         to_article(tweet, user, ticket)
@@ -217,6 +234,9 @@ class Tweet
       Observer::Ticket::Notification.transaction
     end
 
+    if @connection_type == 'stream'
+      ActiveRecord::Base.connection.close
+    end
     ticket
   end
 
@@ -248,6 +268,34 @@ class Tweet
 
     Rails.logger.debug tweet.inspect
     tweet
+  end
+
+  def tweet_limit_reached(tweet)
+    max_count = 60
+    if @connection_type == 'stream'
+      max_count = 15
+    end
+    type_id = Ticket::Article::Type.lookup(name: 'twitter status').id
+    created_at = Time.zone.now - 15.minutes
+    if Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count > max_count
+      Rails.logger.info "Tweet limit reached, ignored tweed id (#{tweet.id})"
+      return true
+    end
+    false
+  end
+
+  def direct_message_limit_reached(tweet)
+    max_count = 100
+    if @connection_type == 'stream'
+      max_count = 40
+    end
+    type_id = Ticket::Article::Type.lookup(name: 'twitter direct-message').id
+    created_at = Time.zone.now - 15.minutes
+    if Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count > max_count
+      Rails.logger.info "Tweet direct message limit reached, ignored tweed id (#{tweet.id})"
+      return true
+    end
+    false
   end
 
 end

@@ -1,0 +1,28 @@
+{
+  "Users": [
+    {
+      "login": "master@example.com",
+      "firstname": "Test Master",
+      "lastname": "Agent",
+      "email": "master@example.com",
+      "password": "test"
+    },
+    {
+      "login": "agent1@example.com",
+      "firstname": "Agent 1",
+      "lastname": "Test",
+      "email": "agent1@example.com",
+      "password": "test"
+    }
+  ],
+  "Settings": [
+    {
+      "name": "developer_mode",
+      "value": true
+    },
+    {
+      "name": "product_name",
+      "value": "Zammad Test System"
+    }
+  ]
+}

@@ -1215,6 +1215,26 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Agent idle timeout',
+  name: 'chat_agent_idle_timeout',
+  area: 'Chat::Extended',
+  description: 'Idle timeout in seconds till agent is set offline automatically.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'chat_agent_idle_timeout',
+        tag: 'input',
+      },
+    ],
+  },
+  preferences: {},
+  state: '120',
+  frontend: true
+)
+
+Setting.create_if_not_exists(
   title: 'Define searchable models.',
   name: 'models_searchable',
   area: 'Models::Base',
@@ -3266,6 +3286,15 @@ Scheduler.create_if_not_exists(
   name: 'Check Channels',
   method: 'Channel.fetch',
   period: 30,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Check streams for Channel ',
+  method: 'Channel.stream',
+  period: 60,
   prio: 1,
   active: true,
   updated_by_id: 1,

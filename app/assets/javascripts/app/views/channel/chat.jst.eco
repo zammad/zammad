@@ -164,7 +164,7 @@ $(function() {
     <%- @T('There can be several reasons for the chat to not show up:') %>
     <ol>
       <li><%- @T('The browser is outdated. It does not support WebSocket - the technology we use for the chat.') %>
-      <li><%- @T('The is no agent online.') %>
+      <li><%- @T('There is no agent online.') %>
       <li><%- @T('The chat is turned off.') %>
       <li><%- @T('There are too many people in queue for the chat.') %>
     </ol>

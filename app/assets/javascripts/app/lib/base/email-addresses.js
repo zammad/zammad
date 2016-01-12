@@ -1,6 +1,6 @@
 
 // email-addresses.js - RFC 5322 email address parser
-// v 2.0.0
+// v 2.0.1
 //
 // http://tools.ietf.org/html/rfc5322
 //
@@ -297,7 +297,6 @@ function parse5322(opts) {
     // 3.2.2. Folding White Space and Comments
 
     // FWS             =   ([*WSP CRLF] 1*WSP) /  obs-FWS
-    // obs-FWS         =   1*WSP *(CRLF 1*WSP)
     function fws() {
         return wrap('fws', or(
             obsFws,
@@ -463,7 +462,7 @@ function parse5322(opts) {
 
     // phrase          =   1*word / obs-phrase
     function phrase() {
-        return wrap('phrase', or(star(word, 1), obsPhrase)());
+        return wrap('phrase', or(obsPhrase, star(word, 1))());
     }
 
     // 3.4. Address Specification

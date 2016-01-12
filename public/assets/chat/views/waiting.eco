@@ -5,7 +5,7 @@
       <span class="zammad-chat-loading-circle"></span>
       <span class="zammad-chat-loading-circle"></span>
     </span>
-    <%- @T('All colleges are busy.') %><br>
+    <%- @T('All colleagues are busy.') %><br>
     <%- @T('You are on waiting list position <strong>%s</strong>.', @position) %>
   </div>
 </div>

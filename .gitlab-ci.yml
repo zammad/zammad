@@ -187,6 +187,40 @@ job_integration_otrs_31:
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb
 
+job_integration_twitter_ff:
+  stage: browser
+  tags:
+    - browser-ff
+    - twitter
+  script:
+    - export BROWSER_PORT=3041
+    - export WS_PORT=3042
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+job_integration_facebook_ff:
+  stage: browser
+  tags:
+    - browser-ff
+    - facebook
+  script:
+    - export BROWSER_PORT=3051
+    - export WS_PORT=3052
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
 job_integration_autowizard_ff:
   stage: browser
   tags:
@@ -259,13 +293,47 @@ job_integration_browser_ff_3:
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
+job_integration_twitter_chrome:
+  stage: browser
+  tags:
+    - browser-chrome
+    - twitter
+  script:
+    - export BROWSER_PORT=4041
+    - export WS_PORT=4042
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+job_integration_facebook_chrome:
+  stage: browser
+  tags:
+    - browser-chrome
+    - facebook
+  script:
+    - export BROWSER_PORT=4051
+    - export WS_PORT=4052
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
 job_integration_autowizard_chrome:
   stage: browser
   tags:
     - browser-chrome
   script:
-    - export BROWSER_PORT=3071
-    - export WS_PORT=3072
+    - export BROWSER_PORT=4001
+    - export WS_PORT=4002
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
@@ -280,8 +348,8 @@ job_integration_browser_chrome_1:
   tags:
     - browser-chrome
   script:
-    - export BROWSER_PORT=3041
-    - export WS_PORT=3042
+    - export BROWSER_PORT=4011
+    - export WS_PORT=4012
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
@@ -300,8 +368,8 @@ job_integration_browser_chrome_2:
   tags:
     - browser-chrome
   script:
-    - export BROWSER_PORT=3051
-    - export WS_PORT=3052
+    - export BROWSER_PORT=4021
+    - export WS_PORT=4022
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
@@ -320,8 +388,8 @@ job_integration_browser_chrome_3:
   tags:
     - browser-chrome
   script:
-    - export BROWSER_PORT=3061
-    - export WS_PORT=3062
+    - export BROWSER_PORT=4031
+    - export WS_PORT=4032
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2

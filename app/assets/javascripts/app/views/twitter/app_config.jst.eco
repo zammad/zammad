@@ -3,7 +3,7 @@
   The tutorial on how to create a Twitter App is hosted on <a href="http://zammad.org/twitter-app-tutorial" target="_blank">zammad.org/twitter-app-tutorial</a>
 </p>
 <fieldset>
-  <h2>Enter your Twitter App Keys</h2>
+  <h2><%- @T('Enter your %s App Keys', 'Twitter') %></h2>
   <div class="input form-group">
     <div class="formGroup-label">
       <label for="consumer_key">Twitter API Key <span>*</span></label>
@@ -18,6 +18,12 @@
     </div>
     <div class="controls">
       <input id="consumer_secret" type="text" name="consumer_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.consumer_secret %><% end %>" class="form-control" required autocomplete="off" >
+    </div>
+  </div>
+  <h2><%- @T('Your callback URL') %></h2>
+  <div class="input form-group">
+    <div class="controls">
+      <input class="form-control js-select" readonly value="<%= @callbackUrl %>">
     </div>
   </div>
 </fieldset>

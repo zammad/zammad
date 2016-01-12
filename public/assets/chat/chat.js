@@ -289,7 +289,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.stopBlinOnlineStateTimeout = null;
 
-    ZammadChat.prototype.showTimeEveryXMinutes = 1;
+    ZammadChat.prototype.showTimeEveryXMinutes = 2;
 
     ZammadChat.prototype.lastTimestamp = null;
 
@@ -314,7 +314,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'Today': 'Heute',
         'Send': 'Senden',
         'Compose your message...': 'Ihre Nachricht...',
-        'All colleges are busy.': 'Alle Kollegen sind belegt.',
+        'All colleagues are busy.': 'Alle Kollegen sind belegt.',
         'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.',
         'Start new conversation': 'Neue Konversation starten',
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.',
@@ -1709,7 +1709,7 @@ window.zammadChatTemplates["waiting"] = function (__obj) {
     (function() {
       __out.push('<div class="zammad-chat-modal">\n  <div class="zammad-chat-modal-text">\n    <span class="zammad-chat-loading-animation">\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n      <span class="zammad-chat-loading-circle"></span>\n    </span>\n    ');
     
-      __out.push(this.T('All colleges are busy.'));
+      __out.push(this.T('All colleagues are busy.'));
     
       __out.push('<br>\n    ');
     

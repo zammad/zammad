@@ -16,14 +16,14 @@ class TwitterTest < ActiveSupport::TestCase
   )
 
   # app config
-  if !ENV['TWITTER_APP_CONSUMER_KEY']
-    fail "ERROR: Need TWITTER_APP_CONSUMER_KEY - hint TWITTER_APP_CONSUMER_KEY='1234'"
+  if !ENV['TWITTER_CONSUMER_KEY']
+    fail "ERROR: Need TWITTER_CONSUMER_KEY - hint TWITTER_CONSUMER_KEY='1234'"
   end
-  if !ENV['TWITTER_APP_CONSUMER_SECRET']
-    fail "ERROR: Need TWITTER_APP_CONSUMER_SECRET - hint TWITTER_APP_CONSUMER_SECRET='1234'"
+  if !ENV['TWITTER_CONSUMER_SECRET']
+    fail "ERROR: Need TWITTER_CONSUMER_SECRET - hint TWITTER_CONSUMER_SECRET='1234'"
   end
-  consumer_key    = ENV['TWITTER_APP_CONSUMER_KEY']
-  consumer_secret = ENV['TWITTER_APP_CONSUMER_SECRET']
+  consumer_key    = ENV['TWITTER_CONSUMER_KEY']
+  consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
 
   # armin_theo (is system and is following marion_bauer)
   if !ENV['TWITTER_SYSTEM_TOKEN']
@@ -35,15 +35,15 @@ class TwitterTest < ActiveSupport::TestCase
   armin_theo_token        = ENV['TWITTER_SYSTEM_TOKEN']
   armin_theo_token_secret = ENV['TWITTER_SYSTEM_TOKEN_SECRET']
 
-  # me_bauer (is following armin_theo)
+  # me_bauer (is customer and is following armin_theo)
   if !ENV['TWITTER_CUSTOMER_TOKEN']
     fail "ERROR: Need CUSTOMER_TOKEN - hint TWITTER_CUSTOMER_TOKEN='1234'"
   end
-  if !ENV['TWITTER_CUSTOMER_TOKEN_SECREET']
-    fail "ERROR: Need CUSTOMER_TOKEN_SECREET - hint TWITTER_CUSTOMER_TOKEN_SECREET='1234'"
+  if !ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
+    fail "ERROR: Need CUSTOMER_TOKEN_SECRET - hint TWITTER_CUSTOMER_TOKEN_SECRET='1234'"
   end
   me_bauer_token        = ENV['TWITTER_CUSTOMER_TOKEN']
-  me_bauer_token_secret = ENV['TWITTER_CUSTOMER_TOKEN_SECREET']
+  me_bauer_token_secret = ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
 
   # add channel
   current = Channel.where(area: 'Twitter::Account')
@@ -57,6 +57,10 @@ class TwitterTest < ActiveSupport::TestCase
         consumer_secret:    consumer_secret,
         oauth_token:        armin_theo_token,
         oauth_token_secret: armin_theo_token_secret,
+      },
+      user: {
+        screen_name: '@armin_theo',
+        id: '1234',
       },
       sync: {
         search: [
@@ -152,11 +156,16 @@ class TwitterTest < ActiveSupport::TestCase
 
     assert(article, "article tweet '#{tweet.id}' imported")
     assert_equal('@me_bauer', article.from, 'ticket article from')
-    #assert_equal('@armin_theo', article.to, 'ticket article to')
-    assert_equal(nil, article.to, 'ticket article to')
+    assert_equal('@armin_theo', article.to, 'ticket article to')
     assert_equal(tweet.id.to_s, article.message_id, 'ticket article inbound message_id')
     assert_equal(2, article.ticket.articles.count, 'ticket article inbound count')
     assert_equal(reply_text.utf8_to_3bytesutf8, ticket.articles.last.body, 'ticket article inbound body')
+
+    channel = Channel.find(channel.id)
+    assert_equal('', channel.last_log_out)
+    assert_equal('ok', channel.status_out)
+    assert_equal('', channel.last_log_in)
+    assert_equal('ok', channel.status_in)
   end
 
   test 'b new inbound and reply' do
@@ -184,7 +193,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 10
+      sleep 15
     }
     assert(article)
     assert_equal('@me_bauer', article.from, 'ticket article from')
@@ -214,6 +223,12 @@ class TwitterTest < ActiveSupport::TestCase
       break
     }
     assert(tweet_found, "found outbound '#{reply_text}' tweet '#{article.message_id}'")
+
+    channel = Channel.find(channel.id)
+    assert_equal('', channel.last_log_out)
+    assert_equal('ok', channel.status_out)
+    assert_equal('', channel.last_log_in)
+    assert_equal('ok', channel.status_in)
   end
 
   test 'c new by direct message inbound' do
@@ -225,7 +240,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = armin_theo_token
       config.access_token_secret = armin_theo_token_secret
     end
-    dms = client.direct_messages(count: 40)
+    dms = client.direct_messages(count: 100)
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
@@ -235,7 +250,7 @@ class TwitterTest < ActiveSupport::TestCase
       access_token:        me_bauer_token,
       access_token_secret: me_bauer_token_secret
     )
-    dms = client.direct_messages(count: 40)
+    dms = client.direct_messages(count: 100)
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
@@ -335,7 +350,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
-      sleep 10
+      sleep 15
     }
 
     assert(article, "inbound article '#{text}' created")
@@ -346,6 +361,93 @@ class TwitterTest < ActiveSupport::TestCase
     assert(ticket.articles, 'ticket.articles exists')
     assert_equal(1, ticket.articles.count, 'ticket article inbound count')
     assert_equal(ticket.state.name, 'new')
+
+    channel = Channel.find(channel.id)
+    assert_equal('', channel.last_log_out)
+    assert_equal('ok', channel.status_out)
+    assert_equal('', channel.last_log_in)
+    assert_equal('ok', channel.status_in)
+  end
+
+  test 'd streaming test' do
+    Thread.new {
+      Channel.stream
+    }
+    sleep 10
+
+    # new tweet I - by me_bauer
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = me_bauer_token
+      config.access_token_secret = me_bauer_token_secret
+    end
+    hash  = '#citheo24 #' + rand(9999).to_s
+    text  = "Today... #{hash}"
+    tweet = client.update(
+      text,
+    )
+    sleep 10
+    article = nil
+    (1..2).each {
+      article = Ticket::Article.find_by(message_id: tweet.id)
+      break if article
+      sleep 10
+    }
+    assert(article)
+    assert_equal('@me_bauer', article.from, 'ticket article from')
+    assert_equal(nil, article.to, 'ticket article to')
+
+    # new tweet II - by me_bauer
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = me_bauer_token
+      config.access_token_secret = me_bauer_token_secret
+    end
+    hash  = '#citheo24 #' + rand(9999).to_s
+    text  = "Today...2  #{hash}"
+    tweet = client.update(
+      text,
+    )
+    ActiveRecord::Base.connection.reconnect!
+    sleep 10
+    article = nil
+    (1..2).each {
+      article = Ticket::Article.find_by(message_id: tweet.id)
+      break if article
+      sleep 10
+    }
+    assert(article)
+    assert_equal('@me_bauer', article.from, 'ticket article from')
+    assert_equal(nil, article.to, 'ticket article to')
+
+    # get dm via stream
+    client = Twitter::REST::Client.new(
+      consumer_key:        consumer_key,
+      consumer_secret:     consumer_secret,
+      access_token:        me_bauer_token,
+      access_token_secret: me_bauer_token_secret
+    )
+    hash  = '#citheo44' + rand(9999).to_s
+    text  = 'How about the details? ' + hash
+    dm = client.create_direct_message(
+      'armin_theo',
+      text,
+    )
+    assert(dm, "dm with ##{hash} created")
+    #ActiveRecord::Base.connection.reconnect!
+    sleep 10
+    article = nil
+    (1..2).each {
+      article = Ticket::Article.find_by(message_id: dm.id)
+      break if article
+      sleep 10
+    }
+    assert(article, "inbound article '#{text}' created")
+    assert_equal('@me_bauer', article.from, 'ticket article from')
+    assert_equal('@armin_theo', article.to, 'ticket article to')
+
   end
 
 end

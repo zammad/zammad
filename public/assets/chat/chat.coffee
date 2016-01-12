@@ -170,7 +170,7 @@ do($ = window.jQuery, window) ->
     isOpen: false
     blinkOnlineInterval: null
     stopBlinOnlineStateTimeout: null
-    showTimeEveryXMinutes: 1
+    showTimeEveryXMinutes: 2
     lastTimestamp: null
     lastAddedType: null
     inputTimeout: null
@@ -188,7 +188,7 @@ do($ = window.jQuery, window) ->
         'Today': 'Heute'
         'Send': 'Senden'
         'Compose your message...': 'Ihre Nachricht...'
-        'All colleges are busy.': 'Alle Kollegen sind belegt.'
+        'All colleagues are busy.': 'Alle Kollegen sind belegt.'
         'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.'
         'Start new conversation': 'Neue Konversation starten'
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.'

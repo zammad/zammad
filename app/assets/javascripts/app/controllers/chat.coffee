@@ -18,12 +18,16 @@ class App.CustomerChat extends App.Controller
       @maxChatWindows = parseInt(preferences.chat.max_windows)
 
     @pushStateIntervalOn = undefined
+    @idleTimeout = parseInt(@Config.get('chat_agent_idle_timeout') || 120)
     @messageCounter = 0
     @meta =
       active: false
       waiting_chat_count: 0
+      waiting_chat_session_list: []
       running_chat_count: 0
-      active_agents: 0
+      running_chat_session_list: []
+      active_agent_count: 0
+      active_agent_ids: []
 
     @render()
     @on 'layout-has-changed', @propagateLayoutChange
@@ -34,7 +38,7 @@ class App.CustomerChat extends App.Controller
         App.Collection.loadAssets(data.assets)
       @meta = data
       @updateMeta()
-      if @pushStateIntervalOn is undefined
+      if data.active is true
         @startPushState()
     )
 
@@ -86,7 +90,65 @@ class App.CustomerChat extends App.Controller
 
     @html App.view('customer_chat/index')()
 
+    chatSessionList = (list) ->
+      for chat_session in list
+        chat = App.Chat.find(chat_session.chat_id)
+        chat_session.name = "#{chat.displayName()} [##{chat_session.id}]"
+        chat_session.geo_data = ''
+        if chat_session.preferences && chat_session.preferences.geo_ip
+          if chat_session.preferences.geo_ip.country_name
+            chat_session.geo_data += chat_session.preferences.geo_ip.country_name
+          if chat_session.preferences.geo_ip.city_name
+            chat_session.geo_data += " #{chat_session.preferences.geo_ip.city_name}"
+        if chat_session.user_id
+          chat_session.user = App.User.find(chat_session.user_id)
+      App.view('customer_chat/chat_list')(
+        chat_sessions: list
+      )
+
+    @el.find('.js-waitingCustomers').popover(
+      trigger:    'hover'
+      html:       true
+      animation:  false
+      delay:      100
+      placement:  'bottom'
+      title: ->
+        App.i18n.translateContent('Waiting Customers')
+      content: =>
+        chatSessionList(@meta.waiting_chat_session_list)
+    )
+
+    @el.find('.js-chattingCustomers').popover(
+      trigger:    'hover'
+      html:       true
+      animation:  false
+      delay:      100
+      placement:  'bottom'
+      title: ->
+        App.i18n.translateContent('Chatting Customers')
+      content: =>
+        chatSessionList(@meta.running_chat_session_list)
+    )
+
+    @el.find('.js-activeAgents').popover(
+      trigger:    'hover'
+      html:       true
+      animation:  false
+      delay:      100
+      placement:  'bottom'
+      title: ->
+        App.i18n.translateContent('Active Agents')
+      content: =>
+        users = []
+        for user_id in @meta.active_agent_ids
+          users.push App.User.find(user_id)
+        App.view('customer_chat/user_list')(
+          users: users
+        )
+    )
+
   show: (params) =>
+    @title 'Customer Chat', true
     @navupdate '#customer_chat'
 
   counter: =>
@@ -127,11 +189,38 @@ class App.CustomerChat extends App.Controller
     if state
       @startPushState()
       preferences = @Session.get('preferences')
-      if !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
-        @notify(
-          type: 'error'
-          msg:  App.i18n.translateContent('To be able to chat you need to select min. one chat topic in settings!')
-        )
+      if App.Chat.first() && !preferences || !preferences.chat || !preferences.chat.active || _.isEmpty(preferences.chat.active)
+
+        # if we only have one chat, avtice it automatically
+        if App.Chat.count() < 2
+          preferences.chat = {}
+          preferences.chat.active = {}
+          preferences.chat.active[App.Chat.first().id] = 'on'
+
+          # update user preferences
+          @ajax(
+            id:          'preferences'
+            type:        'PUT'
+            url:         "#{@apiPath}/users/preferences"
+            data:        JSON.stringify(user: {chat: preferences.chat})
+            processData: true
+            success:     @success
+            error:       @error
+          )
+
+        # if we have more chats, let decide the user
+        else
+          msg = 'To be able to chat you need to select min. one chat topic below!'
+
+          # open modal settings
+          @settings(
+            errors:
+              settings: msg
+            active: @meta.active
+          )
+
+          @meta.active = false
+          @pushState()
     else
       @stopPushState()
       @pushState()
@@ -144,11 +233,14 @@ class App.CustomerChat extends App.Controller
   updateMeta: =>
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()
       @$('.js-acceptChat').addClass('is-clickable is-blinking')
+      @idleTimeoutStart()
     else
       @$('.js-acceptChat').removeClass('is-clickable is-blinking')
+      @idleTimeoutStop()
+
     @$('.js-badgeWaitingCustomers').text(@meta.waiting_chat_count)
     @$('.js-badgeChattingCustomers').text(@meta.running_chat_count)
-    @$('.js-badgeActiveAgents').text(@meta.active_agents)
+    @$('.js-badgeActiveAgents').text(@meta.active_agent_count)
 
     # reopen chats
     if @meta.active_sessions
@@ -190,11 +282,29 @@ class App.CustomerChat extends App.Controller
   acceptChat: =>
     return if @windowCount() >= @maxChatWindows
     App.WebSocket.send(event:'chat_session_start')
+    @idleTimeoutStop()
 
-  settings: ->
+  settings: (params = {}) ->
     new Setting(
-      maxChatWindows: @maxChatWindows
+      windowSpace: @
+      errors: params.errors
+      active: params.active
     )
+
+  idleTimeoutStart: =>
+    return if @idleTimeoutId
+    switchOff = =>
+      @switch(false)
+      @notify(
+        type: 'notice'
+        msg:  App.i18n.translateContent('Chat not answered, set to offline automatically.')
+      )
+    @idleTimeoutId = @delay(switchOff, @idleTimeout * 1000)
+
+  idleTimeoutStop: =>
+    return if !@idleTimeoutId
+    @clearDelay(@idleTimeoutId)
+    @idleTimeoutId = undefined
 
 class CustomerChatRouter extends App.ControllerPermanent
   constructor: (params) ->
@@ -235,7 +345,7 @@ class ChatWindow extends App.Controller
   constructor: ->
     super
 
-    @showTimeEveryXMinutes = 1
+    @showTimeEveryXMinutes = 2
     @lastTimestamp
     @lastAddedType
     @isTyping = false
@@ -244,6 +354,12 @@ class ChatWindow extends App.Controller
 
     chat = App.Chat.find(@session.chat_id)
     @name = "#{chat.displayName()} [##{@session.id}]"
+    @title = ''
+    if @session && @session.preferences && @session.preferences.geo_ip
+      if @session.preferences.geo_ip.country_name
+        @title += @session.preferences.geo_ip.country_name
+      if @session.preferences.geo_ip.city_name
+        @title += " #{@session.preferences.geo_ip.city_name}"
 
     @on 'layout-change', @scrollToBottom
 
@@ -277,6 +393,7 @@ class ChatWindow extends App.Controller
   render: ->
     @html App.view('customer_chat/chat_window')
       name: @name
+      title: @title
 
     @el.one 'transitionend', @onTransitionend
 
@@ -386,6 +503,7 @@ class ChatWindow extends App.Controller
   sendMessage: (delay) =>
     content = @input.html()
     return if !content
+    return if @el.hasClass('is-offline')
 
     send = =>
       App.WebSocket.send(
@@ -531,11 +649,12 @@ class Setting extends App.ControllerModal
     if !preferences.chat.phrase
       preferences.chat.phrase = {}
     if !preferences.chat.max_windows
-      preferences.chat.max_windows = @maxChatWindows
+      preferences.chat.max_windows = @windowSpace.maxChatWindows
 
     App.view('customer_chat/setting')(
       chats: App.Chat.all()
       preferences: preferences
+      errors: @errors || {}
     )
 
   submit: (e) =>
@@ -544,7 +663,10 @@ class Setting extends App.ControllerModal
 
     @formDisable(e)
 
-    # get data
+    # update runtime
+    @windowSpace.maxChatWindows = params.chat.max_windows
+
+    # update user preferences
     @ajax(
       id:          'preferences'
       type:        'PUT'
@@ -556,6 +678,11 @@ class Setting extends App.ControllerModal
     )
 
   success: (data, status, xhr) =>
+    if @active is true || @active is false
+      @windowSpace.meta.active = @active
+      @windowSpace.pushState()
+    else
+      App.WebSocket.send(event:'chat_status_agent')
     App.User.full(
       App.Session.get('id'),
       =>

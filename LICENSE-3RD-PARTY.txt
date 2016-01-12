@@ -1,59 +1,149 @@
 -----------------------------------------------------------------------------
-
-tinycolor-min.js
-
-Source: https://github.com/bgrins/TinyColor
-
-Copyright (c), Brian Grinstead, http://briangrinstead.com
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+ba-linkify.js
+Source: http://benalman.com/code/test/js-linkify/
+Copyright: 2009 "Cowboy" Ben Alman
+License: MIT license
 -----------------------------------------------------------------------------
-
+bootstrap
+Source: https://github.com/twbs/bootstrap
+Copyright: 2011-2015 Twitter, Inc.
+License: MIT license
+-----------------------------------------------------------------------------
+bootstrap-datepicker.js
+Source: https://github.com/eternicode/bootstrap-datepicker
+Copyright: Stefan Petre, Andrew Rowls
+License: Apache License, Version 2.0
+-----------------------------------------------------------------------------
+bootstrap-timepicker.js
+Source: https://github.com/jdewit/bootstrap-timepicker
+Copyright: 2013 Joris de Wit
+License: MIT license
+-----------------------------------------------------------------------------
+bootstrap-tokenfield.js
+Source: https://github.com/sliptree/bootstrap-tokenfield
+Copyright 2013-2014 Sliptree and other contributors
+License: MIT license
+-----------------------------------------------------------------------------
+cropper.js
+Source: https://github.com/fengyuanchen/cropper
+Copyright: 2014-2015 Fengyuan Chen and contributors
+License: MIT license
+-----------------------------------------------------------------------------
+desktop-notify.js
+Source: https://github.com/ttsvetko/HTML5-Desktop-Notifications
+Copyright: Tsvetan Tsvetkov <tsekach@gmail.com>
+License: Apache License, Version 2.0
+-----------------------------------------------------------------------------
+email-addresses.js
+Source: https://github.com/jackbowman/email-addresses
+Copyright: 2013 Fog Creek Software, Jack Bowman (https://github.com/jackbowman)
+License: MIT license
+-----------------------------------------------------------------------------
+expanding.js
+Source: https://github.com/bgrins/ExpandingTextareas
+Copyright: Brian Grinstead (https://github.com/bgrins)
+License: MIT license
+-----------------------------------------------------------------------------
+Exif.js
+Source: https://github.com/exif-js/exif-js
+Copyright: Jacob Seidelin, Roald de Vries
+License: MIT license
+-----------------------------------------------------------------------------
+jquery.flot.js
+Source: https://github.com/dnschnur/flot
+Copyright: Ole Laursen, IOLA
+License: MIT license
+-----------------------------------------------------------------------------
 highlight.pack.js
-
-Source: https://github.com/isagalaev/highlight.js
-
-Copyright (c) 2006, Ivan Sagalaev
-All rights reserved.
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of highlight.js nor the names of its contributors 
-      may be used to endorse or promote products derived from this software 
-      without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND ANY
-EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE REGENTS AND CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+Source: https://highlightjs.org
+Copyright: 2006 Ivan Sagalaev (https://github.com/isagalaev)
+License: BSD License
+-----------------------------------------------------------------------------
+jquery-scrollto.js
+Source: https://github.com/balupton/jquery-scrollto
+Copyright: Bevry Pty Ltd <us@bevry.me>
+           Benjamin Lupton <b@lupton.cc>
+License: MIT license
+-----------------------------------------------------------------------------
+jquery.fineuploader-3.0.js
+Source: http://github.com/Valums-File-Uploader/file-uploader
+Copyright: 2010 Andrew Valums <andrew(at)valums.com>
+           2012 Ray Nicholus <fineuploader(at)garstasio.com>
+License: MIT license, GNU GPL 2 or later, GNU LGPL 2 or later
+-----------------------------------------------------------------------------
+jquery.noty.js
+Source: https://github.com/needim/noty/
+Copyright: 2012 Nedim Arabacı
+License: MIT license
+-----------------------------------------------------------------------------
+jquery.sew.js
+Source: https://github.com/tactivos/jquery-sew
+Copyright: @leChanteaux <santiago at mural.ly>
+           Mural.ly Dev Team <dev at mural.ly>
+License: dfyw
+-----------------------------------------------------------------------------
+marked.js
+Source: https://github.com/chjj/marked
+Copyright: 2011-2014, Christopher Jeffrey
+License: MIT license
+-----------------------------------------------------------------------------
+modernizer.js
+Source: https://modernizr.com
+Copyright: Faruk Ates (https://twitter.com/KuraFire)
+           Paul Irish (https://twitter.com/paul_irish)
+           Alex Sexton (https://twitter.com/SlexAxton)
+           Ryan Seddon (https://twitter.com/ryanseddon)
+           Patrick Kettner (https://twitter.com/patrickkettner)
+           Stu Cox (https://twitter.com/stucoxmedia)
+           Richard Herrera (https://twitter.com/doctyper)
+License: MIT license & BSD license
+-----------------------------------------------------------------------------
+seedrandom.js
+Source: https://github.com/davidbau/seedrandom
+Copyright: 2014 David Bau.
+License: MIT license
+-----------------------------------------------------------------------------
+tinycolor-min.js
+Source: https://github.com/bgrins/TinyColor
+Copyright: Brian Grinstead
+License: MIT license
+-----------------------------------------------------------------------------
+ua-parser.js
+Source: https://github.com/faisalman/ua-parser-js
+Copyright: 2012-2015 Faisal Salman <fyzlman@gmail.com>
+License: MIT license & GPLv2
+-----------------------------------------------------------------------------
+velocity.js
+Source: https://github.com/julianshapiro/velocity
+Copyright: 2014 The jQuery Foundation
+License: MIT license
+-----------------------------------------------------------------------------
+jquery.js
+Source: http://jquery.com/
+Copyright 2005, 2014 jQuery Foundation, Inc.
+License: MIT license
+-----------------------------------------------------------------------------
+jquery-ui.js
+Source: https://jqueryui.com
+Copyright: 2014 jQuery Foundation
+License: MIT license
+-----------------------------------------------------------------------------
+underscore.js
+Source: http://underscorejs.org
+Copyright: 2009-2015 Jeremy Ashkenas, DocumentCloud
+License: MIT license
+-----------------------------------------------------------------------------
+spine.js
+Source: http://spinejs.com
+Copyright: 2011 Alex MacCaw <info@eribium.org>
+License: MIT license
+-----------------------------------------------------------------------------
+rangy.js
+Source: https://github.com/timdown/rangy
+Copyright: 2015, Tim Down
+License: MIT license
+-----------------------------------------------------------------------------
+word_filter.js
+Source: https://gist.github.com/sbrin/6801034
+Copyright (c) 20015, sbrin - https://github.com/sbrin
 -----------------------------------------------------------------------------

@@ -1,15 +1,11 @@
 class ExternalCredential::Twitter
 
   def self.app_verify(params)
-    attributes = {
-      consumer_key:    params[:consumer_key],
-      consumer_secret: params[:consumer_secret],
-    }
-    request_account_to_link('', attributes)
-    attributes
+    request_account_to_link(params)
+    params
   end
 
-  def self.request_account_to_link(callback_url, credentials = {})
+  def self.request_account_to_link(credentials = {})
     external_credential = ExternalCredential.find_by(name: 'twitter')
     if !credentials[:consumer_key]
       credentials[:consumer_key] = external_credential.credentials['consumer_key']
@@ -21,8 +17,9 @@ class ExternalCredential::Twitter
       credentials[:consumer_key],
       credentials[:consumer_secret], {
         site: 'https://api.twitter.com'
-      })
-    request_token = consumer.get_request_token(oauth_callback: callback_url)
+      }
+    )
+    request_token = consumer.get_request_token(oauth_callback: ExternalCredential.callback_url('twitter'))
     {
       request_token: request_token,
       authorize_url: request_token.authorize_url,
@@ -41,6 +38,21 @@ class ExternalCredential::Twitter
     )
     user = client.user
 
+    # check if account already exists
+    Channel.where(area: 'Twitter::Account').each {|channel|
+      next if !channel.options
+      next if !channel.options['user']
+      next if !channel.options['user']['id']
+      next if channel.options['user']['id'] != user['id']
+
+      # update access_token
+      channel.options['auth']['external_credential_id'] = external_credential.id
+      channel.options['auth']['oauth_token'] = access_token.token
+      channel.options['auth']['oauth_token_secret'] = access_token.secret
+      channel.save
+      return channel
+    }
+
     # create channel
     Channel.create(
       area: 'Twitter::Account',
@@ -57,6 +69,7 @@ class ExternalCredential::Twitter
           oauth_token_secret:     access_token.secret,
         },
         sync: {
+          limit: 20,
           search: [],
           mentions: {},
           direct_messages: {}

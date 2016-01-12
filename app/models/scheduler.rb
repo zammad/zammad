@@ -26,14 +26,14 @@ class Scheduler < ApplicationModel
       end
 
       # read/load jobs and check if it is alredy started
-      jobs = Scheduler.where( 'active = ?', true ).order('prio ASC')
+      jobs = Scheduler.where('active = ?', true).order('prio ASC')
       jobs.each {|job|
 
         # ignore job is still running
         next if @@jobs_started[ job.id ]
 
         # check job.last_run
-        next if job.last_run && job.period && job.last_run > ( Time.zone.now - job.period )
+        next if job.last_run && job.period && job.last_run > (Time.zone.now - job.period)
 
         # run job as own thread
         @@jobs_started[ job.id ] = true
@@ -44,7 +44,7 @@ class Scheduler < ApplicationModel
     end
   end
 
-  def self.start_job( job )
+  def self.start_job(job)
 
     Thread.new {
 
@@ -81,7 +81,7 @@ class Scheduler < ApplicationModel
     }
   end
 
-  def self._start_job( job, try_count = 0, try_run_time = Time.zone.now )
+  def self._start_job(job, try_count = 0, try_run_time = Time.zone.now)
     job.last_run = Time.zone.now
     job.pid      = Thread.current.object_id
     job.save
@@ -101,14 +101,14 @@ class Scheduler < ApplicationModel
     try_count += 1
 
     # reset error counter if to old
-    if try_run_time + ( 60 * 5 ) < Time.zone.now
+    if try_run_time + (60 * 5) < Time.zone.now
       try_count = 0
     end
     try_run_time = Time.zone.now
 
     # restart job again
     if try_run_max > try_count
-      _start_job( job, try_count, try_run_time)
+      _start_job(job, try_count, try_run_time)
     else
       raise "STOP thread for #{job.method} after #{try_count} tries"
     end
@@ -145,7 +145,7 @@ class Scheduler < ApplicationModel
 
   end
 
-  def self.check( name, time_warning = 10, time_critical = 20 )
+  def self.check(name, time_warning = 10, time_critical = 20)
     time_warning_time  = Time.zone.now - time_warning.minutes
     time_critical_time = Time.zone.now - time_critical.minutes
     scheduler = Scheduler.find_by( name: name )

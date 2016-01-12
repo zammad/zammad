@@ -98,7 +98,9 @@ EventMachine.run {
   EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: tls_options ) do |ws|
 
     # register client connection
-    ws.onopen {
+    ws.onopen {|handshake|
+      headers = handshake.headers
+      remote_ip = get_remote_ip(headers)
       client_id = ws.object_id.to_s
       log 'notice', 'Client connected.', client_id
       Sessions.create( client_id, {}, { type: 'websocket' } )
@@ -108,6 +110,8 @@ EventMachine.run {
           websocket:   ws,
           last_ping:   Time.now.utc.to_i,
           error_count: 0,
+          headers:     headers,
+          remote_ip:   remote_ip,
         }
       end
     }
@@ -154,6 +158,7 @@ EventMachine.run {
           event: data['event'],
           payload: data,
           session: @clients[client_id][:session],
+          remote_ip: @clients[client_id][:remote_ip],
           client_id: client_id,
           clients: @clients,
           options: @options,
@@ -226,6 +231,11 @@ EventMachine.run {
       end
     }
   }
+
+  def get_remote_ip(headers)
+    return headers['X-Forwarded-For'] if headers && headers['X-Forwarded-For']
+    nil
+  end
 
   def websocket_send(client_id, data)
     if data.class != Array

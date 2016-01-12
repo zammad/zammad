@@ -377,6 +377,9 @@
 
   // log method
   Plugin.prototype.log = function() {
+    if (App && App.Log) {
+      App.Log.debug(this._name, arguments)
+    }
     if (this.options.debug) {
       console.log(this._name, arguments)
     }

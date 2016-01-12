@@ -1,0 +1,41 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Facebook') %> <small><%- @T('Accounts') %></small></h1>
+  </div>
+
+  <div class="page-header-meta">
+    <a class="btn js-configApp"><%- @T('Configure App') %></a>
+    <a class="btn btn--success js-new"><%- @T('Add Account') %></a>
+  </div>
+</div>
+
+<div class="page-content">
+<% for channel in @channels: %>
+  <div class="action" data-id="<%= channel.id %>">
+    <div class="action-block action-row">
+      <h2><%- @Icon('status', 'supergood-color inline') %> <%= channel.options.user.name %> <span class="text-muted"><%= channel.options.user.id %></span></h2>
+    </div>
+    <div class="action-flow action-flow--row">
+      <div class="action-block">
+        <h3><%- @T('Wall') %></h3>
+        <%= channel.options.user.name %> ->  <%= channel.options.sync.wall.groupName %>
+      </div>
+    </div>
+    <div class="action-flow action-flow--row">
+      <div class="action-block">
+        <h3><%- @T('Pages') %></h3>
+        <% if channel.options.pages: %>
+          <% for page in channel.options.pages: %>
+            <%= page.name %> -> <%= page.groupName %><br>
+            (<%= page.perms %>)<br>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="action-controls">
+      <div class="sla-toggle btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+      <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
+    </div>
+  </div>
+<% end %>
+</div>

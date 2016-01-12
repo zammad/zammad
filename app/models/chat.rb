@@ -68,11 +68,25 @@ class Chat < ApplicationModel
     Chat.where(active: true).each {|chat|
       assets = chat.assets(assets)
     }
+    active_agent_ids = []
+    active_agents.each {|user|
+      active_agent_ids.push user.id
+      assets = user.assets(assets)
+    }
+    runningchat_session_list_local = running_chat_session_list
+    runningchat_session_list_local.each {|session|
+      next if !session['user_id']
+      user = User.lookup(id: session['user_id'])
+      next if !user
+      assets = user.assets(assets)
+    }
     {
       waiting_chat_count: waiting_chat_count,
+      waiting_chat_session_list: waiting_chat_session_list,
       running_chat_count: running_chat_count,
-      active_sessions: Chat::Session.active_chats_by_user_id(user_id),
-      active_agents: active_agents,
+      running_chat_session_list: runningchat_session_list_local,
+      active_agent_count: active_agent_count,
+      active_agent_ids: active_agent_ids,
       seads_available: seads_available,
       seads_total: seads_total,
       active: Chat::Agent.state(user_id),
@@ -80,12 +94,35 @@ class Chat < ApplicationModel
     }
   end
 
+  def self.agent_state_with_sessions(user_id)
+    return { state: 'chat_disabled' } if !Setting.get('chat')
+    result = agent_state(user_id)
+    result[:active_sessions] = Chat::Session.active_chats_by_user_id(user_id)
+    result
+  end
+
   def self.waiting_chat_count
     Chat::Session.where(state: ['waiting']).count
   end
 
+  def self.waiting_chat_session_list
+    sessions = []
+    Chat::Session.where(state: ['waiting']).each {|session|
+      sessions.push session.attributes
+    }
+    sessions
+  end
+
   def self.running_chat_count
     Chat::Session.where(state: ['running']).count
+  end
+
+  def self.running_chat_session_list
+    sessions = []
+    Chat::Session.where(state: ['running']).each {|session|
+      sessions.push session.attributes
+    }
+    sessions
   end
 
   def self.active_chat_count
@@ -100,8 +137,18 @@ class Chat < ApplicationModel
     agents
   end
 
-  def self.active_agents(diff = 2.minutes)
+  def self.active_agent_count(diff = 2.minutes)
     Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).count
+  end
+
+  def self.active_agents(diff = 2.minutes)
+    users = []
+    Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each {|record|
+      user = User.lookup(id: record.updated_by_id)
+      next if !user
+      users.push user
+    }
+    users
   end
 
   def self.seads_total(diff = 2.minutes)
@@ -114,6 +161,57 @@ class Chat < ApplicationModel
 
   def self.seads_available(diff = 2.minutes)
     seads_total(diff) - active_chat_count
+  end
+
+=begin
+
+broadcast new agent status to all agents
+
+  Chat.broadcast_agent_state_update
+
+optional you can ignore it for dedecated user
+
+  Chat.broadcast_agent_state_update(ignore_user_id)
+
+=end
+
+  def self.broadcast_agent_state_update(ignore_user_id = nil)
+
+    # send broadcast to agents
+    Chat::Agent.where('active = ? OR updated_at > ?', true, Time.zone.now - 8.hours).each {|item|
+      next if item.updated_by_id == ignore_user_id
+      data = {
+        event: 'chat_status_agent',
+        data: Chat.agent_state(item.updated_by_id),
+      }
+      Sessions.send_to(item.updated_by_id, data)
+    }
+  end
+
+=begin
+
+broadcast new customer queue position to all waiting customers
+
+  Chat.broadcast_customer_state_update
+
+=end
+
+  def self.broadcast_customer_state_update
+
+    # send position update to other waiting sessions
+    position = 0
+    Chat::Session.where(state: 'waiting').order('created_at ASC').each {|local_chat_session|
+      position += 1
+      data = {
+        event: 'chat_session_queue',
+        data: {
+          state: 'queue',
+          position: position,
+          session_id: local_chat_session.session_id,
+        },
+      }
+      local_chat_session.send_to_recipients(data)
+    }
   end
 
 =begin

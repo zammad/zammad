@@ -13,7 +13,7 @@ class App.UiElement.richtext
       renderAttachment = (file) =>
         item.find('.attachments').append( App.view('generic/attachment_item')(
           fileName: file.filename
-          fileSize: App.Utils.humanFileSize( file.size )
+          fileSize: App.Utils.humanFileSize(file.size)
           store_id: file.store_id
         ))
         item.on(
@@ -30,8 +30,8 @@ class App.UiElement.richtext
             # delete attachment from storage
             App.Ajax.request(
               type:        'DELETE'
-              url:         App.Config.get('api_path') + '/ticket_attachment_upload'
-              data:        JSON.stringify( { store_id: store_id } ),
+              url:         "#{App.Config.get('api_path')}/ticket_attachment_upload"
+              data:        JSON.stringify(store_id: store_id),
               processData: false
             )
 
@@ -52,22 +52,22 @@ class App.UiElement.richtext
       @cancelContainer       = item.find('.js-cancel')
 
       u = => html5Upload.initialize(
-        uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload',
-        dropContainer:          item.closest('form').get(0),
-        cancelContainer:        @cancelContainer,
-        inputField:             item.find( 'input' ).get(0),
-        key:                    'File',
-        data:                   { form_id: item.closest('form').find('[name=form_id]').val() },
+        uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload'
+        dropContainer:          item.closest('form').get(0)
+        cancelContainer:        @cancelContainer
+        inputField:             item.find('input').get(0)
         maxSimultaneousUploads: 1,
-        onFileAdded:            (file) =>
+        key:                    'File'
+        data:
+          form_id: item.closest('form').find('[name=form_id]').val()
+        onFileAdded: (file) =>
 
           file.on(
-
             onStart: =>
               @attachmentPlaceholder.addClass('hide')
               @attachmentUpload.removeClass('hide')
               @cancelContainer.removeClass('hide')
-              console.log('upload start')
+              App.Log.debug 'UiElement.richtext', 'upload start'
 
             onAborted: =>
               @attachmentPlaceholder.removeClass('hide')
@@ -75,7 +75,6 @@ class App.UiElement.richtext
 
             # Called after received response from the server
             onCompleted: (response) =>
-
               response = JSON.parse(response)
               @attachments.push response.data
 
@@ -88,7 +87,7 @@ class App.UiElement.richtext
 
               renderAttachment(response.data)
 
-              console.log('upload complete', response.data )
+              App.Log.debug 'UiElement.richtext', 'upload complete', response.data
 
             # Called during upload progress, first parameter
             # is decimal value from 0 to 100.
@@ -98,8 +97,9 @@ class App.UiElement.richtext
               # hide cancel on 90%
               if parseInt(progress) >= 90
                 @cancelContainer.addClass('hide')
-              console.log('uploadProgress ', parseInt(progress))
+              App.Log.debug 'UiElement.richtext', 'uploadProgress ', parseInt(progress)
+
           )
       )
-      App.Delay.set( u, 100, undefined, 'form_upload' )
+      App.Delay.set(u, 100, undefined, 'form_upload')
     item

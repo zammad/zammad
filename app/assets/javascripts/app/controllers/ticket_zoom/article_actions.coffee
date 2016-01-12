@@ -103,6 +103,13 @@ class App.TicketZoomArticleActions extends App.Controller
         icon: 'reply'
         href: '#'
       }
+    if article.type.name is 'twitter direct-message'
+      actions.push {
+        name: 'reply'
+        type: 'twitterDirectMessageReply'
+        icon: 'reply'
+        href: '#'
+      }
 
     actions.push {
       name: 'split'
@@ -118,6 +125,7 @@ class App.TicketZoomArticleActions extends App.Controller
     # get reference article
     article_id = $(e.target).parents('[data-id]').data('id')
     article    = App.TicketArticle.fullLocal(article_id)
+    sender     = App.TicketArticleSender.find(article.sender_id)
     type       = App.TicketArticleType.find(article.type_id)
     customer   = App.User.find(article.created_by_id)
 
@@ -135,18 +143,33 @@ class App.TicketZoomArticleActions extends App.Controller
       articleNew.in_reply_to = article.message_id
 
     # get current body
-    body = @el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
+    body = @el.closest('.ticketZoom').find('.article-add [data-name="body"]').html().trim() || ''
     articleNew.body = body
 
-    to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
-    recipient = "@#{to}&nbsp;"
+    recipients = article.from
+    if article.to
+      if recipients
+        recipients += ' '
+      recipients += article.to
 
-    if !body
-      articleNew.body = recipient
+    if recipients
+      recipientString = ''
+      recipientScreenNames = recipients.split(' ')
+      for recipientScreenName in recipientScreenNames
 
-    if body && !body.match("@#{to}")
-      articleNew.body = "#{recipient}#{articleNew.body}"
+        # exclude already listed screen name
+        if !body || !body.match(recipientScreenName)
 
+          # exclude own screen_name
+          if !body || !body.match(@ticket.preferences.channel_screen_name)
+            if recipientString isnt ''
+              recipientString += ' '
+            recipientString += recipientScreenName.trim()
+
+    if body
+      articleNew.body = "#{recipientString} #{body}&nbsp;"
+    else
+      articleNew.body = "#{recipientString}&nbsp;"
 
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
 
@@ -157,6 +180,7 @@ class App.TicketZoomArticleActions extends App.Controller
     article_id = $(e.target).parents('[data-id]').data('id')
     article    = App.TicketArticle.fullLocal(article_id)
     type       = App.TicketArticleType.find(article.type_id)
+    sender     = App.TicketArticleSender.find(article.sender_id)
     customer   = App.User.find(article.created_by_id)
 
     @scrollToCompose()
@@ -172,7 +196,13 @@ class App.TicketZoomArticleActions extends App.Controller
     if article.message_id
       articleNew.in_reply_to = article.message_id
 
-    articleNew.to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
+    if sender.name is 'Agent'
+      articleNew.to = article.to
+    else
+      articleNew.to = article.from
+
+    if !articleNew.to
+      articleNew.to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
 
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
 

@@ -112,32 +112,38 @@
       }
       _this.log('paste', docType, text)
 
-      if (!_this.maxLengthOk(text.length)) {
-        return
-      }
-
       if (docType == 'html') {
         text = '<div>' + text + '</div>' // to prevent multible dom object. we need it at level 0
         if (_this.options.mode === 'textonly') {
           if (!_this.options.multiline) {
             text = App.Utils.htmlRemoveTags(text)
+            _this.log('htmlRemoveTags', text)
           }
           else {
+            _this.log('htmlRemoveRichtext', text)
             text = App.Utils.htmlRemoveRichtext(text)
           }
         }
         else {
+          _this.log('htmlCleanup', text)
           text = App.Utils.htmlCleanup(text)
         }
         text = text.html()
+        _this.log('text.html()', text)
 
         // as fallback, take text
         if (!text) {
           text = App.Utils.text2html(text.text())
+          _this.log('text2html', text)
         }
       }
       else {
         text = App.Utils.text2html(text)
+        _this.log('text2html', text)
+      }
+
+      if (!_this.maxLengthOk(text.length)) {
+        return
       }
 
       // cleanup
@@ -195,6 +201,7 @@
     }
     this.log('maxLengthOk', length, this.options.maxlength)
     if ( length > this.options.maxlength ) {
+      this.log('maxLengthOk, text too long')
 
       // try to set error on framework form
       var parent = this.$element.parent().parent()
@@ -250,6 +257,9 @@
 
   // log method
   Plugin.prototype.log = function() {
+    if (App && App.Log) {
+      App.Log.debug('contenteditable', arguments)
+    }
     if (this.options.debug) {
       console.log(this._name, arguments)
     }

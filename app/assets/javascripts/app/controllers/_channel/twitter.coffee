@@ -4,7 +4,6 @@ class Index extends App.ControllerContent
     'click .js-edit':      'edit'
     'click .js-delete':    'delete'
     'click .js-configApp': 'configApp'
-    'click .js-configApp': 'configApp'
 
   constructor: ->
     super
@@ -23,12 +22,13 @@ class Index extends App.ControllerContent
       success: (data, status, xhr) =>
         @stopLoading()
         App.Collection.loadAssets(data.assets)
+        @callbackUrl = data.callback_url
         @render(data)
     )
 
   render: (data) =>
 
-    # if no twitter app is registered, show into
+    # if no twitter app is registered, show intro
     if !App.ExternalCredential.findByAttribute(name: 'twitter')
       @html App.view('twitter/index')()
       return
@@ -66,12 +66,19 @@ class Index extends App.ControllerContent
     if @channel_id
       @edit(undefined, @channel_id)
 
-  configApp: ->
-    external_credential = App.ExternalCredential.findByAttribute(name: 'twitter')
+  configApp: =>
+    external_credential = App.ExternalCredential.findByAttribute('name', 'twitter')
+    contentInline = $(App.view('twitter/app_config')(
+      external_credential: external_credential
+      callbackUrl: @callbackUrl
+    ))
+    contentInline.find('.js-select').on('click', (e) =>
+      @selectAll(e)
+    )
     modal = new App.ControllerModal(
       head: 'Connect Twitter App'
       container: @el.parents('.content')
-      contentInline: App.view('twitter/app_config')(external_credential: external_credential)
+      contentInline: contentInline
       shown: true
       button: 'Connect'
       cancel: true
@@ -134,8 +141,9 @@ class Index extends App.ControllerContent
       groupSelection(group_id, placeholder, 'search')
       content.find('.js-searchTermList').append(placeholder)
 
-    for item in channel.options.sync.search
-      placeholderAdd(item.term, item.group_id, 'search')
+    if channel.options && channel.options.sync && channel.options.sync.search
+      for item in channel.options.sync.search
+        placeholderAdd(item.term, item.group_id, 'search')
 
     content.find('.js-searchTermAdd').on('click', ->
       placeholderAdd('', '')
