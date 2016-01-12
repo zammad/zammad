@@ -1374,6 +1374,10 @@ textarea,
     padding: 5px 8px 4px;
     height: 31px;
     line-height: 20px;
+    
+    &.form-control--multiline {
+      min-height: 31px;
+    }
   }
 
   &.form-control--inline {
@@ -1383,6 +1387,7 @@ textarea,
 
   &.form-control--multiline {
     height: auto;
+    min-height: 41px;
   }
 
   &:focus,
