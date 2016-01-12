@@ -17,24 +17,31 @@ class App.Utils
     ascii = '<div>' + ascii.replace(/\n/g, '</div><div>') + '</div>'
     ascii.replace(/<div><\/div>/g, '<div><br></div>')
 
-  # rawText = App.Utils.html2text(html)
-  @html2text: (html) ->
+  # rawText = App.Utils.html2text(html, no_trim)
+  @html2text: (html, no_trim) ->
+
+    if no_trim
+      html = html
+        .replace(/([A-z])\n([A-z])/gm, '$1 $2')
+        .replace(/\n|\r/g, '')
+        .replace(/<(br|hr)>/g, "\n")
+        .replace(/<(br|hr)\/>/g, "\n")
+        .replace(/<\/(div|p|blockquote|form|textarea|address|tr)>/g, "\n")
+      return $('<div>' + html + '</div>').text()
 
     # remove not needed new lines
-    html = html.replace(/>\n/g, '>')
+    html = html.replace(/([A-z])\n([A-z])/gm, '$1 $2')
+      .replace(/>\n/g, '>')
+      .replace(/\n|\r/g, '')
 
-    # insert new lines
+    # trim and cleanup
     html = html
-      .replace(/<br(|.+?)>/g, "\n")
-      .replace(/<br\/>/g, "\n")
+      .replace(/<(br|hr)>/g, "\n")
+      .replace(/<(br|hr)\/>/g, "\n")
       .replace(/<(div)(|.+?)>/g, "")
       .replace(/<(p|blockquote|form|textarea|address|tr)(|.+?)>/g, "\n")
       .replace(/<\/(div|p|blockquote|form|textarea|address|tr)>/g, "\n")
-
-    # trim and cleanup
     $('<div>' + html + '</div>').text().trim()
-      .replace(/(\r\n|\n\r)/g, "\n")  # cleanup
-      .replace(/\r/g, "\n")           # cleanup
       .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.linkify(rawText)

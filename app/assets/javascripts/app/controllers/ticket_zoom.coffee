@@ -319,7 +319,7 @@ class App.TicketZoom extends App.Controller
 
       @form_id = App.ControllerForm.formId()
 
-      new App.TicketZoomArticleNew(
+      @articleNew = new App.TicketZoomArticleNew(
         ticket:    @ticket
         ticket_id: @ticket.id
         el:        elLocal.find('.article-new')
@@ -495,12 +495,15 @@ class App.TicketZoom extends App.Controller
     e.stopPropagation()
     e.preventDefault()
 
+    # validate new article
+    return if !@articleNew.validate()
+
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
     ticketParams = @formParam( @$('.edit') )
 
     # validate ticket
-    ticket = App.Ticket.fullLocal( @ticket.id )
+    ticket = App.Ticket.fullLocal(@ticket.id)
 
     # reset article - should not be resubmited on next ticket update
     ticket.article = undefined
@@ -564,76 +567,9 @@ class App.TicketZoom extends App.Controller
 
     console.log('ticket validateion ok')
 
-    # validate article
-    articleParams = @formParam( @$('.article-add') )
-    console.log 'submit article', articleParams
-
-    # check if attachment exists but no body
-    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
-    if !articleParams['body'] && attachmentCount > 0
-      new App.ControllerModal(
-        head: 'Text missing'
-        buttonCancel: 'Cancel'
-        buttonCancelClass: 'btn--danger'
-        buttonSubmit: false
-        message: 'Please fill also some text in!'
-        shown: true
-        small: true
-        container: @el.closest('.content')
-      )
-      @formEnable(e)
-      @autosaveStart()
-      return
-
-    if articleParams['body']
-      articleParams.from         = @Session.get().displayName()
-      articleParams.ticket_id    = ticket.id
-      articleParams.form_id      = @form_id
-      articleParams.content_type = 'text/html'
-
-      if !articleParams['internal']
-        articleParams['internal'] = false
-
-      if @isRole('Customer')
-        sender                  = App.TicketArticleSender.findByAttribute( 'name', 'Customer' )
-        type                    = App.TicketArticleType.findByAttribute( 'name', 'web' )
-        articleParams.type_id   = type.id
-        articleParams.sender_id = sender.id
-      else
-        sender                  = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-        articleParams.sender_id = sender.id
-        type                    = App.TicketArticleType.findByAttribute( 'name', articleParams['type'] )
-        articleParams.type_id   = type.id
-
+    articleParams = @articleNew.params()
+    if articleParams
       article = new App.TicketArticle
-      for key, value of articleParams
-        article[key] = value
-
-      # validate email params
-      if type.name is 'email'
-
-        # check if recipient exists
-        if !articleParams['to'] && !articleParams['cc']
-          alert( App.i18n.translateContent('Need recipient in "To" or "Cc".') )
-          @formEnable(e)
-          @autosaveStart()
-          return
-
-        # check if message exists
-        if !articleParams['body']
-          alert( App.i18n.translateContent('Text needed') )
-          @formEnable(e)
-          @autosaveStart()
-          return
-
-      # check attachment
-      if articleParams['body']
-        if App.Utils.checkAttachmentReference( articleParams['body'] ) && attachmentCount < 1
-          if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-            @formEnable(e)
-            @autosaveStart()
-            return
-
       article.load(articleParams)
       errors = article.validate()
       if errors
@@ -721,7 +657,7 @@ class App.TicketZoom extends App.Controller
     App.Ajax.request(
       type:  'DELETE'
       url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-      data:  JSON.stringify( { form_id: @form_id } )
+      data:  JSON.stringify(form_id: @form_id)
       processData: false
     )
 

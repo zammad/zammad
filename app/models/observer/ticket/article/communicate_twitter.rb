@@ -25,7 +25,7 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     tweet = channel.deliver(
       type:        type['name'],
       to:          record.to,
-      body:        record.body.html2text,
+      body:        record.body,
       in_reply_to: record.in_reply_to
     )
 

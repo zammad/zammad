@@ -12,6 +12,8 @@ class App.TicketZoomArticleNew extends App.Controller
     '.js-cancel':                         'cancelContainer'
     '.textBubble':                        'textBubble'
     '.editControls-item':                 'editControlItem'
+    '.js-letterCount':                    'letterCount'
+    '.js-signature':                      'signature'
 
   events:
     'click .js-toggleVisibility':    'toggleVisibility'
@@ -21,6 +23,7 @@ class App.TicketZoomArticleNew extends App.Controller
     'click .js-writeArea':           'propagateOpenTextarea'
     'click .list-entry-type div':    'changeType'
     'focus .js-textarea':            'openTextarea'
+    'input .js-textarea':            'updateLetterCount'
 
   constructor: ->
     super
@@ -32,11 +35,13 @@ class App.TicketZoomArticleNew extends App.Controller
         name:       'note'
         icon:       'note'
         attributes: []
+        features:   ['attachment']
       },
       {
         name:       'email'
         icon:       'email'
-        attributes: ['to','cc']
+        attributes: ['to', 'cc']
+        features:   ['attachment']
       },
       {
         name:       'facebook'
@@ -44,21 +49,29 @@ class App.TicketZoomArticleNew extends App.Controller
         attributes: []
       },
       {
-        name:       'twitter status'
-        icon:       'twitter'
-        attributes: []
+        name:              'twitter status'
+        icon:              'twitter'
+        attributes:        []
+        features:          ['body:limit']
+        maxTextLength:     140
+        warningTextLength: 30
       },
       {
-        name:       'twitter direct-message'
-        icon:       'twitter'
-        attributes: ['to']
+        name:              'twitter direct-message'
+        icon:              'twitter'
+        attributes:        ['to']
+        features:          ['body:limit']
+        maxTextLength:     10000
+        warningTextLength: 500
       },
       {
         name:       'phone'
         icon:       'phone'
         attributes: []
+        features:   ['attachment']
       },
     ]
+
     if @isRole('Customer')
       @type = 'note'
       @articleTypes = [
@@ -66,6 +79,7 @@ class App.TicketZoomArticleNew extends App.Controller
           name:       'note'
           icon:       'note'
           attributes: []
+          features:   ['attachment']
         },
       ]
 
@@ -216,6 +230,106 @@ class App.TicketZoomArticleNew extends App.Controller
         )
       @subscribeIdTextModule = ticket.subscribe( callback )
 
+  params: =>
+    params = @formParam( @$('.article-add') )
+
+    if params.body
+      params.from         = @Session.get().displayName()
+      params.ticket_id    = @ticket_id
+      params.form_id      = @form_id
+      params.content_type = 'text/html'
+
+      if !params['internal']
+        params['internal'] = false
+
+      if @isRole('Customer')
+        sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
+        type             = App.TicketArticleType.findByAttribute('name', 'web')
+        params.type_id   = type.id
+        params.sender_id = sender.id
+      else
+        sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
+        params.sender_id = sender.id
+        type             = App.TicketArticleType.findByAttribute('name', params['type'])
+        params.type_id   = type.id
+
+    if params.type is 'twitter status'
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+      params.content_type = 'text/plain'
+      params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+    if params.type is 'twitter direct-message'
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+      params.content_type = 'text/plain'
+      params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+
+    params
+
+  validate: =>
+    params = @params()
+
+    # check if attachment exists but no body
+    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
+    if !params.body && attachmentCount > 0
+      new App.ControllerModal(
+        head: 'Text missing'
+        buttonCancel: 'Cancel'
+        buttonCancelClass: 'btn--danger'
+        buttonSubmit: false
+        message: 'Please fill also some text in!'
+        shown: true
+        small: true
+        container: @el.closest('.content')
+      )
+      return false
+
+    # validate email params
+    if params.type is 'email'
+
+      # check if recipient exists
+      if !params.to && !params.cc
+        new App.ControllerModal(
+          head: 'Text missing'
+          buttonCancel: 'Cancel'
+          buttonCancelClass: 'btn--danger'
+          buttonSubmit: false
+          message: 'Need recipient in "To" or "Cc".'
+          shown: true
+          small: true
+          container: @el.closest('.content')
+        )
+        return false
+
+      # check if message exists
+      if !params.body
+        new App.ControllerModal(
+          head: 'Text missing'
+          buttonCancel: 'Cancel'
+          buttonCancelClass: 'btn--danger'
+          buttonSubmit: false
+          message: 'Text needed'
+          shown: true
+          small: true
+          container: @el.closest('.content')
+        )
+        return false
+
+    # check attachment
+    if params.body
+      if App.Utils.checkAttachmentReference(params.body) && attachmentCount < 1
+        if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+          return false
+
+    if params.type is 'twitter status'
+      params.body
+      textLength = @maxTextLength - params.body.length
+      return false if textLength < 0
+
+    if params.type is 'twitter direct-message'
+      textLength = @maxTextLength - params.body.length
+      return false if textLength < 0
+
+    true
+
   changeType: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
 
@@ -232,7 +346,6 @@ class App.TicketZoomArticleNew extends App.Controller
         .addClass 'is-public'
         .removeClass 'is-internal'
 
-
       @$('[name=internal]').val ''
 
   showSelectableArticleType: (event) =>
@@ -243,7 +356,7 @@ class App.TicketZoomArticleNew extends App.Controller
   selectArticleType: (event) =>
     event.stopPropagation()
     articleTypeToSet = $(event.target).closest('.pop-selectable').data('value')
-    @setArticleType( articleTypeToSet )
+    @setArticleType(articleTypeToSet)
     @hideSelectableArticleType()
 
     $(window).off 'click.ticket-zoom-select-type'
@@ -251,19 +364,12 @@ class App.TicketZoomArticleNew extends App.Controller
   hideSelectableArticleType: =>
     @el.find('.js-articleTypes').addClass('is-hidden')
 
-  setArticleType: (type) ->
+  setArticleType: (type) =>
     wasScrolledToBottom = @isScrolledToBottom()
     @type = type
     @$('[name=type]').val(type)
     @articleNewEdit.attr('data-type', type)
     @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{ type }']").removeClass('hide')
-
-    # show/hide attributes
-    for articleType in @articleTypes
-      if articleType.name is type
-        @$('.form-group').addClass('hide')
-        for name in articleType.attributes
-          @$("[name=#{name}]").closest('.form-group').removeClass('hide')
 
     # detect current signature (use current group_id, if not set, use ticket.group_id)
     ticketCurrent = App.Ticket.find(@ticket_id)
@@ -299,6 +405,31 @@ class App.TicketZoomArticleNew extends App.Controller
     else
       @$('[data-name=body] [data-signature=true]').remove()
 
+    # remove richtext
+    if @type is 'twitter status'
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+    if @type is 'twitter direct-message'
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+
+    # show/hide attributes/features
+    @maxTextLength = undefined
+    @warningTextLength = undefined
+    for articleType in @articleTypes
+      if articleType.name is type
+        @$('.form-group').addClass('hide')
+        for name in articleType.attributes
+          @$("[name=#{name}]").closest('.form-group').removeClass('hide')
+        @$('.article-attachment, .attachments, .js-textSizeLimit').addClass('hide')
+        for name in articleType.features
+          if name is 'attachment'
+            @$('.article-attachment, .attachments').removeClass('hide')
+          if name is 'body:limit'
+            @maxTextLength = articleType.maxTextLength
+            @warningTextLength = articleType.warningTextLength
+            @delay(@updateLetterCount, 600)
+            @updateInitials()
+            @$('.js-textSizeLimit').removeClass('hide')
+
     @scrollToBottom() if wasScrolledToBottom
 
   isScrolledToBottom: ->
@@ -310,6 +441,26 @@ class App.TicketZoomArticleNew extends App.Controller
   propagateOpenTextarea: (event) ->
     event.stopPropagation()
     @textarea.focus()
+
+  updateLetterCount: =>
+    return if !@maxTextLength
+    return if !@warningTextLength
+    params = @params()
+    textLength = @maxTextLength - params.body.length
+    className = switch
+      when textLength < 0 then 'label-danger'
+      when textLength < @warningTextLength then 'label-warning'
+      else ''
+
+    @letterCount
+      .text textLength
+      .removeClass 'label-danger label-warning'
+      .addClass className
+
+  updateInitials: (value) =>
+    if value is undefined
+      value = "/#{App.User.find(@Session.get('id')).initials()}"
+    @signature.text(value)
 
   openTextarea: (event, withoutAnimation) =>
     if event
@@ -450,7 +601,7 @@ class App.TicketZoomArticleNew extends App.Controller
         App.Ajax.request(
           type:  'DELETE'
           url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-          data:  JSON.stringify( { store_id: store_id } )
+          data:  JSON.stringify(store_id: store_id)
           processData: false
         )
 

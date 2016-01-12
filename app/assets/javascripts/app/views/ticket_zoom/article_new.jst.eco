@@ -52,6 +52,10 @@
         <div class="bubble-arrow"></div>
         <div class="js-textarea articleNewEdit-body" contenteditable="true" data-name="body"><%- @article.body %></div>
         <!-- .textBubble grows with textarea (and expanding clone) -->
+        <div class="textBubble-footer js-textSizeLimit">
+          <div class="textBubble-signatur"><span class="js-signature"></span></div>
+          <div class="textBubble-letterCount js-letterCount"></div>
+        </div>
         <div class="attachments"></div>
         <div class="article-attachment">
           <div class="attachmentPlaceholder">
