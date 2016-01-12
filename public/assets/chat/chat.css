@@ -211,7 +211,9 @@
   text-align: center; }
 
 .zammad-chat-message {
-  margin: 0.5em 0;
+  margin: 0.5em 0; }
+
+.zammad-chat-message-body {
   white-space: pre-line;
   word-wrap: break-word;
   border-radius: 1em; }
@@ -308,6 +310,7 @@
   float: left;
   width: auto;
   height: auto;
+  min-height: 1.4em !important;
   max-height: 6em;
   font-family: inherit;
   line-height: inherit;
