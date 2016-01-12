@@ -58,6 +58,10 @@ class TwitterTest < ActiveSupport::TestCase
         oauth_token:        armin_theo_token,
         oauth_token_secret: armin_theo_token_secret,
       },
+      user: {
+        screen_name: '@armin_theo',
+        id: '1234',
+      },
       sync: {
         search: [
           {
@@ -236,7 +240,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = armin_theo_token
       config.access_token_secret = armin_theo_token_secret
     end
-    dms = client.direct_messages(count: 40)
+    dms = client.direct_messages(count: 100)
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
@@ -246,7 +250,7 @@ class TwitterTest < ActiveSupport::TestCase
       access_token:        me_bauer_token,
       access_token_secret: me_bauer_token_secret
     )
-    dms = client.direct_messages(count: 40)
+    dms = client.direct_messages(count: 100)
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
@@ -346,7 +350,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
-      sleep 10
+      sleep 15
     }
 
     assert(article, "inbound article '#{text}' created")

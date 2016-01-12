@@ -39,16 +39,29 @@ class TweetBase
     }
     if auth
       user = User.find(auth.user_id)
-      if (!user_data[:note] || user_data[:note].empty?) && tweet_user.description
-        user_data[:note] = tweet_user.description
-      end
+      map = {
+        note: 'description',
+        web: 'website',
+        address: 'location',
+      }
+
+      # ignore if value is already set
+      map.each {|target, source|
+        next if user[target] && !user[target].empty?
+        new_value = tweet_user.send(source).to_s
+        next if !new_value || new_value.empty?
+        user_data[target] = new_value
+      }
       user.update_attributes(user_data)
     else
       user_data[:login]     = tweet_user.screen_name
       user_data[:firstname] = tweet_user.name
-      user_data[:note] = tweet_user.description
-      user_data[:active] = true
-      user_data[:roles] = Role.where(name: 'Customer')
+      user_data[:web]       = tweet_user.website.to_s
+      user_data[:note]      = tweet_user.description
+      user_data[:address]   = tweet_user.location
+      user_data[:active]    = true
+      user_data[:roles]     = Role.where(name: 'Customer')
+
       user = User.create(user_data)
     end
 
