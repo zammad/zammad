@@ -11,8 +11,6 @@ class OtrsImportBrowserTest < TestCase
       fail "ERROR: Need IMPORT_BT_OTRS_ENDPOINT_KEY - hint IMPORT_BT_OTRS_ENDPOINT_KEY='01234567899876543210'"
     end
 
-    import_url = "#{ENV['IMPORT_BT_OTRS_ENDPOINT']};Key=#{ENV['IMPORT_BT_OTRS_ENDPOINT_KEY']}"
-
     @browser = browser_instance
     location(url: browser_url)
 
@@ -24,13 +22,31 @@ class OtrsImportBrowserTest < TestCase
 
     click(css: '.js-otrs-link')
 
+    invalid_key_url = "#{ENV['IMPORT_BT_OTRS_ENDPOINT']};Key=31337"
+
+    set(
+      css:   '#otrs-link',
+      value: invalid_key_url
+    )
+
+    sleep 5
+
+    watch_for(
+      css: '.otrs-link-error',
+      value: 'Invalid API key.',
+    )
+
+    import_url = "#{ENV['IMPORT_BT_OTRS_ENDPOINT']};Key=#{ENV['IMPORT_BT_OTRS_ENDPOINT_KEY']}"
     set(
       css:   '#otrs-link',
       value: import_url
     )
 
-    exists(
-      css: 'svg.icon-checkmark'
+    sleep 5
+
+    watch_for_disappear(
+      css: '.otrs-link-error',
+      value: 'Invalid API key.',
     )
 
     click(css: '.js-migration-start')
