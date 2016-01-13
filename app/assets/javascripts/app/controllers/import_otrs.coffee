@@ -44,11 +44,6 @@ class Index extends App.ControllerContent
         if data.import_mode == true
           @showImportState()
           @updateMigration()
-        else
-          showDownload = =>
-            @$('[data-slide=otrs-prepare]').toggleClass('hide')
-            @$('[data-slide=otrs-plugin]').toggleClass('hide')
-          @delay( showDownload, 2500 )
     )
 
   render: ->
@@ -64,7 +59,6 @@ class Index extends App.ControllerContent
     @$('[data-slide=otrs-link]').toggleClass('hide')
 
   showImportState: =>
-    @$('[data-slide=otrs-prepare]').addClass('hide')
     @$('[data-slide=otrs-plugin]').addClass('hide')
     @$('[data-slide=otrs-link]').addClass('hide')
     @$('[data-slide=otrs-import]').removeClass('hide')
