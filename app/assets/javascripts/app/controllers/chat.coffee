@@ -601,6 +601,9 @@ class ChatWindow extends App.Controller
     @el.addClass('is-offline')
     @input.attr('disabled', true)
 
+    # add footer with create ticket button
+    @body.append App.view('customer_chat/chat_footer')()
+
   maybeAddTimestamp: ->
     timestamp = Date.now()
 
