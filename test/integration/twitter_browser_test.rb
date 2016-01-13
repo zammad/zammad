@@ -194,16 +194,74 @@ class TwitterBrowserTest < TestCase
       config.access_token_secret = twitter_customer_token_secret
     end
 
-    text  = "Today... #{hash}"
+    text  = "Today... ##{hash} #{rand(99_999)}"
     tweet = client.update(
       text,
     )
 
     # watch till tweet is in app
+    click( text: 'Overviews' )
+
+    # enable full overviews
+    execute(
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
+    click( text: 'Unassigned & Open' )
+    sleep 6 # till overview is rendered
+
+    watch_for(
+      css: '.content.active',
+      value: "##{hash}",
+    )
+
+    ticket_open_by_title(
+      title: "##{hash}",
+    )
 
     # reply via app
+    click( css: '.content.active [data-type="twitterStatusReply"]' )
+
+    ticket_update(
+      data: {
+        body: '@dzucker6 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890',
+      },
+      do_not_submit: true,
+    )
+    click(
+      css: '.content.active .js-submit',
+    )
+    sleep 10
+    click(
+      css: '.content.active .js-reset',
+    )
+    sleep 2
+
+    match_not(
+      css: '.content.active',
+      value: '1234567890',
+    )
+
+    click( css: '.content.active [data-type="twitterStatusReply"]' )
+    sleep 2
+    ticket_update(
+      data: {
+        body: "@dzucker6 reply ##{hash}222 #{rand(99_999)}",
+      },
+    )
+    sleep 20
+
+    match(
+      css: '.content.active .ticket-article',
+      value: "##{hash}222",
+    )
 
     # watch till tweet reached customer
+    text = nil
+    client.search("##{hash}222", result_type: 'mixed').collect { |local_tweet|
+      text = local_tweet.text
+    }
+    assert(text)
 
   end
 

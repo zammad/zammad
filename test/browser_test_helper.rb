@@ -1647,6 +1647,40 @@ wait untill text in selector disabppears
 
 =begin
 
+  ticket_open_by_title(
+    browser: browser2,
+    title:   ticket1[:title],
+  )
+
+=end
+
+  def ticket_open_by_title(params)
+    switch_window_focus(params)
+    log('ticket_open_by_title', params)
+
+    instance = params[:browser] || @browser
+
+    # search by number
+    element = instance.find_elements({ css: '#global-search' })[0]
+    element.click
+    element.clear
+    element.send_keys(params[:title])
+    sleep 3
+
+    # open ticket
+    #instance.find_element({ partial_link_text: params[:title] } ).click
+    instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
+    title = instance.find_elements({ css: '.active .ticketZoom-header .ticket-title-update' })[0].text
+    if title !~ /#{params[:title]}/
+      screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
+      fail "unable to search/find ticket #{params[:title]}!"
+    end
+    sleep 1
+    true
+  end
+
+=begin
+
   overview_count = overview_counter(
     browser: browser2,
   )
