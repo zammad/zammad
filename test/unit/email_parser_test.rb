@@ -606,18 +606,18 @@ Registration AG Ulm HRB 534075 * General Manager Holger Felgner
       },
       {
         data: IO.read('test/fixtures/mail30.box'),
-        body_md5: '23220f9537e59a8febc62705aa1c387c',
+        body_md5: 'b4038e70d25854a023bce604c9f7a7ff',
         params: {
           from: 'Manfred Haert <Manfred.Haert@example.com>',
           from_email: 'Manfred.Haert@example.com',
           from_display_name: 'Manfred Haert',
           subject: 'Antragswesen in TesT abbilden',
           to: 'info@znuny.inc',
-          body: "Sehr geehrte Damen undHerren,
+          body: "Sehr geehrte Damen und Herren,
 
-wir hatten bereits letztes Jahr einen TesT-Workshop mit IhremHerrn XXX durchgeführt und würden nun gerne erneutIhre Dienste in Anspruch nehmen.
+wir hatten bereits letztes Jahr einen TesT-Workshop mit Ihrem Herrn XXX durchgeführt und würden nun gerne erneut Ihre Dienste in Anspruch nehmen.
 
-Mittlerweile setzen wir TesT produktiv ein und würden nun gerne aneinem Anwendungsfall (Change-Management) die Machbarkeit desAbbildens eines derzeit \"per Papier\" durchgeführten Antragswesensin TesT prüfen wollen.
+Mittlerweile setzen wir TesT produktiv ein und würden nun gerne an einem Anwendungsfall (Change-Management) die Machbarkeit des Abbildens eines derzeit \"per Papier\" durchgeführten Antragswesens in TesT prüfen wollen.
 
 Wir bitten gerne um ein entsprechendes Angebot.
 
@@ -640,8 +640,8 @@ JETZT AUCH BEI FACEBOOK !
 ___________________________________
 Test Somewhere GmbH
  
-Diesee-Mail ist ausschließlich für den beabsichtigten Empfängerbestimmt. Sollten Sie irrtümlich diese e-Mail erhaltenhaben, unterrichten Sie uns bitte umgehend unter[4] kontakt@example.com und vernichten Sie diese Mitteilungeinschließlich der ggf. beigefügten Dateien.
-Weil wir die Echtheit oder Vollständigkeit der in dieserNachricht enthaltenen Informationen nicht garantierenkönnen, bitten wir um Verständnis, dass wir zu Ihrem undunserem Schutz die rechtliche Verbindlichkeit dervorstehenden Erklärungen ausschließen, soweit wir mitIhnen keine anders lautenden Vereinbarungen getroffenhaben.
+Diese e-Mail ist ausschließlich für den beabsichtigten Empfänger bestimmt. Sollten Sie irrtümlich diese e-Mail erhalten haben, unterrichten Sie uns bitte umgehend unter [4] kontakt@example.com und vernichten Sie diese Mitteilung einschließlich der ggf. beigefügten Dateien.
+Weil wir die Echtheit oder Vollständigkeit der in dieser Nachricht enthaltenen Informationen nicht garantieren können, bitten wir um Verständnis, dass wir zu Ihrem und unserem Schutz die rechtliche Verbindlichkeit der vorstehenden Erklärungen ausschließen, soweit wir mit Ihnen keine anders lautenden Vereinbarungen getroffen haben.
 
 
 [1] mailto:manfred.haertel@example.com

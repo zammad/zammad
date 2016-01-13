@@ -186,6 +186,7 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
     agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     customer = browser_instance
@@ -273,7 +274,7 @@ class ChatTest < TestCase
     watch_for(
       browser: agent,
       css: '.active .chat-window',
-      value: 'has closed the conversation',
+      value: 'closed the conversation',
     )
   end
 
@@ -292,6 +293,7 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
     agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     customer = browser_instance
@@ -375,6 +377,10 @@ class ChatTest < TestCase
     )
     click(
       browser: agent,
+      css: '.active .chat-window .js-disconnect',
+    )
+    click(
+      browser: agent,
       css: '.active .chat-window .js-close',
     )
     watch_for(
@@ -395,6 +401,7 @@ class ChatTest < TestCase
       browser: customer,
       css: '.zammad-chat-is-open',
     )
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
     agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
     sleep 2
     click(
@@ -440,6 +447,7 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
     agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     # set chat preferences
@@ -555,7 +563,7 @@ class ChatTest < TestCase
     watch_for(
       browser: agent,
       css: '.active .chat-window',
-      value: 'has closed the conversation',
+      value: 'closed the conversation',
     )
   end
 
@@ -574,6 +582,7 @@ class ChatTest < TestCase
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
+    agent.find_elements( { css: '.active .chat-window .js-disconnect' } ).each(&:click)
     agent.find_elements( { css: '.active .chat-window .js-close' } ).each(&:click)
 
     exists(
