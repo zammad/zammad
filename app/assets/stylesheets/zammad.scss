@@ -377,6 +377,18 @@ pre code.hljs {
     &.btn--slim {
       padding-left: 7px !important;
       padding-right: 7px !important;
+      
+      &.btn--small {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+      }
+    }
+
+    &.btn--small {
+      height: 27px;
+      font-size: 11px;
+      padding-left: 8px;
+      padding-right: 8px;
     }
   }
 
@@ -7271,33 +7283,27 @@ output {
 }
 
 .chat-header {
-  padding: 12px 40px;
   background: hsl(210,8%,95%);
   border: 1px solid hsl(0,0%,91%);
   border-radius: 3px 3px 0 0;
-  position: relative;
+  height: 37px;
   line-height: 13px;
-  text-align: center;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-name {
+  margin: 0 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.chat-status,
-.chat-close {
-  position: absolute;
-  top: 0;
-  padding-top: inherit;
-  padding-bottom: inherit;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .chat-status {
-  left: 0;
-  top: -1px;
-
+  margin-left: 10px;
+  
   &[data-status='online'] .icon {
     fill: $supergood-color;
   }
@@ -7326,23 +7332,21 @@ output {
 .chat-status-holder {
   position: relative;
 }
-  
-.chat-close {
-  right: 0;
-  cursor: pointer;
-  
-  .icon {
-    fill: currentColor;
-    opacity: 0.5;
-  }
 
-  &:hover {
-    background: hsl(210,8%,90%);
-    
-    .icon {
-      opacity: 1;
-    }
+.chat-disconnect,
+.chat-close {
+  cursor: pointer;
+  padding: 0 4px;
+  
+  .btn {
+    min-width: 80px;
+    justify-content: center;
   }
+}
+
+.chat-disconnect.is-hidden,
+.chat-close.is-hidden {
+  display: none;
 }
 
 .chat-body-holder {
