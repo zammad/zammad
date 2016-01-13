@@ -114,9 +114,8 @@ class Index extends App.ControllerContent
       processData: true,
       success:     (data, status, xhr) =>
 
-        if data.setup_done
-          @Config.set('system_init_done', true)
-          @navigate '#'
+        if data.result is 'import_done'
+          window.location.reload()
           return
 
         if data.result is 'error'

@@ -91,10 +91,7 @@ class ImportOtrsController < ApplicationController
     end
 
     # start migration
-    Import::OTRS.delay.start_bg(
-      import_otrs_endpoint: Setting.get('import_otrs_endpoint'),
-      import_otrs_endpoint_key: Setting.get('import_otrs_endpoint_key'),
-    )
+    Import::OTRS.delay.start_bg
 
     render json: {
       result: 'ok',
@@ -103,7 +100,7 @@ class ImportOtrsController < ApplicationController
 
   def import_status
     result = Import::OTRS.status_bg
-    if result[:setup_done] == true
+    if result[:result] == 'import_done'
       Setting.reload
     end
     render json: result

@@ -415,19 +415,15 @@ module Import::OTRS
 =begin
   start import in background
 
-  Import::OTRS.start_bg(
-    import_otrs_endpoint: 'http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator
-',
-    import_otrs_endpoint_key: '01234567899876543210',
-  )
+  Import::OTRS.start_bg
 =end
 
-  def self.start_bg(params)
-    Setting.set('import_mode', 'true')
-    Setting.set('import_backend', 'otrs')
-    Setting.set('import_otrs_endpoint', params[:import_otrs_endpoint])
-    Setting.set('import_otrs_endpoint_key', params[:import_otrs_endpoint_key])
+  def self.start_bg
+    Setting.reload
 
+    Import::OTRS.connection_test
+
+    # start thread to observe current state
     status_update_thread = Thread.new {
       loop do
         result = {
@@ -438,9 +434,9 @@ module Import::OTRS
         sleep 8
       end
     }
+    sleep 2
 
-    sleep 5
-
+    # start thread to import data
     begin
       import_thread = Thread.new {
         Import::OTRS.start
@@ -455,10 +451,16 @@ module Import::OTRS
         result: 'error',
       }
       Cache.write('import:state', result, expires_in: 10.hours)
+      return false
     end
     import_thread.join
     status_update_thread.exit
     status_update_thread.join
+
+    result = {
+      result: 'import_done',
+    }
+    Cache.write('import:state', result, expires_in: 10.hours)
 
     Setting.set('system_init_done', true)
     Setting.set('import_mode', false)
@@ -473,11 +475,6 @@ module Import::OTRS
 =end
 
   def self.status_bg
-    if !Setting.get('import_mode')
-      return {
-        setup_done: true,
-      }
-    end
     state = Cache.get('import:state')
     return state if state
     {
