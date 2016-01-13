@@ -214,7 +214,7 @@ module Import::OTRS
 
 =begin
 
-  get object statistic from server ans save it in cache
+  get object statistic from remote server ans save it in cache
 
   result = statistic('Subaction=List')
 
@@ -409,10 +409,77 @@ module Import::OTRS
       threads[thread].join
     }
 
+    true
+  end
+
+=begin
+  start import in background
+
+  Import::OTRS.start_bg
+=end
+
+  def self.start_bg
+    Setting.reload
+
+    Import::OTRS.connection_test
+
+    # start thread to observe current state
+    status_update_thread = Thread.new {
+      loop do
+        result = {
+          data: current_state,
+          result: 'in_progress',
+        }
+        Cache.write('import:state', result, expires_in: 10.minutes)
+        sleep 8
+      end
+    }
+    sleep 2
+
+    # start thread to import data
+    begin
+      import_thread = Thread.new {
+        Import::OTRS.start
+      }
+    rescue => e
+      status_update_thread.exit
+      status_update_thread.join
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.inspect
+      result = {
+        message: e.message,
+        result: 'error',
+      }
+      Cache.write('import:state', result, expires_in: 10.hours)
+      return false
+    end
+    import_thread.join
+    status_update_thread.exit
+    status_update_thread.join
+
+    result = {
+      result: 'import_done',
+    }
+    Cache.write('import:state', result, expires_in: 10.hours)
+
     Setting.set('system_init_done', true)
     Setting.set('import_mode', false)
+  end
 
-    true
+=begin
+
+  get import state from background process
+
+  result = Import::OTRS.status_bg
+
+=end
+
+  def self.status_bg
+    state = Cache.get('import:state')
+    return state if state
+    {
+      message: 'not running',
+    }
   end
 
   def self.diff_worker

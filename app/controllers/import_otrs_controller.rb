@@ -22,9 +22,7 @@ class ImportOtrsController < ApplicationController
       'Connection refused'                                        => 'Connection refused!',
     }
 
-    url_parts = params[:url].split(';')
-
-    response = UserAgent.request( url_parts[0] )
+    response = UserAgent.request( params[:url] )
 
     if !response.success? && response.code.to_s !~ /^40.$/
       message_human = ''
@@ -44,16 +42,27 @@ class ImportOtrsController < ApplicationController
     result = {}
     if response.body =~ /zammad migrator/
 
-      key_parts = url_parts[1].split('=')
+      migrator_response = JSON.parse(response.body)
 
-      Setting.set('import_backend', 'otrs')
-      Setting.set('import_otrs_endpoint', url_parts[0])
-      Setting.set('import_otrs_endpoint_key', key_parts[1])
+      if migrator_response['Success'] == 1
 
-      result = {
-        result: 'ok',
-        url: params[:url],
-      }
+        url_parts = params[:url].split(';')
+        key_parts = url_parts[1].split('=')
+
+        Setting.set('import_backend', 'otrs')
+        Setting.set('import_otrs_endpoint', url_parts[0])
+        Setting.set('import_otrs_endpoint_key', key_parts[1])
+
+        result = {
+          result: 'ok',
+          url: params[:url],
+        }
+      else
+        result = {
+          result: 'invalid',
+          message_human: migrator_response['Error']
+        }
+      end
     elsif response.body =~ /(otrs\sag|otrs\.com|otrs\.org)/i
       result = {
         result: 'invalid',
@@ -71,7 +80,6 @@ class ImportOtrsController < ApplicationController
 
   def import_start
     return if setup_done_response
-
     Setting.set('import_mode', true)
     welcome = Import::OTRS.connection_test
     if !welcome
@@ -83,7 +91,7 @@ class ImportOtrsController < ApplicationController
     end
 
     # start migration
-    Import::OTRS.delay.start
+    Import::OTRS.delay.start_bg
 
     render json: {
       result: 'ok',
@@ -91,18 +99,11 @@ class ImportOtrsController < ApplicationController
   end
 
   def import_status
-    if !Setting.get('import_mode')
-      render json: {
-        setup_done: true,
-      }
-      return
+    result = Import::OTRS.status_bg
+    if result[:result] == 'import_done'
+      Setting.reload
     end
-
-    state = Import::OTRS.current_state
-    render json: {
-      data: state,
-      result: 'in_progress',
-    }
+    render json: result
   end
 
   private

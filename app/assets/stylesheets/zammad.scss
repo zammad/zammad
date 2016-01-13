@@ -7275,7 +7275,6 @@ output {
   }
 
   &.is-offline {
-    .chat-body-holder,
     .chat-controls {
       opacity: 0.5;
     }
@@ -7286,7 +7285,7 @@ output {
   background: hsl(210,8%,95%);
   border: 1px solid hsl(0,0%,91%);
   border-radius: 3px 3px 0 0;
-  height: 37px;
+  height: 43px;
   line-height: 13px;
   flex-shrink: 0;
   display: flex;
@@ -7336,7 +7335,7 @@ output {
 .chat-disconnect,
 .chat-close {
   cursor: pointer;
-  padding: 0 4px;
+  padding: 10px;
   
   .btn {
     min-width: 80px;
@@ -7435,6 +7434,15 @@ output {
 @keyframes load-fade {
   from { opacity: .5; transform: scale(0.6); }
   67% { opacity: 1; transform: scale(1); }
+}
+
+.chat-footer {
+  border-top: 1px solid hsl(0,0%,93%);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  margin: 0 -10px;
 }
 
 .chat-controls {

@@ -77,13 +77,25 @@ reset config setting to default
     @@current[:settings_config][name]
   end
 
+=begin
+
+reload config settings
+
+  Setting.reload
+
+=end
+
+  def self.reload
+    load(true)
+  end
+
   private
 
   # load values and cache them
-  def self.load
+  def self.load(force = false)
 
     # check if config is already generated
-    if @@current[:settings_config]
+    if !force && @@current[:settings_config]
       return false if cache_valid?
     end
 

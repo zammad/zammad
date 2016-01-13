@@ -11,8 +11,6 @@ class OtrsImportBrowserTest < TestCase
       fail "ERROR: Need IMPORT_BT_OTRS_ENDPOINT_KEY - hint IMPORT_BT_OTRS_ENDPOINT_KEY='01234567899876543210'"
     end
 
-    import_url = "#{ENV['IMPORT_BT_OTRS_ENDPOINT']};Key=#{ENV['IMPORT_BT_OTRS_ENDPOINT_KEY']}"
-
     @browser = browser_instance
     location(url: browser_url)
 
@@ -20,26 +18,44 @@ class OtrsImportBrowserTest < TestCase
 
     click(css: 'a[href="#import/otrs"]')
 
+    click(css: '.js-download')
+
+    click(css: '.js-otrs-link')
+
+    invalid_key_url = "#{ENV['IMPORT_BT_OTRS_ENDPOINT']};Key=31337"
+
+    set(
+      css:   '#otrs-link',
+      value: invalid_key_url
+    )
+
+    sleep 5
+
+    watch_for(
+      css: '.otrs-link-error',
+      value: 'Invalid API key.',
+    )
+
+    import_url = "#{ENV['IMPORT_BT_OTRS_ENDPOINT']};Key=#{ENV['IMPORT_BT_OTRS_ENDPOINT_KEY']}"
     set(
       css:   '#otrs-link',
       value: import_url
     )
 
-    watch_for(
-      css: 'body',
-      value: 'xxxx',
-      timeout: 10,
+    sleep 5
+
+    watch_for_disappear(
+      css: '.otrs-link-error',
+      value: 'Invalid API key.',
     )
 
-    # click import
+    click(css: '.js-migration-start')
 
-    # click otrs
-
-    # enter otrs url + key
-
-    # watch for import start
-
-    # watch for import end
+    watch_for(
+      css: 'body',
+      value: 'login',
+      timeout: 300,
+    )
 
   end
 
