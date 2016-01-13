@@ -409,8 +409,8 @@ module Import::OTRS
       threads[thread].join
     }
 
-    Setting.set( 'system_init_done', true )
-    #Setting.set( 'import_mode', false )
+    Setting.set('system_init_done', true)
+    Setting.set('import_mode', false)
 
     true
   end

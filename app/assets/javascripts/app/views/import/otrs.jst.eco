@@ -48,7 +48,7 @@
             <td><span><%- @T('Configuration') %></span>
             <td class="progressTable-progressCell">
               <div class="horizontal center">
-                <div class="flex"><progress value="0.3"></progress></div><!-- if there is no max, the value is between 0..1 -->
+                <div class="flex"><progress value="1"></progress></div>
                 <%- @Icon('checkmark') %>
               </div>
           </tr>

@@ -4,11 +4,15 @@
     <div class="wizard-slide vertical">
       <h2><%- @T('Import from') %></h2>
       <div class="wizard-body flex vertical justified">
-        <div class="import-source centered">
           <% for key, item of @items: %>
-            <a href="<%= item.url %>"><img class="logo" src="<%= @C('image_path') + '/' + item.image %>" alt="<%= item.name %>" height="37"></a>
+            <a href="<%= item.url %>" class="import-source centered <%= item.class %>">
+              <% if item.image: %>
+                <img class="logo" src="<%= @C('image_path') + '/' + item.image %>" alt="<%= item.name %>" height="37">
+              <% else: %>
+                <%= item.name %>
+              <% end %>
+            </a>
           <% end %>
-        </div>
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#getting_started"><%- @T('Go Back') %></a>
