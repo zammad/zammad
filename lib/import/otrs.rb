@@ -412,6 +412,11 @@ module Import::OTRS
     Setting.set('system_init_done', true)
     Setting.set('import_mode', false)
 
+    # broadcast import finish
+    Sessions.broadcast(
+      event: 'import:finished',
+    )
+
     true
   end
 

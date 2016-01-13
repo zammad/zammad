@@ -20,9 +20,9 @@ class OtrsImportBrowserTest < TestCase
 
     click(css: 'a[href="#import/otrs"]')
 
-    click(css: 'a.js-download')
+    click(css: '.js-download')
 
-    click(css: 'a.js-otrs-link')
+    click(css: '.js-otrs-link')
 
     set(
       css:   '#otrs-link',
@@ -33,23 +33,13 @@ class OtrsImportBrowserTest < TestCase
       css: 'svg.icon-checkmark'
     )
 
-    click(css: 'a.js-migration-start')
+    click(css: '.js-migration-start')
 
     watch_for(
       css: 'body',
-      value: 'xxxx',
-      timeout: 10,
+      value: 'login',
+      timeout: 300,
     )
-
-    # click import
-
-    # click otrs
-
-    # enter otrs url + key
-
-    # watch for import start
-
-    # watch for import end
 
   end
 
