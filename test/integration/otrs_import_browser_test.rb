@@ -20,10 +20,20 @@ class OtrsImportBrowserTest < TestCase
 
     click(css: 'a[href="#import/otrs"]')
 
+    click(css: 'a.js-download')
+
+    click(css: 'a.js-otrs-link')
+
     set(
       css:   '#otrs-link',
       value: import_url
     )
+
+    exists(
+      css: 'svg.icon-checkmark'
+    )
+
+    click(css: 'a.js-migration-start')
 
     watch_for(
       css: 'body',
