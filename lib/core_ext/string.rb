@@ -103,6 +103,9 @@ class String
     # remove style tags with content
     string.gsub!( %r{<style(|\s.+?)>(.+?)</style>}im, '')
 
+    # insert spaces on [A-z]\n[A-z]
+    string.gsub!( /([A-z])\n([A-z])/m, '\1 \2' )
+
     # remove empty lines
     string.gsub!( /^\s*/m, '' )
 
