@@ -18,6 +18,12 @@ class Index extends App.ControllerContent
 
     @fetch()
 
+    @bind('import:finished', =>
+      console.log('import:finished')
+      @Config.set('system_init_done', true)
+      @navigate '#'
+    )
+
   fetch: ->
 
     # get data
@@ -79,7 +85,6 @@ class Index extends App.ControllerContent
         success:     (data, status, xhr) =>
 
           # validate form
-          console.log(data)
           if data.result is 'ok'
             @urlStatus.attr('data-state', 'success')
             @linkErrorMessage.text('')
@@ -103,7 +108,6 @@ class Index extends App.ControllerContent
       success:     (data, status, xhr) =>
 
         # validate form
-        console.log(data)
         if data.result is 'ok'
           @delay( @updateMigration, 3000 )
     )
