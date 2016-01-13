@@ -568,7 +568,7 @@ class App.TicketZoom extends App.Controller
     console.log('ticket validateion ok')
 
     articleParams = @articleNew.params()
-    if articleParams
+    if articleParams && articleParams.body
       article = new App.TicketArticle
       article.load(articleParams)
       errors = article.validate()
