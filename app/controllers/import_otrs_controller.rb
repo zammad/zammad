@@ -9,7 +9,7 @@ class ImportOtrsController < ApplicationController
     if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result: 'invalid',
-        message: 'Invalid!',
+        message: 'Invalid URL!',
       }
       return
     end
@@ -22,8 +22,10 @@ class ImportOtrsController < ApplicationController
       'Connection refused'                                        => 'Connection refused!',
     }
 
-    # try connecting to otrs
-    response = UserAgent.request(params[:url])
+    url_parts = params[:url].split(';')
+
+    response = UserAgent.request( url_parts[0] )
+
     if !response.success? && response.code.to_s !~ /^40.$/
       message_human = ''
       translation_map.each {|key, message|
@@ -39,34 +41,32 @@ class ImportOtrsController < ApplicationController
       return
     end
 
-    message_human = 'Host found, but it seems to be no OTRS installation!'
-    suffixes = ['/public.pl', '/otrs/public.pl']
-    suffixes.each {|suffix|
-      url = params[:url] + suffix + '?Action=ZammadMigrator'
-      # strip multiple / in url
-      url.gsub!(%r{([^:])(/+/)}, '\\1/')
-      response = UserAgent.request( url )
+    result = {}
+    if response.body =~ /zammad migrator/
 
-      #Setting.set('import_mode', true)
+      key_parts = url_parts[1].split('=')
+
       Setting.set('import_backend', 'otrs')
-      Setting.set('import_otrs_endpoint', url)
-      Setting.set('import_otrs_endpoint_key', '01234567899876543210')
-      if response.body =~ /zammad migrator/
-        render json: {
-          url: url,
-          result: 'ok',
-        }
-        return # rubocop:disable Lint/NonLocalExitFromIterator
-      elsif response.body =~ /(otrs\sag|otrs.com|otrs.org)/i
-        message_human = 'Host found, but no OTRS migrator is installed!'
-      end
-    }
+      Setting.set('import_otrs_endpoint', url_parts[0])
+      Setting.set('import_otrs_endpoint_key', key_parts[1])
 
-    # return result
-    render json: {
-      result: 'invalid',
-      message_human: message_human,
-    }
+      result = {
+        result: 'ok',
+        url: params[:url],
+      }
+    elsif response.body =~ /(otrs\sag|otrs\.com|otrs\.org)/i
+      result = {
+        result: 'invalid',
+        message_human: 'Host found, but no OTRS migrator is installed!'
+      }
+    else
+      result = {
+        result: 'invalid',
+        message_human: 'Host found, but it seems to be no OTRS installation!',
+      }
+    end
+
+    render json: result
   end
 
   def import_start
@@ -91,10 +91,14 @@ class ImportOtrsController < ApplicationController
   end
 
   def import_status
-    return if setup_done_response
+    if !Setting.get('import_mode')
+      render json: {
+        setup_done: true,
+      }
+      return
+    end
 
     state = Import::OTRS.current_state
-
     render json: {
       data: state,
       result: 'in_progress',

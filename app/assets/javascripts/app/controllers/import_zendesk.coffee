@@ -136,11 +136,10 @@ class Index extends App.ControllerContent
         @delay( @updateMigration, 5000 )
     )
 
-App.Config.set( 'import/otrs', Index, 'Routes' )
-App.Config.set( 'otrs', {
-  image: 'otrs-logo.png'
-  title: 'OTRS'
-  name:  'OTRS'
-  class: 'js-otrs'
-  url:   '#import/otrs'
+App.Config.set( 'import/zendesk', Index, 'Routes' )
+App.Config.set( 'zendesk', {
+  title: 'Zendesk'
+  name:  'Zendesk'
+  class: 'js-zendesk'
+  url:   '#import/zendesk'
 }, 'ImportPlugins' )
