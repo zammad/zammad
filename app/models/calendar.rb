@@ -27,6 +27,11 @@ returns calendar object
       ip = nil
     end
 
+    # prevent multible setups for same ip
+    cache = Cache.get('Calendar.init_setup.done')
+    return if cache && cache[:ip] == ip
+    Cache.write('Calendar.init_setup.done', { ip: ip }, { expires_in: 1.hour })
+
     # call for calendar suggestion
     calendar_details = Service::GeoCalendar.location(ip)
     return if !calendar_details

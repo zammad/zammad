@@ -91,10 +91,14 @@ class ImportOtrsController < ApplicationController
   end
 
   def import_status
-    # return if setup_done_response
+    if !Setting.get('import_mode')
+      render json: {
+        setup_done: true,
+      }
+      return
+    end
 
     state = Import::OTRS.current_state
-
     render json: {
       data: state,
       result: 'in_progress',
