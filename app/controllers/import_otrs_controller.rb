@@ -80,7 +80,6 @@ class ImportOtrsController < ApplicationController
 
   def import_start
     return if setup_done_response
-
     Setting.set('import_mode', true)
     welcome = Import::OTRS.connection_test
     if !welcome
@@ -92,7 +91,10 @@ class ImportOtrsController < ApplicationController
     end
 
     # start migration
-    Import::OTRS.delay.start
+    Import::OTRS.delay.start_bg(
+      import_otrs_endpoint: Setting.get('import_otrs_endpoint'),
+      import_otrs_endpoint_key: Setting.get('import_otrs_endpoint_key'),
+    )
 
     render json: {
       result: 'ok',
@@ -100,18 +102,11 @@ class ImportOtrsController < ApplicationController
   end
 
   def import_status
-    if !Setting.get('import_mode')
-      render json: {
-        setup_done: true,
-      }
-      return
+    result = Import::OTRS.status_bg
+    if result[:setup_done] == true
+      Setting.reload
     end
-
-    state = Import::OTRS.current_state
-    render json: {
-      data: state,
-      result: 'in_progress',
-    }
+    render json: result
   end
 
   private

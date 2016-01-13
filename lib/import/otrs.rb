@@ -214,7 +214,7 @@ module Import::OTRS
 
 =begin
 
-  get object statistic from server ans save it in cache
+  get object statistic from remote server ans save it in cache
 
   result = statistic('Subaction=List')
 
@@ -409,15 +409,80 @@ module Import::OTRS
       threads[thread].join
     }
 
+    true
+  end
+
+=begin
+  start import in background
+
+  Import::OTRS.start_bg(
+    import_otrs_endpoint: 'http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator
+',
+    import_otrs_endpoint_key: '01234567899876543210',
+  )
+=end
+
+  def self.start_bg(params)
+    Setting.set('import_mode', 'true')
+    Setting.set('import_backend', 'otrs')
+    Setting.set('import_otrs_endpoint', params[:import_otrs_endpoint])
+    Setting.set('import_otrs_endpoint_key', params[:import_otrs_endpoint_key])
+
+    status_update_thread = Thread.new {
+      loop do
+        result = {
+          data: current_state,
+          result: 'in_progress',
+        }
+        Cache.write('import:state', result, expires_in: 10.minutes)
+        sleep 8
+      end
+    }
+
+    sleep 5
+
+    begin
+      import_thread = Thread.new {
+        Import::OTRS.start
+      }
+    rescue => e
+      status_update_thread.exit
+      status_update_thread.join
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.inspect
+      result = {
+        message: e.message,
+        result: 'error',
+      }
+      Cache.write('import:state', result, expires_in: 10.hours)
+    end
+    import_thread.join
+    status_update_thread.exit
+    status_update_thread.join
+
     Setting.set('system_init_done', true)
     Setting.set('import_mode', false)
+  end
 
-    # broadcast import finish
-    Sessions.broadcast(
-      event: 'import:finished',
-    )
+=begin
 
-    true
+  get import state from background process
+
+  result = Import::OTRS.status_bg
+
+=end
+
+  def self.status_bg
+    if !Setting.get('import_mode')
+      return {
+        setup_done: true,
+      }
+    end
+    state = Cache.get('import:state')
+    return state if state
+    {
+      message: 'not running',
+    }
   end
 
   def self.diff_worker

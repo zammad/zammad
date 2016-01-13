@@ -18,12 +18,6 @@ class Index extends App.ControllerContent
 
     @fetch()
 
-    @bind('import:finished', =>
-      console.log('import:finished')
-      @Config.set('system_init_done', true)
-      @navigate '#'
-    )
-
   fetch: ->
 
     # get data
@@ -95,7 +89,7 @@ class Index extends App.ControllerContent
             @nextStartMigration.addClass('hide')
 
       )
-    @delay( callback, 700, 'import_otrs_url' )
+    @delay(callback, 700, 'import_otrs_url')
 
   startMigration: (e) =>
     e.preventDefault()
@@ -106,10 +100,8 @@ class Index extends App.ControllerContent
       url:         @apiPath + '/import/otrs/import_start',
       processData: true,
       success:     (data, status, xhr) =>
-
-        # validate form
         if data.result is 'ok'
-          @delay( @updateMigration, 3000 )
+          @delay(@updateMigration, 3000)
     )
 
 
@@ -127,17 +119,24 @@ class Index extends App.ControllerContent
           @navigate '#'
           return
 
-        for key, item of data.data
-          element = @$('.js-' + key.toLowerCase() )
-          element.find('.js-done').text(item.done)
-          element.find('.js-total').text(item.total)
-          element.find('progress').attr('max', item.total )
-          element.find('progress').attr('value', item.done )
-          if item.total <= item.done
-            element.addClass('is-done')
-          else
-            element.removeClass('is-done')
-        @delay( @updateMigration, 5000 )
+        if data.result is 'error'
+          @$('.js-error').removeClass('hide')
+          @$('.js-error').html(App.i18n.translateContent(data.message))
+        else
+          @$('.js-error').addClass('hide')
+
+        if data.result is 'in_progress'
+          for key, item of data.data
+            element = @$('.js-' + key.toLowerCase() )
+            element.find('.js-done').text(item.done)
+            element.find('.js-total').text(item.total)
+            element.find('progress').attr('max', item.total )
+            element.find('progress').attr('value', item.done )
+            if item.total <= item.done
+              element.addClass('is-done')
+            else
+              element.removeClass('is-done')
+        @delay(@updateMigration, 6500)
     )
 
 App.Config.set( 'import/otrs', Index, 'Routes' )

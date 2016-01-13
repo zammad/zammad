@@ -41,6 +41,8 @@
 
     <div class="wizard-slide vertical hide" data-slide="otrs-import">
       <h2><%- @T('OTRS Migration') %></h2>
+      <div class="alert alert--danger hide js-error" role="alert"></div>
+
       <div class="wizard-body flex vertical justified">
         <table class="progressTable">
           <tr class="js-config">
