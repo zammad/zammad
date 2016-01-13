@@ -442,7 +442,7 @@ class ChatWindow extends App.Controller
     })
 
   disconnect: =>
-    @addStatusMessage("<strong>You</strong> left the conversation")
+    @addStatusMessage('<strong>You</strong> left the conversation')
     App.WebSocket.send(
       event:'chat_session_close'
       data:

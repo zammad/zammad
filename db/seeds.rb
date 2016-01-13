@@ -392,27 +392,6 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via OTRS',
-  name: 'auth_otrs',
-  area: 'Security::Authentication',
-  description: 'Enables user authentication via OTRS.',
-  state: {
-    adapter: 'Auth::Otrs',
-    required_group_ro: 'stats',
-    group_rw_role_map: {
-      'admin' => 'Admin',
-      'stats' => 'Report',
-    },
-    group_ro_role_map: {
-      'stats' => 'Report',
-    },
-    always_role: {
-      'Agent' => true,
-    },
-  },
-  frontend: false
-)
-Setting.create_if_not_exists(
   title: 'Authentication via LDAP',
   name: 'auth_ldap',
   area: 'Security::Authentication',
