@@ -23,7 +23,10 @@ store device for user
 
     # get location info
     location_details = Service::GeoIp.location(ip)
-    location = location_details['country_name']
+    location = 'unknown'
+    if location_details
+      location = location_details['country_name']
+    end
 
     # find device by fingerprint
     if fingerprint

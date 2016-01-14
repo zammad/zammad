@@ -8,7 +8,7 @@ module Service
 
 lookup location based on ip or hostname
 
-  result = Service::GeoIp.location( '172.0.0.1' )
+  result = Service::GeoIp.location('172.0.0.1')
 
 returns
 
@@ -31,7 +31,7 @@ returns
     def self.location(address)
 
       # load backend
-      backend = load_adapter_by_setting( 'geo_ip_backend' )
+      backend = load_adapter_by_setting('geo_ip_backend')
       return if !backend
 
       # db lookup
