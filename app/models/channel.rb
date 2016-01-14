@@ -159,17 +159,28 @@ stream all accounts
 
         # start threads for each channel
         @@channel_stream[channel.id][:thread] = Thread.new {
-          logger.debug "Started stream channel for '#{channel.id}' (#{channel.area})..."
-          @@channel_stream[channel.id][:stream_instance] = channel.stream_instance
-          @@channel_stream[channel.id][:stream_instance].stream
-          @@channel_stream[channel.id][:stream_instance].disconnect
-          @@channel_stream[channel.id] = false
-          logger.debug " ...stopped thread for '#{channel.id}'"
+          begin
+            logger.debug "Started stream channel for '#{channel.id}' (#{channel.area})..."
+            @@channel_stream[channel.id][:stream_instance] = channel.stream_instance
+            @@channel_stream[channel.id][:stream_instance].stream
+            @@channel_stream[channel.id][:stream_instance].disconnect
+            @@channel_stream[channel.id] = false
+            logger.debug " ...stopped thread for '#{channel.id}'"
+          rescue => e
+            error = "Can't use channel (#{channel.id}): #{e.inspect}"
+            logger.error error
+            logger.error e.backtrace
+            channel.status_in = 'error'
+            channel.last_log_in = error
+            channel.save
+            @@channel_stream[channel.id] = false
+          end
         }
       }
 
       # cleanup deleted channels
       last_channels.each {|channel_id|
+        next if !@@channel_stream[channel_id]
         next if current_channels.include?(channel_id)
         logger.debug "channel (#{channel_id}) not longer active, stop thread"
         @@channel_stream[channel_id][:thread].exit
