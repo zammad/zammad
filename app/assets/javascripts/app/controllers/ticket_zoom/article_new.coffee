@@ -28,49 +28,71 @@ class App.TicketZoomArticleNew extends App.Controller
   constructor: ->
     super
 
+    # set possble article types
+    possibleArticleType =
+      note: true
+      phone: true
+    if @ticket && @ticket.create_article_type_id
+      articleTypeCreate = App.TicketArticleType.find(@ticket.create_article_type_id).name
+      if articleTypeCreate is 'twitter status'
+        possibleArticleType['twitter status'] = true
+      else if articleTypeCreate is 'twitter direct-message'
+        possibleArticleType['twitter direct-message'] = true
+      else if articleTypeCreate is 'email'
+        possibleArticleType['email'] = true
+    if @ticket && @ticket.customer_id
+      customer = App.User.find(@ticket.customer_id)
+      if customer.email
+        possibleArticleType['email'] = true
+
     # gets referenced in @setArticleType
     @type = @defaults['type'] || 'note'
-    @articleTypes = [
-      {
+    @articleTypes = []
+    if possibleArticleType.note
+      @articleTypes.push {
         name:       'note'
         icon:       'note'
         attributes: []
         features:   ['attachment']
-      },
-      {
+      }
+    if possibleArticleType.email
+      @articleTypes.push {
         name:       'email'
         icon:       'email'
         attributes: ['to', 'cc']
         features:   ['attachment']
-      },
-      {
+      }
+    if possibleArticleType.facebook
+      @articleTypes.push {
         name:       'facebook'
         icon:       'facebook'
         attributes: []
-      },
-      {
+      }
+    if possibleArticleType['twitter status']
+      @articleTypes.push {
         name:              'twitter status'
         icon:              'twitter'
         attributes:        []
         features:          ['body:limit']
         maxTextLength:     140
         warningTextLength: 30
-      },
-      {
+      }
+    if possibleArticleType['twitter direct-message']
+      @articleTypes.push {
         name:              'twitter direct-message'
         icon:              'twitter'
         attributes:        ['to']
         features:          ['body:limit']
         maxTextLength:     10000
         warningTextLength: 500
-      },
-      {
+      }
+    if possibleArticleType.phone
+      @articleTypes.push {
         name:       'phone'
         icon:       'phone'
         attributes: []
         features:   ['attachment']
-      },
-    ]
+      }
 
     if @isRole('Customer')
       @type = 'note'
@@ -249,8 +271,8 @@ class App.TicketZoomArticleNew extends App.Controller
         params.sender_id = sender.id
       else
         sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
-        params.sender_id = sender.id
         type             = App.TicketArticleType.findByAttribute('name', params['type'])
+        params.sender_id = sender.id
         params.type_id   = type.id
 
     if params.type is 'twitter status'
