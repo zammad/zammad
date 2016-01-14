@@ -1,7 +1,7 @@
 <div class="newTicket newTicket--chatTicket">
   <div class="box chatHistory">
     <div class="page-header">
-      <h1>Chat History</h1>
+      <h1>Chat</h1>
     </div>
     <!-- Hallo Martin. Achtung  chat-body-holder--standalone klasse is wichtig -->
     <div class="page-content chat-body-holder chat-body-holder--standalone js-scrollHolder">
@@ -85,32 +85,13 @@
 </div>
 <div class="controls"><div class="richtext form-control">
     <div contenteditable="true" id="TicketArticle_204825_body" data-name="body" class=""></div><div class="shortcut dropdown"><ul class="dropdown-menu" style="width: 360px; max-height: 200px;"><li><a>-</a></li></ul></div>
-    <div class="attachments"></div>
-    <div class="article-attachment">
-        <div class="attachmentPlaceholder">
-            <span class="attachmentPlaceholder-inputHolder fileUpload">
-            select attachment..
-            <input multiple="multiple" type="file" name="file" style="">
-            </span>
-        </div>
-        <div class="attachmentUpload hide">
-            <div class="horizontal">
-                <div class="u-highlight">
-                    Uploading (<span class="js-percentage">0</span>%) ...
-                </div>
-                <div class="attachmentUpload-cancel js-cancel">
-                <svg class="icon icon-diagonal-cross "><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></div>Cancel Upload
-            </div>
-        </div>
-        <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+    <div class="attachments attachments--list">
+      <%- @Icon('paperclip') %>
+      <div class="attachments-title">1 Attached File</div>
+      <div class="attachment">
+        <div class="attachment-name u-highlight">Chat</div>
+      </div>
     </div>
-    <div class="fit dropArea">
-        <div class="dropArea-inner">
-            Drop Files here
-        </div>
-    </div></div>
-    <span class="help-inline"></span>
-    <span class="help-block"></span>
 </div>
 </div></fieldset></div>
 <div class="formset-inset">
