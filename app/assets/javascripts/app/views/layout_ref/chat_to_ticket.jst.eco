@@ -1,0 +1,208 @@
+<div class="newTicket newTicket--chatTicket">
+  <div class="box chatHistory">
+    <div class="page-header">
+      <h1>Chat History</h1>
+    </div>
+    <!-- Hallo Martin. Achtung  chat-body-holder--standalone klasse is wichtig -->
+    <div class="page-content chat-body-holder chat-body-holder--standalone js-scrollHolder">
+        <div class="chat-body js-body"><div class="chat-timestamp js-timestamp"><span class="chat-timestamp-label">today</span> 11:32</div>
+
+<div class="chat-message chat-message--customer">Servus!</div>
+<div class="chat-message chat-message--agent">Griasde!</div>
+
+<div class="chat-message chat-message--customer">Du hast du a Minutn?</div>
+<div class="chat-message chat-message--agent">Ja freili!</div>
+<div class="chat-message chat-message--agent">Um wos gehts?</div>
+
+
+
+
+
+<div class="chat-message chat-message--customer">Oiso I hob meiner Muatta z Weihnachten a Soundbox von eich kafft</div>
+
+<div class="chat-message chat-message--customer">Etz is des Problem dos oana vo de Knepf si ned gscheid drucka lasst</div>
+<div class="chat-message chat-message--agent">Au weh zwick. Des soid ned sa</div>
+<div class="chat-message chat-message--agent">Du kannst du des ei'schicka?</div>
+<div class="chat-timestamp js-timestamp"><span class="chat-timestamp-label">today</span> 11:34</div>
+<div class="chat-message chat-message--agent">Na dat ma wia uns des oschaun</div>
+
+<div class="chat-message chat-message--customer">Ja klar. Super!</div>
+
+<div class="chat-message chat-message--customer">Danksche, gell</div>
+<div class="chat-message chat-message--agent">Koa ding. Duad ma ja leid das des no ned lafft</div>
+<div class="chat-message chat-message--agent">Bis dann!</div>
+
+<div class="chat-message chat-message--customer">Ja pfiate</div>
+</div>
+    </div>
+  </div>
+  <%- @Icon('arrow-right', 'arrow--x2') %>
+  <div class="box">
+      <div class="page-header">
+          <h1>New Ticket</h1>
+      </div>
+      <div class="page-content">
+          <form role="form" class="ticket-create">
+              <input type="hidden" name="formSenderType" value="email-out">
+              <input type="hidden" name="form_id" value="764915655">
+              <div class="ticket-form-top"><fieldset><div class="user_autocompletion form-group">
+                  <div class="formGroup-label">
+                      <label for="Ticket_448391_customer_id">Customer <span>*</span></label>
+                  </div>
+                  <div class="controls"><div class="dropdown js-recipientDropdown zIndex-2"><div class="u-positionOrigin">
+                      <input type="hidden" name="customer_id" value="">
+                      <input name="customer_id_completion" class="user-select form-control" autocapitalize="off" placeholder="Enter Person or Organization/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                      <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
+                  </div>
+                  <div class="dropdown-menu" aria-labelledby="customer_id">
+                      <ul class="recipientList" role="menu"><li class="recipientList-entry recipientList--new js-userNew" data-user-id="new">
+                          <div class="recipientList-iconSpacer">
+                              <svg class="icon icon-plus recipientList-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-plus"></use></svg>
+                          </div>
+                          <div class="recipientList-name">
+                              Create new Customer
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <span class="help-inline"></span>
+          <span class="help-block"></span>
+      </div>
+  </div><div class="input form-group">
+  <div class="formGroup-label">
+      <label for="Ticket_448391_title">Title <span>*</span></label>
+  </div>
+  <div class="controls">
+  <input id="Ticket_448391_title" type="text" name="title" value="" class="form-control " required="">
+  <span class="help-inline"></span>
+  <span class="help-block"></span>
+</div>
+</div></fieldset></div>
+<div class="article-form-top"><fieldset><div class="richtext form-group">
+<div class="formGroup-label">
+    <label for="TicketArticle_204825_body">Text <span>*</span></label>
+</div>
+<div class="controls"><div class="richtext form-control">
+    <div contenteditable="true" id="TicketArticle_204825_body" data-name="body" class=""></div><div class="shortcut dropdown"><ul class="dropdown-menu" style="width: 360px; max-height: 200px;"><li><a>-</a></li></ul></div>
+    <div class="attachments"></div>
+    <div class="article-attachment">
+        <div class="attachmentPlaceholder">
+            <span class="attachmentPlaceholder-inputHolder fileUpload">
+            select attachment..
+            <input multiple="multiple" type="file" name="file" style="">
+            </span>
+        </div>
+        <div class="attachmentUpload hide">
+            <div class="horizontal">
+                <div class="u-highlight">
+                    Uploading (<span class="js-percentage">0</span>%) ...
+                </div>
+                <div class="attachmentUpload-cancel js-cancel">
+                <svg class="icon icon-diagonal-cross "><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-diagonal-cross"></use></svg></div>Cancel Upload
+            </div>
+        </div>
+        <div class="attachmentUpload-progressBar" style="width: 0%"></div>
+    </div>
+    <div class="fit dropArea">
+        <div class="dropArea-inner">
+            Drop Files here
+        </div>
+    </div></div>
+    <span class="help-inline"></span>
+    <span class="help-block"></span>
+</div>
+</div></fieldset></div>
+<div class="formset-inset">
+<div class="ticket-form-middle horizontal two-columns"><div class="select form-group column">
+    <div class="formGroup-label">
+        <label for="Ticket_890825_group_id">Group <span>*</span></label>
+    </div>
+    <div class="controls"><div class="controls-select">
+        <select id="Ticket_890825_group_id" class="form-control" name="group_id" required="">
+            <option value="">-</option>
+            <option value="1">Users</option>
+        </select>
+        <svg class="icon icon-arrow-down "><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
+    </div>
+    <span class="help-inline"></span>
+    <span class="help-block"></span>
+</div>
+</div><div class="select form-group column">
+<div class="formGroup-label">
+<label for="Ticket_890825_owner_id">Owner <span></span></label>
+</div>
+<div class="controls"><div class="controls-select">
+<select id="Ticket_890825_owner_id" class="form-control" name="owner_id">
+    <option value="" selected="">-</option>
+</select>
+<svg class="icon icon-arrow-down "><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
+</div>
+<span class="help-inline"></span>
+<span class="help-block"></span>
+</div>
+</div><div class="select form-group column">
+<div class="formGroup-label">
+<label for="Ticket_890825_state_id">State <span>*</span></label>
+</div>
+<div class="controls"><div class="controls-select">
+<select id="Ticket_890825_state_id" class="form-control" name="state_id" required="">
+<option value="">-</option>
+<option value="4">closed</option>
+<option value="1">new</option>
+<option value="2" selected="">open</option>
+<option value="7">pending close</option>
+<option value="3">pending reminder</option>
+</select>
+<svg class="icon icon-arrow-down "><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
+</div>
+<span class="help-inline"></span>
+<span class="help-block"></span>
+</div>
+</div><div class="datetime form-group column hide has-error">
+<div class="formGroup-label">
+<label for="Ticket_890825_pending_time">Pending till <span>*</span></label>
+</div>
+<div class="controls"><div class="horizontal u-positionOrigin is-hidden" data-name="pending_time">
+<input type="hidden" value="" name="{datetime}pending_time">
+<input type="text" value="" class="form-control flex-shrink-horizontal js-datepicker " data-item="date">
+<div class="controls-label">at</div>
+<input type="text" value="" class="form-control time js-timepicker " data-item="time">
+</div>
+<span class="help-inline"></span>
+<span class="help-block"></span>
+</div>
+</div><div class="select form-group column">
+<div class="formGroup-label">
+<label for="Ticket_890825_priority_id">Priority <span>*</span></label>
+</div>
+<div class="controls"><div class="controls-select">
+<select id="Ticket_890825_priority_id" class="form-control" name="priority_id" required="">
+<option value="">-</option>
+<option value="1">1 low</option>
+<option value="2" selected="">2 normal</option>
+<option value="3">3 high</option>
+</select>
+<svg class="icon icon-arrow-down "><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>
+</div>
+<span class="help-inline"></span>
+<span class="help-block"></span>
+</div>
+</div></div>
+<div class="ticket-form-bottom"><fieldset><div class="tag form-group">
+<div class="formGroup-label">
+<label for="Ticket_216664_tags-tokenfield">Tags <span></span></label>
+</div>
+<div class="controls"><div class="tokenfield form-control" style="height: auto;"><input id="Ticket_216664_tags" type="text" name="tags" value="" class="form-control " tabindex="-1" style="position: absolute; left: -10000px;"><input type="text" tabindex="-1" style="position: absolute; left: -10000px;"><input type="text" class="token-input" autocomplete="off" placeholder="" id="Ticket_216664_tags-tokenfield" tabindex="0" style="min-width: 60px; width: 528px;"></div>
+<span class="help-inline"></span>
+<span class="help-block"></span>
+</div>
+</div></fieldset></div>
+</div>
+<div class="form-controls">
+<button type="submit" class="btn btn--success js-submit align-right">Create</button>
+</div>
+</form>
+</div>
+</div>
+</div>

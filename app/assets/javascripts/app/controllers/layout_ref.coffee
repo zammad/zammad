@@ -2179,5 +2179,24 @@ class TwitterConversationRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
 
+class ChatToTicketRef extends App.ControllerContent
+
+  elements:
+    '.js-scrollHolder': 'scrollHolder'
+
+  constructor: ->
+    super
+    @render()
+    @scrollToBottom()
+
+  render: ->
+    @html App.view('layout_ref/chat_to_ticket')()
+
+  scrollToBottom: ->
+    @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+
+
+App.Config.set( 'layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes' )
+
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

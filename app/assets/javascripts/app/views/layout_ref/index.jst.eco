@@ -2,8 +2,8 @@
 
   <h1>Layout Reference</h1>
 
-
   <ul>
+    <li><a href="#layout_ref/chat_to_ticket">💬 Chat to Ticket</a></li>
     <li><a href="#layout_ref/twitter_conversation">Twitter Conversation</a></li>
     <li><a href="#layout_ref/admin_loading">Admin Loading Screen</a></li>
     <li><a href="#layout_ref/customer_chat">Customer Chat</a></li>
