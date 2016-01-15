@@ -201,3 +201,9 @@ Lint/UselessAssignment:
 Style/ExtraSpacing:
   Description: 'Do not use unnecessary spacing.'
   Enabled: false
+
+# Broken!!!! Generates broken code since "String".downcase == "strinG".downcase is not equals "String".casecmp("strinG") but "String".casecmp("strinG") == 0 !!!
+Performance/Casecmp:
+  Description: 'Use `casecmp` rather than `downcase ==`.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringcasecmp-vs-stringdowncase---code'
+  Enabled: false

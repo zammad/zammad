@@ -193,7 +193,7 @@ class Channel::EmailParser
     # not multipart email
 
     # text part only
-    elsif !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.casecmp('text/plain')
+    elsif !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.casecmp('text/plain') == 0
       data[:body] = mail.body.decoded
       data[:body] = Encode.conv(mail.charset, data[:body])
 
@@ -204,7 +204,7 @@ class Channel::EmailParser
     # html part only, convert to text and add it as attachment
     else
       filename = '-no name-'
-      if mail.mime_type.to_s.casecmp('text/html')
+      if mail.mime_type.to_s.casecmp('text/html') == 0
         filename = 'message.html'
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv(mail.charset, data[:body])
