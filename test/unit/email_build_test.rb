@@ -41,7 +41,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       content_type: 'text/html',
       attachments: [
         {
-          'Mime-Type'    => 'image/png',
+          'Mime-Type' => 'image/png',
           :content      => 'xxx',
           :filename     => 'somename.png',
         },
@@ -95,7 +95,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       body: text,
       attachments: [
         {
-          'Mime-Type'    => 'image/png',
+          'Mime-Type' => 'image/png',
           :content      => 'xxx',
           :filename     => 'somename.png',
         },

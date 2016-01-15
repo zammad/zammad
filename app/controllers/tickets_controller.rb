@@ -117,10 +117,10 @@ class TicketsController < ApplicationController
 
     # open tickets by customer
     group_ids = Group.select( 'groups.id' )
-                .joins(:users)
-                .where( 'groups_users.user_id = ?', current_user.id )
-                .where( 'groups.active = ?', true )
-                .map( &:id )
+                     .joins(:users)
+                     .where( 'groups_users.user_id = ?', current_user.id )
+                     .where( 'groups.active = ?', true )
+                     .map( &:id )
 
     access_condition = [ 'group_id IN (?)', group_ids ]
 
@@ -142,7 +142,7 @@ class TicketsController < ApplicationController
     }
 
     ticket_ids_recent_viewed = []
-    recent_views       = RecentView.list( current_user, 8, 'Ticket' )
+    recent_views = RecentView.list( current_user, 8, 'Ticket' )
     recent_views.each {|recent_view|
       next if recent_view['object'] != 'Ticket'
       ticket_ids_recent_viewed.push recent_view['o_id']
@@ -417,15 +417,15 @@ class TicketsController < ApplicationController
 
         # created
         created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end )
-                  .where(access_condition)
-                  .where(condition)
-                  .count
+                        .where(access_condition)
+                        .where(condition)
+                        .count
 
         # closed
         closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  )
-                 .where(access_condition)
-                 .where(condition)
-                 .count
+                       .where(access_condition)
+                       .where(condition)
+                       .count
 
         data = {
           month: date_to_check.month,
@@ -532,7 +532,7 @@ class TicketsController < ApplicationController
   def article_create(ticket, params)
 
     # create article if given
-    form_id  = params[:form_id]
+    form_id = params[:form_id]
     params.delete(:form_id)
     article = Ticket::Article.new( Ticket::Article.param_validation( params ) )
     article.ticket_id = ticket.id

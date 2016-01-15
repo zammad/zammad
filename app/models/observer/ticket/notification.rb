@@ -71,7 +71,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         end
 
       elsif event[:name] == 'Ticket'
-        ticket  = Ticket.lookup( id: event[:id] )
+        ticket = Ticket.lookup( id: event[:id] )
 
         # next if ticket is already deleted
         next if !ticket

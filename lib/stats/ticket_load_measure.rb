@@ -44,17 +44,17 @@ class Stats::TicketLoadMeasure
 
     in_percent = ( result[:used_for_average].to_f / (result[:average_per_agent].to_f / 100) ).round(1)
     result[:average_per_agent_in_percent] = in_percent
-    if in_percent >= 90
-      result[:state] = 'supergood'
-    elsif in_percent >= 65
-      result[:state] = 'good'
-    elsif in_percent >= 40
-      result[:state] = 'ok'
-    elsif in_percent >= 20
-      result[:state] = 'bad'
-    else
-      result[:state] = 'superbad'
-    end
+    result[:state] = if in_percent >= 90
+                       'supergood'
+                     elsif in_percent >= 65
+                       'good'
+                     elsif in_percent >= 40
+                       'ok'
+                     elsif in_percent >= 20
+                       'bad'
+                     else
+                       'superbad'
+                     end
 
     # convert result[:used_for_average] in percent to related total
     result[:average_per_agent] = ( (result[:total].to_f / 100) * result[:average_per_agent] ).round(1)

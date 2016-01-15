@@ -19,7 +19,7 @@ class TicketArticlesController < ApplicationController
 
   # POST /articles
   def create
-    form_id  = params[:ticket_article][:form_id]
+    form_id = params[:ticket_article][:form_id]
     params[:ticket_article].delete(:form_id)
     @article = Ticket::Article.new( Ticket::Article.param_validation( params[:ticket_article] ) )
 
@@ -93,11 +93,11 @@ class TicketArticlesController < ApplicationController
     file = params[:File]
     content_type = file.content_type
     if !content_type || content_type == 'application/octet-stream'
-      if MIME::Types.type_for(file.original_filename).first
-        content_type = MIME::Types.type_for(file.original_filename).first.content_type
-      else
-        content_type = 'application/octet-stream'
-      end
+      content_type = if MIME::Types.type_for(file.original_filename).first
+                       MIME::Types.type_for(file.original_filename).first.content_type
+                     else
+                       'application/octet-stream'
+                     end
     end
     headers_store = {
       'Content-Type' => content_type

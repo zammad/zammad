@@ -6,7 +6,7 @@ class Observer::Ticket::Notification::BackgroundJob
   end
 
   def perform
-    ticket  = Ticket.find(@p[:ticket_id])
+    ticket = Ticket.find(@p[:ticket_id])
     if @p[:article_id]
       article = Ticket::Article.find(@p[:article_id])
     end
@@ -53,11 +53,8 @@ class Observer::Ticket::Notification::BackgroundJob
     recipients.each do |user|
 
       # ignore user who changed it by him self
-      if article
-        next if article.updated_by_id == user.id
-      else
-        next if ticket.updated_by_id == user.id
-      end
+      next if article && article.updated_by_id == user.id
+      next if !article && ticket.updated_by_id == user.id
 
       # ignore inactive users
       next if !user.active
@@ -217,11 +214,11 @@ class Observer::Ticket::Notification::BackgroundJob
         # set new key
         display = object_manager_attribute[:display].to_s
       end
-      if object_manager_attribute && object_manager_attribute[:translate]
-        changes[display] = ["i18n(#{value_str[0]})", "i18n(#{value_str[1]})"]
-      else
-        changes[display] = [value_str[0].to_s, value_str[1].to_s]
-      end
+      changes[display] = if object_manager_attribute && object_manager_attribute[:translate]
+                           ["i18n(#{value_str[0]})", "i18n(#{value_str[1]})"]
+                         else
+                           [value_str[0].to_s, value_str[1].to_s]
+                         end
     }
     changes
   end

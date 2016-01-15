@@ -44,7 +44,7 @@ e. g.
     # create agents
     agent_pool = []
     if agents && !agents.zero?
-      roles  = Role.where( name: [ 'Agent'] )
+      roles = Role.where( name: [ 'Agent'] )
       groups_all = Group.all
 
       ActiveRecord::Base.transaction do
@@ -73,7 +73,7 @@ e. g.
     # create customer
     customer_pool = []
     if customers && !customers.zero?
-      roles  = Role.where( name: [ 'Customer'] )
+      roles = Role.where( name: [ 'Customer'] )
       groups_all = Group.all
 
       ActiveRecord::Base.transaction do

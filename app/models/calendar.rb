@@ -344,11 +344,11 @@ returns
       if public_holidays_was && public_holidays_was[day] && public_holidays_was[day]['feed']
         meta['feed'] = public_holidays_was[day]['feed']
       end
-      if meta['active']
-        meta['active'] = true
-      else
-        meta['active'] = false
-      end
+      meta['active'] = if meta['active']
+                         true
+                       else
+                         false
+                       end
     }
 
   end

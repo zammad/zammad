@@ -98,7 +98,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
     assert_equal( name, group_new[:name], 'verify by where' )
 
     # lookup by name
-    cache_key = "#{group_new.name}"
+    cache_key = group_new.name.to_s
     assert_nil( Group.cache_get(cache_key) )
 
     group_lookup_name = Group.lookup( name: group_new.name )
@@ -106,7 +106,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
     assert( Group.cache_get(cache_key) )
 
     # lookup by id
-    cache_key = "#{group_new.id}"
+    cache_key = group_new.id.to_s
     assert_nil( Group.cache_get(cache_key) )
 
     group_lookup_id = Group.lookup( id: group.id )
@@ -119,7 +119,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
     group.save
 
     # lookup by name
-    cache_key = "#{group.name}"
+    cache_key = group.name.to_s
     assert_nil( Group.cache_get(cache_key) )
 
     group_lookup = Group.where( name: group_new.name ).first
@@ -139,7 +139,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
     assert( Group.cache_get(cache_key) )
 
     # lookup by id
-    cache_key = "#{group_new.id}"
+    cache_key = group_new.id.to_s
     assert_nil( Group.cache_get(cache_key) )
 
     group_lookup_id = Group.lookup( id: group.id )

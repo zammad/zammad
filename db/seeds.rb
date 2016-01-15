@@ -1644,10 +1644,10 @@ Ticket::Article::Sender.create_if_not_exists( id: 3, name: 'System' )
 Macro.create_if_not_exists(
   name: 'Close & Tag as Spam',
   perform: {
-    'ticket.state_id': {
+    'ticket.state_id' => {
       value: Ticket::State.find_by(name: 'closed').id,
     },
-    'ticket.tags': {
+    'ticket.tags' => {
       operator: 'add',
       value: 'spam',
     },

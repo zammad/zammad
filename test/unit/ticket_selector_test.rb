@@ -37,7 +37,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     updated_by_id: 1,
     created_by_id: 1,
   )
-  roles  = Role.where( name: 'Customer' )
+  roles = Role.where( name: 'Customer' )
   organization1 = Organization.create_if_not_exists(
     name: 'Selector Org',
     updated_at: '2015-02-05 16:37:00',

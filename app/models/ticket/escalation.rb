@@ -171,10 +171,8 @@ returns
     # get close time in min
     if close_time
       self.close_time_in_min = pending_minutes(created_at, close_time, biz, 'business_minutes')
-    else
-      if close_time_escal_date && ((!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time)
-        self.escalation_time = close_time_escal_date
-      end
+    elsif close_time_escal_date && ((!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time)
+      self.escalation_time = close_time_escal_date
     end
 
     # set time to show if sla is raised or not
@@ -186,7 +184,7 @@ returns
       self.escalation_time = nil
     end
 
-    return if !self.changed?
+    return if !changed?
 
     self.callback_loop = true
     save
@@ -279,11 +277,11 @@ returns
       end
       total_time_in_min = total_time_in_min + diff
 
-      if history_item['value_to'] == 'pending reminder'
-        last_state_is_pending = true
-      else
-        last_state_is_pending = false
-      end
+      last_state_is_pending = if history_item['value_to'] == 'pending reminder'
+                                true
+                              else
+                                false
+                              end
 
       # remember for next loop last state
       last_state        = history_item['value_to']

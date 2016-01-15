@@ -12,11 +12,11 @@ class Service::GeoCalendar::Zammad
 
     # do lookup
     host = 'https://geo.zammad.com'
-    if address
-      url  = "/calendar?ip=#{CGI.escape address}"
-    else
-      url  = '/calendar'
-    end
+    url = if address
+            "/calendar?ip=#{CGI.escape address}"
+          else
+            '/calendar'
+          end
     data = {}
     begin
       response = UserAgent.get(

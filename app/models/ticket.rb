@@ -103,16 +103,16 @@ returns
     access_condition = []
     if user.role?(Z_ROLENAME_AGENT)
       group_ids = Group.select( 'groups.id' ).joins(:users)
-                  .where( 'groups_users.user_id = ?', user.id )
-                  .where( 'groups.active = ?', true )
-                  .map( &:id )
+                       .where( 'groups_users.user_id = ?', user.id )
+                       .where( 'groups.active = ?', true )
+                       .map( &:id )
       access_condition = [ 'group_id IN (?)', group_ids ]
     else
-      if !user.organization || ( !user.organization.shared || user.organization.shared == false )
-        access_condition = [ 'tickets.customer_id = ?', user.id ]
-      else
-        access_condition = [ '( tickets.customer_id = ? OR tickets.organization_id = ? )', user.id, user.organization.id ]
-      end
+      access_condition = if !user.organization || ( !user.organization.shared || user.organization.shared == false )
+                           [ 'tickets.customer_id = ?', user.id ]
+                         else
+                           [ '( tickets.customer_id = ? OR tickets.organization_id = ? )', user.id, user.organization.id ]
+                         end
     end
     access_condition
   end
@@ -134,7 +134,7 @@ returns
     ticket_states = Ticket::State.where(
       state_type_id: Ticket::StateType.find_by( name: 'pending action' ),
     )
-    .where.not(next_state_id: nil) # rubocop:disable Style/MultilineOperationIndentation
+                                 .where.not(next_state_id: nil)
 
     return [] if !ticket_states
 
@@ -146,7 +146,7 @@ returns
     tickets = where(
       state_id: next_state_map.keys,
     )
-    .where( 'pending_time <= ?', Time.zone.now ) # rubocop:disable Style/MultilineOperationIndentation
+              .where( 'pending_time <= ?', Time.zone.now )
 
     return [] if !tickets
 

@@ -25,7 +25,7 @@ class RecentViewTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert( ticket2, 'ticket created' )
-    user1   = User.find(2)
+    user1 = User.find(2)
     RecentView.user_log_destroy(user1)
 
     RecentView.log( ticket1.class.to_s, ticket1.id, user1 )

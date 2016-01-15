@@ -274,10 +274,8 @@ returns
       if !params.empty?
         request.body = params.to_json
       end
-    else
-      if !params.empty?
-        request.set_form_data(params)
-      end
+    elsif !params.empty?
+      request.set_form_data(params)
     end
     request
   end

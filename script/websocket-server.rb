@@ -238,11 +238,11 @@ EventMachine.run {
   end
 
   def websocket_send(client_id, data)
-    if data.class != Array
-      msg = "[#{data.to_json}]"
-    else
-      msg = data.to_json
-    end
+    msg = if data.class != Array
+            "[#{data.to_json}]"
+          else
+            data.to_json
+          end
     log 'debug', "send #{msg}", client_id
     if !@clients[client_id]
       log 'error', "no such @clients for #{client_id}", client_id

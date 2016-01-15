@@ -59,14 +59,14 @@ returns
       sender = Ticket::Article::Sender.lookup( name: params[:params][:sender] )
       type   = Ticket::Article::Type.lookup( name: params[:params][:type] )
       count = Ticket::Article.joins('INNER JOIN tickets ON tickets.id = ticket_articles.ticket_id')
-              .where(query, *bind_params).joins(tables)
-              .where(
-                'ticket_articles.created_at >= ? AND ticket_articles.created_at <= ? AND ticket_articles.type_id = ? AND ticket_articles.sender_id = ?',
-                start,
-                stop,
-                type.id,
-                sender.id,
-              ).count
+                             .where(query, *bind_params).joins(tables)
+                             .where(
+                               'ticket_articles.created_at >= ? AND ticket_articles.created_at <= ? AND ticket_articles.type_id = ? AND ticket_articles.sender_id = ?',
+                               start,
+                               stop,
+                               type.id,
+                               sender.id,
+                             ).count
       result.push count
       start = stop
     }

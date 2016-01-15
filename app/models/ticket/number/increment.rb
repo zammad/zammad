@@ -9,7 +9,7 @@ module Ticket::Number::Increment
     config = Setting.get('ticket_number_increment')
 
     # read counter
-    min_digs  = config[:min_size] || 4
+    min_digs = config[:min_size] || 4
     counter_increment = nil
     Ticket::Counter.transaction do
       counter = Ticket::Counter.where( generator: 'Increment' ).lock(true).first

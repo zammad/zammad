@@ -192,11 +192,11 @@ module Import::Zendesk
   def import_field(local_object, zendesk_field)
 
     name = ''
-    if local_object == 'Ticket'
-      name = zendesk_field.title
-    else
-      name = zendesk_field['key'] # TODO: y?!
-    end
+    name = if local_object == 'Ticket'
+             zendesk_field.title
+           else
+             zendesk_field['key'] # TODO: y?!
+           end
 
     @zendesk_ticket_field_mapping ||= {}
     @zendesk_ticket_field_mapping[ zendesk_field.id ] = name
@@ -512,13 +512,13 @@ module Import::Zendesk
 
       ticket_author = User.find( @zendesk_user_mapping[ zendesk_ticket.requester_id ] )
 
-      if ticket_author.role?('Customer')
-        local_ticket_fields[:create_article_sender_id] = article_sender_customer.id
-      elsif ticket_author.role?('Agent')
-        local_ticket_fields[:create_article_sender_id] = article_sender_agent.id
-      else
-        local_ticket_fields[:create_article_sender_id] = article_sender_system.id
-      end
+      local_ticket_fields[:create_article_sender_id] = if ticket_author.role?('Customer')
+                                                         article_sender_customer.id
+                                                       elsif ticket_author.role?('Agent')
+                                                         article_sender_agent.id
+                                                       else
+                                                         article_sender_system.id
+                                                       end
 
       # TODO: zendesk_ticket.external_id ?
       if zendesk_ticket.via.channel == 'web'
@@ -530,20 +530,20 @@ module Import::Zendesk
       elsif zendesk_ticket.via.channel == 'twitter'
 
         # TODO
-        if zendesk_ticket.via.source.rel == 'mention'
-          local_ticket_fields[:create_article_type_id] = article_type_twitter_status.id
-        else
-          local_ticket_fields[:create_article_type_id] = article_type_twitter_dm.id
-        end
+        local_ticket_fields[:create_article_type_id] = if zendesk_ticket.via.source.rel == 'mention'
+                                                         article_type_twitter_status.id
+                                                       else
+                                                         article_type_twitter_dm.id
+                                                       end
 
       elsif zendesk_ticket.via.channel == 'facebook'
 
         # TODO
-        if zendesk_ticket.via.source.rel == 'post'
-          local_ticket_fields[:create_article_type_id] = article_type_facebook_feed_post.id
-        else
-          local_ticket_fields[:create_article_type_id] = article_type_facebook_feed_comment.id
-        end
+        local_ticket_fields[:create_article_type_id] = if zendesk_ticket.via.source.rel == 'post'
+                                                         article_type_facebook_feed_post.id
+                                                       else
+                                                         article_type_facebook_feed_comment.id
+                                                       end
       end
 
       local_ticket = Ticket.create( local_ticket_fields )
@@ -587,13 +587,13 @@ module Import::Zendesk
 
         article_author = User.find( @zendesk_user_mapping[ zendesk_article.author_id ] )
 
-        if article_author.role?('Customer')
-          local_article_fields[:sender_id] = article_sender_customer.id
-        elsif article_author.role?('Agent')
-          local_article_fields[:sender_id] = article_sender_agent.id
-        else
-          local_article_fields[:sender_id] = article_sender_system.id
-        end
+        local_article_fields[:sender_id] = if article_author.role?('Customer')
+                                             article_sender_customer.id
+                                           elsif article_author.role?('Agent')
+                                             article_sender_agent.id
+                                           else
+                                             article_sender_system.id
+                                           end
 
         if zendesk_article.via.channel == 'web'
           local_article_fields[:message_id] = zendesk_article.id
@@ -610,11 +610,11 @@ module Import::Zendesk
           local_article_fields[:message_id] = zendesk_article.id
 
           # TODO
-          if zendesk_article.via.source.rel == 'mention'
-            local_article_fields[:type_id] = article_type_twitter_status.id
-          else
-            local_article_fields[:type_id] = article_type_twitter_dm.id
-          end
+          local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'mention'
+                                             article_type_twitter_status.id
+                                           else
+                                             article_type_twitter_dm.id
+                                           end
 
         elsif zendesk_article.via.channel == 'facebook'
 
@@ -623,11 +623,11 @@ module Import::Zendesk
           local_article_fields[:message_id] = zendesk_article.id
 
           # TODO
-          if zendesk_article.via.source.rel == 'post'
-            local_article_fields[:type_id] = article_type_facebook_feed_post.id
-          else
-            local_article_fields[:type_id] = article_type_facebook_feed_comment.id
-          end
+          local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'post'
+                                             article_type_facebook_feed_post.id
+                                           else
+                                             article_type_facebook_feed_comment.id
+                                           end
         end
 
         # create article

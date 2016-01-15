@@ -124,8 +124,8 @@ returns
     roles.each { |role|
       if role_name.class == Array
         next if !role_name.include?(role.name)
-      else
-        next if role.name != role_name
+      elsif role.name != role_name
+        next
       end
       result = true
       break

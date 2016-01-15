@@ -116,11 +116,11 @@ class TagTest < ActiveSupport::TestCase
     # delete tags
     tests.each { |test|
       tags = nil
-      if test[:tag_add]
-        tags = test[:tag_add]
-      else
-        tags = test[:tag_remove]
-      end
+      tags = if test[:tag_add]
+               test[:tag_add]
+             else
+               test[:tag_remove]
+             end
       success = Tag.tag_remove( tags )
       assert( success, 'Tag.tag_remove successful')
       list = Tag.tag_list( tags )

@@ -16,11 +16,11 @@ class Setting < ApplicationModel
   @@current        = {} # rubocop:disable Style/ClassVars
   @@change_id      = nil # rubocop:disable Style/ClassVars
   @@lookup_at      = nil # rubocop:disable Style/ClassVars
-  if ENV['ZAMMAD_SETTING_TTL']
-    @@lookup_timeout = ENV['ZAMMAD_SETTING_TTL'].to_i.seconds # rubocop:disable Style/ClassVars
-  else
-    @@lookup_timeout = 2.minutes # rubocop:disable Style/ClassVars
-  end
+  @@lookup_timeout = if ENV['ZAMMAD_SETTING_TTL'] # rubocop:disable Style/ClassVars
+                       ENV['ZAMMAD_SETTING_TTL'].to_i.seconds
+                     else
+                       2.minutes
+                     end
 
 =begin
 
@@ -118,6 +118,7 @@ reload config settings
     cache(config)
     true
   end
+  private_class_method :load
 
   # set initial value in state_initial
   def set_initial
@@ -131,6 +132,7 @@ reload config settings
     logger.debug "Setting.cache: set cache, #{@@change_id}"
     @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
   end
+  private_class_method :cache
 
   # reset cache
   def reset_cache
@@ -156,6 +158,7 @@ reload config settings
     logger.debug "Setting.cache_valid?: cache has changed, #{@@change_id}/#{change_id}"
     false
   end
+  private_class_method :cache_valid?
 
   # convert state into hash to be able to store it as store
   def state_check

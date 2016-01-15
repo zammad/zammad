@@ -2,12 +2,14 @@
 # https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
 
 AllCops:
-  RunRailsCops: true
   Exclude:
     - 'bin/rails'
     - 'bin/rake'
     - 'bin/spring'
     - 'db/schema.rb'
+
+Rails:
+  Enabled: true
 
 # Zammad StyleGuide
 
@@ -30,8 +32,13 @@ Style/IfUnlessModifier:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#if-as-a-modifier'
   Enabled: false
 
-Style/TrailingComma:
-  Description: 'Checks for trailing comma in parameter lists and literals.'
+Style/TrailingCommaInLiteral:
+  Description: 'Checks for trailing comma in array and hash literals.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Description: 'Checks for trailing comma in argument lists.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
   Enabled: false
 
@@ -45,12 +52,6 @@ Style/SpaceAfterMethodName:
                  Do not put a space between a method name and the opening
                  parenthesis in a method definition.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#parens-no-spaces'
-  Enabled: false
-
-Style/SingleSpaceBeforeFirstArg:
-  Description: >-
-                 Checks that exactly one space is used between a method name
-                 and the first argument for method calls without parentheses.
   Enabled: false
 
 Style/LeadingCommentSpace:

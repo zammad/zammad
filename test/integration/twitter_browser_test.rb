@@ -215,12 +215,12 @@ class TwitterBrowserTest < TestCase
 
     watch_for(
       css: '.content.active',
-      value: "#{hash}",
+      value: hash.to_s,
       timeout: 20,
     )
 
     ticket_open_by_title(
-      title: "#{hash}",
+      title: hash.to_s,
     )
 
     # reply via app

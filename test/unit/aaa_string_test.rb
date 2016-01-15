@@ -109,20 +109,20 @@ class AaaStringTest < ActiveSupport::TestCase
     result = 'Was soll verbessert werden:'
     assert_equal(result, html.html2text)
 
-    html   = "<!-- some comment -->
+    html = "<!-- some comment -->
     <div>
     test<br><br><br>\n<br>\n<br>\n
     </div>"
     result = 'test'
     assert_equal(result, html.html2text)
 
-    html   = "\n<div><a href=\"http://zammad.org\">Best Tool of the World</a>
+    html = "\n<div><a href=\"http://zammad.org\">Best Tool of the World</a>
      some other text</div>
     <div>"
     result = "[1] Best Tool of the Worldsome other text\n\n\n[1] http://zammad.org"
     assert_equal(result, html.html2text)
 
-    html   = "<!-- some comment -->
+    html = "<!-- some comment -->
     <div>
     test<br><br><br>\n<hr/>\n<br>\n
     </div>"
@@ -259,7 +259,7 @@ div.wordsection1
     should = 'IT-Infrastruktur'
     assert_equal( should, html.html2text)
 
-    html   = "<h1>some head</h1>
+    html = "<h1>some head</h1>
     some content
     <blockquote>
     <p>line 1</p>
@@ -274,7 +274,7 @@ some content
 some text later'
     assert_equal(result, html.html2text)
 
-    html   = "<h1>some head</h1>
+    html = "<h1>some head</h1>
     some content
     <blockquote>
     line 1<br/>
@@ -289,7 +289,7 @@ some content
 some text later'
     assert_equal(result, html.html2text)
 
-    html   = "<h1>some head</h1>
+    html = "<h1>some head</h1>
     some content
     <blockquote>
     <div><div>line 1</div><br></div>
