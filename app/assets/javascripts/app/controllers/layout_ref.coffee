@@ -2194,7 +2194,6 @@ class ChatToTicketRef extends App.ControllerContent
     super
     @render()
     @scrollToBottom()
-    @boxFade.height @chatBox.outerHeight()
     @placeBoxFade()
 
   render: ->
@@ -2204,6 +2203,7 @@ class ChatToTicketRef extends App.ControllerContent
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
   placeBoxFade: =>
+    @boxFade.height @chatBox.outerHeight()
     y1 = @attachments.offset().top - @boxFade.offset().top
 
     @boxFade.html App.view('layout_ref/boxFade')
