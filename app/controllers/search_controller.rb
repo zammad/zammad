@@ -58,10 +58,10 @@ class SearchController < ApplicationController
 
       # do only one query to index search backend
       if !objects_with_direct_search_index.empty?
-        items = SearchIndexBackend.search( query, limit, objects_with_direct_search_index )
+        items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
         items.each { |item|
           require item[:type].to_filename
-          record = Kernel.const_get( item[:type] ).find( item[:id] )
+          record = Kernel.const_get(item[:type]).lookup(id: item[:id])
           assets = record.assets(assets)
           result.push item
         }
