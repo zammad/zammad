@@ -301,7 +301,7 @@ class TwitterTest < ActiveSupport::TestCase
     ticket.state = Ticket::State.find_by(name: 'pending reminder')
     ticket.save
 
-    text  = 'Ok. ' + hash
+    text = 'Ok. ' + hash
     dm = client.create_direct_message(
       'armin_theo',
       text,

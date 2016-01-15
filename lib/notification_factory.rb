@@ -70,11 +70,11 @@ module NotificationFactory
 
             object_refs = object_refs.html2text.chomp
           }
-          if !value
-            placeholder = object_refs
-          else
-            placeholder = value
-          end
+          placeholder = if !value
+                          object_refs
+                        else
+                          value
+                        end
         end
       end
       placeholder

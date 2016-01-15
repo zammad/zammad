@@ -20,11 +20,11 @@ module Ticket::Number::Date
 
       # increase counter
       counter_increment, date_file = counter.content.to_s.split(';')
-      if date_file == date
-        counter_increment = counter_increment.to_i + 1
-      else
-        counter_increment = 1
-      end
+      counter_increment = if date_file == date
+                            counter_increment.to_i + 1
+                          else
+                            1
+                          end
 
       # store new counter value
       counter.content = counter_increment.to_s + ';' + date

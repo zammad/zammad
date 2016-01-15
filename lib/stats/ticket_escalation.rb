@@ -21,15 +21,15 @@ class Stats::TicketEscalation
 
     average = '-'
     state = 'supergood'
-    if own_escalated == 0
-      state = 'supergood'
-    elsif own_escalated <= 1
-      state = 'good'
-    elsif own_escalated <= 4
-      state = 'ok'
-    else
-      state = 'bad'
-    end
+    state = if own_escalated == 0
+              'supergood'
+            elsif own_escalated <= 1
+              'good'
+            elsif own_escalated <= 4
+              'ok'
+            else
+              'bad'
+            end
 
     {
       used_for_average: own_escalated,

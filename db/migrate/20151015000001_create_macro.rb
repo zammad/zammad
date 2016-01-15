@@ -18,10 +18,10 @@ class CreateMacro < ActiveRecord::Migration
     Macro.create_or_update(
       name: 'Close & Tag as Spam',
       perform: {
-        'ticket.state_id': {
+        'ticket.state_id' => {
           value: Ticket::State.find_by(name: 'closed').id,
         },
-        'ticket.tags': {
+        'ticket.tags' => {
           operator: 'add',
           value: 'spam',
         },

@@ -31,11 +31,11 @@ class String
 =end
 
   def to_filename
-    camel_cased_word = "#{self}"
+    camel_cased_word = to_s
     camel_cased_word.gsub(/::/, '/')
-      .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-      .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-      .tr('-', '_').downcase
+                    .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+                    .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                    .tr('-', '_').downcase
   end
 
 =begin
@@ -48,7 +48,7 @@ class String
 =end
 
   def to_classname
-    camel_cased_word = "#{self}"
+    camel_cased_word = to_s
     camel_cased_word.gsub!(/\.rb$/, '')
     camel_cased_word.split('/').map(&:camelize).join('::')
   end
@@ -65,7 +65,7 @@ class String
       end
       c
     }
-    .join('') # rubocop:disable Style/MultilineOperationIndentation
+             .join('')
   end
 
 =begin
@@ -79,7 +79,7 @@ class String
 =end
 
   def html2text(string_only = false)
-    string = "#{self}"
+    string = to_s
 
     # in case of invalid encodeing, strip invalid chars
     # see also test/fixtures/mail21.box
@@ -94,7 +94,7 @@ class String
     if !string_only
       string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) {
         link = $2
-        counter   = counter + 1
+        counter = counter + 1
         link_list += "[#{counter}] #{link}\n"
         "[#{counter}] "
       }

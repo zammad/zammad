@@ -104,8 +104,8 @@ returns
 
       if current_user.role?('Agent')
         groups = Group.joins(:users)
-                 .where( 'groups_users.user_id = ?', current_user.id )
-                 .where( 'groups.active = ?', true )
+                      .where( 'groups_users.user_id = ?', current_user.id )
+                      .where( 'groups.active = ?', true )
         group_condition = []
         groups.each {|group|
           group_condition.push group.name
@@ -113,23 +113,23 @@ returns
         access_condition = {
           'query_string' => { 'default_field' => 'Ticket.group.name', 'query' => "\"#{group_condition.join('" OR "')}\"" }
         }
-        query_extention['bool']['must'].push access_condition
       else
-        if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
-          access_condition = {
-            'query_string' => { 'default_field' => 'Ticket.customer_id', 'query' => current_user.id }
-          }
-          #  customer_id: XXX
-          #          conditions = [ 'customer_id = ?', current_user.id ]
-        else
-          access_condition = {
-            'query_string' => { 'query' => "Ticket.customer_id:#{current_user.id} OR Ticket.organization_id:#{current_user.organization.id}" }
-          }
-          # customer_id: XXX OR organization_id: XXX
-          #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-        end
-        query_extention['bool']['must'].push access_condition
+        access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
+                             {
+                               'query_string' => { 'default_field' => 'Ticket.customer_id', 'query' => current_user.id }
+                             }
+                           #  customer_id: XXX
+                           #          conditions = [ 'customer_id = ?', current_user.id ]
+                           else
+                             {
+                               'query_string' => { 'query' => "Ticket.customer_id:#{current_user.id} OR Ticket.organization_id:#{current_user.organization.id}" }
+                             }
+                             # customer_id: XXX OR organization_id: XXX
+                             #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
+                           end
       end
+
+      query_extention['bool']['must'].push access_condition
 
       items = SearchIndexBackend.search( query, limit, 'Ticket', query_extention )
       if !full
@@ -154,18 +154,18 @@ returns
     if query
       query.delete! '*'
       tickets_all = Ticket.select('DISTINCT(tickets.id)')
-                    .where(access_condition)
-                    .where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
-                    .joins(:articles)
-                    .order('`tickets`.`created_at` DESC')
-                    .limit(limit)
+                          .where(access_condition)
+                          .where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
+                          .joins(:articles)
+                          .order('`tickets`.`created_at` DESC')
+                          .limit(limit)
     else
       query_condition, bind_condition = selector2sql(params[:condition])
       tickets_all = Ticket.select('DISTINCT(tickets.id)')
-                    .where(access_condition)
-                    .where(query_condition, *bind_condition)
-                    .order('`tickets`.`created_at` DESC')
-                    .limit(limit)
+                          .where(access_condition)
+                          .where(query_condition, *bind_condition)
+                          .order('`tickets`.`created_at` DESC')
+                          .limit(limit)
     end
 
     # build result list

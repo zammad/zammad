@@ -81,7 +81,7 @@ returns
     # search
     store_object_id = Store::Object.lookup( name: data[:object] )
     stores = Store.where( store_object_id: store_object_id, o_id: data[:o_id].to_i )
-             .order('created_at ASC, id ASC')
+                  .order('created_at ASC, id ASC')
     stores
   end
 
@@ -104,8 +104,8 @@ returns
     # search
     store_object_id = Store::Object.lookup( name: data[:object] )
     stores = Store.where( store_object_id: store_object_id )
-             .where( o_id: data[:o_id] )
-             .order('created_at ASC, id ASC')
+                  .where( o_id: data[:o_id] )
+                  .order('created_at ASC, id ASC')
     stores.each do |store|
 
       # check backend for references

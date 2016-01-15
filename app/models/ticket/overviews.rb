@@ -20,11 +20,11 @@ returns
     # get customer overviews
     if data[:current_user].role?('Customer')
       role = Role.find_by( name: 'Customer' )
-      if data[:current_user].organization_id && data[:current_user].organization.shared
-        overviews = Overview.where( role_id: role.id, active: true )
-      else
-        overviews = Overview.where( role_id: role.id, organization_shared: false, active: true )
-      end
+      overviews = if data[:current_user].organization_id && data[:current_user].organization.shared
+                    Overview.where( role_id: role.id, active: true )
+                  else
+                    Overview.where( role_id: role.id, organization_shared: false, active: true )
+                  end
       return overviews
     end
 
@@ -113,10 +113,10 @@ returns
       query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition, data[:current_user])
 
       tickets = Ticket.select('id')
-                .where( access_condition )
-                .where( query_condition, *bind_condition )
-                .order( order_by )
-                .limit( 500 )
+                      .where( access_condition )
+                      .where( query_condition, *bind_condition )
+                      .order( order_by )
+                      .limit( 500 )
 
       ticket_ids = []
       tickets.each { |ticket|
@@ -136,8 +136,8 @@ returns
     data[:start_page] ||= 1
     query_condition, bind_condition = Ticket.selector2sql(overview_selected.condition, data[:current_user])
     tickets = Ticket.where( access_condition )
-              .where( query_condition, *bind_condition )
-              .order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )
+                    .where( query_condition, *bind_condition )
+                    .order( overview_selected[:order][:by].to_s + ' ' + overview_selected[:order][:direction].to_s )
 
     tickets_count = Ticket.where( access_condition ).where( query_condition, *bind_condition ).count()
 

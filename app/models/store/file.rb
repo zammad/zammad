@@ -46,12 +46,12 @@ read content of a file
 
     def content
       adapter = self.class.load_adapter("Store::Provider::#{provider}")
-      if sha
-        c = adapter.get( sha )
-      else
-        # fallback until migration is done
-        c = Store::Provider::DB.find_by( md5: md5 ).data
-      end
+      c = if sha
+            adapter.get( sha )
+          else
+            # fallback until migration is done
+            Store::Provider::DB.find_by( md5: md5 ).data
+          end
       c
     end
 

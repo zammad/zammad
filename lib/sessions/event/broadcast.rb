@@ -14,22 +14,18 @@ class Sessions::Event::Broadcast < Sessions::Event::Base
       if @payload['recipient']
         if @payload['recipient'].class != Hash
           log 'error', "recipient attribute isn't a hash '#{@payload['recipient'].inspect}'"
+        elsif !@payload['recipient'].key?('user_id')
+          log 'error', "need recipient.user_id attribute '#{@payload['recipient'].inspect}'"
+        elsif @payload['recipient']['user_id'].class != Array
+          log 'error', "recipient.user_id attribute isn't an array '#{@payload['recipient']['user_id'].inspect}'"
         else
-          if !@payload['recipient'].key?('user_id')
-            log 'error', "need recipient.user_id attribute '#{@payload['recipient'].inspect}'"
-          else
-            if @payload['recipient']['user_id'].class != Array
-              log 'error', "recipient.user_id attribute isn't an array '#{@payload['recipient']['user_id'].inspect}'"
-            else
-              @payload['recipient']['user_id'].each { |user_id|
+          @payload['recipient']['user_id'].each { |user_id|
 
-                next if local_client[:user]['id'].to_i != user_id.to_i
+            next if local_client[:user]['id'].to_i != user_id.to_i
 
-                log 'notice', "send broadcast from (#{@client_id}) to (user_id=#{user_id})", local_client_id
-                websocket_send(local_client_id, @payload['data'])
-              }
-            end
-          end
+            log 'notice', "send broadcast from (#{@client_id}) to (user_id=#{user_id})", local_client_id
+            websocket_send(local_client_id, @payload['data'])
+          }
         end
 
         # broadcast every client

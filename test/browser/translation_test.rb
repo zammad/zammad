@@ -107,11 +107,11 @@ class TranslationTest < TestCase
     )
 
     @browser.action.key_down(:control)
-      .key_down(:alt)
-      .send_keys('t')
-      .key_up(:alt)
-      .key_up(:control)
-      .perform
+            .key_down(:alt)
+            .send_keys('t')
+            .key_up(:alt)
+            .key_up(:control)
+            .perform
 
     watch_for(
       css: 'span.translation[title="Overviews"]',
@@ -126,11 +126,11 @@ class TranslationTest < TestCase
     sleep 5
 
     @browser.action.key_down(:control)
-      .key_down(:alt)
-      .send_keys('t')
-      .key_up(:alt)
-      .key_up(:control)
-      .perform
+            .key_down(:alt)
+            .send_keys('t')
+            .key_up(:alt)
+            .key_up(:control)
+            .perform
 
     sleep 5
     exists_not(
@@ -192,11 +192,11 @@ class TranslationTest < TestCase
     sleep 5
 
     @browser.action.key_down(:control)
-      .key_down(:alt)
-      .send_keys('t')
-      .key_up(:alt)
-      .key_up(:control)
-      .perform
+            .key_down(:alt)
+            .send_keys('t')
+            .key_up(:alt)
+            .key_up(:control)
+            .perform
 
     watch_for(
       css: 'span.translation[title="Overviews"]',
@@ -211,11 +211,11 @@ class TranslationTest < TestCase
     sleep 5
 
     @browser.action.key_down(:control)
-      .key_down(:alt)
-      .send_keys('t')
-      .key_up(:alt)
-      .key_up(:control)
-      .perform
+            .key_down(:alt)
+            .send_keys('t')
+            .key_up(:alt)
+            .key_up(:control)
+            .perform
 
     sleep 5
     exists_not(

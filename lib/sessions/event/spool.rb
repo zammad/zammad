@@ -21,11 +21,10 @@ class Sessions::Event::Spool < Sessions::Event::Base
       # create new msg to push to client
       if item[:type] == 'direct'
         log 'notice', "send spool to (user_id=#{@session['id']})"
-        websocket_send(@client_id, item[:message])
       else
         log 'notice', 'send spool'
-        websocket_send(@client_id, item[:message])
       end
+      websocket_send(@client_id, item[:message])
     }
 
     # send spool:sent event to client

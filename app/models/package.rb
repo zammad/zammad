@@ -96,7 +96,7 @@ class Package < ApplicationModel
   def self.unlink(package_base_dir)
 
     # check if zpm is a package source repo
-    package = self._package_base_dir?(package_base_dir)
+    package = _package_base_dir?(package_base_dir)
 
     # migration down
     Package::Migration.migrate( package, 'reverse' )
@@ -126,7 +126,7 @@ class Package < ApplicationModel
   def self.link(package_base_dir)
 
     # check if zpm is a package source repo
-    package = self._package_base_dir?(package_base_dir)
+    package = _package_base_dir?(package_base_dir)
 
     # link files
     Dir.glob( package_base_dir + '/**/*' ) do |entry|
@@ -337,13 +337,13 @@ class Package < ApplicationModel
   end
 
   def self._read_file(file, fullpath = false)
-    if fullpath == false
-      location = @@root + '/' + file
-    elsif fullpath == true
-      location = file
-    else
-      location = fullpath + '/' + file
-    end
+    location = if fullpath == false
+                 @@root + '/' + file
+               elsif fullpath == true
+                 file
+               else
+                 fullpath + '/' + file
+               end
 
     begin
       data = File.open( location, 'rb' )

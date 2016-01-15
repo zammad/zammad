@@ -46,7 +46,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     updated_by_id: 1,
     created_by_id: 1
   )
-  roles  = Role.where( name: 'Customer' )
+  roles = Role.where( name: 'Customer' )
   organization1 = Organization.create_if_not_exists(
     name: 'Customer Organization Update',
     updated_by_id: 1,

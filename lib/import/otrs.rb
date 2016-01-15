@@ -609,22 +609,22 @@ module Import::OTRS
       # find owner
       if ticket_new[:owner]
         user = User.lookup( login: ticket_new[:owner].downcase )
-        if user
-          ticket_new[:owner_id] = user.id
-        else
-          ticket_new[:owner_id] = 1
-        end
+        ticket_new[:owner_id] = if user
+                                  user.id
+                                else
+                                  1
+                                end
         ticket_new.delete(:owner)
       end
 
       # find customer
       if ticket_new[:customer]
         user = User.lookup( login: ticket_new[:customer].downcase )
-        if user
-          ticket_new[:customer_id] = user.id
-        else
-          ticket_new[:customer_id] = 1
-        end
+        ticket_new[:customer_id] = if user
+                                     user.id
+                                   else
+                                     1
+                                   end
         ticket_new.delete(:customer)
       else
         ticket_new[:customer_id] = 1
@@ -1345,19 +1345,19 @@ module Import::OTRS
   def self._set_valid(record)
 
     # map
-    if record['ValidID'].to_s == '3'
-      record['ValidID'] = false
-    elsif record['ValidID'].to_s == '2'
-      record['ValidID'] = false
-    elsif record['ValidID'].to_s == '1'
-      record['ValidID'] = true
-    elsif record['ValidID'].to_s == '0'
-      record['ValidID'] = false
+    record['ValidID'] = if record['ValidID'].to_s == '3'
+                          false
+                        elsif record['ValidID'].to_s == '2'
+                          false
+                        elsif record['ValidID'].to_s == '1'
+                          true
+                        elsif record['ValidID'].to_s == '0'
+                          false
 
-    # fallback
-    else
-      record['ValidID'] = true
-    end
+                        # fallback
+                        else
+                          true
+                        end
   end
 
   # cleanup invalid values

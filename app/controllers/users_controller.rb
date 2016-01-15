@@ -15,11 +15,11 @@ class UsersController < ApplicationController
   def index
 
     # only allow customer to fetch him self
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
-      users = User.where( id: current_user.id )
-    else
-      users = User.all
-    end
+    users = if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
+              User.where( id: current_user.id )
+            else
+              User.all
+            end
     users_all = []
     users.each {|user|
       users_all.push User.lookup( id: user.id ).attributes_with_associations
@@ -337,11 +337,11 @@ class UsersController < ApplicationController
     end
 
     # do query
-    if params[:role_ids] && !params[:role_ids].empty?
-      user_all = User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
-    else
-      user_all = User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
-    end
+    user_all = if params[:role_ids] && !params[:role_ids].empty?
+                 User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
+               else
+                 User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
+               end
 
     # build result list
     if !params[:full]

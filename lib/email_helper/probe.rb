@@ -280,21 +280,21 @@ returns on fail
       end
 
       # prepare test email
-      if subject
-        mail = {
-          from:    email,
-          to:      email,
-          subject: "Zammad Getting started Test Email #{subject}",
-          body:    "This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email.",
-        }
-      else
-        mail = {
-          from:    email,
-          to:      'emailtrytest@znuny.com',
-          subject: 'This is a Test Email',
-          body:    "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it.",
-        }
-      end
+      mail = if subject
+               {
+                 from:    email,
+                 to:      email,
+                 subject: "Zammad Getting started Test Email #{subject}",
+                 body:    "This is a Test Email of Zammad to check if sending and receiving is working correctly.\n\nYou can ignore or delete this email.",
+               }
+             else
+               {
+                 from:    email,
+                 to:      'emailtrytest@znuny.com',
+                 subject: 'This is a Test Email',
+                 body:    "This is a Test Email of Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore and delete it.",
+               }
+             end
       if subject
         mail['X-Zammad-Test-Message'] = subject
       end
