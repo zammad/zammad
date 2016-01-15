@@ -1,5 +1,5 @@
 <div class="newTicket newTicket--chatTicket">
-  <div class="box chatHistory">
+  <div class="box chatHistory js-chatBox">
     <div class="page-header">
       <h1>Chat</h1>
     </div>
@@ -36,7 +36,7 @@
 </div>
     </div>
   </div>
-  <%- @Icon('arrow-right', 'arrow--x2') %>
+  <div class="boxFade js-boxFade"></div>
   <div class="box">
       <div class="page-header">
           <h1>New Ticket</h1>
@@ -84,8 +84,8 @@
     <label for="TicketArticle_204825_body">Text <span>*</span></label>
 </div>
 <div class="controls"><div class="richtext form-control">
-    <div contenteditable="true" id="TicketArticle_204825_body" data-name="body" class=""></div><div class="shortcut dropdown"><ul class="dropdown-menu" style="width: 360px; max-height: 200px;"><li><a>-</a></li></ul></div>
-    <div class="attachments attachments--list">
+    <div contenteditable="true" id="TicketArticle_204825_body" data-name="body" class="js-textInput"></div><div class="shortcut dropdown"><ul class="dropdown-menu" style="width: 360px; max-height: 200px;"><li><a>-</a></li></ul></div>
+    <div class="attachments attachments--list js-attachments">
       <%- @Icon('paperclip') %>
       <div class="attachments-title">1 Attached File</div>
       <div class="attachment">

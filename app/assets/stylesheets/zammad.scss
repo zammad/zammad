@@ -1459,8 +1459,8 @@ input.time.time--12 {
   .richtext.form-control .attachments.attachments--list:not(:empty) {
     border-top: 1px solid rgba(0,0,0,.04);
     white-space: normal;
-    margin: 0 -12px -14px;
-    padding: 25px 20px 7px 72px;
+    margin: 0 -12px -28px;
+    padding: 25px 20px 21px 72px;
     position: relative;
     line-height: 1;
   }
@@ -5059,6 +5059,14 @@ footer {
   .chatHistory {
     display: flex;
     flex-direction: column;
+  }
+
+  .boxFade {
+    top: 34px;
+    height: 100%;
+    position: absolute;
+    margin-left: -34px;
+    z-index: 1;
   }
 }
 

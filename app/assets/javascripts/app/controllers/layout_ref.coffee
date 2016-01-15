@@ -2183,11 +2183,19 @@ class ChatToTicketRef extends App.ControllerContent
 
   elements:
     '.js-scrollHolder': 'scrollHolder'
+    '.js-boxFade': 'boxFade'
+    '.js-attachments': 'attachments'
+    '.js-chatBox': 'chatBox'
+
+  events:
+    'input .js-textInput': 'placeBoxFade'
 
   constructor: ->
     super
     @render()
     @scrollToBottom()
+    @boxFade.height @chatBox.outerHeight()
+    @placeBoxFade()
 
   render: ->
     @html App.view('layout_ref/chat_to_ticket')()
@@ -2195,6 +2203,14 @@ class ChatToTicketRef extends App.ControllerContent
   scrollToBottom: ->
     @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
 
+  placeBoxFade: =>
+    y1 = @attachments.offset().top - @boxFade.offset().top
+
+    @boxFade.html App.view('layout_ref/boxFade')
+      width: @attachments.offset().left - @boxFade.offset().left
+      height: @boxFade.height()
+      y1: y1
+      y2: y1 + @attachments.outerHeight()
 
 App.Config.set( 'layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes' )
 
