@@ -442,7 +442,7 @@ returns
       # do lookup with == to handle case insensitive databases
       records = where(login: data[:login])
       records.each {|loop_record|
-        if loop_record.login.casecmp data[:login] == 0
+        if loop_record.login.casecmp(data[:login]) == 0
           loop_record.update_attributes(data)
           return loop_record
         end
@@ -455,7 +455,7 @@ returns
       # do lookup with == to handle case insensitive databases
       records = where(email: data[:email])
       records.each {|loop_record|
-        if loop_record.email.casecmp data[:email] == 0
+        if loop_record.email.casecmp(data[:email]) == 0
           loop_record.update_attributes(data)
           return loop_record
         end
@@ -468,7 +468,7 @@ returns
       # do lookup with == to handle case insensitive databases
       records = where(locale: data[:locale])
       records.each {|loop_record|
-        if loop_record.locale.casecmp data[:locale] == 0
+        if loop_record.locale.casecmp(data[:locale]) == 0
           loop_record.update_attributes(data)
           return loop_record
         end
