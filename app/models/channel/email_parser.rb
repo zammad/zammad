@@ -201,7 +201,7 @@ class Channel::EmailParser
         data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
       end
 
-    # html part only, convert ot text and add it as attachment
+    # html part only, convert to text and add it as attachment
     else
       filename = '-no name-'
       if mail.mime_type.to_s.casecmp('text/html')
