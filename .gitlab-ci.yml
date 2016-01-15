@@ -131,7 +131,6 @@ job_integration_otrs_5:
   stage: test
   tags:
     - core
-    - OTRS
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -144,7 +143,6 @@ job_integration_otrs_4:
   stage: test
   tags:
     - core
-    - OTRS
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz383.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -157,7 +155,6 @@ job_integration_otrs_33:
   stage: test
   tags:
     - core
-    - OTRS
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -170,7 +167,6 @@ job_integration_otrs_32:
   stage: test
   tags:
     - core
-    - OTRS
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz382.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -183,7 +179,6 @@ job_integration_otrs_31:
   stage: test
   tags:
     - core
-    - OTRS
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz381.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
@@ -412,7 +407,6 @@ job_integration_otrs_chrome:
   stage: browser
   tags:
     - browser-chrome
-    - OTRS
   script:
     - export BROWSER_PORT=4061
     - export WS_PORT=4062
