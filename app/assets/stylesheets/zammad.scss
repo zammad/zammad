@@ -700,10 +700,20 @@ pre code.hljs {
   .badge {
     background: hsla(210,50%,10%,.24);
   }
+
+  .info-arrow {
+    margin: -8px -10px -6px 0;
+    padding: 8px 10px 7px 3px;
+  }
 }
 
 @keyframes pulsate {
   to { filter: brightness(1.2); }
+}
+
+.info-arrow {
+  display: inline-block;
+  cursor: pointer;
 }
 
 .badge {
