@@ -124,7 +124,7 @@ returns
         next if !model_attributes[:attributes].include?(item)
 
         count = model_class.where("#{item} = ?", object_id).count
-        next if count == 0
+        next if count.zero?
         if !references[model_class.to_s][item]
           references[model_class.to_s][item] = 0
         end
@@ -144,7 +144,7 @@ returns
 
         if reflection_value.options[:class_name] == object_name
           count = model_class.where("#{col_name} = ?", object_id).count
-          next if count == 0
+          next if count.zero?
           if !references[model_class.to_s][col_name]
             references[model_class.to_s][col_name] = 0
           end
@@ -156,7 +156,7 @@ returns
         next if reflection_value.name != object_name.downcase.to_sym
 
         count = model_class.where("#{col_name} = ?", object_id).count
-        next if count == 0
+        next if count.zero?
         if !references[model_class.to_s][col_name]
           references[model_class.to_s][col_name] = 0
         end

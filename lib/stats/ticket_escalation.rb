@@ -21,7 +21,7 @@ class Stats::TicketEscalation
 
     average = '-'
     state = 'supergood'
-    state = if own_escalated == 0
+    state = if own_escalated.zero?
               'supergood'
             elsif own_escalated <= 1
               'good'

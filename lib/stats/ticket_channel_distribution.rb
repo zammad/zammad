@@ -67,7 +67,7 @@ class Stats::TicketChannelDistribution
     channels.each {|channel|
       count = result[channel[:sender].to_sym][:inbound]
       #puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
-      in_process_precent = if count == 0
+      in_process_precent = if count.zero?
                              0
                            else
                              (count * 1000) / ((total_in * 1000) / 100)
@@ -75,7 +75,7 @@ class Stats::TicketChannelDistribution
       result[channel[:sender].to_sym][:inbound_in_percent] = in_process_precent
 
       count = result[channel[:sender].to_sym][:outbound]
-      out_process_precent = if count == 0
+      out_process_precent = if count.zero?
                               0
                             else
                               (count * 1000) / ((total_out * 1000) / 100)

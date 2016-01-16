@@ -635,7 +635,7 @@ module Import::Zendesk
 
         zendesk_attachments = zendesk_article.attachments
 
-        next if zendesk_attachments.size == 0
+        next if zendesk_attachments.size.zero?
 
         local_attachments = local_article.attachments
 

@@ -11,7 +11,7 @@ module Encode
     end
 
     # validate already existing utf8 strings
-    if charset.casecmp('utf8') == 0 || charset.casecmp('utf-8') == 0
+    if charset.casecmp('utf8').zero? || charset.casecmp('utf-8').zero?
       begin
 
         # return if encoding is valid

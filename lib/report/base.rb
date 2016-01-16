@@ -242,7 +242,7 @@ class Report::Base
       time_total = time_total + diff
       tickets += 1
     }
-    if time_total == 0 || tickets == 0
+    if time_total.zero? || tickets.zero?
       tickets = -0.001
     else
       tickets = time_total / tickets / 60
@@ -279,7 +279,7 @@ class Report::Base
         time_min = diff
       end
     }
-    tickets = if time_min == 0
+    tickets = if time_min.zero?
                 -0.001
               else
                 (time_min / 60).to_i
@@ -317,7 +317,7 @@ class Report::Base
         time_max = diff
       end
     }
-    tickets = if time_max == 0
+    tickets = if time_max.zero?
                 -0.001
               else
                 (time_max / 60).to_i

@@ -206,7 +206,7 @@ EventMachine.run {
   }
 
   EventMachine.add_periodic_timer(0.4) {
-    next if @clients.size == 0
+    next if @clients.size.zero?
     #log 'debug', 'checking for data to send...'
     @clients.each { |client_id, client|
       next if client[:disconnect]

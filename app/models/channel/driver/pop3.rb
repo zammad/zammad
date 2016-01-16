@@ -151,7 +151,7 @@ returns
       end
     end
     disconnect
-    if count == 0
+    if count.zero?
       Rails.logger.info ' - no message'
     end
     Rails.logger.info 'done'
