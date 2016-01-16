@@ -422,8 +422,6 @@ job_integration_otrs_chrome:
   script:
     - export BROWSER_PORT=4061
     - export WS_PORT=4062
-    - export IMPORT_BT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
-    - export IMPORT_BT_OTRS_ENDPOINT_KEY="01234567899876543210"
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
