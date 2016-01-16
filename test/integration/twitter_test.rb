@@ -392,7 +392,7 @@ class TwitterTest < ActiveSupport::TestCase
     (1..2).each {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 10
+      sleep 15
     }
     assert(article)
     assert_equal('@me_bauer', article.from, 'ticket article from')
@@ -416,7 +416,7 @@ class TwitterTest < ActiveSupport::TestCase
     (1..2).each {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 10
+      sleep 15
     }
     assert(article)
     assert_equal('@me_bauer', article.from, 'ticket article from')
