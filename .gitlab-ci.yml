@@ -27,6 +27,7 @@ job_unit:
     - core
   script:
     - export RAILS_ENV=test
+    - export Z_LOCALES=en-us:de-de
     - rake db:drop;
     - rake db:create
     - rake db:migrate
