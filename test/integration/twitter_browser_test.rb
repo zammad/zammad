@@ -187,7 +187,7 @@ class TwitterBrowserTest < TestCase
     )
 
     # wait till new streaming of channel is active
-    sleep 40
+    sleep 50
 
     # start tweet from customer
     client = Twitter::REST::Client.new do |config|
@@ -215,12 +215,12 @@ class TwitterBrowserTest < TestCase
 
     watch_for(
       css: '.content.active',
-      value: hash.to_s,
+      value: hash,
       timeout: 20,
     )
 
     ticket_open_by_title(
-      title: hash.to_s,
+      title: hash,
     )
 
     # reply via app
