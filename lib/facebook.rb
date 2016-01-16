@@ -6,101 +6,195 @@ class Facebook
 
   attr_accessor :client, :account
 
-  def initialize(options)
+=begin
 
-    connect( options[:auth][:access_token] )
+  client = Facebook.new('user_or_page_access_token')
 
-    page_access_token = access_token_for_page( options[:sync] )
+=end
 
-    if page_access_token
-      connect( page_access_token )
-    end
-
-    @account = client.get_object('me')
+  def initialize(access_token)
+    connect(access_token)
   end
+
+=begin
+
+reconnect with other access_token
+
+  client.connect('user_or_page_access_token')
+
+=end
 
   def connect(access_token)
-    @client = Koala::Facebook::API.new( access_token )
+    @client = Koala::Facebook::API.new(access_token)
   end
+
+=begin
+
+disconnect client
+
+  client.disconnect
+
+=end
 
   def disconnect
-
     return if !@client
-
     @client = nil
   end
+
+=begin
+
+get pages of user
+
+  pages = client.pages
+
+result
+
+  [
+    {
+      id: '12345',
+      name: 'Some Page Name',
+      access_token, 'some_access_token_for_page',
+    },
+  ]
+
+=end
 
   def pages
     pages = []
     @client.get_connections('me', 'accounts').each { |page|
-      pages.push({
-                   id:           page['id'],
-                   name:         page['name'],
-                   access_token: page['access_token'],
-                 })
+      pages.push(
+        id:           page['id'],
+        name:         page['name'],
+        access_token: page['access_token'],
+      )
     }
     pages
   end
 
-  def user(item)
+=begin
 
+get current user
+
+  pages = current_user
+
+result
+
+  {
+    'id' => '1234567890123456',
+    'name' => 'Page/User Name',
+    'access_token' => 'some_acces_token'
+  }
+
+=end
+
+  def current_user
+    @client.get_object('me')
+  end
+
+=begin
+
+get user of comment/post
+
+  pages = user(comment_or_post)
+
+result
+
+???
+
+=end
+
+  def user(item)
     return if !item['from']
     return if !item['from']['id']
-    return if !item['from']['name']
-
-    return if item['from']['id'] == @account['id']
-
-    @client.get_object( item['from']['id'] )
+    cache_key = "FB:User:Lookup:#{item['from']['id']}"
+    cache = Cache.get(cache_key)
+    return cache if cache
+    begin
+      result = @client.get_object(item['from']['id'], fields: 'first_name,last_name,email')
+    rescue
+      result = @client.get_object(item['from']['id'], fields: 'name')
+    end
+    if result
+      Cache.write(cache_key, result, { expires_in: 15.minutes })
+    end
+    result
   end
 
   def to_user(item)
-
     Rails.logger.debug 'Create user from item...'
     Rails.logger.debug item.inspect
 
     # do item_user lookup
     item_user = user(item)
-
     return if !item_user
 
-    auth = Authorization.find_by( uid: item_user['id'], provider: 'facebook' )
+    auth = Authorization.find_by(uid: item_user['id'], provider: 'facebook')
 
     # create or update user
     user_data = {
-      login:        item_user['id'], # TODO
-      firstname:    item_user['first_name'] || item_user['name'],
-      lastname:     item_user['last_name'] || '',
-      email:        '',
-      password:     '',
-      # TODO: image_source: '',
-      # TODO: note:         '',
-      active:       true,
-      roles:        Role.where( name: 'Customer' ),
+      image_source: "https://graph.facebook.com/#{item_user['id']}/picture?type=large",
     }
     if auth
-      user_data[:id] = auth.user_id
-    end
-    user = User.create_or_update( user_data )
+      user = User.find(auth.user_id)
+      map = {
+        #note: 'description',
+      }
 
-    # create or update authorization
-    auth_data = {
-      uid:      item_user['id'],
-      username: item_user['id'], # TODO
-      user_id:  user.id,
-      provider: 'facebook'
-    }
-    if auth
-      auth.update_attributes( auth_data )
+      # ignore if value is already set
+      map.each {|target, source|
+        next if user[target] && !user[target].empty?
+        new_value = tweet_user.send(source).to_s
+        next if !new_value || new_value.empty?
+        user_data[target] = new_value
+      }
+      user.update_attributes(user_data)
     else
-      Authorization.new( auth_data )
+      user_data[:login] = item_user['id']
+      if item_user['first_name'] && item_user['last_name']
+        user_data[:firstname] = item_user['first_name']
+        user_data[:lastname]  = item_user['last_name']
+      else
+        user_data[:firstname] = item_user['name']
+      end
+      user_data[:active] = true
+      user_data[:roles]  = Role.where(name: 'Customer')
+
+      user = User.create(user_data)
     end
 
-    UserInfo.current_user_id = user.id
+    if user_data[:image_source]
+      avatar = Avatar.add(
+        object: 'User',
+        o_id: user.id,
+        url: user_data[:image_source],
+        source: 'facebook',
+        deletable: true,
+        updated_by_id: user.id,
+        created_by_id: user.id,
+      )
 
+      # update user link
+      if avatar && user.image != avatar.store_hash
+        user.image = avatar.store_hash
+        user.save
+      end
+    end
+
+    # create authorization
+    if !auth
+      auth_data = {
+        uid:      item_user['id'],
+        username: item_user['id'],
+        user_id:  user.id,
+        provider: 'facebook'
+      }
+      Authorization.create(auth_data)
+    end
+    UserInfo.current_user_id = user.id
     user
   end
 
-  def to_ticket(post, group_id)
+  def to_ticket(post, group_id, channel, page)
 
     Rails.logger.debug 'Create ticket from post...'
     Rails.logger.debug post.inspect
@@ -109,16 +203,27 @@ class Facebook
     user = to_user(post)
     return if !user
 
+    # prepare title
+
+    title = post['message']
+    if title.length > 80
+      title = "#{title[0, 80]}..."
+    end
+
     Ticket.create(
       customer_id: user.id,
-      title:       "#{post['message'][0, 37]}...",
+      title:       title,
       group_id:    group_id,
-      state:       Ticket::State.find_by( name: 'new' ),
-      priority:    Ticket::Priority.find_by( name: '2 normal' ),
+      state:       Ticket::State.find_by(name: 'new'),
+      priority:    Ticket::Priority.find_by(name: '2 normal'),
+      preferences: {
+        channel_id: channel.id,
+        channel_fb_object_id: page['id'],
+      },
     )
   end
 
-  def to_article(post, ticket)
+  def to_article(post, ticket, _page)
 
     Rails.logger.debug 'Create article from post...'
     Rails.logger.debug post.inspect
@@ -126,62 +231,70 @@ class Facebook
 
     # set ticket state to open if not new
     if ticket.state.name != 'new'
-      ticket.state = Ticket::State.find_by( name: 'open' )
+      ticket.state = Ticket::State.find_by(name: 'open')
       ticket.save
     end
 
     user = to_user(post)
     return if !user
 
+    to = nil
+    if post['to'] && post['to']['data']
+      post['to']['data'].each {|to_entry|
+        if !to
+          to = ''
+        else
+          to += ', '
+        end
+        to += to_entry['name']
+      }
+    end
+
     feed_post = {
-      from:       "#{user.firstname} #{user.lastname}",
+      from:       post['from']['name'],
+      to:         to,
       body:       post['message'],
       message_id: post['id'],
-      type_id:    Ticket::Article::Type.find_by( name: 'facebook feed post' ).id,
+      type_id:    Ticket::Article::Type.find_by(name: 'facebook feed post').id,
     }
+
     articles = []
-    articles.push( feed_post )
+    articles.push(feed_post)
 
     if post['comments'] && post['comments']['data']
-      articles += nested_comments( post['comments']['data'], post['id'] )
+      articles += nested_comments(post['comments']['data'], post['id'])
     end
 
     articles.each { |article|
-
-      next if Ticket::Article.find_by( message_id: article[:message_id] )
-
+      next if Ticket::Article.find_by(message_id: article[:message_id])
       article = {
-        to:        @account['name'],
+        #to:        @account['name'],
         ticket_id: ticket.id,
         internal:  false,
-        sender_id: Ticket::Article::Sender.lookup( name: 'Customer' ).id,
+        sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
         created_by_id: 1,
         updated_by_id: 1,
-      }.merge( article )
-
-      Ticket::Article.create( article )
+      }.merge(article)
+      Ticket::Article.create(article)
     }
   end
 
-  def to_group(post, group_id)
-
+  def to_group(post, group_id, channel, page)
     Rails.logger.debug 'import post'
-
+    return if !post['message']
     ticket = nil
+
     # use transaction
     ActiveRecord::Base.transaction do
 
       UserInfo.current_user_id = 1
-
-      existing_article = Ticket::Article.find_by( message_id: post['id'] )
-      if existing_article
-        ticket = existing_article.ticket
-      else
-        ticket = to_ticket(post, group_id)
-        return if !ticket
-      end
-
-      to_article(post, ticket)
+      existing_article = Ticket::Article.find_by(message_id: post['id'])
+      ticket = if existing_article
+                 existing_article.ticket
+               else
+                 to_ticket(post, group_id, channel, page)
+               end
+      to_article(post, ticket, page)
 
       # execute ticket events
       Observer::Ticket::Notification.transaction
@@ -191,37 +304,28 @@ class Facebook
   end
 
   def from_article(article)
-
     post = nil
     if article[:type] == 'facebook feed comment'
-
       Rails.logger.debug 'Create feed comment from article...'
-
       post = @client.put_comment(article[:in_reply_to], article[:body])
     else
       fail "Can't handle unknown facebook article type '#{article[:type]}'."
     end
-
     Rails.logger.debug post.inspect
-    @client.get_object( post['id'] )
+    @client.get_object(post['id'])
   end
 
   private
 
   def access_token_for_page(lookup)
-
     access_token = nil
     pages.each { |page|
-
       next if !lookup[:page_id] && !lookup[:page]
       next if lookup[:page_id] && lookup[:page_id].to_s != page[:id]
       next if lookup[:page] && lookup[:page] != page[:name]
-
       access_token = page[:access_token]
-
       break
     }
-
     access_token
   end
 
@@ -234,11 +338,8 @@ class Facebook
     return result if comments.empty?
 
     comments.each { |comment|
-
       user = to_user(comment)
-
       next if !user
-
       article_data = {
         from:         "#{user.firstname} #{user.lastname}",
         body:       comment['message'],
@@ -246,15 +347,13 @@ class Facebook
         type_id:    Ticket::Article::Type.find_by( name: 'facebook feed comment' ).id,
         in_reply_to: in_reply_to
       }
-      result.push( article_data )
-
+      result.push(article_data)
       sub_comments = @client.get_object( "#{comment['id']}/comments" )
-
       sub_articles = nested_comments(sub_comments, comment['id'])
-
       result += sub_articles
     }
 
     result
   end
+
 end
