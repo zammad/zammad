@@ -115,7 +115,7 @@ class Index extends App.ControllerContent
   showCredentials: (e) =>
     e.preventDefault()
     @urlStatus.attr('data-state', '')
-    @zendeskUrlApiToken.attr('href', @zendeskUrl.val() + "agent/admin/api")
+    @zendeskUrlApiToken.attr('href', @zendeskUrl.val() + 'agent/admin/api')
     @zendeskUrlApiToken.val('HERE')
     @$('[data-slide=zendesk-url]').toggleClass('hide')
     @$('[data-slide=zendesk-credentials]').toggleClass('hide')
