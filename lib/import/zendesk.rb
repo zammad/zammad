@@ -48,6 +48,95 @@ module Import::Zendesk
     true
   end
 
+=begin
+  start import in background
+
+  Import::Zendesk.start_bg
+=end
+
+  def start_bg
+    Setting.reload
+
+    Import::Zendesk.connection_test
+
+    # start thread to observe current state
+    status_update_thread = Thread.new {
+      loop do
+        result = {
+          data: current_state,
+          result: 'in_progress',
+        }
+        Cache.write('import:state', result, expires_in: 10.minutes)
+        sleep 8
+      end
+    }
+    sleep 2
+
+    # start thread to import data
+    begin
+      import_thread = Thread.new {
+        Import::Zendesk.start
+      }
+    rescue => e
+      status_update_thread.exit
+      status_update_thread.join
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.inspect
+      result = {
+        message: e.message,
+        result: 'error',
+      }
+      Cache.write('import:state', result, expires_in: 10.hours)
+      return false
+    end
+    import_thread.join
+    status_update_thread.exit
+    status_update_thread.join
+
+    result = {
+      result: 'import_done',
+    }
+    Cache.write('import:state', result, expires_in: 10.hours)
+
+    Setting.set('system_init_done', true)
+    Setting.set('import_mode', false)
+  end
+
+=begin
+
+  get import state from background process
+
+  result = Import::Zendesk.status_bg
+
+=end
+
+  def status_bg
+    state = Cache.get('import:state')
+    return state if state
+    {
+      message: 'not running',
+    }
+  end
+
+=begin
+
+  start get request to backend to check connection
+
+  result = connection_test
+
+  return
+
+     true | false
+
+=end
+
+  def connection_test
+    initialize_client
+
+    return true if @client.users.first
+    false
+  end
+
   def statistic
 
     # check cache
@@ -89,9 +178,61 @@ module Import::Zendesk
     statistic
   end
 
-  def initialize_client
-    return nil if @client
+=begin
 
+  return current import state
+
+  result = current_state
+
+  return
+
+     {
+        :Group => {
+          :total => 1234,
+          :done  => 13,
+        },
+        :Organization => {
+          :total => 1234,
+          :done  => 13,
+        },
+        :User => {
+          :total => 1234,
+          :done  => 13,
+        },
+        :Ticket => {
+          :total => 1234,
+          :done  => 13,
+        },
+     }
+
+=end
+
+  def current_state
+
+    data = statistic
+
+    # TODO: Ticket, User, Organization fields
+    {
+      Group: {
+        done: Group.count,
+        total: data['Groups'] || 0,
+      },
+      Organization: {
+        done: Organization.count,
+        total: data['Organizations'] || 0,
+      },
+      User: {
+        done: User.count,
+        total: data['Users'] || 0,
+      },
+      Ticket: {
+        done: Ticket.count,
+        total: data['Tickets'] || 0,
+      },
+    }
+  end
+
+  def initialize_client
     @client = ZendeskAPI::Client.new do |config|
       config.url = Setting.get('import_zendesk_endpoint')
 
@@ -350,11 +491,13 @@ module Import::Zendesk
     @client.organizations.each { |zendesk_organization|
 
       local_organization_fields = {
-        name:   zendesk_organization.name,
-        note:   zendesk_organization.note,
-        shared: zendesk_organization.shared_tickets,
+        name:          zendesk_organization.name,
+        note:          zendesk_organization.note,
+        shared:        zendesk_organization.shared_tickets,
         # shared: zendesk_organization.shared_comments, # TODO, not yet implemented
         # }.merge(zendesk_organization.organization_fields) # TODO
+        updated_by_id: 1,
+        created_by_id: 1
       }
 
       local_organization = Organization.create_if_not_exists( local_organization_fields )
@@ -391,6 +534,8 @@ module Import::Zendesk
         verified:        zendesk_user.verified,
         organization_id: @zendesk_organization_mapping[ zendesk_user.organization_id ],
         last_login:      zendesk_user.last_login_at,
+        updated_by_id:   1,
+        created_by_id:   1
       }
 
       if @zendesk_user_group_mapping[ zendesk_user.id ]
@@ -498,19 +643,18 @@ module Import::Zendesk
         title:           zendesk_ticket.subject,
         note:            zendesk_ticket.description,
         group_id:        @zendesk_group_mapping[ zendesk_ticket.group_id ] || 1,
-        customer_id:     @zendesk_user_mapping[ zendesk_ticket.requester_id ],
+        customer_id:     @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1,
         organization_id: @zendesk_organization_mapping[ zendesk_ticket.organization_id ],
         state:           Ticket::State.lookup( name: mapping_state( zendesk_ticket.status ) ),
         priority:        Ticket::Priority.lookup( name: mapping_priority( zendesk_ticket.priority ) ),
         pending_time:    zendesk_ticket.due_at,
         updated_at:      zendesk_ticket.updated_at,
         created_at:      zendesk_ticket.created_at,
-        updated_by_id:   @zendesk_user_mapping[ zendesk_ticket.requester_id ],
-        created_by_id:   @zendesk_user_mapping[ zendesk_ticket.requester_id ],
+        updated_by_id:   @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1,
+        created_by_id:   @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1,
         # }.merge(zendesk_ticket_fields) TODO
       }
-
-      ticket_author = User.find( @zendesk_user_mapping[ zendesk_ticket.requester_id ] )
+      ticket_author = User.find( @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1 )
 
       local_ticket_fields[:create_article_sender_id] = if ticket_author.role?('Customer')
                                                          article_sender_customer.id
@@ -553,7 +697,7 @@ module Import::Zendesk
           object:        'Ticket',
           o_id:          local_ticket.id,
           item:          tag.id,
-          created_by_id: @zendesk_user_mapping[ zendesk_ticket.requester_id ],
+          created_by_id: @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1,
         )
       }
 
@@ -581,11 +725,11 @@ module Import::Zendesk
           ticket_id:     local_ticket.id,
           body:          zendesk_article.html_body,
           internal:      !zendesk_article.public,
-          updated_by_id: @zendesk_user_mapping[ zendesk_article.author_id ],
-          created_by_id: @zendesk_user_mapping[ zendesk_article.author_id ],
+          updated_by_id: @zendesk_user_mapping[ zendesk_article.author_id ] || 1,
+          created_by_id: @zendesk_user_mapping[ zendesk_article.author_id ] || 1,
         }
 
-        article_author = User.find( @zendesk_user_mapping[ zendesk_article.author_id ] )
+        article_author = User.find( @zendesk_user_mapping[ zendesk_article.author_id ] || 1 )
 
         local_article_fields[:sender_id] = if article_author.role?('Customer')
                                              article_sender_customer.id
@@ -662,7 +806,8 @@ module Import::Zendesk
             filename:    zendesk_attachment.file_name,
             preferences: {
               'Content-Type' => zendesk_attachment.content_type
-            }
+            },
+            created_by_id: 1
           )
         }
       }
