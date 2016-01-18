@@ -405,8 +405,10 @@ job_integration_autowizard_chrome:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
 job_integration_zendesk_chrome:
-    - export BROWSER_PORT=4071
-    - export WS_PORT=4072
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
