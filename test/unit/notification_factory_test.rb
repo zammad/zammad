@@ -2,6 +2,9 @@
 require 'test_helper'
 
 class NotificationFactoryTest < ActiveSupport::TestCase
+
+  Translation.load('de-de')
+
   test 'notifications send' do
     result = NotificationFactory.send(
       recipient: User.find(2),
