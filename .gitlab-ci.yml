@@ -293,20 +293,6 @@ job_integration_browser_ff_3:
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
-job_integration_autowizard_chrome:
-  stage: browser
-  tags:
-    - browser-chrome
-  script:
-    - export BROWSER_URL=http://$IP:$BROWSER_PORT
-    - RAILS_ENV=test rake db:create
-    - cp contrib/auto_wizard_example.json auto_wizard.json
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-
 job_integration_browser_chrome_1:
   stage: browser
   tags:
@@ -403,3 +389,18 @@ job_integration_otrs_chrome:
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/otrs_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+job_integration_autowizard_chrome:
+  stage: browser
+  tags:
+    - browser-chrome
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_example.json auto_wizard.json
+    - script/bootstrap.sh
+    - rake assets:precompile
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
