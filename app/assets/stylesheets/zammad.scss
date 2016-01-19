@@ -45,6 +45,14 @@ p {
   &.subtle {
     color: hsl(60,1%,74%);
   }
+
+  &.description {
+    color: hsl(190,2%,74%);
+  }
+}
+
+h3 + .description {
+  margin-top: 0;
 }
 
 strong {
@@ -5416,6 +5424,11 @@ footer {
     padding: 0 23px;
     
     h2:first-child {
+      margin-top: 0;
+    }
+
+    p:first-child,
+    .alert.hidden:first-child + p {
       margin-top: 0;
     }
     
