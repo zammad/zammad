@@ -53,7 +53,7 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 
     # calendars
     calendar_ids = []
-    Calendar.all.order(:name).each {|calendar|
+    Calendar.all.order(:name, :created_at).each {|calendar|
       calendar_ids.push calendar.id
       assets = calendar.assets(assets)
     }
@@ -61,7 +61,7 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
     # slas
     sla_ids = []
     models = Models.all
-    Sla.all.order(:name).each {|sla|
+    Sla.all.order(:name, :created_at).each {|sla|
       sla_ids.push sla.id
       assets = sla.assets(assets)
 

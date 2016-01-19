@@ -16,7 +16,7 @@ all:
 
 dedicated:
 
-  Translation.load(locale) # e. g. en-us or de-de
+  Translation.load(locale) # e. g. 'en-us' or 'de-de'
 
 =end
 

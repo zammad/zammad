@@ -207,7 +207,7 @@ returns
     sla_selected = nil
     sla_list = Cache.get('SLA::List::Active')
     if sla_list.nil?
-      sla_list = Sla.all.order(:name)
+      sla_list = Sla.all.order(:name, :created_at)
       Cache.write('SLA::List::Active', sla_list, { expires_in: 1.hour })
     end
     sla_list.each {|sla|
