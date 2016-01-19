@@ -346,6 +346,7 @@ condition example
     # remember query and bind params
     query = ''
     bind_params = []
+    like = Rails.application.config.db_like
 
     # get tables to join
     tables = ''
@@ -437,11 +438,11 @@ condition example
           bind_params.push selector['value']
         end
       elsif selector['operator'] == 'contains'
-        query += "#{attribute} LIKE (?)"
+        query += "#{attribute} #{like} (?)"
         value = "%#{selector['value']}%"
         bind_params.push value
       elsif selector['operator'] == 'contains not'
-        query += "#{attribute} NOT LIKE (?)"
+        query += "#{attribute} NOT #{like} (?)"
         value = "%#{selector['value']}%"
         bind_params.push value
       elsif selector['operator'] == 'before (absolute)'

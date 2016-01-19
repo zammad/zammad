@@ -54,6 +54,7 @@ gem 'therubyracer'
 
 # e. g. for mysql you need to load mysql
 gem 'mysql2', '~> 0.3.20'
+gem 'pg'
 
 gem 'net-ldap'
 

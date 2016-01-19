@@ -1,7 +1,8 @@
 # encoding: utf-8
 # inital data set as extention to db/seeds.rb
+
+# create email address and apply it to all groups
 email_address = EmailAddress.create_if_not_exists(
-  id: 1,
   realname: 'Zammad',
   email: 'zammad@localhost',
   updated_by_id: 1,

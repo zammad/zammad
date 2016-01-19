@@ -303,11 +303,12 @@ returns
 
 =begin
 
-lookup model from cache (if exists) or retrieve it from db, id, name or login possible
+lookup model from cache (if exists) or retrieve it from db, id, name, login or email possible
 
   result = Model.lookup(id: 123)
   result = Model.lookup(name: 'some name')
   result = Model.lookup(login: 'some login')
+  result = Model.lookup(email: 'some login')
 
 returns
 
@@ -328,7 +329,11 @@ returns
       return cache if cache
 
       # do lookup with == to handle case insensitive databases
-      records = where(name: data[:name])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(name) = LOWER(?)', data[:name])
+                else
+                  where(name: data[:name])
+                end
       records.each {|loop_record|
         if loop_record.name == data[:name]
           cache_set(data[:name], loop_record)
@@ -341,17 +346,38 @@ returns
       return cache if cache
 
       # do lookup with == to handle case insensitive databases
-      records = where(login: data[:login])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(login) = LOWER(?)',  data[:login])
+                else
+                  where(login: data[:login])
+                end
       records.each {|loop_record|
         if loop_record.login == data[:login]
-          cache_set( data[:login], loop_record)
+          cache_set(data[:login], loop_record)
+          return loop_record
+        end
+      }
+      return
+    elsif data[:email]
+      cache = cache_get(data[:email])
+      return cache if cache
+
+      # do lookup with == to handle case insensitive databases
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(email) = LOWER(?)',  data[:email])
+                else
+                  where(email: data[:email])
+                end
+      records.each {|loop_record|
+        if loop_record.email == data[:email]
+          cache_set(data[:email], loop_record)
           return loop_record
         end
       }
       return
     end
 
-    fail 'Need name, id or login for lookup()'
+    fail 'Need name, id, login or email for lookup()'
   end
 
 =begin
@@ -373,28 +399,44 @@ returns
     elsif data[:name]
 
       # do lookup with == to handle case insensitive databases
-      records = where(name: data[:name])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(name) = LOWER(?)', data[:name])
+                else
+                  where(name: data[:name])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.name == data[:name]
       }
     elsif data[:login]
 
       # do lookup with == to handle case insensitive databases
-      records = where(login: data[:login])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(login) = LOWER(?)', data[:login])
+                else
+                  where(login: data[:login])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.login == data[:login]
       }
     elsif data[:email]
 
       # do lookup with == to handle case insensitive databases
-      records = where(email: data[:email])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(email) = LOWER(?)', data[:email])
+                else
+                  where(email: data[:email])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.email == data[:email]
       }
     elsif data[:locale] && data[:source]
 
       # do lookup with == to handle case insensitive databases
-      records = where(locale: data[:locale], source: data[:source])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(locale) = LOWER(?) AND LOWER(source) = LOWER(?)', data[:locale], data[:source])
+                else
+                  where(locale: data[:locale], source: data[:source])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.source == data[:source]
       }
@@ -427,7 +469,11 @@ returns
     elsif data[:name]
 
       # do lookup with == to handle case insensitive databases
-      records = where(name: data[:name])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(name) = LOWER(?)', data[:name])
+                else
+                  where(name: data[:name])
+                end
       records.each {|loop_record|
         if loop_record.name == data[:name]
           loop_record.update_attributes(data)
@@ -440,7 +486,11 @@ returns
     elsif data[:login]
 
       # do lookup with == to handle case insensitive databases
-      records = where(login: data[:login])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(login) = LOWER(?)', data[:login])
+                else
+                  where(login: data[:login])
+                end
       records.each {|loop_record|
         if loop_record.login.casecmp(data[:login]).zero?
           loop_record.update_attributes(data)
@@ -453,7 +503,11 @@ returns
     elsif data[:email]
 
       # do lookup with == to handle case insensitive databases
-      records = where(email: data[:email])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(email) = LOWER(?)',  data[:email])
+                else
+                  where(email: data[:email])
+                end
       records.each {|loop_record|
         if loop_record.email.casecmp(data[:email]).zero?
           loop_record.update_attributes(data)
@@ -466,7 +520,11 @@ returns
     elsif data[:locale]
 
       # do lookup with == to handle case insensitive databases
-      records = where(locale: data[:locale])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(locale) = LOWER(?)', data[:locale])
+                else
+                  where(locale: data[:locale])
+                end
       records.each {|loop_record|
         if loop_record.locale.casecmp(data[:locale]).zero?
           loop_record.update_attributes(data)

@@ -2,8 +2,8 @@
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
-  role        = Role.lookup( name: 'Agent' )
-  group       = Group.lookup( name: 'Users' )
+  role        = Role.lookup(name: 'Agent')
+  group       = Group.lookup(name: 'Users')
   agent_user1 = User.create_or_update(
     login: 'agent_online_notify1',
     firstname: 'Bob',
@@ -28,7 +28,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     updated_by_id: 1,
     created_by_id: 1
   )
-  customer_user = User.lookup( login: 'nicole.braun@zammad.org' )
+  customer_user = User.lookup(email: 'nicole.braun@zammad.org')
 
   test 'ticket notification' do
     tests = [
@@ -407,7 +407,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
   end
 
-  def notification_check( online_notifications, checks )
+  def notification_check(online_notifications, checks)
     checks.each { |check_item|
       hit = false
       online_notifications.each {|onine_notification|
@@ -426,7 +426,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     }
   end
 
-  def notification_seen_only_exists_exists( online_notifications )
+  def notification_seen_only_exists_exists(online_notifications)
     online_notifications.each {|onine_notification|
       return false if !onine_notification['seen']
     }
