@@ -104,8 +104,8 @@ returns
 
       if current_user.role?('Agent')
         groups = Group.joins(:users)
-                      .where( 'groups_users.user_id = ?', current_user.id )
-                      .where( 'groups.active = ?', true )
+                      .where('groups_users.user_id = ?', current_user.id)
+                      .where('groups.active = ?', true)
         group_condition = []
         groups.each {|group|
           group_condition.push group.name
@@ -131,7 +131,7 @@ returns
 
       query_extention['bool']['must'].push access_condition
 
-      items = SearchIndexBackend.search( query, limit, 'Ticket', query_extention )
+      items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention)
       if !full
         ids = []
         items.each {|item|
@@ -141,30 +141,30 @@ returns
       end
       tickets = []
       items.each { |item|
-        tickets.push Ticket.lookup( id: item[:id] )
+        tickets.push Ticket.lookup(id: item[:id])
       }
       return tickets
     end
 
     # fallback do sql query
-    access_condition = Ticket.access_condition( current_user )
+    access_condition = Ticket.access_condition(current_user)
 
     # do query
     # - stip out * we already search for *query* -
     if query
       query.delete! '*'
-      tickets_all = Ticket.select('DISTINCT(tickets.id)')
+      tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
                           .where(access_condition)
-                          .where( '( `tickets`.`title` LIKE ? OR `tickets`.`number` LIKE ? OR `ticket_articles`.`body` LIKE ? OR `ticket_articles`.`from` LIKE ? OR `ticket_articles`.`to` LIKE ? OR `ticket_articles`.`subject` LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
+                          .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
                           .joins(:articles)
-                          .order('`tickets`.`created_at` DESC')
+                          .order('tickets.created_at DESC')
                           .limit(limit)
     else
       query_condition, bind_condition = selector2sql(params[:condition])
-      tickets_all = Ticket.select('DISTINCT(tickets.id)')
+      tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
                           .where(access_condition)
                           .where(query_condition, *bind_condition)
-                          .order('`tickets`.`created_at` DESC')
+                          .order('tickets.created_at DESC')
                           .limit(limit)
     end
 
@@ -179,7 +179,7 @@ returns
 
     tickets = []
     tickets_all.each { |ticket|
-      tickets.push Ticket.lookup( id: ticket.id )
+      tickets.push Ticket.lookup(id: ticket.id)
     }
     tickets
   end
