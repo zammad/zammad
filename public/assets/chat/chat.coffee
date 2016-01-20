@@ -179,7 +179,7 @@ do($ = window.jQuery, window) ->
     initialQueueDelay: 10000
     translations:
       de:
-        '<strong>Chat</strong> with us!': '<strong>Chat</strong> mit uns!'
+        '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!'
         'Online': 'Online'
         'Online': 'Online'
         'Offline': 'Offline'
