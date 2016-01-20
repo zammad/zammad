@@ -10,14 +10,14 @@ if [ "$RDB" == '' ]; then
   exit 1
 fi
 
-export RAND=`perl -e 'print rand(99999999)*100000'`
+export RAND=`perl -e 'print int(rand(999999999))'`
 DBNAME="$RNAME-$RAND"
 DBFILE=config/database.yml
 DB_PRODUCTION=$DBNAME"_production"
 DB_TEST=$DBNAME"_test"
 DB_DEVELOPMENT=$DBNAME"_development"
 
-echo "Creating $DBFILE for tests with $DBNAME"
+echo "Creating $DBFILE for $RDB tests with $DBNAME"
 
 if [ "$RDB" == 'mysql' ]; then
   echo "production:" > $DBFILE
