@@ -642,6 +642,7 @@ module Import::OTRS
           ticket    = Ticket.new(ticket_new)
           ticket.id = ticket_new[:id]
           ticket.save
+          _reset_pk('tickets')
         rescue ActiveRecord::RecordNotUnique
           log "Ticket #{ticket_new[:id]} is handled by another thead, skipping."
           next
@@ -723,6 +724,7 @@ module Import::OTRS
                 article_object    = Ticket::Article.new(article_new)
                 article_object.id = article_new[:id]
                 article_object.save
+                _reset_pk('ticket_articles')
               rescue ActiveRecord::RecordNotUnique
                 log "Ticket #{ticket_new[:id]} (article #{article_new[:id]}) is handled by another thead, skipping."
                 next
@@ -930,6 +932,7 @@ module Import::OTRS
         state = Ticket::State.new(state_new)
         state.id = state_new[:id]
         state.save
+        _reset_pk('ticket_states')
       end
     }
   end
@@ -971,6 +974,7 @@ module Import::OTRS
         priority = Ticket::Priority.new(priority_new)
         priority.id = priority_new[:id]
         priority.save
+        _reset_pk('ticket_priorities')
       end
     }
   end
@@ -1011,6 +1015,7 @@ module Import::OTRS
         group = Group.new(group_new)
         group.id = group_new[:id]
         group.save
+        _reset_pk('groups')
       end
     }
   end
@@ -1084,6 +1089,7 @@ module Import::OTRS
         user = User.new(user_new)
         user.id = user_new[:id]
         user.save
+        _reset_pk('users')
       end
     }
   end
@@ -1232,6 +1238,7 @@ module Import::OTRS
         log "add User.find(#{user_new[:id]})"
         user = User.new(user_new)
         user.save
+        _reset_pk('users')
       end
     }
   end
@@ -1283,6 +1290,7 @@ module Import::OTRS
         organization = Organization.new(organization_new)
         organization.id = organization_new[:id]
         organization.save
+        _reset_pk('organizations')
       end
     }
   end
@@ -1381,6 +1389,12 @@ module Import::OTRS
       next if value.class != String
       data[key] = Encode.conv( 'utf8', value )
     }
+  end
+
+  # reset primary key sequences
+  def self._reset_pk(table)
+    return if ActiveRecord::Base.connection_config[:adapter] != 'postgresql'
+    ActiveRecord::Base.connection.reset_pk_sequence!(table)
   end
 
   # create customers for article
