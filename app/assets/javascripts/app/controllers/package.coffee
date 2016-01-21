@@ -19,7 +19,7 @@ class Index extends App.ControllerContent
       url:   "#{@apiPath}/packages",
       processData: true,
       success: (data) =>
-        @packages = data
+        @packages = data.packages
         @render()
       )
 
@@ -52,7 +52,7 @@ class Index extends App.ControllerContent
         id:    'packages'
         type:  httpType
         url:   "#{@apiPath}/packages",
-        data:  JSON.stringify( { id: id } )
+        data:  JSON.stringify(id: id)
         processData: false
         success: =>
           @load()
