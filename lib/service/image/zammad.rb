@@ -6,6 +6,7 @@ class Service::Image::Zammad
   @@api_host = 'https://images.zammad.com'
   @@open_timeout = 4
   @@read_timeout = 6
+  @@total_timeout = 8
 
   def self.user(email)
 
@@ -18,6 +19,7 @@ class Service::Image::Zammad
       {
         open_timeout: @@open_timeout,
         read_timeout: @@read_timeout,
+        total_timeout: @@total_timeout,
       },
     )
     if !response.success?
@@ -46,6 +48,7 @@ class Service::Image::Zammad
       {
         open_timeout: @@open_timeout,
         read_timeout: @@read_timeout,
+        total_timeout: @@total_timeout,
       },
     )
     if !response.success?
@@ -66,7 +69,7 @@ class Service::Image::Zammad
     return false if !image
 
     # store image 1:1
-    product_logo = StaticAssets.store_raw( image[:content], image[:mime_type] )
+    product_logo = StaticAssets.store_raw(image[:content], image[:mime_type])
     Setting.set('product_logo', product_logo)
 
     true

@@ -59,8 +59,11 @@ returns
 
     # start http call
     begin
-      response = http.request(request)
-      return process(response, uri, count, params, options)
+      total_timeout = options[:total_timeout] || 60
+      Timeout.timeout(total_timeout) do
+        response = http.request(request)
+        return process(response, uri, count, params, options)
+      end
     rescue => e
       return Result.new(
         error: e.inspect,
@@ -83,6 +86,7 @@ post http/https calls
     {
       open_timeout: 4,
       read_timeout: 10,
+      total_timeout: 60,
     },
   )
 
@@ -107,8 +111,11 @@ returns
 
     # start http call
     begin
-      response = http.request(request)
-      return process(response, uri, count, params, options)
+      total_timeout = options[:total_timeout] || 60
+      Timeout.timeout(total_timeout) do
+        response = http.request(request)
+        return process(response, uri, count, params, options)
+      end
     rescue => e
       return Result.new(
         error: e.inspect,
@@ -155,8 +162,11 @@ returns
 
     # start http call
     begin
-      response = http.request(request)
-      return process(response, uri, count, params, options)
+      total_timeout = options[:total_timeout] || 60
+      Timeout.timeout(total_timeout) do
+        response = http.request(request)
+        return process(response, uri, count, params, options)
+      end
     rescue => e
       return Result.new(
         error: e.inspect,
@@ -196,8 +206,11 @@ returns
 
     # start http call
     begin
-      response = http.request(request)
-      return process(response, uri, count, {}, options)
+      total_timeout = options[:total_timeout] || 60
+      Timeout.timeout(total_timeout) do
+        response = http.request(request)
+        return process(response, uri, count, {}, options)
+      end
     rescue => e
       return Result.new(
         error: e.inspect,

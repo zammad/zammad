@@ -60,6 +60,7 @@ module Import::OTRS
       {
         open_timeout: 10,
         read_timeout: 60,
+        total_timeout: 180,
         user: Setting.get('import_otrs_user'),
         password: Setting.get('import_otrs_password'),
       },
@@ -93,9 +94,11 @@ module Import::OTRS
     log 'PARAMS: ' + data.inspect
     open_timeout = 10
     read_timeout = 120
+    total_timeout = 360
     if data.empty?
       open_timeout = 6
       read_timeout = 20
+      total_timeout = 120
     end
     response = UserAgent.post(
       url,
@@ -103,6 +106,7 @@ module Import::OTRS
       {
         open_timeout: open_timeout,
         read_timeout: read_timeout,
+        total_timeout: total_timeout,
         user: Setting.get('import_otrs_user'),
         password: Setting.get('import_otrs_password'),
       },

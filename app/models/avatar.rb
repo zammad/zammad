@@ -111,6 +111,7 @@ add a avatar
         {
           open_timeout: 4,
           read_timeout: 6,
+          total_timeout: 6,
         },
       )
       if !response.success?
