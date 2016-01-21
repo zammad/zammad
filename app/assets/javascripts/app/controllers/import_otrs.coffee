@@ -126,6 +126,8 @@ class Index extends App.ControllerContent
 
         if data.result is 'in_progress'
           for key, item of data.data
+            if item.done > item.total
+              item.done = item.total
             element = @$('.js-' + key.toLowerCase() )
             element.find('.js-done').text(item.done)
             element.find('.js-total').text(item.total)

@@ -154,16 +154,25 @@ class Index extends App.ControllerContent
           window.location.reload()
           return
 
-        for key, item of data.data
-          element = @$('.js-' + key.toLowerCase() )
-          element.find('.js-done').text(item.done)
-          element.find('.js-total').text(item.total)
-          element.find('progress').attr('max', item.total )
-          element.find('progress').attr('value', item.done )
-          if item.total <= item.done
-            element.addClass('is-done')
-          else
-            element.removeClass('is-done')
+        if data.result is 'error'
+          @$('.js-error').removeClass('hide')
+          @$('.js-error').html(App.i18n.translateContent(data.message))
+        else
+          @$('.js-error').addClass('hide')
+
+        if data.result is 'in_progress'
+          for key, item of data.data
+            if item.done > item.total
+              item.done = item.total
+            element = @$('.js-' + key.toLowerCase() )
+            element.find('.js-done').text(item.done)
+            element.find('.js-total').text(item.total)
+            element.find('progress').attr('max', item.total )
+            element.find('progress').attr('value', item.done )
+            if item.total <= item.done
+              element.addClass('is-done')
+            else
+              element.removeClass('is-done')
         @delay( @updateMigration, 5000 )
     )
 
