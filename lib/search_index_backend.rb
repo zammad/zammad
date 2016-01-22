@@ -155,27 +155,27 @@ return search result
 
     url = build_url()
     return if !url
-    if index
-      if index.class == Array
-        url += "/#{index.join(',')}/_search"
-      else
-        url += "/#{index}/_search"
-      end
-    else
-      url += '/_search'
-    end
+    url += if index
+             if index.class == Array
+               "/#{index.join(',')}/_search"
+             else
+               "/#{index}/_search"
+             end
+           else
+             '/_search'
+           end
     data = {}
     data['from'] = 0
     data['size'] = limit
     data['sort'] =
-    [
-      {
-        updated_at: {
-          order: 'desc'
-        }
-      },
-      '_score'
-    ]
+      [
+        {
+          updated_at: {
+            order: 'desc'
+          }
+        },
+        '_score'
+      ]
 
     data['query'] = query_extention || {}
     if !data['query']['bool']
@@ -274,15 +274,15 @@ get count of tickets and tickets which match on selector
 
     url = build_url()
     return if !url
-    if index
-      if index.class == Array
-        url += "/#{index.join(',')}/_search"
-      else
-        url += "/#{index}/_search"
-      end
-    else
-      url += '/_search'
-    end
+    url += if index
+             if index.class == Array
+               "/#{index.join(',')}/_search"
+             else
+               "/#{index}/_search"
+             end
+           else
+             '/_search'
+           end
 
     data = selector2query(selectors, current_user, aggs_interval, limit)
 
@@ -444,15 +444,15 @@ return true if backend is configured
     return if !SearchIndexBackend.enabled?
     index = Setting.get('es_index').to_s + "_#{Rails.env}"
     url   = Setting.get('es_url')
-    if type
-      if o_id
-        url = "#{url}/#{index}/#{type}/#{o_id}"
-      else
-        url = "#{url}/#{index}/#{type}"
-      end
-    else
-      url = "#{url}/#{index}"
-    end
+    url = if type
+            if o_id
+              "#{url}/#{index}/#{type}/#{o_id}"
+            else
+              "#{url}/#{index}/#{type}"
+            end
+          else
+            "#{url}/#{index}"
+          end
     url
   end
 

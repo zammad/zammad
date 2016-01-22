@@ -31,11 +31,11 @@ class String
 =end
 
   def to_filename
-    camel_cased_word = "#{self}"
+    camel_cased_word = "#{self}" # rubocop:disable Style/UnneededInterpolation
     camel_cased_word.gsub(/::/, '/')
-      .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-      .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-      .tr('-', '_').downcase
+                    .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+                    .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                    .tr('-', '_').downcase
   end
 
 =begin
@@ -48,7 +48,7 @@ class String
 =end
 
   def to_classname
-    camel_cased_word = "#{self}"
+    camel_cased_word = "#{self}" # rubocop:disable Style/UnneededInterpolation
     camel_cased_word.gsub!(/\.rb$/, '')
     camel_cased_word.split('/').map(&:camelize).join('::')
   end
@@ -57,7 +57,7 @@ class String
   # unfortunaly UTF8mb4 will raise other limitaions of max varchar and lower index sizes
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
   def utf8_to_3bytesutf8
-    return if ActiveRecord::Base.connection_config[:adapter] != 'mysql2'
+    return self if Rails.application.config.db_4bytes_utf8
     each_char.select {|c|
       if c.bytes.count > 3
         Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{self}'"
@@ -65,7 +65,7 @@ class String
       end
       c
     }
-    .join('') # rubocop:disable Style/MultilineOperationIndentation
+             .join('')
   end
 
 =begin
@@ -79,7 +79,7 @@ class String
 =end
 
   def html2text(string_only = false)
-    string = "#{self}"
+    string = "#{self}" # rubocop:disable Style/UnneededInterpolation
 
     # in case of invalid encodeing, strip invalid chars
     # see also test/fixtures/mail21.box
@@ -94,7 +94,7 @@ class String
     if !string_only
       string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) {
         link = $2
-        counter   = counter + 1
+        counter = counter + 1
         link_list += "[#{counter}] #{link}\n"
         "[#{counter}] "
       }
@@ -102,7 +102,6 @@ class String
 
     # remove style tags with content
     string.gsub!( %r{<style(|\s.+?)>(.+?)</style>}im, '')
-
     # remove empty lines
     string.gsub!( /^\s*/m, '' )
 
@@ -113,6 +112,9 @@ class String
     string.gsub!( %r{<code>(.+?)</code>}m ) { |placeholder|
       placeholder = placeholder.gsub(/\n/, '###BR###')
     }
+
+    # insert spaces on [A-z]\n[A-z]
+    string.gsub!( /([A-z])\n([A-z])/m, '\1 \2' )
 
     # remove all new lines
     string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
@@ -208,7 +210,7 @@ class String
 =end
 
   def text2html
-    text = CGI.escapeHTML( self )
+    text = CGI.escapeHTML(self)
     text.gsub!(/\n/, '<br>')
     text.chomp
   end

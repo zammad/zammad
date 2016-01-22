@@ -147,11 +147,10 @@ returns
     admin_user
   end
 
-  private
-
   def self.file_location
     auto_wizard_file_name     = 'auto_wizard.json'
     auto_wizard_file_location = "#{Rails.root}/#{auto_wizard_file_name}"
     auto_wizard_file_location
   end
+  private_class_method :file_location
 end

@@ -13,11 +13,11 @@ class Sessions::Event::Login < Sessions::Event::Base
       end
     end
 
-    if session && session.data && session.data['user_id']
-      new_session_data = { 'id' => session.data['user_id'] }
-    else
-      new_session_data = {}
-    end
+    new_session_data = if session && session.data && session.data['user_id']
+                         { 'id' => session.data['user_id'] }
+                       else
+                         {}
+                       end
 
     if @clients[@client_id]
       @clients[@client_id][:session] = new_session_data

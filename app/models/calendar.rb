@@ -27,6 +27,11 @@ returns calendar object
       ip = nil
     end
 
+    # prevent multible setups for same ip
+    cache = Cache.get('Calendar.init_setup.done')
+    return if cache && cache[:ip] == ip
+    Cache.write('Calendar.init_setup.done', { ip: ip }, { expires_in: 1.hour })
+
     # call for calendar suggestion
     calendar_details = Service::GeoCalendar.location(ip)
     return if !calendar_details
@@ -339,11 +344,11 @@ returns
       if public_holidays_was && public_holidays_was[day] && public_holidays_was[day]['feed']
         meta['feed'] = public_holidays_was[day]['feed']
       end
-      if meta['active']
-        meta['active'] = true
-      else
-        meta['active'] = false
-      end
+      meta['active'] = if meta['active']
+                         true
+                       else
+                         false
+                       end
     }
 
   end

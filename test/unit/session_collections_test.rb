@@ -40,7 +40,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     agent2.roles = roles
     agent2.save
 
-    roles  = Role.where( name: [ 'Customer'] )
+    roles = Role.where( name: [ 'Customer'] )
     customer1 = User.create_or_update(
       login: 'session-collections-customer-1',
       firstname: 'Session',

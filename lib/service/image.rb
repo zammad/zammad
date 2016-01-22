@@ -8,7 +8,7 @@ module Service
 
 lookup user image based on email address
 
-  file = Service::Image.user( 'skywalker@zammad.org' )
+  file = Service::Image.user('skywalker@zammad.org')
 
 returns
 
@@ -22,7 +22,7 @@ returns
     def self.user(address)
 
       # load backend
-      backend = load_adapter_by_setting( 'image_backend' )
+      backend = load_adapter_by_setting('image_backend')
       return if !backend
 
       backend.user(address)
@@ -48,7 +48,7 @@ returns
     def self.organization(domain)
 
       # load backend
-      backend = load_adapter_by_setting( 'image_backend' )
+      backend = load_adapter_by_setting('image_backend')
       return if !backend
 
       backend.organization(domain)
@@ -69,7 +69,7 @@ returns
     def self.organization_suggest(domain)
 
       # load backend
-      backend = load_adapter_by_setting( 'image_backend' )
+      backend = load_adapter_by_setting('image_backend')
       return if !backend
 
       result = backend.organization_suggest(domain)

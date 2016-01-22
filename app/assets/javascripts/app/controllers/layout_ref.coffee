@@ -2179,5 +2179,40 @@ class TwitterConversationRef extends App.ControllerContent
 
 App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
 
+class ChatToTicketRef extends App.ControllerContent
+
+  elements:
+    '.js-scrollHolder': 'scrollHolder'
+    '.js-boxFade': 'boxFade'
+    '.js-attachments': 'attachments'
+    '.js-chatBox': 'chatBox'
+
+  events:
+    'input .js-textInput': 'placeBoxFade'
+
+  constructor: ->
+    super
+    @render()
+    @scrollToBottom()
+    @placeBoxFade()
+
+  render: ->
+    @html App.view('layout_ref/chat_to_ticket')()
+
+  scrollToBottom: ->
+    @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+
+  placeBoxFade: =>
+    @boxFade.height @chatBox.outerHeight()
+    y1 = @attachments.offset().top - @boxFade.offset().top
+
+    @boxFade.html App.view('layout_ref/boxFade')
+      width: @attachments.offset().left - @boxFade.offset().left
+      height: @boxFade.height()
+      y1: y1
+      y2: y1 + @attachments.outerHeight()
+
+App.Config.set( 'layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes' )
+
 
 App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )

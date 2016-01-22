@@ -1,7 +1,8 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <fieldset>
 
-  <%- @T('Search Terms') %>
+  <h3><%- @T('Search Terms') %></h3>
+  <p class="description"><%- @T('Tweets containing search terms are automatically turned into tickets.') %></p>
   <div class="js-searchTerm">
     <div class="js-searchTermItem js-searchTermPlaceholder hidden">
       <input name="" value=""> -> <div class="js-groups"></div>
@@ -16,16 +17,16 @@
     </div>
   </div>
 
-  <hr>
-
   <div class="js-mention">
-    <%- @T('Mentions') %> -> <div class="js-groups"></div>
+    <h3><%- @T('Mentions Group') %></h3>
+    <p class="description"><%- @T('Choose which group %s will get added to.', 'mentions') %></p>
+    <div class="js-groups"></div>
   </div>
 
-  <hr>
-
   <div class="js-directMessage">
-    <%- @T('Direct Messages') %> -> <div class="js-groups"></div>
+    <h3><%- @T('Direct Messages Group') %></h3>
+    <p class="description"><%- @T('Choose which group %s will get added to.', 'direct messages') %></p>
+    <div class="js-groups"></div>
   </div>
 
 </fieldset>

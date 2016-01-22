@@ -43,8 +43,8 @@ list of all attributes
 
   result = [
     {
-      :name    => 'some name',
-      :display => '...',
+      name: 'some name',
+      display: '...',
     }.
   ],
 
@@ -129,8 +129,8 @@ add a new attribute entry for an object
 get the attribute model based on object and name
 
   attribute = ObjectManager::Attribute.get(
-    :object => 'Ticket',
-    :name   => 'group_id',
+    object: 'Ticket',
+    name: 'group_id',
   )
 
 =end
@@ -157,9 +157,9 @@ get user based list of object attributes
 returns:
 
   [
-    { :name => 'api_key', :display => 'API KEY', :tag => 'input', :null => true, :edit => true, :maxlength => 32 },
-    { :name => 'api_ip_regexp', :display => 'API IP RegExp', :tag => 'input', :null => true, :edit => true },
-    { :name => 'api_ip_max', :display => 'API IP Max', :tag => 'input', :null => true, :edit => true },
+    { name: 'api_key', display: 'API KEY', tag: 'input', null: true, edit: true, maxlength: 32 },
+    { name: 'api_ip_regexp', display: 'API IP RegExp', tag: 'input', null: true, edit: true },
+    { name: 'api_ip_max', display: 'API IP Max', tag: 'input', null: true, edit: true },
   ]
 
 =end
@@ -214,9 +214,9 @@ get user based list of object attributes as hash
 returns:
 
   {
-    'api_key'       => { :name => 'api_key', :display => 'API KEY', :tag => 'input', :null => true, :edit => true, :maxlength => 32 },
-    'api_ip_regexp' => { :name => 'api_ip_regexp', :display => 'API IP RegExp', :tag => 'input', :null => true, :edit => true },
-    'api_ip_max'    => { :name => 'api_ip_max', :display => 'API IP Max', :tag => 'input', :null => true, :edit => true },
+    'api_key'       => { name: 'api_key', display: 'API KEY', tag: 'input', null: true, edit: true, maxlength: 32 },
+    'api_ip_regexp' => { name: 'api_ip_regexp', display: 'API IP RegExp', tag: 'input', null: true, edit: true },
+    'api_ip_max'    => { name: 'api_ip_max', display: 'API IP Max', tag: 'input', null: true, edit: true },
   }
 
 =end

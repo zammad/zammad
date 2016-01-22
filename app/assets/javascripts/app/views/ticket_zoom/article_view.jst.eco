@@ -47,7 +47,7 @@
           </div>
         </div>
         <% if !_.isEmpty( @article.attachments ): %>
-          <div class="attachments">
+          <div class="attachments attachments--list">
             <%- @Icon('paperclip') %>
             <div class="attachments-title"><%- @article.attachments.length %> <%- @T('Attached Files') %></div>
             <% for attachment in @article.attachments: %>

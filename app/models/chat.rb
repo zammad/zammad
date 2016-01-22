@@ -46,7 +46,7 @@ class Chat < ApplicationModel
 
     # check if agents are available
     available_agents = Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - 2.minutes).count
-    if available_agents == 0
+    if available_agents.zero?
       return { state: 'offline' }
     end
 

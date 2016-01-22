@@ -23,7 +23,7 @@ class StatsStore < ApplicationModel
     end
 
     StatsStore.where(stats_store_object_id: object_id, o_id: data[:o_id], key: data[:key])
-      .where('created_at > ? AND created_at < ?', data[:start], data[:end]).count
+              .where('created_at > ? AND created_at < ?', data[:start], data[:end]).count
   end
 
 =begin

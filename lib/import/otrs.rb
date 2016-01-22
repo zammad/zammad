@@ -60,6 +60,7 @@ module Import::OTRS
       {
         open_timeout: 10,
         read_timeout: 60,
+        total_timeout: 180,
         user: Setting.get('import_otrs_user'),
         password: Setting.get('import_otrs_password'),
       },
@@ -93,9 +94,11 @@ module Import::OTRS
     log 'PARAMS: ' + data.inspect
     open_timeout = 10
     read_timeout = 120
+    total_timeout = 360
     if data.empty?
       open_timeout = 6
       read_timeout = 20
+      total_timeout = 120
     end
     response = UserAgent.post(
       url,
@@ -103,6 +106,7 @@ module Import::OTRS
       {
         open_timeout: open_timeout,
         read_timeout: read_timeout,
+        total_timeout: total_timeout,
         user: Setting.get('import_otrs_user'),
         password: Setting.get('import_otrs_password'),
       },
@@ -214,7 +218,7 @@ module Import::OTRS
 
 =begin
 
-  get object statistic from server ans save it in cache
+  get object statistic from remote server ans save it in cache
 
   result = statistic('Subaction=List')
 
@@ -409,10 +413,77 @@ module Import::OTRS
       threads[thread].join
     }
 
-    Setting.set( 'system_init_done', true )
-    #Setting.set( 'import_mode', false )
-
     true
+  end
+
+=begin
+  start import in background
+
+  Import::OTRS.start_bg
+=end
+
+  def self.start_bg
+    Setting.reload
+
+    Import::OTRS.connection_test
+
+    # start thread to observe current state
+    status_update_thread = Thread.new {
+      loop do
+        result = {
+          data: current_state,
+          result: 'in_progress',
+        }
+        Cache.write('import:state', result, expires_in: 10.minutes)
+        sleep 8
+      end
+    }
+    sleep 2
+
+    # start thread to import data
+    begin
+      import_thread = Thread.new {
+        Import::OTRS.start
+      }
+    rescue => e
+      status_update_thread.exit
+      status_update_thread.join
+      Rails.logger.error e.message
+      Rails.logger.error e.backtrace.inspect
+      result = {
+        message: e.message,
+        result: 'error',
+      }
+      Cache.write('import:state', result, expires_in: 10.hours)
+      return false
+    end
+    import_thread.join
+    status_update_thread.exit
+    status_update_thread.join
+
+    result = {
+      result: 'import_done',
+    }
+    Cache.write('import:state', result, expires_in: 10.hours)
+
+    Setting.set('system_init_done', true)
+    Setting.set('import_mode', false)
+  end
+
+=begin
+
+  get import state from background process
+
+  result = Import::OTRS.status_bg
+
+=end
+
+  def self.status_bg
+    state = Cache.get('import:state')
+    return state if state
+    {
+      message: 'not running',
+    }
   end
 
   def self.diff_worker
@@ -542,22 +613,22 @@ module Import::OTRS
       # find owner
       if ticket_new[:owner]
         user = User.lookup( login: ticket_new[:owner].downcase )
-        if user
-          ticket_new[:owner_id] = user.id
-        else
-          ticket_new[:owner_id] = 1
-        end
+        ticket_new[:owner_id] = if user
+                                  user.id
+                                else
+                                  1
+                                end
         ticket_new.delete(:owner)
       end
 
       # find customer
       if ticket_new[:customer]
         user = User.lookup( login: ticket_new[:customer].downcase )
-        if user
-          ticket_new[:customer_id] = user.id
-        else
-          ticket_new[:customer_id] = 1
-        end
+        ticket_new[:customer_id] = if user
+                                     user.id
+                                   else
+                                     1
+                                   end
         ticket_new.delete(:customer)
       else
         ticket_new[:customer_id] = 1
@@ -575,6 +646,7 @@ module Import::OTRS
           ticket    = Ticket.new(ticket_new)
           ticket.id = ticket_new[:id]
           ticket.save
+          _reset_pk('tickets')
         rescue ActiveRecord::RecordNotUnique
           log "Ticket #{ticket_new[:id]} is handled by another thead, skipping."
           next
@@ -656,6 +728,7 @@ module Import::OTRS
                 article_object    = Ticket::Article.new(article_new)
                 article_object.id = article_new[:id]
                 article_object.save
+                _reset_pk('ticket_articles')
               rescue ActiveRecord::RecordNotUnique
                 log "Ticket #{ticket_new[:id]} (article #{article_new[:id]}) is handled by another thead, skipping."
                 next
@@ -863,6 +936,7 @@ module Import::OTRS
         state = Ticket::State.new(state_new)
         state.id = state_new[:id]
         state.save
+        _reset_pk('ticket_states')
       end
     }
   end
@@ -904,6 +978,7 @@ module Import::OTRS
         priority = Ticket::Priority.new(priority_new)
         priority.id = priority_new[:id]
         priority.save
+        _reset_pk('ticket_priorities')
       end
     }
   end
@@ -944,6 +1019,7 @@ module Import::OTRS
         group = Group.new(group_new)
         group.id = group_new[:id]
         group.save
+        _reset_pk('groups')
       end
     }
   end
@@ -1017,6 +1093,7 @@ module Import::OTRS
         user = User.new(user_new)
         user.id = user_new[:id]
         user.save
+        _reset_pk('users')
       end
     }
   end
@@ -1165,6 +1242,7 @@ module Import::OTRS
         log "add User.find(#{user_new[:id]})"
         user = User.new(user_new)
         user.save
+        _reset_pk('users')
       end
     }
   end
@@ -1216,6 +1294,7 @@ module Import::OTRS
         organization = Organization.new(organization_new)
         organization.id = organization_new[:id]
         organization.save
+        _reset_pk('organizations')
       end
     }
   end
@@ -1278,19 +1357,19 @@ module Import::OTRS
   def self._set_valid(record)
 
     # map
-    if record['ValidID'].to_s == '3'
-      record['ValidID'] = false
-    elsif record['ValidID'].to_s == '2'
-      record['ValidID'] = false
-    elsif record['ValidID'].to_s == '1'
-      record['ValidID'] = true
-    elsif record['ValidID'].to_s == '0'
-      record['ValidID'] = false
+    record['ValidID'] = if record['ValidID'].to_s == '3'
+                          false
+                        elsif record['ValidID'].to_s == '2'
+                          false
+                        elsif record['ValidID'].to_s == '1'
+                          true
+                        elsif record['ValidID'].to_s == '0'
+                          false
 
-    # fallback
-    else
-      record['ValidID'] = true
-    end
+                        # fallback
+                        else
+                          true
+                        end
   end
 
   # cleanup invalid values
@@ -1314,6 +1393,12 @@ module Import::OTRS
       next if value.class != String
       data[key] = Encode.conv( 'utf8', value )
     }
+  end
+
+  # reset primary key sequences
+  def self._reset_pk(table)
+    return if ActiveRecord::Base.connection_config[:adapter] != 'postgresql'
+    ActiveRecord::Base.connection.reset_pk_sequence!(table)
   end
 
   # create customers for article

@@ -44,11 +44,6 @@ class Index extends App.ControllerContent
         if data.import_mode == true
           @showImportState()
           @updateMigration()
-        else
-          showDownload = =>
-            @$('[data-slide=otrs-prepare]').toggleClass('hide')
-            @$('[data-slide=otrs-plugin]').toggleClass('hide')
-          @delay( showDownload, 2500 )
     )
 
   render: ->
@@ -64,7 +59,6 @@ class Index extends App.ControllerContent
     @$('[data-slide=otrs-link]').toggleClass('hide')
 
   showImportState: =>
-    @$('[data-slide=otrs-prepare]').addClass('hide')
     @$('[data-slide=otrs-plugin]').addClass('hide')
     @$('[data-slide=otrs-link]').addClass('hide')
     @$('[data-slide=otrs-import]').removeClass('hide')
@@ -80,12 +74,11 @@ class Index extends App.ControllerContent
         id:          'import_otrs_url',
         type:        'POST',
         url:         @apiPath + '/import/otrs/url_check',
-        data:        JSON.stringify( { url:url} )
+        data:        JSON.stringify(url: url)
         processData: true,
         success:     (data, status, xhr) =>
 
           # validate form
-          console.log(data)
           if data.result is 'ok'
             @urlStatus.attr('data-state', 'success')
             @linkErrorMessage.text('')
@@ -96,7 +89,7 @@ class Index extends App.ControllerContent
             @nextStartMigration.addClass('hide')
 
       )
-    @delay( callback, 700, 'import_otrs_url' )
+    @delay(callback, 700, 'import_otrs_url')
 
   startMigration: (e) =>
     e.preventDefault()
@@ -107,11 +100,8 @@ class Index extends App.ControllerContent
       url:         @apiPath + '/import/otrs/import_start',
       processData: true,
       success:     (data, status, xhr) =>
-
-        # validate form
-        console.log(data)
         if data.result is 'ok'
-          @delay( @updateMigration, 3000 )
+          @delay(@updateMigration, 3000)
     )
 
 
@@ -124,23 +114,30 @@ class Index extends App.ControllerContent
       processData: true,
       success:     (data, status, xhr) =>
 
-        # validate form
-        console.log(data)
-        for key, item of data.data
-          element = @$('.js-' + key.toLowerCase() )
-          element.find('.js-done').text(item.done)
-          element.find('.js-total').text(item.total)
-          element.find('progress').attr('max', item.total )
-          element.find('progress').attr('value', item.done )
-          if item.total <= item.done
-            element.addClass('is-done')
-          else
-            element.removeClass('is-done')
+        if data.result is 'import_done'
+          window.location.reload()
+          return
 
-#js-finished
-#@Config.set('system_init_done', true)
+        if data.result is 'error'
+          @$('.js-error').removeClass('hide')
+          @$('.js-error').html(App.i18n.translateContent(data.message))
+        else
+          @$('.js-error').addClass('hide')
 
-        @delay( @updateMigration, 5000 )
+        if data.result is 'in_progress'
+          for key, item of data.data
+            if item.done > item.total
+              item.done = item.total
+            element = @$('.js-' + key.toLowerCase() )
+            element.find('.js-done').text(item.done)
+            element.find('.js-total').text(item.total)
+            element.find('progress').attr('max', item.total )
+            element.find('progress').attr('value', item.done )
+            if item.total <= item.done
+              element.addClass('is-done')
+            else
+              element.removeClass('is-done')
+        @delay(@updateMigration, 6500)
     )
 
 App.Config.set( 'import/otrs', Index, 'Routes' )
@@ -148,5 +145,6 @@ App.Config.set( 'otrs', {
   image: 'otrs-logo.png'
   title: 'OTRS'
   name:  'OTRS'
+  class: 'js-otrs'
   url:   '#import/otrs'
 }, 'ImportPlugins' )

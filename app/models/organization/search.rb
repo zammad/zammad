@@ -35,9 +35,9 @@ returns if user has no permissions to search
 search organizations
 
   result = Organization.search(
-    :current_user => User.find(123),
-    :query        => 'search something',
-    :limit        => 15,
+    current_user: User.find(123),
+    query: 'search something',
+    limit: 15,
   )
 
 returns
@@ -58,10 +58,10 @@ returns
 
       # try search index backend
       if SearchIndexBackend.enabled?
-        items = SearchIndexBackend.search( query, limit, 'Organization' )
+        items = SearchIndexBackend.search(query, limit, 'Organization')
         organizations = []
         items.each { |item|
-          organizations.push Organization.lookup( id: item[:id] )
+          organizations.push Organization.lookup(id: item[:id])
         }
         return organizations
       end
@@ -75,7 +75,7 @@ returns
 
       # if only a few organizations are found, search for names of users
       if organizations.length <= 3
-        organizations_by_user = Organization.select('DISTINCT(organizations.id)').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
+        organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
           'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
         ).order('organizations.name').limit(limit)
         organizations_by_user.each {|organization_by_user|

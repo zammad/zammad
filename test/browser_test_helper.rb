@@ -512,10 +512,8 @@ class TestCase < Test::Unit::TestCase
       if params[:type] == 'on'
         instance.find_elements({ css: "#{params[:css]} label" })[0].click
       end
-    else
-      if params[:type] == 'off'
-        instance.find_elements({ css: "#{params[:css]} label" })[0].click
-      end
+    elsif params[:type] == 'off'
+      instance.find_elements({ css: "#{params[:css]} label" })[0].click
     end
   end
 
@@ -622,32 +620,30 @@ class TestCase < Test::Unit::TestCase
         if success
           fail "should not match '#{params[:value]}' in select list, but is matching"
         end
-        return true
-      else
-        if !success
-          fail "not matching '#{params[:value]}' in select list"
-        end
-        return true
+      elsif !success
+        fail "not matching '#{params[:value]}' in select list"
       end
+
+      return true
     end
 
     # match on attribute
     begin
-      if params[:attribute]
-        text = element.attribute(params[:attribute])
-      elsif params[:css] =~ /(input|textarea)/i
-        text = element.attribute('value')
-      else
-        text = element.text
-      end
+      text = if params[:attribute]
+               element.attribute(params[:attribute])
+             elsif params[:css] =~ /(input|textarea)/i
+               element.attribute('value')
+             else
+               element.text
+             end
     rescue => e
 
       # just try again
       if !fallback
         return match(params, true)
-      else
-        raise e.inspect
       end
+
+      raise e.inspect
     end
 
     # do cleanups (needed for richtext tests)
@@ -662,19 +658,16 @@ class TestCase < Test::Unit::TestCase
       if text =~ /#{params[:value]}/i
         match = $1 || true
       end
-    else
-      if text =~ /#{Regexp.quote(params[:value])}/i
-        match = true
-      end
+    elsif text =~ /#{Regexp.quote(params[:value])}/i
+      match = true
     end
+
     if match
       if params[:should_not_match]
         fail "matching '#{params[:value]}' in content '#{text}' but should not!"
       end
-    else
-      if !params[:should_not_match]
-        fail "not matching '#{params[:value]}' in content '#{text}' but should!"
-      end
+    elsif !params[:should_not_match]
+      fail "not matching '#{params[:value]}' in content '#{text}' but should!"
     end
     sleep 0.8
     match
@@ -855,14 +848,12 @@ class TestCase < Test::Unit::TestCase
           else
             fail "task '#{data[:title]}' is not modifed"
           end
+        elsif !is_modified
+          assert(true, "task '#{data[:title]}' is modifed")
+        elsif !exists
+          fail "task '#{data[:title]}' not exists, should be not modified"
         else
-          if !is_modified
-            assert(true, "task '#{data[:title]}' is modifed")
-          elsif !exists
-            fail "task '#{data[:title]}' not exists, should be not modified"
-          else
-            fail "task '#{data[:title]}' is modifed, but should not"
-          end
+          fail "task '#{data[:title]}' is modifed, but should not"
         end
       end
     rescue => e
@@ -870,9 +861,8 @@ class TestCase < Test::Unit::TestCase
       # just try again
       if !fallback
         verify_task(params, true)
-      else
-        raise 'ERROR: ' + e.inspect
       end
+      raise 'ERROR: ' + e.inspect
     end
     true
   end
@@ -948,7 +938,7 @@ class TestCase < Test::Unit::TestCase
     if params[:timeout]
       timeout = params[:timeout]
     end
-    loops = (timeout).to_i * 2
+    loops = timeout.to_i * 2
     text = ''
     (1..loops).each {
       element = instance.find_elements({ css: params[:css] })[0]
@@ -956,13 +946,13 @@ class TestCase < Test::Unit::TestCase
         begin
 
           # match pn attribute
-          if params[:attribute]
-            text = element.attribute(params[:attribute])
-          elsif params[:css] =~ /(input|textarea)/i
-            text = element.attribute('value')
-          else
-            text = element.text
-          end
+          text = if params[:attribute]
+                   element.attribute(params[:attribute])
+                 elsif params[:css] =~ /(input|textarea)/i
+                   element.attribute('value')
+                 else
+                   element.text
+                 end
           if text =~ /#{params[:value]}/i
             assert(true, "'#{params[:value]}' found in '#{text}'")
             sleep 0.5
@@ -1009,7 +999,7 @@ wait untill text in selector disabppears
     if params[:timeout]
       timeout = params[:timeout]
     end
-    loops = (timeout).to_i
+    loops = timeout.to_i
     text  = ''
     (1..loops).each {
       element = instance.find_elements({ css: params[:css] })[0]
@@ -1640,6 +1630,40 @@ wait untill text in selector disabppears
     if number !~ /#{params[:number]}/
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
       fail "unable to search/find ticket #{params[:number]}!"
+    end
+    sleep 1
+    true
+  end
+
+=begin
+
+  ticket_open_by_title(
+    browser: browser2,
+    title:   ticket1[:title],
+  )
+
+=end
+
+  def ticket_open_by_title(params)
+    switch_window_focus(params)
+    log('ticket_open_by_title', params)
+
+    instance = params[:browser] || @browser
+
+    # search by number
+    element = instance.find_elements({ css: '#global-search' })[0]
+    element.click
+    element.clear
+    element.send_keys(params[:title])
+    sleep 3
+
+    # open ticket
+    #instance.find_element({ partial_link_text: params[:title] } ).click
+    instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
+    title = instance.find_elements({ css: '.active .ticketZoom-header .ticket-title-update' })[0].text
+    if title !~ /#{params[:title]}/
+      screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
+      fail "unable to search/find ticket #{params[:title]}!"
     end
     sleep 1
     true

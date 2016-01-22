@@ -89,7 +89,7 @@ class LongPollingController < ApplicationController
           sleep 0.25
         }
         #sleep 2
-        if count == 0
+        if count.zero?
           render json: { event: 'pong' }
           return
         end

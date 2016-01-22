@@ -7,8 +7,11 @@
     </div>
   </div>
   <div class="chat-name" title="<%= @title %>"><%= @name %></div>
-  <div class="chat-close js-close">
-    <%- @Icon('diagonal-cross') %>
+  <div class="chat-disconnect js-disconnect">
+    <div class="btn btn--action btn--small"><%- @T('disconnect') %></div>
+  </div>
+  <div class="chat-close js-close is-hidden">
+    <div class="btn btn--action btn--small"><%- @T('close') %></div>
   </div>
 </div>
 <div class="chat-body-holder js-scrollHolder">

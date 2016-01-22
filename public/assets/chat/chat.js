@@ -305,7 +305,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.translations = {
       de: {
-        '<strong>Chat</strong> with us!': '<strong>Chat</strong> mit uns!',
+        '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!',
         'Online': 'Online',
         'Online': 'Online',
         'Offline': 'Offline',
@@ -1542,11 +1542,11 @@ window.zammadChatTemplates["status"] = function (__obj) {
   }
   (function() {
     (function() {
-      __out.push('<div class="zammad-chat-status">');
+      __out.push('<div class="zammad-chat-status">\n  <div class="zammad-chat-status-inner">\n    ');
     
       __out.push(this.status);
     
-      __out.push('</div>');
+      __out.push('\n  </div>\n</div>');
     
     }).call(this);
     

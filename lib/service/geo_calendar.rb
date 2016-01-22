@@ -57,7 +57,7 @@ returns
     def self.location(address = nil)
 
       # load backend
-      backend = load_adapter_by_setting( 'geo_calendar_backend' )
+      backend = load_adapter_by_setting('geo_calendar_backend')
       return if !backend
 
       # db lookup

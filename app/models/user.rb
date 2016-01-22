@@ -118,14 +118,14 @@ returns
 
 =end
 
-  def role?( role_name )
+  def role?(role_name)
 
     result = false
     roles.each { |role|
       if role_name.class == Array
         next if !role_name.include?(role.name)
-      else
-        next if role.name != role_name
+      elsif role.name != role_name
+        next
       end
       result = true
       break
@@ -138,7 +138,7 @@ returns
 get users activity stream
 
   user = User.find(123)
-  result = user.activity_stream( 20 )
+  result = user.activity_stream(20)
 
 returns
 
@@ -163,8 +163,8 @@ returns
 
 =end
 
-  def activity_stream( limit, fulldata = false )
-    activity_stream = ActivityStream.list( self, limit )
+  def activity_stream(limit, fulldata = false)
+    activity_stream = ActivityStream.list(self, limit)
     return activity_stream if !fulldata
 
     # get related objects
@@ -188,7 +188,7 @@ returns
 
 =end
 
-  def self.authenticate( username, password )
+  def self.authenticate(username, password)
 
     # do not authenticate with nothing
     return if !username || username == ''
@@ -209,7 +209,7 @@ returns
       return false
     end
 
-    user_auth = Auth.check( username, password, user )
+    user_auth = Auth.check(username, password, user)
 
     # set login failed +1
     if !user_auth && user
@@ -237,7 +237,7 @@ returns
   def self.sso(params)
 
     # try to login against configure auth backends
-    user_auth = Sso.check( params )
+    user_auth = Sso.check(params)
     return if !user_auth
 
     user_auth
@@ -257,7 +257,7 @@ returns
 
   def self.create_from_hash!(hash)
 
-    roles = Role.where( name: 'Customer' )
+    roles = Role.where(name: 'Customer')
     url = ''
     if hash['info']['urls']
       hash['info']['urls'].each {|_name, local_url|
@@ -297,11 +297,11 @@ returns
     return if !username || username == ''
 
     # try to find user based on login
-    user = User.find_by( login: username.downcase, active: true )
+    user = User.find_by(login: username.downcase, active: true)
 
     # try second lookup with email
     if !user
-      user = User.find_by( email: username.downcase, active: true )
+      user = User.find_by(email: username.downcase, active: true)
     end
 
     # check if email address exists
@@ -309,7 +309,7 @@ returns
     return if !user.email
 
     # generate token
-    token = Token.create( action: 'PasswordReset', user_id: user.id )
+    token = Token.create(action: 'PasswordReset', user_id: user.id)
 
     # send mail
     data = {}
@@ -362,7 +362,7 @@ returns
 =end
 
   def self.password_reset_check(token)
-    user = Token.check( action: 'PasswordReset', name: token )
+    user = Token.check(action: 'PasswordReset', name: token)
 
     # reset login failed if token is valid
     if user
@@ -387,14 +387,14 @@ returns
   def self.password_reset_via_token(token, password)
 
     # check token
-    user = Token.check( action: 'PasswordReset', name: token )
+    user = Token.check(action: 'PasswordReset', name: token)
     return if !user
 
     # reset password
-    user.update_attributes( password: password )
+    user.update_attributes(password: password)
 
     # delete token
-    Token.find_by( action: 'PasswordReset', name: token ).destroy
+    Token.find_by(action: 'PasswordReset', name: token).destroy
     user
   end
 
@@ -425,6 +425,30 @@ returns
 
 =begin
 
+merge two users to one
+
+  user = User.find(123)
+  result = user.merge(user_id_of_duplicate_user)
+
+returns
+
+  result = new_user_model
+
+=end
+
+  def merge(user_id_of_duplicate_user)
+
+    # find email addresses and move them to primary user
+    duplicate_user = User.find(user_id_of_duplicate_user)
+
+    # merge missing attibutes
+    Models.merge('User', id, user_id_of_duplicate_user)
+
+    true
+  end
+
+=begin
+
 list of active users in role
 
   result = User.of_role('Agent')
@@ -436,7 +460,8 @@ returns
 =end
 
   def self.of_role(role)
-    User.where(active: true).joins(:roles).where( 'roles.name' => role, 'roles.active' => true ).uniq()
+    roles_ids = Role.where(active: true, name: role).map(&:id)
+    User.where(active: true).joins(:users_roles).where('roles_users.role_id IN (?)', roles_ids)
   end
 
   private
@@ -457,7 +482,7 @@ returns
 
   def check_name
 
-    if ( firstname && !firstname.empty? ) && ( !lastname || lastname.empty? )
+    if (firstname && !firstname.empty?) && (!lastname || lastname.empty?)
 
       # Lastname, Firstname
       scan = firstname.scan(/, /)
@@ -483,7 +508,7 @@ returns
       return
 
     # -no name- firstname.lastname@example.com
-    elsif ( !firstname || firstname.empty? ) && ( !lastname || lastname.empty? ) && ( email && !email.empty? )
+    elsif (!firstname || firstname.empty?) && (!lastname || lastname.empty?) && (email && !email.empty?)
       scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
         if !scan[0][0].nil?
@@ -523,7 +548,7 @@ returns
     self.login = login.downcase
     check      = true
     while check
-      exists = User.find_by( login: login )
+      exists = User.find_by(login: login)
       if exists && exists.id != id
         self.login = login + rand(999).to_s
       else
@@ -551,12 +576,12 @@ returns
     # update user link
     return if !avatar
 
-    update_column( :image, avatar.store_hash )
+    update_column(:image, avatar.store_hash)
     cache_delete
   end
 
   def avatar_destroy
-    Avatar.remove( 'User', id )
+    Avatar.remove('User', id)
   end
 
   def check_password
@@ -577,7 +602,7 @@ returns
     return if !password
     return if password =~ /^\{sha2\}/
 
-    crypted       = Digest::SHA2.hexdigest( password )
+    crypted       = Digest::SHA2.hexdigest(password)
     self.password = "{sha2}#{crypted}"
   end
 end

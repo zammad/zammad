@@ -11,7 +11,7 @@ class Organization < ApplicationModel
   has_many                :members,  class_name: 'User'
   validates               :name,     presence: true
 
-  activity_stream_support  role: Z_ROLENAME_ADMIN
+  activity_stream_support role: Z_ROLENAME_ADMIN
   history_support
   search_index_support
   notify_clients_support

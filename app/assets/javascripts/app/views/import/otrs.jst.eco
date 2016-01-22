@@ -1,24 +1,13 @@
 <div class="main flex vertical centered darkBackground">
   <%- @Icon('full-logo', 'wizard-logo') %>
   <div class="import wizard">
-    <div class="wizard-slide vertical" data-slide="otrs-prepare">
-      <h2><%- @T('Create OTRS Migration Plugin') %></h2>
-      <div class="wizard-body flex vertical justified">
-        <p class="wizard-loadingText">
-          <span class="loading icon"></span> <%- @T('Personalise Migration Plugin ...') %>
-        </p>
-      </div>
-      <div class="wizard-controls horizontal center">
-        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
-      </div>
-    </div>
-    <div class="wizard-slide vertical hide" data-slide="otrs-plugin">
+    <div class="wizard-slide vertical" data-slide="otrs-plugin">
       <h2><%- @T('Download OTRS Migration Plugin') %></h2>
       <div class="wizard-body flex vertical justified">
         <p>
-          <%- @T('Download and install your personalised OTRS Migration Plugin on your OTRS System') %>:
+          <%- @T('Download and install the OTRS Migration Plugin on your OTRS System') %>:
         </p>
-        <a class="btn btn--primary btn--download js-download" download><%- @Icon('download') %> <%- @T('Personal Migration Plugin') %></a>
+        <a class="btn btn--primary btn--download js-download" download href="https://portal.znuny.com/api/addon_repos/public/268/latest"><%- @Icon('download') %> <%- @T('Migration Plugin') %></a>
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
@@ -34,7 +23,7 @@
         <div class="form-group">
           <label for="otrs-link">OTRS Link</label>
           <div class="u-positionOrigin">
-            <input type="url" id="otrs-link" class="form-control" placeholder="http://otrs.example.com" name="url">
+            <input type="url" id="otrs-link" class="form-control" placeholder="http://example.com/otrs/public.pl?Action=ZammadMigrator;Key=31337" name="url">
             <div class="input-feedback centered">
               <div class="small loading icon"></div>
               <%- @Icon('diagonal-cross', 'icon-error') %>
@@ -52,6 +41,8 @@
 
     <div class="wizard-slide vertical hide" data-slide="otrs-import">
       <h2><%- @T('OTRS Migration') %></h2>
+      <div class="alert alert--danger hide js-error" role="alert"></div>
+
       <div class="wizard-body flex vertical justified">
         <table class="progressTable">
           <tr class="js-config">
@@ -59,7 +50,7 @@
             <td><span><%- @T('Configuration') %></span>
             <td class="progressTable-progressCell">
               <div class="horizontal center">
-                <div class="flex"><progress value="0.3"></progress></div><!-- if there is no max, the value is between 0..1 -->
+                <div class="flex"><progress value="1"></progress></div>
                 <%- @Icon('checkmark') %>
               </div>
           </tr>

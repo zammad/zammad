@@ -332,10 +332,13 @@ class ChatWindow extends App.Controller
     'click':                         'clearUnread'
     'click .js-send':                'sendMessage'
     'click .js-close':               'close'
+    'click .js-disconnect':          'disconnect'
 
   elements:
     '.js-customerChatInput': 'input'
     '.js-status':            'status'
+    '.js-close':            'closeButton'
+    '.js-disconnect':            'disconnectButton'
     '.js-body':              'body'
     '.js-scrollHolder':      'scrollHolder'
 
@@ -376,13 +379,13 @@ class ChatWindow extends App.Controller
     @bind('chat_session_left', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
-      @addStatusMessage("<strong>#{data.realname}</strong> has left the conversation")
+      @addStatusMessage("<strong>#{data.realname}</strong> left the conversation")
       @goOffline()
     )
     @bind('chat_session_closed', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
-      @addStatusMessage("<strong>#{data.realname}</strong> has closed the conversation")
+      @addStatusMessage("<strong>#{data.realname}</strong> closed the conversation")
       @goOffline()
     )
     @bind('chat_focus', (data) =>
@@ -438,14 +441,18 @@ class ChatWindow extends App.Controller
       maxlength: 40000
     })
 
-  close: =>
-    @el.one 'transitionend', { callback: @release }, @onTransitionend
-    @el.removeClass('is-open')
+  disconnect: =>
+    @addStatusMessage('<strong>You</strong> left the conversation')
     App.WebSocket.send(
       event:'chat_session_close'
       data:
         session_id: @session.session_id
     )
+    @goOffline()
+
+  close: =>
+    @el.one 'transitionend', { callback: @release }, @onTransitionend
+    @el.removeClass('is-open')
     if @removeCallback
       @removeCallback(@session.session_id)
 
@@ -588,10 +595,14 @@ class ChatWindow extends App.Controller
     @$('.js-loader').remove()
 
   goOffline: =>
-    #@addStatusMessage("<strong>#{ @options.name }</strong>'s connection got closed")
     @status.attr('data-status', 'offline')
+    @disconnectButton.addClass 'is-hidden'
+    @closeButton.removeClass 'is-hidden'
     @el.addClass('is-offline')
     @input.attr('disabled', true)
+
+    # add footer with create ticket button
+    @body.append App.view('customer_chat/chat_footer')()
 
   maybeAddTimestamp: ->
     timestamp = Date.now()
@@ -622,6 +633,8 @@ class ChatWindow extends App.Controller
         time: time
 
   addStatusMessage: (message, args) ->
+    @maybeAddTimestamp()
+    
     @body.append App.view('customer_chat/chat_status_message')
       message: message
       args: args

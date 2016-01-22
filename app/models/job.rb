@@ -43,8 +43,8 @@ class Job < ApplicationModel
 
       # find tickets to change
       tickets = Ticket.where( job.condition.permit! )
-                .order( '`tickets`.`created_at` DESC' )
-                .limit( 1_000 )
+                      .order( '`tickets`.`created_at` DESC' )
+                      .limit( 1_000 )
       job.processed = tickets.count
       tickets.each do |ticket|
         logger.debug "CHANGE #{job.execute.inspect}"
@@ -83,4 +83,5 @@ class Job < ApplicationModel
     minutes.gsub!(/(\d)\d/, '\\1')
     minutes.to_s + '0'
   end
+  private_class_method :match_minutes
 end

@@ -142,7 +142,7 @@ returns
     attributes = self.attributes
     self.class.reflect_on_all_associations.map { |assoc|
       real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      if self.respond_to?(real_key)
+      if respond_to?(real_key)
         attributes[ real_key ] = send(real_key)
       end
     }
@@ -230,7 +230,7 @@ returns
   end
 
   def cache_update(o)
-    cache_delete if self.respond_to?('cache_delete')
+    cache_delete if respond_to?('cache_delete')
     o.cache_delete if o.respond_to?('cache_delete')
   end
 
@@ -241,7 +241,7 @@ returns
     Cache.delete(key)
 
     # delete old name / login caches
-    if self.changed?
+    if changed?
       if changes.key?('name')
         name = changes['name'][0]
         key = "#{self.class}::#{name}"
@@ -303,11 +303,12 @@ returns
 
 =begin
 
-lookup model from cache (if exists) or retrieve it from db, id, name or login possible
+lookup model from cache (if exists) or retrieve it from db, id, name, login or email possible
 
   result = Model.lookup(id: 123)
   result = Model.lookup(name: 'some name')
   result = Model.lookup(login: 'some login')
+  result = Model.lookup(email: 'some login')
 
 returns
 
@@ -328,7 +329,11 @@ returns
       return cache if cache
 
       # do lookup with == to handle case insensitive databases
-      records = where(name: data[:name])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(name) = LOWER(?)', data[:name])
+                else
+                  where(name: data[:name])
+                end
       records.each {|loop_record|
         if loop_record.name == data[:name]
           cache_set(data[:name], loop_record)
@@ -341,17 +346,38 @@ returns
       return cache if cache
 
       # do lookup with == to handle case insensitive databases
-      records = where(login: data[:login])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(login) = LOWER(?)',  data[:login])
+                else
+                  where(login: data[:login])
+                end
       records.each {|loop_record|
         if loop_record.login == data[:login]
-          cache_set( data[:login], loop_record)
+          cache_set(data[:login], loop_record)
           return loop_record
         end
       }
       return
-    else
-      fail 'Need name, id or login for lookup()'
+    elsif data[:email]
+      cache = cache_get(data[:email])
+      return cache if cache
+
+      # do lookup with == to handle case insensitive databases
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(email) = LOWER(?)',  data[:email])
+                else
+                  where(email: data[:email])
+                end
+      records.each {|loop_record|
+        if loop_record.email == data[:email]
+          cache_set(data[:email], loop_record)
+          return loop_record
+        end
+      }
+      return
     end
+
+    fail 'Need name, id, login or email for lookup()'
   end
 
 =begin
@@ -373,28 +399,44 @@ returns
     elsif data[:name]
 
       # do lookup with == to handle case insensitive databases
-      records = where(name: data[:name])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(name) = LOWER(?)', data[:name])
+                else
+                  where(name: data[:name])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.name == data[:name]
       }
     elsif data[:login]
 
       # do lookup with == to handle case insensitive databases
-      records = where(login: data[:login])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(login) = LOWER(?)', data[:login])
+                else
+                  where(login: data[:login])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.login == data[:login]
       }
     elsif data[:email]
 
       # do lookup with == to handle case insensitive databases
-      records = where(email: data[:email])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(email) = LOWER(?)', data[:email])
+                else
+                  where(email: data[:email])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.email == data[:email]
       }
     elsif data[:locale] && data[:source]
 
       # do lookup with == to handle case insensitive databases
-      records = where(locale: data[:locale], source: data[:source])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(locale) = LOWER(?) AND LOWER(source) = LOWER(?)', data[:locale], data[:source])
+                else
+                  where(locale: data[:locale], source: data[:source])
+                end
       records.each {|loop_record|
         return loop_record if loop_record.source == data[:source]
       }
@@ -427,7 +469,11 @@ returns
     elsif data[:name]
 
       # do lookup with == to handle case insensitive databases
-      records = where(name: data[:name])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(name) = LOWER(?)', data[:name])
+                else
+                  where(name: data[:name])
+                end
       records.each {|loop_record|
         if loop_record.name == data[:name]
           loop_record.update_attributes(data)
@@ -440,9 +486,13 @@ returns
     elsif data[:login]
 
       # do lookup with == to handle case insensitive databases
-      records = where(login: data[:login])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(login) = LOWER(?)', data[:login])
+                else
+                  where(login: data[:login])
+                end
       records.each {|loop_record|
-        if loop_record.login.downcase == data[:login].downcase
+        if loop_record.login.casecmp(data[:login]).zero?
           loop_record.update_attributes(data)
           return loop_record
         end
@@ -453,9 +503,13 @@ returns
     elsif data[:email]
 
       # do lookup with == to handle case insensitive databases
-      records = where(email: data[:email])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(email) = LOWER(?)',  data[:email])
+                else
+                  where(email: data[:email])
+                end
       records.each {|loop_record|
-        if loop_record.email.downcase == data[:email].downcase
+        if loop_record.email.casecmp(data[:email]).zero?
           loop_record.update_attributes(data)
           return loop_record
         end
@@ -466,9 +520,13 @@ returns
     elsif data[:locale]
 
       # do lookup with == to handle case insensitive databases
-      records = where(locale: data[:locale])
+      records = if Rails.application.config.db_case_sensitive
+                  where('LOWER(locale) = LOWER(?)', data[:locale])
+                else
+                  where(locale: data[:locale])
+                end
       records.each {|loop_record|
-        if loop_record.locale.downcase == data[:locale].downcase
+        if loop_record.locale.casecmp(data[:locale]).zero?
           loop_record.update_attributes(data)
           return loop_record
         end
@@ -783,7 +841,7 @@ log object update activity stream, if configured - will be executed automaticall
   def activity_stream_update
     return if !self.class.activity_stream_support_config
 
-    return if !self.changed?
+    return if !changed?
 
     # default ignored attributes
     ignore_attributes = {
@@ -872,10 +930,10 @@ log object update history with all updated attributes, if configured - will be e
   def history_update
     return if !self.class.history_support_config
 
-    return if !self.changed?
+    return if !changed?
 
     # return if it's no update
-    return if self.new_record?
+    return if new_record?
 
     # new record also triggers update, so ignore new records
     changes = self.changes
@@ -921,7 +979,7 @@ log object update history with all updated attributes, if configured - will be e
         value_id[0] = value[0]
         value_id[1] = value[1]
 
-        if self.respond_to?( attribute_name ) && send(attribute_name)
+        if respond_to?( attribute_name ) && send(attribute_name)
           relation_class = send(attribute_name).class
           if relation_class && value_id[0]
             relation_model = relation_class.lookup( id: value_id[0] )

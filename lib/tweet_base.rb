@@ -121,9 +121,15 @@ class TweetBase
 
     UserInfo.current_user_id = user.id
 
+    # prepare title
+    title = tweet.text
+    if title.length > 80
+      title = "#{title[0, 80]}..."
+    end
+
     Ticket.create(
       customer_id: user.id,
-      title:       "#{tweet.text[0, 37]}...",
+      title:       title,
       group_id:    group_id,
       state:       Ticket::State.find_by(name: 'new'),
       priority:    Ticket::Priority.find_by(name: '2 normal'),

@@ -113,6 +113,48 @@ test("html2text", function() {
   should = "test 123\nlalala\n--\nsome test"
   result = App.Utils.html2text(source)
   equal(result, should, source)
+
+  source = "<p><span>Was\nsoll verbessert werden:</span></p>"
+  should = "Was soll verbessert werden:"
+  result = App.Utils.html2text(source)
+  equal(result, should, source)
+
+  // in raw format, without cleanup
+  source = "<div>Some</div><div>1234</div>"
+  should = "Some\n1234\n"
+  result = App.Utils.html2text(source, true)
+  equal(result, should, source)
+
+  source = "<div>Some</div><div> 1234</div>"
+  should = "Some\n 1234\n"
+  result = App.Utils.html2text(source, true)
+  equal(result, should, source)
+
+  source = "\n\n<div>Some</div>\n<div> 1234</div>"
+  should = "Some\n 1234\n"
+  result = App.Utils.html2text(source, true)
+  equal(result, should, source)
+
+  source = "<div>Some</div><div>  1234</div>"
+  should = "Some\n  1234\n"
+  result = App.Utils.html2text(source, true)
+  equal(result, should, source)
+
+  source = "<div>Some</div>\n\n<div>  1234</div>\n"
+  should = "Some\n  1234\n"
+  result = App.Utils.html2text(source, true)
+  equal(result, should, source)
+
+  source = "<div>test<br>new line<br></div>"
+  should = "test\nnew line\n\n"
+  result = App.Utils.html2text(source, true)
+  equal(result, should, source)
+
+  source = "<p><span>Was\nsoll verbessert werden:</span></p>"
+  should = "Was soll verbessert werden:\n"
+  result = App.Utils.html2text(source, true)
+  equal(result, should, source)
+
 });
 
 // linkify

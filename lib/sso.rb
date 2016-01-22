@@ -22,20 +22,6 @@ returns
       {
         adapter: 'Sso::Env',
       },
-      {
-        adapter: 'Sso::Otrs',
-        required_group_ro: 'stats',
-        group_rw_role_map: {
-          'admin' => 'Admin',
-          'stats' => 'Report',
-        },
-        group_ro_role_map: {
-          'stats' => 'Report',
-        },
-        always_role: {
-          'Agent' => true,
-        },
-      },
     ]
 
     # added configured backends

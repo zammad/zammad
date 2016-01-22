@@ -5,7 +5,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :session_id,  null: false
       t.boolean :persistent, null: true
       t.text :data
-      t.timestamps           null: false
+      t.timestamps null: false
     end
     add_index :sessions, :session_id
     add_index :sessions, :updated_at
@@ -465,7 +465,7 @@ class CreateBase < ActiveRecord::Migration
       t.datetime :failed_at                    # Set when all retries have failed (actually, by default, the record is deleted instead)
       t.string   :locked_by                    # Who is working on this object (if locked)
       t.string   :queue                        # The name of the queue this job is in
-      t.timestamps                                null: false
+      t.timestamps null: false
     end
 
     add_index :delayed_jobs, [:priority, :run_at], name: 'delayed_jobs_priority'

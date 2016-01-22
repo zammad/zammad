@@ -88,7 +88,7 @@ class TwitterTest < ActiveSupport::TestCase
 
   test 'a new outbound and reply' do
 
-    hash   = '#citheo42' + rand(9999).to_s
+    hash   = '#citheo42' + rand(999_999).to_s
     user   = User.find(2)
     text   = "Today the weather is really nice... #{hash}"
     ticket = Ticket.create(
@@ -134,7 +134,7 @@ class TwitterTest < ActiveSupport::TestCase
     }
     assert(tweet_found, "found outbound '#{text}' tweet '#{article.message_id}'")
 
-    reply_text = '@armin_theo on my side the weather is nice, too! 😍😍😍 #weather' + rand(9999).to_s
+    reply_text = '@armin_theo on my side the weather is nice, too! 😍😍😍 #weather' + rand(999_999).to_s
     tweet = client.update(
       reply_text,
       {
@@ -178,7 +178,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token_secret = me_bauer_token_secret
     end
 
-    hash  = '#citheo24 #' + rand(9999).to_s
+    hash  = '#citheo24 #' + rand(999_999).to_s
     text  = "Today... #{hash}"
     tweet = client.update(
       text,
@@ -187,7 +187,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    (1..2).each {
+    (1..3).each {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -201,7 +201,7 @@ class TwitterTest < ActiveSupport::TestCase
     ticket = article.ticket
 
     # send reply
-    reply_text = '@me_bauer on my side #weather' + rand(9999).to_s
+    reply_text = '@me_bauer on my side #weather' + rand(999_999).to_s
     article = Ticket::Article.create(
       ticket_id:     ticket.id,
       body:          reply_text,
@@ -254,7 +254,7 @@ class TwitterTest < ActiveSupport::TestCase
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
-    hash  = '#citheo44' + rand(9999).to_s
+    hash  = '#citheo44' + rand(999_999).to_s
     text  = 'How about the details? ' + hash
     dm = client.create_direct_message(
       'armin_theo',
@@ -301,7 +301,7 @@ class TwitterTest < ActiveSupport::TestCase
     ticket.state = Ticket::State.find_by(name: 'pending reminder')
     ticket.save
 
-    text  = 'Ok. ' + hash
+    text = 'Ok. ' + hash
     dm = client.create_direct_message(
       'armin_theo',
       text,
@@ -382,7 +382,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = me_bauer_token
       config.access_token_secret = me_bauer_token_secret
     end
-    hash  = '#citheo24 #' + rand(9999).to_s
+    hash  = '#citheo24 #' + rand(999_999).to_s
     text  = "Today... #{hash}"
     tweet = client.update(
       text,
@@ -392,7 +392,7 @@ class TwitterTest < ActiveSupport::TestCase
     (1..2).each {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 10
+      sleep 15
     }
     assert(article)
     assert_equal('@me_bauer', article.from, 'ticket article from')
@@ -405,7 +405,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = me_bauer_token
       config.access_token_secret = me_bauer_token_secret
     end
-    hash  = '#citheo24 #' + rand(9999).to_s
+    hash  = '#citheo24 #' + rand(999_999).to_s
     text  = "Today...2  #{hash}"
     tweet = client.update(
       text,
@@ -416,7 +416,7 @@ class TwitterTest < ActiveSupport::TestCase
     (1..2).each {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 10
+      sleep 15
     }
     assert(article)
     assert_equal('@me_bauer', article.from, 'ticket article from')
@@ -429,7 +429,7 @@ class TwitterTest < ActiveSupport::TestCase
       access_token:        me_bauer_token,
       access_token_secret: me_bauer_token_secret
     )
-    hash  = '#citheo44' + rand(9999).to_s
+    hash  = '#citheo44' + rand(999_999).to_s
     text  = 'How about the details? ' + hash
     dm = client.create_direct_message(
       'armin_theo',

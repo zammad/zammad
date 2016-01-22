@@ -239,6 +239,10 @@
       .css('width', this.$body.width())
       .css('height', 0)
       .css('height', this.$element[0].scrollHeight)
+
+    if(this.scrollbarWidth){
+      this.$backdrop.css('width', this.$body.width() - this.scrollbarWidth)
+    }
   }
 
   Modal.prototype.adjustDialog = function () {

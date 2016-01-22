@@ -191,58 +191,56 @@ class Channel::EmailParser
       end
 
     # not multipart email
-    else
 
-      # text part only
-      if !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.downcase == 'text/plain'
+    # text part only
+    elsif !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.casecmp('text/plain').zero?
+      data[:body] = mail.body.decoded
+      data[:body] = Encode.conv(mail.charset, data[:body])
+
+      if !data[:body].force_encoding('UTF-8').valid_encoding?
+        data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+      end
+
+    # html part only, convert to text and add it as attachment
+    else
+      filename = '-no name-'
+      if mail.mime_type.to_s.casecmp('text/html').zero?
+        filename = 'message.html'
         data[:body] = mail.body.decoded
         data[:body] = Encode.conv(mail.charset, data[:body])
+        data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
 
-        if !data[:body].force_encoding('UTF-8').valid_encoding?
+        if !data[:body].valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
         end
 
-      # html part only, convert ot text and add it as attachment
+        # any other attachments
       else
-        filename = '-no name-'
-        if mail.mime_type.to_s.downcase == 'text/html'
-          filename = 'message.html'
-          data[:body] = mail.body.decoded
-          data[:body] = Encode.conv(mail.charset, data[:body])
-          data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
-
-          if !data[:body].valid_encoding?
-            data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-          end
-
-          # any other attachments
-        else
-          data[:body] = 'no visible content'
-        end
-
-        # add body as attachment
-        headers_store = {
-          'content-alternative' => true,
-        }
-        if mail.mime_type
-          headers_store['Mime-Type'] = mail.mime_type
-        end
-        if mail.charset
-          headers_store['Charset'] = mail.charset
-        end
-        attachment = {
-          data: mail.body.decoded,
-          filename: mail.filename || filename,
-          preferences: headers_store
-        }
-        data[:attachments].push attachment
+        data[:body] = 'no visible content'
       end
+
+      # add body as attachment
+      headers_store = {
+        'content-alternative' => true,
+      }
+      if mail.mime_type
+        headers_store['Mime-Type'] = mail.mime_type
+      end
+      if mail.charset
+        headers_store['Charset'] = mail.charset
+      end
+      attachment = {
+        data: mail.body.decoded,
+        filename: mail.filename || filename,
+        preferences: headers_store
+      }
+      data[:attachments].push attachment
     end
 
     # strip not wanted chars
     data[:body].gsub!(/\n\r/, "\n")
     data[:body].gsub!(/\r\n/, "\n")
-    data[:body].gsub!(/\r/, "\n")
+    data[:body].tr!("\r", "\n")
 
     # remember original mail instance
     data[:mail_instance] = mail

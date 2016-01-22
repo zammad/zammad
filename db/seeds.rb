@@ -392,27 +392,6 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via OTRS',
-  name: 'auth_otrs',
-  area: 'Security::Authentication',
-  description: 'Enables user authentication via OTRS.',
-  state: {
-    adapter: 'Auth::Otrs',
-    required_group_ro: 'stats',
-    group_rw_role_map: {
-      'admin' => 'Admin',
-      'stats' => 'Report',
-    },
-    group_ro_role_map: {
-      'stats' => 'Report',
-    },
-    always_role: {
-      'Agent' => true,
-    },
-  },
-  frontend: false
-)
-Setting.create_if_not_exists(
   title: 'Authentication via LDAP',
   name: 'auth_ldap',
   area: 'Security::Authentication',
@@ -1665,10 +1644,10 @@ Ticket::Article::Sender.create_if_not_exists( id: 3, name: 'System' )
 Macro.create_if_not_exists(
   name: 'Close & Tag as Spam',
   perform: {
-    'ticket.state_id': {
+    'ticket.state_id' => {
       value: Ticket::State.find_by(name: 'closed').id,
     },
-    'ticket.tags': {
+    'ticket.tags' => {
       operator: 'add',
       value: 'spam',
     },
@@ -3372,6 +3351,13 @@ Scheduler.create_or_update(
   updated_by_id: 1,
   created_by_id: 1,
 )
+
+# reset primary key sequences
+if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+  ActiveRecord::Base.connection.tables.each do |t|
+    ActiveRecord::Base.connection.reset_pk_sequence!(t)
+  end
+end
 
 # install locales and translations
 Locale.create_if_not_exists(

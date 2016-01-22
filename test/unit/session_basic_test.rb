@@ -180,7 +180,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   end
 
   user = User.lookup(id: 1)
-  roles  = Role.where( name: %w(Agent Admin) )
+  roles = Role.where( name: %w(Agent Admin) )
   user.roles = roles
   user.save
 

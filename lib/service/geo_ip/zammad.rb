@@ -22,6 +22,7 @@ class Service::GeoIp::Zammad
           json: true,
           open_timeout: 2,
           read_timeout: 4,
+          total_timeout: 4,
         },
       )
       if !response.success? && response.code.to_s !~ /^40.$/

@@ -11,7 +11,7 @@ module Encode
     end
 
     # validate already existing utf8 strings
-    if charset.downcase == 'utf8' || charset.downcase == 'utf-8'
+    if charset.casecmp('utf8').zero? || charset.casecmp('utf-8').zero?
       begin
 
         # return if encoding is valid

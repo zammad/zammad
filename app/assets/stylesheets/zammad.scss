@@ -45,6 +45,14 @@ p {
   &.subtle {
     color: hsl(60,1%,74%);
   }
+
+  &.description {
+    color: hsl(190,2%,74%);
+  }
+}
+
+h3 + .description {
+  margin-top: 0;
 }
 
 strong {
@@ -377,6 +385,18 @@ pre code.hljs {
     &.btn--slim {
       padding-left: 7px !important;
       padding-right: 7px !important;
+      
+      &.btn--small {
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+      }
+    }
+
+    &.btn--small {
+      height: 27px;
+      font-size: 11px;
+      padding-left: 8px;
+      padding-right: 8px;
     }
   }
 
@@ -688,10 +708,20 @@ pre code.hljs {
   .badge {
     background: hsla(210,50%,10%,.24);
   }
+
+  .info-arrow {
+    margin: -8px -10px -6px 0;
+    padding: 8px 10px 7px 3px;
+  }
 }
 
 @keyframes pulsate {
   to { filter: brightness(1.2); }
+}
+
+.info-arrow {
+  display: inline-block;
+  cursor: pointer;
 }
 
 .badge {
@@ -1374,6 +1404,10 @@ textarea,
     padding: 5px 8px 4px;
     height: 31px;
     line-height: 20px;
+    
+    &.form-control--multiline {
+      min-height: 31px;
+    }
   }
 
   &.form-control--inline {
@@ -1383,6 +1417,7 @@ textarea,
 
   &.form-control--multiline {
     height: auto;
+    min-height: 41px;
   }
 
   &:focus,
@@ -1437,6 +1472,15 @@ input.time.time--12 {
     height: auto;
     min-height: 82px;
     background: none;
+  }
+
+  .richtext.form-control .attachments.attachments--list:not(:empty) {
+    border-top: 1px solid rgba(0,0,0,.04);
+    white-space: normal;
+    margin: 0 -12px -28px;
+    padding: 25px 20px 21px 72px;
+    position: relative;
+    line-height: 1;
   }
 
   textarea.form-control {
@@ -1832,6 +1876,7 @@ kbd {
   
   & + .page-header-meta {
     margin-left: 0;
+    flex: none;
   }
 }
 
@@ -2304,6 +2349,14 @@ ol.tabs li {
 .icon-arrow-right {
   fill: black;
   opacity: 0.39;
+}
+
+.icon-arrow-left,
+.icon-arrow-right {
+  &.arrow--x2 {
+    width: 14px;
+    height: 26px;
+  }
 }
 
 .arrow--disabled {
@@ -4285,7 +4338,7 @@ footer {
       box-shadow: none;
     }
 
-  .ticket-article-item .attachments:not(:empty) {
+  .attachments.attachments--list:not(:empty) {
     border-top: 1px solid rgba(0,0,0,.04);
     white-space: normal;
     margin: 0 -20px;
@@ -4293,7 +4346,7 @@ footer {
     position: relative;
   }
 
-    .ticket-article-item .attachments .attachments-title {
+    .attachments.attachments--list .attachments-title {
       font-size: 13px;
       color: hsl(60,1%,34%);
       font-weight: bold;
@@ -4301,7 +4354,7 @@ footer {
       margin: 0 0 4px;
     }
 
-    .attachments .icon-paperclip {
+    .attachments .icon {
       position: absolute;
       left: 33px;
       top: 27px;
@@ -5004,6 +5057,37 @@ footer {
     margin-top: 15px;
   }
 
+.newTicket--chatTicket {
+  flex: 1;
+  display: flex;
+  padding: 0;
+  height: 100%;
+  
+  & > .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+  
+  & > .box {
+    flex: 1;
+    margin: 34px;
+  }
+
+  .chatHistory {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .boxFade {
+    top: 34px;
+    height: 100%;
+    position: absolute;
+    margin-left: -34px;
+    z-index: 1;
+  }
+}
+
 .box {
   background: white;
   margin: 20px 0;
@@ -5023,8 +5107,10 @@ footer {
   }
 
   .box h1 {
-    margin-top: 12px;
+    margin-top: 10px;
+    margin-bottom: 12px;
     color: hsl(60,1%,34%);
+    flex: 1;
   }
 
   .box h2 {
@@ -5338,6 +5424,11 @@ footer {
     padding: 0 23px;
     
     h2:first-child {
+      margin-top: 0;
+    }
+
+    p:first-child,
+    .alert.hidden:first-child + p {
       margin-top: 0;
     }
     
@@ -7257,7 +7348,6 @@ output {
   }
 
   &.is-offline {
-    .chat-body-holder,
     .chat-controls {
       opacity: 0.5;
     }
@@ -7265,33 +7355,27 @@ output {
 }
 
 .chat-header {
-  padding: 12px 40px;
   background: hsl(210,8%,95%);
   border: 1px solid hsl(0,0%,91%);
   border-radius: 3px 3px 0 0;
-  position: relative;
+  height: 43px;
   line-height: 13px;
-  text-align: center;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-name {
+  margin: 0 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.chat-status,
-.chat-close {
-  position: absolute;
-  top: 0;
-  padding-top: inherit;
-  padding-bottom: inherit;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .chat-status {
-  left: 0;
-  top: -1px;
-
+  margin-left: 10px;
+  
   &[data-status='online'] .icon {
     fill: $supergood-color;
   }
@@ -7320,23 +7404,21 @@ output {
 .chat-status-holder {
   position: relative;
 }
-  
-.chat-close {
-  right: 0;
-  cursor: pointer;
-  
-  .icon {
-    fill: currentColor;
-    opacity: 0.5;
-  }
 
-  &:hover {
-    background: hsl(210,8%,90%);
-    
-    .icon {
-      opacity: 1;
-    }
+.chat-disconnect,
+.chat-close {
+  cursor: pointer;
+  padding: 10px;
+  
+  .btn {
+    min-width: 80px;
+    justify-content: center;
   }
+}
+
+.chat-disconnect.is-hidden,
+.chat-close.is-hidden {
+  display: none;
 }
 
 .chat-body-holder {
@@ -7348,6 +7430,11 @@ output {
   border-right: 1px solid hsl(0,0%,91%);
   border-left: 1px solid hsl(0,0%,91%);
   position: relative;
+}
+
+.chat-body-holder--standalone {
+  border-top: 1px solid hsl(0,0%,91%);
+  border-bottom: 1px solid hsl(0,0%,91%);
 }
 
 .chat-body {
@@ -7425,6 +7512,15 @@ output {
 @keyframes load-fade {
   from { opacity: .5; transform: scale(0.6); }
   67% { opacity: 1; transform: scale(1); }
+}
+
+.chat-footer {
+  border-top: 1px solid hsl(0,0%,93%);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  margin: 0 -10px;
 }
 
 .chat-controls {

@@ -8,8 +8,8 @@ delete a cache
 
 =end
 
-  def self.delete( key )
-    Rails.cache.delete( key.to_s )
+  def self.delete(key)
+    Rails.cache.delete(key.to_s)
   end
 
 =begin
@@ -19,14 +19,12 @@ write a cache
   Cache.write(
     'some_key',
     { some: { data: { 'structure' } } },
-    {
-      expires_in: 24.hours, # optional, default 7 days
-    }
+    { expires_in: 24.hours, # optional, default 7 days }
   )
 
 =end
 
-  def self.write( key, data, params = {} )
+  def self.write(key, data, params = {})
     if !params[:expires_in]
       params[:expires_in] = 7.days
     end
@@ -45,7 +43,7 @@ get a cache
 
 =end
 
-  def self.get( key )
+  def self.get(key)
     Rails.cache.read(key.to_s)
   end
 

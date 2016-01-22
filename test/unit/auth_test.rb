@@ -32,15 +32,16 @@ Setting.create_or_update(
   frontend: false
 )
 
-user = User.lookup( login: 'nicole.braun@zammad.org' )
+user = User.lookup(email: 'nicole.braun@zammad.org')
 if user
   user.update_attributes(
+    login: 'nicole.braun',
     password: 'some_pass',
     active: true,
   )
 else
   User.create_if_not_exists(
-    login: 'nicole.braun@zammad.org',
+    login: 'nicole.braun',
     firstname: 'Nicole',
     lastname: 'Braun',
     email: 'nicole.braun@zammad.org',
@@ -64,6 +65,42 @@ class AuthTest < ActiveSupport::TestCase
 
       # test 2
       {
+        username: 'nicole.braun@zammad.org',
+        password: 'some_pass',
+        result: true,
+        verify: {
+          firstname: 'Nicole',
+          lastname: 'Braun',
+          email: 'nicole.braun@zammad.org',
+        }
+      },
+
+      # test 3
+      {
+        username: 'nicole.bRaUn@zammad.org',
+        password: 'some_pass',
+        result: true,
+        verify: {
+          firstname: 'Nicole',
+          lastname: 'Braun',
+          email: 'nicole.braun@zammad.org',
+        }
+      },
+
+      # test 4
+      {
+        username: 'nicole.bRaUn',
+        password: 'some_pass',
+        result: true,
+        verify: {
+          firstname: 'Nicole',
+          lastname: 'Braun',
+          email: 'nicole.braun@zammad.org',
+        }
+      },
+
+      # test 5
+      {
         username: 'paige.chen@example.org',
         password: 'password',
         result: true,
@@ -74,30 +111,19 @@ class AuthTest < ActiveSupport::TestCase
         }
       },
 
-      # test 3
-      {
-        username: 'nicole.braun@zammad.org',
-        password: 'some_pass',
-        result: true,
-        verify: {
-          firstname: 'Nicole',
-          lastname: 'Braun',
-          email: 'nicole.braun@zammad.org',
-        }
-      },
     ]
     tests.each { |test|
-      user = User.authenticate( test[:username], test[:password] )
+      user = User.authenticate(test[:username], test[:password])
       if test[:result] == true
         if !user
-          assert( false, 'auth faild' )
+          assert(false, 'auth faild')
         else
           test[:verify].each {|key, value|
-            assert_equal( user[key], value, 'verify' )
+            assert_equal(user[key], value, 'verify')
           }
         end
       else
-        assert_equal( test[:result], user, 'faild or not existing' )
+        assert_equal(test[:result], user, 'faild or not existing')
       end
     }
   end

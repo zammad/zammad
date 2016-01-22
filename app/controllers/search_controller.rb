@@ -20,11 +20,11 @@ class SearchController < ApplicationController
 
     # convert objects string into array of class names
     # e.g. user-ticket-another_object = %w( User Ticket AnotherObject )
-    if !params[:objects]
-      objects = Setting.get('models_searchable')
-    else
-      objects = params[:objects].split('-').map(&:camelize)
-    end
+    objects = if !params[:objects]
+                Setting.get('models_searchable')
+              else
+                params[:objects].split('-').map(&:camelize)
+              end
 
     # get priorities of result
     objects_in_order = []
@@ -58,10 +58,10 @@ class SearchController < ApplicationController
 
       # do only one query to index search backend
       if !objects_with_direct_search_index.empty?
-        items = SearchIndexBackend.search( query, limit, objects_with_direct_search_index )
+        items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
         items.each { |item|
           require item[:type].to_filename
-          record = Kernel.const_get( item[:type] ).find( item[:id] )
+          record = Kernel.const_get(item[:type]).lookup(id: item[:id])
           assets = record.assets(assets)
           result.push item
         }

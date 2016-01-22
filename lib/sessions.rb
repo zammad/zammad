@@ -401,7 +401,7 @@ returns
     }
     files.sort.each {|entry|
       filename = "#{path}/#{entry}"
-      if /^send/.match(entry)
+      if /^send/ =~ entry
         data.push Sessions.queue_file_read(path, entry)
       end
     }

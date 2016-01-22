@@ -206,7 +206,7 @@ EventMachine.run {
   }
 
   EventMachine.add_periodic_timer(0.4) {
-    next if @clients.size == 0
+    next if @clients.size.zero?
     #log 'debug', 'checking for data to send...'
     @clients.each { |client_id, client|
       next if client[:disconnect]
@@ -238,11 +238,11 @@ EventMachine.run {
   end
 
   def websocket_send(client_id, data)
-    if data.class != Array
-      msg = "[#{data.to_json}]"
-    else
-      msg = data.to_json
-    end
+    msg = if data.class != Array
+            "[#{data.to_json}]"
+          else
+            data.to_json
+          end
     log 'debug', "send #{msg}", client_id
     if !@clients[client_id]
       log 'error', "no such @clients for #{client_id}", client_id

@@ -18,11 +18,9 @@ class SessionsController < ApplicationController
     end
 
     # remember me - set session cookie to expire later
-    if params[:remember_me]
-      request.env['rack.session.options'][:expire_after] = 1.year
-    else
-      request.env['rack.session.options'][:expire_after] = nil
-    end
+    request.env['rack.session.options'][:expire_after] = if params[:remember_me]
+                                                           1.year
+                                                         end
     # both not needed to set :expire_after works fine
     #  request.env['rack.session.options'][:renew] = true
     #  reset_session

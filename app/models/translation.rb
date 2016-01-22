@@ -16,7 +16,7 @@ all:
 
 dedicated:
 
-  Translation.load(locale) # e. g. en-us or de-de
+  Translation.load(locale) # e. g. 'en-us' or 'de-de'
 
 =end
 
@@ -175,30 +175,30 @@ get list of translations
       'total' => Translation.where(locale: 'de-de').count,
     }
     list = []
-    if admin
-      translations = Translation.where(locale: locale.downcase).order(:source)
-    else
-      translations = Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
-    end
+    translations = if admin
+                     Translation.where(locale: locale.downcase).order(:source)
+                   else
+                     Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
+                   end
     translations.each { |item|
-      if admin
-        translation_item = [
-          item.id,
-          item.source,
-          item.target,
-          item.target_initial,
-          item.format,
-        ]
-        list.push translation_item
-      else
-        translation_item = [
-          item.id,
-          item.source,
-          item.target,
-          item.format,
-        ]
-        list.push translation_item
-      end
+      translation_item = []
+      translation_item = if admin
+                           [
+                             item.id,
+                             item.source,
+                             item.target,
+                             item.target_initial,
+                             item.format,
+                           ]
+                         else
+                           [
+                             item.id,
+                             item.source,
+                             item.target,
+                             item.format,
+                           ]
+                         end
+      list.push translation_item
     }
     data['list'] = list
 
@@ -250,8 +250,10 @@ translate strings in ruby context, e. g. for notifications
   def self.cache_set(locale, data)
     Cache.write('TranslationMapOnlyContent::' + locale.downcase, data)
   end
+  private_class_method :cache_set
 
   def self.cache_get(locale)
     Cache.get('TranslationMapOnlyContent::' + locale.downcase)
   end
+  private_class_method :cache_get
 end

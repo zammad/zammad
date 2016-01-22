@@ -4,53 +4,78 @@ require 'facebook'
 
 class Channel::Driver::Facebook
 
-  def fetch (_adapter_options, channel)
-
+  def fetch (options, channel)
     @channel  = channel
-    @facebook = Facebook.new( @channel[:options] )
-    @sync     = @channel[:options][:sync]
+    @sync     = options['sync']
+    @pages    = options['pages']
 
     Rails.logger.debug 'facebook fetch started'
 
     fetch_feed
-
     disconnect
 
     Rails.logger.debug 'facebook fetch completed'
+    notice = ''
+    {
+      result: 'ok',
+      notice: notice,
+    }
   end
 
-  def send(article, _notification = false)
+  def send(options, fb_object_id, article, _notification = false)
+    access_token = nil
+    options['pages'].each {|page|
+      next if page['id'].to_s != fb_object_id.to_s
+      access_token = page['access_token']
+    }
+    if !access_token
+      fail "No access_token found for fb_object_id: #{fb_object_id}"
+    end
+    client = Facebook.new(access_token)
+    client.from_article(article)
+  end
 
-    @channel  = Channel.find_by( area: 'Facebook::Inbound', active: true )
-    @facebook = Facebook.new( @channel[:options] )
+=begin
 
-    post = @facebook.from_article(article)
-    disconnect
+  instance = Channel::Driver::Facebook.new
+  instance.fetchable?(channel)
 
-    post
+=end
+
+  def fetchable?(_channel)
+    true
   end
 
   def disconnect
-    @facebook.disconnect
   end
 
   private
 
-  def fetch_feed
-
-    return if !@sync[:group_id]
-
-    counter = 0
-    feed    = @facebook.client.get_connections('me', 'feed')
-    feed.each { |feed_item|
-
-      break if @sync[:limit] && @sync[:limit] <= counter
-
-      post = @facebook.client.get_object( feed_item['id'] )
-
-      @facebook.to_group( post, @sync[:group_id] )
-
-      counter += 1
+  def get_page(page_id)
+    @pages.each {|page|
+      return page if page['id'].to_s == page_id.to_s
     }
+    nil
   end
+
+  def fetch_feed
+    return if !@sync
+    return if !@sync['pages']
+
+    @sync['pages'].each {|page_to_sync_id, page_to_sync_params|
+      page = get_page(page_to_sync_id)
+      next if !page
+      next if !page_to_sync_params['group_id']
+      next if page_to_sync_params['group_id'].empty?
+      page_client = Facebook.new(page['access_token'])
+
+      posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,comments')
+      posts.each {|post|
+        page_client.to_group(post, page_to_sync_params['group_id'], @channel, page)
+      }
+    }
+
+    true
+  end
+
 end

@@ -15,14 +15,14 @@ class UsersController < ApplicationController
   def index
 
     # only allow customer to fetch him self
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
-      users = User.where( id: current_user.id )
-    else
-      users = User.all
-    end
+    users = if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
+              User.where(id: current_user.id)
+            else
+              User.all
+            end
     users_all = []
     users.each {|user|
-      users_all.push User.lookup( id: user.id ).attributes_with_associations
+      users_all.push User.lookup(id: user.id).attributes_with_associations
     }
     render json: users_all, status: :ok
   end
@@ -45,12 +45,12 @@ class UsersController < ApplicationController
     return if !permission_check
 
     if params[:full]
-      full = User.full( params[:id] )
+      full = User.full(params[:id])
       render json: full
       return
     end
 
-    user = User.find( params[:id] )
+    user = User.find(params[:id])
     render json: user
   end
 
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
         group_ids = []
         role_ids  = []
         if count <= 2
-          Role.where( name: [ Z_ROLENAME_ADMIN, 'Agent', 'Chat'] ).each { |role|
+          Role.where(name: [ Z_ROLENAME_ADMIN, 'Agent', 'Chat']).each { |role|
             role_ids.push role.id
           }
           Group.all().each { |group|
@@ -94,7 +94,7 @@ class UsersController < ApplicationController
 
           # everybody else will go as customer per default
         else
-          role_ids.push Role.where( name: Z_ROLENAME_CUSTOMER ).first.id
+          role_ids.push Role.where(name: Z_ROLENAME_CUSTOMER).first.id
         end
         user.role_ids  = role_ids
         user.group_ids = group_ids
@@ -115,18 +115,17 @@ class UsersController < ApplicationController
 
       # check if user already exists
       if user.email
-        exists = User.where( email: user.email ).first
+        exists = User.where(email: user.email.downcase).first
         if exists
           render json: { error: 'User already exists!' }, status: :unprocessable_entity
           return
         end
       end
-
       user.save!
 
       # if first user was added, set system init done
       if count <= 2
-        Setting.set( 'system_init_done', true )
+        Setting.set('system_init_done', true)
 
         # fetch org logo
         if user.email
@@ -138,7 +137,7 @@ class UsersController < ApplicationController
       if params[:invite] && current_user
 
         # generate token
-        token = Token.create( action: 'PasswordReset', user_id: user.id )
+        token = Token.create(action: 'PasswordReset', user_id: user.id)
 
         # send mail
         data = {}
@@ -178,8 +177,7 @@ class UsersController < ApplicationController
           body: data[:body]
         )
       end
-
-      user_new = User.find( user.id )
+      user_new = User.find(user.id)
       render json: user_new, status: :created
     rescue => e
       render json: { error: e.message }, status: :unprocessable_entity
@@ -201,7 +199,7 @@ class UsersController < ApplicationController
     # access deny
     return if !permission_check
 
-    user = User.find( params[:id] )
+    user = User.find(params[:id])
 
     begin
 
@@ -337,11 +335,11 @@ class UsersController < ApplicationController
     end
 
     # do query
-    if params[:role_ids] && !params[:role_ids].empty?
-      user_all = User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
-    else
-      user_all = User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
-    end
+    user_all = if params[:role_ids] && !params[:role_ids].empty?
+                 User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
+               else
+                 User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
+               end
 
     # build result list
     if !params[:full]
@@ -396,7 +394,7 @@ class UsersController < ApplicationController
     end
 
     # get user data
-    user = User.find( params[:id] )
+    user = User.find(params[:id])
 
     # get history of user
     history = user.history_get(true)
@@ -433,7 +431,7 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
       return
     end
 
-    token = User.password_reset_send( params[:username] )
+    token = User.password_reset_send(params[:username])
     if token
 
       # only if system is in develop mode, send token back to browser for browser tests
@@ -483,9 +481,9 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
       end
 
       # set new password with token
-      user = User.password_reset_via_token( params[:token], params[:password] )
+      user = User.password_reset_via_token(params[:token], params[:password])
     else
-      user = User.password_reset_check( params[:token] )
+      user = User.password_reset_check(params[:token])
     end
     if user
       render json: { message: 'ok', user_login: user.login }, status: :ok
@@ -541,7 +539,7 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
       return
     end
 
-    user.update_attributes( password: params[:password_new] )
+    user.update_attributes(password: params[:password_new])
     render json: { message: 'ok', user_login: user.login }, status: :ok
   end
 
@@ -652,7 +650,7 @@ curl http://localhost/api/v1/users/image/8d6cca1c6bdc226cf2ba131e264ca2c7 -v -u 
     response.headers['Cache-Control'] = 'cache, store, max-age=31536000, must-revalidate'
     response.headers['Pragma']        = 'cache'
 
-    file = Avatar.get_by_hash( params[:hash] )
+    file = Avatar.get_by_hash(params[:hash])
     if file
       send_data(
         file.content,
@@ -685,7 +683,7 @@ Payload:
 
 Response:
 {
-  :message => 'ok'
+  message: 'ok'
 }
 
 Test:
@@ -697,8 +695,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return if !valid_session_with_user
 
     # get & validate image
-    file_full   = StaticAssets.data_url_attributes( params[:avatar_full] )
-    file_resize = StaticAssets.data_url_attributes( params[:avatar_resize] )
+    file_full   = StaticAssets.data_url_attributes(params[:avatar_full])
+    file_resize = StaticAssets.data_url_attributes(params[:avatar_resize])
 
     avatar = Avatar.add(
       object: 'User',
@@ -716,7 +714,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     )
 
     # update user link
-    current_user.update_attributes( image: avatar.store_hash )
+    current_user.update_attributes(image: avatar.store_hash)
 
     render json: { avatar: avatar }, status: :ok
   end
@@ -731,10 +729,10 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     end
 
     # set as default
-    avatar = Avatar.set_default( 'User', current_user.id, params[:id] )
+    avatar = Avatar.set_default('User', current_user.id, params[:id])
 
     # update user link
-    current_user.update_attributes( image: avatar.store_hash )
+    current_user.update_attributes(image: avatar.store_hash)
 
     render json: {}, status: :ok
   end
@@ -749,11 +747,11 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     end
 
     # remove avatar
-    Avatar.remove_one( 'User', current_user.id, params[:id] )
+    Avatar.remove_one('User', current_user.id, params[:id])
 
     # update user link
-    avatar = Avatar.get_default( 'User', current_user.id )
-    current_user.update_attributes( image: avatar.store_hash )
+    avatar = Avatar.get_default('User', current_user.id)
+    current_user.update_attributes(image: avatar.store_hash)
 
     render json: {}, status: :ok
   end
@@ -762,7 +760,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return if !valid_session_with_user
 
     # list of avatars
-    result = Avatar.list( 'User', current_user.id )
+    result = Avatar.list('User', current_user.id)
     render json: { avatars: result }, status: :ok
   end
 

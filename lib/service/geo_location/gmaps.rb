@@ -4,10 +4,18 @@ class Service::GeoLocation::Gmaps
 
   def self.geocode(address)
     url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape address}&sensor=true"
-    response = UserAgent.get(url)
+    response = UserAgent.get(
+      url,
+      {},
+      {
+        open_timeout: 2,
+        read_timeout: 4,
+        total_timeout: 4,
+      },
+    )
     return if !response.success?
 
-    result = JSON.parse( response.body )
+    result = JSON.parse(response.body)
 
     return if !result
     return if !result['results']
@@ -20,10 +28,19 @@ class Service::GeoLocation::Gmaps
 
   def self.reverse_geocode(lat, lng)
     url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=#{lat},#{lng}&sensor=true"
-    response = UserAgent.get(url)
+    response = UserAgent.get(
+      url,
+      {},
+      {
+        json: true,
+        open_timeout: 2,
+        read_timeout: 4,
+        total_timeout: 4,
+      },
+    )
     return if !response.success?
 
-    result = JSON.parse( response.body )
+    result = JSON.parse(response.body)
 
     address = result['results'].first['address_components'].first['long_name']
     address

@@ -213,33 +213,38 @@
   margin: 1em 0;
 }
 
+.zammad-chat-status {
+  margin: 1em 0;
+  text-align: center;
+}
+
 .zammad-chat-message {
   margin: 0.5em 0;
 }
 
-.zammad-chat-status,
+
+.zammad-chat-message-body {
+  white-space: pre-line;
+  word-wrap: break-word;
+  border-radius: 1em;
+}
+
+.zammad-chat-status-inner,
 .zammad-chat-message-body {
   padding: 0.5em 1em;
   line-height: 1.4;
-  border-radius: 1em;
   background: hsl(0,0%,93%);
   display: inline-block;
   max-width: 70%;
-  white-space: pre-line;
-  word-wrap: break-word;
   box-shadow:
     0 2px rgba(255,255,255,.15) inset,
     0 0 0 1px rgba(0,0,0,.08) inset,
     0 1px rgba(0,0,0,.02);
 }
 
-.zammad-chat-status {
-  display: inline-block;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 1em 0;
+.zammad-chat-status-inner {
   background: #eee;
+  border-radius: .5em;
 }
 
 .zammad-chat-message--customer {
@@ -311,6 +316,7 @@
   float: left;
   width: auto;
   height: auto;
+  min-height: 1.4em !important;
   max-height: 6em;
   font-family: inherit;
   line-height: inherit;
