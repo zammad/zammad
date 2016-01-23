@@ -495,8 +495,13 @@ class App.TicketZoom extends App.Controller
     e.stopPropagation()
     e.preventDefault()
 
+    # disable form
+    @formDisable(e)
+
     # validate new article
-    return if !@articleNew.validate()
+    if !@articleNew.validate()
+      @formEnable(e)
+      return
 
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
@@ -539,13 +544,11 @@ class App.TicketZoom extends App.Controller
     # check if title exists
     if !ticket['title']
       alert( App.i18n.translateContent('Title needed') )
+      @formEnable(e)
       return
 
     # submit ticket & article
     @log 'notice', 'update ticket', ticket
-
-    # disable form
-    @formDisable(e)
 
     # stop autosave
     @autosaveStop()
