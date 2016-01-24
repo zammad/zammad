@@ -612,7 +612,7 @@ module Import::OTRS
 
       # find owner
       if ticket_new[:owner]
-        user = User.lookup( login: ticket_new[:owner].downcase )
+        user = User.lookup(login: ticket_new[:owner])
         ticket_new[:owner_id] = if user
                                   user.id
                                 else
@@ -623,7 +623,7 @@ module Import::OTRS
 
       # find customer
       if ticket_new[:customer]
-        user = User.lookup( login: ticket_new[:customer].downcase )
+        user = User.lookup(login: ticket_new[:customer])
         ticket_new[:customer_id] = if user
                                      user.id
                                    else
@@ -922,13 +922,13 @@ module Import::OTRS
       }
 
       # check if state already exists
-      state_old = Ticket::State.where( id: state_new[:id] ).first
+      state_old = Ticket::State.lookup( id: state_new[:id] )
 
       # set state types
       if state['TypeName'] == 'pending auto'
         state['TypeName'] = 'pending action'
       end
-      state_type = Ticket::StateType.where( name: state['TypeName'] ).first
+      state_type = Ticket::StateType.lookup( name: state['TypeName'] )
       state_new[:state_type_id] = state_type.id
       if state_old
         state_old.update_attributes(state_new)
@@ -969,7 +969,7 @@ module Import::OTRS
       }
 
       # check if state already exists
-      priority_old = Ticket::Priority.where( id: priority_new[:id] ).first
+      priority_old = Ticket::Priority.lookup( id: priority_new[:id] )
 
       # set state types
       if priority_old
@@ -1010,7 +1010,7 @@ module Import::OTRS
       }
 
       # check if state already exists
-      group_old = Group.where( id: group_new[:id] ).first
+      group_old = Group.lookup( id: group_new[:id] )
 
       # set state types
       if group_old
@@ -1070,7 +1070,7 @@ module Import::OTRS
       end
 
       # check if agent already exists
-      user_old = User.where( id: user_new[:id] ).first
+      user_old = User.lookup( id: user_new[:id] )
 
       # check if login is already used
       login_in_use = User.where( "login = ? AND id != #{user_new[:id]}", user_new[:login].downcase ).count
@@ -1223,7 +1223,7 @@ module Import::OTRS
       }
 
       # check if customer already exists
-      user_old = User.where( login: user_new[:login].downcase ).first
+      user_old = User.lookup( login: user_new[:login] )
 
       # create / update agent
       if user_old
@@ -1252,7 +1252,7 @@ module Import::OTRS
     if user['UserCustomerID']
       organizations.each {|organization|
         next if user['UserCustomerID'] != organization['CustomerID']
-        organization    = Organization.where(name: organization['CustomerCompanyName'] ).first
+        organization    = Organization.lookup(name: organization['CustomerCompanyName'] )
         organization_id = organization.id
       }
     end
@@ -1285,7 +1285,7 @@ module Import::OTRS
       }
 
       # check if state already exists
-      organization_old = Organization.where( name: organization_new[:name] ).first
+      organization_old = Organization.lookup( name: organization_new[:name] )
 
       # set state types
       if organization_old
@@ -1419,9 +1419,9 @@ module Import::OTRS
       end
     end
 
-    user = User.where( email: email.downcase ).first
+    user = User.lookup(email: email)
     if !user
-      user = User.where( login: email.downcase ).first
+      user = User.lookup(login: email)
     end
     if !user
       begin
@@ -1449,7 +1449,7 @@ module Import::OTRS
         )
       rescue ActiveRecord::RecordNotUnique
         log "User #{email} was handled by another thread, taking this."
-        user = User.find_by( login: email.downcase )
+        user = User.lookup(login: email)
         if !user
           log "User #{email} wasn't created sleep and retry."
           sleep rand 3
