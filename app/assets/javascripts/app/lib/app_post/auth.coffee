@@ -135,6 +135,8 @@ class App.Auth
   @_logout: (data) ->
     App.Log.debug 'Auth', '_logout', data
 
+    App.Ajax.abortAll()
+
     # empty session
     App.Session.init()
 
