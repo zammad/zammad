@@ -25,6 +25,7 @@ class SwitchToUserTest < TestCase
     click(
       css: '#content .icon-switchView',
     )
+    sleep 3
 
     watch_for(
       css: '.switchBackToUser',
