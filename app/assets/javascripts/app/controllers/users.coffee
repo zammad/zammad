@@ -76,7 +76,10 @@ class Index extends App.Controller
       @disconnectClient()
       $('#app').hide().attr('style', 'display: none!important')
       App.Auth._logout()
-      window.location = App.Config.get('api_path') + '/sessions/switch/' + id
+      @delay(
+        1200,
+        window.location = App.Config.get('api_path') + '/sessions/switch/' + id
+      )
 
     edit = (id, e) =>
       e.preventDefault()
