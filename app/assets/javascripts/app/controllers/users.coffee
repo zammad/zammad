@@ -76,10 +76,17 @@ class Index extends App.Controller
       @disconnectClient()
       $('#app').hide().attr('style', 'display: none!important')
       @delay(
-        ->
+        =>
           App.Auth._logout()
-          window.location = App.Config.get('api_path') + '/sessions/switch/' + id
-        1200
+          @ajax(
+            id:          'user_switch'
+            type:        'GET'
+            url:         "#{@apiPath}/sessions/switch/#{id}"
+            success:     (data, status, xhr) =>
+              location = "#{window.location.protocol}//#{window.location.host}#{data.location}"
+              @windowReload(undefined, location)
+          )
+        800
       )
 
     edit = (id, e) =>
