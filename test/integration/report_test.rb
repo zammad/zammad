@@ -11,6 +11,9 @@ class ReportTest < ActiveSupport::TestCase
   if !ENV['ES_INDEX']
     fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
   end
+  if ENV['ES_INDEX_RAND']
+    ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
+  end
   Setting.set('es_index', ENV['ES_INDEX'])
 
   # Setting.set('es_url', 'http://172.0.0.1:9200')
@@ -242,7 +245,7 @@ class ReportTest < ActiveSupport::TestCase
 
   sleep 6
 
-  test 'first solution' do
+  test 'a - first solution' do
 
     # month
     result = Report::TicketFirstSolution.aggs(
@@ -488,7 +491,7 @@ class ReportTest < ActiveSupport::TestCase
     # created by channel and direction
   end
 
-  test 'reopen' do
+  test 'b - reopen' do
 
     # month
     result = Report::TicketReopened.aggs(
@@ -604,7 +607,7 @@ class ReportTest < ActiveSupport::TestCase
 
   end
 
-  test 'move in/out' do
+  test 'c - move in/out' do
 
     # month
     result = Report::TicketMoved.aggs(
@@ -702,7 +705,7 @@ class ReportTest < ActiveSupport::TestCase
 
   end
 
-  test 'created at' do
+  test 'd - created at' do
 
     # month
     result = Report::TicketGenericTime.aggs(
@@ -742,6 +745,9 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal(ticket2.id, result[:ticket_ids][5].to_i)
     assert_equal(ticket1.id, result[:ticket_ids][6].to_i)
     assert_equal(nil, result[:ticket_ids][7])
+
+    # cleanup
+    system('rake searchindex:drop')
   end
 
 end
