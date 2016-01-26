@@ -8,7 +8,7 @@ class ReportTest < ActiveSupport::TestCase
     fail "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
   end
   Setting.set('es_url', ENV['ES_URL'])
-  if !ENV['ES_INDEX']
+  if !ENV['ES_INDEX'] && !ENV['ES_INDEX_RAND']
     fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
   end
   if ENV['ES_INDEX_RAND']
