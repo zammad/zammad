@@ -2,8 +2,8 @@ before_script:
   - ruby -v
   - which ruby
   - env
-  - bundle install
   - script/build/test_db_config.sh
+  - bundle install
 
 stages:
   - pre
