@@ -734,7 +734,6 @@ class ReportTest < ActiveSupport::TestCase
       params:      { field: 'created_at' },
     )
     assert(result)
-    puts "r #{result.inspect}"
     assert_equal(ticket7.id, result[:ticket_ids][0].to_i)
     assert_equal(ticket6.id, result[:ticket_ids][1].to_i)
     assert_equal(ticket5.id, result[:ticket_ids][2].to_i)
