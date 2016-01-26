@@ -37,9 +37,9 @@ class SwitchToUserTest < TestCase
     )
     login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     assert_equal(login, 'nicole.braun@zammad.org')
-
     click( css: '.switchBackToUser .js-close' )
 
+    sleep 5
     login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
     assert_equal(login, 'master@example.com')
 
