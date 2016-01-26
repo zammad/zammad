@@ -73,6 +73,7 @@ class Index extends App.Controller
 
     switchTo = (id,e) =>
       e.preventDefault()
+      e.stopPropagation()
       @disconnectClient()
       $('#app').hide().attr('style', 'display: none!important')
       @delay(
