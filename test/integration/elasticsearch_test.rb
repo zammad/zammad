@@ -351,9 +351,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(result.empty?, 'result should be empty')
     assert(!result[0], 'record 1')
 
-  end
-
-  teardown do
+    # cleanup
     system('rake searchindex:drop')
   end
 
