@@ -8,8 +8,11 @@ class ElasticsearchTest < ActiveSupport::TestCase
     fail "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
   end
   Setting.set('es_url', ENV['ES_URL'])
-  if !ENV['ES_INDEX']
+  if !ENV['ES_INDEX'] && !ENV['ES_INDEX_RAND']
     fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+  end
+  if ENV['ES_INDEX_RAND']
+    ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
   end
   Setting.set('es_index', ENV['ES_INDEX'])
 
@@ -348,5 +351,8 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(result.empty?, 'result should be empty')
     assert(!result[0], 'record 1')
 
+    # cleanup
+    system('rake searchindex:drop')
   end
+
 end

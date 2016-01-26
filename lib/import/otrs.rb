@@ -6,13 +6,13 @@ module Import::OTRS
 
 =begin
 
-  result = request_json( :Subaction => 'List', 1)
+  result = request_json(Subaction: 'List', 1)
 
   return
 
    { some json structure }
 
-  result = request_json( :Subaction => 'List' )
+  result = request_json(Subaction: 'List')
 
   return
 
@@ -131,8 +131,8 @@ module Import::OTRS
 =end
 
   def self.json(response)
-    data = Encode.conv( 'utf8', response.body.to_s )
-    JSON.parse( data )
+    data = Encode.conv('utf8', response.body.to_s)
+    JSON.parse(data)
   end
 
 =begin
@@ -257,13 +257,13 @@ module Import::OTRS
   return
 
      {
-        :Ticket => {
-          :total => 1234,
-          :done  => 13,
+        Ticket: {
+          total: 1234,
+          done: 13,
         },
-        :Base   => {
-          :total => 1234,
-          :done  => 13,
+        Base: {
+          total: 1234,
+          done: 13,
         },
      }
 
@@ -612,7 +612,7 @@ module Import::OTRS
 
       # find owner
       if ticket_new[:owner]
-        user = User.lookup( login: ticket_new[:owner].downcase )
+        user = User.find_by(login: ticket_new[:owner].downcase)
         ticket_new[:owner_id] = if user
                                   user.id
                                 else
@@ -623,7 +623,7 @@ module Import::OTRS
 
       # find customer
       if ticket_new[:customer]
-        user = User.lookup( login: ticket_new[:customer].downcase )
+        user = User.lookup(login: ticket_new[:customer].downcase)
         ticket_new[:customer_id] = if user
                                      user.id
                                    else
@@ -682,41 +682,41 @@ module Import::OTRS
             }
 
             if article_new[:sender] == 'customer'
-              article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Customer' ).id
-              article_new.delete( :sender )
+              article_new[:sender_id] = Ticket::Article::Sender.lookup(name: 'Customer').id
+              article_new.delete(:sender)
             end
             if article_new[:sender] == 'agent'
-              article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'Agent' ).id
-              article_new.delete( :sender )
+              article_new[:sender_id] = Ticket::Article::Sender.lookup(name: 'Agent').id
+              article_new.delete(:sender)
             end
             if article_new[:sender] == 'system'
-              article_new[:sender_id] = Ticket::Article::Sender.lookup( name: 'System' ).id
-              article_new.delete( :sender )
+              article_new[:sender_id] = Ticket::Article::Sender.lookup(name: 'System').id
+              article_new.delete(:sender)
             end
 
             if article_new[:type] == 'email-external'
-              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+              article_new[:type_id] = Ticket::Article::Type.lookup(name: 'email').id
               article_new[:internal] = false
             elsif article_new[:type] == 'email-internal'
-              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'email' ).id
+              article_new[:type_id] = Ticket::Article::Type.lookup(name: 'email').id
               article_new[:internal] = true
             elsif article_new[:type] == 'note-external'
-              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+              article_new[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
               article_new[:internal] = false
             elsif article_new[:type] == 'note-internal'
-              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'note' ).id
+              article_new[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
               article_new[:internal] = true
             elsif article_new[:type] == 'phone'
-              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'phone' ).id
+              article_new[:type_id] = Ticket::Article::Type.lookup(name: 'phone').id
               article_new[:internal] = false
             elsif article_new[:type] == 'webrequest'
-              article_new[:type_id] = Ticket::Article::Type.lookup( name: 'web' ).id
+              article_new[:type_id] = Ticket::Article::Type.lookup(name: 'web').id
               article_new[:internal] = false
             else
               article_new[:type_id] = 9
             end
-            article_new.delete( :type )
-            article_object = Ticket::Article.find_by( id: article_new[:id] )
+            article_new.delete(:type)
+            article_object = Ticket::Article.find_by(id: article_new[:id])
 
             # set state types
             if article_object
@@ -798,8 +798,8 @@ module Import::OTRS
             if data =~ /%%(.+?)%%(.+?)%%/
               from    = $1
               to      = $2
-              state_from = Ticket::State.lookup( name: from )
-              state_to   = Ticket::State.lookup( name: to )
+              state_from = Ticket::State.lookup(name: from)
+              state_to   = Ticket::State.lookup(name: to)
               if state_from
                 from_id = state_from.id
               end
@@ -922,13 +922,13 @@ module Import::OTRS
       }
 
       # check if state already exists
-      state_old = Ticket::State.where( id: state_new[:id] ).first
+      state_old = Ticket::State.lookup(id: state_new[:id])
 
       # set state types
       if state['TypeName'] == 'pending auto'
         state['TypeName'] = 'pending action'
       end
-      state_type = Ticket::StateType.where( name: state['TypeName'] ).first
+      state_type = Ticket::StateType.lookup(name: state['TypeName'])
       state_new[:state_type_id] = state_type.id
       if state_old
         state_old.update_attributes(state_new)
@@ -969,7 +969,7 @@ module Import::OTRS
       }
 
       # check if state already exists
-      priority_old = Ticket::Priority.where( id: priority_new[:id] ).first
+      priority_old = Ticket::Priority.lookup(id: priority_new[:id])
 
       # set state types
       if priority_old
@@ -1010,7 +1010,7 @@ module Import::OTRS
       }
 
       # check if state already exists
-      group_old = Group.where( id: group_new[:id] ).first
+      group_old = Group.lookup(id: group_new[:id])
 
       # set state types
       if group_old
@@ -1070,7 +1070,7 @@ module Import::OTRS
       end
 
       # check if agent already exists
-      user_old = User.where( id: user_new[:id] ).first
+      user_old = User.lookup(id: user_new[:id])
 
       # check if login is already used
       login_in_use = User.where( "login = ? AND id != #{user_new[:id]}", user_new[:login].downcase ).count
@@ -1084,7 +1084,7 @@ module Import::OTRS
 
         # only update roles if different (reduce sql statements)
         if user_old.role_ids == user_new[:role_ids]
-          user_new.delete( :role_ids )
+          user_new.delete(:role_ids)
         end
 
         user_old.update_attributes(user_new)
@@ -1172,7 +1172,7 @@ module Import::OTRS
     }
 
     local_roles.each {|role|
-      role_lookup = Role.lookup( name: role )
+      role_lookup = Role.lookup(name: role)
       next if !role_lookup
       local_role_ids.push role_lookup.id
     }
@@ -1203,8 +1203,8 @@ module Import::OTRS
       UserCountry: :country,
     }
 
-    role_agent    = Role.lookup( name: 'Agent' )
-    role_customer = Role.lookup( name: 'Customer' )
+    role_agent    = Role.lookup(name: 'Agent')
+    role_customer = Role.lookup(name: 'Customer')
 
     records.each { |user|
       _set_valid(user)
@@ -1223,17 +1223,17 @@ module Import::OTRS
       }
 
       # check if customer already exists
-      user_old = User.where( login: user_new[:login].downcase ).first
+      user_old = User.lookup(login: user_new[:login])
 
       # create / update agent
       if user_old
 
         # do not update user if it is already agent
-        if !user_old.role_ids.include?( role_agent.id )
+        if !user_old.role_ids.include?(role_agent.id)
 
           # only update roles if different (reduce sql statements)
           if user_old.role_ids == user_new[:role_ids]
-            user_new.delete( :role_ids )
+            user_new.delete(:role_ids)
           end
           log "update User.find(#{user_old[:id]})"
           user_old.update_attributes(user_new)
@@ -1252,7 +1252,7 @@ module Import::OTRS
     if user['UserCustomerID']
       organizations.each {|organization|
         next if user['UserCustomerID'] != organization['CustomerID']
-        organization    = Organization.where(name: organization['CustomerCompanyName'] ).first
+        organization    = Organization.lookup(name: organization['CustomerCompanyName'])
         organization_id = organization.id
       }
     end
@@ -1285,7 +1285,7 @@ module Import::OTRS
       }
 
       # check if state already exists
-      organization_old = Organization.where( name: organization_new[:name] ).first
+      organization_old = Organization.lookup(name: organization_new[:name])
 
       # set state types
       if organization_old
@@ -1306,22 +1306,22 @@ module Import::OTRS
 
       # fqdn
       if setting['Key'] == 'FQDN'
-        Setting.set( 'fqdn', setting['Value'] )
+        Setting.set('fqdn', setting['Value'])
       end
 
       # http type
       if setting['Key'] == 'HttpType'
-        Setting.set( 'http_type', setting['Value'] )
+        Setting.set('http_type', setting['Value'])
       end
 
       # system id
       if setting['Key'] == 'SystemID'
-        Setting.set( 'system_id', setting['Value'] )
+        Setting.set('system_id', setting['Value'])
       end
 
       # organization
       if setting['Key'] == 'Organization'
-        Setting.set( 'organization', setting['Value'] )
+        Setting.set('organization', setting['Value'])
       end
 
       # sending emails
@@ -1332,17 +1332,17 @@ module Import::OTRS
       # number generater
       if setting['Key'] == 'Ticket::NumberGenerator'
         if setting['Value'] == 'Kernel::System::Ticket::Number::DateChecksum'
-          Setting.set( 'ticket_number', 'Ticket::Number::Date' )
-          Setting.set( 'ticket_number_date', { checksum: true } )
+          Setting.set('ticket_number', 'Ticket::Number::Date')
+          Setting.set('ticket_number_date', { checksum: true })
         elsif setting['Value'] == 'Kernel::System::Ticket::Number::Date'
-          Setting.set( 'ticket_number', 'Ticket::Number::Date' )
-          Setting.set( 'ticket_number_date', { checksum: false } )
+          Setting.set('ticket_number', 'Ticket::Number::Date')
+          Setting.set('ticket_number_date', { checksum: false })
         end
       end
 
       # ticket hook
       if setting['Key'] == 'Ticket::Hook'
-        Setting.set( 'ticket_hook', setting['Value'] )
+        Setting.set('ticket_hook', setting['Value'])
       end
     }
   end
@@ -1381,7 +1381,7 @@ module Import::OTRS
     }
 
     # fix OTRS 3.1 bug, no close time if ticket is created
-    if record['StateType'] == 'closed' && ( !record['Closed'] || record['Closed'].empty? )
+    if record['StateType'] == 'closed' && (!record['Closed'] || record['Closed'].empty?)
       record['Closed'] = record['Created']
     end
   end
@@ -1391,7 +1391,7 @@ module Import::OTRS
     data.each { |key, value|
       next if !value
       next if value.class != String
-      data[key] = Encode.conv( 'utf8', value )
+      data[key] = Encode.conv('utf8', value)
     }
   end
 
@@ -1411,7 +1411,7 @@ module Import::OTRS
 
     email = nil
     begin
-      email = Mail::Address.new( article['from'] ).address
+      email = Mail::Address.new(article['from']).address
     rescue
       email = article['from']
       if article['from'] =~ /<(.+?)>/
@@ -1419,9 +1419,9 @@ module Import::OTRS
       end
     end
 
-    user = User.where( email: email.downcase ).first
+    user = User.lookup(email: email)
     if !user
-      user = User.where( login: email.downcase ).first
+      user = User.lookup(login: email)
     end
     if !user
       begin
@@ -1432,9 +1432,9 @@ module Import::OTRS
       end
 
       # do extra decoding because we needed to use field.value
-      display_name = Mail::Field.new( 'X-From', display_name ).to_s
+      display_name = Mail::Field.new('X-From', display_name).to_s
 
-      roles = Role.lookup( name: 'Customer' )
+      roles = Role.lookup(name: 'Customer')
       begin
         user = User.create(
           login: email,
@@ -1449,7 +1449,7 @@ module Import::OTRS
         )
       rescue ActiveRecord::RecordNotUnique
         log "User #{email} was handled by another thread, taking this."
-        user = User.find_by( login: email.downcase )
+        user = User.lookup(login: email)
         if !user
           log "User #{email} wasn't created sleep and retry."
           sleep rand 3

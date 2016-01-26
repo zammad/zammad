@@ -34,7 +34,18 @@ class Widget extends App.ControllerWidgetOnDemand
     e.preventDefault()
     @disconnectClient()
     $('#app').hide().attr('style', 'display: none!important')
-    App.Auth._logout()
-    window.location = App.Config.get('api_path') + '/sessions/switch_back'
+    @delay(
+      =>
+        App.Auth._logout(false)
+        @ajax(
+          id:          'user_switch_back'
+          type:        'GET'
+          url:         "#{@apiPath}/sessions/switch_back"
+          success:     (data, status, xhr) =>
+            location = "#{window.location.protocol}//#{window.location.host}#{data.location}"
+            @windowReload(undefined, location)
+        )
+      800
+    )
 
 App.Config.set( 'switch_back_to_user', Widget, 'Widgets' )

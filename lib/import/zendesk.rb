@@ -515,9 +515,9 @@ module Import::Zendesk
 
     @zendesk_user_mapping = {}
 
-    role_admin    = Role.find_by( name: 'Admin' )
-    role_agent    = Role.find_by( name: 'Agent' )
-    role_customer = Role.find_by( name: 'Customer' )
+    role_admin    = Role.lookup(name: 'Admin')
+    role_agent    = Role.lookup(name: 'Agent')
+    role_customer = Role.lookup(name: 'Customer')
 
     @client.users.all { |zendesk_user|
 
@@ -612,18 +612,18 @@ module Import::Zendesk
   # https://developer.zendesk.com/rest_api/docs/core/ticket_audits # v2
   def import_tickets
 
-    article_sender_customer = Ticket::Article::Sender.find_by(name: 'Customer')
-    article_sender_agent    = Ticket::Article::Sender.find_by(name: 'Agent')
-    article_sender_system   = Ticket::Article::Sender.find_by(name: 'System')
+    article_sender_customer = Ticket::Article::Sender.lookup(name: 'Customer')
+    article_sender_agent    = Ticket::Article::Sender.lookup(name: 'Agent')
+    article_sender_system   = Ticket::Article::Sender.lookup(name: 'System')
 
     # TODO
-    article_type_web                   = Ticket::Article::Type.find_by(name: 'web')
-    article_type_note                  = Ticket::Article::Type.find_by(name: 'note')
-    article_type_email                 = Ticket::Article::Type.find_by(name: 'email')
-    article_type_twitter_status        = Ticket::Article::Type.find_by(name: 'twitter status')
-    article_type_twitter_dm            = Ticket::Article::Type.find_by(name: 'twitter direct-message')
-    article_type_facebook_feed_post    = Ticket::Article::Type.find_by(name: 'facebook feed post')
-    article_type_facebook_feed_comment = Ticket::Article::Type.find_by(name: 'facebook feed comment')
+    article_type_web                   = Ticket::Article::Type.lookup(name: 'web')
+    article_type_note                  = Ticket::Article::Type.lookup(name: 'note')
+    article_type_email                 = Ticket::Article::Type.lookup(name: 'email')
+    article_type_twitter_status        = Ticket::Article::Type.lookup(name: 'twitter status')
+    article_type_twitter_dm            = Ticket::Article::Type.lookup(name: 'twitter direct-message')
+    article_type_facebook_feed_post    = Ticket::Article::Type.lookup(name: 'facebook feed post')
+    article_type_facebook_feed_comment = Ticket::Article::Type.lookup(name: 'facebook feed comment')
 
     @client.tickets.all { |zendesk_ticket|
 

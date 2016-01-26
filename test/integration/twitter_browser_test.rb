@@ -34,7 +34,7 @@ class TwitterBrowserTest < TestCase
     end
     twitter_customer_token_secret = ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
 
-    hash = "#sweetcheck#{rand(99_999)}"
+    hash = "#sweetcheck#{rand(999_999)}"
 
     @browser = browser_instance
     login(
@@ -197,7 +197,7 @@ class TwitterBrowserTest < TestCase
       config.access_token_secret = twitter_customer_token_secret
     end
 
-    text  = "Today... #{hash} #{rand(99_999)}"
+    text  = "Today... #{hash} #{rand(999_999)}"
     tweet = client.update(
       text,
     )
@@ -216,7 +216,7 @@ class TwitterBrowserTest < TestCase
     watch_for(
       css: '.content.active',
       value: hash,
-      timeout: 20,
+      timeout: 24,
     )
 
     ticket_open_by_title(
@@ -248,21 +248,25 @@ class TwitterBrowserTest < TestCase
 
     click( css: '.content.active [data-type="twitterStatusReply"]' )
     sleep 2
+
+    re_hash = "#{hash}re#{rand(99_999)}"
+
     ticket_update(
       data: {
-        body: "@dzucker6 reply #{hash}222 #{rand(99_999)}",
+        body: "@dzucker6 reply #{re_hash} #{rand(999_999)}",
       },
     )
     sleep 20
 
     match(
       css: '.content.active .ticket-article',
-      value: "#{hash}222",
+      value: re_hash,
     )
 
     # watch till tweet reached customer
+    sleep 10
     text = nil
-    client.search("#{hash}222", result_type: 'mixed').collect { |local_tweet|
+    client.search(re_hash, result_type: 'mixed').collect { |local_tweet|
       text = local_tweet.text
     }
     assert(text)

@@ -168,7 +168,7 @@ returns:
 
     # lookups
     if object
-      object_lookup_id = ObjectLookup.by_name( object )
+      object_lookup_id = ObjectLookup.by_name(object)
     end
 
     # get attributes in right order
@@ -198,7 +198,7 @@ returns:
         }
       end
       if item.data_option
-        data = data.merge( item.data_option.symbolize_keys )
+        data = data.merge(item.data_option.symbolize_keys)
       end
       attributes.push data
     }

@@ -9,7 +9,7 @@
   <div class="settings-entry">
     <table class="table">
       <tr>
-        <td><%- @T('On') %></td><td colspan="3"><%- @T('Criteria') %></td><td colspan="2"><%- @T('Channel') %></td>
+        <td><%- @T('On') %></td><td colspan="3"><%- @T('Criteria') %></td><td colspan="2"><%- @T('Notify via') %></td>
       </tr>
       <tr>
         <td></td><td><%- @T('Owned by me') %></td><td><%- @T('Owned by nobody') %></td><td><%- @T('no criteria') %></td><td><%- @T('Email & Online') %></td><td><%- @T('Online') %></td>
@@ -37,7 +37,7 @@
     <% if @groups: %>
       <% for group in @groups: %>
       <tr>
-        <td><%= group.displayName() %></td><td><input type="checkbox" name="group_ids" value="<%= group.id %>" checked/></td>
+        <td><%= group.displayName() %></td><td><input type="checkbox" name="group_ids" value="<%= group.id %>" <% if _.include(@config.group_ids, group.id.toString()): %>checked<% end %>/></td>
       </tr>
       <% end %>
     <% end %>

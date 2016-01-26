@@ -73,10 +73,22 @@ class Index extends App.Controller
 
     switchTo = (id,e) =>
       e.preventDefault()
+      e.stopPropagation()
       @disconnectClient()
       $('#app').hide().attr('style', 'display: none!important')
-      App.Auth._logout()
-      window.location = App.Config.get('api_path') + '/sessions/switch/' + id
+      @delay(
+        =>
+          App.Auth._logout(false)
+          @ajax(
+            id:          'user_switch'
+            type:        'GET'
+            url:         "#{@apiPath}/sessions/switch/#{id}"
+            success:     (data, status, xhr) =>
+              location = "#{window.location.protocol}//#{window.location.host}#{data.location}"
+              @windowReload(undefined, location)
+          )
+        800
+      )
 
     edit = (id, e) =>
       e.preventDefault()

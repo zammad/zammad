@@ -14,16 +14,21 @@
 ###
 
 class App.Ajax
-  _instance = undefined # Must be declared here to force the closure on the class
-  @request: (args) -> # Must be a static method
+  _instance = undefined
+  @request: (args) ->
     if _instance == undefined
       _instance ?= new _ajaxSingleton
     _instance.request(args)
 
-  @abort: (args) -> # Must be a static method
+  @abort: (args) ->
     if _instance == undefined
       _instance ?= new _ajaxSingleton
     _instance.abort(args)
+
+  @abortAll: ->
+    if _instance == undefined
+      _instance ?= new _ajaxSingleton
+    _instance.abortAll()
 
 # The actual Singleton class
 class _ajaxSingleton
@@ -119,6 +124,14 @@ class _ajaxSingleton
         return item if item['id'] isnt id
         return
     )
+
+  abortAll: =>
+    return if !@current_request
+    abortedIds = []
+    for id, ajax of @current_request
+      @abort(id)
+      abortedIds.push id
+    abortedIds
 
   _run: =>
     if @queue_list && @queue_list[0]

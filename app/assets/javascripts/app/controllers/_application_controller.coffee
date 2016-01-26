@@ -100,7 +100,7 @@ class App.Controller extends Spine.Controller
   disconnectClient: ->
     App.Delay.reset()
     App.Interval.reset()
-    App.WebSocket.close( force: true )
+    App.WebSocket.close(force: true)
 
   # add @notify methode to create notification
   notify: (data) ->
@@ -574,6 +574,22 @@ class App.Controller extends Spine.Controller
     e.currentTarget.focus()
     e.currentTarget.select()
 
+  windowReload: (e,url) ->
+    if e
+      e.preventDefault()
+    $('#app').hide().attr('style', 'display: none!important')
+    if url
+      window.location = url
+      return true
+    if window.location.reload
+      window.location.reload()
+      return true
+    if window.location.href
+      window.location.href = window.location.href
+      return true
+
+    throw 'Cant reload page!'
+
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
@@ -726,30 +742,17 @@ class App.ControllerModal extends App.Controller
 class App.SessionMessage extends App.ControllerModal
   onCancel: (e) =>
     if @forceReload
-      @reload(e)
+      @windowReload(e)
 
   onClose: (e) =>
     if @forceReload
-      @reload(e)
+      @windowReload(e)
 
   onSubmit: (e) =>
     if @forceReload
-      @reload(e)
+      @windowReload(e)
     else
       @close()
-
-  reload: (e) ->
-    if e
-      e.preventDefault()
-    $('#app').hide().attr('style', 'display: none!important')
-    if window.location.reload
-      window.location.reload()
-      return true
-    if window.location.href
-      window.location.href = window.location.href
-      return true
-
-    throw 'Cant reload page!'
 
 class App.UpdateHeader extends App.Controller
   constructor: ->

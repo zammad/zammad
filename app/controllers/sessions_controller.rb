@@ -212,7 +212,12 @@ class SessionsController < ApplicationController
     # set session user
     current_user_set(user)
 
-    redirect_to '/#'
+    render(
+      json: {
+        success: true,
+        location: '',
+      },
+    )
   end
 
   # "switch" back to user
@@ -245,7 +250,12 @@ class SessionsController < ApplicationController
     # log end session
     current_session_user.activity_stream_log('ended switch to', user.id, true)
 
-    redirect_to '/#'
+    render(
+      json: {
+        success: true,
+        location: '',
+      },
+    )
   end
 
   def list

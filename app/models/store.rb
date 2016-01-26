@@ -14,10 +14,10 @@ class Store < ApplicationModel
 add an attachment to storage
 
   result = Store.add(
-    :object       => 'Ticket::Article',
-    :o_id         => 4711,
-    :data         => binary_string,
-    :preferences  => {
+    object: 'Ticket::Article',
+    o_id: 4711,
+    data: binary_string,
+    preferences: {
       :content_type => 'image/png',
       :content_id   => 234,
     }
@@ -33,11 +33,11 @@ returns
     data = data.stringify_keys
 
     # lookup store_object.id
-    store_object = Store::Object.create_if_not_exists( name: data['object'] )
+    store_object = Store::Object.create_if_not_exists(name: data['object'])
     data['store_object_id'] = store_object.id
 
     # add to real store
-    file = Store::File.add( data['data'] )
+    file = Store::File.add(data['data'])
 
     data['size'] = data['data'].to_s.bytesize
     data['store_file_id'] = file.id
@@ -57,8 +57,8 @@ returns
 get attachment of object
 
   list = Store.list(
-    :object => 'Ticket::Article',
-    :o_id   => 4711,
+    object: 'Ticket::Article',
+    o_id: 4711,
   )
 
 returns
@@ -66,9 +66,9 @@ returns
   result = [store1, store2]
 
   store1 = {
-    :size        => 94123,
-    :filename    => 'image.png',
-    :preferences => {
+    size: 94123,
+    filename: 'image.png',
+    preferences: {
       :content_type => 'image/png',
       :content_id   => 234,
     }
@@ -79,8 +79,8 @@ returns
 
   def self.list(data)
     # search
-    store_object_id = Store::Object.lookup( name: data[:object] )
-    stores = Store.where( store_object_id: store_object_id, o_id: data[:o_id].to_i )
+    store_object_id = Store::Object.lookup(name: data[:object])
+    stores = Store.where(store_object_id: store_object_id, o_id: data[:o_id].to_i)
                   .order('created_at ASC, id ASC')
     stores
   end
@@ -90,8 +90,8 @@ returns
 remove attachments of object from storage
 
   result = Store.remove(
-    :object => 'Ticket::Article',
-    :o_id   => 4711,
+    object: 'Ticket::Article',
+    o_id: 4711,
   )
 
 returns
@@ -102,14 +102,14 @@ returns
 
   def self.remove(data)
     # search
-    store_object_id = Store::Object.lookup( name: data[:object] )
-    stores = Store.where( store_object_id: store_object_id )
-                  .where( o_id: data[:o_id] )
+    store_object_id = Store::Object.lookup(name: data[:object])
+    stores = Store.where(store_object_id: store_object_id)
+                  .where(o_id: data[:o_id])
                   .order('created_at ASC, id ASC')
     stores.each do |store|
 
       # check backend for references
-      Store.remove_item( store.id )
+      Store.remove_item(store.id)
     end
     true
   end
@@ -130,9 +130,9 @@ returns
 
     # check backend for references
     store = Store.find(store_id)
-    files = Store.where( store_file_id: store.store_file_id )
+    files = Store.where(store_file_id: store.store_file_id)
     if files.count == 1 && files.first.id == store.id
-      Store::File.find( store.store_file_id ).destroy
+      Store::File.find(store.store_file_id).destroy
     end
 
     store.destroy
@@ -140,7 +140,7 @@ returns
   end
 
   def content
-    file = Store::File.find_by( id: store_file_id )
+    file = Store::File.find_by(id: store_file_id)
     if !file
       fail "No such file #{store_file_id}!"
     end
@@ -148,7 +148,7 @@ returns
   end
 
   def provider
-    file = Store::File.find_by( id: store_file_id )
+    file = Store::File.find_by(id: store_file_id)
     if !file
       fail "No such file #{store_file_id}!"
     end
