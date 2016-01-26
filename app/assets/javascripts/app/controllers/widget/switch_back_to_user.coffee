@@ -36,7 +36,7 @@ class Widget extends App.ControllerWidgetOnDemand
     $('#app').hide().attr('style', 'display: none!important')
     @delay(
       =>
-        App.Auth._logout()
+        App.Auth._logout(false)
         @ajax(
           id:          'user_switch_back'
           type:        'GET'

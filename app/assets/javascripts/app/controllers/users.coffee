@@ -78,7 +78,7 @@ class Index extends App.Controller
       $('#app').hide().attr('style', 'display: none!important')
       @delay(
         =>
-          App.Auth._logout()
+          App.Auth._logout(false)
           @ajax(
             id:          'user_switch'
             type:        'GET'

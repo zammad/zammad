@@ -132,8 +132,8 @@ class App.Auth
     App.Event.trigger('ui:rerender')
 
 
-  @_logout: (data) ->
-    App.Log.debug 'Auth', '_logout', data
+  @_logout: (rerender = true) ->
+    App.Log.debug 'Auth', '_logout'
 
     App.Ajax.abortAll()
 
@@ -142,7 +142,8 @@ class App.Auth
 
     App.Event.trigger('auth')
     App.Event.trigger('auth:logout')
-    App.Event.trigger('ui:rerender')
+    if rerender
+      App.Event.trigger('ui:rerender')
     App.Event.trigger('clearStore')
 
   @_loginError: ->
