@@ -138,7 +138,7 @@ job_integration_es_mysql:
     - mysql
   script:
     - export RAILS_ENV=test
-    - export ES_INDEX="estest.local_zammad_"$RNAME
+    - export ES_INDEX_RAND=true
     - export ES_URL="http://localhost:9200"
     - rake db:drop;
     - rake db:create
@@ -154,7 +154,7 @@ job_integration_es_postgresql:
     - postgresql
   script:
     - export RAILS_ENV=test
-    - export ES_INDEX="estest.local_zammad_"$RNAME
+    - export ES_INDEX_RAND=true
     - export ES_URL="http://localhost:9200"
     - rake db:drop;
     - rake db:create
