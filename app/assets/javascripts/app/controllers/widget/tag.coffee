@@ -56,7 +56,12 @@ class App.WidgetTag extends App.Controller
     return if !item
     @add(item)
 
-  add: (item) =>
+  add: (items) =>
+    for item in items.split(',')
+      item = item.trim()
+      @addItem(item)
+
+  addItem: (item) =>
     if _.contains(@tags, item)
       @render()
       return

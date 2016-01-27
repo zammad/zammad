@@ -1202,6 +1202,7 @@ wait untill text in selector disabppears
     {
       id:     123,
       number: '100001',
+      title: 'overview #1',
     }
 
 =end
@@ -1308,6 +1309,7 @@ wait untill text in selector disabppears
           ticket = {
             id: id,
             number: number,
+            title: data[:title],
           }
           sleep 3 # wait until notify is gone
           screenshot(browser: instance, comment: 'ticket_create_ok')

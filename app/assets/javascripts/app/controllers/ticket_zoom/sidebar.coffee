@@ -1,12 +1,12 @@
 class App.TicketZoomSidebar extends App.Controller
   constructor: ->
     super
-    ticket       = App.Ticket.fullLocal( @ticket.id )
+    ticket       = App.Ticket.fullLocal(@ticket.id)
     @subscribeId = ticket.subscribe(@render)
     @render(ticket)
 
   release: =>
-    App.Ticket.unsubscribe( @subscribeId )
+    App.Ticket.unsubscribe(@subscribeId)
 
   render: (ticket) =>
 
@@ -19,12 +19,12 @@ class App.TicketZoomSidebar extends App.Controller
 
         defaults   = ticket.attributes()
         task_state = @taskGet('ticket')
-        modelDiff  = App.Utils.formDiff( task_state, defaults )
+        modelDiff  = App.Utils.formDiff(task_state, defaults)
         #if @isRole('Customer')
         #  delete defaults['state_id']
         #  delete defaults['state']
-        if !_.isEmpty( task_state )
-          defaults = _.extend( defaults, task_state )
+        if !_.isEmpty(task_state)
+          defaults = _.extend(defaults, task_state)
 
         new App.ControllerForm(
           el:       el.find('.edit')
@@ -62,7 +62,6 @@ class App.TicketZoomSidebar extends App.Controller
           object_type: 'Ticket'
           object:      ticket
           links:       @links
-          container:   @el.closest('.content')
         )
 
     showTicketHistory = =>

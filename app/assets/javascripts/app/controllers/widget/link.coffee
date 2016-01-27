@@ -2,6 +2,7 @@ class App.WidgetLink extends App.Controller
   events:
     'click .js-add': 'add'
     'click .js-delete': 'delete'
+    'click .js-delete .icon': 'delete'
 
   constructor: ->
     super
@@ -48,9 +49,9 @@ class App.WidgetLink extends App.Controller
 
   delete: (e) =>
     e.preventDefault()
-    link_type   = $(e.target).data('link-type')
-    link_object_source = $(e.target).data('object')
-    link_object_source_value = $(e.target).data('object-id')
+    link_type   = $(e.currentTarget).data('link-type')
+    link_object_source = $(e.currentTarget).data('object')
+    link_object_source_value = $(e.currentTarget).data('object-id')
     link_object_target = @object_type
     link_object_target_value = @object.id
 
@@ -77,7 +78,7 @@ class App.WidgetLink extends App.Controller
       link_object_id: @object.id
       object:         @object
       parent:         @
-      container:      @container
+      container:      @el.closest('.content')
     )
 
 class App.LinkAdd extends App.ControllerModal
@@ -92,7 +93,7 @@ class App.LinkAdd extends App.ControllerModal
     @ticket = @object
     @fetch()
 
-  fetch: ->
+  fetch: =>
     @ajax(
       id:    'ticket_related'
       type:  'GET'
