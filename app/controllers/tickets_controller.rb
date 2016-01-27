@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
   def show
     @ticket = Ticket.find( params[:id] )
 
-    # permissin check
+    # permission check
     return if !ticket_permission(@ticket)
 
     render json: @ticket
@@ -54,7 +54,7 @@ class TicketsController < ApplicationController
   def update
     ticket = Ticket.find(params[:id])
 
-    # permissin check
+    # permission check
     return if !ticket_permission(ticket)
 
     if ticket.update_attributes( Ticket.param_validation( params[:ticket] ) )
@@ -99,7 +99,7 @@ class TicketsController < ApplicationController
     # get ticket data
     ticket = Ticket.find( params[:id] )
 
-    # permissin check
+    # permission check
     return if !ticket_permission( ticket )
 
     # get history of ticket
@@ -171,7 +171,7 @@ class TicketsController < ApplicationController
       return
     end
 
-    # permissin check
+    # permission check
     return if !ticket_permission(ticket_master)
 
     # check slave ticket
@@ -184,7 +184,7 @@ class TicketsController < ApplicationController
       return
     end
 
-    # permissin check
+    # permission check
     return if !ticket_permission( ticket_slave )
 
     # check diffetent ticket ids
@@ -357,7 +357,7 @@ class TicketsController < ApplicationController
       fail 'Need user_id or organization_id as param'
     end
 
-    # permissin check
+    # permission check
     #return if !ticket_permission(ticket)
 
     # lookup open user tickets
