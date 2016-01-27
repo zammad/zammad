@@ -177,7 +177,7 @@ Test:
   # GET /api/v1/organizations/history/1
   def history
 
-    # permissin check
+    # permission check
     if !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
       response_access_deny
       return
