@@ -80,6 +80,11 @@ class App.CustomerChat extends App.Controller
         active: @meta.active
     )
 
+  featureActive: =>
+    if @Config.get('chat')
+      return true
+    false
+
   render: ->
     if !@isRole('Chat')
       @renderScreenUnauthorized(objectName: 'Chat')
@@ -634,7 +639,7 @@ class ChatWindow extends App.Controller
 
   addStatusMessage: (message, args) ->
     @maybeAddTimestamp()
-    
+
     @body.append App.view('customer_chat/chat_status_message')
       message: message
       args: args
@@ -713,4 +718,4 @@ class Setting extends App.ControllerModal
 
 App.Config.set( 'customer_chat', CustomerChatRouter, 'Routes' )
 App.Config.set( 'CustomerChat', { controller: 'CustomerChat', authentication: true }, 'permanentTask' )
-App.Config.set( 'CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', role: ['Chat'], class: 'chat' }, 'NavBar' )
+App.Config.set( 'CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, role: ['Chat'], class: 'chat' }, 'NavBar' )
