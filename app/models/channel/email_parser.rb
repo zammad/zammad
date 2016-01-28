@@ -284,6 +284,8 @@ class Channel::EmailParser
         if result && result[0] && result[0][1]
           filename = result[0][1]
         end
+      rescue
+        Rails.logger.debug 'Unable to get filename'
       end
     end
 
