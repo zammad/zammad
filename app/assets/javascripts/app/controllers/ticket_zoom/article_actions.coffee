@@ -6,6 +6,7 @@ class App.TicketZoomArticleActions extends App.Controller
     'click [data-type=emailReplyAll]':             'emailReplyAll'
     'click [data-type=twitterStatusReply]':        'twitterStatusReply'
     'click [data-type=twitterDirectMessageReply]': 'twitterDirectMessageReply'
+    'click [data-type=facebookFeedReply]':         'facebookFeedReply'
 
   constructor: ->
     super
@@ -110,6 +111,13 @@ class App.TicketZoomArticleActions extends App.Controller
         icon: 'reply'
         href: '#'
       }
+    if article.type.name is 'facebook feed post' || article.type.name is 'facebook feed comment'
+      actions.push {
+        name: 'reply'
+        type: 'facebookFeedReply'
+        icon: 'reply'
+        href: '#'
+      }
 
     actions.push {
       name: 'split'
@@ -118,6 +126,23 @@ class App.TicketZoomArticleActions extends App.Controller
       href: '#ticket/create/' + article.ticket_id + '/' + article.id
     }
     actions
+
+  facebookFeedReply: (e) =>
+    e.preventDefault()
+
+    type = App.TicketArticleType.findByAttribute('name', 'facebook feed comment')
+    console.log('tt', type)
+    @scrollToCompose()
+
+    # empty form
+    articleNew = {
+      to:          ''
+      cc:          ''
+      body:        ''
+      in_reply_to: ''
+    }
+
+    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
 
   twitterStatusReply: (e) =>
     e.preventDefault()
