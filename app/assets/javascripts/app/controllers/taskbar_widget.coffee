@@ -123,7 +123,7 @@ class App.TaskbarWidget extends App.Controller
 class Remove extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Discared changes'
+  buttonSubmit: 'Discard changes'
   buttonClass: 'btn--danger'
   head: 'Confirm'
 
