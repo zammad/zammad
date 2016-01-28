@@ -131,7 +131,6 @@ class App.TicketZoomArticleActions extends App.Controller
     e.preventDefault()
 
     type = App.TicketArticleType.findByAttribute('name', 'facebook feed comment')
-    console.log('tt', type)
     @scrollToCompose()
 
     # empty form
