@@ -1,8 +1,8 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 ruby '2.2.3'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -36,7 +36,7 @@ gem 'zendesk_api'
 
 gem 'twitter'
 gem 'koala'
-gem 'mail', '~> 2.5.0'
+gem 'mail'
 
 gem 'mime-types'
 
