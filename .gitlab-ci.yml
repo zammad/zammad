@@ -24,6 +24,15 @@ coffeelint:
   script:
     - coffeelint app/
 
+bundle-audit:
+  stage: pre
+  tags:
+    - core
+  script:
+    - gem install bundler-audit
+    - bundle-audit update
+    - bundle-audit
+
 job_unit_mysql:
   stage: test
   tags:
