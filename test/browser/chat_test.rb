@@ -29,16 +29,14 @@ class ChatTest < TestCase
       css: '#content .js-chatSetting',
       type: 'off',
     )
-    sleep 25 # wait for rerendering
-    click(
+
+    # nav bar shuld be gone
+    sleep 2
+    exists_not(
       browser: agent,
       css: 'a[href="#customer_chat"]',
     )
-    match(
-      browser: agent,
-      css: '.active.content',
-      value: 'disabled',
-    )
+    sleep 15
 
     customer = browser_instance
     location(

@@ -53,6 +53,11 @@
         if ( e.keyCode === 13 ) {
           e.preventDefault()
           var id = _this.$widget.find('.dropdown-menu li.active a').data('id')
+
+          // as fallback use hovered element
+          if (!id) {
+            id = _this.$widget.find('.dropdown-menu li:hover a').data('id')
+          }
           _this.take(id)
           return
         }

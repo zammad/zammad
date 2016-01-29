@@ -387,7 +387,7 @@ class UsersController < ApplicationController
   # @response_message 401           Invalid session.
   def history
 
-    # permissin check
+    # permission check
     if !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
       response_access_deny
       return

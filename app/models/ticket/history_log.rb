@@ -37,39 +37,39 @@ returns
 
   result = [
     {
-      :type          => 'created',
-      :object        => 'Ticket',
-      :created_by_id => 3,
-      :created_at    => "2013-08-19 20:41:33",
+      type: 'created',
+      object: 'Ticket',
+      created_by_id: 3,
+      created_at: "2013-08-19 20:41:33",
     },
     {
-      :type          => 'updated',
-      :object        => 'Ticket',
-      :attribute     => 'priority',
-      :o_id          => 1,
-      :id_to         => 3,
-      :id_from       => 2,
-      :value_from    => "low",
-      :value_to      => "high",
-      :created_by_id => 3,
-      :created_at    => "2013-08-19 20:41:33",
+      type: 'updated',
+      object: 'Ticket',
+      attribute: 'priority',
+      o_id: 1,
+      id_to: 3,
+      id_from: 2,
+      value_from: "low",
+      value_to: "high",
+      created_by_id: 3,
+      created_at: "2013-08-19 20:41:33",
     },
   ]
 
 =end
 
   def history_get(fulldata = false)
-    list = History.list( self.class.name, self['id'], 'Ticket::Article' )
+    list = History.list(self.class.name, self['id'], 'Ticket::Article')
     return list if !fulldata
 
     # get related objects
     assets = {}
     list.each {|item|
-      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      record = Kernel.const_get(item['object']).find(item['o_id'])
       assets = record.assets(assets)
 
       if item['related_object']
-        record = Kernel.const_get( item['related_object'] ).find( item['related_o_id'] )
+        record = Kernel.const_get(item['related_object']).find( item['related_o_id'])
         assets = record.assets(assets)
       end
     }

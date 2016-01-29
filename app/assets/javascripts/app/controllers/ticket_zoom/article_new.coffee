@@ -40,6 +40,8 @@ class App.TicketZoomArticleNew extends App.Controller
         possibleArticleType['twitter direct-message'] = true
       else if articleTypeCreate is 'email'
         possibleArticleType['email'] = true
+      else if articleTypeCreate is 'facebook feed post'
+        possibleArticleType['facebook feed comment'] = true
     if @ticket && @ticket.customer_id
       customer = App.User.find(@ticket.customer_id)
       if customer.email
@@ -62,11 +64,12 @@ class App.TicketZoomArticleNew extends App.Controller
         attributes: ['to', 'cc']
         features:   ['attachment']
       }
-    if possibleArticleType.facebook
+    if possibleArticleType['facebook feed comment']
       @articleTypes.push {
-        name:       'facebook'
+        name:       'facebook feed comment'
         icon:       'facebook'
         attributes: []
+        features:   []
       }
     if possibleArticleType['twitter status']
       @articleTypes.push {
@@ -283,6 +286,10 @@ class App.TicketZoomArticleNew extends App.Controller
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
       params.content_type = 'text/plain'
       params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+    if params.type is 'facebook feed comment'
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+      params.content_type = 'text/plain'
+      params.body = App.Utils.html2text(params.body, true)
 
     params
 

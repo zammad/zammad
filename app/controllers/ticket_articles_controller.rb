@@ -124,7 +124,7 @@ class TicketArticlesController < ApplicationController
   # GET /ticket_attachment/1
   def attachment
 
-    # permissin check
+    # permission check
     ticket = Ticket.find( params[:ticket_id] )
     if !ticket_permission(ticket)
       render( json: 'No such ticket.', status: :unauthorized )
@@ -161,7 +161,7 @@ class TicketArticlesController < ApplicationController
   # GET /ticket_article_plain/1
   def article_plain
 
-    # permissin check
+    # permission check
     article = Ticket::Article.find( params[:id] )
     return if !ticket_permission( article.ticket )
 

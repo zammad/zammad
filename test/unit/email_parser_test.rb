@@ -461,7 +461,7 @@ Freemont and pulling out several minutes.
           from_email: 'marketingmanager@nthcpghana.com',
           from_display_name: '',
           subject: nil,
-          to: 'undisclosed-recipients: ;',
+          to: '',
         },
       },
       {

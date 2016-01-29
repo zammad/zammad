@@ -6,7 +6,7 @@ class Service::Image::Zammad
   @@api_host = 'https://images.zammad.com'
   @@open_timeout = 4
   @@read_timeout = 6
-  @@total_timeout = 8
+  @@total_timeout = 6
 
   def self.user(email)
 

@@ -80,6 +80,11 @@ class App.CustomerChat extends App.Controller
         active: @meta.active
     )
 
+  featureActive: =>
+    if @Config.get('chat')
+      return true
+    false
+
   render: ->
     if !@isRole('Chat')
       @renderScreenUnauthorized(objectName: 'Chat')
@@ -106,7 +111,7 @@ class App.CustomerChat extends App.Controller
         chat_sessions: list
       )
 
-    @el.find('.js-waitingCustomers').popover(
+    @el.find('.js-waitingCustomers .js-arrow').popover(
       trigger:    'hover'
       html:       true
       animation:  false
@@ -118,7 +123,7 @@ class App.CustomerChat extends App.Controller
         chatSessionList(@meta.waiting_chat_session_list)
     )
 
-    @el.find('.js-chattingCustomers').popover(
+    @el.find('.js-chattingCustomers .js-arrow').popover(
       trigger:    'hover'
       html:       true
       animation:  false
@@ -130,7 +135,7 @@ class App.CustomerChat extends App.Controller
         chatSessionList(@meta.running_chat_session_list)
     )
 
-    @el.find('.js-activeAgents').popover(
+    @el.find('.js-activeAgents .js-arrow').popover(
       trigger:    'hover'
       html:       true
       animation:  false
@@ -634,7 +639,7 @@ class ChatWindow extends App.Controller
 
   addStatusMessage: (message, args) ->
     @maybeAddTimestamp()
-    
+
     @body.append App.view('customer_chat/chat_status_message')
       message: message
       args: args
@@ -713,4 +718,4 @@ class Setting extends App.ControllerModal
 
 App.Config.set( 'customer_chat', CustomerChatRouter, 'Routes' )
 App.Config.set( 'CustomerChat', { controller: 'CustomerChat', authentication: true }, 'permanentTask' )
-App.Config.set( 'CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', role: ['Chat'], class: 'chat' }, 'NavBar' )
+App.Config.set( 'CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, role: ['Chat'], class: 'chat' }, 'NavBar' )

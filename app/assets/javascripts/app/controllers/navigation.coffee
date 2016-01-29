@@ -50,7 +50,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
     items = @getItems( navbar: @Config.get( 'NavBar' ) )
 
     # apply counter and switch info from persistant controllers (if exists)
+    itemsNew = []
     for item in items
+      shown = true
+      if item.shown isnt undefined
+        shown = item.shown
       if item.key
         worker = App.TaskManager.worker(item.key)
         if worker
@@ -58,6 +62,14 @@ class App.Navigation extends App.ControllerWidgetPermanent
             item.counter = worker.counter()
           if worker.switch
             item.switch = worker.switch()
+          if worker.featureActive
+            if worker.featureActive()
+              shown = true
+            else
+              shown = false
+      if shown
+        itemsNew.push item
+    items = itemsNew
 
     # get open tabs to repopen on rerender
     open_tab = {}

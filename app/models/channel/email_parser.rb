@@ -279,9 +279,13 @@ class Channel::EmailParser
     begin
       filename = file.header[:content_disposition].filename
     rescue
-      result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
-      if result && result[0] && result[0][1]
-        filename = result[0][1]
+      begin
+        result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
+        if result && result[0] && result[0][1]
+          filename = result[0][1]
+        end
+      rescue
+        Rails.logger.debug 'Unable to get filename'
       end
     end
 
@@ -393,12 +397,10 @@ retrns
 
       # create to and cc user
       ['raw-to', 'raw-cc'].each { |item|
-
         next if !mail[item.to_sym]
-        next if !mail[item.to_sym].tree
-
-        items = mail[item.to_sym].tree
-        items.addresses.each {|address_data|
+        next if !mail[item.to_sym].addrs
+        items = mail[item.to_sym].addrs
+        items.each {|address_data|
           user_create(
             firstname: address_data.display_name,
             lastname: '',

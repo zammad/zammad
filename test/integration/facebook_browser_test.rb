@@ -5,22 +5,33 @@ class FacebookBrowserTest < TestCase
   def test_add_config
 
     # app config
-    if !ENV['FACEBOOK_APP_ID']
-      fail "ERROR: Need FACEBOOK_APP_ID - hint FACEBOOK_APP_ID='1234'"
+    if !ENV['FACEBOOK_BT_APP_ID']
+      fail "ERROR: Need FACEBOOK_BT_APP_ID - hint FACEBOOK_BT_APP_ID='1234'"
     end
-    app_id = ENV['FACEBOOK_APP_ID']
-    if !ENV['FACEBOOK_APP_SECRET']
-      fail "ERROR: Need FACEBOOK_APP_SECRET - hint FACEBOOK_APP_SECRET='1234'"
+    app_id = ENV['FACEBOOK_BT_APP_ID']
+    if !ENV['FACEBOOK_BT_APP_SECRET']
+      fail "ERROR: Need FACEBOOK_BT_APP_SECRET - hint FACEBOOK_BT_APP_SECRET='1234'"
     end
-    app_secret = ENV['FACEBOOK_APP_SECRET']
-    if !ENV['FACEBOOK_USER_LOGIN']
-      fail "ERROR: Need FACEBOOK_USER_LOGIN - hint FACEBOOK_USER_LOGIN='1234'"
+    app_secret = ENV['FACEBOOK_BT_APP_SECRET']
+    if !ENV['FACEBOOK_BT_USER_LOGIN']
+      fail "ERROR: Need FACEBOOK_BT_USER_LOGIN - hint FACEBOOK_BT_USER_LOGIN='1234'"
     end
-    user_login = ENV['FACEBOOK_USER_LOGIN']
-    if !ENV['FACEBOOK_USER_PW']
-      fail "ERROR: Need FACEBOOK_USER_PW - hint FACEBOOK_USER_PW='1234'"
+    user_login = ENV['FACEBOOK_BT_USER_LOGIN']
+    if !ENV['FACEBOOK_BT_USER_PW']
+      fail "ERROR: Need FACEBOOK_BT_USER_PW - hint FACEBOOK_BT_USER_PW='1234'"
     end
-    user_pw = ENV['FACEBOOK_USER_PW']
+    user_pw = ENV['FACEBOOK_BT_USER_PW']
+    if !ENV['FACEBOOK_BT_PAGE_ID']
+      fail "ERROR: Need FACEBOOK_BT_PAGE_ID - hint FACEBOOK_BT_PAGE_ID='1234'"
+    end
+    page_id = ENV['FACEBOOK_BT_PAGE_ID']
+
+    if !ENV['FACEBOOK_BT_CUSTOMER']
+      fail "ERROR: Need FACEBOOK_BT_CUSTOMER - hint FACEBOOK_BT_CUSTOMER='name:1234:access_token'"
+    end
+    customer_name = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[0]
+    customer_id = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[1]
+    customer_access_token = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[2]
 
     @browser = browser_instance
     login(
@@ -129,7 +140,9 @@ class FacebookBrowserTest < TestCase
       value: 'Dashboard',
     )
 
-    click(css: '#content .modal .js-close')
+    select(css: '#content .modal [name="pages::' + page_id + '::group_id"]', value: 'Users')
+    click(css: '#content .modal .js-submit')
+    sleep 5
 
     watch_for(
       css: '#content',
@@ -164,6 +177,50 @@ class FacebookBrowserTest < TestCase
     )
     exists_not(
       css: '#content .main .action:nth-child(2)'
+    )
+    sleep 50
+
+    # post new posting
+    hash = "##{rand(999_999)}"
+    customer_client = Koala::Facebook::API.new(customer_access_token)
+    message         = "I need some help for your product #{hash}"
+    post            = customer_client.put_wall_post(message, {}, page_id)
+
+    # watch till post is in app
+    click( text: 'Overviews' )
+
+    # enable full overviews
+    execute(
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
+    click( text: 'Unassigned & Open' )
+    sleep 6 # till overview is rendered
+
+    watch_for(
+      css: '.content.active',
+      value: hash,
+      timeout: 40,
+    )
+
+    ticket_open_by_title(
+      title: hash,
+    )
+    click( css: '.content.active [data-type="facebookFeedReply"]' )
+    sleep 2
+
+    re_hash = "#{hash}re#{rand(99_999)}"
+
+    ticket_update(
+      data: {
+        body: "You need to do this #{re_hash} #{rand(999_999)}",
+      },
+    )
+    sleep 20
+
+    match(
+      css: '.content.active .ticket-article',
+      value: re_hash,
     )
 
   end
