@@ -58,6 +58,11 @@
           if (!id) {
             id = _this.$widget.find('.dropdown-menu li:hover a').data('id')
           }
+
+          // as fallback first element
+          if (!id) {
+            id = _this.$widget.find('.dropdown-menu li:first-child a').data('id')
+          }
           _this.take(id)
           return
         }
