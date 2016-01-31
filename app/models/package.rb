@@ -1,47 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-require 'rexml/document'
 class Package < ApplicationModel
   @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
-
-  # build package based on .szpm
-  # Package.build(
-  #   file:   'package.szpm',
-  #   root:   '/path/to/src/extention/',
-  #   output: '/path/to/package_location/'
-  # )
-  def self.build(data)
-
-    if data[:file]
-      xml     = _read_file(data[:file], data[:root] || true)
-      package = _parse(xml)
-    elsif data[:string]
-      package = _parse(data[:string])
-    end
-
-    build_date = REXML::Element.new('build_date')
-    build_date.text = Time.zone.now.iso8601
-    build_host = REXML::Element.new('build_host')
-    build_host.text = Socket.gethostname
-
-    package.root.insert_after('//zpm/description', build_date)
-    package.root.insert_after('//zpm/description', build_host)
-    package.elements.each('zpm/filelist/file') do |element|
-      location = element.attributes['location']
-      content = _read_file(location, data[:root])
-      base64  = Base64.encode64(content)
-      element.text = base64
-    end
-    if data[:output]
-      location = "#{data[:output]}/#{package.elements['zpm/name'].text}-#{package.elements['zpm/version'].text}.zpm"
-      logger.info "NOTICE: writting package to '#{location}'"
-      file = File.new(location, 'wb')
-      file.write(package.to_s)
-      file.close
-      return true
-    end
-    package.to_s
-  end
 
   # Package.auto_install
   # install all packages located under auto_install/*.zpm
@@ -178,17 +138,17 @@ class Package < ApplicationModel
   # Package.install(string: zpm_as_string)
   def self.install(data)
     if data[:file]
-      xml     = _read_file(data[:file], true)
-      package = _parse(xml)
+      json    = _read_file(data[:file], true)
+      package = JSON.parse(json)
     elsif data[:string]
-      package = _parse(data[:string])
+      package = JSON.parse(data[:string])
     end
 
     # package meta data
     meta = {
-      name: package.elements['zpm/name'].text,
-      version: package.elements['zpm/version'].text,
-      vendor: package.elements['zpm/vendor'].text,
+      name: package['name'],
+      version: package['version'],
+      vendor: package['vendor'],
       state: 'uninstalled',
       created_by_id: 1,
       updated_by_id: 1,
@@ -220,7 +180,7 @@ class Package < ApplicationModel
       Store.add(
         object: 'Package',
         o_id: record.id,
-        data: package.to_s,
+        data: package.to_json,
         filename: "#{meta[:name]}-#{meta[:version]}.zpm",
         preferences: {},
         created_by_id: UserInfo.current_user_id || 1,
@@ -228,13 +188,11 @@ class Package < ApplicationModel
     end
 
     # write files
-    package.elements.each('zpm/filelist/file') do |element|
-      location   = element.attributes['location']
-      permission = element.attributes['permission'] || '644'
-      base64     = element.text
-      content    = Base64.decode64(base64)
-      content    = _write_file(location, permission, content)
-    end
+    package['files'].each { |file|
+      permission = file['permission'] || '644'
+      content    = Base64.decode64(file['content'])
+      _write_file(file['location'], permission, content)
+    }
 
     # update package state
     record.state = 'installed'
@@ -264,53 +222,31 @@ class Package < ApplicationModel
   def self.uninstall(data)
 
     if data[:string]
-      package = _parse(data[:string])
+      package = JSON.parse(data[:string])
     else
-      file    = _get_bin(data[:name], data[:version])
-      package = _parse(file)
+      json_file = _get_bin(data[:name], data[:version])
+      package   = JSON.parse(json_file)
     end
-
-    # package meta data
-    meta = {
-      name: package.elements['zpm/name'].text,
-      version: package.elements['zpm/version'].text,
-    }
 
     # down migrations
     if !data[:migration_not_down]
-      Package::Migration.migrate(meta[:name], 'reverse')
+      Package::Migration.migrate(package['name'], 'reverse')
     end
 
-    package.elements.each('zpm/filelist/file') do |element|
-      location   = element.attributes['location']
-      permission = element.attributes['permission'] || '644'
-      base64     = element.text
-      content    = Base64.decode64(base64)
-      content    = _delete_file(location, permission, content)
-    end
-
-    # prebuild assets
+    package['files'].each { |file|
+      permission = file['permission'] || '644'
+      content    = Base64.decode64(file['content'])
+      _delete_file(file['location'], permission, content)
+    }
 
     # delete package
     record = Package.find_by(
-      name: meta[:name],
-      version: meta[:version],
+      name: package['name'],
+      version: package['version'],
     )
     record.destroy
 
     true
-  end
-
-  def self._parse(xml)
-    logger.debug xml.inspect
-    begin
-      package = REXML::Document.new(xml)
-    rescue => e
-      logger.error 'ERROR: ' + e.inspect
-      return
-    end
-    logger.debug package.inspect
-    package
   end
 
   def self._get_bin(name, version)
@@ -470,7 +406,6 @@ class Package < ApplicationModel
           Kernel.const_get(classname).up
           Package::Migration.create(name: package.underscore, version: version)
         end
-
       }
     end
   end
