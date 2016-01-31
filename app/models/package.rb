@@ -435,7 +435,7 @@ returns
       file = File.new(location, 'wb')
       file.write(data)
       file.close
-      File.chmod(permission.to_i(8), location)
+      File.chmod(permission.to_s.to_i(8), location)
     rescue => e
       raise 'ERROR: ' + e.inspect
     end
