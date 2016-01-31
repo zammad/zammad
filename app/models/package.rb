@@ -403,8 +403,13 @@ returns
   def self._write_file(file, permission, data)
     location = "#{@@root}/#{file}"
 
-    # rename existing file
+    # rename existing file if not already the same file
     if File.exist?(location)
+      content_fs = _read_file(file)
+      if content_fs == data
+        logger.debug "NOTICE: file '#{location}' already exists, skip install"
+        return true
+      end
       backup_location = location + '.save'
       logger.info "NOTICE: backup old file '#{location}' to #{backup_location}"
       File.rename(location, backup_location)
