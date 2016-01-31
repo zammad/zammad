@@ -7,25 +7,36 @@ class PackageTest < ActiveSupport::TestCase
 
       # test 1 - normal install
       {
-        zpm: '<?xml version="1.0"?>
-<zpm version="1.0">
-  <name>UnitTestSample</name>
-  <version>1.0.1</version>
-  <vendor>Znuny GmbH</vendor>
-  <url>http://znuny.org/</url>
-  <license>ABC</license>
-  <description lang="en">some description</description>
-  <filelist>
-    <file permission="644" location="test.txt">YWJjw6TDtsO8w58=</file>
-    <file permission="644" location="some/dir/test.txt">YWJjw6TDtsO8w58=</file>
-    <file permission="644" location="db/addon/unit_test_sample/20121212000001_create_base.rb">Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw
-DQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6
-bmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog
-ICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6
-bnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w
-X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
-  </filelist>
-</zpm>',
+        zpm: '{
+  "name": "UnitTestSample",
+  "version": "1.0.1",
+  "vendor": "Znuny GmbH",
+  "license": "ABC",
+  "url": "http://znuny.org/",
+  "description": [
+    {
+      "language": "en",
+      "text": "some description"
+    }
+  ],
+  "files": [
+    {
+      "permission": "644",
+      "location": "test.txt",
+      "content": "YWJjw6TDtsO8w58="
+    },
+    {
+      "permission": "644",
+      "location": "some/dir/test.txt",
+      "content": "YWJjw6TDtsO8w58="
+    },
+    {
+      "permission": "644",
+      "location": "db/addon/unit_test_sample/20121212000001_create_base.rb",
+      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw\nDQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6\nbmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog\nICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6\nbnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w\nX3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k"
+    }
+  ]
+}',
         action: 'install',
         result: true,
         verify: {
@@ -52,61 +63,88 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
 
       # test 2 - try to install same package again / should not work
       {
-        zpm: '<?xml version="1.0"?>
-<zpm version="1.0">
-  <name>UnitTestSample</name>
-  <version>1.0.1</version>
-  <vendor>Znuny GmbH</vendor>
-  <url>http://znuny.org/</url>
-  <license>ABC</license>
-  <description lang="en">some description</description>
-  <filelist>
-    <file permission="644" location="test.txt">YWJjw6TDtsO8w58=</file>
-  </filelist>
-</zpm>',
+        zpm: '{
+  "name": "UnitTestSample",
+  "version": "1.0.1",
+  "vendor": "Znuny GmbH",
+  "license": "ABC",
+  "url": "http://znuny.org/",
+  "description": [
+    {
+      "language": "en",
+      "text": "some description"
+    }
+  ],
+  "files": [
+    {
+      "permission": "644",
+      "location": "test.txt",
+      "content": "YWJjw6TDtsO8w58="
+    }
+  ]
+}',
         action: 'install',
         result: false,
       },
 
       # test 3 - try to install lower version / should not work
       {
-        zpm: '<?xml version="1.0"?>
-<zpm version="1.0">
-  <name>UnitTestSample</name>
-  <version>1.0.0</version>
-  <vendor>Znuny GmbH</vendor>
-  <url>http://znuny.org/</url>
-  <license>ABC</license>
-  <description lang="en">some description</description>
-  <filelist>
-    <file permission="644" location="test.txt">YWJjw6TDtsO8w58=</file>
-  </filelist>
-</zpm>',
+        zpm: '{
+  "name": "UnitTestSample",
+  "version": "1.0.0",
+  "vendor": "Znuny GmbH",
+  "license": "ABC",
+  "url": "http://znuny.org/",
+  "description": [
+    {
+      "language": "en",
+      "text": "some description"
+    }
+  ],
+  "files": [
+    {
+      "permission": "644",
+      "location": "test.txt",
+      "content": "YWJjw6TDtsO8w58="
+    }
+  ]
+}',
         action: 'install',
         result: false,
       },
 
       # test 4 - upgrade 7 should work
       {
-        zpm: '<?xml version="1.0"?>
-<zpm version="1.0">
-  <name>UnitTestSample</name>
-  <version>1.0.2</version>
-  <vendor>Znuny GmbH</vendor>
-  <url>http://znuny.org/</url>
-  <license>ABC</license>
-  <description lang="en">some description</description>
-  <filelist>
-    <file permission="644" location="test.txt2">YWJjw6TDtsO8w58=</file>
-    <file permission="644" location="some/dir/test.txt2">YWJjw6TDtsO8w58=</file>
-    <file permission="644" location="db/addon/unit_test_sample/20121212000001_create_base.rb">Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw
-DQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6
-bmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog
-ICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6
-bnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w
-X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
-  </filelist>
-</zpm>',
+        zpm: '{
+  "name": "UnitTestSample",
+  "version": "1.0.2",
+  "vendor": "Znuny GmbH",
+  "license": "ABC",
+  "url": "http://znuny.org/",
+  "description": [
+    {
+      "language": "en",
+      "text": "some description"
+    }
+  ],
+  "files": [
+    {
+      "permission": "644",
+      "location": "test.txt2",
+      "content": "YWJjw6TDtsO8w58="
+    },
+    {
+      "permission": "644",
+      "location": "some/dir/test.txt2",
+      "content": "YWJjw6TDtsO8w58="
+    },
+    {
+      "permission": "644",
+      "location": "db/addon/unit_test_sample/20121212000001_create_base.rb",
+      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw\nDQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6\nbmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog\nICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6\nbnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w\nX3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k"
+    }
+  ]
+}',
         action: 'install',
         result: true,
         verify: {
@@ -157,25 +195,36 @@ X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
 
       # test 5 - check auto_install mechanism
       {
-        zpm: '<?xml version="1.0"?>
-<zpm version="1.0">
-  <name>UnitTestSample</name>
-  <version>1.0.2</version>
-  <vendor>Znuny GmbH</vendor>
-  <url>http://znuny.org/</url>
-  <license>ABC</license>
-  <description lang="en">some description</description>
-  <filelist>
-    <file permission="644" location="test.txt2">YWJjw6TDtsO8w58=</file>
-    <file permission="644" location="some/dir/test.txt2">YWJjw6TDtsO8w58=</file>
-    <file permission="644" location="db/addon/unit_test_sample/20121212000001_create_base.rb">Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw
-DQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6
-bmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog
-ICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6
-bnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w
-X3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k</file>
-  </filelist>
-</zpm>',
+        zpm: '{
+  "name": "UnitTestSample",
+  "version": "1.0.2",
+  "vendor": "Znuny GmbH",
+  "license": "ABC",
+  "url": "http://znuny.org/",
+  "description": [
+    {
+      "language": "en",
+      "text": "some description"
+    }
+  ],
+  "files": [
+    {
+      "permission": "644",
+      "location": "test.txt2",
+      "content": "YWJjw6TDtsO8w58="
+    },
+    {
+      "permission": "644",
+      "location": "some/dir/test.txt2",
+      "content": "YWJjw6TDtsO8w58="
+    },
+    {
+      "permission": "644",
+      "location": "db/addon/unit_test_sample/20121212000001_create_base.rb",
+      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw\nDQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6\nbmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog\nICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6\nbnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w\nX3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k"
+    }
+  ]
+}',
         action: 'auto_install',
         result: true,
         verify: {
