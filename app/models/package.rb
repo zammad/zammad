@@ -3,8 +3,59 @@
 class Package < ApplicationModel
   @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
 
-  # Package.auto_install
-  # install all packages located under auto_install/*.zpm
+=begin
+
+verify if package is installed correctly
+
+  package = Package.find(123)
+
+  issues = package.verify
+
+returns:
+
+    # if no issue exists
+    nil
+
+    # list of issues
+    {
+      'path/to/file' => 'missing',
+      'path/to/file' => 'changed',
+    }
+
+=end
+
+  def verify
+
+    # get package
+    json_file = self.class._get_bin(name, version)
+    package   = JSON.parse(json_file)
+
+    # verify installed files
+    issues = {}
+    package['files'].each { |file|
+      if !File.exist?(file['location'])
+        logger.error "File #{file['location']} is missing"
+        issues[file['location']] = 'missing'
+        next
+      end
+      content_package = Base64.decode64(file['content'])
+      content_fs      = self.class._read_file(file['location'])
+      next if content_package == content_fs
+      logger.error "File #{file['location']} is different"
+      issues[file['location']] = 'changed'
+    }
+    return nil if issues.empty?
+    issues
+  end
+
+=begin
+
+install all packages located under auto_install/*.zpm
+
+  Package.auto_install
+
+=end
+
   def self.auto_install
     path = "#{@@root}/auto_install/"
     return if !File.exist?(path)
@@ -20,9 +71,16 @@ class Package < ApplicationModel
     data
   end
 
-  # Package.unlink_all
-  # remove all linked files in application
-  # note: will not take down package migrations, use Package.unlink instead
+=begin
+
+remove all linked files in application
+
+note: will not take down package migrations, use Package.unlink instead
+
+  Package.unlink_all
+
+=end
+
   def self.unlink_all
     # link files
     Dir.glob("#{@@root}/**/*") do |entry|
@@ -51,8 +109,14 @@ class Package < ApplicationModel
     package
   end
 
-  # Package.unlink('/path/to/src/extention')
-  # execute migration down + unlink files
+=begin
+
+execute migration down + unlink files
+
+  Package.unlink('/path/to/src/extention')
+
+=end
+
   def self.unlink(package_base_dir)
 
     # check if zpm is a package source repo
@@ -81,8 +145,14 @@ class Package < ApplicationModel
     end
   end
 
-  # Package.link('/path/to/src/extention')
-  # link files + execute migration up
+=begin
+
+link files + execute migration up
+
+  Package.link('/path/to/src/extention')
+
+=end
+
   def self.link(package_base_dir)
 
     # check if zpm is a package source repo
@@ -134,8 +204,22 @@ class Package < ApplicationModel
     Package::Migration.migrate(package)
   end
 
-  # Package.install(file: '/path/to/package.zpm')
-  # Package.install(string: zpm_as_string)
+=begin
+
+install zpm package
+
+  package = Package.install(file: '/path/to/package.zpm')
+
+or
+
+  package = Package.install(string: zpm_as_string)
+
+returns
+
+  package # record of new created packae
+
+=end
+
   def self.install(data)
     if data[:file]
       json    = _read_file(data[:file], true)
@@ -203,10 +287,21 @@ class Package < ApplicationModel
 
     # prebuild assets
 
-    true
+    record
   end
 
-  # Package.reinstall(package_name)
+=begin
+
+reinstall package
+
+  package = Package.reinstall(package_name)
+
+returns
+
+  package # record of new created packae
+
+=end
+
   def self.reinstall(package_name)
     package = Package.find_by(name: package_name)
     if !package
@@ -215,10 +310,25 @@ class Package < ApplicationModel
 
     file = _get_bin(package.name, package.version)
     install(string: file, reinstall: true)
+    package
   end
 
-  # Package.uninstall(name: 'package', version: '0.1.1')
-  # Package.uninstall(string: zpm_as_string)
+=begin
+
+uninstall package
+
+  package = Package.uninstall(name: 'package', version: '0.1.1')
+
+or
+
+  package = Package.uninstall(string: zpm_as_string)
+
+returns
+
+  package # record of new created packae
+
+=end
+
   def self.uninstall(data)
 
     if data[:string]
@@ -246,7 +356,7 @@ class Package < ApplicationModel
     )
     record.destroy
 
-    true
+    record
   end
 
   def self._get_bin(name, version)

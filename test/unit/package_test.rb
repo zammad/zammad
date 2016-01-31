@@ -277,34 +277,35 @@ class PackageTest < ActiveSupport::TestCase
     tests.each { |test|
       if test[:action] == 'install'
         begin
-          success = Package.install( string: test[:zpm] )
+          package = Package.install( string: test[:zpm] )
         rescue => e
           puts 'ERROR: ' + e.inspect
-          success = false
         end
         if test[:result]
-          assert( success, 'install package not successful' )
+          assert( package, 'install package not successful' )
+          issues = package.verify
+          assert( !issues, 'package verify not successful' )
         else
-          assert( !success, 'install package successful but should not' )
+          assert( !package, 'install package successful but should not' )
         end
       elsif test[:action] == 'uninstall'
         if test[:zpm]
           begin
-            success = Package.uninstall( string: test[:zpm] )
+            package = Package.uninstall( string: test[:zpm] )
           rescue
-            success = false
+            package = false
           end
         else
           begin
-            success = Package.uninstall( name: test[:name], version: test[:version] )
+            package = Package.uninstall( name: test[:name], version: test[:version] )
           rescue
-            success = false
+            package = false
           end
         end
         if test[:result]
-          assert( success, 'uninstall package not successful' )
+          assert( package, 'uninstall package not successful' )
         else
-          assert( !success, 'uninstall package successful but should not' )
+          assert( !package, 'uninstall package successful but should not' )
         end
       elsif test[:action] == 'auto_install'
         if test[:zpm]
