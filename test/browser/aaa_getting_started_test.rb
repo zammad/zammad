@@ -12,6 +12,10 @@ class AaaGettingStartedTest < TestCase
     mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
     mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
 
+    fqdn = Setting.get('fqdn')
+    http_type = Setting.get('http_type')
+    url = "#{http_type}://#{fqdn}"
+
     @browser = browser_instance
     location( url: browser_url )
     watch_for(
@@ -71,7 +75,7 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css: '.js-base input[name="url"]',
-      value: 'http://localhost:3333',
+      value: url,
     )
     click(
       css: '.js-base .btn--primary',
