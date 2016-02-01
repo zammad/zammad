@@ -61,7 +61,34 @@ class PackageTest < ActiveSupport::TestCase
         },
       },
 
-      # test 2 - try to install same package again / should not work
+      # test 2 - renstall
+      {
+        action: 'reinstall',
+        name: 'UnitTestSample',
+        result: true,
+        verify: {
+          package: {
+            name: 'UnitTestSample',
+            version: '1.0.1',
+          },
+          check_files: [
+            {
+              location: 'test.txt',
+              result: true,
+            },
+            {
+              location: 'test2.txt',
+              result: false,
+            },
+            {
+              location: 'some/dir/test.txt',
+              result: true,
+            },
+          ],
+        },
+      },
+
+      # test 3 - try to install same package again / should not work
       {
         zpm: '{
   "name": "UnitTestSample",
@@ -87,7 +114,7 @@ class PackageTest < ActiveSupport::TestCase
         result: false,
       },
 
-      # test 3 - try to install lower version / should not work
+      # test 4 - try to install lower version / should not work
       {
         zpm: '{
   "name": "UnitTestSample",
@@ -113,7 +140,7 @@ class PackageTest < ActiveSupport::TestCase
         result: false,
       },
 
-      # test 4 - upgrade 7 should work
+      # test 5 - upgrade 7 should work
       {
         zpm: '{
   "name": "UnitTestSample",
@@ -173,7 +200,7 @@ class PackageTest < ActiveSupport::TestCase
         },
       },
 
-      # test 4 - uninstall package / should work
+      # test 6 - uninstall package / should work
       {
         name: 'UnitTestSample',
         version: '1.0.2',
@@ -193,7 +220,7 @@ class PackageTest < ActiveSupport::TestCase
         },
       },
 
-      # test 5 - check auto_install mechanism
+      # test 7 - check auto_install mechanism
       {
         zpm: '{
   "name": "UnitTestSample",
@@ -253,7 +280,7 @@ class PackageTest < ActiveSupport::TestCase
         },
       },
 
-      # test 6 - check uninstall / should work
+      # test 8 - check uninstall / should work
       {
         name: 'UnitTestSample',
         version: '1.0.2',
@@ -287,6 +314,19 @@ class PackageTest < ActiveSupport::TestCase
           assert( !issues, 'package verify not successful' )
         else
           assert( !package, 'install package successful but should not' )
+        end
+      elsif test[:action] == 'reinstall'
+        begin
+          package = Package.reinstall( test[:name] )
+        rescue
+          package = false
+        end
+        if test[:result]
+          assert( package, 'reinstall package not successful' )
+          issues = package.verify
+          assert( !issues, 'package verify not successful' )
+        else
+          assert( !package, 'reinstall package successful but should not' )
         end
       elsif test[:action] == 'uninstall'
         if test[:zpm]

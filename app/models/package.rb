@@ -255,15 +255,16 @@ returns
         name: package_db.name,
         version: package_db.version,
         migration_not_down: true,
+        reinstall: data[:reinstall],
       )
     end
 
     # store package
-    record = Package.create(meta)
     if !data[:reinstall]
+      package_db = Package.create(meta)
       Store.add(
         object: 'Package',
-        o_id: record.id,
+        o_id: package_db.id,
         data: package.to_json,
         filename: "#{meta[:name]}-#{meta[:version]}.zpm",
         preferences: {},
@@ -279,15 +280,15 @@ returns
     }
 
     # update package state
-    record.state = 'installed'
-    record.save
+    package_db.state = 'installed'
+    package_db.save
 
     # up migrations
     Package::Migration.migrate(meta[:name])
 
     # prebuild assets
 
-    record
+    package_db
   end
 
 =begin
@@ -307,7 +308,6 @@ returns
     if !package
       fail "No such package '#{package_name}'"
     end
-
     file = _get_bin(package.name, package.version)
     install(string: file, reinstall: true)
     package
@@ -350,11 +350,13 @@ returns
     }
 
     # delete package
-    record = Package.find_by(
-      name: package['name'],
-      version: package['version'],
-    )
-    record.destroy
+    if !data[:reinstall]
+      record = Package.find_by(
+        name: package['name'],
+        version: package['version'],
+      )
+      record.destroy
+    end
 
     record
   end
