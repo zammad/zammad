@@ -80,6 +80,7 @@ GEM
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
     diffy (3.1.0)
+    dnsruby (1.59.1)
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -91,6 +92,8 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
+    email_verifier (0.1.0)
+      dnsruby (>= 1.5)
     equalizer (0.0.10)
     erubis (2.7.0)
     eventmachine (1.0.9.1)
@@ -333,6 +336,7 @@ DEPENDENCIES
   diffy
   eco
   em-websocket
+  email_verifier
   eventmachine
   execjs
   guard (>= 2.2.2)

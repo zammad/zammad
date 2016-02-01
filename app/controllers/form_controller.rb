@@ -43,6 +43,19 @@ class FormController < ApplicationController
       errors['body'] = 'required'
     end
 
+    # realtime verify
+    if !errors['email']
+      begin
+        checker = EmailVerifier::Checker.new(params[:email])
+        checker.connect
+        if !checker.verify
+          errors['email'] = "Unable to send to '#{params[:email]}'"
+        end
+      rescue => e
+        errors['email'] = e.to_s
+      end
+    end
+
     if errors && !errors.empty?
       render json: {
         errors: errors
@@ -55,7 +68,7 @@ class FormController < ApplicationController
 
     customer = User.find_by(email: email)
     if !customer
-      roles = Role.where( name: 'Customer' )
+      roles = Role.where(name: 'Customer')
       customer = User.create(
         firstname: name,
         lastname: '',
@@ -72,16 +85,16 @@ class FormController < ApplicationController
       group_id: 1,
       customer_id: customer.id,
       title: params[:title],
-      state_id: Ticket::State.find_by( name: 'new' ).id,
-      priority_id: Ticket::Priority.find_by( name: '2 normal' ).id,
+      state_id: Ticket::State.find_by(name: 'new').id,
+      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
 
     article = Ticket::Article.create(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.find_by( name: 'web' ).id,
-      sender_id: Ticket::Article::Sender.find_by( name: 'Customer' ).id,
+      type_id: Ticket::Article::Type.find_by(name: 'web').id,
+      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
       body: params[:body],
       from: email,
       subject: params[:title],

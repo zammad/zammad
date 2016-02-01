@@ -37,6 +37,7 @@ gem 'zendesk_api'
 gem 'twitter'
 gem 'koala'
 gem 'mail'
+gem 'email_verifier'
 
 gem 'mime-types'
 
