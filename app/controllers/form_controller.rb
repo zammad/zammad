@@ -33,7 +33,7 @@ class FormController < ApplicationController
     if params[:email] !~ /@/
       errors['email'] = 'invalid'
     end
-    if params[:email] =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?)/
+    if params[:email] =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
       errors['email'] = 'invalid'
     end
     if !params[:title] || params[:title].empty?
@@ -52,7 +52,13 @@ class FormController < ApplicationController
           errors['email'] = "Unable to send to '#{params[:email]}'"
         end
       rescue => e
-        errors['email'] = e.to_s
+        message = e.to_s
+        Rails.logger.info "Can't verify email #{params[:email]}: #{message}"
+
+        # ignore 450, graylistings
+        if message !~ /450/
+          errors['email'] = message
+        end
       end
     end
 
