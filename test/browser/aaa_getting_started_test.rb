@@ -12,9 +12,11 @@ class AaaGettingStartedTest < TestCase
     mailbox_user     = ENV['MAILBOX_INIT'].split(':')[0]
     mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
 
-    fqdn = Setting.get('fqdn')
-    http_type = Setting.get('http_type')
-    url = "#{http_type}://#{fqdn}"
+    url = if ENV['BROWSER_URL']
+            ENV['BROWSER_URL']
+          else
+            'http://localhost:3000'
+          end
 
     @browser = browser_instance
     location( url: browser_url )
