@@ -5503,7 +5503,7 @@ footer {
     color: hsl(198,19%,72%);
   }
 
-  .dropdown-menu.dropdown-menu--light > li > a {
+  .dropdown-menu.dropdown-menu--light > li {
     color: hsl(202,70%,49%);
   }
 
@@ -5512,9 +5512,11 @@ footer {
     background: rgba(0,0,0,.05);
   }
 
-  .dropdown-menu.dropdown-menu--light li:hover,
-  .dropdown-menu.dropdown-menu--light li.is-active {
+  .dropdown-menu.dropdown-menu--light li:hover {
     background: none;
+  }
+  .dropdown-menu.dropdown-menu--light li.is-active {
+    color: white;
   }
 
   .dropdown ul {

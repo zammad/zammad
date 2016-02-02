@@ -16,7 +16,7 @@
         <% if item.navheader: %>
           <li class="dropdown-header"><%- @T( item.navheader ) %></li>
         <% end %>
-        <li class="<% if @active_tab[item.target] : %>active<% end %>"><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %></a></li>
+        <li<%- ' class="is-active"' if @active_tab[item.target] %>><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %></a></li>
       <% end %>
     </ul>
   </div>
