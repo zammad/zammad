@@ -54,7 +54,7 @@
         // enter
         if ( e.keyCode === 13 ) {
           e.preventDefault()
-          var id = _this.$widget.find('.dropdown-menu li.active a').data('id')
+          var id = _this.$widget.find('.dropdown-menu li.is-active a').data('id')
 
           // as fallback use hovered element
           if (!id) {
@@ -78,16 +78,16 @@
         // up
         if ( e.keyCode === 38 ) {
           e.preventDefault()
-          if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
-            var top = _this.$widget.find('.dropdown-menu li').last().addClass('active').position().top
+          if ( !_this.$widget.find('.dropdown-menu li.is-active')[0] ) {
+            var top = _this.$widget.find('.dropdown-menu li').last().addClass('is-active').position().top
             _this.$widget.find('.dropdown-menu').scrollTop( top );
             return
           }
           else {
-            var prev = _this.$widget.find('.dropdown-menu li.active').removeClass('active').prev()
+            var prev = _this.$widget.find('.dropdown-menu li.is-active').removeClass('is-active').prev()
             var top = 300
             if ( prev[0] ) {
-              top = prev.addClass('active').position().top
+              top = prev.addClass('is-active').position().top
             }
             _this.$widget.find('.dropdown-menu').scrollTop( top );
             return
@@ -97,16 +97,16 @@
         // down
         if ( e.keyCode === 40 ) {
           e.preventDefault()
-          if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
-            var top = _this.$widget.find('.dropdown-menu li').first().addClass('active').position().top
+          if ( !_this.$widget.find('.dropdown-menu li.is-active')[0] ) {
+            var top = _this.$widget.find('.dropdown-menu li').first().addClass('is-active').position().top
             _this.$widget.find('.dropdown-menu').scrollTop( top );
             return
           }
           else {
-            var next = _this.$widget.find('.dropdown-menu li.active').removeClass('active').next()
+            var next = _this.$widget.find('.dropdown-menu li.is-active').removeClass('is-active').next()
             var top = 300
             if ( next[0] ) {
-              top = next.addClass('active').position().top
+              top = next.addClass('is-active').position().top
             }
             _this.$widget.find('.dropdown-menu').scrollTop( top );
             return
@@ -384,13 +384,13 @@
       template = template + "</a></li>"
       var element = $(template)
       if (i == 0) {
-        element.addClass('active')
+        element.addClass('is-active')
       }
       this.$widget.find('ul').append(element)
     }
-    if ( !result[0] ) {
-      this.$widget.find('ul').append("<li><a href='#'>-</a></li>")
-    }
+    // if ( !result[0] ) {
+    //   this.$widget.find('ul').append("<li><a href='#'>-</a></li>")
+    // }
     this.$widget.find('ul li').on(
       'click',
       function(e) {
