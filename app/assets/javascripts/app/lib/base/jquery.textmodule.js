@@ -262,7 +262,7 @@
 
   // paste some content
   Plugin.prototype.paste = function(string) {
-    string = App.Utils.text2html(string) + '<br>'
+    string = App.Utils.text2html(string)
     if (document.selection) { // IE
       var range = document.selection.createRange()
       range.pasteHTML(string)
@@ -396,6 +396,9 @@
       element.addClass('u-clickable u-textTruncate')
       if (i == result.length-1) {
         element.addClass('is-active')
+      }
+      if (item.keywords) {
+        element.append($('<kbd>').text(App.Utils.htmlEscape(item.keywords)))
       }
       this.$widget.find('ul').append(element)
     }

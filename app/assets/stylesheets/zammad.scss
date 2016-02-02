@@ -5486,6 +5486,16 @@ footer {
   overflow: hidden;
 }
 
+  .dropdown-menu kbd {
+    background: none;
+    color: inherit;
+    padding: 2px 5px;
+    margin-left: 7px;
+    line-height: 1;
+    vertical-align: baseline;
+    opacity: 0.5;
+  }
+
   .dropdown-toggle {
     display: flex;
     align-items: center;
