@@ -185,7 +185,7 @@ class TwitterTest < ActiveSupport::TestCase
     )
 
     # fetch check system account
-    sleep 15
+    sleep 20
     article = nil
     (1..3).each {
       Channel.fetch
@@ -193,7 +193,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 15
+      sleep 20
     }
     assert(article)
     assert_equal('@me_bauer', article.from, 'ticket article from')

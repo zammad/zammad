@@ -145,6 +145,7 @@ class FormTest < TestCase
       browser: customer,
       css: 'body div.modal .js-close',
     )
+    sleep 1
     exists_not(
       browser: customer,
       css: 'body div.modal',
@@ -246,6 +247,7 @@ class FormTest < TestCase
       browser: customer,
       css: 'body div.modal .js-close',
     )
+    sleep 1
     exists_not(
       browser: customer,
       css: 'body div.modal',
