@@ -47,7 +47,7 @@ class AgentTicketActionLevel0Test < TestCase
       value: :arrow_down,
       slow: true,
     )
-    click( css: '.active .shortcut > ul> li > a' )
+    click( css: '.active .shortcut > ul> li' )
 
     watch_for(
       css: '.active div[data-name=body]',
@@ -134,7 +134,7 @@ class AgentTicketActionLevel0Test < TestCase
     )
     click(
       browser: browser2,
-      css: '.active .shortcut > ul> li > a',
+      css: '.active .shortcut > ul> li',
     )
 
     watch_for(
@@ -161,7 +161,7 @@ class AgentTicketActionLevel0Test < TestCase
     )
     click(
       browser: browser2,
-      css: '.active .shortcut > ul> li > a',
+      css: '.active .shortcut > ul> li',
     )
     watch_for(
       browser: browser2,
@@ -205,7 +205,7 @@ class AgentTicketActionLevel0Test < TestCase
     sleep 1
     click(
       browser: browser2,
-      css: '.active .shortcut > ul> li > a',
+      css: '.active .shortcut > ul> li',
     )
 
     watch_for(

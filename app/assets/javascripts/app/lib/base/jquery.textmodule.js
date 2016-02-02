@@ -237,6 +237,7 @@
     }
     this.buffer = ''
     this.active = false
+    this.$widget.remove()
     $(window).off('click.textmodule')
   }
 
@@ -367,7 +368,7 @@
     this.log('result', term, result)
 
     if (!result[0]) {
-      return this.close()
+      result = [{id:'', name: '-'}]
     }
 
     if (!this.active) {
@@ -382,7 +383,7 @@
       element.attr('data-id', item.id)
       element.text(App.Utils.htmlEscape(item.name))
       element.addClass('u-clickable u-textTruncate')
-      if (i == result.length-1) {
+      if (i == result.length-1 && item.id != '') {
         element.addClass('is-active')
       }
       if (item.keywords) {
@@ -390,7 +391,7 @@
       }
       elements = elements.add(element)
     }
-    
+
     this.$widget.find('ul').append(elements).scrollTop(9999)
     this.movePosition()
   }
