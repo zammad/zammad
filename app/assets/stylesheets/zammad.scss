@@ -4421,6 +4421,10 @@ footer {
   background: none;
 }
 
+.shortcut .dropdown-menu {
+  overflow: auto;
+}
+
 .editControls {
   position: absolute;
   left: 0;
