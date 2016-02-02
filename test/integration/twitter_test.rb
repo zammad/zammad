@@ -178,7 +178,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token_secret = me_bauer_token_secret
     end
 
-    hash  = '#citheo24 #' + rand(999_999).to_s
+    hash  = '#citheo24 #' + hash_gen
     text  = "Today... #{hash}"
     tweet = client.update(
       text,
@@ -195,13 +195,13 @@ class TwitterTest < ActiveSupport::TestCase
       break if article
       sleep 20
     }
-    assert(article)
+    assert(article, "Can't find tweet id #{tweet.id}")
     assert_equal('@me_bauer', article.from, 'ticket article from')
     assert_equal(nil, article.to, 'ticket article to')
     ticket = article.ticket
 
     # send reply
-    reply_text = '@me_bauer on my side #weather' + rand(999_999).to_s
+    reply_text = '@me_bauer on my side #weather' + hash_gen
     article = Ticket::Article.create(
       ticket_id:     ticket.id,
       body:          reply_text,
@@ -254,7 +254,7 @@ class TwitterTest < ActiveSupport::TestCase
     dms.each {|dm|
       client.destroy_direct_message(dm.id)
     }
-    hash  = '#citheo44' + rand(999_999).to_s
+    hash  = '#citheo44' + hash_gen
     text  = 'How about the details? ' + hash
     dm = client.create_direct_message(
       'armin_theo',
@@ -382,7 +382,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = me_bauer_token
       config.access_token_secret = me_bauer_token_secret
     end
-    hash  = '#citheo24 #' + rand(999_999).to_s
+    hash  = '#citheo24 #' + hash_gen
     text  = "Today... #{hash}"
     tweet = client.update(
       text,
@@ -448,6 +448,10 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal('@me_bauer', article.from, 'ticket article from')
     assert_equal('@armin_theo', article.to, 'ticket article to')
 
+  end
+
+  def hash_gen
+    rand(999).to_s + (0...10).map { ('a'..'z').to_a[rand(26)] }.join
   end
 
 end

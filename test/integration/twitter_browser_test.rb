@@ -34,7 +34,7 @@ class TwitterBrowserTest < TestCase
     end
     twitter_customer_token_secret = ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
 
-    hash = "#sweetcheck#{rand(999_999)}"
+    hash = "#sweetcheck#{hash_gen}"
 
     @browser = browser_instance
     login(
@@ -197,7 +197,7 @@ class TwitterBrowserTest < TestCase
       config.access_token_secret = twitter_customer_token_secret
     end
 
-    text  = "Today... #{hash} #{rand(999_999)}"
+    text  = "Today... #{hash} #{hash_gen}"
     tweet = client.update(
       text,
     )
@@ -271,6 +271,10 @@ class TwitterBrowserTest < TestCase
     }
     assert(text)
 
+  end
+
+  def hash_gen
+    (0...10).map { ('a'..'z').to_a[rand(26)] }.join + rand(999).to_s
   end
 
 end
