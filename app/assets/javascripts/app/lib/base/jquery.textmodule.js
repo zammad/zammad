@@ -187,21 +187,13 @@
 
     }).on('focus', function (e) {
       _this.close()
-    }).on('blur', function (e) {
-      // delay, to get click on text module before widget is closed
-      a = $.proxy(function() {
-        this.close()
-      }, _this)
-      setTimeout(a, 600);
     })
-
   };
 
   // create base template
   Plugin.prototype.baseTemplate = function() {
     this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"><li><a>-</a></li></ul></div>')
     this.$widget = this.$element.next()
-    console.log("element", this.$element);
   }
 
   // set height of widget
@@ -246,10 +238,8 @@
   Plugin.prototype.open = function() {
     this.active = true
     this.updatePosition()
-    b = $.proxy(function() {
-      this.$widget.addClass('open')
-    }, this)
-    setTimeout(b, 400);
+    this.$widget.addClass('open')
+    $(window).on('click.textmodule', $.proxy(this.close, this))
   }
 
   // close widget
@@ -260,6 +250,7 @@
     }
     this.buffer = ''
     this.active = false
+    $(window).off('click.textmodule')
   }
 
   // check if widget is active/open
