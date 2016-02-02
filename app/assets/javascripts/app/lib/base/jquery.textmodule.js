@@ -38,7 +38,7 @@
   }
 
   Plugin.prototype.init = function () {
-    this.baseTemplate()
+    this.renderBase()
     var _this = this
 
     this.$element.on('keydown', function (e) {
@@ -75,41 +75,29 @@
           return
         }
 
-        // up
-        if ( e.keyCode === 38 ) {
+        // up or down
+        if ( e.keyCode === 38 || e.keyCode === 40 ) {
           e.preventDefault()
-          if ( !_this.$widget.find('.dropdown-menu li.is-active')[0] ) {
-            var top = _this.$widget.find('.dropdown-menu li').last().addClass('is-active').position().top
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
-          }
-          else {
-            var prev = _this.$widget.find('.dropdown-menu li.is-active').removeClass('is-active').prev()
-            var top = 300
-            if ( prev[0] ) {
-              top = prev.addClass('is-active').position().top
-            }
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
-          }
-        }
+          var active = _this.$widget.find('.dropdown-menu li.is-active')
+          active.removeClass('is-active')
 
-        // down
-        if ( e.keyCode === 40 ) {
-          e.preventDefault()
-          if ( !_this.$widget.find('.dropdown-menu li.is-active')[0] ) {
-            var top = _this.$widget.find('.dropdown-menu li').first().addClass('is-active').position().top
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
+          if ( e.keyCode == 38 && active.prev().size() ) {
+            active = active.prev()
+          } else if ( e.keyCode == 40 && active.next().size() ) {
+            active = active.next()
           }
-          else {
-            var next = _this.$widget.find('.dropdown-menu li.is-active').removeClass('is-active').next()
-            var top = 300
-            if ( next[0] ) {
-              top = next.addClass('is-active').position().top
-            }
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
+
+          active.addClass('is-active')
+
+          var menu = _this.$widget.find('.dropdown-menu')
+
+          if ( active.position().top < 0 ) {
+            // scroll up
+            menu.scrollTop( menu.scrollTop() + active.position().top )
+          } else if ( active.position().top + active.height() > menu.height() ) {
+            // scroll down
+            var invisibleHeight = active.position().top + active.height() - menu.height()
+            menu.scrollTop( menu.scrollTop() + invisibleHeight )
           }
         }
 
@@ -174,15 +162,11 @@
         }
         _this.log('BUFF HINT', _this.buffer, _this.buffer.length, e.which, String.fromCharCode(e.which))
 
-        b = $.proxy(function() {
-          this.result( this.buffer.substr(2,this.buffer.length) )
-        }, _this)
-        setTimeout(b, 400);
-
         if (!_this.isActive()) {
           _this.open()
         }
 
+        _this.result( _this.buffer.substr(2, _this.buffer.length) )
       }
 
     }).on('focus', function (e) {
@@ -191,11 +175,11 @@
   };
 
   // create base template
-  Plugin.prototype.baseTemplate = function() {
-    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"><li><a>-</a></li></ul></div>')
+  Plugin.prototype.renderBase = function() {
+    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"></ul></div>')
     this.$widget = this.$element.next()
     this.$widget.on('click', 'li', $.proxy(this.onEntryClick, this))
-    this.$widget.on('mousemove', $.proxy(this.onMouseover, this))
+    this.$widget.on('mouseenter', 'li', $.proxy(this.onMouseEnter, this))
   }
 
   // set height of widget
@@ -240,6 +224,7 @@
   Plugin.prototype.open = function() {
     this.active = true
     this.updatePosition()
+    this.renderBase()
     this.$widget.addClass('open')
     $(window).on('click.textmodule', $.proxy(this.close, this))
   }
@@ -320,8 +305,9 @@
     }
   }
 
-  Plugin.prototype.onMouseover = function(event) {
+  Plugin.prototype.onMouseEnter = function(event) {
     this.$widget.find('.is-active').removeClass('is-active')
+    $(event.currentTarget).addClass('is-active')
   }
 
   Plugin.prototype.onEntryClick = function(event) {
@@ -388,6 +374,8 @@
       this.open()
     }
 
+    var elements = $()
+
     for (var i = 0; i < result.length; i++) {
       var item = result[i]
       var element = $('<li>')
@@ -400,10 +388,10 @@
       if (item.keywords) {
         element.append($('<kbd>').text(App.Utils.htmlEscape(item.keywords)))
       }
-      this.$widget.find('ul').append(element)
+      elements = elements.add(element)
     }
     
-    this.$widget.find('ul').scrollTop(9999)
+    this.$widget.find('ul').append(elements).scrollTop(9999)
     this.movePosition()
   }
 
