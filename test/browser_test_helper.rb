@@ -923,7 +923,7 @@ class TestCase < Test::Unit::TestCase
     css:       '#content .text-1',
     value:     'some text',
     attribute: 'some_attribute' # optional
-    timeout:   '16', # in sec, default 16
+    timeout:   16, # in sec, default 16
   )
 
 =end
@@ -975,7 +975,7 @@ wait untill selector disabppears
   watch_for_disappear(
     browser: browser1,
     css:     '#content .text-1',
-    timeout: '16', # in sec, default 16
+    timeout: 16, # in sec, default 16
   )
 
 wait untill text in selector disabppears
@@ -984,7 +984,7 @@ wait untill text in selector disabppears
     browser: browser1,
     css:     '#content .text-1',
     value:   'some value as regexp',
-    timeout: '16', # in sec, default 16
+    timeout: 16, # in sec, default 16
   )
 
 =end
