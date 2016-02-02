@@ -14,9 +14,9 @@ add new file to store
 =end
 
     def self.add(data)
-      sha = Digest::SHA256.hexdigest( data )
+      sha = Digest::SHA256.hexdigest(data)
 
-      file = Store::File.find_by( sha: sha )
+      file = Store::File.find_by(sha: sha)
       if file.nil?
 
         # load backend based on config
@@ -24,8 +24,8 @@ add new file to store
         if !adapter_name
           fail 'Missing storage_provider setting option'
         end
-        adapter = load_adapter( "Store::Provider::#{adapter_name}" )
-        adapter.add( data, sha )
+        adapter = load_adapter("Store::Provider::#{adapter_name}")
+        adapter.add(data, sha)
         file = Store::File.create(
           provider: adapter_name,
           sha: sha,
@@ -47,10 +47,10 @@ read content of a file
     def content
       adapter = self.class.load_adapter("Store::Provider::#{provider}")
       c = if sha
-            adapter.get( sha )
+            adapter.get(sha)
           else
             # fallback until migration is done
-            Store::Provider::DB.find_by( md5: md5 ).data
+            Store::Provider::DB.find_by(md5: md5).data
           end
       c
     end
@@ -73,15 +73,15 @@ in case of fixing sha hash use:
       success = true
       Store::File.all.each {|item|
         content = item.content
-        sha = Digest::SHA256.hexdigest( content )
-        logger.info "CHECK: Store::File.find(#{item.id}) "
-
+        sha = Digest::SHA256.hexdigest(content)
+        logger.info "CHECK: Store::File.find(#{item.id})"
         next if sha == item.sha
-
         success = false
-        logger.error "DIFF: sha diff of Store::File.find(#{item.id}) "
+        logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
+        store = Store.find(store_file_id: item.id)
+        logger.error "STORE: #{store.inspect}"
         if fix_it
-          item.update_attribute( :sha, sha )
+          item.update_attribute(:sha, sha)
         end
       }
       success
@@ -110,13 +110,13 @@ move files from db backend to fs
         content = item.content
 
         # add to new provider
-        adapter_target.add( content, item.sha )
+        adapter_target.add(content, item.sha)
 
         # update meta data
-        item.update_attribute( :provider, target )
+        item.update_attribute(:provider, target)
 
         # remove from old provider
-        adapter_source.delete( item.sha )
+        adapter_source.delete(item.sha)
 
         logger.info "Moved file #{item.sha} from #{source} to #{target}"
       }
@@ -127,7 +127,7 @@ move files from db backend to fs
 
     def destroy_provider
       adapter = self.class.load_adapter("Store::Provider::#{provider}")
-      adapter.delete( sha )
+      adapter.delete(sha)
     end
   end
 end
