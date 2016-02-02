@@ -54,16 +54,16 @@
         // enter
         if ( e.keyCode === 13 ) {
           e.preventDefault()
-          var id = _this.$widget.find('.dropdown-menu li.is-active a').data('id')
+          var id = _this.$widget.find('.dropdown-menu li.is-active').data('id')
 
           // as fallback use hovered element
           if (!id) {
-            id = _this.$widget.find('.dropdown-menu li:hover a').data('id')
+            id = _this.$widget.find('.dropdown-menu li:hover').data('id')
           }
 
           // as fallback first element
           if (!id) {
-            id = _this.$widget.find('.dropdown-menu li:first-child a').data('id')
+            id = _this.$widget.find('.dropdown-menu li:first-child').data('id')
           }
           _this.take(id)
           return
@@ -194,6 +194,7 @@
   Plugin.prototype.baseTemplate = function() {
     this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"><li><a>-</a></li></ul></div>')
     this.$widget = this.$element.next()
+    this.$widget.on('click', 'li', $.proxy(this.onEntryClick, this))
   }
 
   // set height of widget
@@ -318,6 +319,11 @@
     }
   }
 
+  Plugin.prototype.onEntryClick = function(event) {
+    var id = $(event.target).data('id')
+    this.take(id)
+  }
+
   // select text module and insert into text
   Plugin.prototype.take = function(id) {
     if (!id) {
@@ -364,32 +370,32 @@
       return
     })
 
+    result.reverse()
+
     this.$widget.find('ul').html('')
     this.log('result', term, result)
+
+    if (!result[0]) {
+      return this.close()
+    }
+
+    if (!this.active) {
+      this.open()
+    }
+
     for (var i = 0; i < result.length; i++) {
       var item = result[i]
-      var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + App.Utils.htmlEscape(item.name)
-      if (item.keywords) {
-        template = template + " (" + App.Utils.htmlEscape(item.keywords) + ")"
-      }
-      template = template + "</a></li>"
-      var element = $(template)
-      if (i == 0) {
+      var element = $('<li>')
+      element.attr('data-id', item.id)
+      element.text(App.Utils.htmlEscape(item.name))
+      element.addClass('u-clickable u-textTruncate')
+      if (i == result.length-1) {
         element.addClass('is-active')
       }
       this.$widget.find('ul').append(element)
     }
-    // if ( !result[0] ) {
-    //   this.$widget.find('ul').append("<li><a href='#'>-</a></li>")
-    // }
-    this.$widget.find('ul li').on(
-      'click',
-      function(e) {
-        e.preventDefault()
-        var id = $(e.target).data('id')
-        _this.take(id)
-      }
-    )
+    
+    this.$widget.find('ul').scrollTop(9999)
     this.movePosition()
   }
 
