@@ -11,7 +11,7 @@
       </th>
     <% end %>
     <% if @radio: %>
-      <th style="width: 22px"></th>
+      <th style="width: 40px" class="no-padding"></th>
     <% end %>
     <% for item, i in @header: %>
       <th class="js-tableHead<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="width:<%= item.displayWidth %>px" data-column-key="<%= item.name %>">
