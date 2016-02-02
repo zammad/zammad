@@ -27,6 +27,8 @@
     this.active     = false
     this.buffer     = ''
 
+    this._width = 380
+
     // check if ce exists
     if ( $.data(element, 'plugin_ce') ) {
       this.ce = $.data(element, 'plugin_ce')
@@ -197,18 +199,29 @@
 
   // create base template
   Plugin.prototype.baseTemplate = function() {
-    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="width: 360px; max-height: 200px;"><li><a>-</a></li></ul></div>')
+    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"><li><a>-</a></li></ul></div>')
     this.$widget = this.$element.next()
+    console.log("element", this.$element);
   }
 
   // set height of widget
   Plugin.prototype.movePosition = function() {
     if (!this._position) return
-    var height       = this.$element.height() + 20
+    var height       = this.$element.height() + 2
     var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
     var top          = -( widgetHeight + height ) + this._position.top
-    this.$widget.css('top', top)
-    this.$widget.css('left', this._position.left)
+    var left = this._position.left - 6
+
+    // position the element further left if it would break out of the textarea width
+    if (left + this._width > this.$element.innerWidth()) {
+      left = this.$element.innerWidth() - this._width
+    }
+
+    this.$widget.css({
+      top: top,
+      left: left,
+      width: this._width
+    })
   }
 
   // set position of widget
@@ -369,7 +382,11 @@
         template = template + " (" + App.Utils.htmlEscape(item.keywords) + ")"
       }
       template = template + "</a></li>"
-      this.$widget.find('ul').append(template)
+      var element = $(template)
+      if (i == 0) {
+        element.addClass('active')
+      }
+      this.$widget.find('ul').append(element)
     }
     if ( !result[0] ) {
       this.$widget.find('ul').append("<li><a href='#'>-</a></li>")
