@@ -141,10 +141,12 @@ class FormTest < TestCase
       css:     'body div.modal',
       value:   'Thank you for your inquiry',
     )
-    click(
-      browser: customer,
-      css: 'body div.modal .js-close',
-    )
+
+    # click on backgroud (not on thank you dialog)
+    element = customer.find_elements({ css: 'body div.modal' })[0]
+    customer.action.move_to(element, 200, 200).perform
+    customer.action.click.perform
+
     sleep 1
     exists_not(
       browser: customer,
@@ -243,10 +245,12 @@ class FormTest < TestCase
       css:     'body div.modal',
       value:   'Thank you for your inquiry',
     )
-    click(
-      browser: customer,
-      css: 'body div.modal .js-close',
-    )
+
+    # click on backgroud (not on thank you dialog)
+    element = customer.find_elements({ css: 'body div.modal' })[0]
+    customer.action.move_to(element, 200, 200).perform
+    customer.action.click.perform
+
     sleep 1
     exists_not(
       browser: customer,
