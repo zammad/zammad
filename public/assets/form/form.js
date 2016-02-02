@@ -94,10 +94,10 @@ $(function() {
     this._script_location = '/assets/form/form.js'
     this._css_location    = '/assets/form/form.css'
 
-    src = document.getElementById('zammad_form_script').src
-    this.css_location = src.replace(this._script_location, this._css_location)
-    this.endpoint_config = src.replace(this._script_location, this._endpoint_config)
-    this.endpoint_submit = src.replace(this._script_location, this._endpoint_submit)
+    this._src = document.getElementById('zammad_form_script').src
+    this.css_location = this._src.replace(this._script_location, this._css_location)
+    this.endpoint_config = this._src.replace(this._script_location, this._endpoint_config)
+    this.endpoint_submit = this._src.replace(this._script_location, this._endpoint_submit)
 
     this._config  = {}
 
@@ -108,7 +108,7 @@ $(function() {
   Plugin.prototype.init = function () {
     var _this = this
 
-    _this.log('debug', 'init')
+    _this.log('debug', 'init', this._src)
 
     if (!_this.options.noCSS) {
       _this.loadCss(_this.css_location)
