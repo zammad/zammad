@@ -46,13 +46,7 @@ read content of a file
 
     def content
       adapter = self.class.load_adapter("Store::Provider::#{provider}")
-      c = if sha
-            adapter.get(sha)
-          else
-            # fallback until migration is done
-            Store::Provider::DB.find_by(md5: md5).data
-          end
-      c
+      adapter.get(sha)
     end
 
 =begin
@@ -78,7 +72,7 @@ in case of fixing sha hash use:
         next if sha == item.sha
         success = false
         logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
-        store = Store.find(store_file_id: item.id)
+        store = Store.find_by(store_file_id: item.id)
         logger.error "STORE: #{store.inspect}"
         if fix_it
           item.update_attribute(:sha, sha)
