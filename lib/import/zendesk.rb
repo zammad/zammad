@@ -677,7 +677,13 @@ module Import::Zendesk
                                                        end
       end
 
-      local_ticket = Ticket.create_or_update( local_ticket_fields )
+      local_ticket = Ticket.find_by(id: local_ticket_fields[:id])
+      if local_ticket
+        local_ticket.update_attributes(local_ticket_fields)
+      else
+        local_ticket = Ticket.create(local_ticket_fields)
+        _reset_pk('tickets')
+      end
 
       zendesk_ticket_tags = []
       zendesk_ticket.tags.each { |tag|
@@ -704,6 +710,7 @@ module Import::Zendesk
           ticket_id:     local_ticket.id,
           body:          zendesk_article.html_body,
           internal:      !zendesk_article.public,
+          message_id:    zendesk_article.id,
           updated_by_id: @zendesk_user_mapping[ zendesk_article.author_id ] || 1,
           created_by_id: @zendesk_user_mapping[ zendesk_article.author_id ] || 1,
         }
@@ -719,19 +726,14 @@ module Import::Zendesk
                                            end
 
         if zendesk_article.via.channel == 'web'
-          local_article_fields[:message_id] = zendesk_article.id
           local_article_fields[:type_id]    = article_type_web.id
         elsif zendesk_article.via.channel == 'email'
           local_article_fields[:from]       = zendesk_article.via.source.from.address
           local_article_fields[:to]         = zendesk_article.via.source.to.address # Notice zendesk_article.via.from.original_recipients=[\"another@gmail.com\", \"support@example.zendesk.com\"]
-          local_article_fields[:message_id] = zendesk_article.id
           local_article_fields[:type_id]    = article_type_email.id
         elsif zendesk_article.via.channel == 'sample_ticket'
-          local_article_fields[:message_id] = zendesk_article.id
           local_article_fields[:type_id]    = article_type_note.id
         elsif zendesk_article.via.channel == 'twitter'
-          local_article_fields[:message_id] = zendesk_article.id
-
           local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'mention'
                                              article_type_twitter_status.id
                                            else
@@ -742,7 +744,6 @@ module Import::Zendesk
 
           local_article_fields[:from]       = zendesk_article.via.source.from.facebook_id
           local_article_fields[:to]         = zendesk_article.via.source.to.facebook_id
-          local_article_fields[:message_id] = zendesk_article.id
 
           local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'post'
                                              article_type_facebook_feed_post.id
@@ -752,7 +753,12 @@ module Import::Zendesk
         end
 
         # create article
-        local_article = Ticket::Article.create( local_article_fields )
+        local_article = Ticket::Article.find_by(message_id: local_article_fields[:message_id])
+        if local_article
+          local_article.update_attributes(local_article_fields)
+        else
+          local_article = Ticket::Article.create( local_article_fields )
+        end
 
         zendesk_attachments = zendesk_article.attachments
 
@@ -1027,6 +1033,12 @@ module Import::Zendesk
       # "position" => 10000
 
     }
+  end
+
+  # reset primary key sequences
+  def self._reset_pk(table)
+    return if ActiveRecord::Base.connection_config[:adapter] != 'postgresql'
+    ActiveRecord::Base.connection.reset_pk_sequence!(table)
   end
 
 end
