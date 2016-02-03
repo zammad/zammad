@@ -163,13 +163,7 @@ module Import::Zendesk
     }
 
     result.each { |object, _score|
-
-      counter = 0
-      @client.send( object.underscore.to_sym ).all do |_resource|
-        counter += 1
-      end
-
-      result[ object ] = counter
+      result[ object ] = @client.send( object.underscore.to_sym ).count!
     }
 
     if result
@@ -317,7 +311,7 @@ module Import::Zendesk
 
       local_fields = local_object.constantize.column_names
 
-      @client.send("#{local_object.downcase}_fields").all { |zendesk_object_field|
+      @client.send("#{local_object.downcase}_fields").all! { |zendesk_object_field|
 
         if local_object == 'Ticket'
           mapped_object_field = method("mapping_#{local_object.downcase}_field").call( zendesk_object_field.type )
@@ -467,7 +461,7 @@ module Import::Zendesk
   def import_groups
 
     @zendesk_group_mapping = {}
-    @client.groups.all { |zendesk_group|
+    @client.groups.all! { |zendesk_group|
       local_group = Group.create_if_not_exists(
         name:          zendesk_group.name,
         active:        !zendesk_group.deleted,
@@ -515,7 +509,7 @@ module Import::Zendesk
     role_agent    = Role.lookup(name: 'Agent')
     role_customer = Role.lookup(name: 'Customer')
 
-    @client.users.all { |zendesk_user|
+    @client.users.all! { |zendesk_user|
 
       local_user_fields = {
         login:           zendesk_user.id.to_s, # Zendesk users may have no other identifier than the ID, e.g. twitter users
@@ -586,7 +580,7 @@ module Import::Zendesk
 
     @zendesk_user_group_mapping = {}
 
-    @client.group_memberships.all { |zendesk_group_membership|
+    @client.group_memberships.all! { |zendesk_group_membership|
 
       @zendesk_user_group_mapping[ zendesk_group_membership.user_id ] ||= []
       @zendesk_user_group_mapping[ zendesk_group_membership.user_id ].push( zendesk_group_membership.group_id )
@@ -620,7 +614,7 @@ module Import::Zendesk
     article_type_facebook_feed_post    = Ticket::Article::Type.lookup(name: 'facebook feed post')
     article_type_facebook_feed_comment = Ticket::Article::Type.lookup(name: 'facebook feed comment')
 
-    @client.tickets.all { |zendesk_ticket|
+    @client.tickets.all! { |zendesk_ticket|
 
       zendesk_ticket_fields = {}
       zendesk_ticket.custom_fields.each { |zendesk_ticket_field|
@@ -635,6 +629,7 @@ module Import::Zendesk
       }
 
       local_ticket_fields = {
+        id:              zendesk_ticket.id,
         title:           zendesk_ticket.subject,
         note:            zendesk_ticket.description,
         group_id:        @zendesk_group_mapping[ zendesk_ticket.group_id ] || 1,
@@ -682,7 +677,7 @@ module Import::Zendesk
                                                        end
       end
 
-      local_ticket = Ticket.create( local_ticket_fields )
+      local_ticket = Ticket.create_or_update( local_ticket_fields )
 
       zendesk_ticket_tags = []
       zendesk_ticket.tags.each { |tag|
@@ -814,7 +809,7 @@ module Import::Zendesk
   # https://developer.zendesk.com/rest_api/docs/core/macros
   def import_macros
 
-    @client.macros.all { |zendesk_macro|
+    @client.macros.all! { |zendesk_macro|
 
       # TODO
       next if !zendesk_macro.active
@@ -866,7 +861,7 @@ module Import::Zendesk
   # https://developer.zendesk.com/rest_api/docs/core/views
   def import_views
 
-    @client.views.all { |zendesk_view|
+    @client.views.all! { |zendesk_view|
 
       # "url"         => "https://example.zendesk.com/api/v2/views/59511071.json"
       # "id"          => 59511071
@@ -995,7 +990,7 @@ module Import::Zendesk
   # https://developer.zendesk.com/rest_api/docs/core/automations
   def import_automations
 
-    @client.automations.all { |zendesk_automation|
+    @client.automations.all! { |zendesk_automation|
 
       # "url"        => "https://example.zendesk.com/api/v2/automations/60037892.json"
       # "id"         => 60037892
