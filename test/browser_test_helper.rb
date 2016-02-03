@@ -238,7 +238,7 @@ class TestCase < Test::Unit::TestCase
 
 =end
 
-  def clues_close(params)
+  def clues_close(params = {})
     switch_window_focus(params)
     log('clues_close', params)
 
