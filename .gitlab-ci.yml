@@ -76,6 +76,7 @@ job_integration_twitter:
   stage: test
   tags:
     - core
+    - twitter
   script:
     - export RAILS_ENV=test
     - rake db:drop;
