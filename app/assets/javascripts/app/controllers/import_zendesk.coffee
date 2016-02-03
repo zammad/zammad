@@ -151,7 +151,11 @@ class Index extends App.ControllerContent
       success:     (data, status, xhr) =>
 
         if data.result is 'import_done'
-          window.location.reload()
+          delay = 0
+          if @Config.get('developer_mode') is true
+            delay = 5000
+
+          @delay(window.location.reload, delay)
           return
 
         if data.result is 'error'

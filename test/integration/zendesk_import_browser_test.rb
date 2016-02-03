@@ -79,17 +79,32 @@ class ZendeskImportBrowserTest < TestCase
     click(css: '.js-migration-start')
 
     watch_for(
-      css: 'body',
-      value: 'login',
+      css:     '.js-group .js-done',
+      value:   '2',
+      timeout: 60,
+    )
+
+    watch_for(
+      css:     '.js-organization .js-done',
+      value:   '1',
+      timeout: 60,
+    )
+
+    watch_for(
+      css:   '.js-user .js-done',
+      value: '141',
+      timeout: 60,
+    )
+
+    watch_for(
+      css:     '.js-ticket .js-done',
+      value:   '143',
       timeout: 300,
     )
 
-    assert_equal( 143, User.count, 'users' )
-    assert_equal( 3, Group.count, 'groups' )
-    assert_equal( 5, Role.count, 'roles' )
-    assert_equal( 2, Organization.count, 'organizations' )
-    assert_equal( 144, Ticket.count, 'tickets' )
-    assert_equal( 151, Ticket::Article.count, 'ticket articles' )
-    assert_equal( 2, Store.count, 'ticket article attachments' )
+    watch_for(
+      css: 'body',
+      value: 'login',
+    )
   end
 end
