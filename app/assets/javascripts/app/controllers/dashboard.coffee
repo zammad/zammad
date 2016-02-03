@@ -18,6 +18,11 @@ class App.Dashboard extends App.Controller
       return if !@authenticate(true)
       @render()
 
+    # start intro
+    preferences = @Session.get('preferences')
+    if !preferences['intro']
+      @clues()
+
   render: ->
 
     @html App.view('dashboard')(
@@ -35,9 +40,18 @@ class App.Dashboard extends App.Controller
     )
 
   clues: (e) =>
-    e.preventDefault()
+    if e
+      e.preventDefault()
     new App.FirstStepsClues(
       el: @el
+      onComplete: =>
+        @ajax(
+          id:          'preferences'
+          type:        'PUT'
+          url:         @apiPath + '/users/preferences'
+          data:        JSON.stringify({user:{intro:true}})
+          processData: true
+        )
     )
 
   active: (state) =>

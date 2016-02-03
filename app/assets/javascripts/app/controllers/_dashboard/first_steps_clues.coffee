@@ -1,18 +1,22 @@
 class App.FirstStepsClues extends App.Controller
   clues: [
     {
+      container: '.js-dashboardMenuItem'
+      headline: 'Dashboard'
+      text: 'Here you see a quick overview about your and other agents performance.'
+      actions: [
+        'hover'
+      ]
+    }
+    {
       container: '.search-holder'
       headline: 'Search'
-      text: 'Here you can search for ticket, customers and organizations. To find everything use the <kbd>*</kbd>-Placeholder'
-      #headline: 'Suche'
-      #text: 'Um alles zu finden nutze den <kbd>*</kbd>-Platzhalter'
+      text: 'Here you can search for ticket, customers and organizations. To find everything use the §*§-Placeholder'
     }
     {
       container: '.user-menu'
       headline: 'Create'
       text: 'Here you can create new tickets. Also if you have the permissions you can create new customers and organizations.'
-      #headline: 'Erstellen'
-      #text: 'Hier kannst du Tickets, Kunden und Organisationen anlegen.'
       actions: [
         'click .add .js-action',
         'hover .add'
@@ -22,8 +26,6 @@ class App.FirstStepsClues extends App.Controller
       container: '.user-menu'
       headline: 'Personal Settings'
       text: 'Here you can sign out, change the frontend language or see your latest views items.'
-      #headline: 'Persönliches Menü'
-      #text: 'Hier findest du den Logout, den Weg zu deinen Einstellungen und deinen Verlauf.'
       actions: [
         'click .user .js-action',
         'hover .user'
@@ -33,18 +35,6 @@ class App.FirstStepsClues extends App.Controller
       container: '.js-overviewsMenuItem'
       headline: 'Overviews'
       text: 'Here you find your ticket overviews for open, my assigned or escalated tickets.'
-      #headline: 'Übersichten'
-      #text: 'Hier findest du eine Liste aller Tickets.'
-      actions: [
-        'hover'
-      ]
-    }
-    {
-      container: '.js-dashboardMenuItem'
-      headline: 'Dashboard'
-      text: 'Here you see a quick overview about your and other agents performance.'
-      #headline: 'Dashboard'
-      #text: 'Hier siehst du auf einem Blick ob sich alle Agenten an die Spielregeln halten.'
       actions: [
         'hover'
       ]
@@ -78,8 +68,6 @@ class App.FirstStepsClues extends App.Controller
       onComplete: a callback for when the user is done
 
     ###
-
-    @options.onComplete = -> null
     @position = 0
     @render()
 
@@ -235,7 +223,7 @@ class App.FirstStepsClues extends App.Controller
       left = maxWidth - modal.width
 
     if top < 0
-      moveArrow = modal.height/2 + height
+      moveArrow = modal.height/2 + top
       top = 0
     else if top + modal.height > maxHeight
       moveArrow = modal.height/2 + maxHeight - (top + modal.height)

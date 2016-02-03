@@ -156,6 +156,13 @@ class TestCase < Test::Unit::TestCase
           fail 'auto wizard login failed'
         end
         assert(true, 'auto wizard login ok')
+
+        # remove clues
+        clues = instance.find_elements({ css: '.js-modal--clue .js-close' })[0]
+        if clues
+          clues.click
+        end
+
         return
       end
       screenshot(browser: instance, comment: 'login_failed')
@@ -182,6 +189,13 @@ class TestCase < Test::Unit::TestCase
       screenshot(browser: instance, comment: 'login_failed')
       fail 'login failed'
     end
+
+    # remove clues
+    clues = instance.find_elements({ css: '.js-modal--clue .js-close' })[0]
+    if clues
+      clues.click
+    end
+
     screenshot(browser: instance, comment: 'login_ok')
     assert(true, 'login ok')
     login

@@ -184,6 +184,12 @@ class _i18nSingleton extends Spine.Module
 
     translated = App.Utils.htmlEscape(@translate(string, args))
 
+    # apply inline markup
+    translated
+      .replace(/\*(.+?)\*/gm, '<b>$1</b>')
+      .replace(/_(.+?)_/gm, '<u>$1</u>')
+      .replace(/§(.+?)§/gm, '<kbd>$1</kbd>')
+
   translatePlain: (string, args) =>
     @translate(string, args)
 
