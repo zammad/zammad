@@ -4,8 +4,8 @@ require 'test_helper'
 class TicketNotificationTest < ActiveSupport::TestCase
 
   # create agent1 & agent2
-  groups = Group.where( name: 'Users' )
-  roles  = Role.where( name: 'Agent' )
+  groups = Group.where(name: 'Users')
+  roles  = Role.where(name: 'Agent')
   agent1 = User.create_or_update(
     login: 'ticket-notification-agent1@example.com',
     firstname: 'Notification',
@@ -44,7 +44,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
   )
 
   # create customer
-  roles    = Role.where( name: 'Customer' )
+  roles    = Role.where(name: 'Customer')
   customer = User.create_or_update(
     login: 'ticket-notification-customer@example.com',
     firstname: 'Notification',
@@ -58,15 +58,88 @@ class TicketNotificationTest < ActiveSupport::TestCase
     created_by_id: 1,
   )
 
-  test 'ticket notification simple' do
+  test 'ticket notification - to all agents / to explicit agents' do
 
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification test 1',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
+      customer: agent1,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: agent1.id,
+      created_by_id: agent1.id,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: agent1.id,
+      created_by_id: agent1.id,
+    )
+    assert(ticket1)
+
+    # execute ticket events
+    ENV['SERVER_NAME'] = nil
+    Observer::Ticket::Notification.transaction
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
+
+    # verify notifications to agent1 + agent2
+    assert_equal(1, notification_check(ticket1, agent1), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent2), ticket1.id)
+
+    # create ticket in group
+    ticket1 = Ticket.create(
+      title: 'some notification test 1',
+      group: Group.lookup(name: 'Users'),
+      customer: agent1,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: agent1.id,
+      created_by_id: agent1.id,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: agent1.id,
+      created_by_id: agent1.id,
+    )
+    assert(ticket1)
+
+    # execute ticket events
+    ENV['SERVER_NAME'] = 'some_host'
+    Observer::Ticket::Notification.transaction
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
+
+    # verify notifications to agent1 + agent2
+    assert_equal(0, notification_check(ticket1, agent1), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent2), ticket1.id)
+  end
+
+  test 'ticket notification - simple' do
+
+    # create ticket in group
+    ticket1 = Ticket.create(
+      title: 'some notification test 1',
+      group: Group.lookup(name: 'Users'),
       customer: customer,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
@@ -86,17 +159,18 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert( ticket1, 'ticket created - ticket notification simple' )
 
     # execute ticket events
+    ENV['SERVER_NAME'] = 'some_host'
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal( 1, notification_check(ticket1, agent1), ticket1.id )
-    assert_equal( 1, notification_check(ticket1, agent2), ticket1.id )
+    assert_equal(1, notification_check(ticket1, agent1), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent2), ticket1.id)
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
-    ticket1.priority = Ticket::Priority.lookup( name: '3 high' )
+    ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
     # execute ticket events
@@ -105,8 +179,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal( 2, notification_check(ticket1, agent1), ticket1.id )
-    assert_equal( 2, notification_check(ticket1, agent2), ticket1.id )
+    assert_equal(2, notification_check(ticket1, agent1), ticket1.id)
+    assert_equal(2, notification_check(ticket1, agent2), ticket1.id)
 
     # add article to ticket
     Ticket::Article.create(
@@ -127,8 +201,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to not to agent1 but to agent2
-    assert_equal( 2, notification_check(ticket1, agent1), ticket1.id )
-    assert_equal( 3, notification_check(ticket1, agent2), ticket1.id )
+    assert_equal(2, notification_check(ticket1, agent1), ticket1.id)
+    assert_equal(3, notification_check(ticket1, agent2), ticket1.id)
 
     # update ticket by user
     ticket1.owner_id      = agent1.id
@@ -152,17 +226,17 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to not to agent1 but to agent2
-    assert_equal( 2, notification_check(ticket1, agent1), ticket1.id )
-    assert_equal( 3, notification_check(ticket1, agent2), ticket1.id )
+    assert_equal(2, notification_check(ticket1, agent1), ticket1.id)
+    assert_equal(3, notification_check(ticket1, agent2), ticket1.id)
 
     # create ticket with agent1 as owner
     ticket2 = Ticket.create(
       title: 'some notification test 2',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
       owner_id: agent1.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: agent1.id,
       created_by_id: agent1.id,
     )
@@ -184,16 +258,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
-    assert( ticket2, 'ticket created' )
+    assert(ticket2, 'ticket created')
 
     # verify notifications to no one
-    assert_equal( 0, notification_check(ticket2, agent1), ticket2.id )
-    assert_equal( 0, notification_check(ticket2, agent2), ticket2.id )
+    assert_equal(0, notification_check(ticket2, agent1), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent2), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #2"
     ticket2.updated_by_id = agent1.id
-    ticket2.priority      = Ticket::Priority.lookup( name: '3 high' )
+    ticket2.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket2.save
 
     # execute ticket events
@@ -202,13 +276,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal( 0, notification_check(ticket2, agent1), ticket2.id )
-    assert_equal( 0, notification_check(ticket2, agent2), ticket2.id )
+    assert_equal(0, notification_check(ticket2, agent1), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent2), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #3"
     ticket2.updated_by_id = agent2.id
-    ticket2.priority      = Ticket::Priority.lookup( name: '2 normal' )
+    ticket2.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket2.save
 
     # execute ticket events
@@ -217,17 +291,17 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal( 1, notification_check(ticket2, agent1), ticket2.id )
-    assert_equal( 0, notification_check(ticket2, agent2), ticket2.id )
+    assert_equal(1, notification_check(ticket2, agent1), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent2), ticket2.id)
 
     # create ticket with agent2 and agent1 as owner
     ticket3 = Ticket.create(
       title: 'some notification test 3',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
       owner_id: agent1.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: agent2.id,
       created_by_id: agent2.id,
     )
@@ -249,16 +323,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
-    assert( ticket3, 'ticket created' )
+    assert(ticket3, 'ticket created')
 
     # verify notifications to agent1 and not to agent2
-    assert_equal( 1, notification_check(ticket3, agent1), ticket3.id )
-    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
+    assert_equal(1, notification_check(ticket3, agent1), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #2"
     ticket3.updated_by_id = agent1.id
-    ticket3.priority      = Ticket::Priority.lookup( name: '3 high' )
+    ticket3.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket3.save
 
     # execute ticket events
@@ -267,13 +341,13 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal( 1, notification_check(ticket3, agent1), ticket3.id )
-    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
+    assert_equal(1, notification_check(ticket3, agent1), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #3"
     ticket3.updated_by_id = agent2.id
-    ticket3.priority      = Ticket::Priority.lookup( name: '2 normal' )
+    ticket3.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket3.save
 
     # execute ticket events
@@ -282,8 +356,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal( 2, notification_check(ticket3, agent1), ticket3.id )
-    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
+    assert_equal(2, notification_check(ticket3, agent1), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
 
     # update article / not notification should be sent
     article_inbound.internal = true
@@ -295,17 +369,17 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications not to agent1 and not to agent2
-    assert_equal( 2, notification_check(ticket3, agent1), ticket3.id )
-    assert_equal( 0, notification_check(ticket3, agent2), ticket3.id )
+    assert_equal(2, notification_check(ticket3, agent1), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
 
     delete = ticket1.destroy
-    assert( delete, 'ticket1 destroy' )
+    assert(delete, 'ticket1 destroy')
 
     delete = ticket2.destroy
-    assert( delete, 'ticket2 destroy' )
+    assert(delete, 'ticket2 destroy')
 
     delete = ticket3.destroy
-    assert( delete, 'ticket3 destroy' )
+    assert(delete, 'ticket3 destroy')
 
   end
 
@@ -314,10 +388,10 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification event test 1',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer: customer,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
@@ -334,38 +408,38 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
-    assert( ticket1, 'ticket created' )
+    assert(ticket1, 'ticket created')
 
     # execute ticket events
     Observer::Ticket::Notification.transaction
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
-    ticket1.priority = Ticket::Priority.lookup( name: '3 high' )
+    ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
     list         = EventBuffer.list
     list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
 
-    assert_equal( 'some notification event test 1', list_objects[ticket1.id][:changes]['title'][0] )
-    assert_equal( 'some notification event test 1 - #2', list_objects[ticket1.id][:changes]['title'][1] )
-    assert_not( list_objects[ticket1.id][:changes]['priority'] )
-    assert_equal( 2, list_objects[ticket1.id][:changes]['priority_id'][0] )
-    assert_equal( 3, list_objects[ticket1.id][:changes]['priority_id'][1] )
+    assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
+    assert_equal('some notification event test 1 - #2', list_objects[ticket1.id][:changes]['title'][1])
+    assert_not(list_objects[ticket1.id][:changes]['priority'])
+    assert_equal(2, list_objects[ticket1.id][:changes]['priority_id'][0])
+    assert_equal(3, list_objects[ticket1.id][:changes]['priority_id'][1])
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #3"
-    ticket1.priority = Ticket::Priority.lookup( name: '1 low' )
+    ticket1.priority = Ticket::Priority.lookup(name: '1 low')
     ticket1.save
 
     list         = EventBuffer.list
     list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
 
-    assert_equal( 'some notification event test 1', list_objects[ticket1.id][:changes]['title'][0] )
-    assert_equal( 'some notification event test 1 - #2 - #3', list_objects[ticket1.id][:changes]['title'][1] )
-    assert_not( list_objects[ticket1.id][:changes]['priority'] )
-    assert_equal( 2, list_objects[ticket1.id][:changes]['priority_id'][0] )
-    assert_equal( 1, list_objects[ticket1.id][:changes]['priority_id'][1] )
+    assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
+    assert_equal('some notification event test 1 - #2 - #3', list_objects[ticket1.id][:changes]['title'][1])
+    assert_not(list_objects[ticket1.id][:changes]['priority'])
+    assert_equal(2, list_objects[ticket1.id][:changes]['priority_id'][0])
+    assert_equal(1, list_objects[ticket1.id][:changes]['priority_id'][1])
 
   end
 
@@ -374,10 +448,10 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification template test 1 Bobs\'s resumé',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer: customer,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
@@ -394,7 +468,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
-    assert( ticket1, 'ticket created - ticket notification template' )
+    assert(ticket1, 'ticket created - ticket notification template')
 
     bg = Observer::Ticket::Notification::BackgroundJob.new(
       ticket_id: ticket1.id,
@@ -449,25 +523,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
         recipient: agent2,
       }
     )
-    assert_match( /Priority/, body )
-    assert_match( /1 low/, body )
-    assert_match( /2 normal/, body )
-    assert_match( /Pending till/, body )
-    assert_match( /2015-01-11 23:33:47 UTC/, body )
-    assert_match( /update/, body )
-    assert_no_match( /pending_till/, body )
-    assert_no_match( /i18n/, body )
+    assert_match(/Priority/, body)
+    assert_match(/1 low/, body)
+    assert_match(/2 normal/, body)
+    assert_match(/Pending till/, body)
+    assert_match(/2015-01-11 23:33:47 UTC/, body)
+    assert_match(/update/, body)
+    assert_no_match(/pending_till/, body)
+    assert_no_match(/i18n/, body)
 
     # de template
     template = bg.template_update(agent1, ticket1, article, human_changes)
-    assert( template[:subject] )
-    assert( template[:body] )
-    assert_match( /Priority/, template[:body] )
-    assert_match( /1 low/, template[:body] )
-    assert_match( /2 normal/, template[:body] )
-    assert_match( /Pending till/, template[:body] )
-    assert_match( /2015-01-11 23:33:47 UTC/, template[:body] )
-    assert_match( /aktualis/, template[:subject] )
+    assert(template[:subject])
+    assert(template[:body])
+    assert_match(/Priority/, template[:body])
+    assert_match(/1 low/, template[:body])
+    assert_match(/2 normal/, template[:body])
+    assert_match(/Pending till/, template[:body])
+    assert_match(/2015-01-11 23:33:47 UTC/, template[:body])
+    assert_match(/aktualis/, template[:subject])
 
     # de notification
     subject = NotificationFactory.build(
@@ -479,7 +553,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
         recipient: agent2,
       }
     )
-    assert_match( /Bobs's resumé/, subject )
+    assert_match(/Bobs's resumé/, subject)
     body = NotificationFactory.build(
       locale: agent1.preferences[:locale],
       string: template[:body],
@@ -490,14 +564,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
       }
     )
 
-    assert_match( /Priorität/, body )
-    assert_match( /1 niedrig/, body )
-    assert_match( /2 normal/, body )
-    assert_match( /Warten/, body )
-    assert_match( /2015-01-11 23:33:47 UTC/, body )
-    assert_match( /aktualis/, body )
-    assert_no_match( /pending_till/, body )
-    assert_no_match( /i18n/, body )
+    assert_match(/Priorität/, body)
+    assert_match(/1 niedrig/, body)
+    assert_match(/2 normal/, body)
+    assert_match(/Warten/, body)
+    assert_match(/2015-01-11 23:33:47 UTC/, body)
+    assert_match(/aktualis/, body)
+    assert_no_match(/pending_till/, body)
+    assert_no_match(/i18n/, body)
 
     bg = Observer::Ticket::Notification::BackgroundJob.new(
       ticket_id: ticket1.id,
@@ -512,15 +586,15 @@ class TicketNotificationTest < ActiveSupport::TestCase
     #puts "hc #{human_changes.inspect}"
     # check changed attributes
     human_changes = bg.human_changes(agent1, ticket1)
-    assert( human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert_equal( 'i18n(2 normal)', human_changes['Priority'][0] )
-    assert_equal( 'i18n(3 high)', human_changes['Priority'][1] )
-    assert_equal( 'some notification template test 1', human_changes['Title'][0] )
-    assert_equal( 'some notification template test 1 #2', human_changes['Title'][1] )
-    assert_not( human_changes['priority_id'] )
-    assert_not( human_changes['pending_time'] )
-    assert_not( human_changes['pending_till'] )
+    assert(human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute')
+    assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
+    assert_equal('i18n(2 normal)', human_changes['Priority'][0])
+    assert_equal('i18n(3 high)', human_changes['Priority'][1])
+    assert_equal('some notification template test 1', human_changes['Title'][0])
+    assert_equal('some notification template test 1 #2', human_changes['Title'][1])
+    assert_not(human_changes['priority_id'])
+    assert_not(human_changes['pending_time'])
+    assert_not(human_changes['pending_till'])
 
     human_changes = bg.human_changes(agent2, ticket1)
     #puts "hc2 #{human_changes.inspect}"

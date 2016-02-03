@@ -17,12 +17,17 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     # reset buffer
     EventBuffer.reset
 
+    via_web = false
+    if ENV['SERVER_NAME']
+      via_web = true
+    end
+
     # get uniq objects
     list_objects = get_uniq_changes(list)
     list_objects.each {|_ticket_id, item|
 
       # send background job
-      Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( item ) )
+      Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( item, via_web ) )
     }
   end
 
