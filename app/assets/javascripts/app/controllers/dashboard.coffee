@@ -18,10 +18,7 @@ class App.Dashboard extends App.Controller
       return if !@authenticate(true)
       @render()
 
-    # start intro
-    preferences = @Session.get('preferences')
-    if !preferences['intro']
-      @clues()
+    @mayBeClues()
 
   render: ->
 
@@ -38,6 +35,12 @@ class App.Dashboard extends App.Controller
       el:    @$('.sidebar')
       limit: 25
     )
+
+  mayBeClues: =>
+    preferences = @Session.get('preferences')
+    return if preferences['intro']
+    return if !@el.is(':visible')
+    @clues()
 
   clues: (e) =>
     if e
@@ -56,6 +59,8 @@ class App.Dashboard extends App.Controller
 
   active: (state) =>
     @activeState = state
+    if state
+      @mayBeClues()
 
   isActive: =>
     @activeState

@@ -157,11 +157,10 @@ class TestCase < Test::Unit::TestCase
         end
         assert(true, 'auto wizard login ok')
 
-        # remove clues
-        clues = instance.find_elements({ css: '.js-modal--clue .js-close' })[0]
-        if clues
-          clues.click
-        end
+        clues_close(
+          browser: instance,
+          optional: true,
+        )
 
         return
       end
@@ -190,11 +189,10 @@ class TestCase < Test::Unit::TestCase
       fail 'login failed'
     end
 
-    # remove clues
-    clues = instance.find_elements({ css: '.js-modal--clue .js-close' })[0]
-    if clues
-      clues.click
-    end
+    clues_close(
+      browser: instance,
+      optional: true,
+    )
 
     screenshot(browser: instance, comment: 'login_ok')
     assert(true, 'login ok')
@@ -229,6 +227,32 @@ class TestCase < Test::Unit::TestCase
     }
     screenshot(browser: instance, comment: 'logout_failed')
     fail 'no login box found, seems logout was not successfully!'
+  end
+
+=begin
+
+  clues_close(
+    browser: browser1,
+    optional: false,
+  )
+
+=end
+
+  def clues_close(params)
+    switch_window_focus(params)
+    log('clues_close', params)
+
+    instance = params[:browser] || @browser
+
+    clues = instance.find_elements({ css: '.js-modal--clue .js-close' })[0]
+    if !params[:optional] && !clues
+      screenshot(browser: instance, comment: 'no_clues')
+      fail 'Unable to closes clues, no clues found!'
+    end
+    return if !clues
+    instance.execute_script("$('.js-modal--clue .js-close').click()")
+    assert(true, 'clues closed')
+    sleep 4
   end
 
 =begin
