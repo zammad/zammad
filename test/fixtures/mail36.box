@@ -1,0 +1,70 @@
+Return-Path: <m.Smith@example.com>
+X-Original-To: me@example.com
+Delivered-To: martin@arber.example.com
+Received-SPF: softfail (example.com: Sender is not authorized by default to use 'm.Smith@example.com' in 'mfrom' identity, however domain is not currently prepared for false failures (mechanism '~all' matched)) receiver=arber.example.com; identity=mailfrom; envelope-from="m.Smith@example.com"; helo=mout.web.de; client-ip=212.227.15.14
+Received: from mout.web.de (mout.web.de [2.2.1.1])
+  by arber.example.com (Postfix) with ESMTPS id CC5CF61391
+  for <me@example.com>; Wed,  3 Feb 2016 13:23:33 +0100 (CET)
+Received: from [79.228.218.253] by 3capp-webde-bs15.server.lan (via HTTP);
+ Wed, 3 Feb 2016 13:23:33 +0100
+MIME-Version: 1.0
+Message-ID: <trinity-147fd84a-1e14-4765-bbc0-8c1387385e8f-1454502213303@3capp-webde-bs15>
+From: "Martin Smith" <m.Smith@example.com>
+To: "Martin Edenhofer" <me@example.com>
+Subject: Fw: Zugangsdaten
+Content-Type: text/html; charset=UTF-8
+Date: Wed, 3 Feb 2016 13:23:33 +0100
+Importance: normal
+Sensitivity: Normal
+References: <70E61C7E-7508-45D9-918E-D890862641E1@example.com>,
+ <trinity-0f474eb0-4274-4af8-b928-83c21e7881eb-1454499808226@3capp-webde-bs15>
+X-UI-Message-Type: mail
+X-Priority: 3
+X-Provags-ID: V03:K0:/WfykMPf5Mwa0ZvXBNkPO5anKRmg15X0kEGEx6sir6T
+ Iu1DfMCe1Rqe3ptJJPM6rUy7U0VBf9/N8eAXiGMlekWzR4A1KD
+ t2D3jKxbBmHQTLoPNpOLpQkO86WZPkGEIRvi4GzGt6y7+AF6Wr
+ YKe4AHIigSb7TubsOEGhV8vRzB7oObrecn+X9vfQD1vgQextTn
+ aZrl8Uz4Iq8Qgc9HaDcg2+IG7ZBMKeTgKGlqNqOEpj76pRy3il
+ HfkGfFxxgbnKg/RK0X0oC1rwgMubWuAxwA97c6AeTLFnPJxtPt ZQu4v0=
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Z3b52B2Tvas=:1Ly2mLCISrNqxwJZwsSJvd
+ ggRZBL9pBdcfKBkFAX6sMmwK+lPYbULi0XgW1MYCDo1JffR9/0dMVKxNGebwN6cBYp9BOZ4PL
+ c12fINf2qyNQpOUhI5OGSsdltK9XZqPk1MVBK2VoGF2HUo+lBhtzt9ilmD8zdMgXTla9YzQfu
+ mEm90UGBuITr3Cqln3YOV8nH24PTYE0nvkqLFRENEpR3cUGFxTYWiImuDjr8x+GaUcdqoa7EP
+ jxQQgSn011n3PozpFcDaw/09WrmkwJ4BlfXbu5jKdQR1X1hzSUrXxniCy1DY2QtX5OqPu+CnA
+ LrrHBQM4+Arxzd438ajIFoUlswodEY5HGOERMC4SxORgirHKkQz117HjPuPCHoLHqf+zmXgS5
+ k68l59J5dk2qb1UvcidOMMMYyLEE0Le0K88qs8doKy5RnQZz+butudnLd2NsNZtyWPFbxZu3S
+ Vb8PRK9Gng==
+
+<html><head></head><body><div style="font-family: Verdana;font-size: 12.0px;"><div><br/>
+&nbsp;</div>
+
+<div class="signature">--&nbsp;<br/>
+don&#39;t&nbsp;cry&nbsp;-&nbsp;work!&nbsp;(Rainald&nbsp;Goetz)</div>
+
+<div>&nbsp;
+<div>&nbsp;
+<div name="quote" style="margin:10px 5px 5px 10px; padding: 10px 0 10px 10px; border-left:2px solid #C3D9E5; word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<div style="margin:0 0 10px 0;"><b>Gesendet:</b>&nbsp;Mittwoch, 03. Februar 2016 um 12:43 Uhr<br/>
+<b>Von:</b>&nbsp;&quot;Martin Smith&quot; &lt;m.Smith@example.com&gt;<br/>
+<b>An:</b>&nbsp;linuxhotel@zammad.com<br/>
+<b>Betreff:</b>&nbsp;Fw: Zugangsdaten</div>
+
+<div name="quoted-content">
+<div style="font-family: Verdana;font-size: 12.0px;">
+<div><br/>
+&nbsp;</div>
+
+<div class="signature">--&nbsp;<br/>
+don&#39;t&nbsp;cry&nbsp;-&nbsp;work!&nbsp;(Rainald&nbsp;Goetz)</div>
+
+<div>&nbsp;
+<div>&nbsp;
+<div style="margin: 10.0px 5.0px 5.0px 10.0px;padding: 10.0px 0 10.0px 10.0px;border-left: 2.0px solid rgb(195,217,229);">
+<div style="margin: 0 0 10.0px 0;"><b>Gesendet:</b>&nbsp;Freitag, 22. Januar 2016 um 11:52 Uhr<br/>
+<b>Von:</b>&nbsp;&quot;Martin Edenhofer&quot; &lt;me@example.com&gt;<br/>
+<b>An:</b>&nbsp;m.Smith@example.com<br/>
+<b>Betreff:</b>&nbsp;Zugangsdaten</div>
+
+<div>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B. <a href="http://web.de" target="_blank">web.de</a>) mal ein wenig selber &ldquo;spielen&rdquo;. :)</div>
+
+</body></html>
