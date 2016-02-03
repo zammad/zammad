@@ -48,7 +48,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
     assert_equal( 3, Group.count, 'groups' )
     assert_equal( 5, Role.count, 'roles' )
     assert_equal( 2, Organization.count, 'organizations' )
-    assert_equal( 144, Ticket.count, 'tickets' )
+    assert_equal( 143, Ticket.count, 'tickets' )
     assert_equal( 151, Ticket::Article.count, 'ticket articles' )
     assert_equal( 2, Store.count, 'ticket article attachments' )
 
@@ -277,7 +277,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       {
         id: 3,
         data: {
-          title:                    'test',
+          title:                    'Bob Smith, here is the test ticket you requested',
           note:                     'test email',
           create_article_type_id:   1,
           create_article_sender_id: 2,
