@@ -27,6 +27,8 @@
     this.active     = false
     this.buffer     = ''
 
+    this._width = 380
+
     // check if ce exists
     if ( $.data(element, 'plugin_ce') ) {
       this.ce = $.data(element, 'plugin_ce')
@@ -36,7 +38,7 @@
   }
 
   Plugin.prototype.init = function () {
-    this.baseTemplate()
+    this.renderBase()
     var _this = this
 
     this.$element.on('keydown', function (e) {
@@ -52,11 +54,16 @@
         // enter
         if ( e.keyCode === 13 ) {
           e.preventDefault()
-          var id = _this.$widget.find('.dropdown-menu li.active a').data('id')
+          var id = _this.$widget.find('.dropdown-menu li.is-active').data('id')
 
           // as fallback use hovered element
           if (!id) {
-            id = _this.$widget.find('.dropdown-menu li:hover a').data('id')
+            id = _this.$widget.find('.dropdown-menu li:hover').data('id')
+          }
+
+          // as fallback first element
+          if (!id) {
+            id = _this.$widget.find('.dropdown-menu li:first-child').data('id')
           }
           _this.take(id)
           return
@@ -68,41 +75,29 @@
           return
         }
 
-        // up
-        if ( e.keyCode === 38 ) {
+        // up or down
+        if ( e.keyCode === 38 || e.keyCode === 40 ) {
           e.preventDefault()
-          if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
-            var top = _this.$widget.find('.dropdown-menu li').last().addClass('active').position().top
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
-          }
-          else {
-            var prev = _this.$widget.find('.dropdown-menu li.active').removeClass('active').prev()
-            var top = 300
-            if ( prev[0] ) {
-              top = prev.addClass('active').position().top
-            }
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
-          }
-        }
+          var active = _this.$widget.find('.dropdown-menu li.is-active')
+          active.removeClass('is-active')
 
-        // down
-        if ( e.keyCode === 40 ) {
-          e.preventDefault()
-          if ( !_this.$widget.find('.dropdown-menu li.active')[0] ) {
-            var top = _this.$widget.find('.dropdown-menu li').first().addClass('active').position().top
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
+          if ( e.keyCode == 38 && active.prev().size() ) {
+            active = active.prev()
+          } else if ( e.keyCode == 40 && active.next().size() ) {
+            active = active.next()
           }
-          else {
-            var next = _this.$widget.find('.dropdown-menu li.active').removeClass('active').next()
-            var top = 300
-            if ( next[0] ) {
-              top = next.addClass('active').position().top
-            }
-            _this.$widget.find('.dropdown-menu').scrollTop( top );
-            return
+
+          active.addClass('is-active')
+
+          var menu = _this.$widget.find('.dropdown-menu')
+
+          if ( active.position().top < 0 ) {
+            // scroll up
+            menu.scrollTop( menu.scrollTop() + active.position().top )
+          } else if ( active.position().top + active.height() > menu.height() ) {
+            // scroll down
+            var invisibleHeight = active.position().top + active.height() - menu.height()
+            menu.scrollTop( menu.scrollTop() + invisibleHeight )
           }
         }
 
@@ -167,43 +162,44 @@
         }
         _this.log('BUFF HINT', _this.buffer, _this.buffer.length, e.which, String.fromCharCode(e.which))
 
-        b = $.proxy(function() {
-          this.result( this.buffer.substr(2,this.buffer.length) )
-        }, _this)
-        setTimeout(b, 400);
-
         if (!_this.isActive()) {
           _this.open()
         }
 
+        _this.result( _this.buffer.substr(2, _this.buffer.length) )
       }
 
     }).on('focus', function (e) {
       _this.close()
-    }).on('blur', function (e) {
-      // delay, to get click on text module before widget is closed
-      a = $.proxy(function() {
-        this.close()
-      }, _this)
-      setTimeout(a, 600);
     })
-
   };
 
   // create base template
-  Plugin.prototype.baseTemplate = function() {
-    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="width: 360px; max-height: 200px;"><li><a>-</a></li></ul></div>')
+  Plugin.prototype.renderBase = function() {
+    this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"></ul></div>')
     this.$widget = this.$element.next()
+    this.$widget.on('click', 'li', $.proxy(this.onEntryClick, this))
+    this.$widget.on('mouseenter', 'li', $.proxy(this.onMouseEnter, this))
   }
 
   // set height of widget
   Plugin.prototype.movePosition = function() {
     if (!this._position) return
-    var height       = this.$element.height() + 20
+    var height       = this.$element.height() + 2
     var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
     var top          = -( widgetHeight + height ) + this._position.top
-    this.$widget.css('top', top)
-    this.$widget.css('left', this._position.left)
+    var left = this._position.left - 6
+
+    // position the element further left if it would break out of the textarea width
+    if (left + this._width > this.$element.innerWidth()) {
+      left = this.$element.innerWidth() - this._width
+    }
+
+    this.$widget.css({
+      top: top,
+      left: left,
+      width: this._width
+    })
   }
 
   // set position of widget
@@ -228,10 +224,9 @@
   Plugin.prototype.open = function() {
     this.active = true
     this.updatePosition()
-    b = $.proxy(function() {
-      this.$widget.addClass('open')
-    }, this)
-    setTimeout(b, 400);
+    this.renderBase()
+    this.$widget.addClass('open')
+    $(window).on('click.textmodule', $.proxy(this.close, this))
   }
 
   // close widget
@@ -242,6 +237,8 @@
     }
     this.buffer = ''
     this.active = false
+    this.$widget.remove()
+    $(window).off('click.textmodule')
   }
 
   // check if widget is active/open
@@ -251,7 +248,7 @@
 
   // paste some content
   Plugin.prototype.paste = function(string) {
-    string = App.Utils.text2html(string) + '<br>'
+    string = App.Utils.text2html(string)
     if (document.selection) { // IE
       var range = document.selection.createRange()
       range.pasteHTML(string)
@@ -309,6 +306,16 @@
     }
   }
 
+  Plugin.prototype.onMouseEnter = function(event) {
+    this.$widget.find('.is-active').removeClass('is-active')
+    $(event.currentTarget).addClass('is-active')
+  }
+
+  Plugin.prototype.onEntryClick = function(event) {
+    var id = $(event.target).data('id')
+    this.take(id)
+  }
+
   // select text module and insert into text
   Plugin.prototype.take = function(id) {
     if (!id) {
@@ -355,28 +362,29 @@
       return
     })
 
+    result.reverse()
+
     this.$widget.find('ul').html('')
     this.log('result', term, result)
+
+    var elements = $()
+
     for (var i = 0; i < result.length; i++) {
       var item = result[i]
-      var template = "<li><a href=\"#\" class=\"u-textTruncate\" data-id=" + item.id + ">" + App.Utils.htmlEscape(item.name)
+      var element = $('<li>')
+      element.attr('data-id', item.id)
+      element.text(App.Utils.htmlEscape(item.name))
+      element.addClass('u-clickable u-textTruncate')
+      if (i == result.length-1) {
+        element.addClass('is-active')
+      }
       if (item.keywords) {
-        template = template + " (" + App.Utils.htmlEscape(item.keywords) + ")"
+        element.append($('<kbd>').text(App.Utils.htmlEscape(item.keywords)))
       }
-      template = template + "</a></li>"
-      this.$widget.find('ul').append(template)
+      elements = elements.add(element)
     }
-    if ( !result[0] ) {
-      this.$widget.find('ul').append("<li><a href='#'>-</a></li>")
-    }
-    this.$widget.find('ul li').on(
-      'click',
-      function(e) {
-        e.preventDefault()
-        var id = $(e.target).data('id')
-        _this.take(id)
-      }
-    )
+
+    this.$widget.find('ul').append(elements).scrollTop(9999)
     this.movePosition()
   }
 

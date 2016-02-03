@@ -71,7 +71,7 @@ class AaaGettingStartedTest < TestCase
     )
     set(
       css: '.js-base input[name="url"]',
-      value: 'http://localhost:3333',
+      value: browser_url,
     )
     click(
       css: '.js-base .btn--primary',

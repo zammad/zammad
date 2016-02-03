@@ -101,7 +101,7 @@
 
 &lt;script&gt;
 $(function() {
-  $('#feedback-form').zammad_form({
+  $('#feedback-form').ZammadForm({
 <span class="js-modal-params"></span>
   });
 });

@@ -1,8 +1,9 @@
 # encoding: utf-8
 
 class Observer::Ticket::Notification::BackgroundJob
-  def initialize(params)
+  def initialize(params, via_web = false)
     @p = params
+    @via_web = via_web
   end
 
   def perform
@@ -52,14 +53,14 @@ class Observer::Ticket::Notification::BackgroundJob
     recipient_list = ''
     recipients.each do |user|
 
-      # ignore user who changed it by him self
-      next if article && article.updated_by_id == user.id
-      next if !article && ticket.updated_by_id == user.id
+      # ignore user who changed it by him self via web
+      if @via_web
+        next if article && article.updated_by_id == user.id
+        next if !article && ticket.updated_by_id == user.id
+      end
 
       # ignore inactive users
       next if !user.active
-
-      # create desktop notification
 
       # create online notification
       seen = ticket.online_notification_seen_state(user.id)

@@ -1,50 +1,61 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-require 'rexml/document'
 class Package < ApplicationModel
   @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
 
-  # build package based on .szpm
-  # Package.build(
-  #   file:   'package.szpm',
-  #   root:   '/path/to/src/extention/',
-  #   output: '/path/to/package_location/'
-  # )
-  def self.build(data)
+=begin
 
-    if data[:file]
-      xml     = _read_file(data[:file], data[:root] || true)
-      package = _parse(xml)
-    elsif data[:string]
-      package = _parse(data[:string])
-    end
+verify if package is installed correctly
 
-    build_date = REXML::Element.new('build_date')
-    build_date.text = Time.zone.now.iso8601
-    build_host = REXML::Element.new('build_host')
-    build_host.text = Socket.gethostname
+  package = Package.find(123)
 
-    package.root.insert_after('//zpm/description', build_date)
-    package.root.insert_after('//zpm/description', build_host)
-    package.elements.each('zpm/filelist/file') do |element|
-      location = element.attributes['location']
-      content = _read_file(location, data[:root])
-      base64  = Base64.encode64(content)
-      element.text = base64
-    end
-    if data[:output]
-      location = "#{data[:output]}/#{package.elements['zpm/name'].text}-#{package.elements['zpm/version'].text}.zpm"
-      logger.info "NOTICE: writting package to '#{location}'"
-      file = File.new(location, 'wb')
-      file.write(package.to_s)
-      file.close
-      return true
-    end
-    package.to_s
+  issues = package.verify
+
+returns:
+
+    # if no issue exists
+    nil
+
+    # list of issues
+    {
+      'path/to/file' => 'missing',
+      'path/to/file' => 'changed',
+    }
+
+=end
+
+  def verify
+
+    # get package
+    json_file = self.class._get_bin(name, version)
+    package   = JSON.parse(json_file)
+
+    # verify installed files
+    issues = {}
+    package['files'].each { |file|
+      if !File.exist?(file['location'])
+        logger.error "File #{file['location']} is missing"
+        issues[file['location']] = 'missing'
+        next
+      end
+      content_package = Base64.decode64(file['content'])
+      content_fs      = self.class._read_file(file['location'])
+      next if content_package == content_fs
+      logger.error "File #{file['location']} is different"
+      issues[file['location']] = 'changed'
+    }
+    return nil if issues.empty?
+    issues
   end
 
-  # Package.auto_install
-  # install all packages located under auto_install/*.zpm
+=begin
+
+install all packages located under auto_install/*.zpm
+
+  Package.auto_install
+
+=end
+
   def self.auto_install
     path = "#{@@root}/auto_install/"
     return if !File.exist?(path)
@@ -60,9 +71,16 @@ class Package < ApplicationModel
     data
   end
 
-  # Package.unlink_all
-  # remove all linked files in application
-  # note: will not take down package migrations, use Package.unlink instead
+=begin
+
+remove all linked files in application
+
+note: will not take down package migrations, use Package.unlink instead
+
+  Package.unlink_all
+
+=end
+
   def self.unlink_all
     # link files
     Dir.glob("#{@@root}/**/*") do |entry|
@@ -91,8 +109,14 @@ class Package < ApplicationModel
     package
   end
 
-  # Package.unlink('/path/to/src/extention')
-  # execute migration down + unlink files
+=begin
+
+execute migration down + unlink files
+
+  Package.unlink('/path/to/src/extention')
+
+=end
+
   def self.unlink(package_base_dir)
 
     # check if zpm is a package source repo
@@ -121,8 +145,14 @@ class Package < ApplicationModel
     end
   end
 
-  # Package.link('/path/to/src/extention')
-  # link files + execute migration up
+=begin
+
+link files + execute migration up
+
+  Package.link('/path/to/src/extention')
+
+=end
+
   def self.link(package_base_dir)
 
     # check if zpm is a package source repo
@@ -174,21 +204,35 @@ class Package < ApplicationModel
     Package::Migration.migrate(package)
   end
 
-  # Package.install(file: '/path/to/package.zpm')
-  # Package.install(string: zpm_as_string)
+=begin
+
+install zpm package
+
+  package = Package.install(file: '/path/to/package.zpm')
+
+or
+
+  package = Package.install(string: zpm_as_string)
+
+returns
+
+  package # record of new created packae
+
+=end
+
   def self.install(data)
     if data[:file]
-      xml     = _read_file(data[:file], true)
-      package = _parse(xml)
+      json    = _read_file(data[:file], true)
+      package = JSON.parse(json)
     elsif data[:string]
-      package = _parse(data[:string])
+      package = JSON.parse(data[:string])
     end
 
     # package meta data
     meta = {
-      name: package.elements['zpm/name'].text,
-      version: package.elements['zpm/version'].text,
-      vendor: package.elements['zpm/vendor'].text,
+      name: package['name'],
+      version: package['version'],
+      vendor: package['vendor'],
       state: 'uninstalled',
       created_by_id: 1,
       updated_by_id: 1,
@@ -211,16 +255,17 @@ class Package < ApplicationModel
         name: package_db.name,
         version: package_db.version,
         migration_not_down: true,
+        reinstall: data[:reinstall],
       )
     end
 
     # store package
-    record = Package.create(meta)
     if !data[:reinstall]
+      package_db = Package.create(meta)
       Store.add(
         object: 'Package',
-        o_id: record.id,
-        data: package.to_s,
+        o_id: package_db.id,
+        data: package.to_json,
         filename: "#{meta[:name]}-#{meta[:version]}.zpm",
         preferences: {},
         created_by_id: UserInfo.current_user_id || 1,
@@ -228,89 +273,92 @@ class Package < ApplicationModel
     end
 
     # write files
-    package.elements.each('zpm/filelist/file') do |element|
-      location   = element.attributes['location']
-      permission = element.attributes['permission'] || '644'
-      base64     = element.text
-      content    = Base64.decode64(base64)
-      content    = _write_file(location, permission, content)
-    end
+    package['files'].each { |file|
+      permission = file['permission'] || '644'
+      content    = Base64.decode64(file['content'])
+      _write_file(file['location'], permission, content)
+    }
 
     # update package state
-    record.state = 'installed'
-    record.save
+    package_db.state = 'installed'
+    package_db.save
 
     # up migrations
     Package::Migration.migrate(meta[:name])
 
     # prebuild assets
 
-    true
+    package_db
   end
 
-  # Package.reinstall(package_name)
+=begin
+
+reinstall package
+
+  package = Package.reinstall(package_name)
+
+returns
+
+  package # record of new created packae
+
+=end
+
   def self.reinstall(package_name)
     package = Package.find_by(name: package_name)
     if !package
       fail "No such package '#{package_name}'"
     end
-
     file = _get_bin(package.name, package.version)
     install(string: file, reinstall: true)
+    package
   end
 
-  # Package.uninstall(name: 'package', version: '0.1.1')
-  # Package.uninstall(string: zpm_as_string)
+=begin
+
+uninstall package
+
+  package = Package.uninstall(name: 'package', version: '0.1.1')
+
+or
+
+  package = Package.uninstall(string: zpm_as_string)
+
+returns
+
+  package # record of new created packae
+
+=end
+
   def self.uninstall(data)
 
     if data[:string]
-      package = _parse(data[:string])
+      package = JSON.parse(data[:string])
     else
-      file    = _get_bin(data[:name], data[:version])
-      package = _parse(file)
+      json_file = _get_bin(data[:name], data[:version])
+      package   = JSON.parse(json_file)
     end
-
-    # package meta data
-    meta = {
-      name: package.elements['zpm/name'].text,
-      version: package.elements['zpm/version'].text,
-    }
 
     # down migrations
     if !data[:migration_not_down]
-      Package::Migration.migrate(meta[:name], 'reverse')
+      Package::Migration.migrate(package['name'], 'reverse')
     end
 
-    package.elements.each('zpm/filelist/file') do |element|
-      location   = element.attributes['location']
-      permission = element.attributes['permission'] || '644'
-      base64     = element.text
-      content    = Base64.decode64(base64)
-      content    = _delete_file(location, permission, content)
-    end
-
-    # prebuild assets
+    package['files'].each { |file|
+      permission = file['permission'] || '644'
+      content    = Base64.decode64(file['content'])
+      _delete_file(file['location'], permission, content)
+    }
 
     # delete package
-    record = Package.find_by(
-      name: meta[:name],
-      version: meta[:version],
-    )
-    record.destroy
-
-    true
-  end
-
-  def self._parse(xml)
-    logger.debug xml.inspect
-    begin
-      package = REXML::Document.new(xml)
-    rescue => e
-      logger.error 'ERROR: ' + e.inspect
-      return
+    if !data[:reinstall]
+      record = Package.find_by(
+        name: package['name'],
+        version: package['version'],
+      )
+      record.destroy
     end
-    logger.debug package.inspect
-    package
+
+    record
   end
 
   def self._get_bin(name, version)
@@ -357,8 +405,13 @@ class Package < ApplicationModel
   def self._write_file(file, permission, data)
     location = "#{@@root}/#{file}"
 
-    # rename existing file
+    # rename existing file if not already the same file
     if File.exist?(location)
+      content_fs = _read_file(file)
+      if content_fs == data
+        logger.debug "NOTICE: file '#{location}' already exists, skip install"
+        return true
+      end
       backup_location = location + '.save'
       logger.info "NOTICE: backup old file '#{location}' to #{backup_location}"
       File.rename(location, backup_location)
@@ -384,7 +437,7 @@ class Package < ApplicationModel
       file = File.new(location, 'wb')
       file.write(data)
       file.close
-      File.chmod(permission.to_i(8), location)
+      File.chmod(permission.to_s.to_i(8), location)
     rescue => e
       raise 'ERROR: ' + e.inspect
     end
@@ -470,7 +523,6 @@ class Package < ApplicationModel
           Kernel.const_get(classname).up
           Package::Migration.create(name: package.underscore, version: version)
         end
-
       }
     end
   end

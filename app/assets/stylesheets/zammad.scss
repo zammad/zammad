@@ -4417,12 +4417,13 @@ footer {
     justify-content: center;
   }
 
-.shortcut .dropdown-menu > .active > a {
+.shortcut .dropdown-menu > .is-active > a {
   background: none;
 }
 
-.shortcut .dropdown-menu > .active {
-  background: hsl(145,51%,45%);
+.shortcut .dropdown-menu {
+  overflow: auto;
+  position: absolute;
 }
 
 .editControls {
@@ -5486,6 +5487,16 @@ footer {
   overflow: hidden;
 }
 
+  .dropdown-menu kbd {
+    background: none;
+    color: inherit;
+    padding: 2px 5px;
+    margin-left: 7px;
+    line-height: 1;
+    vertical-align: baseline;
+    opacity: 0.5;
+  }
+
   .dropdown-toggle {
     display: flex;
     align-items: center;
@@ -5503,7 +5514,7 @@ footer {
     color: hsl(198,19%,72%);
   }
 
-  .dropdown-menu.dropdown-menu--light > li > a {
+  .dropdown-menu.dropdown-menu--light > li {
     color: hsl(202,70%,49%);
   }
 
@@ -5512,9 +5523,11 @@ footer {
     background: rgba(0,0,0,.05);
   }
 
-  .dropdown-menu.dropdown-menu--light li:hover,
-  .dropdown-menu.dropdown-menu--light li.is-active {
+  .dropdown-menu.dropdown-menu--light li:hover {
     background: none;
+  }
+  .dropdown-menu.dropdown-menu--light li.is-active {
+    color: white;
   }
 
   .dropdown ul {

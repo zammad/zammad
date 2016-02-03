@@ -124,7 +124,7 @@ class App.TicketCreate extends App.Controller
       diff = difference( @autosaveLast, data )
       if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
         @autosaveLast = data
-        @log 'notice', 'form hash changed', diff, data
+        @log 'debug', 'form hash changed', diff, data
         App.TaskManager.update( @task_key, { 'state': data })
     @interval( update, 3000, @id )
 

@@ -14,13 +14,13 @@ class Store
       end
 
       def self.get(sha)
-        file = Store::Provider::DB.find_by( sha: sha )
+        file = Store::Provider::DB.find_by(sha: sha)
         return if !file
         file.data
       end
 
       def self.delete(sha)
-        Store::Provider::DB.where( sha: sha ).destroy_all
+        Store::Provider::DB.where(sha: sha).destroy_all
         true
       end
     end

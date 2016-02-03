@@ -80,6 +80,7 @@ GEM
       activerecord (>= 3.0, < 5)
       delayed_job (>= 3.0, < 5)
     diffy (3.1.0)
+    dnsruby (1.59.1)
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -91,6 +92,8 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
+    email_verifier (0.1.0)
+      dnsruby (>= 1.5)
     equalizer (0.0.10)
     erubis (2.7.0)
     eventmachine (1.0.9.1)
@@ -153,6 +156,7 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    mysql2 (0.3.20)
     naught (1.1.0)
     nenv (0.2.0)
     net-ldap (0.13.0)
@@ -192,7 +196,6 @@ GEM
       omniauth-oauth (~> 1.1)
     parser (2.3.0.2)
       ast (~> 2.2)
-    pg (0.18.4)
     pluginator (1.3.0)
     power_assert (0.2.7)
     powerpack (0.1.1)
@@ -333,6 +336,7 @@ DEPENDENCIES
   diffy
   eco
   em-websocket
+  email_verifier
   eventmachine
   execjs
   guard (>= 2.2.2)
@@ -343,13 +347,13 @@ DEPENDENCIES
   libv8
   mail
   mime-types
+  mysql2 (~> 0.3.20)
   net-ldap
   omniauth
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-linkedin
   omniauth-twitter
-  pg
   pre-commit
   puma
   rack-livereload

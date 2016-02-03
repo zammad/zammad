@@ -156,6 +156,13 @@ class TestCase < Test::Unit::TestCase
           fail 'auto wizard login failed'
         end
         assert(true, 'auto wizard login ok')
+
+        # remove clues
+        clues = instance.find_elements({ css: '.js-modal--clue .js-close' })[0]
+        if clues
+          clues.click
+        end
+
         return
       end
       screenshot(browser: instance, comment: 'login_failed')
@@ -182,6 +189,13 @@ class TestCase < Test::Unit::TestCase
       screenshot(browser: instance, comment: 'login_failed')
       fail 'login failed'
     end
+
+    # remove clues
+    clues = instance.find_elements({ css: '.js-modal--clue .js-close' })[0]
+    if clues
+      clues.click
+    end
+
     screenshot(browser: instance, comment: 'login_ok')
     assert(true, 'login ok')
     login
@@ -923,7 +937,7 @@ class TestCase < Test::Unit::TestCase
     css:       '#content .text-1',
     value:     'some text',
     attribute: 'some_attribute' # optional
-    timeout:   '16', # in sec, default 16
+    timeout:   16, # in sec, default 16
   )
 
 =end
@@ -975,7 +989,7 @@ wait untill selector disabppears
   watch_for_disappear(
     browser: browser1,
     css:     '#content .text-1',
-    timeout: '16', # in sec, default 16
+    timeout: 16, # in sec, default 16
   )
 
 wait untill text in selector disabppears
@@ -984,7 +998,7 @@ wait untill text in selector disabppears
     browser: browser1,
     css:     '#content .text-1',
     value:   'some value as regexp',
-    timeout: '16', # in sec, default 16
+    timeout: 16, # in sec, default 16
   )
 
 =end
