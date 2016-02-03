@@ -148,7 +148,7 @@ module Import::Zendesk
     initialize_client
 
     # retrive statistic
-    statistic = {
+    result = {
       'Tickets'            => 0,
       'TicketFields'       => 0,
       'UserFields'         => 0,
@@ -162,20 +162,20 @@ module Import::Zendesk
       'Automations'        => 0,
     }
 
-    statistic.each { |object, _score|
+    result.each { |object, _score|
 
       counter = 0
       @client.send( object.underscore.to_sym ).all do |_resource|
         counter += 1
       end
 
-      statistic[ object ] = counter
+      result[ object ] = counter
     }
 
-    if statistic
-      Cache.write('import_zendesk_stats', statistic)
+    if result
+      Cache.write('import_zendesk_stats', result)
     end
-    statistic
+    result
   end
 
 =begin
@@ -763,7 +763,6 @@ module Import::Zendesk
         elsif zendesk_article.via.channel == 'twitter'
           local_article_fields[:message_id] = zendesk_article.id
 
-          # TODO
           local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'mention'
                                              article_type_twitter_status.id
                                            else
@@ -776,7 +775,6 @@ module Import::Zendesk
           local_article_fields[:to]         = zendesk_article.via.source.to.facebook_id
           local_article_fields[:message_id] = zendesk_article.id
 
-          # TODO
           local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'post'
                                              article_type_facebook_feed_post.id
                                            else
