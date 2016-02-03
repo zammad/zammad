@@ -132,7 +132,7 @@ class AaaStringTest < ActiveSupport::TestCase
     html = ' line&nbsp;1<br>
 you<br/>
 -----&amp;'
-    should = 'line 1
+    should = 'line 1
 you
 -----&'
     assert_equal( should, html.html2text)

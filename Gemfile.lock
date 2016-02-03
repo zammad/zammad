@@ -120,6 +120,7 @@ GEM
       guard-compat (~> 1.0)
       multi_json (~> 1.8)
     hashie (3.4.3)
+    htmlentities (4.3.4)
     http (1.0.2)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -341,6 +342,7 @@ DEPENDENCIES
   execjs
   guard (>= 2.2.2)
   guard-livereload
+  htmlentities
   icalendar
   json
   koala

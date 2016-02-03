@@ -149,43 +149,50 @@ class String
     # replace multiple spaces with one
     string.gsub!(/  /, ' ')
 
-    # strip all &amp; &lt; &gt; &quot;
-    string.gsub!( '&amp;', '&' )
-    string.gsub!( '&lt;', '<' )
-    string.gsub!( '&gt;', '>' )
-    string.gsub!( '&quot;', '"' )
-    string.gsub!( '&nbsp;', ' ' )
+    # try HTMLEntities, if it fails on invalid signes, use manual way
+    begin
+      coder = HTMLEntities.new
+      string = coder.decode(string)
+    rescue
 
-    # encode html entities like "&#8211;"
-    string.gsub!( /(&\#(\d+);?)/x ) {
-      $2.chr
-    }
+      # strip all &amp; &lt; &gt; &quot;
+      string.gsub!( '&amp;', '&' )
+      string.gsub!( '&lt;', '<' )
+      string.gsub!( '&gt;', '>' )
+      string.gsub!( '&quot;', '"' )
+      string.gsub!( '&nbsp;', ' ' )
 
-    # encode html entities like "&#3d;"
-    string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) {
-      chr_orig = $1
-      hex      = $2.hex
-      if hex
-        chr = hex.chr
-        if chr
-          chr_orig = chr
+      # encode html entities like "&#8211;"
+      string.gsub!( /(&\#(\d+);?)/x ) {
+        $2.chr
+      }
+
+      # encode html entities like "&#3d;"
+      string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) {
+        chr_orig = $1
+        hex      = $2.hex
+        if hex
+          chr = hex.chr
+          if chr
+            chr_orig = chr
+          else
+            chr_orig
+          end
         else
           chr_orig
         end
-      else
-        chr_orig
-      end
 
-      # check valid encoding
-      begin
-        if !chr_orig.encode('UTF-8').valid_encoding?
+        # check valid encoding
+        begin
+          if !chr_orig.encode('UTF-8').valid_encoding?
+            chr_orig = '?'
+          end
+        rescue
           chr_orig = '?'
         end
-      rescue
-        chr_orig = '?'
-      end
-      chr_orig
-    }
+        chr_orig
+      }
+    end
 
     # remove tailing empty spaces
     string.gsub!(/\s+\n$/, "\n")
