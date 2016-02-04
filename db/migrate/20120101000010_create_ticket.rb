@@ -51,7 +51,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :close_time_in_min,                :integer,               null: true
       t.column :close_time_diff_in_min,           :integer,               null: true
       t.column :update_time_escal_date,           :timestamp,             null: true
-      t.column :updtate_time_sla_time,            :timestamp,             null: true
+      t.column :update_time_sla_time,             :timestamp,             null: true
       t.column :update_time_in_min,               :integer,               null: true
       t.column :update_time_diff_in_min,          :integer,               null: true
       t.column :last_contact,                     :timestamp,             null: true

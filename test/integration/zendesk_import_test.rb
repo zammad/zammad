@@ -447,7 +447,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       close_time_in_min
       close_time_diff_in_min
       update_time_escal_date
-      updtate_time_sla_time
+      update_time_sla_time
       update_time_in_min
       update_time_diff_in_min
       last_contact

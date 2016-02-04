@@ -34,7 +34,7 @@ class TwitterBrowserTest < TestCase
     end
     twitter_customer_token_secret = ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
 
-    hash = "#sweetcheck#{hash_gen}"
+    hash = "#sweet#{hash_gen}"
 
     @browser = browser_instance
     login(
@@ -197,7 +197,7 @@ class TwitterBrowserTest < TestCase
       config.access_token_secret = twitter_customer_token_secret
     end
 
-    text  = "Today... #{hash} #{hash_gen}"
+    text  = "Today #{rand_word}... #{hash} #{hash_gen}"
     tweet = client.update(
       text,
     )
@@ -253,7 +253,7 @@ class TwitterBrowserTest < TestCase
 
     ticket_update(
       data: {
-        body: "@dzucker6 reply #{re_hash} #{rand(999_999)}",
+        body: "@dzucker6 #{rand_word} reply #{re_hash} #{rand(999_999)}",
       },
     )
     sleep 20
@@ -275,6 +275,28 @@ class TwitterBrowserTest < TestCase
 
   def hash_gen
     (0...10).map { ('a'..'z').to_a[rand(26)] }.join + rand(999).to_s
+  end
+
+  def rand_word
+    words = [
+      'dog',
+      'cat',
+      'house',
+      'home',
+      'yesterday',
+      'tomorrow',
+      'new york',
+      'berlin',
+      'coffee script',
+      'java script',
+      'bob smith',
+      'be open',
+      'really nice',
+      'stay tuned',
+      'be a good boy',
+      'invent new things',
+    ]
+    words[rand(words.length)]
   end
 
 end
