@@ -742,8 +742,8 @@ module Import::Zendesk
 
         elsif zendesk_article.via.channel == 'facebook'
 
-          local_article_fields[:from]       = zendesk_article.via.source.from.facebook_id
-          local_article_fields[:to]         = zendesk_article.via.source.to.facebook_id
+          local_article_fields[:from] = zendesk_article.via.source.from.facebook_id
+          local_article_fields[:to]   = zendesk_article.via.source.to.facebook_id
 
           local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'post'
                                              article_type_facebook_feed_post.id

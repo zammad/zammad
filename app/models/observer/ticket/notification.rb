@@ -18,7 +18,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     EventBuffer.reset
 
     via_web = false
-    if ENV['SERVER_NAME']
+    if ENV['RACK_ENV'] || defined? Rails.configuration.webserver_is_active
       via_web = true
     end
 
