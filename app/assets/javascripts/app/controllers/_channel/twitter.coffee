@@ -133,10 +133,10 @@ class Index extends App.ControllerContent
         class: 'form-control--small'
       )
 
-    addSearchTerm = () =>
+    addSearchTerm = =>
       @searchTerms.push
-        term: ""
-        group_id: ""
+        term: ''
+        group_id: ''
       renderSearchTerms()
       content.find('.js-searchTermList [name="search::term"]').last().focus()
 
@@ -145,7 +145,7 @@ class Index extends App.ControllerContent
       @searchTerms.splice(index, 1)
       renderSearchTerms()
 
-    renderSearchTerms = () =>
+    renderSearchTerms = =>
       return if !@searchTerms
 
       content.find('.js-searchTermList').empty()
