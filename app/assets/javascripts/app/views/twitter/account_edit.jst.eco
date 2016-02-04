@@ -3,30 +3,32 @@
 
   <h3><%- @T('Search Terms') %></h3>
   <p class="description"><%- @T('Tweets containing search terms are automatically turned into tickets.') %></p>
-  <div class="js-searchTerm">
-    <div class="js-searchTermItem js-searchTermPlaceholder hidden">
-      <input name="" value=""> -> <div class="js-groups"></div>
-      <div class="btn btn--text js-searchTermRemove">
-        <%- @Icon('trash') %> <%- @T('Remove') %>
-      </div>
-      <hr>
-    </div>
-    <div class="js-searchTermList"></div>
-    <div class="btn btn--text js-searchTermAdd">
-      <%- @Icon('plus-small') %> <%- @T('Add') %>
-    </div>
-  </div>
 
-  <div class="js-mention">
-    <h3><%- @T('Mentions Group') %></h3>
-    <p class="description"><%- @T('Choose which group %s will get added to.', 'mentions') %></p>
-    <div class="js-groups"></div>
-  </div>
+  <table class="settings-list">
+    <thead>
+      <tr>
+        <th><%- @T('Search Term') %>
+        <th><%- @T('Group') %>
+        <th><%- @T('Action') %>
+    </thead>
+    <tbody class="js-searchTermList">
+      <tr>
+        <td colspan="3">
+          <%- @T('Empty') %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="settings-list-action-cell js-searchTermAdd">
+          <%- @Icon('plus-small') %>
+    </tfoot>
+  </table>
+  
+  <h3><%- @T('Mentions Group') %></h3>
+  <p class="description"><%- @T('Choose which group %s will get added to.', 'mentions') %></p>
+  <div class="js-mentionsGroup"></div>
 
-  <div class="js-directMessage">
-    <h3><%- @T('Direct Messages Group') %></h3>
-    <p class="description"><%- @T('Choose which group %s will get added to.', 'direct messages') %></p>
-    <div class="js-groups"></div>
-  </div>
+  <h3><%- @T('Direct Messages Group') %></h3>
+  <p class="description"><%- @T('Choose which group %s will get added to.', 'direct messages') %></p>
+  <div class="js-directMessagesGroup"></div>
 
 </fieldset>

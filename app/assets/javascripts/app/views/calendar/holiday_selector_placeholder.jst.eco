@@ -7,9 +7,7 @@
     </label>
   <td><%- @Tdate(@placeholderDate) %>
   <td><input class="form-control form-control--small js-summary" type="text" name="<%= @placeholderSummary %>" value="<%= @placeholderSummary %>" required/>
-  <td>
-    <div class="settings-list-rowControls">
-      <div class="btn btn--text js-remove">
-        <%- @Icon('trash') %> <%- @T('Remove') %>
-      </div>
+  <td class="settings-list-row-control">
+    <div class="btn btn--text js-remove">
+      <%- @Icon('trash') %> <%- @T('Remove') %>
     </div>

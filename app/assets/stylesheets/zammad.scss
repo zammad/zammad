@@ -317,7 +317,7 @@ pre code.hljs {
   
   .icon {
     vertical-align: middle;
-    margin-top: -1px; // more negative margin top looks bad on the btn--quad plus in overviews
+    margin-top: -3px;
   }
 
   &.btn--icon--last .icon {
@@ -424,6 +424,7 @@ pre code.hljs {
   }
 
   &.btn--positive,
+  &.btn--create,
   &.btn--success {
     color: white;
     background: hsl(145,51%,45%);
@@ -439,6 +440,10 @@ pre code.hljs {
       &:active {
         background: hsl(0,0%,98%);
       }
+    }
+
+    &.btn--text {
+      color: $supergood-color;
     }
 
     .icon {
@@ -521,6 +526,10 @@ pre code.hljs {
 
   &.btn--quad {
     padding: 10px 12px 9px;
+    
+    .icon {
+      margin-top: -1px;
+    }
   }
 
   &.btn--split--first {
@@ -6808,20 +6817,13 @@ output {
     margin: 0;
   }
 
-  .btn.btn--text:not(.btn--secondary) {
-    color: hsl(60,1%,61%);
-  }
-
-  .btn .icon {
-    fill: hsl(60,1%,61%);
-  }
-
   th:not(:last-child),
   td:not(:last-child) {
     border-right: none;
   }
 
-  tr:not(:last-child) td {
+  tr:not(:last-child) td,
+  & > tbody:not(:last-child) tr td {
     border-bottom: none;
   }
 
@@ -6838,11 +6840,13 @@ output {
     border-top-right-radius: 4px;
   }
 
-  & > tbody > tr:last-child > td:first-child {
+  & > tbody:last-child > tr:last-child > td:first-child,
+  & > tfoot:last-child > tr:last-child > td:first-child {
     border-bottom-left-radius: 4px;
   }
 
-  & > tbody > tr:last-child > td:last-child {
+  & > tbody:last-child > tr:last-child > td:last-child,
+  & > tfoot:last-child > tr:last-child > td:last-child {
     border-bottom-right-radius: 4px;
   }
 
@@ -6870,9 +6874,11 @@ output {
     }
   }
 
-  .settings-list-controlRow {
-    td {
-      padding: 5px;
+  .settings-list-control-cell {
+    padding: 5px;
+    
+    & ~ .settings-list-row-control {
+      padding-bottom: 7px;
     }
   }
 }
