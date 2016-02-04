@@ -5,32 +5,27 @@
   </div>
 
   <div class="tab-content first-steps-widgets hidden">
-    <% if @isAdmin: %>
-    <%- @T('Configuration') %>
-    <ul>
-      <li><%- @T('Branding') %></li>
-      <li><%- @T('Your Email Configuration') %></li>
-      <li><%- @T('Invite Agents/Colleges') %></li>
-    </ul>
-    <% end %>
-    <%- @T('How to use it') %>
-    <ul>
-      <li><a href="#" class="intro"><%- @T('Intro') %></a></li>
-      <li><%- @T('Create a Test Ticket') %></li>
-      <li><%- @T('Create new Overviews') %></li>
-      <li><%- @T('Create Text Modues') %></li>
-      <li><%- @T('Create Macros') %></li>
-    </ul>
-    <% if @isAdmin: %>
-    <%- @T('Additionals Channels') %>
-    <ul>
-      <li><%- @T('Twitter') %></li>
-      <li><%- @T('Facebook') %></li>
-      <li><%- @T('Chat') %></li>
-      <li><%- @T('Widget') %></li>
-    </ul>
-    <% end %>
-
+    <div class="box box--paper">
+      <% if @isAdmin: %>
+      <h3><%- @T('Configuration') %></h3>
+      <div class="todo is-done"><%- @T('Branding') %></div>
+      <div class="todo"><%- @T('Your Email Configuration') %></div>
+      <div class="todo"><%- @T('Invite Agents/Colleges') %></div>
+      <% end %>
+      <h3><%- @T('How to use it') %></h3>
+      <div class="todo"><a href="#" class="intro"><%- @T('Intro') %></a></div>
+      <div class="todo is-done"><%- @T('Create a Test Ticket') %></div>
+      <div class="todo"><%- @T('Create new Overviews') %></div>
+      <div class="todo is-done"><%- @T('Create Text Modues') %></div>
+      <div class="todo"><%- @T('Create Macros') %></div>
+      <% if @isAdmin: %>
+      <h3><%- @T('Additionals Channels') %></h3>
+      <div class="todo"><%- @T('Twitter') %></div>
+      <div class="todo"><%- @T('Facebook') %></div>
+      <div class="todo is-done"><%- @T('Chat') %></div>
+      <div class="todo"><%- @T('Widget') %></div>
+      <% end %>
+    </div>
   </div>
 
   <div class="tab-content stat-widgets three-columns horizontal"></div>

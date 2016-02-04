@@ -17,6 +17,28 @@ $highlight-color: hsl(205,90%,60%);
 
 $largeScreenBreakpoint: 1280px;
 
+/// Replace `$search` with `$replace` in `$string`
+/// @author Hugo Giraudel
+/// @param {String} $string - Initial string
+/// @param {String} $search - Substring to replace
+/// @param {String} $replace ('') - New value
+/// @return {String} - Updated string
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@function icon($name, $color) {
+  $data-uri: asset-data-url("/assets/images/icons/#{$name}");
+  $replace-src: str-replace("@{data-uri}", "#50E3C2", $color);
+  @return $replace-src;
+}
+
 html {
   height: 100%;
 }
@@ -2231,7 +2253,7 @@ ol.tabs li {
   }
 
   .tabs--big {
-    margin: 25px auto 20px;
+    margin: 28px auto;
     font-size: 14px;
     border-radius: 8px;
     
@@ -3691,7 +3713,7 @@ footer {
 .superbad-color  { fill: $superbad-color; }
 
 .stat-widgets {
-  margin: 0 -7px 20px;
+  margin: -7px -7px 20px;
 }
 
   .stat-widget {
@@ -5116,6 +5138,23 @@ footer {
     margin-bottom: 12px;
   }
 
+  .box--paper {
+    background-image: linear-gradient(transparent 30px, hsl(0,0%,93%) 31px);
+    background-size: 100% 31px;
+    line-height: 31px;
+    padding-top: 31px;
+    padding-bottom: 31px;
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: inherit;
+    }
+
+    h3:not(:first-child) {
+      margin-top: 31px;
+    }
+  }
+
   .box h1 {
     margin-top: 10px;
     margin-bottom: 12px;
@@ -5854,8 +5893,6 @@ footer {
 }
 
 .tab-content {
-  margin-top: 25px;
-  
   h2:first-child {
     margin-top: 0;
   }
@@ -7723,6 +7760,32 @@ output {
     
     &.is-selected {
       background: linear-gradient(hsla(202,50%,20%,0.1), hsla(202,50%,20%,.03));
+    }
+  }
+}
+
+.todo {
+  padding: 0 22px;
+  position: relative;
+
+  /* circle */
+  &:before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 12px;
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+    background: rgba(0,0,0,.1);
+  }
+
+  &.is-done {
+    // background: icon("checkmark.svg", $supergood-color) no-repeat 0 9px;
+    background: url("images/icons/checkmark.svg") no-repeat 0 9px;
+
+    &:before {
+      display: none;
     }
   }
 }
