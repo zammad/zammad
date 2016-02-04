@@ -1,4 +1,5 @@
 class App.Dashboard extends App.Controller
+  clueAccess: true
   events:
     'click .tabs .tab': 'toggle'
     'click .intro': 'clues'
@@ -7,7 +8,7 @@ class App.Dashboard extends App.Controller
     super
 
     if @isRole('Customer')
-      @navigate '#', true
+      @clueAccess = false
       return
 
     # render page
@@ -17,6 +18,8 @@ class App.Dashboard extends App.Controller
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
       @render()
+
+    @mayBeClues()
 
   render: ->
 
@@ -34,14 +37,34 @@ class App.Dashboard extends App.Controller
       limit: 25
     )
 
+  mayBeClues: =>
+    return if !@clueAccess
+    return if !@activeState
+    preferences = @Session.get('preferences')
+    @clueAccess = false
+    return if preferences['intro']
+    @clues()
+
   clues: (e) =>
-    e.preventDefault()
+    @clueAccess = false
+    if e
+      e.preventDefault()
     new App.FirstStepsClues(
       el: @el
+      onComplete: =>
+        @ajax(
+          id:          'preferences'
+          type:        'PUT'
+          url:         @apiPath + '/users/preferences'
+          data:        JSON.stringify({user:{intro:true}})
+          processData: true
+        )
     )
 
   active: (state) =>
     @activeState = state
+    if state
+      @mayBeClues()
 
   isActive: =>
     @activeState
@@ -50,6 +73,10 @@ class App.Dashboard extends App.Controller
     '#dashboard'
 
   show: (params) =>
+
+    if @isRole('Customer')
+      @navigate '#', true
+      return
 
     # set title
     @title 'Dashboard'

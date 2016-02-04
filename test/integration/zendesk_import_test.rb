@@ -48,7 +48,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
     assert_equal( 3, Group.count, 'groups' )
     assert_equal( 5, Role.count, 'roles' )
     assert_equal( 2, Organization.count, 'organizations' )
-    assert_equal( 144, Ticket.count, 'tickets' )
+    assert_equal( 143, Ticket.count, 'tickets' )
     assert_equal( 151, Ticket::Article.count, 'ticket articles' )
     assert_equal( 2, Store.count, 'ticket article attachments' )
 
@@ -275,10 +275,10 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
     checks = [
       {
-        id: 3,
+        id: 2,
         data: {
           title:                    'test',
-          note:                     'test email',
+          note:                     'This is the first comment. Feel free to delete this sample ticket.',
           create_article_type_id:   1,
           create_article_sender_id: 2,
           article_count:            2,
@@ -288,6 +288,38 @@ class ZendeskImportTest < ActiveSupport::TestCase
           owner_id:                 1,
           customer_id:              6,
           organization_id:          2,
+        },
+      },
+      {
+        id: 3,
+        data: {
+          title:                    'Bob Smith, here is the test ticket you requested',
+          note:                     'test email',
+          create_article_type_id:   10,
+          create_article_sender_id: 2,
+          article_count:            4,
+          state_id:                 3,
+          group_id:                 3,
+          priority_id:              1,
+          owner_id:                 1,
+          customer_id:              7,
+          organization_id:          nil,
+        },
+      },
+      {
+        id: 5,
+        data: {
+          title:                    'Twitter',
+          note:                     '@DesafioCaracol sh q acaso sto se vale ver el jueg...',
+          create_article_type_id:   6,
+          create_article_sender_id: 2,
+          article_count:            1,
+          state_id:                 1,
+          group_id:                 3,
+          priority_id:              2,
+          owner_id:                 1,
+          customer_id:              91,
+          organization_id:          nil,
         },
       },
       {
@@ -304,38 +336,6 @@ class ZendeskImportTest < ActiveSupport::TestCase
           owner_id:                 1,
           customer_id:              143,
           organization_id:          nil,
-        },
-      },
-      {
-        id: 5,
-        data: {
-          title:                    'Twitter',
-          note:                     '@DesafioCaracol sh q acaso sto se vale ver el jueg...',
-          create_article_type_id:   6,
-          create_article_sender_id: 2,
-          article_count:            1,
-          state_id:                 1,
-          group_id:                 3,
-          priority_id:              2,
-          owner_id:                 1,
-          customer_id:              90,
-          organization_id:          nil,
-        },
-      },
-      {
-        id: 2,
-        data: {
-          title:                    'This is a sample ticket requested and submitted by you',
-          note:                     'This is the first comment. Feel free to delete this sample ticket.',
-          create_article_type_id:   10,
-          create_article_sender_id: 1,
-          article_count:            4,
-          state_id:                 3,
-          group_id:                 3,
-          priority_id:              3,
-          owner_id:                 1,
-          customer_id:              4,
-          organization_id:          2,
         },
       },
       # {
@@ -359,16 +359,16 @@ class ZendeskImportTest < ActiveSupport::TestCase
     checks.each { |check|
       ticket = Ticket.find( check[:id] )
 
-      assert_equal( check[:data][:title], ticket.title, 'title' )
-      assert_equal( check[:data][:create_article_type_id], ticket.create_article_type_id, 'created_article_type_id' )
-      assert_equal( check[:data][:create_article_sender_id], ticket.create_article_sender_id, 'created_article_sender_id' )
-      assert_equal( check[:data][:article_count], ticket.article_count, 'article_count' )
-      assert_equal( check[:data][:state_id], ticket.state.id, 'state_id' )
-      assert_equal( check[:data][:group_id], ticket.group.id, 'group_id' )
-      assert_equal( check[:data][:priority_id], ticket.priority.id, 'priority_id' )
-      assert_equal( check[:data][:owner_id], ticket.owner.id, 'owner_id' )
-      assert_equal( check[:data][:customer_id], ticket.customer.id, 'customer_id' )
-      assert_equal( check[:data][:organization_id], ticket.organization.try(:id), 'organization_id' )
+      assert_equal( check[:data][:title], ticket.title, "title of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:create_article_type_id], ticket.create_article_type_id, "created_article_type_id of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:create_article_sender_id], ticket.create_article_sender_id, "created_article_sender_id of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:article_count], ticket.article_count, "article_count of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:state_id], ticket.state.id, "state_id of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:group_id], ticket.group.id, "group_id of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:priority_id], ticket.priority.id, "priority_id of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:owner_id], ticket.owner.id, "owner_id of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:customer_id], ticket.customer.id, "customer_id of Ticket.find(#{check[:id]})" )
+      assert_equal( check[:data][:organization_id], ticket.organization.try(:id), "organization_id of Ticket.find(#{check[:id]})" )
     }
   end
 

@@ -86,7 +86,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1)
 
     # execute ticket events
-    ENV['SERVER_NAME'] = nil
+    Rails.configuration.webserver_is_active = nil
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
@@ -121,7 +121,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1)
 
     # execute ticket events
-    ENV['SERVER_NAME'] = 'some_host'
+    Rails.configuration.webserver_is_active = true
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
@@ -159,7 +159,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert( ticket1, 'ticket created - ticket notification simple' )
 
     # execute ticket events
-    ENV['SERVER_NAME'] = 'some_host'
+    Rails.configuration.webserver_is_active = true
     Observer::Ticket::Notification.transaction
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off

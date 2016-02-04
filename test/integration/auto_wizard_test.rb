@@ -29,6 +29,8 @@ class AutoWizardTest < TestCase
       timeout: 20,
     )
 
+    clues_close
+
     organization_open_by_search(
       value: 'Demo Organization',
     )

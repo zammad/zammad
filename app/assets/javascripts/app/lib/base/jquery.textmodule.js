@@ -367,14 +367,6 @@
     this.$widget.find('ul').html('')
     this.log('result', term, result)
 
-    if (!result[0]) {
-      result = [{id:'', name: '-'}]
-    }
-
-    if (!this.active) {
-      this.open()
-    }
-
     var elements = $()
 
     for (var i = 0; i < result.length; i++) {
@@ -383,7 +375,7 @@
       element.attr('data-id', item.id)
       element.text(App.Utils.htmlEscape(item.name))
       element.addClass('u-clickable u-textTruncate')
-      if (i == result.length-1 && item.id != '') {
+      if (i == result.length-1) {
         element.addClass('is-active')
       }
       if (item.keywords) {

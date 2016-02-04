@@ -4,7 +4,7 @@
     <%- @Icon('diagonal-cross') %>
   </div>
   <div class="modal-header"><%- @T(@headline) %></div>
-  <div class="modal-body"><%- @text %></div>
+  <div class="modal-body"><%- @T(@text) %></div>
   <div class="modal-controls">
     <div class="modal-control">
       <div class="<% if @position is 0: %>is-disabled <% end %>btn btn--text js-previous"><%- @T( 'Previous' ) %></div>
