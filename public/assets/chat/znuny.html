@@ -4,8 +4,7 @@
   <meta charset="utf-8">
   <title>Zammad Chat</title>
   <link rel="stylesheet" href="znuny.css">
-  <meta name="viewport" content="width=device-width">
-  <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35738/livereload.js?snipver=1"></' + 'script>')</script>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <style>
     body {
       margin: 0;
@@ -134,7 +133,7 @@
   var hostname = window.location.hostname;
   var port = window.location.port;
   var params = getSearchParameters();
-  var host = 'ws://localhost:6042'
+  var host = 'ws://'+ (location.host || 'localhost').split(':')[0] +':6042'
   if (params['port']) {
     host = 'ws://' + hostname + ':' + params['port']
   }
