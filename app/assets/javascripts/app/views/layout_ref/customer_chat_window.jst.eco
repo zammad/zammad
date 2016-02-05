@@ -3,7 +3,7 @@
     <div class="chat-status-holder">
       <%- @Icon('status') %>
       <%- @Icon('status-modified-outer-circle') %>
-      <%- @Icon('status-modified-inner-circle') %>
+      <%- @Icon('small-dot', 'status-modified-inner-circle') %>
     </div>
   </div>
   <div class="chat-name"><%- @name %></div>

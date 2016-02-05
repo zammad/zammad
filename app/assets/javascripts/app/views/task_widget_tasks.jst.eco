@@ -3,7 +3,7 @@
     <div class="nav-tab-icon" title="<%- @Ti(item.meta.iconTitle) %>">
       <% if item.meta.type is 'task': %>
         <% if item.task.notify: %>
-          <%- @Icon('status-modified-inner-circle', "icon-task-state #{item.meta.iconClass}") %>
+          <%- @Icon('small-dot', "icon-status-modified-inner-circle icon-task-state #{item.meta.iconClass}") %>
           <%- @Icon('status-modified-outer-circle', "icon-task-state #{item.meta.iconClass}") %>
         <% else: %>
           <%- @Icon('task-state', item.meta.iconClass) %>
