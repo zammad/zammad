@@ -17,28 +17,6 @@ $highlight-color: hsl(205,90%,60%);
 
 $largeScreenBreakpoint: 1280px;
 
-/// Replace `$search` with `$replace` in `$string`
-/// @author Hugo Giraudel
-/// @param {String} $string - Initial string
-/// @param {String} $search - Substring to replace
-/// @param {String} $replace ('') - New value
-/// @return {String} - Updated string
-@function str-replace($string, $search, $replace: '') {
-  $index: str-index($string, $search);
-
-  @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-  }
-
-  @return $string;
-}
-
-@function icon($name, $color) {
-  $data-uri: asset-data-url("/assets/images/icons/#{$name}");
-  $replace-src: str-replace("@{data-uri}", "#50E3C2", $color);
-  @return $replace-src;
-}
-
 html {
   height: 100%;
 }
@@ -7765,28 +7743,17 @@ output {
 }
 
 .todo {
-  padding: 0 22px;
   position: relative;
+  display: block;
 
-  /* circle */
-  &:before {
-    content: "";
-    position: absolute;
-    left: 5px;
-    top: 12px;
-    width: 6px;
-    height: 6px;
-    border-radius: 100%;
-    background: rgba(0,0,0,.1);
+  .icon {
+    fill: hsl(0,0%,80%);
+    vertical-align: middle;
+    margin: -2px 3px 0 0;
   }
 
-  &.is-done {
-    // background: icon("checkmark.svg", $supergood-color) no-repeat 0 9px;
-    background: url("images/icons/checkmark.svg") no-repeat 0 9px;
-
-    &:before {
-      display: none;
-    }
+  &.is-done .icon {
+    fill: $supergood-color;
   }
 }
 
