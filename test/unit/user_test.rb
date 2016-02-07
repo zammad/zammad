@@ -335,6 +335,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not(customer1.preferences['notification_config'])
 
     customer1.roles = Role.where(name: 'Agent')
+    customer1.save
     assert(customer1.preferences)
     assert(customer1.preferences['locale'])
     assert_equal(customer1.preferences['locale'], 'de-de')
