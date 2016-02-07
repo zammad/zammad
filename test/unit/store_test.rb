@@ -15,12 +15,12 @@ class StoreTest < ActiveSupport::TestCase
         o_id: 2,
       },
       {
-        data: IO.read('test/fixtures/test1.pdf'),
+        data: IO.binread('test/fixtures/test1.pdf'),
         filename: 'test.pdf',
         o_id: 3,
       },
       {
-        data: IO.read('test/fixtures/test1.pdf'),
+        data: IO.binread('test/fixtures/test1.pdf'),
         filename: 'test-again.pdf',
         o_id: 4,
       },
