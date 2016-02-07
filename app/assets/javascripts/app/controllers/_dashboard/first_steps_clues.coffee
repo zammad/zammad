@@ -11,7 +11,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.search-holder'
       headline: 'Search'
-      text: 'Here you can search for ticket, customers and organizations. To find everything use the §*§-Placeholder'
+      text: 'Here you can search for ticket, customers and organizations. You can use the §*§-Placeholder as wildcard. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
     }
     {
       container: '.user-menu'
