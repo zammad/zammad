@@ -137,12 +137,12 @@ class Observer::Ticket::Notification::BackgroundJob
 
       # ignore email channel notificaiton and empty emails
       if !channels['email'] && (!user.email || user.email == '')
-        add_recipient_list(recipient_list, user, channels)
+        add_recipient_list(ticket, user, used_channels)
         next
       end
 
       used_channels.push 'email'
-      recipient_list = add_recipient_list(recipient_list, user, used_channels)
+      add_recipient_list(ticket, user, used_channels)
 
       # get user based notification template
       # if create, send create message / block update messages
@@ -181,9 +181,11 @@ class Observer::Ticket::Notification::BackgroundJob
       )
     end
 
-    # add history record
-    return if recipient_list == ''
+  end
 
+  def add_recipient_list(ticket, user, channels)
+    return if channels.empty?
+    recipient_list = "#{user.email}(#{channels.join(',')})"
     History.add(
       o_id: ticket.id,
       history_type: 'notification',
@@ -191,14 +193,6 @@ class Observer::Ticket::Notification::BackgroundJob
       value_to: recipient_list,
       created_by_id: ticket.updated_by_id || 1
     )
-  end
-
-  def add_recipient_list(recipient_list, user, channels)
-    return recipient_list if channels.empty?
-    if recipient_list != ''
-      recipient_list += ','
-    end
-    recipient_list += "#{user.email}(#{channels.join(',')})"
   end
 
   def human_changes(user, record)
