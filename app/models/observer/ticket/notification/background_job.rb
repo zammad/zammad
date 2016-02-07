@@ -185,7 +185,11 @@ class Observer::Ticket::Notification::BackgroundJob
 
   def add_recipient_list(ticket, user, channels)
     return if channels.empty?
-    recipient_list = "#{user.email}(#{channels.join(',')})"
+    identifier = user.email
+    if !identifier && identifier == ''
+      identifier = user.login
+    end
+    recipient_list = "#{identifier}(#{channels.join(',')})"
     History.add(
       o_id: ticket.id,
       history_type: 'notification',
