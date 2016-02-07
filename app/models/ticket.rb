@@ -84,7 +84,11 @@ returns
 =end
 
   def agent_of_group
-    Group.find( group_id ).users.where( active: true ).joins(:roles).where( 'roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true ).uniq()
+    Group.find(group_id)
+         .users.where(active: true)
+         .joins(:roles)
+         .where('roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true)
+         .uniq()
   end
 
 =begin
