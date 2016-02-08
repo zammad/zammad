@@ -1,3 +1,64 @@
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   slice = [].slice,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -385,7 +446,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.renderMessage = bind(this.renderMessage, this);
       this.receiveMessage = bind(this.receiveMessage, this);
       this.onSubmit = bind(this.onSubmit, this);
-      this.onFocusOut = bind(this.onFocusOut, this);
       this.onFocus = bind(this.onFocus, this);
       this.onInput = bind(this.onInput, this);
       this.onReopenSession = bind(this.onReopenSession, this);
@@ -394,7 +454,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.send = bind(this.send, this);
       this.checkForEnter = bind(this.checkForEnter, this);
       this.render = bind(this.render, this);
-      this.getScrollRoot = bind(this.getScrollRoot, this);
       this.view = bind(this.view, this);
       this.T = bind(this.T, this);
       this.options = $.extend({}, this.defaults, options);
@@ -439,7 +498,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.getScrollRoot = function() {
       var end, html, start;
-      if ("scrollingElement" in document) {
+      if ('scrollingElement' in document) {
         return document.scrollingElement;
       }
       html = document.documentElement;
@@ -645,7 +704,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       keyboardShown = $(window).scrollTop() > 0;
       $(window).scrollTop(0);
       if (keyboardShown) {
-        return this.log.notice("virtual keyboard shown");
+        return this.log.notice('virtual keyboard shown');
       }
     };
 
@@ -717,6 +776,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.open = function() {
+      var sendDelayedInit;
       if (this.isOpen) {
         this.log.debug('widget already open, block');
         return;
@@ -731,7 +791,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.el.animate({
           bottom: 0
         }, 500, this.onOpenAnimationEnd);
-        return this.send('chat_session_init');
+        sendDelayedInit = (function(_this) {
+          return function() {
+            return _this.send('chat_session_init');
+          };
+        })(this);
+        return this.initDelayId = setTimeout(sendDelayedInit, 1000);
       } else {
         this.el.css('bottom', 0);
         return this.onOpenAnimationEnd();
@@ -771,6 +836,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (!this.isOpen) {
         this.log.debug('can\'t close widget, it\'s not open');
         return;
+      }
+      if (this.initDelayId) {
+        clearTimeout(this.initDelayId);
       }
       if (!this.sessionId) {
         this.log.debug('can\'t close widget without sessionId');
@@ -1152,67 +1220,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   })(Base);
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
-
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
 
 /*!
  * ----------------------------------------------------------------------------

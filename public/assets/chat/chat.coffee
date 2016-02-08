@@ -513,7 +513,9 @@ do($ = window.jQuery, window) ->
 
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
-        @send('chat_session_init')
+        sendDelayedInit = =>
+          @send('chat_session_init')
+        @initDelayId = setTimeout(sendDelayedInit, 1000)
       else
         @el.css 'bottom', 0
         @onOpenAnimationEnd()
@@ -552,6 +554,8 @@ do($ = window.jQuery, window) ->
       if !@isOpen
         @log.debug 'can\'t close widget, it\'s not open'
         return
+      if @initDelayId
+        clearTimeout(@initDelayId)
       if !@sessionId
         @log.debug 'can\'t close widget without sessionId'
         return
