@@ -88,6 +88,7 @@ returns
          .users.where(active: true)
          .joins(:roles)
          .where('roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true)
+         .order('users.login')
          .uniq()
   end
 
