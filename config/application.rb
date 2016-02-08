@@ -50,5 +50,58 @@ module Zammad
     # define cache store
     config.cache_store = :file_store, "tmp/cache_file_store_#{Rails.env}"
 
+    # default preferences by role
+    config.preferences_default_by_role = {
+      Agent: {
+        notification_config: {
+          matrix: {
+            create: {
+              criteria: {
+                owned_by_me: true,
+                owned_by_nobody: true,
+                no: false,
+              },
+              channel: {
+                email: true,
+                online: true,
+              }
+            },
+            update: {
+              criteria: {
+                owned_by_me: true,
+                owned_by_nobody: true,
+                no: false,
+              },
+              channel: {
+                email: true,
+                online: true,
+              }
+            },
+            reminder_reached: {
+              criteria: {
+                owned_by_me: true,
+                owned_by_nobody: false,
+                no: false,
+              },
+              channel: {
+                email: true,
+                online: true,
+              }
+            },
+            escalation: {
+              criteria: {
+                owned_by_me: true,
+                owned_by_nobody: false,
+                no: false,
+              },
+              channel: {
+                email: true,
+                online: true,
+              }
+            }
+          }
+        }
+      }
+    }
   end
 end

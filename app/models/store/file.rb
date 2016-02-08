@@ -11,9 +11,13 @@ add new file to store
 
     store_file_id = Store::File.add(binary_data)
 
+do also verify of written data
+
+    store_file_id = Store::File.add(binary_data, true)
+
 =end
 
-    def self.add(data)
+    def self.add(data, verify = true)
       sha = Digest::SHA256.hexdigest(data)
 
       file = Store::File.find_by(sha: sha)
@@ -30,6 +34,15 @@ add new file to store
           provider: adapter_name,
           sha: sha,
         )
+
+        # verify
+        if verify
+          read_data = adapter.get(sha)
+          read_sha = Digest::SHA256.hexdigest(read_data)
+          if sha != read_sha
+            fail "Content not written correctly (provider #{adapter_name})."
+          end
+        end
       end
       file
     end

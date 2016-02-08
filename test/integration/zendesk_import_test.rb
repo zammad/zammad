@@ -459,11 +459,11 @@ class ZendeskImportTest < ActiveSupport::TestCase
       escalation_time
       pending_time
       type
+      preferences
       updated_by_id
       created_by_id
       created_at
-      updated_at
-      preferences)
+      updated_at)
 
     assert_equal( copmare_fields, local_fields, 'ticket fields' )
   end

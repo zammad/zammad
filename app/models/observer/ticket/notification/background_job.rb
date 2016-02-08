@@ -13,7 +13,7 @@ class Observer::Ticket::Notification::BackgroundJob
     end
 
     # find recipients
-    recipients = []
+    recipients_and_channels = []
 
 =begin
     # group of agents to work on
@@ -43,15 +43,68 @@ class Observer::Ticket::Notification::BackgroundJob
     end
 =end
 
-    if ticket.owner_id != 1
-      recipients.push ticket.owner
-    else
-      recipients = ticket.agent_of_group()
+    # loop through all users
+    possible_recipients = ticket.agent_of_group
+    if ticket.owner_id == 1
+      possible_recipients.push ticket.owner
     end
+    already_checked_recipient_ids = {}
+    possible_recipients.each {|user|
+      next if already_checked_recipient_ids[user.id]
+      already_checked_recipient_ids[user.id] = true
+      next if !user.preferences
+      next if !user.preferences['notification_config']
+      matrix = user.preferences['notification_config']['matrix']
+      if ticket.owner_id != user.id
+        if user.preferences['notification_config']['group_ids'] ||
+           (user.preferences['notification_config']['group_ids'].class == Array && (!user.preferences['notification_config']['group_ids'].empty? || user.preferences['notification_config']['group_ids'][0] != '-'))
+          hit = false
+          user.preferences['notification_config']['group_ids'].each {|notify_group_id|
+            user.group_ids.each {|local_group_id|
+              if local_group_id.to_s == notify_group_id.to_s
+                hit = true
+              end
+            }
+          }
+          next if !hit
+        end
+      end
+      next if !matrix
+      next if !matrix[@p[:type]]
+      data = matrix[@p[:type]]
+      next if !data
+      next if !data['criteria']
+      channels = data['channel']
+      if data['criteria']['owned_by_me'] && ticket.owner_id == user.id
+        data = {
+          user: user,
+          channels: channels
+        }
+        recipients_and_channels.push data
+        next
+      end
+      if data['criteria']['owned_by_nobody'] && ticket.owner_id == 1
+        data = {
+          user: user,
+          channels: channels
+        }
+        recipients_and_channels.push data
+        next
+      end
+      next unless data['criteria']['no']
+      data = {
+        user: user,
+        channels: channels
+      }
+      recipients_and_channels.push data
+      next
+    }
 
     # send notifications
     recipient_list = ''
-    recipients.each do |user|
+    recipients_and_channels.each do |item|
+      user = item[:user]
+      channels = item[:channels]
 
       # ignore user who changed it by him self via web
       if @via_web
@@ -62,31 +115,34 @@ class Observer::Ticket::Notification::BackgroundJob
       # ignore inactive users
       next if !user.active
 
-      # create online notification
-      seen = ticket.online_notification_seen_state(user.id)
-      OnlineNotification.add(
-        type: @p[:type],
-        object: 'Ticket',
-        o_id: ticket.id,
-        seen: seen,
-        created_by_id: ticket.updated_by_id || 1,
-        user_id: user.id,
-      )
-
-      # create email notification
-      next if !user.email || user.email == ''
-
-      # add recipient_list
-      if recipient_list != ''
-        recipient_list += ','
-      end
-      recipient_list += user.email.to_s
-
       # ignore if no changes has been done
       changes = human_changes(user, ticket)
-      if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
+      next if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
+
+      # create online notification
+      used_channels = []
+      if channels['online']
+        used_channels.push 'online'
+        seen = ticket.online_notification_seen_state(user.id)
+        OnlineNotification.add(
+          type: @p[:type],
+          object: 'Ticket',
+          o_id: ticket.id,
+          seen: seen,
+          created_by_id: ticket.updated_by_id || 1,
+          user_id: user.id,
+        )
+        Rails.logger.info "send ticket online notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
+      end
+
+      # ignore email channel notificaiton and empty emails
+      if !channels['email'] || !user.email || user.email == ''
+        add_recipient_list(ticket, user, used_channels)
         next
       end
+
+      used_channels.push 'email'
+      add_recipient_list(ticket, user, used_channels)
 
       # get user based notification template
       # if create, send create message / block update messages
@@ -113,10 +169,9 @@ class Observer::Ticket::Notification::BackgroundJob
       }
 
       # rebuild subject
-      notification[:subject] = ticket.subject_build( notification[:subject] )
+      notification[:subject] = ticket.subject_build(notification[:subject])
 
-      # send notification
-      Rails.logger.info "send ticket notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
+      Rails.logger.info "send ticket email notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
 
       NotificationFactory.send(
         recipient: user,
@@ -126,9 +181,15 @@ class Observer::Ticket::Notification::BackgroundJob
       )
     end
 
-    # add history record
-    return if recipient_list == ''
+  end
 
+  def add_recipient_list(ticket, user, channels)
+    return if channels.empty?
+    identifier = user.email
+    if !identifier || identifier == ''
+      identifier = user.login
+    end
+    recipient_list = "#{identifier}(#{channels.join(',')})"
     History.add(
       o_id: ticket.id,
       history_type: 'notification',

@@ -14,6 +14,7 @@ class Sessions::Backend::TicketOverviewList
     overviews = Ticket::Overviews.all(
       current_user: @user,
     )
+    return if !overviews
     result = []
     overviews.each { |overview|
       overview_data = Ticket::Overviews.list(
