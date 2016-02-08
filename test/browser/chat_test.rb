@@ -155,7 +155,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.js-chat-close',
+      css: '.js-chat-toggle',
     )
     watch_for_disappear(
       browser: customer,
@@ -267,7 +267,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.js-chat-close',
+      css: '.js-chat-toggle',
     )
     watch_for(
       browser: agent,
@@ -393,7 +393,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.zammad-chat .js-chat-close',
+      css: '.zammad-chat .js-chat-toggle',
     )
     watch_for_disappear(
       browser: customer,
@@ -556,7 +556,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.js-chat-close',
+      css: '.js-chat-toggle',
     )
     watch_for(
       browser: agent,
