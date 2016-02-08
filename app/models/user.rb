@@ -470,6 +470,49 @@ returns
         .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids)
   end
 
+=begin
+
+update/sync default preferences of users in a dedecated role
+
+  result = User.update_default_preferences('Agent')
+
+returns
+
+  result = true # false
+
+=end
+
+  def self.update_default_preferences(role_name)
+    role = Role.lookup(name: role_name)
+    User.of_role(role_name).each {|user|
+      user.check_notifications(role)
+      user.check_preferences_default
+      user.save
+    }
+    true
+  end
+
+  def check_notifications(o)
+    default = Rails.configuration.preferences_default_by_role
+    return if !default
+    default.deep_stringify_keys!
+    return if !default[o.name]
+    if !@preferences_default
+      @preferences_default = {}
+    end
+    default[o.name].each {|key, value|
+      next if @preferences_default[key]
+      @preferences_default[key] = value
+    }
+  end
+
+  def check_preferences_default
+    return if !@preferences_default
+    return if @preferences_default.empty?
+    preferences_tmp = @preferences_default.merge(preferences)
+    self.preferences = preferences_tmp
+  end
+
   private
 
   def cache_delete
@@ -590,13 +633,6 @@ returns
     Avatar.remove('User', id)
   end
 
-  def check_preferences_default
-    return if !@preferences_default
-    return if @preferences_default.empty?
-    preferences_tmp = @preferences_default.merge(preferences)
-    self.preferences = preferences_tmp
-  end
-
   def check_password
 
     # set old password again if not given
@@ -619,17 +655,4 @@ returns
     self.password = "{sha2}#{crypted}"
   end
 
-  def check_notifications(o)
-    default = Rails.configuration.preferences_default_by_role
-    return if !default
-    default.deep_stringify_keys!
-    return if !default[o.name]
-    if !@preferences_default
-      @preferences_default = {}
-    end
-    default[o.name].each {|key, value|
-      next if @preferences_default[key]
-      @preferences_default[key] = value
-    }
-  end
 end
