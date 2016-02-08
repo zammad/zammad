@@ -80,7 +80,7 @@ module Zammad
             reminder_reached: {
               criteria: {
                 owned_by_me: true,
-                owned_by_nobody: true,
+                owned_by_nobody: false,
                 no: false,
               },
               channel: {
@@ -91,7 +91,7 @@ module Zammad
             escalation: {
               criteria: {
                 owned_by_me: true,
-                owned_by_nobody: true,
+                owned_by_nobody: false,
                 no: false,
               },
               channel: {
