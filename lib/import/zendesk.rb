@@ -59,6 +59,9 @@ module Import::Zendesk
 
     Import::Zendesk.connection_test
 
+    # get statistic before starting import
+    statistic
+
     # start thread to observe current state
     status_update_thread = Thread.new {
       loop do
