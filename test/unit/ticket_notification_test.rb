@@ -92,8 +92,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(1, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent2, 'email'), ticket1.id)
 
     # create ticket in group
     ticket1 = Ticket.create(
@@ -127,8 +127,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(1, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(0, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent2, 'email'), ticket1.id)
   end
 
   test 'ticket notification - simple' do
@@ -165,8 +165,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(1, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent2, 'email'), ticket1.id)
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
@@ -179,8 +179,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(2, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(2, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(2, notification_check(ticket1, agent2, 'email'), ticket1.id)
 
     # add article to ticket
     Ticket::Article.create(
@@ -201,8 +201,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to not to agent1 but to agent2
-    assert_equal(2, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(3, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(2, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(3, notification_check(ticket1, agent2, 'email'), ticket1.id)
 
     # update ticket by user
     ticket1.owner_id      = agent1.id
@@ -226,8 +226,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to not to agent1 but to agent2
-    assert_equal(2, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(3, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(2, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(3, notification_check(ticket1, agent2, 'email'), ticket1.id)
 
     # create ticket with agent1 as owner
     ticket2 = Ticket.create(
@@ -261,8 +261,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket2, 'ticket created')
 
     # verify notifications to no one
-    assert_equal(0, notification_check(ticket2, agent1), ticket2.id)
-    assert_equal(0, notification_check(ticket2, agent2), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent2, 'email'), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #2"
@@ -276,8 +276,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal(0, notification_check(ticket2, agent1), ticket2.id)
-    assert_equal(0, notification_check(ticket2, agent2), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent2, 'email'), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #3"
@@ -291,8 +291,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal(1, notification_check(ticket2, agent1), ticket2.id)
-    assert_equal(0, notification_check(ticket2, agent2), ticket2.id)
+    assert_equal(1, notification_check(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(0, notification_check(ticket2, agent2, 'email'), ticket2.id)
 
     # create ticket with agent2 and agent1 as owner
     ticket3 = Ticket.create(
@@ -326,8 +326,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket3, 'ticket created')
 
     # verify notifications to agent1 and not to agent2
-    assert_equal(1, notification_check(ticket3, agent1), ticket3.id)
-    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
+    assert_equal(1, notification_check(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2, 'email'), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #2"
@@ -341,8 +341,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal(1, notification_check(ticket3, agent1), ticket3.id)
-    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
+    assert_equal(1, notification_check(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2, 'email'), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #3"
@@ -356,8 +356,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal(2, notification_check(ticket3, agent1), ticket3.id)
-    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
+    assert_equal(2, notification_check(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2, 'email'), ticket3.id)
 
     # update article / not notification should be sent
     article_inbound.internal = true
@@ -369,8 +369,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications not to agent1 and not to agent2
-    assert_equal(2, notification_check(ticket3, agent1), ticket3.id)
-    assert_equal(0, notification_check(ticket3, agent2), ticket3.id)
+    assert_equal(2, notification_check(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent2, 'email'), ticket3.id)
 
     delete = ticket1.destroy
     assert(delete, 'ticket1 destroy')
@@ -432,8 +432,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(1, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(0, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, notification_check(ticket1, agent2, 'email'), ticket1.id)
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
@@ -446,8 +446,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, notification_check(ticket1, agent1), ticket1.id)
-    assert_equal(2, notification_check(ticket1, agent2), ticket1.id)
+    assert_equal(0, notification_check(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(2, notification_check(ticket1, agent2, 'email'), ticket1.id)
 
     # create ticket in group
     ticket2 = Ticket.create(
@@ -480,8 +480,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, notification_check(ticket2, agent1), ticket2.id)
-    assert_equal(1, notification_check(ticket2, agent2), ticket2.id)
+    assert_equal(1, notification_check(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(1, notification_check(ticket2, agent2, 'email'), ticket2.id)
 
     # update ticket attributes
     ticket2.title    = "#{ticket2.title} - #2"
@@ -494,8 +494,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, notification_check(ticket2, agent1), ticket2.id)
-    assert_equal(2, notification_check(ticket2, agent2), ticket2.id)
+    assert_equal(2, notification_check(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(2, notification_check(ticket2, agent2, 'email'), ticket2.id)
 
     # create ticket in group
     ticket3 = Ticket.create(
@@ -528,8 +528,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, notification_check(ticket3, agent1), ticket3.id)
-    assert_equal(1, notification_check(ticket3, agent2), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(1, notification_check(ticket3, agent2, 'email'), ticket3.id)
 
     # update ticket attributes
     ticket3.title    = "#{ticket3.title} - #2"
@@ -542,8 +542,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, notification_check(ticket3, agent1), ticket3.id)
-    assert_equal(2, notification_check(ticket3, agent2), ticket3.id)
+    assert_equal(0, notification_check(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(2, notification_check(ticket3, agent2, 'email'), ticket3.id)
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
@@ -594,8 +594,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, notification_check(ticket4, agent1), ticket4.id)
-    assert_equal(1, notification_check(ticket4, agent2), ticket4.id)
+    assert_equal(1, notification_check(ticket4, agent1, 'email'), ticket4.id)
+    assert_equal(1, notification_check(ticket4, agent2, 'email'), ticket4.id)
 
     # update ticket attributes
     ticket4.title    = "#{ticket4.title} - #2"
@@ -608,8 +608,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, notification_check(ticket4, agent1), ticket4.id)
-    assert_equal(2, notification_check(ticket4, agent2), ticket4.id)
+    assert_equal(2, notification_check(ticket4, agent1, 'email'), ticket4.id)
+    assert_equal(2, notification_check(ticket4, agent2, 'email'), ticket4.id)
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
@@ -660,8 +660,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, notification_check(ticket5, agent1), ticket5.id)
-    assert_equal(0, notification_check(ticket5, agent2), ticket5.id)
+    assert_equal(1, notification_check(ticket5, agent1, 'email'), ticket5.id)
+    assert_equal(0, notification_check(ticket5, agent2, 'email'), ticket5.id)
 
     # update ticket attributes
     ticket5.title    = "#{ticket5.title} - #2"
@@ -674,8 +674,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, notification_check(ticket5, agent1), ticket5.id)
-    assert_equal(0, notification_check(ticket5, agent2), ticket5.id)
+    assert_equal(2, notification_check(ticket5, agent1, 'email'), ticket5.id)
+    assert_equal(0, notification_check(ticket5, agent2, 'email'), ticket5.id)
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
@@ -727,8 +727,10 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, notification_check(ticket6, agent1), ticket6.id)
-    assert_equal(0, notification_check(ticket6, agent2), ticket6.id)
+    assert_equal(1, notification_check(ticket6, agent1, 'email'), ticket6.id)
+    assert_equal(1, notification_check(ticket6, agent1, 'online'), ticket6.id)
+    assert_equal(0, notification_check(ticket6, agent2, 'email'), ticket6.id)
+    assert_equal(0, notification_check(ticket6, agent2, 'online'), ticket6.id)
 
     # update ticket attributes
     ticket6.title    = "#{ticket6.title} - #2"
@@ -741,8 +743,89 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, notification_check(ticket6, agent1), ticket6.id)
-    assert_equal(0, notification_check(ticket6, agent2), ticket6.id)
+    assert_equal(2, notification_check(ticket6, agent1, 'email'), ticket6.id)
+    assert_equal(2, notification_check(ticket6, agent1, 'online'), ticket6.id)
+    assert_equal(0, notification_check(ticket6, agent2, 'email'), ticket6.id)
+    assert_equal(0, notification_check(ticket6, agent2, 'online'), ticket6.id)
+
+    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    agent1.preferences['notification_config']['matrix']['create']['channel']['email'] = false
+    agent1.preferences['notification_config']['matrix']['create']['channel']['online'] = true
+    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    agent1.preferences['notification_config']['matrix']['update']['channel']['email'] = false
+    agent1.preferences['notification_config']['matrix']['update']['channel']['online'] = true
+    agent1.preferences['notification_config']['group_ids'] = [999]
+    agent1.save
+
+    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    agent2.preferences['notification_config']['matrix']['create']['channel']['email'] = false
+    agent2.preferences['notification_config']['matrix']['create']['channel']['online'] = true
+    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    agent2.preferences['notification_config']['matrix']['update']['channel']['email'] = false
+    agent2.preferences['notification_config']['matrix']['update']['channel']['online'] = true
+    agent2.preferences['notification_config']['group_ids'] = [999]
+    agent2.save
+
+    # create ticket in group
+    ticket7 = Ticket.create(
+      title: 'some notification test - z preferences tests 7',
+      group: Group.lookup(name: 'Users'),
+      customer: customer,
+      owner: agent1,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: customer.id,
+      created_by_id: customer.id,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket7.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: customer.id,
+      created_by_id: customer.id,
+    )
+
+    # execute ticket events
+    Rails.configuration.webserver_is_active = false
+    Observer::Ticket::Notification.transaction
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
+
+    # verify notifications to agent1 + agent2
+    assert_equal(0, notification_check(ticket7, agent1, 'email'), ticket7.id)
+    assert_equal(1, notification_check(ticket7, agent1, 'online'), ticket7.id)
+    assert_equal(0, notification_check(ticket7, agent2, 'email'), ticket7.id)
+    assert_equal(0, notification_check(ticket7, agent2, 'online'), ticket7.id)
+
+    # update ticket attributes
+    ticket7.title    = "#{ticket7.title} - #2"
+    ticket7.priority = Ticket::Priority.lookup(name: '3 high')
+    ticket7.save
+
+    # execute ticket events
+    Observer::Ticket::Notification.transaction
+    #puts Delayed::Job.all.inspect
+    Delayed::Worker.new.work_off
+
+    # verify notifications to agent1 + agent2
+    assert_equal(0, notification_check(ticket7, agent1, 'email'), ticket7.id)
+    assert_equal(2, notification_check(ticket7, agent1, 'online'), ticket7.id)
+    assert_equal(0, notification_check(ticket7, agent2, 'email'), ticket7.id)
+    assert_equal(0, notification_check(ticket7, agent2, 'online'), ticket7.id)
 
   end
 
@@ -970,13 +1053,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
   end
 
-  def notification_check(ticket, recipient)
+  def notification_check(ticket, recipient, type)
     result = ticket.history_get()
     count  = 0
     result.each {|item|
       next if item['type'] != 'notification'
       next if item['object'] != 'Ticket'
       next if item['value_to'] !~ /#{recipient.email}/i
+      next if item['value_to'] !~ /#{type}/i
       count += 1
     }
     count

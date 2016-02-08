@@ -136,7 +136,7 @@ class Observer::Ticket::Notification::BackgroundJob
       end
 
       # ignore email channel notificaiton and empty emails
-      if !channels['email'] && (!user.email || user.email == '')
+      if !channels['email'] || !user.email || user.email == ''
         add_recipient_list(ticket, user, used_channels)
         next
       end
