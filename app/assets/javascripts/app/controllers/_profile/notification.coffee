@@ -15,7 +15,7 @@ class Index extends App.Controller
       group_ids: []
       matrix:
         create:
-          name: 'new Ticket'
+          name: 'New Ticket'
         update:
           name: 'Ticket update'
         reminder_reached:
