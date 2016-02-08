@@ -22,7 +22,7 @@
           <td><input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_nobody" value="true"  <% if value.criteria.owned_by_nobody: %>checked<% end %>/></td>
           <td><input type="checkbox" name="matrix.<%= key %>.criteria.no" value="true"  <% if value.criteria.no: %>checked<% end %>/></td>
           <td><input type="radio" name="matrix.<%= key %>.channel" value="email" <% if value.channel.email: %>checked<% end %>/></td>
-          <td><input type="radio" name="matrix.<%= key %>.channel" value="online" <% if value.channel.online: %>checked<% end %>/></td>
+          <td><input type="radio" name="matrix.<%= key %>.channel" value="online" <% if !value.channel.email && value.channel.online: %>checked<% end %>/></td>
         </tr>
         <% end %>
       <% end %>

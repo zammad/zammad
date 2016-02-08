@@ -88,7 +88,7 @@ class Index extends App.Controller
             else
               params.notification_config[area[0]][area[1]][area[2]] = {
                 email:  true
-                online: false
+                online: true
               }
     if !params.notification_config.group_ids || _.isEmpty(params.notification_config.group_ids)
       params.notification_config.group_ids = ['-']
