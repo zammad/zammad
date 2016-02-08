@@ -149,11 +149,15 @@ module Channel::EmailBuild
     p {
       margin: 0;
     }
-    blockquote, pre {
+    blockquote {
+      border-left: 2px solid blue;
       margin: 0px;
       padding: 8px 12px 8px 12px;
     }
-
+    pre {
+      margin: 0px;
+      padding: 8px 12px 8px 12px;
+    }
     </style>
   <head>
   <body style="#{css}">#{html}</body>
