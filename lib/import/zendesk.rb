@@ -77,9 +77,7 @@ module Import::Zendesk
 
     # start thread to import data
     begin
-      import_thread = Thread.new {
-        Import::Zendesk.start
-      }
+      Import::Zendesk.start
     rescue => e
       status_update_thread.exit
       status_update_thread.join
@@ -92,7 +90,6 @@ module Import::Zendesk
       Cache.write('import:state', result, expires_in: 10.hours)
       return false
     end
-    import_thread.join
     status_update_thread.exit
     status_update_thread.join
 
