@@ -224,6 +224,10 @@ do($ = window.jQuery, window) ->
       @options = $.extend {}, @defaults, options
       super(@options)
 
+      # fullscreen
+      @isFullscreen = (window.matchMedia and window.matchMedia('(max-width: 768px)').matches)
+      @scrollRoot = $(@getScrollRoot())
+
       # check prerequisites
       if !$
         @state = 'unsupported'
@@ -259,29 +263,18 @@ do($ = window.jQuery, window) ->
       )
       @io.connect()
 
+    getScrollRoot: ->
+      return document.scrollingElement if 'scrollingElement' of document
+      html = document.documentElement
+      start = html.scrollTop
+      html.scrollTop = start + 1
+      end = html.scrollTop
+      html.scrollTop = start
+      return if end > start then html else document.body
+
     render: =>
       if !@el || !$('.zammad-chat').get(0)
-        @el = $(@view('chat')(
-          title: @options.title
-        ))
-        @options.target.append @el
-
-        @input = @el.find('.zammad-chat-input')
-
-        # start bindings
-        @el.find('.js-chat-open').click @open
-        @el.find('.js-chat-close').click @close
-        @el.find('.zammad-chat-controls').on 'submit', @onSubmit
-        @input.on
-          keydown: @checkForEnter
-          input: @onInput
-        $(window).on('beforeunload', =>
-          @onLeaveTemporary()
-        )
-        $(window).bind('hashchange', =>
-          return if @isOpen
-          @idleTimeout.start()
-        )
+        @renderBase()
 
       # disable open button
       $(".#{ @options.buttonClass }").addClass @inactiveClass
@@ -297,6 +290,34 @@ do($ = window.jQuery, window) ->
       @sessionId = sessionStorage.getItem('sessionId')
       @send 'chat_status_customer',
         session_id: @sessionId
+
+    renderBase: ->
+      @el = $(@view('chat')(
+        title: @options.title
+      ))
+      @options.target.append @el
+
+      @input = @el.find('.zammad-chat-input')
+
+      # start bindings
+      @el.find('.js-chat-open').click @open
+      @el.find('.js-chat-toggle').click @toggle
+      @el.find('.zammad-chat-controls').on 'submit', @onSubmit
+      @input.on
+        keydown: @checkForEnter
+        input: @onInput
+      $(window).on('beforeunload', =>
+        @onLeaveTemporary()
+      )
+      $(window).bind('hashchange', =>
+        return if @isOpen
+        @idleTimeout.start()
+      )
+
+      if @isFullscreen
+        @input.on
+          focus: @onFocus
+          focusout: @onFocusOut
 
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
@@ -399,6 +420,19 @@ do($ = window.jQuery, window) ->
 
       @onTyping()
 
+    onFocus: =>
+      $(window).scrollTop(10)
+      keyboardShown = $(window).scrollTop() > 0
+      $(window).scrollTop(0)
+
+      if keyboardShown
+        @log.notice 'virtual keyboard shown'
+        # on keyboard shown
+        # can't measure visible area height :(
+
+    onFocusOut: ->
+      # on keyboard hidden
+
     onTyping: ->
 
       # send typing start event only every 1.5 seconds
@@ -487,6 +521,9 @@ do($ = window.jQuery, window) ->
     onOpenAnimationEnd: =>
       @idleTimeout.stop()
 
+      if @isFullscreen
+        @disableScrollOnRoot()
+
     sessionClose: =>
       # send close
       @send 'chat_session_close',
@@ -505,6 +542,12 @@ do($ = window.jQuery, window) ->
 
       @setSessionId undefined
 
+    toggle: (event) =>
+      if @isOpen
+        @close(event)
+      else
+        @open(event)
+
     close: (event) =>
       if !@isOpen
         @log.debug 'can\'t close widget, it\'s not open'
@@ -518,6 +561,9 @@ do($ = window.jQuery, window) ->
       event.stopPropagation() if event
 
       @sessionClose()
+
+      if @isFullscreen
+        @enableScrollOnRoot()
 
       # close window
       @el.removeClass('zammad-chat-is-open')
@@ -563,6 +609,9 @@ do($ = window.jQuery, window) ->
       @input.prop('disabled', false)
       @el.find('.zammad-chat-send').prop('disabled', false)
 
+    hideModal: ->
+      @el.find('.zammad-chat-modal').html ''
+
     onQueueScreen: (data) =>
       @setSessionId data.session_id
 
@@ -586,7 +635,7 @@ do($ = window.jQuery, window) ->
       @log.notice 'onQueue', data.position
       @inQueue = true
 
-      @el.find('.zammad-chat-body').html @view('waiting')
+      @el.find('.zammad-chat-modal').html @view('waiting')
         position: data.position
 
     onAgentTypingStart: =>
@@ -713,11 +762,12 @@ do($ = window.jQuery, window) ->
 
       @enableInput()
 
-      @el.find('.zammad-chat-body').empty()
+      @hideModal()
       @el.find('.zammad-chat-welcome').addClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent').removeClass('zammad-chat-is-hidden')
       @el.find('.zammad-chat-agent-status').removeClass('zammad-chat-is-hidden')
-      @input.focus()
+
+      @input.focus() if not @isFullscreen
 
       @setAgentOnlineState 'online'
 
@@ -726,7 +776,7 @@ do($ = window.jQuery, window) ->
       @inactiveTimeout.start()
 
     showCustomerTimeout: ->
-      @el.find('.zammad-chat-body').html @view('customer_timeout')
+      @el.find('.zammad-chat-modal').html @view('customer_timeout')
         agent: @agent.name
         delay: @options.inactiveTimeout
       reload = ->
@@ -735,7 +785,7 @@ do($ = window.jQuery, window) ->
       @sessionClose()
 
     showWaitingListTimeout: ->
-      @el.find('.zammad-chat-body').html @view('waiting_list_timeout')
+      @el.find('.zammad-chat-modal').html @view('waiting_list_timeout')
         delay: @options.watingListTimeout
       reload = ->
         location.reload()
@@ -743,7 +793,7 @@ do($ = window.jQuery, window) ->
       @sessionClose()
 
     showLoader: ->
-      @el.find('.zammad-chat-body').html @view('loader')()
+      @el.find('.zammad-chat-modal').html @view('loader')()
 
     setAgentOnlineState: (state) =>
       @state = state
@@ -807,5 +857,17 @@ do($ = window.jQuery, window) ->
           @showWaitingListTimeout()
           @destroy(remove: false)
       )
+
+    disableScrollOnRoot: ->
+      @rootScrollOffset = @scrollRoot.scrollTop()
+      @scrollRoot.css
+        overflow: 'hidden'
+        position: 'fixed'
+
+    enableScrollOnRoot: ->
+      @scrollRoot.scrollTop @rootScrollOffset
+      @scrollRoot.css
+        overflow: ''
+        position: ''
 
   window.ZammadChat = ZammadChat

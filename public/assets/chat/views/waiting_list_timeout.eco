@@ -1,7 +1,5 @@
-<div class="zammad-chat-modal">
-  <div class="zammad-chat-modal-text">
-    <%- @T('We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!') %>
-    <br>
-    <div class="zammad-chat-button js-restart"<%= " style='background: #{ @background }'" if @background %>><%- @T('Start new conversation') %></div>
-  </div>
+<div class="zammad-chat-modal-text">
+  <%- @T('We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!') %>
+  <br>
+  <div class="zammad-chat-button js-restart"<%= " style='background: #{ @background }'" if @background %>><%- @T('Start new conversation') %></div>
 </div>

@@ -1,11 +1,9 @@
-<div class="zammad-chat-modal">
-  <div class="zammad-chat-modal-text">
-    <span class="zammad-chat-loading-animation">
-      <span class="zammad-chat-loading-circle"></span>
-      <span class="zammad-chat-loading-circle"></span>
-      <span class="zammad-chat-loading-circle"></span>
-    </span>
-    <%- @T('All colleagues are busy.') %><br>
-    <%- @T('You are on waiting list position <strong>%s</strong>.', @position) %>
-  </div>
+<div class="zammad-chat-modal-text">
+  <span class="zammad-chat-loading-animation">
+    <span class="zammad-chat-loading-circle"></span>
+    <span class="zammad-chat-loading-circle"></span>
+    <span class="zammad-chat-loading-circle"></span>
+  </span>
+  <%- @T('All colleagues are busy.') %><br>
+  <%- @T('You are on waiting list position <strong>%s</strong>.', @position) %>
 </div>
