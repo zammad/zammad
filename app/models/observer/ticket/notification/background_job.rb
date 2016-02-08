@@ -186,7 +186,7 @@ class Observer::Ticket::Notification::BackgroundJob
   def add_recipient_list(ticket, user, channels)
     return if channels.empty?
     identifier = user.email
-    if !identifier && identifier == ''
+    if !identifier || identifier == ''
       identifier = user.login
     end
     recipient_list = "#{identifier}(#{channels.join(',')})"
