@@ -31,7 +31,7 @@
 
 
   <h3><%- @T( 'Groups' ) %></h3>
-
+  <%- @T('For "owned by nobody" and "no criteria" only notify about tickets in theres groups.') %>
   <div class="settings-entry">
     <table class="table">
     <% if @groups: %>
