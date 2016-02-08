@@ -10,16 +10,16 @@
         <tr>
           <th>
           <th><%- @T('My Tickets') %>
-          <th><%- @T('Not Assigned') %>
-          <th><%- @T('All Tickets') %>
-          <th class="settings-list-separator"><%- @T('Email Notification') %>
+          <th><%- @T('Not Assigned') %> *
+          <th><%- @T('All Tickets') %> *
+          <th class="settings-list-separator"><%- @T('Notify also via Email') %>
       </thead>
       <tbody>
       <% if @config.matrix: %>
         <% for key, value of @config.matrix: %>
         <tr>
           <td>
-            <%= value.name %>
+            <%- @T(value.name) %>
           <td class="u-positionOrigin">
             <label class="checkbox-replacement checkbox-replacement--fullscreen">
               <input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_me" value="true" <% if value.criteria.owned_by_me: %>checked<% end %>/>
@@ -40,7 +40,7 @@
             </label>
           <td class="u-positionOrigin settings-list-separator">
             <label class="checkbox-replacement checkbox-replacement--fullscreen">
-              <input type="checkbox" name="matrix.<%= key %>.channel" value="email" <% if value.channel.email: %>checked<% end %>/>
+              <input type="checkbox" name="matrix.<%= key %>.channel" value="email" <% if value.channel && value.channel.email: %>checked<% end %>/>
               <%- @Icon('checkbox', 'icon-unchecked') %>
               <%- @Icon('checkbox-checked', 'icon-checked') %>
             </label>
@@ -51,13 +51,13 @@
   </div>
 
   <% if @groups: %>
-  <h2><%- @T( 'Limit Groups' ) %></h2>
+  <h2>* <%- @T( 'Limit Groups' ) %></h2>
   <div class="settings-entry">
     <table class="settings-list">
       <thead>
         <tr>
           <th><%- @T('Group') %>
-          <th><%- @T('Not Assigned & All Tickets') %>
+          <th><%- @T('Not Assigned') %> & <%- @T('All Tickets') %>
       </thead>
       <tbody>
       <% for group in @groups: %>
