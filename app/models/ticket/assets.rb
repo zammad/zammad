@@ -31,8 +31,9 @@ returns
     %w(created_by_id updated_by_id owner_id customer_id).each {|local_user_id|
       next if !self[ local_user_id ]
       next if data[ User.to_app_model ] && data[ User.to_app_model ][ self[ local_user_id ] ]
-      user = User.lookup( id: self[ local_user_id ] )
-      data = user.assets( data )
+      user = User.lookup(id: self[ local_user_id ])
+      next if !user
+      data = user.assets(data)
     }
     data
   end

@@ -24,8 +24,10 @@ returns
     def assets (data)
 
       if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self['created_by_id'] ]
-        user = User.lookup( id: self['created_by_id'] )
-        data = user.assets( data )
+        user = User.lookup(id: self['created_by_id'])
+        if user
+          data = user.assets(data)
+        end
       end
 
       data
