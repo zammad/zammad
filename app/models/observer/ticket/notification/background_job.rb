@@ -75,6 +75,7 @@ class Observer::Ticket::Notification::BackgroundJob
       next if !data
       next if !data['criteria']
       channels = data['channel']
+      next if !channels
       if data['criteria']['owned_by_me'] && ticket.owner_id == user.id
         data = {
           user: user,
@@ -409,6 +410,10 @@ i18n(Changes):<br>
   def template_header(_user)
     '
 <style type="text/css">
+  blockquote {
+    border-left: 2px solid blue;
+    padding-left: 1em;
+  }
   .header {
     color: #aaaaaa;
     border-bottom-style:solid;
