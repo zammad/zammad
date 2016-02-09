@@ -12,7 +12,7 @@
   <% end %>
 </select>
 <div class="columnSelect-column columnSelect-column--selected js-selected">
-  <div class="u-placeholder js-placeholder"><%- @T('Nothing selected') %></div>
+  <div class="u-placeholder u-unselectable js-placeholder"><%- @T('Nothing selected') %></div>
   <% for option in @options: %>
   <div class="columnSelect-option is-hidden js-remove js-option" data-value="<%= option.value %>"><%= option.name %></div>
   <% end %>
@@ -29,7 +29,7 @@
   <% end %>
   <div class="columnSelect-pool js-pool">
     <% for option in @options: %>
-    <div class="columnSelect-option js-select js-option" data-value="<%= option.value %>"><%= option.name %></div>
+    <div class="columnSelect-option js-select js-option" data-value="<%= option.value %>" title="<%= option.name %>"><%= option.name %></div>
     <% end %>
   </div>
 </div>
