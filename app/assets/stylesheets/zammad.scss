@@ -431,6 +431,10 @@ pre code.hljs {
     }
   }
 
+  &.btn--secondary {
+    color: hsl(202,68%,54%);
+  }
+
   &.btn--positive,
   &.btn--create,
   &.btn--success {
