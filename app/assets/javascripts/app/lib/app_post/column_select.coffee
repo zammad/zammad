@@ -29,10 +29,12 @@ class App.ColumnSelect extends Spine.Controller
   render: ->
     @html App.view('generic/column_select')( @options.attribute )
 
-    # keep height fixed
-    setTimeout =>
-      @el.css 'height', @el.height()
-    , 0
+    # keep inital height
+    # disabled for now since controls in modals get rendered hidden
+    # and thus have no height
+    # setTimeout =>
+    #   @el.css 'height', @el.height()
+    # , 0
 
   onSelect: (event) ->
     @select $(event.currentTarget).attr('data-value')
