@@ -68,7 +68,7 @@ class App.ColumnSelect extends Spine.Controller
     @poolOptions.each (i, el) ->
       return if $(el).hasClass('is-hidden')
 
-      if $(el).text().indexOf(filter) > -1
+      if $(el).text().toLowerCase().indexOf(filter.toLowerCase()) > -1
         $(el).removeClass 'is-filtered'
       else
         $(el).addClass 'is-filtered'

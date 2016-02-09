@@ -123,6 +123,11 @@ blockquote {
   user-select: none;
 }
 
+.u-unselectable {
+  pointer-events: none;
+  user-select: none;
+}
+
 .u-textTruncate {
   white-space: nowrap;
   overflow: hidden;
@@ -7036,7 +7041,7 @@ output {
   .searchableSelect-autocomplete {
     position: absolute;
     left: 13px;
-    top: 10px;
+    top: 11px;
     right: 37px;
     white-space: nowrap;
     overflow: hidden;
@@ -7791,12 +7796,9 @@ output {
   }
 }
 
-
 .columnSelect {
+  height: 234px;
   display: flex;
-  height: auto;
-  line-height: 25px;
-  max-height: 300px;
   padding: 0;
   line-height: 22px;
   
@@ -7804,9 +7806,8 @@ output {
     display: none;
   }
 
-  .columnSelect-column--selected {
-    flex-basis: 66%;
-    flex-grow: 1;
+  .columnSelect-column--selected { 
+    flex: 1 1 66%;
     overflow: auto;
     padding: 7px;
   }
@@ -7817,10 +7818,11 @@ output {
     border-left: 1px dotted hsl(0,0%,90%);
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   .columnSelect-pool {
-    flex: 1;
+    flex: 1 1 auto;
     overflow: auto;
     padding: 7px;
   }
@@ -7830,6 +7832,9 @@ output {
     user-select: none;
     padding: 0 5px;
     border-radius: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     
     &:hover {
       background: hsl(0,0%,96%);
