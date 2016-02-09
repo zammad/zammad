@@ -1,0 +1,35 @@
+<select
+  class="columnSelect-shadow js-shadow"
+  id="<%= @id %>"
+  name="<%= @name %>"
+  <%= @required %>
+  <%= @autofocus %>
+  value="<%= @value %>"
+  multiple
+>
+  <% for option in @options: %>
+  <option value="<%= option.value %>"><%= option.name %></option>
+  <% end %>
+</select>
+<div class="columnSelect-column columnSelect-column--selected js-selected">
+  <div class="u-placeholder js-placeholder"><%- @T('No value selected') %></div>
+  <% for option in @options: %>
+  <div class="columnSelect-option is-hidden js-remove js-option" data-value="<%= option.value %>"><%= option.name %></div>
+  <% end %>
+</div>
+<div class="columnSelect-column columnSelect-column--sidebar">
+  <% if @options.length > 10: %>
+  <div class="columnSelect-search">
+    <%- @Icon('magnifier') %>
+    <input class="js-search">
+    <div class="columnSelect-search-clear js-clear is-hidden">
+      <%- @Icon('diagonal-cross') %>
+    </div>
+  </div>
+  <% end %>
+  <div class="columnSelect-pool js-pool">
+    <% for option in @options: %>
+    <div class="columnSelect-option js-select js-option" data-value="<%= option.value %>"><%= option.name %></div>
+    <% end %>
+  </div>
+</div>

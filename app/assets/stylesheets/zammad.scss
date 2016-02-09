@@ -295,7 +295,8 @@ pre code.hljs {
 
 .textarea::placeholder,
 .form-control::placeholder,
-.token-input::placeholder {
+.token-input::placeholder,
+.u-placeholder {
   color: hsl(0,0%,80%);
 }
 
@@ -7768,6 +7769,87 @@ output {
 
   &.is-done .icon {
     fill: $supergood-color;
+  }
+}
+
+
+.columnSelect {
+  display: flex;
+  height: auto;
+  line-height: 25px;
+  max-height: 300px;
+  padding: 0;
+  line-height: 22px;
+  
+  .columnSelect-shadow {
+    display: none;
+  }
+
+  .columnSelect-column--selected {
+    flex-basis: 66%;
+    flex-grow: 1;
+    overflow: auto;
+    padding: 7px 12px;
+  }
+  
+  .columnSelect-column--sidebar {
+    flex-basis: 33%;
+    flex-shrink: 1;
+    border-left: 1px dotted hsl(0,0%,90%);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .columnSelect-pool {
+    flex: 1;
+    overflow: auto;
+    padding: 7px 12px;
+    
+    .columnSelect-option {
+      padding-left: 18px;
+    }
+  }
+  
+  .columnSelect-option {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .is-hidden,
+  .is-filtered {
+    display: none;
+  }
+}
+
+.columnSelect-search {
+  position: relative;
+  
+  .icon {
+    fill: hsl(0,0%,90%);
+  }
+
+  .icon-magnifier {
+    left: 7px;
+    top: 5px;
+    position: absolute;
+  }
+
+  .columnSelect-search-clear {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 7px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  input {
+    width: 100%;
+    padding: 2px 30px 1px;
+    border: none;
+    outline: none;
+    border-bottom: 1px dotted hsl(0,0%,90%);
+    background: none;
   }
 }
 

@@ -119,6 +119,12 @@
       </div>
     </div>
 
+    <h2>Column Select</h2>
+    <div class="column-select form-group">
+      <label>Companys</label>
+      <div class="columnSelectPlaceholder"></div>
+    </div>
+
     <h2>Switch</h2>
     <div class="switch form-group">
       <div class="controls">
