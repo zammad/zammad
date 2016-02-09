@@ -83,6 +83,64 @@
           e.preventDefault()
           return
         }
+
+        // break <blockquote> after enter on empty line
+        sel = window.getSelection()
+        node = $(sel.anchorNode)
+        if (node.parent().is('blockquote')) {
+          e.preventDefault()
+          document.execCommand('Insertparagraph')
+          document.execCommand('Outdent')
+        }
+      }
+
+      // on zammad metaKey + ctrlKey + i/b/u
+      //  metaKey + ctrlKey + u -> Toggles the current selection between underlined and not underlined
+      //  metaKey + ctrlKey + b -> Toggles the current selection between bold and non-bold
+      //  metaKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
+      //  metaKey + ctrlKey + r -> Removes the formatting tags from the current selection
+      //  metaKey + ctrlKey + h -> Inserts a Horizontal Rule
+      //  metaKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
+      //  metaKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
+      //  metaKey + ctrlKey + o -> Draws a line through the middle of the current selection
+      //  metaKey + ctrlKey + w -> Removes any hyperlink from the current selection
+      if ( !e.altKey && e.ctrlKey && e.metaKey && (_this.options.richTextFormatKey[ e.keyCode ]
+        || e.keyCode == 82
+        || e.keyCode == 72
+        || e.keyCode == 76
+        || e.keyCode == 75
+        || e.keyCode == 79
+        || e.keyCode == 87)) {
+        e.preventDefault()
+        if (e.keyCode == 66) {
+          document.execCommand('Bold')
+        }
+        if (e.keyCode == 73) {
+          document.execCommand('Italic')
+        }
+        if (e.keyCode == 85) {
+          document.execCommand('Underline')
+        }
+        if (e.keyCode == 82) {
+          document.execCommand('RemoveFormat')
+        }
+        if (e.keyCode == 72) {
+          document.execCommand('insertHorizontalRule')
+        }
+        if (e.keyCode == 76) {
+          document.execCommand('InsertUnorderedList')
+        }
+        if (e.keyCode == 75) {
+          document.execCommand('InsertOrderedList')
+        }
+        if (e.keyCode == 79) {
+          document.execCommand('StrikeThrough')
+        }
+        if (e.keyCode == 87) {
+          document.execCommand('Unlink')
+        }
+        _this.log('content editable richtext key', e.keyCode)
+        return true
       }
 
       // limit check
