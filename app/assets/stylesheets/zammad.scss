@@ -7789,7 +7789,7 @@ output {
     flex-basis: 66%;
     flex-grow: 1;
     overflow: auto;
-    padding: 7px 12px;
+    padding: 7px;
   }
   
   .columnSelect-column--sidebar {
@@ -7803,16 +7803,18 @@ output {
   .columnSelect-pool {
     flex: 1;
     overflow: auto;
-    padding: 7px 12px;
-    
-    .columnSelect-option {
-      padding-left: 18px;
-    }
+    padding: 7px;
   }
   
   .columnSelect-option {
     cursor: pointer;
     user-select: none;
+    padding: 0 5px;
+    border-radius: 1px;
+    
+    &:hover {
+      background: hsl(0,0%,96%);
+    }
   }
 
   .is-hidden,
