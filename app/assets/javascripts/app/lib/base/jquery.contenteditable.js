@@ -84,7 +84,7 @@
           return
         }
 
-        // breack <blockquote> after enter on empty line
+        // break <blockquote> after enter on empty line
         sel = window.getSelection()
         node = $(sel.anchorNode)
         if (node.parent().is('blockquote')) {
@@ -95,15 +95,15 @@
       }
 
       // on zammad metaKey + ctrlKey + i/b/u
-      // + metaKey + ctrlKey + u -> Toggles the current selection between underlined and not underlined
-      // + metaKey + ctrlKey + b -> Toggles the current selection between bold and non-bold
-      // + metaKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
-      // + metaKey + ctrlKey + r -> Removes the formatting tags from the current selection
-      // + metaKey + ctrlKey + h -> Inserts a Horizontal Rule
-      // + metaKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
-      // + metaKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
-      // + metaKey + ctrlKey + o -> Draws a line through the middle of the current selection
-      // + metaKey + ctrlKey + r -> Removes any hyperlink from the current selection
+      //  metaKey + ctrlKey + u -> Toggles the current selection between underlined and not underlined
+      //  metaKey + ctrlKey + b -> Toggles the current selection between bold and non-bold
+      //  metaKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
+      //  metaKey + ctrlKey + r -> Removes the formatting tags from the current selection
+      //  metaKey + ctrlKey + h -> Inserts a Horizontal Rule
+      //  metaKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
+      //  metaKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
+      //  metaKey + ctrlKey + o -> Draws a line through the middle of the current selection
+      //  metaKey + ctrlKey + w -> Removes any hyperlink from the current selection
       if ( !e.altKey && e.ctrlKey && e.metaKey && (_this.options.richTextFormatKey[ e.keyCode ]
         || e.keyCode == 82
         || e.keyCode == 72
