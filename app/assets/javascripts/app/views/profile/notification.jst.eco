@@ -12,7 +12,7 @@
           <th><%- @T('My Tickets') %>
           <th><%- @T('Not Assigned') %> *
           <th><%- @T('All Tickets') %> *
-          <th class="settings-list-separator"><%- @T('Notify also via Email') %>
+          <th class="settings-list-separator"><%- @T('Also notify via email') %>
       </thead>
       <tbody>
       <% if @config.matrix: %>
