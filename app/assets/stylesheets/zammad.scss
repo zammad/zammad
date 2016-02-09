@@ -5564,6 +5564,10 @@ footer {
 
   .dropdown-menu.dropdown-menu--light > li {
     color: hsl(202,70%,49%);
+    
+    &.dropdown-header {
+      color: hsl(198,19%,72%);
+    }
   }
 
   .dropdown-menu.dropdown-menu--light > li > a:hover {
@@ -5680,8 +5684,8 @@ footer {
   }
 
   li.dropdown-header {
-    line-height: 36px;
-    height: 32px;
+    line-height: 34px;
+    height: 30px;
   }
 
 .recipientList,
