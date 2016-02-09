@@ -75,7 +75,7 @@ module Import::Zendesk
     }
     sleep 2
 
-    # start thread to import data
+    # start import data
     begin
       Import::Zendesk.start
     rescue => e
@@ -90,6 +90,7 @@ module Import::Zendesk
       Cache.write('import:state', result, expires_in: 10.hours)
       return false
     end
+    sleep 16 # wait until new finished import state is on client
     status_update_thread.exit
     status_update_thread.join
 
