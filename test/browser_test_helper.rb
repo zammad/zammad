@@ -514,6 +514,21 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
+    # searchable select
+    element = instance.find_elements({ css: "#{params[:css]}.js-shadow" })[0]
+    if element
+      element = instance.find_elements({ css: "#{params[:css]}.js-shadow + .js-input" })[0]
+      element.click
+      element.clear
+      sleep 1
+      element.send_keys(params[:value])
+      sleep 0.5
+      element.send_keys(:enter)
+      sleep 0.5
+      return
+    end
+
+    # native select
     begin
       element  = instance.find_elements({ css: params[:css] })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)

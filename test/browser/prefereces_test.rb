@@ -46,7 +46,7 @@ class PreferencesTest < TestCase
     click( css: 'a[href="#profile"]' )
     click( css: 'a[href="#profile/language"]' )
     select(
-      css: '.language_item select[name="locale"]',
+      css: '.language_item [name="locale"]',
       value: 'Deutsch',
     )
     click( css: '.content button[type="submit"]' )
@@ -159,7 +159,7 @@ class PreferencesTest < TestCase
     click( css: 'a[href="#profile"]' )
     click( css: 'a[href="#profile/language"]' )
     select(
-      css: '.language_item select[name="locale"]',
+      css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
     click( css: '.content button[type="submit"]' )
@@ -275,7 +275,7 @@ class PreferencesTest < TestCase
     click( css: 'a[href="#profile/language"]' )
     sleep 4
     select(
-      css: '.language_item select[name="locale"]',
+      css: '.language_item [name="locale"]',
       value: 'Deutsch',
     )
     click( css: '.content button[type="submit"]' )
