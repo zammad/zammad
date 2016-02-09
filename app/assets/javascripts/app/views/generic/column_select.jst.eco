@@ -12,7 +12,7 @@
   <% end %>
 </select>
 <div class="columnSelect-column columnSelect-column--selected js-selected">
-  <div class="u-placeholder js-placeholder"><%- @T('No value selected') %></div>
+  <div class="u-placeholder js-placeholder"><%- @T('Nothing selected') %></div>
   <% for option in @options: %>
   <div class="columnSelect-option is-hidden js-remove js-option" data-value="<%= option.value %>"><%= option.name %></div>
   <% end %>
