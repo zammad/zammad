@@ -131,7 +131,7 @@ Some Text",
         },
       },
       {
-        data: IO.read('test/fixtures/mail21.box'),
+        data: IO.binread('test/fixtures/mail21.box'),
         success: true,
         result: {
           0 => {
@@ -184,7 +184,7 @@ ___
         },
       },
       {
-        data: IO.read('test/fixtures/mail22.box'),
+        data: IO.binread('test/fixtures/mail22.box'),
         success: true,
         result: {
           0 => {
@@ -217,7 +217,7 @@ Freemont and pulling out several minutes.
         },
       },
       {
-        data: IO.read('test/fixtures/mail23.box'),
+        data: IO.binread('test/fixtures/mail23.box'),
         success: true,
         result: {
           0 => {
@@ -1870,7 +1870,7 @@ Some Text',
         }
       },
       {
-        data: IO.read('test/fixtures/mail30.box'),
+        data: IO.binread('test/fixtures/mail30.box'),
         success: true,
         result: {
           0 => {
@@ -1906,7 +1906,7 @@ Some Text',
         }
       },
       {
-        data: IO.read('test/fixtures/mail31.box'),
+        data: IO.binread('test/fixtures/mail31.box'),
         success: true,
         result: {
           0 => {
@@ -1930,7 +1930,7 @@ Some Text',
         }
       },
       {
-        data: IO.read('test/fixtures/mail32.box'),
+        data: IO.binread('test/fixtures/mail32.box'),
         success: true,
         result: {
           0 => {
@@ -1954,7 +1954,7 @@ Some Text',
         }
       },
       {
-        data: IO.read('test/fixtures/mail35.box'),
+        data: IO.binread('test/fixtures/mail35.box'),
         success: true,
         result: {
           0 => {

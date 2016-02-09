@@ -447,7 +447,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       close_time_in_min
       close_time_diff_in_min
       update_time_escal_date
-      updtate_time_sla_time
+      update_time_sla_time
       update_time_in_min
       update_time_diff_in_min
       last_contact
@@ -459,11 +459,11 @@ class ZendeskImportTest < ActiveSupport::TestCase
       escalation_time
       pending_time
       type
+      preferences
       updated_by_id
       created_by_id
       created_at
-      updated_at
-      preferences)
+      updated_at)
 
     assert_equal( copmare_fields, local_fields, 'ticket fields' )
   end

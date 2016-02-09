@@ -121,8 +121,8 @@ class Index extends App.ControllerContent
     channel = App.Channel.find(id)
     content = $( App.view('twitter/account_edit')(channel: channel) )
 
-    groupSelection = (selected_id, el, prefix) ->
-      selection = App.UiElement.select.render(
+    createGroupSelection = (selected_id, prefix) ->
+      return App.UiElement.select.render(
         name: "#{prefix}::group_id"
         multiple: false
         limit: 100
@@ -130,30 +130,46 @@ class Index extends App.ControllerContent
         relation: 'Group'
         nulloption: true
         default: selected_id
+        class: 'form-control--small'
       )
-      el.find('.js-groups').html(selection)
 
-    placeholderAdd = (value = '', group_id) ->
-      placeholder = content.find('.js-searchTermPlaceholder').clone()
-      placeholder.removeClass('hidden').removeClass('js-searchTermPlaceholder')
-      placeholder.find('input').val(value)
-      placeholder.find('input').attr('name', 'search::term')
-      groupSelection(group_id, placeholder, 'search')
-      content.find('.js-searchTermList').append(placeholder)
+    addSearchTerm = =>
+      @searchTerms.push
+        term: ''
+        group_id: ''
+      renderSearchTerms()
+      content.find('.js-searchTermList [name="search::term"]').last().focus()
+
+    removeSearchTerm = (event) =>
+      index = $(event.currentTarget).attr('data-index')
+      @searchTerms.splice(index, 1)
+      renderSearchTerms()
+
+    renderSearchTerms = =>
+      return if !@searchTerms
+
+      content.find('.js-searchTermList').empty()
+
+      for item, i in @searchTerms
+        content.find('.js-searchTermList').append App.view('twitter/search_term')
+          term: item.term
+          index: i
+
+        select = createGroupSelection(item.group_id, 'search')
+        content.find(".js-termGroup[data-index=\"#{i}\"]").replaceWith select
 
     if channel.options && channel.options.sync && channel.options.sync.search
-      for item in channel.options.sync.search
-        placeholderAdd(item.term, item.group_id, 'search')
+      @searchTerms = channel.options.sync.search
+    else
+      @searchTerms = []
 
-    content.find('.js-searchTermAdd').on('click', ->
-      placeholderAdd('', '')
-    )
-    content.find('.js-searchTerm').on('click', '.js-searchTermRemove',(e) ->
-      $(e.target).closest('.js-searchTermItem').remove()
-    )
+    renderSearchTerms()
 
-    groupSelection(channel.options.sync.mentions.group_id, content.find('.js-mention'), 'mentions')
-    groupSelection(channel.options.sync.direct_messages.group_id, content.find('.js-directMessage'), 'direct_messages')
+    content.find('.js-searchTermAdd').click(addSearchTerm)
+    content.find('.js-searchTermList').on('click', '.js-searchTermRemove', removeSearchTerm)
+
+    content.find('.js-mentionsGroup').replaceWith createGroupSelection(channel.options.sync.mentions.group_id, 'mentions')
+    content.find('.js-directMessagesGroup').replaceWith createGroupSelection(channel.options.sync.direct_messages.group_id, 'direct_messages')
 
     modal = new App.ControllerModal(
       head: 'Twitter Account'

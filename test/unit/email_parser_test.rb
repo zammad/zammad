@@ -6,7 +6,7 @@ class EmailParserTest < ActiveSupport::TestCase
   test 'parse' do
     files = [
       {
-        data: IO.read('test/fixtures/mail1.box'),
+        data: IO.binread('test/fixtures/mail1.box'),
         body_md5: 'b57d21dcac6b05e1aa67af51a9e4c1ec',
         params: {
           from: 'John.Smith@example.com',
@@ -16,7 +16,7 @@ class EmailParserTest < ActiveSupport::TestCase
         },
       },
       {
-        data: IO.read('test/fixtures/mail2.box'),
+        data: IO.binread('test/fixtures/mail2.box'),
         body_md5: '154c7d3ae7b94f99589df62882841b08',
         params: {
           from: 'Martin Edenhofer <martin@example.com>',
@@ -34,7 +34,7 @@ Old programmers never die. They just branch to a new address.
         },
       },
       {
-        data: IO.read('test/fixtures/mail3.box'),
+        data: IO.binread('test/fixtures/mail3.box'),
         body_md5: '96a0a7847c1c60e82058db8f8bff8136',
         params: {
           from: '"Günther John | Example GmbH" <k.guenther@example.com>',
@@ -44,7 +44,7 @@ Old programmers never die. They just branch to a new address.
         },
       },
       {
-        data: IO.read('test/fixtures/mail4.box'),
+        data: IO.binread('test/fixtures/mail4.box'),
         body_md5: '9fab9a0e8523011fde0f3ecd80f8d72c',
         params: {
           from: '"Günther Katja | Example GmbH" <k.guenther@example.com>',
@@ -75,7 +75,7 @@ Liebe Grüße!
         },
       },
       {
-        data: IO.read('test/fixtures/mail5.box'),
+        data: IO.binread('test/fixtures/mail5.box'),
         body_md5: 'f34033e9a34bb5367062dd5df21115df',
         params: {
           from: 'marc.smith@example.com (Marc Smith)',
@@ -85,7 +85,7 @@ Liebe Grüße!
         },
       },
       {
-        data: IO.read('test/fixtures/mail6.box'),
+        data: IO.binread('test/fixtures/mail6.box'),
         body_md5: '683ac042e94e99a8bb5e8ced7893b1d7',
         params: {
           from: '"Hans BÄKOSchönland" <me@bogen.net>',
@@ -108,7 +108,7 @@ Test5:=
         },
       },
       {
-        data: IO.read('test/fixtures/mail7.box'),
+        data: IO.binread('test/fixtures/mail7.box'),
         body_md5: 'c78f6a91905538ee32bc0bf71f70fcf2',
         params: {
           from: 'Eike.Ehringer@example.com',
@@ -148,7 +148,7 @@ Managing Director: Martin Edenhofer",
         },
       },
       {
-        data: IO.read('test/fixtures/mail8.box'),
+        data: IO.binread('test/fixtures/mail8.box'),
         body_md5: 'ca502c70a1b006f5184d1f0bf79d5799',
         attachments: [
           {
@@ -188,7 +188,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail9.box'),
+        data: IO.binread('test/fixtures/mail9.box'),
         body_md5: 'c70de14cc69b17b07850b570d7a4fbe7',
         attachments: [
           {
@@ -209,7 +209,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail10.box'),
+        data: IO.binread('test/fixtures/mail10.box'),
         body_md5: 'ddfad696bd34d83f607763180243f3c5',
         attachments: [
           {
@@ -230,7 +230,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail11.box'),
+        data: IO.binread('test/fixtures/mail11.box'),
         body_md5: 'cf8b26d9fc4ce9abb19a36ce3a130c79',
         attachments: [
           {
@@ -247,7 +247,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail12.box'),
+        data: IO.binread('test/fixtures/mail12.box'),
         body_md5: '8b48e082bc77e927d395448875259172',
         attachments: [
           {
@@ -268,7 +268,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail13.box'),
+        data: IO.binread('test/fixtures/mail13.box'),
         body_md5: '58806e006b14b04a535784a5462d09b0',
         attachments: [
           {
@@ -285,7 +285,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail14.box'),
+        data: IO.binread('test/fixtures/mail14.box'),
         body_md5: '154c7d3ae7b94f99589df62882841b08',
         attachments: [
           {
@@ -307,7 +307,7 @@ Hof
       },
       # spam email
       {
-        data: IO.read('test/fixtures/mail15.box'),
+        data: IO.binread('test/fixtures/mail15.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         attachments: [
           # :preferences=>{"Message-ID"=>"<temp@test>", "Content-Type"=>"application/octet-stream; name=\"\xBC\xA8\xD0\xA7\xB9\xDC\xC0\xED,\xBE\xBF\xBE\xB9\xCB\xAD\xB4\xED\xC1\xCB.xls\"", "Mime-Type"=>"application/octet-stream", "Charset"=>"UTF-8"}}
@@ -327,7 +327,7 @@ Hof
       },
       # spam email
       {
-        data: IO.read('test/fixtures/mail16.box'),
+        data: IO.binread('test/fixtures/mail16.box'),
         body_md5: '91e698a1ba3679dff398ba3587b3f3d9',
         params: {
           from: nil,
@@ -339,7 +339,7 @@ Hof
       },
       # spam email
       {
-        data: IO.read('test/fixtures/mail17.box'),
+        data: IO.binread('test/fixtures/mail17.box'),
         body_md5: 'c32d6502f47435e613a2112625118270',
         params: {
           from: '"都琹" <ghgbwum@185.com.cn>',
@@ -350,7 +350,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail18.box'),
+        data: IO.binread('test/fixtures/mail18.box'),
         body_md5: '66f20e8557095762ccad9a6cb6f59c3a',
         params: {
           from: 'postmaster@example.com',
@@ -361,7 +361,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail19.box'),
+        data: IO.binread('test/fixtures/mail19.box'),
         body_md5: '0bf7e746158d121bce7e2c46b64b0d39',
         params: {
           from: '"我" <>',
@@ -372,7 +372,7 @@ Hof
         },
       },
       {
-        data: IO.read('test/fixtures/mail20.box'),
+        data: IO.binread('test/fixtures/mail20.box'),
         body_md5: 'ddcbbb850491ae9a174c4f1e42309f84',
         params: {
           from: 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
@@ -413,7 +413,7 @@ Wade to give it seemed like this. Yeah but one for any longer. Everything you go
         },
       },
       {
-        data: IO.read('test/fixtures/mail21.box'),
+        data: IO.binread('test/fixtures/mail21.box'),
         body_md5: 'c9fb828072385643e528ab3a9ce7f10c',
         params: {
           from: 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
@@ -424,7 +424,7 @@ Wade to give it seemed like this. Yeah but one for any longer. Everything you go
         },
       },
       {
-        data: IO.read('test/fixtures/mail22.box'),
+        data: IO.binread('test/fixtures/mail22.box'),
         body_md5: '7dd64b40dce1aa3053fc7bbdea136612',
         params: {
           from: 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
@@ -454,7 +454,7 @@ Freemont and pulling out several minutes.
 
       },
       {
-        data: IO.read('test/fixtures/mail23.box'),
+        data: IO.binread('test/fixtures/mail23.box'),
         body_md5: '545a1b067fd10ac636c20b44f5df8868',
         params: {
           from: 'marketingmanager@nthcpghana.com',
@@ -465,7 +465,7 @@ Freemont and pulling out several minutes.
         },
       },
       {
-        data: IO.read('test/fixtures/mail24.box'),
+        data: IO.binread('test/fixtures/mail24.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'oracle@IG0-1-DB01.example.com',
@@ -486,7 +486,7 @@ Freemont and pulling out several minutes.
         ],
       },
       {
-        data: IO.read('test/fixtures/mail25.box'),
+        data: IO.binread('test/fixtures/mail25.box'),
         body_md5: '436f71d8d8a4ffbd3f18fc9de7d7f767',
         params: {
           from: 'oracle@IG0-1-DB01.example.com',
@@ -504,7 +504,7 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail26.box'),
+        data: IO.binread('test/fixtures/mail26.box'),
         body_md5: 'c68fd31c71a463c7ea820ccdf672c680',
         params: {
           from: 'gate <team@support.gate.de>',
@@ -534,7 +534,7 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
         ],
       },
       {
-        data: IO.read('test/fixtures/mail27.box'),
+        data: IO.binread('test/fixtures/mail27.box'),
         body_md5: 'd41d8cd98f00b204e9800998ecf8427e',
         params: {
           from: 'caoyaoewfzfw@21cn.com',
@@ -552,7 +552,7 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
         ],
       },
       {
-        data: IO.read('test/fixtures/mail28.box'),
+        data: IO.binread('test/fixtures/mail28.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'kontakt@example.de',
@@ -574,7 +574,7 @@ gate GmbH   *   Gladbacher Str. 74   *  40219  Düsseldorf
         ],
       },
       {
-        data: IO.read('test/fixtures/mail29.box'),
+        data: IO.binread('test/fixtures/mail29.box'),
         body_md5: 'bd34701dd5246b7651f67aeea6dd0fd3',
         params: {
           from: 'Example Sales <sales@example.com>',
@@ -605,7 +605,7 @@ Registration AG Ulm HRB 534075 * General Manager Holger Felgner
         },
       },
       {
-        data: IO.read('test/fixtures/mail30.box'),
+        data: IO.binread('test/fixtures/mail30.box'),
         body_md5: 'b4038e70d25854a023bce604c9f7a7ff',
         params: {
           from: 'Manfred Haert <Manfred.Haert@example.com>',
@@ -651,7 +651,7 @@ Weil wir die Echtheit oder Vollständigkeit der in dieser Nachricht enthaltenen 
         },
       },
       {
-        data: IO.read('test/fixtures/mail31.box'),
+        data: IO.binread('test/fixtures/mail31.box'),
         body_md5: '10484f3b096e85e7001da387c18871d5',
         params: {
           from: '"bertha　mou" <zhengkang@ha.chinamobile.com>',
@@ -662,7 +662,7 @@ Weil wir die Echtheit oder Vollständigkeit der in dieser Nachricht enthaltenen 
         },
       },
       {
-        data: IO.read('test/fixtures/mail32.box'),
+        data: IO.binread('test/fixtures/mail32.box'),
         body_md5: '6bed82e0d079e521f506e4e5d3529107',
         params: {
           from: '"Dana.Qin" <Dana.Qin6e1@gmail.com>',
@@ -673,7 +673,7 @@ Weil wir die Echtheit oder Vollständigkeit der in dieser Nachricht enthaltenen 
         },
       },
       {
-        data: IO.read('test/fixtures/mail34.box'),
+        data: IO.binread('test/fixtures/mail34.box'),
         body_md5: 'b6e46176404ec81b3ab412fe71dff0f0',
         params: {
           from: 'Bay <memberbay+12345@members.somewhat>',
@@ -685,7 +685,7 @@ Weil wir die Echtheit oder Vollständigkeit der in dieser Nachricht enthaltenen 
         },
       },
       {
-        data: IO.read('test/fixtures/mail36.box'),
+        data: IO.binread('test/fixtures/mail36.box'),
         body_md5: '428327fb533b387b3efca181ae0c25d0',
         params: {
           from: 'Martin Smith <m.Smith@example.com>',

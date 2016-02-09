@@ -9,34 +9,32 @@
   <tbody>
     <% for day, meta of @days: %>
     <tr <% if !meta.active: %>class="is-inactive"<% end %> data-date="<%= day %>">
-      <td>
-        <label class="checkbox-replacement">
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
           <input type="checkbox" <% if meta.active: %>checked<% end %> class="js-active" name="{boolean}public_holidays::<%= day %>::active" value="true">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>
       <td><%- @Tdate(day) %>
-      <td><input class="form-control form-control--small js-summary <% if !meta.active: %>is-disabled<% end %>" type="text" name="public_holidays::<%= day %>::summary" value="<%= meta.summary %>" required/>
-      <td>
-        <div class="settings-list-rowControls">
-          <% if !meta.feed: %>
-            <div class="btn btn--text js-remove">
-              <%- @Icon('trash') %> <%- @T('Remove') %>
-            </div>
-          <% end %>
-        </div>
+      <td class="settings-list-control-cell"><input class="form-control form-control--small js-summary <% if !meta.active: %>is-disabled<% end %>" type="text" name="public_holidays::<%= day %>::summary" value="<%= meta.summary %>" required/>
+      <td class="settings-list-row-control">
+        <% if !meta.feed: %>
+          <div class="btn btn--text js-remove">
+            <%- @Icon('trash') %> <%- @T('Remove') %>
+          </div>
+        <% end %>
     <% end %>
 
-    <tr class="settings-list-controlRow">
+    <tr>
       <td>
-      <td class="js-datePicker">
+      <td class="settings-list-control-cell js-datePicker">
         <!-- not supported right now by ff
         <input class="form-control form-control--small" type="date" placeholder="<%- @T('Date') %>"/>
         -->
-      <td>
+      <td class="settings-list-control-cell">
         <input class="form-control form-control--small js-summary" type="text" placeholder="<%- @T('Description') %>"/>
-      <td>
-        <div class="btn btn--text js-add">
+      <td class="settings-list-row-control">
+        <div class="btn btn--text btn--create js-add">
           <%- @Icon('plus-small') %> <%- @T('Add') %>
         </div>
   </tbody>

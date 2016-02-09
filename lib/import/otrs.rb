@@ -440,11 +440,9 @@ module Import::OTRS
     }
     sleep 2
 
-    # start thread to import data
+    # start import data
     begin
-      import_thread = Thread.new {
-        Import::OTRS.start
-      }
+      Import::OTRS.start
     rescue => e
       status_update_thread.exit
       status_update_thread.join
@@ -457,7 +455,7 @@ module Import::OTRS
       Cache.write('import:state', result, expires_in: 10.hours)
       return false
     end
-    import_thread.join
+    sleep 16 # wait until new finished import state is on client
     status_update_thread.exit
     status_update_thread.join
 

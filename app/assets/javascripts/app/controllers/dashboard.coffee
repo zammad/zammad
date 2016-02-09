@@ -2,7 +2,7 @@ class App.Dashboard extends App.Controller
   clueAccess: true
   events:
     'click .tabs .tab': 'toggle'
-    'click .intro': 'clues'
+    'click .js-intro': 'clues'
 
   constructor: ->
     super

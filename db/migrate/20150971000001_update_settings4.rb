@@ -60,9 +60,9 @@ class UpdateSettings4 < ActiveRecord::Migration
             name: 'ticket_hook_position',
             tag: 'select',
             options: {
-              'left'  => 'Left',
-              'right' => 'Right',
-              'none'  => 'None',
+              'left'  => 'left',
+              'right' => 'right',
+              'none'  => 'none',
             },
           },
         ],

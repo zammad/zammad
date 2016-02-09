@@ -29,15 +29,15 @@ class User < ApplicationModel
   include User::Assets
   extend User::Search
 
-  before_create   :check_name, :check_email, :check_login, :check_password
-  before_update   :check_password, :check_email, :check_login
+  before_create   :check_name, :check_email, :check_login, :check_password, :check_preferences_default
+  before_update   :check_password, :check_email, :check_login, :check_preferences_default
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
   notify_clients_support
 
   has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update
-  has_and_belongs_to_many :roles,           after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
   has_many                :authorizations,  after_add: :cache_update, after_remove: :cache_update
@@ -451,7 +451,7 @@ returns
 
 list of active users in role
 
-  result = User.of_role('Agent')
+  result = User.of_role('Agent', group_ids)
 
 returns
 
@@ -459,9 +459,58 @@ returns
 
 =end
 
-  def self.of_role(role)
+  def self.of_role(role, group_ids = nil)
     roles_ids = Role.where(active: true, name: role).map(&:id)
-    User.where(active: true).joins(:users_roles).where('roles_users.role_id IN (?)', roles_ids)
+    if !group_ids
+      return User.where(active: true).joins(:users_roles).where('roles_users.role_id IN (?)', roles_ids)
+    end
+    User.where(active: true)
+        .joins(:users_roles)
+        .joins(:users_groups)
+        .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids)
+  end
+
+=begin
+
+update/sync default preferences of users in a dedecated role
+
+  result = User.update_default_preferences('Agent')
+
+returns
+
+  result = true # false
+
+=end
+
+  def self.update_default_preferences(role_name)
+    role = Role.lookup(name: role_name)
+    User.of_role(role_name).each {|user|
+      user.check_notifications(role)
+      user.check_preferences_default
+      user.save
+    }
+    true
+  end
+
+  def check_notifications(o)
+    default = Rails.configuration.preferences_default_by_role
+    return if !default
+    default.deep_stringify_keys!
+    return if !default[o.name]
+    if !@preferences_default
+      @preferences_default = {}
+    end
+    default[o.name].each {|key, value|
+      next if @preferences_default[key]
+      @preferences_default[key] = value
+    }
+  end
+
+  def check_preferences_default
+    return if !@preferences_default
+    return if @preferences_default.empty?
+    preferences_tmp = @preferences_default.merge(preferences)
+    self.preferences = preferences_tmp
   end
 
   private
@@ -605,4 +654,5 @@ returns
     crypted       = Digest::SHA2.hexdigest(password)
     self.password = "{sha2}#{crypted}"
   end
+
 end

@@ -8,6 +8,10 @@ process emails from STDIN
 
   cat /path/to/mail.eml | rails r 'Channel::Driver::MailStdin.new'
 
+e. g.
+
+cat test/fixtures/mail1.box | rails r 'Channel::Driver::MailStdin.new'
+
 =end
 
   def initialize

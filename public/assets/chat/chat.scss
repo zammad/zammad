@@ -23,8 +23,9 @@
   @media only screen and (max-width: 768px) {
     right: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     border-radius: 0 !important;
+    font-size: 16px;
   }
 }
 .zammad-chat.zammad-chat-is-shown {
@@ -173,6 +174,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:empty {
+    display: none;
+  }
 }
 
 .zammad-chat-modal-text {
@@ -199,6 +204,7 @@
   overflow: auto;
   background: white;
   flex: 1;
+  -webkit-overflow-scrolling: touch;
 
   @media only screen and (max-width: 768px) {
     height: auto;

@@ -5,32 +5,63 @@
   </div>
 
   <div class="tab-content first-steps-widgets hidden">
-    <% if @isAdmin: %>
-    <%- @T('Configuration') %>
-    <ul>
-      <li><%- @T('Branding') %></li>
-      <li><%- @T('Your Email Configuration') %></li>
-      <li><%- @T('Invite Agents/Colleges') %></li>
-    </ul>
-    <% end %>
-    <%- @T('How to use it') %>
-    <ul>
-      <li><a href="#" class="intro"><%- @T('Intro') %></a></li>
-      <li><%- @T('Create a Test Ticket') %></li>
-      <li><%- @T('Create new Overviews') %></li>
-      <li><%- @T('Create Text Modues') %></li>
-      <li><%- @T('Create Macros') %></li>
-    </ul>
-    <% if @isAdmin: %>
-    <%- @T('Additionals Channels') %>
-    <ul>
-      <li><%- @T('Twitter') %></li>
-      <li><%- @T('Facebook') %></li>
-      <li><%- @T('Chat') %></li>
-      <li><%- @T('Widget') %></li>
-    </ul>
-    <% end %>
-
+    <div class="box box--paper">
+      <% if @isAdmin: %>
+      <h3><%- @T('Configuration') %></h3>
+      <a class="todo is-done">
+        <%- @Icon('checkmark') %>
+        <%- @T('Branding') %>
+      </a>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Your Email Configuration') %>
+      </a>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Invite Agents/Colleges') %>
+      </a>
+      <% end %>
+      <h3><%- @T('How to use it') %></h3>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Intro') %></a>
+      </a>
+      <a class="todo is-done">
+        <%- @Icon('checkmark') %>
+        <%- @T('Create a Test Ticket') %>
+      </a>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Create new Overviews') %>
+      </a>
+      <a class="todo is-done">
+        <%- @Icon('checkmark') %>
+        <%- @T('Create Text Modues') %>
+      </a>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Create Macros') %>
+      </a>
+      <% if @isAdmin: %>
+      <h3><%- @T('Additionals Channels') %></h3>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Twitter') %>
+      </a>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Facebook') %>
+      </a>
+      <a class="todo is-done">
+        <%- @Icon('checkmark') %>
+        <%- @T('Chat') %>
+      </a>
+      <a class="todo">
+        <%- @Icon('small-dot') %>
+        <%- @T('Widget') %>
+      </a>
+      <% end %>
+    </div>
   </div>
 
   <div class="tab-content stat-widgets three-columns horizontal"></div>

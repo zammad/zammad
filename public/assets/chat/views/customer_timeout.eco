@@ -1,11 +1,9 @@
-<div class="zammad-chat-modal">
-  <div class="zammad-chat-modal-text">
-    <% if @agent: %>
-      <%- @T('Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.', @delay, @agent) %>
-    <% else: %>
-      <%- @T('Since you didn\'t respond in the last %s minutes your conversation got closed.', @delay) %>
-    <% end %>
-    <br>
-    <div class="zammad-chat-button js-restart"<%= " style='background: #{ @background }'" if @background %>><%- @T('Start new conversation') %></div>
-  </div>
+<div class="zammad-chat-modal-text">
+  <% if @agent: %>
+    <%- @T('Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.', @delay, @agent) %>
+  <% else: %>
+    <%- @T('Since you didn\'t respond in the last %s minutes your conversation got closed.', @delay) %>
+  <% end %>
+  <br>
+  <div class="zammad-chat-button js-restart"<%= " style='background: #{ @background }'" if @background %>><%- @T('Start new conversation') %></div>
 </div>

@@ -15,7 +15,7 @@ $navigationWidth: 260px;
 
 $highlight-color: hsl(205,90%,60%);
 
-$largeScreenBreakpoint: 1280px;
+$largeScreenBreakpoint: 1260px;
 
 html {
   height: 100%;
@@ -317,7 +317,7 @@ pre code.hljs {
   
   .icon {
     vertical-align: middle;
-    margin-top: -1px; // more negative margin top looks bad on the btn--quad plus in overviews
+    margin-top: -3px;
   }
 
   &.btn--icon--last .icon {
@@ -424,6 +424,7 @@ pre code.hljs {
   }
 
   &.btn--positive,
+  &.btn--create,
   &.btn--success {
     color: white;
     background: hsl(145,51%,45%);
@@ -439,6 +440,10 @@ pre code.hljs {
       &:active {
         background: hsl(0,0%,98%);
       }
+    }
+
+    &.btn--text {
+      color: $supergood-color;
     }
 
     .icon {
@@ -521,6 +526,10 @@ pre code.hljs {
 
   &.btn--quad {
     padding: 10px 12px 9px;
+    
+    .icon {
+      margin-top: -1px;
+    }
   }
 
   &.btn--split--first {
@@ -926,6 +935,16 @@ th.align-right {
   align-items: center;
   justify-content: center;
 }
+
+.checkbox-replacement.checkbox-replacement--fullscreen,
+.radio-replacement.radio-replacement--fullscreen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
 
 .checkbox-replacement.checkbox-replacement--inline,
 .radio-replacement.radio-replacement--inline {
@@ -2222,7 +2241,7 @@ ol.tabs li {
   }
 
   .tabs--big {
-    margin: 25px auto 20px;
+    margin: 28px auto;
     font-size: 14px;
     border-radius: 8px;
     
@@ -3682,7 +3701,7 @@ footer {
 .superbad-color  { fill: $superbad-color; }
 
 .stat-widgets {
-  margin: 0 -7px 20px;
+  margin: -7px -7px 20px;
 }
 
   .stat-widget {
@@ -5107,6 +5126,23 @@ footer {
     margin-bottom: 12px;
   }
 
+  .box--paper {
+    background-image: linear-gradient(transparent 30px, hsl(0,0%,93%) 31px);
+    background-size: 100% 31px;
+    line-height: 31px;
+    padding-top: 31px;
+    padding-bottom: 31px;
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: inherit;
+    }
+
+    h3:not(:first-child) {
+      margin-top: 31px;
+    }
+  }
+
   .box h1 {
     margin-top: 10px;
     margin-bottom: 12px;
@@ -5845,8 +5881,6 @@ footer {
 }
 
 .tab-content {
-  margin-top: 25px;
-  
   h2:first-child {
     margin-top: 0;
   }
@@ -6792,6 +6826,10 @@ output {
   td.empty-cell {
     border-top: none;
   }
+  
+  .settings-list-separator {
+    border-left-width: 2px;
+  }
 
   .text-muted {
     text-transform: none;
@@ -6808,20 +6846,13 @@ output {
     margin: 0;
   }
 
-  .btn.btn--text:not(.btn--secondary) {
-    color: hsl(60,1%,61%);
-  }
-
-  .btn .icon {
-    fill: hsl(60,1%,61%);
-  }
-
   th:not(:last-child),
   td:not(:last-child) {
     border-right: none;
   }
 
-  tr:not(:last-child) td {
+  tr:not(:last-child) td,
+  & > tbody:not(:last-child) tr td {
     border-bottom: none;
   }
 
@@ -6838,11 +6869,13 @@ output {
     border-top-right-radius: 4px;
   }
 
-  & > tbody > tr:last-child > td:first-child {
+  & > tbody:last-child > tr:last-child > td:first-child,
+  & > tfoot:last-child > tr:last-child > td:first-child {
     border-bottom-left-radius: 4px;
   }
 
-  & > tbody > tr:last-child > td:last-child {
+  & > tbody:last-child > tr:last-child > td:last-child,
+  & > tfoot:last-child > tr:last-child > td:last-child {
     border-bottom-right-radius: 4px;
   }
 
@@ -6870,9 +6903,11 @@ output {
     }
   }
 
-  .settings-list-controlRow {
-    td {
-      padding: 5px;
+  .settings-list-control-cell {
+    padding: 5px;
+    
+    & ~ .settings-list-row-control {
+      padding-bottom: 7px;
     }
   }
 }
@@ -7718,6 +7753,21 @@ output {
     &.is-selected {
       background: linear-gradient(hsla(202,50%,20%,0.1), hsla(202,50%,20%,.03));
     }
+  }
+}
+
+.todo {
+  position: relative;
+  display: block;
+
+  .icon {
+    fill: hsl(0,0%,80%);
+    vertical-align: middle;
+    margin: -2px 3px 0 0;
+  }
+
+  &.is-done .icon {
+    fill: $supergood-color;
   }
 }
 

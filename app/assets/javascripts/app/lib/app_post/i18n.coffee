@@ -186,7 +186,8 @@ class _i18nSingleton extends Spine.Module
 
     # apply inline markup
     translated
-      .replace(/\*(.+?)\*/gm, '<b>$1</b>')
+      .replace(/\|\|(.+?)\|\|/gm, '<i>$1</i>')
+      .replace(/\|(.+?)\|/gm, '<b>$1</b>')
       .replace(/_(.+?)_/gm, '<u>$1</u>')
       .replace(/§(.+?)§/gm, '<kbd>$1</kbd>')
 

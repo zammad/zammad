@@ -1,10 +1,7 @@
 ---
-:warnings_remove: []
-:warnings_add:
-- :merge_conflict
-- :debugger
-- :pry
-- :local
+:checks_remove:
+- :common
+- :rails
+:checks_add:
 - :rubocop
 - :coffeelint
-- :yaml

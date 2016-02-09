@@ -1,0 +1,7 @@
+<tr>
+  <td class="settings-list-control-cell"><input name="search::term" value="<%= @term %>" class="form-control form-control--small">
+  <td class="settings-list-control-cell"><div class="js-termGroup" data-index="<%= @index %>"></div>
+  <td class="settings-list-row-control">
+    <div class="btn btn--text js-searchTermRemove" data-index="<%= @index %>">
+      <%- @Icon('trash') %> <%- @T('Remove') %>
+    </div>

@@ -11,56 +11,37 @@ class Index extends App.Controller
   render: =>
 
     # matrix
-    config = {}
-    config['matrix'] = {}
-    config['matrix']['create'] = {}
-    config['matrix']['create']['name'] = 'new Ticket'
-    config['matrix']['create']['criteria'] = {}
-    config['matrix']['create']['criteria']['owned_by_me'] = true
-    config['matrix']['create']['criteria']['owned_by_nobody'] = true
-    config['matrix']['create']['criteria']['no'] = false
-    config['matrix']['create']['channel'] = {}
-    config['matrix']['create']['channel']['email'] = true
-    config['matrix']['create']['channel']['online'] = false
-    config['matrix']['update'] = {}
-    config['matrix']['update']['name'] = 'Ticket update'
-    config['matrix']['update']['criteria'] = {}
-    config['matrix']['update']['criteria']['owned_by_me'] = true
-    config['matrix']['update']['criteria']['owned_by_nobody'] = false
-    config['matrix']['update']['criteria']['no'] = false
-    config['matrix']['update']['channel'] = {}
-    config['matrix']['update']['channel']['email'] = true
-    config['matrix']['update']['channel']['online'] = false
-    config['matrix']['move_into'] = {}
-    config['matrix']['move_into']['name'] = 'Ticket moved into my group'
-    config['matrix']['move_into']['criteria'] = {}
-    config['matrix']['move_into']['criteria']['owned_by_me'] = true
-    config['matrix']['move_into']['criteria']['owned_by_nobody'] = true
-    config['matrix']['move_into']['criteria']['no'] = false
-    config['matrix']['move_into']['channel'] = {}
-    config['matrix']['move_into']['channel']['email'] = true
-    config['matrix']['move_into']['channel']['online'] = false
-    config['matrix']['escalation'] = {}
-    config['matrix']['escalation']['name'] = 'Ticket escalation'
-    config['matrix']['escalation']['criteria'] = {}
-    config['matrix']['escalation']['criteria']['owned_by_me'] = true
-    config['matrix']['escalation']['criteria']['owned_by_nobody'] = true
-    config['matrix']['escalation']['criteria']['no'] = false
-    config['matrix']['escalation']['channel'] = {}
-    config['matrix']['escalation']['channel']['email'] = true
-    config['matrix']['escalation']['channel']['online'] = false
+    config =
+      group_ids: []
+      matrix:
+        create:
+          name: 'New Ticket'
+        update:
+          name: 'Ticket update'
+        reminder_reached:
+          name: 'Ticket reminder reached'
+        escalation:
+          name: 'Ticket escalation'
 
     user_config = @Session.get('preferences').notification_config
     if user_config
       config = $.extend(true, {}, config, user_config)
-    console.log('oo', config)
+
     # groups
+    user_group_config = true
+    if !user_config || !user_config['group_ids'] || _.isEmpty(user_config['group_ids']) || user_config['group_ids'][0] is '-'
+      user_group_config = false
+
     groups = []
     group_ids = @Session.get('group_ids')
     if group_ids
       for group_id in group_ids
         group = App.Group.find(group_id)
         groups.push group
+        if !user_group_config
+          if !config['group_ids']
+            config['group_ids'] = []
+          config['group_ids'].push group_id.toString()
 
     @html App.view('profile/notification')( groups: groups, config: config )
 
@@ -72,7 +53,6 @@ class Index extends App.Controller
     params.notification_config = {}
 
     form_params = @formParam(e.target)
-    console.log('P',form_params)
     for key, value of form_params
       if key is 'group_ids'
         if typeof value isnt 'object'
@@ -100,18 +80,27 @@ class Index extends App.Controller
               params.notification_config[area[0]] = {}
             if !params.notification_config[area[0]][area[1]]
               params.notification_config[area[0]][area[1]] = {}
-            if value is 'online'
-              params.notification_config[area[0]][area[1]][area[2]] = {
-                email:  false
-                online: true
-              }
-            else
+            if value is 'email'
               params.notification_config[area[0]][area[1]][area[2]] = {
                 email:  true
-                online: false
+                online: true
               }
-    console.log('P2',params)
 
+    # validation
+    if !params['notification_config']['matrix']
+      @log('error', 'invalid notification_config, matrix is missing')
+      return
+
+    # check missing channels
+    for key, value of params['notification_config']['matrix']
+      if !value.channel
+        value.channel = {
+          email:  false
+          online: true
+        }
+
+    if !params.notification_config.group_ids || _.isEmpty(params.notification_config.group_ids)
+      params.notification_config.group_ids = ['-']
     @formDisable(e)
 
     # get data
@@ -127,12 +116,12 @@ class Index extends App.Controller
 
   success: (data, status, xhr) =>
     App.User.full(
-      App.Session.get( 'id' ),
+      App.Session.get('id'),
       =>
-        App.Event.trigger( 'ui:rerender' )
+        App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent( 'Successfully!' )
+          msg:  App.i18n.translateContent('Successfully!')
         )
       ,
       true
@@ -140,10 +129,10 @@ class Index extends App.Controller
 
   error: (xhr, status, error) =>
     @render()
-    data = JSON.parse( xhr.responseText )
+    data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent( data.message )
+      msg:  App.i18n.translateContent(data.message)
     )
 
 App.Config.set( 'Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', role: ['Agent'], controller: Index }, 'NavBarProfile' )

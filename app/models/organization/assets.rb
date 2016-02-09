@@ -46,10 +46,10 @@ returns
         local_attributes['member_ids'] = local_member_ids
         if local_member_ids
           local_member_ids.each {|local_user_id|
-            if !data[ User.to_app_model ][ local_user_id ]
-              user = User.lookup( id: local_user_id )
-              data = user.assets( data )
-            end
+            next if data[ User.to_app_model ][ local_user_id ]
+            user = User.lookup(id: local_user_id)
+            next if !user
+            data = user.assets(data)
           }
         end
 
@@ -58,8 +58,9 @@ returns
       %w(created_by_id updated_by_id).each {|local_user_id|
         next if !self[ local_user_id ]
         next if data[ User.to_app_model ][ self[ local_user_id ] ]
-        user = User.lookup( id: self[ local_user_id ] )
-        data = user.assets( data )
+        user = User.lookup(id: self[ local_user_id ])
+        next if !user
+        data = user.assets(data)
       }
       data
     end

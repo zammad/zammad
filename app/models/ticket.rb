@@ -38,7 +38,7 @@ class Ticket < ApplicationModel
     close_time_in_min: true,
     close_time_diff_in_min: true,
     update_time_escal_date: true,
-    updtate_time_sla_time: true,
+    update_time_sla_time: true,
     update_time_in_min: true,
     update_time_diff_in_min: true,
     last_contact: true,
@@ -84,7 +84,12 @@ returns
 =end
 
   def agent_of_group
-    Group.find( group_id ).users.where( active: true ).joins(:roles).where( 'roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true ).uniq()
+    Group.find(group_id)
+         .users.where(active: true)
+         .joins(:roles)
+         .where('roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true)
+         .order('users.login')
+         .uniq()
   end
 
 =begin
