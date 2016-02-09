@@ -438,10 +438,10 @@
                     <option value="4">
                       closed
                     </option>
-                    <option value="2">
+                    <option selected value="2">
                       open
                     </option>
-                    <option selected value="7">
+                    <option value="7">
                       pending close
                     </option>
                     <option value="3">
@@ -450,16 +450,6 @@
                   </select>
                   <%- @Icon('arrow-down', 'dropdown-arrow') %>
                 </div><span class="help-inline"></span> <span class="help-block"></span>
-              </div>
-            </div>
-            <div class="date form-group formGroup--bundle">
-              <div class="formGroup-label">
-                <label for="Ticket_187247_pending_time">Pending till <span>*</span></label>
-              </div>
-              <div class="controls">
-                <input type="text" value="10/28/2015" class="form-control js-datepicker">
-                <div class="controls-label">at</div>
-                <input type="text" value="08:00" class="form-control time js-timepicker">
               </div>
             </div>
             <div class="select form-group">
@@ -485,21 +475,19 @@
             </div>
           </fieldset>
         </form>
+        <hr>
+        <div class="userNotifications">
+          <label>Notifications</label>
+          <div class="btn btn--small btn--fullWidth">
+            <%- @Icon('mute') %>
+            Unsubscribe
+          </div>
+          <span class="help-block">You’re receiving notifications because you wrote something.</span>
+        </div>
+        <hr>
         <div class="tags">
           <label>Tags</label>
           <ul class="list list--sidebar">
-            <li class="list-item">
-              <div class="list-item-name">
-                test
-              </div>
-              <div class="list-item-delete js-delete"></div>
-            </li>
-            <li class="list-item">
-              <div class="list-item-name">
-                123
-              </div>
-              <div class="list-item-delete js-delete"></div>
-            </li>
             <li class="list-item">
               <div class="list-item-name">
                 planeten

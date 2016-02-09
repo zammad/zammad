@@ -304,7 +304,7 @@ pre code.hljs {
   display: inline-block;
   font-size: 14px;
   padding: 10px 24px 9px;
-  color: hsl(202,68%,54%);
+  color: hsl(0,0%,20%);
   background: white;
   border: 1px solid rgba(0,0,0,.1);
   outline: none !important;
@@ -319,6 +319,7 @@ pre code.hljs {
   .icon {
     vertical-align: middle;
     margin-top: -3px;
+    fill: currentColor;
   }
 
   &.btn--icon--last .icon {
@@ -337,6 +338,12 @@ pre code.hljs {
   &.btn--slim {
     padding-left: 12px;
     padding-right: 12px;
+  }
+
+  &.btn--fullWidth {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   &.btn--table {
@@ -4961,7 +4968,7 @@ footer {
   }
 
   .sidebar .text-muted {
-    color: hsl(198,19%,72%);
+    color: hsl(198,22%,82%);
   }
 
 .alert {
@@ -4991,6 +4998,10 @@ footer {
 .tags,
 .links {
   margin: 20px 0;
+}
+
+.userNotifications label + .btn {
+  margin-top: 1px;
 }
 
 .list {

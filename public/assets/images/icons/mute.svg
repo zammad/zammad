@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.5.1 (25234) - http://www.bohemiancoding.com/sketch -->
+    <title>mute</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="mute" sketch:type="MSArtboardGroup" fill="#50E3C2">
+            <path d="M1,6 L1,10 L4,10 L8,13 L8,3 L4,6 L1,6 Z" id="speaker" sketch:type="MSShapeGroup"></path>
+            <path d="M11.2928932,8 L9.14644661,5.85355339 C8.95118446,5.65829124 8.95118446,5.34170876 9.14644661,5.14644661 C9.34170876,4.95118446 9.65829124,4.95118446 9.85355339,5.14644661 L12,7.29289322 L14.1464466,5.14644661 C14.3417088,4.95118446 14.6582912,4.95118446 14.8535534,5.14644661 C15.0488155,5.34170876 15.0488155,5.65829124 14.8535534,5.85355339 L12.7071068,8 L14.8535534,10.1464466 C15.0488155,10.3417088 15.0488155,10.6582912 14.8535534,10.8535534 C14.6582912,11.0488155 14.3417088,11.0488155 14.1464466,10.8535534 L12,8.70710678 L9.85355339,10.8535534 C9.65829124,11.0488155 9.34170876,11.0488155 9.14644661,10.8535534 C8.95118446,10.6582912 8.95118446,10.3417088 9.14644661,10.1464466 L11.2928932,8 Z" id="cross" sketch:type="MSShapeGroup"></path>
+        </g>
+    </g>
+</svg>
