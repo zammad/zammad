@@ -1,24 +1,24 @@
 <select
   class="columnSelect-shadow js-shadow"
-  id="<%= @id %>"
-  name="<%= @name %>"
-  <%= @required %>
-  <%= @autofocus %>
-  value="<%= @value %>"
+  id="<%= @attribute.id %>"
+  name="<%= @attribute.name %>"
+  <%= @attribute.required %>
+  <%= @attribute.autofocus %>
+  value="<%= @attribute.value %>"
   multiple
 >
-  <% for option in @options: %>
+  <% for option in @attribute.options: %>
   <option value="<%= option.value %>"><%= option.name %></option>
   <% end %>
 </select>
 <div class="columnSelect-column columnSelect-column--selected js-selected">
-  <div class="u-placeholder u-unselectable js-placeholder"><%- @T('Nothing selected') %></div>
-  <% for option in @options: %>
-  <div class="columnSelect-option is-hidden js-remove js-option" data-value="<%= option.value %>"><%= option.name %></div>
+  <div class="u-placeholder u-unselectable js-placeholder<%= ' is-hidden' if @values.length %>"><%- @T('Nothing selected') %></div>
+  <% for option in @attribute.options: %>
+  <div class="columnSelect-option js-remove js-option<%= ' is-hidden' if !option.selected %>" data-value="<%= option.value %>"><%= option.name %></div>
   <% end %>
 </div>
 <div class="columnSelect-column columnSelect-column--sidebar">
-  <% if @options.length > 10: %>
+  <% if @attribute.options.length > 10: %>
   <div class="columnSelect-search">
     <%- @Icon('magnifier') %>
     <input class="js-search">
@@ -28,8 +28,8 @@
   </div>
   <% end %>
   <div class="columnSelect-pool js-pool">
-    <% for option in @options: %>
-    <div class="columnSelect-option js-select js-option" data-value="<%= option.value %>" title="<%= option.name %>"><%= option.name %></div>
+    <% for option in @attribute.options: %>
+    <div class="columnSelect-option js-select js-option<%= ' is-hidden' if option.selected %>" data-value="<%= option.value %>" title="<%= option.name %>"><%= option.name %></div>
     <% end %>
   </div>
 </div>

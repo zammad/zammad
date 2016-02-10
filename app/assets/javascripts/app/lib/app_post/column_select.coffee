@@ -23,11 +23,17 @@ class App.ColumnSelect extends Spine.Controller
 
   constructor: ->
     super
-    @values = []
     @render()
 
   render: ->
-    @html App.view('generic/column_select')( @options.attribute )
+    @values = []
+    _.each @options.attribute.options, (option) =>
+      if option.selected
+        @values.push option.value
+
+    @html App.view('generic/column_select')
+      attribute: @options.attribute
+      values: @values
 
     # keep inital height
     # disabled for now since controls in modals get rendered hidden
