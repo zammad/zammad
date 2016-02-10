@@ -5,22 +5,22 @@ class EmailBuildTest < ActiveSupport::TestCase
   test 'document complete check' do
 
     html   = '<b>test</b>'
-    result = Channel::EmailBuild.html_complete_check( html )
+    result = Channel::EmailBuild.html_complete_check(html)
 
-    assert( result =~ /^<\!DOCTYPE/, 'test 1')
-    assert( result !~ /^.+?<\!DOCTYPE/, 'test 1')
-    assert( result =~ /<html>/, 'test 1')
-    assert( result =~ /font-family/, 'test 1')
-    assert( result =~ %r{<b>test</b>}, 'test 1')
+    assert(result =~ /^<\!DOCTYPE/, 'test 1')
+    assert(result !~ /^.+?<\!DOCTYPE/, 'test 1')
+    assert(result =~ /<html>/, 'test 1')
+    assert(result =~ /font-family/, 'test 1')
+    assert(result =~ %r{<b>test</b>}, 'test 1')
 
     html   = 'invalid <!DOCTYPE html><html><b>test</b></html>'
-    result = Channel::EmailBuild.html_complete_check( html )
+    result = Channel::EmailBuild.html_complete_check(html)
 
-    assert( result !~ /^<\!DOCTYPE/, 'test 2')
-    assert( result =~ /^.+?<\!DOCTYPE/, 'test 2')
-    assert( result =~ /<html>/, 'test 2')
-    assert( result !~ /font-family/, 'test 2')
-    assert( result =~ %r{<b>test</b>}, 'test 2')
+    assert(result !~ /^<\!DOCTYPE/, 'test 2')
+    assert(result =~ /^.+?<\!DOCTYPE/, 'test 2')
+    assert(result =~ /<html>/, 'test 2')
+    assert(result !~ /font-family/, 'test 2')
+    assert(result =~ %r{<b>test</b>}, 'test 2')
 
   end
 
@@ -52,33 +52,33 @@ class EmailBuildTest < ActiveSupport::TestCase
 >
 > Thank you for installing Zammad. äöüß
 >'
-    assert_equal( should, mail.text_part.body.to_s )
-    assert_equal( html, mail.html_part.body.to_s )
+    assert_equal(should, mail.text_part.body.to_s)
+    assert_equal(html, mail.html_part.body.to_s)
 
     parser = Channel::EmailParser.new
-    data = parser.parse( mail.to_s )
+    data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal( should, data[:body] )
+    assert_equal(should, data[:body])
 
     # check count of attachments, only 2, because 3 part is text message and is already in body
-    assert_equal( 2, data[:attachments].length )
+    assert_equal(2, data[:attachments].length)
 
     # check attachments
     if data[:attachments]
       data[:attachments].each { |attachment|
         if attachment[:filename] == 'message.html'
-          assert_equal( nil, attachment[:preferences]['Content-ID'] )
-          assert_equal( true, attachment[:preferences]['content-alternative'] )
-          assert_equal( 'text/html', attachment[:preferences]['Mime-Type'] )
-          assert_equal( 'UTF-8', attachment[:preferences]['Charset'] )
+          assert_equal(nil, attachment[:preferences]['Content-ID'])
+          assert_equal(true, attachment[:preferences]['content-alternative'])
+          assert_equal('text/html', attachment[:preferences]['Mime-Type'])
+          assert_equal('UTF-8', attachment[:preferences]['Charset'])
         elsif attachment[:filename] == 'somename.png'
-          assert_equal( nil, attachment[:preferences]['Content-ID'] )
-          assert_equal( nil, attachment[:preferences]['content-alternative'] )
-          assert_equal( 'image/png', attachment[:preferences]['Mime-Type'] )
-          assert_equal( 'UTF-8', attachment[:preferences]['Charset'] )
+          assert_equal(nil, attachment[:preferences]['Content-ID'])
+          assert_equal(nil, attachment[:preferences]['content-alternative'])
+          assert_equal('image/png', attachment[:preferences]['Mime-Type'])
+          assert_equal('UTF-8', attachment[:preferences]['Charset'])
         else
-          assert( false, "invalid attachment, should not be there, #{attachment.inspect}" )
+          assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
         end
       }
     end
@@ -106,28 +106,28 @@ class EmailBuildTest < ActiveSupport::TestCase
 >
 > Thank you for installing Zammad. äöüß
 >'
-    assert_equal( should, mail.text_part.body.to_s )
-    assert_equal( nil, mail.html_part )
+    assert_equal(should, mail.text_part.body.to_s)
+    assert_equal(nil, mail.html_part)
 
     parser = Channel::EmailParser.new
-    data = parser.parse( mail.to_s )
+    data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal( should, data[:body] )
+    assert_equal(should, data[:body])
 
     # check count of attachments, 2
-    assert_equal( 1, data[:attachments].length )
+    assert_equal(1, data[:attachments].length)
 
     # check attachments
     if data[:attachments]
       data[:attachments].each { |attachment|
         if attachment[:filename] == 'somename.png'
-          assert_equal( nil, attachment[:preferences]['Content-ID'] )
-          assert_equal( nil, attachment[:preferences]['content-alternative'] )
-          assert_equal( 'image/png', attachment[:preferences]['Mime-Type'] )
-          assert_equal( 'UTF-8', attachment[:preferences]['Charset'] )
+          assert_equal(nil, attachment[:preferences]['Content-ID'])
+          assert_equal(nil, attachment[:preferences]['content-alternative'])
+          assert_equal('image/png', attachment[:preferences]['Mime-Type'])
+          assert_equal('UTF-8', attachment[:preferences]['Charset'])
         else
-          assert( false, "invalid attachment, should not be there, #{attachment.inspect}" )
+          assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
         end
       }
     end
@@ -148,17 +148,47 @@ class EmailBuildTest < ActiveSupport::TestCase
 >
 > Thank you for installing Zammad. äöüß
 >'
-    assert_equal( should, mail.body.to_s )
-    assert_equal( nil, mail.html_part )
+    assert_equal(should, mail.body.to_s)
+    assert_equal(nil, mail.html_part)
 
     parser = Channel::EmailParser.new
-    data = parser.parse( mail.to_s )
+    data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal( should, data[:body] )
+    assert_equal(should, data[:body])
 
     # check count of attachments, 0
-    assert_equal( 0, data[:attachments].length )
+    assert_equal(0, data[:attachments].length)
+
+  end
+
+  test 'email - html email client fixes' do
+
+    # https://github.com/martini/zammad/issues/165
+    html_raw = '<blockquote type="cite">some
+text
+</blockquote>
+
+123
+
+<blockquote type="cite">some
+text
+</blockquote>'
+    html_with_fixes = Channel::EmailBuild.html_mail_client_fixes(html_raw)
+
+    assert_not_equal(html_with_fixes, html_raw)
+
+    html_should = '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">some
+text
+</blockquote>
+
+123
+
+<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">some
+text
+</blockquote>'
+
+    assert_equal(html_should, html_with_fixes)
 
   end
 

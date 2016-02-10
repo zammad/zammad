@@ -7,10 +7,10 @@ module Channel::EmailBuild
 =begin
 
   mail = Channel::EmailBuild.build(
-    :from         => 'sender@example.com',
-    :to           => 'recipient@example.com',
-    :body         => 'somebody with some text',
-    :content_type => 'text/plain',
+    from: 'sender@example.com',
+    to: 'recipient@example.com',
+    body: 'somebody with some text',
+    content_type: 'text/plain',
   )
 
 =end
@@ -53,7 +53,7 @@ module Channel::EmailBuild
         content_type 'text/html; charset=UTF-8'
 
         # complete check
-        html_document = Channel::EmailBuild.html_complete_check( attr[:body] )
+        html_document = Channel::EmailBuild.html_complete_check(attr[:body])
 
         body html_document
       end
@@ -110,11 +110,17 @@ module Channel::EmailBuild
 
 =begin
 
-  full_html_document_string = Channel::EmailBuild.html_complete_check( html_string )
+Check if string is a complete html document. If not, add head and css styles.
+
+  full_html_document_string = Channel::EmailBuild.html_complete_check(html_string)
 
 =end
 
   def self.html_complete_check(html)
+
+    # apply mail client fixes
+    html = Channel::EmailBuild.html_mail_client_fixes(html)
+
     return html if html =~ /<html>/i
 
     css = "font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;"
@@ -166,4 +172,20 @@ HERE
 
     html
   end
+
+=begin
+
+Add/change markup to display html in any mail client nice.
+
+  html_string_with_fixes = Channel::EmailBuild.html_mail_client_fixes(html_string)
+
+=end
+
+  def self.html_mail_client_fixes(html)
+
+    # https://github.com/martini/zammad/issues/165
+    html.gsub('<blockquote type="cite">', '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">')
+
+  end
+
 end
