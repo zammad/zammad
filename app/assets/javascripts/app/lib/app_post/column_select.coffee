@@ -88,7 +88,7 @@ class App.ColumnSelect extends Spine.Controller
 
   onFilterKeydown: (event) ->
     return if event.keyCode != 13
-    
+
     firstVisibleOption = @poolOptions.not('.is-filtered').not('.is-hidden').first()
     if firstVisibleOption
       @select firstVisibleOption.attr('data-value')
