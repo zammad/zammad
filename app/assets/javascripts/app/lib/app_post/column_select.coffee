@@ -50,6 +50,7 @@ class App.ColumnSelect extends Spine.Controller
     @pool.find("[data-value='#{value}']").addClass 'is-hidden'
     @values.push(value)
     @shadow.val(@values)
+    @shadow.trigger('change')
 
     @placeholder.addClass 'is-hidden'
 
@@ -64,6 +65,7 @@ class App.ColumnSelect extends Spine.Controller
     @selected.find("[data-value='#{value}']").addClass 'is-hidden'
     @values.splice(@values.indexOf(value), 1)
     @shadow.val(@values)
+    @shadow.trigger('change')
 
     if !@values.length
       @placeholder.removeClass 'is-hidden'
