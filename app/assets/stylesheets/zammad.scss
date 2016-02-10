@@ -7826,10 +7826,15 @@ output {
   .columnSelect-column--sidebar {
     flex-basis: 33%;
     flex-shrink: 1;
-    border-left: 1px dotted hsl(0,0%,90%);
+    border-left: 1px solid hsl(198,4%,90%);
+    background: hsl(198,4%,96%);
     display: flex;
     flex-direction: column;
     min-width: 0;
+    
+    .columnSelect-option:hover {
+      background: hsl(198,4%,91%);
+    }
   }
 
   .columnSelect-pool {
@@ -7848,7 +7853,7 @@ output {
     text-overflow: ellipsis;
     
     &:hover {
-      background: hsl(0,0%,96%);
+      background: hsl(198,4%,96%);
     }
   }
 
@@ -7862,7 +7867,7 @@ output {
   position: relative;
   
   .icon {
-    fill: hsl(0,0%,90%);
+    fill: hsl(198,4%,85%);
   }
 
   .icon-magnifier {
@@ -7885,7 +7890,7 @@ output {
     padding: 2px 30px 1px;
     border: none;
     outline: none;
-    border-bottom: 1px dotted hsl(0,0%,90%);
+    border-bottom: 1px solid hsl(198,4%,90%);
     background: none;
   }
 }
