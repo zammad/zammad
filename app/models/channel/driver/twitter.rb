@@ -266,6 +266,10 @@ returns
     return if !@sync[:search]
     return if @sync[:search].empty?
     @sync[:search].each { |search|
+      next if !search[:term]
+      next if search[:term].to_s.empty?
+      next if !search[:group_id]
+      next if search[:group_id].to_s.empty?
       result_type = search[:type] || 'mixed'
       Rails.logger.debug " - searching for '#{search[:term]}'"
       @rest_client.client.search(search[:term], result_type: result_type).collect { |tweet|
@@ -279,6 +283,8 @@ returns
   def fetch_mentions
     return if !@sync[:mentions]
     return if @sync[:mentions].empty?
+    return if !@sync[:mentions][:group_id]
+    return if @sync[:mentions][:group_id].to_s.empty?
     Rails.logger.debug ' - searching for mentions'
     @rest_client.client.mentions_timeline.each { |tweet|
       next if Ticket::Article.find_by(message_id: tweet.id)
@@ -290,6 +296,8 @@ returns
   def fetch_direct_messages
     return if !@sync[:direct_messages]
     return if @sync[:direct_messages].empty?
+    return if !@sync[:direct_messages][:group_id]
+    return if @sync[:direct_messages][:group_id].to_s.empty?
     Rails.logger.debug ' - searching for direct_messages'
     @rest_client.client.direct_messages.each { |tweet|
       next if Ticket::Article.find_by(message_id: tweet.id)

@@ -123,6 +123,11 @@ blockquote {
   user-select: none;
 }
 
+.u-unselectable {
+  pointer-events: none;
+  user-select: none;
+}
+
 .u-textTruncate {
   white-space: nowrap;
   overflow: hidden;
@@ -295,7 +300,8 @@ pre code.hljs {
 
 .textarea::placeholder,
 .form-control::placeholder,
-.token-input::placeholder {
+.token-input::placeholder,
+.u-placeholder {
   color: hsl(0,0%,80%);
 }
 
@@ -303,7 +309,7 @@ pre code.hljs {
   display: inline-block;
   font-size: 14px;
   padding: 10px 24px 9px;
-  color: hsl(202,68%,54%);
+  color: hsl(0,0%,20%);
   background: white;
   border: 1px solid rgba(0,0,0,.1);
   outline: none !important;
@@ -318,6 +324,7 @@ pre code.hljs {
   .icon {
     vertical-align: middle;
     margin-top: -3px;
+    fill: currentColor;
   }
 
   &.btn--icon--last .icon {
@@ -336,6 +343,12 @@ pre code.hljs {
   &.btn--slim {
     padding-left: 12px;
     padding-right: 12px;
+  }
+
+  &.btn--fullWidth {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 
   &.btn--table {
@@ -421,6 +434,10 @@ pre code.hljs {
       fill: white;
       opacity: 1;
     }
+  }
+
+  &.btn--secondary {
+    color: hsl(202,68%,54%);
   }
 
   &.btn--positive,
@@ -1176,6 +1193,17 @@ fieldset {
     margin-left: 4px;
     margin-right: 4px;
   }
+}
+
+/*
+
+Firefox Specific Hack
+to fix the overflow of column select with long names
+https://stackoverflow.com/questions/17408815/fieldset-resizes-wrong-appears-to-have-unremovable-min-width-min-content/17863685#17863685
+
+*/
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
 }
 
 fieldset > .form-group {
@@ -4960,7 +4988,7 @@ footer {
   }
 
   .sidebar .text-muted {
-    color: hsl(198,19%,72%);
+    color: hsl(198,22%,82%);
   }
 
 .alert {
@@ -4990,6 +5018,10 @@ footer {
 .tags,
 .links {
   margin: 20px 0;
+}
+
+.userNotifications label + .btn {
+  margin-top: 1px;
 }
 
 .list {
@@ -5552,6 +5584,10 @@ footer {
 
   .dropdown-menu.dropdown-menu--light > li {
     color: hsl(202,70%,49%);
+    
+    &.dropdown-header {
+      color: hsl(198,19%,72%);
+    }
   }
 
   .dropdown-menu.dropdown-menu--light > li > a:hover {
@@ -5668,8 +5704,8 @@ footer {
   }
 
   li.dropdown-header {
-    line-height: 36px;
-    height: 32px;
+    line-height: 34px;
+    height: 30px;
   }
 
 .recipientList,
@@ -6065,7 +6101,7 @@ label + .wizard-buttonList {
 }
 
 .import.wizard .wizard-slide {
-  height: 300px;
+  min-height: 300px;
 }
 
 .import-source {
@@ -6826,9 +6862,9 @@ output {
   td.empty-cell {
     border-top: none;
   }
-  
+
   .settings-list-separator {
-    border-left-width: 2px;
+    border-left-width: 3px;
   }
 
   .text-muted {
@@ -7016,7 +7052,7 @@ output {
   .searchableSelect-autocomplete {
     position: absolute;
     left: 13px;
-    top: 10px;
+    top: 11px;
     right: 37px;
     white-space: nowrap;
     overflow: hidden;
@@ -7768,6 +7804,94 @@ output {
 
   &.is-done .icon {
     fill: $supergood-color;
+  }
+}
+
+.columnSelect {
+  height: 234px;
+  display: flex;
+  padding: 0;
+  line-height: 22px;
+  
+  .columnSelect-shadow {
+    display: none;
+  }
+
+  .columnSelect-column--selected { 
+    flex: 1 1 66%;
+    overflow: auto;
+    padding: 7px;
+  }
+  
+  .columnSelect-column--sidebar {
+    flex-basis: 33%;
+    flex-shrink: 1;
+    border-left: 1px solid hsl(198,4%,90%);
+    background: hsl(198,4%,96%);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    
+    .columnSelect-option:hover {
+      background: hsl(198,4%,91%);
+    }
+  }
+
+  .columnSelect-pool {
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: 7px;
+  }
+  
+  .columnSelect-option {
+    cursor: pointer;
+    user-select: none;
+    padding: 0 5px;
+    border-radius: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+    &:hover {
+      background: hsl(198,4%,96%);
+    }
+  }
+
+  .is-hidden,
+  .is-filtered {
+    display: none;
+  }
+}
+
+.columnSelect-search {
+  position: relative;
+  
+  .icon {
+    fill: hsl(198,4%,85%);
+  }
+
+  .icon-magnifier {
+    left: 7px;
+    top: 5px;
+    position: absolute;
+  }
+
+  .columnSelect-search-clear {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 7px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  input {
+    width: 100%;
+    padding: 2px 30px 1px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid hsl(198,4%,90%);
+    background: none;
   }
 }
 

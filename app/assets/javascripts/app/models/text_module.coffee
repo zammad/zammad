@@ -5,7 +5,7 @@ class App.TextModule extends App.Model
   @configure_attributes = [
     { name: 'name',       display: 'Name',          tag: 'input',     type: 'text', limit: 100, null: false },
     { name: 'keywords',   display: 'Keywords',      tag: 'input',     type: 'text', limit: 100, null: true },
-    { name: 'content',    display: 'Content',       tag: 'textarea',                limit: 250, null: false },
+    { name: 'content',    display: 'Content',       tag: 'richtext',                limit: 2000, null: false },
     { name: 'updated_at', display: 'Updated',       tag: 'datetime',  readonly: 1 },
     { name: 'active',     display: 'Active',        tag: 'active',    default: true },
   ]
@@ -16,14 +16,15 @@ class App.TextModule extends App.Model
     'content',
   ]
 
+  # coffeelint: disable=no_interpolation_in_single_quotes
   @description = '''
 Create Text Modules to **spend less time writing responses**. TextModules can include smart variables like the users name or email address.
 
 Examples of snippets are:
 
-* Hallo Frau <%= @ticket.customer.lastname %>,
-* Hallo Herr <%= @ticket.customer.lastname %>,
-* Hallo <%= @ticket.customer.firstname %>,
+* Hallo Frau #{@ticket.customer.lastname},
+* Hallo Herr #{@ticket.customer.lastname},
+* Hallo #{@ticket.customer.firstname},
 
 Of course you can also use multi line snippets.
 
@@ -34,3 +35,4 @@ Available objects are:
 * @ticket.organization (e. g. @ticket.organization.name)
 
 '''
+  # coffeelint: enable=no_interpolation_in_single_quotes

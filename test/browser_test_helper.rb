@@ -514,6 +514,21 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
+    # searchable select
+    element = instance.find_elements({ css: "#{params[:css]}.js-shadow" })[0]
+    if element
+      element = instance.find_elements({ css: "#{params[:css]}.js-shadow + .js-input" })[0]
+      element.click
+      element.clear
+      sleep 1
+      element.send_keys(params[:value])
+      sleep 0.5
+      element.send_keys(:enter)
+      sleep 0.5
+      return
+    end
+
+    # native select
     begin
       element  = instance.find_elements({ css: params[:css] })[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
@@ -1969,7 +1984,7 @@ wait untill text in selector disabppears
     element = instance.find_elements({ css: '.modal input[name=keywords]' })[0]
     element.clear
     element.send_keys(data[:keywords])
-    element = instance.find_elements({ css: '.modal textarea[name=content]' })[0]
+    element = instance.find_elements({ css: '.modal [data-name=content]' })[0]
     element.clear
     element.send_keys(data[:content])
     instance.find_elements({ css: '.modal button.js-submit' })[0].click
@@ -2016,7 +2031,7 @@ wait untill text in selector disabppears
     element = instance.find_elements({ css: '.modal input[name=name]' })[0]
     element.clear
     element.send_keys(data[:name])
-    element = instance.find_elements({ css: '.modal textarea[name=body]' })[0]
+    element = instance.find_elements({ css: '.modal [data-name=body]' })[0]
     element.clear
     element.send_keys(data[:body])
     instance.find_elements({ css: '.modal button.js-submit' })[0].click

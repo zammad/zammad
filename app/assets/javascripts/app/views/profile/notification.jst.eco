@@ -9,10 +9,10 @@
       <thead>
         <tr>
           <th>
-          <th><%- @T('My Tickets') %>
-          <th><%- @T('Not Assigned') %> *
-          <th><%- @T('All Tickets') %> *
-          <th class="settings-list-separator"><%- @T('Notify also via Email') %>
+          <th width="18%" style="text-align: center;"><%- @T('My Tickets') %>
+          <th width="18%" style="text-align: center;"><%- @T('Not Assigned') %>*
+          <th width="18%" style="text-align: center;"><%- @T('All Tickets') %>*
+          <th width="120px" class="settings-list-separator" style="text-align: center;"><%- @T('Also notify via email') %>
       </thead>
       <tbody>
       <% if @config.matrix: %>

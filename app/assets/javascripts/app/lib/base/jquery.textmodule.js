@@ -248,7 +248,6 @@
 
   // paste some content
   Plugin.prototype.paste = function(string) {
-    string = App.Utils.text2html(string)
     if (document.selection) { // IE
       var range = document.selection.createRange()
       range.pasteHTML(string)

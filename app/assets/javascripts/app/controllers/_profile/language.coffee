@@ -15,7 +15,7 @@ class Index extends App.Controller
     for locale in locales
       options[locale.locale] = locale.name
     configure_attributes = [
-      { name: 'locale', display: '', tag: 'select', null: false, class: 'input', options: options, default: App.i18n.get() },
+      { name: 'locale', display: '', tag: 'searchable_select', null: false, class: 'input', options: options, default: App.i18n.get() },
     ]
 
     @form = new App.ControllerForm(

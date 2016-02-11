@@ -201,9 +201,7 @@ class App.TicketCreate extends App.Controller
         type = @$('[name="formSenderType"]').val()
 
         if signature isnt undefined &&  signature.body && type is 'email-out'
-          signatureFinished = App.Utils.text2html(
-            App.Utils.replaceTags( signature.body, { user: App.Session.get() } )
-          )
+          signatureFinished = App.Utils.replaceTags( signature.body, { user: App.Session.get() } )
 
           # get current body
           body = @$('[data-name="body"]').html() || ''

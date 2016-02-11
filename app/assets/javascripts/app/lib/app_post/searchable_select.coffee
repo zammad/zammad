@@ -3,6 +3,7 @@ class App.SearchableSelect extends Spine.Controller
   events:
     'input .js-input':                  'onInput'
     'blur .js-input':                   'onBlur'
+    'focus .js-input':                  'onFocus'
     'click .js-option':                 'selectItem'
     'mouseenter .js-option':            'highlightItem'
     'shown.bs.dropdown':                'onDropdownShown'
@@ -97,14 +98,16 @@ class App.SearchableSelect extends Spine.Controller
       caretPosition = @invisiblePart.text().length + 1
 
     @input.val @suggestion
+    @shadowInput.val @suggestionValue
     @clearAutocomplete()
     @toggle()
 
     @input.prop('selectionStart', caretPosition)
     @input.prop('selectionEnd', caretPosition)
 
-  autocomplete: (text) ->
+  autocomplete: (value, text) ->
     @suggestion = text
+    @suggestionValue = value
     startIndex = text.indexOf(@query)
 
     if !@query or startIndex != 0
@@ -146,7 +149,12 @@ class App.SearchableSelect extends Spine.Controller
     @toggle()
 
   onBlur: ->
-    # @clearAutocomplete()
+    @clearAutocomplete()
+
+  onFocus: ->
+    textEnd = @input.val().length
+    @input.prop('selectionStart', textEnd)
+    @input.prop('selectionEnd', textEnd)
 
   onInput: (event) =>
     @toggle() if not @isOpen
@@ -163,12 +171,14 @@ class App.SearchableSelect extends Spine.Controller
         @textContent.match(regex)
       .removeClass 'is-hidden'
 
-    @highlightFirst()
+    @highlightFirst(true)
 
-  highlightFirst: ->
+  highlightFirst: (autocomplete) ->
     first = @option_items.removeClass('is-active').not('.is-hidden').first()
     first.addClass 'is-active'
-    @autocomplete first.text().trim()
+
+    if autocomplete
+      @autocomplete first.attr('data-value'), first.text().trim()
 
   highlightItem: (event) =>
     @option_items.removeClass('is-active')

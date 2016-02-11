@@ -420,9 +420,8 @@ class App.TicketZoomArticleNew extends App.Controller
         @$('[data-name=body] [data-signature="true"]').remove()
 
       # apply new signature
-      signatureFinished = App.Utils.text2html(
-        App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: ticketCurrent } )
-      )
+      signatureFinished = App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: ticketCurrent } )
+
       body = @$('[data-name=body]').html() || ''
       if App.Utils.signatureCheck(body, signatureFinished)
         if !App.Utils.lastLineEmpty(body)

@@ -30,7 +30,7 @@ class App.WidgetTextModule extends App.Controller
     for item in allRaw
       if item.active is true
         attributes = item.attributes()
-        attributes.content = attributes.content.replace( /<%=\s{0,2}(.+?)\s{0,2}%>/g, ( index, key ) ->
+        attributes.content = attributes.content.replace( /#\{{0,2}(.+?)\s{0,2}\}/g, ( index, key ) ->
           key = key.replace( /@/g, 'data.' )
           varString = "#{key}" + ''
           #console.log( "tag replacement env: ", data)
