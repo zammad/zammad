@@ -247,13 +247,12 @@ class App.Utils
       true
 
   # messageWithMarker = App.Utils.signatureIdentify(message, false)
-  @signatureIdentify: (message, test = false) ->
+  @signatureIdentify: (message, test = false, internal = false) ->
     textToSearch = @html2text(message)
 
     # if we do have less then 8 lines and less then 300 chars ignore this
     textToSearchInLines = textToSearch.split("\n")
-    if !test
-      return message if textToSearchInLines.length < 8 && textToSearch.length < 300
+    return message if !test && (textToSearchInLines.length < 8 && textToSearch.length < 300)
 
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
@@ -417,28 +416,28 @@ class App.Utils
     markerTemplate = '<span class="js-signatureMarker"></span>'
 
     # search for zammad
-    # <div data-signature="true" data-signature-id=".{1,3}">
-    if !markers || !markers[0]
-      regex = new RegExp( "(<div data-signature=\"true\" data-signature-id=\".{1,5}\">)" )
-      if message.match( regex )
-        return message.replace( regex, "#{markerTemplate}\$1" )
-      regex = new RegExp( "(<div data-signature-id=\".{1,5}\" data-signature=\"true\">)" )
-      if message.match( regex )
-        return message.replace( regex, "#{markerTemplate}\$1" )
+    # <div data-signature="true" data-signature-id=".{1,5}">
+    if !markers || !markers[0] || internal
+      regex = new RegExp("(<div data-signature=\"true\" data-signature-id=\".{1,5}\">)")
+      if message.match(regex)
+        return message.replace(regex, "#{markerTemplate}\$1")
+      regex = new RegExp("(<div data-signature-id=\".{1,5}\" data-signature=\"true\">)")
+      if message.match(regex)
+        return message.replace(regex, "#{markerTemplate}\$1")
 
     # search for <blockquote type="cite">
     # <blockquote type="cite">
     if !markers || !markers[0]
-      regex = new RegExp( "(<blockquote type=\"cite\">)" )
-      if message.match( regex )
-        return message.replace( regex, "#{markerTemplate}\$1" )
+      regex = new RegExp("(<blockquote type=\"cite\">)")
+      if message.match(regex)
+        return message.replace(regex, "#{markerTemplate}\$1")
 
     # gmail
     # <div class="ecxgmail_quote">
     if !markers || !markers[0]
-      regex = new RegExp( "(<blockquote class=\"(ecxgmail_quote|gmail_quote)\">)" )
-      if message.match( regex )
-        return message.replace( regex, "#{markerTemplate}\$1" )
+      regex = new RegExp("(<blockquote class=\"(ecxgmail_quote|gmail_quote)\">)")
+      if message.match(regex)
+        return message.replace(regex, "#{markerTemplate}\$1")
 
     # if no marker is found, return
     return message if !markers || !markers[0]
@@ -446,11 +445,11 @@ class App.Utils
     # get first marker
     markers = _.sortBy(markers, 'lineCount')
     if markers[0].type is 'seperator'
-      regex = new RegExp( "\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})\s{0,10}\<" )
-      message.replace( regex, ">#{markerTemplate}\$1<" )
+      regex = new RegExp("\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})\s{0,10}\<")
+      message.replace(regex, ">#{markerTemplate}\$1<")
     else
-      regex = new RegExp( "\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})" )
-      message.replace( regex, ">#{markerTemplate}\$1" )
+      regex = new RegExp("\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})")
+      message.replace(regex, ">#{markerTemplate}\$1")
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
   @replaceTags: (template, objects) ->
