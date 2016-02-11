@@ -23,23 +23,30 @@ class App.Dashboard extends App.Controller
 
   render: ->
 
-    @html App.view('dashboard')(
+    localEl = $( App.view('dashboard')(
       head:    'Dashboard'
       isAdmin: @isRole('Admin')
-    )
+    ) )
 
     new App.DashboardStats(
-      el: @$('.stat-widgets')
+      el: localEl.find('.stat-widgets')
     )
 
     new App.DashboardActivityStream(
-      el:    @$('.sidebar')
+      el:    localEl.find('.js-activityContent')
       limit: 25
     )
+
+    new App.DashboardFirstSteps(
+      el: localEl.find('.first-steps-widgets')
+    )
+
+    @html localEl
 
   mayBeClues: =>
     return if !@clueAccess
     return if !@activeState
+    return if @Config.get('switch_back_to_possible')
     preferences = @Session.get('preferences')
     @clueAccess = false
     return if preferences['intro']
@@ -49,17 +56,7 @@ class App.Dashboard extends App.Controller
     @clueAccess = false
     if e
       e.preventDefault()
-    new App.FirstStepsClues(
-      el: @el
-      onComplete: =>
-        @ajax(
-          id:          'preferences'
-          type:        'PUT'
-          url:         @apiPath + '/users/preferences'
-          data:        JSON.stringify({user:{intro:true}})
-          processData: true
-        )
-    )
+    @navigate '#clues'
 
   active: (state) =>
     @activeState = state

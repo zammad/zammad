@@ -1,18 +1,22 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <fieldset>
 
-  <%- @T('Wall') %>
+  <h1><%- @T('Wall') %></h1>
+  <p class="description"><%- @T('Choose which group page postings should go.') %></p>
   <div class="js-wall">
-    <%= @channel.options.user.name %> -> <div data-page-id="<%= @channel.options.user.id %>" class="js-groups"></div>
+    <h2><%= @channel.options.user.name %></h2>
+    <div data-page-id="<%= @channel.options.user.id %>" class="js-groups"></div>
   </div>
 
   <hr>
 
-  <%- @T('Pages') %>
+  <h1><%- @T('Pages') %></h1>
+  <p class="description"><%- @T('Choose which group page postings should go.') %></p>
   <div class="js-pages">
     <% if @channel.options.pages: %>
       <% for page in @channel.options.pages: %>
-        <%= page.name %> -> <div data-page-id="<%= page.id %>" class="js-groups"></div><br>
+        <h2><%= page.name %></h2>
+        <div data-page-id="<%= page.id %>" class="js-groups"></div>
       <% end %>
     <% end %>
   </div>

@@ -1,0 +1,15 @@
+<div class="box box--paper">
+  <% for area in @data: %>
+  <h3><%- @T(area.name) %></h3>
+    <% for item in area.items: %>
+    <a class="todo <% if item.checked: %>is-done<% end %>" href="<%- item.location %>">
+      <% if item.checked: %>
+        <%- @Icon('checkmark') %>
+      <% else: %>
+        <%- @Icon('small-dot') %>
+      <% end %>
+      <%- @T(item.name) %>
+    </a>
+    <% end %>
+  <% end %>
+</div>
