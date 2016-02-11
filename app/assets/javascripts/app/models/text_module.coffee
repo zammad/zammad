@@ -16,6 +16,7 @@ class App.TextModule extends App.Model
     'content',
   ]
 
+  # coffeelint: disable=no_interpolation_in_single_quotes
   @description = '''
 Create Text Modules to **spend less time writing responses**. TextModules can include smart variables like the users name or email address.
 
@@ -34,3 +35,4 @@ Available objects are:
 * @ticket.organization (e. g. @ticket.organization.name)
 
 '''
+  # coffeelint: enable=no_interpolation_in_single_quotes
