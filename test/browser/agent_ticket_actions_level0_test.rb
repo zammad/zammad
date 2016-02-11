@@ -101,7 +101,7 @@ class AgentTicketActionLevel0Test < TestCase
       data: {
         name: 'some name' + random,
         keywords: random,
-        content: 'some content <%= @ticket.customer.lastname %>' + random,
+        content: 'some content #{@ticket.customer.lastname}' + random,
       },
     )
 

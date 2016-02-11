@@ -21,9 +21,9 @@ Create Text Modules to **spend less time writing responses**. TextModules can in
 
 Examples of snippets are:
 
-* Hallo Frau <%= @ticket.customer.lastname %>,
-* Hallo Herr <%= @ticket.customer.lastname %>,
-* Hallo <%= @ticket.customer.firstname %>,
+* Hallo Frau #{@ticket.customer.lastname},
+* Hallo Herr #{@ticket.customer.lastname},
+* Hallo #{@ticket.customer.firstname},
 
 Of course you can also use multi line snippets.
 
