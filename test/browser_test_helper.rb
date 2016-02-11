@@ -1984,7 +1984,7 @@ wait untill text in selector disabppears
     element = instance.find_elements({ css: '.modal input[name=keywords]' })[0]
     element.clear
     element.send_keys(data[:keywords])
-    element = instance.find_elements({ css: '.modal textarea[name=content]' })[0]
+    element = instance.find_elements({ css: '.modal [data-name=content]' })[0]
     element.clear
     element.send_keys(data[:content])
     instance.find_elements({ css: '.modal button.js-submit' })[0].click
@@ -2031,7 +2031,7 @@ wait untill text in selector disabppears
     element = instance.find_elements({ css: '.modal input[name=name]' })[0]
     element.clear
     element.send_keys(data[:name])
-    element = instance.find_elements({ css: '.modal textarea[name=body]' })[0]
+    element = instance.find_elements({ css: '.modal [data-name=body]' })[0]
     element.clear
     element.send_keys(data[:body])
     instance.find_elements({ css: '.modal button.js-submit' })[0].click
