@@ -33,7 +33,7 @@ class App.Dashboard extends App.Controller
     )
 
     new App.DashboardActivityStream(
-      el:    localEl.find('.sidebar')
+      el:    localEl.find('.js-activityContent')
       limit: 25
     )
 

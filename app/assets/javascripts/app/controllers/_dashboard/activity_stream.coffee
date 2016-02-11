@@ -41,12 +41,10 @@ class App.DashboardActivityStream extends App.Controller
   render: (items) ->
 
     # show description of activity stream
-    if _.isEmpty(items)
-      @$('.activity-description').removeClass('hidden')
-      return
+    return if _.isEmpty(items)
 
     # remove description of activity stream
-    @$('.activity-description').remove()
+    @$('.activity-description').removeClass('activity-description')
 
     items = @prepareForObjectList(items)
 
@@ -54,8 +52,7 @@ class App.DashboardActivityStream extends App.Controller
     for item in items
       html.append(@renderItem(item))
 
-    @$('.activity-entries').remove()
-    @el.append html
+    @el.html html
 
   renderItem: (item) ->
     html = $(App.view('dashboard/activity_stream')(
