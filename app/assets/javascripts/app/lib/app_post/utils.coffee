@@ -253,7 +253,7 @@ class App.Utils
     # count lines, if we do have lower the 10, ignore this
     textToSearchInLines = textToSearch.split("\n")
     if !test
-      return message if textToSearchInLines.length < 10
+      return message if textToSearchInLines.length < 8
 
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
@@ -419,7 +419,7 @@ class App.Utils
     # search for zammad
     # <div data-signature="true" data-signature-id=".{1,3}">
     if !markers || !markers[0]
-      regex = new RegExp( "(<div data-signature=\"true\" data-signature-id=\".{1,3}\">)" )
+      regex = new RegExp( "(<div data-signature=\"true\" data-signature-id=\".{1,5}\">)" )
       if message.match( regex )
         return message.replace( regex, "#{markerTemplate}\$1" )
 
