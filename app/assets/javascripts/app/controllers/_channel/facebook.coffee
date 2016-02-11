@@ -131,6 +131,7 @@ class Index extends App.ControllerContent
         relation: 'Group'
         nulloption: true
         default: selected_id
+        class: 'form-control--small'
       )
       el.html(selection)
 
