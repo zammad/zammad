@@ -422,6 +422,9 @@ class App.Utils
       regex = new RegExp( "(<div data-signature=\"true\" data-signature-id=\".{1,5}\">)" )
       if message.match( regex )
         return message.replace( regex, "#{markerTemplate}\$1" )
+      regex = new RegExp( "(<div data-signature-id=\".{1,5}\" data-signature=\"true\">)" )
+      if message.match( regex )
+        return message.replace( regex, "#{markerTemplate}\$1" )
 
     # search for <blockquote type="cite">
     # <blockquote type="cite">
