@@ -163,7 +163,8 @@ class AaaGettingStartedTest < TestCase
       value: 'My Stats',
     )
     location_check(
-      url: '#dashboard',
+      url: '#clues',
+    #url: '#dashboard',
     )
   end
 
