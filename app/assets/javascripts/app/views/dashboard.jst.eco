@@ -3,69 +3,8 @@
     <div class="tab active" data-area="stat-widgets"><%- @T('My Stats') %></div>
     <div class="tab" data-area="first-steps-widgets"><%- @T('First Steps') %></div>
   </div>
-
-  <div class="tab-content first-steps-widgets hidden">
-    <div class="box box--paper">
-      <% if @isAdmin: %>
-      <h3><%- @T('Configuration') %></h3>
-      <a class="todo is-done">
-        <%- @Icon('checkmark') %>
-        <%- @T('Branding') %>
-      </a>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Your Email Configuration') %>
-      </a>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Invite Agents/Colleges') %>
-      </a>
-      <% end %>
-      <h3><%- @T('How to use it') %></h3>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Intro') %></a>
-      </a>
-      <a class="todo is-done">
-        <%- @Icon('checkmark') %>
-        <%- @T('Create a Test Ticket') %>
-      </a>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Create new Overviews') %>
-      </a>
-      <a class="todo is-done">
-        <%- @Icon('checkmark') %>
-        <%- @T('Create Text Modues') %>
-      </a>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Create Macros') %>
-      </a>
-      <% if @isAdmin: %>
-      <h3><%- @T('Additionals Channels') %></h3>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Twitter') %>
-      </a>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Facebook') %>
-      </a>
-      <a class="todo is-done">
-        <%- @Icon('checkmark') %>
-        <%- @T('Chat') %>
-      </a>
-      <a class="todo">
-        <%- @Icon('small-dot') %>
-        <%- @T('Widget') %>
-      </a>
-      <% end %>
-    </div>
-  </div>
-
+  <div class="tab-content first-steps-widgets hidden"></div>
   <div class="tab-content stat-widgets three-columns horizontal"></div>
-
 </div>
 <div class="sidebar optional">
   <h2><%- @T('Activity Stream') %></h2>

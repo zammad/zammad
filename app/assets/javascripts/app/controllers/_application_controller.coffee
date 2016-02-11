@@ -111,7 +111,11 @@ class App.Controller extends Spine.Controller
     App.Event.trigger 'notifyDesktop', data
 
   # add @navupdate methode to update navigation
-  navupdate: (url) ->
+  navupdate: (url, force = false) ->
+
+    # ignore navupdate untill #clues are gone
+    return if !force && window.location.hash is '#clues'
+
     App.Event.trigger 'navupdate', url
 
   # show navigation
