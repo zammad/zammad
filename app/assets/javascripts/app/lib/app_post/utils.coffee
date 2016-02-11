@@ -250,11 +250,10 @@ class App.Utils
   @signatureIdentify: (message, test = false) ->
     textToSearch = @html2text(message)
 
-    # count lines, if we do have lower the 8 or more then 300 chars ignore this
+    # if we do have less then 8 lines and less then 300 chars ignore this
     textToSearchInLines = textToSearch.split("\n")
     if !test
-      return message if textToSearch.length < 300
-      return message if textToSearchInLines.length < 8
+      return message if textToSearchInLines.length < 8 && textToSearch.length < 300
 
     quote = (str) ->
       (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&")
