@@ -726,12 +726,26 @@ test("identify signature", function() {
   result  = App.Utils.signatureIdentify(message, true)
   equal(result, should)
 
+  message = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://znuny.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
+  should  = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><span class=\"js-signatureMarker\"></span><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://znuny.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
+  result  = App.Utils.signatureIdentify(message, true, true)
+  equal(result, should)
+
+  message = "Dear Mr. Smith, nice to read you,<div><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
+  should  = "Dear Mr. Smith, nice to read you,<div><span class=\"js-signatureMarker\"></span><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
+  result  = App.Utils.signatureIdentify(message, true, true)
+  equal(result, should)
+
+  message = "Dear Mr. Smith, nice to read you,<div><div data-signature=\"true\" data-signature-id=\"9999\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
+  should  = "Dear Mr. Smith, nice to read you,<div><div data-signature=\"true\" data-signature-id=\"9999\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
+  result  = App.Utils.signatureIdentify(message, false, true)
+  equal(result, should)
+
   // fr
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>'
   result  = App.Utils.signatureIdentify(message, true)
   equal(result, should)
-
 
   // thunderbird
   // de
