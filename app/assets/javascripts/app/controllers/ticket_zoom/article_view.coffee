@@ -178,6 +178,7 @@ class ArticleViewItem extends App.Controller
     @shown = true
 
     maxHeight               = 560
+    minHeight               = 90
     bubbleContent           = @textBubbleContent
     bubbleOvervlowContainer = @textBubbleOverflowContainer
 
@@ -194,11 +195,20 @@ class ArticleViewItem extends App.Controller
     # remember offset of "see more"
     offsetTop = bubbleContent.find('.js-signatureMarker').position()
 
+    # safari - workaround
+    # in safari somethimes the marker is directly on top via .top and inspector but it isn't
+    # in this case use the next element
+    if offsetTop && offsetTop.top is 0
+      offsetTop = bubbleContent.find('.js-signatureMarker').next('div, p').position()
+
     # remember bubble heigth
     heigth = bubbleContent.height()
     if offsetTop && heigth
+      newHeigth = offsetTop.top + 30
+      if newHeigth < minHeight
+        newHeigth = minHeight
       bubbleContent.attr('data-height', heigth)
-      bubbleContent.css('height', "#{offsetTop.top + 30}px")
+      bubbleContent.css('height', "#{newHeigth}px")
       bubbleOvervlowContainer.removeClass('hide')
     else if heigth > maxHeight
       bubbleContent.attr('data-height', heigth)
