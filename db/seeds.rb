@@ -17,6 +17,16 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'App Version',
+  name: 'app_version',
+  area: 'Core::WebApp',
+  description: 'Only used for internal, to propagate current web app version to clients.',
+  options: {},
+  state: '',
+  preferences: { online_service_disable: true },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'Developer System',
   name: 'developer_mode',
   area: 'Core::Develop',
