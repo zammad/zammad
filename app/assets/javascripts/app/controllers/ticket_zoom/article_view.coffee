@@ -118,7 +118,7 @@ class ArticleViewItem extends App.Controller
 
     # prepare html body
     if @article.content_type is 'text/html'
-      if @article.sender.type is 'Agent'
+      if @article.sender.name is 'Agent'
         @article['html'] = App.Utils.signatureIdentify(@article.body, false, true)
       else
         @article['html'] = App.Utils.signatureIdentify(@article.body)
