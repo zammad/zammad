@@ -79,10 +79,10 @@ returns
   def fetchable?(channel)
     return true if Rails.env.test?
 
-    # only fetch once a hour
+    # only fetch once in 30 minutes
     return true if !channel.preferences
     return true if !channel.preferences[:last_fetch]
-    return false if channel.preferences[:last_fetch] > Time.zone.now - 1.hour
+    return false if channel.preferences[:last_fetch] > Time.zone.now - 30.minutes
     true
   end
 
@@ -183,16 +183,22 @@ returns
 =end
 
   def stream
-    hashtags = []
-    @channel.options['sync']['search'].each {|item|
-      hashtags.push item['term']
-    }
-    filter = {
-      track: hashtags.join(','),
-    }
-    if @channel.options['sync']['mentions']['group_id'] != ''
+    sync = @channel.options['sync']
+    fail 'Need channel.options[\'sync\'] for account, but no params found' if !sync
+
+    filter = {}
+    if sync['search']
+      hashtags = []
+      sync['search'].each {|item|
+        hashtags.push item['term']
+      }
+      filter[:track] = hashtags.join(',')
+    end
+    if sync['mentions'] && sync['mentions']['group_id'] != ''
       filter[:replies] = 'all'
     end
+
+    return if filter.empty?
 
     @stream_client.client.user(filter) do |tweet|
       next if tweet.class != Twitter::Tweet && tweet.class != Twitter::DirectMessage
@@ -200,9 +206,9 @@ returns
 
       # check direct message
       if tweet.class == Twitter::DirectMessage
-        if @channel.options['sync']['direct_messages']['group_id'] != ''
+        if sync['direct_messages'] && sync['direct_messages']['group_id'] != ''
           next if @stream_client.direct_message_limit_reached(tweet)
-          @stream_client.to_group(tweet, @channel.options['sync']['direct_messages']['group_id'], @channel)
+          @stream_client.to_group(tweet, sync['direct_messages']['group_id'], @channel)
         end
         next
       end
@@ -210,7 +216,7 @@ returns
       next if @stream_client.tweet_limit_reached(tweet)
 
       # check if it's mention
-      if @channel.options['sync']['mentions']['group_id'] != ''
+      if sync['mentions'] && sync['mentions']['group_id'] != ''
         hit = false
         if tweet.user_mentions
           tweet.user_mentions.each {|user|
@@ -220,15 +226,15 @@ returns
           }
         end
         if hit
-          @stream_client.to_group(tweet, @channel.options['sync']['mentions']['group_id'], @channel)
+          @stream_client.to_group(tweet, sync['mentions']['group_id'], @channel)
           next
         end
       end
 
       # check hashtags
-      if @channel.options['sync']['search'] && tweet.hashtags
+      if sync['search'] && tweet.hashtags
         hit = false
-        @channel.options['sync']['search'].each {|item|
+        sync['search'].each {|item|
           tweet.hashtags.each {|hashtag|
             next if item['term'] !~ /^#/
             if item['term'].sub(/^#/, '') == hashtag.text
@@ -243,10 +249,10 @@ returns
       end
 
       # check stings
-      if @channel.options['sync']['search']
+      if sync['search']
         hit = false
         body = tweet.text
-        @channel.options['sync']['search'].each {|item|
+        sync['search'].each {|item|
           next if item['term'] =~ /^#/
           if body =~ /#{item['term']}/
             hit = item
