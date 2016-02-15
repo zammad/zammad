@@ -25,6 +25,14 @@ class App.ColumnSelect extends Spine.Controller
     super
     @render()
 
+    @throttledRemove = _.throttle =>
+      @remove @pickedValue
+    , 300, {trailing: false}
+
+    @throttledSelect = _.throttle =>
+      @select @pickedValue
+    , 300, {trailing: false}
+
   render: ->
     @values = []
     _.each @options.attribute.options, (option) =>
@@ -43,7 +51,8 @@ class App.ColumnSelect extends Spine.Controller
     # , 0
 
   onSelect: (event) ->
-    @select $(event.currentTarget).attr('data-value')
+    @pickedValue = $(event.currentTarget).attr('data-value')
+    @throttledSelect()
 
   select: (value) ->
     @selected.find("[data-value='#{value}']").removeClass 'is-hidden'
@@ -58,7 +67,8 @@ class App.ColumnSelect extends Spine.Controller
       @clear()
 
   onRemove: (event) ->
-    @remove $(event.currentTarget).attr('data-value')
+    @pickedValue = $(event.currentTarget).attr('data-value')
+    @throttledRemove()
 
   remove: (value) ->
     @pool.find("[data-value='#{value}']").removeClass 'is-hidden'
@@ -90,7 +100,7 @@ class App.ColumnSelect extends Spine.Controller
 
   onFilterKeydown: (event) ->
     return if event.keyCode != 13
-    
+
     event.stopPropagation()
     event.preventDefault()
 
