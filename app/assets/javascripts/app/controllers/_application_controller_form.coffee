@@ -511,7 +511,6 @@ class App.ControllerForm extends App.Controller
     else
       form = $(form)
 
-    #console.log('FF', form)
     # get form
     if form.is('form') is true
       #console.log('direct from')
@@ -534,15 +533,20 @@ class App.ControllerForm extends App.Controller
     lookupForm = @findForm(form)
 
     if lookupForm
+      if lookupForm.is('button, input, select, textarea, div, span')
+        App.Log.debug 'ControllerForm', 'disable item...', lookupForm
+        lookupForm.attr('readonly', true)
+        lookupForm.attr('disabled', true)
+        return
       App.Log.debug 'ControllerForm', 'disable form...', lookupForm
 
       # set forms to read only during communication with backend
       lookupForm.find('button, input, select, textarea').attr('readonly', true)
 
       # disable additionals submits
-      lookupForm.find('button.btn').attr('disabled', true)
+      lookupForm.find('button').attr('disabled', true)
     else
-      App.Log.notice 'ControllerForm', 'disable item...', form
+      App.Log.debug 'ControllerForm', 'disable item...', form
       form.attr('readonly', true)
       form.attr('disabled', true)
 
@@ -551,15 +555,20 @@ class App.ControllerForm extends App.Controller
     lookupForm = @findForm(form)
 
     if lookupForm
+      if lookupForm.is('button, input, select, textarea, div, span')
+        App.Log.debug 'ControllerForm', 'disable item...', lookupForm
+        lookupForm.attr('readonly', false)
+        lookupForm.attr('disabled', false)
+        return
       App.Log.debug 'ControllerForm', 'enable form...', lookupForm
 
       # enable fields again
       lookupForm.find('button, input, select, textarea').attr('readonly', false)
 
       # enable submits again
-      lookupForm.find('button.btn').attr('disabled', false)
+      lookupForm.find('button').attr('disabled', false)
     else
-      App.Log.notice 'ControllerForm', 'enable item...', form
+      App.Log.debug 'ControllerForm', 'enable item...', form
       form.attr('readonly', false)
       form.attr('disabled', false)
 

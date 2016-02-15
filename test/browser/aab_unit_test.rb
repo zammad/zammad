@@ -46,6 +46,14 @@ class AAbUnitTest < TestCase
     )
 
     location( url: browser_url + '/tests_form_trim' )
+    sleep 4
+    match(
+      css: '.result .failed',
+      value: '0',
+    )
+
+    location( url: browser_url + '/tests_form_find' )
+    sleep 4
     match(
       css: '.result .failed',
       value: '0',
