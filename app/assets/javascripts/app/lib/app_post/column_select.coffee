@@ -90,6 +90,9 @@ class App.ColumnSelect extends Spine.Controller
 
   onFilterKeydown: (event) ->
     return if event.keyCode != 13
+    
+    event.stopPropagation()
+    event.preventDefault()
 
     firstVisibleOption = @poolOptions.not('.is-filtered').not('.is-hidden').first()
     if firstVisibleOption
