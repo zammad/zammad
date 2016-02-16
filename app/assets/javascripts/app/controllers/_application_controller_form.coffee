@@ -12,6 +12,10 @@ class App.ControllerForm extends App.Controller
     # set empty class attributes if needed
     if !@form
       @form = @formGen()
+
+    # add alert placeholder
+    @form.prepend('<div class="alert alert--danger js-alert hide" role="alert"></div>')
+
     if !@model
       @model = {}
     if !@attributes
@@ -27,8 +31,17 @@ class App.ControllerForm extends App.Controller
       @form.find('textarea').trigger('change')
       @form.find('select').trigger('change')
 
+    # remove alert on input
+    @form.on('input', @hideAlert)
+
     @finishForm = true
     @form
+
+  showAlert: (message) =>
+    @form.find('.alert').removeClass('hide').html( App.i18n.translateContent( message ) )
+
+  hideAlert: =>
+    @form.find('.alert').addClass('hide').html()
 
   html: =>
     @form.html()

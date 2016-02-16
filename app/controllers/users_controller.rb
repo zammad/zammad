@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 
         # check if feature is enabled
         if !Setting.get('user_create_account')
-          render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
+          render json: { error_human: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
 
@@ -117,7 +117,7 @@ class UsersController < ApplicationController
       if user.email
         exists = User.where(email: user.email.downcase).first
         if exists
-          render json: { error: 'User already exists!' }, status: :unprocessable_entity
+          render json: { error_human: 'User already exists!' }, status: :unprocessable_entity
           return
         end
       end
@@ -180,7 +180,7 @@ class UsersController < ApplicationController
       user_new = User.find(user.id)
       render json: user_new, status: :created
     rescue => e
-      render json: { error: e.message }, status: :unprocessable_entity
+      render json: model_match_error(e.message), status: :unprocessable_entity
     end
   end
 
