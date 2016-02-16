@@ -38,11 +38,13 @@
                 <span class="formGroup-metaControl js-addEmail" title="Add Email Address">+</span>
               </div>
 
-              <div class="controls controls--emailSwitch">
+              <div class="controls controls--button">
                 <input class="form-control" id="User_510389_email1" name="email" required="" type="email" value="">
-                <div class="primary-email-switch-holder">
-                  <input class="primary-email-switch" type="radio" name="merge-primary-email" id="User_510389_email1_switch" checked>
-                  <label for="User_510389_email1_switch">primary</label>
+                <div class="controls-button">
+                  <div class="controls-button-inner">
+                    <input class="primary-email-switch" type="radio" name="merge-primary-email" id="User_510389_email1_switch" checked>
+                    <label for="User_510389_email1_switch">primary</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -53,11 +55,13 @@
                 <span class="formGroup-metaControl js-removeEmail" title="Remove Email Address">&times;</span>
               </div>
 
-              <div class="controls controls--emailSwitch">
+              <div class="controls controls--button">
                 <input class="form-control" id="User_510389_email2" name="email" required="" type="email" value="">
-                <div class="primary-email-switch-holder">
-                  <input class="primary-email-switch" type="radio" name="merge-primary-email" id="User_510389_email2_switch" checked>
-                  <label for="User_510389_email2_switch">primary</label>
+                <div class="controls-button">
+                  <div class="controls-button-inner">
+                    <input class="primary-email-switch" type="radio" name="merge-primary-email" id="User_510389_email2_switch" checked>
+                    <label for="User_510389_email2_switch">primary</label>
+                  </div>
                 </div>
               </div>
             </div>

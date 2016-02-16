@@ -3,16 +3,15 @@ class App.ChannelChat extends App.Controller
     'change .js-params': 'updateParams'
     'input .js-params': 'updateParams'
     'submit .js-demo-head': 'onUrlSubmit'
-    'blur .js-testurl-input': 'changeDemoWebsite'
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
     'click .js-toggle-chat': 'toggleChat'
     'click .js-chatSetting': 'toggleChatSetting'
+    'click .js-eyedropper': 'pickColor'
 
   elements:
     '.js-browser': 'browser'
     '.js-browserBody': 'browserBody'
-    '.js-iframe': 'iframe'
     '.js-screenshot': 'screenshot'
     '.js-website': 'website'
     '.js-chat': 'chat'
@@ -25,6 +24,7 @@ class App.ChannelChat extends App.Controller
     '.js-palette': 'palette'
     '.js-color': 'colorField'
     '.js-chatSetting input': 'chatSetting'
+    '.js-eyedropper': 'eyedropper'
 
   apiOptions: [
     {
@@ -105,6 +105,7 @@ class App.ChannelChat extends App.Controller
   isOpen: true
   browserWidth: 1280
   previewUrl: ''
+  previewScale: 1
 
   constructor: ->
     super
@@ -155,6 +156,7 @@ class App.ChannelChat extends App.Controller
 
   release: ->
     $(window).off 'resize.chat-designer'
+    @website.off('click.eyedropper')
 
   selectBrowserWidth: (event) =>
     tab = $(event.target).closest('[data-value]')
@@ -177,6 +179,7 @@ class App.ChannelChat extends App.Controller
       transform: ''
       width: ''
       height: ''
+    @previewScale = 1
 
     return if @browserWidth is 'fit'
 
@@ -184,12 +187,12 @@ class App.ChannelChat extends App.Controller
       @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
       @browser.css('width', "#{ width }px")
     else
-      percentage = @el.width()/width
-      @chat.css 'transform', "translateY(#{ @getChatOffset() * percentage }px) scale(#{ percentage })"
+      @previewScale = @el.width()/width
+      @chat.css 'transform', "translateY(#{ @getChatOffset() * @previewScale }px) scale(#{ @previewScale })"
       @website.css
-        transform: "scale(#{ percentage })"
-        width: @el.width() / percentage
-        height: @browserBody.height() / percentage
+        transform: "scale(#{ @previewScale })"
+        width: @el.width() / @previewScale
+        height: @browserBody.height() / @previewScale
 
   getChatOffset: (fullscreen) ->
     return 0 if @isOpen
@@ -217,8 +220,6 @@ class App.ChannelChat extends App.Controller
     @palette.empty()
 
     @screenshot.attr('src', '')
-    @website.attr('data-mode', 'iframe')
-    @iframe.attr('src', @url)
 
     $.ajax
       url: 'https://images.zammad.com/api/v1/webpage/combined'
@@ -229,12 +230,9 @@ class App.ChannelChat extends App.Controller
       dataType: 'json'
 
   renderDemoWebsite: (data) =>
-    imageSource = data['data_url']
+    @_screenshotSource = data['data_url']
 
-    if imageSource
-      @screenshot.attr 'src', imageSource
-      @iframe.attr('src', '')
-      @website.attr('data-mode', 'screenshot')
+    @screenshot.attr 'src', @_screenshotSource
 
     @renderPalette data['palette']
 
@@ -267,6 +265,40 @@ class App.ChannelChat extends App.Controller
       code = $(event.currentTarget).attr('data-color')
     @colorField.val code
     @updateParams()
+
+  pickColor: ->
+    return if !@_screenshotSource
+
+    if @_pickingColor
+      @_pickingColor = false
+      @website
+        .off('click.eyedropper')
+        .removeClass('is-picking')
+      @eyedropper.removeClass('is-active')
+    else
+      @_pickingColor = true
+      @website
+        .on('click.eyedropper', @onColorPicked)
+        .addClass('is-picking')
+      @eyedropper.addClass('is-active')
+
+  onColorPicked: (event) =>
+    x = event.pageX - @website.offset().left
+    y = event.pageY - @website.offset().top
+
+    image = new Image()
+    image.src = @_screenshotSource
+
+    canvas = document.createElement('canvas')
+    ctx = canvas.getContext('2d')
+
+    canvas.width = image.width
+    canvas.height = image.height
+
+    ctx.drawImage(image, 0, 0, @previewScale * canvas.width, @previewScale * canvas.height)
+    pixels = ctx.getImageData(x, y, 1, 1).data
+
+    @colorField.val("rgb(#{pixels.slice(0,3).join(',')})").trigger('change')
 
   toggleChat: =>
     @chat.toggleClass('is-open')
