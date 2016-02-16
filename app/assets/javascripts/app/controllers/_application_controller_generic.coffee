@@ -353,25 +353,44 @@ class App.ControllerNavSidbar extends App.ControllerContent
 
     @params = params
 
-    # get groups
+    # get accessable groups
+    roles = App.Session.get('roles')
     groups = App.Config.get(@configKey)
     groupsUnsorted = []
-    for key, value of groups
-      if !value.controller
-        groupsUnsorted.push value
+    for key, item of groups
+      if !item.controller
+        if !item.role
+          groupsUnsorted.push item
+        else
+          match = _.include(item.role, 'Anybody')
+          if !match
+            for role in roles
+              if !match
+                match = _.include(item.role, role.name)
+          if match
+            groupsUnsorted.push item
 
-    @groupsSorted = _.sortBy( groupsUnsorted, (item) -> return item.prio )
+    @groupsSorted = _.sortBy(groupsUnsorted, (item) -> return item.prio)
 
     # get items of group
     for group in @groupsSorted
       items = App.Config.get(@configKey)
       itemsUnsorted = []
-      for key, value of items
-        if value.controller
-          if value.parent is group.target
-            itemsUnsorted.push value
+      for key, item of items
+        if item.parent is group.target
+          if item.controller
+            if !item.role
+              itemsUnsorted.push item
+            else
+              match = _.include(item.role, 'Anybody')
+              if !match
+                for role in roles
+                  if !match
+                    match = _.include(item.role, role.name)
+              if match
+                itemsUnsorted.push item
 
-      group.items = _.sortBy( itemsUnsorted, (item) -> return item.prio )
+      group.items = _.sortBy(itemsUnsorted, (item) -> return item.prio)
 
     # check last selected item
     selectedItem = undefined
