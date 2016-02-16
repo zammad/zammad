@@ -2,6 +2,21 @@
   <h1>Inputs</h1>
 
   <div style="max-width: 500px">
+    <h2>Color</h2>
+    <div class="color form-group">
+      <div class="formGroup-label">
+        <label for="background-color"><%- @T('Background color') %></label>
+      </div>
+      <div class="controls controls--button">
+        <input type="text" id="background-color" value="">
+        <div class="controls-button">
+          <div class="controls-button-inner u-clickable">
+            <%- @Icon('eyedropper') %>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <h2>Time</h2>
     <p>A time of the day</p>
     <input type="text" value="14:40" class="time js-timepicker1">

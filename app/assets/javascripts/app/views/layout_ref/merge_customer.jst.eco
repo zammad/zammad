@@ -103,13 +103,13 @@
   <div class="merge-target">
     <label>Email</label>
     <div class="merge-value">
-      <div class="primary-email-switch-holder">
+      <div class="controls-button">
         <span class="primary-email-switch-label">nicole.braun@zammad.org</span>
         <input class="primary-email-switch" type="radio" name="merge-primary-email" id="input-1" checked><label for="input-1">main</label>
       </div>
     </div>
     <div class="merge-value">
-      <div class="primary-email-switch-holder">
+      <div class="controls-button">
         <span class="primary-email-switch-label">nicole.mueller@zammad.org</span>
         <input class="primary-email-switch" type="radio" name="merge-primary-email" id="input-2"><label for="input-2">main</label>
       </div>
