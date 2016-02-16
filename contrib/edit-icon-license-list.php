@@ -1,8 +1,10 @@
 <?
 
+$src = '../LICENSE-ICONS-3RD-PARTY.json';
+
 // check for ajax request
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-  file_put_contents('list.json', json_encode($_POST['list'], JSON_PRETTY_PRINT));
+  return file_put_contents($src, json_encode($_POST['list'], JSON_PRETTY_PRINT));
   exit();
 }
 
@@ -19,17 +21,45 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     font-family: sans-serif;
     font-size: 13px;
   }
+  .controls {
+    border: 1px solid hsl(167,72%,60%);
+    border-radius: 5px;
+    margin: 0 0 28px 14px;
+    display: table;
+    box-shadow: 0 1px hsl(199,44%,96%);
+  }
+  .controls label {
+    padding: 7px 10px;
+    float: left;
+    cursor: pointer;
+  }
+  .controls label:not(:last-child) {
+    border-right: 1px solid hsl(167,72%,60%);
+  }
+  .controls input {
+    display: none;
+  }
+  .controls input:checked + label {
+    background: hsl(167,72%,60%);
+    color: white;
+  }
+  .icons {
+    display: flex;
+    flex-wrap: wrap;
+  }
   .icon-holder {
     border: 1px solid hsl(199,44%,93%);
     background: white;
     box-shadow: 0 2px hsl(210,7%,96%);
-    float: left;
     margin: 0 0 14px 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 200px;
+    flex: 1;
+  }
+  .icon-holder.is-filtered {
+    display: none;
   }
   .icon {
     position: relative;
@@ -49,19 +79,22 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     position: relative;
   }
   .icon-body {
-    padding: 14px;
+    padding: 14px 14px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .icon-name {
     margin: 0 0 7px;
     white-space: nowrap;
   }
-  input {
-    width: 160px;
+  input:not([type=radio]) {
+    margin: 0 0 4px;
     font: inherit;
     border: 1px solid #ddd;
     padding: 3px 5px;
   }
-  input:focus {
+  input:not([type=radio]):focus {
     outline: none;
     border-color: hsl(205,74%,61%);
   }
@@ -81,17 +114,23 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
   }*/
 </style>
 
+<div class="controls">
+  <input type="radio" value="off" name="filter" checked id="off"><label for="off">No Filter</label>
+  <input type="radio" value="empty_author" name="filter" id="author"><label for="author">No Author</label>
+  <input type="radio" value="empty_license" name="filter" id="license"><label for="license">No License</label>
+</div>
+<div class="icons">
 <?
 
 # Path to image folder
-$imageFolder = '../../public/assets/images/icons/';
+$imageFolder = '../public/assets/images/icons/';
 
 # Show only these file types from the image folder
 $imageTypes = '{*.svg}';
 
 # Set to true if you prefer sorting images by name
 # If set to false, images will be sorted by date
-$sortByImageName = true;
+$sortByImageName = false;
 
 # Set to false if you want the oldest images to appear first
 # This is only used if images are sorted by date (see above)
@@ -102,7 +141,7 @@ $newestImagesFirst = true;
 # Add images to array
 $images = glob($imageFolder . $imageTypes, GLOB_BRACE);
 
-$author_data = json_decode(file_get_contents('list.json'), true);
+$author_data = json_decode(file_get_contents($src), true);
 
 # Sort images
 if ($sortByImageName) {
@@ -136,25 +175,70 @@ if ($sortByImageName) {
     <div class="icon">
       <?= file_get_contents($image) ?>
     </div>
-    <div class="icon-body">
+    <form class="icon-body" data-filename="<?= $filename ?>">
       <div class="icon-name"><?= $name ?></div>
-      <input class="icon-author" value="<?= $author_data[$filename] ?>" placeholder="Author" data-filename="<?= $filename ?>">
-    </div>
+      <input name="author" value="<?= $author_data[$filename]['author'] ?>" placeholder="Author">
+      <input type="url" name="url" value="<?= $author_data[$filename]['url'] ?>" placeholder="URL">
+      <input name="license" value="<?= $author_data[$filename]['license'] ?>" placeholder="License">
+    </form>
   </div>
 <? endforeach ?>
+</div>
 
-<script src="../../app/assets/javascripts/app/lib/core/jquery-2.1.1.min.js"></script>
+<script src="../app/assets/javascripts/app/lib/core/jquery-2.1.4.js"></script>
 <script>
-  $('input').on('input', storeAuthors)
+  var self = "<?= basename($_SERVER["SCRIPT_FILENAME"]) ?>"
+  var filter = "off"
+  var filterTimeout
+
+  $('input').on({
+    input: storeAuthors,
+    blur: onBlur,
+    focus: onFocus
+  })
+
+  function onBlur(){
+    filterTimeout = setTimeout(applyFilter, 500)
+  }
+
+  function onFocus(){
+    clearTimeout(filterTimeout)
+  }
 
   function storeAuthors(){
     var iconList = {}
 
-    $('.icon-author').each(function(){
-      iconList[$(this).attr('data-filename')] = $(this).val()
+    $('.icon-holder form').each(function(){
+      iconList[$(this).attr('data-filename')] = {
+        author: this.elements.author.value,
+        url: this.elements.url.value,
+        license: this.elements.license.value
+      }
     })
 
-    $.post('index.php', { list: iconList }, function(data){ console.log(data) })
+    $.post(self, { list: iconList }, function(data){ console.log(data) })
+  }
+
+  $('[name="filter"]').change(function(){
+    filter = this.value
+    applyFilter()
+  })
+
+  function applyFilter(){
+    $('.icon-holder').removeClass('is-filtered').each(function(){
+      var holder = $(this)
+
+      switch(filter){
+        case "empty_author":
+          if(holder.find("[name='author']").val())
+            holder.addClass('is-filtered')
+          break;
+        case "empty_license":
+          if(holder.find("[name='license']").val())
+            holder.addClass('is-filtered')
+          break;
+      }
+    });
   }
 
   $('svg').each(function(i, svg){
