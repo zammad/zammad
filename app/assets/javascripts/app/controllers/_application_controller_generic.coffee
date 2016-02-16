@@ -6,13 +6,13 @@ class App.ControllerGenericNew extends App.ControllerModal
 
   content: =>
     @head = @pageData.object
-    controller = new App.ControllerForm(
+    @controller = new App.ControllerForm(
       model:     App[ @genericObject ]
       params:    @item
       screen:    @screen || 'edit'
       autofocus: true
     )
-    controller.form
+    @controller.form
 
   onSubmit: (e) ->
     params = @formParam(e.target)
@@ -39,9 +39,10 @@ class App.ControllerGenericNew extends App.ControllerModal
           ui.callback(item)
         ui.close()
 
-      fail: ->
-        ui.log 'errors'
-        ui.close()
+      fail: (settings, details) ->
+        ui.log 'errors', details
+        ui.formEnable(e)
+        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
 class App.ControllerGenericEdit extends App.ControllerModal
@@ -54,13 +55,13 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @item = App[ @genericObject ].find( @id )
     @head = @pageData.object
 
-    controller = new App.ControllerForm(
+    @controller = new App.ControllerForm(
       model:      App[ @genericObject ]
       params:     @item
       screen:     @screen || 'edit'
       autofocus:  true
     )
-    controller.form
+    @controller.form
 
   onSubmit: (e) ->
     params = @formParam(e.target)
@@ -85,9 +86,10 @@ class App.ControllerGenericEdit extends App.ControllerModal
           ui.callback(item)
         ui.close()
 
-      fail: ->
+      fail: (settings, details) ->
         ui.log 'errors'
-        ui.close()
+        ui.formEnable(e)
+        ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
 
 class App.ControllerGenericIndex extends App.Controller
