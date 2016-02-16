@@ -10,6 +10,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
 ?>
 <!doctype html>
+<meta charset="utf-8">
 <title>Zammad Icons</title>
 <style>
   html {
@@ -115,7 +116,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 </style>
 
 <div class="controls">
-  <input type="radio" value="off" name="filter" checked id="off"><label for="off">No Filter</label>
+  <input type="radio" value="off" name="filter" id="off"><label for="off">No Filter</label>
   <input type="radio" value="empty_author" name="filter" id="author"><label for="author">No Author</label>
   <input type="radio" value="empty_license" name="filter" id="license"><label for="license">No License</label>
 </div>
@@ -191,19 +192,14 @@ if ($sortByImageName) {
   var filter = "off"
   var filterTimeout
 
-  $('input').on({
-    input: storeAuthors,
-    blur: onBlur,
-    focus: onFocus
-  })
-
-  function onBlur(){
-    filterTimeout = setTimeout(applyFilter, 500)
+  if(localStorage.getItem('icon-list-filter')){
+    filter = localStorage.getItem('icon-list-filter')
+    applyFilter()
   }
+  
+  $('[name="filter"][value="'+ filter +'"]').prop('checked', true)
 
-  function onFocus(){
-    clearTimeout(filterTimeout)
-  }
+  $('input').on('input', storeAuthors)
 
   function storeAuthors(){
     var iconList = {}
@@ -221,6 +217,7 @@ if ($sortByImageName) {
 
   $('[name="filter"]').change(function(){
     filter = this.value
+    localStorage.setItem('icon-list-filter', filter)
     applyFilter()
   })
 

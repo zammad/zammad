@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="29px" height="22px" viewBox="0 0 29 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
     <title>email-button</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
         <g id="email-button" sketch:type="MSArtboardGroup" fill="#FFFFFF">
-            <path d="M25.5086484,18.3149449 C25.8146823,17.9649376 26,17.5077401 26,17.0081158 L26,5.99188419 C26,5.57003752 25.8674188,5.17881924 25.6419541,4.85677054 L14.5,14 L3.35735204,4.85620115 C3.13207326,5.17854842 3,5.5700978 3,5.99188419 L3,17.0081158 C3,17.5078518 3.18606043,17.9646049 3.49218432,18.3143008 L11.6549714,12 L12,12.2923145 L3.82364829,18.6171082 C4.15469946,18.8578739 4.56203526,19 5.00086422,19 L23.9991358,19 C24.439573,19 24.8467726,18.8580775 25.1772629,18.617813 L17,12.2923145 L17.3450286,12 L25.5086484,18.3149449 Z M4.00595392,4.26365716 C4.29900312,4.09596268 4.63869667,4 5.00086422,4 L23.9991358,4 C24.3601255,4 24.6998037,4.09617742 24.9932362,4.26432456 L14.5000004,12.9116819 L4.00595392,4.26365716 Z" id="email" sketch:type="MSShapeGroup"></path>
+            <path d="M3.692327,4 L25.3063956,4 L14.4948188,13.2789684 L3.692327,4 Z M26,5.55434383 L26,19 L3,19 L3,5.55530843 L13.9696218,14.9778358 L14.4960016,15.4299778 L15.0225136,14.9779923 L26,5.55434383 Z" id="mail" sketch:type="MSShapeGroup"></path>
         </g>
     </g>
 </svg>

@@ -1,4 +1,59 @@
 {
+    "trash.svg": {
+        "author": "Filip Malinowski",
+        "url": "https:\/\/thenounproject.com\/term\/trash\/16505\/",
+        "license": "CC 3.0 Attribution"
+    },
+    "email.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "email-button.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "paperclip.svg": {
+        "author": "Cheesefork",
+        "url": "https:\/\/thenounproject.com\/search\/?q=attachment&i=197956",
+        "license": "CC 3.0 Attribution"
+    },
+    "cog.svg": {
+        "author": "Melvin Salas",
+        "url": "https:\/\/thenounproject.com\/term\/gear\/17369\/",
+        "license": "CC 3.0 Attribution"
+    },
+    "team.svg": {
+        "author": "R\u00e9my M\u00e9dard",
+        "url": "https:\/\/thenounproject.com\/catalarem\/uploads\/?i=2554",
+        "license": "CC 3.0 Attribution"
+    },
+    "important.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "note.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "pen.svg": {
+        "author": "Dmitry Baranovskiy",
+        "url": "https:\/\/thenounproject.com\/search\/?q=edit&i=5039",
+        "license": "CC 3.0 Attribution"
+    },
+    "package.svg": {
+        "author": "Michael Wallner",
+        "url": "https:\/\/thenounproject.com\/search\/?q=package&i=25152",
+        "license": "CC 3.0 Attribution"
+    },
+    "organization.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
     "eyedropper.svg": {
         "author": "Felix Niklas",
         "url": "",
@@ -25,9 +80,9 @@
         "license": "MIT"
     },
     "user.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
+        "author": "R\u00e9my M\u00e9dard",
+        "url": "https:\/\/thenounproject.com\/search\/?q=user&i=10314",
+        "license": "CC 3.0 Attribution"
     },
     "twitter.svg": {
         "author": "Twitter",
@@ -39,15 +94,10 @@
         "url": "twitter.com",
         "license": ""
     },
-    "trash.svg": {
-        "author": "Felix Niklas",
-        "url": "",
-        "license": "MIT"
-    },
     "total-tickets.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "tools.svg": {
         "author": "Michael Kussmaul",
@@ -59,35 +109,30 @@
         "url": "",
         "license": "MIT"
     },
-    "team.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
     "task-state.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "switchView.svg": {
-        "author": "",
+        "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "stopwatch.svg": {
-        "author": "",
+        "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "status.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "status-modified-outer-circle.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "split.svg": {
         "author": "Felix Niklas",
@@ -95,14 +140,14 @@
         "license": "MIT"
     },
     "signout.svg": {
-        "author": "",
+        "author": "Felix Niklas",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "report.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "reply.svg": {
         "author": "Felix Niklas",
@@ -115,9 +160,9 @@
         "license": "MIT"
     },
     "reopening.svg": {
-        "author": "",
+        "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "reload.svg": {
         "author": "Anand A Nair",
@@ -125,51 +170,36 @@
         "license": "CC 3.0 Attribution"
     },
     "received-calls.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
+        "author": "Michael Zenaty",
+        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
+        "license": "CC 3.0 Attribution"
     },
     "radio.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "radio-checked.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "plus.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "plus-small.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
-    },
-    "phone.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
-    "person.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
-    "pen.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
-    "paperclip.svg": {
-        "author": "Felix Niklas",
-        "url": "",
         "license": "MIT"
     },
-    "package.svg": {
+    "phone.svg": {
+        "author": "Michael Zenaty",
+        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
+        "license": "CC 3.0 Attribution"
+    },
+    "person.svg": {
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
@@ -180,59 +210,49 @@
         "license": "MIT"
     },
     "outbound-calls.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
-    "organization.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
+        "author": "Michael Zenaty",
+        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
+        "license": "CC 3.0 Attribution"
     },
     "one-ticket.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
-    },
-    "note.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "mood-supergood.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "mood-super-bad.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "mood-ok.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "mood-good.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "mood-bad.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "minus.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "minus-small.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "message.svg": {
         "author": "Felix Niklas",
@@ -247,42 +267,42 @@
     "magnifier.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "long-arrow-right.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "logotype.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "logo.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "lock.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "lock-open.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "loading.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "list.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "linkedin-button.svg": {
         "author": "Linkedin",
@@ -302,12 +322,7 @@
     "in-process.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
-    },
-    "important.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "help.svg": {
         "author": "Felix Niklas",
@@ -315,9 +330,9 @@
         "license": "MIT"
     },
     "group.svg": {
-        "author": "",
+        "author": "Felix Niklas",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "google-button.svg": {
         "author": "Google",
@@ -327,7 +342,7 @@
     "full-logo.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "facebook.svg": {
         "author": "Facebook",
@@ -339,20 +354,10 @@
         "url": "",
         "license": ""
     },
-    "email.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
-    "email-button.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
     "dropdown-list.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "download.svg": {
         "author": "Felix Niklas",
@@ -362,7 +367,7 @@
     "diagonal-cross.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "dashboard.svg": {
         "author": "Anton Gajdosik",
@@ -374,25 +379,20 @@
         "url": "",
         "license": "MIT"
     },
-    "cog.svg": {
-        "author": "",
-        "url": "",
-        "license": ""
-    },
     "cloud.svg": {
-        "author": "Felix Niklas",
-        "url": "",
-        "license": "MIT"
+        "author": "Kirill Ulitin",
+        "url": "https:\/\/thenounproject.com\/search\/?q=cloud&i=84976",
+        "license": "CC 3.0 Attribution"
     },
     "small-dot.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "clock.svg": {
-        "author": "",
+        "author": "Felix Niklas",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "clipboard.svg": {
         "author": "Felix Niklas",
@@ -402,17 +402,17 @@
     "checkmark.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "checkbox.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "checkbox-checked.svg": {
         "author": "Zammad",
         "url": "",
-        "license": ""
+        "license": "MIT"
     },
     "chat.svg": {
         "author": "Felix Niklas",
