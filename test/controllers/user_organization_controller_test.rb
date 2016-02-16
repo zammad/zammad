@@ -80,8 +80,8 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     post '/api/v1/users', {}, @headers
     assert_response(422)
     result = JSON.parse(@response.body)
-    assert(result['error'])
-    assert_equal('Feature not enabled!', result['error'])
+    assert(result['error_human'])
+    assert_equal('Feature not enabled!', result['error_human'])
 
     # already existing user with enabled feature
     Setting.set('user_create_account', true)
@@ -89,8 +89,8 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     post '/api/v1/users', params.to_json, @headers
     assert_response(422)
     result = JSON.parse(@response.body)
-    assert(result['error'])
-    assert_equal('User already exists!', result['error'])
+    assert(result['error_human'])
+    assert_equal('User already exists!', result['error_human'])
 
     # create user with enabled feature
     params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com' }
