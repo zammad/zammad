@@ -2508,6 +2508,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {},
     view: {
       '-all-' => {
@@ -2539,6 +2540,11 @@ ObjectManager::Attribute.add(
       },
     },
     invite_agent: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    invite_customer: {
       '-all-' => {
         null: false,
       },
@@ -2582,6 +2588,11 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    invite_customer: {
+      '-all-' => {
+        null: false,
+      },
+    },
     edit: {
       '-all-' => {
         null: false,
@@ -2621,6 +2632,11 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    invite_customer: {
+      '-all-' => {
+        null: false,
+      },
+    },
     edit: {
       '-all-' => {
         null: false,
@@ -2652,6 +2668,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2683,6 +2700,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2714,6 +2732,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2745,6 +2764,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2777,6 +2797,11 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {
+      '-all-' => {
+        null: true,
+      },
+    },
     edit: {
       '-all-' => {
         null: true,
@@ -2808,6 +2833,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2838,6 +2864,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2869,6 +2896,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2900,6 +2928,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2931,6 +2960,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2967,6 +2997,7 @@ ObjectManager::Attribute.add(
       },
     },
     invite_agent: {},
+    invite_customer: {},
     edit: {
       Admin: {
         null: true,
@@ -3030,6 +3061,11 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {
+      '-all-' => {
+        null: true,
+      },
+    },
     edit: {
       '-all-' => {
         null: true,
@@ -3060,6 +3096,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       Admin: {
         null: false,
@@ -3094,6 +3131,7 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    invite_customer: {},
     edit: {
       Admin: {
         null: true,
@@ -3122,6 +3160,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       Admin: {
         null: false,

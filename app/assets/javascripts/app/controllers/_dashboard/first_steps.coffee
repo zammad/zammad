@@ -1,6 +1,8 @@
 class App.DashboardFirstSteps extends App.Controller
   events:
     'click a': 'scrollIntoView'
+    'click .js-inviteAgent': 'inviteAgent'
+    'click .js-inviteCustomer': 'inviteCustomer'
 
   constructor: ->
     super
@@ -8,7 +10,6 @@ class App.DashboardFirstSteps extends App.Controller
     @load()
 
   load: =>
-
     @ajax(
       id:    'first_steps'
       type:  'GET'
@@ -31,3 +32,22 @@ class App.DashboardFirstSteps extends App.Controller
       return if !element
       element.scrollIntoView()
     @delay(delay, 20)
+
+  inviteAgent: (e) =>
+    e.preventDefault()
+    new App.InviteUser(
+      container: @el.closest('.content')
+      head: 'Invite Colleagues'
+      screen: 'invite_agent'
+      role: 'Agent'
+    )
+
+  inviteCustomer: (e) =>
+    e.preventDefault()
+    new App.InviteUser(
+      container: @el.closest('.content')
+      head: 'Invite Customer'
+      screen: 'invite_customer'
+      role: 'Customer'
+    )
+

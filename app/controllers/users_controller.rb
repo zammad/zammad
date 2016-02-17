@@ -103,7 +103,7 @@ class UsersController < ApplicationController
       else
 
         # permission check by role
-        return if !permission_check_by_role
+        return if !permission_check_by_role(params)
 
         if params[:role_ids]
           user.role_ids = params[:role_ids]
@@ -202,6 +202,9 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     begin
+
+      # permission check by role
+      return if !permission_check_by_role(params)
 
       user.update_attributes( User.param_cleanup(params) )
 
@@ -779,8 +782,25 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     true
   end
 
-  def permission_check_by_role
+  def permission_check_by_role(params)
     return true if role?(Z_ROLENAME_ADMIN)
+
+    if !role?('Admin') && params[:role_ids]
+      params[:role_ids].each {|role_id|
+        role_name = Role.find(role_id).name
+        next if role_name != 'Admin' && role_name != 'Agent'
+        render json: { error_human: 'This role assignment is only allowed by admin!' }, status: :unauthorized
+        return false
+      }
+    end
+
+    if role?('Agent')
+      if params[:group_ids] && !params[:group_ids].empty?
+        render json: { error_human: 'Group relation is only allowed by admin!' }, status: :unauthorized
+        return false
+      end
+    end
+
     return true if role?('Agent')
 
     response_access_deny

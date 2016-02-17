@@ -2,7 +2,7 @@
   <% for area in @data: %>
   <h3><%- @T(area.name) %></h3>
     <% for item in area.items: %>
-    <a class="todo <% if item.checked: %>is-done<% end %>" href="<%- item.location %>">
+    <a class="todo <% if item.checked: %>is-done<% end %> <% if item.class: %><%- item.class %><% end %>" href="<%- item.location %>">
       <% if item.checked: %>
         <%- @Icon('checkmark') %>
       <% else: %>
