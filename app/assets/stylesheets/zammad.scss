@@ -6943,6 +6943,23 @@ output {
     }
   }
 
+
+  .settings-list-controls {
+    padding: 0;
+    
+    & > div {
+      display: flex;
+      min-height: 40px;
+    }
+
+    .settings-list-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+    }
+  }
+
   .settings-list-control-cell {
     padding: 5px;
     
