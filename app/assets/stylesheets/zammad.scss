@@ -353,7 +353,6 @@ pre code.hljs {
 
   &.btn--table {
     padding: 4px 9px;
-    font-weight: 300;
     border: none;
     margin: 5px 6px 0;
     vertical-align: baseline; /* calendar_subscriptions.jst.eco */
@@ -1208,10 +1207,6 @@ https://stackoverflow.com/questions/17408815/fieldset-resizes-wrong-appears-to-h
 
 fieldset > .form-group {
   padding: 0 4px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 
 .form-group {
