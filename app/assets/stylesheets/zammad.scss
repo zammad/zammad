@@ -1402,6 +1402,14 @@ fieldset > .form-group {
   .form-control {
     min-width: initial;
   }
+
+  .controls {
+    display: block;
+  }
+
+  .controls--button {
+    display: flex;
+  }
 }
 
 .formGroup--standalone .form-control {
@@ -1437,6 +1445,7 @@ textarea,
   display: block;
   padding: 7px 12px;
   width: 100%;
+  min-width: 200px;
   height: 41px;
   font-size: 14px;
   font-weight: normal;
@@ -1649,7 +1658,7 @@ input.has-error {
 }
 
 .controls--button {
-  display: flex;
+  display: inline-flex;
   
   input,
   .form-control {
@@ -3421,6 +3430,10 @@ footer {
     font-size: 16px;
     text-transform: initial;
     letter-spacing: 0;
+  }
+
+  .controls {
+    width: 100%;
   }
 }
 
