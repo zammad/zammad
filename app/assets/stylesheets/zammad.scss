@@ -1139,6 +1139,7 @@ label,
   margin-bottom: 4px;
   text-align: left;
   padding: 0;
+  user-select: none;
 }
 
 /* circumventing the label:not(.inline-label) selector because it's too strong */
@@ -1155,6 +1156,9 @@ label,
   text-transform: none;
   display: inline;
   white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
+}
+.inline-label {
+  color: hsl(206,7%,28%);
 }
 .label-text {
   margin-left: 3px;
@@ -1954,7 +1958,7 @@ kbd {
 }
 
 .page-content {
-  label,
+  .formGroup-label label,
   .label {
     color: hsl(197,18%,70%);
   }
@@ -7280,7 +7284,7 @@ output {
   .day {
     width: 27px;
     height: 26px;
-    border-radius: 100%;
+    border-radius: 14px;
     padding: 1px 0 0 !important;
   }
 
