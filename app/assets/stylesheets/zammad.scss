@@ -1409,6 +1409,10 @@ fieldset > .form-group {
   margin-bottom: 0;
 }
 
+.controls {
+  display: table;
+}
+
 .controls--select {
   position: relative;
 }
