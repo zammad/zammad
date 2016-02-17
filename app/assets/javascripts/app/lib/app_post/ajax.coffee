@@ -73,6 +73,7 @@ class _ajaxSingleton
       # do not show any error message with code 401/404 (handled by controllers)
       return if status is 401
       return if status is 404
+      return if status is 422
 
       # do not show any error message with code 502
       return if status is 502

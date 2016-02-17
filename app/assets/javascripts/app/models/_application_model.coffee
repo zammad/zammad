@@ -307,7 +307,7 @@ class App.Model extends Spine.Model
 
       # subscribe and render data / fetch new data if triggered
       @bind(
-        'refresh change'
+        'refresh change remove'
         (items) =>
           App.Log.debug('Model', "local collection refresh/change #{@className}", items)
           for key, callback of @SUBSCRIPTION_COLLECTION
@@ -375,6 +375,19 @@ class App.Model extends Spine.Model
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
               item = App[ @className ]._fillUp( item )
               callback(item, 'change')
+      )
+      @bind(
+        'remove'
+        (items) =>
+
+          # check if result is array or singel item
+          if !_.isArray(items)
+            items = [items]
+          App.Log.debug('Model', "local remove #{@className}", items)
+          for item in items
+            for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
+              item = App[ @className ]._fillUp( item )
+              callback(item, 'remove')
       )
 
       @changeTable = {}
