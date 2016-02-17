@@ -393,7 +393,7 @@ class ApplicationController < ActionController::Base
     data = {
       error: error
     }
-    if error =~ /(already exists|duplicate key)/i
+    if error =~ /(already exists|duplicate key|duplicate entry)/i
       data[:error_human] = 'Object already exists!'
     end
     data
