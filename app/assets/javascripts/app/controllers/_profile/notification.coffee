@@ -1,6 +1,47 @@
 class Index extends App.Controller
   events:
     'submit form': 'update'
+    'change .js-notificationSound': 'previewSound'
+
+  sounds: [
+    {
+      name: 'Bell'
+      file: 'Bell.mp3'
+    },
+    {
+      name: 'Kalimba'
+      file: 'Kalimba.mp3'
+    },
+    {
+      name: 'Marimba'
+      file: 'Marimba.mp3'
+    },
+    {
+      name: 'Peep'
+      file: 'Peep.mp3'
+    },
+    {
+      name: 'Plop'
+      file: 'Plop.mp3'
+    },
+    {
+      name: 'Ring'
+      file: 'Ring.mp3'
+    },
+    {
+      name: 'Space'
+      file: 'Space.mp3'
+    },
+    {
+      name: 'Wood'
+      file: 'Wood.mp3'
+    },
+    {
+      name: 'Xylo'
+      file: 'Xylo.mp3'
+      selected: true
+    }
+  ]
 
   constructor: ->
     super
@@ -43,7 +84,10 @@ class Index extends App.Controller
             config['group_ids'] = []
           config['group_ids'].push group_id.toString()
 
-    @html App.view('profile/notification')( groups: groups, config: config )
+    @html App.view('profile/notification')
+      groups: groups
+      config: config
+      sounds: @sounds
 
   update: (e) =>
 
@@ -134,5 +178,9 @@ class Index extends App.Controller
       type: 'error'
       msg:  App.i18n.translateContent(data.message)
     )
+
+  previewSound: (event) ->
+    sound = new Audio("assets/sounds/#{ @sounds[event.currentTarget.value].file }")
+    sound.play()
 
 App.Config.set( 'Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', role: ['Agent'], controller: Index }, 'NavBarProfile' )

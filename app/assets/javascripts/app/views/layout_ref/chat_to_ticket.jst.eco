@@ -99,7 +99,7 @@
     <div class="formGroup-label">
         <label for="Ticket_890825_group_id">Group <span>*</span></label>
     </div>
-    <div class="controls"><div class="controls-select">
+    <div class="controls"><div class="controls controls--select">
         <select id="Ticket_890825_group_id" class="form-control" name="group_id" required="">
             <option value="">-</option>
             <option value="1">Users</option>
@@ -113,7 +113,7 @@
 <div class="formGroup-label">
 <label for="Ticket_890825_owner_id">Owner <span></span></label>
 </div>
-<div class="controls"><div class="controls-select">
+<div class="controls"><div class="controls controls--select">
 <select id="Ticket_890825_owner_id" class="form-control" name="owner_id">
     <option value="" selected="">-</option>
 </select>
@@ -126,7 +126,7 @@
 <div class="formGroup-label">
 <label for="Ticket_890825_state_id">State <span>*</span></label>
 </div>
-<div class="controls"><div class="controls-select">
+<div class="controls"><div class="controls controls--select">
 <select id="Ticket_890825_state_id" class="form-control" name="state_id" required="">
 <option value="">-</option>
 <option value="4">closed</option>
@@ -157,7 +157,7 @@
 <div class="formGroup-label">
 <label for="Ticket_890825_priority_id">Priority <span>*</span></label>
 </div>
-<div class="controls"><div class="controls-select">
+<div class="controls"><div class="controls controls--select">
 <select id="Ticket_890825_priority_id" class="form-control" name="priority_id" required="">
 <option value="">-</option>
 <option value="1">1 low</option>

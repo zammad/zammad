@@ -75,5 +75,30 @@
   </div>
   <% end %>
 
+  <h2><%- @T('Sounds') %></h2>
+  <div class="form-group">
+    <div class="formGroup-label">
+      <label for="notification-sound"><%- @T('Notification Sound') %></label>
+    </div>
+    <div class="controls controls--select">
+      <select class="form-control js-notificationSound" id="notification-sound">
+        <% for sound, i in @sounds: %>
+        <option value="<%= i %>"<%= ' selected' if sound.selected %>><%= sound.name %></option>
+        <% end %>
+      </select>
+      <%- @Icon('arrow-down') %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="inline-label">
+      <span class="checkbox-replacement checkbox-replacement--inline">
+        <input type="checkbox" name="enable_sound" value="true" checked>
+        <%- @Icon('checkbox', 'icon-unchecked') %>
+        <%- @Icon('checkbox-checked', 'icon-checked') %>
+      </span>
+      <%- @T('Play user interface sound effects') %>
+    </label>
+  </div>
+
   <button type="submit" class="btn btn--primary"><%- @T( 'Submit' ) %></button>
 </form>
