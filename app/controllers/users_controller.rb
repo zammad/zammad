@@ -786,17 +786,31 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return true if role?(Z_ROLENAME_ADMIN)
 
     if !role?('Admin') && params[:role_ids]
+      if params[:role_ids].class != Array
+        params[:role_ids] = [params[:role_ids]]
+      end
       params[:role_ids].each {|role_id|
-        role_name = Role.find(role_id).name
+        role_local = Role.lookup(id: role_id)
+        if !role_local
+          render json: { error_human: 'Invalid role_ids!' }, status: :unauthorized
+          logger.info "Invalid role_ids for current_user_id: #{current_user.id} role_ids #{role_id}"
+          return false
+        end
+        role_name = role_local.name
         next if role_name != 'Admin' && role_name != 'Agent'
         render json: { error_human: 'This role assignment is only allowed by admin!' }, status: :unauthorized
+        logger.info "This role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{role_name}"
         return false
       }
     end
 
-    if role?('Agent')
-      if params[:group_ids] && !params[:group_ids].empty?
+    if role?('Agent') && params[:group_ids]
+      if params[:group_ids].class != Array
+        params[:group_ids] = [params[:group_ids]]
+      end
+      if !params[:group_ids].empty?
         render json: { error_human: 'Group relation is only allowed by admin!' }, status: :unauthorized
+        logger.info "Group relation is only allowed by admin! current_user_id: #{current_user.id} group_ids #{params[:group_ids].inspect}"
         return false
       end
     end
