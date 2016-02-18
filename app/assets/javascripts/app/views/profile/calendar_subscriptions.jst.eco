@@ -9,11 +9,13 @@
   <p><%- @T('See your tickets from within your favorite calendar by adding the following url to your calendar app.') %></p>
 
   <h3><label for="calendar-subscription-url"><%- @T('URL') %></label></h3>
-  <div class="form-group">
-    <div class="controls">
-      <input type="url" class="form-control js-select" readonly value="<%= @baseurl %>/ical/tickets" id="calendar-subscription-url">
+  <form class="form--flexibleWidth">
+    <div class="form-group">
+      <div class="controls">
+        <input type="url" class="form-control js-select" readonly value="<%= @baseurl %>/ical/tickets" id="calendar-subscription-url">
+      </div>
     </div>
-  </div>
+  </form>
 
   <h3><%- @T('Subscription Settings') %></h3>
   <table class="settings-list">

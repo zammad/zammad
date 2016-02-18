@@ -2515,6 +2515,10 @@ ol.tabs li {
  */
 form {
   margin: 0;
+  
+  &.form--flexibleWidth .controls {
+    display: table;
+  }
 }
 
 .form-controls {
