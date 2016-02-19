@@ -1,0 +1,13 @@
+Einladung zu <%= c 'product_name' %> über <%= c 'fqdn' %>
+
+<p>Hallo <%= d 'user.firstname' %>,</p>
+<br>
+<p>Ich (<%= d 'current_user.firstname' %> <%= d 'current_user.lastname' %>) möchte Dich zu <%= c 'product_name' %> einladen - unsere Kundensupport / Ticket System Platform.</p>
+<br>
+<p>Um sich anzumelden kann <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#password_reset_verify/<%= d 'token.name' %>">hier</a> das Password gesetzt werden.</p>
+<br>
+<p>Enjoy,</p>
+<br>
+<p><%= d 'current_user.firstname' %> <%= d 'current_user.lastname' %></p>
+<br>
+<p>Dein <%= c 'product_name' %> Team</p>

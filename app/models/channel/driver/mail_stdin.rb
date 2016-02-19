@@ -10,7 +10,7 @@ process emails from STDIN
 
 e. g.
 
-cat test/fixtures/mail1.box | rails r 'Channel::Driver::MailStdin.new'
+  cat test/fixtures/mail1.box | rails r 'Channel::Driver::MailStdin.new'
 
 =end
 

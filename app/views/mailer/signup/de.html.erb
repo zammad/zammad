@@ -1,0 +1,9 @@
+Bestätigung des <%= c 'product_name' %> Accounts, <%= d 'user.firstname' %> <%= d 'user.lastname' %>
+
+<p>Hallo <%= d 'user.firstname' %>,</p>
+<br>
+<p>bestätige Deine E-Mail-Adresse um Deine Registrierung bei <%= c 'product_name' %> abzuschließen. Es ist einfach - klick einfach auf den Link unten.</p>
+<br>
+<p><a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#email_verify/<%= d 'token.name' %>"><%= c 'http_type' %>://<%= c 'fqdn' %>/#email_verify/<%= d 'token.name' %></a></p>
+<br>
+<p>Dein <%= c 'product_name' %> Team</p>

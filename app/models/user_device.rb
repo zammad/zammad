@@ -154,41 +154,13 @@ send new user device info
   def send_notification
     user = User.find(user_id)
 
-    # send mail
-    data = {}
-    data[:subject] = '#{config.product_name} signin detected from a new device'
-    data[:body]    = 'Hi #{user.firstname},
-
-it looks like you signed into your #{config.product_name} account using a new device on "#{user_device.created_at}":
-
-Your Location: #{user_device.location}
-Your IP: #{user_device.ip}
-
-Your device has been added to your list of known devices, which you can view here:
-
-#{config.http_type}://#{config.fqdn}/#profile/devices
-
-If this wasn\'t you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.
-
-Your #{config.product_name} Team'
-
-    # prepare subject & body
-    [:subject, :body].each { |key|
-      data[key.to_sym] = NotificationFactory.build(
-        locale: user.preferences[:locale],
-        string: data[key.to_sym],
-        objects: {
-          user_device: self,
-          user: user,
-        }
-      )
-    }
-
-    # send notification
-    NotificationFactory.send(
-      recipient: user,
-      subject: data[:subject],
-      body: data[:body]
+    NotificationFactory.notification(
+      template: 'user_device',
+      user: user,
+      objects: {
+        user_device: self,
+        user: user,
+      }
     )
   end
 end

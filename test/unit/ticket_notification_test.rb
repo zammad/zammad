@@ -927,129 +927,142 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # check changed attributes
-    human_changes = bg.human_changes(agent1, ticket1)
+    human_changes = bg.human_changes(agent2, ticket1)
     assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
     assert( human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert_equal( 'i18n(1 low)', human_changes['Priority'][0] )
-    assert_equal( 'i18n(2 normal)', human_changes['Priority'][1] )
-    assert_equal( 'i18n()', human_changes['Pending till'][0] )
-    assert_equal( 'i18n(2015-01-11 23:33:47 UTC)', human_changes['Pending till'][1] )
+    assert_equal( '1 low', human_changes['Priority'][0] )
+    assert_equal( '2 normal', human_changes['Priority'][1] )
+    assert_equal( '', human_changes['Pending till'][0].to_s )
+    assert_equal( '2015-01-11 23:33:47 UTC', human_changes['Pending till'][1].to_s )
     assert_not( human_changes['priority_id'] )
     assert_not( human_changes['pending_time'] )
     assert_not( human_changes['pending_till'] )
 
-    # en template
-    template = bg.template_update(agent2, ticket1, article, human_changes)
-    assert( template[:subject] )
-    assert( template[:body] )
-    assert_match( /Priority/, template[:body] )
-    assert_match( /1 low/, template[:body] )
-    assert_match( /2 normal/, template[:body] )
-    assert_match( /Pending till/, template[:body] )
-    assert_match( /2015-01-11 23:33:47 UTC/, template[:body] )
-    assert_match( /updated/i, template[:subject] )
-
     # en notification
-    subject = NotificationFactory.build(
+    result = NotificationFactory.template(
       locale: agent2.preferences[:locale],
-      string: template[:subject],
+      template: 'ticket_update',
       objects: {
         ticket: ticket1,
         article: article,
         recipient: agent2,
+        changes: human_changes,
       }
     )
-    assert_match( /Bobs's resumé/, subject )
-    body = NotificationFactory.build(
-      locale: agent2.preferences[:locale],
-      string: template[:body],
-      objects: {
-        ticket: ticket1,
-        article: article,
-        recipient: agent2,
-      }
-    )
-    assert_match(/Priority/, body)
-    assert_match(/1 low/, body)
-    assert_match(/2 normal/, body)
-    assert_match(/Pending till/, body)
-    assert_match(/2015-01-11 23:33:47 UTC/, body)
-    assert_match(/update/, body)
-    assert_no_match(/pending_till/, body)
-    assert_no_match(/i18n/, body)
+    assert_match(/Bobs's resumé/, result[:subject])
+    assert_match(/Priority/, result[:body])
+    assert_match(/1 low/, result[:body])
+    assert_match(/2 normal/, result[:body])
+    assert_match(/Pending till/, result[:body])
+    assert_match(/2015-01-11 23:33:47 UTC/, result[:body])
+    assert_match(/update/, result[:body])
+    assert_no_match(/pending_till/, result[:body])
+    assert_no_match(/i18n/, result[:body])
 
-    # de template
-    template = bg.template_update(agent1, ticket1, article, human_changes)
-    assert(template[:subject])
-    assert(template[:body])
-    assert_match(/Priority/, template[:body])
-    assert_match(/1 low/, template[:body])
-    assert_match(/2 normal/, template[:body])
-    assert_match(/Pending till/, template[:body])
-    assert_match(/2015-01-11 23:33:47 UTC/, template[:body])
-    assert_match(/aktualis/, template[:subject])
+    human_changes = bg.human_changes(agent1, ticket1)
+    assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
+    assert( human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute' )
+    assert_equal( '1 niedrig', human_changes['Priority'][0] )
+    assert_equal( '2 normal', human_changes['Priority'][1] )
+    assert_equal( '', human_changes['Pending till'][0].to_s )
+    assert_equal( '2015-01-11 23:33:47 UTC', human_changes['Pending till'][1].to_s )
+    assert_not( human_changes['priority_id'] )
+    assert_not( human_changes['pending_time'] )
+    assert_not( human_changes['pending_till'] )
 
     # de notification
-    subject = NotificationFactory.build(
+    result = NotificationFactory.template(
       locale: agent1.preferences[:locale],
-      string: template[:subject],
-      objects: {
-        ticket: ticket1,
-        article: article,
-        recipient: agent2,
-      }
-    )
-    assert_match(/Bobs's resumé/, subject)
-    body = NotificationFactory.build(
-      locale: agent1.preferences[:locale],
-      string: template[:body],
+      template: 'ticket_update',
       objects: {
         ticket: ticket1,
         article: article,
         recipient: agent1,
+        changes: human_changes,
       }
     )
 
-    assert_match(/Priorität/, body)
-    assert_match(/1 niedrig/, body)
-    assert_match(/2 normal/, body)
-    assert_match(/Warten/, body)
-    assert_match(/2015-01-11 23:33:47 UTC/, body)
-    assert_match(/aktualis/, body)
-    assert_no_match(/pending_till/, body)
-    assert_no_match(/i18n/, body)
+    assert_match(/Bobs's resumé/, result[:subject])
+    assert_match(/Priorität/, result[:body])
+    assert_match(/1 niedrig/, result[:body])
+    assert_match(/2 normal/, result[:body])
+    assert_match(/Warten/, result[:body])
+    assert_match(/2015-01-11 23:33:47 UTC/, result[:body])
+    assert_match(/aktualis/, result[:body])
+    assert_no_match(/pending_till/, result[:body])
+    assert_no_match(/i18n/, result[:body])
 
     bg = Observer::Ticket::Notification::BackgroundJob.new(
       ticket_id: ticket1.id,
       article_id: article.id,
       type: 'update',
       changes: {
-        title: ['some notification template test 1', 'some notification template test 1 #2'],
+        title: ['some notification template test old 1', 'some notification template test 1 #2'],
         priority_id: [2, 3],
       },
     )
 
-    #puts "hc #{human_changes.inspect}"
     # check changed attributes
     human_changes = bg.human_changes(agent1, ticket1)
     assert(human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
-    assert_equal('i18n(2 normal)', human_changes['Priority'][0])
-    assert_equal('i18n(3 high)', human_changes['Priority'][1])
-    assert_equal('some notification template test 1', human_changes['Title'][0])
+    assert_equal('2 normal', human_changes['Priority'][0])
+    assert_equal('3 hoch', human_changes['Priority'][1])
+    assert_equal('some notification template test old 1', human_changes['Title'][0])
     assert_equal('some notification template test 1 #2', human_changes['Title'][1])
     assert_not(human_changes['priority_id'])
     assert_not(human_changes['pending_time'])
     assert_not(human_changes['pending_till'])
 
+    # de notification
+    result = NotificationFactory.template(
+      locale: agent1.preferences[:locale],
+      template: 'ticket_update',
+      objects: {
+        ticket: ticket1,
+        article: article,
+        recipient: agent1,
+        changes: human_changes,
+      }
+    )
+
+    assert_match(/Bobs's resumé/, result[:subject])
+    assert_match(/Titel/, result[:body])
+    assert_no_match(/Title/, result[:body])
+    assert_match(/some notification template test old 1/, result[:body])
+    assert_match(/some notification template test 1 #2/, result[:body])
+    assert_match(/Priorität/, result[:body])
+    assert_no_match(/Priority/, result[:body])
+    assert_match(/3 hoch/, result[:body])
+    assert_match(/2 normal/, result[:body])
+    assert_match(/aktualisier/, result[:body])
+
     human_changes = bg.human_changes(agent2, ticket1)
-    #puts "hc2 #{human_changes.inspect}"
 
-    template = bg.template_update(agent1, ticket1, article, human_changes)
-    #puts "t1 #{template.inspect}"
+    # en notification
+    result = NotificationFactory.template(
+      locale: agent2.preferences[:locale],
+      template: 'ticket_update',
+      objects: {
+        ticket: ticket1,
+        article: article,
+        recipient: agent2,
+        changes: human_changes,
+      }
+    )
 
-    template = bg.template_update(agent2, ticket1, article, human_changes)
-    #puts "t2 #{template.inspect}"
+    assert_match(/Bobs's resumé/, result[:subject])
+    assert_match(/Title/, result[:body])
+    assert_match(/some notification template test old 1/, result[:body])
+    assert_match(/some notification template test 1 #2/, result[:body])
+    assert_match(/Priority/, result[:body])
+    assert_match(/3 high/, result[:body])
+    assert_match(/2 normal/, result[:body])
+    assert_no_match(/Pending till/, result[:body])
+    assert_no_match(/2015-01-11 23:33:47 UTC/, result[:body])
+    assert_match(/update/, result[:body])
+    assert_no_match(/pending_till/, result[:body])
+    assert_no_match(/i18n/, result[:body])
 
   end
 

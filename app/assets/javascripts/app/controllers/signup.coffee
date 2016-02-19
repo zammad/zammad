@@ -43,6 +43,7 @@ class Index extends App.ControllerContent
     if !@params.login && @params.email
       @params.login = @params.email
 
+    @params.signup = true
     @params.role_ids = [0]
     @log 'notice', 'updateAttributes', @params
     user = new App.User

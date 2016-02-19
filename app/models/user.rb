@@ -283,17 +283,20 @@ returns
 
 =begin
 
-send reset password email with token to user
+generate new token for reset password
 
-  result = User.password_reset_send(username)
+  result = User.password_reset_new_token(username)
 
 returns
 
-  result = token
+  result = {
+    token: token,
+    user: user,
+  }
 
 =end
 
-  def self.password_reset_send(username)
+  def self.password_reset_new_token(username)
     return if !username || username == ''
 
     # try to find user based on login
@@ -311,42 +314,10 @@ returns
     # generate token
     token = Token.create(action: 'PasswordReset', user_id: user.id)
 
-    # send mail
-    data = {}
-    data[:subject] = 'Reset your #{config.product_name} password'
-    data[:body]    = 'Forgot your password?
-
-We received a request to reset the password for your #{config.product_name} account (#{user.login}).
-
-If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
-
-#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
-
-This link takes you to a page where you can change your password.
-
-If you don\'t want to reset your password, please ignore this message. Your password will not be reset.
-
-Your #{config.product_name} Team'
-
-    # prepare subject & body
-    [:subject, :body].each { |key|
-      data[key.to_sym] = NotificationFactory.build(
-        locale: user.preferences[:locale],
-        string: data[key.to_sym],
-        objects: {
-          token: token,
-          user: user,
-        }
-      )
+    {
+      token: token,
+      user: user,
     }
-
-    # send notification
-    NotificationFactory.send(
-      recipient: user,
-      subject: data[:subject],
-      body: data[:body]
-    )
-    token
   end
 
 =begin

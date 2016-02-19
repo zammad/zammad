@@ -1,0 +1,15 @@
+Reset your <%= c 'product_name' %> password
+
+<p>Hi <%= d 'user.firstname' %>,</p>
+<br>
+<p>We received a request to reset the password for your <%= c 'product_name' %> account <b><%= d 'user.login' %></b>.</p>
+<br>
+<p>If you want to reset your password, click on the link below (or copy and paste the URL into your browser):</p>
+<br>
+<p><a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#password_reset_verify/<%= d 'token.name' %>"><%= c 'http_type' %>://<%= c 'fqdn' %>/#password_reset_verify/<%= d 'token.name' %></a></p>
+<br>
+<p>This link takes you to a page where you can change your password.</p>
+<br>
+<p>If you don't want to reset your password, please ignore this message. Your password will not be reset.</p>
+<br>
+<p>Your <%= c 'product_name' %> Team</p>

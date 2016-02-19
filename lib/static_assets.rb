@@ -122,7 +122,7 @@ returns
 
     # store hash in config
     if list && list[0]
-      file = Store.find(list[0])
+      file = Store.find(list[0].id)
       filelocation = filename(file)
       Setting.set('product_logo', filelocation)
       return file

@@ -1,0 +1,42 @@
+<style type="text/css">
+  blockquote {
+    border-left: 2px solid blue;
+    padding-left: 1em;
+  }
+  .header {
+    color: #aaaaaa;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    border-bottom-color:#aaaaaa;
+    width: 100%;
+    max-width: 600px;
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+    padding-top: 6px;
+    font-size: 16px;
+  }
+  .footer {
+    color: #aaaaaa;
+    border-top-style:solid;
+    border-top-width:1px;
+    border-top-color:#aaaaaa;
+    width: 100%;
+    max-width: 600px;
+    padding-top: 6px;
+    margin-top: 16px;
+    padding-botton: 6px;
+  }
+  .footer a {
+    color: #aaaaaa;
+  }
+</style>
+
+<div class="header">
+  <%= c 'product_name' %> <%= t 'Notification' %>
+</div>
+
+<%= d 'message', false %>
+
+<div class="footer">
+  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'Manage your notifications settings' %></a> | <%= c 'organization' %>
+</div>

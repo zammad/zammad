@@ -133,7 +133,7 @@ class Observer::Ticket::Notification::BackgroundJob
           created_by_id: ticket.updated_by_id || 1,
           user_id: user.id,
         )
-        Rails.logger.info "send ticket online notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
+        Rails.logger.debug "sent ticket online notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
       end
 
       # ignore email channel notificaiton and empty emails
@@ -147,39 +147,26 @@ class Observer::Ticket::Notification::BackgroundJob
 
       # get user based notification template
       # if create, send create message / block update messages
+      template = nil
       if @p[:type] == 'create'
-        template = template_create(user, ticket, article, changes)
+        template = 'ticket_create'
       elsif @p[:type] == 'update'
-        template = template_update(user, ticket, article, changes)
+        template = 'ticket_update'
       else
         fail "unknown type for notification #{@p[:type]}"
       end
 
-      # prepare subject & body
-      notification = {}
-      [:subject, :body].each { |key|
-        notification[key.to_sym] = NotificationFactory.build(
-          locale: user.preferences[:locale],
-          string: template[key],
-          objects: {
-            ticket: ticket,
-            article: article,
-            recipient: user,
-          }
-        )
-      }
-
-      # rebuild subject
-      notification[:subject] = ticket.subject_build(notification[:subject])
-
-      Rails.logger.info "send ticket email notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
-
-      NotificationFactory.send(
-        recipient: user,
-        subject: notification[:subject],
-        body: notification[:body],
-        content_type: 'text/html',
+      NotificationFactory.notification(
+        template: template,
+        user: user,
+        objects: {
+          ticket: ticket,
+          article: article,
+          recipient: user,
+          changes: changes,
+        }
       )
+      Rails.logger.debug "sent ticket email notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
     end
 
   end
@@ -203,6 +190,7 @@ class Observer::Ticket::Notification::BackgroundJob
   def human_changes(user, record)
 
     return {} if !@p[:changes]
+    locale = user.preferences[:locale] || 'en-us'
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
@@ -278,7 +266,9 @@ class Observer::Ticket::Notification::BackgroundJob
         display = object_manager_attribute[:display].to_s
       end
       changes[display] = if object_manager_attribute && object_manager_attribute[:translate]
-                           ["i18n(#{value_str[0]})", "i18n(#{value_str[1]})"]
+                           from = Translation.translate(locale, value_str[0])
+                           to = Translation.translate(locale, value_str[1])
+                           [from, to]
                          else
                            [value_str[0].to_s, value_str[1].to_s]
                          end
@@ -286,176 +276,4 @@ class Observer::Ticket::Notification::BackgroundJob
     changes
   end
 
-  def template_create(user, ticket, article, _ticket_changes)
-    article_content = ''
-    if article
-      article_content = 'i18n(Information):
-<blockquote type="cite">
-#{article.body.text2html}
-</blockquote>
-<br>
-<br>'
-    end
-
-    if user.preferences[:locale] =~ /^de/i
-      subject = 'Neues Ticket (#{ticket.title})'
-      body    = '<div>Hallo #{recipient.firstname.text2html},</div>
-<br>
-<div>
-es wurde ein neues Ticket (#{ticket.title.text2html}) von "<b>#{ticket.updated_by.fullname.text2html}</b>" erstellt.
-</div>
-<br>
-<div>
-i18n(Group): #{ticket.group.name.text2html}<br>
-i18n(Owner): #{ticket.owner.fullname.text2html}<br>
-i18n(State): i18n(#{ticket.state.name.text2html})<br>
-</div>
-<br>
-<div>
-' + article_content + '
-</div>
-'
-    else
-
-      subject = 'New Ticket (#{ticket.title})'
-      body    = '<div>Hi #{recipient.firstname.text2html},</div>
-<br>
-<div>
-a new Ticket (#{ticket.title.text2html}) has been created by "<b>#{ticket.updated_by.fullname.text2html}</b>".
-</div>
-<br>
-<div>
-Group: #{ticket.group.name.text2html}<br>
-Owner: #{ticket.owner.fullname.text2html}<br>
-State: i18n(#{ticket.state.name.text2html})<br>
-</div>
-<br>
-<div>
-' + article_content + '
-</div>
-'
-
-    end
-
-    body = template_header(user) + body
-    body += template_footer(user, ticket, article)
-
-    template = {
-      subject: subject,
-      body: body,
-    }
-    template
-  end
-
-  def template_update(user, ticket, article, ticket_changes)
-    changes = ''
-    ticket_changes.each {|key, value|
-      changes += "i18n(#{key.to_s.text2html}): #{value[0].to_s.text2html} -> #{value[1].to_s.text2html}<br>\n"
-    }
-    article_content = ''
-    if article
-      article_content = 'i18n(Information):
-<blockquote type="cite">
-#{article.body.text2html}
-</blockquote>
-<br>
-<br>'
-    end
-    if user.preferences[:locale] =~ /^de/i
-      subject = 'Ticket aktualisiert (#{ticket.title})'
-      body    = '<div>Hallo #{recipient.firstname.text2html},</div>
-<br>
-<div>
-Ticket (#{ticket.title.text2html}) wurde von "<b>#{ticket.updated_by.fullname.text2html}</b>" aktualisiert.
-</div>
-<br>
-<div>
-i18n(Changes):<br>
-' + changes + '
-</div>
-<br>
-<div>
-' + article_content + '
-</div>
-'
-    else
-      subject = 'Updated Ticket (#{ticket.title})'
-      body    = '<div>Hi #{recipient.firstname.text2html},</div>
-<br>
-<div>
-Ticket (#{ticket.title.text2html}) has been updated by "<b>#{ticket.updated_by.fullname.text2html}</b>".
-</div>
-<br>
-<div>
-i18n(Changes):<br>
-' + changes + '
-</div>
-<br>
-<div>
-' + article_content + '
-</div>
-'
-    end
-
-    body = template_header(user) + body
-    body += template_footer(user, ticket, article)
-
-    template = {
-      subject: subject,
-      body: body,
-    }
-    template
-  end
-
-  def template_header(_user)
-    '
-<style type="text/css">
-  blockquote {
-    border-left: 2px solid blue;
-    padding-left: 1em;
-  }
-  .header {
-    color: #aaaaaa;
-    border-bottom-style:solid;
-    border-bottom-width:1px;
-    border-bottom-color:#aaaaaa;
-    width: 100%;
-    max-width: 600px;
-    padding-bottom: 6px;
-    margin-bottom: 16px;
-    padding-top: 6px;
-    font-size: 16px;
-  }
-  .footer {
-    color: #aaaaaa;
-    border-top-style:solid;
-    border-top-width:1px;
-    border-top-color:#aaaaaa;
-    width: 100%;
-    max-width: 600px;
-    padding-top: 6px;
-    margin-top: 16px;
-    padding-botton: 6px;
-  }
-  .footer a {
-    color: #aaaaaa;
-  }
-</style>
-
-<div class="header">
-  #{config.product_name} i18n(Notification)
-</div>
-'
-  end
-
-  def template_footer(_user, _ticket, _article)
-    '
-<p>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">i18n(View this in Zammad)</a>
-</p>
-<div class="footer">
-  <a href="#{config.http_type}://#{config.fqdn}/#profile/notifications">i18n(Manage your notifications settings)</a>
-</div>
-'
-  end
 end

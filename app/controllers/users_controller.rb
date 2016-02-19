@@ -135,46 +135,28 @@ class UsersController < ApplicationController
 
       # send inviteation if needed / only if session exists
       if params[:invite] && current_user
-
-        # generate token
         token = Token.create(action: 'PasswordReset', user_id: user.id)
+        NotificationFactory.notification(
+          template: 'user_invite',
+          user: user,
+          objects: {
+            token: token,
+            user: user,
+            current_user: current_user,
+          }
+        )
+      end
 
-        # send mail
-        data = {}
-        data[:subject] = 'Invitation to #{config.product_name} at #{config.fqdn}'
-        data[:body]    = 'Hi #{user.firstname},
-
-        I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - the customer support / ticket system platform.
-
-        Click on the following link and set your password:
-
-        #{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
-
-        Enjoy,
-
-        #{current_user.firstname} #{current_user.lastname}
-
-        Your #{config.product_name} Team
-        '
-
-        # prepare subject & body
-        [:subject, :body].each { |key|
-          data[key.to_sym] = NotificationFactory.build(
-            locale: user.preferences[:locale],
-            string: data[key.to_sym],
-            objects: {
-              token: token,
-              user: user,
-              current_user: current_user,
-            }
-          )
-        }
-
-        # send notification
-        NotificationFactory.send(
-          recipient: user,
-          subject: data[:subject],
-          body: data[:body]
+      # send email verify
+      if params[:signup] && !current_user
+        token = Token.create(action: 'EmailVerify', user_id: user.id)
+        NotificationFactory.notification(
+          template: 'signup',
+          user: user,
+          objects: {
+            token: token,
+            user: user,
+          }
         )
       end
       user_new = User.find(user.id)
@@ -434,12 +416,20 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
       return
     end
 
-    token = User.password_reset_send(params[:username])
-    if token
+    result = User.password_reset_new_token(params[:username])
+    if result && result[:token]
+
+      # send mail
+      user = result[:user]
+      NotificationFactory.notification(
+        template: 'password_reset',
+        user: user,
+        objects: result
+      )
 
       # only if system is in develop mode, send token back to browser for browser tests
       if Setting.get('developer_mode') == true
-        render json: { message: 'ok', token: token.name }, status: :ok
+        render json: { message: 'ok', token: result[:token].name }, status: :ok
         return
       end
 
@@ -485,6 +475,19 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
 
       # set new password with token
       user = User.password_reset_via_token(params[:token], params[:password])
+
+      # send mail
+      if user
+        NotificationFactory.notification(
+          template: 'password_change',
+          user: user,
+          objects: {
+            user: user,
+            current_user: current_user,
+          }
+        )
+      end
+
     else
       user = User.password_reset_check(params[:token])
     end
@@ -543,6 +546,16 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
     end
 
     user.update_attributes(password: params[:password_new])
+
+    NotificationFactory.notification(
+      template: 'password_change',
+      user: user,
+      objects: {
+        user: user,
+        current_user: current_user,
+      }
+    )
+
     render json: { message: 'ok', user_login: user.login }, status: :ok
   end
 
