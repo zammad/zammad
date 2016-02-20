@@ -3,7 +3,7 @@ Updated Ticket (<%= d 'ticket.title' %>)
 <p>Hi <%= d 'recipient.firstname' %>,</p>
 <br>
 <div>
-Ticket (<%= d 'ticket.title' %>) has been updated by "<b><%= d 'ticket.updated_by.fullname' %></b>".
+Ticket (<%= d 'ticket.title' %>) has been updated by "<b><%= d 'ticket.updated_by.longname' %></b>".
 </div>
 <br>
 <% if @objects[:changes] && !@objects[:changes].empty? %>

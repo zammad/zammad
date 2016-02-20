@@ -120,11 +120,33 @@ class Observer::Ticket::Notification::BackgroundJob
       changes = human_changes(user, ticket)
       next if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
 
+      # check if today already notified within last 24 hours
+      if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
+        identifier = user.email
+        if !identifier || identifier == ''
+          identifier = user.login
+        end
+        already_notified = false
+        History.list('Ticket', ticket.id).each {|history|
+          next if history['type'] != 'notification'
+          next if history['value_to'] !~ /\(#{Regexp.escape(@p[:type])}:/
+          next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
+          next if history['created_at'] < Time.zone.now - 24.hours
+          already_notified = true
+        }
+        next if already_notified
+      end
+
       # create online notification
       used_channels = []
       if channels['online']
         used_channels.push 'online'
         seen = ticket.online_notification_seen_state(user.id)
+
+        # delete old notifications
+        if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
+          OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type])
+        end
         OnlineNotification.add(
           type: @p[:type],
           object: 'Ticket',
@@ -138,12 +160,12 @@ class Observer::Ticket::Notification::BackgroundJob
 
       # ignore email channel notificaiton and empty emails
       if !channels['email'] || !user.email || user.email == ''
-        add_recipient_list(ticket, user, used_channels)
+        add_recipient_list(ticket, user, used_channels, @p[:type])
         next
       end
 
       used_channels.push 'email'
-      add_recipient_list(ticket, user, used_channels)
+      add_recipient_list(ticket, user, used_channels, @p[:type])
 
       # get user based notification template
       # if create, send create message / block update messages
@@ -152,6 +174,10 @@ class Observer::Ticket::Notification::BackgroundJob
         template = 'ticket_create'
       elsif @p[:type] == 'update'
         template = 'ticket_update'
+      elsif @p[:type] == 'reminder_reached'
+        template = 'ticket_reminder_reached'
+      elsif @p[:type] == 'escalation'
+        template = 'ticket_escalation'
       else
         fail "unknown type for notification #{@p[:type]}"
       end
@@ -173,13 +199,13 @@ class Observer::Ticket::Notification::BackgroundJob
 
   end
 
-  def add_recipient_list(ticket, user, channels)
+  def add_recipient_list(ticket, user, channels, type)
     return if channels.empty?
     identifier = user.email
     if !identifier || identifier == ''
       identifier = user.login
     end
-    recipient_list = "#{identifier}(#{channels.join(',')})"
+    recipient_list = "#{identifier}(#{type}:#{channels.join(',')})"
     History.add(
       o_id: ticket.id,
       history_type: 'notification',

@@ -28,10 +28,10 @@ add a new online notification for this user
 
     # lookups
     if data[:type]
-      type_id = TypeLookup.by_name( data[:type] )
+      type_id = TypeLookup.by_name(data[:type])
     end
     if data[:object]
-      object_id = ObjectLookup.by_name( data[:object] )
+      object_id = ObjectLookup.by_name(data[:object])
     end
 
     record = {
@@ -66,12 +66,12 @@ mark online notification as seen
 
 remove whole online notifications of an object
 
-  OnlineNotification.remove( 'Ticket', 123 )
+  OnlineNotification.remove('Ticket', 123)
 
 =end
 
-  def self.remove( object_name, o_id )
-    object_id = ObjectLookup.by_name( object_name )
+  def self.remove(object_name, o_id)
+    object_id = ObjectLookup.by_name(object_name)
     OnlineNotification.where(
       object_lookup_id: object_id,
       o_id: o_id,
@@ -80,22 +80,40 @@ remove whole online notifications of an object
 
 =begin
 
+remove whole online notifications of an object by type
+
+  OnlineNotification.remove_by_type('Ticket', 123, type)
+
+=end
+
+  def self.remove_by_type(object_name, o_id, type)
+    object_id = ObjectLookup.by_name(object_name)
+    type_id = TypeLookup.by_name(type)
+    OnlineNotification.where(
+      object_lookup_id: object_id,
+      type_lookup_id: type_id,
+      o_id: o_id,
+    ).destroy_all
+  end
+
+=begin
+
 return all online notifications of an user
 
-  notifications = OnlineNotification.list( user, limit )
+  notifications = OnlineNotification.list(user, limit)
 
 =end
 
   def self.list(user, limit)
 
     notifications = OnlineNotification.where(user_id: user.id)
-                                      .order( 'created_at DESC, id DESC' )
-                                      .limit( limit )
+                                      .order('created_at DESC, id DESC')
+                                      .limit(limit)
     list = []
     notifications.each do |item|
       data           = item.attributes
-      data['object'] = ObjectLookup.by_id( data['object_lookup_id'] )
-      data['type']   = TypeLookup.by_id( data['type_lookup_id'] )
+      data['object'] = ObjectLookup.by_id(data['object_lookup_id'])
+      data['type']   = TypeLookup.by_id(data['type_lookup_id'])
       data.delete('object_lookup_id')
       data.delete('type_lookup_id')
       list.push data
@@ -107,18 +125,18 @@ return all online notifications of an user
 
 return all online notifications of an object
 
-  notifications = OnlineNotification.list_by_object( 'Ticket', 123 )
+  notifications = OnlineNotification.list_by_object('Ticket', 123)
 
 =end
 
-  def self.list_by_object( object_name, o_id)
-    object_id = ObjectLookup.by_name( object_name )
+  def self.list_by_object(object_name, o_id)
+    object_id = ObjectLookup.by_name(object_name)
     notifications = OnlineNotification.where(
       object_lookup_id: object_id,
       o_id: o_id,
     )
-                                      .order( 'created_at DESC, id DESC' )
-                                      .limit( 10_000 )
+                                      .order('created_at DESC, id DESC')
+                                      .limit(10_000)
     notifications
   end
 
@@ -126,12 +144,12 @@ return all online notifications of an object
 
 mark online notification as seen by object
 
-  OnlineNotification.seen_by_object( 'Ticket', 123, user_id )
+  OnlineNotification.seen_by_object('Ticket', 123, user_id)
 
 =end
 
   def self.seen_by_object(object_name, o_id)
-    object_id     = ObjectLookup.by_name( object_name )
+    object_id     = ObjectLookup.by_name(object_name)
     notifications = OnlineNotification.where(
       object_lookup_id: object_id,
       o_id: o_id,
@@ -148,7 +166,7 @@ mark online notification as seen by object
 
 return all online notifications of an user with assets
 
-  OnlineNotification.list_full( user )
+  OnlineNotification.list_full(user)
 
 returns:
 

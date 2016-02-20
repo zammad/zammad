@@ -1,14 +1,8 @@
-New Ticket (<%= d 'ticket.title' %>)
+Reminder reached (<%= d 'ticket.title' %>)
 
 <p>Hi <%= d 'recipient.firstname' %>,</p>
 <br>
-<p>a new Ticket (<%= d 'ticket.title' %>) has been created by "<b><%= d 'ticket.updated_by.longname' %></b>".</p>
-<br>
-<p>
-<%= t 'Group' %>: <%= d 'ticket.group.name' %><br>
-<%= t 'Owner' %>: <%= d 'ticket.owner.fullname' %><br>
-<%= t 'State' %>: <%= t d 'ticket.state.name' %><br>
-</p>
+<p>ticket needs attachen, reminder reached for Ticket (<%= d 'ticket.title' %>) with customer "<b><%= d 'ticket.customer.longname' %></b>".</p>
 <br>
 <% if @objects[:article] %>
   <p>

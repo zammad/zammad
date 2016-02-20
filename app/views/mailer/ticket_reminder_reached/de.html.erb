@@ -1,14 +1,8 @@
-Neues Ticket (<%= d 'ticket.title' %>)
+Warten auf Erinnerung erreicht! (<%= d 'ticket.title' %>)
 
 <p>Hallo <%= d 'recipient.firstname' %>,</p>
 <br>
-<p>es wurde ein neues Ticket (<%= d 'ticket.title' %>) von "<b><%= d 'ticket.updated_by.longname' %></b>" erstellt.</p>
-<br>
-<p>
-<%= t 'Group' %>: <%= d 'ticket.group.name' %><br>
-<%= t 'Owner' %>: <%= d 'ticket.owner.fullname' %><br>
-<%= t 'State' %>: <%= t d 'ticket.state.name' %><br>
-</p>
+<p>dieses Ticket benötigt Deine Aufmerksamkeit, warten auf Erinnerung für (<%= d 'ticket.title' %>) mit dem Kunden "<b><%= d 'ticket.customer.longname' %></b>" ist erreicht.</p>
 <br>
 <% if @objects[:article] %>
   <p>

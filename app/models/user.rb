@@ -78,7 +78,7 @@ class User < ApplicationModel
 fullname of user
 
   user = User.find(123)
-  result = user.fulename
+  result = user.fullname
 
 returns
 
@@ -87,20 +87,48 @@ returns
 =end
 
   def fullname
-    fullname = ''
+    name = ''
     if firstname && !firstname.empty?
-      fullname = fullname + firstname
+      name = name + firstname
     end
     if lastname && !lastname.empty?
-      if fullname != ''
-        fullname = fullname + ' '
+      if name != ''
+        name += ' '
       end
-      fullname = fullname + lastname
+      name += lastname
     end
-    if fullname == '' && email
-      fullname = email
+    if name == '' && email
+      name = email
     end
-    fullname
+    name
+  end
+
+=begin
+
+longname of user
+
+  user = User.find(123)
+  result = user.longname
+
+returns
+
+  result = "Bob Smith"
+
+  or with org
+
+  result = "Bob Smith (Org ABC)"
+
+=end
+
+  def longname
+    name = fullname
+    if organization_id
+      organization = Organization.lookup(id: organization_id)
+      if organization
+        name += " (#{organization.name})"
+      end
+    end
+    name
   end
 
 =begin

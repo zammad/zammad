@@ -135,39 +135,61 @@ returns
 =end
 
   def self.process_pending
-
-    ticket_states = Ticket::State.where(
-      state_type_id: Ticket::StateType.find_by( name: 'pending action' ),
-    )
-                                 .where.not(next_state_id: nil)
-
-    return [] if !ticket_states
-
-    next_state_map = {}
-    ticket_states.each { |state|
-      next_state_map[state.id] = state.next_state_id
-    }
-
-    tickets = where(
-      state_id: next_state_map.keys,
-    )
-              .where( 'pending_time <= ?', Time.zone.now )
-
-    return [] if !tickets
-
     result = []
-    tickets.each { |ticket|
-      ticket.state_id      = next_state_map[ticket.state_id]
-      ticket.updated_at    = Time.zone.now
-      ticket.updated_by_id = 1
-      ticket.save!
 
-      result.push ticket
-    }
+    # process pending action tickets
+    pending_action = Ticket::StateType.find_by(name: 'pending action')
+    ticket_states_pending_action = Ticket::State.where(state_type_id: pending_action)
+                                                .where.not(next_state_id: nil)
+    if !ticket_states_pending_action.empty?
+      next_state_map = {}
+      ticket_states_pending_action.each { |state|
+        next_state_map[state.id] = state.next_state_id
+      }
 
-    # we do not have an destructor at this point, so we need to
-    # execute ticket events manually
-    Observer::Ticket::Notification.transaction
+      tickets = where(state_id: next_state_map.keys)
+                .where('pending_time <= ?', Time.zone.now)
+
+      tickets.each { |ticket|
+        ticket.state_id      = next_state_map[ticket.state_id]
+        ticket.updated_at    = Time.zone.now
+        ticket.updated_by_id = 1
+        ticket.save!
+
+        # we do not have an destructor at this point, so we need to
+        # execute ticket events manually
+        Observer::Ticket::Notification.transaction
+
+        result.push ticket
+      }
+    end
+
+    # process pending reminder tickets
+    pending_reminder = Ticket::StateType.find_by(name: 'pending reminder')
+    ticket_states_pending_reminder = Ticket::State.where(state_type_id: pending_reminder)
+
+    if !ticket_states_pending_reminder.empty?
+      reminder_state_map = {}
+      ticket_states_pending_reminder.each { |state|
+        reminder_state_map[state.id] = state.next_state_id
+      }
+
+      tickets = where(state_id: reminder_state_map.keys)
+                .where('pending_time <= ?', Time.zone.now)
+
+      tickets.each { |ticket|
+
+        # send notification
+        bg = Observer::Ticket::Notification::BackgroundJob.new(
+          ticket_id: ticket.id,
+          article_id: ticket.articles.last.id,
+          type: 'reminder_reached',
+        )
+        bg.perform
+
+        result.push ticket
+      }
+    end
 
     result
   end
