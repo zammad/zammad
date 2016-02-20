@@ -391,7 +391,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
     assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
 
     # to open, all to seen
@@ -404,6 +404,28 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state, false)
     assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
     assert_equal(ticket1.online_notification_seen_state(agent_user2.id), false)
+
+    # to closed, all only others to seen
+    ticket1.update_attributes(
+      owner_id: agent_user1.id,
+      state: Ticket::State.lookup(name: 'closed'),
+      updated_by_id: agent_user2.id,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+
+    # to closed by owner self, all to seen
+    ticket1.update_attributes(
+      owner_id: agent_user1.id,
+      state: Ticket::State.lookup(name: 'closed'),
+      updated_by_id: agent_user1.id,
+    )
+
+    assert_equal(ticket1.online_notification_seen_state, true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), true)
+    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
 
   end
 

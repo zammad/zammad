@@ -278,13 +278,17 @@ returns
 =end
 
   def online_notification_seen_state(user_id_check = nil)
-    state      = Ticket::State.lookup( id: state_id )
-    state_type = Ticket::StateType.lookup( id: state.state_type_id )
+
+    # always to set unseen for ticket owner
+    return false if user_id_check && user_id_check == owner_id && user_id_check != updated_by_id
+
+    state      = Ticket::State.lookup(id: state_id)
+    state_type = Ticket::StateType.lookup(id: state.state_type_id)
 
     # set all to seen if pending action state is a closed or merged state
     if state_type.name == 'pending action' && state.next_state_id
-      state      = Ticket::State.lookup( id: state.next_state_id )
-      state_type = Ticket::StateType.lookup( id: state.state_type_id )
+      state      = Ticket::State.lookup(id: state.next_state_id)
+      state_type = Ticket::StateType.lookup(id: state.state_type_id)
     end
 
     # set all to seen if new state is pending reminder state
