@@ -145,6 +145,7 @@ class Observer::Ticket::Notification::BackgroundJob
 
         # delete old notifications
         if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
+          seen = false
           OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type])
         end
         OnlineNotification.add(
