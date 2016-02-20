@@ -356,8 +356,29 @@ next line, Group: Users',
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_no_match('Dein', result[:body])
 
-    ticket = Ticket.first
-    article = ticket.articles.first
+    ticket = Ticket.create(
+      group_id: Group.where( name: 'Users' ).first.id,
+      customer_id: User.where( login: 'nicole.braun@zammad.org' ).first.id,
+      owner_id: User.where( login: '-' ).first.id,
+      title: 'Welcome to Zammad!',
+      state_id: Ticket::State.where( name: 'new' ).first.id,
+      priority_id: Ticket::Priority.where( name: '2 normal' ).first.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article = Ticket::Article.create(
+      ticket_id: ticket.id,
+      type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
+      sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+      from: 'Zammad Feedback <feedback@zammad.org>',
+      content_type: 'text/plain',
+      body: 'Welcome!
+<b>test123</b>',
+      internal: false,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
     changes = {}
     result = NotificationFactory.template(
       template: 'ticket_create',
@@ -372,6 +393,7 @@ next line, Group: Users',
     assert_match('New Ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been created by', result[:body])
+    assert_match('&lt;b&gt;test123&lt;/b&gt;', result[:body])
     assert_match('Manage your notifications settings', result[:body])
     assert_no_match('Dein', result[:body])
 
@@ -388,11 +410,22 @@ next line, Group: Users',
     assert_match('Neues Ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('es wurde ein neues Ticket', result[:body])
+    assert_match('&lt;b&gt;test123&lt;/b&gt;', result[:body])
     assert_match('Manage your notifications settings', result[:body])
     assert_no_match('Your', result[:body])
 
-    ticket = Ticket.first
-    article = ticket.articles.first
+    article = Ticket::Article.create(
+      ticket_id: ticket.id,
+      type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
+      sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+      from: 'Zammad Feedback <feedback@zammad.org>',
+      content_type: 'text/html',
+      body: 'Welcome!
+<b>test123</b>',
+      internal: false,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
     changes = {
       state: %w(aaa bbb),
       group: %w(xxx yyy),
@@ -410,6 +443,7 @@ next line, Group: Users',
     assert_match('Updated Ticket', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('has been updated by', result[:body])
+    assert_match('<b>test123</b>', result[:body])
     assert_match('Manage your notifications settings', result[:body])
     assert_no_match('Dein', result[:body])
 
@@ -426,6 +460,7 @@ next line, Group: Users',
     assert_match('Ticket aktualisiert', result[:subject])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_match('wurde von', result[:body])
+    assert_match('<b>test123</b>', result[:body])
     assert_match('Manage your notifications settings', result[:body])
     assert_no_match('Your', result[:body])
 

@@ -297,7 +297,7 @@ module NotificationFactory
       if content_type =~ /html/
         return d "#{article}.body", false
       end
-      d("#{article}.content_type", false).text2html
+      d("#{article}.body", false).text2html
     end
 
     def h(key)

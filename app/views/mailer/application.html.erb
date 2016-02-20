@@ -38,5 +38,5 @@
 <%= d 'message', false %>
 
 <div class="footer">
-  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'Manage your notifications settings' %></a> | <%= c 'organization' %>
+  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'Manage your notifications settings' %></a> <% if !c('organization').empty? %>| <%= c 'organization' %><% end %>
 </div>
