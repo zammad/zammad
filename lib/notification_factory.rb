@@ -96,10 +96,11 @@ module NotificationFactory
 =begin
 
   success = NotificationFactory.send(
-    recipient:     User.find(123),
+    recipient:    User.find(123),
     subject:      'sime subject',
     body:         'some body',
     content_type: '', # optional, e. g. 'text/html'
+    references:   ['message-id123', 'message-id456'],
   )
 
 =end
@@ -121,6 +122,7 @@ module NotificationFactory
         from: sender,
         to: data[:recipient][:email],
         subject: data[:subject],
+        references: data[:references],
         body: data[:body],
         content_type: content_type,
       },
@@ -133,9 +135,11 @@ module NotificationFactory
   NotificationFactory.notification(
     template: 'password_reset',
     user: User.find(2),
-    objects:  {
+    objects: {
       recipient: User.find(2),
     },
+    main_object: ticket.find(123), # optional
+    references: ['message-id123', 'message-id456'],
   )
 
 =end
@@ -149,11 +153,17 @@ module NotificationFactory
       objects: data[:objects],
     )
 
+    # rebuild subject
+    if data[:main_object] && data[:main_object].respond_to?(:subject_build)
+      result[:subject] = data[:main_object].subject_build(result[:subject])
+    end
+
     NotificationFactory.send(
       recipient: data[:user],
       subject: result[:subject],
       body: result[:body],
       content_type: 'text/html',
+      references: data[:references],
     )
   end
 

@@ -164,7 +164,9 @@ class Observer::Ticket::Notification::BackgroundJob
           article: article,
           recipient: user,
           changes: changes,
-        }
+        },
+        references: ticket.get_references,
+        main_object: ticket,
       )
       Rails.logger.debug "sent ticket email notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
     end

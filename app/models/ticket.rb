@@ -531,6 +531,42 @@ condition example
     [query, bind_params, tables]
   end
 
+=begin
+
+get all email references headers of a ticket, to exclude some, parse it as array into method
+
+  references = ticket.get_references
+
+result
+
+  ['message-id-1234', 'message-id-5678']
+
+ignore references header(s)
+
+  references = ticket.get_references(['message-id-5678'])
+
+result
+
+  ['message-id-1234']
+
+=end
+
+  def get_references(ignore = [])
+    references = []
+    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each {|article|
+      if !article.in_reply_to.empty?
+        references.push article.in_reply_to
+      end
+      next if !article.message_id
+      next if article.message_id.empty?
+      references.push article.message_id
+    }
+    ignore.each {|item|
+      references.delete(item)
+    }
+    references
+  end
+
   private
 
   def check_generate
