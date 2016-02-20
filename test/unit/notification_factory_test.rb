@@ -357,19 +357,19 @@ next line, Group: Users',
     assert_no_match('Dein', result[:body])
 
     ticket = Ticket.create(
-      group_id: Group.where( name: 'Users' ).first.id,
-      customer_id: User.where( login: 'nicole.braun@zammad.org' ).first.id,
-      owner_id: User.where( login: '-' ).first.id,
+      group_id: Group.lookup(name: 'Users').id,
+      customer_id: User.lookup(email: 'nicole.braun@zammad.org').id,
+      owner_id: User.lookup(login: '-' ).id,
       title: 'Welcome to Zammad!',
-      state_id: Ticket::State.where( name: 'new' ).first.id,
-      priority_id: Ticket::Priority.where( name: '2 normal' ).first.id,
+      state_id: Ticket::State.lookup(name: 'new').id,
+      priority_id: Ticket::Priority.lookup(name: '2 normal').id,
       updated_by_id: 1,
       created_by_id: 1,
     )
     article = Ticket::Article.create(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
-      sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+      type_id: Ticket::Article::Type.lookup(name: 'phone').id,
+      sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Zammad Feedback <feedback@zammad.org>',
       content_type: 'text/plain',
       body: 'Welcome!
@@ -416,8 +416,8 @@ next line, Group: Users',
 
     article = Ticket::Article.create(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
-      sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+      type_id: Ticket::Article::Type.lookup(name: 'phone').id,
+      sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Zammad Feedback <feedback@zammad.org>',
       content_type: 'text/html',
       body: 'Welcome!
