@@ -394,6 +394,7 @@ class CreateBase < ActiveRecord::Migration
       t.integer :type_lookup_id,                null: false
       t.integer :user_id,                       null: false
       t.boolean :seen,                          null: false, default: false
+      t.integer :updated_by_id,                 null: false
       t.integer :created_by_id,                 null: false
       t.timestamps                              null: false
     end

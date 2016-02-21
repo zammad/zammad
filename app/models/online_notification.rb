@@ -18,8 +18,11 @@ add a new online notification for this user
     object:        'Ticket',
     o_id:          ticket.id,
     seen:          false,
-    created_by_id: 1,
     user_id:       2,
+    created_by_id: 1,
+    updated_by_id: 1,
+    created_at:    Time.zone.now,
+    updated_at:    Time.zone.now,
   )
 
 =end
@@ -40,7 +43,10 @@ add a new online notification for this user
       type_lookup_id: type_id,
       seen: data[:seen],
       user_id: data[:user_id],
-      created_by_id: data[:created_by_id]
+      created_by_id: data[:created_by_id],
+      updated_by_id: data[:updated_by_id],
+      created_at: data[:created_at],
+      updated_at: data[:updated_at],
     }
 
     OnlineNotification.create(record)
@@ -203,12 +209,28 @@ cleanup old online notifications
 
   OnlineNotification.cleanup
 
+with dedicated times
+
+  max_age = Time.zone.now - 9.months
+  max_own_seen = Time.zone.now - 35.minutes
+  max_auto_seen = Time.zone.now - 8.hours
+
+  OnlineNotification.cleanup(max_age, max_own_seen, max_auto_seen)
+
 =end
 
-  def self.cleanup
-    OnlineNotification.where('created_at < ?', Time.zone.now - 6.months).delete_all
-    OnlineNotification.where('seen = ? AND created_at < ?', true, Time.zone.now - 4.hours).delete_all
-    OnlineNotification.where('seen = ? AND updated_at < ?', true, Time.zone.now - 1.hour).delete_all
+  def self.cleanup(max_age = Time.zone.now - 9.months, max_own_seen = Time.zone.now - 35.minutes, max_auto_seen = Time.zone.now - 8.hours)
+    OnlineNotification.where('created_at < ?', max_age).delete_all
+    OnlineNotification.where('seen = ? AND updated_at < ?', true, max_own_seen).each {|notification|
+
+      # delete own "seen" notificatons after 1 hour
+      next if notification.user_id == notification.updated_by_id && notification.updated_at > max_own_seen
+
+      # delete notificatons which are set to "seen" by somebody else after 8 hour
+      next if notification.user_id != notification.updated_by_id && notification.updated_at > max_auto_seen
+
+      notification.delete
+    }
 
     # notify all agents
     User.of_role('Agent').each {|user|

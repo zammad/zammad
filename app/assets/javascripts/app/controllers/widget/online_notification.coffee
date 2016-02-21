@@ -11,7 +11,7 @@ class App.OnlineNotificationWidget extends App.Controller
     @bind 'OnlineNotification::changed', =>
       @delay(
         => @fetch()
-        1600
+        2600
         'online-notification-changed'
       )
 
@@ -38,12 +38,12 @@ class App.OnlineNotificationWidget extends App.Controller
 
     if @access()
       @createContainer()
-      @subscribeId = App.OnlineNotification.subscribe( @updateContent )
+      @subscribeId = App.OnlineNotification.subscribe(@updateContent)
 
   release: ->
     @removeContainer()
     $(window).off 'click.notifications'
-    App.OnlineNotification.unsubscribe( @subscribeId )
+    App.OnlineNotification.unsubscribe(@subscribeId)
 
   access: ->
     return false if !@Session.get()
@@ -105,12 +105,12 @@ class App.OnlineNotificationWidget extends App.Controller
   fetch: =>
     load = (items) =>
       @fetchedData = true
-      App.OnlineNotification.refresh( items, { clear: true } )
+      App.OnlineNotification.refresh(items, { clear: true })
       @updateContent()
     App.OnlineNotification.fetchFull(load)
 
   updateContent: =>
-    items = App.OnlineNotification.search( sortBy: 'created_at', order: 'DESC' )
+    items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC')
     counter = 0
     for item in items
       if !item.seen

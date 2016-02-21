@@ -440,6 +440,97 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
   end
 
+  test 'cleanup check' do
+    online_notification1 = OnlineNotification.add(
+      type:          'create',
+      object:        'Ticket',
+      o_id:          123,
+      seen:          false,
+      user_id:       agent_user1.id,
+      created_by_id: 1,
+      updated_by_id: 1,
+      created_at:    Time.zone.now - 10.months,
+      updated_at:    Time.zone.now - 10.months,
+    )
+    online_notification2 = OnlineNotification.add(
+      type:          'create',
+      object:        'Ticket',
+      o_id:          123,
+      seen:          true,
+      user_id:       agent_user1.id,
+      created_by_id: 1,
+      updated_by_id: 1,
+      created_at:    Time.zone.now - 10.months,
+      updated_at:    Time.zone.now - 10.months,
+    )
+    online_notification3 = OnlineNotification.add(
+      type:          'create',
+      object:        'Ticket',
+      o_id:          123,
+      seen:          false,
+      user_id:       agent_user1.id,
+      created_by_id: 1,
+      updated_by_id: 1,
+      created_at:    Time.zone.now - 2.days,
+      updated_at:    Time.zone.now - 2.days,
+    )
+    online_notification4 = OnlineNotification.add(
+      type:          'create',
+      object:        'Ticket',
+      o_id:          123,
+      seen:          true,
+      user_id:       agent_user1.id,
+      created_by_id: agent_user1.id,
+      updated_by_id: agent_user1.id,
+      created_at:    Time.zone.now - 2.days,
+      updated_at:    Time.zone.now - 2.days,
+    )
+    online_notification5 = OnlineNotification.add(
+      type:          'create',
+      object:        'Ticket',
+      o_id:          123,
+      seen:          true,
+      user_id:       agent_user1.id,
+      created_by_id: agent_user2.id,
+      updated_by_id: agent_user2.id,
+      created_at:    Time.zone.now - 2.days,
+      updated_at:    Time.zone.now - 2.days,
+    )
+    online_notification6 = OnlineNotification.add(
+      type:          'create',
+      object:        'Ticket',
+      o_id:          123,
+      seen:          true,
+      user_id:       agent_user1.id,
+      created_by_id: agent_user1.id,
+      updated_by_id: agent_user1.id,
+      created_at:    Time.zone.now - 10.minutes,
+      updated_at:    Time.zone.now - 10.minutes,
+    )
+    online_notification7 = OnlineNotification.add(
+      type:          'create',
+      object:        'Ticket',
+      o_id:          123,
+      seen:          true,
+      user_id:       agent_user1.id,
+      created_by_id: agent_user2.id,
+      updated_by_id: agent_user2.id,
+      created_at:    Time.zone.now - 10.minutes,
+      updated_at:    Time.zone.now - 10.minutes,
+    )
+
+    OnlineNotification.cleanup
+
+    assert(!OnlineNotification.find_by(id: online_notification1.id))
+    assert(!OnlineNotification.find_by(id: online_notification2.id))
+    assert(OnlineNotification.find_by(id: online_notification3.id))
+    assert(!OnlineNotification.find_by(id: online_notification4.id))
+    assert(!OnlineNotification.find_by(id: online_notification5.id))
+    assert(OnlineNotification.find_by(id: online_notification6.id))
+    assert(OnlineNotification.find_by(id: online_notification7.id))
+
+  end
+
   def notification_check(online_notifications, checks)
     checks.each { |check_item|
       hit = false
