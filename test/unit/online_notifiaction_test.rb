@@ -528,7 +528,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(!OnlineNotification.find_by(id: online_notification5.id))
     assert(OnlineNotification.find_by(id: online_notification6.id))
     assert(OnlineNotification.find_by(id: online_notification7.id))
-
+    OnlineNotification.destroy_all
   end
 
   def notification_check(online_notifications, checks)
