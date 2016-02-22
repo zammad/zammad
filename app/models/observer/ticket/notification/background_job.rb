@@ -140,7 +140,7 @@ class Observer::Ticket::Notification::BackgroundJob
           next if history['type'] != 'notification'
           next if history['value_to'] !~ /\(#{Regexp.escape(@p[:type])}:/
           next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
-          next if history['created_at'].today?
+          next if !history['created_at'].today?
           already_notified = true
         }
         next if already_notified
@@ -154,7 +154,7 @@ class Observer::Ticket::Notification::BackgroundJob
         # delete old notifications
         if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
           seen = false
-          OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type])
+          OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type], user)
 
         # on updates without state changes create unseen messages
         elsif @p[:type] != 'create' && (!@p[:changes] || @p[:changes].empty? || !@p[:changes]['state_id'])

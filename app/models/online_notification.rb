@@ -88,17 +88,18 @@ remove whole online notifications of an object
 
 remove whole online notifications of an object by type
 
-  OnlineNotification.remove_by_type('Ticket', 123, type)
+  OnlineNotification.remove_by_type('Ticket', 123, type, user)
 
 =end
 
-  def self.remove_by_type(object_name, o_id, type)
+  def self.remove_by_type(object_name, o_id, type, user)
     object_id = ObjectLookup.by_name(object_name)
     type_id = TypeLookup.by_name(type)
     OnlineNotification.where(
       object_lookup_id: object_id,
       type_lookup_id: type_id,
       o_id: o_id,
+      user_id: user.id,
     ).destroy_all
   end
 
