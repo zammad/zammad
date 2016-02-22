@@ -322,6 +322,7 @@ class _taskManagerSingleton extends App.Controller
     task = @get(key)
     if !task
       throw "No such task with '#{key}' to mute"
+    return if !task.notify
     task.notify = false
     @taskUpdate(task)
 

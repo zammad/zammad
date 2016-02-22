@@ -8,6 +8,7 @@ class App.TicketZoom extends App.Controller
     'click .js-submit':   'submit'
     'click .js-bookmark': 'bookmark'
     'click .js-reset':    'reset'
+    'click .main':        'muteTask'
 
   constructor: (params) ->
     super
@@ -212,6 +213,9 @@ class App.TicketZoom extends App.Controller
         @metaTaskUpdate()
     )
 
+
+  muteTask: =>
+    App.TaskManager.mute(@task_key)
 
   load: (data, force) =>
 
@@ -637,9 +641,7 @@ class App.TicketZoom extends App.Controller
           return
 
         @autosaveStart()
-
-        App.TaskManager.mute(@task_key)
-
+        @muteTask()
         @fetch(ticket.id, true)
 
         # enable form

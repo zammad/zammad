@@ -244,5 +244,33 @@ class AgentTicketActionsLevel2Test < TestCase
         body: 'some level 2 <b>body</b> in instance 2',
       },
     )
+
+    # modify ticket again and erase modified via mouse click on .active.content
+    ticket_update(
+      browser: browser1,
+      data: {
+        body: 'some update 4711',
+      },
+    )
+    sleep 4
+    verify_task(
+      browser: browser2,
+      data: {
+        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        modified: true,
+      }
+    )
+    click(
+      browser: browser2,
+      css: '.active.content',
+    )
+    sleep 4
+    verify_task(
+      browser: browser2,
+      data: {
+        title: 'TTTsome level 2 <b>subject<\/b> 123äöü',
+        modified: false,
+      }
+    )
   end
 end
