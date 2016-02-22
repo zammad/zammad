@@ -130,7 +130,7 @@ class Observer::Ticket::Notification::BackgroundJob
       next if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
 
       # check if today already notified
-      if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
+      if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation' || @p[:type] == 'escalation_warning'
         identifier = user.email
         if !identifier || identifier == ''
           identifier = user.login
@@ -154,10 +154,16 @@ class Observer::Ticket::Notification::BackgroundJob
         created_by_id = ticket.updated_by_id || 1
 
         # delete old notifications
-        if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
+        if @p[:type] == 'reminder_reached'
           seen = false
           created_by_id = 1
           OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type], user)
+
+        elsif @p[:type] == 'escalation' || @p[:type] == 'escalation_warning'
+          seen = false
+          created_by_id = 1
+          OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation', user)
+          OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation_warning', user)
 
         # on updates without state changes create unseen messages
         elsif @p[:type] != 'create' && (!@p[:changes] || @p[:changes].empty? || !@p[:changes]['state_id'])
@@ -197,6 +203,8 @@ class Observer::Ticket::Notification::BackgroundJob
         template = 'ticket_reminder_reached'
       elsif @p[:type] == 'escalation'
         template = 'ticket_escalation'
+      elsif @p[:type] == 'escalation_warning'
+        template = 'ticket_escalation_warning'
       else
         fail "unknown type for notification #{@p[:type]}"
       end

@@ -154,6 +154,7 @@ class App.OnlineNotificationWidget extends App.Controller
             title = item.objectNative.activityMessage(item)
           else
             title = "Need objectNative in item #{item.object}.find(#{item.o_id})"
+          title = title.replace(/<.+?>/g, '"')
           @notifyDesktop(
             url: item.link
             title: title

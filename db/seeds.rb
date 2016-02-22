@@ -3302,6 +3302,13 @@ Scheduler.create_if_not_exists(
   active: true,
 )
 Scheduler.create_if_not_exists(
+  name: 'Process escalation tickets',
+  method: 'Ticket.process_escalation',
+  period: 60 * 5,
+  prio: 1,
+  active: true,
+)
+Scheduler.create_if_not_exists(
   name: 'Import OTRS diff load',
   method: 'Import::OTRS.diff_worker',
   period: 60 * 3,
@@ -3320,7 +3327,7 @@ Scheduler.create_if_not_exists(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
-  name: 'Check streams for Channel ',
+  name: 'Check streams for Channel',
   method: 'Channel.stream',
   period: 60,
   prio: 1,

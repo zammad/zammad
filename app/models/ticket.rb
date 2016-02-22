@@ -126,7 +126,7 @@ returns
 
 processes tickets which have reached their pending time and sets next state_id
 
-  processed_tickets = Ticket.process_pending()
+  processed_tickets = Ticket.process_pending
 
 returns
 
@@ -191,6 +191,54 @@ returns
       }
     end
 
+    result
+  end
+
+=begin
+
+processes escalated tickets
+
+  processed_tickets = Ticket.process_escalation
+
+returns
+
+  processed_tickets = [<Ticket>, ...]
+
+=end
+
+  def self.process_escalation
+    result = []
+
+    # get max warning diff
+
+    tickets = where('escalation_time <= ?', Time.zone.now + 15.minutes)
+
+    tickets.each {|ticket|
+
+      # get sla
+      sla = ticket.escalation_calculation_get_sla
+
+      # send escalation
+      if ticket.escalation_time < Time.zone.now
+        bg = Observer::Ticket::Notification::BackgroundJob.new(
+          ticket_id: ticket.id,
+          article_id: ticket.articles.last.id,
+          type: 'escalation',
+        )
+        bg.perform
+        result.push ticket
+        next
+      end
+
+      # check if warning need to be sent
+      bg = Observer::Ticket::Notification::BackgroundJob.new(
+        ticket_id: ticket.id,
+        article_id: ticket.articles.last.id,
+        type: 'escalation_warning',
+      )
+      bg.perform
+      result.push ticket
+    }
     result
   end
 
