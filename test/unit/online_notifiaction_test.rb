@@ -30,9 +30,9 @@ class OnlineNotificationTest < ActiveSupport::TestCase
   )
   customer_user = User.lookup(email: 'nicole.braun@zammad.org')
 
-  Rails.configuration.webserver_is_active = true
-
   test 'ticket notification' do
+
+    Rails.configuration.webserver_is_active = true
 
     # case #1
     ticket1 = Ticket.create(
