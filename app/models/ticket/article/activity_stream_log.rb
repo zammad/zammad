@@ -6,7 +6,7 @@ module Ticket::Article::ActivityStreamLog
 log activity for this object
 
   article = Ticket::Article.find(123)
-  result = article.activity_stream_log( 'created', user_id )
+  result = article.activity_stream_log('create', user_id)
 
 returns
 
@@ -14,7 +14,7 @@ returns
 
 =end
 
-  def activity_stream_log (type, user_id)
+  def activity_stream_log(type, user_id)
 
     # return if we run import mode
     return if Setting.get('import_mode')
@@ -24,7 +24,7 @@ returns
 
     return if !self.class.activity_stream_support_config
     role = self.class.activity_stream_support_config[:role]
-    ticket = Ticket.lookup( id: ticket_id )
+    ticket = Ticket.lookup(id: ticket_id)
     ActivityStream.add(
       o_id: self['id'],
       type: type,

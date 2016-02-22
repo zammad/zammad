@@ -45,3 +45,10 @@ Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei be
     class:      'organization organization-popover'
     url:        @uiUrl()
     icon:       'organization'
+
+  activityMessage: (item) ->
+    if item.type is 'create'
+      return App.i18n.translateContent('%s created Organization |%s|', item.created_by.displayName(), item.title)
+    else if item.type is 'update'
+      return App.i18n.translateContent('%s updated Organization |%s|', item.created_by.displayName(), item.title)
+    return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."

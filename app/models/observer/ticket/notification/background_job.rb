@@ -151,9 +151,12 @@ class Observer::Ticket::Notification::BackgroundJob
       if channels['online']
         used_channels.push 'online'
 
+        created_by_id = ticket.updated_by_id || 1
+
         # delete old notifications
         if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
           seen = false
+          created_by_id = 1
           OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type], user)
 
         # on updates without state changes create unseen messages
@@ -168,7 +171,7 @@ class Observer::Ticket::Notification::BackgroundJob
           object: 'Ticket',
           o_id: ticket.id,
           seen: seen,
-          created_by_id: ticket.updated_by_id || 1,
+          created_by_id: created_by_id,
           user_id: user.id,
         )
         Rails.logger.debug "sent ticket online notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"

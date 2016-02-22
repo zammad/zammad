@@ -10,12 +10,12 @@ class ActivityStream < ApplicationModel
 add a new activity entry for an object
 
   ActivityStream.add(
-    :type          => 'updated',
-    :object        => 'Ticket',
-    :role          => 'Admin',
-    :o_id          => ticket.id,
-    :created_by_id => 1,
-    :created_at    => '2013-06-04 10:00:00',
+    type: 'update',
+    object: 'Ticket',
+    role: 'Admin',
+    o_id: ticket.id,
+    created_by_id: 1,
+    created_at: '2013-06-04 10:00:00',
   )
 
 =end
@@ -24,15 +24,15 @@ add a new activity entry for an object
 
     # lookups
     if data[:type]
-      type_id = TypeLookup.by_name( data[:type] )
+      type_id = TypeLookup.by_name(data[:type])
     end
     if data[:object]
-      object_id = ObjectLookup.by_name( data[:object] )
+      object_id = ObjectLookup.by_name(data[:object])
     end
 
     role_id = nil
     if data[:role]
-      role = Role.lookup( name: data[:role] )
+      role = Role.lookup(name: data[:role])
       if !role
         fail "No such Role #{data[:role]}"
       end
@@ -49,7 +49,7 @@ add a new activity entry for an object
     ).order('created_at DESC, id DESC').first
 
     # resturn if old entry is really fresh
-    return result if result && result.created_at.to_i >= ( data[:created_at].to_i - 12 )
+    return result if result && result.created_at.to_i >= ( data[:created_at].to_i - 20 )
 
     # create history
     record = {
@@ -69,12 +69,12 @@ add a new activity entry for an object
 
 remove whole activity entries of an object
 
-  ActivityStream.remove( 'Ticket', 123 )
+  ActivityStream.remove('Ticket', 123)
 
 =end
 
-  def self.remove( object_name, o_id )
-    object_id = ObjectLookup.by_name( object_name )
+  def self.remove(object_name, o_id)
+    object_id = ObjectLookup.by_name(object_name)
     ActivityStream.where(
       activity_stream_object_id: object_id,
       o_id: o_id,
@@ -85,7 +85,7 @@ remove whole activity entries of an object
 
 return all activity entries of an user
 
-  activity_stream = ActivityStream.list( user )
+  activity_stream = ActivityStream.list(user)
 
 =end
 
@@ -94,7 +94,7 @@ return all activity entries of an user
     group_ids = user.group_ids
 
     # do not return an activity stream for custoers
-    customer_role = Role.lookup( name: 'Customer' )
+    customer_role = Role.lookup(name: 'Customer')
 
     return [] if role_ids.include?(customer_role.id)
     stream = if group_ids.empty?

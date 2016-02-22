@@ -643,3 +643,6 @@ class App.Model extends Spine.Model
       return
     )
     collection
+
+  activityMessage: (item) ->
+    return "Need own activityMessage() in model to generate text (#{@objectDisplayName()}/#{item.type})."
