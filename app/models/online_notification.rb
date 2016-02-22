@@ -44,9 +44,9 @@ add a new online notification for this user
       seen: data[:seen],
       user_id: data[:user_id],
       created_by_id: data[:created_by_id],
-      updated_by_id: data[:updated_by_id],
-      created_at: data[:created_at],
-      updated_at: data[:updated_at],
+      updated_by_id: data[:updated_by_id] || data[:created_by_id],
+      created_at: data[:created_at] || Time.zone.now,
+      updated_at: data[:updated_at] || Time.zone.now,
     }
 
     OnlineNotification.create(record)
@@ -201,6 +201,53 @@ returns:
         data: {}
       }
     )
+  end
+
+=begin
+
+check if all notifications are seed for dedecated object
+
+  OnlineNotification.all_seen?('Ticket', 123)
+
+returns:
+
+  true # false
+
+=end
+
+  def self.all_seen?(object, o_id)
+    notifications = OnlineNotification.list_by_object(object, o_id)
+    notifications.each {|onine_notification|
+      return false if !onine_notification['seen']
+    }
+    true
+  end
+
+=begin
+
+check if notification was created for certain user
+
+  OnlineNotification.exists?(for_user, object, o_id, type, created_by_user, seen)
+
+returns:
+
+  true # false
+
+=end
+
+  # rubocop:disable Metrics/ParameterLists
+  def self.exists?(user, object, o_id, type, created_by_user, seen)
+    # rubocop:enable Metrics/ParameterLists
+    notifications = OnlineNotification.list(user, 10)
+    notifications.each {|notification|
+      next if notification['o_id'] != o_id
+      next if notification['object'] != object
+      next if notification['type'] != type
+      next if notification['created_by_id'] != created_by_user.id
+      next if notification['seen'] != seen
+      return true
+    }
+    false
   end
 
 =begin

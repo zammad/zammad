@@ -169,6 +169,31 @@ module NotificationFactory
 
 =begin
 
+get count of already sent notifications
+
+  count = NotificationFactory.already_sent?(ticket, recipient_user, type)
+
+retunes
+
+  8
+
+=end
+
+  def self.already_sent?(ticket, recipient, type)
+    result = ticket.history_get()
+    count  = 0
+    result.each {|item|
+      next if item['type'] != 'notification'
+      next if item['object'] != 'Ticket'
+      next if item['value_to'] !~ /#{recipient.email}/i
+      next if item['value_to'] !~ /#{type}/i
+      count += 1
+    }
+    count
+  end
+
+=begin
+
   result = NotificationFactory.template(
     template: 'password_reset',
     locale: 'en-us',

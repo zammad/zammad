@@ -48,11 +48,11 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
 
   def index
     if params[:full]
-      render json: OnlineNotification.list_full(current_user, 75)
+      render json: OnlineNotification.list_full(current_user, 100)
       return
     end
 
-    notifications = OnlineNotification.list(current_user, 75)
+    notifications = OnlineNotification.list(current_user, 100)
     model_index_render_result(notifications)
   end
 

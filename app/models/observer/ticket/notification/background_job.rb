@@ -2,6 +2,15 @@
 
 class Observer::Ticket::Notification::BackgroundJob
   def initialize(params, via_web = false)
+
+=begin
+    :type      => 'update',
+    :ticket_id => 123,
+    :changes   => {
+      'attribute1' => [before,now],
+      'attribute2' => [before,now],
+    }
+=end
     @p = params
     @via_web = via_web
   end
@@ -141,13 +150,19 @@ class Observer::Ticket::Notification::BackgroundJob
       used_channels = []
       if channels['online']
         used_channels.push 'online'
-        seen = ticket.online_notification_seen_state(user.id)
 
         # delete old notifications
         if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
           seen = false
           OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type])
+
+        # on updates without state changes create unseen messages
+        elsif @p[:type] != 'create' && (!@p[:changes] || @p[:changes].empty? || !@p[:changes]['state_id'])
+          seen = false
+        else
+          seen = ticket.online_notification_seen_state(user.id)
         end
+
         OnlineNotification.add(
           type: @p[:type],
           object: 'Ticket',
