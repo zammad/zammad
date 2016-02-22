@@ -115,6 +115,10 @@ class App.OnlineNotificationWidget extends App.Controller
     App.OnlineNotification.fetchFull(load)
 
   updateContent: =>
+    if !@Session.get()
+      $('.js-notificationsContainer .popover-content').html('')
+      return
+
     items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC')
     counter = 0
     for item in items
