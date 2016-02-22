@@ -129,7 +129,7 @@ class Observer::Ticket::Notification::BackgroundJob
       changes = human_changes(user, ticket)
       next if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
 
-      # check if today already notified within last 24 hours
+      # check if today already notified
       if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation'
         identifier = user.email
         if !identifier || identifier == ''
@@ -140,7 +140,7 @@ class Observer::Ticket::Notification::BackgroundJob
           next if history['type'] != 'notification'
           next if history['value_to'] !~ /\(#{Regexp.escape(@p[:type])}:/
           next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
-          next if history['created_at'] < Time.zone.now - 24.hours
+          next if history['created_at'].today?
           already_notified = true
         }
         next if already_notified
