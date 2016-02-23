@@ -84,6 +84,11 @@ test("html2text", function() {
   result = App.Utils.html2text(source)
   equal(result, should, source)
 
+  source = "<div>Some &amp; &lt;Value&gt;</div>"
+  should = "Some & <Value>"
+  result = App.Utils.html2text(source)
+  equal(result, should, source)
+
   source = "<div>Some</div><div>&lt;b&gt;Value&lt;/b&gt;</div>"
   should = "Some\n<b>Value</b>"
   result = App.Utils.html2text(source)
