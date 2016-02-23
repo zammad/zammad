@@ -36,7 +36,7 @@ returns
   def escalation_calculation
 
     # set escalation off if ticket is already closed
-    state = Ticket::State.lookup( id: state_id )
+    state = Ticket::State.lookup(id: state_id)
     escalation_disabled = false
     if state.ignore_escalation?
       escalation_disabled = true
@@ -56,6 +56,7 @@ returns
       return true if !escalation_time
 
       self.escalation_time = nil
+      self.updated_by_id   = 1
       self.callback_loop   = true
       save
       return true
@@ -187,6 +188,7 @@ returns
     return if !changed?
 
     self.callback_loop = true
+    self.updated_by_id = 1
     save
   end
 
