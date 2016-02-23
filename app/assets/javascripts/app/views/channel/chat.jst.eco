@@ -38,7 +38,6 @@
     </form>
     <div class="browser-body js-browserBody">
       <div class="browser-website js-website">
-        <iframe class="js-iframe" sandbox="allow-scripts allow-same-origin"></iframe>
         <img class="js-screenshot">
       </div>
       <style>@import "/assets/chat/chat.css";</style>
@@ -97,8 +96,13 @@
           <label for="form-chat-background"><%- @T('Background color') %></label>
           <div class="align-right horizontal js-palette"></div>
         </div>
-        <div class="controls">
-          <input class="js-color" type="text" id="form-chat-background" name="background" value="">
+        <div class="controls controls--button">
+          <input class="js-color" type="text" id="form-chat-background" name="background">
+          <div class="controls-button js-eyedropper">
+            <div class="controls-button-inner u-clickable">
+              <%- @Icon('eyedropper') %>
+            </div>
+          </div>
         </div>
         <span class="help-block"><%- @T('Can be in any CSS color format.') %></span>
       </div>

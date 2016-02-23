@@ -480,14 +480,15 @@ class App.Controller extends Spine.Controller
       item.object = item.object.replace('::', '')
 
       # lookup real data
-      if App[item.object] && App[item.object].exists( item.o_id )
-        object            = App[item.object].find( item.o_id )
+      if App[item.object] && App[item.object].exists(item.o_id)
+        object            = App[item.object].find(item.o_id)
+        item.objectNative = object
         item.link         = object.uiUrl()
         item.title        = object.displayName()
         item.object_name  = object.objectDisplayName()
-        item.cssIcon      = object.iconActivity( @Session.get() )
+        item.cssIcon      = object.iconActivity(@Session.get())
 
-      item.created_by = App.User.find( item.created_by_id )
+      item.created_by = App.User.find(item.created_by_id)
     items
 
   # central method, is getting called on every ticket form change

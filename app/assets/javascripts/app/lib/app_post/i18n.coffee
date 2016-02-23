@@ -174,7 +174,7 @@ class _i18nSingleton extends Spine.Module
 
   translateInline: (string, args) =>
     return string if !string
-    App.Utils.htmlEscape(@translate(string, args))
+    @translate(string, args, true)
 
   translateContent: (string, args) =>
     return string if !string
@@ -182,19 +182,12 @@ class _i18nSingleton extends Spine.Module
     if App.Config.get('translation_inline')
       return '<span class="translation" onclick="arguments[0].stopPropagation(); return false" contenteditable="true" title="' + App.Utils.htmlEscape(string) + '">' + App.Utils.htmlEscape(@translate(string)) + '</span>'
 
-    translated = App.Utils.htmlEscape(@translate(string, args))
-
-    # apply inline markup
-    translated
-      .replace(/\|\|(.+?)\|\|/gm, '<i>$1</i>')
-      .replace(/\|(.+?)\|/gm, '<b>$1</b>')
-      .replace(/_(.+?)_/gm, '<u>$1</u>')
-      .replace(/§(.+?)§/gm, '<kbd>$1</kbd>')
+    translated = @translate(string, args, true, true)
 
   translatePlain: (string, args) =>
     @translate(string, args)
 
-  translate: (string, args) =>
+  translate: (string, args, quote, markup) =>
 
     # type convertation
     if typeof string isnt 'string'
@@ -221,10 +214,27 @@ class _i18nSingleton extends Spine.Module
           @log 'notice', "translation for '#{string}' in '#{@locale}' is missing"
         @_notTranslated[@locale][string] = true
 
+    # apply html quote
+    if quote
+      translated = App.Utils.htmlEscape(translated)
+
+    # apply inline markup
+    if markup
+      translated = translated
+        .replace(/\|\|(.+?)\|\|/gm, '<i>$1</i>')
+        .replace(/\|(.+?)\|/gm, '<b>$1</b>')
+        .replace(/_(.+?)_/gm, '<u>$1</u>')
+        .replace(/§(.+?)§/gm, '<kbd>$1</kbd>')
+
     # search %s
     if args
       for arg in args
-        translated = translated.replace(/%s/, arg)
+        if quote
+          argNew = App.Utils.htmlEscape(arg)
+        else
+          argNew = arg
+
+        translated = translated.replace(/%s/, argNew)
 
     @log 'debug', 'translate', string, args, translated
 

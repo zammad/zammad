@@ -313,7 +313,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_create_render_item (generic_object)
@@ -335,7 +335,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_update_render_item (generic_object)
@@ -349,7 +349,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_destory_render_item ()
@@ -369,7 +369,7 @@ class ApplicationController < ActionController::Base
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_show_render_item (generic_object)
@@ -382,11 +382,20 @@ class ApplicationController < ActionController::Base
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_index_render_result (generic_objects)
     render json: generic_objects, status: :ok
   end
 
+  def model_match_error (error)
+    data = {
+      error: error
+    }
+    if error =~ /(already exists|duplicate key|duplicate entry)/i
+      data[:error_human] = 'Object already exists!'
+    end
+    data
+  end
 end

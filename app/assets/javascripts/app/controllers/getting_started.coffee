@@ -228,11 +228,11 @@ class Admin extends App.ControllerContent
         )
         @Config.set('system_init_done', true)
 
-      fail: (data) =>
+      fail: (settings, details) =>
         @formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent( 'Can\'t create user!' )
+          msg:     App.i18n.translateContent( details.error_human || 'Can\'t create user!' )
           timeout: 2500
         }
     )
@@ -984,11 +984,11 @@ class Agent extends App.ControllerContent
         # rerender page
         @render()
 
-      fail: (data) =>
+      fail: (settings, details) =>
         @formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent( 'Can\'t create user!' )
+          msg:     App.i18n.translateContent( details.error_human || 'Can\'t create user!' )
           timeout: 2500
         }
     )

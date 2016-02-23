@@ -6,7 +6,7 @@ module Ticket::ActivityStreamLog
 log activity for this object
 
   ticket = Ticket.find(123)
-  result = ticket.activity_stream_log( 'created', user_id )
+  result = ticket.activity_stream_log('create', user_id)
 
 returns
 

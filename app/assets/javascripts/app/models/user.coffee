@@ -1,19 +1,19 @@
 class App.User extends App.Model
-  @configure 'User', 'login', 'firstname', 'lastname', 'email', 'web', 'password', 'phone', 'fax', 'mobile', 'street', 'zip', 'city', 'country', 'organization_id', 'department', 'note', 'role_ids', 'group_ids', 'active', 'invite', 'updated_at'
+  @configure 'User', 'login', 'firstname', 'lastname', 'email', 'web', 'password', 'phone', 'fax', 'mobile', 'street', 'zip', 'city', 'country', 'organization_id', 'department', 'note', 'role_ids', 'group_ids', 'active', 'invite', 'signup', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/users'
 
 #  @hasMany 'roles', 'App.Role'
   @configure_attributes = [
     { name: 'login',            display: 'Login',         tag: 'input',    type: 'text',     limit: 100, null: false, autocapitalize: false, signup: false, quick: false },
-    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true },
-    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true },
-    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true },
-    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true },
+    { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
+    { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
     { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'off', signup: true, },
-    { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
+    { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true, invite_customer: true },
     { name: 'role_ids',         display: 'Roles',         tag: 'checkbox', multiple: true, null: false, relation: 'Role' },
-    { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', invite_agent: true },
+    { name: 'group_ids',        display: 'Groups',        tag: 'checkbox', multiple: true, null: true, relation: 'Group', invite_agent: true, invite_customer: true },
     { name: 'active',           display: 'Active',        tag: 'active',   default: true },
     { name: 'created_at',       display: 'Created',       tag: 'datetime', readonly: 1 },
     { name: 'updated_at',       display: 'Updated',       tag: 'datetime', readonly: 1 },
@@ -142,3 +142,22 @@ class App.User extends App.Model
     class:      'user user-popover'
     url:        @uiUrl()
     icon:       'user'
+
+  activityMessage: (item) ->
+    if item.type is 'create'
+      return App.i18n.translateContent('%s created User |%s|', item.created_by.displayName(), item.title)
+    else if item.type is 'update'
+      return App.i18n.translateContent('%s updated User |%s|', item.created_by.displayName(), item.title)
+    else if item.type is 'session started'
+      return App.i18n.translateContent('%s started a new session', item.created_by.displayName())
+    else if item.type is 'switch to'
+      to = item.title
+      if item.objectNative
+        to = item.objectNative.displayName()
+      return App.i18n.translateContent('%s switched to |%s|!', item.created_by.displayName(), to)
+    else if item.type is 'ended switch to'
+      to = item.title
+      if item.objectNative
+        to = item.objectNative.displayName()
+      return App.i18n.translateContent('%s ended switch to |%s|!', item.created_by.displayName(), to)
+    return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."

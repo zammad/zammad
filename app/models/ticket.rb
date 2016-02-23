@@ -126,7 +126,7 @@ returns
 
 processes tickets which have reached their pending time and sets next state_id
 
-  processed_tickets = Ticket.process_pending()
+  processed_tickets = Ticket.process_pending
 
 returns
 
@@ -135,40 +135,110 @@ returns
 =end
 
   def self.process_pending
-
-    ticket_states = Ticket::State.where(
-      state_type_id: Ticket::StateType.find_by( name: 'pending action' ),
-    )
-                                 .where.not(next_state_id: nil)
-
-    return [] if !ticket_states
-
-    next_state_map = {}
-    ticket_states.each { |state|
-      next_state_map[state.id] = state.next_state_id
-    }
-
-    tickets = where(
-      state_id: next_state_map.keys,
-    )
-              .where( 'pending_time <= ?', Time.zone.now )
-
-    return [] if !tickets
-
     result = []
-    tickets.each { |ticket|
-      ticket.state_id      = next_state_map[ticket.state_id]
-      ticket.updated_at    = Time.zone.now
-      ticket.updated_by_id = 1
-      ticket.save!
 
+    # process pending action tickets
+    pending_action = Ticket::StateType.find_by(name: 'pending action')
+    ticket_states_pending_action = Ticket::State.where(state_type_id: pending_action)
+                                                .where.not(next_state_id: nil)
+    if !ticket_states_pending_action.empty?
+      next_state_map = {}
+      ticket_states_pending_action.each { |state|
+        next_state_map[state.id] = state.next_state_id
+      }
+
+      tickets = where(state_id: next_state_map.keys)
+                .where('pending_time <= ?', Time.zone.now)
+
+      tickets.each { |ticket|
+        ticket.state_id      = next_state_map[ticket.state_id]
+        ticket.updated_at    = Time.zone.now
+        ticket.updated_by_id = 1
+        ticket.save!
+
+        # we do not have an destructor at this point, so we need to
+        # execute ticket events manually
+        Observer::Ticket::Notification.transaction
+
+        result.push ticket
+      }
+    end
+
+    # process pending reminder tickets
+    pending_reminder = Ticket::StateType.find_by(name: 'pending reminder')
+    ticket_states_pending_reminder = Ticket::State.where(state_type_id: pending_reminder)
+
+    if !ticket_states_pending_reminder.empty?
+      reminder_state_map = {}
+      ticket_states_pending_reminder.each { |state|
+        reminder_state_map[state.id] = state.next_state_id
+      }
+
+      tickets = where(state_id: reminder_state_map.keys)
+                .where('pending_time <= ?', Time.zone.now)
+
+      tickets.each { |ticket|
+
+        # send notification
+        bg = Observer::Ticket::Notification::BackgroundJob.new(
+          ticket_id: ticket.id,
+          article_id: ticket.articles.last.id,
+          type: 'reminder_reached',
+        )
+        bg.perform
+
+        result.push ticket
+      }
+    end
+
+    result
+  end
+
+=begin
+
+processes escalated tickets
+
+  processed_tickets = Ticket.process_escalation
+
+returns
+
+  processed_tickets = [<Ticket>, ...]
+
+=end
+
+  def self.process_escalation
+    result = []
+
+    # get max warning diff
+
+    tickets = where('escalation_time <= ?', Time.zone.now + 15.minutes)
+
+    tickets.each {|ticket|
+
+      # get sla
+      sla = ticket.escalation_calculation_get_sla
+
+      # send escalation
+      if ticket.escalation_time < Time.zone.now
+        bg = Observer::Ticket::Notification::BackgroundJob.new(
+          ticket_id: ticket.id,
+          article_id: ticket.articles.last.id,
+          type: 'escalation',
+        )
+        bg.perform
+        result.push ticket
+        next
+      end
+
+      # check if warning need to be sent
+      bg = Observer::Ticket::Notification::BackgroundJob.new(
+        ticket_id: ticket.id,
+        article_id: ticket.articles.last.id,
+        type: 'escalation_warning',
+      )
+      bg.perform
       result.push ticket
     }
-
-    # we do not have an destructor at this point, so we need to
-    # execute ticket events manually
-    Observer::Ticket::Notification.transaction
-
     result
   end
 
@@ -256,13 +326,20 @@ returns
 =end
 
   def online_notification_seen_state(user_id_check = nil)
-    state      = Ticket::State.lookup( id: state_id )
-    state_type = Ticket::StateType.lookup( id: state.state_type_id )
+    state      = Ticket::State.lookup(id: state_id)
+    state_type = Ticket::StateType.lookup(id: state.state_type_id)
+
+    # always to set unseen for ticket owner
+    if state_type.name != 'merged'
+      if user_id_check
+        return false if user_id_check == owner_id && user_id_check != updated_by_id
+      end
+    end
 
     # set all to seen if pending action state is a closed or merged state
     if state_type.name == 'pending action' && state.next_state_id
-      state      = Ticket::State.lookup( id: state.next_state_id )
-      state_type = Ticket::StateType.lookup( id: state.state_type_id )
+      state      = Ticket::State.lookup(id: state.next_state_id)
+      state_type = Ticket::StateType.lookup(id: state.state_type_id)
     end
 
     # set all to seen if new state is pending reminder state
@@ -529,6 +606,42 @@ condition example
       end
     }
     [query, bind_params, tables]
+  end
+
+=begin
+
+get all email references headers of a ticket, to exclude some, parse it as array into method
+
+  references = ticket.get_references
+
+result
+
+  ['message-id-1234', 'message-id-5678']
+
+ignore references header(s)
+
+  references = ticket.get_references(['message-id-5678'])
+
+result
+
+  ['message-id-1234']
+
+=end
+
+  def get_references(ignore = [])
+    references = []
+    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each {|article|
+      if !article.in_reply_to.empty?
+        references.push article.in_reply_to
+      end
+      next if !article.message_id
+      next if article.message_id.empty?
+      references.push article.message_id
+    }
+    ignore.each {|item|
+      references.delete(item)
+    }
+    references
   end
 
   private

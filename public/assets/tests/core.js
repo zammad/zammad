@@ -271,8 +271,11 @@ test( "i18n", function() {
   translated = App.i18n.translateContent('%s ago', 123);
   equal( translated, 'vor 123', 'de-de - %s' );
 
-  translated = App.i18n.translateContent('%s %s test', 123, 'xxx');
-  equal( translated, '123 xxx test', 'de-de - %s %s' );
+  translated = App.i18n.translateContent('%s ago', '<b>quote</b>');
+  equal( translated, 'vor &lt;b&gt;quote&lt;/b&gt;', 'de-de - %s - quote' );
+
+  translated = App.i18n.translateContent('%s %s test', 123, 'xxx |B|');
+  equal( translated, '123 xxx |B| test', 'de-de - %s %s' );
 
   translated = App.i18n.translateContent('|%s| %s test', 123, 'xxx');
   equal( translated, '<b>123</b> xxx test', 'de-de - *%s* %s' );
@@ -311,11 +314,14 @@ test( "i18n", function() {
   translated = App.i18n.translateContent('%s ago', 123);
   equal( translated, '123 ago', 'en-us - %s' );
 
+  translated = App.i18n.translateContent('%s ago', '<b>quote</b>');
+  equal( translated, '&lt;b&gt;quote&lt;/b&gt; ago', 'en-us - %s - qupte' );
+
   translated = App.i18n.translateContent('%s %s test', 123, 'xxx');
   equal( translated, '123 xxx test', 'en-us - %s %s' );
 
-  translated = App.i18n.translateContent('|%s| %s test', 123, 'xxx');
-  equal( translated, '<b>123</b> xxx test', 'en-us - *%s* %s' );
+  translated = App.i18n.translateContent('|%s| %s test', 123, 'xxx |B|');
+  equal( translated, '<b>123</b> xxx |B| test', 'en-us - *%s* %s' );
 
   translated = App.i18n.translateContent('||%s|| %s test', 123, 'xxx');
   equal( translated, '<i>123</i> xxx test', 'en-us - *%s* %s' );

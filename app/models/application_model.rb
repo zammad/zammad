@@ -826,7 +826,7 @@ log object create activity stream, if configured - will be executed automaticall
 
   def activity_stream_create
     return if !self.class.activity_stream_support_config
-    activity_stream_log('created', self['created_by_id'])
+    activity_stream_log('create', self['created_by_id'])
   end
 
 =begin
@@ -867,7 +867,7 @@ log object update activity stream, if configured - will be executed automaticall
 
     return if !log
 
-    activity_stream_log('updated', self['updated_by_id'])
+    activity_stream_log('update', self['updated_by_id'])
   end
 
 =begin

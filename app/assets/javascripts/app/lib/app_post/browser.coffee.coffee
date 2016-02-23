@@ -11,9 +11,15 @@ get used browser
   browser = App.Browser.detection()
 
   browser = {
-    browser: "Chrome",
-    version: 37,
-    OS:      "Mac"
+    browser: {
+      major: "48",
+      name: "Chrome",
+      version: "48.0.2564.109",
+    },
+    os: {
+      name: "Mac OS",
+      version: "10.11.3",
+    }
   }
 
 ###

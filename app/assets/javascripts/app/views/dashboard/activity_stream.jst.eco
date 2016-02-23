@@ -3,7 +3,11 @@
   <a href="<%- @item.link %>" class="activity-body">
     <span class="activity-message">
       <span class="activity-text">
-        <%= @item.created_by.displayName() %> <%- @T( @item.type ) %> <%- @T( @item.object_name ) %><% if @item.title: %> <strong><%= @item.title %></strong><% end %>
+        <% if @item.objectNative && @item.objectNative.activityMessage: %>
+          <%- @item.objectNative.activityMessage(@item) %>
+        <% else: %>
+            Need objectNative in item <%= item.object %>.find(<%= item.o_id %>)
+        <% end %>
       </span>
       <%- @humanTime(@item.created_at, false, 'activity-time') %>
     </span>

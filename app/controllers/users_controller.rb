@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 
         # check if feature is enabled
         if !Setting.get('user_create_account')
-          render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
+          render json: { error_human: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
 
@@ -103,7 +103,7 @@ class UsersController < ApplicationController
       else
 
         # permission check by role
-        return if !permission_check_by_role
+        return if !permission_check_by_role(params)
 
         if params[:role_ids]
           user.role_ids = params[:role_ids]
@@ -117,7 +117,7 @@ class UsersController < ApplicationController
       if user.email
         exists = User.where(email: user.email.downcase).first
         if exists
-          render json: { error: 'User already exists!' }, status: :unprocessable_entity
+          render json: { error_human: 'User already exists!' }, status: :unprocessable_entity
           return
         end
       end
@@ -135,52 +135,34 @@ class UsersController < ApplicationController
 
       # send inviteation if needed / only if session exists
       if params[:invite] && current_user
-
-        # generate token
         token = Token.create(action: 'PasswordReset', user_id: user.id)
+        NotificationFactory.notification(
+          template: 'user_invite',
+          user: user,
+          objects: {
+            token: token,
+            user: user,
+            current_user: current_user,
+          }
+        )
+      end
 
-        # send mail
-        data = {}
-        data[:subject] = 'Invitation to #{config.product_name} at #{config.fqdn}'
-        data[:body]    = 'Hi #{user.firstname},
-
-        I (#{current_user.firstname} #{current_user.lastname}) invite you to #{config.product_name} - the customer support / ticket system platform.
-
-        Click on the following link and set your password:
-
-        #{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
-
-        Enjoy,
-
-        #{current_user.firstname} #{current_user.lastname}
-
-        Your #{config.product_name} Team
-        '
-
-        # prepare subject & body
-        [:subject, :body].each { |key|
-          data[key.to_sym] = NotificationFactory.build(
-            locale: user.preferences[:locale],
-            string: data[key.to_sym],
-            objects: {
-              token: token,
-              user: user,
-              current_user: current_user,
-            }
-          )
-        }
-
-        # send notification
-        NotificationFactory.send(
-          recipient: user,
-          subject: data[:subject],
-          body: data[:body]
+      # send email verify
+      if params[:signup] && !current_user
+        token = Token.create(action: 'EmailVerify', user_id: user.id)
+        NotificationFactory.notification(
+          template: 'signup',
+          user: user,
+          objects: {
+            token: token,
+            user: user,
+          }
         )
       end
       user_new = User.find(user.id)
       render json: user_new, status: :created
     rescue => e
-      render json: { error: e.message }, status: :unprocessable_entity
+      render json: model_match_error(e.message), status: :unprocessable_entity
     end
   end
 
@@ -202,6 +184,9 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
 
     begin
+
+      # permission check by role
+      return if !permission_check_by_role(params)
 
       user.update_attributes( User.param_cleanup(params) )
 
@@ -431,12 +416,20 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
       return
     end
 
-    token = User.password_reset_send(params[:username])
-    if token
+    result = User.password_reset_new_token(params[:username])
+    if result && result[:token]
+
+      # send mail
+      user = result[:user]
+      NotificationFactory.notification(
+        template: 'password_reset',
+        user: user,
+        objects: result
+      )
 
       # only if system is in develop mode, send token back to browser for browser tests
       if Setting.get('developer_mode') == true
-        render json: { message: 'ok', token: token.name }, status: :ok
+        render json: { message: 'ok', token: result[:token].name }, status: :ok
         return
       end
 
@@ -482,6 +475,19 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
 
       # set new password with token
       user = User.password_reset_via_token(params[:token], params[:password])
+
+      # send mail
+      if user
+        NotificationFactory.notification(
+          template: 'password_change',
+          user: user,
+          objects: {
+            user: user,
+            current_user: current_user,
+          }
+        )
+      end
+
     else
       user = User.password_reset_check(params[:token])
     end
@@ -540,6 +546,16 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
     end
 
     user.update_attributes(password: params[:password_new])
+
+    NotificationFactory.notification(
+      template: 'password_change',
+      user: user,
+      objects: {
+        user: user,
+        current_user: current_user,
+      }
+    )
+
     render json: { message: 'ok', user_login: user.login }, status: :ok
   end
 
@@ -779,8 +795,39 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     true
   end
 
-  def permission_check_by_role
+  def permission_check_by_role(params)
     return true if role?(Z_ROLENAME_ADMIN)
+
+    if !role?('Admin') && params[:role_ids]
+      if params[:role_ids].class != Array
+        params[:role_ids] = [params[:role_ids]]
+      end
+      params[:role_ids].each {|role_id|
+        role_local = Role.lookup(id: role_id)
+        if !role_local
+          render json: { error_human: 'Invalid role_ids!' }, status: :unauthorized
+          logger.info "Invalid role_ids for current_user_id: #{current_user.id} role_ids #{role_id}"
+          return false
+        end
+        role_name = role_local.name
+        next if role_name != 'Admin' && role_name != 'Agent'
+        render json: { error_human: 'This role assignment is only allowed by admin!' }, status: :unauthorized
+        logger.info "This role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{role_name}"
+        return false
+      }
+    end
+
+    if role?('Agent') && params[:group_ids]
+      if params[:group_ids].class != Array
+        params[:group_ids] = [params[:group_ids]]
+      end
+      if !params[:group_ids].empty?
+        render json: { error_human: 'Group relation is only allowed by admin!' }, status: :unauthorized
+        logger.info "Group relation is only allowed by admin! current_user_id: #{current_user.id} group_ids #{params[:group_ids].inspect}"
+        return false
+      end
+    end
+
     return true if role?('Agent')
 
     response_access_deny

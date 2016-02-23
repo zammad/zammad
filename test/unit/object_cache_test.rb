@@ -25,13 +25,13 @@ class ObjectCacheTest < ActiveSupport::TestCase
       groups: groups,
     )
     assets = org.assets({})
-    assert_equal( org.member_ids, assets[:Organization][org.id]['member_ids'] )
+    assert_equal(org.member_ids.sort, assets[:Organization][org.id]['member_ids'].sort)
 
     user1.organization_id = nil
     user1.save
 
     assets = org.assets({})
-    assert_equal( org.member_ids, assets[:Organization][org.id]['member_ids'] )
+    assert_equal(org.member_ids.sort, assets[:Organization][org.id]['member_ids'].sort)
   end
 
   test 'user cache' do
@@ -50,7 +50,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
       groups: groups,
     )
     assets = user1.assets({})
-    assert_equal( user1.group_ids, assets[:User][user1.id]['group_ids'] )
+    assert_equal(user1.group_ids.sort, assets[:User][user1.id]['group_ids'].sort)
 
     # update group
     group1 = groups.first
@@ -58,31 +58,31 @@ class ObjectCacheTest < ActiveSupport::TestCase
     group1.save
 
     assets = user1.assets({})
-    assert_equal( group1.note, assets[:Group][group1.id]['note'] )
+    assert_equal(group1.note, assets[:Group][group1.id]['note'])
 
     # update group
-    assert_equal( user1.group_ids, assets[:User][user1.id]['group_ids'] )
+    assert_equal(user1.group_ids.sort, assets[:User][user1.id]['group_ids'].sort)
     user1.group_ids = []
     user1.save
 
     assets = user1.assets({})
-    assert_equal( user1.group_ids, assets[:User][user1.id]['group_ids'] )
+    assert_equal(user1.group_ids.sort, assets[:User][user1.id]['group_ids'].sort)
 
     # update role
-    assert_equal( user1.role_ids, assets[:User][user1.id]['role_ids'] )
+    assert_equal(user1.role_ids.sort, assets[:User][user1.id]['role_ids'].sort)
     user1.role_ids = []
     user1.save
 
     assets = user1.assets({})
-    assert_equal( user1.role_ids, assets[:User][user1.id]['role_ids'] )
+    assert_equal(user1.role_ids.sort, assets[:User][user1.id]['role_ids'].sort)
 
     # update groups
-    assert_equal( user1.organization_ids, assets[:User][user1.id]['organization_ids'] )
+    assert_equal(user1.organization_ids.sort, assets[:User][user1.id]['organization_ids'].sort)
     user1.organization_ids = [1]
     user1.save
 
     assets = user1.assets({})
-    assert_equal( user1.organization_ids, assets[:User][user1.id]['organization_ids'] )
+    assert_equal(user1.organization_ids.sort, assets[:User][user1.id]['organization_ids'].sort)
 
   end
 
@@ -94,24 +94,24 @@ class ObjectCacheTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    group_new = Group.where( name: name ).first
-    assert_equal( name, group_new[:name], 'verify by where' )
+    group_new = Group.where( name: name).first
+    assert_equal(name, group_new[:name], 'verify by where')
 
     # lookup by name
     cache_key = group_new.name.to_s
-    assert_nil( Group.cache_get(cache_key) )
+    assert_nil(Group.cache_get(cache_key))
 
-    group_lookup_name = Group.lookup( name: group_new.name )
-    assert_equal( group_new.name, group_lookup_name[:name], 'verify by lookup.name' )
-    assert( Group.cache_get(cache_key) )
+    group_lookup_name = Group.lookup(name: group_new.name)
+    assert_equal(group_new.name, group_lookup_name[:name], 'verify by lookup.name')
+    assert(Group.cache_get(cache_key))
 
     # lookup by id
     cache_key = group_new.id.to_s
-    assert_nil( Group.cache_get(cache_key) )
+    assert_nil(Group.cache_get(cache_key))
 
-    group_lookup_id = Group.lookup( id: group.id )
-    assert_equal( group_new.name, group_lookup_id[:name], 'verify by lookup.id' )
-    assert( Group.cache_get(cache_key) )
+    group_lookup_id = Group.lookup(id: group.id)
+    assert_equal(group_new.name, group_lookup_id[:name], 'verify by lookup.id')
+    assert(Group.cache_get(cache_key))
 
     # update / check if old name caches are deleted
     name_new = name + ' next'
@@ -120,50 +120,50 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
     # lookup by name
     cache_key = group.name.to_s
-    assert_nil( Group.cache_get(cache_key) )
+    assert_nil(Group.cache_get(cache_key))
 
-    group_lookup = Group.where( name: group_new.name ).first
-    assert_nil( group_lookup, 'verify by where name_old' )
-    assert_nil( Group.cache_get(cache_key) )
+    group_lookup = Group.where(name: group_new.name).first
+    assert_nil(group_lookup, 'verify by where name_old')
+    assert_nil(Group.cache_get(cache_key))
 
-    group_lookup = Group.where( name: group.name ).first
-    assert_equal( name_new, group_lookup[:name], 'verify by where name_new' )
-    assert_nil( Group.cache_get(cache_key) )
+    group_lookup = Group.where(name: group.name).first
+    assert_equal(name_new, group_lookup[:name], 'verify by where name_new')
+    assert_nil(Group.cache_get(cache_key))
 
-    group_lookup_name = Group.lookup( name: group_new.name )
-    assert_nil( group_lookup_name, 'verify by lookup.name name_old' )
-    assert_nil( Group.cache_get(cache_key) )
+    group_lookup_name = Group.lookup(name: group_new.name)
+    assert_nil(group_lookup_name, 'verify by lookup.name name_old')
+    assert_nil(Group.cache_get(cache_key))
 
-    group_lookup_name = Group.lookup( name: group.name )
-    assert_equal( name_new, group_lookup_name[:name], 'verify by lookup.name name_new' )
-    assert( Group.cache_get(cache_key) )
+    group_lookup_name = Group.lookup(name: group.name)
+    assert_equal(name_new, group_lookup_name[:name], 'verify by lookup.name name_new')
+    assert(Group.cache_get(cache_key))
 
     # lookup by id
     cache_key = group_new.id.to_s
-    assert_nil( Group.cache_get(cache_key) )
+    assert_nil(Group.cache_get(cache_key))
 
-    group_lookup_id = Group.lookup( id: group.id )
-    assert_equal( name_new, group_lookup_id[:name], 'verify by lookup.id' )
-    assert( Group.cache_get(cache_key) )
+    group_lookup_id = Group.lookup(id: group.id)
+    assert_equal(name_new, group_lookup_id[:name], 'verify by lookup.id')
+    assert(Group.cache_get(cache_key))
 
     group.destroy
 
     # lookup by name
-    group_lookup = Group.where( name: group_new.name ).first
-    assert_nil( group_lookup, 'verify by where name_old' )
+    group_lookup = Group.where(name: group_new.name).first
+    assert_nil(group_lookup, 'verify by where name_old')
 
-    group_lookup = Group.where( name: group.name ).first
-    assert_nil( group_lookup, 'verify by where name_new' )
+    group_lookup = Group.where(name: group.name).first
+    assert_nil(group_lookup, 'verify by where name_new')
 
-    group_lookup_name = Group.lookup( name: group_new.name )
-    assert_nil( group_lookup_name, 'verify by lookup.name name_old' )
+    group_lookup_name = Group.lookup(name: group_new.name)
+    assert_nil(group_lookup_name, 'verify by lookup.name name_old')
 
-    group_lookup_name = Group.lookup( name: group.name )
-    assert_nil( group_lookup_name, 'verify by lookup.name name_new' )
+    group_lookup_name = Group.lookup(name: group.name)
+    assert_nil(group_lookup_name, 'verify by lookup.name name_new')
 
     # lookup by id
-    group_lookup_id = Group.lookup( id: group.id )
-    assert_nil( group_lookup_id, 'verify by lookup.id' )
+    group_lookup_id = Group.lookup(id: group.id)
+    assert_nil(group_lookup_id, 'verify by lookup.id')
 
   end
 end

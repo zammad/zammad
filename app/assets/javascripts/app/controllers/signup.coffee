@@ -24,7 +24,7 @@ class Index extends App.ControllerContent
 
     @html App.view('signup')()
 
-    new App.ControllerForm(
+    @form = new App.ControllerForm(
       el:        @el.find('form')
       model:     App.User
       screen:    'signup'
@@ -34,7 +34,7 @@ class Index extends App.ControllerContent
   cancel: ->
     @navigate '#login'
 
-  submit: (e) ->
+  submit: (e) =>
     e.preventDefault()
     @formDisable(e)
     @params = @formParam(e.target)
@@ -43,6 +43,7 @@ class Index extends App.ControllerContent
     if !@params.login && @params.email
       @params.login = @params.email
 
+    @params.signup = true
     @params.role_ids = [0]
     @log 'notice', 'updateAttributes', @params
     user = new App.User
@@ -67,6 +68,9 @@ class Index extends App.ControllerContent
           success: @success
           error: @error
         )
+      fail: (settings, details) =>
+        @formEnable(e)
+        @form.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
 
   success: (data, status, xhr) =>

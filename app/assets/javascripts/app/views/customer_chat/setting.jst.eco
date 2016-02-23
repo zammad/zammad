@@ -23,9 +23,9 @@
 <% for chat in @chats: %>
     <tr>
       <td><%= chat.name %>
-      <td><label class="inline-label"><input name="chat::phrase::<%- chat.id %>" value="<%= @preferences.chat.phrase[chat.id] %>" class="form-control form-control--small" placeholder="<%- @T('Hello, my name is %s, what can I do for you?', App.Session.get('firstname')) %>"/></label>
-      <td>
-        <label class="inline-label checkbox-replacement">
+      <td class="settings-list-control-cell"><label class="inline-label"><input name="chat::phrase::<%- chat.id %>" value="<%= @preferences.chat.phrase[chat.id] %>" class="form-control form-control--small" placeholder="<%- @T('Hello, my name is %s, what can I do for you?', App.Session.get('firstname')) %>"/></label>
+      <td class="u-positionOrigin">
+        <label class="checkbox-replacement checkbox-replacement--fullscreen">
             <input type="checkbox" name="chat::active::<%- chat.id %>" <% if @preferences.chat.active[chat.id]: %>checked<% end %>>
             <%- @Icon('checkbox', 'icon-unchecked') %>
             <%- @Icon('checkbox-checked', 'icon-checked') %>

@@ -1,0 +1,29 @@
+Updated Ticket (<%= d 'ticket.title' %>)
+
+<p>Hi <%= d 'recipient.firstname' %>,</p>
+<br>
+<div>
+Ticket (<%= d 'ticket.title' %>) has been updated by "<b><%= d 'ticket.updated_by.longname' %></b>".
+</div>
+<br>
+<% if @objects[:changes] && !@objects[:changes].empty? %>
+  <p>
+  <%= t 'Changes' %>:<br>
+  <% @objects[:changes].each do |key, value| %>
+    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+  <% end %>
+  </p>
+<% end %>
+<br>
+<% if @objects[:article] %>
+  <p>
+  <%= t 'Information' %>:
+  <blockquote type="cite">
+  <%= a 'article' %>
+  </blockquote>
+  </p>
+<% end %>
+<br>
+<p>
+  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>" target="zammad_app"><%= t 'View this in Zammad' %></a>
+</p>

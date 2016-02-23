@@ -1,0 +1,18 @@
+Ticket is escalated (<%= d 'ticket.title' %>)
+
+<p>Hi <%= d 'recipient.firstname' %>,</p>
+<br>
+<p>Ticket (<%= d 'ticket.title' %>) from "<b><%= d 'ticket.customer.longname' %></b>" is escalated since "<%= d 'ticket.escalation_time' %>"!</p>
+<br>
+<% if @objects[:article] %>
+  <p>
+  <%= t 'Information' %>:
+  <blockquote type="cite">
+  <%= a 'article' %>
+  </blockquote>
+  </p>
+<% end %>
+<br>
+<p>
+  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>" target="zammad_app"><%= t 'View this in Zammad' %></a>
+</p>

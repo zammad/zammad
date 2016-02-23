@@ -17,6 +17,16 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'App Version',
+  name: 'app_version',
+  area: 'Core::WebApp',
+  description: 'Only used for internal, to propagate current web app version to clients.',
+  options: {},
+  state: '',
+  preferences: { online_service_disable: true },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'Developer System',
   name: 'developer_mode',
   area: 'Core::Develop',
@@ -2498,6 +2508,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {},
     view: {
       '-all-' => {
@@ -2529,6 +2540,11 @@ ObjectManager::Attribute.add(
       },
     },
     invite_agent: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    invite_customer: {
       '-all-' => {
         null: false,
       },
@@ -2572,6 +2588,11 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    invite_customer: {
+      '-all-' => {
+        null: false,
+      },
+    },
     edit: {
       '-all-' => {
         null: false,
@@ -2611,6 +2632,11 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    invite_customer: {
+      '-all-' => {
+        null: false,
+      },
+    },
     edit: {
       '-all-' => {
         null: false,
@@ -2642,6 +2668,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2673,6 +2700,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2704,6 +2732,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2735,6 +2764,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2767,6 +2797,11 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {
+      '-all-' => {
+        null: true,
+      },
+    },
     edit: {
       '-all-' => {
         null: true,
@@ -2798,6 +2833,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2828,6 +2864,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2859,6 +2896,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2890,6 +2928,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2921,6 +2960,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       '-all-' => {
         null: true,
@@ -2957,6 +2997,7 @@ ObjectManager::Attribute.add(
       },
     },
     invite_agent: {},
+    invite_customer: {},
     edit: {
       Admin: {
         null: true,
@@ -3020,6 +3061,11 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {
+      '-all-' => {
+        null: true,
+      },
+    },
     edit: {
       '-all-' => {
         null: true,
@@ -3050,6 +3096,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       Admin: {
         null: false,
@@ -3084,6 +3131,7 @@ ObjectManager::Attribute.add(
         null: false,
       },
     },
+    invite_customer: {},
     edit: {
       Admin: {
         null: true,
@@ -3112,6 +3160,7 @@ ObjectManager::Attribute.add(
   screens: {
     signup: {},
     invite_agent: {},
+    invite_customer: {},
     edit: {
       Admin: {
         null: false,
@@ -3253,6 +3302,13 @@ Scheduler.create_if_not_exists(
   active: true,
 )
 Scheduler.create_if_not_exists(
+  name: 'Process escalation tickets',
+  method: 'Ticket.process_escalation',
+  period: 60 * 5,
+  prio: 1,
+  active: true,
+)
+Scheduler.create_if_not_exists(
   name: 'Import OTRS diff load',
   method: 'Import::OTRS.diff_worker',
   period: 60 * 3,
@@ -3271,7 +3327,7 @@ Scheduler.create_if_not_exists(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
-  name: 'Check streams for Channel ',
+  name: 'Check streams for Channel',
   method: 'Channel.stream',
   period: 60,
   prio: 1,

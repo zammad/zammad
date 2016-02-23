@@ -1,0 +1,18 @@
+<%= c 'product_name' %> signin detected from a new device
+
+<p>Hi <%= d 'user.firstname' %>,</p>
+<br>
+<p>it looks like you signed into your <%= c 'product_name' %> account using a new device on "<%= d 'user_device.created_at' %>":</p>
+<br>
+<p>
+Your Location: <%= d 'user_device.location' %><br>
+Your IP: <%= d 'user_device.ip' %><br
+</p>
+<br>
+<p>Your device has been added to your list of known devices, which you can view here:</p>
+<br>
+<p><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</p>
+<br>
+<p>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</p>
+<br>
+<p>Your <%= c 'product_name' %> Team</p>

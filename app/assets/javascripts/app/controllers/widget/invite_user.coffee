@@ -1,0 +1,76 @@
+class App.InviteUser extends App.Wizard
+  className: 'modal fade'
+  events:
+    'click  .js-close':     'hide'
+    'submit .js-user':      'submit'
+    'click  .js-goToSlide': 'goToSlide'
+
+  constructor: ->
+    super
+
+    if @container
+      @el.addClass('modal--local')
+
+    @render()
+
+    @el.modal
+      keyboard:  true
+      show:      true
+      backdrop:  true
+      container: @container
+    .on
+      'hidden.bs.modal': =>
+        if @callback
+          @callback()
+        @el.remove()
+
+  render: =>
+    @html App.view('widget/invite_user')(
+      head: @head
+    )
+    new App.ControllerForm(
+      el:        @$('.js-form')
+      model:     App.User
+      screen:    @screen
+      autofocus: true
+    )
+
+  submit: (e) =>
+    e.preventDefault()
+    @showSlide('js-waiting')
+    @formDisable(e)
+    @params          = @formParam(e.target)
+    @params.role_ids = [0]
+
+    # set invite flag
+    @params.invite = true
+
+    # find agent role
+    role = App.Role.findByAttribute('name', @role)
+    if role
+      @params.role_ids = role.id
+
+    user = new App.User
+    user.load(@params)
+
+    errors = user.validate(
+      screen: @screen
+    )
+    if errors
+      @log 'error new', errors
+      @formValidate( form: e.target, errors: errors )
+      @formEnable(e)
+      @showSlide('js-user')
+      return false
+
+    # save user
+    user.save(
+      done: (r) =>
+        @showSlide('js-success')
+        @el.modal('hide')
+
+      fail: (settings, details) =>
+        @formEnable(e)
+        @showSlide('js-user')
+        @showAlert('js-user',  details.error_human || details.error)
+    )

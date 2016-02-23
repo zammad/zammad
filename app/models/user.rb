@@ -78,7 +78,7 @@ class User < ApplicationModel
 fullname of user
 
   user = User.find(123)
-  result = user.fulename
+  result = user.fullname
 
 returns
 
@@ -87,20 +87,48 @@ returns
 =end
 
   def fullname
-    fullname = ''
+    name = ''
     if firstname && !firstname.empty?
-      fullname = fullname + firstname
+      name = name + firstname
     end
     if lastname && !lastname.empty?
-      if fullname != ''
-        fullname = fullname + ' '
+      if name != ''
+        name += ' '
       end
-      fullname = fullname + lastname
+      name += lastname
     end
-    if fullname == '' && email
-      fullname = email
+    if name == '' && email
+      name = email
     end
-    fullname
+    name
+  end
+
+=begin
+
+longname of user
+
+  user = User.find(123)
+  result = user.longname
+
+returns
+
+  result = "Bob Smith"
+
+  or with org
+
+  result = "Bob Smith (Org ABC)"
+
+=end
+
+  def longname
+    name = fullname
+    if organization_id
+      organization = Organization.lookup(id: organization_id)
+      if organization
+        name += " (#{organization.name})"
+      end
+    end
+    name
   end
 
 =begin
@@ -283,17 +311,20 @@ returns
 
 =begin
 
-send reset password email with token to user
+generate new token for reset password
 
-  result = User.password_reset_send(username)
+  result = User.password_reset_new_token(username)
 
 returns
 
-  result = token
+  result = {
+    token: token,
+    user: user,
+  }
 
 =end
 
-  def self.password_reset_send(username)
+  def self.password_reset_new_token(username)
     return if !username || username == ''
 
     # try to find user based on login
@@ -311,42 +342,10 @@ returns
     # generate token
     token = Token.create(action: 'PasswordReset', user_id: user.id)
 
-    # send mail
-    data = {}
-    data[:subject] = 'Reset your #{config.product_name} password'
-    data[:body]    = 'Forgot your password?
-
-We received a request to reset the password for your #{config.product_name} account (#{user.login}).
-
-If you want to reset your password, click on the link below (or copy and paste the URL into your browser):
-
-#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}
-
-This link takes you to a page where you can change your password.
-
-If you don\'t want to reset your password, please ignore this message. Your password will not be reset.
-
-Your #{config.product_name} Team'
-
-    # prepare subject & body
-    [:subject, :body].each { |key|
-      data[key.to_sym] = NotificationFactory.build(
-        locale: user.preferences[:locale],
-        string: data[key.to_sym],
-        objects: {
-          token: token,
-          user: user,
-        }
-      )
+    {
+      token: token,
+      user: user,
     }
-
-    # send notification
-    NotificationFactory.send(
-      recipient: user,
-      subject: data[:subject],
-      body: data[:body]
-    )
-    token
   end
 
 =begin

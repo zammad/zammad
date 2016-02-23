@@ -61,22 +61,22 @@ class ActivityStreamTest < ActiveSupport::TestCase
           {
             result: true,
             object: 'Ticket',
-            type: 'updated',
+            type: 'update',
           },
           {
             result: true,
             object: 'Ticket::Article',
-            type: 'created',
+            type: 'create',
           },
           {
             result: true,
             object: 'Ticket',
-            type: 'created',
+            type: 'create',
           },
           {
             result: false,
             object: 'User',
-            type: 'updated',
+            type: 'update',
             o_id: current_user.id,
           },
         ]
@@ -118,7 +118,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         article.update_attributes(test[:update][:article])
       end
 
-      sleep 15
+      sleep 21
       if test[:update][:ticket]
         ticket.update_attributes(test[:update][:ticket])
       end
@@ -168,12 +168,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
           {
             result: true,
             object: 'Organization',
-            type: 'updated',
+            type: 'update',
           },
           {
             result: true,
             object: 'Organization',
-            type: 'created',
+            type: 'create',
           },
         ]
       },
@@ -194,7 +194,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         test[:check][1][:o_id]          = organization.id
         test[:check][1][:updated_at]    = organization.updated_at
         test[:check][1][:created_by_id] = current_user.id
-        sleep 13
+        sleep 19
       end
 
       if test[:update2][:organization]
@@ -240,12 +240,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
           {
             result: true,
             object: 'User',
-            type: 'created',
+            type: 'create',
           },
           {
             result: false,
             object: 'User',
-            type: 'updated',
+            type: 'update',
           },
         ]
       },
@@ -312,12 +312,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
           {
             result: true,
             object: 'User',
-            type: 'updated',
+            type: 'update',
           },
           {
             result: true,
             object: 'User',
-            type: 'created',
+            type: 'create',
           },
         ]
       },
@@ -340,7 +340,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       end
 
       # to verify update which need to be logged
-      sleep 14
+      sleep 21
 
       if test[:update2][:user]
         user.update_attributes(test[:update2][:user])

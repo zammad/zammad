@@ -1,0 +1,18 @@
+<%= c 'product_name' %>-Anmeldung erfasst von einem neuen Gerät
+
+<p>Hallo <%= d 'user.firstname' %>,</p>
+<br>
+<p>es sieht aus, als ob Du Dich bei <%= c 'product_name' %> mit einem neuen Gerät um "<%= d 'user_device.created_at' %>" angemeldet hast:</p>
+<br>
+<p>
+Deine Lokation (relativ): <%= d 'user_device.location' %><br>
+Deine IP: <%= d 'user_device.ip' %><br
+</p>
+<br>
+<p>Das Gerät wurde in die Liste der bekannten Geräte hinzugefügt, diese Liste kannst Du hier einsehen:</p>
+<br>
+<p><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</p>
+<br>
+<p>Wenn dies nicht Du warst, entferne das Gerät aus der Liste, ändere Dein Account-Passwort und kontaktieren Deinen Administrator. Jemand könnte unberechtigten Zugriff auf Dein Konto bekommen haben.</p>
+<br>
+<p>Dein <%= c 'product_name' %> Team</p>

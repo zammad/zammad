@@ -353,7 +353,6 @@ pre code.hljs {
 
   &.btn--table {
     padding: 4px 9px;
-    font-weight: 300;
     border: none;
     margin: 5px 6px 0;
     vertical-align: baseline; /* calendar_subscriptions.jst.eco */
@@ -1140,6 +1139,7 @@ label,
   margin-bottom: 4px;
   text-align: left;
   padding: 0;
+  user-select: none;
 }
 
 /* circumventing the label:not(.inline-label) selector because it's too strong */
@@ -1156,6 +1156,9 @@ label,
   text-transform: none;
   display: inline;
   white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
+}
+.inline-label {
+  color: hsl(206,7%,28%);
 }
 .label-text {
   margin-left: 3px;
@@ -1208,10 +1211,6 @@ https://stackoverflow.com/questions/17408815/fieldset-resizes-wrong-appears-to-h
 
 fieldset > .form-group {
   padding: 0 4px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 
 .form-group {
@@ -1409,7 +1408,7 @@ fieldset > .form-group {
   margin-bottom: 0;
 }
 
-.controls-select {
+.controls--select {
   position: relative;
 }
 
@@ -1506,190 +1505,198 @@ input.time.time--12 {
   width: 7.5ch;
 }
 
-  .tokenfield.focus {
-    border-color: hsl(200,71%,59%);
-    box-shadow: 0 0 0 3px hsl(201,62%,90%);
-  }
+.tokenfield.focus {
+  border-color: hsl(200,71%,59%);
+  box-shadow: 0 0 0 3px hsl(201,62%,90%);
+}
 
-  .richtext.form-control {
-    padding-bottom: 28px;
-  }
+.richtext.form-control {
+  padding-bottom: 28px;
+}
 
-  .richtext.form-control [contenteditable] {
-    height: auto;
-    min-height: 82px;
-    background: none;
-  }
+.richtext.form-control [contenteditable] {
+  height: auto;
+  min-height: 82px;
+  background: none;
+}
 
-  .richtext.form-control .attachments.attachments--list:not(:empty) {
-    border-top: 1px solid rgba(0,0,0,.04);
-    white-space: normal;
-    margin: 0 -12px -28px;
-    padding: 25px 20px 21px 72px;
-    position: relative;
-    line-height: 1;
-  }
+.richtext.form-control .attachments.attachments--list:not(:empty) {
+  border-top: 1px solid rgba(0,0,0,.04);
+  white-space: normal;
+  margin: 0 -12px -28px;
+  padding: 25px 20px 21px 72px;
+  position: relative;
+  line-height: 1;
+}
 
-  textarea.form-control {
-    height: 118px;
-  }
+textarea.form-control {
+  height: 118px;
+}
 
-  select.form-control:not([multiple]) {
-    padding-left: 10px;
-    padding-right: 34px;
-    word-wrap: normal;
-  }
+select.form-control:not([multiple]) {
+  padding-left: 10px;
+  padding-right: 34px;
+  word-wrap: normal;
+}
 
-  .form-control.is-hidden {
-    display: none;
-  }
+.form-control.is-hidden {
+  display: none;
+}
 
-  .form-control[disabled], .form-control.is-disabled {
-    cursor: not-allowed;
-    background-color: #fff;
-    color: #d5d5d5;
-    opacity: 1;
-  }
+.form-control[disabled], .form-control.is-disabled {
+  cursor: not-allowed;
+  background-color: #fff;
+  color: #d5d5d5;
+  opacity: 1;
+}
 
-  .form-control.form-control--borderless {
-    border: none;
-    padding: 0;
-    line-height: inherit;
-    height: auto;
-    
-    &:focus {
-      box-shadow: none;
-    }
-  }
-
-  .form-control + .icon-arrow-down,
-  .dropdown-arrow {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    margin-top: -3px;
-    fill: black;
-    opacity: 0.39;
-    width: 13px;
-    height: 7px;
-    @extend .u-unclickable;
-  }
-
-  /* 
-
-    Firefox only hack
-    -----------------
-
-    Firefox below version 35 doesn't allow us to 
-    hide the dropdown arrow but we want to replace 
-    it with our own icon. So we have to hide our own 
-    icon in Firefox versions under 35.
-    
-    The class is set via Javascript
-
-  */
-
-  html.ff-lt-35 .form-control + .icon-arrow-down,
-  html.ff-lt-35 .dropdown-arrow {
-    display: none;
-  }
-
-  select::-ms-expand {
-    display: none;
-  }
-
-  .has-error .form-control,
-  .has-error .form-control:focus,
-  .has-error .form-control.focus {
+.form-control.form-control--borderless {
+  border: none;
+  padding: 0;
+  line-height: inherit;
+  height: auto;
+  
+  &:focus {
     box-shadow: none;
-    border-color: red !important;
+  }
+}
+
+.form-control + .icon-arrow-down,
+.dropdown-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  margin-top: -3px;
+  fill: black;
+  opacity: 0.39;
+  width: 13px;
+  height: 7px;
+  @extend .u-unclickable;
+}
+
+/* 
+
+  Firefox only hack
+  -----------------
+
+  Firefox below version 35 doesn't allow us to 
+  hide the dropdown arrow but we want to replace 
+  it with our own icon. So we have to hide our own 
+  icon in Firefox versions under 35.
+  
+  The class is set via Javascript
+
+*/
+
+html.ff-lt-35 .form-control + .icon-arrow-down,
+html.ff-lt-35 .dropdown-arrow {
+  display: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+.has-error .form-control,
+.has-error .form-control:focus,
+.has-error .form-control.focus {
+  box-shadow: none;
+  border-color: red !important;
+}
+
+input.has-error {
+  box-shadow: none;
+  border-color: red !important;
+}
+
+.help-inline:not(:empty) {
+  color: red;
+  padding: 2px;
+  font-size: 13px;
+}
+
+/* use on input[type=radio] */
+.primary-email-switch {
+  display: none;
+
+  & + label {
+    font-size: 11px;
+    color: #DBDBDB;
+    cursor: pointer;
+    margin: 0;
   }
 
-  input.has-error {
-    box-shadow: none;
-    border-color: red !important;
+  &:checked + label {
+    color: $highlight-color;
   }
+}
 
-  .help-inline:not(:empty) {
-    color: red;
-    padding: 2px;
-    font-size: 13px;
-  }
+.primary-email-switch-label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
-  /* use on input[type=radio] */
-  .primary-email-switch {
-    display: none;
+.primary-email-switch + label {
+  align-self: stretch;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+}
 
-    & + label {
-      font-size: 11px;
-      color: #DBDBDB;
-      cursor: pointer;
-      margin: 0;
-    }
-
-    &:checked + label {
-      color: $highlight-color;
-    }
-  }
-
-  .primary-email-switch-holder {
-    position: relative;
-    display: flex;
+.controls--button {
+  display: flex;
+  
+  input,
+  .form-control {
+    flex: 1;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     
-    .primary-email-switch-label {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    
-    .primary-email-switch + label {
-      align-self: stretch;
-      padding: 0 5px;
-      display: flex;
-      align-items: center;
-    }
-  }
-
-  .controls--emailSwitch {
-    display: flex;
-    
-    .form-control {
-      flex: 1;
-      border-right: none;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+    &:focus + .controls-button {
+      .controls-button-inner {
+        border-color: hsl(200,71%,59%);
+      }
       
-      &:focus + .primary-email-switch-holder {
-        label {
-          border-color: hsl(200,71%,59%);
-        }
-        
-        /* 
+      /* 
 
-          fake the form-control outline 
+        fake the form-control outline 
 
-        */
-        &:before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: -3px;
-          right: -3px;
-          bottom: -3px;
-          background: hsl(201,62%,90%);
-          border-radius: 0 7px 7px 0;
-        }
+      */
+      &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: -3px;
+        right: -3px;
+        bottom: -3px;
+        background: hsl(201,62%,90%);
+        border-radius: 0 7px 7px 0;
       }
     }
-
-    .primary-email-switch-holder label {
-      padding: 0 9px;
-      background: white;
-      position: relative;
-      border: 1px solid hsl(0, 0%, 90%);
-      border-radius: 0 3px 3px 0;
-    }
   }
+}
+
+.controls-button {
+  position: relative;
+  display: flex;
+
+  &.is-active .icon  {
+    fill: $highlight-color;
+  }
+}
+
+.controls-button-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  background: white;
+  position: relative;
+  border: 1px solid hsl(0, 0%, 90%);
+  border-radius: 0 3px 3px 0;
+}
 
 .searchfield {
   position: relative;
@@ -1947,7 +1954,7 @@ kbd {
 }
 
 .page-content {
-  label,
+  .formGroup-label label,
   .label {
     color: hsl(197,18%,70%);
   }
@@ -2508,6 +2515,10 @@ ol.tabs li {
  */
 form {
   margin: 0;
+  
+  &.form--flexibleWidth .controls {
+    display: table;
+  }
 }
 
 .form-controls {
@@ -4078,7 +4089,7 @@ footer {
     background: none;
   }
 
-  .form-inline .controls-select {
+  .form-inline .controls--select {
     position: static;
   }
 
@@ -4238,8 +4249,6 @@ footer {
     }
 
     .article-meta-icon {
-      width: 16px;
-      height: 16px;
       fill: white;
       vertical-align: top;
       margin: 2px 3px 0 0;
@@ -4514,8 +4523,6 @@ footer {
   }
 
   .editControls-icon .icon {
-    width: 16px;
-    height: 16px;
     fill: hsl(210,2%,78%);
   }
 
@@ -6939,6 +6946,23 @@ output {
     }
   }
 
+
+  .settings-list-controls {
+    padding: 0;
+    
+    & > div {
+      display: flex;
+      min-height: 40px;
+    }
+
+    .settings-list-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+    }
+  }
+
   .settings-list-control-cell {
     padding: 5px;
     
@@ -7260,7 +7284,7 @@ output {
   .day {
     width: 27px;
     height: 26px;
-    border-radius: 100%;
+    border-radius: 14px;
     padding: 1px 0 0 !important;
   }
 
@@ -7642,23 +7666,10 @@ output {
     height: 100%;
     transform-origin: left top;
     overflow: hidden;
-    
-    &[data-mode=screenshot] iframe,
-    &[data-mode=iframe] img {
-      display: none;
+
+    &.is-picking {
+      cursor: image_url("/assets/images/eyedropper.gif") 0 15, auto;
     }
-  }
-  
-  iframe {
-    position: absolute;
-    border: none;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    border-radius: 0 0 5px 5px;
-    pointer-events: none;
   }
 
   img {

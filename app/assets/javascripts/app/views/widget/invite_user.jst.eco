@@ -1,0 +1,63 @@
+<div class="modal-dialog wizard">
+
+  <form class="modal-content setup wizard js-user">
+    <!-- dummy to prevent chrome to ask for password save -->
+    <input style="display:none">
+    <input type="password" style="display:none">
+    <!-- /dummy to prevent chrome to ask for password save -->
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+      <h1 class="modal-title"><%- @T(@head) %></h1>
+    </div>
+    <div class="modal-body">
+      <div class="wizard-body vertical justified">
+        <div class="js-form"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-rightFooter">
+      <a class="btn btn--text btn--secondary js-close" data-slide="js-inbound"><%- @T('Cancel') %></a>
+      </div>
+      <div class="modal-rightFooter">
+        <button class="btn btn--primary align-right"><%- @T('Invite') %></button>
+      </div>
+    </div>
+  </form>
+
+  <form class="modal-content setup wizard hide js-waiting">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+      <h1 class="modal-title"><%- @T(@head) %></h1>
+    </div>
+    <div class="modal-body">
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> <%- @T('Sending...') %>
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer"></div>
+  </form>
+
+  <form class="modal-content setup wizard hide js-success">
+    <div class="modal-header">
+      <div class="modal-close js-close">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+      <h1 class="modal-title"><%- @T(@head) %></h1>
+    </div>
+    <div class="modal-body">
+      <div class="wizard-body vertical justified">
+        <p class="wizard-loadingText">
+          <span class="loading icon"></span> <%- @T('done') %>
+        </p>
+      </div>
+    </div>
+    <div class="modal-footer"></div>
+  </form>
+
+</div>

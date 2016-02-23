@@ -166,7 +166,14 @@ class Collection extends Base
   failResponse: (options) =>
     (xhr, statusText, error, settings) =>
       @model.trigger('ajaxError', null, xhr, statusText, error, settings)
-      options.fail?.call(@model, settings)
+      # add errors to calllback
+      @record.trigger('ajaxError', @record, xhr, statusText, error, settings)
+      #options.fail?.call(@model, settings)
+      detailsRaw = xhr.responseText
+      if !_.isEmpty(detailsRaw)
+        details = JSON.parse(detailsRaw)
+      options.fail?.call(@record, settings, details)
+      # /add errors to calllback
 
 class Singleton extends Base
   constructor: (@record) ->
@@ -230,8 +237,15 @@ class Singleton extends Base
       switch settings.type
         when 'POST' then @createFailed()
         when 'DELETE' then @destroyFailed()
+      # add errors to calllback
       @record.trigger('ajaxError', @record, xhr, statusText, error, settings)
-      options.fail?.call(@record, settings)
+      #options.fail?.call(@record, settings)
+      detailsRaw = xhr.responseText
+      if !_.isEmpty(detailsRaw)
+        details = JSON.parse(detailsRaw)
+      options.fail?.call(@record, settings, details)
+      @record.trigger('remove', @record)
+      # /add errors to calllback
 
   createFailed: ->
     @record.remove(clear: true)

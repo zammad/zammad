@@ -80,8 +80,8 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     post '/api/v1/users', {}, @headers
     assert_response(422)
     result = JSON.parse(@response.body)
-    assert(result['error'])
-    assert_equal('Feature not enabled!', result['error'])
+    assert(result['error_human'])
+    assert_equal('Feature not enabled!', result['error_human'])
 
     # already existing user with enabled feature
     Setting.set('user_create_account', true)
@@ -89,8 +89,8 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     post '/api/v1/users', params.to_json, @headers
     assert_response(422)
     result = JSON.parse(@response.body)
-    assert(result['error'])
-    assert_equal('User already exists!', result['error'])
+    assert(result['error_human'])
+    assert_equal('User already exists!', result['error_human'])
 
     # create user with enabled feature
     params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com' }
@@ -103,6 +103,30 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Me Last', result['lastname'])
     assert_equal('new_here@example.com', result['login'])
     assert_equal('new_here@example.com', result['email'])
+
+    # create user with admin role
+    role = Role.lookup(name: 'Admin')
+    params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert(result)
+    user = User.find(result['id'])
+    assert_not(user.role?('Admin'))
+    assert_not(user.role?('Agent'))
+    assert(user.role?('Customer'))
+
+    # create user with agent role
+    role = Role.lookup(name: 'Agent')
+    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert(result)
+    user = User.find(result['id'])
+    assert_not(user.role?('Admin'))
+    assert_not(user.role?('Agent'))
+    assert(user.role?('Customer'))
 
     # no user
     get '/api/v1/users', {}, @headers
@@ -156,7 +180,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert(result)
   end
 
-  test 'user index with admin' do
+  test 'user index and create with admin' do
 
     # email auth
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
@@ -190,9 +214,81 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result.class, Hash)
     assert_equal(result['email'], 'rest-customer1@example.com')
 
+    # create user with admin role
+    role = Role.lookup(name: 'Admin')
+    params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin_by_admin@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert(result)
+    user = User.find(result['id'])
+    assert(user.role?('Admin'))
+    assert_not(user.role?('Agent'))
+    assert_not(user.role?('Customer'))
+
+    # create user with agent role
+    role = Role.lookup(name: 'Agent')
+    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent_by_admin@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert(result)
+    user = User.find(result['id'])
+    assert_not(user.role?('Admin'))
+    assert(user.role?('Agent'))
+    assert_not(user.role?('Customer'))
+
   end
 
-  test 'user index with customer1' do
+  test 'user index and create with agent' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-agent@example.com', 'agentpw')
+
+    # index
+    get '/api/v1/users', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+
+    # index
+    get '/api/v1/users', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert_equal(result.class, Array)
+    assert(result.length >= 3)
+
+    # create user with admin role
+    role = Role.lookup(name: 'Admin')
+    params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert(result)
+
+    # create user with agent role
+    role = Role.lookup(name: 'Agent')
+    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert(result)
+
+    # create user with customer role
+    role = Role.lookup(name: 'Customer')
+    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert(result)
+    user = User.find(result['id'])
+    assert_not(user.role?('Admin'))
+    assert_not(user.role?('Agent'))
+    assert(user.role?('Customer'))
+
+  end
+
+  test 'user index and create with customer1' do
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-customer1@example.com', 'customer1pw')
 
@@ -215,6 +311,18 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
     assert(result.empty?)
+
+    # create user with admin role
+    role = Role.lookup(name: 'Admin')
+    params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin_by_customer1@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(401)
+
+    # create user with agent role
+    role = Role.lookup(name: 'Agent')
+    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent_by_customer1@example.com', role_ids: [ role.id ] }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(401)
 
   end
 

@@ -1,6 +1,7 @@
 class Observer::Ticket::OnlineNotificationSeen::BackgroundJob
-  def initialize(id)
-    @ticket_id = id
+  def initialize(ticket_id, user_id)
+    @ticket_id = ticket_id
+    @user_id = user_id || 1
   end
 
   def perform
@@ -14,6 +15,7 @@ class Observer::Ticket::OnlineNotificationSeen::BackgroundJob
         next if !seen
         next if seen == notification.seen
         notification.seen = true
+        notification.updated_by_id = @user_id
         notification.save
       }
     end

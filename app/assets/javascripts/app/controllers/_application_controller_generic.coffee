@@ -6,13 +6,13 @@ class App.ControllerGenericNew extends App.ControllerModal
 
   content: =>
     @head = @pageData.object
-    controller = new App.ControllerForm(
+    @controller = new App.ControllerForm(
       model:     App[ @genericObject ]
       params:    @item
       screen:    @screen || 'edit'
       autofocus: true
     )
-    controller.form
+    @controller.form
 
   onSubmit: (e) ->
     params = @formParam(e.target)
@@ -39,9 +39,10 @@ class App.ControllerGenericNew extends App.ControllerModal
           ui.callback(item)
         ui.close()
 
-      fail: ->
-        ui.log 'errors'
-        ui.close()
+      fail: (settings, details) ->
+        ui.log 'errors', details
+        ui.formEnable(e)
+        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
 class App.ControllerGenericEdit extends App.ControllerModal
@@ -54,13 +55,13 @@ class App.ControllerGenericEdit extends App.ControllerModal
     @item = App[ @genericObject ].find( @id )
     @head = @pageData.object
 
-    controller = new App.ControllerForm(
+    @controller = new App.ControllerForm(
       model:      App[ @genericObject ]
       params:     @item
       screen:     @screen || 'edit'
       autofocus:  true
     )
-    controller.form
+    @controller.form
 
   onSubmit: (e) ->
     params = @formParam(e.target)
@@ -85,9 +86,10 @@ class App.ControllerGenericEdit extends App.ControllerModal
           ui.callback(item)
         ui.close()
 
-      fail: ->
+      fail: (settings, details) ->
         ui.log 'errors'
-        ui.close()
+        ui.formEnable(e)
+        ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
 
 class App.ControllerGenericIndex extends App.Controller
@@ -351,25 +353,44 @@ class App.ControllerNavSidbar extends App.ControllerContent
 
     @params = params
 
-    # get groups
+    # get accessable groups
+    roles = App.Session.get('roles')
     groups = App.Config.get(@configKey)
     groupsUnsorted = []
-    for key, value of groups
-      if !value.controller
-        groupsUnsorted.push value
+    for key, item of groups
+      if !item.controller
+        if !item.role
+          groupsUnsorted.push item
+        else
+          match = _.include(item.role, 'Anybody')
+          if !match
+            for role in roles
+              if !match
+                match = _.include(item.role, role.name)
+          if match
+            groupsUnsorted.push item
 
-    @groupsSorted = _.sortBy( groupsUnsorted, (item) -> return item.prio )
+    @groupsSorted = _.sortBy(groupsUnsorted, (item) -> return item.prio)
 
     # get items of group
     for group in @groupsSorted
       items = App.Config.get(@configKey)
       itemsUnsorted = []
-      for key, value of items
-        if value.controller
-          if value.parent is group.target
-            itemsUnsorted.push value
+      for key, item of items
+        if item.parent is group.target
+          if item.controller
+            if !item.role
+              itemsUnsorted.push item
+            else
+              match = _.include(item.role, 'Anybody')
+              if !match
+                for role in roles
+                  if !match
+                    match = _.include(item.role, role.name)
+              if match
+                itemsUnsorted.push item
 
-      group.items = _.sortBy( itemsUnsorted, (item) -> return item.prio )
+      group.items = _.sortBy(itemsUnsorted, (item) -> return item.prio)
 
     # check last selected item
     selectedItem = undefined

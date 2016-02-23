@@ -6,10 +6,10 @@ module ApplicationModel::ActivityStreamBase
 log activity for this object
 
   article = Ticket::Article.find(123)
-  result = article.activity_stream_log( 'created', user_id )
+  result = article.activity_stream_log('create', user_id)
 
   # force log
-  result = article.activity_stream_log( 'created', user_id, true )
+  result = article.activity_stream_log('create', user_id, true)
 
 returns
 
@@ -17,7 +17,7 @@ returns
 
 =end
 
-  def activity_stream_log (type, user_id, force = false)
+  def activity_stream_log(type, user_id, force = false)
 
     # return if we run import mode
     return if Setting.get('import_mode')

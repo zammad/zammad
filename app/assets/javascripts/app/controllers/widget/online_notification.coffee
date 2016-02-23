@@ -11,7 +11,7 @@ class App.OnlineNotificationWidget extends App.Controller
     @bind 'OnlineNotification::changed', =>
       @delay(
         => @fetch()
-        1600
+        2600
         'online-notification-changed'
       )
 
@@ -38,12 +38,17 @@ class App.OnlineNotificationWidget extends App.Controller
 
     if @access()
       @createContainer()
-      @subscribeId = App.OnlineNotification.subscribe( @updateContent )
+      @subscribeId = App.OnlineNotification.subscribe(@updateContent)
+
+    @bind('ui:rerender', =>
+      @updateContent()
+      'popover'
+    )
 
   release: ->
     @removeContainer()
     $(window).off 'click.notifications'
-    App.OnlineNotification.unsubscribe( @subscribeId )
+    App.OnlineNotification.unsubscribe(@subscribeId)
 
   access: ->
     return false if !@Session.get()
@@ -105,12 +110,16 @@ class App.OnlineNotificationWidget extends App.Controller
   fetch: =>
     load = (items) =>
       @fetchedData = true
-      App.OnlineNotification.refresh( items, { clear: true } )
+      App.OnlineNotification.refresh(items, { clear: true })
       @updateContent()
     App.OnlineNotification.fetchFull(load)
 
   updateContent: =>
-    items = App.OnlineNotification.search( sortBy: 'created_at', order: 'DESC' )
+    if !@Session.get()
+      $('.js-notificationsContainer .popover-content').html('')
+      return
+
+    items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC')
     counter = 0
     for item in items
       if !item.seen
@@ -141,8 +150,11 @@ class App.OnlineNotificationWidget extends App.Controller
       if !@alreadyShown[item.id]
         @alreadyShown[item.id] = true
         if @fetchedData
-          word = "#{item.type}d"
-          title = "#{item.created_by.displayName()} #{App.i18n.translateInline(word)} #{App.i18n.translateInline(item.object_name)} \"#{item.title}\""
+          if item.objectNative && item.objectNative.activityMessage
+            title = item.objectNative.activityMessage(item)
+          else
+            title = "Need objectNative in item #{item.object}.find(#{item.o_id})"
+          title = title.replace(/<.+?>/g, '"')
           @notifyDesktop(
             url: item.link
             title: title
