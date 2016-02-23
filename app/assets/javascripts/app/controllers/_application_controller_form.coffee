@@ -9,6 +9,11 @@ class App.ControllerForm extends App.Controller
     @handlers.push @showHideToggle
     @handlers.push @requiredMandantoryToggle
 
+    if !@model
+      @model = {}
+    if !@attributes
+      @attributes = []
+
     # set empty class attributes if needed
     if !@form
       @form = @formGen()
@@ -16,14 +21,9 @@ class App.ControllerForm extends App.Controller
     # add alert placeholder
     @form.prepend('<div class="alert alert--danger js-alert hide" role="alert"></div>')
 
-    if !@model
-      @model = {}
-    if !@attributes
-      @attributes = []
-
     # if element is given, prepend form to it
     if @el
-      @el.prepend( @form )
+      @el.prepend(@form)
 
     # trigger change to rebuild shown/hidden item and update sub selections
     if typeof @form is 'object'
@@ -38,7 +38,7 @@ class App.ControllerForm extends App.Controller
     @form
 
   showAlert: (message) =>
-    @form.find('.alert').removeClass('hide').html( App.i18n.translateContent( message ) )
+    @form.find('.alert').removeClass('hide').html( App.i18n.translateContent(message) )
 
   hideAlert: =>
     @form.find('.alert').addClass('hide').html()
@@ -46,7 +46,7 @@ class App.ControllerForm extends App.Controller
   html: =>
     @form.html()
 
-  formGen: ->
+  formGen: =>
     App.Log.debug 'ControllerForm', 'formGen', @model.configure_attributes
 
     # check if own fieldset should be generated
@@ -55,12 +55,14 @@ class App.ControllerForm extends App.Controller
     else
       fieldset = $('<fieldset></fieldset>')
 
+    return fieldset if _.isEmpty(@model)
+
     # collect form attributes
     @attributes = []
     if @model.attributesGet
       attributesClean = @model.attributesGet(@screen)
     else
-      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes )
+      attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes)
 
     for attributeName, attribute of attributesClean
 
@@ -81,7 +83,7 @@ class App.ControllerForm extends App.Controller
       attribute_count = attribute_count + 1
 
       # add item
-      item = @formGenItem( attribute, className, fieldset, attribute_count )
+      item = @formGenItem(attribute, className, fieldset, attribute_count)
       item.appendTo(fieldset)
 
       # if password, add confirm password item
@@ -96,7 +98,7 @@ class App.ControllerForm extends App.Controller
         if !attribute.single
           attribute.display = attribute.display + ' (confirm)'
           attribute.name = attribute.name + '_confirm'
-          item = @formGenItem( attribute, className, fieldset, attribute_count )
+          item = @formGenItem(attribute, className, fieldset, attribute_count)
           item.appendTo(fieldset)
 
     if @fullForm
@@ -188,7 +190,7 @@ class App.ControllerForm extends App.Controller
 
   ###
 
-  formGenItem: (attribute_config, classname, form, attribute_count ) ->
+  formGenItem: (attribute_config, classname, form, attribute_count) ->
     attribute = clone( attribute_config, true )
 
     # create item id

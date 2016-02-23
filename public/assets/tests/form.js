@@ -1,5 +1,13 @@
 
 // form
+test( "form without @el", function() {
+  var form = new App.ControllerForm()
+
+  equal($(form.html()).is('div'), true)
+  equal($(form.html()).hasClass('alert'), true)
+  equal($(form.html()).hasClass('hide'), true)
+
+})
 test( "form elements check", function() {
 //    deepEqual( item, test.value, 'group set/get tests' );
   $('#forms').append('<hr><h1>form elements check</h1><form id="form1"></form>')
