@@ -146,4 +146,5 @@ License: MIT license
 word_filter.js
 Source: https://gist.github.com/sbrin/6801034
 Copyright (c) 20015, sbrin - https://github.com/sbrin
+License: MIT license
 -----------------------------------------------------------------------------
