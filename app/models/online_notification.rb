@@ -260,14 +260,14 @@ cleanup old online notifications
 with dedicated times
 
   max_age = Time.zone.now - 9.months
-  max_own_seen = Time.zone.now - 35.minutes
+  max_own_seen = Time.zone.now - 10.minutes
   max_auto_seen = Time.zone.now - 8.hours
 
   OnlineNotification.cleanup(max_age, max_own_seen, max_auto_seen)
 
 =end
 
-  def self.cleanup(max_age = Time.zone.now - 9.months, max_own_seen = Time.zone.now - 35.minutes, max_auto_seen = Time.zone.now - 8.hours)
+  def self.cleanup(max_age = Time.zone.now - 9.months, max_own_seen = Time.zone.now - 10.minutes, max_auto_seen = Time.zone.now - 8.hours)
     OnlineNotification.where('created_at < ?', max_age).delete_all
     OnlineNotification.where('seen = ? AND updated_at < ?', true, max_own_seen).each {|notification|
 
