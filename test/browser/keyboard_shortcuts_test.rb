@@ -128,6 +128,7 @@ class KeyboardShortcutsTest < TestCase
     shortcut(key: 'm')
     shortcut(key: 'j')
     window_keys(value: 'some note')
+    sleep 1
     shortcut(key: :enter)
     watch_for(
       css:     '.active.content .ticket-article',
@@ -138,6 +139,7 @@ class KeyboardShortcutsTest < TestCase
 
     shortcut(key: 'g')
     window_keys(value: 'some reply')
+    sleep 1
     shortcut(key: :enter)
     watch_for(
       css:     '.active.content .ticket-article',

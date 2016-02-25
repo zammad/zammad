@@ -292,11 +292,13 @@ class TestCase < Test::Unit::TestCase
     log('location_check', params)
 
     instance = params[:browser] || @browser
-    if instance.current_url !~ /#{Regexp.quote(params[:url])}/
+    sleep 0.7
+    current_url = instance.current_url
+    if current_url !~ /#{Regexp.quote(params[:url])}/
       screenshot(browser: instance, comment: 'location_check_failed')
-      fail "url #{instance.current_url} is not matching #{params[:url]}"
+      fail "url #{current_url} is not matching #{params[:url]}"
     end
-    assert(true, "url #{instance.current_url} is matching #{params[:url]}")
+    assert(true, "url #{current_url} is matching #{params[:url]}")
   end
 
 =begin
