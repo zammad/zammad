@@ -110,6 +110,7 @@
       //  altKey + ctrlKey + u -> Toggles the current selection between underlined and not underlined
       //  altKey + ctrlKey + b -> Toggles the current selection between bold and non-bold
       //  altKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
+      //  altKey + ctrlKey + v -> Toggles the current selection between strike and non-strike
       //  altKey + ctrlKey + f -> Removes the formatting tags from the current selection
       //  altKey + ctrlKey + z -> Inserts a Horizontal Rule
       //  altKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
@@ -124,7 +125,7 @@
         || e.keyCode == 90
         || e.keyCode == 76
         || e.keyCode == 75
-        || e.keyCode == 79
+        || e.keyCode == 86
         || e.keyCode == 87)) {
         e.preventDefault()
 
@@ -154,7 +155,7 @@
         if (e.keyCode == 75) {
           document.execCommand('InsertOrderedList')
         }
-        if (e.keyCode == 79) {
+        if (e.keyCode == 86) {
           document.execCommand('StrikeThrough')
         }
         if (e.keyCode == 87) {
