@@ -11,6 +11,8 @@ class Index extends App.ControllerModal
 
     return if !@authenticate()
 
+    @bind('keyboard_shortcuts_close', @close)
+
   content: ->
     App.view('keyboard_shortcuts')(
       areas: App.Config.get('keyboard_shortcuts')

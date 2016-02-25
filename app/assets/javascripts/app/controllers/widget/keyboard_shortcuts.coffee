@@ -73,6 +73,9 @@ App.Config.set(
               hotkeys: true
               description: 'List of shortcuts'
               callback: ->
+                if window.location.hash is '#keyboard_shortcuts'
+                  App.Event.trigger('keyboard_shortcuts_close')
+                  return
                 window.location.hash = '#keyboard_shortcuts'
             }
             {
