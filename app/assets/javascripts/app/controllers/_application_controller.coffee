@@ -458,6 +458,9 @@ class App.Controller extends Spine.Controller
     if @userTicketPopupsList
       @userTicketPopupsList.popover('destroy')
 
+  anyPopoversDestroy: ->
+    $('.popover').remove()
+
   recentView: (object, o_id) =>
     params =
       object: object

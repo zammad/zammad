@@ -272,7 +272,7 @@ class TestCase < Test::Unit::TestCase
     instance.get(params[:url])
 
     # check if reload was successfull
-    if !instance.find_elements({ css: 'body' })[0] || instance.find_elements({ css: 'body' })[0].text =~ /unavailable or too busy/i
+    if !instance.find_elements(css: 'body')[0] || instance.find_elements(css: 'body')[0].text =~ /unavailable or too busy/i
       instance.navigate.refresh
     end
     screenshot(browser: instance, comment: 'location')

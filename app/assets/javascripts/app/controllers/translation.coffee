@@ -85,7 +85,7 @@ class Index extends App.ControllerContent
   release: =>
     rerender = ->
       App.Event.trigger('ui:rerender')
-    if @translationList.changes()
+    if @translationList && @translationList.changes()
       App.Delay.set(rerender, 400)
 
   showAction: =>

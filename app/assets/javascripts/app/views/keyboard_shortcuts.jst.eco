@@ -1,0 +1,38 @@
+<div class="horizontal">
+  <div class="flex">
+<% for area in @areas: %>
+  <% if area.location is 'left': %>
+    <h2><%- @T(area.headline) %></h2>
+    <% for item in area.content: %>
+      <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
+      <% for shortcut in item.shortcuts: %>
+        <% if shortcut.hotkeys: %><kbd>ctrl</kbd> <kbd>alt</kbd> <% end %>
+          <% if _.isArray(shortcut.key): %><% for key in shortcut.key: %> <kbd><%- key %></kbd><% end %>
+        <% else: %>
+          <kbd><%- shortcut.key %></kbd>
+        <% end %>
+        <%- @T(shortcut.description) %><br>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+  </div>
+  <div class="flex">
+<% for area in @areas: %>
+  <% if area.location is 'right': %>
+    <h2><%- @T(area.headline) %></h2>
+    <% for item in area.content: %>
+      <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
+      <% for shortcut in item.shortcuts: %>
+        <% if shortcut.hotkeys: %><kbd>ctrl</kbd> <kbd>alt</kbd> <% end %>
+          <% if _.isArray(shortcut.key): %><% for key in shortcut.key: %> <kbd><%- key %></kbd><% end %>
+        <% else: %>
+          <kbd><%- shortcut.key %></kbd>
+        <% end %>
+        <%- @T(shortcut.description) %><br>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+  </div>
+</div>

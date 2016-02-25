@@ -289,6 +289,9 @@ test( "i18n", function() {
   translated = App.i18n.translateContent('§%s§ %s test', 123, 'xxx');
   equal( translated, '<kbd>123</kbd> xxx test', 'de-de - §%s§ %s' );
 
+  translated = App.i18n.translateContent('//%s// %s test', 123, 'xxx');
+  equal( translated, '<del>123</del> xxx test', 'de-de - //%s// %s' );
+
   translated = App.i18n.translateContent('\'%s\' %s test', 123, 'xxx');
   equal( translated, '&#39;123&#39; xxx test', 'de-de - \'%s\' %s' );
 
@@ -331,6 +334,9 @@ test( "i18n", function() {
 
   translated = App.i18n.translateContent('§%s§ %s test', 123, 'xxx');
   equal( translated, '<kbd>123</kbd> xxx test', 'en-us - §%s§ %s' );
+
+  translated = App.i18n.translateContent('//%s// %s test', 123, 'xxx');
+  equal( translated, '<del>123</del> xxx test', 'en-us - //%s// %s' );
 
   translated = App.i18n.translateContent('\'%s\' %s test', 123, 'xxx');
   equal( translated, '&#39;123&#39; xxx test', 'en-us - \'%s\' %s' );

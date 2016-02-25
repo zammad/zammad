@@ -1,4 +1,5 @@
 class Index extends App.ControllerNavSidbar
+  authenticateRequired: true
   configKey: 'NavBarProfile'
 
 App.Config.set( 'profile', Index, 'Routes' )

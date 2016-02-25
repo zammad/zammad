@@ -128,6 +128,11 @@ Source: https://jqueryui.com
 Copyright: 2014 jQuery Foundation
 License: MIT license
 -----------------------------------------------------------------------------
+jquery.hotkeys.js
+Source: https://github.com/jeresig/jquery.hotkeys
+Copyright 2010, John Resig
+License: Dual licensed under the MIT or GPL Version 2 licenses.
+-----------------------------------------------------------------------------
 underscore.js
 Source: http://underscorejs.org
 Copyright: 2009-2015 Jeremy Ashkenas, DocumentCloud

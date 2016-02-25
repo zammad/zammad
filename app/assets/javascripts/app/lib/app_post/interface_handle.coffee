@@ -6,8 +6,7 @@ class App.Run extends App.Controller
     App.Event.trigger('app:init')
 
     # browser check
-    if !App.Browser.check()
-      return
+    return if !App.Browser.check()
 
     # hide splash screen
     $('.splash').hide()

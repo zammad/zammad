@@ -17,4 +17,4 @@ class Widget
 """
     console.log(banner)
 
-App.Config.set( 'dev_banner', Widget, 'Widgets' )
+App.Config.set('dev_banner', Widget, 'Widgets')

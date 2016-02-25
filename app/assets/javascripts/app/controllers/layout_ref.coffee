@@ -2223,4 +2223,4 @@ class ChatToTicketRef extends App.ControllerContent
 App.Config.set( 'layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes' )
 
 
-App.Config.set( 'LayoutRef', { prio: 1700, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
+App.Config.set( 'LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
