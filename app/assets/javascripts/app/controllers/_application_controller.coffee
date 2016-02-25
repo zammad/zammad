@@ -205,7 +205,7 @@ class App.Controller extends Spine.Controller
     # remember requested url
     if !checkOnly
       location = window.location.hash
-      if location isnt '#login' && location isnt '#logout'
+      if location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
         @Config.set( 'requested_url', location)
 
     return false if checkOnly
@@ -612,6 +612,7 @@ class App.ControllerContent extends App.Controller
     @navShow()
 
 class App.ControllerModal extends App.Controller
+  authenticateRequired: false
   backdrop: true
   keyboard: true
   large: false
@@ -637,6 +638,9 @@ class App.ControllerModal extends App.Controller
 
   constructor: ->
     super
+
+    if @authenticateRequired
+      return if !@authenticate()
 
     # rerender view, e. g. on langauge change
     @bind('ui:rerender', =>

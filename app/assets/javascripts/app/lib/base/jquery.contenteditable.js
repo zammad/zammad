@@ -127,6 +127,12 @@
         || e.keyCode == 79
         || e.keyCode == 87)) {
         e.preventDefault()
+
+        // disable rich text b/u/i
+        if ( _this.options.mode === 'textonly' ) {
+          return
+        }
+
         if (e.keyCode == 66) {
           document.execCommand('Bold')
         }
@@ -234,15 +240,6 @@
       document.execCommand('insertHTML', false, text)
       return true
     })
-
-    // disable rich text b/u/i
-    if ( this.options.mode === 'textonly' ) {
-      this.$element.on('keydown', function (e) {
-        if ( _this.richTextKey(e) ) {
-          e.preventDefault()
-        }
-      })
-    }
   }
 
   // check if key is allowed, even if length limit is reached

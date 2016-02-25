@@ -1,3 +1,24 @@
+class App.KeyboardShortcutModal extends App.ControllerModal
+  authenticateRequired: true
+  large: true
+  head: 'Keyboard Shortcuts'
+  buttonClose: true
+  buttonCancel: false
+  buttonSubmit: false
+
+  constructor: ->
+    super
+    @bind('keyboard_shortcuts_close', @close)
+
+  content: ->
+    App.view('keyboard_shortcuts')(
+      areas: App.Config.get('keyboard_shortcuts')
+    )
+
+  exists: =>
+    return true if @el.parents('html').length > 0
+    false
+
 class App.KeyboardShortcutWidget extends Spine.Module
   @include App.LogInclude
 
@@ -5,7 +26,6 @@ class App.KeyboardShortcutWidget extends Spine.Module
     @observerKeys()
 
   observerKeys: =>
-    #jQuery.hotkeys.options.filterInputAcceptingElements = false
     navigationHotkeys = 'alt+ctrl'
     areas = App.Config.get('keyboard_shortcuts')
     for area in areas
@@ -37,59 +57,75 @@ App.Config.set(
               key: 'd'
               hotkeys: true
               description: 'Dashboard'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#dashboard'
             }
             {
               key: 'o'
               hotkeys: true
               description: 'Overviews'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/view'
             }
             {
               key: 's'
               hotkeys: true
               description: 'Search'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 $('#global-search').focus()
             }
             {
               key: 'n'
               hotkeys: true
               description: 'New Ticket'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/create'
             }
             {
               key: 'e'
               hotkeys: true
               description: 'Logout'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#logout'
             }
             {
               key: 'h'
               hotkeys: true
               description: 'List of shortcuts'
-              callback: ->
-                if window.location.hash is '#keyboard_shortcuts'
-                  App.Event.trigger('keyboard_shortcuts_close')
+              callback: (e) =>
+                e.preventDefault()
+                if @dialog && @dialog.exists()
+                  @dialog.close()
+                  @dialog = false
                   return
-                window.location.hash = '#keyboard_shortcuts'
+                @dialog = new App.KeyboardShortcutModal()
             }
             {
               key: 'x'
               hotkeys: true
               description: 'Close current tab'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 $('#navigation .tasks .is-active .js-close').click()
             }
             {
               key: 'tab'
               hotkeys: true
               description: 'Next in tab'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 if $('#navigation .tasks .is-active').get(0)
                   if $('#navigation .tasks .is-active').next().get(0)
                     $('#navigation .tasks .is-active').next().find('div').first().click()
@@ -100,7 +136,9 @@ App.Config.set(
               key: 'shift+tab'
               hotkeys: true
               description: 'Previous tab'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 if $('#navigation .tasks .is-active').get(0)
                   if $('#navigation .tasks .is-active').prev().get(0)
                     $('#navigation .tasks .is-active').prev().find('div').first().click()
@@ -111,7 +149,9 @@ App.Config.set(
               key: 'return'
               hotkeys: true
               description: 'Confirm/submit dialog'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
 
                 # check of primary modal exists
                 dialog = $('body > div.modal')
@@ -185,14 +225,19 @@ App.Config.set(
               key: 'm'
               hotkeys: true
               description: 'Open note box'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
+                $('.active.content .editControls .js-articleTypes [data-value="note"]').click()
                 $('.active.content .article-new .articleNewEdit-body').first().focus()
             }
             {
-              key: 'r'
+              key: 'g'
               hotkeys: true
               description: 'Reply to last article'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 lastArticleWithReply = $('.active.content .ticket-article .icon-reply').last()
                 lastArticleWithReplyAll = lastArticleWithReply.parent().find('.icon-reply-all')
                 if lastArticleWithReplyAll.get(0)
@@ -200,18 +245,30 @@ App.Config.set(
                   return
                 lastArticleWithReply.click()
             }
+            {
+              key: 'j'
+              hotkeys: true
+              description: 'Set article to internal/public'
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
+                $('.active.content .editControls .js-selectInternalPublic').click()
+            }
             #{
             #  key: 'm'
             #  hotkeys: true
             #  description: 'Open macro selection'
-            #  callback: ->
+            #  callback: (e) ->
+            #    e.preventDefault()
             #    window.location.hash = '#ticket/create'
             #}
             {
               key: 'c'
               hotkeys: true
               description: 'Update as closed'
-              callback: ->
+              callback: (e) ->
+                e.preventDefault()
+                App.Event.trigger('keyboard_shortcuts_close')
                 return if !$('.active.content .edit').get(0)
                 $('.active.content .edit [name="state_id"]').val(4)
                 $('.active.content .js-attributeBar .js-submit').first().click()

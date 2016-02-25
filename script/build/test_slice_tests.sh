@@ -9,6 +9,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_ticket_*.rb
   rm test/browser/chat_test.rb
+  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
 
@@ -25,6 +26,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/chat_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/form_test.rb
+  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_*.rb
   rm test/browser/manage_test.rb
   rm test/browser/prefereces_test.rb

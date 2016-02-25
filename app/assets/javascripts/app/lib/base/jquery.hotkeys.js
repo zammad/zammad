@@ -121,9 +121,12 @@
     textInputTypes: /textarea|input|select/i,
 
     options: {
-      filterInputAcceptingElements: true,
-      filterTextInputs: true,
-      filterContentEditable: true
+      //filterInputAcceptingElements: true,
+      //filterTextInputs: true,
+      //filterContentEditable: true
+      filterInputAcceptingElements: false,
+      filterTextInputs: false,
+      filterContentEditable: false
     }
   };
 

@@ -21,7 +21,7 @@
         <% end %>
       </div>
     </div>
-    <div class="editControls-item is-hidden js-toggleVisibility">
+    <div class="editControls-item is-hidden js-toggleVisibility js-selectInternalPublic">
       <div class="editControls-iconHolder">
         <div class="editControls-icon icon-internal" title="<%- @Ti("set to public") %>">
           <%- @Icon('lock') %>
