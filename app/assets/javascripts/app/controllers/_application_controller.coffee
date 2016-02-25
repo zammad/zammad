@@ -202,7 +202,13 @@ class App.Controller extends Spine.Controller
       callback: data.callback
     )
 
-  authenticate: (checkOnly = false) ->
+  authenticate: (checkOnly = false, role) ->
+
+    # role check
+    if role && !@isRole(role)
+      return false if checkOnly
+      @navigate '#login'
+      return false
 
     # return true if session exists
     return true if @Session.get()

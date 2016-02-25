@@ -8,7 +8,7 @@ class Index extends App.ControllerContent
     super
 
     # check authentication
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
 
     @title 'Translations', true
     @locale = App.i18n.get()

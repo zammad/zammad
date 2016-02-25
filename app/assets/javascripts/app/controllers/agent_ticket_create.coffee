@@ -11,7 +11,7 @@ class App.TicketCreate extends App.Controller
     super
 
     # check authentication
-    if !@authenticate()
+    if !@authenticate(false, 'Agent')
       App.TaskManager.remove(@task_key)
       return
 

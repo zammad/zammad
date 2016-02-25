@@ -4,7 +4,7 @@ class Index extends App.ControllerContent
   constructor: ->
     super
 
-    if @authenticate(true)
+    if @authenticate(true, 'Admin')
       @navigate '#'
       return
 
@@ -68,7 +68,7 @@ class AutoWizard extends App.ControllerContent
     super
 
     # if already logged in, got to #
-    if @authenticate(true)
+    if @authenticate(true, 'Admin')
       @navigate '#'
       return
 
@@ -138,7 +138,7 @@ class Admin extends App.ControllerContent
   constructor: ->
     super
 
-    if @authenticate(true)
+    if @authenticate(true, 'Admin')
       @navigate '#'
       return
 
@@ -260,7 +260,7 @@ class Base extends App.Wizard
     super
 
     # redirect if we are not admin
-    if !@authenticate(true)
+    if !@authenticate(true, 'Admin')
       @navigate '#'
       return
 
@@ -394,7 +394,7 @@ class EmailNotification extends App.Wizard
     super
 
     # redirect if we are not admin
-    if !@authenticate(true)
+    if !@authenticate(true, 'Admin')
       @navigate '#'
       return
 
@@ -512,7 +512,7 @@ class Channel extends App.ControllerContent
     super
 
     # redirect if we are not admin
-    if !@authenticate(true)
+    if !@authenticate(true, 'Admin')
       @navigate '#'
       return
 
@@ -565,7 +565,7 @@ class ChannelEmailPreConfigured extends App.ControllerContent
     super
 
     # redirect if we are not admin
-    if !@authenticate(true)
+    if !@authenticate(true, 'Admin')
       @navigate '#'
       return
 
@@ -616,7 +616,7 @@ class ChannelEmail extends App.Wizard
     super
 
     # redirect if we are not admin
-    if !@authenticate(true)
+    if !@authenticate(true, 'Admin')
       @navigate '#'
       return
 

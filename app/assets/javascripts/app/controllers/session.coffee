@@ -6,7 +6,7 @@ class Index extends App.ControllerContent
     super
 
     # check authentication
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
 
     @title 'Sessions', true
 

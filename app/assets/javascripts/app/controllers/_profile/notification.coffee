@@ -45,7 +45,7 @@ class Index extends App.Controller
 
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Agent')
     @title 'Notifications', true
     @render()
 

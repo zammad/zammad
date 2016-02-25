@@ -316,7 +316,7 @@ class CustomerChatRouter extends App.ControllerPermanent
     super
 
     # check authentication
-    return if !@authenticate()
+    return if !@authenticate(false, 'Chat')
 
     App.TaskManager.execute(
       key:        'CustomerChat'
