@@ -555,8 +555,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       agent_user1.id,
       created_by_id: agent_user1.id,
       updated_by_id: agent_user1.id,
-      created_at:    Time.zone.now - 10.minutes,
-      updated_at:    Time.zone.now - 10.minutes,
+      created_at:    Time.zone.now - 5.minutes,
+      updated_at:    Time.zone.now - 5.minutes,
     )
     online_notification7 = OnlineNotification.add(
       type:          'create',
@@ -566,8 +566,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       user_id:       agent_user1.id,
       created_by_id: agent_user2.id,
       updated_by_id: agent_user2.id,
-      created_at:    Time.zone.now - 10.minutes,
-      updated_at:    Time.zone.now - 10.minutes,
+      created_at:    Time.zone.now - 5.minutes,
+      updated_at:    Time.zone.now - 5.minutes,
     )
 
     OnlineNotification.cleanup

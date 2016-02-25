@@ -351,6 +351,9 @@ class App.ControllerNavSidbar extends App.ControllerContent
   constructor: (params) ->
     super
 
+    if @authenticateRequired
+      return if !@authenticate()
+
     @params = params
 
     # get accessable groups

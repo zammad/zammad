@@ -59,6 +59,10 @@ var originalShow = $.fn.popover.Constructor.prototype.show;
 $.fn.popover.Constructor.prototype.show = function(){
   originalShow.call(this);
 
+  // improved error handling - no exeption if no $tip exists
+  if (!this.$tip) {
+    return
+  }
   var maxHeight = $(this.options.viewport.selector).height() - 2 * this.options.viewport.padding;
   this.$tip.find('.popover-body').css('maxHeight', maxHeight);
 }

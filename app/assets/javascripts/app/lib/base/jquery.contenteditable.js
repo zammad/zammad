@@ -51,7 +51,6 @@
 
     this._defaults = defaults;
     this._name     = pluginName;
-    this._setTimeOutReformat = false;
 
     // take placeholder from markup
     if ( !this.options.placeholder && this.$element.data('placeholder') ) {
@@ -66,6 +65,19 @@
 
   Plugin.prototype.init = function () {
     var _this = this
+
+    this.toggleBlock = function(tag) {
+      sel = window.getSelection()
+      node = $(sel.anchorNode)
+      console.log('toggleBlock', tag, node.parent(), node.is())
+      if (node.is(tag) || node.parent().is(tag) || node.parent().parent().is(tag)) {
+        document.execCommand('formatBlock', false, 'div')
+        //document.execCommand('RemoveFormat')
+      }
+      else {
+        document.execCommand('formatBlock', false, tag)
+      }
+    }
 
     // handle enter
     this.$element.on('keydown', function (e) {
@@ -94,24 +106,33 @@
         }
       }
 
-      // on zammad metaKey + ctrlKey + i/b/u
-      //  metaKey + ctrlKey + u -> Toggles the current selection between underlined and not underlined
-      //  metaKey + ctrlKey + b -> Toggles the current selection between bold and non-bold
-      //  metaKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
-      //  metaKey + ctrlKey + r -> Removes the formatting tags from the current selection
-      //  metaKey + ctrlKey + h -> Inserts a Horizontal Rule
-      //  metaKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
-      //  metaKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
-      //  metaKey + ctrlKey + o -> Draws a line through the middle of the current selection
-      //  metaKey + ctrlKey + w -> Removes any hyperlink from the current selection
-      if ( !e.altKey && e.ctrlKey && e.metaKey && (_this.options.richTextFormatKey[ e.keyCode ]
-        || e.keyCode == 82
-        || e.keyCode == 72
+      // on zammad altKey + ctrlKey + i/b/u
+      //  altKey + ctrlKey + u -> Toggles the current selection between underlined and not underlined
+      //  altKey + ctrlKey + b -> Toggles the current selection between bold and non-bold
+      //  altKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
+      //  altKey + ctrlKey + f -> Removes the formatting tags from the current selection
+      //  altKey + ctrlKey + z -> Inserts a Horizontal Rule
+      //  altKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
+      //  altKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
+      //  altKey + ctrlKey + o -> Draws a line through the middle of the current selection
+      //  altKey + ctrlKey + w -> Removes any hyperlink from the current selection
+      if ( e.altKey && e.ctrlKey && !e.metaKey && (_this.options.richTextFormatKey[ e.keyCode ]
+        || e.keyCode == 49
+        || e.keyCode == 50
+        || e.keyCode == 51
+        || e.keyCode == 70
+        || e.keyCode == 90
         || e.keyCode == 76
         || e.keyCode == 75
         || e.keyCode == 79
         || e.keyCode == 87)) {
         e.preventDefault()
+
+        // disable rich text b/u/i
+        if ( _this.options.mode === 'textonly' ) {
+          return
+        }
+
         if (e.keyCode == 66) {
           document.execCommand('Bold')
         }
@@ -121,10 +142,10 @@
         if (e.keyCode == 85) {
           document.execCommand('Underline')
         }
-        if (e.keyCode == 82) {
+        if (e.keyCode == 70) {
           document.execCommand('RemoveFormat')
         }
-        if (e.keyCode == 72) {
+        if (e.keyCode == 90) {
           document.execCommand('insertHorizontalRule')
         }
         if (e.keyCode == 76) {
@@ -138,6 +159,15 @@
         }
         if (e.keyCode == 87) {
           document.execCommand('Unlink')
+        }
+        if (e.keyCode == 49) {
+          _this.toggleBlock('h1')
+        }
+        if (e.keyCode == 50) {
+          _this.toggleBlock('h2')
+        }
+        if (e.keyCode == 51) {
+          _this.toggleBlock('h3')
         }
         _this.log('content editable richtext key', e.keyCode)
         return true
@@ -210,15 +240,6 @@
       document.execCommand('insertHTML', false, text)
       return true
     })
-
-    // disable rich text b/u/i
-    if ( this.options.mode === 'textonly' ) {
-      this.$element.on('keydown', function (e) {
-        if ( _this.richTextKey(e) ) {
-          e.preventDefault()
-        }
-      })
-    }
   }
 
   // check if key is allowed, even if length limit is reached

@@ -68,7 +68,8 @@ class App.TicketZoomArticleActions extends App.Controller
       ]
     #if @article.type.name is 'note'
     #     actions.push []
-    if article.type.name is 'email' || article.type.name is 'phone' || article.type.name is 'web'
+    group = @ticket.group
+    if group.email_address_id && (article.type.name is 'email' || article.type.name is 'phone' || article.type.name is 'web')
       actions.push {
         name: 'reply'
         type: 'emailReply'

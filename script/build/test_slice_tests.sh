@@ -9,6 +9,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_ticket_*.rb
   rm test/browser/chat_test.rb
+  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
 
@@ -18,12 +19,14 @@ elif [ "$LEVEL" == '2' ]; then
   # only ticket action
   rm test/browser/aab_unit_test.rb
   rm test/browser/aac_basic_richtext_test.rb
+  rm test/browser/aab_basic_urls_test.rb
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_user_*.rb
   rm test/browser/auth_test.rb
   rm test/browser/chat_test.rb
   rm test/browser/customer_ticket_create_test.rb
   rm test/browser/form_test.rb
+  rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_*.rb
   rm test/browser/manage_test.rb
   rm test/browser/prefereces_test.rb
@@ -40,6 +43,7 @@ elif [ "$LEVEL" == '3' ]; then
   # only profile action
   rm test/browser/aab_unit_test.rb
   rm test/browser/aac_basic_richtext_test.rb
+  rm test/browser/aab_basic_urls_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_ticket_*.rb
   rm test/browser/auth_test.rb

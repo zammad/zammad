@@ -138,7 +138,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     el = @$('#global-search-result')
 
     # remove result if not result exists
-    if _.isEmpty( result )
+    if _.isEmpty(result)
       @$('.search').removeClass('open')
       el.html('')
       return
@@ -179,11 +179,103 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # renderPersonal
     @renderPersonal()
 
-    searchFunction = =>
+    # observer search box
+    @$('#global-search').bind('focusout', (e) =>
+      # delay to be able to click x
+      update = =>
+        @$('.search').removeClass('focused')
+      @delay(update, 100, 'removeFocused')
+    )
+    @$('#global-search').bind('focusin', (e) =>
+      @query = '' # reset query cache
+      @$('.search').addClass('focused')
+      @anyPopoversDestroy()
+      @searchFunction(0)
+    )
+    @$('form.search').on('submit', (e) ->
+      e.preventDefault()
+    )
+    @$('#global-search').on('keydown', @listNavigate)
+
+    # bind to empty search
+    @$('.empty-search').on('click', =>
+      @emptyAndClose()
+    )
+
+    new App.OnlineNotificationWidget(
+      el: @el
+    )
+
+  listNavigate: (e) =>
+    if e.keyCode is 27 # close on esc
+      @emptyAndClose()
+      return
+    else if e.keyCode is 38 # up
+      @nudge(e, -1)
+      return
+    else if e.keyCode is 40 # down
+      @nudge(e, 1)
+      return
+    else if e.keyCode is 13 # enter
+      href = @$('#global-search-result .nav-tab.is-hover').attr('href')
+      @locationExecute(href)
+      @emptyAndClose()
+      return
+
+    # on other keys, show result
+    @searchFunction(200)
+
+  nudge: (e, position) =>
+
+    # get current
+    navigationResult = @$('#global-search-result')
+    current = navigationResult.find('.nav-tab.is-hover')
+    if !current.get(0)
+      navigationResult.find('.nav-tab').first().addClass('is-hover')
+      return
+
+    if position is 1
+      next = current.closest('li').nextAll('li').not('.divider').first().find('.nav-tab')
+      if next.get(0)
+        current.removeClass('is-hover').popover('hide')
+        next.addClass('is-hover').popover('show')
+    else
+      prev = current.closest('li').prevAll('li').not('.divider').first().find('.nav-tab')
+      if prev.get(0)
+        current.removeClass('is-hover').popover('hide')
+        prev.addClass('is-hover').popover('show')
+
+    if next
+      @scrollToIfNeeded(next, true)
+    if prev
+      @scrollToIfNeeded(prev, false)
+
+  emptyAndClose: =>
+    @$('#global-search').val('').blur()
+    @$('.search').removeClass('filled').removeClass('open')
+
+    # remove not needed popovers
+    @delay(@anyPopoversDestroy, 100, 'removePopovers')
+
+  andClose: =>
+    @$('#global-search').blur()
+    @$('.search').removeClass('open')
+    @delay(@anyPopoversDestroy, 100, 'removePopovers')
+
+  searchFunction: (delay) =>
+
+    search = =>
+      query = @$('#global-search').val().trim()
+      return if !query
+      return if query is @query
+      @query = query
+      @$('.search').toggleClass('filled', !!@query)
 
       # use cache for search result
       if @searchResultCache[@query]
-        @renderResult( @searchResultCache[@query] )
+        @renderResult(@searchResultCache[@query].result)
+        currentTime = new Date
+        return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
 
       App.Ajax.request(
         id:    'search'
@@ -193,13 +285,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
           query: @query
         processData: true,
         success: (data, status, xhr) =>
-
-          # load assets
-          App.Collection.loadAssets( data.assets )
-
-          # cache search result
-          @searchResultCache[@query] = data.result
-
+          App.Collection.loadAssets(data.assets)
           result = {}
           for item in data.result
             if App[item.type] && App[item.type].find
@@ -214,84 +300,26 @@ class App.Navigation extends App.ControllerWidgetPermanent
             else
               @log 'error', "No such model App.#{item.type}"
 
+          diff = false
+          if @searchResultCache[@query]
+            diff = difference(@searchResultCache[@query].resultRaw, data.result)
+
+          # cache search result
+          @searchResultCache[@query] =
+            result: result
+            resultRaw: data.result
+            time: new Date
+
+          # if result hasn't changed, do not rerender
+          return if diff isnt false && _.isEmpty(diff)
+
           @renderResult(result)
 
-          @$('#global-search-result').on('click', 'a', ->
-            close()
+          @$('#global-search-result').on('click', 'a', =>
+            @andClose()
           )
       )
-
-    removePopovers = ->
-      $('.popover').remove()
-
-    close = =>
-      @$('#global-search').blur()
-      @$('.search').removeClass('open')
-
-      # remove not needed popovers
-      @delay( removePopovers, 280, 'removePopovers' )
-
-    emptyAndClose = =>
-      @$('#global-search').val('').blur()
-      @$('.search').removeClass('filled').removeClass('open')
-
-      # remove not needed popovers
-      @delay( removePopovers, 280, 'removePopovers' )
-
-    # observer search box
-    @$('#global-search').bind( 'focusout', (e) =>
-      # delay to be able to click x
-      update = =>
-        @$('.search').removeClass('focused')
-      @delay( update, 180, 'removeFocused' )
-    )
-
-    @$('#global-search').bind( 'focusin', (e) =>
-
-      @$('.search').addClass('focused')
-
-      # remove not needed popovers
-      removePopovers()
-
-      # check if search is needed
-      query = @$('#global-search').val().trim()
-      return if !query
-      @query = query
-      @delay( searchFunction, 220, 'search' )
-    )
-
-    # prevent submit of search box
-    @$('form.search').on( 'submit', (e) ->
-      e.preventDefault()
-    )
-
-    # start search
-    @$('#global-search').on( 'keyup', (e) =>
-
-      # close on esc
-      if e.which == 27
-        emptyAndClose()
-        return
-
-      # on other keys, show result
-      query = @$('#global-search').val().trim()
-      return if !query
-      return if query is @query
-      @query = query
-      @$('.search').toggleClass('filled', !!@query)
-      @delay( searchFunction, 200, 'search' )
-    )
-
-    # bind to empty search
-    @$('.empty-search').on(
-      'click'
-      ->
-        emptyAndClose()
-    )
-
-    new App.OnlineNotificationWidget(
-      el: @el
-    )
+    @delay(search, 200, 'search')
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)

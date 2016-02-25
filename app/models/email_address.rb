@@ -8,6 +8,8 @@ class EmailAddress < ApplicationModel
 
   before_create   :check_if_channel_exists_set_inactive
   before_update   :check_if_channel_exists_set_inactive
+  after_create    :update_email_address_id
+  after_update    :update_email_address_id
   after_destroy   :delete_group_reference
 
   latest_change_support
@@ -60,4 +62,17 @@ check and if channel not exists reset configured channels for email addresses
       group.email_address_id = nil
     }
   end
+
+  # keep email email address is of inital group filled
+  def update_email_address_id
+    not_configured = Group.where(email_address_id: nil).count
+    total = Group.count
+    return if not_configured == 0
+    return if total != 1
+    group = Group.find_by(email_address_id: nil)
+    group.email_address_id = id
+    group.updated_by_id = updated_by_id
+    group.save
+  end
+
 end

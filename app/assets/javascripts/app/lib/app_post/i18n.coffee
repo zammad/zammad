@@ -224,6 +224,7 @@ class _i18nSingleton extends Spine.Module
         .replace(/\|\|(.+?)\|\|/gm, '<i>$1</i>')
         .replace(/\|(.+?)\|/gm, '<b>$1</b>')
         .replace(/_(.+?)_/gm, '<u>$1</u>')
+        .replace(/\/\/(.+?)\/\//gm, '<del>$1</del>')
         .replace(/§(.+?)§/gm, '<kbd>$1</kbd>')
 
     # search %s

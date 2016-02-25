@@ -1,4 +1,5 @@
 class IndexRouter extends App.ControllerNavSidbar
+  authenticateRequired: true
   configKey: 'NavBarAdmin'
 
 App.Config.set('manage', IndexRouter, 'Routes')

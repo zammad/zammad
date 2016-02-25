@@ -133,6 +133,9 @@ class App.TicketZoomArticleNew extends App.Controller
 
       # preselect article type
       @setArticleType(data.type.name)
+
+      # set focus into field
+      @textarea.focus()
     )
 
     # reset new article screen
