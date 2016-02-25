@@ -6,7 +6,6 @@ class App.DashboardFirstSteps extends App.Controller
 
   constructor: ->
     super
-
     @load()
 
   load: =>
@@ -23,15 +22,14 @@ class App.DashboardFirstSteps extends App.Controller
       data: data
     )
 
-  scrollIntoView: (e) ->
+  scrollIntoView: (e) =>
     href = $(e.currentTarget).attr('href')
     return if !href
     return if href is '#'
-    delay = ->
-      element = $("[href='#{href}']").get(0)
-      return if !element
-      element.scrollIntoView()
-    @delay(delay, 20)
+    delay = =>
+      element = $("[href='#{href}']")
+      @scrollToIfNeeded(element)
+    @delay(delay, 40)
 
   inviteAgent: (e) =>
     e.preventDefault()
@@ -50,4 +48,3 @@ class App.DashboardFirstSteps extends App.Controller
       screen: 'invite_customer'
       role: 'Customer'
     )
-

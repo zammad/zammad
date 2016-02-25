@@ -134,6 +134,11 @@ class App.Controller extends Spine.Controller
 
     @delay(a, delay)
 
+  scrollToIfNeeded: (element, position = true) ->
+    return if !element
+    return if !element.get(0)
+    element.get(0).scrollIntoView(position)
+
   shake: (element) ->
 
     # this part is from wordpress 3, thanks to open source

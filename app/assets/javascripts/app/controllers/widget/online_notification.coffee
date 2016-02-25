@@ -92,12 +92,9 @@ class App.OnlineNotificationWidget extends App.Controller
         prev.addClass('is-hover')
 
     if next
-      element = next.get(0)
+      @scrollToIfNeeded(next, false)
     if prev
-      element = prev.get(0)
-    return if !element
-    return if $(element).visible(true)
-    element.scrollIntoView()
+      @scrollToIfNeeded(prev, true)
 
   counterUpdate: (count) =>
     if !count

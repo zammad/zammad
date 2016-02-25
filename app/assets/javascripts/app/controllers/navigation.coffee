@@ -246,12 +246,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
         prev.addClass('is-hover').popover('show')
 
     if next
-      element = next.get(0)
+      @scrollToIfNeeded(next, true)
     if prev
-      element = prev.get(0)
-    return if !element
-    return if $(element).visible(true)
-    element.scrollIntoView()
+      @scrollToIfNeeded(prev, false)
 
   emptyAndClose: =>
     @$('#global-search').val('').blur()

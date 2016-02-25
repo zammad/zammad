@@ -139,11 +139,21 @@ App.Config.set(
               callback: (e) ->
                 e.preventDefault()
                 App.Event.trigger('keyboard_shortcuts_close')
-                if $('#navigation .tasks .is-active').get(0)
-                  if $('#navigation .tasks .is-active').next().get(0)
-                    $('#navigation .tasks .is-active').next().find('div').first().click()
+                scollIfNeeded = (element) ->
+                  return if !element
+                  return if !element.get(0)
+                  element.get(0).scrollIntoView(false)
+                current = $('#navigation .tasks .is-active')
+                if current.get(0)
+                  next = current.next()
+                  if next.get(0)
+                    next.find('div').first().click()
+                    scollIfNeeded(next)
                     return
-                $('#navigation .tasks .task').first().find('div').first().click()
+                prev = $('#navigation .tasks .task').first()
+                if prev.get(0)
+                  prev.find('div').first().click()
+                  scollIfNeeded(prev)
             }
             {
               key: 'shift+tab'
@@ -152,11 +162,21 @@ App.Config.set(
               callback: (e) ->
                 e.preventDefault()
                 App.Event.trigger('keyboard_shortcuts_close')
-                if $('#navigation .tasks .is-active').get(0)
-                  if $('#navigation .tasks .is-active').prev().get(0)
-                    $('#navigation .tasks .is-active').prev().find('div').first().click()
+                scollIfNeeded = (element) ->
+                  return if !element
+                  return if !element.get(0)
+                  element.get(0).scrollIntoView(true)
+                current = $('#navigation .tasks .is-active')
+                if current.get(0)
+                  prev = current.prev()
+                  if prev.get(0)
+                    prev.find('div').first().click()
+                    scollIfNeeded(prev)
                     return
-                $('#navigation .tasks .task').last().find('div').first().click()
+                last = $('#navigation .tasks .task').last()
+                if last.get(0)
+                  last.find('div').first().click()
+                  scollIfNeeded(last)
             }
             {
               key: 'return'
