@@ -30,9 +30,8 @@ class CalendarSubscriptions
   end
 
   def generic(object_name, method_name = 'all')
-
-    events_data = generic_call( object_name, method_name )
-    to_ical( events_data )
+    events_data = generic_call(object_name, method_name)
+    to_ical(events_data)
   end
 
   def generic_call(object_name, method_name = 'all')
@@ -59,6 +58,13 @@ class CalendarSubscriptions
       cal.event do |e|
         e.dtstart     = event_data[:dtstart]
         e.dtend       = event_data[:dtend]
+        if event_data[:alarm]
+          e.alarm do |a|
+            a.action  = 'DISPLAY'
+            a.summary = event_data[:alarm][:summary]
+            a.trigger = event_data[:alarm][:trigger]
+          end
+        end
         e.summary     = event_data[:summary]
         e.description = event_data[:description]
         e.ip_class    = 'PRIVATE'

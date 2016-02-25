@@ -5,6 +5,7 @@ class CalendarSubscriptions::Tickets
   def initialize(user, preferences)
     @user        = user
     @preferences = preferences
+    @tzid        = 'UTC'
   end
 
   def all
@@ -75,8 +76,8 @@ class CalendarSubscriptions::Tickets
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
 
-      event_data[:dtstart]     = Icalendar::Values::Date.new( Time.zone.today )
-      event_data[:dtend]       = Icalendar::Values::Date.new( Time.zone.today )
+      event_data[:dtstart]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
+      event_data[:dtend]       = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
       event_data[:description] = "T##{ticket.number}"
 
@@ -117,6 +118,7 @@ class CalendarSubscriptions::Tickets
 
     user_locale       = @user.preferences['locale'] || 'en'
     translated_ticket = Translation.translate(user_locale, 'ticket')
+    customer          = Translation.translate(user_locale, 'customer')
 
     events_data = []
     tickets.each do |ticket|
@@ -132,10 +134,14 @@ class CalendarSubscriptions::Tickets
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
 
-      event_data[:dtstart]     = Icalendar::Values::DateTime.new( pending_time )
-      event_data[:dtend]       = Icalendar::Values::DateTime.new( pending_time )
-      event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @tzid)
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @tzid)
+      event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
+      event_data[:alarm]       = {
+        summary: event_data[:summary],
+        trigger: '-PT1M',
+      }
 
       events_data.push event_data
     end
@@ -167,6 +173,7 @@ class CalendarSubscriptions::Tickets
 
     user_locale                  = @user.preferences['locale'] || 'en'
     translated_ticket_escalation = Translation.translate(user_locale, 'ticket escalation')
+    customer                     = Translation.translate(user_locale, 'customer')
 
     tickets.each do |ticket|
 
@@ -179,10 +186,14 @@ class CalendarSubscriptions::Tickets
         escalation_time = Time.zone.today
       end
 
-      event_data[:dtstart]     = Icalendar::Values::DateTime.new( escalation_time )
-      event_data[:dtend]       = Icalendar::Values::DateTime.new( escalation_time )
-      event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}'"
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_time, 'tzid' => @tzid)
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_time, 'tzid' => @tzid)
+      event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}' #{customer}: #{ticket.customer.longname} "
       event_data[:description] = "T##{ticket.number}"
+      event_data[:alarm]       = {
+        summary: event_data[:summary],
+        trigger: '-PT1M',
+      }
 
       events_data.push event_data
     end
