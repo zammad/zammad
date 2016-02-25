@@ -154,6 +154,38 @@ class KeyboardShortcutsTest < TestCase
       timeout: 6,
     )
 
+    # open online notification
+    @browser_agent = browser_instance
+    login(
+      browser:  @browser_agent,
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    ticket2 = ticket_create(
+      browser:  @browser_agent,
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'Test Ticket for Shortcuts II - ABC123',
+        body: 'Test Ticket Body for Shortcuts II - ABC123',
+      },
+    )
+    sleep 5
+    shortcut(key: 'y')
+    watch_for(
+      css:     '.js-notificationsContainer',
+      value:   'Test Ticket for Shortcuts II',
+      timeout: 10,
+    )
+    window_keys(value: :arrow_down)
+    window_keys(value: :enter)
+    watch_for(
+      css:     '.active.content',
+      value:   ticket2[:number],
+      timeout: 2,
+    )
+
     shortcut(key: 'e')
     watch_for(
       css:     'body',

@@ -48,6 +48,7 @@ class App.OnlineNotificationWidget extends App.Controller
   release: ->
     @removeContainer()
     $(window).off 'click.notifications'
+    $(window).off 'keydown.notifications'
     App.OnlineNotification.unsubscribe(@subscribeId)
 
   access: ->
@@ -55,6 +56,48 @@ class App.OnlineNotificationWidget extends App.Controller
     return true if @isRole('Agent')
     return true if @isRole('Admin')
     return false
+
+  listNavigate: (e) =>
+
+    if e.keyCode is 27 # close on esc
+      @hidePopover()
+      return
+    else if e.keyCode is 38 # up
+      @nudge(e, -1)
+      return
+    else if e.keyCode is 40 # down
+      @nudge(e, 1)
+      return
+    else if e.keyCode is 13 # enter
+      $('.js-notificationsContainer .popover-content .activity-entry.is-hover .js-locationVerify').click()
+
+  nudge: (e, position) ->
+
+    # get current
+    navigation = $('.js-notificationsContainer .popover-content')
+    current = navigation.find('.activity-entry.is-hover')
+    if !current.get(0)
+      navigation.find('.activity-entry').first().addClass('is-hover')
+      return
+
+    if position is 1
+      next = current.next('.activity-entry')
+      if next.get(0)
+        current.removeClass('is-hover')
+        next.addClass('is-hover')
+    else
+      prev = current.prev('.activity-entry')
+      if prev.get(0)
+        current.removeClass('is-hover')
+        prev.addClass('is-hover')
+
+    if next
+      element = next.get(0)
+    if prev
+      element = prev.get(0)
+    return if !element
+    return if $(element).visible(true)
+    element.scrollIntoView()
 
   counterUpdate: (count) =>
     if !count
@@ -100,9 +143,11 @@ class App.OnlineNotificationWidget extends App.Controller
 
     notificationsContainer.on 'click', @stopPropagation
     $(window).on 'click.notifications', @hidePopover
+    $(window).on 'keydown.notifications', @listNavigate
 
   onHide: ->
     $(window).off 'click.notifications'
+    $(window).off 'keydown.notifications'
 
   hidePopover: =>
     @toggle.popover('hide')

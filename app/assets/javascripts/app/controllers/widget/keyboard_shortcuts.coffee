@@ -59,6 +59,7 @@ App.Config.set(
               description: 'Dashboard'
               callback: (e) ->
                 e.preventDefault()
+                $('#global-search').blur()
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#dashboard'
             }
@@ -68,6 +69,7 @@ App.Config.set(
               description: 'Overviews'
               callback: (e) ->
                 e.preventDefault()
+                $('#global-search').blur()
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/view'
             }
@@ -81,11 +83,22 @@ App.Config.set(
                 $('#global-search').focus()
             }
             {
+              key: 'y'
+              hotkeys: true
+              description: 'Notifications'
+              callback: (e) ->
+                e.preventDefault()
+                $('#global-search').blur()
+                App.Event.trigger('keyboard_shortcuts_close')
+                $('#navigation .js-toggleNotifications').click()
+            }
+            {
               key: 'n'
               hotkeys: true
               description: 'New Ticket'
               callback: (e) ->
                 e.preventDefault()
+                $('#global-search').blur()
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/create'
             }

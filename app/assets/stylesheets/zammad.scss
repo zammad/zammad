@@ -2904,7 +2904,8 @@ footer {
   }
 
   .nav-tab.is-active,
-  .nav-tab.nav-tab--search:hover {
+  .nav-tab.nav-tab--search:hover,
+  .nav-tab.nav-tab--search.is-hover {
     background: #389ed9;
     color: white;
 
@@ -3891,6 +3892,10 @@ footer {
 
     &.is-inactive {
       opacity: 0.5;
+    }
+
+    &.is-hover {
+      background-color: #f8f9fa;
     }
 
     &.activity-entry--removeable {

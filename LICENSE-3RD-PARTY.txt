@@ -82,6 +82,11 @@ Copyright: @leChanteaux <santiago at mural.ly>
            Mural.ly Dev Team <dev at mural.ly>
 License: dfyw
 -----------------------------------------------------------------------------
+jquery.visible.js
+Source: https://github.com/customd/jquery-visible
+Copyright: 2012, Digital Fusion
+License: MIT license
+-----------------------------------------------------------------------------
 marked.js
 Source: https://github.com/chjj/marked
 Copyright: 2011-2014, Christopher Jeffrey

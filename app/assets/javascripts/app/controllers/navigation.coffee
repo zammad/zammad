@@ -195,7 +195,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @$('form.search').on('submit', (e) ->
       e.preventDefault()
     )
-    @$('#global-search').on('keydown', @navigate)
+    @$('#global-search').on('keydown', @listNavigate)
 
     # bind to empty search
     @$('.empty-search').on('click', =>
@@ -206,7 +206,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       el: @el
     )
 
-  navigate: (e) =>
+  listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
       @emptyAndClose()
       return
@@ -217,7 +217,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      href = @$('#global-search-result .nav-tab.is-active').attr('href')
+      href = @$('#global-search-result .nav-tab.is-hover').attr('href')
       @locationExecute(href)
       @emptyAndClose()
       return
@@ -229,21 +229,29 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
     # get current
     navigationResult = @$('#global-search-result')
-    current = navigationResult.find('.nav-tab.is-active')
+    current = navigationResult.find('.nav-tab.is-hover')
     if !current.get(0)
-      navigationResult.find('.nav-tab').first().addClass('is-active')
+      navigationResult.find('.nav-tab').first().addClass('is-hover')
       return
 
     if position is 1
       next = current.closest('li').nextAll('li').not('.divider').first().find('.nav-tab')
       if next.get(0)
-        current.removeClass('is-active').popover('hide')
-        next.addClass('is-active').popover('show')
+        current.removeClass('is-hover').popover('hide')
+        next.addClass('is-hover').popover('show')
     else
       prev = current.closest('li').prevAll('li').not('.divider').first().find('.nav-tab')
       if prev.get(0)
-        current.removeClass('is-active').popover('hide')
-        prev.addClass('is-active').popover('show')
+        current.removeClass('is-hover').popover('hide')
+        prev.addClass('is-hover').popover('show')
+
+    if next
+      element = next.get(0)
+    if prev
+      element = prev.get(0)
+    return if !element
+    return if $(element).visible(true)
+    element.scrollIntoView()
 
   emptyAndClose: =>
     @$('#global-search').val('').blur()

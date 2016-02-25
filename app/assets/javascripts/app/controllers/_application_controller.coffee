@@ -128,32 +128,32 @@ class App.Controller extends Spine.Controller
     return if !$('#navigation').is(':visible')
     $('#navigation').addClass('hide')
 
-  scrollTo: ( x = 0, y = 0, delay = 0 ) ->
+  scrollTo: (x = 0, y = 0, delay = 0) ->
     a = ->
-      window.scrollTo( x, y )
+      window.scrollTo(x, y)
 
-    @delay( a, delay )
+    @delay(a, delay)
 
   shake: (element) ->
 
     # this part is from wordpress 3, thanks to open source
     shakeMe = (element, position, positionEnd) ->
       positionStart = position.shift()
-      element.css( 'left', positionStart + 'px' )
+      element.css('left', positionStart + 'px')
       if position.length > 0
-        setTimeout( ->
-          shakeMe( element, position, positionEnd )
+        setTimeout(->
+          shakeMe(element, position, positionEnd)
         , positionEnd)
       else
         try
-          element.css( 'position', 'static' )
+          element.css('position', 'static')
         catch e
           console.log 'error', e
 
     position = [ 15, 30, 15, 0, -15, -30, -15, 0 ]
-    position = position.concat( position.concat( position ) )
-    element.css( 'position', 'relative' )
-    shakeMe( element, position, 20 )
+    position = position.concat(position.concat(position))
+    element.css('position', 'relative')
+    shakeMe(element, position, 20)
 
   isRole: (name) ->
     roles = @Session.get('roles')
@@ -183,8 +183,8 @@ class App.Controller extends Spine.Controller
     App.Utils.humanFileSize(size)
 
   # human readable time
-  humanTime: ( time, escalation, long = true ) ->
-    App.PrettyDate.humanTime( time, escalation, long )
+  humanTime: (time, escalation, long = true) ->
+    App.PrettyDate.humanTime(time, escalation, long)
 
   userInfo: (data) ->
     el = data.el || $('[data-id="customer_info"]')
@@ -206,7 +206,7 @@ class App.Controller extends Spine.Controller
     if !checkOnly
       location = window.location.hash
       if location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
-        @Config.set( 'requested_url', location)
+        @Config.set('requested_url', location)
 
     return false if checkOnly
 
@@ -262,16 +262,16 @@ class App.Controller extends Spine.Controller
       placement:  position
       title: ->
         ticket_id = $(@).data('id')
-        ticket    = App.Ticket.fullLocal( ticket_id )
-        App.Utils.htmlEscape( ticket.title )
+        ticket    = App.Ticket.fullLocal(ticket_id)
+        App.Utils.htmlEscape(ticket.title)
       content: ->
         ticket_id = $(@).data('id')
-        ticket    = App.Ticket.fullLocal( ticket_id )
+        ticket    = App.Ticket.fullLocal(ticket_id)
         html = App.view('popover/ticket')(
           ticket: ticket
         )
         html = $(html)
-        html.find('.humanTimeFromNow').each( ->
+        html.find('.humanTimeFromNow').each(->
           item = $(@)
           ui.frontendTimeUpdateItem(item)
         )
@@ -306,11 +306,11 @@ class App.Controller extends Spine.Controller
       placement:  "auto #{position}"
       title: ->
         user_id = $(@).data('id')
-        user    = App.User.fullLocal( user_id )
-        App.Utils.htmlEscape( user.displayName() )
+        user    = App.User.fullLocal(user_id)
+        App.Utils.htmlEscape(user.displayName())
       content: ->
         user_id = $(@).data('id')
-        user    = App.User.fullLocal( user_id )
+        user    = App.User.fullLocal(user_id)
 
         # get display data
         userData = []
@@ -318,7 +318,7 @@ class App.Controller extends Spine.Controller
 
           # check if value for _id exists
           name    = attributeName
-          nameNew = name.substr( 0, name.length - 3 )
+          nameNew = name.substr(0, name.length - 3)
           if nameNew of user
             name = nameNew
 
@@ -364,11 +364,11 @@ class App.Controller extends Spine.Controller
       placement:  "auto #{position}"
       title: ->
         organization_id = $(@).data('id')
-        organization    = App.Organization.fullLocal( organization_id )
-        App.Utils.htmlEscape( organization.name )
+        organization    = App.Organization.fullLocal(organization_id)
+        App.Utils.htmlEscape(organization.name)
       content: ->
         organization_id = $(@).data('id')
-        organization    = App.Organization.fullLocal( organization_id )
+        organization    = App.Organization.fullLocal(organization_id)
 
         # get display data
         organizationData = []
@@ -376,7 +376,7 @@ class App.Controller extends Spine.Controller
 
           # check if value for _id exists
           name    = attributeName
-          nameNew = name.substr( 0, name.length - 3 )
+          nameNew = name.substr(0, name.length - 3)
           if nameNew of organization
             name = nameNew
 
@@ -424,13 +424,13 @@ class App.Controller extends Spine.Controller
           tickets = []
           if ticket_list[type]
             for ticket_id in ticket_list[type]
-              tickets.push App.Ticket.fullLocal( ticket_id )
+              tickets.push App.Ticket.fullLocal(ticket_id)
 
           # insert data
           html = App.view('popover/user_ticket_list')(
             tickets: tickets
           )
-          html = $( html )
+          html = $(html )
           html.find('.humanTimeFromNow').each( ->
             item = $(@)
             ui.frontendTimeUpdateItem(item)
@@ -440,15 +440,14 @@ class App.Controller extends Spine.Controller
 
     fetch = (params) =>
       @ajax(
-        type:  'GET',
-        url:   @Config.get('api_path') + '/ticket_customer',
-        data:  {
-          customer_id: params.user_id,
-        }
-        processData: true,
+        type:  'GET'
+        url:   @Config.get('api_path') + '/ticket_customer'
+        data:
+          customer_id: params.user_id
+        processData: true
         success: (data, status, xhr) ->
-          App.Collection.loadAssets( data.assets )
-          show( params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed } )
+          App.Collection.loadAssets(data.assets)
+          show(params, { open: data.ticket_ids_open, closed: data.ticket_ids_closed })
       )
 
     # get data
@@ -514,10 +513,10 @@ class App.Controller extends Spine.Controller
               item.default = params[item.name]
               #if !item.default
               #  delete item['default']
-              newElement = ui.formGenItem( item, classname, form )
+              newElement = ui.formGenItem(item, classname, form)
 
           # replace new option list
-          form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith( newElement )
+          form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith(newElement)
 
   stopPropagation: (e) ->
     e.stopPropagation()
@@ -712,7 +711,6 @@ class App.ControllerModal extends App.Controller
       'hide.bs.modal':   @onClose
       'hidden.bs.modal': =>
         @onClosed()
-        # remove modal from dom
         $('.modal').remove()
 
   close: (e) =>

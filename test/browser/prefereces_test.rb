@@ -9,8 +9,8 @@ class PreferencesTest < TestCase
       password: 'test',
       url: browser_url,
     )
-    click( css: 'a[href="#current_user"]' )
-    click( css: 'a[href="#profile"]' )
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
     match(
       css: '.content .NavBarProfile',
       value: 'Password',
@@ -36,8 +36,8 @@ class PreferencesTest < TestCase
       password: 'test',
       url: browser_url,
     )
-    click( css: 'a[href="#current_user"]' )
-    click( css: 'a[href="#profile"]' )
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
     match(
       css: '.content .NavBarProfile',
       value: 'Password',
@@ -96,14 +96,14 @@ class PreferencesTest < TestCase
       value: 'Zammad Foundation',
     )
 
-    click( css: 'a[href="#current_user"]' )
-    click( css: 'a[href="#profile"]' )
-    click( css: 'a[href="#profile/language"]' )
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
     select(
       css: '.language_item [name="locale"]',
       value: 'Deutsch',
     )
-    click( css: '.content button[type="submit"]' )
+    click(css: '.content button[type="submit"]')
     watch_for(
       css: 'body',
       value: 'Sprache',
@@ -116,14 +116,14 @@ class PreferencesTest < TestCase
     )
 
     # check language in dashboard
-    click( css: '.js-menu a[href="#dashboard"]' )
+    click(css: '.js-menu a[href="#dashboard"]')
     watch_for(
       css: '.content.active',
       value: 'Meine Statistik'
     )
 
     # check language in overview
-    click( css: '.js-menu a[href="#ticket/view"]' )
+    click(css: '.js-menu a[href="#ticket/view"]')
     watch_for(
       css: '.content.active',
       value: 'Meine'
@@ -209,14 +209,14 @@ class PreferencesTest < TestCase
       value: 'notiz'
     )
 
-    click( css: 'a[href="#current_user"]' )
-    click( css: 'a[href="#profile"]' )
-    click( css: 'a[href="#profile/language"]' )
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
     select(
       css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
-    click( css: '.content button[type="submit"]' )
+    click(css: '.content button[type="submit"]')
     sleep 2
     watch_for(
       css: 'body',
@@ -230,14 +230,14 @@ class PreferencesTest < TestCase
     )
 
     # check language in dashboard
-    click( css: '.js-menu a[href="#dashboard"]' )
+    click(css: '.js-menu a[href="#dashboard"]')
     watch_for(
       css: '.content.active',
       value: 'My Stats'
     )
 
     # check language in overview
-    click( css: '.js-menu a[href="#ticket/view"]' )
+    click(css: '.js-menu a[href="#ticket/view"]')
     watch_for(
       css: '.content.active',
       value: 'My'
@@ -324,15 +324,15 @@ class PreferencesTest < TestCase
     )
 
     # switch to de again
-    click( css: 'a[href="#current_user"]' )
-    click( css: 'a[href="#profile"]' )
-    click( css: 'a[href="#profile/language"]' )
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
     sleep 4
     select(
       css: '.language_item [name="locale"]',
       value: 'Deutsch',
     )
-    click( css: '.content button[type="submit"]' )
+    click(css: '.content button[type="submit"]')
     sleep 4
     watch_for(
       css: 'body',
@@ -356,14 +356,14 @@ class PreferencesTest < TestCase
     )
 
     # check language in dashboard
-    click( css: '.js-menu a[href="#dashboard"]' )
+    click(css: '.js-menu a[href="#dashboard"]')
     watch_for(
       css: '.content.active',
       value: 'Meine Statistik'
     )
 
     # check language in overview
-    click( css: '.js-menu a[href="#ticket/view"]' )
+    click(css: '.js-menu a[href="#ticket/view"]')
     watch_for(
       css: '.content.active',
       value: 'Meine'
