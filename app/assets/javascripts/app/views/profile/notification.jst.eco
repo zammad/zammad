@@ -81,9 +81,9 @@
       <label for="notification-sound"><%- @T('Notification Sound') %></label>
     </div>
     <div class="controls controls--select">
-      <select class="form-control js-notificationSound" id="notification-sound">
-        <% for sound, i in @sounds: %>
-        <option value="<%= i %>"<%= ' selected' if sound.selected %>><%= sound.name %></option>
+      <select class="form-control js-notificationSound" id="notification-sound" name="notification_sound::file">
+        <% for sound in @sounds: %>
+        <option value="<%= sound.file %>"<%= ' selected' if sound.selected %>><%= sound.name %></option>
         <% end %>
       </select>
       <%- @Icon('arrow-down') %>
@@ -92,7 +92,7 @@
   <div class="form-group">
     <label class="inline-label">
       <span class="checkbox-replacement checkbox-replacement--inline">
-        <input type="checkbox" name="enable_sound" value="true" checked>
+        <input type="checkbox" name="notification_sound::enabled" value="true" <% if @notification_sound_enabled: %> checked<% end %> class="js-SoundEnableDisable">
         <%- @Icon('checkbox', 'icon-unchecked') %>
         <%- @Icon('checkbox-checked', 'icon-checked') %>
       </span>

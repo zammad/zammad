@@ -201,6 +201,7 @@ class App.OnlineNotificationWidget extends App.Controller
             url: item.link
             title: title
           )
+          App.OnlineNotification.play()
 
     # execute controller again of already open (because hash hasn't changed, we need to do it manually)
     notificationsContainer.find('.js-locationVerify').on('click', (e) =>
