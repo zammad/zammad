@@ -69,7 +69,6 @@
     this.toggleBlock = function(tag) {
       sel = window.getSelection()
       node = $(sel.anchorNode)
-      console.log('toggleBlock', tag, node.parent(), node.is())
       if (node.is(tag) || node.parent().is(tag) || node.parent().parent().is(tag)) {
         document.execCommand('formatBlock', false, 'div')
         //document.execCommand('RemoveFormat')
