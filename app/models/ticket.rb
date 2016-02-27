@@ -414,6 +414,10 @@ condition example
       pre_condition: 'specific',
       value: 4711,
     },
+    'ticket.escalation_time' => {
+      operator: 'is not', # not
+      value: nil,
+    }
   }
 
 =end
@@ -463,8 +467,8 @@ condition example
       selector = selector_raw.stringify_keys
       fail "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
 
-      # validate value / allow empty but only if pre_condition eyists
-      if selector['value'].nil? || (selector['value'].respond_to?(:empty?) && selector['value'].empty?)
+      # validate value / allow empty but only if pre_condition exists
+      if (selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:empty?) && selector['value'].empty?)
         return nil if selector['pre_condition'].nil? || (selector['pre_condition'].respond_to?(:empty?) && selector['pre_condition'].empty?)
       end
 
@@ -497,8 +501,14 @@ condition example
           user = User.lookup(id: current_user_id)
           bind_params.push user.organization_id
         else
-          query += "#{attribute} IN (?)"
-          bind_params.push selector['value']
+          # rubocop:disable Style/IfInsideElse
+          if selector['value'].nil?
+            query += "#{attribute} NOT NULL"
+          else
+            query += "#{attribute} IN (?)"
+            bind_params.push selector['value']
+          end
+          # rubocop:enable Style/IfInsideElse
         end
       elsif selector['operator'] == 'is not'
         if selector['pre_condition'] == 'set'
@@ -516,8 +526,14 @@ condition example
           user = User.lookup(id: current_user_id)
           bind_params.push user.organization_id
         else
-          query += "#{attribute} NOT IN (?)"
-          bind_params.push selector['value']
+          # rubocop:disable Style/IfInsideElse
+          if selector['value'].nil?
+            query += "#{attribute} IS NOT NULL"
+          else
+            query += "#{attribute} NOT IN (?)"
+            bind_params.push selector['value']
+          end
+          # rubocop:enable Style/IfInsideElse
         end
       elsif selector['operator'] == 'contains'
         query += "#{attribute} #{like} (?)"

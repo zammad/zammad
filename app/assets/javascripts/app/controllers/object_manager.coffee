@@ -5,7 +5,7 @@ class Index extends App.ControllerTabs
     super
 
     # check authentication
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
 
     @title 'Objects', true
 

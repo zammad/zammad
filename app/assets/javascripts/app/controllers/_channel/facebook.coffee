@@ -7,7 +7,7 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
 
     #@interval(@load, 60000)
     @load()

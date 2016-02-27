@@ -35,7 +35,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
       'Users'              => 141,
       'GroupMemberships'   => 3,
       'Macros'             => 5,
-      'Views'              => 11,
+      'Views'              => 19,
       'Automations'        => 5
     }
 

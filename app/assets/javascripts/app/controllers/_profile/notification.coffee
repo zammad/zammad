@@ -39,13 +39,12 @@ class Index extends App.Controller
     {
       name: 'Xylo'
       file: 'Xylo.mp3'
-      selected: true
     }
   ]
 
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Agent')
     @title 'Notifications', true
     @render()
 
@@ -84,10 +83,15 @@ class Index extends App.Controller
             config['group_ids'] = []
           config['group_ids'].push group_id.toString()
 
+    for sound in @sounds
+      if sound.file is App.OnlineNotification.soundFile()
+        sound.selected = true
+
     @html App.view('profile/notification')
       groups: groups
       config: config
       sounds: @sounds
+      notification_sound_enabled: App.OnlineNotification.soundEnabled()
 
   update: (e) =>
 
@@ -147,6 +151,10 @@ class Index extends App.Controller
       params.notification_config.group_ids = ['-']
     @formDisable(e)
 
+    params.notification_sound = form_params.notification_sound
+    if !params.notification_sound.enabled
+      params.notification_sound.enabled = false
+
     # get data
     @ajax(
       id:          'preferences'
@@ -179,8 +187,11 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-  previewSound: (event) ->
-    sound = new Audio("assets/sounds/#{ @sounds[event.currentTarget.value].file }")
-    sound.play()
+  previewSound: (e) =>
+    params = @formParam(e.target)
+    return if !params.notification_sound
+    return if !params.notification_sound.file
+    App.OnlineNotification.play(params.notification_sound.file)
+
 
 App.Config.set( 'Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', role: ['Agent'], controller: Index }, 'NavBarProfile' )

@@ -7,7 +7,7 @@ class Auth
 
 authenticate user via username and password
 
-  result = Auth.check( username, password, user )
+  result = Auth.check(username, password, user)
 
 returns
 
@@ -28,7 +28,7 @@ returns
     ]
 
     # added configured backends
-    Setting.where( area: 'Security::Authentication' ).each {|setting|
+    Setting.where(area: 'Security::Authentication').each {|setting|
       if setting.state_current[:value]
         config.push setting.state_current[:value]
       end
@@ -40,10 +40,10 @@ returns
       next if !config_item[:adapter]
 
       # load backend
-      backend = load_adapter( config_item[:adapter] )
+      backend = load_adapter(config_item[:adapter])
       next if !backend
 
-      user_auth = backend.check( username, password, config_item, user )
+      user_auth = backend.check(username, password, config_item, user)
 
       # auth not ok
       next if !user_auth

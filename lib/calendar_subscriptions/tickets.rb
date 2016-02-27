@@ -188,7 +188,7 @@ class CalendarSubscriptions::Tickets
 
       event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_time, 'tzid' => @tzid)
       event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_time, 'tzid' => @tzid)
-      event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}' #{customer}: #{ticket.customer.longname} "
+      event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
       event_data[:alarm]       = {
         summary: event_data[:summary],

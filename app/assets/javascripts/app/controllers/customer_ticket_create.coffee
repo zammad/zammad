@@ -8,7 +8,7 @@ class Index extends App.ControllerContent
     super
 
     # check authentication
-    return if !@authenticate()
+    return if !@authenticate(false, 'Customer')
 
     # set title
     @title 'New Ticket'

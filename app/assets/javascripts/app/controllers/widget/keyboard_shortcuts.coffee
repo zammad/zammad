@@ -334,7 +334,7 @@ App.Config.set(
               description: 'Format as ||italic||'
             }
             {
-              key: 't'
+              key: 'v'
               hotkeys: true
               description: 'Format as //strikethrough//'
             }

@@ -5,6 +5,56 @@ class App.OnlineNotification extends App.Model
 
   ###
 
+  App.OnlineNotification.play()
+
+  App.OnlineNotification.play('bell.mp3')
+
+  ###
+
+  @play: (file) ->
+    if file
+      sound = new Audio("assets/sounds/#{file}")
+      sound.play()
+      return
+    preferences = App.Session.get('preferences')
+    return if !preferences
+    return if !App.OnlineNotification.soundEnabled()
+    file = App.OnlineNotification.soundFile()
+    sound = new Audio("assets/sounds/#{file}")
+    sound.play()
+
+  ###
+
+  App.OnlineNotification.soundEnabled()
+
+  ###
+
+  @soundEnabled: ->
+    preferences = App.Session.get('preferences')
+    return false if !preferences
+    if !preferences.notification_sound
+      preferences.notification_sound = {}
+    if preferences.notification_sound.enabled is undefined
+      preferences.notification_sound.enabled = true
+    return false if preferences.notification_sound.enabled.toString() is 'false'
+    true
+
+  ###
+
+  App.OnlineNotification.soundFile()
+
+  ###
+
+  @soundFile: ->
+    file = 'Xylo.mp3'
+    preferences = App.Session.get('preferences')
+    return file if !preferences
+    return file if !preferences.notification_sound
+    return file if !preferences.notification_sound.file
+    preferences.notification_sound.file
+
+  ###
+
   App.OnlineNotification.seen( 'Ticket', 123 )
 
   ###

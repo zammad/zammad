@@ -27,6 +27,7 @@ class App.Notify extends App.ControllerWidgetPermanent
 
       @desktopNotifyCounter += 1
       counter = @desktopNotifyCounter
+      data.silent = true
       notification = new window.Notification(data.title, data)
       @desktopNotify[counter] = notification
       @log 'debug', 'notifyDesktop', data, counter

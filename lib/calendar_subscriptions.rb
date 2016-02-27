@@ -6,7 +6,7 @@ class CalendarSubscriptions
     @user        = user
     @preferences = {}
 
-    default_preferences = Setting.where( area: 'Defaults::CalendarSubscriptions' )
+    default_preferences = Setting.where(area: 'Defaults::CalendarSubscriptions')
     default_preferences.each { |calendar_subscription|
 
       next if calendar_subscription.name !~ /\Adefaults_calendar_subscriptions_(.*)\z/
@@ -17,16 +17,16 @@ class CalendarSubscriptions
 
     return if !@user.preferences[:calendar_subscriptions]
     return if @user.preferences[:calendar_subscriptions].empty?
-    @preferences = @preferences.merge( @user.preferences[:calendar_subscriptions] )
+    @preferences = @preferences.merge(@user.preferences[:calendar_subscriptions])
   end
 
   def all
     events_data = []
     @preferences.each { |object_name, _sub_structure|
-      result      = generic_call( object_name )
+      result      = generic_call(object_name)
       events_data = events_data + result
     }
-    to_ical( events_data )
+    to_ical(events_data)
   end
 
   def generic(object_name, method_name = 'all')
@@ -42,8 +42,8 @@ class CalendarSubscriptions
     if @preferences[ object_name ] && !@preferences[ object_name ].empty?
       sub_class_name = object_name.to_s.capitalize
       object         = Object.const_get("CalendarSubscriptions::#{sub_class_name}")
-      instance       = object.new( @user, @preferences[ object_name ] )
-      method         = instance.method( method_name )
+      instance       = object.new(@user, @preferences[ object_name ])
+      method         = instance.method(method_name)
       events_data += method.call
     end
     events_data

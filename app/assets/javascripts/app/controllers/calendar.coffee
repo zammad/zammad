@@ -10,7 +10,7 @@ class Index extends App.ControllerContent
     super
 
     # check authentication
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
 
     @interval(@load, 60000)
     #@load()

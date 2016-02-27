@@ -2,7 +2,7 @@ class Branding extends App.ControllerTabs
   header: 'Branding'
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
     @title 'Branding', true
     @tabs = [
       { name: 'Base',       'target': 'base',     controller: App.SettingsArea, params: { area: 'System::Branding' } }
@@ -13,7 +13,7 @@ class System extends App.ControllerTabs
   header: 'System'
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
     @title 'System', true
     @tabs = []
     if !App.Config.get('system_online_service')
@@ -28,7 +28,7 @@ class Security extends App.ControllerTabs
   header: 'Security'
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
     @title 'Security', true
     @tabs = [
       { name: 'Base',                     'target': 'base',             controller: App.SettingsArea, params: { area: 'Security::Base' } }
@@ -42,7 +42,7 @@ class Import extends App.ControllerTabs
   header: 'Import'
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
     @title 'Import', true
     @tabs = [
       { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'Import::Base' } }
@@ -54,7 +54,7 @@ class Ticket extends App.ControllerTabs
   header: 'Ticket'
   constructor: ->
     super
-    return if !@authenticate()
+    return if !@authenticate(false, 'Admin')
     @title 'Ticket', true
     @tabs = [
       { name: 'Base',         'target': 'base',     controller: App.SettingsArea, params: { area: 'Ticket::Base' } }

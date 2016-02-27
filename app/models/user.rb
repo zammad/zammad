@@ -223,11 +223,11 @@ returns
     return if !password || password == ''
 
     # try to find user based on login
-    user = User.find_by( login: username.downcase, active: true )
+    user = User.find_by(login: username.downcase, active: true)
 
     # try second lookup with email
     if !user
-      user = User.find_by( email: username.downcase, active: true )
+      user = User.find_by(email: username.downcase, active: true)
     end
 
     # check failed logins
