@@ -41,17 +41,17 @@ class NotificationFactoryTest < ActiveSupport::TestCase
   test 'notifications base' do
     ticket = Ticket.create(
       title: 'some title äöüß',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 2,
       created_by_id: 2,
     )
     article_plain = Ticket::Article.create(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
-      sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+      type_id: Ticket::Article::Type.where(name: 'phone').first.id,
+      sender_id: Ticket::Article::Sender.where(name: 'Customer').first.id,
       from: 'Zammad Feedback <feedback@example.org>',
       body: 'some text',
       internal: false,
@@ -155,7 +155,7 @@ class NotificationFactoryTest < ActiveSupport::TestCase
         },
         locale: test[:locale]
       )
-      assert_equal( test[:result], result, 'verify result' )
+      assert_equal(test[:result], result, 'verify result')
     }
 
     ticket.destroy
@@ -164,17 +164,17 @@ class NotificationFactoryTest < ActiveSupport::TestCase
   test 'notifications html' do
     ticket = Ticket.create(
       title: 'some title <b>äöüß</b> 2',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     article_html = Ticket::Article.create(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
-      sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+      type_id: Ticket::Article::Type.where(name: 'phone').first.id,
+      sender_id: Ticket::Article::Sender.where(name: 'Customer').first.id,
       from: 'Zammad Feedback <feedback@example.org>',
       body: 'some <b>text</b><br>next line',
       content_type: 'text/html',
@@ -210,7 +210,7 @@ next line, Group: Users',
         },
         locale: test[:locale]
       )
-      assert_equal( test[:result], result, 'verify result' )
+      assert_equal(test[:result], result, 'verify result')
     }
 
     ticket.destroy
@@ -219,17 +219,17 @@ next line, Group: Users',
   test 'notifications attack' do
     ticket = Ticket.create(
       title: 'some title <b>äöüß</b> 3',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
     article_html = Ticket::Article.create(
       ticket_id: ticket.id,
-      type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
-      sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+      type_id: Ticket::Article::Type.where(name: 'phone').first.id,
+      sender_id: Ticket::Article::Sender.where(name: 'Customer').first.id,
       from: 'Zammad Feedback <feedback@example.org>',
       body: 'some <b>text</b><br>next line',
       content_type: 'text/html',
@@ -291,7 +291,7 @@ next line, Group: Users',
         },
         locale: test[:locale]
       )
-      assert_equal( test[:result], result, 'verify result' )
+      assert_equal(test[:result], result, 'verify result')
     }
 
     ticket.destroy
@@ -359,7 +359,7 @@ next line, Group: Users',
     ticket = Ticket.create(
       group_id: Group.lookup(name: 'Users').id,
       customer_id: User.lookup(email: 'nicole.braun@zammad.org').id,
-      owner_id: User.lookup(login: '-' ).id,
+      owner_id: User.lookup(login: '-').id,
       title: 'Welcome to Zammad!',
       state_id: Ticket::State.lookup(name: 'new').id,
       priority_id: Ticket::Priority.lookup(name: '2 normal').id,
@@ -463,6 +463,233 @@ next line, Group: Users',
     assert_match('<b>test123</b>', result[:body])
     assert_match('Benachrichtigungseinstellungen Verwalten', result[:body])
     assert_no_match('Your', result[:body])
+
+  end
+
+  test 'notifications settings' do
+
+    groups = Group.all
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create_or_update(
+      login: 'notification-settings-agent1@example.com',
+      firstname: 'Notification<b>xxx</b>',
+      lastname: 'Agent1',
+      email: 'notification-settings-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    agent2 = User.create_or_update(
+      login: 'notification-settings-agent2@example.com',
+      firstname: 'Notification<b>xxx</b>',
+      lastname: 'Agent2',
+      email: 'notification-settings-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    group_notification_setting = Group.create_or_update(
+      name: 'NotificationSetting',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket1 = Ticket.create(
+      group_id: Group.lookup(name: 'Users').id,
+      customer_id: User.lookup(email: 'nicole.braun@zammad.org').id,
+      owner_id: User.lookup(login: '-').id,
+      title: 'Notification Settings Test 1!',
+      state_id: Ticket::State.lookup(name: 'new').id,
+      priority_id: Ticket::Priority.lookup(name: '2 normal').id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket2 = Ticket.create(
+      group_id: Group.lookup(name: 'Users').id,
+      customer_id: User.lookup(email: 'nicole.braun@zammad.org').id,
+      owner_id: agent1.id,
+      title: 'Notification Settings Test 2!',
+      state_id: Ticket::State.lookup(name: 'new').id,
+      priority_id: Ticket::Priority.lookup(name: '2 normal').id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket3 = Ticket.create(
+      group_id: group_notification_setting.id,
+      customer_id: User.lookup(email: 'nicole.braun@zammad.org').id,
+      owner_id: User.lookup(login: '-').id,
+      title: 'Notification Settings Test 1!',
+      state_id: Ticket::State.lookup(name: 'new').id,
+      priority_id: Ticket::Priority.lookup(name: '2 normal').id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket4 = Ticket.create(
+      group_id: group_notification_setting.id,
+      customer_id: User.lookup(email: 'nicole.braun@zammad.org').id,
+      owner_id: agent1.id,
+      title: 'Notification Settings Test 2!',
+      state_id: Ticket::State.lookup(name: 'new').id,
+      priority_id: Ticket::Priority.lookup(name: '2 normal').id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    agent1.preferences[:notification_config][:group_ids] = nil
+    agent1.save
+
+    result = NotificationFactory.notification_settings(agent1, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket2, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket3, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket4, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    agent2.preferences[:notification_config][:group_ids] = nil
+    agent2.save
+
+    result = NotificationFactory.notification_settings(agent2, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent2, ticket2, 'create')
+    assert_equal(nil, result)
+
+    result = NotificationFactory.notification_settings(agent2, ticket3, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent2, ticket4, 'create')
+    assert_equal(nil, result)
+
+    # no group selection
+    agent1.preferences[:notification_config][:group_ids] = []
+    agent1.save
+
+    result = NotificationFactory.notification_settings(agent1, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket2, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket3, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket4, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    agent2.preferences[:notification_config][:group_ids] = []
+    agent2.save
+
+    result = NotificationFactory.notification_settings(agent2, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent2, ticket2, 'create')
+    assert_equal(nil, result)
+
+    result = NotificationFactory.notification_settings(agent2, ticket3, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent2, ticket4, 'create')
+    assert_equal(nil, result)
+
+    agent1.preferences[:notification_config][:group_ids] = ['-']
+    agent1.save
+
+    result = NotificationFactory.notification_settings(agent1, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket2, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket3, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket4, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    agent2.preferences[:notification_config][:group_ids] = ['-']
+    agent2.save
+
+    result = NotificationFactory.notification_settings(agent2, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent2, ticket2, 'create')
+    assert_equal(nil, result)
+
+    result = NotificationFactory.notification_settings(agent2, ticket3, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent2, ticket4, 'create')
+    assert_equal(nil, result)
+
+    # dedecated group selection
+    agent1.preferences[:notification_config][:group_ids] = [Group.lookup(name: 'Users').id]
+    agent1.save
+
+    result = NotificationFactory.notification_settings(agent1, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket2, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent1, ticket3, 'create')
+    assert_equal(nil, result)
+
+    result = NotificationFactory.notification_settings(agent1, ticket4, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    agent2.preferences[:notification_config][:group_ids] = [Group.lookup(name: 'Users').id]
+    agent2.save
+
+    result = NotificationFactory.notification_settings(agent2, ticket1, 'create')
+    assert_equal(true, result[:channels][:online])
+    assert_equal(true, result[:channels][:email])
+
+    result = NotificationFactory.notification_settings(agent2, ticket2, 'create')
+    assert_equal(nil, result)
+
+    result = NotificationFactory.notification_settings(agent2, ticket3, 'create')
+    assert_equal(nil, result)
+    assert_equal(nil, result)
+
+    result = NotificationFactory.notification_settings(agent2, ticket4, 'create')
+    assert_equal(nil, result)
 
   end
 

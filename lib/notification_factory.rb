@@ -2,6 +2,80 @@ module NotificationFactory
 
 =begin
 
+get notification settings for user and notification type
+
+  result = NotificationFactory.notification_settings(user, ticket, type)
+
+  type: create | update | reminder_reached | pending
+
+returns
+
+  {
+    user: user,
+    channels: {
+      online: true,
+      email: true,
+    },
+  }
+
+=end
+
+  def self.notification_settings(user, ticket, type)
+    return if !user.preferences
+    return if !user.preferences['notification_config']
+    matrix = user.preferences['notification_config']['matrix']
+    return if !matrix
+
+    # check if group is in selecd groups
+    if ticket.owner_id != user.id
+      selected_group_ids = user.preferences['notification_config']['group_ids']
+      if selected_group_ids
+        if selected_group_ids.class == Array
+          hit = nil
+          if selected_group_ids.empty?
+            hit = true
+          elsif selected_group_ids[0] == '-' && selected_group_ids.count == 1
+            hit = true
+          else
+            hit = false
+            selected_group_ids.each {|selected_group_id|
+              if selected_group_id.to_s == ticket.group_id.to_s
+                hit = true
+                break
+              end
+            }
+          end
+          return if !hit
+        end
+      end
+    end
+    return if !matrix[type]
+    data = matrix[type]
+    return if !data
+    return if !data['criteria']
+    channels = data['channel']
+    return if !channels
+    if data['criteria']['owned_by_me'] && ticket.owner_id == user.id
+      return {
+        user: user,
+        channels: channels
+      }
+    end
+    if data['criteria']['owned_by_nobody'] && ticket.owner_id == 1
+      return {
+        user: user,
+        channels: channels
+      }
+    end
+    return if !data['criteria']['no']
+    {
+      user: user,
+      channels: channels
+    }
+  end
+
+=begin
+
 # deprecated, will be removed with 2.0
 
   result_string = NotificationFactory.build(

@@ -4,9 +4,9 @@ class Observer::Ticket::Notification::BackgroundJob
   def initialize(params, via_web = false)
 
 =begin
-    :type      => 'update',
-    :ticket_id => 123,
-    :changes   => {
+    type: 'update',
+    ticket_id: 123,
+    changes: {
       'attribute1' => [before,now],
       'attribute2' => [before,now],
     }
@@ -59,55 +59,11 @@ class Observer::Ticket::Notification::BackgroundJob
     end
     already_checked_recipient_ids = {}
     possible_recipients.each {|user|
-      next if already_checked_recipient_ids[user.id]
-      already_checked_recipient_ids[user.id] = true
-      next if !user.preferences
-      next if !user.preferences['notification_config']
-      matrix = user.preferences['notification_config']['matrix']
-      if ticket.owner_id != user.id
-        if user.preferences['notification_config']['group_ids'] ||
-           (user.preferences['notification_config']['group_ids'].class == Array && (!user.preferences['notification_config']['group_ids'].empty? || user.preferences['notification_config']['group_ids'][0] != '-'))
-          hit = false
-          user.preferences['notification_config']['group_ids'].each {|notify_group_id|
-            user.group_ids.each {|local_group_id|
-              if local_group_id.to_s == notify_group_id.to_s
-                hit = true
-              end
-            }
-          }
-          next if !hit
-        end
-      end
-      next if !matrix
-      next if !matrix[@p[:type]]
-      data = matrix[@p[:type]]
-      next if !data
-      next if !data['criteria']
-      channels = data['channel']
-      next if !channels
-      if data['criteria']['owned_by_me'] && ticket.owner_id == user.id
-        data = {
-          user: user,
-          channels: channels
-        }
-        recipients_and_channels.push data
-        next
-      end
-      if data['criteria']['owned_by_nobody'] && ticket.owner_id == 1
-        data = {
-          user: user,
-          channels: channels
-        }
-        recipients_and_channels.push data
-        next
-      end
-      next unless data['criteria']['no']
-      data = {
-        user: user,
-        channels: channels
-      }
-      recipients_and_channels.push data
-      next
+      result = NotificationFactory.notification_settings(user, ticket, @p[:type])
+      next if !result
+      next if already_checked_recipient_ids[result[:user].id]
+      already_checked_recipient_ids[result[:user].id] = true
+      recipients_and_channels.push result
     }
 
     # send notifications
