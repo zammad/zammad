@@ -250,7 +250,9 @@ class Table extends App.Controller
 
     # render init page
     checkbox = true
-    edit     = true
+    edit     = false
+    if @isRole('Admin')
+      edit = true
     if @isRole('Customer')
       checkbox = false
       edit     = false
@@ -271,7 +273,6 @@ class Table extends App.Controller
     html = App.view('agent_ticket_view/content')(
       overview:   @overview
       view_modes: view_modes
-      checkbox:   checkbox
       edit:       edit
     )
     html = $(html)
