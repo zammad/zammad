@@ -5,7 +5,7 @@
 // the compiled file.
 //
 
-//= require ./app/lib/core/jquery-2.1.4.js
+//= require ./app/lib/core/jquery-2.2.1.js
 //= require ./app/lib/core/jquery-ui-1.11.2.js
 //= require ./app/lib/core/underscore-1.8.3.js
 
