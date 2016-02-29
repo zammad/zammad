@@ -98,10 +98,10 @@ class App.OnlineNotificationWidget extends App.Controller
 
   counterUpdate: (count) =>
     if !count
-      @el.find('.js-counter').text('')
+      @$('.js-counter').text('')
       return
 
-    @el.find('.js-counter').text(count)
+    @$('.js-counter').text(count)
 
   markAllAsRead: =>
     @counterUpdate(0)
@@ -109,7 +109,7 @@ class App.OnlineNotificationWidget extends App.Controller
       id:   'markAllAsRead'
       type: 'POST'
       url:  @apiPath + '/online_notifications/mark_all_as_read'
-      data: JSON.stringify( '' )
+      data: JSON.stringify('')
       processData: true
     )
 
@@ -170,7 +170,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
     # update title
     $('.js-notificationsContainer .popover-title').html(
-      App.i18n.translateInline( 'Notifications' ) + " <span class='popover-notificationsCounter'>#{counter}</span>"
+      App.i18n.translateInline('Notifications') + " <span class='popover-notificationsCounter'>#{counter}</span>"
     )
 
     # show mark all as read if needed

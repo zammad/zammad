@@ -13,7 +13,7 @@ class AgentTicketActionsLevel2Test < TestCase
       password: 'test',
       url: browser_url,
     )
-    tasks_close_all( browser: browser1 )
+    tasks_close_all(browser: browser1)
 
     browser2 = browser_instance
     login(
@@ -22,7 +22,7 @@ class AgentTicketActionsLevel2Test < TestCase
       password: 'test',
       url: browser_url,
     )
-    tasks_close_all( browser: browser2 )
+    tasks_close_all(browser: browser2)
 
     # create ticket
     ticket1 = ticket_create(

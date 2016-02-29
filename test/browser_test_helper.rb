@@ -933,7 +933,7 @@ class TestCase < Test::Unit::TestCase
 
 =end
 
-  def open_task(params = {}, _fallback = false)
+  def open_task(params = {})
     switch_window_focus(params)
     log('open_task', params)
 
@@ -946,6 +946,44 @@ class TestCase < Test::Unit::TestCase
       fail "no task with title '#{data[:title]}' found"
     end
     element.click
+    true
+  end
+
+=begin
+
+  close_task(
+    browser: browser1,
+    data: {
+      title: 'some title',
+    },
+    discard_changes: true,
+  )
+
+=end
+
+  def close_task(params = {})
+    switch_window_focus(params)
+    log('close_task', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    element = instance.find_elements(partial_link_text: data[:title])[0]
+    if !element
+      screenshot(browser: instance, comment: 'close_task_failed')
+      fail "no task with title '#{data[:title]}' found"
+    end
+
+    instance.mouse.move_to(element)
+    sleep 0.1
+    instance.execute_script("$('.navigation .tasks .task:contains(\"#{data[:title]}\") .js-close').click()")
+
+    # accept task close warning
+    if params[:discard_changes]
+      sleep 1
+      instance.find_elements(css: '.modal button.js-submit')[0].click
+    end
+
     true
   end
 
@@ -1122,7 +1160,6 @@ wait untill text in selector disabppears
 
   tasks_close_all(
     browser: browser1,
-    discard_changes: true,
   )
 
 =end
@@ -1144,8 +1181,8 @@ wait untill text in selector disabppears
             click_element.click
 
             # accept task close warning
-            if params[:discard_changes]
-              sleep 1
+            if instance.find_elements(css: '.modal button.js-submit')[0]
+              sleep 0.5
               instance.find_elements(css: '.modal button.js-submit')[0].click
             end
           end

@@ -126,10 +126,11 @@ class App.TicketZoom extends App.Controller
 
   changed: =>
     return false if !@ticket
-    formCurrent = @formParam( @el.find('.edit') )
-    ticket      = App.Ticket.find(@ticket_id).attributes()
-    modelDiff   = App.Utils.formDiff(formCurrent, ticket)
+    currentParams = @formCurrent()
+    currentStore = @currentStore()
+    modelDiff = @formDiff(currentParams, currentStore)
     return false if !modelDiff || _.isEmpty(modelDiff)
+    return false if _.isEmpty(modelDiff.ticket) && _.isEmpty(modelDiff.article)
     return true
 
   release: =>
@@ -412,50 +413,61 @@ class App.TicketZoom extends App.Controller
     if !@autosaveLast
       @autosaveLast = @taskGet()
     update = =>
-      #console.log('AR', @ticket_id, @ticket, @formParam( @el.find('.article-add') ) )
       return if !@ticket
-      currentStoreTicket = @ticket.attributes()
-      delete currentStoreTicket.article
-      currentStore  =
-        ticket:  currentStoreTicket
-        article:
-          to:          ''
-          cc:          ''
-          type:        'note'
-          body:        ''
-          internal:    ''
-          in_reply_to: ''
-      currentParams =
-        ticket:  @formParam( @el.find('.edit') )
-        article: @formParam( @el.find('.article-add') )
+      currentParams = @formCurrent()
 
-      # add attachments if exist
-      attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
-      if attachmentCount > 0
-        currentParams.article.attachments = true
-      else
-        delete currentParams.article.attachments
+      # check changed between last autosave
+      sameAsLastSave = _.isEqual(currentParams, @autosaveLast)
+      return if sameAsLastSave
+      @autosaveLast = clone(currentParams)
 
-      #console.log('lll', currentStore)
-      # remove not needed attributes
-      delete currentParams.article.form_id
+      # update changes in ui
+      currentStore = @currentStore()
+      modelDiff = @formDiff(currentParams, currentStore)
+      @markFormDiff(modelDiff)
+      @taskUpdateAll(modelDiff)
 
-      # get diff of model
-      modelDiff =
-        ticket:  App.Utils.formDiff( currentParams.ticket, currentStore.ticket )
-        article: App.Utils.formDiff( currentParams.article, currentStore.article )
-      #console.log('modelDiff', modelDiff)
-
-      # get diff of last save
-      changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast)
-      if !changedBetweenLastSave
-        #console.log('model DIFF ', modelDiff)
-
-        @autosaveLast = clone(currentParams)
-        @markFormDiff(modelDiff)
-
-        @taskUpdateAll(modelDiff)
     @interval(update, 2800, 'autosave')
+
+  currentStore: =>
+    return if !@ticket
+    currentStoreTicket = @ticket.attributes()
+    delete currentStoreTicket.article
+    currentStore  =
+      ticket:  currentStoreTicket
+      article:
+        to:          ''
+        cc:          ''
+        type:        'note'
+        body:        ''
+        internal:    ''
+        in_reply_to: ''
+    currentStore
+
+  formCurrent: =>
+    currentParams =
+      ticket:  @formParam(@el.find('.edit'))
+      article: @formParam(@el.find('.article-add'))
+
+    # add attachments if exist
+    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
+    if attachmentCount > 0
+      currentParams.article.attachments = true
+    else
+      delete currentParams.article.attachments
+
+    # remove not needed attributes
+    delete currentParams.article.form_id
+    currentParams
+
+  formDiff: (currentParams, currentStore) ->
+
+    # get diff of model
+    modelDiff =
+      ticket:  App.Utils.formDiff(currentParams.ticket, currentStore.ticket)
+      article: App.Utils.formDiff(currentParams.article, currentStore.article)
+
+    modelDiff
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
