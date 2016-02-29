@@ -19,8 +19,11 @@ class App.OnlineNotification extends App.Model
     preferences = App.Session.get('preferences')
     return if !preferences
     return if !App.OnlineNotification.soundEnabled()
+    sound = App.Config.get('latest_online_notification_sond')
+    return if sound && !sound.ended
     file = App.OnlineNotification.soundFile()
     sound = new Audio("assets/sounds/#{file}")
+    App.Config.set('latest_online_notification_sond', sound)
     sound.play()
 
   ###
