@@ -91,6 +91,15 @@ class _webSocketSingleton extends App.Controller
     # initial connect
     @connect()
 
+    # send ping after visibilitychange to check if connection is open again after wakeup
+    $(document).bind('visibilitychange', =>
+      console.log('visibilitychange')
+      return if document.hidden
+      return if !@connectionEstablished
+      console.log('ping')
+      @ping()
+    )
+
   channel: ->
     @backend
 
@@ -153,7 +162,7 @@ class _webSocketSingleton extends App.Controller
     @log 'debug', 'send websocket ping'
     @send(event: 'ping')
 
-    # check if ping is back within 2 min
+    # check if ping is back within 90 sec
     App.Delay.clear 'websocket-ping-check', 'ws'
     check = =>
       @log 'debug', 'no websocket ping response, reconnect...'
@@ -165,7 +174,7 @@ class _webSocketSingleton extends App.Controller
 
     @log 'debug', 'received websocket pong'
 
-    # test again after 1 min
+    # test again after 60 sec
     App.Delay.set(@ping, 60000, 'websocket-pong', 'ws')
 
   connect: =>
