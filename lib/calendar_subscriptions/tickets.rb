@@ -20,6 +20,16 @@ class CalendarSubscriptions::Tickets
     events_data
   end
 
+  def alarm?
+
+    alarm = false
+
+    return alarm if @preferences.empty?
+    return alarm if !@preferences[:alarm]
+
+    @preferences[:alarm]
+  end
+
   def owner_ids(method)
 
     owner_ids = []
@@ -138,10 +148,12 @@ class CalendarSubscriptions::Tickets
       event_data[:dtend]       = Icalendar::Values::DateTime.new(pending_time, 'tzid' => @tzid)
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
-      event_data[:alarm]       = {
-        summary: event_data[:summary],
-        trigger: '-PT1M',
-      }
+      if alarm?
+        event_data[:alarm] = {
+          summary: event_data[:summary],
+          trigger: '-PT1M',
+        }
+      end
 
       events_data.push event_data
     end
@@ -190,10 +202,12 @@ class CalendarSubscriptions::Tickets
       event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_time, 'tzid' => @tzid)
       event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
-      event_data[:alarm]       = {
-        summary: event_data[:summary],
-        trigger: '-PT1M',
-      }
+      if alarm?
+        event_data[:alarm] = {
+          summary: event_data[:summary],
+          trigger: '-PT1M',
+        }
+      end
 
       events_data.push event_data
     end

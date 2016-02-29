@@ -18,6 +18,21 @@
   </form>
 
   <h3><%- @T('Subscription Settings') %></h3>
+  <div class="form-group">
+    <div class="formGroup-label">
+      <label for="notification-sound"><%- @T('Alarm') %></label>
+    </div>
+    <div class="controls">
+      <p>
+        <label class="checkbox-replacement inline-label">
+          <input type="checkbox" name="alarm" value="true" <% if @preferences.alarm: %>checked<% end %>/>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+        <%- @T('Add alarm to pending reminder and escalated tickets.') %>
+      </p>
+    </div>
+  </div>
   <table class="settings-list">
     <thead>
       <tr>
@@ -28,27 +43,29 @@
     </thead>
     <tbody>
       <% for stateType, options of @preferences: %>
-      <tr>
-        <td style="text-transform: capitalize">
-          <%= @translationTable[stateType] %>
-        <td>
-          <label class="inline-label checkbox-replacement">
-            <input type="checkbox" name="<%= stateType %>/own"<%= if options.own then ' checked' %>>
-            <%- @Icon('checkbox', 'icon-unchecked') %>
-            <%- @Icon('checkbox-checked', 'icon-checked') %>
-            <span class="label-text"><%- @T('My Tickets') %></span>
-          </label>
-        <td>
-          <label class="inline-label checkbox-replacement">
-            <input type="checkbox" name="<%= stateType %>/not_assigned"<%= if options.not_assigned then ' checked' %>>
-            <%- @Icon('checkbox', 'icon-unchecked') %>
-            <%- @Icon('checkbox-checked', 'icon-checked') %>
-            <span class="label-text"><%- @T('Not Assigned') %></span>
-          </label>
-        <td>
-          <div class="btn btn--table btn--text js-showLink"><%- @T('Show') %></div>
-          <input class="form-control form-control--borderless js-select is-hidden" readonly value="<%- @baseurl %>/ical/tickets/<%= stateType %>">
-      </tr>
+        <% if _.isObject(options): %>
+          <tr>
+            <td style="text-transform: capitalize">
+              <%= @translationTable[stateType] %>
+            <td>
+              <label class="inline-label checkbox-replacement">
+                <input type="checkbox" name="<%= stateType %>/own"<%= if options.own then ' checked' %>>
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+                <span class="label-text"><%- @T('My Tickets') %></span>
+              </label>
+            <td>
+              <label class="inline-label checkbox-replacement">
+                <input type="checkbox" name="<%= stateType %>/not_assigned"<%= if options.not_assigned then ' checked' %>>
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+                <span class="label-text"><%- @T('Not Assigned') %></span>
+              </label>
+            <td>
+              <div class="btn btn--table btn--text js-showLink"><%- @T('Show') %></div>
+              <input class="form-control form-control--borderless js-select is-hidden" readonly value="<%- @baseurl %>/ical/tickets/<%= stateType %>">
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>

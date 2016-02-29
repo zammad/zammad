@@ -42,14 +42,19 @@ class CalendarSubscriptions extends App.Controller
 
     for i, checkbox of @options.serializeArray()
       [state, option] = checkbox.name.split('/')
-      @preferences[state][option] = true
+      if state && option
+        @preferences[state][option] = true
+      else
+        @preferences[checkbox.name] = true
 
     @store()
 
   setAllPreferencesToFalse: ->
+    @preferences.alarm = false
     for state of @preferences
-      @preferences[state].own = false
-      @preferences[state].not_assigned = false
+      if _.isObject(@preferences)
+        @preferences[state].own = false
+        @preferences[state].not_assigned = false
 
   store: ->
     # get data
@@ -69,22 +74,21 @@ class CalendarSubscriptions extends App.Controller
 
   success: (data, status, xhr) =>
     App.User.full(
-      App.Session.get( 'id' ),
+      App.Session.get('id')
       =>
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent( 'Successfully!' )
+          msg:  App.i18n.translateContent('Successfully!')
         )
-      ,
       true
     )
 
   error: (xhr, status, error) =>
     @render()
-    data = JSON.parse( xhr.responseText )
+    data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent( data.message )
+      msg:  App.i18n.translateContent(data.message)
     )
 
 App.Config.set( 'CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', role: ['Agent'], controller: CalendarSubscriptions }, 'NavBarProfile' )
