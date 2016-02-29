@@ -1604,7 +1604,7 @@ user_community = User.create_or_update(
   email: 'nicole.braun@zammad.org',
   password: '',
   active: true,
-  roles: roles,
+  roles: [roles],
   organization_id: org_community.id,
 )
 
