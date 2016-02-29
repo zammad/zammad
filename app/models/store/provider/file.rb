@@ -53,9 +53,9 @@ class Store::Provider::File
 
     # generate directory
     base     = "#{Rails.root}/storage/fs/"
-    parts    = sha.scan(/.{1,4}/)
-    path     = parts[ 1..10 ].join('/') + '/'
-    file     = parts[ 11..parts.count ].join('')
+    parts    = sha.scan(/.{1,6}/)
+    path     = parts[ 1..6 ].join('/') + '/'
+    file     = parts[ 7..parts.count ].join('')
     location = "#{base}/#{path}"
 
     # create directory if not exists
