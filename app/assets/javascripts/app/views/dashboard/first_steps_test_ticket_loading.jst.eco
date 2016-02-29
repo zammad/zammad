@@ -1,0 +1,5 @@
+<div class="wizard-body vertical justified">
+  <p class="wizard-loadingText">
+    <span class="loading icon"></span>
+  </p>
+</div>

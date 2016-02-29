@@ -1589,7 +1589,7 @@ user = User.create_if_not_exists(
 )
 
 UserInfo.current_user_id = 1
-roles         = Role.where( name: 'Customer' )
+roles         = Role.find_by(name: 'Customer')
 organizations = Organization.all
 groups        = Group.all
 org_community = Organization.create_if_not_exists(
@@ -1608,48 +1608,48 @@ user_community = User.create_or_update(
   organization_id: org_community.id,
 )
 
-Link::Type.create_if_not_exists( id: 1, name: 'normal' )
-Link::Object.create_if_not_exists( id: 1, name: 'Ticket' )
-Link::Object.create_if_not_exists( id: 2, name: 'Announcement' )
-Link::Object.create_if_not_exists( id: 3, name: 'Question/Answer' )
-Link::Object.create_if_not_exists( id: 4, name: 'Idea' )
-Link::Object.create_if_not_exists( id: 5, name: 'Bug' )
+Link::Type.create_if_not_exists(id: 1, name: 'normal')
+Link::Object.create_if_not_exists(id: 1, name: 'Ticket')
+Link::Object.create_if_not_exists(id: 2, name: 'Announcement')
+Link::Object.create_if_not_exists(id: 3, name: 'Question/Answer')
+Link::Object.create_if_not_exists(id: 4, name: 'Idea')
+Link::Object.create_if_not_exists(id: 5, name: 'Bug')
 
-Ticket::StateType.create_if_not_exists( id: 1, name: 'new'  )
-Ticket::StateType.create_if_not_exists( id: 2, name: 'open'  )
-Ticket::StateType.create_if_not_exists( id: 3, name: 'pending reminder' )
-Ticket::StateType.create_if_not_exists( id: 4, name: 'pending action' )
-Ticket::StateType.create_if_not_exists( id: 5, name: 'closed' )
-Ticket::StateType.create_if_not_exists( id: 6, name: 'merged' )
-Ticket::StateType.create_if_not_exists( id: 7, name: 'removed' )
+Ticket::StateType.create_if_not_exists(id: 1, name: 'new' )
+Ticket::StateType.create_if_not_exists(id: 2, name: 'open' )
+Ticket::StateType.create_if_not_exists(id: 3, name: 'pending reminder')
+Ticket::StateType.create_if_not_exists(id: 4, name: 'pending action')
+Ticket::StateType.create_if_not_exists(id: 5, name: 'closed')
+Ticket::StateType.create_if_not_exists(id: 6, name: 'merged')
+Ticket::StateType.create_if_not_exists(id: 7, name: 'removed')
 
-Ticket::State.create_if_not_exists( id: 1, name: 'new', state_type_id: Ticket::StateType.find_by(name: 'new').id,  )
-Ticket::State.create_if_not_exists( id: 2, name: 'open', state_type_id: Ticket::StateType.find_by(name: 'open').id )
-Ticket::State.create_if_not_exists( id: 3, name: 'pending reminder', state_type_id: Ticket::StateType.find_by(name: 'pending reminder').id, ignore_escalation: true )
-Ticket::State.create_if_not_exists( id: 4, name: 'closed', state_type_id: Ticket::StateType.find_by(name: 'closed').id, ignore_escalation: true )
-Ticket::State.create_if_not_exists( id: 5, name: 'merged', state_type_id: Ticket::StateType.find_by(name: 'merged').id, ignore_escalation: true )
-Ticket::State.create_if_not_exists( id: 6, name: 'removed', state_type_id: Ticket::StateType.find_by(name: 'removed').id, active: false, ignore_escalation: true )
-Ticket::State.create_if_not_exists( id: 7, name: 'pending close', state_type_id: Ticket::StateType.find_by(name: 'pending action').id, next_state_id: 4, ignore_escalation: true )
+Ticket::State.create_if_not_exists(id: 1, name: 'new', state_type_id: Ticket::StateType.find_by(name: 'new').id, )
+Ticket::State.create_if_not_exists(id: 2, name: 'open', state_type_id: Ticket::StateType.find_by(name: 'open').id)
+Ticket::State.create_if_not_exists(id: 3, name: 'pending reminder', state_type_id: Ticket::StateType.find_by(name: 'pending reminder').id, ignore_escalation: true)
+Ticket::State.create_if_not_exists(id: 4, name: 'closed', state_type_id: Ticket::StateType.find_by(name: 'closed').id, ignore_escalation: true)
+Ticket::State.create_if_not_exists(id: 5, name: 'merged', state_type_id: Ticket::StateType.find_by(name: 'merged').id, ignore_escalation: true)
+Ticket::State.create_if_not_exists(id: 6, name: 'removed', state_type_id: Ticket::StateType.find_by(name: 'removed').id, active: false, ignore_escalation: true)
+Ticket::State.create_if_not_exists(id: 7, name: 'pending close', state_type_id: Ticket::StateType.find_by(name: 'pending action').id, next_state_id: 4, ignore_escalation: true)
 
-Ticket::Priority.create_if_not_exists( id: 1, name: '1 low' )
-Ticket::Priority.create_if_not_exists( id: 2, name: '2 normal' )
-Ticket::Priority.create_if_not_exists( id: 3, name: '3 high' )
+Ticket::Priority.create_if_not_exists(id: 1, name: '1 low')
+Ticket::Priority.create_if_not_exists(id: 2, name: '2 normal')
+Ticket::Priority.create_if_not_exists(id: 3, name: '3 high')
 
-Ticket::Article::Type.create_if_not_exists( id: 1, name: 'email', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 2, name: 'sms', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 3, name: 'chat', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 4, name: 'fax', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 5, name: 'phone', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 6, name: 'twitter status', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 7, name: 'twitter direct-message', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 8, name: 'facebook feed post', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 9, name: 'facebook feed comment', communication: true )
-Ticket::Article::Type.create_if_not_exists( id: 10, name: 'note', communication: false )
-Ticket::Article::Type.create_if_not_exists( id: 11, name: 'web', communication: true )
+Ticket::Article::Type.create_if_not_exists(id: 1, name: 'email', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 2, name: 'sms', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 3, name: 'chat', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 4, name: 'fax', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 5, name: 'phone', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 6, name: 'twitter status', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 7, name: 'twitter direct-message', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 8, name: 'facebook feed post', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 9, name: 'facebook feed comment', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 10, name: 'note', communication: false)
+Ticket::Article::Type.create_if_not_exists(id: 11, name: 'web', communication: true)
 
-Ticket::Article::Sender.create_if_not_exists( id: 1, name: 'Agent' )
-Ticket::Article::Sender.create_if_not_exists( id: 2, name: 'Customer' )
-Ticket::Article::Sender.create_if_not_exists( id: 3, name: 'System' )
+Ticket::Article::Sender.create_if_not_exists(id: 1, name: 'Agent')
+Ticket::Article::Sender.create_if_not_exists(id: 2, name: 'Customer')
+Ticket::Article::Sender.create_if_not_exists(id: 3, name: 'System')
 
 Macro.create_if_not_exists(
   name: 'Close & Tag as Spam',
@@ -1668,21 +1668,21 @@ Macro.create_if_not_exists(
 
 UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
-  group_id: Group.where( name: 'Users' ).first.id,
-  customer_id: User.where( login: 'nicole.braun@zammad.org' ).first.id,
-  owner_id: User.where( login: '-' ).first.id,
+  group_id: Group.find_by(name: 'Users').id,
+  customer_id: User.find_by(login: 'nicole.braun@zammad.org').id,
+  owner_id: User.find_by(login: '-').id,
   title: 'Welcome to Zammad!',
-  state_id: Ticket::State.where( name: 'new' ).first.id,
-  priority_id: Ticket::Priority.where( name: '2 normal' ).first.id,
+  state_id: Ticket::State.find_by(name: 'new').id,
+  priority_id: Ticket::Priority.find_by(name: '2 normal').id,
 )
 Ticket::Article.create(
   ticket_id: ticket.id,
-  type_id: Ticket::Article::Type.where(name: 'phone' ).first.id,
-  sender_id: Ticket::Article::Sender.where(name: 'Customer' ).first.id,
+  type_id: Ticket::Article::Type.find_by(name: 'phone').id,
+  sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
   from: 'Zammad Feedback <feedback@zammad.org>',
   body: 'Welcome!
 
-Thank you for installing Zammad.
+Thank you for choosing Zammad.
 
 You will find updates and patches at http://zammad.org/. Online
 documentation is available at http://guides.zammad.org/. You can also
@@ -1690,13 +1690,13 @@ use our forums at http://forums.zammad.org/
 
 Regards,
 
-The Zammad.org Project
+The Zammad Project
 ',
   internal: false,
 )
 
 UserInfo.current_user_id = 1
-overview_role = Role.where( name: 'Agent' ).first
+overview_role = Role.find_by(name: 'Agent')
 Overview.create_if_not_exists(
   name: 'My assigned Tickets',
   link: 'my_assigned',
@@ -1858,7 +1858,7 @@ Overview.create_if_not_exists(
   },
 )
 
-overview_role = Role.where( name: 'Customer' ).first
+overview_role = Role.find_by(name: 'Customer')
 Overview.create_if_not_exists(
   name: 'My Tickets',
   link: 'my_tickets',
@@ -1994,8 +1994,8 @@ Network::Category.create_if_not_exists(
   id: 1,
   name: 'Announcements',
   network_id: network.id,
-  network_category_type_id: Network::Category::Type.where(name: 'Announcement').first.id,
-  network_privacy_id: Network::Privacy.where(name: 'logged in and moderator').first.id,
+  network_category_type_id: Network::Category::Type.find_by(name: 'Announcement').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in and moderator').id,
   allow_comments: true,
 )
 Network::Category.create_if_not_exists(
@@ -2003,30 +2003,30 @@ Network::Category.create_if_not_exists(
   name: 'Questions',
   network_id: network.id,
   allow_comments: true,
-  network_category_type_id: Network::Category::Type.where(name: 'Question').first.id,
-  network_privacy_id: Network::Privacy.where(name: 'logged in').first.id,
-#  :network_categories_moderator_user_ids => User.where(:login => '-').first.id,
+  network_category_type_id: Network::Category::Type.find_by(name: 'Question').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
+#  network_categories_moderator_user_ids: User.find_by(:login => '-').id,
 )
 Network::Category.create_if_not_exists(
   id: 3,
   name: 'Ideas',
   network_id: network.id,
-  network_category_type_id: Network::Category::Type.where(name: 'Idea').first.id,
-  network_privacy_id: Network::Privacy.where(name: 'logged in').first.id,
+  network_category_type_id: Network::Category::Type.find_by(name: 'Idea').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
   allow_comments: true,
 )
 Network::Category.create_if_not_exists(
   id: 4,
   name: 'Bug Reports',
   network_id: network.id,
-  network_category_type_id: Network::Category::Type.where(name: 'Bug Report').first.id,
-  network_privacy_id: Network::Privacy.where(name: 'logged in').first.id,
+  network_category_type_id: Network::Category::Type.find_by(name: 'Bug Report').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
   allow_comments: true,
 )
 item = Network::Item.create(
   title: 'Example Announcement',
   body: 'Some announcement....',
-  network_category_id: Network::Category.where(name: 'Announcements').first.id,
+  network_category_id: Network::Category.find_by(name: 'Announcements').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,
@@ -2035,7 +2035,7 @@ Network::Item::Comment.create(
 item = Network::Item.create(
   title: 'Example Question?',
   body: 'Some questions....',
-  network_category_id: Network::Category.where(name: 'Questions').first.id,
+  network_category_id: Network::Category.find_by(name: 'Questions').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,
@@ -2044,7 +2044,7 @@ Network::Item::Comment.create(
 item = Network::Item.create(
   title: 'Example Idea',
   body: 'Some idea....',
-  network_category_id: Network::Category.where(name: 'Ideas').first.id,
+  network_category_id: Network::Category.find_by(name: 'Ideas').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,
@@ -2053,7 +2053,7 @@ Network::Item::Comment.create(
 item = Network::Item.create(
   title: 'Example Bug Report',
   body: 'Some bug....',
-  network_category_id: Network::Category.where(name: 'Bug Reports').first.id,
+  network_category_id: Network::Category.find_by(name: 'Bug Reports').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,

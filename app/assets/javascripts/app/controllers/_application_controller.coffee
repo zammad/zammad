@@ -637,6 +637,7 @@ class App.ControllerModal extends App.Controller
   buttonSubmit: true
   headPrefix: ''
   shown: true
+  closeOnAnyClick: false
 
   events:
     'submit form':                        'submit'
@@ -723,6 +724,11 @@ class App.ControllerModal extends App.Controller
       'hidden.bs.modal': =>
         @onClosed()
         $('.modal').remove()
+
+    if @closeOnAnyClick
+      @el.on('click', =>
+        @close()
+      )
 
   close: (e) =>
     if e
