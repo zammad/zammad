@@ -63,6 +63,9 @@ store device for user
     }
 
     # generate device name
+    if browser[:name] == 'Generic Browser'
+      browser[:name] = user_agent
+    end
     name = ''
     if browser[:plattform] && browser[:plattform] != 'Other'
       name = browser[:plattform]
