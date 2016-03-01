@@ -7,7 +7,7 @@ class App.DashboardFirstSteps extends App.Controller
 
   constructor: ->
     super
-    @interval(@load, 35000)
+    @interval(@load, 25000)
 
   load: =>
     return if @lastData && !@el.is(':visible')

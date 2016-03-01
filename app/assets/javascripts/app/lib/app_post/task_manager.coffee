@@ -1,38 +1,38 @@
 class App.TaskManager
   _instance = undefined
 
-  @init: ( params ) ->
-    _instance ?= new _taskManagerSingleton( params )
+  @init: (params) ->
+    _instance ?= new _taskManagerSingleton(params)
 
   @all: ->
     _instance.all()
 
-  @execute: ( params ) ->
-    _instance.execute( params )
+  @execute: (params) ->
+    _instance.execute(params)
 
-  @get: ( key ) ->
-    _instance.get( key )
+  @get: (key) ->
+    _instance.get(key)
 
-  @update: ( key, params ) ->
-    _instance.update( key, params )
+  @update: (key, params) ->
+    _instance.update(key, params)
 
   @remove: (key, rerender = true) ->
     _instance.remove(key, rerender)
 
-  @notify: ( key ) ->
-    _instance.notify( key )
+  @notify: (key) ->
+    _instance.notify(key)
 
-  @mute: ( key ) ->
-    _instance.mute( key )
+  @mute: (key) ->
+    _instance.mute(key)
 
-  @reorder: ( order ) ->
-    _instance.reorder( order )
+  @reorder: (order) ->
+    _instance.reorder(order)
 
   @reset: ->
     _instance.reset()
 
-  @worker: ( key ) ->
-    _instance.worker( key )
+  @worker: (key) ->
+    _instance.worker(key)
 
   @nextTaskUrl: ->
     _instance.nextTaskUrl()
@@ -181,7 +181,7 @@ class _taskManagerSingleton extends App.Controller
         if task.key isnt params.key
           if task.active
             task.active = false
-            @taskUpdate( task )
+            @taskUpdate(task)
         else
           changed = false
           if !task.active
@@ -191,7 +191,7 @@ class _taskManagerSingleton extends App.Controller
             changed = true
             task.notify = false
           if changed
-            @taskUpdate( task )
+            @taskUpdate(task)
 
     # start worker for task if not exists
     @startController(params)
@@ -405,12 +405,12 @@ class _taskManagerSingleton extends App.Controller
     return if @offlineModus
     for key of @tasksToUpdate
       continue if !key
-      task = @get( key )
+      task = @get(key)
       continue if !task
       if @tasksToUpdate[ task.key ] is 'toUpdate'
         @tasksToUpdate[ task.key ] = 'inProgress'
         taskUpdate = new App.Taskbar
-        taskUpdate.load( task )
+        taskUpdate.load(task)
         if taskUpdate.isOnline()
           ui = @
           taskUpdate.save(
@@ -456,11 +456,11 @@ class _taskManagerSingleton extends App.Controller
 
     # initial load of permanent tasks
     authentication = App.Session.get('id')
-    permanentTask  = App.Config.get( 'permanentTask' )
+    permanentTask  = App.Config.get('permanentTask')
     task_count     = 0
     if permanentTask
       for key, config of permanentTask
-        if !config.authentication || ( config.authentication && authentication )
+        if !config.authentication || (config.authentication && authentication)
           task_count += 1
           do (key, config, task_count) =>
             App.Delay.set(
