@@ -13,3 +13,5 @@ rails r "Setting.set('chat_agent_idle_timeout', '45')"
 pumactl start --pidfile tmp/pids/puma.pid -d -p $APP_PORT -e $RAILS_ENV
 script/websocket-server.rb start -d -p $WS_PORT
 script/scheduler.rb start
+
+sleep 5
