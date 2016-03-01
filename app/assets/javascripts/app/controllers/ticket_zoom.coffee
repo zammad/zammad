@@ -351,7 +351,7 @@ class App.TicketZoom extends App.Controller
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
       new App.WidgetAvatar(
-        el:      @$('.ticketZoom-header .js-avatar')
+        el:      elLocal.find('.ticketZoom-header .js-avatar')
         user_id: @ticket.customer_id
         size:    50
       )
@@ -381,12 +381,12 @@ class App.TicketZoom extends App.Controller
       )
 
     # scroll to article if given
-    if @article_id && document.getElementById( 'article-' + @article_id )
-      offset = document.getElementById( 'article-' + @article_id ).offsetTop
+    if @article_id && document.getElementById('article-' + @article_id)
+      offset = document.getElementById('article-' + @article_id).offsetTop
       offset = offset - 45
       scrollTo = ->
-        @scrollTo( 0, offset )
-      @delay( scrollTo, 100, false )
+        @scrollTo(0, offset)
+      @delay(scrollTo, 100, false)
 
     @ticketLastAttributes = @ticket.attributes()
 
@@ -476,8 +476,8 @@ class App.TicketZoom extends App.Controller
     resetButton   = @$('.js-reset')
 
     params         = {}
-    params.ticket  = @formParam( ticketForm )
-    params.article = @formParam( articleForm )
+    params.ticket  = @formParam(ticketForm)
+    params.article = @formParam(articleForm)
     #console.log('markFormDiff', diff, params)
 
     # clear all changes
@@ -731,6 +731,6 @@ class TicketZoomRouter extends App.ControllerPermanent
       show:       true
     )
 
-App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes' )
+App.Config.set('ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes')
+App.Config.set('ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes')
+App.Config.set('ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes')
