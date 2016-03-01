@@ -44,7 +44,7 @@ dedicated:
           read_timeout: 16,
         }
       )
-      fail "Can't load translations from #{url}: #{result.error}" if !result.success?
+      raise "Can't load translations from #{url}: #{result.error}" if !result.success?
 
       translations = Translation.where(locale: locale).all
       ActiveRecord::Base.transaction do
@@ -120,7 +120,7 @@ push translations to online
         read_timeout: 16,
       }
     )
-    fail "Can't push translations to #{url}: #{result.error}" if !result.success?
+    raise "Can't push translations to #{url}: #{result.error}" if !result.success?
 
     # set new translator_key if given
     if result.data['translator_key']

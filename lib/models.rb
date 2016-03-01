@@ -215,7 +215,7 @@ returns
     if force
       total = references_total(object_name, object_id_to_merge)
       if total > 1000
-        fail "Can't merge object because object has more then 1000 (#{total}) references, please contact your system administrator."
+        raise "Can't merge object because object has more then 1000 (#{total}) references, please contact your system administrator."
       end
     end
 

@@ -18,11 +18,11 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
     return if type['name'] !~ /\Atwitter/i
 
     ticket = Ticket.lookup(id: record.ticket_id)
-    fail "Can't find ticket.preferences for Ticket.find(#{record.ticket_id})" if !ticket.preferences
-    fail "Can't find ticket.preferences['channel_id'] for Ticket.find(#{record.ticket_id})" if !ticket.preferences['channel_id']
+    raise "Can't find ticket.preferences for Ticket.find(#{record.ticket_id})" if !ticket.preferences
+    raise "Can't find ticket.preferences['channel_id'] for Ticket.find(#{record.ticket_id})" if !ticket.preferences['channel_id']
     channel = Channel.lookup(id: ticket.preferences['channel_id'])
-    fail "No such channel id #{ticket.preferences['channel_id']}" if !channel
-    fail "Channel.find(#{channel.id}) isn't a twitter channel!" if channel.options[:adapter] !~ /\Atwitter/i
+    raise "No such channel id #{ticket.preferences['channel_id']}" if !channel
+    raise "Channel.find(#{channel.id}) isn't a twitter channel!" if channel.options[:adapter] !~ /\Atwitter/i
     tweet = channel.deliver(
       type:        type['name'],
       to:          record.to,
@@ -54,7 +54,7 @@ class Observer::Ticket::Article::CommunicateTwitter < ActiveRecord::Observer
         record.preferences[:twitter_mention_ids] = twitter_mention_ids
       end
     else
-      fail "Unknown tweet type '#{tweet.class}'"
+      raise "Unknown tweet type '#{tweet.class}'"
     end
 
     record.message_id = tweet.id

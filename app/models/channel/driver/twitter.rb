@@ -184,7 +184,7 @@ returns
 
   def stream
     sync = @channel.options['sync']
-    fail 'Need channel.options[\'sync\'] for account, but no params found' if !sync
+    raise 'Need channel.options[\'sync\'] for account, but no params found' if !sync
 
     filter = {}
     if sync['search']
@@ -315,7 +315,7 @@ returns
   def check_external_credential(options)
     if options[:auth] && options[:auth][:external_credential_id]
       external_credential = ExternalCredential.find_by(id: options[:auth][:external_credential_id])
-      fail "No such ExternalCredential.find(#{options[:auth][:external_credential_id]})" if !external_credential
+      raise "No such ExternalCredential.find(#{options[:auth][:external_credential_id]})" if !external_credential
       options[:auth][:consumer_key] = external_credential.credentials['consumer_key']
       options[:auth][:consumer_secret] = external_credential.credentials['consumer_secret']
     end

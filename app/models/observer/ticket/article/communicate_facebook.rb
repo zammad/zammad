@@ -20,15 +20,15 @@ class Observer::Ticket::Article::CommunicateFacebook < ActiveRecord::Observer
     return if type['name'] !~ /\Afacebook/
 
     ticket = Ticket.lookup(id: record.ticket_id)
-    fail "Can't find ticket.preferences for Ticket.find(#{record.ticket_id})" if !ticket.preferences
-    fail "Can't find ticket.preferences['channel_id'] for Ticket.find(#{record.ticket_id})" if !ticket.preferences['channel_id']
+    raise "Can't find ticket.preferences for Ticket.find(#{record.ticket_id})" if !ticket.preferences
+    raise "Can't find ticket.preferences['channel_id'] for Ticket.find(#{record.ticket_id})" if !ticket.preferences['channel_id']
     channel = Channel.lookup(id: ticket.preferences['channel_id'])
-    fail "Channel.find(#{channel.id}) isn't a twitter channel!" if channel.options[:adapter] !~ /\Afacebook/i
+    raise "Channel.find(#{channel.id}) isn't a twitter channel!" if channel.options[:adapter] !~ /\Afacebook/i
 
     # check source object id
     ticket = record.ticket
     if !ticket.preferences['channel_fb_object_id']
-      fail "fb object id is missing in ticket.preferences['channel_fb_object_id'] for Ticket.find(#{ticket.id})"
+      raise "fb object id is missing in ticket.preferences['channel_fb_object_id'] for Ticket.find(#{ticket.id})"
     end
 
     # fill in_reply_to

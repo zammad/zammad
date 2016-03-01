@@ -1,6 +1,6 @@
 class Sessions::Backend::ActivityStream
 
-  def initialize( user, client = nil, client_id = nil, ttl = 30 )
+  def initialize(user, client = nil, client_id = nil, ttl = 25)
     @user        = user
     @client      = client
     @client_id   = client_id
@@ -11,7 +11,7 @@ class Sessions::Backend::ActivityStream
   def load
 
     # get whole collection
-    activity_stream = @user.activity_stream( 25 )
+    activity_stream = @user.activity_stream(25)
     if activity_stream && !activity_stream.first
       return
     end
@@ -25,7 +25,7 @@ class Sessions::Backend::ActivityStream
       @last_change = activity_stream.first['created_at']
     end
 
-    @user.activity_stream( 25, true )
+    @user.activity_stream(25, true)
   end
 
   def client_key
@@ -35,11 +35,11 @@ class Sessions::Backend::ActivityStream
   def push
 
     # check timeout
-    timeout = Sessions::CacheIn.get( client_key )
+    timeout = Sessions::CacheIn.get(client_key)
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
 
     data = load
 

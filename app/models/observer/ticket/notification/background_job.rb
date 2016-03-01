@@ -162,7 +162,7 @@ class Observer::Ticket::Notification::BackgroundJob
       elsif @p[:type] == 'escalation_warning'
         template = 'ticket_escalation_warning'
       else
-        fail "unknown type for notification #{@p[:type]}"
+        raise "unknown type for notification #{@p[:type]}"
       end
 
       NotificationFactory.notification(

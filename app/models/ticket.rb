@@ -367,7 +367,7 @@ get count of tickets and tickets which match on selector
 =end
 
   def self.selectors(selectors, limit = 10, current_user = nil)
-    fail 'no selectors given' if !selectors
+    raise 'no selectors given' if !selectors
     query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
 
@@ -454,7 +454,7 @@ condition example
         tables += ', users owners'
         query += 'tickets.owner_id = owners.id'
       else
-        fail "invalid selector #{attribute.inspect}->#{selector.inspect}"
+        raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
     }
 
@@ -462,10 +462,10 @@ condition example
     selectors.each {|attribute, selector_raw|
 
       # validation
-      fail "Invalid selector #{selector_raw.inspect}" if !selector_raw
-      fail "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
+      raise "Invalid selector #{selector_raw.inspect}" if !selector_raw
+      raise "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
       selector = selector_raw.stringify_keys
-      fail "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
+      raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
 
       # validate value / allow empty but only if pre_condition exists
       if (selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:empty?) && selector['value'].empty?)
@@ -492,11 +492,11 @@ condition example
             query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
-          fail "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
+          raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
           query += "#{attribute} IN (?)"
           bind_params.push current_user_id
         elsif selector['pre_condition'] == 'current_user.organization_id'
-          fail "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
+          raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
           query += "#{attribute} IN (?)"
           user = User.lookup(id: current_user_id)
           bind_params.push user.organization_id
@@ -563,7 +563,7 @@ condition example
         elsif selector['range'] == 'year'
           time = Time.zone.now - selector['value'].to_i.years
         else
-          fail "Unknown selector attributes '#{selector.inspect}'"
+          raise "Unknown selector attributes '#{selector.inspect}'"
         end
         bind_params.push time
       elsif selector['operator'] == 'within next (relative)'
@@ -580,7 +580,7 @@ condition example
         elsif selector['range'] == 'year'
           time = Time.zone.now + selector['value'].to_i.years
         else
-          fail "Unknown selector attributes '#{selector.inspect}'"
+          raise "Unknown selector attributes '#{selector.inspect}'"
         end
         bind_params.push time
       elsif selector['operator'] == 'before (relative)'
@@ -597,7 +597,7 @@ condition example
         elsif selector['range'] == 'year'
           time = Time.zone.now - selector['value'].to_i.years
         else
-          fail "Unknown selector attributes '#{selector.inspect}'"
+          raise "Unknown selector attributes '#{selector.inspect}'"
         end
         bind_params.push time
       elsif selector['operator'] == 'after (relative)'
@@ -614,11 +614,11 @@ condition example
         elsif selector['range'] == 'year'
           time = Time.zone.now + selector['value'].to_i.years
         else
-          fail "Unknown selector attributes '#{selector.inspect}'"
+          raise "Unknown selector attributes '#{selector.inspect}'"
         end
         bind_params.push time
       else
-        fail "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
+        raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end
     }
     [query, bind_params, tables]

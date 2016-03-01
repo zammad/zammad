@@ -4,13 +4,13 @@ require 'integration_test_helper'
 class ZendeskImportTest < ActiveSupport::TestCase
 
   if !ENV['IMPORT_ZENDESK_ENDPOINT']
-    fail "ERROR: Need IMPORT_ZENDESK_ENDPOINT - hint IMPORT_ZENDESK_ENDPOINT='https://example.zendesk.com/api/v2'"
+    raise "ERROR: Need IMPORT_ZENDESK_ENDPOINT - hint IMPORT_ZENDESK_ENDPOINT='https://example.zendesk.com/api/v2'"
   end
   if !ENV['IMPORT_ZENDESK_ENDPOINT_KEY']
-    fail "ERROR: Need IMPORT_ZENDESK_ENDPOINT_KEY - hint IMPORT_ZENDESK_ENDPOINT_KEY='01234567899876543210'"
+    raise "ERROR: Need IMPORT_ZENDESK_ENDPOINT_KEY - hint IMPORT_ZENDESK_ENDPOINT_KEY='01234567899876543210'"
   end
   if !ENV['IMPORT_ZENDESK_ENDPOINT_USERNAME']
-    fail "ERROR: Need IMPORT_ZENDESK_ENDPOINT_USERNAME - hint IMPORT_ZENDESK_ENDPOINT_USERNAME='bob.ross@happylittletrees.com'"
+    raise "ERROR: Need IMPORT_ZENDESK_ENDPOINT_USERNAME - hint IMPORT_ZENDESK_ENDPOINT_USERNAME='bob.ross@happylittletrees.com'"
   end
 
   Setting.set('import_zendesk_endpoint', ENV['IMPORT_ZENDESK_ENDPOINT'])

@@ -12,9 +12,9 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
 
     # send email
     if !ticket.group.email_address_id
-      fail "Can't send email, no email address definde for group id '#{ticket.group.id}'"
+      raise "Can't send email, no email address definde for group id '#{ticket.group.id}'"
     elsif !ticket.group.email_address.channel_id
-      fail "Can't send email, no channel definde for email_address id '#{ticket.group.email_address_id}'"
+      raise "Can't send email, no channel definde for email_address id '#{ticket.group.email_address_id}'"
     end
 
     channel = ticket.group.email_address.channel

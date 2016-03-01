@@ -322,7 +322,7 @@ returns
         code: response.code,
       )
     when Net::HTTPRedirection
-      fail 'Too many redirections for the original URL, halting.' if count <= 0
+      raise 'Too many redirections for the original URL, halting.' if count <= 0
       url = response['location']
       return get(url, params, options, count - 1)
     when Net::HTTPOK
@@ -351,7 +351,7 @@ returns
       )
     end
 
-    fail "Unable to process http call '#{response.inspect}'"
+    raise "Unable to process http call '#{response.inspect}'"
   end
 
   def self.ftp(uri, options)

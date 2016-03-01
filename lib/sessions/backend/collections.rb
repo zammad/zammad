@@ -1,6 +1,6 @@
 class Sessions::Backend::Collections
 
-  def initialize( user, client, client_id, ttl = 10 )
+  def initialize(user, client, client_id, ttl = 10)
     @user      = user
     @client    = client
     @client_id = client_id
@@ -28,7 +28,7 @@ class Sessions::Backend::Collections
 
     # load collections to deliver from external files
     dir = File.expand_path('../../../../', __FILE__)
-    files = Dir.glob( "#{dir}/lib/sessions/backend/collections/*.rb" )
+    files = Dir.glob("#{dir}/lib/sessions/backend/collections/*.rb")
     files.each { |file|
       file.gsub!("#{dir}/lib/", '')
       file.gsub!(/\.rb$/, '')

@@ -32,7 +32,7 @@ returns
 
   def self.data
     auto_wizard_file_location = file_location
-    fail "So such file #{auto_wizard_file_location}" if !File.file?(auto_wizard_file_location)
+    raise "So such file #{auto_wizard_file_location}" if !File.file?(auto_wizard_file_location)
     JSON.parse( File.read(auto_wizard_file_location) )
   end
 

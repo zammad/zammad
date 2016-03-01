@@ -17,23 +17,23 @@ class TwitterTest < ActiveSupport::TestCase
 
   # app config
   if !ENV['TWITTER_CONSUMER_KEY']
-    fail "ERROR: Need TWITTER_CONSUMER_KEY - hint TWITTER_CONSUMER_KEY='1234'"
+    raise "ERROR: Need TWITTER_CONSUMER_KEY - hint TWITTER_CONSUMER_KEY='1234'"
   end
   if !ENV['TWITTER_CONSUMER_SECRET']
-    fail "ERROR: Need TWITTER_CONSUMER_SECRET - hint TWITTER_CONSUMER_SECRET='1234'"
+    raise "ERROR: Need TWITTER_CONSUMER_SECRET - hint TWITTER_CONSUMER_SECRET='1234'"
   end
   consumer_key    = ENV['TWITTER_CONSUMER_KEY']
   consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
 
   # armin_theo (is system and is following marion_bauer)
   if !ENV['TWITTER_SYSTEM_LOGIN']
-    fail "ERROR: Need TWITTER_SYSTEM_LOGIN - hint TWITTER_SYSTEM_LOGIN='@system'"
+    raise "ERROR: Need TWITTER_SYSTEM_LOGIN - hint TWITTER_SYSTEM_LOGIN='@system'"
   end
   if !ENV['TWITTER_SYSTEM_TOKEN']
-    fail "ERROR: Need TWITTER_SYSTEM_TOKEN - hint TWITTER_SYSTEM_TOKEN='1234'"
+    raise "ERROR: Need TWITTER_SYSTEM_TOKEN - hint TWITTER_SYSTEM_TOKEN='1234'"
   end
   if !ENV['TWITTER_SYSTEM_TOKEN_SECRET']
-    fail "ERROR: Need TWITTER_SYSTEM_TOKEN_SECRET - hint TWITTER_SYSTEM_TOKEN_SECRET='1234'"
+    raise "ERROR: Need TWITTER_SYSTEM_TOKEN_SECRET - hint TWITTER_SYSTEM_TOKEN_SECRET='1234'"
   end
   system_login            = ENV['TWITTER_SYSTEM_LOGIN']
   system_login_without_at = system_login[1, system_login.length]
@@ -42,13 +42,13 @@ class TwitterTest < ActiveSupport::TestCase
 
   # me_bauer (is customer and is following armin_theo)
   if !ENV['TWITTER_CUSTOMER_LOGIN']
-    fail "ERROR: Need CUSTOMER_LOGIN - hint TWITTER_CUSTOMER_LOGIN='@customer'"
+    raise "ERROR: Need CUSTOMER_LOGIN - hint TWITTER_CUSTOMER_LOGIN='@customer'"
   end
   if !ENV['TWITTER_CUSTOMER_TOKEN']
-    fail "ERROR: Need CUSTOMER_TOKEN - hint TWITTER_CUSTOMER_TOKEN='1234'"
+    raise "ERROR: Need CUSTOMER_TOKEN - hint TWITTER_CUSTOMER_TOKEN='1234'"
   end
   if !ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
-    fail "ERROR: Need CUSTOMER_TOKEN_SECRET - hint TWITTER_CUSTOMER_TOKEN_SECRET='1234'"
+    raise "ERROR: Need CUSTOMER_TOKEN_SECRET - hint TWITTER_CUSTOMER_TOKEN_SECRET='1234'"
   end
   customer_login        = ENV['TWITTER_CUSTOMER_LOGIN']
   customer_token        = ENV['TWITTER_CUSTOMER_TOKEN']

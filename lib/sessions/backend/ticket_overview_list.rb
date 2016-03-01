@@ -1,5 +1,5 @@
 class Sessions::Backend::TicketOverviewList
-  def initialize( user, client = nil, client_id = nil, ttl = 6 )
+  def initialize(user, client = nil, client_id = nil, ttl = 7)
     @user               = user
     @client             = client
     @client_id          = client_id
@@ -45,10 +45,10 @@ class Sessions::Backend::TicketOverviewList
   def push
 
     # check interval
-    return if Sessions::CacheIn.get( client_key )
+    return if Sessions::CacheIn.get(client_key)
 
     # reset check interval
-    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
 
     # check if min one ticket has changed
     last_ticket_change = Ticket.latest_change
@@ -67,7 +67,7 @@ class Sessions::Backend::TicketOverviewList
 
       assets = {}
       overview_data[:ticket_ids].each {|ticket_id|
-        ticket = Ticket.find( ticket_id )
+        ticket = Ticket.find(ticket_id)
         assets = ticket.assets(assets)
       }
 

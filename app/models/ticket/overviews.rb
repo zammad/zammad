@@ -72,7 +72,7 @@ returns
     }
 
     if data[:view] && !overview_selected
-      fail "No such view '#{data[:view]}'"
+      raise "No such view '#{data[:view]}'"
     end
 
     # get only tickets with permissions

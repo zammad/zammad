@@ -23,14 +23,14 @@ module Import::OTRS
   def self.request_json(data, data_only = false)
     response = post(data)
     if !response
-      fail "Can't connect to Zammad Migrator"
+      raise "Can't connect to Zammad Migrator"
     end
     if !response.success?
-      fail "Can't connect to Zammad Migrator"
+      raise "Can't connect to Zammad Migrator"
     end
     result = json(response)
     if !result
-      fail 'Invalid response'
+      raise 'Invalid response'
     end
     if data_only
       result['Result']
@@ -303,12 +303,12 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-      fail 'System is not in import mode!'
+      raise 'System is not in import mode!'
     end
 
     result = request_json({})
     if !result['Success']
-      fail 'API key not valid!'
+      raise 'API key not valid!'
     end
 
     # set settings
@@ -495,7 +495,7 @@ module Import::OTRS
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-      fail 'System is not in import mode!'
+      raise 'System is not in import mode!'
     end
 
     # create states

@@ -26,7 +26,7 @@ do also verify of written data
         # load backend based on config
         adapter_name = Setting.get('storage_provider') || 'DB'
         if !adapter_name
-          fail 'Missing storage_provider setting option'
+          raise 'Missing storage_provider setting option'
         end
         adapter = load_adapter("Store::Provider::#{adapter_name}")
         adapter.add(data, sha)
@@ -40,7 +40,7 @@ do also verify of written data
           read_data = adapter.get(sha)
           read_sha = Digest::SHA256.hexdigest(read_data)
           if sha != read_sha
-            fail "Content not written correctly (provider #{adapter_name})."
+            raise "Content not written correctly (provider #{adapter_name})."
           end
         end
       end

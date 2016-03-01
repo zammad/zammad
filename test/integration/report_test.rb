@@ -5,11 +5,11 @@ class ReportTest < ActiveSupport::TestCase
 
   # set config
   if !ENV['ES_URL']
-    fail "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
+    raise "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
   end
   Setting.set('es_url', ENV['ES_URL'])
   if !ENV['ES_INDEX'] && !ENV['ES_INDEX_RAND']
-    fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+    raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
   end
   if ENV['ES_INDEX_RAND']
     ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"

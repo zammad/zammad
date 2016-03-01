@@ -27,7 +27,7 @@ class ExternalCredential::Twitter
   end
 
   def self.link_account(request_token, params)
-    fail if request_token.params[:oauth_token] != params[:oauth_token]
+    raise if request_token.params[:oauth_token] != params[:oauth_token]
     external_credential = ExternalCredential.find_by(name: 'twitter')
     access_token = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
     client = Twitter::REST::Client.new(

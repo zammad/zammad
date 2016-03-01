@@ -1,7 +1,7 @@
 class Sessions::Backend::Collections::Base
   class << self; attr_accessor :model, :roles, :not_roles end
 
-  def initialize( user, client, client_id, ttl )
+  def initialize(user, client, client_id, ttl)
     @user        = user
     @client      = client
     @client_id   = client_id
@@ -42,11 +42,11 @@ class Sessions::Backend::Collections::Base
     end
 
     # check timeout
-    timeout = Sessions::CacheIn.get( client_key )
+    timeout = Sessions::CacheIn.get(client_key)
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
 
     # check if update has been done
     last_change = self.class.model.constantize.latest_change

@@ -268,7 +268,7 @@ returns
     if location =~ /^http/i
       result = UserAgent.get(location)
       if !result.success?
-        fail result.error
+        raise result.error
       end
       cal_file = result.body
     else
