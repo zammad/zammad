@@ -350,15 +350,15 @@ class App.TicketZoom extends App.Controller
 
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
-      new App.WidgetAvatar(
-        el:      elLocal.find('.ticketZoom-header .js-avatar')
-        user_id: @ticket.customer_id
-        size:    50
-      )
       if elLocal
         el = elLocal
       else
         el = @el
+      new App.WidgetAvatar(
+        el:      el.find('.ticketZoom-header .js-avatar')
+        user_id: @ticket.customer_id
+        size:    50
+      )
       @sidebar = new App.TicketZoomSidebar(
         el:           el.find('.tabsSidebar')
         sidebarState: @sidebarState
