@@ -21,6 +21,11 @@ store device for user
 
   def self.add(user_agent, ip, user_id, fingerprint, type)
 
+    # since gem browser 2 is not handling nil for user_agent, set it to ''
+    if user_agent.nil?
+      user_agent = ''
+    end
+
     # get location info
     location_details = Service::GeoIp.location(ip)
     location = 'unknown'
@@ -49,7 +54,7 @@ store device for user
     end
 
     # get browser details
-    browser = Browser.new(ua: user_agent, accept_language: 'en-us')
+    browser = Browser.new(user_agent, accept_language: 'en-us')
     browser = {
       plattform: browser.platform.to_s.camelize,
       name: browser.name,
