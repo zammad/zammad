@@ -314,17 +314,18 @@ returns
     template_body = ''
     locale = data[:locale] || 'en'
     template = data[:template]
-    location = "app/views/mailer/#{template}/#{locale}.html.erb"
+    root = Rails.root
+    location = "#{root}/app/views/mailer/#{template}/#{locale}.html.erb"
 
     # as fallback, use 2 char locale
     if !File.exist?(location)
       locale = locale[0, 2]
-      location = "app/views/mailer/#{template}/#{locale}.html.erb"
+      location = "#{root}/app/views/mailer/#{template}/#{locale}.html.erb"
     end
 
     # as fallback, use en
     if !File.exist?(location)
-      location = "app/views/mailer/#{template}/en.html.erb"
+      location = "#{root}/app/views/mailer/#{template}/en.html.erb"
     end
 
     File.open(location, 'r:UTF-8').each do |line|
@@ -340,7 +341,7 @@ returns
 
     if !data[:raw]
       application_template = nil
-      File.open('app/views/mailer/application.html.erb', 'r:UTF-8') do |file|
+      File.open("#{root}/app/views/mailer/application.html.erb", 'r:UTF-8') do |file|
         application_template = file.read
       end
       data[:objects][:message] = message_body
