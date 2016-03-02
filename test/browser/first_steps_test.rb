@@ -44,6 +44,7 @@ class FirstStepsTest < TestCase
     )
     click(
       css: '.modal button.btn.btn--primary',
+      fast: true,
     )
     watch_for(
       css:   'body div.modal',
@@ -77,6 +78,7 @@ class FirstStepsTest < TestCase
     )
     click(
       css: '.modal button.btn.btn--primary',
+      fast: true,
     )
     watch_for(
       css:   'body div.modal',
@@ -90,6 +92,7 @@ class FirstStepsTest < TestCase
     # test ticket
     click(
       css: '.active.content .js-testTicket',
+      fast: true,
     )
     watch_for(
       css:   'body div.modal',
@@ -97,6 +100,7 @@ class FirstStepsTest < TestCase
     )
     click(
       css: '.modal .modal-body',
+      fast: true,
     )
     watch_for_disappear(
       css:   'body div.modal',
