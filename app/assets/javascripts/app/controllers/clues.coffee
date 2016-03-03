@@ -8,7 +8,7 @@ class Index extends App.Controller
     new App.FirstStepsClues(
       el: @el
       onComplete: =>
-        @ajax(
+        App.Ajax.request(
           id:          'preferences'
           type:        'PUT'
           url:         @apiPath + '/users/preferences'

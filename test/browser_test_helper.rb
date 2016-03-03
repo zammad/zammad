@@ -1626,6 +1626,7 @@ wait untill text in selector disabppears
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
         if !text || text.empty?
           screenshot(browser: instance, comment: 'ticket_update_ok')
+          sleep 1
           return true
         end
       rescue
