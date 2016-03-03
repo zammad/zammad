@@ -1,4 +1,4 @@
-class App.OverviewCollection
+class App.OverviewListCollection
   _instance = undefined # Must be declared here to force the closure on the class
 
   @get: (view) ->
@@ -35,18 +35,11 @@ class _Singleton
     @counter = 0
 
     # websocket updates
-    App.Event.bind 'ticket_overview_rebuild', (data) =>
-      if !@overview[data.view]
-        @overview[data.view] = {}
-
-      # proccess assets, delete them later
-      if data.assets
-        App.Collection.loadAssets( data.assets )
-      delete data.assets
-
-      @overview[data.view] = data
-
-      @callback(data.view, data)
+    App.Event.bind 'ticket_overview_list', (data) =>
+      if !@overview[data.overview.view]
+        @overview[data.overview.view] = {}
+      @overview[data.overview.view] = data
+      @callback(data.overview.view, data)
 
   get: (view) ->
     @overview[view]
@@ -70,6 +63,14 @@ class _Singleton
     delete @callbacks[counter]
 
   fetch: (view) =>
+    if App.WebSocket.support()
+      App.WebSocket.send(
+        event: 'ticket_overview_list'
+        view: view
+      )
+      return
+
+    App.OverviewIndexCollection.fetch()
     return if @fetchActive[view]
     @fetchActive[view] = true
     App.Ajax.request(
@@ -81,15 +82,10 @@ class _Singleton
       processData: true,
       success: (data) =>
         @fetchActive[view] = false
-
-        # proccess assets, delete them later
         if data.assets
-          App.Collection.loadAssets( data.assets )
-        delete data.assets
-
-        @overview[data.view] = data
-
-        @callback(view, data)
+          App.Collection.loadAssets(data.assets)
+        @overview[data.index.overview.view] = data.index
+        @callback(view, data.index)
       error: =>
         @fetchActive[view] = false
     )

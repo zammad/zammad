@@ -637,7 +637,7 @@ class TestCase < Test::Unit::TestCase
     if params[:slow]
       sleep 2
     else
-      sleep 0.6
+      sleep 0.3
     end
   end
 
@@ -1171,7 +1171,7 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
 
     (1..100).each do
-      sleep 1
+      sleep 0.2
       begin
         if instance.find_elements(css: '.navigation .tasks .task:first-child')[0]
           instance.mouse.move_to(instance.find_elements(css: '.navigation .tasks .task:first-child')[0])
@@ -1193,7 +1193,6 @@ wait untill text in selector disabppears
         # try again
       end
     end
-    sleep 1
     assert(true, 'all tasks closed')
   end
 

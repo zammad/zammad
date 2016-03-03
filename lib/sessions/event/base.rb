@@ -25,6 +25,30 @@ class Sessions::Event::Base
     end
   end
 
+  def valid_session?
+    if !@session
+      error = {
+        event: 'error',
+        data: {
+          state: 'no_session',
+        },
+      }
+      Sessions.send(@client_id, error)
+      return
+    end
+    if !@session['id']
+      error = {
+        event: 'error',
+        data: {
+          state: 'no_session_user_id',
+        },
+      }
+      Sessions.send(@client_id, error)
+      return
+    end
+    true
+  end
+
   def log(level, data, client_id = nil)
     if !@options[:v]
       return if level == 'debug'

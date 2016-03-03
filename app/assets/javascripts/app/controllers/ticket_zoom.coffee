@@ -618,25 +618,25 @@ class App.TicketZoom extends App.Controller
           if @overview_id
             current_position = 0
             overview = App.Overview.find(@overview_id)
-            list = App.OverviewCollection.get(overview.link)
-            for ticket_id in list.ticket_ids
+            list = App.OverviewListCollection.get(overview.link)
+            for ticket in list.tickets
               current_position += 1
-              if ticket_id is @ticket_id
-                next = list.ticket_ids[current_position]
+              if ticket.id is @ticket_id
+                next = list.tickets[current_position]
                 if next
                   # close task
                   App.TaskManager.remove(@task_key)
 
                   # open task via task manager to get overview information
                   App.TaskManager.execute(
-                    key:        'Ticket-' + next
+                    key:        'Ticket-' + next.id
                     controller: 'TicketZoom'
                     params:
-                      ticket_id:   next
+                      ticket_id:   next.id
                       overview_id: @overview_id
                     show:       true
                   )
-                  @navigate "ticket/zoom/#{next}"
+                  @navigate "ticket/zoom/#{next.id}"
                   return
 
           # fallback, close task
@@ -658,6 +658,8 @@ class App.TicketZoom extends App.Controller
 
         # enable form
         @formEnable(e)
+
+        App.Event.trigger('overview:fetch')
     )
 
   bookmark: (e) ->

@@ -10,7 +10,6 @@ class Sessions::Client
   def fetch
 
     backends = [
-      'Sessions::Backend::TicketOverviewIndex',
       'Sessions::Backend::TicketOverviewList',
       'Sessions::Backend::Collections',
       'Sessions::Backend::Rss',
@@ -24,11 +23,11 @@ class Sessions::Client
     loop do
 
       # get connection user
-      session_data = Sessions.get( @client_id )
+      session_data = Sessions.get(@client_id)
       return if !session_data
       return if !session_data[:user]
       return if !session_data[:user]['id']
-      user = User.lookup( id: session_data[:user]['id'] )
+      user = User.lookup(id: session_data[:user]['id'])
       return if !user
 
       # init new backends
@@ -66,11 +65,11 @@ class Sessions::Client
   end
 
   # send update to browser
-  def send( data )
-    Sessions.send( @client_id, data )
+  def send(data)
+    Sessions.send(@client_id, data)
   end
 
-  def log( msg )
+  def log(msg)
     Rails.logger.debug "client(#{@client_id}) #{msg}"
   end
 end

@@ -53,5 +53,7 @@ class App.TicketZoomTitle extends App.Controller
       # update taskbar with new meta data
       @metaTaskUpdate()
 
+      App.Event.trigger('overview:fetch')
+
   release: =>
     App.Ticket.unsubscribe(@subscribeId)
