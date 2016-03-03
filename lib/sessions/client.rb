@@ -1,6 +1,6 @@
 class Sessions::Client
 
-  def initialize( client_id )
+  def initialize(client_id)
     @client_id = client_id
     log '---client start ws connection---'
     fetch
@@ -17,6 +17,7 @@ class Sessions::Client
       'Sessions::Backend::TicketCreate',
     ]
 
+    asset_lookup = {}
     backend_pool = []
     user_id_last_run = nil
     loop_count = 0
@@ -33,6 +34,7 @@ class Sessions::Client
       # init new backends
       if user_id_last_run != user.id
         user_id_last_run = user.id
+        asset_lookup = {}
 
         # release old objects
         backend_pool.collect! {
@@ -42,7 +44,7 @@ class Sessions::Client
         # create new pool
         backend_pool = []
         backends.each {|backend|
-          item = backend.constantize.new(user, self, @client_id)
+          item = backend.constantize.new(user, asset_lookup, self, @client_id)
           backend_pool.push item
         }
       end

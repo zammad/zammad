@@ -28,7 +28,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     Ticket.create(title: 'default overview test', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1)
 
     user = User.lookup(id: agent1.id)
-    client1 = Sessions::Backend::TicketOverviewList.new(user, false, '123-1', 5)
+    client1 = Sessions::Backend::TicketOverviewList.new(user, {}, false, '123-1', 5)
 
     result1 = client1.push
     assert(result1, 'check ticket_overview_List')

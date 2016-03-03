@@ -1,11 +1,12 @@
 class Sessions::Backend::ActivityStream
 
-  def initialize(user, client = nil, client_id = nil, ttl = 25)
-    @user        = user
-    @client      = client
-    @client_id   = client_id
-    @ttl         = ttl
-    @last_change = nil
+  def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 25)
+    @user         = user
+    @client       = client
+    @client_id    = client_id
+    @ttl          = ttl
+    @asset_lookup = asset_lookup
+    @last_change  = nil
   end
 
   def load

@@ -1,11 +1,4 @@
-class Sessions::Backend::TicketCreate
-  def initialize(user, client = nil, client_id = nil, ttl = 30)
-    @user        = user
-    @client      = client
-    @client_id   = client_id
-    @ttl         = ttl
-    @last_change = nil
-  end
+class Sessions::Backend::TicketCreate < Sessions::Backend::Base
 
   def load
 
