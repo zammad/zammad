@@ -71,7 +71,7 @@ returns
   def self.param_cleanup(params, newObject = false)
 
     if params.nil?
-      fail "No params for #{self}!"
+      raise "No params for #{self}!"
     end
 
     # ignore id for new objects
@@ -377,7 +377,7 @@ returns
       return
     end
 
-    fail 'Need name, id, login or email for lookup()'
+    raise 'Need name, id, login or email for lookup()'
   end
 
 =begin
@@ -535,7 +535,7 @@ returns
       record.save
       return record
     else
-      fail 'Need name, login, email or locale for create_or_update()'
+      raise 'Need name, login, email or locale for create_or_update()'
     end
   end
 

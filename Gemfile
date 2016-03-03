@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.3'
 
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.5.2'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -122,7 +122,7 @@ group :development, :test do
 
 end
 
-gem 'puma'
+gem 'puma', '< 3.0'
 
 # load onw gem's
 local_gemfile = File.join(File.dirname(__FILE__), 'Gemfile.local')

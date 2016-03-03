@@ -54,7 +54,7 @@ returns
       adapter = adapter.constantize
 
       if !adapter
-        fail "Can't load adapter '#{adapter_name}'"
+        raise "Can't load adapter '#{adapter_name}'"
       end
 
       adapter

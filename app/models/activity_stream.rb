@@ -34,7 +34,7 @@ add a new activity entry for an object
     if data[:role]
       role = Role.lookup(name: data[:role])
       if !role
-        fail "No such Role #{data[:role]}"
+        raise "No such Role #{data[:role]}"
       end
       role_id = role.id
     end

@@ -6,28 +6,28 @@ class FacebookBrowserTest < TestCase
 
     # app config
     if !ENV['FACEBOOK_BT_APP_ID']
-      fail "ERROR: Need FACEBOOK_BT_APP_ID - hint FACEBOOK_BT_APP_ID='1234'"
+      raise "ERROR: Need FACEBOOK_BT_APP_ID - hint FACEBOOK_BT_APP_ID='1234'"
     end
     app_id = ENV['FACEBOOK_BT_APP_ID']
     if !ENV['FACEBOOK_BT_APP_SECRET']
-      fail "ERROR: Need FACEBOOK_BT_APP_SECRET - hint FACEBOOK_BT_APP_SECRET='1234'"
+      raise "ERROR: Need FACEBOOK_BT_APP_SECRET - hint FACEBOOK_BT_APP_SECRET='1234'"
     end
     app_secret = ENV['FACEBOOK_BT_APP_SECRET']
     if !ENV['FACEBOOK_BT_USER_LOGIN']
-      fail "ERROR: Need FACEBOOK_BT_USER_LOGIN - hint FACEBOOK_BT_USER_LOGIN='1234'"
+      raise "ERROR: Need FACEBOOK_BT_USER_LOGIN - hint FACEBOOK_BT_USER_LOGIN='1234'"
     end
     user_login = ENV['FACEBOOK_BT_USER_LOGIN']
     if !ENV['FACEBOOK_BT_USER_PW']
-      fail "ERROR: Need FACEBOOK_BT_USER_PW - hint FACEBOOK_BT_USER_PW='1234'"
+      raise "ERROR: Need FACEBOOK_BT_USER_PW - hint FACEBOOK_BT_USER_PW='1234'"
     end
     user_pw = ENV['FACEBOOK_BT_USER_PW']
     if !ENV['FACEBOOK_BT_PAGE_ID']
-      fail "ERROR: Need FACEBOOK_BT_PAGE_ID - hint FACEBOOK_BT_PAGE_ID='1234'"
+      raise "ERROR: Need FACEBOOK_BT_PAGE_ID - hint FACEBOOK_BT_PAGE_ID='1234'"
     end
     page_id = ENV['FACEBOOK_BT_PAGE_ID']
 
     if !ENV['FACEBOOK_BT_CUSTOMER']
-      fail "ERROR: Need FACEBOOK_BT_CUSTOMER - hint FACEBOOK_BT_CUSTOMER='name:1234:access_token'"
+      raise "ERROR: Need FACEBOOK_BT_CUSTOMER - hint FACEBOOK_BT_CUSTOMER='name:1234:access_token'"
     end
     customer_name = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[0]
     customer_id = ENV['FACEBOOK_BT_CUSTOMER'].split(':')[1]

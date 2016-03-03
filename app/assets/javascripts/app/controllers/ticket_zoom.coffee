@@ -350,15 +350,15 @@ class App.TicketZoom extends App.Controller
 
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
-      new App.WidgetAvatar(
-        el:      @$('.ticketZoom-header .js-avatar')
-        user_id: @ticket.customer_id
-        size:    50
-      )
       if elLocal
         el = elLocal
       else
         el = @el
+      new App.WidgetAvatar(
+        el:      el.find('.ticketZoom-header .js-avatar')
+        user_id: @ticket.customer_id
+        size:    50
+      )
       @sidebar = new App.TicketZoomSidebar(
         el:           el.find('.tabsSidebar')
         sidebarState: @sidebarState
@@ -381,12 +381,12 @@ class App.TicketZoom extends App.Controller
       )
 
     # scroll to article if given
-    if @article_id && document.getElementById( 'article-' + @article_id )
-      offset = document.getElementById( 'article-' + @article_id ).offsetTop
+    if @article_id && document.getElementById('article-' + @article_id)
+      offset = document.getElementById('article-' + @article_id).offsetTop
       offset = offset - 45
       scrollTo = ->
-        @scrollTo( 0, offset )
-      @delay( scrollTo, 100, false )
+        @scrollTo(0, offset)
+      @delay(scrollTo, 100, false)
 
     @ticketLastAttributes = @ticket.attributes()
 
@@ -476,8 +476,8 @@ class App.TicketZoom extends App.Controller
     resetButton   = @$('.js-reset')
 
     params         = {}
-    params.ticket  = @formParam( ticketForm )
-    params.article = @formParam( articleForm )
+    params.ticket  = @formParam(ticketForm)
+    params.article = @formParam(articleForm)
     #console.log('markFormDiff', diff, params)
 
     # clear all changes
@@ -618,25 +618,25 @@ class App.TicketZoom extends App.Controller
           if @overview_id
             current_position = 0
             overview = App.Overview.find(@overview_id)
-            list = App.OverviewCollection.get(overview.link)
-            for ticket_id in list.ticket_ids
+            list = App.OverviewListCollection.get(overview.link)
+            for ticket in list.tickets
               current_position += 1
-              if ticket_id is @ticket_id
-                next = list.ticket_ids[current_position]
+              if ticket.id is @ticket_id
+                next = list.tickets[current_position]
                 if next
                   # close task
                   App.TaskManager.remove(@task_key)
 
                   # open task via task manager to get overview information
                   App.TaskManager.execute(
-                    key:        'Ticket-' + next
+                    key:        'Ticket-' + next.id
                     controller: 'TicketZoom'
                     params:
-                      ticket_id:   next
+                      ticket_id:   next.id
                       overview_id: @overview_id
                     show:       true
                   )
-                  @navigate "ticket/zoom/#{next}"
+                  @navigate "ticket/zoom/#{next.id}"
                   return
 
           # fallback, close task
@@ -658,6 +658,8 @@ class App.TicketZoom extends App.Controller
 
         # enable form
         @formEnable(e)
+
+        App.Event.trigger('overview:fetch')
     )
 
   bookmark: (e) ->
@@ -731,6 +733,6 @@ class TicketZoomRouter extends App.ControllerPermanent
       show:       true
     )
 
-App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes' )
+App.Config.set('ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes')
+App.Config.set('ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes')
+App.Config.set('ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes')

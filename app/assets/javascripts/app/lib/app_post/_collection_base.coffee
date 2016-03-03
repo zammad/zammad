@@ -44,6 +44,10 @@ class App._CollectionSingletonBase
         delete @callbacks[counter]
 
   fetch: =>
+    if App.WebSocket.support()
+      App.WebSocket.send(event: @event)
+      return
+
     return if @fetchActive
     @fetchActive = true
     App.Ajax.request(

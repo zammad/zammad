@@ -103,7 +103,7 @@ note: will not take down package migrations, use Package.unlink instead
       package = entry.sub(%r{^.*/(.+?)\.szpm$}, '\1')
     end
     if package == false
-      fail "Can't link package, '#{package_base_dir}' is no package source directory!"
+      raise "Can't link package, '#{package_base_dir}' is no package source directory!"
     end
     logger.debug package.inspect
     package
@@ -184,7 +184,7 @@ link files + execute migration up
       if File.file?(entry.to_s) && (File.file?(dest.to_s) && !File.symlink?(dest.to_s))
         backup_file = dest.to_s + '.link_backup'
         if File.exist?(backup_file)
-          fail "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
+          raise "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
         else
           logger.info "Create backup file of #{dest} -> #{backup_file}."
           File.rename(dest.to_s, backup_file)
@@ -243,10 +243,10 @@ returns
     if package_db
       if !data[:reinstall]
         if Gem::Version.new(package_db.version) == Gem::Version.new(meta[:version])
-          fail "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
+          raise "Package '#{meta[:name]}-#{meta[:version]}' already installed!"
         end
         if Gem::Version.new(package_db.version) > Gem::Version.new(meta[:version])
-          fail "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
+          raise "Newer version (#{package_db.version}) of package '#{meta[:name]}-#{meta[:version]}' already installed!"
         end
       end
 
@@ -306,7 +306,7 @@ returns
   def self.reinstall(package_name)
     package = Package.find_by(name: package_name)
     if !package
-      fail "No such package '#{package_name}'"
+      raise "No such package '#{package_name}'"
     end
     file = _get_bin(package.name, package.version)
     install(string: file, reinstall: true)
@@ -367,7 +367,7 @@ returns
       version: version,
     )
     if !package
-      fail "No such package '#{name}' version '#{version}'"
+      raise "No such package '#{name}' version '#{version}'"
     end
     list = Store.list(
       object: 'Package',
@@ -376,10 +376,10 @@ returns
 
     # find file
     if !list || !list.first
-      fail "No such file in storage list #{name} #{version}"
+      raise "No such file in storage list #{name} #{version}"
     end
     if !list.first.content
-      fail "No such file in storage #{name} #{version}"
+      raise "No such file in storage #{name} #{version}"
     end
     list.first.content
   end
@@ -497,7 +497,7 @@ returns
           name    = $2
         end
         if !version || !name
-          fail "Invalid package migration '#{migration}'"
+          raise "Invalid package migration '#{migration}'"
         end
 
         # down

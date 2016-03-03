@@ -1,13 +1,6 @@
 require 'rss'
 
-class Sessions::Backend::Rss
-
-  def initialize( user, client, client_id, ttl = 30 )
-    @user      = user
-    @client    = client
-    @ttl       = ttl
-    @client_id = client_id
-  end
+class Sessions::Backend::Rss < Sessions::Backend::Base
 
   def collection_key
     "rss::load::#{self.class}::#{@user.id}"
@@ -16,14 +9,14 @@ class Sessions::Backend::Rss
   def load
 
     # check timeout
-    cache = Sessions::CacheIn.get( collection_key )
+    cache = Sessions::CacheIn.get(collection_key)
     return cache if cache
 
     url = 'http://www.heise.de/newsticker/heise-atom.xml'
-    rss_items = Rss.fetch( url, 8 )
+    rss_items = Rss.fetch(url, 8)
 
     # set new timeout
-    Sessions::CacheIn.set( collection_key, rss_items, { expires_in: 1.hour } )
+    Sessions::CacheIn.set(collection_key, rss_items, { expires_in: 1.hour })
 
     rss_items
   end
@@ -35,11 +28,11 @@ class Sessions::Backend::Rss
   def push
 
     # check timeout
-    timeout = Sessions::CacheIn.get( client_key )
+    timeout = Sessions::CacheIn.get(client_key)
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
 
     data = load
 

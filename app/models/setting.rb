@@ -33,7 +33,7 @@ set config setting
   def self.set(name, value)
     setting = Setting.find_by( name: name )
     if !setting
-      fail "Can't find config setting '#{name}'"
+      raise "Can't find config setting '#{name}'"
     end
     setting.state_current = { value: value }
     setting.save
@@ -68,7 +68,7 @@ reset config setting to default
   def self.reset(name)
     setting = Setting.find_by( name: name )
     if !setting
-      fail "Can't find config setting '#{name}'"
+      raise "Can't find config setting '#{name}'"
     end
     setting.state_current = setting.state_initial
     setting.save

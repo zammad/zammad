@@ -4,10 +4,10 @@ require 'integration_test_helper'
 class OtrsImportTest < ActiveSupport::TestCase
 
   if !ENV['IMPORT_OTRS_ENDPOINT']
-    fail "ERROR: Need IMPORT_OTRS_ENDPOINT - hint IMPORT_OTRS_ENDPOINT='http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator'"
+    raise "ERROR: Need IMPORT_OTRS_ENDPOINT - hint IMPORT_OTRS_ENDPOINT='http://vz305.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator'"
   end
   if !ENV['IMPORT_OTRS_ENDPOINT_KEY']
-    fail "ERROR: Need IMPORT_OTRS_ENDPOINT_KEY - hint IMPORT_OTRS_ENDPOINT_KEY='01234567899876543210'"
+    raise "ERROR: Need IMPORT_OTRS_ENDPOINT_KEY - hint IMPORT_OTRS_ENDPOINT_KEY='01234567899876543210'"
   end
 
   Setting.set('import_otrs_endpoint', ENV['IMPORT_OTRS_ENDPOINT'])

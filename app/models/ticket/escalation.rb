@@ -84,7 +84,7 @@ returns
       }
       config.hours = hours
       if !hours || hours.empty?
-        fail "No congifure hours found in calendar #{calendar.inspect}"
+        raise "No congifure hours found in calendar #{calendar.inspect}"
       end
 
       # get holidays

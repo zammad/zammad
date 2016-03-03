@@ -16,21 +16,21 @@ class FacebookTest < ActiveSupport::TestCase
 
   # account config
   if !ENV['FACEBOOK_USER']
-    fail "ERROR: Need FACEBOOK_USER - hint FACEBOOK_USER='name:1234:access_token'"
+    raise "ERROR: Need FACEBOOK_USER - hint FACEBOOK_USER='name:1234:access_token'"
   end
   user_name         = ENV['FACEBOOK_USER'].split(':')[0]
   user_id           = ENV['FACEBOOK_USER'].split(':')[1]
   user_access_token = ENV['FACEBOOK_USER'].split(':')[2]
 
   if !ENV['FACEBOOK_PAGE']
-    fail "ERROR: Need FACEBOOK_PAGE - hint FACEBOOK_PAGE='name:1234:access_token'"
+    raise "ERROR: Need FACEBOOK_PAGE - hint FACEBOOK_PAGE='name:1234:access_token'"
   end
   page_name = ENV['FACEBOOK_PAGE'].split(':')[0]
   page_id = ENV['FACEBOOK_PAGE'].split(':')[1]
   page_access_token = ENV['FACEBOOK_PAGE'].split(':')[2]
 
   if !ENV['FACEBOOK_CUSTOMER']
-    fail "ERROR: Need FACEBOOK_CUSTOMER - hint FACEBOOK_CUSTOMER='name:1234:access_token'"
+    raise "ERROR: Need FACEBOOK_CUSTOMER - hint FACEBOOK_CUSTOMER='name:1234:access_token'"
   end
   customer_name = ENV['FACEBOOK_CUSTOMER'].split(':')[0]
   customer_id = ENV['FACEBOOK_CUSTOMER'].split(':')[1]

@@ -1,11 +1,4 @@
-class Sessions::Backend::TicketCreate
-  def initialize( user, client = nil, client_id = nil, ttl = 30 )
-    @user        = user
-    @client      = client
-    @client_id   = client_id
-    @ttl         = ttl
-    @last_change = nil
-  end
+class Sessions::Backend::TicketCreate < Sessions::Backend::Base
 
   def load
 
@@ -33,11 +26,11 @@ class Sessions::Backend::TicketCreate
   def push
 
     # check timeout
-    timeout = Sessions::CacheIn.get( client_key )
+    timeout = Sessions::CacheIn.get(client_key)
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
 
     data = load
 

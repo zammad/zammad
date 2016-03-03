@@ -249,7 +249,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test I
     if !ENV['EMAILHELPER_MAILBOX_1']
-      fail "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
@@ -401,7 +401,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test I
     if !ENV['EMAILHELPER_MAILBOX_1']
-      fail "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
@@ -433,7 +433,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test I, with imap
     if !ENV['EMAILHELPER_MAILBOX_1']
-      fail "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
@@ -448,7 +448,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test II, gmail with only pop3
     if !ENV['EMAILHELPER_MAILBOX_2']
-      fail "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
     end
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_2'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_2'].split(':')[1]
@@ -467,7 +467,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test I, with imap
     if !ENV['EMAILHELPER_MAILBOX_1']
-      fail "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
@@ -499,7 +499,7 @@ class EmailHelperTest < ActiveSupport::TestCase
 
     # realtest - test II, gmail with pop3
     if !ENV['EMAILHELPER_MAILBOX_2']
-      fail "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
+      raise "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
     end
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_2'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_2'].split(':')[1]

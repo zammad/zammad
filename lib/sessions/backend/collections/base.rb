@@ -1,12 +1,13 @@
-class Sessions::Backend::Collections::Base
+class Sessions::Backend::Collections::Base < Sessions::Backend::Base
   class << self; attr_accessor :model, :roles, :not_roles end
 
-  def initialize( user, client, client_id, ttl )
-    @user        = user
-    @client      = client
-    @client_id   = client_id
-    @ttl         = ttl
-    @last_change = nil
+  def initialize(user, asset_lookup, client, client_id, ttl)
+    @user         = user
+    @client       = client
+    @client_id    = client_id
+    @ttl          = ttl
+    @asset_lookup = asset_lookup
+    @last_change  = nil
   end
 
   def load
@@ -42,11 +43,11 @@ class Sessions::Backend::Collections::Base
     end
 
     # check timeout
-    timeout = Sessions::CacheIn.get( client_key )
+    timeout = Sessions::CacheIn.get(client_key)
     return if timeout
 
     # set new timeout
-    Sessions::CacheIn.set( client_key, true, { expires_in: @ttl.seconds } )
+    Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
 
     # check if update has been done
     last_change = self.class.model.constantize.latest_change
@@ -67,6 +68,7 @@ class Sessions::Backend::Collections::Base
     # collect assets
     assets = {}
     items.each {|item|
+      next if !asset_needed?(item)
       assets = item.assets(assets)
     }
     if !@client

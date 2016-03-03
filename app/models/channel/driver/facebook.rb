@@ -29,7 +29,7 @@ class Channel::Driver::Facebook
       access_token = page['access_token']
     }
     if !access_token
-      fail "No access_token found for fb_object_id: #{fb_object_id}"
+      raise "No access_token found for fb_object_id: #{fb_object_id}"
     end
     client = Facebook.new(access_token)
     client.from_article(article)

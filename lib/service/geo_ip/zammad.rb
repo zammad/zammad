@@ -26,7 +26,7 @@ class Service::GeoIp::Zammad
         },
       )
       if !response.success? && response.code.to_s !~ /^40.$/
-        fail "ERROR: #{response.code}/#{response.body}"
+        raise "ERROR: #{response.code}/#{response.body}"
       end
 
       data = response.data

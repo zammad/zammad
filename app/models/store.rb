@@ -142,7 +142,7 @@ returns
   def content
     file = Store::File.find_by(id: store_file_id)
     if !file
-      fail "No such file #{store_file_id}!"
+      raise "No such file #{store_file_id}!"
     end
     file.content
   end
@@ -150,7 +150,7 @@ returns
   def provider
     file = Store::File.find_by(id: store_file_id)
     if !file
-      fail "No such file #{store_file_id}!"
+      raise "No such file #{store_file_id}!"
     end
     file.provider
   end

@@ -30,6 +30,11 @@ class App.WebSocket
       _instance ?= new _webSocketSingleton
     _instance.spool()
 
+  @support: ->
+    if _instance == undefined
+      _instance ?= new _webSocketSingleton
+    _instance.support()
+
 # The actual Singleton class
 class _webSocketSingleton extends App.Controller
   @include App.LogInclude
@@ -102,6 +107,9 @@ class _webSocketSingleton extends App.Controller
 
   channel: ->
     @backend
+
+  support: ->
+    @supported
 
   send: (data) =>
     if @backend is 'ajax'
@@ -180,6 +188,7 @@ class _webSocketSingleton extends App.Controller
   connect: =>
 
     if !window.WebSocket
+      @supported = false
       @backend = 'ajax'
       @log 'debug', 'no support of websocket, use ajax long polling'
       @_ajaxInit()
