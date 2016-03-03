@@ -53,7 +53,7 @@ class AgentTicketActionLevel0Test < TestCase
       css: '.active div[data-name=body]',
       value: 'some content' + random,
     )
-    tasks_close_all( discard_changes: true )
+    tasks_close_all()
 
     # test with two browser windows
     random = 'text_II_module_test_' + rand(99_999_999).to_s

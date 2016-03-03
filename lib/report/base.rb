@@ -98,9 +98,9 @@ class Report::Base
                       ).count
       end
 
-      fail "UNKOWN params (#{params.inspect})!"
+      raise "UNKOWN params (#{params.inspect})!"
     end
-    fail "UNKOWN :type (#{params[:type]})!"
+    raise "UNKOWN :type (#{params[:type]})!"
   end
 
   # :object
@@ -219,7 +219,7 @@ class Report::Base
         ticket_ids: ticket_ids,
       }
     end
-    fail "UNKOWN :type (#{data[:type]})!"
+    raise "UNKOWN :type (#{data[:type]})!"
   end
 
   # :type

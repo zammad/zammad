@@ -6,7 +6,7 @@ EXIT=$4 || 0
 
 script/scheduler.rb stop
 script/websocket-server.rb stop
-kill $(cat tmp/pids/puma.pid)
+kill $(cat tmp/pids/server.pid)
 
 rake db:drop
 

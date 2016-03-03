@@ -59,7 +59,7 @@ create/update/delete index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    fail response.inspect
+    raise response.inspect
   end
 
 =begin
@@ -91,7 +91,7 @@ add new object to search index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    fail response.inspect
+    raise response.inspect
   end
 
 =begin
@@ -270,7 +270,7 @@ get count of tickets and tickets which match on selector
 =end
 
   def self.selectors(index = nil, selectors = nil, limit = 10, current_user = nil, aggs_interval = nil)
-    fail 'no selectors given' if !selectors
+    raise 'no selectors given' if !selectors
 
     url = build_url()
     return if !url
@@ -303,7 +303,7 @@ get count of tickets and tickets which match on selector
 
     Rails.logger.info "# #{response.code}"
     if !response.success?
-      fail "ERROR: #{response.inspect}"
+      raise "ERROR: #{response.inspect}"
     end
     Rails.logger.debug response.data.to_json
 
@@ -345,7 +345,7 @@ get count of tickets and tickets which match on selector
         elsif data['operator'] == 'contains not'
           query_must_not.push t
         else
-          fail "unknown operator '#{data['operator']}'"
+          raise "unknown operator '#{data['operator']}'"
         end
       }
     end

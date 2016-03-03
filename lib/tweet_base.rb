@@ -18,7 +18,7 @@ class TweetBase
       Rails.logger.debug tweet.user.inspect
       return tweet.user
     else
-      fail "Unknown tweet type '#{tweet.class}'"
+      raise "Unknown tweet type '#{tweet.class}'"
     end
 
   end
@@ -100,6 +100,7 @@ class TweetBase
   end
 
   def to_ticket(tweet, user, group_id, channel)
+    UserInfo.current_user_id = user.id
 
     Rails.logger.debug 'Create ticket from tweet...'
     Rails.logger.debug tweet.inspect
@@ -118,8 +119,6 @@ class TweetBase
       )
       return ticket if ticket
     end
-
-    UserInfo.current_user_id = user.id
 
     # prepare title
     title = tweet.text
@@ -177,7 +176,7 @@ class TweetBase
       end
       in_reply_to = tweet.in_reply_to_status_id
     else
-      fail "Unknown tweet type '#{tweet.class}'"
+      raise "Unknown tweet type '#{tweet.class}'"
     end
 
     UserInfo.current_user_id = user.id
@@ -233,7 +232,7 @@ class TweetBase
         end
         to_article(tweet, user, ticket)
       else
-        fail "Unknown tweet type '#{tweet.class}'"
+        raise "Unknown tweet type '#{tweet.class}'"
       end
 
       # execute ticket events
@@ -269,7 +268,7 @@ class TweetBase
         }
       )
     else
-      fail "Can't handle unknown twitter article type '#{article[:type]}'."
+      raise "Can't handle unknown twitter article type '#{article[:type]}'."
     end
 
     Rails.logger.debug tweet.inspect

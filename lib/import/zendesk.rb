@@ -12,7 +12,7 @@ module Import::Zendesk
 
     # check if system is in import mode
     if !Setting.get('import_mode')
-      fail 'System is not in import mode!'
+      raise 'System is not in import mode!'
     end
 
     initialize_client

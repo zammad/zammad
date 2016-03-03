@@ -73,7 +73,7 @@ class AgentUserManageTest < TestCase
     sleep 4
 
     # call new ticket screen again
-    tasks_close_all( discard_changes: 1 )
+    tasks_close_all()
 
     click( css: 'a[href="#new"]' )
     click( css: 'a[href="#ticket/create"]' )

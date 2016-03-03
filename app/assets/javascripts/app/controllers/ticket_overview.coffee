@@ -23,6 +23,11 @@ class App.TicketOverview extends App.Controller
 
     @html elLocal
 
+    @bind 'overview:fetch', =>
+      update = =>
+        App.OverviewListCollection.fetch(@view)
+      @delay(update, 2800, 'overview:fetch')
+
   active: (state) =>
     @activeState = state
 
@@ -197,16 +202,16 @@ class Table extends App.Controller
     super
 
     if @view
-      @bindId = App.OverviewCollection.bind(@view, @render)
+      @bindId = App.OverviewListCollection.bind(@view, @render)
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
-      @render(App.OverviewCollection.get(@view))
+      @render(App.OverviewListCollection.get(@view))
 
   release: =>
     if @bindId
-      App.OverviewCollection.unbind(@bindId)
+      App.OverviewListCollection.unbind(@bindId)
 
   update: (params) =>
     for key, value of params
@@ -219,24 +224,20 @@ class Table extends App.Controller
 
     if @view
       if @bindId
-        App.OverviewCollection.unbind(@bindId)
-      @bindId = App.OverviewCollection.bind(@view, @render)
+        App.OverviewListCollection.unbind(@bindId)
+      @bindId = App.OverviewListCollection.bind(@view, @render)
 
   render: (data) =>
     return if !data
 
     # use cache
-    overview      = data.overview
-    tickets_count = data.tickets_count
-    ticket_ids    = data.ticket_ids
-
-    # use cache if no local change
-    App.Overview.refresh(overview, { clear: true })
+    overview = data.overview
+    tickets  = data.tickets
 
     # get ticket list
     ticket_list_show = []
-    for ticket_id in ticket_ids
-      ticket_list_show.push App.Ticket.fullLocal(ticket_id)
+    for ticket in tickets
+      ticket_list_show.push App.Ticket.fullLocal(ticket.id)
 
     # if customer and no ticket exists, show the following message only
     if !ticket_list_show[0] && @isRole('Customer')
@@ -250,7 +251,9 @@ class Table extends App.Controller
 
     # render init page
     checkbox = true
-    edit     = true
+    edit     = false
+    if @isRole('Admin')
+      edit = true
     if @isRole('Customer')
       checkbox = false
       edit     = false
@@ -271,7 +274,6 @@ class Table extends App.Controller
     html = App.view('agent_ticket_view/content')(
       overview:   @overview
       view_modes: view_modes
-      checkbox:   checkbox
       edit:       edit
     )
     html = $(html)
@@ -621,8 +623,7 @@ class BulkForm extends App.Controller
             @hide()
 
             # fetch overview data again
-            App.OverviewIndexCollection.fetch()
-            App.OverviewCollection.fetch(@view)
+            App.Event.trigger('overview:fetch')
       )
     )
     @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
@@ -760,11 +761,10 @@ class App.OverviewSettings extends App.ControllerModal
 
         # fetch overview data again
         if @reload_needed
-          App.OverviewIndexCollection.fetch()
-          App.OverviewCollection.fetch(@overview.link)
+          App.OverviewListCollection.fetch(@overview.link)
         else
           App.OverviewIndexCollection.trigger()
-          App.OverviewCollection.trigger(@overview.link)
+          App.OverviewListCollection.trigger(@overview.link)
 
         # close modal
         @close()

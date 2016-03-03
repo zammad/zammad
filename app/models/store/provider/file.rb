@@ -5,19 +5,20 @@ class Store::Provider::File
   def self.add(data, sha)
 
     # install file
+    location = get_location(sha)
     permission = '600'
-    if !File.exist?(get_locaton(sha))
-      Rails.logger.debug "storge write '#{get_locaton(sha)}' (#{permission})"
-      file = File.new(get_locaton(sha), 'wb')
+    if !File.exist?(location)
+      Rails.logger.debug "storge write '#{location}' (#{permission})"
+      file = File.new(location, 'wb')
       file.write(data)
       file.close
     end
-    File.chmod(permission.to_i(8), get_locaton(sha))
+    File.chmod(permission.to_i(8), location)
 
     # check sha
     local_sha = Digest::SHA256.hexdigest(get(sha))
     if sha != local_sha
-      fail "ERROR: Corrupt file in fs #{get_locaton(sha)}, sha should be #{sha} but is #{local_sha}"
+      raise "ERROR: Corrupt file in fs #{location}, sha should be #{sha} but is #{local_sha}"
     end
 
     true
@@ -25,44 +26,76 @@ class Store::Provider::File
 
   # read file from fs
   def self.get(sha)
-    Rails.logger.debug "read from fs #{get_locaton(sha)}"
-    if !File.exist?(get_locaton(sha))
-      fail "ERROR: No such file #{get_locaton(sha)}"
+    location = get_location(sha)
+    Rails.logger.debug "read from fs #{location}"
+    if !File.exist?(location)
+      raise "ERROR: No such file #{location}"
     end
-    data    = File.open(get_locaton(sha), 'rb')
+    data    = File.open(location, 'rb')
     content = data.read
 
     # check sha
     local_sha = Digest::SHA256.hexdigest(content)
     if local_sha != sha
-      fail "ERROR: Corrupt file in fs #{get_locaton(sha)}, sha should be #{sha} but is #{local_sha}"
+      raise "ERROR: Corrupt file in fs #{location}, sha should be #{sha} but is #{local_sha}"
     end
     content
   end
 
   # unlink file from fs
   def self.delete(sha)
-    if File.exist?( get_locaton(sha) )
-      Rails.logger.info "storge remove '#{get_locaton(sha)}'"
-      File.delete( get_locaton(sha) )
+    location = get_location(sha)
+    if File.exist?(location)
+      Rails.logger.info "storge remove '#{location}'"
+      File.delete(location)
     end
+
+    # check if dir need to be removed
+    base = "#{Rails.root}/storage/fs"
+    locations = location.split('/')
+    (0..locations.count).reverse_each {|count|
+      local_location = locations[0, count].join('/')
+      break if local_location =~ %r{storage/fs/{0,4}$}
+      break if !Dir["#{local_location}/*"].empty?
+      FileUtils.rmdir(local_location)
+    }
   end
 
   # generate file location
-  def self.get_locaton(sha)
+  def self.get_location(sha)
 
     # generate directory
-    base     = "#{Rails.root}/storage/fs/"
-    parts    = sha.scan(/.{1,4}/)
-    path     = parts[ 1..10 ].join('/') + '/'
-    file     = parts[ 11..parts.count ].join('')
+    base   = "#{Rails.root}/storage/fs/"
+    parts  = []
+    length1 = 4
+    length2 = 5
+    length3 = 7
+    last_position = 0
+    (0..1).each {|_count|
+      end_position = last_position + length1
+      parts.push sha[last_position, length1]
+      last_position = end_position
+    }
+    (0..1).each {|_count|
+      end_position = last_position + length2
+      parts.push sha[last_position, length2]
+      last_position = end_position
+    }
+    (0..1).each {|_count|
+      end_position = last_position + length3
+      parts.push sha[last_position, length3]
+      last_position = end_position
+    }
+    path     = parts[ 0..6 ].join('/') + '/'
+    file     = sha[last_position, sha.length]
     location = "#{base}/#{path}"
 
     # create directory if not exists
     if !File.exist?(location)
       FileUtils.mkdir_p(location)
     end
-    location += file
+    full_path = location += file
+    full_path.gsub('//', '/')
   end
 
 end

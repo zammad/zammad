@@ -21,7 +21,7 @@ class UserDeviceTest < ActiveSupport::TestCase
     )
   end
 
-  test 'session test' do
+  test 'aaa - session test' do
 
     # signin with fingerprint A from country A via session -> new device #1
     user_device1 = UserDevice.add(
@@ -84,7 +84,7 @@ class UserDeviceTest < ActiveSupport::TestCase
 
   end
 
-  test 'session test - user agent (unknown)' do
+  test 'bbb - session test - user agent (unknown)' do
 
     # known user agent
     user_device1 = UserDevice.add(
@@ -118,8 +118,8 @@ class UserDeviceTest < ActiveSupport::TestCase
       'session',
     )
     assert_equal('Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12H143 Safari/600.1.4', user_device3.user_agent)
-    assert_equal('iPhone', user_device3.browser)
-    assert_equal('iPhone', user_device3.name)
+    assert_equal('Safari', user_device3.browser)
+    assert_equal('Ios, Safari', user_device3.name)
 
     user_device4 = UserDevice.add(
       'Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1',
@@ -130,11 +130,11 @@ class UserDeviceTest < ActiveSupport::TestCase
     )
     assert_equal('Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1', user_device4.user_agent)
     assert_equal('Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1', user_device4.browser)
-    assert_equal('Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1', user_device4.name)
+    assert_equal('Mac, Mac+OS+X/10.10.5 (14F27) CalendarAgent/316.1', user_device4.name)
 
   end
 
-  test 'api test' do
+  test 'ccc - api test' do
 
     # signin with ua from country A via basic auth -> new device #1
     user_device1 = UserDevice.add(

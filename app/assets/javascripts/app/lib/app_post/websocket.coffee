@@ -30,6 +30,11 @@ class App.WebSocket
       _instance ?= new _webSocketSingleton
     _instance.spool()
 
+  @support: ->
+    if _instance == undefined
+      _instance ?= new _webSocketSingleton
+    _instance.support()
+
 # The actual Singleton class
 class _webSocketSingleton extends App.Controller
   @include App.LogInclude
@@ -91,8 +96,20 @@ class _webSocketSingleton extends App.Controller
     # initial connect
     @connect()
 
+    # send ping after visibilitychange to check if connection is open again after wakeup
+    $(document).bind('visibilitychange', =>
+      console.log('visibilitychange')
+      return if document.hidden
+      return if !@connectionEstablished
+      console.log('ping')
+      @ping()
+    )
+
   channel: ->
     @backend
+
+  support: ->
+    @supported
 
   send: (data) =>
     if @backend is 'ajax'
@@ -153,7 +170,7 @@ class _webSocketSingleton extends App.Controller
     @log 'debug', 'send websocket ping'
     @send(event: 'ping')
 
-    # check if ping is back within 2 min
+    # check if ping is back within 90 sec
     App.Delay.clear 'websocket-ping-check', 'ws'
     check = =>
       @log 'debug', 'no websocket ping response, reconnect...'
@@ -165,12 +182,13 @@ class _webSocketSingleton extends App.Controller
 
     @log 'debug', 'received websocket pong'
 
-    # test again after 1 min
+    # test again after 60 sec
     App.Delay.set(@ping, 60000, 'websocket-pong', 'ws')
 
   connect: =>
 
     if !window.WebSocket
+      @supported = false
       @backend = 'ajax'
       @log 'debug', 'no support of websocket, use ajax long polling'
       @_ajaxInit()

@@ -227,15 +227,19 @@ class _i18nSingleton extends Spine.Module
         .replace(/\/\/(.+?)\/\//gm, '<del>$1</del>')
         .replace(/§(.+?)§/gm, '<kbd>$1</kbd>')
 
-    # search %s
+    # search %s|%l
     if args
       for arg in args
-        if quote
-          argNew = App.Utils.htmlEscape(arg)
-        else
-          argNew = arg
-
-        translated = translated.replace(/%s/, argNew)
+        translated = translated.replace(/%(s|l)/, (match) ->
+          if match is '%s'
+            if quote
+              argNew = App.Utils.htmlEscape(arg)
+            else
+              argNew = arg
+            argNew
+          else
+            "<a href=\"#{arg}\">🔗</a>"
+        )
 
     @log 'debug', 'translate', string, args, translated
 

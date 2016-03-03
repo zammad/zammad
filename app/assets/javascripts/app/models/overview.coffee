@@ -149,3 +149,6 @@ class App.Overview extends App.Model
 
 Sie können auch individuelle Übersichten für einzelne Agenten oder agenten Gruppen erstellen.
 '''
+
+  uiUrl: ->
+    '#ticket/view/' + @link

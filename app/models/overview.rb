@@ -10,6 +10,8 @@ class Overview < ApplicationModel
   before_create   :fill_link
   before_update   :fill_link
 
+  latest_change_support
+
   private
 
   # fill link

@@ -5,13 +5,13 @@ class ZendeskImportBrowserTest < TestCase
   def test_import
 
     if !ENV['IMPORT_BT_ZENDESK_ENDPOINT']
-      fail "ERROR: Need IMPORT_BT_ZENDESK_ENDPOINT - hint IMPORT_BT_ZENDESK_ENDPOINT='https://example.zendesk.com/' (including trailing slash!)"
+      raise "ERROR: Need IMPORT_BT_ZENDESK_ENDPOINT - hint IMPORT_BT_ZENDESK_ENDPOINT='https://example.zendesk.com/' (including trailing slash!)"
     end
     if !ENV['IMPORT_BT_ZENDESK_ENDPOINT_USERNAME']
-      fail "ERROR: Need IMPORT_BT_ZENDESK_ENDPOINT_USERNAME - hint IMPORT_BT_ZENDESK_ENDPOINT_USERNAME='your@email.com'"
+      raise "ERROR: Need IMPORT_BT_ZENDESK_ENDPOINT_USERNAME - hint IMPORT_BT_ZENDESK_ENDPOINT_USERNAME='your@email.com'"
     end
     if !ENV['IMPORT_BT_ZENDESK_ENDPOINT_KEY']
-      fail "ERROR: Need IMPORT_BT_ZENDESK_ENDPOINT_KEY - hint IMPORT_BT_ZENDESK_ENDPOINT_KEY='XYZ3133723421111'"
+      raise "ERROR: Need IMPORT_BT_ZENDESK_ENDPOINT_KEY - hint IMPORT_BT_ZENDESK_ENDPOINT_KEY='XYZ3133723421111'"
     end
 
     @browser = browser_instance

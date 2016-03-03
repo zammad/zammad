@@ -56,16 +56,16 @@ returns
     (1..stop_interval).each {|_counter|
       match = false
       if !result_es
-        fail "Invalid es result #{result_es.inspect}"
+        raise "Invalid es result #{result_es.inspect}"
       end
       if !result_es['aggregations']
-        fail "Invalid es result, no aggregations #{result_es.inspect}"
+        raise "Invalid es result, no aggregations #{result_es.inspect}"
       end
       if !result_es['aggregations']['time_buckets']
-        fail "Invalid es result, no time_buckets #{result_es.inspect}"
+        raise "Invalid es result, no time_buckets #{result_es.inspect}"
       end
       if !result_es['aggregations']['time_buckets']['buckets']
-        fail "Invalid es result, no buckets #{result_es.inspect}"
+        raise "Invalid es result, no buckets #{result_es.inspect}"
       end
       result_es['aggregations']['time_buckets']['buckets'].each {|item|
         if params[:interval] == 'minute'

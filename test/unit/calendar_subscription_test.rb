@@ -232,18 +232,22 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     assert_equal(cal.events[0].dtstart, Time.zone.today)
     assert_equal(cal.events[0].summary, 'new ticket: \'some title1 - new - group_calendar\'')
     assert_equal(cal.events[0].description, "T##{ticket1.number}")
+    assert_equal(cal.events[0].has_alarm?, false)
 
     assert_equal(cal.events[1].dtstart, Time.zone.today)
     assert_equal(cal.events[1].summary, 'new ticket: \'some title1 - escalation - group_calendar\'')
     assert_equal(cal.events[1].description, "T##{ticket5.number}")
+    assert_equal(cal.events[1].has_alarm?, false)
 
     assert_equal(cal.events[2].dtstart, Time.zone.today)
     assert_equal(cal.events[2].summary, 'pending reminder ticket: \'some title1 - pending - group_calendar\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[2].description, "T##{ticket3.number}")
+    assert_equal(cal.events[2].has_alarm?, false)
 
     assert_equal(cal.events[3].dtstart, Time.zone.today)
     assert_equal(cal.events[3].summary, 'ticket escalation: \'some title1 - escalation - group_calendar\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[3].description, "T##{ticket5.number}")
+    assert_equal(cal.events[3].has_alarm?, false)
 
     if !agent1.preferences[:calendar_subscriptions]
       agent1.preferences[:calendar_subscriptions] = {}
@@ -260,7 +264,8 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       pending: {
         own: true,
         not_assigned: true,
-      }
+      },
+      alarm: true,
     }
     agent1.save!
 
@@ -276,34 +281,42 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     assert_equal(cal.events[0].dtstart, Time.zone.today)
     assert_equal(cal.events[0].summary, 'new ticket: \'some title2 - new - group_calendar\'')
     assert_equal(cal.events[0].description, "T##{ticket7.number}")
+    assert_equal(cal.events[0].has_alarm?, false)
 
     assert_equal(cal.events[1].dtstart, Time.zone.today)
     assert_equal(cal.events[1].summary, 'new ticket: \'some title2 - escalation - group_calendar\'')
     assert_equal(cal.events[1].description, "T##{ticket11.number}")
+    assert_equal(cal.events[1].has_alarm?, false)
 
     assert_equal(cal.events[2].dtstart, Time.zone.today)
     assert_equal(cal.events[2].summary, 'new ticket: \'some title1 - new - group_calendar\'')
     assert_equal(cal.events[2].description, "T##{ticket1.number}")
+    assert_equal(cal.events[2].has_alarm?, false)
 
     assert_equal(cal.events[3].dtstart, Time.zone.today)
     assert_equal(cal.events[3].summary, 'new ticket: \'some title1 - escalation - group_calendar\'')
     assert_equal(cal.events[3].description, "T##{ticket5.number}")
+    assert_equal(cal.events[3].has_alarm?, false)
 
     assert_equal(cal.events[4].dtstart, Time.zone.today)
     assert_equal(cal.events[4].summary, 'pending reminder ticket: \'some title2 - pending - group_calendar\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[4].description, "T##{ticket9.number}")
+    assert_equal(cal.events[4].has_alarm?, true)
 
     assert_equal(cal.events[5].dtstart, Time.zone.today)
     assert_equal(cal.events[5].summary, 'pending reminder ticket: \'some title1 - pending - group_calendar\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[5].description, "T##{ticket3.number}")
+    assert_equal(cal.events[5].has_alarm?, true)
 
     assert_equal(cal.events[6].dtstart, Time.zone.today)
     assert_equal(cal.events[6].summary, 'ticket escalation: \'some title2 - escalation - group_calendar\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[6].description, "T##{ticket11.number}")
+    assert_equal(cal.events[6].has_alarm?, true)
 
     assert_equal(cal.events[7].dtstart, Time.zone.today)
     assert_equal(cal.events[7].summary, 'ticket escalation: \'some title1 - escalation - group_calendar\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[7].description, "T##{ticket5.number}")
+    assert_equal(cal.events[7].has_alarm?, true)
 
     # check agent 2
     calendar_subscriptions = CalendarSubscriptions.new(agent2)
@@ -346,7 +359,8 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       pending: {
         own: true,
         not_assigned: true,
-      }
+      },
+      alarm: false,
     }
     agent2.save!
 
@@ -362,34 +376,42 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     assert_equal(cal.events[0].dtstart, Time.zone.today)
     assert_equal(cal.events[0].summary, 'new ticket: \'some title2 - new - group_default\'')
     assert_equal(cal.events[0].description, "T##{ticket8.number}")
+    assert_equal(cal.events[0].has_alarm?, false)
 
     assert_equal(cal.events[1].dtstart, Time.zone.today)
     assert_equal(cal.events[1].summary, 'new ticket: \'some title2 - escalation - group_default\'')
     assert_equal(cal.events[1].description, "T##{ticket12.number}")
+    assert_equal(cal.events[1].has_alarm?, false)
 
     assert_equal(cal.events[2].dtstart, Time.zone.today)
     assert_equal(cal.events[2].summary, 'new ticket: \'some title1 - new - group_default\'')
     assert_equal(cal.events[2].description, "T##{ticket2.number}")
+    assert_equal(cal.events[1].has_alarm?, false)
 
     assert_equal(cal.events[3].dtstart, Time.zone.today)
     assert_equal(cal.events[3].summary, 'new ticket: \'some title1 - escalation - group_default\'')
     assert_equal(cal.events[3].description, "T##{ticket6.number}")
+    assert_equal(cal.events[3].has_alarm?, false)
 
     assert_equal(cal.events[4].dtstart, Time.zone.today)
     assert_equal(cal.events[4].summary, 'pending reminder ticket: \'some title2 - pending - group_default\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[4].description, "T##{ticket10.number}")
+    assert_equal(cal.events[4].has_alarm?, false)
 
     assert_equal(cal.events[5].dtstart, Time.zone.today)
     assert_equal(cal.events[5].summary, 'pending reminder ticket: \'some title1 - pending - group_default\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[5].description, "T##{ticket4.number}")
+    assert_equal(cal.events[5].has_alarm?, false)
 
     assert_equal(cal.events[6].dtstart, Time.zone.today)
     assert_equal(cal.events[6].summary, 'ticket escalation: \'some title2 - escalation - group_default\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[6].description, "T##{ticket12.number}")
+    assert_equal(cal.events[6].has_alarm?, false)
 
     assert_equal(cal.events[7].dtstart, Time.zone.today)
     assert_equal(cal.events[7].summary, 'ticket escalation: \'some title1 - escalation - group_default\' customer: Notification Customer1 (Selector Org)')
     assert_equal(cal.events[7].description, "T##{ticket6.number}")
+    assert_equal(cal.events[7].has_alarm?, false)
 
   end
 

@@ -20,7 +20,7 @@ returns
       data[:content]   = Base64.decode64($2)
       return data
     end
-    fail "Unable to parse data url: #{data_url.substr(0, 100)}"
+    raise "Unable to parse data url: #{data_url.substr(0, 100)}"
   end
 
 =begin
@@ -67,7 +67,7 @@ returns
     if list && list[0]
       return Store.find( list[0] )
     end
-    fail 'No such raw logo!'
+    raise 'No such raw logo!'
   end
 
 =begin

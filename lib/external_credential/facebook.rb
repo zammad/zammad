@@ -23,6 +23,7 @@ class ExternalCredential::Facebook
     state = rand(999_999_999_999).to_s
     {
       request_token: state,
+      #authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages, user_posts', state: state),
       authorize_url: oauth.url_for_oauth_code(permissions: 'publish_pages, manage_pages', state: state),
     }
   end
@@ -30,7 +31,7 @@ class ExternalCredential::Facebook
   def self.link_account(_request_token, params)
     #    fail if request_token.params[:oauth_token] != params[:state]
     external_credential = ExternalCredential.find_by(name: 'facebook')
-    fail 'No such account' if !external_credential
+    raise 'No such account' if !external_credential
     oauth = Koala::Facebook::OAuth.new(
       external_credential.credentials['application_id'],
       external_credential.credentials['application_secret'],

@@ -160,6 +160,6 @@ returns
         }
       end
     end
-    fail "Unknown selector params '#{selector.inspect}'"
+    raise "Unknown selector params '#{selector.inspect}'"
   end
 end

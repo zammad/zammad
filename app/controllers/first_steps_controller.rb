@@ -4,11 +4,7 @@ class FirstStepsController < ApplicationController
   before_action :authentication_check
 
   def index
-    result = []
-    if !current_user.role?(%w(Agent Admin))
-      render json: result
-      return
-    end
+    return if !access?
 
     invite_agents = false
     #if User.of_role('Agent').count > 2
@@ -89,7 +85,8 @@ class FirstStepsController < ApplicationController
             {
               name: 'Create a Test Ticket',
               checked: false,
-              location: '#create_test_ticket',
+              location: '#',
+              class: 'js-testTicket',
             },
             {
               name: 'Create Overviews',
@@ -135,6 +132,8 @@ class FirstStepsController < ApplicationController
         },
       ]
 
+      check_availability(result)
+
       render json: result
       return
     end
@@ -151,7 +150,8 @@ class FirstStepsController < ApplicationController
           {
             name: 'Create a Test Ticket',
             checked: false,
-            location: '#create_test_ticket',
+            location: '#',
+            class: 'js-testTicket',
           },
           {
             name: 'Invite Customers to create issues in Zammad',
@@ -163,7 +163,98 @@ class FirstStepsController < ApplicationController
       },
     ]
 
+    check_availability(result)
+
     render json: result
+  end
+
+  def test_ticket
+    return if !access?
+
+    agent = current_user
+    customer = test_customer
+    from = "#{customer.fullname} <#{customer.email}>"
+    original_user_id = UserInfo.current_user_id
+    result = NotificationFactory.template(
+      template: 'test_ticket',
+      locale: agent.preferences[:locale] || 'en-us',
+      objects:  {
+        agent: agent,
+        customer: customer,
+      },
+      raw: true,
+    )
+    UserInfo.current_user_id = customer.id
+    ticket = Ticket.create(
+      group_id: Group.find_by(active: true).id,
+      customer_id: customer.id,
+      owner_id: User.find_by(login: '-').id,
+      title: result[:subject],
+      state_id: Ticket::State.find_by(name: 'new').id,
+      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
+    )
+    article = Ticket::Article.create(
+      ticket_id: ticket.id,
+      type_id: Ticket::Article::Type.find_by(name: 'phone').id,
+      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+      from: from,
+      body: result[:body],
+      content_type: 'text/html',
+      internal: false,
+    )
+    UserInfo.current_user_id = original_user_id
+    overview = test_overview
+    assets = ticket.assets({})
+    assets = article.assets(assets)
+    assets = overview.assets(assets)
+    render json: {
+      overview_id: overview.id,
+      ticket_id: ticket.id,
+      assets: assets,
+    }
+  end
+
+  private
+
+  def test_overview
+    Overview.find_by(name: 'Unassigned & Open')
+  end
+
+  def test_customer
+    User.find_by(login: 'nicole.braun@zammad.org')
+  end
+
+  def access?
+    return true if current_user.role?(%w(Agent Admin))
+    render json: []
+    false
+  end
+
+  def check_availability(result)
+    test_ticket_active = true
+    overview = test_overview
+
+    if !overview
+      test_ticket_active = false
+    elsif overview.updated_by_id != 1
+      test_ticket_active = false
+    end
+    if !test_customer
+      test_ticket_active = false
+    end
+    if Group.where(active: true).count > 1
+      test_ticket_active = false
+    end
+    return result if test_ticket_active
+    result.each {|item|
+      items = []
+      item[:items].each {|local_item|
+        next if local_item[:name] == 'Create a Test Ticket'
+        items.push local_item
+      }
+      item[:items] = items
+    }
+    result
   end
 
 end

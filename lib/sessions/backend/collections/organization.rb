@@ -8,7 +8,7 @@ class Sessions::Backend::Collections::Organization < Sessions::Backend::Collecti
     if !@user.role?('Customer')
       all = Organization.all
     elsif @user.organization_id
-      all = Organization.where( id: @user.organization_id )
+      all = Organization.where(id: @user.organization_id)
     end
 
     all

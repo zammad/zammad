@@ -10,7 +10,7 @@ class App.Controller extends Spine.Controller
     super
 
     # generate controllerId
-    @controllerId = 'controller-' + new Date().getTime() + '-' + Math.floor( Math.random() * 999999 )
+    @controllerId = 'controller-' + new Date().getTime() + '-' + Math.floor(Math.random() * 999999)
 
     # apply to release controller on dom remove
     @el.on('remove', @releaseController)
@@ -84,7 +84,7 @@ class App.Controller extends Spine.Controller
 
   # add @title methode to set title
   title: (name, translate = false) ->
-#    $('html head title').html( @Config.get(product_name) + ' - ' + App.i18n.translateInline(name) )
+#    $('html head title').html(@Config.get(product_name) + ' - ' + App.i18n.translateInline(name))
     title = name
     if translate
       title = App.i18n.translatePlain(name)
@@ -92,9 +92,9 @@ class App.Controller extends Spine.Controller
 
   copyToClipboard: (text) ->
     if window.clipboardData # IE
-      window.clipboardData.setData( 'Text', text )
+      window.clipboardData.setData('Text', text)
     else
-      window.prompt( 'Copy to clipboard: Ctrl+C, Enter', text )
+      window.prompt('Copy to clipboard: Ctrl+C, Enter', text)
 
   # disable all delay's and interval's
   disconnectClient: ->
@@ -238,11 +238,11 @@ class App.Controller extends Spine.Controller
         currentVal = item.text()
         ui.frontendTimeUpdateItem(item, currentVal)
       )
-    App.Interval.set( update, 61000, 'frontendTimeUpdate', 'ui' )
+    App.Interval.set(update, 61000, 'frontendTimeUpdate', 'ui')
 
   frontendTimeUpdateItem: (item, currentVal) =>
     timestamp = item.data('time')
-    time      = @humanTime( timestamp, item.hasClass('escalation') )
+    time      = @humanTime(timestamp, item.hasClass('escalation'))
 
     # only do dom updates on changes
     return if time is currentVal
@@ -637,6 +637,7 @@ class App.ControllerModal extends App.Controller
   buttonSubmit: true
   headPrefix: ''
   shown: true
+  closeOnAnyClick: false
 
   events:
     'submit form':                        'submit'
@@ -723,6 +724,11 @@ class App.ControllerModal extends App.Controller
       'hidden.bs.modal': =>
         @onClosed()
         $('.modal').remove()
+
+    if @closeOnAnyClick
+      @el.on('click', =>
+        @close()
+      )
 
   close: (e) =>
     if e

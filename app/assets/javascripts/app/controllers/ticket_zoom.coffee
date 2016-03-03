@@ -126,10 +126,11 @@ class App.TicketZoom extends App.Controller
 
   changed: =>
     return false if !@ticket
-    formCurrent = @formParam( @el.find('.edit') )
-    ticket      = App.Ticket.find(@ticket_id).attributes()
-    modelDiff   = App.Utils.formDiff(formCurrent, ticket)
+    currentParams = @formCurrent()
+    currentStore = @currentStore()
+    modelDiff = @formDiff(currentParams, currentStore)
     return false if !modelDiff || _.isEmpty(modelDiff)
+    return false if _.isEmpty(modelDiff.ticket) && _.isEmpty(modelDiff.article)
     return true
 
   release: =>
@@ -349,15 +350,15 @@ class App.TicketZoom extends App.Controller
 
     # rerender whole sidebar if customer or organization has changed
     if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
-      new App.WidgetAvatar(
-        el:      @$('.ticketZoom-header .js-avatar')
-        user_id: @ticket.customer_id
-        size:    50
-      )
       if elLocal
         el = elLocal
       else
         el = @el
+      new App.WidgetAvatar(
+        el:      el.find('.ticketZoom-header .js-avatar')
+        user_id: @ticket.customer_id
+        size:    50
+      )
       @sidebar = new App.TicketZoomSidebar(
         el:           el.find('.tabsSidebar')
         sidebarState: @sidebarState
@@ -380,12 +381,12 @@ class App.TicketZoom extends App.Controller
       )
 
     # scroll to article if given
-    if @article_id && document.getElementById( 'article-' + @article_id )
-      offset = document.getElementById( 'article-' + @article_id ).offsetTop
+    if @article_id && document.getElementById('article-' + @article_id)
+      offset = document.getElementById('article-' + @article_id).offsetTop
       offset = offset - 45
       scrollTo = ->
-        @scrollTo( 0, offset )
-      @delay( scrollTo, 100, false )
+        @scrollTo(0, offset)
+      @delay(scrollTo, 100, false)
 
     @ticketLastAttributes = @ticket.attributes()
 
@@ -412,50 +413,61 @@ class App.TicketZoom extends App.Controller
     if !@autosaveLast
       @autosaveLast = @taskGet()
     update = =>
-      #console.log('AR', @ticket_id, @ticket, @formParam( @el.find('.article-add') ) )
       return if !@ticket
-      currentStoreTicket = @ticket.attributes()
-      delete currentStoreTicket.article
-      currentStore  =
-        ticket:  currentStoreTicket
-        article:
-          to:          ''
-          cc:          ''
-          type:        'note'
-          body:        ''
-          internal:    ''
-          in_reply_to: ''
-      currentParams =
-        ticket:  @formParam( @el.find('.edit') )
-        article: @formParam( @el.find('.article-add') )
+      currentParams = @formCurrent()
 
-      # add attachments if exist
-      attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
-      if attachmentCount > 0
-        currentParams.article.attachments = true
-      else
-        delete currentParams.article.attachments
+      # check changed between last autosave
+      sameAsLastSave = _.isEqual(currentParams, @autosaveLast)
+      return if sameAsLastSave
+      @autosaveLast = clone(currentParams)
 
-      #console.log('lll', currentStore)
-      # remove not needed attributes
-      delete currentParams.article.form_id
+      # update changes in ui
+      currentStore = @currentStore()
+      modelDiff = @formDiff(currentParams, currentStore)
+      @markFormDiff(modelDiff)
+      @taskUpdateAll(modelDiff)
 
-      # get diff of model
-      modelDiff =
-        ticket:  App.Utils.formDiff( currentParams.ticket, currentStore.ticket )
-        article: App.Utils.formDiff( currentParams.article, currentStore.article )
-      #console.log('modelDiff', modelDiff)
-
-      # get diff of last save
-      changedBetweenLastSave = _.isEqual(currentParams, @autosaveLast)
-      if !changedBetweenLastSave
-        #console.log('model DIFF ', modelDiff)
-
-        @autosaveLast = clone(currentParams)
-        @markFormDiff(modelDiff)
-
-        @taskUpdateAll(modelDiff)
     @interval(update, 2800, 'autosave')
+
+  currentStore: =>
+    return if !@ticket
+    currentStoreTicket = @ticket.attributes()
+    delete currentStoreTicket.article
+    currentStore  =
+      ticket:  currentStoreTicket
+      article:
+        to:          ''
+        cc:          ''
+        type:        'note'
+        body:        ''
+        internal:    ''
+        in_reply_to: ''
+    currentStore
+
+  formCurrent: =>
+    currentParams =
+      ticket:  @formParam(@el.find('.edit'))
+      article: @formParam(@el.find('.article-add'))
+
+    # add attachments if exist
+    attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
+    if attachmentCount > 0
+      currentParams.article.attachments = true
+    else
+      delete currentParams.article.attachments
+
+    # remove not needed attributes
+    delete currentParams.article.form_id
+    currentParams
+
+  formDiff: (currentParams, currentStore) ->
+
+    # get diff of model
+    modelDiff =
+      ticket:  App.Utils.formDiff(currentParams.ticket, currentStore.ticket)
+      article: App.Utils.formDiff(currentParams.article, currentStore.article)
+
+    modelDiff
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
@@ -464,8 +476,8 @@ class App.TicketZoom extends App.Controller
     resetButton   = @$('.js-reset')
 
     params         = {}
-    params.ticket  = @formParam( ticketForm )
-    params.article = @formParam( articleForm )
+    params.ticket  = @formParam(ticketForm)
+    params.article = @formParam(articleForm)
     #console.log('markFormDiff', diff, params)
 
     # clear all changes
@@ -606,25 +618,25 @@ class App.TicketZoom extends App.Controller
           if @overview_id
             current_position = 0
             overview = App.Overview.find(@overview_id)
-            list = App.OverviewCollection.get(overview.link)
-            for ticket_id in list.ticket_ids
+            list = App.OverviewListCollection.get(overview.link)
+            for ticket in list.tickets
               current_position += 1
-              if ticket_id is @ticket_id
-                next = list.ticket_ids[current_position]
+              if ticket.id is @ticket_id
+                next = list.tickets[current_position]
                 if next
                   # close task
                   App.TaskManager.remove(@task_key)
 
                   # open task via task manager to get overview information
                   App.TaskManager.execute(
-                    key:        'Ticket-' + next
+                    key:        'Ticket-' + next.id
                     controller: 'TicketZoom'
                     params:
-                      ticket_id:   next
+                      ticket_id:   next.id
                       overview_id: @overview_id
                     show:       true
                   )
-                  @navigate "ticket/zoom/#{next}"
+                  @navigate "ticket/zoom/#{next.id}"
                   return
 
           # fallback, close task
@@ -646,6 +658,8 @@ class App.TicketZoom extends App.Controller
 
         # enable form
         @formEnable(e)
+
+        App.Event.trigger('overview:fetch')
     )
 
   bookmark: (e) ->
@@ -719,6 +733,6 @@ class TicketZoomRouter extends App.ControllerPermanent
       show:       true
     )
 
-App.Config.set( 'ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes' )
-App.Config.set( 'ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes' )
+App.Config.set('ticket/zoom/:ticket_id', TicketZoomRouter, 'Routes')
+App.Config.set('ticket/zoom/:ticket_id/nav/:nav', TicketZoomRouter, 'Routes')
+App.Config.set('ticket/zoom/:ticket_id/:article_id', TicketZoomRouter, 'Routes')

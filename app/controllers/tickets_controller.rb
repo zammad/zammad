@@ -354,7 +354,7 @@ class TicketsController < ApplicationController
   def stats
 
     if !params[:user_id] && !params[:organization_id]
-      fail 'Need user_id or organization_id as param'
+      raise 'Need user_id or organization_id as param'
     end
 
     # permission check

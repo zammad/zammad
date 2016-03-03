@@ -2,6 +2,57 @@
 require 'browser_test_helper'
 
 class AgentTicketActionsLevel3Test < TestCase
+  def test_check_changes
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # confirm on create
+    ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'some changes',
+        body: 'some body 123äöü - changes',
+      },
+      do_not_submit: true,
+    )
+    close_task(
+      data: {
+        title: 'some changes',
+      },
+      discard_changes: true,
+    )
+    sleep 1
+
+    # confirm on zoom
+    ticket1 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'some changes',
+        body: 'some body 123äöü - changes',
+      },
+    )
+    ticket_update(
+      data: {
+        body: 'some note',
+      },
+      do_not_submit: true,
+    )
+    close_task(
+      data: {
+        title: 'some changes',
+      },
+      discard_changes: true,
+    )
+
+  end
+
   def test_work_with_two_browser_on_same_ticket_edit
 
     browser1 = browser_instance
@@ -11,7 +62,7 @@ class AgentTicketActionsLevel3Test < TestCase
       password: 'test',
       url: browser_url,
     )
-    tasks_close_all( browser: browser1 )
+    tasks_close_all(browser: browser1)
 
     browser2 = browser_instance
     login(
@@ -20,7 +71,7 @@ class AgentTicketActionsLevel3Test < TestCase
       password: 'test',
       url: browser_url,
     )
-    tasks_close_all( browser: browser2 )
+    tasks_close_all(browser: browser2)
 
     # create ticket
     ticket1 = ticket_create(
@@ -52,6 +103,13 @@ class AgentTicketActionsLevel3Test < TestCase
       },
       do_not_submit: true,
     )
+    sleep 6
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-reset',
+      value: '(Discard your unsaved changes.|Verwerfen der)',
+      no_quote: true,
+    )
 
     # update ticket in instance 2
     ticket_update(
@@ -60,6 +118,13 @@ class AgentTicketActionsLevel3Test < TestCase
         body: 'some level 3 <b>body</b> in instance 2',
       },
       do_not_submit: true,
+    )
+    sleep 6
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-reset',
+      value: '(Discard your unsaved changes.|Verwerfen der)',
+      no_quote: true,
     )
 
     click(

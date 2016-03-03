@@ -309,7 +309,7 @@ result
       Rails.logger.debug 'Create feed comment from article...'
       post = @client.put_comment(article[:in_reply_to], article[:body])
     else
-      fail "Can't handle unknown facebook article type '#{article[:type]}'."
+      raise "Can't handle unknown facebook article type '#{article[:type]}'."
     end
     Rails.logger.debug post.inspect
     @client.get_object(post['id'])

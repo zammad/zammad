@@ -284,6 +284,24 @@ retunes
     },
   )
 
+only raw subject/body
+
+  result = NotificationFactory.template(
+    template: 'password_reset',
+    locale: 'en-us',
+    objects:  {
+      recipient: User.find(2),
+    },
+    raw: true,
+  )
+
+returns
+
+  {
+    subject: 'some sobject',
+    body: 'some body',
+  }
+
 =end
 
   def self.template(data)
@@ -296,17 +314,18 @@ retunes
     template_body = ''
     locale = data[:locale] || 'en'
     template = data[:template]
-    location = "app/views/mailer/#{template}/#{locale}.html.erb"
+    root = Rails.root
+    location = "#{root}/app/views/mailer/#{template}/#{locale}.html.erb"
 
     # as fallback, use 2 char locale
     if !File.exist?(location)
       locale = locale[0, 2]
-      location = "app/views/mailer/#{template}/#{locale}.html.erb"
+      location = "#{root}/app/views/mailer/#{template}/#{locale}.html.erb"
     end
 
     # as fallback, use en
     if !File.exist?(location)
-      location = "app/views/mailer/#{template}/en.html.erb"
+      location = "#{root}/app/views/mailer/#{template}/en.html.erb"
     end
 
     File.open(location, 'r:UTF-8').each do |line|
@@ -320,12 +339,14 @@ retunes
     message_subject = NotificationFactory::Template.new(data[:objects], data[:locale], template_subject, false).render
     message_body = NotificationFactory::Template.new(data[:objects], data[:locale], template_body).render
 
-    application_template = nil
-    File.open('app/views/mailer/application.html.erb', 'r:UTF-8') do |file|
-      application_template = file.read
+    if !data[:raw]
+      application_template = nil
+      File.open("#{root}/app/views/mailer/application.html.erb", 'r:UTF-8') do |file|
+        application_template = file.read
+      end
+      data[:objects][:message] = message_body
+      message_body = NotificationFactory::Template.new(data[:objects], data[:locale], application_template).render
     end
-    data[:objects][:message] = message_body
-    message_body = NotificationFactory::Template.new(data[:objects], data[:locale], application_template).render
     {
       subject: message_subject,
       body: message_body,
