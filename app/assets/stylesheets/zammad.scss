@@ -993,10 +993,10 @@ th.align-right {
   display: none;
 }
 
-.checkbox-replacement input:focus ~ .icon-checked,
-.checkbox-replacement input:focus ~ .icon-unchecked,
-.radio-replacement input:focus ~ .icon-checked,
-.radio-replacement input:focus ~ .icon-unchecked, {
+.checkbox-replacement input:focus:not(.is-active) ~ .icon-checked,
+.checkbox-replacement input:focus:not(.is-active) ~ .icon-unchecked,
+.radio-replacement input:focus:not(.is-active) ~ .icon-checked,
+.radio-replacement input:focus:not(.is-active) ~ .icon-unchecked, {
   box-shadow: 0 0 0 2px hsl(201,62%,90%);
   color: hsl(200,71%,59%);
 }
