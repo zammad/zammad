@@ -28,8 +28,12 @@
     font-size: 16px;
   }
 }
-.zammad-chat.zammad-chat-is-shown {
+.zammad-chat.zammad-chat-is-loaded {
   display: flex;
+  opacity: 0;
+}
+.zammad-chat.zammad-chat-is-shown {
+  opacity: 1;
 }
 
 .zammad-chat-icon {
@@ -88,6 +92,7 @@
 .zammad-chat-header-icon-close {
   fill: currentColor;
   width: 1.6em;
+  height: auto;
   vertical-align: middle;
 }
 

@@ -27,10 +27,14 @@
       border-radius: 0 !important;
       font-size: 16px; } }
 
-.zammad-chat.zammad-chat-is-shown {
+.zammad-chat.zammad-chat-is-loaded {
   display: -webkit-flex;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  opacity: 0; }
+
+.zammad-chat.zammad-chat-is-shown {
+  opacity: 1; }
 
 .zammad-chat-icon {
   height: 2em;
@@ -77,6 +81,7 @@
 .zammad-chat-header-icon-close {
   fill: currentColor;
   width: 1.6em;
+  height: auto;
   vertical-align: middle; }
 
 .zammad-chat-header-icon-close {
