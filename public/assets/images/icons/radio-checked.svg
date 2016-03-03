@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6 (26304) - http://www.bohemiancoding.com/sketch -->
     <title>radio-checked</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="radio-checked" sketch:type="MSArtboardGroup" fill="#000000">
-            <circle id="inner" sketch:type="MSShapeGroup" cx="5.5" cy="5.5" r="2.5"></circle>
-            <path d="M5.5,11 C8.53756612,11 11,8.53756612 11,5.5 C11,2.46243388 8.53756612,0 5.5,0 C2.46243388,0 0,2.46243388 0,5.5 C0,8.53756612 2.46243388,11 5.5,11 Z M5.5,10 C7.98528137,10 10,7.98528137 10,5.5 C10,3.01471863 7.98528137,1 5.5,1 C3.01471863,1 1,3.01471863 1,5.5 C1,7.98528137 3.01471863,10 5.5,10 Z" id="outer" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="radio-checked">
+            <circle id="inner" fill="#000000" cx="5.5" cy="5.5" r="2.5"></circle>
+            <path d="M5.5,11 C8.53756612,11 11,8.53756612 11,5.5 C11,2.46243388 8.53756612,0 5.5,0 C2.46243388,0 0,2.46243388 0,5.5 C0,8.53756612 2.46243388,11 5.5,11 Z M5.5,10 C7.98528137,10 10,7.98528137 10,5.5 C10,3.01471863 7.98528137,1 5.5,1 C3.01471863,1 1,3.01471863 1,5.5 C1,7.98528137 3.01471863,10 5.5,10 Z" id="outer" fill="#BD0FE1"></path>
         </g>
     </g>
 </svg>
