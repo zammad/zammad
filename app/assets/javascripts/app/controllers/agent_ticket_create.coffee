@@ -1,6 +1,6 @@
 class App.TicketCreate extends App.Controller
   elements:
-    '.tabsSidebar'      : 'sidebar'
+    '.tabsSidebar': 'sidebar'
 
   events:
     'click .type-tabs .tab': 'changeFormType'
@@ -42,29 +42,32 @@ class App.TicketCreate extends App.Controller
       @buildScreen(params)
     @bindId = App.TicketCreateCollection.one(load)
 
-  changeFormType: (e) =>
-    type = $(e.target).data('type')
+  currentChannel: =>
     if !type
-      type = $(e.target).parent().data('type')
+      type = @$('.type-tabs .tab.active').data('type')
+    if !type
+      type = @default_type
+    type
+
+  changeFormType: (e) =>
+    type = $(e.currentTarget).data('type')
     @setFormTypeInUi(type)
 
   setFormTypeInUi: (type) =>
 
     # detect current form type
     if !type
-      type = @el.find('.type-tabs .tab.active').data('type')
-    if !type
-      type = @default_type
+      type = @currentChannel()
 
     # reset all tabs
-    tabs = @el.find('.type-tabs .tab')
+    tabs = @$('.type-tabs .tab')
     tabs.removeClass('active')
-    tabIcons = @el.find('.type-tabs .tab .icon')
+    tabIcons = @$('.type-tabs .tab .icon')
     tabIcons.addClass('gray')
     tabIcons.removeClass('white')
 
     # set active tab
-    selectedTab = @el.find(".type-tabs .tab[data-type='#{type}']")
+    selectedTab = @$(".type-tabs .tab[data-type='#{type}']")
     selectedTab.addClass('active')
 
     # set form type attributes
@@ -87,16 +90,22 @@ class App.TicketCreate extends App.Controller
     @articleAttributes = articleSenderTypeMap[type]
 
     # update form
-    @el.find('[name="formSenderType"]').val(type)
+    @$('[name="formSenderType"]').val(type)
 
     # force changing signature
-    @el.find('[name="group_id"]').trigger('change')
+    @$('[name="group_id"]').trigger('change')
+
+    # show cc
+    if type is 'email-out'
+      @$('[name="cc"]').closest('.form-group').removeClass('hide')
+    else
+      @$('[name="cc"]').closest('.form-group').addClass('hide')
 
   meta: =>
     text = ''
     if @articleAttributes
-      text = App.i18n.translateInline( @articleAttributes['title'] )
-    title = @el.find('[name=title]').val()
+      text = App.i18n.translateInline(@articleAttributes['title'])
+    title = @$('[name=title]').val()
     if title
       text = "#{text}: #{title}"
     meta =
@@ -107,26 +116,26 @@ class App.TicketCreate extends App.Controller
       iconClass: 'pen'
 
   url: =>
-    '#ticket/create/id/' + @id
+    "#ticket/create/id/#{@id}"
 
   show: =>
     @navupdate '#'
 
   changed: =>
-    formCurrent = @formParam( @el.find('.ticket-create') )
-    diff = difference( @formDefault, formCurrent )
-    return false if !diff || _.isEmpty( diff )
+    formCurrent = @formParam( @$('.ticket-create') )
+    diff = difference(@formDefault, formCurrent)
+    return false if !diff || _.isEmpty(diff)
     return true
 
   autosave: =>
     update = =>
-      data = @formParam( @el.find('.ticket-create') )
-      diff = difference( @autosaveLast, data )
-      if !@autosaveLast || ( diff && !_.isEmpty( diff ) )
+      data = @formParam(@$('.ticket-create'))
+      diff = difference(@autosaveLast, data)
+      if !@autosaveLast || (diff && !_.isEmpty(diff))
         @autosaveLast = data
         @log 'debug', 'form hash changed', diff, data
-        App.TaskManager.update( @task_key, { 'state': data })
-    @interval( update, 3000, @id )
+        App.TaskManager.update(@task_key, { 'state': data })
+    @interval(update, 3000, @id)
 
   # get data / in case also ticket data for split
   buildScreen: (params) =>
@@ -150,8 +159,8 @@ class App.TicketCreate extends App.Controller
         App.Collection.loadAssets(data.assets)
 
         # prefill with split ticket
-        t = App.Ticket.find( params.ticket_id ).attributes()
-        a = App.TicketArticle.find( params.article_id )
+        t = App.Ticket.find(params.ticket_id).attributes()
+        a = App.TicketArticle.find(params.article_id)
 
         # reset owner
         t.owner_id               = 0
@@ -162,7 +171,7 @@ class App.TicketCreate extends App.Controller
         if a.content_type.match(/\/html/)
           t.body = a.body
         else
-          t.body  = App.Utils.text2html( a.body )
+          t.body  = App.Utils.text2html(a.body)
 
         # render page
         @render( options: t )
@@ -172,9 +181,9 @@ class App.TicketCreate extends App.Controller
 
     # get params
     params = {}
-    if template && !_.isEmpty( template.options )
+    if template && !_.isEmpty(template.options)
       params = template.options
-    else if App.TaskManager.get(@task_key) && !_.isEmpty( App.TaskManager.get(@task_key).state )
+    else if App.TaskManager.get(@task_key) && !_.isEmpty(App.TaskManager.get(@task_key).state)
       params = App.TaskManager.get(@task_key).state
 
     if params['form_id']
@@ -193,19 +202,19 @@ class App.TicketCreate extends App.Controller
       if attribute && attribute.name is 'group_id'
         signature = undefined
         if params['group_id']
-          group = App.Group.find( params['group_id'] )
+          group = App.Group.find(params['group_id'])
           if group && group.signature_id
-            signature = App.Signature.find( group.signature_id )
+            signature = App.Signature.find(group.signature_id)
 
         # check if signature need to be added
         type = @$('[name="formSenderType"]').val()
 
         if signature isnt undefined &&  signature.body && type is 'email-out'
-          signatureFinished = App.Utils.replaceTags( signature.body, { user: App.Session.get() } )
+          signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get() })
 
           # get current body
           body = @$('[data-name="body"]').html() || ''
-          if App.Utils.signatureCheck( body, signatureFinished )
+          if App.Utils.signatureCheck(body, signatureFinished)
 
             # if signature has changed, replace it
             signature_id = @$('[data-signature=true]').data('signature-id')
@@ -226,7 +235,7 @@ class App.TicketCreate extends App.Controller
           @$('[data-name="body"]').find('[data-signature=true]').remove()
 
     new App.ControllerForm(
-      el:       @el.find('.ticket-form-top')
+      el:       @$('.ticket-form-top')
       form_id:  @form_id
       model:    App.Ticket
       screen:   'create_top'
@@ -242,14 +251,14 @@ class App.TicketCreate extends App.Controller
     )
 
     new App.ControllerForm(
-      el:      @el.find('.article-form-top')
+      el:      @$('.article-form-top')
       form_id: @form_id
       model:   App.TicketArticle
       screen:  'create_top'
       params:  params
     )
     new App.ControllerForm(
-      el:      @el.find('.ticket-form-middle')
+      el:      @$('.ticket-form-middle')
       form_id: @form_id
       model:   App.Ticket
       screen:  'create_middle'
@@ -264,7 +273,7 @@ class App.TicketCreate extends App.Controller
       noFieldset: true
     )
     new App.ControllerForm(
-      el:       @el.find('.ticket-form-bottom')
+      el:       @$('.ticket-form-bottom')
       form_id:  @form_id
       model:    App.Ticket
       screen:   'create_bottom'
@@ -282,11 +291,11 @@ class App.TicketCreate extends App.Controller
     @setFormTypeInUi( params['formSenderType'] )
 
     # remember form params of init load
-    @formDefault = @formParam( @el.find('.ticket-create') )
+    @formDefault = @formParam( @$('.ticket-create') )
 
     # show text module UI
     @textModule = new App.WidgetTextModule(
-      el: @el.find('[data-name="body"]').parent()
+      el: @$('[data-name="body"]').parent()
     )
 
     new Sidebar(
@@ -305,7 +314,7 @@ class App.TicketCreate extends App.Controller
 
   localUserInfo: (e) =>
 
-    params = App.ControllerForm.params( $(e.target).closest('form') )
+    params = App.ControllerForm.params($(e.target).closest('form'))
 
     new Sidebar(
       el:         @sidebar
@@ -331,11 +340,15 @@ class App.TicketCreate extends App.Controller
     ticket = new App.Ticket
 
     # find sender_id
-    sender = App.TicketArticleSender.findByAttribute( 'name', @articleAttributes['sender'] )
-    type   = App.TicketArticleType.findByAttribute( 'name', @articleAttributes['article'] )
+    sender = App.TicketArticleSender.findByAttribute('name', @articleAttributes['sender'])
+    type   = App.TicketArticleType.findByAttribute('name', @articleAttributes['article'])
 
     if params.group_id
-      group  = App.Group.find( params.group_id )
+      group  = App.Group.find(params.group_id)
+
+    # allow cc only on email tickets
+    if @currentChannel() isnt 'email-out'
+      delete params.cc
 
     # create article
     if sender.name is 'Customer'
@@ -376,20 +389,20 @@ class App.TicketCreate extends App.Controller
     )
 
     article = new App.TicketArticle
-    article.load( params['article'] )
+    article.load(params['article'])
     articleErrors = article.validate(
       screen: 'create_top'
     )
 
     # collect whole validation result
     errors = {}
-    errors = _.extend( errors, ticketErrorsTop )
-    errors = _.extend( errors, ticketErrorsMiddle )
-    errors = _.extend( errors, ticketErrorsBottom )
-    errors = _.extend( errors, articleErrors )
+    errors = _.extend(errors, ticketErrorsTop)
+    errors = _.extend(errors, ticketErrorsMiddle)
+    errors = _.extend(errors, ticketErrorsBottom)
+    errors = _.extend(errors, articleErrors)
 
     # show errors in form
-    if !_.isEmpty( errors )
+    if !_.isEmpty(errors)
       @log 'error', errors
       @formValidate(
         form:   e.target
@@ -401,7 +414,7 @@ class App.TicketCreate extends App.Controller
 
       # check attachment
       if article['body']
-        if App.Utils.checkAttachmentReference( article['body'] )
+        if App.Utils.checkAttachmentReference(article['body'])
           if @$('.richtext .attachments .attachment').length < 1
             if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
               return
@@ -415,19 +428,19 @@ class App.TicketCreate extends App.Controller
           # notify UI
           ui.notify
             type:    'success',
-            msg:     App.i18n.translateInline( 'Ticket %s created!', @number ),
+            msg:     App.i18n.translateInline('Ticket %s created!', @number),
             link:    "#ticket/zoom/#{@id}"
             timeout: 4000,
 
           # close ticket create task
-          App.TaskManager.remove( ui.task_key )
+          App.TaskManager.remove(ui.task_key)
 
           # scroll to top
           ui.scrollTo()
 
           # access to group
           group_ids = App.Session.get('group_ids')
-          if group_ids && _.contains( group_ids, @group_id )
+          if group_ids && _.contains(group_ids, @group_id)
             ui.navigate "#ticket/zoom/#{@id}"
             return
 
@@ -445,7 +458,7 @@ class Sidebar extends App.Controller
 
     # load user
     if @params['customer_id']
-      App.User.full( @params['customer_id'], @render )
+      App.User.full(@params['customer_id'], @render)
       return
 
     # render ui
@@ -542,8 +555,8 @@ class Sidebar extends App.Controller
     }
 
     new App.Sidebar(
-      el:     @el
-      items:  items
+      el:    @el
+      items: items
     )
 
 class Router extends App.ControllerPermanent
@@ -569,20 +582,20 @@ class Router extends App.ControllerPermanent
       id:         params.id
 
     App.TaskManager.execute(
-      key:        'TicketCreateScreen-' + params['id']
+      key:        "TicketCreateScreen-#{params['id']}"
       controller: 'TicketCreate'
       params:     clean_params
       show:       true
     )
 
 # create new ticket routes/controller
-App.Config.set( 'ticket/create', Router, 'Routes' )
-App.Config.set( 'ticket/create/', Router, 'Routes' )
-App.Config.set( 'ticket/create/id/:id', Router, 'Routes' )
+App.Config.set('ticket/create', Router, 'Routes')
+App.Config.set('ticket/create/', Router, 'Routes')
+App.Config.set('ticket/create/id/:id', Router, 'Routes')
 
 # split ticket
-App.Config.set( 'ticket/create/:ticket_id/:article_id', Router, 'Routes' )
-App.Config.set( 'ticket/create/id/:id/:ticket_id/:article_id', Router, 'Routes' )
+App.Config.set('ticket/create/:ticket_id/:article_id', Router, 'Routes')
+App.Config.set('ticket/create/id/:id/:ticket_id/:article_id', Router, 'Routes')
 
 # set new actions
-App.Config.set( 'TicketCreate', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#ticket/create', role: ['Agent'], divider: true }, 'NavBarRight' )
+App.Config.set('TicketCreate', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#ticket/create', role: ['Agent'], divider: true }, 'NavBarRight')

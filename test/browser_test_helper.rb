@@ -1256,6 +1256,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements(css: 'a[href="#manage"]')[0].click
+    sleep 0.2
     instance.find_elements(css: 'a[href="#manage/overviews"]')[0].click
     sleep 0.2
     instance.find_elements(css: '#content a[data-type="new"]')[0].click
