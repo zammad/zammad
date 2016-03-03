@@ -1,32 +1,3 @@
-class App.OverviewListCollection
-  _instance = undefined # Must be declared here to force the closure on the class
-
-  @get: (view) ->
-    if _instance == undefined
-      _instance ?= new _Singleton
-    _instance.get(view)
-
-  @bind: (view, callback, init) ->
-    if _instance == undefined
-      _instance ?= new _Singleton
-    _instance.bind(view, callback, init)
-
-  @unbind: (counter) ->
-    if _instance == undefined
-      _instance ?= new _Singleton
-    _instance.unbind(counter)
-
-  @fetch: (view) ->
-    if _instance == undefined
-      _instance ?= new _Singleton
-    _instance.fetch(view)
-
-  @trigger: (view) ->
-    if _instance == undefined
-      _instance ?= new _Singleton
-    _instance.trigger(view)
-
-# The actual Singleton class
 class _Singleton
   constructor: ->
     @overview = {}
@@ -34,7 +5,6 @@ class _Singleton
     @fetchActive = {}
     @counter = 0
 
-    # websocket updates
     App.Event.bind 'ticket_overview_list', (data) =>
       if !@overview[data.overview.view]
         @overview[data.overview.view] = {}
@@ -97,3 +67,31 @@ class _Singleton
     for counter, meta of @callbacks
       if meta.view is view
         meta.callback(data)
+
+class App.OverviewListCollection
+  _instance = new _Singleton
+
+  @get: (view) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.get(view)
+
+  @bind: (view, callback, init) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.bind(view, callback, init)
+
+  @unbind: (counter) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.unbind(counter)
+
+  @fetch: (view) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.fetch(view)
+
+  @trigger: (view) ->
+    if _instance == undefined
+      _instance ?= new _Singleton
+    _instance.trigger(view)
