@@ -1305,6 +1305,7 @@ wait untill text in selector disabppears
         overview = {
           name: name,
         }
+        sleep 1
         return overview
       end
       sleep 1
@@ -2020,6 +2021,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'sla created')
+        sleep 1
         return true
       end
       sleep 1
@@ -2069,6 +2071,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'text module created')
+        sleep 1
         return true
       end
       sleep 1
@@ -2116,6 +2119,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'signature created')
+        sleep 1
         return true
       end
       sleep 1
