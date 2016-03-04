@@ -65,14 +65,14 @@ Date.prototype.getWeek = function() {
 
 function difference(object1, object2) {
   var changes = {};
-  for ( var name in object1 ) {
-    if ( name in object2 ) {
-      if ( _.isObject( object2[name] ) && !_.isArray( object2[name] ) ) {
-        var diff = difference( object1[name], object2[name] );
-        if ( !_.isEmpty( diff ) ) {
+  for (var name in object1) {
+    if (name in object2) {
+      if (_.isObject(object2[name]) && !_.isArray(object2[name])) {
+        var diff = difference(object1[name], object2[name]);
+        if (!_.isEmpty(diff)) {
             changes[name] = diff;
         }
-      } else if ( !_.isEqual( object1[name], object2[name] ) ) {
+      } else if (!_.isEqual(object1[name], object2[name])) {
         changes[name] = object2[name];
       }
     }
@@ -113,7 +113,7 @@ function clone(item, full) {
   // ignore certain objects
   var acceptedInstances = [ 'Object', 'Number', 'String', 'Boolean', 'Array' ]
   if (full) {
-    acceptedInstances.push( 'Function' )
+    acceptedInstances.push('Function')
   }
 
   // check if item is accepted to get cloned
@@ -141,7 +141,7 @@ function clone(item, full) {
     result = {}
     for(var key in item) {
       if (item.hasOwnProperty(key)) {
-        result[key] = clone( item[key], full )
+        result[key] = clone(item[key], full)
       }
     }
   }
@@ -150,58 +150,6 @@ function clone(item, full) {
     result = item
   }
   return result
-}
-
-// taken from http://stackoverflow.com/questions/4459928/how-to-deep-clone-in-javascript
-function clone2(item) {
-    if (!item) { return item; } // null, undefined values check
-
-    var types = [ Number, String, Boolean ],
-        result;
-
-    // normalizing primitives if someone did new String('aaa'), or new Number('444');
-    types.forEach(function(type) {
-        if (item instanceof type) {
-            result = type( item );
-        }
-    });
-
-    if (typeof result == "undefined") {
-        if (Object.prototype.toString.call( item ) === "[object Array]") {
-            result = [];
-            item.forEach(function(child, index, array) {
-                result[index] = clone( child );
-            });
-        } else if (typeof item == "object") {
-            // testing that this is DOM
-            if (item.nodeType && typeof item.cloneNode == "function") {
-                var result = item.cloneNode( true );
-            } else if (!item.prototype) { // check that this is a literal
-                if (item instanceof Date) {
-                    result = new Date(item);
-                } else {
-                    // it is an object literal
-                    result = {};
-                    for (var i in item) {
-                        result[i] = clone( item[i] );
-                    }
-                }
-            } else {
-                // depending what you would like here,
-                // just keep the reference, or create new object
-                if (false && item.constructor) {
-                    // would not advice to do that, reason? Read below
-                    result = new item.constructor();
-                } else {
-                    result = item;
-                }
-            }
-        } else {
-            result = item;
-        }
-    }
-
-    return result;
 }
 
 // taken from https://github.com/epeli/underscore.string/blob/master/underscored.js
