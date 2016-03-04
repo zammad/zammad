@@ -486,7 +486,8 @@ pre code.hljs {
 
   &.btn--text {
     font-size: inherit;
-    padding: 0;
+    margin: -10px;
+    padding: 10px;
     color: hsl(203,65%,55%);
     border: none;
     background: none;
@@ -1833,13 +1834,12 @@ input.has-error {
   }
 
   .modal-control {
-    padding: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+        
     .btn.is-disabled {
       opacity: 1;
       color: hsl(240,5%,83%);
-    }
-    .btn {
-      padding: 10px;
     }
   }
 
