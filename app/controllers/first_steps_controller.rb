@@ -89,11 +89,6 @@ class FirstStepsController < ApplicationController
               class: 'js-testTicket',
             },
             {
-              name: 'Create Overviews',
-              checked: false,
-              location: '#manage/overviews',
-            },
-            {
               name: 'Create Text Modues',
               checked: text_module_active,
               location: '#manage/text_modules',
@@ -102,6 +97,11 @@ class FirstStepsController < ApplicationController
               name: 'Create Macros',
               checked: macro_active,
               location: '#manage/macros',
+            },
+            {
+              name: 'Create Overviews',
+              checked: false,
+              location: '#manage/overviews',
             },
           ],
         },
