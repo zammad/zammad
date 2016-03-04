@@ -539,6 +539,14 @@ pre code.hljs {
         color: hsl(0,0%,75%);
       }
     }
+
+    &.space-left {
+      margin-left: 0;
+    }
+
+    &.space-right {
+      margin-right: 0;
+    }
   }
 
   &.btn--quad {
@@ -8111,6 +8119,10 @@ body.fit {
 
 .space-left {
   margin-left: 10px; 
+}
+
+.space-right {
+  margin-right: 10px; 
 }
 
 .align-center {
