@@ -38,7 +38,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     click( text: 'Unassigned & Open' )
-    sleep 6 # till overview is rendered
+    sleep 8 # till overview is rendered
 
     # select both via bulk action
     click(
