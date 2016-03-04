@@ -98,11 +98,11 @@ class FirstStepsController < ApplicationController
               checked: macro_active,
               location: '#manage/macros',
             },
-            {
-              name: 'Create Overviews',
-              checked: false,
-              location: '#manage/overviews',
-            },
+            #{
+            #  name: 'Create Overviews',
+            #  checked: false,
+            #  location: '#manage/overviews',
+            #},
           ],
         },
         {
