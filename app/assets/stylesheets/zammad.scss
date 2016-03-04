@@ -1833,12 +1833,13 @@ input.has-error {
   }
 
   .modal-control {
-    padding-left: 14px;
-    padding-right: 14px;
-    
+    padding: 0;
     .btn.is-disabled {
       opacity: 1;
       color: hsl(240,5%,83%);
+    }
+    .btn {
+      padding: 10px;
     }
   }
 
