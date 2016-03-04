@@ -1256,6 +1256,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     instance.find_elements(css: 'a[href="#manage"]')[0].click
+    sleep 0.2
     instance.find_elements(css: 'a[href="#manage/overviews"]')[0].click
     sleep 0.2
     instance.find_elements(css: '#content a[data-type="new"]')[0].click
@@ -1304,6 +1305,7 @@ wait untill text in selector disabppears
         overview = {
           name: name,
         }
+        sleep 1
         return overview
       end
       sleep 1
@@ -1624,6 +1626,7 @@ wait untill text in selector disabppears
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
         if !text || text.empty?
           screenshot(browser: instance, comment: 'ticket_update_ok')
+          sleep 1
           return true
         end
       rescue
@@ -2019,6 +2022,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'sla created')
+        sleep 1
         return true
       end
       sleep 1
@@ -2068,6 +2072,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'text module created')
+        sleep 1
         return true
       end
       sleep 1
@@ -2115,6 +2120,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'signature created')
+        sleep 1
         return true
       end
       sleep 1

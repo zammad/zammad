@@ -1,13 +1,6 @@
 require 'rss'
 
-class Sessions::Backend::Rss
-
-  def initialize(user, client, client_id, ttl = 30)
-    @user      = user
-    @client    = client
-    @ttl       = ttl
-    @client_id = client_id
-  end
+class Sessions::Backend::Rss < Sessions::Backend::Base
 
   def collection_key
     "rss::load::#{self.class}::#{@user.id}"

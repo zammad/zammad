@@ -1,15 +1,16 @@
-class Sessions::Backend::TicketOverviewList
+class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
   def self.reset(user_id)
     key = "TicketOverviewPull::#{user_id}"
     Cache.write(key, { needed: true })
   end
 
-  def initialize(user, client = nil, client_id = nil, ttl = 8)
+  def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 8)
     @user                 = user
     @client               = client
     @client_id            = client_id
     @ttl                  = ttl
+    @asset_lookup         = asset_lookup
     @last_change          = nil
     @last_overview        = {}
     @last_overview_change = nil
@@ -96,9 +97,12 @@ class Sessions::Backend::TicketOverviewList
 
       assets = {}
       overview = Overview.lookup(id: index[:overview][:id])
-      assets = overview.assets(assets)
+      if asset_needed?(overview)
+        assets = overview.assets(assets)
+      end
       index[:tickets].each {|ticket_meta|
         ticket = Ticket.lookup(id: ticket_meta[:id])
+        next if !asset_needed?(ticket)
         assets = ticket.assets(assets)
       }
 

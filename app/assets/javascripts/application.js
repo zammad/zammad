@@ -222,6 +222,17 @@ jQuery.event.special.remove = {
   }
 };
 
+// checkbox-replacement helper
+// native checkbox focus behaviour is the following:
+// tab to checkbox: :focus state and focus outline
+// click on checkbox: :focus state but no focus outline
+$('body').on('click', '.checkbox-replacement, .radio-replacement', function(event){ 
+  $(event.currentTarget).find('input').addClass('is-active')
+});
+$('body').on('blur', '.checkbox-replacement input, .radio-replacement input', function(){ 
+  $(this).removeClass('is-active')
+});
+
 // start application
 jQuery(function(){
   new App.Run();

@@ -1,11 +1,12 @@
-class Sessions::Backend::Collections
+class Sessions::Backend::Collections < Sessions::Backend::Base
 
-  def initialize(user, client, client_id, ttl = 10)
-    @user      = user
-    @client    = client
-    @client_id = client_id
-    @ttl       = ttl
-    @backends  = backend
+  def initialize(user, asset_lookup, client, client_id, ttl = 10)
+    @user         = user
+    @client       = client
+    @client_id    = client_id
+    @ttl          = ttl
+    @asset_lookup = asset_lookup
+    @backends     = backend
   end
 
   def push
@@ -35,7 +36,7 @@ class Sessions::Backend::Collections
       next if file.classify == 'Sessions::Backend::Collections::Base'
       #puts "LOAD #{file.classify}---"
       #next if file == ''
-      backend = file.classify.constantize.new(@user, @client, @client_id, @ttl)
+      backend = file.classify.constantize.new(@user, @asset_lookup, @client, @client_id, @ttl)
       if backend
         backends.push backend
       end

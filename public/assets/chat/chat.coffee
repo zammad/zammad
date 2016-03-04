@@ -261,6 +261,7 @@ do($ = window.jQuery, window) ->
         onMessage: @onWebSocketMessage
         onError: @onError
       )
+
       @io.connect()
 
     getScrollRoot: ->
@@ -354,7 +355,11 @@ do($ = window.jQuery, window) ->
             switch pipe.data.state
               when 'online'
                 @sessionId = undefined
-                @onReady()
+
+                if !@options.cssAutoload || @cssLoaded
+                  @onReady()
+                else
+                  @socketReady = true
               when 'offline'
                 @onError 'Zammad Chat: No agent online'
               when 'chat_disabled'
@@ -590,11 +595,12 @@ do($ = window.jQuery, window) ->
       return if @isOpen
       if @el
         @el.removeClass('zammad-chat-is-shown')
+        @el.removeClass('zammad-chat-is-loaded')
 
     show: ->
       return if @state is 'offline'
 
-      @el.addClass('zammad-chat-is-shown')
+      @el.addClass('zammad-chat-is-loaded')
 
       if !@inputInitialized
         @inputInitialized = true
@@ -603,7 +609,11 @@ do($ = window.jQuery, window) ->
 
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
 
+      console.log "el", @el.height()
+      console.log "header", @el.find('.zammad-chat-header').outerHeight()
+
       @el.css 'bottom', -remainerHeight
+      @el.addClass('zammad-chat-is-shown')
 
     disableInput: ->
       @input.prop('disabled', true)
@@ -827,9 +837,16 @@ do($ = window.jQuery, window) ->
       @log.debug "load css from '#{url}'"
       styles = "@import url('#{url}');"
       newSS = document.createElement('link')
+      newSS.onload = @onCssLoaded
       newSS.rel = 'stylesheet'
       newSS.href = 'data:text/css,' + escape(styles)
       document.getElementsByTagName('head')[0].appendChild(newSS)
+
+    onCssLoaded: =>
+      if @socketReady
+        @onReady()
+      else
+        @cssLoaded = true
 
     startTimeoutObservers: =>
       @idleTimeout = new Timeout(

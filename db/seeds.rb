@@ -2113,7 +2113,30 @@ ObjectManager::Attribute.add(
   pending_migration: false,
   position: 10,
 )
-
+ObjectManager::Attribute.add(
+  object: 'Ticket',
+  name: 'cc',
+  display: 'Cc',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 1000,
+    null: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create_top: {
+      Agent: {
+        null: true,
+      },
+    },
+    create_middle: {},
+    edit: {}
+  },
+  pending_migration: false,
+  position: 11,
+)
 ObjectManager::Attribute.add(
   object: 'Ticket',
   name: 'type',
@@ -2440,13 +2463,7 @@ ObjectManager::Attribute.add(
   editable: false,
   active: true,
   screens: {
-    create_phone_in: {},
-    create_phone_out: {},
-    create_email_out: {
-      '-all-' => {
-        null: true,
-      }
-    },
+    create_top: {},
     create_middle: {},
     edit: {
       Agent: {
