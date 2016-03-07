@@ -1615,15 +1615,15 @@ Link::Object.create_if_not_exists(id: 3, name: 'Question/Answer')
 Link::Object.create_if_not_exists(id: 4, name: 'Idea')
 Link::Object.create_if_not_exists(id: 5, name: 'Bug')
 
-Ticket::StateType.create_if_not_exists(id: 1, name: 'new' )
-Ticket::StateType.create_if_not_exists(id: 2, name: 'open' )
+Ticket::StateType.create_if_not_exists(id: 1, name: 'new')
+Ticket::StateType.create_if_not_exists(id: 2, name: 'open')
 Ticket::StateType.create_if_not_exists(id: 3, name: 'pending reminder')
 Ticket::StateType.create_if_not_exists(id: 4, name: 'pending action')
 Ticket::StateType.create_if_not_exists(id: 5, name: 'closed')
 Ticket::StateType.create_if_not_exists(id: 6, name: 'merged')
 Ticket::StateType.create_if_not_exists(id: 7, name: 'removed')
 
-Ticket::State.create_if_not_exists(id: 1, name: 'new', state_type_id: Ticket::StateType.find_by(name: 'new').id, )
+Ticket::State.create_if_not_exists(id: 1, name: 'new', state_type_id: Ticket::StateType.find_by(name: 'new').id)
 Ticket::State.create_if_not_exists(id: 2, name: 'open', state_type_id: Ticket::StateType.find_by(name: 'open').id)
 Ticket::State.create_if_not_exists(id: 3, name: 'pending reminder', state_type_id: Ticket::StateType.find_by(name: 'pending reminder').id, ignore_escalation: true)
 Ticket::State.create_if_not_exists(id: 4, name: 'closed', state_type_id: Ticket::StateType.find_by(name: 'closed').id, ignore_escalation: true)
@@ -2183,6 +2183,7 @@ ObjectManager::Attribute.add(
     multiple: false,
     null: false,
     translate: false,
+    only_shown_if_selectable: true,
   },
   editable: false,
   active: true,
@@ -2876,8 +2877,8 @@ ObjectManager::Attribute.add(
     maxlength: 100,
     null: true,
   },
-  editable: false,
-  active: true,
+  editable: true,
+  active: false,
   screens: {
     signup: {},
     invite_agent: {},
@@ -2908,8 +2909,8 @@ ObjectManager::Attribute.add(
     null: true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
+  editable: true,
+  active: false,
   screens: {
     signup: {},
     invite_agent: {},
@@ -2940,8 +2941,8 @@ ObjectManager::Attribute.add(
     null: true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
-  active: true,
+  editable: true,
+  active: false,
   screens: {
     signup: {},
     invite_agent: {},
@@ -2972,7 +2973,7 @@ ObjectManager::Attribute.add(
     null: true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
+  editable: true,
   active: true,
   screens: {
     signup: {},
@@ -3146,6 +3147,7 @@ ObjectManager::Attribute.add(
     invite_agent: {
       '-all-' => {
         null: false,
+        only_shown_if_selectable: true,
       },
     },
     invite_customer: {},

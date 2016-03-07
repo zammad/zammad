@@ -142,9 +142,10 @@ class AaaGettingStartedTest < TestCase
       css: '.js-agent input[name="email"]',
       value: 'agent1@example.com',
     )
-    click(
-      css: '.js-agent input[name="group_ids"][value="1"]',
-    )
+    # not needed since we hide group selections if only one group exists
+    #click(
+    #  css: '.js-agent input[name="group_ids"][value="1"]',
+    #)
     click(
       css: '.js-agent .btn--success',
     )

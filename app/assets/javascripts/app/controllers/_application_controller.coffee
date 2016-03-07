@@ -527,7 +527,8 @@ class App.Controller extends Spine.Controller
               newElement = ui.formGenItem(item, classname, form)
 
           # replace new option list
-          form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith(newElement)
+          if newElement
+            form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith(newElement)
 
   stopPropagation: (e) ->
     e.stopPropagation()
