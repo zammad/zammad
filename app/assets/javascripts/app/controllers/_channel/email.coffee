@@ -436,11 +436,9 @@ class App.ChannelEmailEdit extends App.ControllerModal
         @formEnable(e)
     )
 
-class App.ChannelEmailAccountWizard extends App.Wizard
+class App.ChannelEmailAccountWizard extends App.WizardModal
   elements:
     '.modal-body': 'body'
-
-  className: 'modal fade'
 
   events:
     'submit .js-intro':                   'probeBasedOnIntro'
@@ -775,11 +773,9 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     e.preventDefault()
     @el.modal('hide')
 
-class App.ChannelEmailNotificationWizard extends App.Wizard
+class App.ChannelEmailNotificationWizard extends App.WizardModal
   elements:
     '.modal-body': 'body'
-
-  className: 'modal fade'
 
   events:
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'

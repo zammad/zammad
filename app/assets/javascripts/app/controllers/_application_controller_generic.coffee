@@ -677,7 +677,9 @@ class App.Sidebar extends App.Controller
     # show sidebar if not shown
     @showSidebar()
 
-class App.Wizard extends App.Controller
+class App.WizardModal extends App.Controller
+  className: 'modal fade'
+
   constructor: ->
     super
 
@@ -723,3 +725,11 @@ class App.Wizard extends App.Controller
     for field, type of fields
       if type
         @$(".#{screen}").find("[name=\"options::#{field}\"]").closest('.form-group').addClass('has-error')
+
+class App.WizardFullScreen extends App.WizardModal
+  className: 'getstarted fit'
+
+  constructor: ->
+    super
+    $('.content').addClass('hide')
+    $('#content').removeClass('hide')

@@ -1,5 +1,4 @@
-class App.InviteUser extends App.Wizard
-  className: 'modal fade'
+class App.InviteUser extends App.WizardModal
   events:
     'click  .js-close':     'hide'
     'submit .js-user':      'submit'
