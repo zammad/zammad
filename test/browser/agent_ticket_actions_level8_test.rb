@@ -139,7 +139,7 @@ class AgentTicketActionLevel8Test < TestCase
     )
     select(
       css: '.content.active .modal-body [name="link_type"]',
-      value: 'normal',
+      value: 'Normal',
     )
     click(
       css: '.content.active .modal-footer .js-submit',

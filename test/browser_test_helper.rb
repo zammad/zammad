@@ -1320,7 +1320,7 @@ wait untill text in selector disabppears
     browser: browser1,
     data: {
       customer: 'nico',
-      group:    'Users',
+      group:    'Users', # optional / '-NONE-' # if group selection should not be shown
       priority: '2 normal',
       title:    'overview #1',
       body:     'overview #1',
@@ -1353,15 +1353,28 @@ wait untill text in selector disabppears
     end
     sleep 1
 
-    # check count of agents, should be only 1 / - selection on init screen
-    count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
-    assert_equal(1, count, 'check if owner selection is empty per default' )
-
     if data[:group]
-      element = instance.find_elements(css: '.active .newTicket select[name="group_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:group])
-      sleep 0.2
+      if data[:group] == '-NONE-'
+
+        # check if owner selection exists
+        count = instance.find_elements(css: '.active .newTicket select[name="group_id"] option').count
+        assert_equal(0, count, 'owner selection should not be showm')
+
+        # check count of agents, should be only 3 / - selection + master + agent on init screen
+        count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
+        assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
+
+      else
+
+        # check count of agents, should be only 1 / - selection on init screen
+        count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
+        assert_equal(1, count, 'check if owner selection is empty per default')
+
+        element = instance.find_elements(css: '.active .newTicket select[name="group_id"]')[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by(:text, data[:group])
+        sleep 0.2
+      end
     end
     if data[:priority]
       element = instance.find_elements(css: '.active .newTicket select[name="priority_id"]')[0]
@@ -1460,7 +1473,7 @@ wait untill text in selector disabppears
       title:    '',
       customer: 'some_customer@example.com',
       body:     'some body',
-      group:    'some group',
+      group:    'some group', # optional
       priority: '1 low',
       state:    'closed',
     },
@@ -1566,10 +1579,23 @@ wait untill text in selector disabppears
     end
 
     if data[:group]
-      element = instance.find_elements(css: '.active .sidebar select[name="group_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:group])
-      sleep 0.2
+      if data[:group] == '-NONE-'
+
+        # check if owner selection exists
+        count = instance.find_elements(css: '.active .sidebar select[name="group_id"] option').count
+        assert_equal(0, count, 'owner selection should not be showm')
+
+        # check count of agents, should be only 3 / - selection + master + agent on init screen
+        count = instance.find_elements(css: '.active .sidebar select[name="owner_id"] option').count
+        assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
+
+      else
+
+        element = instance.find_elements(css: '.active .sidebar select[name="group_id"]')[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by(:text, data[:group])
+        sleep 0.2
+      end
     end
 
     if data[:priority]
@@ -2193,6 +2219,7 @@ wait untill text in selector disabppears
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
             instance.find_elements(css: '.modal button.js-submit')[0].click
+            sleep 3
           }
         end
       end
