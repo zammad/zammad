@@ -104,7 +104,7 @@
           <% for email_address in channel.email_addresses: %>
             <li class="list-item" data-id="<%= email_address.id %>">
               <div class="list-item-name"><%= email_address.email %></div>
-              <div class="btn btn--text js-emailAddressEdit space-left"><%- @T('Edit') %></div>
+              <div class="btn btn--text js-emailAddressEdit space-left space-right"><%- @T('Edit') %></div>
               <% if channel.email_addresses.length > 1: %>
               <div class="list-item-delete js-emailAddressDelete">
                 <%- @Icon('diagonal-cross') %>

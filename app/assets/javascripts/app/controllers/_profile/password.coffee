@@ -14,8 +14,8 @@ class Index extends App.Controller
     html = $( App.view('profile/password')() )
 
     configure_attributes = [
-      { name: 'password_old', display: 'Current Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input', single: true  },
-      { name: 'password_new', display: 'New Password',     tag: 'input', type: 'password', limit: 100, null: false, class: 'input',  },
+      { name: 'password_old', display: 'Current password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input', single: true  },
+      { name: 'password_new', display: 'New password',     tag: 'input', type: 'password', limit: 100, null: false, class: 'input',  },
     ]
 
     @form = new App.ControllerForm(

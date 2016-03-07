@@ -678,6 +678,15 @@ class App.Sidebar extends App.Controller
     @showSidebar()
 
 class App.Wizard extends App.Controller
+  constructor: ->
+    super
+
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      @render()
+      'wizard'
+    )
+
   goToSlide: (e) =>
     e.preventDefault()
     slide = $(e.target).data('slide')

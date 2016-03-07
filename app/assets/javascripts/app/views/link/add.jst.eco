@@ -1,22 +1,22 @@
 <fieldset>
-  <%- @T( 'Link' ) %>
-  <%- @T( @link_object ) %>
+  <%- @T('Link') %>
+  <%- @T(@link_object) %>
   <input type="text" name="ticket_number" value="" class="span2" required/>
-  <%- @T( 'as' ) %>
+  <%- @T('as') %>
   <select name="link_type" class="span2" required>
     <option value="">-</option>
-    <option value="normal"><%- @T( 'normal' ) %></option>
-    <option value="child"><%- @T( 'child' ) %></option>
-    <option value="parent"><%- @T( 'parent' ) %></option>
+    <option value="normal"><%- @T('Normal') %></option>
+    <option value="child"><%- @T('Child') %></option>
+    <option value="parent"><%- @T('Parent') %></option>
   </select>
-  <%- @T( 'of' ) %>
+  <%- @T('of') %>
   Ticket#
   <%= @object.number %>.
 
   <hr>
-  <h4><%- @T( 'Recent Customer Tickets' ) %></h4>
+  <h4><%- @T('Recent Customer Tickets') %></h4>
   <div id="ticket-merge-customer-tickets"></div>
   <hr>
-  <h4><%- @T( 'Recent viewed Tickets' ) %></h4>
+  <h4><%- @T('Recent viewed Tickets') %></h4>
   <div id="ticket-merge-recent-tickets"></div>
 </fieldset>

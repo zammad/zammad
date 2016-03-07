@@ -174,7 +174,7 @@ class Edit extends App.ControllerModal
       textarea: 'Text (normal - multiline)'
       richtext: 'Text (richtext)'
       checkbox: 'Checkbox'
-      boolean:  'Yes/No'
+      boolean:  'yes/no'
 
     configureAttributesTop = [
       { name: 'name',       display: 'Name',    tag: 'input',     type: 'text', limit: 100, 'null': false },
@@ -193,11 +193,11 @@ class Edit extends App.ControllerModal
     configureAttributesInput = [
       { name: 'data_option::type',            display: 'Type',            tag: 'select', multiple: false, nulloption: true, null: false, options: { text: 'text', email: 'email', url: 'url', email: 'email', password: 'password', phone: 'phone'}, translate: true },
       { name: 'data_option::maxlength',       display: 'Max. Length',     tag: 'input',  type: 'text', limit: 100, 'null': false },
-      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
-      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
-      { name: 'data_option::autocomplete',    display: 'autocomplete',    tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
+      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'no', false: 'yes' }, translate: true },
+      { name: 'data_option::autocomplete',    display: 'autocomplete',    tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'no', false: 'yes' }, translate: true },
       { name: 'data_option::default',         display: 'Default',         tag: 'input', type: 'text', limit: 100, null: true },
-      { name: 'data_option::note',            display: 'Note',            tag: 'input', type: 'text', limit: 100, null: true },
+      { name: 'data_option::note',            display: 'note',            tag: 'input', type: 'text', limit: 100, null: true },
     ]
     controller = new App.ControllerForm(
       model:     { configure_attributes: configureAttributesInput, className: '' },
@@ -209,8 +209,8 @@ class Edit extends App.ControllerModal
     # textarea
     configureAttributesTextarea = [
       { name: 'data_option::maxlength',       display: 'Max. Length',     tag: 'input',  type: 'text', limit: 100, null: false },
-      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
-      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
+      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'no', false: 'yes' }, translate: true },
       { name: 'data_option::note',            display: 'autocomplete',    tag: 'input',  type: 'text', limit: 100, null: true },
     ]
     controller = new App.ControllerForm(
@@ -222,11 +222,11 @@ class Edit extends App.ControllerModal
 
     # select
     configureAttributesSelect = [
-      { name: 'data_option::nulloption',      display: 'Empty Selection', tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
-      { name: 'data_option::null',            display: 'Required',        tag: 'boolean', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::nulloption',      display: 'Empty Selection', tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
+      { name: 'data_option::null',            display: 'Required',        tag: 'boolean', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
       { name: 'data_option::relation',        display: 'Relation',        tag: 'input',  type: 'text', limit: 100, null: true },
       { name: 'data_option::options',         display: 'Options',         tag: 'hash',   multiple: true, null: false },
-      { name: 'data_option::translate',       display: 'Übersetzen',      tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'No', false: 'Yes' }, translate: true },
+      { name: 'data_option::translate',       display: 'Übersetzen',      tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
       { name: 'data_option::note',            display: 'Note',            tag: 'input',  type: 'text', limit: 100, null: true },
     ]
     controller = new App.ControllerForm(

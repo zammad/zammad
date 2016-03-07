@@ -2755,6 +2755,10 @@ footer {
   display: inline-block;
 }
 
+.translationOverview .btn + .btn {
+  margin: -10px;
+}
+
 .sub_attribute .control-label {
   width: 60px;
 }

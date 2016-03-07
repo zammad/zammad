@@ -52,15 +52,15 @@ class App.Overview extends App.Model
         },
         {
           value:  'last_contact'
-          name:   'Last Contact'
+          name:   'Last contact'
         },
         {
           value:  'last_contact_agent'
-          name:   'Last Contact Agent'
+          name:   'Last contact (agent)'
         },
         {
           value:  'last_contact_customer'
-          name:   'Last Contact Customer'
+          name:   'Last contact (customer)'
         },
         {
           value:  'first_response'
@@ -68,7 +68,7 @@ class App.Overview extends App.Model
         },
         {
           value:  'close_time'
-          name:   'Close Time'
+          name:   'Close time'
         },
         {
           value:  'article_count'
@@ -94,11 +94,11 @@ class App.Overview extends App.Model
         group:                  'Group'
         owner:                  'Owner'
         created_at:             'Age'
-        last_contact:           'Last Contact'
-        last_contact_agent:     'Last Contact Agent'
-        last_contact_customer:  'Last Contact Customer'
+        last_contact:           'Last contact'
+        last_contact_agent:     'Last contact (agent)'
+        last_contact_customer:  'Last contact (customer)'
         first_response:         'First Response'
-        close_time:             'Close Time'
+        close_time:             'Close time'
         article_count:          'Article Count'
       class:   'span4'
     },

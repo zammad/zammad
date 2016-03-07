@@ -34,7 +34,7 @@ class App.UiElement.postmaster_set
           {
             value:    'x-zammad-ignore'
             name:     'Ignore Message'
-            options:  { true: 'Yes', false: 'No'}
+            options:  { true: 'yes', false: 'no'}
           },
         ]
       expert:
@@ -43,7 +43,7 @@ class App.UiElement.postmaster_set
           {
             value:    'x-zammad-article-internal'
             name:     'Internal'
-            options:  { true: 'Yes', false: 'No'}
+            options:  { true: 'yes', false: 'no'}
           },
           {
             value:    'x-zammad-article-type_id'
