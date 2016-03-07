@@ -439,7 +439,7 @@ class App.TicketCreate extends App.Controller
           ui.scrollTo()
 
           # access to group
-          group_ids = _.filter(App.Session.get('group_ids'), (id) -> id.toString())
+          group_ids = _.map(App.Session.get('group_ids'), (id) -> id.toString())
           if group_ids && _.contains(group_ids, @group_id.toString())
             ui.navigate "#ticket/zoom/#{@id}"
             return
