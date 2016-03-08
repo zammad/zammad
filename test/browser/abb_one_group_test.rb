@@ -18,7 +18,7 @@ class AgentTicketActionLevel0Test < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        Group: '-NONE-',
+        group: '-NONE-',
         title: 'some subject 123äöü - one group 1',
         body: 'some body 123äöü - one group 1',
       },
@@ -28,8 +28,8 @@ class AgentTicketActionLevel0Test < TestCase
     # update ticket
     ticket_update(
       data: {
-        State: 'closed',
-        Group: '-NONE-',
+        state: 'closed',
+        group: '-NONE-',
         body: 'some body 1234 äöüß - one group 1 - update',
       },
     )
@@ -174,7 +174,7 @@ class AgentTicketActionLevel0Test < TestCase
     ticket_update(
       data: {
         body: 'some body 1234 äöüß - one group 2 - update',
-        Group: 'Users',
+        group: 'Users',
       },
     )
 
