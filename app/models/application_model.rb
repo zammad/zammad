@@ -800,9 +800,11 @@ reload search index with full data
 =end
 
   def self.search_index_reload
-    return if !@search_index_support_config
+    config = @search_index_support_config
+    return if !config
     all_ids = select('id').all.order('created_at DESC')
     all_ids.each { |item_with_id|
+      next if config[:ignore_ids] && config[:ignore_ids].include?(item_with_id.id)
       item = find(item_with_id.id)
       item.search_index_update_backend
     }
