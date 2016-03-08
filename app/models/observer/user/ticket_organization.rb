@@ -18,7 +18,7 @@ class Observer::User::TicketOrganization < ActiveRecord::Observer
     return if !record.changes['organization_id']
 
     # update last 100 tickets of user
-    tickets = Ticket.where( customer_id: record.id ).limit(100)
+    tickets = Ticket.where(customer_id: record.id).limit(100)
     tickets.each {|ticket|
       if ticket.organization_id != record.organization_id
         ticket.organization_id = record.organization_id

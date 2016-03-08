@@ -83,7 +83,7 @@ class Observer::Ticket::Notification::BackgroundJob
 
       # ignore if no changes has been done
       changes = human_changes(user, ticket)
-      next if @p[:type] == 'update' && !article && ( !changes || changes.empty? )
+      next if @p[:type] == 'update' && !article && (!changes || changes.empty?)
 
       # check if today already notified
       if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation' || @p[:type] == 'escalation_warning'
@@ -241,10 +241,10 @@ class Observer::Ticket::Notification::BackgroundJob
         value_id[0] = value[0]
         value_id[1] = value[1]
 
-        if record.respond_to?( attribute_name ) && record.send(attribute_name)
+        if record.respond_to?(attribute_name) && record.send(attribute_name)
           relation_class = record.send(attribute_name).class
           if relation_class && value_id[0]
-            relation_model = relation_class.lookup( id: value_id[0] )
+            relation_model = relation_class.lookup(id: value_id[0])
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
@@ -254,7 +254,7 @@ class Observer::Ticket::Notification::BackgroundJob
             end
           end
           if relation_class && value_id[1]
-            relation_model = relation_class.lookup( id: value_id[1] )
+            relation_model = relation_class.lookup(id: value_id[1])
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
@@ -271,7 +271,7 @@ class Observer::Ticket::Notification::BackgroundJob
       if object_manager_attribute && object_manager_attribute[:display]
 
         # delete old key
-        changes.delete( display )
+        changes.delete(display)
 
         # set new key
         display = object_manager_attribute[:display].to_s

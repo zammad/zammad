@@ -8,7 +8,7 @@ class User
 check if user has access to user
 
   user   = User.find(123)
-  result = user.permission( :type => 'rw', :current_user => User.find(123) )
+  result = user.permission(type: 'rw', current_user: User.find(123))
 
 returns
 

@@ -18,7 +18,7 @@ class Observer::User::Geo < ActiveRecord::Observer
 
     # check if geo update is needed based on old/new location
     if record.id
-      current = User.find_by( id: record.id )
+      current = User.find_by(id: record.id)
       return if !current
 
       current_location = {}
@@ -34,7 +34,7 @@ class Observer::User::Geo < ActiveRecord::Observer
     }
 
     # return if address hasn't changed and geo data is already available
-    return if ( current_location == next_location ) && record.preferences['lat'] && record.preferences['lng']
+    return if (current_location == next_location) && record.preferences['lat'] && record.preferences['lng']
 
     # geo update
     geo_update(record)
@@ -54,7 +54,7 @@ class Observer::User::Geo < ActiveRecord::Observer
     return if address == ''
 
     # lookup
-    latlng = Service::GeoLocation.geocode( address )
+    latlng = Service::GeoLocation.geocode(address)
     return if !latlng
 
     # store data

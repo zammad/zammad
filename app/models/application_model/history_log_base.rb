@@ -6,7 +6,7 @@ module ApplicationModel::HistoryLogBase
 create history entry for this object
 
   organization = Organization.find(123)
-  result = organization.history_log( 'created', user_id )
+  result = organization.history_log('created', user_id)
 
 returns
 
@@ -77,19 +77,19 @@ returns
 
   def history_get(fulldata = false)
     if !fulldata
-      return History.list( self.class.name, self['id'] )
+      return History.list(self.class.name, self['id'])
     end
 
     # get related objects
-    history = History.list( self.class.name, self['id'], nil, true )
+    history = History.list(self.class.name, self['id'], nil, true)
     history[:list].each {|item|
-      record = Kernel.const_get( item['object'] ).find( item['o_id'] )
+      record = Kernel.const_get(item['object']).find(item['o_id'])
 
-      history[:assets] = record.assets( history[:assets] )
+      history[:assets] = record.assets(history[:assets])
 
       if item['related_object']
-        record = Kernel.const_get( item['related_object'] ).find( item['related_o_id'] )
-        history[:assets] = record.assets( history[:assets] )
+        record = Kernel.const_get(item['related_object']).find(item['related_o_id'])
+        history[:assets] = record.assets(history[:assets])
       end
     }
     {

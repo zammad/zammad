@@ -74,7 +74,8 @@ returns
 
 lookup name of ref. objects
 
-  attributes = search_index_attribute_lookup(attributes, Ticket)
+  ticket = Ticket.find(123)
+  attributes = ticket.search_index_attribute_lookup(attributes, Ticket)
 
 returns
 
@@ -95,14 +96,14 @@ returns
       attribute_name = attribute_name[ 0, attribute_name.length - 3 ]
 
       # check if attribute method exists
-      next if !ref_object.respond_to?( attribute_name )
+      next if !ref_object.respond_to?(attribute_name)
 
       # check if method has own class
       relation_class = ref_object.send(attribute_name).class
       next if !relation_class
 
       # lookup ref object
-      relation_model = relation_class.lookup( id: value )
+      relation_model = relation_class.lookup(id: value)
       next if !relation_model
 
       # get name of ref object

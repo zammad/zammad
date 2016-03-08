@@ -8,7 +8,7 @@ class Organization
 check if user has access to user
 
   user   = Organization.find(123)
-  result = organization.permission( :type => 'rw', :current_user => User.find(123) )
+  result = organization.permission(type: 'rw', current_user: User.find(123))
 
 returns
 

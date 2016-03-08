@@ -11,16 +11,16 @@ class Observer::Ticket::Article::SignatureDetection < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # if sender is not customer, do not change anything
-    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
+    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return if !sender
     return if sender['name'] != 'Customer'
 
     # set email attributes
-    type = Ticket::Article::Type.lookup( id: record.type_id )
+    type = Ticket::Article::Type.lookup(id: record.type_id)
     return if type['name'] != 'email'
 
     # add queue job to update current signature of user id
-    Delayed::Job.enqueue( Observer::Ticket::Article::SignatureDetection::BackgroundJob.new( record.created_by_id ) )
+    Delayed::Job.enqueue(Observer::Ticket::Article::SignatureDetection::BackgroundJob.new(record.created_by_id))
 
     # user
     user = User.lookup(id: record.created_by_id)

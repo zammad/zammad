@@ -70,7 +70,8 @@ class User < ApplicationModel
       source: true,
       login_failed: true,
       preferences: true,
-    }
+    },
+    ignore_ids: [1],
   )
 
 =begin

@@ -70,7 +70,7 @@ returns
       # - stip out * we already search for *query* -
       query.delete! '*'
       users = if params[:role_ids]
-                User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where(
+                User.joins(:roles).where('roles.id' => params[:role_ids]).where(
                   '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
                 ).order('firstname').limit(limit)
               else
