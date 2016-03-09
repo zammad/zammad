@@ -3,12 +3,14 @@ class App.Organization extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/organizations'
   @configure_attributes = [
-    { name: 'name',       display: 'Name',                tag: 'input',     type: 'text', limit: 100, null: false, info: true },
-    { name: 'shared',     display: 'Shared organization', tag: 'boolean',   note: 'Customers in the organization can view each other items.', type: 'boolean', default: true, null: false, info: false },
-    { name: 'note',       display: 'Note',                tag: 'textarea',  note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
-    { name: 'active',     display: 'Active',              tag: 'active',    default: true, info: false },
-    { name: 'updated_at', display: 'Updated',             tag: 'datetime',  readonly: 1, info: false },
-    { name: 'created_at', display: 'Created',             tag: 'datetime',  readonly: 1, info: false },
+    { name: 'name',           display: 'Name',                tag: 'input',     type: 'text', limit: 100, null: false, info: true },
+    { name: 'shared',         display: 'Shared organization', tag: 'boolean',   note: 'Customers in the organization can view each other items.', type: 'boolean', default: true, null: false, info: false },
+    { name: 'note',           display: 'Note',                tag: 'textarea',  note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true },
+    { name: 'active',         display: 'Active',              tag: 'active',    default: true, info: false },
+    { name: 'created_by_id',  display: 'Created by',    relation: 'User', readonly: 1, info: false },
+    { name: 'created_at',     display: 'Created at',    tag: 'datetime',  readonly: 1, info: false },
+    { name: 'updated_by_id',  display: 'Updated by',    relation: 'User', readonly: 1, info: false },
+    { name: 'updated_at',     display: 'Updated at',    tag: 'datetime',  readonly: 1, info: false },
   ]
   @configure_overview = [
     'name',

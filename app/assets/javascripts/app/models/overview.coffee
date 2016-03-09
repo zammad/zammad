@@ -47,20 +47,16 @@ class App.Overview extends App.Model
           name:   'Owner'
         },
         {
-          value:  'created_at'
-          name:   'Age'
-        },
-        {
           value:  'last_contact'
           name:   'Last contact'
         },
         {
           value:  'last_contact_agent'
-          name:   'Last contact (agent)'
+          name:   'Last contact (Agent)'
         },
         {
           value:  'last_contact_customer'
-          name:   'Last contact (customer)'
+          name:   'Last contact (Customer)'
         },
         {
           value:  'first_response'
@@ -73,6 +69,14 @@ class App.Overview extends App.Model
         {
           value:  'article_count'
           name:   'Article Count'
+        },
+        {
+          value:  'updated_at'
+          name:   'Updated at'
+        },
+        {
+          value:  'created_at'
+          name:   'Created at'
         },
       ]
       class:      'medium'
@@ -93,13 +97,14 @@ class App.Overview extends App.Model
         priority:               'Priority'
         group:                  'Group'
         owner:                  'Owner'
-        created_at:             'Age'
         last_contact:           'Last contact'
-        last_contact_agent:     'Last contact (agent)'
-        last_contact_customer:  'Last contact (customer)'
+        last_contact_agent:     'Last contact (Agent)'
+        last_contact_customer:  'Last contact (Customer)'
         first_response:         'First Response'
         close_time:             'Close time'
         article_count:          'Article Count'
+        updated_at:             'Updated at'
+        created_at:             'Created at'
       class:   'span4'
     },
     {
