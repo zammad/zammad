@@ -22,17 +22,18 @@ Create Text Modules to **spend less time writing responses**. TextModules can in
 
 Examples of snippets are:
 
-* Hallo Frau #{@ticket.customer.lastname},
-* Hallo Herr #{@ticket.customer.lastname},
-* Hallo #{@ticket.customer.firstname},
+* Hallo Frau #{ticket.customer.lastname},
+* Hallo Herr #{ticket.customer.lastname},
+* Hallo #{ticket.customer.firstname},
+* My Name is #{user.firstname},
 
 Of course you can also use multi line snippets.
 
 Available objects are:
-* @ticket (e. g. @ticket.state, @ticket.group)
-* @ticket.customer (e. g. @ticket.customer.firstname, @ticket.customer.lastname)
-* @ticket.owner (e. g. @ticket.owner.firstname, @ticket.owner.lastname)
-* @ticket.organization (e. g. @ticket.organization.name)
+* ticket (e. g. ticket.state, ticket.group)
+* ticket.customer (e. g. ticket.customer.firstname, ticket.customer.lastname)
+* ticket.owner (e. g. ticket.owner.firstname, ticket.owner.lastname)
+* ticket.organization (e. g. ticket.organization.name)
 
 '''
   # coffeelint: enable=no_interpolation_in_single_quotes
