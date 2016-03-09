@@ -248,15 +248,17 @@ class App.TicketZoomArticleNew extends App.Controller
     # show text module UI
     if !@isRole('Customer')
       textModule = new App.WidgetTextModule(
-        el:       @$('.js-textarea').parent()
+        el: @$('.js-textarea').parent()
         data:
           ticket: ticket
+          user: App.Session.get()
       )
       callback = (ticket) ->
         textModule.reload(
           ticket: ticket
+          user: App.Session.get()
         )
-      @subscribeIdTextModule = ticket.subscribe( callback )
+      @subscribeIdTextModule = ticket.subscribe(callback)
 
   params: =>
     params = @formParam( @$('.article-add') )
@@ -423,7 +425,7 @@ class App.TicketZoomArticleNew extends App.Controller
         @$('[data-name=body] [data-signature="true"]').remove()
 
       # apply new signature
-      signatureFinished = App.Utils.replaceTags( signature.body, { user: App.Session.get(), ticket: ticketCurrent } )
+      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent })
 
       body = @$('[data-name=body]').html() || ''
       if App.Utils.signatureCheck(body, signatureFinished)
