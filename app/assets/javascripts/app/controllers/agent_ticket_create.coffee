@@ -475,6 +475,7 @@ class Sidebar extends App.Controller
           @textModule.reload(
             ticket:
               customer: user
+            user: App.Session.get()
           )
 
         new App.WidgetUser(
