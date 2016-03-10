@@ -79,6 +79,8 @@ class AgentTicketActionLevel0Test < TestCase
       value: 'Sending',
     )
 
+    tasks_close_all()
+
   end
 
   def test_bbb_customer_ticket_create_with_one_group
@@ -136,6 +138,8 @@ class AgentTicketActionLevel0Test < TestCase
       css: '.active div.ticket-article',
       value: 'one group - some body 1234 äöüß',
     )
+
+    tasks_close_all()
 
   end
 

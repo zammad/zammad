@@ -806,7 +806,7 @@ class TestCase < Test::Unit::TestCase
       # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
       next if cookie[:name] !~ /#{params[:name]}/i
 
-      if params.key?(:value ) && cookie[:value].to_s =~ /#{params[:value]}/i
+      if params.key?(:value) && cookie[:value].to_s =~ /#{params[:value]}/i
         assert(true, "matching value '#{params[:value]}' in cookie '#{cookie}'")
       else
         raise "not matching value '#{params[:value]}' in cookie '#{cookie}'"
