@@ -18,8 +18,11 @@
       </div>
     </div>
     <div class="modal-footer">
-        <div class="modal-centerFooter">
-          <button class="btn btn--primary align-center"><%- @T('Connect') %></button>
+        <div class="modal-leftFooter">
+          <button class="btn btn--text btn--secondary align-left js-expert"><%- @T('Experts') %></button>
+        </div>
+        <div class="modal-rightFooter">
+          <button class="btn btn--primary align-right js-submit"><%- @T('Connect') %></button>
         </div>
     </div>
   </form>
@@ -98,7 +101,7 @@
       <a class="btn btn--text btn--secondary js-goToSlide align-left" data-slide="js-intro"><%- @T('Go Back') %></a>
       </div>
       <div class="modal-rightFooter">
-        <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
+        <button class="btn btn--primary align-right js-submit"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>
@@ -121,7 +124,7 @@
       <a class="btn btn--text btn--secondary js-goToSlide js-back align-left" data-slide="js-inbound"><%- @T('Go Back') %></a>
       </div>
       <div class="modal-rightFooter">
-        <button class="btn btn--primary js-goToSlide js-next align-right" data-slide="js-outbound"><%- @T('Continue') %></button>
+        <button class="btn btn--primary js-goToSlide js-next align-right js-submit" data-slide="js-outbound"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>
@@ -149,7 +152,7 @@
       <a class="btn btn--text btn--secondary js-goToSlide align-left" data-slide="js-inbound"><%- @T('Go Back') %></a>
       </div>
       <div class="modal-rightFooter">
-        <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
+        <button class="btn btn--primary align-right js-submit"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>

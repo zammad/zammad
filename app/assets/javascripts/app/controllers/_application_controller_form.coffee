@@ -389,7 +389,7 @@ class App.ControllerForm extends App.Controller
       model:  @model
       params: params
       screen: @screen
-  )
+    )
 
   # get all params of the form
   @params: (form) ->

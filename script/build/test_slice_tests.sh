@@ -5,6 +5,7 @@ if [ "$LEVEL" == '1' ]; then
   echo "slicing level 1"
 
   # no ticket action
+  rm test/browser/admin_channel_email_test.rb
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_ticket_*.rb
@@ -21,6 +22,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/aab_unit_test.rb
   rm test/browser/aac_basic_richtext_test.rb
   rm test/browser/aab_basic_urls_test.rb
+  rm test/browser/admin_channel_email_test.rb
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_user_*.rb
   rm test/browser/auth_test.rb

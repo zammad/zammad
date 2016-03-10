@@ -446,6 +446,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
     'click  .js-goToSlide':               'goToSlide'
+    'click  .js-expert':                  'probeBasedOnIntro'
     'click  .js-close':                   'hide'
 
   constructor: ->
@@ -495,13 +496,12 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 
     # base
     configureAttributesBase = [
-      { name: 'realname', display: 'Department Name',   tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
+      { name: 'realname', display: 'Organization & Department Name', tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
       { name: 'email',    display: 'Email',    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
       { name: 'password', display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
       { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
-      { name: 'folder',   display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
     ]
-    new App.ControllerForm(
+    @formMeta = new App.ControllerForm(
       el:    @$('.base-settings'),
       model:
         configure_attributes: configureAttributesBase
@@ -586,6 +586,19 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     # let backend know about the channel
     if @channel
       params.channel_id = @channel.id
+
+    if $(e.currentTarget).hasClass('js-expert')
+
+      # validate form
+      errors = @formMeta.validate(params)
+      if errors
+        @formValidate(form: e.target, errors: errors)
+        return
+
+      @showSlide('js-inbound')
+      @$('.js-inbound [name="options::user"]').val(params.email)
+      @$('.js-inbound [name="options::password"]').val(params.password)
+      return
 
     @disable(e)
     @$('.js-probe .js-email').text(params.email)
@@ -777,7 +790,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
             else
               if data.subject && @account
                 @account.subject = data.subject
-              @verify( @account, count + 1 )
+              @verify(@account, count + 1)
       fail: =>
         @showSlide('js-intro')
         @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
