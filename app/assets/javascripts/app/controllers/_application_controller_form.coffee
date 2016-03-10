@@ -38,7 +38,7 @@ class App.ControllerForm extends App.Controller
     @form
 
   showAlert: (message) =>
-    @form.find('.alert').removeClass('hide').html( App.i18n.translateContent(message) )
+    @form.find('.alert').removeClass('hide').html(App.i18n.translateContent(message))
 
   hideAlert: =>
     @form.find('.alert').addClass('hide').html()
@@ -356,7 +356,7 @@ class App.ControllerForm extends App.Controller
         hit = false
         for refAttribute, refValue of attribute.shown_if
           if params[refAttribute]
-            if _.isArray( refValue )
+            if _.isArray(refValue)
               for item in refValue
                 if params[refAttribute].toString() is item.toString()
                   hit = true

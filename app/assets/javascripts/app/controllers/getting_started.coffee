@@ -731,7 +731,7 @@ class ChannelEmail extends App.WizardFullScreen
               @account[key] = value
 
           if data.content_messages && data.content_messages > 0
-            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
             @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')

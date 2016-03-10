@@ -702,10 +702,10 @@ class App.WizardModal extends App.Controller
     @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
 
   showAlert: (screen, message) =>
-    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
+    @$(".#{screen}").find('.alert').first().removeClass('hide').text(App.i18n.translatePlain(message))
 
   hideAlert: (screen) =>
-    @$(".#{screen}").find('.alert').addClass('hide')
+    @$(".#{screen}").find('.alert').first().addClass('hide')
 
   disable: (e) =>
     @formDisable(e)

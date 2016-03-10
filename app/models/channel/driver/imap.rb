@@ -65,7 +65,7 @@ returns
     end
 
     Timeout.timeout(timeout) do
-      @imap = Net::IMAP.new( options[:host], port, ssl, nil, false )
+      @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
     end
 
     # try LOGIN, if not - try plain
@@ -90,7 +90,7 @@ returns
     # check mode only
     if check_type == 'check'
       Rails.logger.info 'check only mode, fetch no emails'
-      content_max_check = 5
+      content_max_check = 2
       content_messages  = 0
 
       # check messages

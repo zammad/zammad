@@ -52,6 +52,9 @@
           <tr>
             <td><%- @T('User') %>
             <td><%= channel.options.inbound.options.user %>
+            <% if channel.options.inbound.options.folder: %>
+              (<%- @T('Folder') %>: <%= channel.options.inbound.options.folder %>)
+            <% end %>
           <tr>
             <td><%- @T('Host') %>
             <td><%= channel.options.inbound.options.host %>
