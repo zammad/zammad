@@ -3004,13 +3004,12 @@ footer {
     position: absolute;
     right: 0;
     top: 0;
-    width: 50px;
     height: 100%;
+    padding: 0 16px 0 0;
     visibility: hidden;
     @extend .u-clickable;
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 
     .nav-tab:hover .nav-tab-close {
