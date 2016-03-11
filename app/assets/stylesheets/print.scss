@@ -1,0 +1,46 @@
+#app > *:not(.content):not(.active),
+#app > .hide,
+.icon,
+.avatar {
+  display: none;
+}
+
+
+/*
+
+  Ticket Zoom
+  ===========
+
+*/
+
+.ticketZoom-controls,
+.scrollPageHeader,
+.article-new,
+.article-actions,
+.tabsSidebar,
+.attributeBar,
+.textBubble-overflowContainer {
+  display: none;
+}
+
+.ticket-title {
+  font-size: 2em;
+}
+
+.ticket-article-item {
+  margin: 1em 0;
+  border: 1px solid;
+  padding: 1em;
+}
+
+.article-meta-value {
+  font-weight: bold;
+}
+
+.article-content {
+  margin: 0.5em 0;
+}
+
+.article-meta .article-meta-key {
+  display: none;
+}

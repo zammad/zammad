@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title><%= Setting.get('product_name') %></title>
   <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag    "application-print", :media => 'print' %>
   <% if Rails.configuration.assets.debug %>
   <%= javascript_include_tag "application" %>
   <% else %>
