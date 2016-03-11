@@ -382,6 +382,7 @@ returns on fail
         'Connection refused'                                        => { host: true },
         'Mailbox doesn\'t exist'                                    => { folder: true },
         'Folder doesn\'t exist'                                     => { folder: true },
+        'Unknown Mailbox'                                           => { folder: true },
       }
     end
 

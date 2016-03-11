@@ -48,15 +48,19 @@ class AdminChannelEmailTest < TestCase
 
     watch_for(
       css: '.modal',
-      value: 'already exists',
+      value: '(already exists|unknown mailbox)',
     )
 
     click(css: '.modal .js-close')
 
-    # delete
-    click(css: '#content .js-channelDelete')
-    sleep 2
-    click(css: '.modal .js-submit')
+    # delete all channels
+    loop do
+      break if !@browser.find_elements(css: '#content .js-channelDelete')[0]
+      click(css: '#content .js-channelDelete')
+      sleep 2
+      click(css: '.modal .js-submit')
+      sleep 2
+    end
 
     # re-create
     click(css: '#content .js-channelNew')
