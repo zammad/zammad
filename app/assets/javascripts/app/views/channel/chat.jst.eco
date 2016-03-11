@@ -21,7 +21,7 @@
     <div class="control">
       <div class="select-tabs js-selectBrowserWidth">
         <div class="tab" data-value="375">iPhone 6</div>
-        <div class="tab" data-value="fit"><%- @T('1:1') %></div>
+        <div class="tab" data-value="fit">1:1</div>
         <div class="tab is-selected" data-value="1280">MacBook</div>
       </div>
     </div>
@@ -34,7 +34,7 @@
         <input type="url" class="js-testurl-input" id="preview-iframe" value="<%= @previewUrl %>" placeholder="www.zammad.org">
         <div class="loading icon small muted"></div>
       </div>
-      <input type="submit" class="btn" value="<%- @T('Load') %>">
+      <input type="submit" class="btn" value="<%- @Ti('Load') %>">
     </form>
     <div class="browser-body js-browserBody">
       <div class="browser-website js-website">
@@ -131,13 +131,13 @@
 
   <h2><%- @T('Usage') %></h2>
 
-  <p><%- marked(@T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the `</body>` closing tag.')) %></p>
+  <p><%- marked(@T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the §</body>§ closing tag.')) %></p>
 
-  <h3>Requirements</h3>
+  <h3><%- @T('Requirements') %></h3>
   <p><%- @T("Zammad Chat requires jQuery. If you don't already use it on your website include it like this:") %></p>
   <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-2.1.4.min.js"&gt;&lt;/script&gt;</code></pre>
 
-  <h3><%- @T('Auto-show chat') %></h3>
+  <h3><%- @T('Auto-show chat') %> (<%- @T('default') %>)</h3>
   <p><%- @T('The chat will show up once the connection to the server got established and if there is someone online to chat with.') %></p>
 
   <pre><code class="language-html js-paramsBlock">&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
@@ -150,7 +150,7 @@ $(function() {
 &lt;/script&gt;</code></pre>
 
   <h3><%- @T('Manually open chat') %></h3>
-  <p><%- marked(@T('If you want to open the chat by the press of a button set the option `show` to `false` and add the class `open-zammad-chat` to the button.')) %></p>
+  <p><%- @T('If you want to open the chat by the press of a button set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button.') %></p>
   <pre><code class="language-html js-paramsBlock">&lt;button class="open-zammad-chat"&gt;Chat with us&lt;/button&gt;
 
 &lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
@@ -172,7 +172,7 @@ $(function() {
       <li><%- @T('The chat is turned off.') %>
       <li><%- @T('There are too many people in queue for the chat.') %>
     </ol>
-    <%- marked(@T('When you turn on debugging by setting the option `debug` to `true` the reason gets printed to the javascript console.')) %>
+    <%- @T('When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the javascript console.') %>
   </p>
 
   <h3><%- @T('Options') %></h3>
@@ -188,7 +188,7 @@ $(function() {
     <tbody>
     <% for option in @apiOptions: %>
       <tr>
-        <td><%- @T(option.name) %>
+        <td><%= option.name %>
         <td style="white-space: nowrap;"><code class="language-javascript js-code"><%= option.default %></code>
         <td style="white-space: nowrap;"><code class="language-javascript js-code"><%= option.type %></code>
         <td><%- @T(option.description, option.descriptionSubstitute) %>

@@ -54,7 +54,7 @@ returns
 
     Rails.logger.info "fetching pop3 (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
-    @pop = Net::POP3.new( options[:host], port )
+    @pop = Net::POP3.new(options[:host], port)
     #@pop.set_debug_output $stderr
 
     # on check, reduce open_timeout to have faster probing

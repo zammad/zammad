@@ -47,7 +47,7 @@ class ApplicationModel < ActiveRecord::Base
 
     # do noting, use id as it is
     return if !Setting.get('system_init_done')
-    return if Setting.get('import_mode') && import_class_list.include?( self.class.to_s )
+    return if Setting.get('import_mode') && import_class_list.include?(self.class.to_s)
 
     self[:id] = nil
   end
@@ -589,7 +589,7 @@ returns
 
   def self.latest_change
     key        = "#{new.class.name}_latest_change"
-    updated_at = Cache.get( key )
+    updated_at = Cache.get(key)
 
     # if we do not have it cached, do lookup
     if !updated_at
@@ -739,11 +739,13 @@ class OwnModel < ApplicationModel
 serve methode to configure and enable search index support for this model
 
 class Model < ApplicationModel
-  search_index_support ignore_attributes: {
-    create_article_type_id:   true,
-    create_article_sender_id: true,
-    article_count:            true,
-  }
+  search_index_support
+    ignore_attributes: {
+      create_article_type_id:   true,
+      create_article_sender_id: true,
+      article_count:            true,
+    },
+    ignore_ids: [1,2,4]
 
 end
 
@@ -763,11 +765,13 @@ update search index, if configured - will be executed automatically
 =end
 
   def search_index_update
-    return if !self.class.search_index_support_config
+    config = self.class.search_index_support_config
+    return if !config
+    return if config[:ignore_ids] && config[:ignore_ids].include?(id)
 
     # start background job to transfer data to search index
     return if !SearchIndexBackend.enabled?
-    Delayed::Job.enqueue( ApplicationModel::BackgroundJobSearchIndex.new( self.class.to_s, id ) )
+    Delayed::Job.enqueue(ApplicationModel::BackgroundJobSearchIndex.new(self.class.to_s, id))
   end
 
 =begin
@@ -780,7 +784,10 @@ delete search index object, will be executed automatically
 =end
 
   def search_index_destroy
-    return if !self.class.search_index_support_config
+    config = self.class.search_index_support_config
+    return if !config
+    return if config[:ignore_ids] && config[:ignore_ids].include?(id)
+
     SearchIndexBackend.remove(self.class.to_s, id)
   end
 
@@ -793,10 +800,12 @@ reload search index with full data
 =end
 
   def self.search_index_reload
-    return if !@search_index_support_config
+    config = @search_index_support_config
+    return if !config
     all_ids = select('id').all.order('created_at DESC')
     all_ids.each { |item_with_id|
-      item = find( item_with_id.id )
+      next if config[:ignore_ids] && config[:ignore_ids].include?(item_with_id.id)
+      item = find(item_with_id.id)
       item.search_index_update_backend
     }
   end
@@ -979,10 +988,10 @@ log object update history with all updated attributes, if configured - will be e
         value_id[0] = value[0]
         value_id[1] = value[1]
 
-        if respond_to?( attribute_name ) && send(attribute_name)
+        if respond_to?(attribute_name) && send(attribute_name)
           relation_class = send(attribute_name).class
           if relation_class && value_id[0]
-            relation_model = relation_class.lookup( id: value_id[0] )
+            relation_model = relation_class.lookup(id: value_id[0])
             if relation_model
               if relation_model['name']
                 value_str[0] = relation_model['name']
@@ -992,7 +1001,7 @@ log object update history with all updated attributes, if configured - will be e
             end
           end
           if relation_class && value_id[1]
-            relation_model = relation_class.lookup( id: value_id[1] )
+            relation_model = relation_class.lookup(id: value_id[1])
             if relation_model
               if relation_model['name']
                 value_str[1] = relation_model['name']
@@ -1059,7 +1068,7 @@ store attachments for this object
     self.attachments_buffer = attachments
 
     # update if object already exists
-    return if !( id && id != 0 )
+    return if !(id && id != 0)
 
     attachments_buffer_check
   end

@@ -518,9 +518,7 @@ do($ = window.jQuery, window) ->
 
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
-        sendDelayedInit = =>
-          @send('chat_session_init')
-        @initDelayId = setTimeout(sendDelayedInit, 1000)
+        @send('chat_session_init')
       else
         @el.css 'bottom', 0
         @onOpenAnimationEnd()
@@ -608,9 +606,6 @@ do($ = window.jQuery, window) ->
           extraLine: false
 
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
-
-      console.log "el", @el.height()
-      console.log "header", @el.find('.zammad-chat-header').outerHeight()
 
       @el.css 'bottom', -remainerHeight
       @el.addClass('zammad-chat-is-shown')

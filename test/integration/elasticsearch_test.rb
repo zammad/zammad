@@ -22,15 +22,15 @@ class ElasticsearchTest < ActiveSupport::TestCase
   # Setting.set('es_password', 'zammad')
 
   # set max attachment size in mb
-  Setting.set('es_attachment_max_size_in_mb', 1 )
+  Setting.set('es_attachment_max_size_in_mb', 1)
 
   # drop/create indexes
   #Rake::Task["searchindex:drop"].execute
   #Rake::Task["searchindex:create"].execute
   system('rake searchindex:rebuild')
 
-  groups = Group.where( name: 'Users' )
-  roles  = Role.where( name: 'Agent' )
+  groups = Group.where(name: 'Users')
+  roles  = Role.where(name: 'Agent')
   agent  = User.create_or_update(
     login: 'es-agent@example.com',
     firstname: 'E',
@@ -49,7 +49,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     updated_by_id: 1,
     created_by_id: 1
   )
-  roles = Role.where( name: 'Customer' )
+  roles = Role.where(name: 'Customer')
   organization1 = Organization.create_if_not_exists(
     name: 'Customer Organization Update',
     updated_by_id: 1,
@@ -98,10 +98,10 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     ticket1 = Ticket.create(
       title: "some title\n äöüß",
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: customer1.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -167,10 +167,10 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     ticket2 = Ticket.create(
       title: 'something else',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: customer2.id,
-      state: Ticket::State.lookup( name: 'open' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'open'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -193,10 +193,10 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     ticket3 = Ticket.create(
       title: 'something else',
-      group: Group.lookup( name: 'WithoutAccess'),
+      group: Group.lookup(name: 'WithoutAccess'),
       customer_id: customer3.id,
-      state: Ticket::State.lookup( name: 'open' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'open'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )

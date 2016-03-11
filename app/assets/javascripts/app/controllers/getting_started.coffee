@@ -1,6 +1,4 @@
-class Index extends App.ControllerContent
-  className: 'getstarted fit'
-
+class Index extends App.WizardFullScreen
   constructor: ->
     super
 
@@ -62,8 +60,6 @@ App.Config.set( 'getting_started', Index, 'Routes' )
 
 
 class AutoWizard extends App.ControllerContent
-  className: 'getstarted fit'
-
   constructor: ->
     super
 
@@ -130,8 +126,7 @@ App.Config.set( 'getting_started/auto_wizard', AutoWizard, 'Routes' )
 App.Config.set( 'getting_started/auto_wizard/:token', AutoWizard, 'Routes' )
 
 
-class Admin extends App.ControllerContent
-  className: 'getstarted fit'
+class Admin extends App.WizardFullScreen
   events:
     'submit form': 'submit'
 
@@ -247,8 +242,7 @@ class Admin extends App.ControllerContent
 App.Config.set( 'getting_started/admin', Admin, 'Routes' )
 
 
-class Base extends App.Wizard
-  className: 'getstarted fit'
+class Base extends App.WizardFullScreen
   elements:
     '.logo-preview': 'logoPreview'
 
@@ -384,8 +378,7 @@ class Base extends App.Wizard
 App.Config.set( 'getting_started/base', Base, 'Routes' )
 
 
-class EmailNotification extends App.Wizard
-  className: 'getstarted fit'
+class EmailNotification extends App.WizardFullScreen
   events:
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'submit'
@@ -505,9 +498,7 @@ class EmailNotification extends App.Wizard
 App.Config.set( 'getting_started/email_notification', EmailNotification, 'Routes' )
 
 
-class Channel extends App.ControllerContent
-  className: 'getstarted fit'
-
+class Channel extends App.WizardFullScreen
   constructor: ->
     super
 
@@ -558,9 +549,7 @@ class Channel extends App.ControllerContent
 
 App.Config.set( 'getting_started/channel', Channel, 'Routes' )
 
-class ChannelEmailPreConfigured extends App.ControllerContent
-  className: 'getstarted fit'
-
+class ChannelEmailPreConfigured extends App.WizardFullScreen
   constructor: ->
     super
 
@@ -603,8 +592,7 @@ class ChannelEmailPreConfigured extends App.ControllerContent
 
 App.Config.set( 'getting_started/channel/email_pre_configured', ChannelEmailPreConfigured, 'Routes' )
 
-class ChannelEmail extends App.Wizard
-  className: 'getstarted fit'
+class ChannelEmail extends App.WizardFullScreen
   events:
     'submit .js-intro':                   'probeBasedOnIntro'
     'submit .js-inbound':                 'probeInbound'
@@ -743,7 +731,7 @@ class ChannelEmail extends App.Wizard
               @account[key] = value
 
           if data.content_messages && data.content_messages > 0
-            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
             @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
@@ -895,8 +883,7 @@ class ChannelEmail extends App.Wizard
 
 App.Config.set( 'getting_started/channel/email', ChannelEmail, 'Routes' )
 
-class Agent extends App.ControllerContent
-  className: 'getstarted fit'
+class Agent extends App.WizardFullScreen
   events:
     'submit form': 'submit'
 
@@ -995,9 +982,7 @@ class Agent extends App.ControllerContent
 
 App.Config.set( 'getting_started/agents', Agent, 'Routes' )
 
-class Channel extends App.ControllerContent
-  className: 'getstarted fit'
-
+class Channel extends App.WizardFullScreen
   constructor: ->
     super
 

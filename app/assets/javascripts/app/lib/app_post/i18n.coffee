@@ -267,7 +267,14 @@ class _i18nSingleton extends Spine.Module
     true
 
   getNotTranslated: (locale) =>
-    @_notTranslated[locale || @locale]
+    notTranslated = @_notTranslated[locale || @locale]
+    return notTranslated if locale && locale isnt @locale
+
+    # remove already translated entries
+    for local_locale, translation_list of notTranslated
+      if @mapString[local_locale] && @mapString[local_locale] isnt ''
+        delete notTranslated[local_locale]
+    notTranslated
 
   removeNotTranslated: (locale, key) =>
     delete @_notTranslated[locale][key]

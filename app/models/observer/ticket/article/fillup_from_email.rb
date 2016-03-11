@@ -9,22 +9,22 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     # if sender is customer, do not change anything
-    sender = Ticket::Article::Sender.lookup( id: record.sender_id )
+    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return if sender.nil?
     return if sender['name'] == 'Customer'
 
     # set email attributes
-    type = Ticket::Article::Type.lookup( id: record.type_id )
+    type = Ticket::Article::Type.lookup(id: record.type_id)
     return if type['name'] != 'email'
 
     # set subject if empty
-    ticket = Ticket.lookup( id: record.ticket_id )
+    ticket = Ticket.lookup(id: record.ticket_id)
     if !record.subject || record.subject == ''
       record.subject = ticket.title
     end
 
     # clean subject
-    record.subject = ticket.subject_clean( record.subject )
+    record.subject = ticket.subject_clean(record.subject)
 
     # generate message id, force it in prodution, in test allow to set it for testing reasons
     if !record.message_id || Rails.env.production?
@@ -43,7 +43,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     system_sender = "#{email_address.realname} <#{email_address.email}>"
     if Setting.get('ticket_define_email_from') == 'AgentNameSystemAddressName'
       seperator = Setting.get('ticket_define_email_from_seperator')
-      sender    = User.find( record.created_by_id )
+      sender    = User.find(record.created_by_id)
       record.from = "#{sender.firstname} #{sender.lastname} #{seperator} #{system_sender}"
     else
       record.from = system_sender

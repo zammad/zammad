@@ -89,11 +89,6 @@ class FirstStepsController < ApplicationController
               class: 'js-testTicket',
             },
             {
-              name: 'Create Overviews',
-              checked: false,
-              location: '#manage/overviews',
-            },
-            {
               name: 'Create Text Modues',
               checked: text_module_active,
               location: '#manage/text_modules',
@@ -103,6 +98,11 @@ class FirstStepsController < ApplicationController
               checked: macro_active,
               location: '#manage/macros',
             },
+            #{
+            #  name: 'Create Overviews',
+            #  checked: false,
+            #  location: '#manage/overviews',
+            #},
           ],
         },
         {
@@ -186,7 +186,7 @@ class FirstStepsController < ApplicationController
     )
     UserInfo.current_user_id = customer.id
     ticket = Ticket.create(
-      group_id: Group.find_by(active: true).id,
+      group_id: Group.find_by(active: true, name: 'Users').id,
       customer_id: customer.id,
       owner_id: User.find_by(login: '-').id,
       title: result[:subject],
@@ -242,7 +242,7 @@ class FirstStepsController < ApplicationController
     if !test_customer
       test_ticket_active = false
     end
-    if Group.where(active: true).count > 1
+    if Group.where(active: true, name: 'Users').count == 0
       test_ticket_active = false
     end
     return result if test_ticket_active

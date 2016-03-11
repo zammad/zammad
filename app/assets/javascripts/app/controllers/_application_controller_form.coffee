@@ -38,7 +38,7 @@ class App.ControllerForm extends App.Controller
     @form
 
   showAlert: (message) =>
-    @form.find('.alert').removeClass('hide').html( App.i18n.translateContent(message) )
+    @form.find('.alert').removeClass('hide').html(App.i18n.translateContent(message))
 
   hideAlert: =>
     @form.find('.alert').addClass('hide').html()
@@ -245,6 +245,18 @@ class App.ControllerForm extends App.Controller
     else
       throw "Invalid UiElement.#{attribute.tag}"
 
+    if attribute.only_shown_if_selectable
+      count = Object.keys(attribute.options).length
+      if !attribute.null && (attribute.nulloption && count is 2) || (!attribute.nulloption && count is 1)
+        attribute.transparent = true
+        attributesNew = clone(attribute)
+        attributesNew.type = 'hidden'
+        attributesNew.value = ''
+        for item in attribute.options
+          if item.value && item.value isnt ''
+            attributesNew.value = item.value
+        item = $( App.view('generic/input')( attribute: attributesNew ) )
+
     if @handlers
       item.bind('change', (e) =>
         params = App.ControllerForm.params( $(e.target) )
@@ -278,7 +290,7 @@ class App.ControllerForm extends App.Controller
                   ui.show(action.change.name)
             )
 
-    if !attribute.display
+    if !attribute.display || attribute.transparent
 
       # hide/show item
       #if attribute.hide
@@ -344,7 +356,7 @@ class App.ControllerForm extends App.Controller
         hit = false
         for refAttribute, refValue of attribute.shown_if
           if params[refAttribute]
-            if _.isArray( refValue )
+            if _.isArray(refValue)
               for item in refValue
                 if params[refAttribute].toString() is item.toString()
                   hit = true
@@ -377,7 +389,7 @@ class App.ControllerForm extends App.Controller
       model:  @model
       params: params
       screen: @screen
-  )
+    )
 
   # get all params of the form
   @params: (form) ->

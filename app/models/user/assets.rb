@@ -8,7 +8,7 @@ class User
 get all assets / related models for this user
 
   user = User.find(123)
-  result = user.assets( assets_if_exists )
+  result = user.assets(assets_if_exists)
 
 returns
 
@@ -63,8 +63,8 @@ returns
         local_attributes['role_ids'] = local_role_ids
         if local_role_ids
           local_role_ids.each {|role_id|
-            role = Role.lookup( id: role_id )
-            data = role.assets( data )
+            role = Role.lookup(id: role_id)
+            data = role.assets(data)
           }
         end
 
@@ -78,8 +78,9 @@ returns
         local_attributes['group_ids'] = local_group_ids
         if local_group_ids
           local_group_ids.each {|group_id|
-            group = Group.lookup( id: group_id )
-            data = group.assets( data )
+            group = Group.lookup(id: group_id)
+            next if !group
+            data = group.assets(data)
           }
         end
 
@@ -93,8 +94,9 @@ returns
         local_attributes['organization_ids'] = local_organization_ids
         if local_organization_ids
           local_organization_ids.each {|organization_id|
-            organization = Organization.lookup( id: organization_id )
-            data = organization.assets( data )
+            organization = Organization.lookup(id: organization_id)
+            next if !organization
+            data = organization.assets(data)
           }
         end
 
@@ -104,8 +106,10 @@ returns
       # add organization
       if self.organization_id
         if !data[ Organization.to_app_model ] || !data[ Organization.to_app_model ][ self.organization_id ]
-          organization = Organization.lookup( id: self.organization_id )
-          data = organization.assets( data )
+          organization = Organization.lookup(id: self.organization_id)
+          if organization
+            data = organization.assets(data)
+          end
         end
       end
       %w(created_by_id updated_by_id).each {|local_user_id|

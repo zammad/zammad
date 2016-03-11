@@ -2,11 +2,11 @@
 class App.UiElement.time_range
   @render: (attribute) ->
     ranges =
-      minute: 'minute(s)'
-      hour: 'hour(s)'
-      day: 'day(s)'
-      month: 'month(s)'
-      year: 'year(s)'
+      minute: 'Minute(s)'
+      hour: 'Hour(s)'
+      day: 'Day(s)'
+      month: 'Month(s)'
+      year: 'Year(s)'
     for key, value of ranges
       ranges[key] = App.i18n.translateInline(value)
 

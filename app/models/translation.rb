@@ -200,7 +200,18 @@ get list of translations
                          end
       list.push translation_item
     }
-    data['list'] = list
+
+    # add presorted on top
+    presorted_list = []
+    %w(yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each {|presort|
+      list.each {|item|
+        next if item[1] != presort
+        presorted_list.push item
+        list.delete item
+        #list.unshift presort
+      }
+    }
+    data['list'] = presorted_list.concat list
 
     # set cache
     if !admin

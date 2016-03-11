@@ -7,14 +7,13 @@ class App.DashboardFirstSteps extends App.Controller
 
   constructor: ->
     super
-    @interval(@load, 25000)
+    @interval(@load, 20000)
 
   load: =>
     return if @lastData && !@el.is(':visible')
     @ajax(
-      id:    'first_steps'
-      type:  'GET'
-      url:   @apiPath + '/first_steps'
+      type: 'GET'
+      url:  @apiPath + '/first_steps'
       success: (data) =>
         return if _.isEqual(@lastData, data)
         @lastData = data

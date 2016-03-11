@@ -10,7 +10,7 @@ class Authorization < ApplicationModel
   validates     :provider, presence: true
 
   def self.find_from_hash(hash)
-    auth = Authorization.find_by( provider: hash['provider'], uid: hash['uid'] )
+    auth = Authorization.find_by(provider: hash['provider'], uid: hash['uid'])
     if auth
 
       # update auth tokens
@@ -28,7 +28,7 @@ class Authorization < ApplicationModel
 
       # update image if needed
       if hash['info']['image']
-        user = User.find( auth.user_id )
+        user = User.find(auth.user_id)
 
         # save/update avatar
         avatar = Avatar.add(

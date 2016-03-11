@@ -14,11 +14,11 @@
     debug: false
   }
 
-  function Plugin( element, options ) {
+  function Plugin(element, options) {
     this.element    = element
     this.$element   = $(element)
 
-    this.options    = $.extend( {}, defaults, options)
+    this.options    = $.extend({}, defaults, options)
 
     this._defaults  = defaults
     this._name      = pluginName
@@ -44,15 +44,15 @@
     this.$element.on('keydown', function (e) {
 
       // esc
-      if ( e.keyCode === 27 ) {
+      if (e.keyCode === 27) {
         _this.close()
       }
 
       // navigate through item
-      if ( _this.isActive() ) {
+      if (_this.isActive()) {
 
         // enter
-        if ( e.keyCode === 13 ) {
+        if (e.keyCode === 13) {
           e.preventDefault()
           var id = _this.$widget.find('.dropdown-menu li.is-active').data('id')
 
@@ -70,20 +70,21 @@
         }
 
         // arrow keys left/right
-        if ( e.keyCode === 37 || e.keyCode === 39 ) {
+        if (e.keyCode === 37 || e.keyCode === 39) {
           e.preventDefault()
           return
         }
 
         // up or down
-        if ( e.keyCode === 38 || e.keyCode === 40 ) {
+        if (e.keyCode === 38 || e.keyCode === 40) {
           e.preventDefault()
           var active = _this.$widget.find('.dropdown-menu li.is-active')
           active.removeClass('is-active')
 
-          if ( e.keyCode == 38 && active.prev().size() ) {
+          if (e.keyCode == 38 && active.prev().size()) {
             active = active.prev()
-          } else if ( e.keyCode == 40 && active.next().size() ) {
+          }
+          else if (e.keyCode == 40 && active.next().size()) {
             active = active.next()
           }
 
@@ -91,10 +92,11 @@
 
           var menu = _this.$widget.find('.dropdown-menu')
 
-          if ( active.position().top < 0 ) {
+          if (active.position().top < 0) {
             // scroll up
             menu.scrollTop( menu.scrollTop() + active.position().top )
-          } else if ( active.position().top + active.height() > menu.height() ) {
+          }
+          else if ( active.position().top + active.height() > menu.height() ) {
             // scroll down
             var invisibleHeight = active.position().top + active.height() - menu.height()
             menu.scrollTop( menu.scrollTop() + invisibleHeight )
@@ -108,10 +110,10 @@
     this.$element.on('keydown', function (e) {
 
       // backspace
-      if ( e.keyCode === 8 && _this.buffer ) {
+      if (e.keyCode === 8 && _this.buffer) {
 
         // backspace + buffer === :: -> close textmodule
-        if ( _this.buffer === '::' ) {
+        if (_this.buffer === '::') {
           _this.close(true)
           e.preventDefault()
           return
@@ -119,41 +121,41 @@
 
         // reduce buffer and show new result
         var length   = _this.buffer.length
-        _this.buffer = _this.buffer.substr( 0, length-1 )
-        _this.log( 'BS backspace', _this.buffer )
-        _this.result( _this.buffer.substr( 2, length-1 ) )
+        _this.buffer = _this.buffer.substr(0, length-1)
+        _this.log('BS backspace', _this.buffer)
+        _this.result(_this.buffer.substr(2, length-1))
       }
     })
 
     // build buffer
     this.$element.on('keypress', function (e) {
-      _this.log('BUFF', _this.buffer, e.keyCode, String.fromCharCode(e.which) )
+      _this.log('BUFF', _this.buffer, e.keyCode, String.fromCharCode(e.which))
 
       // shift
-      if ( e.keyCode === 16 ) return
+      if (e.keyCode === 16) return
 
       // enter
-      if ( e.keyCode === 13 ) return
+      if (e.keyCode === 13) return
 
       // arrow keys
-      if ( e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40 ) return
+      if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) return
 
       // observer other second key
-      if ( _this.buffer === ':' && String.fromCharCode(e.which) !== ':' ) {
+      if (_this.buffer === ':' && String.fromCharCode(e.which) !== ':') {
         _this.buffer = ''
       }
 
       // oberserve second :
-      if ( _this.buffer === ':' && String.fromCharCode(e.which) === ':' ) {
+      if (_this.buffer === ':' && String.fromCharCode(e.which) === ':') {
         _this.buffer = _this.buffer + ':'
       }
 
       // oberserve first :
-      if ( !_this.buffer && String.fromCharCode(e.which) === ':' ) {
+      if (!_this.buffer && String.fromCharCode(e.which) === ':') {
         _this.buffer = _this.buffer + ':'
       }
 
-      if ( _this.buffer && _this.buffer.substr(0,2) === '::' ) {
+      if (_this.buffer && _this.buffer.substr(0,2) === '::') {
 
         var sign = String.fromCharCode(e.which)
         if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
@@ -166,7 +168,7 @@
           _this.open()
         }
 
-        _this.result( _this.buffer.substr(2, _this.buffer.length) )
+        _this.result(_this.buffer.substr(2, _this.buffer.length))
       }
 
     }).on('focus', function (e) {
@@ -204,8 +206,8 @@
 
   // set position of widget
   Plugin.prototype.updatePosition = function() {
-    this.$widget.find('.dropdown-menu').scrollTop( 300 );
-    if ( !this.$element.is(':visible') ) return
+    this.$widget.find('.dropdown-menu').scrollTop(300)
+    if (!this.$element.is(':visible')) return
 
     // get cursor position
     var marker = '<span id="js-cursor-position"></span>'
@@ -281,7 +283,7 @@
       clone.setStart(range.startContainer, start-1)
       clone.setEnd(range.startContainer, start)
       var spacerChar = clone.toString()
-      if ( spacerChar === ' ' ) {
+      if (spacerChar === ' ') {
         start = start - 1
       }
     }
@@ -292,7 +294,7 @@
 
     // for chrome, insert space again
     if (start) {
-      if ( spacerChar === ' ' ) {
+      if (spacerChar === ' ') {
         string = "&nbsp;"
         if (document.selection) { // IE
           var range = document.selection.createRange()
@@ -350,12 +352,12 @@
   // render result
   Plugin.prototype.result = function(term) {
     var _this = this
-    var result = _.filter( this.collection, function(item) {
-      var reg = new RegExp( term, 'i' )
-      if ( item.name && item.name.match( reg ) ) {
+    var result = _.filter(this.collection, function(item) {
+      var reg = new RegExp(term, 'i')
+      if (item.name && item.name.match(reg)) {
         return item
       }
-      if ( item.keywords && item.keywords.match( reg ) ) {
+      if (item.keywords && item.keywords.match(reg)) {
         return item
       }
       return
@@ -372,13 +374,13 @@
       var item = result[i]
       var element = $('<li>')
       element.attr('data-id', item.id)
-      element.text(App.Utils.htmlEscape(item.name))
+      element.text(item.name)
       element.addClass('u-clickable u-textTruncate')
       if (i == result.length-1) {
         element.addClass('is-active')
       }
       if (item.keywords) {
-        element.append($('<kbd>').text(App.Utils.htmlEscape(item.keywords)))
+        element.append($('<kbd>').text(item.keywords))
       }
       elements = elements.add(element)
     }
@@ -397,11 +399,10 @@
     }
   }
 
-  $.fn[pluginName] = function ( options ) {
+  $.fn[pluginName] = function (options) {
     return this.each(function () {
       if (!$.data(this, 'plugin_' + pluginName)) {
-        $.data(this, 'plugin_' + pluginName,
-        new Plugin( this, options ));
+        $.data(this, 'plugin_' + pluginName, new Plugin(this, options))
       }
     });
   }

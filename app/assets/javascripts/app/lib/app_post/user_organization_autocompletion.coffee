@@ -37,11 +37,11 @@ class App.UserOrganizationAutocompletion extends App.Controller
   close: =>
     execute = =>
       @el.removeClass('open')
-    @delay( execute, 400, 'close' )
+    @delay(execute, 200, 'close')
 
     $(window).off 'click.UserOrganizationAutocompletion'
 
-  selectUser: (e) ->
+  selectUser: (e) =>
     userId = $(e.target).parents('.recipientList-entry').data('user-id')
     if !userId
       userId = $(e.target).data('user-id')
@@ -51,7 +51,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
   setUser: (userId) =>
     @el.find('[name="' + @attribute.name + '"]').val( userId ).trigger('change')
 
-  executeCallback: ->
+  executeCallback: =>
     userId = @el.find('[name="' + @attribute.name + '"]').val()
     return if !userId
     return if !App.User.exists(userId)
@@ -158,9 +158,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
           userId = @$('.recipientList').find('li.is-active').data('user-id')
           if !userId
             organizationId = @$('.recipientList').find('li.is-active').data('organization-id')
-            if organizationId
-              @showOrganizationMembers(undefined, @$('.recipientList').find('li.is-active'))
+            if !organizationId
               return
+            @showOrganizationMembers(undefined, @$('.recipientList').find('li.is-active'))
+            return
           if userId is 'new'
             @newUser()
           else
@@ -174,19 +175,19 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @el.find('[name="' + @attribute.name + '_completion"]').on(
       'keyup',
       (e) =>
-        item = $(e.target).val().trim()
-        return if @searchTerm is item
-        @searchTerm = item
+        term = $(e.target).val().trim()
+        return if @searchTerm is term
+        @searchTerm = term
 
         # hide dropdown
-        if !item && !@attribute.disableCreateUser
+        if !term && !@attribute.disableCreateUser
           @emptyResultList()
-          @$('.recipientList').append( @buildUserNew() )
+          @$('.recipientList').append(@buildUserNew())
 
         # show dropdown
-        if item && ( !@attribute.minLengt || @attribute.minLengt <= item.length )
-          execute = => @searchUser(item)
-          @delay( execute, 400, 'userSearch' )
+        if term && ( !@attribute.minLengt || @attribute.minLengt <= term.length )
+          execute = => @searchUser(term)
+          @delay(execute, 400, 'userSearch')
     )
 
   searchUser: (term) =>
@@ -201,27 +202,27 @@ class App.UserOrganizationAutocompletion extends App.Controller
         @emptyResultList()
 
         # load assets
-        App.Collection.loadAssets( data.assets )
+        App.Collection.loadAssets(data.assets)
 
         # build markup
         for item in data.result
 
           # organization
           if item.type is 'Organization'
-            organization = App.Organization.fullLocal( item.id )
-            @el.find('.recipientList').append( @buildOrganizationItem(organization) )
+            organization = App.Organization.fullLocal(item.id)
+            @$('.recipientList').append(@buildOrganizationItem(organization))
 
             # users of organization
             if organization.member_ids
-              @el.find('.dropdown-menu').append( @buildOrganizationMembers(organization) )
+              @$('.dropdown-menu').append(@buildOrganizationMembers(organization))
 
           # users
           if item.type is 'User'
-            user = App.User.fullLocal( item.id )
-            @el.find('.recipientList').append( @buildUserItem(user) )
+            user = App.User.fullLocal(item.id)
+            @$('.recipientList').append(@buildUserItem(user))
 
         if !@attribute.disableCreateUser
-          @el.find('.recipientList').append( @buildUserNew() )
+          @$('.recipientList').append(@buildUserNew())
     )
 
   emptyResultList: =>

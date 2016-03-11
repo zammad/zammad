@@ -720,7 +720,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.open = function() {
-      var sendDelayedInit;
       if (this.isOpen) {
         this.log.debug('widget already open, block');
         return;
@@ -735,12 +734,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.el.animate({
           bottom: 0
         }, 500, this.onOpenAnimationEnd);
-        sendDelayedInit = (function(_this) {
-          return function() {
-            return _this.send('chat_session_init');
-          };
-        })(this);
-        return this.initDelayId = setTimeout(sendDelayedInit, 1000);
+        return this.send('chat_session_init');
       } else {
         this.el.css('bottom', 0);
         return this.onOpenAnimationEnd();
@@ -836,8 +830,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         });
       }
       remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
-      console.log("el", this.el.height());
-      console.log("header", this.el.find('.zammad-chat-header').outerHeight());
       this.el.css('bottom', -remainerHeight);
       return this.el.addClass('zammad-chat-is-shown');
     };

@@ -11,7 +11,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.search-holder'
       headline: 'Search'
-      text: 'Here you can search for ticket, customers and organizations. You can use the §*§-Placeholder as wildcard. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
+      text: 'Here you can search for ticket, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
     }
     {
       container: '.user-menu'
@@ -25,7 +25,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.user-menu'
       headline: 'Personal Settings'
-      text: 'Here you can sign out, change the frontend language or see your latest views items.'
+      text: 'Here you can sign out, change the frontend language and see your last viewed items.'
       actions: [
         'click .user .js-action',
         'hover .user'
@@ -70,6 +70,11 @@ class App.FirstStepsClues extends App.Controller
     ###
     @position = 0
     @render()
+
+    @bind('ui:rerender', =>
+      @render()
+      'clues'
+    )
 
   stopPropagation: (event) ->
     event.stopPropagation()

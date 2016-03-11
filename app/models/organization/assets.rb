@@ -8,7 +8,7 @@ class Organization
 get all assets / related models for this organization
 
   organization = Organization.find(123)
-  result = organization.assets( assets_if_exists )
+  result = organization.assets(assets_if_exists)
 
 returns
 

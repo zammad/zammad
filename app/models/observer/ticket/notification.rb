@@ -27,7 +27,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
     list_objects.each {|_ticket_id, item|
 
       # send background job
-      Delayed::Job.enqueue( Observer::Ticket::Notification::BackgroundJob.new( item, via_web ) )
+      Delayed::Job.enqueue(Observer::Ticket::Notification::BackgroundJob.new(item, via_web))
     }
   end
 
@@ -59,7 +59,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
 
       # get current state of objects
       if event[:name] == 'Ticket::Article'
-        article = Ticket::Article.lookup( id: event[:id] )
+        article = Ticket::Article.lookup(id: event[:id])
 
         # next if article is already deleted
         next if !article
@@ -76,7 +76,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
         end
 
       elsif event[:name] == 'Ticket'
-        ticket = Ticket.lookup( id: event[:id] )
+        ticket = Ticket.lookup(id: event[:id])
 
         # next if ticket is already deleted
         next if !ticket

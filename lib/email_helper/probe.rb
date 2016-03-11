@@ -8,6 +8,7 @@ get result of probe
   result = EmailHelper::Probe.full(
     email: 'znuny@example.com',
     password: 'somepassword',
+    folder: 'some_folder', # optional im imap
   )
 
 returns on success
@@ -23,7 +24,8 @@ returns on success
           ssl: true,
           user: 'some@example.com',
           password: 'password',
-        },
+          folder: 'some_folder', # optional im imap
+         },
       },
       outbound: {
         adapter: 'smtp',
@@ -71,6 +73,11 @@ returns on fail
 
           next if domain_to_check !~ /#{settings[:domain]}/i
 
+          # add folder to config if needed
+          if !params[:folder].empty? && settings[:inbound] && settings[:inbound][:options]
+            settings[:inbound][:options][:folder] = params[:folder]
+          end
+
           # probe inbound
           Rails.logger.debug "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}"
           result_inbound = EmailHelper::Probe.inbound(settings[:inbound])
@@ -103,6 +110,12 @@ returns on fail
       }
       success = false
       inbound_map.each {|config|
+
+        # add folder to config if needed
+        if !params[:folder].empty? && config[:options]
+          config[:options][:folder] = params[:folder]
+        end
+
         Rails.logger.debug "INBOUND PROBE GUESS: #{config.inspect}"
         result_inbound = EmailHelper::Probe.inbound(config)
         Rails.logger.debug "INBOUND RESULT GUESS: #{result_inbound.inspect}"
@@ -165,6 +178,7 @@ get result of inbound probe
       ssl: true,
       user: 'some@example.com',
       password: 'password',
+      folder: 'some_folder', # optional
     }
   )
 
@@ -184,6 +198,7 @@ returns on fail
       ssl: true,
       user: 'some@example.com',
       password: 'password',
+      folder: 'some_folder', # optional im imap
     },
     message: 'error message from used lib',
     message_human: 'translated error message, readable for humans',
@@ -365,6 +380,9 @@ returns on fail
         'No route to host'                                          => { host: true },
         'execution expired'                                         => { host: true },
         'Connection refused'                                        => { host: true },
+        'Mailbox doesn\'t exist'                                    => { folder: true },
+        'Folder doesn\'t exist'                                     => { folder: true },
+        'Unknown Mailbox'                                           => { folder: true },
       }
     end
 

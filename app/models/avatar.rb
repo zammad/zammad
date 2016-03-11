@@ -62,7 +62,7 @@ add a avatar
 
     # lookups
     if data[:object]
-      object_id = ObjectLookup.by_name( data[:object] )
+      object_id = ObjectLookup.by_name(data[:object])
     end
 
     # add initial avatar
@@ -159,7 +159,7 @@ add a avatar
     end
 
     # check if avatar need to be updated
-    record[:store_hash] = Digest::MD5.hexdigest( data[:resize][:content] )
+    record[:store_hash] = Digest::MD5.hexdigest(data[:resize][:content])
     if avatar_already_exists && avatar_already_exists.store_hash == record[:store_hash]
       avatar_already_exists.touch
       return
@@ -179,7 +179,7 @@ add a avatar
         created_by_id: data[:created_by_id],
       )
       record[:store_full_id] = store_full.id
-      record[:store_hash]    = Digest::MD5.hexdigest( data[:full][:content] )
+      record[:store_hash]    = Digest::MD5.hexdigest(data[:full][:content])
     end
     if data[:resize]
       store_resize = Store.add(
@@ -193,7 +193,7 @@ add a avatar
         created_by_id: data[:created_by_id],
       )
       record[:store_resize_id] = store_resize.id
-      record[:store_hash]      = Digest::MD5.hexdigest( data[:resize][:content] )
+      record[:store_hash]      = Digest::MD5.hexdigest(data[:resize][:content] )
     end
 
     # update existing
@@ -218,8 +218,8 @@ set avatars as default
 
 =end
 
-  def self.set_default( object_name, o_id, avatar_id )
-    object_id = ObjectLookup.by_name( object_name )
+  def self.set_default(object_name, o_id, avatar_id)
+    object_id = ObjectLookup.by_name(object_name)
     avatar = Avatar.find_by(
       object_lookup_id: object_id,
       o_id: o_id,

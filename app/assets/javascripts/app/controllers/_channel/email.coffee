@@ -436,11 +436,9 @@ class App.ChannelEmailEdit extends App.ControllerModal
         @formEnable(e)
     )
 
-class App.ChannelEmailAccountWizard extends App.Wizard
+class App.ChannelEmailAccountWizard extends App.WizardModal
   elements:
     '.modal-body': 'body'
-
-  className: 'modal fade'
 
   events:
     'submit .js-intro':                   'probeBasedOnIntro'
@@ -448,6 +446,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
     'click  .js-goToSlide':               'goToSlide'
+    'click  .js-expert':                  'probeBasedOnIntro'
     'click  .js-close':                   'hide'
 
   constructor: ->
@@ -497,12 +496,12 @@ class App.ChannelEmailAccountWizard extends App.Wizard
 
     # base
     configureAttributesBase = [
-      { name: 'realname', display: 'Department Name',   tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
-      { name: 'email',    display: 'User',     tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off', },
+      { name: 'realname', display: 'Organization & Department Name', tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
+      { name: 'email',    display: 'Email',    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
       { name: 'password', display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
       { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
     ]
-    new App.ControllerForm(
+    @formMeta = new App.ControllerForm(
       el:    @$('.base-settings'),
       model:
         configure_attributes: configureAttributesBase
@@ -530,13 +529,25 @@ class App.ChannelEmailAccountWizard extends App.Wizard
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'options::folder',    display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
     ]
+
+    showHideFolder = (params, attribute, attributes, classname, form, ui) ->
+      return if !params
+      if params.adapter is 'imap'
+        ui.show('options::folder')
+        return
+      ui.hide('options::folder')
+
     new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
       model:
         configure_attributes: configureAttributesInbound
         className: ''
       params: @account.inbound
+      handlers: [
+        showHideFolder
+      ]
     )
 
   toggleOutboundAdapter: =>
@@ -546,6 +557,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     if @account['meta']
       channel_used['options']['user']     = @account['meta']['email']
       channel_used['options']['password'] = @account['meta']['password']
+      channel_used['options']['folder']   = @account['meta']['folder']
 
     # show used backend
     @$('.base-outbound-settings').html('')
@@ -575,15 +587,28 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     if @channel
       params.channel_id = @channel.id
 
+    if $(e.currentTarget).hasClass('js-expert')
+
+      # validate form
+      errors = @formMeta.validate(params)
+      if errors
+        @formValidate(form: e.target, errors: errors)
+        return
+
+      @showSlide('js-inbound')
+      @$('.js-inbound [name="options::user"]').val(params.email)
+      @$('.js-inbound [name="options::password"]').val(params.password)
+      return
+
     @disable(e)
-    @$('.js-probe .js-email').text( params.email )
+    @$('.js-probe .js-email').text(params.email)
     @showSlide('js-probe')
 
     @ajax(
       id:   'email_probe'
       type: 'POST'
       url:  @apiPath + '/channels/email_probe'
-      data: JSON.stringify( params )
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -591,8 +616,8 @@ class App.ChannelEmailAccountWizard extends App.Wizard
             for key, value of data.setting
               @account[key] = value
 
-          if !@channel &&  data.content_messages && data.content_messages > 0
-            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+          if data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
             @$('.js-inbound-acknowledge .js-next').attr('data-slide', '')
@@ -606,12 +631,12 @@ class App.ChannelEmailAccountWizard extends App.Wizard
 
         else if data.result is 'duplicate'
           @showSlide('js-intro')
-          @showAlert('js-intro', 'Account already exists!' )
+          @showAlert('js-intro', 'Account already exists!')
         else
           @showSlide('js-inbound')
-          @showAlert('js-inbound', 'Unable to detect your server settings. Manual configuration needed.' )
-          @$('.js-inbound [name="options::user"]').val( @account['meta']['email'] )
-          @$('.js-inbound [name="options::password"]').val( @account['meta']['password'] )
+          @showAlert('js-inbound', 'Unable to detect your server settings. Manual configuration needed.')
+          @$('.js-inbound [name="options::user"]').val(@account['meta']['email'])
+          @$('.js-inbound [name="options::password"]').val(@account['meta']['password'])
 
         @enable(e)
       fail: =>
@@ -637,7 +662,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
       id:   'email_inbound'
       type: 'POST'
       url:  @apiPath + '/channels/email_inbound'
-      data: JSON.stringify( params )
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -645,8 +670,8 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           # remember account settings
           @account.inbound = params
 
-          if !@channel && data.content_messages && data.content_messages > 0
-            message = App.i18n.translateContent('We have already found %s emails in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
+          if data.content_messages && data.content_messages > 0
+            message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
             @$('.js-inbound-acknowledge .js-next').unbind('click.verify')
@@ -657,21 +682,21 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           # fill user / password based on inbound settings
           if !@channel
             if @account['inbound']['options']
-              @$('.js-outbound [name="options::host"]').val( @account['inbound']['options']['host'] )
-              @$('.js-outbound [name="options::user"]').val( @account['inbound']['options']['user'] )
-              @$('.js-outbound [name="options::password"]').val( @account['inbound']['options']['password'] )
+              @$('.js-outbound [name="options::host"]').val(@account['inbound']['options']['host'])
+              @$('.js-outbound [name="options::user"]').val(@account['inbound']['options']['user'])
+              @$('.js-outbound [name="options::password"]').val(@account['inbound']['options']['password'])
             else
-              @$('.js-outbound [name="options::user"]').val( @account['meta']['email'] )
-              @$('.js-outbound [name="options::password"]').val( @account['meta']['password'] )
+              @$('.js-outbound [name="options::user"]').val(@account['meta']['email'])
+              @$('.js-outbound [name="options::password"]').val(@account['meta']['password'])
 
         else
           @showSlide('js-inbound')
-          @showAlert('js-inbound', data.message_human || data.message )
+          @showAlert('js-inbound', data.message_human || data.message)
           @showInvalidField('js-inbound', data.invalid_field)
         @enable(e)
       fail: =>
         @showSlide('js-inbound')
-        @showAlert('js-inbound', data.message_human || data.message )
+        @showAlert('js-inbound', data.message_human || data.message)
         @showInvalidField('js-inbound', data.invalid_field)
         @enable(e)
     )
@@ -684,7 +709,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     params['email'] = @account['meta']['email']
 
     if !params['email'] && @channel
-      email_addresses = App.EmailAddress.search( filter: { channel_id: @channel.id } )
+      email_addresses = App.EmailAddress.search(filter: { channel_id: @channel.id })
       if email_addresses && email_addresses[0]
         params['email'] = email_addresses[0].email
 
@@ -711,12 +736,12 @@ class App.ChannelEmailAccountWizard extends App.Wizard
           @verify(@account)
         else
           @showSlide('js-outbound')
-          @showAlert('js-outbound', data.message_human || data.message )
+          @showAlert('js-outbound', data.message_human || data.message)
           @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
       fail: =>
         @showSlide('js-outbound')
-        @showAlert('js-outbound', data.message_human || data.message )
+        @showAlert('js-outbound', data.message_human || data.message)
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
@@ -734,7 +759,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
       account.group_id = @channel.group_id
 
     if !account.email && @channel
-      email_addresses = App.EmailAddress.search( filter: { channel_id: @channel.id } )
+      email_addresses = App.EmailAddress.search(filter: { channel_id: @channel.id })
       if email_addresses && email_addresses[0]
         account.email = email_addresses[0].email
 
@@ -742,7 +767,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
       id:   'email_verify'
       type: 'POST'
       url:  @apiPath + '/channels/email_verify'
-      data: JSON.stringify( account )
+      data: JSON.stringify(account)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -750,11 +775,11 @@ class App.ChannelEmailAccountWizard extends App.Wizard
         else
           if data.source is 'inbound' || data.source is 'outbound'
             @showSlide("js-#{data.source}")
-            @showAlert("js-#{data.source}", data.message_human || data.message )
+            @showAlert("js-#{data.source}", data.message_human || data.message)
             @showInvalidField("js-#{data.source}", data.invalid_field)
           else
             if count is 2
-              @showAlert('js-verify', data.message_human || data.message )
+              @showAlert('js-verify', data.message_human || data.message)
               @delay(
                 =>
                   @showSlide('js-intro')
@@ -765,7 +790,7 @@ class App.ChannelEmailAccountWizard extends App.Wizard
             else
               if data.subject && @account
                 @account.subject = data.subject
-              @verify( @account, count + 1 )
+              @verify(@account, count + 1)
       fail: =>
         @showSlide('js-intro')
         @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
@@ -775,11 +800,9 @@ class App.ChannelEmailAccountWizard extends App.Wizard
     e.preventDefault()
     @el.modal('hide')
 
-class App.ChannelEmailNotificationWizard extends App.Wizard
+class App.ChannelEmailNotificationWizard extends App.WizardModal
   elements:
     '.modal-body': 'body'
-
-  className: 'modal fade'
 
   events:
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
@@ -886,12 +909,12 @@ class App.ChannelEmailNotificationWizard extends App.Wizard
           @el.remove()
         else
           @showSlide('js-outbound')
-          @showAlert('js-outbound', data.message_human || data.message )
+          @showAlert('js-outbound', data.message_human || data.message)
           @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
       fail: =>
         @showSlide('js-outbound')
-        @showAlert('js-outbound', data.message_human || data.message )
+        @showAlert('js-outbound', data.message_human || data.message)
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )

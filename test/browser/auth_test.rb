@@ -4,12 +4,12 @@ require 'browser_test_helper'
 class AuthTest < TestCase
   def test_authentication
     @browser = browser_instance
-    location( url: browser_url )
+    location(url: browser_url)
     match(
       css: '#login',
       value: 'username',
     )
-    click( css: '#login button' )
+    click(css: '#login button')
 
     sleep 4
     match(
@@ -22,6 +22,7 @@ class AuthTest < TestCase
       username: 'nicole.braun@zammad.org',
       password: 'test',
     )
+    tasks_close_all()
 
     # reload page
     reload()
@@ -42,7 +43,7 @@ class AuthTest < TestCase
 
   def test_authentication_new_browser_without_permanent_cookie_no_session_should_be
     @browser = browser_instance
-    location( url: browser_url )
+    location(url: browser_url)
     match(
       css: '#login',
       value: 'username',
@@ -51,7 +52,7 @@ class AuthTest < TestCase
 
   def test_new_browser_with_permanent_cookie_login
     @browser = browser_instance
-    location( url: browser_url )
+    location(url: browser_url)
 
     # login with username/password
     login(

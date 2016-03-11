@@ -22,7 +22,7 @@
             <label><%- @T('System URL') %></label>
             <div class="alert alert--danger hide" role="alert"></div>
             <input type="text" class="form-control" name="url" value="<%= @url %>" placeholder="http://zammad.example.com" required>
-            <p class="help-block">The URL to this installation of Zammad.</p>
+            <p class="help-block"><%- @T('The URL to this installation of Zammad.') %></p>
           </div>
           <% end %>
         </fieldset>

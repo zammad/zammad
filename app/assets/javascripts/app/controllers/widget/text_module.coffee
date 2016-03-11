@@ -2,6 +2,9 @@ class App.WidgetTextModule extends App.Controller
   constructor: ->
     super
 
+    if !@data
+      @data = {}
+
     # remember instances
     @bindElements = []
     if @selector
@@ -13,7 +16,7 @@ class App.WidgetTextModule extends App.Controller
         @bindElements = @$('[contenteditable]').textmodule()
     @update()
 
-    @subscribeId = App.TextModule.subscribe(@update, initFetch: true )
+    @subscribeId = App.TextModule.subscribe(@update, initFetch: true)
 
   release: =>
     App.TextModule.unsubscribe(@subscribeId)
@@ -26,22 +29,10 @@ class App.WidgetTextModule extends App.Controller
   update: =>
     allRaw = App.TextModule.all()
     all = []
-    data = @data || @
     for item in allRaw
       if item.active is true
         attributes = item.attributes()
-        attributes.content = attributes.content.replace( /#\{{0,2}(.+?)\s{0,2}\}/g, ( index, key ) ->
-          key = key.replace( /@/g, 'data.' )
-          varString = "#{key}" + ''
-          #console.log( "tag replacement env: ", data)
-          try
-            #console.log( "tag replacement: " + key, varString )
-            key = eval (varString)
-          catch error
-            #console.log( "tag replacement error: " + error )
-            key = ''
-          return key
-        )
+        attributes.content = App.Utils.replaceTags(attributes.content, @data)
         all.push attributes
 
     # set new data

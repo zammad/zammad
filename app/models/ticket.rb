@@ -503,7 +503,7 @@ condition example
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
-            query += "#{attribute} NOT NULL"
+            query += "#{attribute} IS NOT NULL"
           else
             query += "#{attribute} IN (?)"
             bind_params.push selector['value']

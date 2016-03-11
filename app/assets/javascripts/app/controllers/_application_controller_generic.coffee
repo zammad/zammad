@@ -677,7 +677,18 @@ class App.Sidebar extends App.Controller
     # show sidebar if not shown
     @showSidebar()
 
-class App.Wizard extends App.Controller
+class App.WizardModal extends App.Controller
+  className: 'modal fade'
+
+  constructor: ->
+    super
+
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      @render()
+      'wizard'
+    )
+
   goToSlide: (e) =>
     e.preventDefault()
     slide = $(e.target).data('slide')
@@ -691,10 +702,10 @@ class App.Wizard extends App.Controller
     @$(".setup.wizard.#{name} input, .setup.wizard.#{name} select").first().focus()
 
   showAlert: (screen, message) =>
-    @$(".#{screen}").find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
+    @$(".#{screen}").find('.alert').first().removeClass('hide').text(App.i18n.translatePlain(message))
 
   hideAlert: (screen) =>
-    @$(".#{screen}").find('.alert').addClass('hide')
+    @$(".#{screen}").find('.alert').first().addClass('hide')
 
   disable: (e) =>
     @formDisable(e)
@@ -714,3 +725,11 @@ class App.Wizard extends App.Controller
     for field, type of fields
       if type
         @$(".#{screen}").find("[name=\"options::#{field}\"]").closest('.form-group').addClass('has-error')
+
+class App.WizardFullScreen extends App.WizardModal
+  className: 'getstarted fit'
+
+  constructor: ->
+    super
+    $('.content').addClass('hide')
+    $('#content').removeClass('hide')

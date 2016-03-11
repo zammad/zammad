@@ -1,5 +1,4 @@
-class App.InviteUser extends App.Wizard
-  className: 'modal fade'
+class App.InviteUser extends App.WizardModal
   events:
     'click  .js-close':     'hide'
     'submit .js-user':      'submit'
@@ -25,15 +24,20 @@ class App.InviteUser extends App.Wizard
         @el.remove()
 
   render: =>
-    @html App.view('widget/invite_user')(
+    modal = $(App.view('widget/invite_user')(
       head: @head
-    )
+    ))
     new App.ControllerForm(
-      el:        @$('.js-form')
+      el:        modal.find('.js-form')
       model:     App.User
       screen:    @screen
       autofocus: true
     )
+    if !@initRenderingDone
+      @initRenderingDone = true
+      @html modal
+    else
+      @$('.modal-dialog').replaceWith(modal)
 
   submit: (e) =>
     e.preventDefault()

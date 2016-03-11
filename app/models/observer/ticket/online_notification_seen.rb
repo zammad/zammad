@@ -28,6 +28,6 @@ class Observer::Ticket::OnlineNotificationSeen < ActiveRecord::Observer
 
     # set all online notifications to seen
     # send background job
-    Delayed::Job.enqueue( Observer::Ticket::OnlineNotificationSeen::BackgroundJob.new( record.id, record.updated_by_id ) )
+    Delayed::Job.enqueue(Observer::Ticket::OnlineNotificationSeen::BackgroundJob.new(record.id, record.updated_by_id))
   end
 end

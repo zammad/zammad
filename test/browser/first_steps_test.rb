@@ -14,18 +14,15 @@ class FirstStepsTest < TestCase
       url: browser_url,
     )
     tasks_close_all()
-    click(
-      css: '.active.content .tab[data-area="first-steps-widgets"]',
-    )
+
+    click(css: '.active.content .tab[data-area="first-steps-widgets"]')
     watch_for(
       css:   '.active.content',
       value: 'Configuration',
     )
 
-    # invite agent
-    click(
-      css: '.active.content .js-inviteAgent',
-    )
+    # invite agent (with more then one group)
+    click(css: '.active.content .js-inviteAgent')
     sleep 4
     set(
       css: '.modal [name="firstname"]',
@@ -39,9 +36,7 @@ class FirstStepsTest < TestCase
       css: '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
-    check(
-      css: '.modal [name="group_ids"]',
-    )
+    check(css: '.modal [name="group_ids"]')
     click(
       css: '.modal button.btn.btn--primary',
       fast: true,
@@ -56,9 +51,7 @@ class FirstStepsTest < TestCase
     )
 
     # invite customer
-    click(
-      css: '.active.content .js-inviteCustomer',
-    )
+    click(css: '.active.content .js-inviteCustomer')
     sleep 4
     set(
       css: '.modal [name="firstname"]',
@@ -116,18 +109,14 @@ class FirstStepsTest < TestCase
     )
 
     # check update
-    click(
-      css: '.active.content a[href="#channels/form"]',
-    )
+    click(css: '.active.content a[href="#channels/form"]')
     sleep 2
     switch(
       css: '#content .js-formSetting',
       type: 'on',
     )
     sleep 2
-    click(
-      css: '#navigation a[href="#dashboard"]',
-    )
+    click(css: '#navigation a[href="#dashboard"]')
     hit = false
     (1..38).each {
       next if !@browser.find_elements(css: '.active.content a[href="#channels/form"].todo.is-done')[0]

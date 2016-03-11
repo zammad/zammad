@@ -486,7 +486,8 @@ pre code.hljs {
 
   &.btn--text {
     font-size: inherit;
-    padding: 0;
+    margin: -10px;
+    padding: 10px;
     color: hsl(203,65%,55%);
     border: none;
     background: none;
@@ -537,6 +538,14 @@ pre code.hljs {
       &:active {
         color: hsl(0,0%,75%);
       }
+    }
+
+    &.space-left {
+      margin-left: 0;
+    }
+
+    &.space-right {
+      margin-right: 0;
     }
   }
 
@@ -687,8 +696,8 @@ pre code.hljs {
   }
 
   .btn--text {
-    padding-left: 3px;
-    padding-right: 3px;
+    padding-left: 13px;
+    padding-right: 13px;
   }
 }
 
@@ -1835,7 +1844,7 @@ input.has-error {
   .modal-control {
     padding-left: 14px;
     padding-right: 14px;
-    
+        
     .btn.is-disabled {
       opacity: 1;
       color: hsl(240,5%,83%);
@@ -2744,6 +2753,10 @@ footer {
 
 .translation:hover .icon-edit {
   display: inline-block;
+}
+
+.translationOverview .btn + .btn {
+  margin: -10px;
 }
 
 .sub_attribute .control-label {
@@ -4342,7 +4355,8 @@ footer {
     background: white;
 
     .btn {
-      padding: 7px 0;
+      padding-top: 17px;
+      padding-bottom: 17px;
       font-size: 10px;
     }
 
@@ -8110,6 +8124,10 @@ body.fit {
 
 .space-left {
   margin-left: 10px; 
+}
+
+.space-right {
+  margin-right: 10px; 
 }
 
 .align-center {

@@ -24,7 +24,7 @@ class App.TicketCreate extends App.Controller
       split = "/#{@ticket_id}/#{@article_id}"
 
     # update navbar highlighting
-    @navupdate '#ticket/create/id/' + @id + split
+    @navupdate "#ticket/create/id/#{@id}#{split}"
 
     # lisen if view need to be rerendered
     @bind 'ticket_create_rerender', (defaults) =>
@@ -174,7 +174,7 @@ class App.TicketCreate extends App.Controller
           t.body  = App.Utils.text2html(a.body)
 
         # render page
-        @render( options: t )
+        @render(options: t)
     )
 
   render: (template = {}) ->
@@ -427,10 +427,10 @@ class App.TicketCreate extends App.Controller
 
           # notify UI
           ui.notify
-            type:    'success',
-            msg:     App.i18n.translateInline('Ticket %s created!', @number),
+            type:    'success'
+            msg:     App.i18n.translateInline('Ticket %s created!', @number)
             link:    "#ticket/zoom/#{@id}"
-            timeout: 4000,
+            timeout: 4000
 
           # close ticket create task
           App.TaskManager.remove(ui.task_key)
@@ -439,8 +439,8 @@ class App.TicketCreate extends App.Controller
           ui.scrollTo()
 
           # access to group
-          group_ids = App.Session.get('group_ids')
-          if group_ids && _.contains(group_ids, @group_id)
+          group_ids = _.map(App.Session.get('group_ids'), (id) -> id.toString())
+          if group_ids && _.contains(group_ids, @group_id.toString())
             ui.navigate "#ticket/zoom/#{@id}"
             return
 
@@ -475,6 +475,7 @@ class Sidebar extends App.Controller
           @textModule.reload(
             ticket:
               customer: user
+            user: App.Session.get()
           )
 
         new App.WidgetUser(

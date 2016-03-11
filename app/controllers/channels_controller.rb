@@ -149,6 +149,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     result = EmailHelper::Probe.full(
       email: params[:email],
       password: params[:password],
+      folder: params[:folder],
     )
 
     # verify if user+host already exists
