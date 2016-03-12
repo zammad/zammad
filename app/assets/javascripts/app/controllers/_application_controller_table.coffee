@@ -33,6 +33,16 @@ class App.ControllerTable extends App.Controller
     @html @tableGen()
     @readjustHeaderWidths()
 
+    if @dndCallback
+      dndOptions =
+        tolerance:            'pointer'
+        distance:             15
+        opacity:              0.6
+        forcePlaceholderSize: true
+        items:                'tr'
+        update:               @dndCallback
+      @el.find('table > tbody').sortable(dndOptions)
+
   ###
 
     # table based on model
@@ -103,6 +113,9 @@ class App.ControllerTable extends App.Controller
         attributeName: [
           callbackAttributes
         ]
+      dndCallback: =>
+        items = @el.find('table > tbody > tr')
+        console.log('all effected items', items)
     )
 
     new App.ControllerTable(

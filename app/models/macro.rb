@@ -4,4 +4,7 @@ class Macro < ApplicationModel
   store     :perform
   validates :name, presence: true
 
+  notify_clients_support
+  latest_change_support
+
 end

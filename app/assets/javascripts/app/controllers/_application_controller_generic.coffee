@@ -174,6 +174,8 @@ class App.ControllerGenericIndex extends App.Controller
             'click': @edit
         container: @container
         explanation: @pageData.explanation or 'none'
+        groupBy: @groupBy
+        dndCallback: @dndCallback
       },
       @pageData.tableExtend
     )

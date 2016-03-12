@@ -8,5 +8,6 @@ class Group < ApplicationModel
 
   activity_stream_support  role: Z_ROLENAME_ADMIN
   history_support
+  notify_clients_support
   latest_change_support
 end
