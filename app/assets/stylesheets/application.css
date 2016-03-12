@@ -6,7 +6,6 @@
  *= require ./bootstrap.css
  *= require ./cropper.css
  *= require ./fineuploader.css
- *= require ./ui-lightness/jquery-ui-1.11.2.css
  *= require ./bootstrap-tokenfield.css
  *= require ./font.css
  *= require ./svg-dimensions.css
