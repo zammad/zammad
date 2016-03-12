@@ -1285,11 +1285,6 @@ wait untill text in selector disabppears
       }
     end
 
-    if data[:prio]
-      element = instance.find_elements(css: '.modal input[name=prio]')[0]
-      element.clear
-      element.send_keys(data[:prio])
-    end
     if data['order::direction']
       element = instance.find_elements(css: '.modal select[name="order::direction"]')[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)

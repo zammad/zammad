@@ -33,7 +33,6 @@ class AgentTicketOverviewLevel1Test < TestCase
         selector: {
           'Priority' => '1 low',
         },
-        prio: 1000,
         'order::direction' => 'down',
       }
     )
@@ -45,7 +44,6 @@ class AgentTicketOverviewLevel1Test < TestCase
         selector: {
           'Priority' => '3 high',
         },
-        prio: 1001,
         'order::direction' => 'down',
       }
     )
