@@ -30,14 +30,14 @@ class AgentTicketOverviewLevel0Test < TestCase
         body: 'overview count test #2',
       }
     )
-    click( text: 'Overviews' )
+    click(text: 'Overviews')
 
     # enable full overviews
     execute(
       js: '$(".content.active .sidebar").css("display", "block")',
     )
 
-    click( text: 'Unassigned & Open' )
+    click(text: 'Unassigned & Open')
     sleep 8 # till overview is rendered
 
     # select both via bulk action
@@ -87,7 +87,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     overview_counter_before = overview_counter()
 
     # click options and enable number and article count
-    click( css: '.active [data-type="settings"]' )
+    click(css: '.active [data-type="settings"]')
 
     watch_for(
       css: '.modal h1',
@@ -111,7 +111,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     check(
       css: '.modal input[value="article_count"]',
     )
-    click( css: '.modal .js-submit' )
+    click(css: '.modal .js-submit')
     sleep 4
 
     # check if number and article count is shown
@@ -147,7 +147,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     # disable number and article count
-    click( css: '.active [data-type="settings"]' )
+    click(css: '.active [data-type="settings"]')
 
     watch_for(
       css: '.modal h1',
@@ -159,7 +159,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     uncheck(
       css: '.modal input[value="article_count"]',
     )
-    click( css: '.modal .js-submit' )
+    click(css: '.modal .js-submit')
     sleep 2
 
     # check if number and article count is gone
@@ -188,7 +188,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # get new overview count
     overview_counter_new = overview_counter()
-    assert_equal( overview_counter_before['#ticket/view/all_unassigned'] + 1, overview_counter_new['#ticket/view/all_unassigned'] )
+    assert_equal(overview_counter_before['#ticket/view/all_unassigned'] + 1, overview_counter_new['#ticket/view/all_unassigned'])
 
     # open ticket by search
     ticket_open_by_search(
@@ -206,7 +206,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # get current overview count
     overview_counter_after = overview_counter()
-    assert_equal( overview_counter_before['#ticket/view/all_unassigned'], overview_counter_after['#ticket/view/all_unassigned'] )
+    assert_equal(overview_counter_before['#ticket/view/all_unassigned'], overview_counter_after['#ticket/view/all_unassigned'])
 
     # cleanup
     tasks_close_all()

@@ -7,22 +7,36 @@ class Overview < ApplicationModel
   validates :name, presence: true
   validates :prio, presence: true
 
-  before_create :fill_link
-  before_update :fill_link
+  before_create :fill_link_on_create, :fill_prio
+  before_update :fill_link_on_update
 
   notify_clients_support
   latest_change_support
 
   private
 
-  # fill link
-  def fill_link
+  def fill_prio
+    return true if prio
+    prio = 9999
+  end
+
+  def fill_link_on_create
+    return true if !link.empty?
+    self.link = link_name(name)
+  end
+
+  def fill_link_on_update
     return true if link.empty?
     return true if !changes['name']
-    self.link = name.downcase
+    self.link = link_name(name)
+  end
+
+  def link_name(name)
+    link = name.downcase
     link.gsub!(/\s/, '_')
     link.gsub!(/[^0-9a-z]/i, '_')
     link.gsub!(/_+/, '_')
+    link
   end
 
 end
