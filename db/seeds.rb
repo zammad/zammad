@@ -1661,6 +1661,10 @@ Macro.create_if_not_exists(
       operator: 'add',
       value: 'spam',
     },
+    'ticket.owner_id' => {
+      pre_condition: 'current_user.id',
+      value: '',
+    },
   },
   note: 'example macro',
   active: true,
