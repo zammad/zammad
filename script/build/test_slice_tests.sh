@@ -6,6 +6,7 @@ if [ "$LEVEL" == '1' ]; then
 
   # no ticket action
   rm test/browser/admin_channel_email_test.rb
+  rm test/browser/admin_overview_test.rb
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_ticket_*.rb
@@ -23,6 +24,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/aac_basic_richtext_test.rb
   rm test/browser/aab_basic_urls_test.rb
   rm test/browser/admin_channel_email_test.rb
+  rm test/browser/admin_overview_test.rb
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_user_*.rb
   rm test/browser/auth_test.rb

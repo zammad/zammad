@@ -1233,7 +1233,7 @@ wait untill text in selector disabppears
 
 =begin
 
-  username = overview_create(
+  overview_create(
     browser: browser1,
     data: {
       name:     name,
@@ -1241,7 +1241,6 @@ wait untill text in selector disabppears
       selector: {
         'Priority': '1 low',
       },
-      prio: 1000,
       'order::direction' => 'down',
     }
   )
@@ -1278,6 +1277,7 @@ wait untill text in selector disabppears
         element = instance.find_elements(css: '.modal .ticket_selector .js-attributeSelector select')[0]
         dropdown = Selenium::WebDriver::Support::Select.new(element)
         dropdown.select_by(:text, key)
+        sleep 0.5
         element = instance.find_elements(css: '.modal .ticket_selector .js-value select')[0]
         dropdown = Selenium::WebDriver::Support::Select.new(element)
         dropdown.deselect_all
@@ -1307,6 +1307,87 @@ wait untill text in selector disabppears
     }
     screenshot(browser: instance, comment: 'overview_create_failed')
     raise 'overview creation failed'
+  end
+
+=begin
+
+  overview_update(
+    browser: browser1,
+    data: {
+      name:     name,
+      role:     'Agent',
+      selector: {
+        'Priority': '1 low',
+      },
+      'order::direction' => 'down',
+    }
+  )
+
+=end
+
+  def overview_update(params)
+    switch_window_focus(params)
+    log('overview_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    instance.find_elements(css: 'a[href="#manage"]')[0].click
+    sleep 0.2
+    instance.find_elements(css: 'a[href="#manage/overviews"]')[0].click
+    sleep 0.2
+    #instance.find_elements(css: '#content a[data-type="new"]')[0].click
+    #sleep 2
+
+    instance.execute_script("$(\"#content td:contains('#{params[:name]}')\").first().click()")
+    sleep 2
+
+    if data[:name]
+      element = instance.find_elements(css: '.modal input[name=name]')[0]
+      element.clear
+      element.send_keys(data[:name])
+    end
+    if data[:role]
+      element = instance.find_elements(css: '.modal select[name="role_id"]')[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by(:text, data[:role])
+    end
+
+    if data[:selector]
+      data[:selector].each {|key, value|
+        element = instance.find_elements(css: '.modal .ticket_selector .js-attributeSelector select')[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.select_by(:text, key)
+        instance.execute_script("$('#content .modal .ticket_selector .js-attributeSelector select').first().trigger('change')")
+        element = instance.find_elements(css: '.modal .ticket_selector .js-value select')[0]
+        dropdown = Selenium::WebDriver::Support::Select.new(element)
+        dropdown.deselect_all
+        dropdown.select_by(:text, value)
+      }
+    end
+
+    if data['order::direction']
+      element = instance.find_elements(css: '.modal select[name="order::direction"]')[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by(:text, data['order::direction'])
+    end
+
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    (1..12).each {
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert(true, 'overview updated')
+        overview = {
+          name: name,
+        }
+        sleep 1
+        return overview
+      end
+      sleep 1
+    }
+    screenshot(browser: instance, comment: 'overview_update_failed')
+    raise 'overview update failed'
   end
 
 =begin

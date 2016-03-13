@@ -5,7 +5,6 @@ class Overview < ApplicationModel
   store     :order
   store     :view
   validates :name, presence: true
-  validates :prio, presence: true
 
   before_create :fill_link_on_create, :fill_prio
   before_update :fill_link_on_update
@@ -16,8 +15,8 @@ class Overview < ApplicationModel
   private
 
   def fill_prio
-    return true if prio
-    prio = 9999
+    return true if !prio.empty?
+    self.prio = 9999
   end
 
   def fill_link_on_create
