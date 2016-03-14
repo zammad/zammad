@@ -8,6 +8,7 @@ script/scheduler.rb stop
 script/websocket-server.rb stop
 kill $(cat tmp/pids/server.pid)
 
-rake db:drop
+rake db:drop RAILS_ENV=test
+rake db:drop RAILS_ENV=production
 
 exit $EXIT
