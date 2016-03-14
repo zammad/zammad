@@ -292,6 +292,7 @@ class App.ControllerTable extends App.Controller
       class:      @class
       destroy:    destroy
       callbacks:  @callbackAttributes
+      sortable: @dndCallback
     )
 
     # convert to jquery object
