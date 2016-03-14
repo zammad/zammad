@@ -930,6 +930,11 @@ th.align-right {
   fill: hsl(240,1%,77%);
 }
 
+.table-checkbox,
+.table-radio {
+  padding: 0 !important;
+}
+
 .table .table-sort-arrow {
   opacity: 1;
   fill: hsl(206,7%,33%);
