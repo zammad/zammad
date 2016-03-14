@@ -15,7 +15,7 @@ class Overview < ApplicationModel
   private
 
   def fill_prio
-    return true if !prio.empty?
+    return true if prio
     self.prio = 9999
   end
 
