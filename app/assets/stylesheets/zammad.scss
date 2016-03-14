@@ -874,7 +874,7 @@ th.align-right {
 }
 
 .table > tbody > tr > td {
-  padding: 11px 10px 7px;
+  padding: 10px 10px 8px;
   border: none;
   box-shadow: 0 1px rgba(0,0,0,.03);
 }
@@ -924,6 +924,7 @@ th.align-right {
   }
 }
 
+.table .icon-draggable,
 .table .icon-trash {
   vertical-align: middle;
   fill: hsl(240,1%,77%);

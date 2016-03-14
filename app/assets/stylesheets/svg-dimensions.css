@@ -14,6 +14,7 @@
 .icon-dashboard { width: 24px; height: 24px; }
 .icon-diagonal-cross { width: 13px; height: 13px; }
 .icon-download { width: 14px; height: 13px; }
+.icon-draggable { width: 16px; height: 16px; }
 .icon-dropdown-list { width: 19px; height: 14px; }
 .icon-email-button { width: 29px; height: 22px; }
 .icon-email { width: 17px; height: 17px; }
@@ -85,5 +86,6 @@
 .icon-unmute { width: 16px; height: 16px; }
 .icon-user { width: 16px; height: 16px; }
 .icon-website { width: 17px; height: 17px; }
+.icon-zammad { width: 17px; height: 17px; }
 .icon-zoom-in { width: 20px; height: 20px; }
 .icon-zoom-out { width: 20px; height: 20px; }

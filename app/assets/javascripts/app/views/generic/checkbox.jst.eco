@@ -1,5 +1,10 @@
 <div class="<%= @attribute.class %> checkbox">
 <% for row in @attribute.options: %>
-  <label><input type="checkbox" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>/> <%= row.name %> <% if row.note: %>- <%= row.note %><% end %></label>
+  <label class="inline-label checkbox-replacement">
+    <input type="checkbox" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>/>
+    <%- @Icon('checkbox', 'icon-unchecked') %>
+    <%- @Icon('checkbox-checked', 'icon-checked') %>
+    <span class="label-text"><%= row.name %> <% if row.note: %>- <span class="help-text"><%= row.note %></span><% end %></span>
+  </label>
 <% end %>
 </div>

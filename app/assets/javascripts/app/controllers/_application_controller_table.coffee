@@ -40,6 +40,13 @@ class App.ControllerTable extends App.Controller
         opacity:              0.6
         forcePlaceholderSize: true
         items:                'tr'
+        helper: (e, tr) ->
+          originals = tr.children()
+          helper = tr.clone()
+          helper.children().each (index) ->
+            # Set helper cell sizes to match the original sizes
+            $(this).width( originals.eq(index).outerWidth() )
+          return helper
         update:               @dndCallback
       @el.find('table > tbody').sortable(dndOptions)
 
@@ -285,6 +292,7 @@ class App.ControllerTable extends App.Controller
       class:      @class
       destroy:    destroy
       callbacks:  @callbackAttributes
+      sortable: @dndCallback
     )
 
     # convert to jquery object

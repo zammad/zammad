@@ -1,6 +1,9 @@
 <table class="table table-hover<%- " #{@class}" if @class %>">
   <thead>
     <tr>
+    <% if @sortable: %>
+      <th style="width: 36px"></th>
+    <% end %>
     <% if @checkbox: %>
       <th style="width: 40px" class="no-padding">
         <label class="checkbox-replacement">
@@ -49,6 +52,9 @@
   <% end %>
   <% position++ %>
   <tr class="item<%= ' is-inactive' if object.active is false %>" data-id="<%= object.id %>" data-position="<%= position %>" >
+    <% if @sortable: %>
+      <td><%- @Icon('draggable') %></td>
+    <% end %>
     <% if @checkbox: %>
       <td class="no-padding">
         <label class="checkbox-replacement">
