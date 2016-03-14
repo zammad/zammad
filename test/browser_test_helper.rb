@@ -587,9 +587,10 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements(css: params[:css])[0]
-    checked = element.attribute('checked')
-    element.click if !checked
+    instance.execute_script("if (!$('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
+    #element = instance.find_elements(css: params[:css])[0]
+    #checked = element.attribute('checked')
+    #element.click if !checked
   end
 
 =begin
@@ -607,9 +608,10 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    element = instance.find_elements(css: params[:css])[0]
-    checked = element.attribute('checked')
-    element.click if checked
+    instance.execute_script("if ($('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
+    #element = instance.find_elements(css: params[:css])[0]
+    #checked = element.attribute('checked')
+    #element.click if checked
   end
 
 =begin
@@ -2070,7 +2072,10 @@ wait untill text in selector disabppears
     element = instance.find_elements(css: '.modal input[name=password_confirm]')[0]
     element.clear
     element.send_keys(data[:password])
-    instance.find_elements(css: '.modal input[name="role_ids"][value="3"]')[0].click
+    check(
+      browser: instance,
+      css:     '.modal input[name=role_ids][value=3]',
+    )
     instance.find_elements(css: '.modal button.js-submit')[0].click
     sleep 3.5
     set(
