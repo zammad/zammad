@@ -2,10 +2,10 @@
   <thead>
     <tr>
     <% if @sortable: %>
-      <th style="width: 36px"></th>
+      <th style="width: 36px" class="table-draggable"></th>
     <% end %>
     <% if @checkbox: %>
-      <th style="width: 40px" class="no-padding">
+      <th style="width: 40px" class="table-checkbox">
         <label class="checkbox-replacement">
           <input type="checkbox" value="" name="bulk_all">
           <%- @Icon('checkbox', 'icon-unchecked') %>
@@ -14,7 +14,7 @@
       </th>
     <% end %>
     <% if @radio: %>
-      <th style="width: 40px" class="no-padding"></th>
+      <th style="width: 40px" class="table-radio"></th>
     <% end %>
     <% for item, i in @header: %>
       <th class="js-tableHead<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="width:<%= item.displayWidth %>px" data-column-key="<%= item.name %>">
@@ -53,10 +53,10 @@
   <% position++ %>
   <tr class="item<%= ' is-inactive' if object.active is false %>" data-id="<%= object.id %>" data-position="<%= position %>" >
     <% if @sortable: %>
-      <td><%- @Icon('draggable') %></td>
+      <td class="table-draggable"><%- @Icon('draggable') %></td>
     <% end %>
     <% if @checkbox: %>
-      <td class="no-padding">
+      <td class="table-checkbox">
         <label class="checkbox-replacement">
           <input type="checkbox" value="<%= object.id %>" name="bulk">
           <%- @Icon('checkbox', 'icon-unchecked') %>
@@ -65,7 +65,7 @@
       </td>
     <% end %>
     <% if @radio: %>
-      <td class="no-padding">
+      <td class="table-radio">
         <label class="radio-replacement">
           <input type="radio" value="<%= object.id %>" name="radio">
           <%- @Icon('radio', 'icon-unchecked') %>

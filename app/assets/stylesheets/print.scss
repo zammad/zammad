@@ -1,15 +1,14 @@
 #app > *:not(.content):not(.active),
-#app > .hide,
-.icon,
-.btn,
-.avatar {
+#app > .hide {
   display: none;
 }
 
 .table {
-  margin: 1em 0;
-  border: 1px solid;
-  padding: 1em;
+  border: 1px solid hsl(0,0%,90%);
+}
+
+.table thead tr {
+  border-bottom: 1px solid hsl(0,0%,90%);
 }
 
 /*
@@ -32,7 +31,8 @@
 
 .bulkAction,
 .overviews .checkbox-replacement,
-.overviews .overview-header {
+.overviews .overview-header,
+.table-checkbox {
   display: none;
 }
 
@@ -53,22 +53,8 @@
   display: none;
 }
 
-.ticket-title {
-  font-size: 2em;
-}
-
-.ticket-article-item {
-  margin: 1em 0;
-  border: 1px solid;
-  padding: 1em;
-}
-
-.article-meta-value {
-  font-weight: bold;
-}
-
-.article-content {
-  margin: 0.5em 0;
+.tabsSidebar-sidebarSpacer {
+  margin-right: 0;
 }
 
 .article-meta .article-meta-key {
