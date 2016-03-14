@@ -378,7 +378,11 @@ class ApplicationController < ActionController::Base
 
   def model_index_render (object, _params)
     generic_objects = object.all
-    model_index_render_result(generic_objects)
+    generic_objects_with_associations = []
+    generic_objects.each {|item|
+      generic_objects_with_associations.push item.attributes_with_associations
+    }
+    model_index_render_result(generic_objects_with_associations)
   rescue => e
     logger.error e.message
     logger.error e.backtrace.inspect

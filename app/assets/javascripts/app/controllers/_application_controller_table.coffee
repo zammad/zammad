@@ -33,6 +33,23 @@ class App.ControllerTable extends App.Controller
     @html @tableGen()
     @readjustHeaderWidths()
 
+    if @dndCallback
+      dndOptions =
+        tolerance:            'pointer'
+        distance:             15
+        opacity:              0.6
+        forcePlaceholderSize: true
+        items:                'tr'
+        helper: (e, tr) ->
+          originals = tr.children()
+          helper = tr.clone()
+          helper.children().each (index) ->
+            # Set helper cell sizes to match the original sizes
+            $(@).width( originals.eq(index).outerWidth() )
+          return helper
+        update:               @dndCallback
+      @el.find('table > tbody').sortable(dndOptions)
+
   ###
 
     # table based on model
@@ -103,6 +120,9 @@ class App.ControllerTable extends App.Controller
         attributeName: [
           callbackAttributes
         ]
+      dndCallback: =>
+        items = @el.find('table > tbody > tr')
+        console.log('all effected items', items)
     )
 
     new App.ControllerTable(
@@ -272,6 +292,7 @@ class App.ControllerTable extends App.Controller
       class:      @class
       destroy:    destroy
       callbacks:  @callbackAttributes
+      sortable:   @dndCallback
     )
 
     # convert to jquery object
@@ -287,9 +308,11 @@ class App.ControllerTable extends App.Controller
       for name, item of @bindCol
         if item.events
           position = 0
+          if @dndCallback
+            position += 1
           if @checkbox
             position += 1
-          hit      = false
+          hit = false
 
           for headerName in @headers
             if !hit

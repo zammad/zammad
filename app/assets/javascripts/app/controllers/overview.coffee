@@ -9,6 +9,8 @@ class Index extends App.ControllerContent
       el: @el
       id: @id
       genericObject: 'Overview'
+      defaultSortBy: 'prio'
+      #groupBy: 'role'
       pageData:
         title: 'Overviews'
         home: 'overviews'
@@ -22,7 +24,18 @@ class Index extends App.ControllerContent
           { name: 'New Overview', 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
-      large: true,
+      large: true
+      dndCallback: =>
+        items = @el.find('table > tbody > tr')
+        order = []
+        prio = 0
+        for item in items
+          prio += 1
+          id = $(item).data('id')
+          overview = App.Overview.find(id)
+          if overview.prio isnt prio
+            overview.prio = prio
+            overview.save()
     )
 
 App.Config.set( 'Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

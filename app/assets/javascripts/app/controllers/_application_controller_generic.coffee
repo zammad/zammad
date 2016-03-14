@@ -174,6 +174,8 @@ class App.ControllerGenericIndex extends App.Controller
             'click': @edit
         container: @container
         explanation: @pageData.explanation or 'none'
+        groupBy: @groupBy
+        dndCallback: @dndCallback
       },
       @pageData.tableExtend
     )
@@ -338,8 +340,8 @@ class App.ControllerTabs extends App.Controller
 
     # set last or first tab to active
     @lastActiveTab = @Config.get('lastTab')
-    if @lastActiveTab &&  @$(".nav-tabs li a[href=#{@lastActiveTab}]")[0]
-      @$(".nav-tabs li a[href=#{@lastActiveTab}]").tab('show')
+    if @lastActiveTab &&  @$(".nav-tabs li a[href='#{@lastActiveTab}']")[0]
+      @$(".nav-tabs li a[href='#{@lastActiveTab}']").tab('show')
     else
       @$('.nav-tabs li:first a').tab('show')
 

@@ -1,6 +1,6 @@
 
 // form
-test( "form without @el", function() {
+test("form without @el", function() {
   var form = new App.ControllerForm()
 
   equal($(form.html()).is('div'), true)
@@ -8,8 +8,8 @@ test( "form without @el", function() {
   equal($(form.html()).hasClass('hide'), true)
 
 })
-test( "form elements check", function() {
-//    deepEqual( item, test.value, 'group set/get tests' );
+test("form elements check", function() {
+//    deepEqual(item, test.value, 'group set/get tests' );
   $('#forms').append('<hr><h1>form elements check</h1><form id="form1"></form>')
   var el = $('#form1')
   var defaults = {
@@ -49,61 +49,61 @@ test( "form elements check", function() {
     },
     autofocus: true
   });
-  equal( el.find('[name="input1"]').val(), '', 'check input1 value')
-  equal( el.find('[name="input1"]').prop('required'), false, 'check input1 required')
-//  equal( el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
+  equal(el.find('[name="input1"]').val(), '', 'check input1 value')
+  equal(el.find('[name="input1"]').prop('required'), false, 'check input1 required')
+//  equal(el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
 
-  equal( el.find('[name="input2"]').val(), '123abc', 'check input2 value')
-  equal( el.find('[name="input2"]').prop('required'), true, 'check input2 required')
-  equal( el.find('[name="input2"]').is(":focus"), false, 'check input2 focus')
+  equal(el.find('[name="input2"]').val(), '123abc', 'check input2 value')
+  equal(el.find('[name="input2"]').prop('required'), true, 'check input2 required')
+  equal(el.find('[name="input2"]').is(":focus"), false, 'check input2 focus')
 
-  equal( el.find('[name="password1"]').val(), '', 'check password1 value')
-  equal( el.find('[name="password1_confirm"]').val(), '', 'check password1 value')
-  equal( el.find('[name="password1"]').prop('required'), false, 'check password1 required')
-  equal( el.find('[name="password1"]').is(":focus"), false, 'check password1 focus')
+  equal(el.find('[name="password1"]').val(), '', 'check password1 value')
+  equal(el.find('[name="password1_confirm"]').val(), '', 'check password1 value')
+  equal(el.find('[name="password1"]').prop('required'), false, 'check password1 required')
+  equal(el.find('[name="password1"]').is(":focus"), false, 'check password1 focus')
 
-  equal( el.find('[name="password2"]').val(), 'pw1234<l>', 'check password2 value')
-  equal( el.find('[name="password2_confirm"]').val(), 'pw1234<l>', 'check password2 value')
-  equal( el.find('[name="password2"]').prop('required'), true, 'check password2 required')
-  equal( el.find('[name="password2"]').is(":focus"), false, 'check password2 focus')
+  equal(el.find('[name="password2"]').val(), 'pw1234<l>', 'check password2 value')
+  equal(el.find('[name="password2_confirm"]').val(), 'pw1234<l>', 'check password2 value')
+  equal(el.find('[name="password2"]').prop('required'), true, 'check password2 required')
+  equal(el.find('[name="password2"]').is(":focus"), false, 'check password2 focus')
 
-  equal( el.find('[name="textarea1"]').val(), '', 'check textarea1 value')
-  equal( el.find('[name="textarea1"]').prop('required'), false, 'check textarea1 required')
-  equal( el.find('[name="textarea1"]').is(":focus"), false, 'check textarea1 focus')
+  equal(el.find('[name="textarea1"]').val(), '', 'check textarea1 value')
+  equal(el.find('[name="textarea1"]').prop('required'), false, 'check textarea1 required')
+  equal(el.find('[name="textarea1"]').is(":focus"), false, 'check textarea1 focus')
 
-  equal( el.find('[name="textarea2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
-  equal( el.find('[name="textarea2"]').prop('required'), true, 'check textarea2 required')
-  equal( el.find('[name="textarea2"]').is(":focus"), false, 'check textarea2 focus')
+  equal(el.find('[name="textarea2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
+  equal(el.find('[name="textarea2"]').prop('required'), true, 'check textarea2 required')
+  equal(el.find('[name="textarea2"]').is(":focus"), false, 'check textarea2 focus')
 
-  equal( el.find('[name="select1"]').val(), 'false', 'check select1 value')
-  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
-  equal( el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
+  equal(el.find('[name="select1"]').val(), 'false', 'check select1 value')
+  equal(el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+  equal(el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
 
-  equal( el.find('[name="select2"]').val(), 'true', 'check select2 value')
-  equal( el.find('[name="select2"]').prop('required'), true, 'check select2 required')
-  equal( el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
+  equal(el.find('[name="select2"]').val(), 'true', 'check select2 value')
+  equal(el.find('[name="select2"]').prop('required'), true, 'check select2 required')
+  equal(el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
 
-  equal( el.find('[name="selectmulti1"]').val(), 'false', 'check selectmulti1 value')
-  equal( el.find('[name="selectmulti1"]').prop('required'), false, 'check selectmulti1 required')
-  equal( el.find('[name="selectmulti1"]').is(":focus"), false, 'check selectmulti1 focus')
+  equal(el.find('[name="selectmulti1"]').val(), 'false', 'check selectmulti1 value')
+  equal(el.find('[name="selectmulti1"]').prop('required'), false, 'check selectmulti1 required')
+  equal(el.find('[name="selectmulti1"]').is(":focus"), false, 'check selectmulti1 focus')
 
-  equal( el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
-  equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
+  equal(el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
+  equal(el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
 
-  //equal( el.find('[name="richtext1"]').val(), '', 'check textarea1 value')
-  //equal( el.find('[name="richtext1"]').prop('required'), false, 'check textarea1 required')
-  equal( el.find('[name="richtext1"]').is(":focus"), false, 'check textarea1 focus')
+  //equal(el.find('[name="richtext1"]').val(), '', 'check textarea1 value')
+  //equal(el.find('[name="richtext1"]').prop('required'), false, 'check textarea1 required')
+  equal(el.find('[name="richtext1"]').is(":focus"), false, 'check textarea1 focus')
 
-  //equal( el.find('[name="richtext2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
-  //equal( el.find('[name="richtext2"]').prop('required'), true, 'check textarea2 required')
-  equal( el.find('[name="richtext2"]').is(":focus"), false, 'check textarea2 focus')
+  //equal(el.find('[name="richtext2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
+  //equal(el.find('[name="richtext2"]').prop('required'), true, 'check textarea2 required')
+  equal(el.find('[name="richtext2"]').is(":focus"), false, 'check textarea2 focus')
 
 });
 
-test( "form params check", function() {
-//    deepEqual( item, test.value, 'group set/get tests' );
+test("form params check", function() {
+//    deepEqual(item, test.value, 'group set/get tests' );
 
   $('#forms').append('<hr><h1>form params check</h1><form id="form2"></form>')
   var el = $('#form2')
@@ -126,8 +126,8 @@ test( "form params check", function() {
     richtext6: '<div>lalu <b>b</b> lalu</div>',
     richtext7: "<div>&nbsp;<div>&nbsp;\n</div>  \n</div>",
     richtext8: '<div>lalu <i>b</i> lalu</div>',
-    datetime1: new Date( Date.parse('2015-01-11T12:40:00Z') ),
-    datetime3: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    datetime1: new Date(Date.parse('2015-01-11T12:40:00Z') ),
+    datetime3: new Date(Date.parse('2015-01-11T12:40:00Z') ),
     date1:     '2015-01-11',
     date3:     '2015-01-11',
     active1:   true,
@@ -174,50 +174,50 @@ test( "form params check", function() {
     params: defaults,
     autofocus: true
   });
-  equal( el.find('[name="input1"]').val(), '', 'check input1 value')
-  equal( el.find('[name="input1"]').prop('required'), false, 'check input1 required')
-//  equal( el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
+  equal(el.find('[name="input1"]').val(), '', 'check input1 value')
+  equal(el.find('[name="input1"]').prop('required'), false, 'check input1 required')
+//  equal(el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
 
-  equal( el.find('[name="input2"]').val(), '123abc', 'check input2 value')
-  equal( el.find('[name="input2"]').prop('required'), true, 'check input2 required')
-  equal( el.find('[name="input2"]').is(":focus"), false, 'check input2 focus')
+  equal(el.find('[name="input2"]').val(), '123abc', 'check input2 value')
+  equal(el.find('[name="input2"]').prop('required'), true, 'check input2 required')
+  equal(el.find('[name="input2"]').is(":focus"), false, 'check input2 focus')
 
-  equal( el.find('[name="password1"]').val(), '', 'check password1 value')
-  equal( el.find('[name="password1_confirm"]').val(), '', 'check password1 value')
-  equal( el.find('[name="password1"]').prop('required'), false, 'check password1 required')
-  equal( el.find('[name="password1"]').is(":focus"), false, 'check password1 focus')
+  equal(el.find('[name="password1"]').val(), '', 'check password1 value')
+  equal(el.find('[name="password1_confirm"]').val(), '', 'check password1 value')
+  equal(el.find('[name="password1"]').prop('required'), false, 'check password1 required')
+  equal(el.find('[name="password1"]').is(":focus"), false, 'check password1 focus')
 
-  equal( el.find('[name="password2"]').val(), 'pw1234<l>', 'check password2 value')
-  equal( el.find('[name="password2_confirm"]').val(), 'pw1234<l>', 'check password2 value')
-  equal( el.find('[name="password2"]').prop('required'), true, 'check password2 required')
-  equal( el.find('[name="password2"]').is(":focus"), false, 'check password2 focus')
+  equal(el.find('[name="password2"]').val(), 'pw1234<l>', 'check password2 value')
+  equal(el.find('[name="password2_confirm"]').val(), 'pw1234<l>', 'check password2 value')
+  equal(el.find('[name="password2"]').prop('required'), true, 'check password2 required')
+  equal(el.find('[name="password2"]').is(":focus"), false, 'check password2 focus')
 
-  equal( el.find('[name="textarea1"]').val(), '', 'check textarea1 value')
-  equal( el.find('[name="textarea1"]').prop('required'), false, 'check textarea1 required')
-  equal( el.find('[name="textarea1"]').is(":focus"), false, 'check textarea1 focus')
+  equal(el.find('[name="textarea1"]').val(), '', 'check textarea1 value')
+  equal(el.find('[name="textarea1"]').prop('required'), false, 'check textarea1 required')
+  equal(el.find('[name="textarea1"]').is(":focus"), false, 'check textarea1 focus')
 
-  equal( el.find('[name="textarea2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
-  equal( el.find('[name="textarea2"]').prop('required'), true, 'check textarea2 required')
-  equal( el.find('[name="textarea2"]').is(":focus"), false, 'check textarea2 focus')
+  equal(el.find('[name="textarea2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
+  equal(el.find('[name="textarea2"]').prop('required'), true, 'check textarea2 required')
+  equal(el.find('[name="textarea2"]').is(":focus"), false, 'check textarea2 focus')
 
-  equal( el.find('[name="select1"]').val(), 'false', 'check select1 value')
-  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
-  equal( el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
+  equal(el.find('[name="select1"]').val(), 'false', 'check select1 value')
+  equal(el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+  equal(el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
 
-  equal( el.find('[name="select2"]').val(), 'true', 'check select2 value')
-  equal( el.find('[name="select2"]').prop('required'), true, 'check select2 required')
-  equal( el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
+  equal(el.find('[name="select2"]').val(), 'true', 'check select2 value')
+  equal(el.find('[name="select2"]').prop('required'), true, 'check select2 required')
+  equal(el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
 
-  equal( el.find('[name="selectmulti1"]').val(), 'false', 'check selectmulti1 value')
-  equal( el.find('[name="selectmulti1"]').prop('required'), false, 'check selectmulti1 required')
-  equal( el.find('[name="selectmulti1"]').is(":focus"), false, 'check selectmulti1 focus')
+  equal(el.find('[name="selectmulti1"]').val(), 'false', 'check selectmulti1 value')
+  equal(el.find('[name="selectmulti1"]').prop('required'), false, 'check selectmulti1 required')
+  equal(el.find('[name="selectmulti1"]').is(":focus"), false, 'check selectmulti1 focus')
 
-  equal( el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
-  equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
+  equal(el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
+  equal(el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
 
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     input1: '',
     input2: '123abc',
@@ -258,12 +258,12 @@ test( "form params check", function() {
     active1: true,
     active2: false,
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
 
 });
 
-test( "form defaults + params check", function() {
-//    deepEqual( item, test.value, 'group set/get tests' );
+test("form defaults + params check", function() {
+//    deepEqual(item, test.value, 'group set/get tests' );
 
 // mix default and params -> check it -> add note
 // test auto completion
@@ -301,47 +301,47 @@ test( "form defaults + params check", function() {
     params: defaults,
     autofocus: true
   });
-  equal( el.find('[name="input1"]').val(), '', 'check input1 value')
-  equal( el.find('[name="input1"]').prop('required'), false, 'check input1 required')
-//  equal( el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
-  equal( el.find('[name="input2"]').val(), 'some used default', 'check input2 value')
-  equal( el.find('[name="input2"]').prop('required'), false, 'check input2 required')
+  equal(el.find('[name="input1"]').val(), '', 'check input1 value')
+  equal(el.find('[name="input1"]').prop('required'), false, 'check input1 required')
+//  equal(el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
+  equal(el.find('[name="input2"]').val(), 'some used default', 'check input2 value')
+  equal(el.find('[name="input2"]').prop('required'), false, 'check input2 required')
 
-  equal( el.find('[name="password1"]').val(), 'some used pass', 'check password1 value')
-  equal( el.find('[name="password1_confirm"]').val(), 'some used pass', 'check password1 value')
-  equal( el.find('[name="password1"]').prop('required'), true, 'check password1 required')
-  equal( el.find('[name="password1"]').is(":focus"), false, 'check password1 focus')
+  equal(el.find('[name="password1"]').val(), 'some used pass', 'check password1 value')
+  equal(el.find('[name="password1_confirm"]').val(), 'some used pass', 'check password1 value')
+  equal(el.find('[name="password1"]').prop('required'), true, 'check password1 required')
+  equal(el.find('[name="password1"]').is(":focus"), false, 'check password1 focus')
 
-  equal( el.find('[name="password2"]').val(), 'pw1234<l>', 'check password2 value')
-  equal( el.find('[name="password2_confirm"]').val(), 'pw1234<l>', 'check password2 value')
-  equal( el.find('[name="password2"]').prop('required'), true, 'check password2 required')
-  equal( el.find('[name="password2"]').is(":focus"), false, 'check password2 focus')
+  equal(el.find('[name="password2"]').val(), 'pw1234<l>', 'check password2 value')
+  equal(el.find('[name="password2_confirm"]').val(), 'pw1234<l>', 'check password2 value')
+  equal(el.find('[name="password2"]').prop('required'), true, 'check password2 required')
+  equal(el.find('[name="password2"]').is(":focus"), false, 'check password2 focus')
 
-  equal( el.find('[name="textarea1"]').val(), 'some used text', 'check textarea1 value')
-  equal( el.find('[name="textarea1"]').prop('required'), true, 'check textarea1 required')
-  equal( el.find('[name="textarea1"]').is(":focus"), false, 'check textarea1 focus')
+  equal(el.find('[name="textarea1"]').val(), 'some used text', 'check textarea1 value')
+  equal(el.find('[name="textarea1"]').prop('required'), true, 'check textarea1 required')
+  equal(el.find('[name="textarea1"]').is(":focus"), false, 'check textarea1 focus')
 
-  equal( el.find('[name="textarea2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
-  equal( el.find('[name="textarea2"]').prop('required'), true, 'check textarea2 required')
-  equal( el.find('[name="textarea2"]').is(":focus"), false, 'check textarea2 focus')
+  equal(el.find('[name="textarea2"]').val(), 'lalu <l> lalu', 'check textarea2 value')
+  equal(el.find('[name="textarea2"]').prop('required'), true, 'check textarea2 required')
+  equal(el.find('[name="textarea2"]').is(":focus"), false, 'check textarea2 focus')
 
-  equal( el.find('[name="select1"]').val(), 'false', 'check select1 value')
-  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
-  equal( el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
+  equal(el.find('[name="select1"]').val(), 'false', 'check select1 value')
+  equal(el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+  equal(el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
 
-  equal( el.find('[name="select2"]').val(), 'false', 'check select2 value')
-  equal( el.find('[name="select2"]').prop('required'), false, 'check select2 required')
-  equal( el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
+  equal(el.find('[name="select2"]').val(), 'false', 'check select2 value')
+  equal(el.find('[name="select2"]').prop('required'), false, 'check select2 required')
+  equal(el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
 
-  equal( el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
-  equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
+  equal(el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
+  equal(el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
 
 });
 
-test( "form dependend fields check", function() {
-//    deepEqual( item, test.value, 'group set/get tests' );
+test("form dependend fields check", function() {
+//    deepEqual(item, test.value, 'group set/get tests' );
 
 // mix default and params -> check it -> add note
 // test auto completion
@@ -357,8 +357,8 @@ test( "form dependend fields check", function() {
     select2: false,
     selectmulti2: [ false, true ],
     selectmultioption1: false,
-    datetime1: new Date( Date.parse('2015-01-11T12:40:00Z') ),
-    datetime3: new Date( Date.parse('2015-01-11T12:40:00Z') ),
+    datetime1: new Date(Date.parse('2015-01-11T12:40:00Z')),
+    datetime3: new Date(Date.parse('2015-01-11T12:40:00Z')),
     date1:     '2015-01-11',
     date3:     '2015-01-11',
   }
@@ -448,29 +448,29 @@ test( "form dependend fields check", function() {
     ],
     autofocus: true
   });
-  equal( el.find('[name="input1"]').val(), '', 'check input1 value')
-  equal( el.find('[name="input1"]').prop('required'), false, 'check input1 required')
-//  equal( el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
-  equal( el.find('[name="input2"]').val(), 'some used default', 'check input2 value')
-  equal( el.find('[name="input2"]').prop('required'), false, 'check input2 required')
+  equal(el.find('[name="input1"]').val(), '', 'check input1 value')
+  equal(el.find('[name="input1"]').prop('required'), false, 'check input1 required')
+//  equal(el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
+  equal(el.find('[name="input2"]').val(), 'some used default', 'check input2 value')
+  equal(el.find('[name="input2"]').prop('required'), false, 'check input2 required')
 
-  equal( el.find('[name="input3"]').val(), 'some used default', 'check input3 value')
-  equal( el.find('[name="input3"]').prop('required'), false, 'check input3 required')
+  equal(el.find('[name="input3"]').val(), 'some used default', 'check input3 value')
+  equal(el.find('[name="input3"]').prop('required'), false, 'check input3 required')
 
-  equal( el.find('[name="select1"]').val(), 'false', 'check select1 value')
-  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
-  equal( el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
+  equal(el.find('[name="select1"]').val(), 'false', 'check select1 value')
+  equal(el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+  equal(el.find('[name="select1"]').is(":focus"), false, 'check select1 focus')
 
-  equal( el.find('[name="select2"]').val(), 'false', 'check select2 value')
-  equal( el.find('[name="select2"]').prop('required'), false, 'check select2 required')
-  equal( el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
+  equal(el.find('[name="select2"]').val(), 'false', 'check select2 value')
+  equal(el.find('[name="select2"]').prop('required'), false, 'check select2 required')
+  equal(el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
 
-  equal( el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
-  equal( el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
-  equal( el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
+  equal(el.find('[name="selectmulti2"]').val()[0], 'true', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').val()[1], 'false', 'check selectmulti2 value')
+  equal(el.find('[name="selectmulti2"]').prop('required'), true, 'check selectmulti2 required')
+  equal(el.find('[name="selectmulti2"]').is(":focus"), false, 'check selectmulti2 focus')
 
-  var params = App.ControllerForm.params( el )
+  var params = App.ControllerForm.params(el)
   var test_params = {
     input1: "",
     input2: "some used default",
@@ -488,19 +488,19 @@ test( "form dependend fields check", function() {
     date3: '2015-01-11',
     date4: undefined,
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
 
   errors = form.validate(params)
   test_errors = {
     datetime4: "is required",
     date4:     "is required",
   }
-  deepEqual( errors, test_errors, 'validation errors check' )
-  App.ControllerForm.validate( { errors: errors, form: el } )
+  deepEqual(errors, test_errors, 'validation errors check')
+  App.ControllerForm.validate({ errors: errors, form: el })
 
   el.find('[name="select1"]').val('true')
   el.find('[name="select1"]').trigger('change')
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     input1: "",
     input2: undefined,
@@ -518,11 +518,11 @@ test( "form dependend fields check", function() {
     date3: '2015-01-11',
     date4: undefined,
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
 });
 
-test( "form handler check with and without fieldset", function() {
-//    deepEqual( item, test.value, 'group set/get tests' );
+test("form handler check with and without fieldset", function() {
+//    deepEqual(item, test.value, 'group set/get tests' );
 
 // mix default and params -> check it -> add note
 // test auto completion
@@ -550,8 +550,8 @@ test( "form handler check with and without fieldset", function() {
         options: { 1:'1', 2:'2', 3:'3' },
         default: 3,
       };
-      var newElement = ui.formGenItem( item, classname, form )
-      form.find('[name="select2"]').closest('.form-group').replaceWith( newElement )
+      var newElement = ui.formGenItem(item, classname, form)
+      form.find('[name="select2"]').closest('.form-group').replaceWith(newElement)
     }
     if (params['select1'] === 'a') {
       console.log('lala', params)
@@ -563,8 +563,8 @@ test( "form handler check with and without fieldset", function() {
         options: { 1:'1', 2:'2', 3:'3' },
         default: 1,
       };
-      var newElement = ui.formGenItem( item, classname, form )
-      form.find('[name="select2"]').closest('.form-group').replaceWith( newElement )
+      var newElement = ui.formGenItem(item, classname, form)
+      form.find('[name="select2"]').closest('.form-group').replaceWith(newElement)
     }
   }
 
@@ -582,34 +582,34 @@ test( "form handler check with and without fieldset", function() {
     ],
     //noFieldset: true,
   });
-  equal( el.find('[name="select1"]').val(), 'a', 'check select1 value')
-  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+  equal(el.find('[name="select1"]').val(), 'a', 'check select1 value')
+  equal(el.find('[name="select1"]').prop('required'), false, 'check select1 required')
 
-  equal( el.find('[name="select2"]').val(), '1', 'check select2 value')
-  equal( el.find('[name="select2"]').prop('required'), false, 'check select2 required')
+  equal(el.find('[name="select2"]').val(), '1', 'check select2 value')
+  equal(el.find('[name="select2"]').prop('required'), false, 'check select2 required')
 
-  var params = App.ControllerForm.params( el )
+  var params = App.ControllerForm.params(el)
   var test_params = {
     select1: 'a',
     select2: '1',
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
   el.find('[name="select1"]').val('b')
   el.find('[name="select1"]').trigger('change')
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     select1: 'b',
     select2: '3',
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
   el.find('[name="select1"]').val('a')
   el.find('[name="select1"]').trigger('change')
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     select1: 'a',
     select2: '1',
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
 
   // test with noFieldset
   el.empty()
@@ -627,38 +627,38 @@ test( "form handler check with and without fieldset", function() {
     ],
     noFieldset: true,
   });
-  equal( el.find('[name="select1"]').val(), 'a', 'check select1 value')
-  equal( el.find('[name="select1"]').prop('required'), false, 'check select1 required')
+  equal(el.find('[name="select1"]').val(), 'a', 'check select1 value')
+  equal(el.find('[name="select1"]').prop('required'), false, 'check select1 required')
 
-  equal( el.find('[name="select2"]').val(), '1', 'check select2 value')
-  equal( el.find('[name="select2"]').prop('required'), false, 'check select2 required')
+  equal(el.find('[name="select2"]').val(), '1', 'check select2 value')
+  equal(el.find('[name="select2"]').prop('required'), false, 'check select2 required')
 
-  var params = App.ControllerForm.params( el )
+  var params = App.ControllerForm.params(el)
   var test_params = {
     select1: 'a',
     select2: '1',
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
   el.find('[name="select1"]').val('b')
   el.find('[name="select1"]').trigger('change')
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     select1: 'b',
     select2: '3',
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
   el.find('[name="select1"]').val('a')
   el.find('[name="select1"]').trigger('change')
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     select1: 'a',
     select2: '1',
   }
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
 
 });
 
-test( "form postmaster filter", function() {
+test("form postmaster filter", function() {
 
 // check match area
 
@@ -667,7 +667,7 @@ test( "form postmaster filter", function() {
 // add match rule
 
 // add set rule
-  App.TicketPriority.refresh( [
+  App.TicketPriority.refresh([
     {
       id:   1,
       name: 'prio 1',
@@ -677,7 +677,7 @@ test( "form postmaster filter", function() {
       name: 'prio 2',
     },
   ] )
-  App.Group.refresh( [
+  App.Group.refresh([
     {
       id:   1,
       name: 'group 1',
@@ -730,7 +730,7 @@ test( "form postmaster filter", function() {
     },
     params: defaults,
   });
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     input1: 'some not used default',
     input2: 'some name',
@@ -760,12 +760,12 @@ test( "form postmaster filter", function() {
       }
     },
   };
-  deepEqual( params, test_params, 'form param check' );
+  deepEqual(params, test_params, 'form param check')
   el.find('[name="set::x-zammad-ticket-priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
   el.find('[name="set::x-zammad-ticket-customer::value"]').closest('.js-filterElement').find('.js-remove').click()
-  App.Delay.set( function() {
-      test( "form param check after remove click", function() {
-        params = App.ControllerForm.params( el )
+  App.Delay.set(function() {
+      test("form param check after remove click", function() {
+        params = App.ControllerForm.params(el)
         test_params = {
           input1: 'some not used default',
           input2: 'some name',
@@ -789,7 +789,7 @@ test( "form postmaster filter", function() {
             },
           },
         };
-        deepEqual( params, test_params, 'form param check' );
+        deepEqual(params, test_params, 'form param check')
       });
     },
     1000
@@ -797,7 +797,7 @@ test( "form postmaster filter", function() {
 
 });
 
-test( "form selector", function() {
+test("form selector", function() {
   $('#forms').append('<hr><h1>form selector</h1><div><form id="form7"></form></div>')
   var el = $('#form7')
   var defaults = {
@@ -817,18 +817,18 @@ test( "form selector", function() {
     input1: 'some not used default33',
     input2: 'some name66',
   };
-  params = App.ControllerForm.params( el )
-  deepEqual( params, test_params, 'form param check via $("#form")' );
+  params = App.ControllerForm.params(el)
+  deepEqual(params, test_params, 'form param check via $("#form")')
 
-  params = App.ControllerForm.params( el.find('input') )
-  deepEqual( params, test_params, 'form param check via $("#form").find("input")' );
+  params = App.ControllerForm.params(el.find('input'))
+  deepEqual(params, test_params, 'form param check via $("#form").find("input")')
 
-  params = App.ControllerForm.params( el.parent() )
-  deepEqual( params, test_params, 'form param check via $("#form").parent()' );
+  params = App.ControllerForm.params(el.parent())
+  deepEqual(params, test_params, 'form param check via $("#form").parent()')
 
 });
 
-test( "form required_if + shown_if", function() {
+test("form required_if + shown_if", function() {
   $('#forms').append('<hr><h1>form required_if + shown_if</h1><div><form id="form8"></form></div>')
   var el = $('#form8')
   var defaults = {
@@ -856,13 +856,13 @@ test( "form required_if + shown_if", function() {
     input4: undefined,
     active: true,
   };
-  params = App.ControllerForm.params( el )
-  deepEqual( params, test_params, 'form param check via $("#form")' );
-  equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
-  equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
-  equal( el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3 ')
-  equal( el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3 ')
-  equal( el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
+  params = App.ControllerForm.params(el)
+  deepEqual(params, test_params, 'form param check via $("#form")')
+  equal(el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
+  equal(el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
+  equal(el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3 ')
+  equal(el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3 ')
+  equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
 
 
   el.find('[name="{boolean}active"]').val('false').trigger('change')
@@ -873,12 +873,12 @@ test( "form required_if + shown_if", function() {
     input4: undefined,
     active: false,
   };
-  params = App.ControllerForm.params( el )
-  deepEqual( params, test_params, 'form param check via $("#form")' );
-  equal( el.find('[name="input2"]').attr('required'), undefined, 'check required attribute of input2 ')
-  equal( el.find('[name="input2"]').is(":visible"), false, 'check visible attribute of input2 ')
-  equal( el.find('[name="input3"]').is(":visible"), false, 'check visible attribute of input3 ')
-  equal( el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
+  params = App.ControllerForm.params(el)
+  deepEqual(params, test_params, 'form param check via $("#form")')
+  equal(el.find('[name="input2"]').attr('required'), undefined, 'check required attribute of input2')
+  equal(el.find('[name="input2"]').is(":visible"), false, 'check visible attribute of input2')
+  equal(el.find('[name="input3"]').is(":visible"), false, 'check visible attribute of input3')
+  equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4')
 
 
   el.find('[name="{boolean}active"]').val('true').trigger('change')
@@ -889,12 +889,12 @@ test( "form required_if + shown_if", function() {
     input4: undefined,
     active: true,
   };
-  params = App.ControllerForm.params( el )
-  deepEqual( params, test_params, 'form param check via $("#form")' );
-  equal( el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2 ')
-  equal( el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2 ')
-  equal( el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3 ')
-  equal( el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3 ')
-  equal( el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
+  params = App.ControllerForm.params(el)
+  deepEqual(params, test_params, 'form param check via $("#form")')
+  equal(el.find('[name="input2"]').attr('required'), 'required', 'check required attribute of input2')
+  equal(el.find('[name="input2"]').is(":visible"), true, 'check visible attribute of input2')
+  equal(el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3')
+  equal(el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3')
+  equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4')
 
 });

@@ -1,4 +1,54 @@
 {
+    "draggable.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "zammad.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
+    "website.svg": {
+        "author": "Pickin Studio",
+        "url": "https:\/\/thenounproject.com\/search\/?q=website&i=16523",
+        "license": "CC 3.0 Attribution"
+    },
+    "radio.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
+    "radio-checked.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
+    "received-calls.svg": {
+        "author": "Michael Zenaty",
+        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
+        "license": "CC 3.0 Attribution"
+    },
+    "phone.svg": {
+        "author": "Michael Zenaty",
+        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
+        "license": "CC 3.0 Attribution"
+    },
+    "outbound-calls.svg": {
+        "author": "Michael Zenaty",
+        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
+        "license": "CC 3.0 Attribution"
+    },
+    "signout.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "reopening.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
     "trash.svg": {
         "author": "Filip Malinowski",
         "url": "https:\/\/thenounproject.com\/term\/trash\/16505\/",
@@ -139,11 +189,6 @@
         "url": "",
         "license": "MIT"
     },
-    "signout.svg": {
-        "author": "Felix Niklas",
-        "url": "",
-        "license": "MIT"
-    },
     "report.svg": {
         "author": "Zammad",
         "url": "",
@@ -159,30 +204,10 @@
         "url": "",
         "license": "MIT"
     },
-    "reopening.svg": {
-        "author": "Zammad",
-        "url": "",
-        "license": "MIT"
-    },
     "reload.svg": {
         "author": "Anand A Nair",
         "url": "https:\/\/thenounproject.com\/anandgrafiti\/uploads\/?i=2149",
         "license": "CC 3.0 Attribution"
-    },
-    "received-calls.svg": {
-        "author": "Michael Zenaty",
-        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
-        "license": "CC 3.0 Attribution"
-    },
-    "radio.svg": {
-        "author": "Zammad",
-        "url": "",
-        "license": "MIT"
-    },
-    "radio-checked.svg": {
-        "author": "Zammad",
-        "url": "",
-        "license": "MIT"
     },
     "plus.svg": {
         "author": "Zammad",
@@ -194,11 +219,6 @@
         "url": "",
         "license": "MIT"
     },
-    "phone.svg": {
-        "author": "Michael Zenaty",
-        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
-        "license": "CC 3.0 Attribution"
-    },
     "person.svg": {
         "author": "Felix Niklas",
         "url": "",
@@ -208,11 +228,6 @@
         "author": "Felix Niklas",
         "url": "",
         "license": "MIT"
-    },
-    "outbound-calls.svg": {
-        "author": "Michael Zenaty",
-        "url": "https:\/\/thenounproject.com\/search\/?q=phone&i=21797",
-        "license": "CC 3.0 Attribution"
     },
     "one-ticket.svg": {
         "author": "Zammad",
@@ -389,6 +404,16 @@
         "url": "",
         "license": "MIT"
     },
+    "checkbox.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
+    "checkbox-checked.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
     "clock.svg": {
         "author": "Felix Niklas",
         "url": "",
@@ -400,16 +425,6 @@
         "license": "MIT"
     },
     "checkmark.svg": {
-        "author": "Zammad",
-        "url": "",
-        "license": "MIT"
-    },
-    "checkbox.svg": {
-        "author": "Zammad",
-        "url": "",
-        "license": "MIT"
-    },
-    "checkbox-checked.svg": {
         "author": "Zammad",
         "url": "",
         "license": "MIT"

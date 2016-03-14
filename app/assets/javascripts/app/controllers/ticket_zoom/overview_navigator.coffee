@@ -51,7 +51,7 @@ class App.TicketZoomOverviewNavigator extends App.Controller
 
     @html App.view('ticket_zoom/overview_navigator')(
       title:            overview.overview.name
-      total_count:      overview.tickets_count
+      total_count:      overview.count
       current_position: current_position
       next:             next
       previous:         previous

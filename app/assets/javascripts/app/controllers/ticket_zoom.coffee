@@ -548,6 +548,13 @@ class App.TicketZoom extends App.Controller
               else
                 @sidebar.tagWidget.add(tag)
 
+        # apply user changes
+        else if attributes[1] is 'owner_id'
+          if content.pre_condition is 'current_user.id'
+            ticket[attributes[1]] = App.Session.get('id')
+          else
+            ticket[attributes[1]] = content.value
+
         # apply direct value changes
         else
           ticket[attributes[1]] = content.value

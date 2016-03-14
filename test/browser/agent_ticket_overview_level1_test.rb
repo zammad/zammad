@@ -33,7 +33,6 @@ class AgentTicketOverviewLevel1Test < TestCase
         selector: {
           'Priority' => '1 low',
         },
-        prio: 1000,
         'order::direction' => 'down',
       }
     )
@@ -45,7 +44,6 @@ class AgentTicketOverviewLevel1Test < TestCase
         selector: {
           'Priority' => '3 high',
         },
-        prio: 1001,
         'order::direction' => 'down',
       }
     )
@@ -54,7 +52,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket1 = ticket_create(
       browser: browser1,
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         priority: '1 low',
         group: 'Users',
         title: 'overview #1',
@@ -71,7 +69,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket2 = ticket_create(
       browser: browser1,
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         priority: '1 low',
         group: 'Users',
         title: 'overview #2',
@@ -82,7 +80,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket3 = ticket_create(
       browser: browser1,
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         priority: '1 low',
         group: 'Users',
         title: 'overview #3',

@@ -1,0 +1,62 @@
+#app > *:not(.content):not(.active),
+#app > .hide {
+  display: none;
+}
+
+.table {
+  border: 1px solid hsl(0,0%,90%);
+}
+
+.table thead tr {
+  border-bottom: 1px solid hsl(0,0%,90%);
+}
+
+/*
+
+  Dashboard
+  =========
+
+*/
+
+.dashboard + .sidebar {
+  display: none;
+}
+
+/*
+
+  Ticket Overviews
+  =================
+
+*/
+
+.bulkAction,
+.overviews .checkbox-replacement,
+.overviews .overview-header,
+.table-checkbox {
+  display: none;
+}
+
+/*
+
+  Ticket Zoom
+  ===========
+
+*/
+
+.ticketZoom-controls,
+.scrollPageHeader,
+.article-new,
+.article-actions,
+.tabsSidebar,
+.attributeBar,
+.textBubble-overflowContainer {
+  display: none;
+}
+
+.tabsSidebar-sidebarSpacer {
+  margin-right: 0;
+}
+
+.article-meta .article-meta-key {
+  display: none;
+}

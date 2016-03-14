@@ -21,17 +21,30 @@ returns
     if data[:current_user].role?('Customer')
       role = Role.find_by(name: 'Customer')
       overviews = if data[:current_user].organization_id && data[:current_user].organization.shared
-                    Overview.where(role_id: role.id, active: true)
+                    Overview.where(role_id: role.id, active: true).order(:prio)
                   else
-                    Overview.where(role_id: role.id, organization_shared: false, active: true)
+                    Overview.where(role_id: role.id, organization_shared: false, active: true).order(:prio)
                   end
-      return overviews
+      overviews_list = []
+      overviews.each {|overview|
+        user_ids = overview.user_ids
+        next if !user_ids.empty? && !user_ids.include?(data[:current_user].id)
+        overviews_list.push overview
+      }
+      return overviews_list
     end
 
     # get agent overviews
     return if !data[:current_user].role?('Agent')
     role = Role.find_by(name: 'Agent')
-    Overview.where(role_id: role.id, active: true)
+    overviews = Overview.where(role_id: role.id, active: true).order(:prio)
+    overviews_list = []
+    overviews.each {|overview|
+      user_ids = overview.user_ids
+      next if !user_ids.empty? && !user_ids.include?(data[:current_user].id)
+      overviews_list.push overview
+    }
+    overviews_list
   end
 
 =begin

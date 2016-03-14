@@ -874,7 +874,7 @@ th.align-right {
 }
 
 .table > tbody > tr > td {
-  padding: 11px 10px 7px;
+  padding: 10px 10px 8px;
   border: none;
   box-shadow: 0 1px rgba(0,0,0,.03);
 }
@@ -924,9 +924,15 @@ th.align-right {
   }
 }
 
+.table .icon-draggable,
 .table .icon-trash {
   vertical-align: middle;
   fill: hsl(240,1%,77%);
+}
+
+.table-checkbox,
+.table-radio {
+  padding: 0 !important;
 }
 
 .table .table-sort-arrow {
@@ -3004,13 +3010,12 @@ footer {
     position: absolute;
     right: 0;
     top: 0;
-    width: 50px;
     height: 100%;
+    padding: 0 16px 0 0;
     visibility: hidden;
     @extend .u-clickable;
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 
     .nav-tab:hover .nav-tab-close {
@@ -4562,6 +4567,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 4px;
+    box-shadow: 0 1px 7px rgba(0,8,14,.13);
     
     &.is-hidden {
       display: none;

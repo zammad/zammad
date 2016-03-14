@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.6.1 (26313) - http://www.bohemiancoding.com/sketch -->
+    <title>draggable</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="draggable" fill="#50E3C2">
+            <rect id="line" x="0" y="5" width="16" height="1"></rect>
+            <rect id="line-copy-3" x="0" y="1" width="16" height="1"></rect>
+            <rect id="line-copy" x="0" y="9" width="16" height="1"></rect>
+            <rect id="line-copy-2" x="0" y="13" width="16" height="1"></rect>
+        </g>
+    </g>
+</svg>

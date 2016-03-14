@@ -64,34 +64,23 @@ class App.UiElement.ticket_selector
       elementClone = element.clone(true)
       element.after(elementClone)
       elementClone.find('.js-attributeSelector select').trigger('change')
+      @updateAttributeSelectors(item)
       @preview(item)
     )
 
     # remove filter
     item.find('.js-remove').bind('click', (e) =>
+      return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
-      @rebuildAttributeSelectors(item)
+      @updateAttributeSelectors(item)
       @preview(item)
-    )
-
-    # change attribute selector
-    item.find('.js-attributeSelector select').bind('change', (e) =>
-      groupAndAttribute = $(e.target).find('option:selected').attr('value')
-      elementRow = $(e.target).closest('.js-filterElement')
-
-      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute)
-      @rebuildOperater(item, elementRow, groupAndAttribute, elements, undefined, attribute)
-      @buildValue(item, elementRow, groupAndAttribute, elements, undefined, undefined, attribute)
     )
 
     # build inital params
     if !_.isEmpty(params[attribute.name])
-
       selectorExists = false
       for groupAndAttribute, meta of params[attribute.name]
         selectorExists = true
-        operator = meta.operator
-        value = meta.value
 
         # get selector rows
         elementFirst = item.find('.js-filterElement').first()
@@ -99,9 +88,7 @@ class App.UiElement.ticket_selector
 
         # clone, rebuild and append
         elementClone = elementFirst.clone(true)
-        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute)
-        @rebuildOperater(item, elementClone, groupAndAttribute, elements, operator, attribute)
-        @buildValue(item, elementClone, groupAndAttribute, elements, value, operator, attribute)
+        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute, elements, meta, attribute)
         elementLast.after(elementClone)
 
       # remove first dummy row
@@ -109,7 +96,7 @@ class App.UiElement.ticket_selector
         item.find('.js-filterElement').first().remove()
 
     else
-      for default_row in defaults
+      for groupAndAttribute in defaults
 
         # get selector rows
         elementFirst = item.find('.js-filterElement').first()
@@ -117,7 +104,7 @@ class App.UiElement.ticket_selector
 
         # clone, rebuild and append
         elementClone = elementFirst.clone(true)
-        @rebuildAttributeSelectors(item, elementClone, default_row)
+        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute, elements, {}, attribute)
         elementLast.after(elementClone)
       item.find('.js-filterElement').first().remove()
 
@@ -138,12 +125,25 @@ class App.UiElement.ticket_selector
       triggerSearch()
     )
 
+    # change attribute selector
+    item.find('.js-attributeSelector select').bind('change', (e) =>
+      elementRow = $(e.target).closest('.js-filterElement')
+      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
+      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
+      @updateAttributeSelectors(item)
+    )
+
+    # change operator selector
+    item.on('change', '.js-operator select', (e) =>
+      elementRow = $(e.target).closest('.js-filterElement')
+      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
+      @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
+    )
+
     item
 
   @preview: (item) ->
     params = App.ControllerForm.params(item)
-
-    # ajax call
     App.Ajax.request(
       id:    'ticket_selector'
       type:  'POST'
@@ -151,7 +151,7 @@ class App.UiElement.ticket_selector
       data:        JSON.stringify(params)
       processData: true,
       success: (data, status, xhr) =>
-        App.Collection.loadAssets( data.assets )
+        App.Collection.loadAssets(data.assets)
         item.find('.js-previewCounterContainer').removeClass('hide')
         item.find('.js-previewLoader').addClass('hide')
         @ticketTable(data.ticket_ids, data.ticket_count, item)
@@ -162,92 +162,6 @@ class App.UiElement.ticket_selector
     new App.TicketList(
       el:         item.find('.js-previewTable')
       ticket_ids: ticket_ids
-    )
-
-  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, value, operator, attribute) ->
-
-    # do nothing if item already exists
-    operator = elementRow.find('.js-operator option:selected').attr('value')
-    name = "#{attribute.name}::#{groupAndAttribute}::value"
-
-    # build new item
-    attributeConfig = elements[groupAndAttribute]
-    config = _.clone(attributeConfig)
-
-    # force to use auto complition on user lookup
-    config.preCondition = false
-    if config.relation is 'User'
-      config.preCondition = 'user'
-      config.tag = 'user_autocompletion'
-    if config.relation is 'Organization'
-      config.tag = 'autocompletion_ajax'
-      config.preCondition = 'org'
-
-    @buildPreCondition(config, elementFull, elementRow, groupAndAttribute, attribute)
-
-    # render ui element
-    item = ''
-    if config && App.UiElement[config.tag]
-      config['name'] = name
-      if attribute.value && attribute.value[groupAndAttribute]
-        config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
-      if 'multiple' of config
-        config.multiple = true
-        config.nulloption = false
-      if config.tag is 'checkbox'
-        config.tag = 'select'
-      tagSearch = "#{config.tag}_search"
-      if App.UiElement[tagSearch]
-        item = App.UiElement[tagSearch].render(config, {})
-      else
-        item = App.UiElement[config.tag].render(config, {})
-
-    if operator is 'before (relative)' || operator is 'within next (relative)' || operator is 'within last (relative)' || operator is 'after (relative)'
-      config['name'] = "#{attribute.name}::#{groupAndAttribute}"
-      config['value'] = _.clone(attribute.value[groupAndAttribute])
-      item = App.UiElement['time_range'].render(config, {})
-
-    elementRow.find('.js-value').html(item)
-
-  @buildPreCondition: (config, elementFull, elementRow, groupAndAttribute, attribute) ->
-    if !config.preCondition
-      elementRow.find('.js-preCondition').addClass('hide')
-      return
-
-    name = "#{attribute.name}::#{groupAndAttribute}::pre_condition"
-    preConditionCurrent = elementRow.find('.js-preCondition option:selected').attr('value')
-    if !preCondition && attribute.value && attribute.value[groupAndAttribute]
-      preCondition = attribute.value[groupAndAttribute].pre_condition
-    selection = $("<select class=\"form-control\" name=\"#{name}\" ></select>")
-    options = {}
-    if config.preCondition is 'user'
-      options =
-        'set': App.i18n.translateInline('set')
-        'current_user.id': App.i18n.translateInline('current user')
-        'specific': App.i18n.translateInline('specific user')
-    else if config.preCondition is 'org'
-      options =
-        'set': App.i18n.translateInline('set')
-        'current_user.organization_id': App.i18n.translateInline('current user organization')
-        'specific': App.i18n.translateInline('specific organization')
-    for key, value of options
-      selected = preConditionCurrent
-      if key is preCondition
-        selected = 'selected="selected"'
-      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
-    elementRow.find('.js-preCondition').removeClass('hide')
-    elementRow.find('.js-preCondition select').replaceWith(selection)
-
-    toggle = ->
-      preCondition = elementRow.find('.js-preCondition option:selected').attr('value')
-      if preCondition is 'specific'
-        elementRow.find('.js-value').removeClass('hide')
-      else
-        elementRow.find('.js-value').addClass('hide')
-    toggle()
-
-    elementRow.find('.js-preCondition select').bind('change', (e) ->
-      toggle()
     )
 
   @buildAttributeSelector: (groups, elements) ->
@@ -265,7 +179,7 @@ class App.UiElement.ticket_selector
             optgroup.append("<option value=\"#{elementKey}\">#{displayName}</option>")
     selection
 
-  @rebuildAttributeSelectors: (elementFull, elementRow, groupAndAttribute) ->
+  @updateAttributeSelectors: (elementFull) ->
 
     # enable all
     elementFull.find('.js-attributeSelector select option').removeAttr('disabled')
@@ -282,40 +196,141 @@ class App.UiElement.ticket_selector
     else
       elementFull.find('.js-remove').addClass('is-disabled')
 
+
+  @rebuildAttributeSelectors: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+
     # set attribute
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
 
-  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute) ->
-    selection = $("<select class=\"form-control\" name=\"#{attribute.name}::#{groupAndAttribute}::operator\"></select>")
+    @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+
+  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+    currentOperator = elementRow.find('.js-operator option:selected').attr('value')
+
+    if !meta.operator
+      meta.operator = currentOperator
+
+    name = "#{attribute.name}::#{groupAndAttribute}::operator"
+
+    selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
 
     attributeConfig = elements[groupAndAttribute]
     if attributeConfig.operator
       for operator in attributeConfig.operator
         operatorName = App.i18n.translateInline(operator)
         selected = ''
-        if current_operator is operator
+        if meta.operator is operator
           selected = 'selected="selected"'
         selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
       selection
 
-  @rebuildOperater: (elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute) ->
-    return if !groupAndAttribute
+    elementRow.find('.js-operator select').replaceWith(selection)
 
-    # do nothing if item already exists
-    name = "#{attribute.name}::#{groupAndAttribute}::operator"
-    return if elementRow.find("[name=\"#{name}\"]").get(0)
+    @buildPreCondition(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
-    # render new operator
-    operator = @buildOperator(elementFull, elementRow, groupAndAttribute, elements, current_operator, attribute)
-    elementRow.find('.js-operator select').replaceWith(operator)
+  @buildPreCondition: (elementFull, elementRow, groupAndAttribute, elements, meta, attributeConfig) ->
+    currentOperator = elementRow.find('.js-operator option:selected').attr('value')
+    currentPreCondition = elementRow.find('.js-preCondition option:selected').attr('value')
 
-    # render not value option
-    elementRow.find('.js-operator select').bind('change', (e) =>
-      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
-      operator = elementRow.find('.js-operator option:selected').attr('value')
-      @buildValue(elementFull, elementRow, groupAndAttribute, elements, undefined, operator, attribute)
+    if !meta.pre_condition
+      meta.pre_condition = currentPreCondition
+
+    toggleValue = =>
+      preCondition = elementRow.find('.js-preCondition option:selected').attr('value')
+      if preCondition isnt 'specific'
+        elementRow.find('.js-value select').html('')
+        elementRow.find('.js-value').addClass('hide')
+      else
+        elementRow.find('.js-value').removeClass('hide')
+        @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+
+    # force to use auto complition on user lookup
+    attribute = _.clone(attributeConfig)
+
+    name = "#{attribute.name}::#{groupAndAttribute}::value"
+    attributeSelected = elements[groupAndAttribute]
+
+    preCondition = false
+    if attributeSelected.relation is 'User'
+      preCondition = 'user'
+      attribute.tag = 'user_autocompletion'
+    if attributeSelected.relation is 'Organization'
+      preCondition = 'org'
+      attribute.tag = 'autocompletion_ajax'
+    if !preCondition
+      elementRow.find('.js-preCondition select').html('')
+      elementRow.find('.js-preCondition').addClass('hide')
+      toggleValue()
+      @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+      return
+
+    elementRow.find('.js-preCondition').removeClass('hide')
+    name = "#{attribute.name}::#{groupAndAttribute}::pre_condition"
+
+    selection = $("<select class=\"form-control\" name=\"#{name}\" ></select>")
+    options = {}
+    if preCondition is 'user'
+      options =
+        'current_user.id': App.i18n.translateInline('current user')
+        'specific': App.i18n.translateInline('specific user')
+        #'set': App.i18n.translateInline('set')
+    else if preCondition is 'org'
+      options =
+        'current_user.organization_id': App.i18n.translateInline('current user organization')
+        'specific': App.i18n.translateInline('specific organization')
+        #'set': App.i18n.translateInline('set')
+
+    for key, value of options
+      selected = ''
+      if key is meta.pre_condition
+        selected = 'selected="selected"'
+      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
+    elementRow.find('.js-preCondition').removeClass('hide')
+    elementRow.find('.js-preCondition select').replaceWith(selection)
+
+    elementRow.find('.js-preCondition select').bind('change', (e) ->
+      toggleValue()
     )
+
+    @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    toggleValue()
+
+  @buildValue: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+    name = "#{attribute.name}::#{groupAndAttribute}::value"
+
+    # build new item
+    attributeConfig = elements[groupAndAttribute]
+    config = _.clone(attributeConfig)
+
+    if config.relation is 'User'
+      config.tag = 'user_autocompletion'
+    if config.relation is 'Organization'
+      config.tag = 'autocompletion_ajax'
+
+    # render ui element
+    item = ''
+    if config && App.UiElement[config.tag]
+      config['name'] = name
+      if attribute.value && attribute.value[groupAndAttribute]
+        config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
+      if 'multiple' of config
+        config.multiple = true
+        config.nulloption = false
+      if config.tag is 'checkbox'
+        config.tag = 'select'
+      tagSearch = "#{config.tag}_search"
+      if App.UiElement[tagSearch]
+        item = App.UiElement[tagSearch].render(config, {})
+      else
+        item = App.UiElement[config.tag].render(config, {})
+    if meta.operator is 'before (relative)' || meta.operator is 'within next (relative)' || meta.operator is 'within last (relative)' || meta.operator is 'after (relative)'
+      config['name'] = "#{attribute.name}::#{groupAndAttribute}"
+      if attribute.value && attribute.value[groupAndAttribute]
+        config['value'] = _.clone(attribute.value[groupAndAttribute])
+      item = App.UiElement['time_range'].render(config, {})
+
+    elementRow.find('.js-value').removeClass('hide').html(item)
 
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')
@@ -354,5 +369,5 @@ class App.UiElement.ticket_selector
     data = App[config.relation].fullLocal(value)
     return value if !data
     if data.displayName
-      return App.i18n.translateContent( data.displayName() )
-    valueHuman.push App.i18n.translateContent( data.name )
+      return App.i18n.translateContent(data.displayName())
+    valueHuman.push App.i18n.translateContent(data.name)
