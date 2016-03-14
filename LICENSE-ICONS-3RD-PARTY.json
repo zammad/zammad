@@ -1,4 +1,14 @@
 {
+    "draggable.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
+    "zammad.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
     "website.svg": {
         "author": "Pickin Studio",
         "url": "https:\/\/thenounproject.com\/search\/?q=website&i=16523",
