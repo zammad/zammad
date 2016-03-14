@@ -1335,11 +1335,11 @@ wait untill text in selector disabppears
     instance.find_elements(css: 'a[href="#manage"]')[0].click
     sleep 0.2
     instance.find_elements(css: 'a[href="#manage/overviews"]')[0].click
-    sleep 0.2
+    sleep 1
     #instance.find_elements(css: '#content a[data-type="new"]')[0].click
     #sleep 2
 
-    instance.execute_script("$(\"#content td:contains('#{params[:name]}')\").first().click()")
+    instance.execute_script("$(\"#content td:contains('#{data[:name]}')\").first().click()")
     sleep 2
 
     if data[:name]
