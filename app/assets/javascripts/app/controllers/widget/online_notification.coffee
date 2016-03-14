@@ -113,7 +113,7 @@ class App.OnlineNotificationWidget extends App.Controller
       processData: true
     )
 
-  updateHeight: =>
+  updateHeight: ->
     # set height of notification popover
     notificationsContainer  = $('.js-notificationsContainer')
     heightApp               = $('#app').height()
