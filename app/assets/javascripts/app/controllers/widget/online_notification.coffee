@@ -113,9 +113,7 @@ class App.OnlineNotificationWidget extends App.Controller
       processData: true
     )
 
-  onShow: =>
-    @updateContent()
-
+  updateHeight: =>
     # set height of notification popover
     notificationsContainer  = $('.js-notificationsContainer')
     heightApp               = $('#app').height()
@@ -130,6 +128,10 @@ class App.OnlineNotificationWidget extends App.Controller
       notificationsContainer.removeClass('is-overflowing')
 
     notificationsContainer.find('.popover-content').css('height', "#{heightPopoverContentNew}px")
+
+  onShow: =>
+    @updateContent()
+    @updateHeight()
 
     # mark all notifications as read
     notificationsContainer.find('.js-markAllAsRead').on('click', (e) =>
@@ -221,7 +223,7 @@ class App.OnlineNotificationWidget extends App.Controller
       row = $(e.target).closest('.activity-entry')
       id = row.data('id')
       App.OnlineNotification.destroy(id)
-      @resetHeight()
+      @updateHeight()
     )
 
   createContainer: =>
@@ -253,8 +255,4 @@ class App.OnlineNotificationWidget extends App.Controller
   removeContainer: =>
     @counterUpdate(0)
     @toggle.popover('destroy')
-
-  resetHeight: ->
-    notificationsContainer = $('.js-notificationsContainer')
-    notificationsContainer.find('.popover-content').css('height', 'auto')
 
