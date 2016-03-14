@@ -1,12 +1,12 @@
 #app > *:not(.content):not(.active),
 #app > .hide,
-#app .icon,
-#app .btn,
-#app .avatar {
+.icon,
+.btn,
+.avatar {
   display: none;
 }
 
-#app .table {
+.table {
   margin: 1em 0;
   border: 1px solid;
   padding: 1em;
@@ -19,7 +19,7 @@
 
 */
 
-#app .dashboard + .sidebar {
+.dashboard + .sidebar {
   display: none;
 }
 
@@ -30,9 +30,9 @@
 
 */
 
-#app .bulkAction,
-#app .overviews .checkbox-replacement,
-#app .overviews .overview-header {
+.bulkAction,
+.overviews .checkbox-replacement,
+.overviews .overview-header {
   display: none;
 }
 
