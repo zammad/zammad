@@ -45,7 +45,7 @@ class App.ControllerTable extends App.Controller
           helper = tr.clone()
           helper.children().each (index) ->
             # Set helper cell sizes to match the original sizes
-            $(this).width( originals.eq(index).outerWidth() )
+            $(@).width( originals.eq(index).outerWidth() )
           return helper
         update:               @dndCallback
       @el.find('table > tbody').sortable(dndOptions)
