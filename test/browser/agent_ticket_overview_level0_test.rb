@@ -16,7 +16,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     # create new ticket
     ticket1 = ticket_create(
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         group: 'Users',
         title: 'overview count test #1',
         body: 'overview count test #1',
@@ -24,7 +24,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
     ticket2 = ticket_create(
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         group: 'Users',
         title: 'overview count test #2',
         body: 'overview count test #2',
@@ -178,7 +178,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     # create new ticket
     ticket3 = ticket_create(
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         group: 'Users',
         title: 'overview count test #3',
         body: 'overview count test #3',

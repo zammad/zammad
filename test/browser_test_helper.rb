@@ -1219,7 +1219,7 @@ wait untill text in selector disabppears
     element.clear
 
     # workaround, sometimes focus is not triggered
-    element.send_keys(params[:customer] + '*')
+    element.send_keys(params[:customer])
     sleep 3.5
 
     # check if pulldown is open, it's not working stable via selenium
@@ -1487,7 +1487,7 @@ wait untill text in selector disabppears
       element.clear
 
       # workaround, sometimes focus is not triggered
-      element.send_keys(data[:customer] + '*')
+      element.send_keys(data[:customer])
       sleep 3.5
 
       # check if pulldown is open, it's not working stable via selenium

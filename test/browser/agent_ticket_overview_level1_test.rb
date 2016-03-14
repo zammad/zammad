@@ -52,7 +52,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket1 = ticket_create(
       browser: browser1,
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         priority: '1 low',
         group: 'Users',
         title: 'overview #1',
@@ -69,7 +69,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket2 = ticket_create(
       browser: browser1,
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         priority: '1 low',
         group: 'Users',
         title: 'overview #2',
@@ -80,7 +80,7 @@ class AgentTicketOverviewLevel1Test < TestCase
     ticket3 = ticket_create(
       browser: browser1,
       data: {
-        customer: 'nico*',
+        customer: 'nico',
         priority: '1 low',
         group: 'Users',
         title: 'overview #3',

@@ -185,6 +185,11 @@ return search result
       data['query']['bool']['must'] = []
     end
 
+    # add * on simple query search
+    if query && query =~ /^\w+$/
+      query += '*'
+    end
+
     # real search condition
     condition = {
       'query_string' => {
