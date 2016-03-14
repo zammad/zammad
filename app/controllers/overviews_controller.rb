@@ -17,7 +17,7 @@ Example:
   "order":{"o_a":1,"o_b":2},
   "group_by":"group",
   "view":{"v_a":1,"v_b":2},
-  "user_id": null,
+  "user_ids": null,
   "role_id": null,
   "updated_at":"2012-09-14T17:51:53Z",
   "created_at":"2012-09-14T17:51:53Z",
@@ -91,7 +91,7 @@ Payload:
   "order":{"o_a":1,"o_b":2},
   "group_by":"group",
   "view":{"v_a":1,"v_b":2},
-  "user_id": null,
+  "user_ids": null,
   "role_id": null,
 }
 
@@ -125,7 +125,7 @@ Payload:
   "order":{"o_a":1,"o_b":2},
   "group_by":"group",
   "view":{"v_a":1,"v_b":2},
-  "user_id": null,
+  "user_ids": null,
   "role_id": null,
 }
 

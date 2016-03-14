@@ -144,7 +144,7 @@ class App.UiElement.ticket_perform_action
       elementFull.find('.js-remove').addClass('is-disabled')
 
   @rebuildAttributeSelectors: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
-    console.log('aa', groupAndAttribute, meta)
+
     # set attribute
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)

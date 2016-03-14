@@ -467,7 +467,6 @@ test('form checks', function() {
     },
   }
   deepEqual(params, test_params, 'form param check')
-  console.log('APO3', App.Organization.find(12))
 
   //deepEqual(el.find('[name="times::days"]').val(), ['mon', 'wed'], 'check times::days value')
   //equal(el.find('[name="times::hours"]').val(), 2, 'check times::hours value')
