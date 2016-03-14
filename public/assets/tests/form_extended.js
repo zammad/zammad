@@ -33,6 +33,30 @@ test('form checks', function() {
     },
   ])
 
+  App.TicketState.refresh([
+    {
+      id:         1,
+      name:       'new',
+      note:       'some note 1',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:         2,
+      name:       'open',
+      note:       'some note 2',
+      active:     true,
+      created_at: '2014-06-10T10:17:34.000Z',
+    },
+    {
+      id:         3,
+      name:       'should not be shown',
+      note:       'some note 3',
+      active:     false,
+      created_at: '2014-06-10T10:17:34.000Z',
+    },
+  ])
+
   App.User.refresh([
     {
       id:         47,
