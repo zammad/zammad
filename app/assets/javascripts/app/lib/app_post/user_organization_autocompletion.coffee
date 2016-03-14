@@ -298,12 +298,12 @@ class UserNew extends App.ControllerModal
   headPrefix: 'New'
 
   content: ->
-    controller = new App.ControllerForm(
+    @controller = new App.ControllerForm(
       model:     App.User
       screen:    'edit'
       autofocus: true
     )
-    controller.form
+    @controller.form
 
   onSubmit: (e) =>
     params = @formParam(e.target)
@@ -324,7 +324,7 @@ class UserNew extends App.ControllerModal
     errors = user.validate()
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return
 
     # save user
@@ -334,13 +334,15 @@ class UserNew extends App.ControllerModal
 
         # force to reload object
         callbackReload = (user) ->
-          ui.parent.el.find('[name=customer_id]').val( user.id ).trigger('change')
+          ui.parent.el.find('[name=customer_id]').val(user.id).trigger('change')
           ui.parent.close()
 
           # start customer info controller
           ui.close()
         App.User.full(@id, callbackReload , true)
 
-      fail: ->
-        ui.close()
+      fail: (settings, details) ->
+        ui.log 'errors', details
+        ui.formEnable(e)
+        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
