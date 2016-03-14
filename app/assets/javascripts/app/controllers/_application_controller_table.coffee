@@ -292,7 +292,7 @@ class App.ControllerTable extends App.Controller
       class:      @class
       destroy:    destroy
       callbacks:  @callbackAttributes
-      sortable: @dndCallback
+      sortable:   @dndCallback
     )
 
     # convert to jquery object
@@ -308,9 +308,11 @@ class App.ControllerTable extends App.Controller
       for name, item of @bindCol
         if item.events
           position = 0
+          if @dndCallback
+            position += 1
           if @checkbox
             position += 1
-          hit      = false
+          hit = false
 
           for headerName in @headers
             if !hit
