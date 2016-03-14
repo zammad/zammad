@@ -1,10 +1,40 @@
 #app > *:not(.content):not(.active),
 #app > .hide,
-.icon,
-.avatar {
+#app .icon,
+#app .btn,
+#app .avatar {
   display: none;
 }
 
+#app .table {
+  margin: 1em 0;
+  border: 1px solid;
+  padding: 1em;
+}
+
+/*
+
+  Dashboard
+  =========
+
+*/
+
+#app .dashboard + .sidebar {
+  display: none;
+}
+
+/*
+
+  Ticket Overviews
+  =================
+
+*/
+
+#app .bulkAction,
+#app .overviews .checkbox-replacement,
+#app .overviews .overview-header {
+  display: none;
+}
 
 /*
 
