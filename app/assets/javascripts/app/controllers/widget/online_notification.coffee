@@ -134,6 +134,7 @@ class App.OnlineNotificationWidget extends App.Controller
     @updateHeight()
 
     # mark all notifications as read
+    notificationsContainer = $('.js-notificationsContainer')
     notificationsContainer.find('.js-markAllAsRead').on('click', (e) =>
       e.preventDefault()
       @markAllAsRead()
