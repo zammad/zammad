@@ -59,7 +59,7 @@ class Index extends App.WizardFullScreen
 App.Config.set( 'getting_started', Index, 'Routes' )
 
 
-class AutoWizard extends App.ControllerContent
+class AutoWizard extends App.WizardFullScreen
   constructor: ->
     super
 
