@@ -360,6 +360,7 @@ class TestCase < Test::Unit::TestCase
       #  sleep 0.2
       #end
     else
+      sleep 1
       instance.find_elements(partial_link_text: params[:text])[0].click
     end
     sleep 0.4 if !params[:fast]
@@ -1846,7 +1847,7 @@ wait untill text in selector disabppears
     sleep 3
 
     # empty search box by x
-    instance.find_elements(css: '.search .empty-search')[0].click
+    instance.find_elements(css: '.search .empty-search .icon')[0].click
     sleep 0.5
     text = instance.find_elements(css: '#global-search')[0].attribute('value')
     if !text
@@ -1974,7 +1975,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(params[:value])
     sleep 3
-    instance.find_elements(css: '.search .empty-search')[0].click
+    instance.find_elements(css: '.search .empty-search .icon')[0].click
     sleep 0.5
     text = instance.find_elements(css: '#global-search')[0].attribute('value')
     if !text
