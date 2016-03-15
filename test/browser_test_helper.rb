@@ -1201,6 +1201,39 @@ wait untill text in selector disabppears
 
 =begin
 
+  empty_search(
+    browser: browser1,
+  )
+
+=end
+
+  def empty_search(params = {})
+    switch_window_focus(params)
+    log('empty_search', params)
+
+    instance = params[:browser] || @browser
+
+    # empty search box by x
+    begin
+      instance.find_elements(css: '.search .empty-search')[0].click
+    rescue
+
+      # in issues with ff & selenium, sometimes exeption appears
+      # "Element is not currently visible and so may not be interacted with"
+      log('empty_search via js')
+      instance.execute_script('$(".search .empty-search").click()')
+    end
+    sleep 0.5
+    text = instance.find_elements(css: '#global-search')[0].attribute('value')
+    if !text
+      raise '#global-search is not empty!'
+    end
+
+    true
+  end
+
+=begin
+
   ticket_customer_select(
     browser:  browser1,
     css:      '#content .text-1',
@@ -1846,13 +1879,7 @@ wait untill text in selector disabppears
     element.send_keys(params[:number])
     sleep 3
 
-    # empty search box by x
-    instance.find_elements(css: '.search .empty-search .icon')[0].click
-    sleep 0.5
-    text = instance.find_elements(css: '#global-search')[0].attribute('value')
-    if !text
-      raise '#global-search is not empty!'
-    end
+    empty_search(browser: instance)
 
     # search by number again
     element = instance.find_elements(css: '#global-search')[0]
@@ -1975,12 +2002,9 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(params[:value])
     sleep 3
-    instance.find_elements(css: '.search .empty-search .icon')[0].click
-    sleep 0.5
-    text = instance.find_elements(css: '#global-search')[0].attribute('value')
-    if !text
-      raise '#global-search is not empty!'
-    end
+
+    empty_search(browser: instance)
+
     element = instance.find_elements(css: '#global-search')[0]
     element.click
     element.clear
