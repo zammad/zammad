@@ -1891,6 +1891,7 @@ wait untill text in selector disabppears
     # open ticket
     #instance.find_element(partial_link_text: params[:number] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    sleep 1
     number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
@@ -1925,6 +1926,7 @@ wait untill text in selector disabppears
     # open ticket
     #instance.find_element(partial_link_text: params[:title] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
+    sleep 1
     title = instance.find_elements(css: '.active .ticketZoom-header .ticket-title-update')[0].text
     if title !~ /#{params[:title]}/
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
@@ -2012,6 +2014,7 @@ wait untill text in selector disabppears
     sleep 2
     #instance.find_element(partial_link_text: params[:value] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/
       screenshot(browser: instance, comment: 'organization_open_by_search_failed')
@@ -2044,6 +2047,7 @@ wait untill text in selector disabppears
     sleep 3
     #instance.find_element(partial_link_text: params[:value]).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/
       screenshot(browser: instance, comment: 'user_open_by_search_failed')
