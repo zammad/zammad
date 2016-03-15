@@ -33,12 +33,12 @@ class AgentOrganizationProfileTest < TestCase
       css: '.active .profile [data-name="note"]',
       value: note,
     )
-    click( css: '.empty-search' )
+    empty_search()
     sleep 2
 
     # check and change note again in edit screen
-    click( css: '.active .js-action .icon-arrow-down', fast: true )
-    click( css: '.active .js-action [data-type="edit"]' )
+    click(css: '.active .js-action .icon-arrow-down', fast: true)
+    click(css: '.active .js-action [data-type="edit"]')
 
     watch_for(
       css: '.active .modal',
@@ -53,7 +53,7 @@ class AgentOrganizationProfileTest < TestCase
       css: '.active .modal [data-name="note"]',
       value: 'some note abc',
     )
-    click( css: '.active .modal button.js-submit' )
+    click(css: '.active .modal button.js-submit')
 
     watch_for(
       css: '.active .profile-window',
@@ -112,9 +112,8 @@ class AgentOrganizationProfileTest < TestCase
       css: '.active .profile [data-name="note"]',
       value: message,
     )
-    click(
+    empty_search(
       browser: browser1,
-      css:     '.empty-search',
     )
 
     # verify

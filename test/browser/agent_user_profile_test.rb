@@ -14,7 +14,7 @@ class AgentUserProfileTest < TestCase
     tasks_close_all()
 
     # search and open user
-    user_open_by_search( value: 'Braun' )
+    user_open_by_search(value: 'Braun')
 
     watch_for(
       css: '.active .profile-window',
@@ -30,12 +30,12 @@ class AgentUserProfileTest < TestCase
       css: '.active [data-name="note"]',
       value: 'some note 123',
     )
-    click( css: '.empty-search' )
+    empty_search()
     sleep 2
 
     # check and change note again in edit screen
-    click( css: '.active .js-action .icon-arrow-down' )
-    click( css: '.active .js-action [data-type="edit"]' )
+    click(css: '.active .js-action .icon-arrow-down')
+    click(css: '.active .js-action [data-type="edit"]')
 
     watch_for(
       css: '.active .modal',
@@ -50,7 +50,7 @@ class AgentUserProfileTest < TestCase
       css: '.modal [data-name="note"]',
       value: 'some note abc',
     )
-    click( css: '.active .modal button.js-submit' )
+    click(css: '.active .modal button.js-submit')
 
     watch_for(
       css: '.active .profile-window',
@@ -68,7 +68,7 @@ class AgentUserProfileTest < TestCase
     )
 
     # switch to org tab, verify if ticket is shown
-    user_open_by_search( value: 'Braun' )
+    user_open_by_search(value: 'Braun')
     watch_for(
       css: '.active .profile-window',
       value: 'user profile check ' + message,
@@ -107,9 +107,8 @@ class AgentUserProfileTest < TestCase
       css: '.active [data-name="note"]',
       value: message,
     )
-    click(
+    empty_search(
       browser: browser1,
-      css:     '.empty-search',
     )
 
     watch_for(

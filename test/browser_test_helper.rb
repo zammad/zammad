@@ -2353,7 +2353,7 @@ wait untill text in selector disabppears
     @last_used_browser = instance
   end
 
-  def log(method, params)
+  def log(method, params = {})
     return if !@@debug
     return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"
