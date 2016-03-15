@@ -42,7 +42,7 @@
       </div>
       <style>@import "/assets/chat/chat.css";</style>
       <div class="chat-demo-animationHolder">
-        <div class="js-chat zammad-chat zammad-chat-is-shown is-open">
+        <div class="js-chat zammad-chat zammad-chat-is-loaded zammad-chat-is-shown is-open">
           <div class="zammad-chat-header js-toggle-chat js-backgroundColor js-chatHeader">
             <div class="zammad-chat-header-controls">
               <span class="zammad-chat-agent-status" data-status="online"><%- @T('Online') %></span>
