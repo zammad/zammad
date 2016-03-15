@@ -24,15 +24,15 @@ class App.ControllerTable extends App.Controller
       for key, value of data['headerWidth']
         @headerWidth[key] = value
 
+    @availableWidth = @el.width()
     @render()
-    $(window).on 'resize.table', @readjustHeaderWidths
+    $(window).on 'resize.table', @onResize
 
   release: =>
-    $(window).off 'resize.table', @readjustHeaderWidths
+    $(window).off 'resize.table', @onResize
 
   render: =>
     @html @tableGen()
-    @readjustHeaderWidths()
 
     if @dndCallback
       dndOptions =
@@ -172,7 +172,7 @@ class App.ControllerTable extends App.Controller
             # e.g. column: owner
             headerFound = true
             if @headerWidth[attribute.name]
-              attribute.displayWidth = @headerWidth[attribute.name]
+              attribute.displayWidth = @headerWidth[attribute.name] * @availableWidth
             else if !attribute.width
               attribute.displayWidth = @baseColWidth
             else
@@ -191,7 +191,7 @@ class App.ControllerTable extends App.Controller
             if attributeName is rowWithoutId
               headerFound = true
               if @headerWidth[attribute.name]
-                attribute.displayWidth = @headerWidth[attribute.name]
+                attribute.displayWidth = @headerWidth[attribute.name] * @availableWidth
               else if !attribute.width
                 attribute.displayWidth = @baseColWidth
               else
@@ -281,6 +281,8 @@ class App.ControllerTable extends App.Controller
         @objects = @objects.concat groupObjects[group]
         groupObjects[group] = [] # release old array
 
+    @calculateHeaderWidths()
+
     # get content
     table = App.view('generic/table')(
       table_id:   @table_id
@@ -360,7 +362,6 @@ class App.ControllerTable extends App.Controller
 
     # if we have a personalised table
     if @table_id
-
       # enable resize column
       table.on 'mousedown', '.js-col-resize', @onColResizeMousedown
       table.on 'click', '.js-col-resize', @stopPropagation
@@ -404,17 +405,15 @@ class App.ControllerTable extends App.Controller
       item:      item
       container: @container
 
-  adjustHeaderWidths: ->
+  calculateHeaderWidths: ->
     if !@headers
       return
 
-    availableWidth = @el.width()
-
-    if availableWidth is 0
-      availableWidth = @minTableWidth
+    if @availableWidth is 0
+      @availableWidth = @minTableWidth
 
     widths = @getHeaderWidths()
-    shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount()
+    shrinkBy = Math.ceil (widths - @availableWidth) / @getShrinkableHeadersCount()
 
     # make all cols evenly smaller
     @headers = _.map @headers, (col) =>
@@ -423,10 +422,12 @@ class App.ControllerTable extends App.Controller
       return col
 
     # give left-over space from rounding to last column to get to 100%
-    roundingLeftOver = availableWidth - @getHeaderWidths()
+    roundingLeftOver = @availableWidth - @getHeaderWidths()
     # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
     if roundingLeftOver > 0
       @headers[@headers.length - 1].displayWidth = @headers[@headers.length - 1].displayWidth + roundingLeftOver
+
+    @storeHeaderWidths()
 
   getShrinkableHeadersCount: ->
     _.reduce @headers, (memo, col) ->
@@ -449,11 +450,23 @@ class App.ControllerTable extends App.Controller
 
     return widths
 
-  readjustHeaderWidths: =>
-    @adjustHeaderWidths()
+  setHeaderWidths: =>
+    @calculateHeaderWidths()
 
     @tableHead.each (i, el) =>
       el.style.width = @headers[i].displayWidth + 'px'
+
+  storeHeaderWidths: ->
+    widths = {}
+
+    for header in @headers
+      widths[header.name] = header.displayWidth / @availableWidth
+
+    App.LocalStorage.set(@preferencesStoreKey(), { headerWidth: widths }, @Session.get('id'))
+
+  onResize: =>
+    @availableWidth = @el.width()
+    @setHeaderWidths()
 
   stopPropagation: (event) ->
     event.stopPropagation()
@@ -488,17 +501,11 @@ class App.ControllerTable extends App.Controller
 
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()
-    leftWidth = @resizeTargetLeft.width()
-    rightWidth = @resizeTargetRight.width()
+    leftWidth = @resizeTargetLeft.width() / resizeBaseWidth
+    rightWidth = @resizeTargetRight.width() / resizeBaseWidth
 
     leftColumnKey = @resizeTargetLeft.attr('data-column-key')
     rightColumnKey = @resizeTargetRight.attr('data-column-key')
-
-    # save table changed widths
-    storeColWidths = [
-      { key: leftColumnKey, width: leftWidth }
-      { key: rightColumnKey, width: rightWidth }
-    ]
 
     # update store and runtime @headerWidth
     @preferencesStore('headerWidth', leftColumnKey, leftWidth)
@@ -543,4 +550,4 @@ class App.ControllerTable extends App.Controller
     data
 
   preferencesStoreKey: =>
-    "tablePreferences:#{@table_id}"
+    "tablePrefs:#{@table_id}"
