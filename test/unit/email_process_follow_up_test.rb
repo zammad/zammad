@@ -85,45 +85,45 @@ no reference "
     Setting.set('postmaster_follow_up_search_in', %w(body attachment references))
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_subject)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
     assert_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_body)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
     assert_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_attachment)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_attachment)
     assert_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references1)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references1)
     assert_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references2)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
     assert_equal(ticket.id, ticket_p.id)
 
     Setting.set('postmaster_follow_up_search_in', setting_orig)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_subject)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
     assert_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_body)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
     assert_not_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_attachment)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_attachment)
     assert_not_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references1)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references1)
     assert_not_equal(ticket.id, ticket_p.id)
 
     sleep 1
-    ticket_p, article_p, user_p = Channel::EmailParser.new.process( {}, email_raw_string_references2)
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
     assert_not_equal(ticket.id, ticket_p.id)
   end
 
@@ -165,7 +165,51 @@ Auto-Submitted: auto-replied
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.id, ticket_p.id)
+    assert_equal('open', ticket.state.name)
+  end
+
+  test 'process with follow up check - email with more forgein T#\'s in subject' do
+
+    ticket = Ticket.create(
+      title: 'email with more forgein T#\'s in subject',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article = Ticket::Article.create(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'follow up with references follow up check',
+      message_id: '<20151222145601.30.608881@edenhofer.zammad.com>',
+      body: 'some message with references follow up check',
+      internal: false,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sleep 1
+
+    system_id           = Setting.get('system_id')
+    ticket_hook         = Setting.get('ticket_hook')
+    ticket_hook_divider = Setting.get('ticket_hook_divider')
+
+    tn = "[#{ticket_hook}#{ticket_hook_divider}#{system_id}#{Ticket::Number.generate}99]"
+
+    email_raw_string_subject = "From: me@example.com
+To: customer@example.com
+Subject: First foreign Tn #{tn} #{tn} #{tn} - #{ticket.subject_build('some new subject')}
+
+Some Text"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string_subject)
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket.state.name)

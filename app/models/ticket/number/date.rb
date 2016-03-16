@@ -13,9 +13,9 @@ module Ticket::Number::Date
     # read counter
     counter_increment = nil
     Ticket::Counter.transaction do
-      counter = Ticket::Counter.where( generator: 'Date' ).lock(true).first
+      counter = Ticket::Counter.where(generator: 'Date').lock(true).first
       if !counter
-        counter = Ticket::Counter.new( generator: 'Date', content: '0' )
+        counter = Ticket::Counter.new(generator: 'Date', content: '0')
       end
 
       # increase counter
@@ -48,7 +48,7 @@ module Ticket::Number::Date
       mult   = 1
       (1..number.length).each do |i|
         digit = number.to_s[i, 1]
-        chksum = chksum + ( mult * digit.to_i )
+        chksum = chksum + (mult * digit.to_i)
         mult += 1
         if mult == 3
           mult = 1
@@ -73,10 +73,15 @@ module Ticket::Number::Date
     ticket              = nil
 
     # probe format
-    if string =~ /#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,50})/i
-      ticket = Ticket.find_by( number: $1 )
-    elsif string =~ /#{ticket_hook}\s{0,2}(#{system_id}\d{2,50})/i
-      ticket = Ticket.find_by( number: $1 )
+    string.scan(/#{ticket_hook}#{ticket_hook_divider}(#{system_id}\d{2,48})/i) {
+      ticket = Ticket.find_by(number: $1)
+      break if ticket
+    }
+    if !ticket
+      string.scan(/#{ticket_hook}\s{0,2}(#{system_id}\d{2,48})/i) {
+        ticket = Ticket.find_by(number: $1)
+        break if ticket
+      }
     end
     ticket
   end
