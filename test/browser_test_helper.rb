@@ -360,6 +360,7 @@ class TestCase < Test::Unit::TestCase
       #  sleep 0.2
       #end
     else
+      sleep 1
       instance.find_elements(partial_link_text: params[:text])[0].click
     end
     sleep 0.4 if !params[:fast]
@@ -1200,6 +1201,39 @@ wait untill text in selector disabppears
 
 =begin
 
+  empty_search(
+    browser: browser1,
+  )
+
+=end
+
+  def empty_search(params = {})
+    switch_window_focus(params)
+    log('empty_search', params)
+
+    instance = params[:browser] || @browser
+
+    # empty search box by x
+    begin
+      instance.find_elements(css: '.search .empty-search')[0].click
+    rescue
+
+      # in issues with ff & selenium, sometimes exeption appears
+      # "Element is not currently visible and so may not be interacted with"
+      log('empty_search via js')
+      instance.execute_script('$(".search .empty-search").click()')
+    end
+    sleep 0.5
+    text = instance.find_elements(css: '#global-search')[0].attribute('value')
+    if !text
+      raise '#global-search is not empty!'
+    end
+
+    true
+  end
+
+=begin
+
   ticket_customer_select(
     browser:  browser1,
     css:      '#content .text-1',
@@ -1845,13 +1879,7 @@ wait untill text in selector disabppears
     element.send_keys(params[:number])
     sleep 3
 
-    # empty search box by x
-    instance.find_elements(css: '.search .empty-search')[0].click
-    sleep 0.5
-    text = instance.find_elements(css: '#global-search')[0].attribute('value')
-    if !text
-      raise '#global-search is not empty!'
-    end
+    empty_search(browser: instance)
 
     # search by number again
     element = instance.find_elements(css: '#global-search')[0]
@@ -1863,6 +1891,7 @@ wait untill text in selector disabppears
     # open ticket
     #instance.find_element(partial_link_text: params[:number] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    sleep 1
     number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
@@ -1897,6 +1926,7 @@ wait untill text in selector disabppears
     # open ticket
     #instance.find_element(partial_link_text: params[:title] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
+    sleep 1
     title = instance.find_elements(css: '.active .ticketZoom-header .ticket-title-update')[0].text
     if title !~ /#{params[:title]}/
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
@@ -1974,12 +2004,9 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(params[:value])
     sleep 3
-    instance.find_elements(css: '.search .empty-search')[0].click
-    sleep 0.5
-    text = instance.find_elements(css: '#global-search')[0].attribute('value')
-    if !text
-      raise '#global-search is not empty!'
-    end
+
+    empty_search(browser: instance)
+
     element = instance.find_elements(css: '#global-search')[0]
     element.click
     element.clear
@@ -1987,6 +2014,7 @@ wait untill text in selector disabppears
     sleep 2
     #instance.find_element(partial_link_text: params[:value] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/
       screenshot(browser: instance, comment: 'organization_open_by_search_failed')
@@ -2019,6 +2047,7 @@ wait untill text in selector disabppears
     sleep 3
     #instance.find_element(partial_link_text: params[:value]).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/
       screenshot(browser: instance, comment: 'user_open_by_search_failed')
@@ -2328,7 +2357,7 @@ wait untill text in selector disabppears
     @last_used_browser = instance
   end
 
-  def log(method, params)
+  def log(method, params = {})
     return if !@@debug
     return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"

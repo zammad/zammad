@@ -5,6 +5,7 @@ class App.ControllerTable extends App.Controller
 
   checkBoxColWidth: 40
   radioColWidth: 22
+  sortableColWidth: 36
 
   elements:
     '.js-tableHead': 'tableHead'
@@ -442,6 +443,9 @@ class App.ControllerTable extends App.Controller
 
     if @radio
       widths += @radioColWidth
+
+    if @dndCallback
+      widths += @sortableColWidth
 
     return widths
 

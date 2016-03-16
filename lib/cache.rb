@@ -10,6 +10,8 @@ delete a cache
 
   def self.delete(key)
     Rails.cache.delete(key.to_s)
+  rescue => e
+    Rails.logger.error "ERROR: Cache.delete #{e.message}"
   end
 
 =begin
@@ -31,7 +33,7 @@ write a cache
     begin
       Rails.cache.write(key.to_s, data, params)
     rescue => e
-      Rails.logger.error "NOTICE: #{e.message}"
+      Rails.logger.error "ERROR: Cache.write #{e.message}"
     end
   end
 

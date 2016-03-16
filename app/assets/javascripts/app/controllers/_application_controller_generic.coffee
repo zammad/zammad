@@ -728,6 +728,9 @@ class App.WizardModal extends App.Controller
       if type
         @$(".#{screen}").find("[name=\"options::#{field}\"]").closest('.form-group').addClass('has-error')
 
+  render: ->
+    # do nothing
+
 class App.WizardFullScreen extends App.WizardModal
   className: 'getstarted fit'
 
