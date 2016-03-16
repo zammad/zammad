@@ -95,7 +95,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       owner_id: agent2.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 16:37:00',
+      created_at: '2016-02-05 16:38:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -107,7 +107,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'pending reminder'),
       pending_time: '2016-02-07 16:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 16:37:00',
+      created_at: '2016-02-05 16:39:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -117,9 +117,9 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       customer_id: customer1.id,
       owner_id: agent2.id,
       state: Ticket::State.lookup(name: 'pending reminder'),
-      pending_time: '2016-02-07 16:37:00',
+      pending_time: '2016-02-07 16:38:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 16:37:00',
+      created_at: '2016-02-05 16:40:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -129,9 +129,9 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       customer_id: customer1.id,
       owner_id: agent1.id,
       state: Ticket::State.lookup(name: 'new'),
-      escalation_time: '2016-02-07 17:37:00',
+      escalation_time: '2016-02-07 17:39:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 16:37:00',
+      created_at: '2016-02-05 16:41:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -143,7 +143,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'new'),
       escalation_time: '2016-02-07 16:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 16:37:00',
+      created_at: '2016-02-05 16:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -166,7 +166,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       owner_id: 1,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 17:37:00',
+      created_at: '2016-02-05 17:38:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -178,7 +178,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'pending reminder'),
       pending_time: '2016-02-08 16:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 17:37:00',
+      created_at: '2016-02-05 17:39:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -188,9 +188,9 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       customer_id: customer1.id,
       owner_id: 1,
       state: Ticket::State.lookup(name: 'pending reminder'),
-      pending_time: '2016-02-08 16:37:00',
+      pending_time: '2016-02-08 16:38:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 17:37:00',
+      created_at: '2016-02-05 17:40:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -200,9 +200,9 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       customer_id: customer1.id,
       owner_id: 1,
       state: Ticket::State.lookup(name: 'new'),
-      escalation_time: '2016-02-08 17:37:00',
+      escalation_time: '2016-02-08 18:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 17:37:00',
+      created_at: '2016-02-05 17:41:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -212,9 +212,9 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       customer_id: customer1.id,
       owner_id: 1,
       state: Ticket::State.lookup(name: 'new'),
-      escalation_time: '2016-02-08 16:37:00',
+      escalation_time: '2016-02-08 18:38:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      created_at: '2016-02-05 17:37:00',
+      created_at: '2016-02-05 17:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -230,13 +230,13 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     assert_equal(cal.events.count, 4)
 
     assert_equal(cal.events[0].dtstart, Time.zone.today)
-    assert_equal(cal.events[0].summary, 'new ticket: \'some title1 - new - group_calendar\'')
-    assert_equal(cal.events[0].description, "T##{ticket1.number}")
+    assert_equal(cal.events[0].summary, 'new ticket: \'some title1 - escalation - group_calendar\'')
+    assert_equal(cal.events[0].description, "T##{ticket5.number}")
     assert_equal(cal.events[0].has_alarm?, false)
 
     assert_equal(cal.events[1].dtstart, Time.zone.today)
-    assert_equal(cal.events[1].summary, 'new ticket: \'some title1 - escalation - group_calendar\'')
-    assert_equal(cal.events[1].description, "T##{ticket5.number}")
+    assert_equal(cal.events[1].summary, 'new ticket: \'some title1 - new - group_calendar\'')
+    assert_equal(cal.events[1].description, "T##{ticket1.number}")
     assert_equal(cal.events[1].has_alarm?, false)
 
     assert_equal(cal.events[2].dtstart, Time.zone.today)
@@ -279,23 +279,23 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     assert_equal(cal.events.count, 8)
 
     assert_equal(cal.events[0].dtstart, Time.zone.today)
-    assert_equal(cal.events[0].summary, 'new ticket: \'some title2 - new - group_calendar\'')
-    assert_equal(cal.events[0].description, "T##{ticket7.number}")
+    assert_equal(cal.events[0].summary, 'new ticket: \'some title2 - escalation - group_calendar\'')
+    assert_equal(cal.events[0].description, "T##{ticket11.number}")
     assert_equal(cal.events[0].has_alarm?, false)
 
     assert_equal(cal.events[1].dtstart, Time.zone.today)
-    assert_equal(cal.events[1].summary, 'new ticket: \'some title2 - escalation - group_calendar\'')
-    assert_equal(cal.events[1].description, "T##{ticket11.number}")
+    assert_equal(cal.events[1].summary, 'new ticket: \'some title2 - new - group_calendar\'')
+    assert_equal(cal.events[1].description, "T##{ticket7.number}")
     assert_equal(cal.events[1].has_alarm?, false)
 
     assert_equal(cal.events[2].dtstart, Time.zone.today)
-    assert_equal(cal.events[2].summary, 'new ticket: \'some title1 - new - group_calendar\'')
-    assert_equal(cal.events[2].description, "T##{ticket1.number}")
+    assert_equal(cal.events[2].summary, 'new ticket: \'some title1 - escalation - group_calendar\'')
+    assert_equal(cal.events[2].description, "T##{ticket5.number}")
     assert_equal(cal.events[2].has_alarm?, false)
 
     assert_equal(cal.events[3].dtstart, Time.zone.today)
-    assert_equal(cal.events[3].summary, 'new ticket: \'some title1 - escalation - group_calendar\'')
-    assert_equal(cal.events[3].description, "T##{ticket5.number}")
+    assert_equal(cal.events[3].summary, 'new ticket: \'some title1 - new - group_calendar\'')
+    assert_equal(cal.events[3].description, "T##{ticket1.number}")
     assert_equal(cal.events[3].has_alarm?, false)
 
     assert_equal(cal.events[4].dtstart, Time.zone.today)
@@ -329,12 +329,12 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     assert_equal(cal.events.count, 4)
 
     assert_equal(cal.events[0].dtstart, Time.zone.today)
-    assert_equal(cal.events[0].summary, 'new ticket: \'some title1 - new - group_default\'')
-    assert_equal(cal.events[0].description, "T##{ticket2.number}")
+    assert_equal(cal.events[0].summary, 'new ticket: \'some title1 - escalation - group_default\'')
+    assert_equal(cal.events[0].description, "T##{ticket6.number}")
 
     assert_equal(cal.events[1].dtstart, Time.zone.today)
-    assert_equal(cal.events[1].summary, 'new ticket: \'some title1 - escalation - group_default\'')
-    assert_equal(cal.events[1].description, "T##{ticket6.number}")
+    assert_equal(cal.events[1].summary, 'new ticket: \'some title1 - new - group_default\'')
+    assert_equal(cal.events[1].description, "T##{ticket2.number}")
 
     assert_equal(cal.events[2].dtstart, Time.zone.today)
     assert_equal(cal.events[2].summary, 'pending reminder ticket: \'some title1 - pending - group_default\' customer: Notification Customer1 (Selector Org)')
@@ -374,23 +374,23 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     assert_equal(cal.events.count, 8)
 
     assert_equal(cal.events[0].dtstart, Time.zone.today)
-    assert_equal(cal.events[0].summary, 'new ticket: \'some title2 - new - group_default\'')
-    assert_equal(cal.events[0].description, "T##{ticket8.number}")
+    assert_equal(cal.events[0].summary, 'new ticket: \'some title2 - escalation - group_default\'')
+    assert_equal(cal.events[0].description, "T##{ticket12.number}")
     assert_equal(cal.events[0].has_alarm?, false)
 
     assert_equal(cal.events[1].dtstart, Time.zone.today)
-    assert_equal(cal.events[1].summary, 'new ticket: \'some title2 - escalation - group_default\'')
-    assert_equal(cal.events[1].description, "T##{ticket12.number}")
+    assert_equal(cal.events[1].summary, 'new ticket: \'some title2 - new - group_default\'')
+    assert_equal(cal.events[1].description, "T##{ticket8.number}")
     assert_equal(cal.events[1].has_alarm?, false)
 
     assert_equal(cal.events[2].dtstart, Time.zone.today)
-    assert_equal(cal.events[2].summary, 'new ticket: \'some title1 - new - group_default\'')
-    assert_equal(cal.events[2].description, "T##{ticket2.number}")
-    assert_equal(cal.events[1].has_alarm?, false)
+    assert_equal(cal.events[2].summary, 'new ticket: \'some title1 - escalation - group_default\'')
+    assert_equal(cal.events[2].description, "T##{ticket6.number}")
+    assert_equal(cal.events[2].has_alarm?, false)
 
     assert_equal(cal.events[3].dtstart, Time.zone.today)
-    assert_equal(cal.events[3].summary, 'new ticket: \'some title1 - escalation - group_default\'')
-    assert_equal(cal.events[3].description, "T##{ticket6.number}")
+    assert_equal(cal.events[3].summary, 'new ticket: \'some title1 - new - group_default\'')
+    assert_equal(cal.events[3].description, "T##{ticket2.number}")
     assert_equal(cal.events[3].has_alarm?, false)
 
     assert_equal(cal.events[4].dtstart, Time.zone.today)

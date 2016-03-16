@@ -54,9 +54,6 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
-
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
@@ -82,8 +79,5 @@ Rails.application.configure do
 
   # format log
   config.log_formatter = Logger::Formatter.new
-
-  # define cache store
-  config.cache_store = :file_store, 'tmp/cache_file_store_production'
 
 end
