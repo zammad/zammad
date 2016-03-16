@@ -10,8 +10,6 @@ delete a cache
 
   def self.delete(key)
     Rails.cache.delete(key.to_s)
-  rescue => e
-    Rails.logger.error "ERROR: Cache.delete #{e.message}"
   end
 
 =begin
@@ -30,11 +28,7 @@ write a cache
     if !params[:expires_in]
       params[:expires_in] = 7.days
     end
-    begin
-      Rails.cache.write(key.to_s, data, params)
-    rescue => e
-      Rails.logger.error "ERROR: Cache.write #{e.message}"
-    end
+    Rails.cache.write(key.to_s, data, params)
   end
 
 =begin
