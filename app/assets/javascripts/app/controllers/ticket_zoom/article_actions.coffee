@@ -77,16 +77,15 @@ class App.TicketZoomArticleActions extends App.Controller
         href: '#'
       }
       recipients = []
-      if article.sender.name is 'Agent'
-        if article.to
-          localRecipients = emailAddresses.parseAddressList(article.to)
-          if localRecipients
-            recipients = recipients.concat localRecipients
-      else
+      if article.sender.name is 'Customer'
         if article.from
           localRecipients = emailAddresses.parseAddressList(article.from)
           if localRecipients
             recipients = recipients.concat localRecipients
+      if article.to
+        localRecipients = emailAddresses.parseAddressList(article.to)
+        if localRecipients
+          recipients = recipients.concat localRecipients
       if article.cc
         localRecipients = emailAddresses.parseAddressList(article.cc)
         if localRecipients
