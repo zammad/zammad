@@ -90,7 +90,25 @@ class App.TicketZoomArticleActions extends App.Controller
         localRecipients = emailAddresses.parseAddressList(article.cc)
         if localRecipients
           recipients = recipients.concat localRecipients
-      if recipients.length > 1
+
+      # remove system addresses
+      localAddresses = App.EmailAddress.all()
+      forgeinRecipients = []
+      recipientUsed = {}
+      for recipient in recipients
+        localRecipientAddeess = recipient.address.toString().toLowerCase()
+        if !recipientUsed[localRecipientAddeess]
+          recipientUsed[localRecipientAddeess] = true
+          localAddess = false
+          for address in localAddresses
+            if localRecipientAddeess is address.email.toString().toLowerCase()
+              recipientUsed[localRecipientAddeess] = true
+              localAddess = true
+          if !localAddess
+            forgeinRecipients.push recipient
+
+      # check if reply all is neede
+      if forgeinRecipients.length > 1
         actions.push {
           name: 'reply all'
           type: 'emailReplyAll'

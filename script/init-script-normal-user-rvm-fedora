@@ -63,7 +63,7 @@ start() {
     echo -n $"Starting ${NAME}/${RAILS_ENV} application server on port: ${APP_PORT}"
 #    $RAILS server -d -p $APP_PORT --pid $APP_PIDFILE &> /dev/null
 #    thin start --threaded -d -p $APP_PORT --pid $APP_PIDFILE
-    pumactl start --pidfile $APP_PIDFILE -d -p $APP_PORT -e $RAILS_ENV &> /dev/null
+    puma --pidfile $APP_PIDFILE -d -p $APP_PORT -e $RAILS_ENV &> /dev/null
     sleep 2
     status -p $APP_PIDFILE &> /dev/null && echo_success || echo_failure
     echo
