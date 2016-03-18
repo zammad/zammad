@@ -1,88 +1,30 @@
-class Index extends App.ControllerTabs
-  header: 'Trigger'
+class Index extends App.ControllerContent
   constructor: ->
     super
 
-    @title 'Trigger', true
+    # check authentication
+    return if !@authenticate(false, 'Admin')
 
-    @tabs = [
-      {
-        name:       'Time Based',
-        target:     'c-time-based',
-        controller: App.TriggerTime,
-      },
-      {
-        name:       'Event Based',
-        target:     'c-event-based',
-        controller: App.SettingsArea,
-        params:     { area: 'Email::Base' },
-      },
-      {
-        name:       'Notifications',
-        target:     'c-notification',
-        controller: App.SettingsArea,
-        params:     { area: 'Email::Base' },
-      },
-      {
-        name:       'Web Hooks',
-        target:     'c-web-hook',
-        controller: App.SettingsArea,
-        params:     { area: 'Email::Base' },
-      },
-    ]
-
-    @render()
-
-App.Config.set( 'Trigger', { prio: 3000, name: 'Trigger', parent: '#manage', target: '#manage/triggers', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
-
-class App.TriggerTime extends App.Controller
-  events:
-    'click .js-new': 'new'
-    #'click .js-edit': 'edit'
-    'click .js-delete': 'delete'
-
-  constructor: ->
-    super
-    @interval(@load, 30000)
-    #@load()
-
-  load: =>
-    @startLoading()
-    @ajax(
-      id:   'trigger_time_index'
-      type: 'GET'
-      url:  @apiPath + '/jobs'
-      processData: true
-      success: (data, status, xhr) =>
-        #App.Collection.loadAssets(data.assets)
-        @stopLoading()
-        @render(data)
-    )
-
-  render: (data = {}) =>
-
-    @html App.view('trigger/time/index')(
-      triggers: []
-    )
-
-
-  delete: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item:      item
-      container: @el.closest('.content')
-      callback:  @load
-    )
-
-  new: (e) =>
-    e.preventDefault()
-    channel_id = $(e.target).closest('.action').data('id')
-    new App.ControllerGenericNew(
+    new App.ControllerGenericIndex(
+      el: @el
+      id: @id
+      genericObject: 'Trigger'
+      defaultSortBy: 'name'
+      #groupBy: 'role'
       pageData:
-        object: 'Jobs'
-      genericObject: 'Job'
+        title: 'Triggers'
+        home: 'triggers'
+        object: 'Trigger'
+        objects: 'Triggers'
+        navupdate: '#triggers'
+        notes: [
+          'Triggers are ...'
+        ]
+        buttons: [
+          { name: 'New Trigger', 'data-type': 'new', class: 'btn--success' }
+        ]
       container: @el.closest('.content')
-      callback: @load
+      #large: true
     )
+
+App.Config.set('Trigger', { prio: 3300, name: 'Trigger', parent: '#manage', target: '#manage/trigger', controller: Index, role: ['Admin'] }, 'NavBarAdmin')

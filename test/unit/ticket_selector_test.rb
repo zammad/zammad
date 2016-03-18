@@ -146,6 +146,86 @@ class TicketSelectorTest < ActiveSupport::TestCase
     ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
     assert_equal(ticket_count, 0)
 
+    # search matching with empty value / missing key
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.state_id' => {
+        operator: 'is',
+      },
+    }
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal(ticket_count, nil)
+
+    # search matching with empty value []
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.state_id' => {
+        operator: 'is',
+        value: [],
+      },
+    }
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal(ticket_count, nil)
+
+    # search matching with empty value ''
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.state_id' => {
+        operator: 'is',
+        value: '',
+      },
+    }
+
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal(ticket_count, nil)
+
     # search matching
     condition = {
       'ticket.group_id' => {

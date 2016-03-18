@@ -468,7 +468,7 @@ condition example
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
 
       # validate value / allow empty but only if pre_condition exists
-      if (selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:empty?) && selector['value'].empty?)
+      if !selector.key?('value') || ((selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:empty?) && selector['value'].empty?))
         return nil if selector['pre_condition'].nil? || (selector['pre_condition'].respond_to?(:empty?) && selector['pre_condition'].empty?)
       end
 
@@ -679,7 +679,7 @@ result
 
     return if !customer_id
 
-    customer = User.find( customer_id )
+    customer = User.find(customer_id)
     return if organization_id == customer.organization_id
 
     self.organization_id = customer.organization_id
@@ -691,8 +691,8 @@ result
     return if !changes['state_id']
 
     # check if new state isn't pending*
-    current_state      = Ticket::State.lookup( id: state_id )
-    current_state_type = Ticket::StateType.lookup( id: current_state.state_type_id )
+    current_state      = Ticket::State.lookup(id: state_id)
+    current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)
 
     # in case, set pending_time to nil
     return if current_state_type.name =~ /^pending/i
@@ -706,7 +706,7 @@ result
     articles.destroy_all
 
     # destroy online notifications
-    OnlineNotification.remove( self.class.to_s, id )
+    OnlineNotification.remove(self.class.to_s, id)
   end
 
 end

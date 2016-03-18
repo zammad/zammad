@@ -13,7 +13,7 @@ class App.UiElement.textarea
         if visible && !$( item[0] ).expanding('active')
           $( item[0] ).expanding().focus()
       )
-    App.Delay.set( a, 80 )
+    App.Delay.set(a, 80)
 
     if attribute.upload
 
@@ -39,5 +39,5 @@ class App.UiElement.textarea
               fail:    ''
             debug: false
           )
-      App.Delay.set( u, 100, undefined, 'form_upload' )
+      App.Delay.set(u, 100, undefined, 'form_upload')
     item

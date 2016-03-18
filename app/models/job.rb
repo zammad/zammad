@@ -3,85 +3,118 @@
 class Job < ApplicationModel
   store     :timeplan
   store     :condition
-  store     :execute
+  store     :perform
   validates :name, presence: true
 
-  before_create   :updated_matching
-  before_update   :updated_matching
+  before_create :updated_matching
+  before_update :updated_matching
 
   notify_clients_support
 
   def self.run
-    time    = Time.zone.now
-    day_map = {
-      0 => 'sun',
-      1 => 'mon',
-      2 => 'tue',
-      3 => 'wed',
-      4 => 'thu',
-      5 => 'fri',
-      6 => 'sat',
-    }
-    jobs = Job.where( active: true )
+    jobs = Job.where(active: true, running: false)
     jobs.each do |job|
+      logger.debug "Execute job #{job.inspect}"
 
-      # only execute jobs, older then 1 min, to give admin posibility to change
-      next if job.updated_at > Time.zone.now - 1.minute
+      next if !job.executable?
 
-      # check if jobs need to be executed
-      # ignore if job was running within last 10 min.
-      next if job.last_run_at && job.last_run_at > Time.zone.now - 10.minutes
-
-      # check day
-      next if !job.timeplan['days'].include?( day_map[time.wday] )
-
-      # check hour
-      next if !job.timeplan['hours'].include?( time.hour.to_s )
-
-      # check min
-      next if !job.timeplan['minutes'].include?( match_minutes(time.min.to_s) )
-
-      # find tickets to change
-      tickets = Ticket.where( job.condition.permit! )
-                      .order( '`tickets`.`created_at` DESC' )
-                      .limit( 1_000 )
-      job.processed = tickets.count
-      tickets.each do |ticket|
-        logger.debug "CHANGE #{job.execute.inspect}"
-        changed = false
-        job.execute.each do |key, value|
-          changed = true
-          attribute = key.split('.', 2).last
-          logger.debug "-- #{Ticket.columns_hash[ attribute ].type}"
-          #value = 4
-          #if Ticket.columns_hash[ attribute ].type == :integer
-          #  logger.debug "to i #{attribute}/#{value.inspect}/#{value.to_i.inspect}"
-          #  #value = value.to_i
-          #end
-          ticket[attribute] = value
-          logger.debug "set #{attribute} = #{value.inspect}"
-        end
-        next if !changed
-        ticket.updated_by_id = 1
-        ticket.save
+      matching = job.matching_count
+      if job.matching != matching
+        job.matching = matching
+        job.save
       end
 
+      next if !job.in_timeplan?
+
+      # find tickets to change
+      ticket_count, tickets = Ticket.selectors(job.condition, 2_000)
+
+      logger.debug "Job #{job.name} with #{ticket_count} tickets"
+
+      job.processed = ticket_count || 0
+      job.running = true
+      job.save
+
+      if tickets
+        tickets.each do |ticket|
+          logger.debug "Perform job #{job.perform.inspect} in Ticket.find(#{ticket.id})"
+          changed = false
+          job.perform.each do |key, value|
+            (object_name, attribute) = key.split('.', 2)
+            raise "Unable to update object #{object_name}.#{attribute}, only can update tickets!" if object_name != 'ticket'
+
+            next if ticket[attribute].to_s == value['value'].to_s
+            changed = true
+
+            ticket[attribute] = value['value']
+            logger.debug "set #{object_name}.#{attribute} = #{value['value'].inspect}"
+          end
+          next if !changed
+          ticket.updated_by_id = 1
+          ticket.save
+        end
+      end
+
+      job.running = false
       job.last_run_at = Time.zone.now
       job.save
     end
     true
   end
 
+  def executable?
+
+    # only execute jobs, older then 1 min, to give admin posibility to change
+    return false if updated_at > Time.zone.now - 1.minute
+
+    # check if jobs need to be executed
+    # ignore if job was running within last 10 min.
+    return false if last_run_at && last_run_at > Time.zone.now - 10.minutes
+
+    true
+  end
+
+  def in_timeplan?
+    time    = Time.zone.now
+    day_map = {
+      0 => 'Sun',
+      1 => 'Mon',
+      2 => 'Tue',
+      3 => 'Wed',
+      4 => 'Thu',
+      5 => 'Fri',
+      6 => 'Sat',
+    }
+
+    # check day
+    return false if !timeplan['days']
+    return false if !timeplan['days'][day_map[time.wday]]
+
+    # check hour
+    return false if !timeplan['hours']
+    return false if !timeplan['hours'][time.hour.to_s] && !timeplan['hours'][time.hour]
+
+    # check min
+    return false if !timeplan['minutes']
+    return false if !timeplan['minutes'][match_minutes(time.min).to_s] && !timeplan['minutes'][match_minutes(time.min)]
+
+    true
+  end
+
+  def matching_count
+    ticket_count, tickets = Ticket.selectors(condition, 1)
+    ticket_count || 0
+  end
+
   private
 
   def updated_matching
-    count = Ticket.where( condition.permit! ).count
-    self.matching = count
+    self.matching = matching_count
   end
 
-  def self.match_minutes(minutes)
-    minutes.gsub!(/(\d)\d/, '\\1')
-    minutes.to_s + '0'
+  def match_minutes(minutes)
+    return 0 if minutes < 10
+    "#{minutes.to_s.gsub(/(\d)\d/, '\\1')}0".to_i
   end
-  private_class_method :match_minutes
+
 end
