@@ -158,7 +158,7 @@ test("form elements check", function() {
   $('#form2 .js-hour [data-value="16"]').click()
   $('#form2 .js-minute [data-value="10"]').click()
 
-  equal('Run every Monday, Friday and Samstag at 00:00, 00:50, 10:00 and 10:50', el.find('.js-timerResult').val())
+  equal('Run every Monday, Friday and Saturday at 00:00, 00:50, 10:00 and 10:50', el.find('.js-timerResult').val())
 
   var params = App.ControllerForm.params(el)
   var test_params = {
