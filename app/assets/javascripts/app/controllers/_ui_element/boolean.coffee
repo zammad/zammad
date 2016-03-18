@@ -14,13 +14,13 @@ class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
       attribute.name = '{boolean}' + attribute.name
 
     # build options list based on config
-    @getConfigOptionList( attribute, params )
+    @getConfigOptionList(attribute, params)
 
     # sort attribute.options
-    @sortOptions( attribute, params )
+    @sortOptions(attribute, params)
 
     # finde selected/checked item of list
-    @selectedOptions( attribute, params )
+    @selectedOptions(attribute, params)
 
     # return item
-    $( App.view('generic/select')( attribute: attribute ) )
+    $(App.view('generic/select')(attribute: attribute))

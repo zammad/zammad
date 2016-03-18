@@ -73,7 +73,7 @@ returns
     # set Settings
     if auto_wizard_hash['Settings']
       auto_wizard_hash['Settings'].each { |setting_data|
-        Setting.set( setting_data['name'], setting_data['value'] )
+        Setting.set(setting_data['name'], setting_data['value'])
       }
     end
 

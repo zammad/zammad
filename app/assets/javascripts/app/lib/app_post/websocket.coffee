@@ -98,10 +98,10 @@ class _webSocketSingleton extends App.Controller
 
     # send ping after visibilitychange to check if connection is open again after wakeup
     $(document).bind('visibilitychange', =>
-      console.log('visibilitychange')
+      @log 'debug', 'visibilitychange'
       return if document.hidden
       return if !@connectionEstablished
-      console.log('ping')
+      @log 'debug', 'ping'
       @ping()
     )
 

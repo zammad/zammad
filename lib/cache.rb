@@ -28,11 +28,7 @@ write a cache
     if !params[:expires_in]
       params[:expires_in] = 7.days
     end
-    begin
-      Rails.cache.write(key.to_s, data, params)
-    rescue => e
-      Rails.logger.error "NOTICE: #{e.message}"
-    end
+    Rails.cache.write(key.to_s, data, params)
   end
 
 =begin

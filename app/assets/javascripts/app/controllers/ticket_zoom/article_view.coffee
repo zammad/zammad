@@ -100,7 +100,7 @@ class ArticleViewItem extends App.Controller
     # set @el attributes
     if !article
       @el.addClass("ticket-article-item #{@article.sender.name.toLowerCase()}")
-      @el.attr('data-id',  @article.id)
+      @el.attr('data-id', @article.id)
       @el.attr('id', "article-#{@article.id}")
 
     # set internal change directly in dom, without rerender while article
@@ -166,7 +166,7 @@ class ArticleViewItem extends App.Controller
     @shown = false
     a = =>
       @setSeeMore()
-    @delay( a, 50 )
+    @delay(a, 50)
 
     # set highlighter
     @setHighlighter()

@@ -15,13 +15,13 @@ class App.UiElement.timezone extends App.UiElement.ApplicationUiElement
       attribute.options.push item
 
     # add null selection if needed
-    @addNullOption( attribute, params )
+    @addNullOption(attribute, params)
 
     # sort attribute.options
-    @sortOptions( attribute, params )
+    @sortOptions(attribute, params)
 
     # finde selected/checked item of list
-    @selectedOptions( attribute, params )
+    @selectedOptions(attribute, params)
 
     attribute.tag =        'searchable_select'
     attribute.placeholder = App.i18n.translateInline('Enter timzone...')

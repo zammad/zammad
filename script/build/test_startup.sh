@@ -16,6 +16,6 @@ echo "export IP=$IP"
 echo "export BROWSER_PORT=$BROWSER_PORT"
 
 #rails s puma -d --pid tmp/pids/server.pid --bind 0.0.0.0 --port $APP_PORT
-pumactl start --pidfile tmp/pids/server.pid -d -p $APP_PORT -e $RAILS_ENV
+puma --pidfile tmp/pids/server.pid -d -p $APP_PORT -e $RAILS_ENV
 script/websocket-server.rb start -d -p $WS_PORT
 script/scheduler.rb start

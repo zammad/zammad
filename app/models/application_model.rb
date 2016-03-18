@@ -92,7 +92,7 @@ returns
 
 =begin
 
-set rellations of model based on params
+set relations of model based on params
 
   model = Model.find(1)
   result = model.param_set_associations(params)
@@ -117,6 +117,7 @@ returns
       end
       list = []
       list_of_items.each {|item|
+        next if !item
         list.push(assoc.klass.find(item))
       }
       send(assoc.name.to_s + '=', list)
