@@ -1,6 +1,9 @@
 class App.Navigation extends App.ControllerWidgetPermanent
   className: 'navigation vertical'
 
+  events:
+    'click .js-toggleNotifications': 'toggleNotifications'
+
   constructor: ->
     super
     @render()
@@ -202,9 +205,8 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @emptyAndClose()
     )
 
-    new App.OnlineNotificationWidget(
-      el: @el
-    )
+    @notificationWidget = new App.OnlineNotificationWidget()
+    $('#app').append @notificationWidget.el
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
@@ -467,5 +469,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
       App.RecentView.refresh( items, { clear: true } )
       @renderPersonal()
     App.RecentView.fetchFull(load)
+
+  toggleNotifications: (event) ->
+    event.stopPropagation()
+    @notificationWidget.toggle()
 
 App.Config.set( 'navigation', App.Navigation, 'Navigations' )

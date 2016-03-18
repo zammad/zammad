@@ -8,7 +8,7 @@
   </div>
   <div class="logo js-toggleNotifications">
     <%- @Icon('logo') %>
-    <div class="activity-counter js-counter"></div>
+    <div class="activity-counter js-notificationsCounter"></div>
   </div>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
 </form>
