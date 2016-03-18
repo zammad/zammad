@@ -22,6 +22,7 @@ class RenewTriggers < ActiveRecord::Migration
       t.column :perform,              :string,  limit: 2500, null: false
       t.column :disable_notification, :boolean,              null: false, default: true
       t.column :last_run_at,          :timestamp,            null: true
+      t.column :next_run_at,          :timestamp,            null: true
       t.column :running,              :boolean,              null: false, default: false
       t.column :processed,            :integer,              null: false, default: 0
       t.column :matching,             :integer,              null: false, default: 0

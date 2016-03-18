@@ -507,7 +507,7 @@ retrns
       end
     end
 
-    # execute ticket events
+    # execute ticket notification events
     Observer::Ticket::Notification.transaction
 
     # run postmaster post filter

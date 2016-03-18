@@ -130,6 +130,7 @@ class JobTest < ActiveSupport::TestCase
       updated_by_id: 1,
       updated_at: Time.zone.now,
     )
+    assert_not(job1.next_run_at)
     assert_not(job1.executable?)
 
     job1.last_run_at = Time.zone.now - 15.minutes
@@ -139,6 +140,14 @@ class JobTest < ActiveSupport::TestCase
     job1.updated_at = Time.zone.now - 15.minutes
     job1.save
     assert(job1.executable?)
+
+    job1.active = false
+    job1.save
+    assert_not(job1.executable?)
+
+    job1.active = true
+    job1.save
+    assert_not(job1.executable?)
 
     assert_not(job1.in_timeplan?)
     time    = Time.zone.now
@@ -168,7 +177,7 @@ class JobTest < ActiveSupport::TestCase
       min = 30
     elsif min < 50
       min = 40
-    elsif min < 59
+    elsif min < 60
       min = 50
     end
     job1.timeplan['minutes'][min.to_s] = true
@@ -187,6 +196,7 @@ class JobTest < ActiveSupport::TestCase
     job1.save
     Job.run
 
+    assert(job1.next_run_at)
     assert(job1.executable?)
     assert(job1.in_timeplan?)
 
@@ -419,6 +429,296 @@ class JobTest < ActiveSupport::TestCase
     ticket2_later = Ticket.find(ticket2.id)
     assert_equal('new', ticket2_later.state.name)
     assert_equal(ticket2.updated_at.to_s, ticket2_later.updated_at.to_s)
+
+  end
+
+  test 'case 3' do
+
+    # create jobs
+    job1 = Job.create_or_update(
+      name: 'Test Job1',
+      timeplan: {
+        days: {
+          Mon: true,
+          Tue: false,
+          Wed: false,
+          Thu: false,
+          Fri: true,
+          Sat: false,
+          Sun: false,
+        },
+        hours: {
+          0 => false,
+          1 => true,
+          2 => false,
+          3 => false,
+          4 => false,
+          5 => false,
+          6 => false,
+          7 => false,
+          8 => false,
+          9 => false,
+          10 => true,
+          11 => false,
+          12 => false,
+          13 => false,
+          14 => false,
+          15 => false,
+          16 => false,
+          17 => false,
+          18 => false,
+          19 => false,
+          20 => false,
+          21 => false,
+          22 => false,
+          23 => false,
+        },
+        minutes: {
+          0 => true,
+          10 => false,
+          20 => false,
+          30 => false,
+          40 => true,
+          50 => false,
+        },
+      },
+      condition: {
+        'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
+        'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
+      },
+      perform: {
+        'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
+      },
+      disable_notification: true,
+      last_run_at: nil,
+      active: true,
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+    )
+
+    time_now = Time.zone.parse('2016-03-18 09:17:13 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 10:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-18 10:37:13 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 10:40:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-17 09:17:13 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-17 11:17:13 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-19 11:17:13 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-21 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-22 00:59:59 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-25 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-25 00:59:59 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-25 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-24 00:59:59 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-25 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-24 23:59:59 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-25 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-25 01:00:01 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-25 01:00:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-25 01:09:01 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-25 01:40:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-25 01:09:59 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-25 01:40:00 UTC', next_run_at.to_s)
+
+    job1.last_run_at = Time.zone.parse('2016-03-18 10:00:01 UTC')
+    job1.save
+    time_now = Time.zone.parse('2016-03-18 10:00:02 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 10:40:00 UTC', next_run_at.to_s)
+
+    job1.last_run_at = Time.zone.parse('2016-03-18 10:40:01 UTC')
+    job1.save
+    time_now = Time.zone.parse('2016-03-18 10:40:02 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-21 01:00:00 UTC', next_run_at.to_s)
+
+  end
+
+  test 'case 4' do
+
+    # create jobs
+    job1 = Job.create_or_update(
+      name: 'Test Job1',
+      timeplan: {
+        days: {
+          Mon: true,
+          Tue: false,
+          Wed: false,
+          Thu: false,
+          Fri: true,
+          Sat: false,
+          Sun: false,
+        },
+        hours: {
+          0 => true,
+          1 => false,
+          2 => false,
+          3 => false,
+          4 => false,
+          5 => false,
+          6 => false,
+          7 => false,
+          8 => false,
+          9 => false,
+          10 => true,
+          11 => false,
+          12 => false,
+          13 => false,
+          14 => false,
+          15 => false,
+          16 => false,
+          17 => false,
+          18 => false,
+          19 => false,
+          20 => false,
+          21 => false,
+          22 => false,
+          23 => false,
+        },
+        minutes: {
+          0 => true,
+          10 => false,
+          20 => false,
+          30 => false,
+          40 => true,
+          50 => false,
+        },
+      },
+      condition: {
+        'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
+        'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
+      },
+      perform: {
+        'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
+      },
+      disable_notification: true,
+      last_run_at: nil,
+      active: true,
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+    )
+
+    time_now = Time.zone.parse('2016-03-17 23:51:23 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 00:00:00 UTC', next_run_at.to_s)
+
+    job1.last_run_at = Time.zone.parse('2016-03-17 23:45:01 UTC')
+    job1.save
+    time_now = Time.zone.parse('2016-03-17 23:51:23 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 00:00:00 UTC', next_run_at.to_s)
+
+    job1.last_run_at = Time.zone.parse('2016-03-17 23:59:01 UTC')
+    job1.save
+    time_now = Time.zone.parse('2016-03-17 23:59:23 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-18 00:40:00 UTC', next_run_at.to_s)
+
+    time_now = Time.zone.parse('2016-03-17 23:59:23 UTC')
+    assert_not(job1.in_timeplan?(time_now))
+
+    time_now = Time.zone.parse('2016-03-18 00:01:23 UTC')
+    assert(job1.in_timeplan?(time_now))
+
+  end
+
+  test 'case 5' do
+
+    # create jobs
+    job1 = Job.create_or_update(
+      name: 'Test Job1',
+      timeplan: {
+        days: {
+          Mon: true,
+          Tue: false,
+          Wed: false,
+          Thu: false,
+          Fri: false,
+          Sat: false,
+          Sun: false,
+        },
+        hours: {
+          '0' => true,
+          '1' => false,
+          '2' => false,
+          '3' => false,
+          '4' => false,
+          '5' => false,
+          '6' => false,
+          '7' => false,
+          '8' => false,
+          '9' => false,
+          '10' => false,
+          '11' => false,
+          '12' => false,
+          '13' => false,
+          '14' => false,
+          '15' => false,
+          '16' => false,
+          '17' => false,
+          '18' => false,
+          '19' => false,
+          '20' => false,
+          '21' => false,
+          '22' => false,
+          '23' => false,
+        },
+        minutes: {
+          '0' => true,
+          '10' => false,
+          '20' => false,
+          '30' => false,
+          '40' => false,
+          '50' => false,
+        },
+      },
+      condition: {
+        'ticket.state_id' => { 'operator' => 'is', 'value' => [Ticket::State.lookup(name: 'new').id.to_s, Ticket::State.lookup(name: 'open').id.to_s] },
+        'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
+      },
+      perform: {
+        'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
+      },
+      disable_notification: true,
+      last_run_at: nil,
+      active: true,
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+    )
+
+    time_now = Time.zone.parse('2016-03-17 23:51:23 UTC')
+    next_run_at = job1.next_run_at_calculate(time_now)
+    assert_equal('2016-03-21 00:00:00 UTC', next_run_at.to_s)
 
   end
 

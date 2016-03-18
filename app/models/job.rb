@@ -6,8 +6,8 @@ class Job < ApplicationModel
   store     :perform
   validates :name, presence: true
 
-  before_create :updated_matching
-  before_update :updated_matching
+  before_create :updated_matching, :update_next_run_at
+  before_update :updated_matching, :update_next_run_at
 
   notify_clients_support
 
@@ -37,21 +37,31 @@ class Job < ApplicationModel
 
       if tickets
         tickets.each do |ticket|
-          logger.debug "Perform job #{job.perform.inspect} in Ticket.find(#{ticket.id})"
-          changed = false
-          job.perform.each do |key, value|
-            (object_name, attribute) = key.split('.', 2)
-            raise "Unable to update object #{object_name}.#{attribute}, only can update tickets!" if object_name != 'ticket'
 
-            next if ticket[attribute].to_s == value['value'].to_s
-            changed = true
+          # use transaction
+          ActiveRecord::Base.transaction do
+            UserInfo.current_user_id = 1
 
-            ticket[attribute] = value['value']
-            logger.debug "set #{object_name}.#{attribute} = #{value['value'].inspect}"
+            logger.debug "Perform job #{job.perform.inspect} in Ticket.find(#{ticket.id})"
+            changed = false
+            job.perform.each do |key, value|
+              (object_name, attribute) = key.split('.', 2)
+              raise "Unable to update object #{object_name}.#{attribute}, only can update tickets!" if object_name != 'ticket'
+
+              next if ticket[attribute].to_s == value['value'].to_s
+              changed = true
+
+              ticket[attribute] = value['value']
+              logger.debug "set #{object_name}.#{attribute} = #{value['value'].inspect}"
+            end
+            next if !changed
+            ticket.save
+
+            # execute ticket notification events
+            if !job.disable_notification
+              Observer::Ticket::Notification.transaction
+            end
           end
-          next if !changed
-          ticket.updated_by_id = 1
-          ticket.save
         end
       end
 
@@ -63,6 +73,7 @@ class Job < ApplicationModel
   end
 
   def executable?
+    return false if !active
 
     # only execute jobs, older then 1 min, to give admin posibility to change
     return false if updated_at > Time.zone.now - 1.minute
@@ -74,8 +85,7 @@ class Job < ApplicationModel
     true
   end
 
-  def in_timeplan?
-    time    = Time.zone.now
+  def in_timeplan?(time = Time.zone.now)
     day_map = {
       0 => 'Sun',
       1 => 'Mon',
@@ -106,10 +116,115 @@ class Job < ApplicationModel
     ticket_count || 0
   end
 
+  def next_run_at_calculate(time = Time.zone.now)
+    if last_run_at
+      diff = time - last_run_at
+      if diff > 0
+        time = time + 10.minutes
+      end
+    end
+    day_map = {
+      0 => 'Sun',
+      1 => 'Mon',
+      2 => 'Tue',
+      3 => 'Wed',
+      4 => 'Thu',
+      5 => 'Fri',
+      6 => 'Sat',
+    }
+    return nil if !active
+    return nil if !timeplan['days']
+    return nil if !timeplan['hours']
+    return nil if !timeplan['minutes']
+
+    # loop week days
+    (0..7).each do |day_counter|
+      time_to_check = nil
+      day_to_check = if day_counter == 0
+                       time
+                     else
+                       time + 1.day
+                     end
+      if !timeplan['days'][day_map[day_to_check.wday]]
+
+        # start on next day at 00:00:00
+        time = day_to_check - day_to_check.sec.seconds
+        time = time - day_to_check.min.minutes
+        time = time - day_to_check.hour.hours
+        next
+      end
+
+      min = day_to_check.min
+      if min < 9
+        min = 0
+      elsif min < 20
+        min = 10
+      elsif min < 30
+        min = 20
+      elsif min < 40
+        min = 30
+      elsif min < 50
+        min = 40
+      elsif min < 60
+        min = 50
+      end
+
+      # move to [0-5]0:00 time stamps
+      day_to_check = day_to_check - day_to_check.min.minutes + min.minutes
+      day_to_check = day_to_check - day_to_check.sec.seconds
+
+      # loop minutes till next full hour
+      if day_to_check.min != 0
+        (0..5).each do |minute_counter|
+          if minute_counter != 0
+            break if day_to_check.min == 0
+            day_to_check = day_to_check + 10.minutes
+          end
+          next if !timeplan['hours'][day_to_check.hour] && !timeplan['hours'][day_to_check.hour.to_s]
+          next if !timeplan['minutes'][match_minutes(day_to_check.min)] && !timeplan['minutes'][match_minutes(day_to_check.min).to_s]
+          return day_to_check
+        end
+      end
+
+      # loop hours
+      hour_to_check = nil
+      (0..23).each do |hour_counter|
+        hour_to_check = day_to_check + hour_counter.hours
+
+        # start on next day
+        if hour_to_check.day != day_to_check.day
+          time = day_to_check - day_to_check.hour.hours
+          break
+        end
+
+        # ignore not configured hours
+        next if !timeplan['hours'][hour_to_check.hour] && !timeplan['hours'][hour_to_check.hour.to_s]
+        return nil if !hour_to_check
+
+        # loop minutes
+        minute_to_check = nil
+        (0..5).each do |minute_counter|
+          minute_to_check = hour_to_check + minute_counter.minutes * 10
+          next if !timeplan['minutes'][match_minutes(minute_to_check.min)] && !timeplan['minutes'][match_minutes(minute_to_check.min).to_s]
+          time_to_check = minute_to_check
+          break
+        end
+        next if !minute_to_check
+        return time_to_check
+      end
+
+    end
+    nil
+  end
+
   private
 
   def updated_matching
     self.matching = matching_count
+  end
+
+  def update_next_run_at
+    self.next_run_at = next_run_at_calculate
   end
 
   def match_minutes(minutes)
