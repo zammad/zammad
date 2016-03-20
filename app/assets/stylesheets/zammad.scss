@@ -3654,6 +3654,8 @@ footer {
   }
 
   .popover--notifications {
+    left: $navigationWidth;
+    margin: 8px 2px;
     min-height: 91px;
     width: auto;
     max-width: 400px;
@@ -3667,6 +3669,7 @@ footer {
 
     .arrow {
       top: 23px !important;
+      left: -11px;
     }
 
     .popover-content {

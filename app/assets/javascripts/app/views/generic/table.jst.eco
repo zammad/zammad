@@ -56,7 +56,7 @@
       <td class="table-draggable"><%- @Icon('draggable') %></td>
     <% end %>
     <% if @checkbox: %>
-      <td class="table-checkbox">
+      <td class="table-checkbox js-checkbox-field">
         <label class="checkbox-replacement">
           <input type="checkbox" value="<%= object.id %>" name="bulk">
           <%- @Icon('checkbox', 'icon-unchecked') %>
