@@ -153,9 +153,9 @@ class App.OnlineNotificationWidget extends App.Controller
     @toggle.popover('hide')
 
   fetch: =>
-    load = (items) =>
+    load = (data) =>
       @fetchedData = true
-      App.OnlineNotification.refresh(items, { clear: true })
+      App.OnlineNotification.refresh(data.stream, clear: true)
       @updateContent()
     App.OnlineNotification.fetchFull(load)
 

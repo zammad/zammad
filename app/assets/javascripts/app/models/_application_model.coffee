@@ -63,15 +63,15 @@ class App.Model extends Spine.Model
   iconActivity: (user) ->
     ''
 
-  @validate: ( data = {} ) ->
+  @validate: (data = {}) ->
 
     # based on model attrbutes
     if App[ data['model'] ] && App[ data['model'] ].attributesGet
-      attributes = App[ data['model'] ].attributesGet( data['screen'] )
+      attributes = App[ data['model'] ].attributesGet(data['screen'])
 
     # based on custom attributes
     else if data['model'].configure_attributes
-      attributes = App.Model.attributesGet( data['screen'], data['model'].configure_attributes )
+      attributes = App.Model.attributesGet(data['screen'], data['model'].configure_attributes)
 
     # check required_if attributes
     for attributeName, attribute of attributes
@@ -186,9 +186,9 @@ class App.Model extends Spine.Model
 
   @attributesGet: (screen = undefined, attributes = false) ->
     if !attributes
-      attributes = clone( App[ @.className ].configure_attributes, true )
+      attributes = clone(App[ @.className ].configure_attributes, true)
     else
-      attributes = clone( attributes, true )
+      attributes = clone(attributes, true)
 
     # in case if no configure_attributes exist
     return {} if !attributes
@@ -198,13 +198,13 @@ class App.Model extends Spine.Model
     if screen
       for attribute in attributes
         if attribute.screen
-          if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty( attribute.screen[ screen ] )
+          if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty(attribute.screen[ screen ])
             for item, value of attribute.screen[ screen ]
               attribute[item] = value
             attributesNew[ attribute.name ] = attribute
 
     # if no screen is given or no attribute has this screen - use default attributes
-    if !screen || _.isEmpty( attributesNew )
+    if !screen || _.isEmpty(attributesNew)
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
@@ -238,11 +238,11 @@ class App.Model extends Spine.Model
       subscribeId = App[ @className ].subscribe_item(id, callback)
 
     # execute if object already exists
-    if !force && App[ @className ].exists( id )
-      data = App[ @className ].find( id )
-      data = @_fillUp( data )
+    if !force && App[ @className ].exists(id)
+      data = App[ @className ].find(id)
+      data = @_fillUp(data)
       if callback
-        callback( data, 'full' )
+        callback(data, 'full')
       return subscribeId
 
     # store callback and requested id
@@ -270,16 +270,16 @@ class App.Model extends Spine.Model
 
           # full / load assets
           if data.assets
-            App.Collection.loadAssets( data.assets )
+            App.Collection.loadAssets(data.assets)
 
           # find / load object
           else
-            App[ @className ].refresh( data )
+            App[ @className ].refresh(data)
 
           # execute callbacks
           if @FULL_CALLBACK[ data.id ]
             for key, callback of @FULL_CALLBACK[ data.id ]
-              callback( @_fillUp( App[ @className ].find( data.id ) ) )
+              callback( @_fillUp( App[ @className ].find(data.id) ) )
               delete @FULL_CALLBACK[ data.id ][ key ]
             if _.isEmpty @FULL_CALLBACK[ data.id ]
               delete @FULL_CALLBACK[ data.id ]
@@ -297,11 +297,13 @@ class App.Model extends Spine.Model
   params =
     initFetch: true # fetch initial collection
 
-  @subscribeId = App.Model.subscribe( methodWhichIsCalledAtLocalOrServerSiteChange )
+  @subscribeId = App.Model.subscribe(methodWhichIsCalledAtLocalOrServerSiteChange)
 
   ###
 
   @subscribe: (callback, param = {}) ->
+
+    # global bind to changes
     if !@SUBSCRIPTION_COLLECTION
       @SUBSCRIPTION_COLLECTION = {}
 
@@ -320,7 +322,10 @@ class App.Model extends Spine.Model
         events
         =>
           App.Log.debug('Model', "server notify collection change #{@className}")
-          @fetch( {}, { clear: true } )
+          @fetchFull(
+            ->
+            clear: true
+          )
 
         'Collection::Subscribe::' + @className
       )
@@ -334,9 +339,12 @@ class App.Model extends Spine.Model
         @one 'refresh', (collection) =>
           @initFetchActive = true
           callback(collection)
-        @fetch( {}, { clear: true } )
+        @fetchFull(
+          ->
+          clear: true
+        )
       else
-        callback( @all() )
+        callback(@all())
 
     # return key
     key
@@ -347,7 +355,7 @@ class App.Model extends Spine.Model
     console.log("Item has changed", changedItem, localOrServer)
 
   model = App.Model.find(1)
-  @subscribeId = model.subscribe( methodWhichIsCalledAtLocalOrServerSiteChange )
+  @subscribeId = model.subscribe(methodWhichIsCalledAtLocalOrServerSiteChange)
 
   ###
 
@@ -373,7 +381,7 @@ class App.Model extends Spine.Model
           App.Log.debug('Model', "local change #{@className}", items)
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
-              item = App[ @className ]._fillUp( item )
+              item = App[ @className ]._fillUp(item)
               callback(item, 'change')
       )
       @bind(
@@ -386,7 +394,7 @@ class App.Model extends Spine.Model
           App.Log.debug('Model', "local remove #{@className}", items)
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
-              item = App[ @className ]._fillUp( item )
+              item = App[ @className ]._fillUp(item)
               callback(item, 'remove')
       )
 
@@ -405,7 +413,7 @@ class App.Model extends Spine.Model
               # only trigger callbacks if object has changed
               if !@changeTable[key] || @changeTable[key] isnt item.updated_at
                 @changeTable[key] = item.updated_at
-                item = App[ @className ]._fillUp( item )
+                item = App[ @className ]._fillUp(item)
                 callback(item, 'refresh')
       )
 
@@ -416,14 +424,13 @@ class App.Model extends Spine.Model
         (item) =>
           if @SUBSCRIPTION_ITEM && @SUBSCRIPTION_ITEM[ item.id ]
             genericObject = undefined
-            if App[ @className ].exists( item.id )
-              genericObject = App[ @className ].find( item.id )
+            if App[ @className ].exists(item.id)
+              genericObject = App[ @className ].find(item.id)
             App.Log.debug('Model', "server change on #{@className}.find(#{item.id}) #{item.updated_at}")
             callback = =>
               if !genericObject || new Date(item.updated_at) >= new Date(genericObject.updated_at)
                 App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
-                @full( item.id, false, true )
-
+                @full(item.id, false, true)
             App.Delay.set(callback, 500, item.id, "full-#{@className}")
 
         'Item::Subscribe::' + @className
@@ -460,10 +467,16 @@ class App.Model extends Spine.Model
 
   fetch full collection (with assets)
 
-  App.Model.fetchFull( @callback )
+  App.Model.fetchFull(@callback)
+
+  App.Model.fetchFull(
+    @callback
+    clear: true
+  )
+
 
   ###
-  @fetchFull: (callback) ->
+  @fetchFull: (callback, params = {}) ->
     url = "#{@url}/?full=true"
     App.Log.debug('Model', "fetchFull collection #{@className}", url)
     App.Ajax.request(
@@ -474,16 +487,20 @@ class App.Model extends Spine.Model
 
         App.Log.debug('Model', "got fetchFull collection #{@className}", data)
 
+        # clear collection
+        if params.clear
+          App[@className].deleteAll()
+
         # full / load assets
         if data.assets
-          App.Collection.loadAssets( data.assets )
+          App.Collection.loadAssets(data.assets)
 
         # find / load object
         else
-          App[ @className ].refresh( data )
+          App[@className].refresh(data)
 
-        # execute callbacks
-        callback(data.stream)
+        if callback
+          callback(data)
 
       error: (xhr, statusText, error) ->
         App.Log.error('Model', statusText, error, url)
@@ -494,7 +511,7 @@ class App.Model extends Spine.Model
       for id, keys of @SUBSCRIPTION_ITEM
         return false if !_.isEmpty(keys)
 
-    if @SUBSCRIPTION_COLLECTION && !_.isEmpty( @SUBSCRIPTION_COLLECTION )
+    if @SUBSCRIPTION_COLLECTION && !_.isEmpty(@SUBSCRIPTION_COLLECTION)
       return false
 
     return true
@@ -502,8 +519,8 @@ class App.Model extends Spine.Model
   @_fillUp: (data, classNames = []) ->
 
     # fill up via relations
-    return data if !App[ @className ].configure_attributes
-    for attribute in App[ @className ].configure_attributes
+    return data if !App[@className].configure_attributes
+    for attribute in App[@className].configure_attributes
 
       # lookup relations
       if attribute.relation
@@ -512,19 +529,19 @@ class App.Model extends Spine.Model
         if !_.contains(classNames, @className)
 
           # only if relation model exists
-          if App[ attribute.relation ]
-            withoutId = attribute.name.substr( 0, attribute.name.length - 3 )
-            if attribute.name.substr( attribute.name.length - 3, attribute.name.length ) is '_id'
+          if App[attribute.relation]
+            withoutId = attribute.name.substr(0, attribute.name.length - 3)
+            if attribute.name.substr(attribute.name.length - 3, attribute.name.length) is '_id'
               if data[attribute.name]
 
                 # only if relation record exists in collection
-                if App[ attribute.relation ].exists( data[attribute.name] )
-                  item = App[ attribute.relation ].find( data[attribute.name] )
-                  item = App[ attribute.relation ]._fillUp(item, classNames.concat(@className))
-                  data[ withoutId ] = item
+                if App[ attribute.relation ].exists(data[attribute.name])
+                  item = App[attribute.relation].find(data[attribute.name])
+                  item = App[attribute.relation]._fillUp(item, classNames.concat(@className))
+                  data[withoutId] = item
                 else
                   if !attribute.do_not_log
-                    console.log("ERROR, cant find #{ attribute.name } App.#{ attribute.relation }.find(#{ data[attribute.name] }) for '#{ data.constructor.className }' #{ data.displayName() }")
+                    console.log("ERROR, cant find #{attribute.name} App.#{attribute.relation}.find(#{data[attribute.name]}) for '#{data.constructor.className}' #{data.displayName()}")
     data
 
   ###

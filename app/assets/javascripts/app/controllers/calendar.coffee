@@ -12,26 +12,17 @@ class Index extends App.ControllerContent
     # check authentication
     return if !@authenticate(false, 'Admin')
 
-    @interval(@load, 60000)
-    #@load()
+    @subscribeId = App.Calendar.subscribe(@render)
 
-  load: =>
+    callback = (data) =>
+      App.Config.set('ical_feeds', data.ical_feeds)
+      App.Config.set('timezones', data.timezones)
+      @stopLoading()
+      @render()
     @startLoading()
-    @ajax(
-      id:   'calendar_index'
-      type: 'GET'
-      url:  @apiPath + '/calendars'
-      processData: true
-      success: (data, status, xhr) =>
-
-        App.Config.set('ical_feeds', data.ical_feeds)
-        App.Config.set('timezones', data.timezones)
-
-        # load assets
-        App.Collection.loadAssets(data.assets)
-
-        @stopLoading()
-        @render(data)
+    App.Calendar.fetchFull(
+      callback
+      clear: true
     )
 
   render: =>

@@ -542,7 +542,7 @@ class App.Controller extends Spine.Controller
         el.html App.view('generic/page_loading')()
       else
         @html App.view('generic/page_loading')()
-    @initLoadingDoneDelay = @delay(later, 2800)
+    @initLoadingDoneDelay = @delay(later, 1800)
 
   stopLoading: =>
     return if !@initLoadingDoneDelay
