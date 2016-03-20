@@ -17,6 +17,7 @@ class App.OnlineNotificationWidget extends App.Controller
     '.js-mark': 'mark'
     '.js-item': 'item'
     '.js-content': 'content'
+    '.js-header': 'header'
 
   constructor: ->
     super
@@ -50,7 +51,7 @@ class App.OnlineNotificationWidget extends App.Controller
           return
 
     if @access()
-      @subscribeId = App.OnlineNotification.subscribe(@show)
+      @subscribeId = App.OnlineNotification.subscribe(@updateContent)
 
     @bind('ui:reshow', =>
       @show()
@@ -58,6 +59,8 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
     $(window).on 'click.notifications', @hide
+
+    @updateContent()
 
   release: ->
     $(window).off 'click.notifications'
@@ -131,6 +134,7 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
   updateHeight: ->
+
     # set height of notification popover
     heightApp               = $('#app').height()
     heightPopoverSpacer     = 22
@@ -150,7 +154,7 @@ class App.OnlineNotificationWidget extends App.Controller
     load = (data) =>
       @fetchedData = true
       App.OnlineNotification.refresh(data.stream, clear: true)
-      @show()
+      @updateContent()
     App.OnlineNotification.fetchFull(load)
 
   toggle: =>
@@ -159,8 +163,7 @@ class App.OnlineNotificationWidget extends App.Controller
     else
       @show()
 
-  show: =>
-    @shown = true
+  updateContent: =>
     if !@Session.get()
       @content.html('')
       return
@@ -197,19 +200,25 @@ class App.OnlineNotificationWidget extends App.Controller
       count: @count
     )
 
+    return if !@shown
+    @show()
+
+  show: =>
+    @shown = true
     @el.show()
+    @updateHeight()
 
   hide: =>
     @shown = false
     @el.hide()
 
-  onItemClick: (event) ->
-    @locationVerify(event)
+  onItemClick: (e) ->
+    @locationVerify(e)
     @hide()
 
-  removeItem: (event) ->
-    event.preventDefault()
-    event.stopPropagation()
+  removeItem: (e) =>
+    e.preventDefault()
+    e.stopPropagation()
     row = $(e.target).closest('.js-item')
     id = row.data('id')
     App.OnlineNotification.destroy(id)
