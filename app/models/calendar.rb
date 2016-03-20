@@ -10,6 +10,8 @@ class Calendar < ApplicationModel
   after_update   :sync_default, :min_one_check
   after_destroy  :min_one_check
 
+  notify_clients_support
+
 =begin
 
 set inital default calendar

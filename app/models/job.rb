@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Job < ApplicationModel
+  load 'job/assets.rb'
+  include Job::Assets
+
   store     :timeplan
   store     :condition
   store     :perform

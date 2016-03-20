@@ -357,8 +357,8 @@ class CreateTicket < ActiveRecord::Migration
       t.column :update_time,          :integer,                 null: true
       t.column :close_time,           :integer,                 null: true
       t.column :condition,            :string, limit: 5000,     null: true
-      t.column :data,                 :string, limit: 5000,  null: true
-      t.column :timezone,             :string, limit: 50,    null: true
+      t.column :data,                 :string, limit: 5000,     null: true
+      t.column :timezone,             :string, limit: 50,       null: true
       t.column :active,               :boolean,                 null: false, default: true
       t.column :updated_by_id,        :integer,                 null: false
       t.column :created_by_id,        :integer,                 null: false

@@ -6,9 +6,8 @@ class CalendarsController < ApplicationController
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
 
-    assets = {}
-
     # calendars
+    assets = {}
     calendar_ids = []
     Calendar.all.order(:name, :created_at).each {|calendar|
       calendar_ids.push calendar.id
