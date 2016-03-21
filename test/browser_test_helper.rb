@@ -504,9 +504,10 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   select(
-    browser: browser1,
-    css:     '.some_class',
-    value:   'Some Value',
+    browser:      browser1,
+    css:          '.some_class',
+    value:        'Some Value',
+    deselect_all: false, # default false
   )
 
 =end
@@ -535,12 +536,18 @@ class TestCase < Test::Unit::TestCase
     begin
       element  = instance.find_elements(css: params[:css])[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
+      if params[:deselect_all]
+        dropdown.deselect_all
+      end
       dropdown.select_by(:text, params[:value])
       puts "select - #{params.inspect}"
     rescue
       # just try again
       element  = instance.find_elements(css: params[:css])[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
+      if params[:deselect_all]
+        dropdown.deselect_all
+      end
       dropdown.select_by(:text, params[:value])
       puts "select2 - #{params.inspect}"
     end
@@ -1298,33 +1305,48 @@ wait untill text in selector disabppears
     sleep 2
 
     if data[:name]
-      element = instance.find_elements(css: '.modal input[name=name]')[0]
-      element.clear
-      element.send_keys(data[:name])
+      set(
+        browser:  instance,
+        css:      '.modal input[name=name]',
+        value:    data[:name],
+        mute_log: true,
+      )
     end
     if data[:role]
-      element = instance.find_elements(css: '.modal select[name="role_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:role])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="role_id"]',
+        value:    data[:role],
+        mute_log: true,
+      )
     end
 
     if data[:selector]
       data[:selector].each {|key, value|
-        element = instance.find_elements(css: '.modal .ticket_selector .js-attributeSelector select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, key)
+        select(
+          browser:  instance,
+          css:      '.modal .ticket_selector .js-attributeSelector select',
+          value:    key,
+          mute_log: true,
+        )
         sleep 0.5
-        element = instance.find_elements(css: '.modal .ticket_selector .js-value select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.deselect_all
-        dropdown.select_by(:text, value)
+        select(
+          browser:      instance,
+          css:          '.modal .ticket_selector .js-value select',
+          value:        value,
+          deselect_all: true,
+          mute_log:     true,
+        )
       }
     end
 
     if data['order::direction']
-      element = instance.find_elements(css: '.modal select[name="order::direction"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data['order::direction'])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="order::direction"]',
+        value:    data['order::direction'],
+        mute_log: true,
+      )
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
@@ -1379,33 +1401,48 @@ wait untill text in selector disabppears
     sleep 2
 
     if data[:name]
-      element = instance.find_elements(css: '.modal input[name=name]')[0]
-      element.clear
-      element.send_keys(data[:name])
+      set(
+        browser:  instance,
+        css:      '.modal input[name=name]',
+        value:    data[:name],
+        mute_log: true,
+      )
     end
     if data[:role]
-      element = instance.find_elements(css: '.modal select[name="role_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:role])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="role_id"]',
+        value:    data[:role],
+        mute_log: true,
+      )
     end
 
     if data[:selector]
       data[:selector].each {|key, value|
-        element = instance.find_elements(css: '.modal .ticket_selector .js-attributeSelector select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, key)
-        instance.execute_script("$('#content .modal .ticket_selector .js-attributeSelector select').first().trigger('change')")
-        element = instance.find_elements(css: '.modal .ticket_selector .js-value select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.deselect_all
-        dropdown.select_by(:text, value)
+        select(
+          browser:  instance,
+          css:      '.modal .ticket_selector .js-attributeSelector select',
+          value:    key,
+          mute_log: true,
+        )
+        sleep 0.5
+        select(
+          browser:      instance,
+          css:          '.modal .ticket_selector .js-value select',
+          value:        value,
+          deselect_all: true,
+          mute_log:     true,
+        )
       }
     end
 
     if data['order::direction']
-      element = instance.find_elements(css: '.modal select[name="order::direction"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data['order::direction'])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="order::direction"]',
+        value:    data['order::direction'],
+        mute_log: true,
+      )
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
@@ -1481,31 +1518,40 @@ wait untill text in selector disabppears
         # check count of agents, should be only 1 / - selection on init screen
         count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
         assert_equal(1, count, 'check if owner selection is empty per default')
-
-        element = instance.find_elements(css: '.active .newTicket select[name="group_id"]')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, data[:group])
+        select(
+          browser:  instance,
+          css:      '.active .newTicket select[name="group_id"]',
+          value:    data[:group],
+          mute_log: true,
+        )
         sleep 0.2
       end
     end
     if data[:priority]
-      element = instance.find_elements(css: '.active .newTicket select[name="priority_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:priority])
-      sleep 0.2
+      select(
+        browser:  instance,
+        css:      '.active .newTicket select[name="priority_id"]',
+        value:    data[:priority],
+        mute_log: true,
+      )
     end
     if data[:title]
-      element = instance.find_elements(css: '.active .newTicket input[name="title"]')[0]
-      element.clear
-      element.send_keys(data[:title])
-      sleep 0.2
+      set(
+        browser:  instance,
+        css:      '.active .newTicket input[name="title"]',
+        value:    data[:title],
+        clear:    true,
+        mute_log: true,
+      )
     end
     if data[:body]
-      #instance.execute_script('$(".active .newTicket div[data-name=body]").focus()')
-      sleep 0.5
-      element = instance.find_elements(css: '.active .newTicket div[data-name=body]')[0]
-      element.clear
-      element.send_keys(data[:body])
+      set(
+        browser:  instance,
+        css:      '.active .newTicket div[data-name=body]',
+        value:    data[:body],
+        clear:    true,
+        mute_log: true,
+      )
 
       # it's not working stable via selenium, use js
       value = instance.find_elements(css: '.content .newTicket div[data-name=body]')[0].text
@@ -1675,11 +1721,12 @@ wait untill text in selector disabppears
 
     end
     if data[:body]
-      #instance.execute_script('$(".content.active div[data-name=body]").focus()')
-      sleep 0.5
-      element = instance.find_elements(css: '.content.active div[data-name=body]')[0]
-      element.clear
-      element.send_keys(data[:body])
+      set(
+        browser:  instance,
+        css:      '.content.active div[data-name=body]',
+        value:    data[:body],
+        mute_log: true,
+      )
 
       # it's not working stable via selenium, use js
       value = instance.find_elements(css: '.content.active div[data-name=body]')[0].text
@@ -1702,26 +1749,32 @@ wait untill text in selector disabppears
         assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
 
       else
-
-        element = instance.find_elements(css: '.active .sidebar select[name="group_id"]')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, data[:group])
+        select(
+          browser:  instance,
+          css:      '.active .sidebar select[name="group_id"]',
+          value:    data[:group],
+          mute_log: true,
+        )
         sleep 0.2
       end
     end
 
     if data[:priority]
-      element = instance.find_elements(css: '.active .sidebar select[name="priority_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:priority])
-      sleep 0.2
+      select(
+        browser:  instance,
+        css:      '.active .sidebar select[name="priority_id"]',
+        value:    data[:priority],
+        mute_log: true,
+      )
     end
 
     if data[:state]
-      element = instance.find_elements(css: '.active .sidebar select[name="state_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:state])
-      sleep 0.2
+      select(
+        browser:  instance,
+        css:      '.active .sidebar select[name="state_id"]',
+        value:    data[:state],
+        mute_log: true,
+      )
     end
 
     if data[:state] || data[:group] || data[:body]
