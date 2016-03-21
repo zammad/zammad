@@ -1,7 +1,7 @@
 class App.OnlineNotificationWidget extends App.Controller
   alreadyShown: {}
   shown: false
-  className: 'popover popover--notifications right'
+  className: 'popover popover--notifications right js-notificationsContainer'
   attributes:
     role: 'tooltip'
 
@@ -13,7 +13,6 @@ class App.OnlineNotificationWidget extends App.Controller
     'keydown': 'listNavigate'
 
   elements:
-    '.js-notificationsContainer': 'container'
     '.js-mark': 'mark'
     '.js-item': 'item'
     '.js-content': 'content'
@@ -144,9 +143,6 @@ class App.OnlineNotificationWidget extends App.Controller
 
     if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
       heightPopoverContent = heightApp - heightPopoverHeader - heightPopoverSpacer
-      @container.addClass('is-overflowing')
-    else
-      @container.removeClass('is-overflowing')
 
     @content.css('height', heightPopoverContent)
 
