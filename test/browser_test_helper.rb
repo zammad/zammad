@@ -2446,7 +2446,7 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#channels/groups"]',
+      css:  'a[href="#manage/groups"]',
       mute_log: true,
     )
     click(
