@@ -542,6 +542,8 @@ class TestCase < Test::Unit::TestCase
       dropdown.select_by(:text, params[:value])
       puts "select - #{params.inspect}"
     rescue
+      sleep 0.5
+
       # just try again
       element  = instance.find_elements(css: params[:css])[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
@@ -1725,6 +1727,7 @@ wait untill text in selector disabppears
         browser:  instance,
         css:      '.content.active div[data-name=body]',
         value:    data[:body],
+        no_click: true,
         mute_log: true,
       )
 
