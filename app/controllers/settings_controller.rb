@@ -6,14 +6,6 @@ class SettingsController < ApplicationController
   # GET /settings
   def index
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
-
-    # only serve requested items
-    if params[:area]
-      model_index_render_result( Setting.where(area: params[:area]) )
-      return
-    end
-
-    # serve all items
     model_index_render(Setting, params)
   end
 

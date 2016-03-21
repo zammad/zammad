@@ -5,20 +5,7 @@ class App.SettingsArea extends App.Controller
     # check authentication
     return if !@authenticate()
 
-    @load()
-
-  load: ->
-    @startLoading()
-    @ajax(
-      id:    "setting_area_#{@area}"
-      type:  'GET'
-      url:   "#{@apiPath}/settings/area/#{@area}"
-      processData: true
-      success: (data, status, xhr) =>
-        @stopLoading()
-        App.Collection.load( sessionStorage: false, type: 'Setting', data: data )
-        @render()
-    )
+    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
   render: =>
 
