@@ -10,7 +10,6 @@ class App.OnlineNotificationWidget extends App.Controller
     'click .js-item': 'hide'
     'click .js-remove': 'removeItem'
     'click .js-locationVerify': 'onItemClick'
-    'keydown': 'listNavigate'
 
   elements:
     '.js-mark': 'mark'
@@ -58,11 +57,13 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
     $(window).on 'click.notifications', @hide
+    $(window).on 'keydown.notifications', @listNavigate
 
     @updateContent()
 
   release: ->
     $(window).off 'click.notifications'
+    $(window).off 'keydown.notifications'
     App.OnlineNotification.unsubscribe(@subscribeId)
     super
 
@@ -99,7 +100,7 @@ class App.OnlineNotificationWidget extends App.Controller
         current.removeClass('is-hover')
         next.addClass('is-hover')
     else
-      prev = current.prev('.is-item')
+      prev = current.prev('.js-item')
       if prev.size()
         current.removeClass('is-hover')
         prev.addClass('is-hover')
@@ -138,7 +139,7 @@ class App.OnlineNotificationWidget extends App.Controller
     heightApp               = $('#app').height()
     heightPopoverSpacer     = 22
     heightPopoverHeader     = @header.outerHeight(true)
-    heightPopoverContent    = 0
+    heightPopoverContent    = 30
     @item.each -> heightPopoverContent += @clientHeight
 
     if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
