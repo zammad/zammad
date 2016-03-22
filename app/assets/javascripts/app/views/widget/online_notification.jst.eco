@@ -1,6 +1,6 @@
 <div class="arrow js-arrow"></div>
 <div class="popover-notificationsHeader js-header">
-  <div class="popover-title"><%- @T('Notifications') %><span class='popover-notificationsCounter js-notificationsCounter'><%- @count %></span></div>
+  <div class="popover-title"><%- @T('Notifications') %> <span class='popover-notificationsCounter js-notificationsCounter'><%- @count %></span></div>
   <a class="btn btn--text btn--subtle js-mark<%- ' hidden' if !@count %>"><%- @T( 'Mark all as read' ) %></a>
 </div>
 <div class="popover-content js-content">

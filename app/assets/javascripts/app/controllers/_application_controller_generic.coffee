@@ -124,7 +124,10 @@ class App.ControllerGenericIndex extends App.Controller
 
     # fetch all
     if !@disableInitFetch
-      App[ @genericObject ].fetch()
+      App[ @genericObject ].fetchFull(
+        ->
+        clear: true
+      )
 
   release: =>
     if @subscribeId

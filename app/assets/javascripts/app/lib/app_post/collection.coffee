@@ -85,16 +85,23 @@ class _collectionSingleton extends Spine.Module
       return
 
     # load data from object
+    listToRefresh = []
     for key, object of params.data
       if !params.refresh && appObject
+        @log 'debug', 'refrest try', params.type, key
 
         # check if new object is newer, just load newer objects
         if object.updated_at && appObject.exists(key)
           exists = appObject.find(key)
           if exists.updated_at
             if exists.updated_at < object.updated_at
-              appObject.refresh(object)
+              listToRefresh.push object
+              @log 'debug', 'refrest newser', params.type, key
           else
-            appObject.refresh(object)
+            listToRefresh.push object
+            @log 'debug', 'refrest try no updated_at', params.type, key
         else
-          appObject.refresh(object)
+          listToRefresh.push object
+          @log 'debug', 'refrest new', params.type, key
+    return if _.isEmpty(listToRefresh)
+    appObject.refresh(listToRefresh)

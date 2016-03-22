@@ -1131,6 +1131,48 @@ get assets of object list
     assets
   end
 
+=begin
+
+get assets and record_ids of selector
+
+  model = Model.find(123)
+
+  assets = model.assets_of_selector('attribute_name_of_selector', assets)
+
+=end
+
+  def assets_of_selector(selector, assets = {})
+
+    # get assets of condition
+    models = Models.all
+    send(selector).each {|item, content|
+      attribute = item.split(/\./)
+      next if !attribute[1]
+      attribute_class = attribute[0].to_classname.constantize
+      reflection = attribute[1].sub(/_id$/, '')
+      #reflection = reflection.to_sym
+      next if !models[attribute_class]
+      next if !models[attribute_class][:reflections]
+      next if !models[attribute_class][:reflections][reflection]
+      next if !models[attribute_class][:reflections][reflection].klass
+      attribute_ref_class = models[attribute_class][:reflections][reflection].klass
+      if content['value'].class == Array
+        content['value'].each {|item_id|
+          attribute_object = attribute_ref_class.find_by(id: item_id)
+          if attribute_object
+            assets = attribute_object.assets(assets)
+          end
+        }
+      else
+        attribute_object = attribute_ref_class.find_by(id: content['value'])
+        if attribute_object
+          assets = attribute_object.assets(assets)
+        end
+      end
+    }
+    assets
+  end
+
   private
 
   def attachments_buffer

@@ -1,7 +1,7 @@
 class App.OnlineNotificationWidget extends App.Controller
   alreadyShown: {}
   shown: false
-  className: 'popover popover--notifications right'
+  className: 'popover popover--notifications right js-notificationsContainer'
   attributes:
     role: 'tooltip'
 
@@ -10,13 +10,13 @@ class App.OnlineNotificationWidget extends App.Controller
     'click .js-item': 'hide'
     'click .js-remove': 'removeItem'
     'click .js-locationVerify': 'onItemClick'
-    'keydown': 'listNavigate'
+    'click': 'stopPropagation'
 
   elements:
-    '.js-notificationsContainer': 'container'
     '.js-mark': 'mark'
     '.js-item': 'item'
     '.js-content': 'content'
+    '.js-header': 'header'
 
   constructor: ->
     super
@@ -50,7 +50,7 @@ class App.OnlineNotificationWidget extends App.Controller
           return
 
     if @access()
-      @subscribeId = App.OnlineNotification.subscribe(@show)
+      @subscribeId = App.OnlineNotification.subscribe(@updateContent)
 
     @bind('ui:reshow', =>
       @show()
@@ -58,9 +58,13 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
     $(window).on 'click.notifications', @hide
+    $(window).on 'keydown.notifications', @listNavigate
+
+    @updateContent()
 
   release: ->
     $(window).off 'click.notifications'
+    $(window).off 'keydown.notifications'
     App.OnlineNotification.unsubscribe(@subscribeId)
     super
 
@@ -97,7 +101,7 @@ class App.OnlineNotificationWidget extends App.Controller
         current.removeClass('is-hover')
         next.addClass('is-hover')
     else
-      prev = current.prev('.is-item')
+      prev = current.prev('.js-item')
       if prev.size()
         current.removeClass('is-hover')
         prev.addClass('is-hover')
@@ -131,29 +135,29 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
   updateHeight: ->
+
     # set height of notification popover
     heightApp               = $('#app').height()
     heightPopoverSpacer     = 22
     heightPopoverHeader     = @header.outerHeight(true)
-    heightPopoverContent    = 0
     isOverflowing           = false
-    @item.each ->
+    @item.each (i, el) =>
       # accumulate height of items
-      heightPopoverContent += @clientHeight
+      heightPopoverContent += el.clientHeight
 
       if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
-        heightPopoverContent = heightApp - heightPopoverHeader - heightPopoverSpacer
+        @content.css 'height', heightApp - heightPopoverHeader - heightPopoverSpacer
         isOverflowing = true
         return false # exit .each loop
 
-    @container.toggleClass('is-overflowing', isOverflowing)
-    @content.css('height', heightPopoverContent)
+    @el.toggleClass('is-overflowing', isOverflowing)
+    @content.css 'height', '' if !isOverflowing
 
   fetch: =>
-    load = (items) =>
+    load = (data) =>
       @fetchedData = true
-      App.OnlineNotification.refresh(items, { clear: true })
-      @show()
+      App.OnlineNotification.refresh(data.stream, clear: true)
+      @updateContent()
     App.OnlineNotification.fetchFull(load)
 
   toggle: =>
@@ -162,8 +166,7 @@ class App.OnlineNotificationWidget extends App.Controller
     else
       @show()
 
-  show: =>
-    @shown = true
+  updateContent: =>
     if !@Session.get()
       @content.html('')
       return
@@ -195,23 +198,33 @@ class App.OnlineNotificationWidget extends App.Controller
           )
           App.OnlineNotification.play()
 
-    @html App.view('widget/online_notification')
+    @html App.view('widget/online_notification')(
       items: items
       count: @count
+    )
 
+    return if !@shown
+    @show()
+
+  show: =>
+    @shown = true
     @el.show()
+    @updateHeight()
 
   hide: =>
     @shown = false
     @el.hide()
 
-  onItemClick: (event) ->
-    @locationVerify(event)
+  onItemClick: (e) ->
+    @locationVerify(e)
     @hide()
 
-  removeItem: (event) ->
-    event.preventDefault()
-    event.stopPropagation()
+  stopPropagation: (e) ->
+    e.stopPropagation()
+
+  removeItem: (e) =>
+    e.preventDefault()
+    e.stopPropagation()
     row = $(e.target).closest('.js-item')
     id = row.data('id')
     App.OnlineNotification.destroy(id)
