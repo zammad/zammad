@@ -57,7 +57,6 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
     $(window).on 'click.notifications', @hide
-    $(window).on 'keydown.notifications', @listNavigate
 
     @updateContent()
 
@@ -201,11 +200,13 @@ class App.OnlineNotificationWidget extends App.Controller
     @show()
 
   show: =>
+    $(window).on 'keydown.notifications', @listNavigate
     @shown = true
     @el.show()
     @updateHeight()
 
   hide: =>
+    $(window).off 'keydown.notifications'
     @shown = false
     @el.hide()
 
