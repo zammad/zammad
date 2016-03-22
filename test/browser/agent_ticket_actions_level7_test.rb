@@ -39,7 +39,7 @@ class AgentTicketActionLevel7Test < TestCase
     )
 
     # click reply
-    click( css: '.content.active [data-type="emailReply"]' )
+    click(css: '.content.active [data-type="emailReply"]')
 
     # check body
     watch_for(
@@ -62,13 +62,20 @@ class AgentTicketActionLevel7Test < TestCase
     )
 
     # click reply
-    click( css: '.content.active [data-type="emailReply"]' )
+    click(css: '.content.active [data-type="emailReply"]')
 
     # check body
     watch_for(
       css: '.content.active .js-reset',
       value: '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
+    )
+
+    # check body
+    ticket_verify(
+      data: {
+        body: 'keep me',
+      },
     )
 
   end

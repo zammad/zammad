@@ -413,7 +413,7 @@ class TestCase < Test::Unit::TestCase
       js:       "\$('#{params[:css]}').get(0).scrollIntoView(#{position})",
       mute_log: params[:mute_log]
     )
-    sleep 0.2
+    sleep 0.3
   end
 
 =begin
@@ -1205,7 +1205,7 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
 
     (1..100).each do
-      sleep 0.2
+      sleep 0.1
       begin
         if instance.find_elements(css: '.navigation .tasks .task:first-child')[0]
           instance.mouse.move_to(instance.find_elements(css: '.navigation .tasks .task:first-child')[0])
