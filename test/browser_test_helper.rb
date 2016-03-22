@@ -1336,7 +1336,7 @@ wait untill text in selector disabppears
       css:  '#content a[data-type="new"]',
       mute_log: true,
     )
-
+    sleep 2
     if data[:name]
       set(
         browser:  instance,
