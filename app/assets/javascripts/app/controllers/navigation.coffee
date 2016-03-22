@@ -49,6 +49,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
       else
         @$('.bell').removeClass('show')
 
+  release: =>
+    if @notificationWidget
+      @notificationWidget.remove()
+      @notificationWidget = undefined
+
   renderMenu: =>
     items = @getItems( navbar: @Config.get( 'NavBar' ) )
 
@@ -205,6 +210,8 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @emptyAndClose()
     )
 
+    if @notificationWidget
+      @notificationWidget.remove()
     @notificationWidget = new App.OnlineNotificationWidget()
     $('#app').append @notificationWidget.el
 

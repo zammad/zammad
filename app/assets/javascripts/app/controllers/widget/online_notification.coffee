@@ -44,10 +44,12 @@ class App.OnlineNotificationWidget extends App.Controller
     @bind 'auth', (user) =>
       if !user
         @counterUpdate(0)
-      else
-        if !@access()
-          @counterUpdate(0)
-          return
+        return
+      if !@access()
+        @counterUpdate(0)
+        return
+      if !@subscribeId
+        @subscribeId = App.OnlineNotification.subscribe(@updateContent)
 
     if @access()
       @subscribeId = App.OnlineNotification.subscribe(@updateContent)
@@ -69,9 +71,7 @@ class App.OnlineNotificationWidget extends App.Controller
 
   access: ->
     return false if !@Session.get()
-    return true if @isRole('Agent')
-    return true if @isRole('Admin')
-    return false
+    return true
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
@@ -140,7 +140,9 @@ class App.OnlineNotificationWidget extends App.Controller
     heightPopoverSpacer     = 22
     heightPopoverHeader     = @header.outerHeight(true)
     isOverflowing           = false
+    heightPopoverContent    = 0
     @item.each (i, el) =>
+
       # accumulate height of items
       heightPopoverContent += el.clientHeight
 
@@ -206,6 +208,7 @@ class App.OnlineNotificationWidget extends App.Controller
     @show()
 
   show: =>
+    return if !@access()
     $(window).on 'keydown.notifications', @listNavigate
     @shown = true
     @el.show()
@@ -230,3 +233,6 @@ class App.OnlineNotificationWidget extends App.Controller
     id = row.data('id')
     App.OnlineNotification.destroy(id)
     @updateHeight()
+
+  remove: =>
+    @el.remove()
