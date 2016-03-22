@@ -1,6 +1,4 @@
 class App.CustomerChat extends App.Controller
-  @extend Spine.Events
-
   events:
     'click .js-acceptChat': 'acceptChat'
     'click .js-settings': 'settings'
@@ -334,8 +332,6 @@ class CustomerChatRouter extends App.ControllerPermanent
     )
 
 class ChatWindow extends App.Controller
-  @extend Spine.Events
-
   className: 'chat-window'
 
   events:
