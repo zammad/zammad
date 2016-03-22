@@ -6,7 +6,7 @@ class App.CustomerChat extends App.Controller
     'click .js-settings': 'settings'
 
   elements:
-    '.js-acceptChat': 'acceptChat'
+    '.js-acceptChat': 'acceptChatElement'
     '.js-badgeWaitingCustomers': 'badgeWaitingCustomers'
     '.js-badgeChattingCustomers': 'badgeChattingCustomers'
     '.js-badgeActiveAgents': 'badgeActiveAgents'
@@ -244,10 +244,10 @@ class App.CustomerChat extends App.Controller
 
   updateMeta: =>
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()
-      @acceptChat.addClass('is-clickable is-blinking')
+      @acceptChatElement.addClass('is-clickable is-blinking')
       @idleTimeoutStart()
     else
-      @acceptChat.removeClass('is-clickable is-blinking')
+      @acceptChatElement.removeClass('is-clickable is-blinking')
       @idleTimeoutStop()
 
     @badgeWaitingCustomers.text(@meta.waiting_chat_count)
