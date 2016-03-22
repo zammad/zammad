@@ -366,7 +366,6 @@ class TestCase < Test::Unit::TestCase
         #if element
         #  instance.mouse.move_to(element)
         #end
-        sleep 0.2
         element.click
       rescue => e
         sleep 0.5
@@ -377,15 +376,14 @@ class TestCase < Test::Unit::TestCase
         #if element
         #  instance.mouse.move_to(element)
         #end
-        sleep 0.2
         element.click
       end
 
     else
-      sleep 1
+      sleep 0.5
       instance.find_elements(partial_link_text: params[:text])[0].click
     end
-    sleep 0.4 if !params[:fast]
+    sleep 0.2 if !params[:fast]
     sleep params[:wait] if params[:wait]
   end
 
@@ -520,7 +518,7 @@ class TestCase < Test::Unit::TestCase
       instance.execute_script("$('#{params[:css]}').blur()")
     end
 
-    sleep 0.5
+    sleep 0.2
   end
 
 =begin
@@ -546,11 +544,11 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
       element.click
       element.clear
-      sleep 1
+      sleep 0.5
       element.send_keys(params[:value])
-      sleep 0.5
+      sleep 0.2
       element.send_keys(:enter)
-      sleep 0.5
+      sleep 0.2
       return
     end
 
@@ -576,7 +574,7 @@ class TestCase < Test::Unit::TestCase
       dropdown.select_by(:text, params[:value])
       #puts "select2 - #{params.inspect}"
     end
-    sleep 0.8
+    sleep 0.5
   end
 
 =begin
@@ -671,9 +669,9 @@ class TestCase < Test::Unit::TestCase
     end
     instance.action.send_keys(params[:value]).perform
     if params[:slow]
-      sleep 2
+      sleep 1.5
     else
-      sleep 0.3
+      sleep 0.2
     end
   end
 
@@ -760,7 +758,7 @@ class TestCase < Test::Unit::TestCase
     elsif !params[:should_not_match]
       raise "not matching '#{params[:value]}' in content '#{text}' but should!"
     end
-    sleep 0.8
+    sleep 0.2
     match
   end
 
@@ -1218,7 +1216,7 @@ wait untill text in selector disabppears
 
             # accept task close warning
             if instance.find_elements(css: '.modal button.js-submit')[0]
-              sleep 0.5
+              sleep 0.4
               instance.find_elements(css: '.modal button.js-submit')[0].click
             end
           end
@@ -1287,16 +1285,16 @@ wait untill text in selector disabppears
 
     # workaround, sometimes focus is not triggered
     element.send_keys(params[:customer])
-    sleep 3.5
+    sleep 2.5
 
     # check if pulldown is open, it's not working stable via selenium
     #instance.execute_script("$('#{params[:css]} .js-recipientDropdown').addClass('open')")
     #sleep 0.5
     element.send_keys(:arrow_down)
-    sleep 0.3
+    sleep 0.2
     element.send_keys(:enter)
     #instance.find_elements(css: params[:css] + ' .recipientList-entry.js-user.is-active')[0].click
-    sleep 0.6
+    sleep 0.4
     assert(true, 'ticket_customer_select')
   end
 
@@ -1548,7 +1546,7 @@ wait untill text in selector disabppears
       screenshot(browser: instance, comment: 'ticket_create_failed')
       raise 'no ticket create screen found!'
     end
-    sleep 1
+    sleep 0.4
 
     if data[:group]
       if data[:group] == '-NONE-'
@@ -1616,16 +1614,16 @@ wait untill text in selector disabppears
 
       # workaround, sometimes focus is not triggered
       element.send_keys(data[:customer])
-      sleep 3.5
+      sleep 2.5
 
       # check if pulldown is open, it's not working stable via selenium
       #instance.execute_script("$('.active .newTicket .js-recipientDropdown').addClass('open')")
       #sleep 0.5
       element.send_keys(:arrow_down)
-      sleep 0.3
+      sleep 0.2
       element.send_keys(:enter)
       #instance.find_elements(css: '.active .newTicket .recipientList-entry.js-user.is-active')[0].click
-      sleep 0.6
+      sleep 0.4
     end
 
     if data[:attachment]
@@ -1745,16 +1743,16 @@ wait untill text in selector disabppears
 
       # workaround, sometimes focus is not triggered
       element.send_keys(data[:customer])
-      sleep 3.5
+      sleep 2.5
 
       # check if pulldown is open, it's not working stable via selenium
       #instance.execute_script("$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')")
       #sleep 0.5
       element.send_keys(:arrow_down)
-      sleep 0.6
+      sleep 0.4
       element.send_keys(:enter)
       #instance.find_elements(css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active')[0].click
-      sleep 0.3
+      sleep 0.2
 
       click(browser: instance, css: '.modal .js-submit')
 

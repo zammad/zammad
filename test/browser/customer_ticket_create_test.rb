@@ -11,8 +11,8 @@ class CustomerTicketCreateTest < TestCase
     )
 
     # customer ticket create
-    click( css: 'a[href="#new"]' )
-    click( css: 'a[href="#customer_ticket_new"]' )
+    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#customer_ticket_new"]')
     sleep 2
 
     select(
@@ -28,11 +28,11 @@ class CustomerTicketCreateTest < TestCase
       css: '.newTicket [data-name="body"]',
       value: 'some body 123äöü',
     )
-    click( css: '.newTicket button.js-submit' )
+    click(css: '.newTicket button.js-submit')
     sleep 5
 
     # check if ticket is shown
-    location_check( url: '#ticket/zoom/' )
+    location_check(url: '#ticket/zoom/')
 
     match(
       css: '.active div.ticket-article',
@@ -51,7 +51,7 @@ class CustomerTicketCreateTest < TestCase
       type: 'stayOnTab',
     )
 
-    click( css: '.active .js-submit' )
+    click(css: '.active .js-submit')
 
     watch_for(
       css: '.active div.ticket-article',
