@@ -35,6 +35,21 @@ class KeyboardShortcutsTest < TestCase
       timeout: 2,
     )
 
+    # show notifications
+    shortcut(key: 'a')
+    watch_for(
+      css:     '.js-notificationsContainer .js-header',
+      value:   'Notification',
+      timeout: 10,
+    )
+
+    shortcut(key: 'a')
+    watch_for_disappear(
+      css:     '.js-notificationsContainer .js-header',
+      value:   'Notification',
+      timeout: 2,
+    )
+
     # go to overviews
     shortcut(key: 'o')
     watch_for(
@@ -172,7 +187,7 @@ class KeyboardShortcutsTest < TestCase
       },
     )
     sleep 5
-    shortcut(key: 'y')
+    shortcut(key: 'a')
     watch_for(
       css:     '.js-notificationsContainer',
       value:   'Test Ticket for Shortcuts II',
@@ -183,7 +198,7 @@ class KeyboardShortcutsTest < TestCase
     watch_for(
       css:     '.active.content',
       value:   ticket2[:number],
-      timeout: 2,
+      timeout: 3,
     )
 
     shortcut(key: 'e')

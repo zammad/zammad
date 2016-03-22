@@ -15,6 +15,11 @@ class App.Track
       _instance ?= new _trackSingleton
     _instance.send()
 
+  @force: (value) ->
+    if _instance == undefined
+      _instance ?= new _trackSingleton
+    _instance.force(value)
+
   @_all: ->
     if _instance == undefined
       _instance ?= new _trackSingleton
@@ -27,6 +32,8 @@ class _trackSingleton
     @data    = []
 #    @url     = 'http://localhost:3005/api/v1/ui'
     @url     = 'https://log.zammad.com/api/v1/ui'
+
+    @forceSending = false
 
     @log('start', 'notice', {})
 
@@ -104,11 +111,10 @@ class _trackSingleton
         return
     )
 
-  log: (facility, level, args) ->
-    return if App.Config.get('developer_mode')
-    return if !App.Config.get('ui_send_client_stats')
+  log: (facility, level, args) =>
+    return if !@shouldSend()
     info =
-      time:     Math.round( new Date().getTime() / 1000 )
+      time:     Math.round(new Date().getTime() / 1000)
       facility: facility
       level:    level
       location: window.location.pathname + window.location.hash
@@ -116,8 +122,7 @@ class _trackSingleton
     @data.push info
 
   send: (async = true) =>
-    return if App.Config.get('developer_mode')
-    return if !App.Config.get('ui_send_client_stats')
+    return if !@shouldSend()
     return if _.isEmpty @data
     newData = _.clone(@data)
     @data = []
@@ -154,6 +159,15 @@ class _trackSingleton
         for item in newDataNew
           @data.push item
     )
+
+  force: (value = true) ->
+    @forceSending = value
+
+  shouldSend: ->
+    return true if @forceSending
+    return false if App.Config.get('developer_mode')
+    return false if !App.Config.get('ui_send_client_stats')
+    true
 
   _all: ->
     @data

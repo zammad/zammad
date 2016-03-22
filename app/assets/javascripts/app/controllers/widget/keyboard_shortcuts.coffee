@@ -83,7 +83,7 @@ App.Config.set(
                 $('#global-search').focus()
             }
             {
-              key: 'y'
+              key: 'a'
               hotkeys: true
               description: 'Notifications'
               callback: (e) ->

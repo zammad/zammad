@@ -469,7 +469,9 @@ class App.Controller extends Spine.Controller
       @userTicketPopupsList.popover('destroy')
 
   anyPopoversDestroy: ->
-    $('.popover').remove()
+
+    # do not remove permanent .popover--notifications widget
+    $('.popover:not(.popover--notifications)').remove()
 
   recentView: (object, o_id) =>
     params =
