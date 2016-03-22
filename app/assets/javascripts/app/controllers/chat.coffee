@@ -5,6 +5,13 @@ class App.CustomerChat extends App.Controller
     'click .js-acceptChat': 'acceptChat'
     'click .js-settings': 'settings'
 
+  elements:
+    '.js-acceptChat': 'acceptChat'
+    '.js-badgeWaitingCustomers': 'badgeWaitingCustomers'
+    '.js-badgeChattingCustomers': 'badgeChattingCustomers'
+    '.js-badgeActiveAgents': 'badgeActiveAgents'
+    '.chat-workspace': 'workspace'
+
   sounds:
     chat_new: new Audio('assets/sounds/chat_new.mp3')
 
@@ -237,15 +244,15 @@ class App.CustomerChat extends App.Controller
 
   updateMeta: =>
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()
-      @$('.js-acceptChat').addClass('is-clickable is-blinking')
+      @acceptChat.addClass('is-clickable is-blinking')
       @idleTimeoutStart()
     else
-      @$('.js-acceptChat').removeClass('is-clickable is-blinking')
+      @acceptChat.removeClass('is-clickable is-blinking')
       @idleTimeoutStop()
 
-    @$('.js-badgeWaitingCustomers').text(@meta.waiting_chat_count)
-    @$('.js-badgeChattingCustomers').text(@meta.running_chat_count)
-    @$('.js-badgeActiveAgents').text(@meta.active_agent_count)
+    @badgeWaitingCustomers.text(@meta.waiting_chat_count)
+    @badgeChattingCustomers.text(@meta.running_chat_count)
+    @badgeActiveAgents.text(@meta.active_agent_count)
 
     # reopen chats
     if @meta.active_sessions
@@ -262,7 +269,7 @@ class App.CustomerChat extends App.Controller
       removeCallback: @removeChat
       messageCallback: @updateNavMenu
 
-    @$('.chat-workspace').append chat.el
+    @workspace.append chat.el
     chat.render()
     @chatWindows[session.session_id] = chat
 
