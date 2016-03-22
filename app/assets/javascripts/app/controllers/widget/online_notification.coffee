@@ -136,14 +136,17 @@ class App.OnlineNotificationWidget extends App.Controller
     heightPopoverSpacer     = 22
     heightPopoverHeader     = @header.outerHeight(true)
     heightPopoverContent    = 0
-    @item.each -> heightPopoverContent += @clientHeight
+    isOverflowing           = false
+    @item.each ->
+      # accumulate height of items
+      heightPopoverContent += @clientHeight
 
-    if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
-      heightPopoverContent = heightApp - heightPopoverHeader - heightPopoverSpacer
-      @container.addClass('is-overflowing')
-    else
-      @container.removeClass('is-overflowing')
+      if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
+        heightPopoverContent = heightApp - heightPopoverHeader - heightPopoverSpacer
+        isOverflowing = true
+        return false # exit .each loop
 
+    @container.toggleClass('is-overflowing', isOverflowing)
     @content.css('height', heightPopoverContent)
 
   fetch: =>
