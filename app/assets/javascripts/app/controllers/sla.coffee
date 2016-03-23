@@ -11,20 +11,16 @@ class Index extends App.ControllerContent
     # check authentication
     return if !@authenticate(false, 'Admin')
 
-    @interval(@load, 60000)
-    #@load()
+    @subscribeCalendarId = App.Calendar.subscribe(@render)
+    @subscribeSlaId = App.Sla.subscribe(@render)
 
-  load: =>
+    callback = =>
+      @stopLoading()
+      @render()
     @startLoading()
-    @ajax(
-      id:   'sla_index'
-      type: 'GET'
-      url:  @apiPath + '/slas'
-      processData: true
-      success: (data, status, xhr) =>
-        App.Collection.loadAssets(data.assets)
-        @stopLoading()
-        @render(data)
+    App.Sla.fetchFull(
+      callback
+      clear: true
     )
 
   render: =>
@@ -56,8 +52,10 @@ class Index extends App.ControllerContent
     )
 
   release: =>
-    if @subscribeId
-      App.Calendar.unsubscribe(@subscribeId)
+    if @subscribeCalendarId
+      App.Calendar.unsubscribe(@subscribeCalendarId)
+    if @subscribeSlaId
+      App.Sla.unsubscribe(@subscribeSlaId)
 
   new: (e) ->
     e.preventDefault()

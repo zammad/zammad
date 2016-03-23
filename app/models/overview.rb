@@ -1,7 +1,10 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Overview < ApplicationModel
-  has_and_belongs_to_many :users,         after_add: :cache_update, after_remove: :cache_update
+  load 'overview/assets.rb'
+  include Overview::Assets
+
+  has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
   store     :condition
   store     :order
   store     :view

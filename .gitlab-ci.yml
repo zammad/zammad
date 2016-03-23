@@ -84,6 +84,7 @@ job_integration_twitter:
     - rake db:seed
     - ruby -I test/ test/integration/twitter_test.rb
     - rake db:drop
+  allow_failure: true
 
 job_integration_facebook:
   stage: test
@@ -96,6 +97,7 @@ job_integration_facebook:
     - rake db:seed
     - ruby -I test/ test/integration/facebook_test.rb
     - rake db:drop
+  allow_failure: true
 
 job_integration_geo_ip:
   stage: test

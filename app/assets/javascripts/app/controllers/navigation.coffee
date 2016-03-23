@@ -1,6 +1,9 @@
 class App.Navigation extends App.ControllerWidgetPermanent
   className: 'navigation vertical'
 
+  events:
+    'click .js-toggleNotifications': 'toggleNotifications'
+
   constructor: ->
     super
     @render()
@@ -45,6 +48,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
         )
       else
         @$('.bell').removeClass('show')
+
+  release: =>
+    if @notificationWidget
+      @notificationWidget.remove()
+      @notificationWidget = undefined
 
   renderMenu: =>
     items = @getItems( navbar: @Config.get( 'NavBar' ) )
@@ -202,9 +210,10 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @emptyAndClose()
     )
 
-    new App.OnlineNotificationWidget(
-      el: @el
-    )
+    if @notificationWidget
+      @notificationWidget.remove()
+    @notificationWidget = new App.OnlineNotificationWidget()
+    $('#app').append @notificationWidget.el
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
@@ -327,7 +336,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     level1 = []
     dropdown = {}
 
-    roles = App.Session.get( 'roles' )
+    roles = App.Session.get('roles')
 
     for item in navbar
       if typeof item.callback is 'function'
@@ -339,11 +348,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
         if !item.role
           match = 1
         if !roles && item.role
-          match = _.include( item.role, 'Anybody' )
+          match = _.include(item.role, 'Anybody')
         if roles
           for role in roles
             if !match
-              match = _.include( item.role, role.name )
+              match = _.include(item.role, role.name)
 
         if match
           level1.push item
@@ -359,11 +368,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
             if !itemSub.role
               match = 1
             if !roles
-              match = _.include( itemSub.role, 'Anybody' )
+              match = _.include(itemSub.role, 'Anybody')
             if roles
               for role in roles
                 if !match
-                  match = _.include( itemSub.role, role.name )
+                  match = _.include(itemSub.role, role.name)
 
             if match
               dropdown[ item.parent ].push itemSub
@@ -371,13 +380,13 @@ class App.Navigation extends App.ControllerWidgetPermanent
         # find parent
         for itemLevel1 in level1
           if itemLevel1.target is item.parent
-            sub = @getOrder( dropdown[ item.parent ] )
+            sub = @getOrder(dropdown[ item.parent ])
             itemLevel1.child = sub
 
     # clean up, only show navbar items with existing childrens
     clean_list = []
     for item in level1
-      if !item.child || item.child && !_.isEmpty( item.child )
+      if !item.child || item.child && !_.isEmpty(item.child)
         clean_list.push item
     nav = @getOrder(clean_list)
     return nav
@@ -435,11 +444,11 @@ class App.Navigation extends App.ControllerWidgetPermanent
           delete NavBarRight[key]
 
     if !@Session.get()
-      @Config.set( 'NavBarRight', NavBarRight )
+      @Config.set('NavBarRight', NavBarRight)
       return
 
     # add new views
-    items = App.RecentView.search(sortBy: 'created_at', order: 'DESC' )
+    items = App.RecentView.search(sortBy: 'created_at', order: 'DESC')
     items = @prepareForObjectList(items)
     prio = 80
     for item in items
@@ -460,12 +469,16 @@ class App.Navigation extends App.ControllerWidgetPermanent
         type:      'recentViewed'
       }
 
-    @Config.set( 'NavBarRight', NavBarRight )
+    @Config.set('NavBarRight', NavBarRight)
 
   fetchRecentView: =>
-    load = (items) =>
-      App.RecentView.refresh( items, { clear: true } )
+    load = (data) =>
+      App.RecentView.refresh(data.stream, clear: true)
       @renderPersonal()
     App.RecentView.fetchFull(load)
 
-App.Config.set( 'navigation', App.Navigation, 'Navigations' )
+  toggleNotifications: (event) ->
+    event.stopPropagation()
+    @notificationWidget.toggle()
+
+App.Config.set('navigation', App.Navigation, 'Navigations')

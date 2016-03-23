@@ -12,8 +12,8 @@ class TaskbarTaskTest < TestCase
     tasks_close_all()
 
     # persistant task
-    click( css: 'a[href="#new"]' )
-    click( css: 'a[href="#ticket/create"]' )
+    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
       css: '.active .newTicket input[name="title"]',
       value: 'some test AAA',
@@ -31,7 +31,7 @@ class TaskbarTaskTest < TestCase
     sleep 3
 
     # check if task still exists
-    click( css: '.task' )
+    click(css: '.task', wait: 0.8)
 
     match(
       css: '.active .newTicket input[name="title"]',
@@ -40,7 +40,7 @@ class TaskbarTaskTest < TestCase
 
     tasks_close_all()
 
-    exists_not( css: '.active .newTicket input[name="title"]' )
+    exists_not(css: '.active .newTicket input[name="title"]')
   end
 
   def test_persistant_task_with_relogin
@@ -52,8 +52,8 @@ class TaskbarTaskTest < TestCase
     )
     tasks_close_all()
 
-    click( css: 'a[href="#new"]' )
-    click( css: 'a[href="#ticket/create"]' )
+    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#ticket/create"]')
     set(
       css: '.active .newTicket input[name="title"]',
       value: 'INBOUND TEST#1',
@@ -63,8 +63,8 @@ class TaskbarTaskTest < TestCase
       value: 'INBOUND BODY TEST#1',
     )
 
-    click( css: 'a[href="#new"]' )
-    click( css: 'a[href="#ticket/create"]' )
+    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
       css: '.active .newTicket input[name="title"]',
       value: 'OUTBOUND TEST#1',

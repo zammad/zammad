@@ -37,20 +37,14 @@ class AgentTicketActionLevel0Test < TestCase
     tasks_close_all()
 
     # invite agent (with one group)
-    click(
-      css: '#navigation a[href="#dashboard"]',
-    )
-    click(
-      css: '.active.content .tab[data-area="first-steps-widgets"]',
-    )
+    click(css: '#navigation a[href="#dashboard"]')
+    click(css: '.active.content .tab[data-area="first-steps-widgets"]')
     watch_for(
       css:   '.active.content',
       value: 'Configuration',
     )
-    click(
-      css: '.active.content .js-inviteAgent',
-    )
-    sleep 4
+    click(css: '.active.content .js-inviteAgent')
+    modal_ready()
     set(
       css: '.modal [name="firstname"]',
       value: 'Bob',
@@ -94,12 +88,9 @@ class AgentTicketActionLevel0Test < TestCase
 
     # customer ticket create
     click(css: 'a[href="#new"]')
-    click(css: 'a[href="#customer_ticket_new"]')
-    sleep 2
+    click(css: 'a[href="#customer_ticket_new"]', wait: 2)
 
-    exists_not(
-      css: '.newTicket select[name="group_id"]',
-    )
+    exists_not(css: '.newTicket select[name="group_id"]')
 
     set(
       css: '.newTicket input[name="title"]',
@@ -109,8 +100,7 @@ class AgentTicketActionLevel0Test < TestCase
       css: '.newTicket [data-name="body"]',
       value: 'one group body',
     )
-    click(css: '.newTicket button.js-submit')
-    sleep 5
+    click(css: '.newTicket button.js-submit', wait: 5)
 
     # check if ticket is shown
     location_check(url: '#ticket/zoom/')

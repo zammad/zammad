@@ -18,7 +18,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
-    assert(result.body =~ %r{"text/plain"})
+    assert(result.body =~ /"content_type_requested":null/)
 
     # get / 404
     result = UserAgent.get(
@@ -92,7 +92,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"delete"/)
-    assert(result.body =~ %r{"text/plain"})
+    assert(result.body =~ /"content_type_requested":null/)
 
     # delete / 404
     result = UserAgent.delete(
@@ -120,7 +120,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
-    assert(result.body =~ %r{"text/plain"})
+    assert(result.body =~ /"content_type_requested":null/)
 
     # get / 401
     result = UserAgent.get(
@@ -219,7 +219,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal('200', result.code)
     assert_equal(String, result.body.class)
     assert(result.body =~ /"delete"/)
-    assert(result.body =~ %r{"text/plain"})
+    assert(result.body =~ /"content_type_requested":null/)
 
     # delete / 401
     result = UserAgent.delete(
@@ -248,7 +248,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"abc"/)
-    assert(result.body =~ %r{"text/plain"})
+    assert(result.body =~ /"content_type_requested":null/)
 
     # get / 301
     result = UserAgent.request(
@@ -264,7 +264,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"abc"/)
-    assert(result.body =~ %r{"text/plain"})
+    assert(result.body =~ /"content_type_requested":null/)
 
     # get / 401
     result = UserAgent.request(
@@ -293,7 +293,7 @@ class UserAgentTest < ActiveSupport::TestCase
     assert_equal(String, result.body.class)
     assert(result.body =~ /"get"/)
     assert(result.body =~ /"123"/)
-    assert(result.body =~ %r{"text/plain"})
+    assert(result.body =~ /"content_type_requested":null/)
 
     # ftp / 200
     result = UserAgent.request(

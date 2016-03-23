@@ -70,6 +70,7 @@ class TestCase < Test::Unit::TestCase
     rescue
       # just try again
       sleep 10
+      log('browser_instance', { rescure: true })
       browser_instance_preferences(local_browser)
     end
 
@@ -138,6 +139,9 @@ class TestCase < Test::Unit::TestCase
       instance.get(params[:url])
     end
 
+    # submit logs anyway
+    instance.execute_script('App.Track.force()')
+
     element = instance.find_elements(css: '#login input[name="username"]')[0]
     if !element
 
@@ -148,7 +152,7 @@ class TestCase < Test::Unit::TestCase
           value:   'auto wizard is enabled',
           timeout: 10,
         )
-        location( url: "#{browser_url}/#getting_started/auto_wizard" )
+        location(url: "#{browser_url}/#getting_started/auto_wizard")
         sleep 10
         login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
         if login != params[:username]
@@ -213,9 +217,17 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    instance.find_elements(css: 'a[href="#current_user"]')[0].click
-    sleep 0.1
-    instance.find_elements(css: 'a[href="#logout"]')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#current_user"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#logout"]',
+      mute_log: true,
+    )
+
     (1..6).each {
       sleep 1
       login = instance.find_elements(css: '#login')[0]
@@ -252,7 +264,7 @@ class TestCase < Test::Unit::TestCase
     return if !clues
     instance.execute_script("$('.js-modal--clue .js-close').click()")
     assert(true, 'clues closed')
-    sleep 4
+    sleep 2
   end
 
 =begin
@@ -349,21 +361,29 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     if params[:css]
 
-      element = instance.find_elements(css: params[:css])[0]
-      #instance.mouse.move_to(element)
-      #sleep 0.2
-      element.click
+      begin
+        element = instance.find_elements(css: params[:css])[0]
+        #if element
+        #  instance.mouse.move_to(element)
+        #end
+        element.click
+      rescue => e
+        sleep 0.5
 
-      # trigger also focus on input/select and textarea fields
-      #if params[:css] =~ /(input|select|textarea)/
-      #  instance.execute_script("$('#{params[:css]}').trigger('focus')")
-      #  sleep 0.2
-      #end
+        # just try again
+        log('click', { rescure: true })
+        element = instance.find_elements(css: params[:css])[0]
+        #if element
+        #  instance.mouse.move_to(element)
+        #end
+        element.click
+      end
+
     else
-      sleep 1
+      sleep 0.5
       instance.find_elements(partial_link_text: params[:text])[0].click
     end
-    sleep 0.4 if !params[:fast]
+    sleep 0.2 if !params[:fast]
     sleep params[:wait] if params[:wait]
   end
 
@@ -393,7 +413,24 @@ class TestCase < Test::Unit::TestCase
       js:       "\$('#{params[:css]}').get(0).scrollIntoView(#{position})",
       mute_log: params[:mute_log]
     )
-    sleep 0.2
+    sleep 0.3
+  end
+
+=begin
+
+  modal_ready(
+    browser:  browser1,
+  )
+
+=end
+
+  def modal_ready(params = {})
+    switch_window_focus(params)
+    log('modal_ready', params)
+
+    instance = params[:browser] || @browser
+
+    sleep 2
   end
 
 =begin
@@ -498,15 +535,16 @@ class TestCase < Test::Unit::TestCase
       instance.execute_script("$('#{params[:css]}').blur()")
     end
 
-    sleep 0.5
+    sleep 0.2
   end
 
 =begin
 
   select(
-    browser: browser1,
-    css:     '.some_class',
-    value:   'Some Value',
+    browser:      browser1,
+    css:          '.some_class',
+    value:        'Some Value',
+    deselect_all: false, # default false
   )
 
 =end
@@ -523,11 +561,11 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
       element.click
       element.clear
-      sleep 1
+      sleep 0.4
       element.send_keys(params[:value])
-      sleep 0.5
+      sleep 0.2
       element.send_keys(:enter)
-      sleep 0.5
+      sleep 0.2
       return
     end
 
@@ -535,15 +573,25 @@ class TestCase < Test::Unit::TestCase
     begin
       element  = instance.find_elements(css: params[:css])[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
+      if params[:deselect_all]
+        dropdown.deselect_all
+      end
       dropdown.select_by(:text, params[:value])
-      puts "select - #{params.inspect}"
+      #puts "select - #{params.inspect}"
     rescue
+      sleep 0.4
+
       # just try again
+      log('select', { rescure: true })
       element  = instance.find_elements(css: params[:css])[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)
+      if params[:deselect_all]
+        dropdown.deselect_all
+      end
       dropdown.select_by(:text, params[:value])
-      puts "select2 - #{params.inspect}"
+      #puts "select2 - #{params.inspect}"
     end
+    sleep 0.4
   end
 
 =begin
@@ -638,9 +686,9 @@ class TestCase < Test::Unit::TestCase
     end
     instance.action.send_keys(params[:value]).perform
     if params[:slow]
-      sleep 2
+      sleep 1.5
     else
-      sleep 0.3
+      sleep 0.2
     end
   end
 
@@ -727,7 +775,7 @@ class TestCase < Test::Unit::TestCase
     elsif !params[:should_not_match]
       raise "not matching '#{params[:value]}' in content '#{text}' but should!"
     end
-    sleep 0.8
+    sleep 0.2
     match
   end
 
@@ -983,7 +1031,7 @@ class TestCase < Test::Unit::TestCase
 
     # accept task close warning
     if params[:discard_changes]
-      sleep 1
+      modal_ready()
       instance.find_elements(css: '.modal button.js-submit')[0].click
     end
 
@@ -1174,7 +1222,7 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
 
     (1..100).each do
-      sleep 0.2
+      sleep 0.1
       begin
         if instance.find_elements(css: '.navigation .tasks .task:first-child')[0]
           instance.mouse.move_to(instance.find_elements(css: '.navigation .tasks .task:first-child')[0])
@@ -1185,7 +1233,7 @@ wait untill text in selector disabppears
 
             # accept task close warning
             if instance.find_elements(css: '.modal button.js-submit')[0]
-              sleep 0.5
+              sleep 0.4
               instance.find_elements(css: '.modal button.js-submit')[0].click
             end
           end
@@ -1254,16 +1302,16 @@ wait untill text in selector disabppears
 
     # workaround, sometimes focus is not triggered
     element.send_keys(params[:customer])
-    sleep 3.5
+    sleep 2.5
 
     # check if pulldown is open, it's not working stable via selenium
     #instance.execute_script("$('#{params[:css]} .js-recipientDropdown').addClass('open')")
     #sleep 0.5
     element.send_keys(:arrow_down)
-    sleep 0.3
+    sleep 0.2
     element.send_keys(:enter)
     #instance.find_elements(css: params[:css] + ' .recipientList-entry.js-user.is-active')[0].click
-    sleep 0.6
+    sleep 0.4
     assert(true, 'ticket_customer_select')
   end
 
@@ -1290,41 +1338,65 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#manage"]')[0].click
-    sleep 0.2
-    instance.find_elements(css: 'a[href="#manage/overviews"]')[0].click
-    sleep 0.2
-    instance.find_elements(css: '#content a[data-type="new"]')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/overviews"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '#content a[data-type="new"]',
+      mute_log: true,
+    )
     sleep 2
-
     if data[:name]
-      element = instance.find_elements(css: '.modal input[name=name]')[0]
-      element.clear
-      element.send_keys(data[:name])
+      set(
+        browser:  instance,
+        css:      '.modal input[name=name]',
+        value:    data[:name],
+        mute_log: true,
+      )
     end
     if data[:role]
-      element = instance.find_elements(css: '.modal select[name="role_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:role])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="role_id"]',
+        value:    data[:role],
+        mute_log: true,
+      )
     end
 
     if data[:selector]
       data[:selector].each {|key, value|
-        element = instance.find_elements(css: '.modal .ticket_selector .js-attributeSelector select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, key)
+        select(
+          browser:  instance,
+          css:      '.modal .ticket_selector .js-attributeSelector select',
+          value:    key,
+          mute_log: true,
+        )
         sleep 0.5
-        element = instance.find_elements(css: '.modal .ticket_selector .js-value select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.deselect_all
-        dropdown.select_by(:text, value)
+        select(
+          browser:      instance,
+          css:          '.modal .ticket_selector .js-value select',
+          value:        value,
+          deselect_all: true,
+          mute_log:     true,
+        )
       }
     end
 
     if data['order::direction']
-      element = instance.find_elements(css: '.modal select[name="order::direction"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data['order::direction'])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="order::direction"]',
+        value:    data['order::direction'],
+        mute_log: true,
+      )
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
@@ -1368,44 +1440,63 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#manage"]')[0].click
-    sleep 0.2
-    instance.find_elements(css: 'a[href="#manage/overviews"]')[0].click
-    sleep 1
-    #instance.find_elements(css: '#content a[data-type="new"]')[0].click
-    #sleep 2
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/overviews"]',
+      mute_log: true,
+    )
 
     instance.execute_script("$(\"#content td:contains('#{data[:name]}')\").first().click()")
     sleep 2
 
     if data[:name]
-      element = instance.find_elements(css: '.modal input[name=name]')[0]
-      element.clear
-      element.send_keys(data[:name])
+      set(
+        browser:  instance,
+        css:      '.modal input[name=name]',
+        value:    data[:name],
+        mute_log: true,
+      )
     end
     if data[:role]
-      element = instance.find_elements(css: '.modal select[name="role_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:role])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="role_id"]',
+        value:    data[:role],
+        mute_log: true,
+      )
     end
 
     if data[:selector]
       data[:selector].each {|key, value|
-        element = instance.find_elements(css: '.modal .ticket_selector .js-attributeSelector select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, key)
-        instance.execute_script("$('#content .modal .ticket_selector .js-attributeSelector select').first().trigger('change')")
-        element = instance.find_elements(css: '.modal .ticket_selector .js-value select')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.deselect_all
-        dropdown.select_by(:text, value)
+        select(
+          browser:  instance,
+          css:      '.modal .ticket_selector .js-attributeSelector select',
+          value:    key,
+          mute_log: true,
+        )
+        sleep 0.5
+        select(
+          browser:      instance,
+          css:          '.modal .ticket_selector .js-value select',
+          value:        value,
+          deselect_all: true,
+          mute_log:     true,
+        )
       }
     end
 
     if data['order::direction']
-      element = instance.find_elements(css: '.modal select[name="order::direction"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data['order::direction'])
+      select(
+        browser:  instance,
+        css:      '.modal select[name="order::direction"]',
+        value:    data['order::direction'],
+        mute_log: true,
+      )
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
@@ -1456,14 +1547,23 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#new"]')[0].click
-    instance.find_elements(css: 'a[href="#ticket/create"]')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#new"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#ticket/create"]',
+      mute_log: true,
+    )
+
     element = instance.find_elements(css: '.active .newTicket')[0]
     if !element
       screenshot(browser: instance, comment: 'ticket_create_failed')
       raise 'no ticket create screen found!'
     end
-    sleep 1
+    sleep 0.4
 
     if data[:group]
       if data[:group] == '-NONE-'
@@ -1481,31 +1581,40 @@ wait untill text in selector disabppears
         # check count of agents, should be only 1 / - selection on init screen
         count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
         assert_equal(1, count, 'check if owner selection is empty per default')
-
-        element = instance.find_elements(css: '.active .newTicket select[name="group_id"]')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, data[:group])
+        select(
+          browser:  instance,
+          css:      '.active .newTicket select[name="group_id"]',
+          value:    data[:group],
+          mute_log: true,
+        )
         sleep 0.2
       end
     end
     if data[:priority]
-      element = instance.find_elements(css: '.active .newTicket select[name="priority_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:priority])
-      sleep 0.2
+      select(
+        browser:  instance,
+        css:      '.active .newTicket select[name="priority_id"]',
+        value:    data[:priority],
+        mute_log: true,
+      )
     end
     if data[:title]
-      element = instance.find_elements(css: '.active .newTicket input[name="title"]')[0]
-      element.clear
-      element.send_keys(data[:title])
-      sleep 0.2
+      set(
+        browser:  instance,
+        css:      '.active .newTicket input[name="title"]',
+        value:    data[:title],
+        clear:    true,
+        mute_log: true,
+      )
     end
     if data[:body]
-      #instance.execute_script('$(".active .newTicket div[data-name=body]").focus()')
-      sleep 0.5
-      element = instance.find_elements(css: '.active .newTicket div[data-name=body]')[0]
-      element.clear
-      element.send_keys(data[:body])
+      set(
+        browser:  instance,
+        css:      '.active .newTicket div[data-name=body]',
+        value:    data[:body],
+        clear:    true,
+        mute_log: true,
+      )
 
       # it's not working stable via selenium, use js
       value = instance.find_elements(css: '.content .newTicket div[data-name=body]')[0].text
@@ -1522,16 +1631,16 @@ wait untill text in selector disabppears
 
       # workaround, sometimes focus is not triggered
       element.send_keys(data[:customer])
-      sleep 3.5
+      sleep 2.5
 
       # check if pulldown is open, it's not working stable via selenium
       #instance.execute_script("$('.active .newTicket .js-recipientDropdown').addClass('open')")
       #sleep 0.5
       element.send_keys(:arrow_down)
-      sleep 0.3
+      sleep 0.2
       element.send_keys(:enter)
       #instance.find_elements(css: '.active .newTicket .recipientList-entry.js-user.is-active')[0].click
-      sleep 0.6
+      sleep 0.4
     end
 
     if data[:attachment]
@@ -1546,9 +1655,14 @@ wait untill text in selector disabppears
       assert(true, 'ticket created without submit')
       return
     end
-    sleep 0.8
+    sleep 0.5
     #instance.execute_script('$(".content.active .newTicket form").submit();')
-    instance.find_elements(css: '.active .newTicket button.js-submit')[0].click
+    click(
+      browser: instance,
+      css:  '.active .newTicket button.js-submit',
+      mute_log: true,
+    )
+
     sleep 1
     (1..10).each {
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
@@ -1646,16 +1760,16 @@ wait untill text in selector disabppears
 
       # workaround, sometimes focus is not triggered
       element.send_keys(data[:customer])
-      sleep 3.5
+      sleep 2.5
 
       # check if pulldown is open, it's not working stable via selenium
       #instance.execute_script("$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')")
       #sleep 0.5
       element.send_keys(:arrow_down)
-      sleep 0.6
+      sleep 0.4
       element.send_keys(:enter)
       #instance.find_elements(css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active')[0].click
-      sleep 0.3
+      sleep 0.2
 
       click(browser: instance, css: '.modal .js-submit')
 
@@ -1675,11 +1789,13 @@ wait untill text in selector disabppears
 
     end
     if data[:body]
-      #instance.execute_script('$(".content.active div[data-name=body]").focus()')
-      sleep 0.5
-      element = instance.find_elements(css: '.content.active div[data-name=body]')[0]
-      element.clear
-      element.send_keys(data[:body])
+      set(
+        browser:  instance,
+        css:      '.content.active div[data-name=body]',
+        value:    data[:body],
+        no_click: true,
+        mute_log: true,
+      )
 
       # it's not working stable via selenium, use js
       value = instance.find_elements(css: '.content.active div[data-name=body]')[0].text
@@ -1702,26 +1818,32 @@ wait untill text in selector disabppears
         assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
 
       else
-
-        element = instance.find_elements(css: '.active .sidebar select[name="group_id"]')[0]
-        dropdown = Selenium::WebDriver::Support::Select.new(element)
-        dropdown.select_by(:text, data[:group])
+        select(
+          browser:  instance,
+          css:      '.active .sidebar select[name="group_id"]',
+          value:    data[:group],
+          mute_log: true,
+        )
         sleep 0.2
       end
     end
 
     if data[:priority]
-      element = instance.find_elements(css: '.active .sidebar select[name="priority_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:priority])
-      sleep 0.2
+      select(
+        browser:  instance,
+        css:      '.active .sidebar select[name="priority_id"]',
+        value:    data[:priority],
+        mute_log: true,
+      )
     end
 
     if data[:state]
-      element = instance.find_elements(css: '.active .sidebar select[name="state_id"]')[0]
-      dropdown = Selenium::WebDriver::Support::Select.new(element)
-      dropdown.select_by(:text, data[:state])
-      sleep 0.2
+      select(
+        browser:  instance,
+        css:      '.active .sidebar select[name="state_id"]',
+        value:    data[:state],
+        mute_log: true,
+      )
     end
 
     if data[:state] || data[:group] || data[:body]
@@ -2080,11 +2202,22 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#manage"]')[0].click
-    sleep 1
-    instance.find_elements(css: 'a[href="#manage/users"]')[0].click
-    sleep 2
-    instance.find_elements(css: 'a[data-type="new"]')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/users"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[data-type="new"]',
+      mute_log: true,
+    )
+
     sleep 2
     element = instance.find_elements(css: '.modal input[name=firstname]')[0]
     element.clear
@@ -2140,11 +2273,22 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#manage"]')[0].click
-    sleep 1
-    instance.find_elements(css: 'a[href="#manage/slas"]')[0].click
-    sleep 2
-    instance.find_elements(css: 'a.js-new')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/slas"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a.js-new',
+      mute_log: true,
+    )
+
     sleep 2
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
@@ -2187,11 +2331,22 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#manage"]')[0].click
-    sleep 1
-    instance.find_elements(css: 'a[href="#manage/text_modules"]')[0].click
-    sleep 2
-    instance.find_elements(css: 'a[data-type="new"]')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/text_modules"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[data-type="new"]',
+      mute_log: true,
+    )
+
     sleep 2
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
@@ -2236,13 +2391,28 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#manage"]')[0].click
-    sleep 1
-    instance.find_elements(css: 'a[href="#channels/email"]')[0].click
-    sleep 1
-    instance.find_elements(css: 'a[href="#c-signature"]')[0].click
-    sleep 8
-    instance.find_elements(css: '#content #c-signature a[data-type="new"]')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#channels/email"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#c-signature"]',
+      mute_log: true,
+    )
+    sleep 4
+    click(
+      browser: instance,
+      css:  '#content #c-signature a[data-type="new"]',
+      mute_log: true,
+    )
+
     sleep 2
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
@@ -2287,11 +2457,22 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    instance.find_elements(css: 'a[href="#manage"]')[0].click
-    sleep 0.5
-    instance.find_elements(css: 'a[href="#manage/groups"]')[0].click
-    sleep 2
-    instance.find_elements(css: 'a[data-type="new"]')[0].click
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/groups"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[data-type="new"]',
+      mute_log: true,
+    )
+
     sleep 2
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear

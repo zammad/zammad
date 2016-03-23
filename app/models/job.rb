@@ -1,87 +1,238 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Job < ApplicationModel
+  load 'job/assets.rb'
+  include Job::Assets
+
   store     :timeplan
   store     :condition
-  store     :execute
+  store     :perform
   validates :name, presence: true
 
-  before_create   :updated_matching
-  before_update   :updated_matching
+  before_create :updated_matching, :update_next_run_at
+  before_update :updated_matching, :update_next_run_at
 
   notify_clients_support
 
   def self.run
-    time    = Time.zone.now
-    day_map = {
-      0 => 'sun',
-      1 => 'mon',
-      2 => 'tue',
-      3 => 'wed',
-      4 => 'thu',
-      5 => 'fri',
-      6 => 'sat',
-    }
-    jobs = Job.where( active: true )
+    jobs = Job.where(active: true, running: false)
     jobs.each do |job|
+      logger.debug "Execute job #{job.inspect}"
 
-      # only execute jobs, older then 1 min, to give admin posibility to change
-      next if job.updated_at > Time.zone.now - 1.minute
+      next if !job.executable?
 
-      # check if jobs need to be executed
-      # ignore if job was running within last 10 min.
-      next if job.last_run_at && job.last_run_at > Time.zone.now - 10.minutes
-
-      # check day
-      next if !job.timeplan['days'].include?( day_map[time.wday] )
-
-      # check hour
-      next if !job.timeplan['hours'].include?( time.hour.to_s )
-
-      # check min
-      next if !job.timeplan['minutes'].include?( match_minutes(time.min.to_s) )
-
-      # find tickets to change
-      tickets = Ticket.where( job.condition.permit! )
-                      .order( '`tickets`.`created_at` DESC' )
-                      .limit( 1_000 )
-      job.processed = tickets.count
-      tickets.each do |ticket|
-        logger.debug "CHANGE #{job.execute.inspect}"
-        changed = false
-        job.execute.each do |key, value|
-          changed = true
-          attribute = key.split('.', 2).last
-          logger.debug "-- #{Ticket.columns_hash[ attribute ].type}"
-          #value = 4
-          #if Ticket.columns_hash[ attribute ].type == :integer
-          #  logger.debug "to i #{attribute}/#{value.inspect}/#{value.to_i.inspect}"
-          #  #value = value.to_i
-          #end
-          ticket[attribute] = value
-          logger.debug "set #{attribute} = #{value.inspect}"
-        end
-        next if !changed
-        ticket.updated_by_id = 1
-        ticket.save
+      matching = job.matching_count
+      if job.matching != matching
+        job.matching = matching
+        job.save
       end
 
+      next if !job.in_timeplan?
+
+      # find tickets to change
+      ticket_count, tickets = Ticket.selectors(job.condition, 2_000)
+
+      logger.debug "Job #{job.name} with #{ticket_count} tickets"
+
+      job.processed = ticket_count || 0
+      job.running = true
+      job.save
+
+      if tickets
+        tickets.each do |ticket|
+
+          # use transaction
+          ActiveRecord::Base.transaction do
+            UserInfo.current_user_id = 1
+
+            logger.debug "Perform job #{job.perform.inspect} in Ticket.find(#{ticket.id})"
+            changed = false
+            job.perform.each do |key, value|
+              (object_name, attribute) = key.split('.', 2)
+              raise "Unable to update object #{object_name}.#{attribute}, only can update tickets!" if object_name != 'ticket'
+
+              next if ticket[attribute].to_s == value['value'].to_s
+              changed = true
+
+              ticket[attribute] = value['value']
+              logger.debug "set #{object_name}.#{attribute} = #{value['value'].inspect}"
+            end
+            next if !changed
+            ticket.save
+
+            # execute ticket notification events
+            if !job.disable_notification
+              Observer::Ticket::Notification.transaction
+            end
+          end
+        end
+      end
+
+      job.running = false
       job.last_run_at = Time.zone.now
       job.save
     end
     true
   end
 
+  def executable?
+    return false if !active
+
+    # only execute jobs, older then 1 min, to give admin posibility to change
+    return false if updated_at > Time.zone.now - 1.minute
+
+    # check if jobs need to be executed
+    # ignore if job was running within last 10 min.
+    return false if last_run_at && last_run_at > Time.zone.now - 10.minutes
+
+    true
+  end
+
+  def in_timeplan?(time = Time.zone.now)
+    day_map = {
+      0 => 'Sun',
+      1 => 'Mon',
+      2 => 'Tue',
+      3 => 'Wed',
+      4 => 'Thu',
+      5 => 'Fri',
+      6 => 'Sat',
+    }
+
+    # check day
+    return false if !timeplan['days']
+    return false if !timeplan['days'][day_map[time.wday]]
+
+    # check hour
+    return false if !timeplan['hours']
+    return false if !timeplan['hours'][time.hour.to_s] && !timeplan['hours'][time.hour]
+
+    # check min
+    return false if !timeplan['minutes']
+    return false if !timeplan['minutes'][match_minutes(time.min).to_s] && !timeplan['minutes'][match_minutes(time.min)]
+
+    true
+  end
+
+  def matching_count
+    ticket_count, tickets = Ticket.selectors(condition, 1)
+    ticket_count || 0
+  end
+
+  def next_run_at_calculate(time = Time.zone.now)
+    if last_run_at
+      diff = time - last_run_at
+      if diff > 0
+        time = time + 10.minutes
+      end
+    end
+    day_map = {
+      0 => 'Sun',
+      1 => 'Mon',
+      2 => 'Tue',
+      3 => 'Wed',
+      4 => 'Thu',
+      5 => 'Fri',
+      6 => 'Sat',
+    }
+    return nil if !active
+    return nil if !timeplan['days']
+    return nil if !timeplan['hours']
+    return nil if !timeplan['minutes']
+
+    # loop week days
+    (0..7).each do |day_counter|
+      time_to_check = nil
+      day_to_check = if day_counter == 0
+                       time
+                     else
+                       time + 1.day
+                     end
+      if !timeplan['days'][day_map[day_to_check.wday]]
+
+        # start on next day at 00:00:00
+        time = day_to_check - day_to_check.sec.seconds
+        time = time - day_to_check.min.minutes
+        time = time - day_to_check.hour.hours
+        next
+      end
+
+      min = day_to_check.min
+      if min < 9
+        min = 0
+      elsif min < 20
+        min = 10
+      elsif min < 30
+        min = 20
+      elsif min < 40
+        min = 30
+      elsif min < 50
+        min = 40
+      elsif min < 60
+        min = 50
+      end
+
+      # move to [0-5]0:00 time stamps
+      day_to_check = day_to_check - day_to_check.min.minutes + min.minutes
+      day_to_check = day_to_check - day_to_check.sec.seconds
+
+      # loop minutes till next full hour
+      if day_to_check.min != 0
+        (0..5).each do |minute_counter|
+          if minute_counter != 0
+            break if day_to_check.min == 0
+            day_to_check = day_to_check + 10.minutes
+          end
+          next if !timeplan['hours'][day_to_check.hour] && !timeplan['hours'][day_to_check.hour.to_s]
+          next if !timeplan['minutes'][match_minutes(day_to_check.min)] && !timeplan['minutes'][match_minutes(day_to_check.min).to_s]
+          return day_to_check
+        end
+      end
+
+      # loop hours
+      hour_to_check = nil
+      (0..23).each do |hour_counter|
+        hour_to_check = day_to_check + hour_counter.hours
+
+        # start on next day
+        if hour_to_check.day != day_to_check.day
+          time = day_to_check - day_to_check.hour.hours
+          break
+        end
+
+        # ignore not configured hours
+        next if !timeplan['hours'][hour_to_check.hour] && !timeplan['hours'][hour_to_check.hour.to_s]
+        return nil if !hour_to_check
+
+        # loop minutes
+        minute_to_check = nil
+        (0..5).each do |minute_counter|
+          minute_to_check = hour_to_check + minute_counter.minutes * 10
+          next if !timeplan['minutes'][match_minutes(minute_to_check.min)] && !timeplan['minutes'][match_minutes(minute_to_check.min).to_s]
+          time_to_check = minute_to_check
+          break
+        end
+        next if !minute_to_check
+        return time_to_check
+      end
+
+    end
+    nil
+  end
+
   private
 
   def updated_matching
-    count = Ticket.where( condition.permit! ).count
-    self.matching = count
+    self.matching = matching_count
   end
 
-  def self.match_minutes(minutes)
-    minutes.gsub!(/(\d)\d/, '\\1')
-    minutes.to_s + '0'
+  def update_next_run_at
+    self.next_run_at = next_run_at_calculate
   end
-  private_class_method :match_minutes
+
+  def match_minutes(minutes)
+    return 0 if minutes < 10
+    "#{minutes.to_s.gsub(/(\d)\d/, '\\1')}0".to_i
+  end
+
 end

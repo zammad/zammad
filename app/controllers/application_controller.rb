@@ -378,6 +378,21 @@ class ApplicationController < ActionController::Base
 
   def model_index_render (object, _params)
     generic_objects = object.all
+
+    if params[:full]
+      assets = {}
+      item_ids = []
+      generic_objects.each {|item|
+        item_ids.push item.id
+        assets = item.assets(assets)
+      }
+      render json: {
+        record_ids: item_ids,
+        assets: assets,
+      }, status: :ok
+      return
+    end
+
     generic_objects_with_associations = []
     generic_objects.each {|item|
       generic_objects_with_associations.push item.attributes_with_associations

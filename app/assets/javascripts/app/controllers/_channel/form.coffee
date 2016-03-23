@@ -12,7 +12,7 @@ class App.ChannelForm extends App.Controller
   constructor: ->
     super
     @title 'Form'
-    @subscribeId = App.Setting.subscribe(@render, initFetch: true)
+    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
   render: =>
     App.Setting.unsubscribe(@subscribeId)

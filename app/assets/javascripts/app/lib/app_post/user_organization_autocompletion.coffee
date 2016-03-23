@@ -155,6 +155,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
         # enter / take item
         if e.keyCode is 13
           e.preventDefault()
+          e.stopPropagation()
           userId = @$('.recipientList').find('li.is-active').data('user-id')
           if !userId
             organizationId = @$('.recipientList').find('li.is-active').data('organization-id')

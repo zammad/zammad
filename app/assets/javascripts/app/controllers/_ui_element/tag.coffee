@@ -5,5 +5,5 @@ class App.UiElement.tag
     a = ->
       $('#' + attribute.id ).tokenfield()
       $('#' + attribute.id ).parent().css('height', 'auto')
-    App.Delay.set( a, 120, undefined, 'tags' )
+    App.Delay.set(a, 120, undefined, 'tags')
     item

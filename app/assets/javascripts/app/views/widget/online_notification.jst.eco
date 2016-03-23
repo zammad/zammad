@@ -1,8 +1,37 @@
-<div class="popover popover--notifications js-notificationsContainer" role="tooltip">
-  <div class="arrow"></div>
-  <div class="popover-notificationsHeader">
-    <div class="popover-title"></div>
-    <a class="btn btn--text btn--subtle js-markAllAsRead"><%- @T( 'Mark all as read' ) %></a>
-  </div>
-  <div class="popover-content"></div>
+<div class="arrow js-arrow"></div>
+<div class="popover-notificationsHeader js-header">
+  <div class="popover-title"><%- @T('Notifications') %> <span class='popover-notificationsCounter js-notificationsCounter'><%- @count %></span></div>
+  <a class="btn btn--text btn--subtle js-mark<%- ' hidden' if !@count %>"><%- @T( 'Mark all as read' ) %></a>
+</div>
+<div class="popover-content js-content">
+  <% if @items.length: %>
+    <% for item in @items: %>
+    <div class="js-item activity-entry activity-entry--removeable<% if item.seen: %> is-inactive<% end %>" data-id="<%- item.id %>">
+      <a class="activity-avatar user-popover" data-id="<%= item.created_by_id %>" <% if item.created_by_id isnt 1: %>href="<%- item.created_by.uiUrl() %>"<% end %>>
+        <%- item.created_by.avatar() %>
+      </a>
+      <div class="activity-body">
+        <a class="activity-message js-locationVerify" href="<%- item.link %>">
+          <span class="activity-text">
+            <% if item.objectNative && item.objectNative.activityMessage: %>
+              <%- item.objectNative.activityMessage(item) %>
+            <% else: %>
+              Need objectNative in item <%= item.object %>.find(<%= item.o_id %>)
+            <% end %>
+          </span>
+          <%- @humanTime(item.created_at, false, 'activity-time') %>
+        </a>
+        <div class="activity-remove js-remove">
+          <div class="activity-remove-icon-holder">
+            <%- @Icon('diagonal-cross') %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  <% else: %>
+    <div class="activity-placeholder">
+      <%- @T("No unread Notifications for you. :) ") %>
+    </div>
+  <% end %>
 </div>

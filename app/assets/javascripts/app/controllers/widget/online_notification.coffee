@@ -1,8 +1,22 @@
 class App.OnlineNotificationWidget extends App.Controller
   alreadyShown: {}
+  shown: false
+  className: 'popover popover--notifications right js-notificationsContainer'
+  attributes:
+    role: 'tooltip'
+
+  events:
+    'click .js-mark': 'markAllAsRead'
+    'click .js-item': 'hide'
+    'click .js-remove': 'removeItem'
+    'click .js-locationVerify': 'onItemClick'
+    'click': 'stopPropagation'
 
   elements:
-    '.js-toggleNotifications': 'toggle'
+    '.js-mark': 'mark'
+    '.js-item': 'item'
+    '.js-content': 'content'
+    '.js-header': 'header'
 
   constructor: ->
     super
@@ -29,38 +43,39 @@ class App.OnlineNotificationWidget extends App.Controller
     # rebuild widget on auth
     @bind 'auth', (user) =>
       if !user
-        @el.find('.js-counter').text('')
-      else
-        if !@access()
-          @el.find('.js-counter').text('')
-          return
-        @createContainer()
+        @counterUpdate(0)
+        return
+      if !@access()
+        @counterUpdate(0)
+        return
+      if !@subscribeId
+        @subscribeId = App.OnlineNotification.subscribe(@updateContent)
 
     if @access()
-      @createContainer()
       @subscribeId = App.OnlineNotification.subscribe(@updateContent)
 
-    @bind('ui:rerender', =>
-      @updateContent()
+    @bind('ui:reshow', =>
+      @show()
       'popover'
     )
 
+    $(window).on 'click.notifications', @hide
+
+    @updateContent()
+
   release: ->
-    @removeContainer()
     $(window).off 'click.notifications'
     $(window).off 'keydown.notifications'
     App.OnlineNotification.unsubscribe(@subscribeId)
+    super
 
   access: ->
     return false if !@Session.get()
-    return true if @isRole('Agent')
-    return true if @isRole('Admin')
-    return false
+    return true
 
   listNavigate: (e) =>
-
     if e.keyCode is 27 # close on esc
-      @hidePopover()
+      @hide()
       return
     else if e.keyCode is 38 # up
       @nudge(e, -1)
@@ -69,25 +84,24 @@ class App.OnlineNotificationWidget extends App.Controller
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      $('.js-notificationsContainer .popover-content .activity-entry.is-hover .js-locationVerify').click()
+      @item.filter('.is-hover').find('.js-locationVerify').click()
 
   nudge: (e, position) ->
 
     # get current
-    navigation = $('.js-notificationsContainer .popover-content')
-    current = navigation.find('.activity-entry.is-hover')
-    if !current.get(0)
-      navigation.find('.activity-entry').first().addClass('is-hover')
+    current = @item.filter('.is-hover')
+    if !current.size()
+      @item.first().addClass('is-hover')
       return
 
     if position is 1
-      next = current.next('.activity-entry')
-      if next.get(0)
+      next = current.next('.js-item')
+      if next.size()
         current.removeClass('is-hover')
         next.addClass('is-hover')
     else
-      prev = current.prev('.activity-entry')
-      if prev.get(0)
+      prev = current.prev('.js-item')
+      if prev.size()
         current.removeClass('is-hover')
         prev.addClass('is-hover')
 
@@ -97,13 +111,19 @@ class App.OnlineNotificationWidget extends App.Controller
       @scrollToIfNeeded(prev, true)
 
   counterUpdate: (count) =>
+    count = '' if count is 0
+
+    $('.js-notificationsCounter').text(count)
+    @count = count
+
+    # show mark all as read if needed
     if !count
-      @$('.js-counter').text('')
-      return
+      @mark.addClass('hidden')
+    else
+      @mark.removeClass('hidden')
 
-    @$('.js-counter').text(count)
-
-  markAllAsRead: =>
+  markAllAsRead: (event) ->
+    event.preventDefault()
     @counterUpdate(0)
     @ajax(
       id:   'markAllAsRead'
@@ -114,81 +134,54 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
   updateHeight: ->
+
     # set height of notification popover
-    notificationsContainer  = $('.js-notificationsContainer')
     heightApp               = $('#app').height()
     heightPopoverSpacer     = 22
-    heightPopoverHeader     = notificationsContainer.find('.popover-notificationsHeader').outerHeight(true)
-    heightPopoverContent    = notificationsContainer.find('.popover-content').prop('scrollHeight')
-    heightPopoverContentNew = heightPopoverContent
-    if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
-      heightPopoverContentNew = heightApp - heightPopoverHeader - heightPopoverSpacer
-      notificationsContainer.addClass('is-overflowing')
-    else
-      notificationsContainer.removeClass('is-overflowing')
+    heightPopoverHeader     = @header.outerHeight(true)
+    isOverflowing           = false
+    heightPopoverContent    = 0
+    @item.each (i, el) =>
 
-    notificationsContainer.find('.popover-content').css('height', "#{heightPopoverContentNew}px")
+      # accumulate height of items
+      heightPopoverContent += el.clientHeight
 
-  onShow: =>
-    @updateContent()
-    @updateHeight()
+      if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
+        @content.css 'height', heightApp - heightPopoverHeader - heightPopoverSpacer
+        isOverflowing = true
+        return false # exit .each loop
 
-    # mark all notifications as read
-    notificationsContainer = $('.js-notificationsContainer')
-    notificationsContainer.find('.js-markAllAsRead').on('click', (e) =>
-      e.preventDefault()
-      @markAllAsRead()
-      @hidePopover()
-    )
-
-    notificationsContainer.on 'click', @stopPropagation
-    $(window).on 'click.notifications', @hidePopover
-    $(window).on 'keydown.notifications', @listNavigate
-
-  onHide: ->
-    $(window).off 'click.notifications'
-    $(window).off 'keydown.notifications'
-
-  hidePopover: =>
-    @toggle.popover('hide')
+    @el.toggleClass('is-overflowing', isOverflowing)
+    @content.css 'height', '' if !isOverflowing
 
   fetch: =>
-    load = (items) =>
+    load = (data) =>
       @fetchedData = true
-      App.OnlineNotification.refresh(items, { clear: true })
+      App.OnlineNotification.refresh(data.stream, clear: true)
       @updateContent()
     App.OnlineNotification.fetchFull(load)
 
+  toggle: =>
+    if @shown
+      @hide()
+    else
+      @show()
+
   updateContent: =>
     if !@Session.get()
-      $('.js-notificationsContainer .popover-content').html('')
+      @content.html('')
       return
 
     items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC')
-    counter = 0
+    @count = 0
     for item in items
       if !item.seen
-        counter = counter + 1
-    @counterUpdate(counter)
+        @count++
 
-    # update title
-    $('.js-notificationsContainer .popover-title').html(
-      App.i18n.translateInline('Notifications') + " <span class='popover-notificationsCounter'>#{counter}</span>"
-    )
-
-    # show mark all as read if needed
-    if counter is 0
-      $('.js-notificationsContainer .js-markAllAsRead').addClass('hidden')
-    else
-      $('.js-notificationsContainer .js-markAllAsRead').removeClass('hidden')
+    @counterUpdate(@count)
 
     # update content
     items = @prepareForObjectList(items)
-    $('.js-notificationsContainer .popover-content').html(
-      $( App.view('widget/online_notification_content')(items: items) )
-    )
-
-    notificationsContainer  = $('.js-notificationsContainer .popover-content')
 
     # generate desktop notifications
     for item in items
@@ -206,54 +199,40 @@ class App.OnlineNotificationWidget extends App.Controller
           )
           App.OnlineNotification.play()
 
-    # execute controller again of already open (because hash hasn't changed, we need to do it manually)
-    notificationsContainer.find('.js-locationVerify').on('click', (e) =>
-      @locationVerify(e)
-      @hidePopover()
+    @html App.view('widget/online_notification')(
+      items: items
+      count: @count
     )
 
-    # close notification list on click
-    notificationsContainer.find('.activity-entry').on('click', (e) =>
-      @hidePopover()
-    )
+    return if !@shown
+    @show()
 
-    # remove
-    notificationsContainer.find('.js-remove').on('click', (e) =>
-      e.preventDefault()
-      e.stopPropagation()
-      row = $(e.target).closest('.activity-entry')
-      id = row.data('id')
-      App.OnlineNotification.destroy(id)
-      @updateHeight()
-    )
+  show: =>
+    return if !@access()
+    $(window).on 'keydown.notifications', @listNavigate
+    @shown = true
+    @el.show()
+    @updateHeight()
 
-  createContainer: =>
-    @removeContainer()
+  hide: =>
+    $(window).off 'keydown.notifications'
+    @shown = false
+    @el.hide()
 
-    # show popover
-    waitUntilOldPopoverIsRemoved = =>
-      @toggle.popover
-        trigger:   'click'
-        container: 'body'
-        html:      true
-        placement: 'right'
-        viewport:  { selector: '#app', padding: 10 }
-        template:  App.view('widget/online_notification')()
-        title:     ' '
-        content:   ' '
-      .on
-        'shown.bs.popover': @onShow
-        'hide.bs.popover':  @onHide
+  onItemClick: (e) ->
+    @locationVerify(e)
+    @hide()
 
-      @updateContent()
+  stopPropagation: (e) ->
+    e.stopPropagation()
 
-    @delay(
-      -> waitUntilOldPopoverIsRemoved()
-      600
-      'popover'
-    )
+  removeItem: (e) =>
+    e.preventDefault()
+    e.stopPropagation()
+    row = $(e.target).closest('.js-item')
+    id = row.data('id')
+    App.OnlineNotification.destroy(id)
+    @updateHeight()
 
-  removeContainer: =>
-    @counterUpdate(0)
-    @toggle.popover('destroy')
-
+  remove: =>
+    @el.remove()
