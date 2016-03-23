@@ -264,7 +264,7 @@ class TestCase < Test::Unit::TestCase
     return if !clues
     instance.execute_script("$('.js-modal--clue .js-close').click()")
     assert(true, 'clues closed')
-    sleep 4
+    sleep 2
   end
 
 =begin
@@ -418,6 +418,23 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  modal_ready(
+    browser:  browser1,
+  )
+
+=end
+
+  def modal_ready(params)
+    switch_window_focus(params)
+    log('modal_ready', params)
+
+    instance = params[:browser] || @browser
+
+    sleep 2
+  end
+
+=begin
+
   execute(
     browser: browser1,
     js:      '.some_class',
@@ -544,7 +561,7 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
       element.click
       element.clear
-      sleep 0.5
+      sleep 0.4
       element.send_keys(params[:value])
       sleep 0.2
       element.send_keys(:enter)
@@ -562,7 +579,7 @@ class TestCase < Test::Unit::TestCase
       dropdown.select_by(:text, params[:value])
       #puts "select - #{params.inspect}"
     rescue
-      sleep 0.5
+      sleep 0.4
 
       # just try again
       log('select', { rescure: true })
@@ -574,7 +591,7 @@ class TestCase < Test::Unit::TestCase
       dropdown.select_by(:text, params[:value])
       #puts "select2 - #{params.inspect}"
     end
-    sleep 0.5
+    sleep 0.4
   end
 
 =begin
@@ -1014,7 +1031,7 @@ class TestCase < Test::Unit::TestCase
 
     # accept task close warning
     if params[:discard_changes]
-      sleep 1
+      modal_ready()
       instance.find_elements(css: '.modal button.js-submit')[0].click
     end
 

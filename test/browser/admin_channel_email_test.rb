@@ -25,7 +25,7 @@ class AdminChannelEmailTest < TestCase
 
     click(css: '#content .js-channelNew')
 
-    sleep 2
+    modal_ready()
 
     set(
       css: '.modal input[name="realname"]',
@@ -65,7 +65,7 @@ class AdminChannelEmailTest < TestCase
     # re-create
     click(css: '#content .js-channelNew')
 
-    sleep 2
+    modal_ready()
 
     set(
       css: '.modal input[name="realname"]',
@@ -99,7 +99,8 @@ class AdminChannelEmailTest < TestCase
 
     # set invalid folder
     click(css: '#content .js-editInbound')
-    sleep 2
+
+    modal_ready()
 
     set(
       css: '.modal input[name="options::folder"]',

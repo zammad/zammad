@@ -13,12 +13,12 @@ class AaaGettingStartedTest < TestCase
     mailbox_password = ENV['MAILBOX_INIT'].split(':')[1]
 
     @browser = browser_instance
-    location( url: browser_url )
+    location(url: browser_url)
     watch_for(
       css: '.setup.wizard',
       value: 'setup new system',
     )
-    click( css: '.js-start .btn--primary' )
+    click(css: '.js-start .btn--primary')
     watch_for(
       css: '.setup.wizard',
       value: 'admin',
@@ -47,7 +47,7 @@ class AaaGettingStartedTest < TestCase
       css: '.js-admin input[name="password_confirm"]',
       value: 'test1234äöüß',
     )
-    click( css: '.js-admin .btn--success' )
+    click(css: '.js-admin .btn--success')
 
     # getting started - base
     watch_for(
@@ -197,7 +197,7 @@ class AaaGettingStartedTest < TestCase
     accounts.each {|account|
 
       # getting started - auto mail
-      location( url: browser_url + '/#getting_started/channel' )
+      location(url: browser_url + '/#getting_started/channel')
       click(
         css: '.js-channel .email .provider_name',
       )
@@ -269,7 +269,7 @@ class AaaGettingStartedTest < TestCase
     accounts.each {|account|
 
       # getting started - manual mail
-      location( url: browser_url + '/#getting_started/channel' )
+      location(url: browser_url + '/#getting_started/channel')
 
       click(
         css: '.js-channel .email .provider_name',
