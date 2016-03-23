@@ -46,7 +46,7 @@ class FacebookBrowserTest < TestCase
     click(css: 'a[href="#channels/facebook"]')
 
     click(css: '#content .js-configApp')
-    sleep 2
+    modal_ready()
     set(
       css: '#content .modal [name=application_id]',
       value: app_id,
@@ -79,7 +79,7 @@ class FacebookBrowserTest < TestCase
     )
 
     click(css: '#content .js-configApp')
-
+    modal_ready()
     set(
       css: '#content .modal [name=application_secret]',
       value: 'wrong',
@@ -122,7 +122,7 @@ class FacebookBrowserTest < TestCase
       css: '#pass',
       value: user_pw,
     )
-    click(css: '#login_button_inline')
+    click(css: '#loginbutton')
 
     #sleep 10
     #click(css: 'div[role="dialog"] button[type="submit"][name="__CONFIRM__"]')
@@ -187,14 +187,14 @@ class FacebookBrowserTest < TestCase
     post            = customer_client.put_wall_post(message, {}, page_id)
 
     # watch till post is in app
-    click( text: 'Overviews' )
+    click(text: 'Overviews')
 
     # enable full overviews
     execute(
       js: '$(".content.active .sidebar").css("display", "block")',
     )
 
-    click( text: 'Unassigned & Open' )
+    click(text: 'Unassigned & Open')
     sleep 6 # till overview is rendered
 
     watch_for(
@@ -206,7 +206,7 @@ class FacebookBrowserTest < TestCase
     ticket_open_by_title(
       title: hash,
     )
-    click( css: '.content.active [data-type="facebookFeedReply"]' )
+    click(css: '.content.active [data-type="facebookFeedReply"]')
     sleep 2
 
     re_hash = "#{hash}re#{rand(99_999)}"

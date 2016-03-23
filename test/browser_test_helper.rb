@@ -424,7 +424,7 @@ class TestCase < Test::Unit::TestCase
 
 =end
 
-  def modal_ready(params)
+  def modal_ready(params = {})
     switch_window_focus(params)
     log('modal_ready', params)
 
