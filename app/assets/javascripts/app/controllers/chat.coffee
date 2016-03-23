@@ -122,6 +122,7 @@ class App.CustomerChat extends App.Controller
       animation:  false
       delay:      0
       placement:  'bottom'
+      container:  'body' # place in body do prevent it from animating
       title: ->
         App.i18n.translateContent('Waiting Customers')
       content: =>
@@ -134,6 +135,7 @@ class App.CustomerChat extends App.Controller
       animation:  false
       delay:      0
       placement:  'bottom'
+      container:  'body'
       title: ->
         App.i18n.translateContent('Chatting Customers')
       content: =>
@@ -146,6 +148,7 @@ class App.CustomerChat extends App.Controller
       animation:  false
       delay:      0
       placement:  'bottom'
+      container:  'body'
       title: ->
         App.i18n.translateContent('Active Agents')
       content: =>
