@@ -116,11 +116,11 @@ class App.CustomerChat extends App.Controller
         chat_sessions: list
       )
 
-    @el.find('.js-waitingCustomers .js-arrow').popover(
+    @el.find('.js-waitingCustomers .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
-      delay:      100
+      delay:      0
       placement:  'bottom'
       title: ->
         App.i18n.translateContent('Waiting Customers')
@@ -128,11 +128,11 @@ class App.CustomerChat extends App.Controller
         chatSessionList(@meta.waiting_chat_session_list)
     )
 
-    @el.find('.js-chattingCustomers .js-arrow').popover(
+    @el.find('.js-chattingCustomers .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
-      delay:      100
+      delay:      0
       placement:  'bottom'
       title: ->
         App.i18n.translateContent('Chatting Customers')
@@ -140,11 +140,11 @@ class App.CustomerChat extends App.Controller
         chatSessionList(@meta.running_chat_session_list)
     )
 
-    @el.find('.js-activeAgents .js-arrow').popover(
+    @el.find('.js-activeAgents .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
-      delay:      100
+      delay:      0
       placement:  'bottom'
       title: ->
         App.i18n.translateContent('Active Agents')

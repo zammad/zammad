@@ -707,8 +707,11 @@ pre code.hljs {
 
 .status-field {
   color: hsl(0,0%,60%);
-  padding: 8px 10px 6px;
   border: 1px solid hsl(0,0%,90%);
+  display: flex;
+  height: 34px;
+  align-items: center;
+  line-height: 35px;
   
   &.is-clickable {
     background: hsl(203,65%,55%);
@@ -740,22 +743,29 @@ pre code.hljs {
   }
 
   .badge {
+    margin: 0 5px 0 10px;
     background: hsla(210,50%,10%,.24);
   }
 
-  .info-arrow {
-    margin: -8px -10px -6px 0;
-    padding: 8px 10px 7px 3px;
+  .status-badge {
+    width: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
   }
+}
+
+.info-badge {
+  border-radius: 100%;
+  fill: rgba(0,0,0,.24);
+  border: 1px solid rgba(0,0,0,.13);
+  padding: 2px 5px 0px;
+  line-height: 12px;
 }
 
 @keyframes pulsate {
   to { filter: brightness(1.2); }
-}
-
-.info-arrow {
-  display: inline-block;
-  cursor: pointer;
 }
 
 .badge {
