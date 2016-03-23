@@ -7575,6 +7575,12 @@ output {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+    
+  .status-badge {
+    margin-left: 2px;
+    vertical-align: middle;
+    height: 100%;
+  }
 }
 
 .chat-status {
