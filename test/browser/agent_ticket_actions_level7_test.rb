@@ -56,11 +56,11 @@ class AgentTicketActionLevel7Test < TestCase
     )
 
     # scroll to reply - needed for chrome
+    sleep 5
     scroll_to(
       position: 'botton',
       css:      '.content.active [data-type="emailReply"]',
     )
-
     # click reply
     click(css: '.content.active [data-type="emailReply"]')
 
