@@ -3603,7 +3603,8 @@ footer {
   }
 
   .popover-content {
-    padding: 0 17px 10px;
+    padding: 0 17px;
+    margin-bottom: 21px;
   }
 
   .popover.right { margin-left: 4px; }
@@ -3666,6 +3667,11 @@ footer {
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  .popover .two-columns,
+  .popover .three-columns {
+    margin-bottom: -8px;
   }
 
   .popover .column label {
