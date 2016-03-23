@@ -860,11 +860,11 @@
         <hr>
         <label>Members</label>
 
-        <ul class="userList">
-          <li>
-            <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
-          </li>
-        </ul>
+        <div class="userList">
+          <div class="userList-entry">
+            <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="userList-entry user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
+          </div>
+        </div>
       </div>
     </div>
 
