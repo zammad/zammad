@@ -3381,6 +3381,11 @@ footer {
   vertical-align: bottom;
   position: relative;
   
+  &.size-30 {
+    width: 30px;
+    height: 30px;
+  }
+  
   .icon-crown {
     position: absolute;
     width: 28px;
@@ -3414,7 +3419,7 @@ footer {
 
   &.unique {
     background-image: image_url("/assets/images/avatar-bg.png");
-    background-size: auto;
+    background-size: 300px 226px;
     color: white;
     line-height: 40px;
     text-align: center;
@@ -3423,15 +3428,23 @@ footer {
     text-transform: uppercase;
     text-shadow: 0 1px rgba(0,0,0,.2);
     cursor: default;
+    
+    &.size-30 {
+      font-size: 10px;
+      line-height: 32px;
+      background-size: 225px 170px;
+    }
 
     &.size-50 {
       font-size: 16px;
       line-height: 52px;
+      background-size: 375px 283px;
     }
 
     &.size-80 {
-      font-size: 20px;
+      font-size: 26px;
       line-height: 84px;
+      background-size: 600px 452px;
     }
   }
 

@@ -48,6 +48,7 @@ class App.User extends App.Model
       return '??'
 
   avatar: (size = 40, placement = '', cssClass = '', unique = false, avatar, type = undefined) ->
+    baseSize = 40
     size   = parseInt(size, 10)
 
     cssClass += ' ' if cssClass
@@ -92,8 +93,8 @@ class App.User extends App.Model
         cssClass: cssClass
         placement: placement
         vip: vip
-        x: x
-        y: y
+        x: x * size/baseSize
+        y: y * size/baseSize
         initials: @initials()
 
     # generate image based avatar
