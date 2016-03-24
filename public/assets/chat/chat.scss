@@ -35,6 +35,7 @@
   }
 }
 
+
 .zammad-chat-icon {
   height: 2em;
   width: 2em;
@@ -62,10 +63,6 @@
   @media only screen and (max-width: 768px) {
     border-radius: 0 !important;
   }
-}
-
-.zammad-chat.is-fullscreen .zammad-chat-header {
-  border-radius: 0 !important;
 }
 
 .zammad-chat.zammad-chat-is-open .zammad-chat-header {

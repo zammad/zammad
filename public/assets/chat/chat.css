@@ -58,9 +58,6 @@
     .zammad-chat-header {
       border-radius: 0 !important; } }
 
-.zammad-chat.is-fullscreen .zammad-chat-header {
-  border-radius: 0 !important; }
-
 .zammad-chat.zammad-chat-is-open .zammad-chat-header {
   cursor: default; }
 
