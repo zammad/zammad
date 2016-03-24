@@ -258,6 +258,11 @@ class _taskManagerSingleton extends App.Controller
     if controller.show
       controller.show(params_app)
 
+    # update title
+    if controller.meta
+      meta = controller.meta()
+      @title meta.title
+
     true
 
   # hide task content

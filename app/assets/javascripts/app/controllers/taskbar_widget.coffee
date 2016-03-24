@@ -49,7 +49,7 @@ class App.TaskbarWidget extends App.Controller
       item.meta = meta
       taskItems.push item
 
-      # set title
+      # update title
       if task.active
         @title meta.title
 
