@@ -516,6 +516,11 @@ do($ = window.jQuery, window) ->
 
       @el.addClass('zammad-chat-is-open')
 
+      if !@inputInitialized
+        @inputInitialized = true
+        @input.autoGrow
+          extraLine: false
+
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
 
       @el.css 'bottom', -remainerHeight
@@ -603,11 +608,6 @@ do($ = window.jQuery, window) ->
       return if @state is 'offline'
 
       @el.addClass('zammad-chat-is-loaded')
-
-      if !@inputInitialized
-        @inputInitialized = true
-        @input.autoGrow
-          extraLine: false
 
       @el.addClass('zammad-chat-is-shown')
 
