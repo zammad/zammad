@@ -366,14 +366,8 @@ class ChatWindow extends App.Controller
     @isAgentTyping = false
     @resetUnreadMessages()
 
-    chat = App.Chat.find(@session.chat_id)
-    @name = "#{chat.displayName()} [##{@session.id}]"
-    @title = ''
-    if @session && @session.preferences && @session.preferences.geo_ip
-      if @session.preferences.geo_ip.country_name
-        @title += @session.preferences.geo_ip.country_name
-      if @session.preferences.geo_ip.city_name
-        @title += " #{@session.preferences.geo_ip.city_name}"
+    @chat = App.Chat.find(@session.chat_id)
+    @name = "#{@chat.displayName()} ##{@session.id}"
 
     @on 'layout-change', @scrollToBottom
 
@@ -407,7 +401,6 @@ class ChatWindow extends App.Controller
   render: ->
     @html App.view('customer_chat/chat_window')
       name: @name
-      title: @title
 
     @el.one 'transitionend', @onTransitionend
 
@@ -434,6 +427,21 @@ class ChatWindow extends App.Controller
             phrase = phrasesArray[_.random(0, phrasesArray.length-1)]
             @input.html(phrase)
             @sendMessage(1600)
+
+    @$('.js-info').popover(
+      trigger:    'hover'
+      html:       true
+      animation:  false
+      delay:      0
+      placement:  'bottom'
+      container:  'body' # place in body do prevent it from animating
+      title: ->
+        App.i18n.translateContent('Details')
+      content: =>
+        App.view('customer_chat/chat_window_info')(
+          session: @session
+        )
+    )
 
   focus: =>
     @input.focus()
