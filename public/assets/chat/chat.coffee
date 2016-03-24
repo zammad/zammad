@@ -516,6 +516,10 @@ do($ = window.jQuery, window) ->
 
       @el.addClass('zammad-chat-is-open')
 
+      remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
+
+      @el.css 'bottom', -remainerHeight
+
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
         @send('chat_session_init')
@@ -573,12 +577,12 @@ do($ = window.jQuery, window) ->
         @enableScrollOnRoot()
 
       # close window
-      @el.removeClass('zammad-chat-is-open')
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
       @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
 
     onCloseAnimationEnd: =>
-      @el.removeClass('zammad-chat-is-visible')
+      @el.css 'bottom', ''
+      @el.removeClass('zammad-chat-is-open')
 
       @showLoader()
       @el.find('.zammad-chat-welcome').removeClass('zammad-chat-is-hidden')
@@ -605,9 +609,6 @@ do($ = window.jQuery, window) ->
         @input.autoGrow
           extraLine: false
 
-      remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
-
-      @el.css 'bottom', -remainerHeight
       @el.addClass('zammad-chat-is-shown')
 
     disableInput: ->
