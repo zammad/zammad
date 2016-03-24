@@ -5,7 +5,8 @@
 <p>It looks like you signed into your <%= c 'product_name' %> account using a new device on "<%= d 'user_device.created_at' %>":</p>
 <br>
 <p>
-Your location: <%= d 'user_device.location' %><br>
+Your device: <%= d 'user_device.name' %><br>
+Your location (relative): <%= d 'user_device.location' %><br>
 Your IP: <%= d 'user_device.ip' %><br
 </p>
 <br>
