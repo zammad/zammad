@@ -251,15 +251,15 @@ class _taskManagerSingleton extends App.Controller
     return false if !controller
 
     # set controller state to active
-    if controller.active
+    if controller.active && _.isFunction(controller.active)
       controller.active(true)
 
     # execute controllers show
-    if controller.show
+    if controller.show && _.isFunction(controller.show)
       controller.show(params_app)
 
     # update title
-    if controller.meta
+    if controller.meta && _.isFunction(controller.meta)
       meta = controller.meta()
       @title meta.title
 
@@ -273,11 +273,11 @@ class _taskManagerSingleton extends App.Controller
     return false if !controller
 
     # set controller state to active
-    if controller.active
+    if controller.active && _.isFunction(controller.active)
       controller.active(false)
 
     # execute controllers hide
-    if controller.hide
+    if controller.hide && _.isFunction(controller.hide)
       controller.hide()
 
     true
