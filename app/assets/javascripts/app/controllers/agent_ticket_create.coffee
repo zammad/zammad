@@ -135,6 +135,13 @@ class App.TicketCreate extends App.Controller
         @autosaveLast = data
         @log 'debug', 'form hash changed', diff, data
         App.TaskManager.update(@task_key, { 'state': data })
+
+        # check it task title in task need to be updated
+        title = @$('[name=title]').val()
+        if @latestTitle isnt title
+          @latestTitle = title
+          @metaTaskUpdate()
+
     @interval(update, 3000, @id)
 
   # get data / in case also ticket data for split
@@ -146,9 +153,9 @@ class App.TicketCreate extends App.Controller
 
     # fetch split ticket data
     @ajax(
-      id:    'ticket_split' + @task_key
+      id:    "ticket_split#{@task_key}"
       type:  'GET'
-      url:   @apiPath + '/ticket_split'
+      url:   "#{@apiPath}/ticket_split"
       data:
         ticket_id: params.ticket_id
         article_id: params.article_id

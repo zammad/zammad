@@ -201,7 +201,9 @@ class _taskManagerSingleton extends App.Controller
       $('.nav-tab.task').each( (_index, element) =>
         localElement = $(element)
         key = localElement.data('key')
+        return if !key
         task = @get(key)
+        return if !task
         if task.active
           localElement.addClass('is-active')
         else
