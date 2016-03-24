@@ -181,7 +181,7 @@ class _taskManagerSingleton extends App.Controller
         if task.key isnt params.key
           if task.active
             task.active = false
-            @taskUpdate(task)
+            @taskUpdate(task, true)
         else
           changed = false
           if !task.active
@@ -191,13 +191,22 @@ class _taskManagerSingleton extends App.Controller
             changed = true
             task.notify = false
           if changed
-            @taskUpdate(task)
+            @taskUpdate(task, true)
 
     # start worker for task if not exists
     @startController(params)
 
+    # set active state
     if !params.init
-      @metaTaskUpdate()
+      $('.nav-tab.task').each( (_index, element) =>
+        localElement = $(element)
+        key = localElement.data('key')
+        task = @get(key)
+        if task.active
+          localElement.addClass('is-active')
+        else
+          localElement.removeClass('is-active')
+      )
 
   startController: (params) =>
 
@@ -279,7 +288,12 @@ class _taskManagerSingleton extends App.Controller
       throw "No such task with '#{key}' to update"
     for item, value of params
       task[item] = value
-    @taskUpdate(task)
+
+    # mute rerender on state attribute updates
+    mute = false
+    if Object.keys(params).length is 1 && params.state
+      mute = true
+    @taskUpdate(task, mute)
 
   # remove task certain task from tasks
   remove: (key, rerender) =>
@@ -336,7 +350,7 @@ class _taskManagerSingleton extends App.Controller
       prio++
       if task.prio isnt prio
         task.prio = prio
-        @taskUpdate(task)
+        @taskUpdate(task, true)
 
   # release one task
   release: (key) =>
@@ -396,10 +410,11 @@ class _taskManagerSingleton extends App.Controller
       @TaskbarIdInt = Math.floor( Math.random() * 99999999 )
     @TaskbarIdInt
 
-  taskUpdate: (task) ->
-    #@log 'notice', "UPDATE task #{task.id}", task
+  taskUpdate: (task, mute = false) ->
+    @log 'debug', 'UPDATE task', task, mute
     @tasksToUpdate[ task.key ] = 'toUpdate'
-    @metaTaskUpdate()
+    if !mute
+      @metaTaskUpdate()
 
   taskUpdateLoop: =>
     return if @offlineModus

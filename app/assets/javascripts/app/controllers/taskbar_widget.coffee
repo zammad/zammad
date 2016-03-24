@@ -97,12 +97,12 @@ class App.TaskbarWidget extends App.Controller
         return
 
     # check if active task is closed
-    currentTask      = App.TaskManager.get(key)
-    tasks            = App.TaskManager.all()
-    active_is_closed = false
+    currentTask    = App.TaskManager.get(key)
+    tasks          = App.TaskManager.all()
+    activeIsClosed = false
     for task in tasks
       if currentTask.active && task.key is key
-        active_is_closed = true
+        activeIsClosed = true
 
     # remove task
     App.TaskManager.remove(key, false)
@@ -110,7 +110,7 @@ class App.TaskbarWidget extends App.Controller
     $(e.target).closest('.task').remove()
 
     # if we do not need to move to an other task
-    return if !active_is_closed
+    return if !activeIsClosed
 
     # get new task url
     nextTaskUrl = App.TaskManager.nextTaskUrl()
