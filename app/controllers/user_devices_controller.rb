@@ -4,7 +4,7 @@ class UserDevicesController < ApplicationController
   before_action :authentication_check
 
   def index
-    devices = UserDevice.where(user_id: current_user.id).order('created_at DESC')
+    devices = UserDevice.where(user_id: current_user.id).order('updated_at DESC, name ASC')
     devices_full = []
     devices.each {|device|
       attributes = device.attributes

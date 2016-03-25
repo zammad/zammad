@@ -19,13 +19,15 @@ class Index extends App.Controller
     @ajax(
       id:    'user_devices'
       type:  'GET'
-      url:   @apiPath + '/user_devices'
+      url:   "#{@apiPath}/user_devices"
       success: (data) =>
         @render(data)
     )
 
   render: (data) =>
-    @html App.view('profile/devices')( devices: data )
+    @html App.view('profile/devices')(
+      devices: data
+    )
 
   delete: (e) =>
     e.preventDefault()
@@ -41,10 +43,10 @@ class Index extends App.Controller
     )
 
   error: (xhr, status, error) =>
-    data = JSON.parse( xhr.responseText )
+    data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent( data.message )
+      msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set( 'Devices', { prio: 3100, name: 'Devices', parent: '#profile', target: '#profile/devices', controller: Index }, 'NavBarProfile' )
+App.Config.set('Devices', { prio: 3100, name: 'Devices', parent: '#profile', target: '#profile/devices', controller: Index }, 'NavBarProfile')
