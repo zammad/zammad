@@ -775,6 +775,9 @@ do($ = window.jQuery, window) ->
       if data.session_id
         @setSessionId data.session_id
 
+      # empty old messages
+      @el.find('.zammad-chat-body').html('')
+
       @el.find('.zammad-chat-agent').html @view('agent')
         agent: @agent
 
