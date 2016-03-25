@@ -4,6 +4,7 @@ require 'browser_test_helper'
 class ChatTest < TestCase
 
   def test_basic
+    chat_url = "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}"
     agent = browser_instance
     login(
       browser: agent,
@@ -41,7 +42,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
+      url:     chat_url,
     )
     sleep 4
     exists_not(
@@ -170,6 +171,7 @@ class ChatTest < TestCase
   end
 
   def test_basic_usecase1
+    chat_url = "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}"
     agent = browser_instance
     login(
       browser: agent,
@@ -190,7 +192,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
+      url:     chat_url,
     )
     watch_for(
       browser: customer,
@@ -219,6 +221,11 @@ class ChatTest < TestCase
     exists_not(
       browser: agent,
       css: '.active .chat-window .chat-status.is-modified',
+    )
+    match(
+      browser: agent,
+      css: '.active .chat-window .js-body',
+      value: chat_url,
     )
     set(
       browser: agent,
@@ -277,6 +284,7 @@ class ChatTest < TestCase
   end
 
   def test_basic_usecase2
+    chat_url = "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}"
     agent = browser_instance
     login(
       browser: agent,
@@ -297,7 +305,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
+      url:     chat_url,
     )
     watch_for(
       browser: customer,
@@ -431,6 +439,7 @@ class ChatTest < TestCase
   end
 
   def test_basic_usecase3
+    chat_url = "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}"
     agent = browser_instance
     login(
       browser: agent,
@@ -466,7 +475,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
+      url:     chat_url,
     )
     watch_for(
       browser: customer,
@@ -499,6 +508,11 @@ class ChatTest < TestCase
       browser: customer,
       css: '.zammad-chat .zammad-chat-agent-status',
       value: 'online',
+    )
+    match(
+      browser: agent,
+      css: '.active .chat-window .js-body',
+      value: chat_url,
     )
     set(
       browser: agent,
@@ -554,6 +568,16 @@ class ChatTest < TestCase
       css: '.zammad-chat',
       value: 'my name is customer',
     )
+    location(
+      browser: customer,
+      url:     "#{chat_url}#new_hash",
+    )
+    sleep 2
+    match(
+      browser: agent,
+      css: '.active .chat-window .js-body',
+      value: "#{chat_url}#new_hash",
+    )
     click(
       browser: customer,
       css: '.js-chat-toggle',
@@ -566,6 +590,7 @@ class ChatTest < TestCase
   end
 
   def test_timeouts
+    chat_url = "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}"
     agent = browser_instance
     login(
       browser: agent,
@@ -592,7 +617,7 @@ class ChatTest < TestCase
     customer = browser_instance
     location(
       browser: customer,
-      url:     "#{browser_url}/assets/chat/znuny.html?port=#{ENV['WS_PORT']}",
+      url:     chat_url,
     )
     watch_for(
       browser: customer,

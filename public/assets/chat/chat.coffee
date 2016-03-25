@@ -291,6 +291,7 @@ do($ = window.jQuery, window) ->
       @sessionId = sessionStorage.getItem('sessionId')
       @send 'chat_status_customer',
         session_id: @sessionId
+        url: window.location.href
 
     renderBase: ->
       @el = $(@view('chat')(
@@ -311,7 +312,12 @@ do($ = window.jQuery, window) ->
         @onLeaveTemporary()
       )
       $(window).bind('hashchange', =>
-        return if @isOpen
+        if @isOpen
+          if @sessionId
+            @send 'chat_session_notice',
+              session_id: @sessionId
+              message: window.location.href
+          return
         @idleTimeout.start()
       )
 
@@ -527,7 +533,9 @@ do($ = window.jQuery, window) ->
 
       if !@sessionId
         @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
-        @send('chat_session_init')
+        @send('chat_session_init'
+          url: window.location.href
+        )
       else
         @el.css 'bottom', 0
         @onOpenAnimationEnd()

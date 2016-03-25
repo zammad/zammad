@@ -32,6 +32,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
       name: '',
       state: 'waiting',
       preferences: {
+        url: @payload['data']['url'],
         participants: [@client_id],
         remote_ip: @remote_ip,
         geo_ip: geo_ip,

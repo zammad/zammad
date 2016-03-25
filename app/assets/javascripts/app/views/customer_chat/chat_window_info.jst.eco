@@ -1,3 +1,4 @@
+<hr>
 <ul>
 <% if @session: %>
 <li><%- @T('Created at') %>: <%- @Ttimestamp(@session.created_at) %>

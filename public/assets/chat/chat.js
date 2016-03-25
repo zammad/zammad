@@ -464,7 +464,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       this.idleTimeout.start();
       this.sessionId = sessionStorage.getItem('sessionId');
       return this.send('chat_status_customer', {
-        session_id: this.sessionId
+        session_id: this.sessionId,
+        url: window.location.href
       });
     };
 
@@ -489,6 +490,12 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       $(window).bind('hashchange', (function(_this) {
         return function() {
           if (_this.isOpen) {
+            if (_this.sessionId) {
+              _this.send('chat_session_notice', {
+                session_id: _this.sessionId,
+                message: window.location.href
+              });
+            }
             return;
           }
           return _this.idleTimeout.start();
@@ -743,7 +750,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.el.animate({
           bottom: 0
         }, 500, this.onOpenAnimationEnd);
-        return this.send('chat_session_init');
+        return this.send('chat_session_init', {
+          url: window.location.href
+        });
       } else {
         this.el.css('bottom', 0);
         return this.onOpenAnimationEnd();

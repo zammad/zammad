@@ -381,6 +381,11 @@ class ChatWindow extends App.Controller
       return if data.self_written
       @receiveMessage(data.message.content)
     )
+    @bind('chat_session_notice', (data) =>
+      return if data.session_id isnt @session.session_id
+      return if data.self_written
+      @addNoticeMessage(data.message)
+    )
     @bind('chat_session_left', (data) =>
       return if data.session_id isnt @session.session_id
       return if data.self_written
@@ -410,6 +415,9 @@ class ChatWindow extends App.Controller
 
     # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent'
     if @session
+      if @session && @session.preferences && @session.preferences.url
+        @addNoticeMessage(@session.preferences.url)
+
       if @session.messages
         for message in @session.messages
           if message.created_by_id
@@ -655,6 +663,15 @@ class ChatWindow extends App.Controller
     @maybeAddTimestamp()
 
     @body.append App.view('customer_chat/chat_status_message')
+      message: message
+      args: args
+
+    @scrollToBottom()
+
+  addNoticeMessage: (message, args) ->
+    @maybeAddTimestamp()
+
+    @body.append App.view('customer_chat/chat_notice_message')
       message: message
       args: args
 
