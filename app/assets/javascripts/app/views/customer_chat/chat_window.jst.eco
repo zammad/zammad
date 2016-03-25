@@ -6,7 +6,11 @@
       <%- @Icon('small-dot', 'icon-status-modified-inner-circle') %>
     </div>
   </div>
-  <div class="chat-name" title="<%= @title %>"><%= @name %></div>
+  <div class="chat-name">
+    <%= @name %> <div class="status-badge js-info">
+      <div class="info-badge"><%- @Icon('info') %></div>
+    </div>
+  </div>
   <div class="chat-disconnect js-disconnect">
     <div class="btn btn--action btn--small"><%- @T('disconnect') %></div>
   </div>

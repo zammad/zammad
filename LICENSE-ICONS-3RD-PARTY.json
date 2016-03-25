@@ -1,8 +1,8 @@
 {
-    "draggable.svg": {
-        "author": "Felix Niklas",
-        "url": "",
-        "license": "MIT"
+    "info.svg": {
+        "author": "Information by Gregor \u010cre\u0161nar from the Noun Project",
+        "url": "https:\/\/thenounproject.com\/search\/?q=info&i=176431",
+        "license": "CC 3.0 Attribution"
     },
     "web.svg": {
         "author": "Zammad",
@@ -13,6 +13,11 @@
         "author": "Pickin Studio",
         "url": "https:\/\/thenounproject.com\/search\/?q=website&i=16523",
         "license": "CC 3.0 Attribution"
+    },
+    "draggable.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
     },
     "radio.svg": {
         "author": "Zammad",

@@ -1,0 +1,1 @@
+<div class="chat-notice-message"><%= @message %></div>

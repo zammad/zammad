@@ -137,6 +137,8 @@ $sortByImageName = false;
 # This is only used if images are sorted by date (see above)
 $newestImagesFirst = true;
 
+date_default_timezone_set('Europe/Berlin');
+
 # The rest of the code is technical
 
 # Add images to array
@@ -170,6 +172,14 @@ if ($sortByImageName) {
   $filename = basename($image);
   $name = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
 
+  if(!array_key_exists($filename, $author_data)){
+    $author_data[$filename] = array(
+      'author' => '',
+      'url' => '',
+      'license' => ''
+    );
+  }
+
   # Begin adding
 ?>
   <div class="icon-holder">
@@ -186,7 +196,7 @@ if ($sortByImageName) {
 <? endforeach ?>
 </div>
 
-<script src="../app/assets/javascripts/app/lib/core/jquery-2.1.4.js"></script>
+<script src="../app/assets/javascripts/app/lib/core/jquery-2.2.1.js"></script>
 <script>
   var self = "<?= basename($_SERVER["SCRIPT_FILENAME"]) ?>"
   var filter = "off"

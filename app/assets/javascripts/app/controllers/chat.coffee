@@ -116,36 +116,39 @@ class App.CustomerChat extends App.Controller
         chat_sessions: list
       )
 
-    @el.find('.js-waitingCustomers .js-arrow').popover(
+    @el.find('.js-waitingCustomers .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
-      delay:      100
+      delay:      0
       placement:  'bottom'
+      container:  'body' # place in body do prevent it from animating
       title: ->
         App.i18n.translateContent('Waiting Customers')
       content: =>
         chatSessionList(@meta.waiting_chat_session_list)
     )
 
-    @el.find('.js-chattingCustomers .js-arrow').popover(
+    @el.find('.js-chattingCustomers .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
-      delay:      100
+      delay:      0
       placement:  'bottom'
+      container:  'body'
       title: ->
         App.i18n.translateContent('Chatting Customers')
       content: =>
         chatSessionList(@meta.running_chat_session_list)
     )
 
-    @el.find('.js-activeAgents .js-arrow').popover(
+    @el.find('.js-activeAgents .js-info').popover(
       trigger:    'hover'
       html:       true
       animation:  false
-      delay:      100
+      delay:      0
       placement:  'bottom'
+      container:  'body'
       title: ->
         App.i18n.translateContent('Active Agents')
       content: =>
@@ -172,12 +175,13 @@ class App.CustomerChat extends App.Controller
     if @lastWaitingChatCount isnt counter
 
       # do not play sound on initial load
-      if counter > 0 && @lastWaitingChatCount isnt undefined
-        @sounds.chat_new.play()
-        @notifyDesktop(
-          title: "#{counter} #{App.i18n.translateInline('Waiting Customers')}",
-          url: '#customer_chat'
-        )
+      if @switch()
+        if counter > 0 && @lastWaitingChatCount isnt undefined
+          @sounds.chat_new.play()
+          @notifyDesktop(
+            title: "#{counter} #{App.i18n.translateInline('Waiting Customers')}",
+            url: '#customer_chat'
+          )
       @lastWaitingChatCount = counter
 
     # collect chat window messages
@@ -363,14 +367,8 @@ class ChatWindow extends App.Controller
     @isAgentTyping = false
     @resetUnreadMessages()
 
-    chat = App.Chat.find(@session.chat_id)
-    @name = "#{chat.displayName()} [##{@session.id}]"
-    @title = ''
-    if @session && @session.preferences && @session.preferences.geo_ip
-      if @session.preferences.geo_ip.country_name
-        @title += @session.preferences.geo_ip.country_name
-      if @session.preferences.geo_ip.city_name
-        @title += " #{@session.preferences.geo_ip.city_name}"
+    @chat = App.Chat.find(@session.chat_id)
+    @name = "#{@chat.displayName()} ##{@session.id}"
 
     @on 'layout-change', @scrollToBottom
 
@@ -383,6 +381,11 @@ class ChatWindow extends App.Controller
       return if data.session_id isnt @session.session_id
       return if data.self_written
       @receiveMessage(data.message.content)
+    )
+    @bind('chat_session_notice', (data) =>
+      return if data.session_id isnt @session.session_id
+      return if data.self_written
+      @addNoticeMessage(data.message)
     )
     @bind('chat_session_left', (data) =>
       return if data.session_id isnt @session.session_id
@@ -404,7 +407,6 @@ class ChatWindow extends App.Controller
   render: ->
     @html App.view('customer_chat/chat_window')
       name: @name
-      title: @title
 
     @el.one 'transitionend', @onTransitionend
 
@@ -414,6 +416,9 @@ class ChatWindow extends App.Controller
 
     # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent'
     if @session
+      if @session && @session.preferences && @session.preferences.url
+        @addNoticeMessage(@session.preferences.url)
+
       if @session.messages
         for message in @session.messages
           if message.created_by_id
@@ -431,6 +436,21 @@ class ChatWindow extends App.Controller
             phrase = phrasesArray[_.random(0, phrasesArray.length-1)]
             @input.html(phrase)
             @sendMessage(1600)
+
+    @$('.js-info').popover(
+      trigger:    'hover'
+      html:       true
+      animation:  false
+      delay:      0
+      placement:  'bottom'
+      container:  'body' # place in body do prevent it from animating
+      title: ->
+        App.i18n.translateContent('Details')
+      content: =>
+        App.view('customer_chat/chat_window_info')(
+          session: @session
+        )
+    )
 
   focus: =>
     @input.focus()
@@ -644,6 +664,15 @@ class ChatWindow extends App.Controller
     @maybeAddTimestamp()
 
     @body.append App.view('customer_chat/chat_status_message')
+      message: message
+      args: args
+
+    @scrollToBottom()
+
+  addNoticeMessage: (message, args) ->
+    @maybeAddTimestamp()
+
+    @body.append App.view('customer_chat/chat_notice_message')
       message: message
       args: args
 

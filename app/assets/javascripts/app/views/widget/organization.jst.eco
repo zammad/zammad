@@ -23,16 +23,16 @@
 
 <% if @organization.members: %>
 <hr>
-<user class="sidebar-block">
+<div class="sidebar-block">
   <label><%- @T('Members') %></label>
-  <ul class="userList">
+  <div class="userList">
 <% for user in @organization.members: %>
-    <li>
+    <div class="userList-entry">
       <%- user.avatar("40") %>
-      <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>">
+      <a href="<%- user.uiUrl() %>" class="userList-name user-popover" data-id="<%- user.id %>">
         <%= user.displayName() %>
       </a>
 <% end %>
-  </ul>
+  </div>
 </div>
 <% end %>

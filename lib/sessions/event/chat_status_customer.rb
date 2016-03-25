@@ -12,7 +12,20 @@ class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
       # update recipients of existing sessions
       chat_session = Chat::Session.find_by(session_id: session_id)
       chat_session.add_recipient(@client_id, true)
+
+      # sent url update to agent
+      if @payload['data']['url']
+        message = {
+          event: 'chat_session_notice',
+          data: {
+            session_id: chat_session.session_id,
+            message: @payload['data']['url'],
+          },
+        }
+        chat_session.send_to_recipients(message, @client_id)
+      end
     end
+
     {
       event: 'chat_status_customer',
       data: current_chat.customer_state(session_id),

@@ -51,6 +51,11 @@ p {
   }
 }
 
+ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
 h3 + .description {
   margin-top: 0;
 }
@@ -707,8 +712,11 @@ pre code.hljs {
 
 .status-field {
   color: hsl(0,0%,60%);
-  padding: 8px 10px 6px;
   border: 1px solid hsl(0,0%,90%);
+  display: flex;
+  height: 34px;
+  align-items: center;
+  line-height: 35px;
   
   &.is-clickable {
     background: hsl(203,65%,55%);
@@ -740,22 +748,49 @@ pre code.hljs {
   }
 
   .badge {
+    margin: 0 5px 0 10px;
     background: hsla(210,50%,10%,.24);
   }
 
-  .info-arrow {
-    margin: -8px -10px -6px 0;
-    padding: 8px 10px 7px 3px;
+  .status-badge {
+    width: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+}
+
+.info-badge {
+  fill: currentColor;
+  padding: 3px 6px 1px;
+  line-height: 12px;
+  opacity: 0.5;
+  position: relative;
+  
+  /* 
+    border in its own layer to make it more 
+    translucend but still depend on the currentColor
+  */
+  &:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border: 1px solid currentColor;
+    opacity: 0.5;
+    border-radius: 100%;
   }
 }
 
 @keyframes pulsate {
   to { filter: brightness(1.2); }
-}
-
-.info-arrow {
-  display: inline-block;
-  cursor: pointer;
 }
 
 .badge {
@@ -3186,7 +3221,6 @@ footer {
   }
 
     .search .logo .activity-counter {
-      height: 20px;
       min-width: 21px;
       position: absolute;
       right: -3px;
@@ -3371,6 +3405,11 @@ footer {
   vertical-align: bottom;
   position: relative;
   
+  &.size-30 {
+    width: 30px;
+    height: 30px;
+  }
+  
   .icon-crown {
     position: absolute;
     width: 28px;
@@ -3404,7 +3443,7 @@ footer {
 
   &.unique {
     background-image: image_url("/assets/images/avatar-bg.png");
-    background-size: auto;
+    background-size: 300px 226px;
     color: white;
     line-height: 40px;
     text-align: center;
@@ -3413,15 +3452,23 @@ footer {
     text-transform: uppercase;
     text-shadow: 0 1px rgba(0,0,0,.2);
     cursor: default;
+    
+    &.size-30 {
+      font-size: 10px;
+      line-height: 32px;
+      background-size: 225px 170px;
+    }
 
     &.size-50 {
       font-size: 16px;
       line-height: 52px;
+      background-size: 375px 283px;
     }
 
     &.size-80 {
-      font-size: 20px;
+      font-size: 26px;
       line-height: 84px;
+      background-size: 600px 452px;
     }
   }
 
@@ -3580,7 +3627,8 @@ footer {
   }
 
   .popover-content {
-    padding: 0 17px 10px;
+    padding: 0 17px;
+    margin-bottom: 21px;
   }
 
   .popover.right { margin-left: 4px; }
@@ -3643,6 +3691,11 @@ footer {
     font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  .popover .two-columns,
+  .popover .three-columns {
+    margin-bottom: -8px;
   }
 
   .popover .column label {
@@ -5854,17 +5907,19 @@ footer {
   list-style: none;
   padding: 0;
 
-  li {
-    position: relative;
+  .userList-entry {
     margin: 10px 0;
+    display: flex;
+    align-items: center;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
-
-  a {
+  
+  .userList-name {
     @extend .u-textTruncate;
-    position: absolute;
-    top: 10px;
-    right: 0px;
-    left: 48px;
+    margin-left: 7px;
   }
 }
 
@@ -7519,6 +7574,12 @@ output {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+    
+  .status-badge {
+    margin-left: 2px;
+    vertical-align: middle;
+    height: 100%;
+  }
 }
 
 .chat-status {
@@ -7596,7 +7657,8 @@ output {
   left: 0;
 }
 
-.chat-timestamp {
+.chat-timestamp,
+.chat-notice-message {
   font-size: 12px;
   color: hsl(10,5%,78%);
   margin-bottom: 4px;
@@ -7765,6 +7827,25 @@ output {
     transition: 500ms;
     user-select: none;
     will-change: transform;
+
+    &.is-fullscreen {
+      right: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0 !important;
+      
+      .zammad-chat-header {
+        border-radius: 0 !important;
+        box-shadow:
+          0 -1px rgba(0,0,0,.1),
+          0 -1px rgba(0,0,0,.1) inset,
+          0 1px 1px rgba(0,0,0,.13);
+      }
+
+      .zammad-chat-controls {
+        border-radius: 0 0 5px 5px;
+      }
+    }
     
     &.no-transition {
       transition: none;

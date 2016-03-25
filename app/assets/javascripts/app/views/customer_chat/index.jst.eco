@@ -6,13 +6,22 @@
       <div class="page-header-center">
         <div class="status-fields">
           <div class="status-field js-acceptChat js-waitingCustomers">
-            <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting Customers') %> <div class="info-arrow js-arrow"><%- @Icon('arrow-down') %></div>
+            <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting Customers') %> 
+            <div class="status-badge js-info">
+              <div class="info-badge"><%- @Icon('info') %></div>
+            </div>
           </div>
           <div class="status-field js-chattingCustomers">
-            <span class="badge js-badgeChattingCustomers"></span> <%- @T('Chatting Customers') %> <div class="info-arrow js-arrow"><%- @Icon('arrow-down') %></div>
+            <span class="badge js-badgeChattingCustomers"></span> <%- @T('Chatting Customers') %> 
+            <div class="status-badge js-info">
+              <div class="info-badge"><%- @Icon('info') %></div>
+            </div>
           </div>
           <div class="status-field js-activeAgents">
-            <span class="badge js-badgeActiveAgents"></span> <%- @T('Active Agents') %> <div class="info-arrow js-arrow"><%- @Icon('arrow-down') %></div>
+            <span class="badge js-badgeActiveAgents"></span> <%- @T('Active Agents') %> 
+            <div class="status-badge js-info">
+              <div class="info-badge"><%- @Icon('info') %></div>
+            </div>
           </div>
         </div>
       </div>

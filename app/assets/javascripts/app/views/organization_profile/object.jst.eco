@@ -27,11 +27,11 @@
 <% if @organization.members: %>
 <div class="profile-section profile-memberSection">
   <label><%- @T('Members') %></label>
-  <div class="profile-details horizontal wrap">
+  <div class="userList">
     <% for user in @organization.members: %>
-      <div class="profile-organizationMember">
+      <div class="userList-entry">
         <%- user.avatar("40") %>
-        <a href="<%- user.uiUrl() %>" class="user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a>
+        <a href="<%- user.uiUrl() %>" class="userList-name user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a>
       </div>
     <% end %>
   </div>

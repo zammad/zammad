@@ -113,10 +113,14 @@ class ApplicationController < ActionController::Base
     end
 
     # check if entry exists / only if write action
-    return if request.method == 'GET' || request.method == 'OPTIONS'
+    diff = Time.zone.now - 10.minutes
+    method = request.method
+    if method == 'GET' || method == 'OPTIONS' || method == 'HEAD'
+      diff = Time.zone.now - 30.minutes
+    end
 
     # only update if needed
-    return if session[:user_device_update_at] && session[:user_device_update_at] > Time.zone.now - 5.minutes
+    return if session[:user_device_update_at] && session[:user_device_update_at] > diff
     session[:user_device_update_at] = Time.zone.now
 
     UserDevice.action(
@@ -158,10 +162,10 @@ class ApplicationController < ActionController::Base
 
     # already logged in, early exit
     if session.id && session[:user_id]
-
+      logger.debug 'session based auth check'
       userdata = User.lookup(id: session[:user_id])
       current_user_set(userdata)
-
+      logger.debug "session based auth for '#{userdata.login}'"
       return {
         auth: true
       }
@@ -173,7 +177,6 @@ class ApplicationController < ActionController::Base
     sso_userdata = User.sso(params)
     if sso_userdata
       session[:persistent] = true
-
       return {
         auth: true
       }
@@ -182,14 +185,11 @@ class ApplicationController < ActionController::Base
     # check http basic based authentication
     authenticate_with_http_basic do |username, password|
       logger.debug "http basic auth check '#{username}'"
-
       userdata = User.authenticate(username, password)
-
       next if !userdata
-
       current_user_set(userdata)
       user_device_log(userdata, 'basic_auth')
-
+      logger.debug "http basic auth for '#{userdata.login}'"
       return {
         auth: true
       }
@@ -199,17 +199,14 @@ class ApplicationController < ActionController::Base
     if auth_param[:token_action]
       authenticate_with_http_token do |token, _options|
         logger.debug "token auth check '#{token}'"
-
         userdata = Token.check(
           action: auth_param[:token_action],
           name: token,
         )
-
         next if !userdata
-
         current_user_set(userdata)
         user_device_log(userdata, 'token_auth')
-
+        logger.debug "token auth for '#{userdata.login}'"
         return {
           auth: true
         }

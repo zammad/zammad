@@ -31,7 +31,7 @@ set config setting
 =end
 
   def self.set(name, value)
-    setting = Setting.find_by( name: name )
+    setting = Setting.find_by(name: name)
     if !setting
       raise "Can't find config setting '#{name}'"
     end
@@ -66,7 +66,7 @@ reset config setting to default
 =end
 
   def self.reset(name)
-    setting = Setting.find_by( name: name )
+    setting = Setting.find_by(name: name)
     if !setting
       raise "Can't find config setting '#{name}'"
     end
@@ -109,7 +109,7 @@ reload config settings
     config.each { |key, value|
       next if value.class.to_s != 'String'
 
-      config[key].gsub!( /\#\{config\.(.+?)\}/ ) {
+      config[key].gsub!(/\#\{config\.(.+?)\}/) {
         config[$1].to_s
       }
     }

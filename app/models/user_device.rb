@@ -145,6 +145,7 @@ log user device action
     end
 
     # update attributes
+    user_device.updated_at = Time.zone.now # force update, also if no other attribute has changed
     user_device.save
     user_device
   end

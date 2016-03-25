@@ -2,7 +2,6 @@
 <div class="user-organization"><a href="<%- @user.organization.uiUrl() %>"><%= @user.organization.displayName() %></a></div>
 <% end %>
 <hr>
-<div>
 <% for row in @userData: %>
   <% if @user[row.name]: %>
   <div class="popover-block">

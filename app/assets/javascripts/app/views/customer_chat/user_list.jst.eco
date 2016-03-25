@@ -1,9 +1,15 @@
+<hr>
 <% if _.isEmpty(@users): %>
 <%- @T('none') %>
 <% else: %>
-<ul>
+<div class="userList">
 <% for user in @users: %>
-  <li><%= user.displayName() %>
+  <div class="userList-entry">
+    <%- user.avatar("30") %>
+    <span class="userList-name">
+      <%= user.displayName() %>
+    </span>
+  </div>
 <% end %>
-</ul>
+</div>
 <% end %>

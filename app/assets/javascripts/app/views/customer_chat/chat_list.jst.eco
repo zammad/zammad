@@ -1,3 +1,4 @@
+<hr>
 <% if _.isEmpty(@chat_sessions): %>
 <%- @T('none') %>
 <% else: %>

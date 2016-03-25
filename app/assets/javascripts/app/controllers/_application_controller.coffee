@@ -587,6 +587,7 @@ class App.Controller extends Spine.Controller
     newLocation = newLocation.replace(/#/, '')
     @log 'debug', "execute controller again for '#{newLocation}' because of same hash"
     Spine.Route.matchRoutes(newLocation)
+    @metaTaskUpdate()
 
   logoUrl: ->
     "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"
