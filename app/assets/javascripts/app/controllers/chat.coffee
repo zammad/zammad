@@ -175,12 +175,13 @@ class App.CustomerChat extends App.Controller
     if @lastWaitingChatCount isnt counter
 
       # do not play sound on initial load
-      if counter > 0 && @lastWaitingChatCount isnt undefined
-        @sounds.chat_new.play()
-        @notifyDesktop(
-          title: "#{counter} #{App.i18n.translateInline('Waiting Customers')}",
-          url: '#customer_chat'
-        )
+      if @switch()
+        if counter > 0 && @lastWaitingChatCount isnt undefined
+          @sounds.chat_new.play()
+          @notifyDesktop(
+            title: "#{counter} #{App.i18n.translateInline('Waiting Customers')}",
+            url: '#customer_chat'
+          )
       @lastWaitingChatCount = counter
 
     # collect chat window messages
