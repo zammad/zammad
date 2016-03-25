@@ -335,6 +335,7 @@ class _taskManagerSingleton extends App.Controller
     task = @get(key)
     if !task
       throw "No such task with '#{key}' to notify"
+    return if task.notify
     task.notify = true
     @taskUpdate(task)
 
