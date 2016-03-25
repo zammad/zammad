@@ -113,7 +113,10 @@ class ApplicationController < ActionController::Base
     end
 
     # check if entry exists / only if write action
-    return if request.method == 'GET' || request.method == 'OPTIONS'
+    method = request.method
+    return if method == 'GET'
+    return if method == 'OPTIONS'
+    return if method == 'HEAD'
 
     # only update if needed
     return if session[:user_device_update_at] && session[:user_device_update_at] > Time.zone.now - 5.minutes
