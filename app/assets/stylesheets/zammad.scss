@@ -7658,7 +7658,8 @@ output {
   left: 0;
 }
 
-.chat-timestamp {
+.chat-timestamp,
+.chat-notice-message {
   font-size: 12px;
   color: hsl(10,5%,78%);
   margin-bottom: 4px;
