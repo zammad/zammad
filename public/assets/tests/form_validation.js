@@ -1,4 +1,4 @@
-test( 'form validation check', function() {
+test('form validation check', function() {
 
   $('#forms').append('<hr><h1>form params check</h1><form id="form1"></form>')
 
@@ -22,30 +22,30 @@ test( 'form validation check', function() {
     },
     params: defaults,
   });
-  equal( el.find('[name="input1"]').val(), '', 'check input1 value')
-  equal( el.find('[name="input1"]').prop('required'), true, 'check input1 required')
-//  equal( el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
+  equal(el.find('[name="input1"]').val(), '', 'check input1 value')
+  equal(el.find('[name="input1"]').prop('required'), true, 'check input1 required')
+//  equal(el.find('[name="input1"]').is(":focus"), true, 'check input1 focus')
 
-  equal( el.find('[name="password1"]').val(), '', 'check password1 value')
-  equal( el.find('[name="password1_confirm"]').val(), '', 'check password1 value')
-  equal( el.find('[name="password1"]').prop('required'), true, 'check password1 required')
+  equal(el.find('[name="password1"]').val(), '', 'check password1 value')
+  equal(el.find('[name="password1_confirm"]').val(), '', 'check password1 value')
+  equal(el.find('[name="password1"]').prop('required'), true, 'check password1 required')
 
-  equal( el.find('[name="textarea1"]').val(), '', 'check textarea1 value')
-  equal( el.find('[name="textarea1"]').prop('required'), true, 'check textarea1 required')
+  equal(el.find('[name="textarea1"]').val(), '', 'check textarea1 value')
+  equal(el.find('[name="textarea1"]').prop('required'), true, 'check textarea1 required')
 
-  equal( el.find('[name="select1"]').val(), '', 'check select1 value')
-  equal( el.find('[name="select1"]').prop('required'), true, 'check select1 required')
+  equal(el.find('[name="select1"]').val(), '', 'check select1 value')
+  equal(el.find('[name="select1"]').prop('required'), true, 'check select1 required')
 
-  equal( el.find('[name="selectmulti1"]').val(), null, 'check selectmulti1 value')
-  equal( el.find('[name="selectmulti1"]').prop('required'), true, 'check selectmulti1 required')
+  equal(el.find('[name="selectmulti1"]').val(), null, 'check selectmulti1 value')
+  equal(el.find('[name="selectmulti1"]').prop('required'), true, 'check selectmulti1 required')
 
-  equal( el.find('[name="autocompletion1"]').val(), '', 'check autocompletion1 value')
-  equal( el.find('[name="autocompletion1"]').prop('required'), true, 'check autocompletion1 required')
+  equal(el.find('[name="autocompletion1"]').val(), '', 'check autocompletion1 value')
+  equal(el.find('[name="autocompletion1"]').prop('required'), true, 'check autocompletion1 required')
 
-  equal( el.find('[data-name="richtext1"]').val(), '', 'check richtext1 value')
-  //equal( el.find('[data-name="richtext1"]').prop('required'), true, 'check richtext1 required')
+  equal(el.find('[data-name="richtext1"]').val(), '', 'check richtext1 value')
+  //equal(el.find('[data-name="richtext1"]').prop('required'), true, 'check richtext1 required')
 
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   errors = form.validate(params)
 
   test_errors = {
@@ -59,40 +59,40 @@ test( 'form validation check', function() {
     datetime1:       'is required',
     date1:           'is required',
   }
-  deepEqual( errors, test_errors, 'validation errors check' )
+  deepEqual(errors, test_errors, 'validation errors check')
 
-  App.ControllerForm.validate( { errors: errors, form: el } )
+  App.ControllerForm.validate({ errors: errors, form: el })
 
-  equal( el.find('[name="input1"]').closest('.form-group').hasClass('has-error'), true, 'check input1 has-error')
-  equal( el.find('[name="input1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check input1 error message')
+  equal(el.find('[name="input1"]').closest('.form-group').hasClass('has-error'), true, 'check input1 has-error')
+  equal(el.find('[name="input1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check input1 error message')
 
-  equal( el.find('[name="password1"]').closest('.form-group').hasClass('has-error'), true, 'check password1 has-error')
-  equal( el.find('[name="password1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check password1 error message')
+  equal(el.find('[name="password1"]').closest('.form-group').hasClass('has-error'), true, 'check password1 has-error')
+  equal(el.find('[name="password1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check password1 error message')
 
-  equal( el.find('[name="textarea1"]').closest('.form-group').hasClass('has-error'), true, 'check textarea1 has-error')
-  equal( el.find('[name="textarea1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check textarea1 error message')
+  equal(el.find('[name="textarea1"]').closest('.form-group').hasClass('has-error'), true, 'check textarea1 has-error')
+  equal(el.find('[name="textarea1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check textarea1 error message')
 
-  equal( el.find('[name="select1"]').closest('.form-group').hasClass('has-error'), true, 'check select1 has-error')
-  equal( el.find('[name="select1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check select1 error message')
+  equal(el.find('[name="select1"]').closest('.form-group').hasClass('has-error'), true, 'check select1 has-error')
+  equal(el.find('[name="select1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check select1 error message')
 
-  equal( el.find('[name="selectmulti1"]').closest('.form-group').hasClass('has-error'), true, 'check selectmulti1 has-error')
-  equal( el.find('[name="selectmulti1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check selectmulti1 error message')
+  equal(el.find('[name="selectmulti1"]').closest('.form-group').hasClass('has-error'), true, 'check selectmulti1 has-error')
+  equal(el.find('[name="selectmulti1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check selectmulti1 error message')
 
-  equal( el.find('[name="autocompletion1"]').closest('.form-group').hasClass('has-error'), true, 'check autocompletion1 has-error')
-  equal( el.find('[name="autocompletion1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check autocompletion1 error message')
+  equal(el.find('[name="autocompletion1"]').closest('.form-group').hasClass('has-error'), true, 'check autocompletion1 has-error')
+  equal(el.find('[name="autocompletion1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check autocompletion1 error message')
 
-  equal( el.find('[data-name="richtext1"]').closest('.form-group').hasClass('has-error'), true, 'check richtext1 has-error')
-  equal( el.find('[data-name="richtext1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check richtext1 error message')
+  equal(el.find('[data-name="richtext1"]').closest('.form-group').hasClass('has-error'), true, 'check richtext1 has-error')
+  equal(el.find('[data-name="richtext1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check richtext1 error message')
 
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 has-error')
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 has-error')
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
 
-  equal( el.find('[data-name="date1"]').closest('.form-group').hasClass('has-error'), true, 'check date1 has-error')
-  equal( el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date1 error message')
+  equal(el.find('[data-name="date1"]').closest('.form-group').hasClass('has-error'), true, 'check date1 has-error')
+  equal(el.find('[data-name="date1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date1 error message')
 
 });
 
-test( 'datetime validation check', function() {
+test('datetime validation check', function() {
 
   $('#forms').append('<hr><h1>datetime validation check</h1><form id="form2"></form>')
 
@@ -109,22 +109,22 @@ test( 'datetime validation check', function() {
   });
 
   // check params
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     datetime1: undefined,
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
   errors = form.validate(params)
   test_errors = {
     datetime1: 'is required',
   }
-  deepEqual( errors, test_errors, 'validation errors check' )
-  App.ControllerForm.validate( { errors: errors, form: el } )
+  deepEqual(errors, test_errors, 'validation errors check')
+  App.ControllerForm.validate({ errors: errors, form: el })
 
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 has-error')
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
-  //equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 has-error')
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
+  //equal(el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
 
   // set new values
   el.find('[data-name="datetime1"] [data-item="date"]').val('01/01/2015').trigger('blur')
@@ -135,42 +135,42 @@ test( 'datetime validation check', function() {
   // check params
   timeStamp = new Date( Date.parse('2015-01-01T12:42:00.000Z') )
   timeStamp.setMinutes( timeStamp.getMinutes() + timeStamp.getTimezoneOffset() )
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     datetime1: timeStamp.toISOString(),
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
   // check errors
   errors = form.validate(params)
   test_errors = undefined
-  deepEqual( errors, test_errors, 'validation errors check' )
+  deepEqual(errors, test_errors, 'validation errors check')
 
-  App.ControllerForm.validate( { errors: errors, form: el } )
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), false, 'check datetime1 has-error')
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
+  App.ControllerForm.validate({ errors: errors, form: el })
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), false, 'check datetime1 has-error')
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), '', 'check datetime1 error message')
 
   el.find('[data-name="datetime1"] [data-item="date"]').val('').trigger('blur')
   el.find('[data-name="datetime1"] [data-item="date"]').datepicker('setDate')
   el.find('[data-name="datetime1"] [data-item="time"]').val('12:42').trigger('blur')
   el.find('[data-name="datetime1"] [data-item="time"]').trigger('change')
 
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true )
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true )
 
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   errors = form.validate(params)
   test_errors = {
     datetime1: 'is required',
   }
-  deepEqual( errors, test_errors, 'validation errors check' )
-  App.ControllerForm.validate( { errors: errors, form: el } )
+  deepEqual(errors, test_errors, 'validation errors check')
+  App.ControllerForm.validate({ errors: errors, form: el })
 
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 no has-error')
-  equal( el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').hasClass('has-error'), true, 'check datetime1 no has-error')
+  equal(el.find('[data-name="datetime1"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check datetime1 error message')
 
 });
 
-test( 'date validation check', function() {
+test('date validation check', function() {
 
   $('#forms').append('<hr><h1>date validation check</h1><form id="form3"></form>')
 
@@ -186,24 +186,24 @@ test( 'date validation check', function() {
     params: defaults,
   });
 
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
 
   // check params
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     date2: undefined,
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
   errors = form.validate(params)
   test_errors = {
     date2: 'is required',
   }
-  deepEqual( errors, test_errors, 'validation errors check' )
-  App.ControllerForm.validate( { errors: errors, form: el } )
+  deepEqual(errors, test_errors, 'validation errors check')
+  App.ControllerForm.validate({ errors: errors, form: el })
 
-  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
-  equal( el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date2 error message')
+  equal(el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
+  equal(el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date2 error message')
 
   // set new values
   el.find('[data-name="date2"] [data-item="date"]').val('01/01/2015').trigger('blur')
@@ -211,43 +211,43 @@ test( 'date validation check', function() {
   el.find('[data-name="date2"] [data-item="date"]').trigger('change')
 
   // check params
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     date2: '2015-01-01',
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
   // check errors
   errors = form.validate(params)
   test_errors = undefined
-  deepEqual( errors, test_errors, 'validation errors check' )
-  App.ControllerForm.validate( { errors: errors, form: el } )
-  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), false, 'check date1 has-error')
-  equal( el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
+  deepEqual(errors, test_errors, 'validation errors check')
+  App.ControllerForm.validate({ errors: errors, form: el })
+  equal(el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), false, 'check date1 has-error')
+  equal(el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), '', 'check date1 error message')
 
   // set invalid values
   el.find('[data-name="date2"] [data-item="date"]').val('').trigger('blur')
   el.find('[data-name="date2"] [data-item="date"]').datepicker('setDate')
   el.find('[data-name="date2"] [data-item="date"]').trigger('change')
-  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
+  equal(el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
 
   // check params
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     date2: undefined,
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
   // check errors
   errors = form.validate(params)
   test_errors = {
     date2: 'is required',
   }
-  deepEqual( errors, test_errors, 'validation errors check' )
-  App.ControllerForm.validate( { errors: errors, form: el } )
+  deepEqual(errors, test_errors, 'validation errors check')
+  App.ControllerForm.validate({ errors: errors, form: el })
 
-  equal( el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
-  equal( el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date2 error message')
+  equal(el.find('[data-name="date2"]').closest('.form-group').hasClass('has-error'), true, 'check date2 has-error')
+  equal(el.find('[data-name="date2"]').closest('.form-group').find('.help-inline').text(), 'is required', 'check date2 error message')
 });
 
 test( "datetime selector check", function() {
@@ -267,11 +267,11 @@ test( "datetime selector check", function() {
   });
 
   // check params
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     datetime1: undefined,
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
   timeStamp = new Date()
 
@@ -279,13 +279,35 @@ test( "datetime selector check", function() {
   el.find('.js-datepicker').trigger('blur')
 
   // check params
+  var timezoneOffset = new Date().getTimezoneOffset()
+  var startHour = 8 + (timezoneOffset/60)
+  if (startHour < 10) {
+    startHour = '0' + startHour.toString()
+  }
   currentTime = timeStamp.toISOString()
-  currentTime = currentTime.replace(/(\d\d.\d\d.\d\d\.\d\d\dZ)$/, '08:00:00.000Z')
-  params = App.ControllerForm.params( el )
+  currentTime = currentTime.replace(/(\d\d.\d\d.\d\d\.\d\d\dZ)$/, startHour + ':00:00.000Z')
+  params = App.ControllerForm.params(el)
   test_params = {
     datetime1: currentTime,
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
+
+  el.find('.js-timepicker[data-item="time"]').val('9:00')
+  el.find('.js-timepicker[data-item="time"]').trigger('blur')
+
+  // check params
+  var timezoneOffset = new Date().getTimezoneOffset()
+  var startHour = 9 + (timezoneOffset/60)
+  if (startHour < 10) {
+    startHour = '0' + startHour.toString()
+  }
+  currentTime = timeStamp.toISOString()
+  currentTime = currentTime.replace(/(\d\d.\d\d.\d\d\.\d\d\dZ)$/, startHour + ':00:00.000Z')
+  params = App.ControllerForm.params(el)
+  test_params = {
+    datetime1: currentTime,
+  }
+  deepEqual(params, test_params, 'params check')
 
 });
 
@@ -306,11 +328,11 @@ test( "date selector check", function() {
   });
 
   // check params
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     date3: undefined,
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
   timeStamp = new Date()
 
@@ -319,17 +341,17 @@ test( "date selector check", function() {
 
   // check params
   format = function (number) {
-    if ( parseInt(number) < 10 ) {
+    if (parseInt(number) < 10 ) {
       number = '0' + number.toString()
     }
     return number
   }
 
   currentTime = timeStamp.getFullYear() + '-' + format(timeStamp.getMonth()+1) + '-' + format(timeStamp.getDate())
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     date3: currentTime,
   }
-  deepEqual( params, test_params, 'params check' )
+  deepEqual(params, test_params, 'params check')
 
 });
