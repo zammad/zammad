@@ -464,7 +464,6 @@ class _taskManagerSingleton extends App.Controller
     # if task isnt already stored on backend
     return if !task.id
     App.Taskbar.destroy(task.id)
-    return
 
   tasksInitial: =>
     @init()

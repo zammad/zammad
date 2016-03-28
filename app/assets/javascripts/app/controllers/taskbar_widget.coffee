@@ -81,6 +81,7 @@ class App.TaskbarWidget extends App.Controller
 
   remove: (e, key = false, force = false) =>
     e.preventDefault()
+    e.stopPropagation()
     if !key
       key = $(e.target).parents('a').data('key')
     if !key
