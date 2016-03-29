@@ -1,4 +1,4 @@
-<ul class="recipientList-organizationMembers hide" id="<%- @organization.id %>">
+<ul class="recipientList-organizationMembers hide" organization-id="<%- @organization.id %>">
   <li class="recipientList-controls js-back">
     <div class="btn btn--action btn--onDark">
       <%- @Icon('arrow-left') %>

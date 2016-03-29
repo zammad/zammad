@@ -5879,7 +5879,7 @@ footer {
   .recipientList-controls:hover {
     @extend .u-clickable;
     padding: 0 10px !important;
-    background: hsl(206,7%,28%) !important;
+    background: hsl(206,7%,28%);
     
     & + li {
       box-shadow: 0 1px rgba(255,255,255,.13) inset;
