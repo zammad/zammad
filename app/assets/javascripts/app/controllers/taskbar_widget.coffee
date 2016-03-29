@@ -93,7 +93,8 @@ class App.TaskbarWidget extends App.Controller
       if worker.changed()
         new Remove(
           key: key
-          ui:  @
+          ui: @
+          event: e
         )
         return
 
@@ -131,6 +132,6 @@ class Remove extends App.ControllerModal
   content: ->
     App.i18n.translateContent('Tab has changed, you really want to close it?')
 
-  onSubmit: (e) =>
+  onSubmit: =>
     @close()
-    @ui.remove(e, @key, true)
+    @ui.remove(@event, @key, true)

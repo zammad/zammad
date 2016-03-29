@@ -51,7 +51,7 @@ class App.TicketZoom extends App.Controller
       update = =>
         @fetch(@ticket_id, false)
       if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-        @delay( update, 1200, 'ticket-zoom-' + @ticket_id )
+        @delay(update, 1200, "ticket-zoom-#{@ticket_id}")
     )
 
     # rerender view, e. g. on langauge change
@@ -100,7 +100,7 @@ class App.TicketZoom extends App.Controller
     @activeState = true
 
     # start autosave
-    @autosaveStart()
+    @delay(@autosaveStart, 800, "ticket-zoom-auto-save-#{@ticket_id}")
 
     # if ticket is shown the first time
     if !@shown
@@ -122,6 +122,7 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
     # stop autosave
+    @clearDelay("ticket-zoom-auto-save-#{@ticket_id}")
     @autosaveStop()
 
   changed: =>
@@ -687,11 +688,11 @@ class App.TicketZoom extends App.Controller
       processData: false
     )
 
-    # reset edit ticket / reset new article
-    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id })
-
     # hide reset button
     @$('.js-reset').addClass('hide')
+
+    # reset edit ticket / reset new article
+    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id })
 
     # remove change flag on tab
     @$('.tabsSidebar-tab[data-tab="ticket"]').removeClass('is-changed')

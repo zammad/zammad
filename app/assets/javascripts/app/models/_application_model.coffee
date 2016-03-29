@@ -666,3 +666,13 @@ class App.Model extends Spine.Model
 
   activityMessage: (item) ->
     return "Need own activityMessage() in model to generate text (#{@objectDisplayName()}/#{item.type})."
+
+  @lastUpdatedAt: ->
+    updated_at
+    for item in @all()
+      if item.updated_at
+        if !updated_at
+          updated_at = item.updated_at
+        else if item.updated_at > updated_at
+          updated_at = item.updated_at
+    updated_at
