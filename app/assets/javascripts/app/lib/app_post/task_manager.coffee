@@ -77,7 +77,18 @@ class _taskManagerSingleton extends App.Controller
     @allTasks          = []
     @tasksToUpdate     = {}
     @activeTaskHistory = []
-    @renderDelayTime   = 600
+
+    # speed improvements for certain browsers
+    @renderInitTime = 2000
+    @renderDelayTime = 3000
+    data = App.Browser.detection()
+    if data.browser
+      if data.browser.name is 'Chrome'
+        @renderInitTime = 1200
+        @renderDelayTime = 1800
+      else if data.browser.anem is 'Firefox'
+        @renderInitTime = 1600
+        @renderDelayTime = 2000
 
   all: ->
 
@@ -514,7 +525,7 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          task_count * 450
+          task_count * 850
           undefined
           'task'
         )
@@ -523,14 +534,14 @@ class _taskManagerSingleton extends App.Controller
     @initTaskRenderInterval = App.Interval.set(
       ->
         App.Event.trigger('task:render')
-      1200
+      @renderInitTime
     )
     App.Delay.set(
       =>
         App.Interval.clear(@initTaskRenderInterval)
         @renderDelayTime = 20
         App.Event.trigger('task:render')
-      task_count * 450
+      task_count * 950
     )
 
     App.Event.trigger 'taskbar:ready'
