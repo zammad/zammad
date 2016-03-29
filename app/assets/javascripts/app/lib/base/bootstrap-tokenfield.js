@@ -135,7 +135,7 @@
     }
 
     // Set up mirror for input auto-sizing
-    this.$mirror = $('<span style="position:absolute; top:-999px; left:0; white-space:pre;"/>');
+    this.$mirror = $('<span class="js-tokenfieldMirror" style="position:absolute; top:-999px; left:0; white-space:pre;"/>');
     this.$input.css('min-width', this.options.minWidth + 'px')
     $.each([
         'fontFamily', 
@@ -149,7 +149,12 @@
     ], function (i, val) {
         _self.$mirror[0].style[val] = _self.$input.css(val);
     });
-    this.$mirror.appendTo( 'body' )
+    if (!$('.js-tokenfieldMirror').get(0)) {
+      this.$mirror.appendTo( 'body' )
+    }
+    else {
+      this.$mirror = $('.js-tokenfieldMirror')
+    }
 
     // Insert tokenfield to HTML
     this.$wrapper.insertBefore( this.$element )
