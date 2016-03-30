@@ -79,16 +79,16 @@ class _taskManagerSingleton extends App.Controller
     @activeTaskHistory = []
 
     # speed improvements for certain browsers
-    @renderInitTime = 2000
-    @renderDelayTime = 3000
+    @renderInitTime = 2200
+    @renderDelayTime = 3400
     data = App.Browser.detection()
     if data.browser
       if data.browser.name is 'Chrome'
+        @renderInitTime = 1000
+        @renderDelayTime = 1600
+      else if data.browser.anem is 'Firefox'
         @renderInitTime = 1200
         @renderDelayTime = 1800
-      else if data.browser.anem is 'Firefox'
-        @renderInitTime = 1600
-        @renderDelayTime = 2000
 
   all: ->
 
