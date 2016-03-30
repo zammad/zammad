@@ -16,7 +16,7 @@
 
 	// if electron is used, go back to non CommonJS
 	//if ( typeof module === "object" && typeof module.exports === "object" ) {
-	if ( typeof module === "object" && typeof module.exports === "object" && !(process && process.version && process.versions.electron)) {
+	if ( typeof module === "object" && typeof module.exports === "object" && !(window.process && window.process.version && window.process.versions.electron)) {
 		// For CommonJS and CommonJS-like environments where a proper `window`
 		// is present, execute the factory and get jQuery.
 		// For environments that do not have a `window` with a `document`

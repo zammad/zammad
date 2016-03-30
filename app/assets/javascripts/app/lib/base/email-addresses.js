@@ -947,7 +947,7 @@ parse5322.parseAddressList = parseAddressListSimple;
 
 // if electron is used, go back to non CommonJS
 //if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined' && !(process && process.version && process.versions.electron)) {
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined' && !(window.process && window.process.version && window.process.versions.electron)) {
     module.exports = parse5322;
 } else {
     global.emailAddresses = parse5322;
