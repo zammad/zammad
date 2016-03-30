@@ -7,7 +7,7 @@ class UserDevice < ApplicationModel
 
 =begin
 
-store device for user
+store new device for user if device not already known
 
   user_device = UserDevice.add(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
@@ -34,13 +34,17 @@ store device for user
     end
 
     # find device by fingerprint
+    device_exists_by_fingerprint = false
     if fingerprint
-      user_device = UserDevice.find_by(
+      user_devices = UserDevice.where(
         user_id: user_id,
         fingerprint: fingerprint,
-        location: location,
       )
-      return action(user_device.id, user_agent, ip, user_id) if user_device
+      user_devices.each {|local_user_device|
+        device_exists_by_fingerprint = true
+        next if local_user_device.location != location
+        return action(local_user_device.id, user_agent, ip, user_id) if local_user_device
+      }
     end
 
     # for basic_auth|token_auth search for user agent
@@ -112,7 +116,13 @@ store device for user
     # send notification if needed
     user_devices = UserDevice.where(user_id: user_id).count
     if user_devices >= 2
-      user_device.send_notification
+
+      # notify on now device of if country has changed
+      if device_exists_by_fingerprint
+        user_device.notification_send('user_device_new_location')
+      else
+        user_device.notification_send('user_device_new')
+      end
     end
 
     user_device
@@ -141,6 +151,11 @@ log user device action
       user_device.location_details = location_details
 
       location = location_details['country_name']
+
+      # notify if country has changed
+      if user_device.location != location
+        user_device.notification_send('user_device_new_location')
+      end
       user_device.location = location
     end
 
@@ -152,19 +167,19 @@ log user device action
 
 =begin
 
-send new user device info
+send user notification about new device or new location for device
 
   user_device = UserDevice.find(id)
 
-  user_device.send_notification
+  user_device.notification_send('user_device_new_location')
 
 =end
 
-  def send_notification
+  def notification_send(template)
     user = User.find(user_id)
 
     NotificationFactory.notification(
-      template: 'user_device',
+      template: template,
       user: user,
       objects: {
         user_device: self,
@@ -172,4 +187,5 @@ send new user device info
       }
     )
   end
+
 end

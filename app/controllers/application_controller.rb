@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
       return false
     end
 
-    # add defice if needed
+    # add device if needed
     user_device = UserDevice.add(
       request.env['HTTP_USER_AGENT'],
       request.remote_ip,
