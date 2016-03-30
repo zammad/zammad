@@ -114,6 +114,8 @@ class App.OnlineNotificationWidget extends App.Controller
     count = '' if count is 0
 
     $('.js-notificationsCounter').text(count)
+    App.Event.trigger('online_notification_counter', count.toString())
+
     @count = count
 
     # show mark all as read if needed
