@@ -26,6 +26,10 @@ class App.TaskbarWidget extends App.Controller
 
   constructor: ->
     super
+
+    @queue = []
+    @queueRunning = false
+
     @renderAll()
 
     dndOptions =
@@ -49,30 +53,56 @@ class App.TaskbarWidget extends App.Controller
     # bind to changes
     @bind('taskInit', => @renderAll())
     @bind('taskUpdate', (tasks) =>
-      @checkChanges(tasks)
+      @queue.push ['taskUpdate', tasks]
+      @uIRunner()
     )
     @bind('taskRemove', (task_ids) =>
-      @checkRemoves(task_ids)
+      @queue.push ['checkRemoves', task_ids]
+      @uIRunner()
     )
 
     # render on generic ui call
-    @bind('ui:rerender', => @renderAll())
+    @bind('ui:rerender', =>
+      @queue.push ['renderAll']
+      @uIRunner()
+    )
 
     # render on login
-    @bind('auth:login', => @renderAll())
+    @bind('auth:login', =>
+      @queue.push ['renderAll']
+      @uIRunner()
+    )
 
     # reset current tasks on logout
-    @bind('auth:logout', => @renderAll())
+    @bind('auth:logout', =>
+      @queue.push ['renderAll']
+      @uIRunner()
+    )
 
-  checkRemoves: (task_ids) ->
-    for task_id in task_ids
-      delete @currentItems[task_id]
-      if @renderList[task_id]
-        @renderList[task_id].remove()
-        delete @renderList[task_id]
+  uIRunner: ->
+    return if !@queue[0]
+    return if @queueRunning
+    @queueRunning = true
+    loop
+      param = @queue.shift()
+      if param[0] is 'taskUpdate'
+        @checkChanges(param[1])
+      else if param[0] is 'checkRemoves'
+        @checkRemoves(param[1])
+      else if param[0] is 'renderAll'
+        @renderAll()
+      if !@queue[0]
+        @queueRunning = false
+        break
+
+  checkRemoves: (keys) ->
+    for key in keys
+      delete @currentItems[key]
+      if @renderList[key]
+        @renderList[key].remove()
+        delete @renderList[key]
 
   checkChanges: (items) ->
-    #console.log('checkChanges', items, @currentItems)
     changedItems = []
     for item in items
       attributes = {}
@@ -81,20 +111,19 @@ class App.TaskbarWidget extends App.Controller
       #console.log('item', item)
       #attributes = item.attributes()
       #console.log('item', @fields.observe, item, attributes)
-      if !@currentItems[item.id]
+      if !@currentItems[item.key]
         changedItems.push item
-        @currentItems[item.id] = attributes
+        @currentItems[item.key] = attributes
       else
-        currentItem = @currentItems[item.id]
+        currentItem = @currentItems[item.key]
         hit = false
         for field of @fields.observe
           diff = _.isEqual(currentItem[field], attributes[field])
           #console.log('diff', field, diff, currentItem[field], attributes[field])
           if !hit && diff
             changedItems.push item
-            @currentItems[item.id] = attributes
+            @currentItems[item.key] = attributes
             hit = true
-    console.log('checkChanges, changedItems', changedItems)
     return if _.isEmpty(changedItems)
     @renderParts(changedItems)
 
@@ -108,17 +137,16 @@ class App.TaskbarWidget extends App.Controller
 
   renderParts: (items) ->
     for item in items
-      if !@renderList[item.id]
+      if !@renderList[item.key]
         @renderItem(item)
       else
-        @renderItem(item, @renderList[item.id])
+        @renderItem(item, @renderList[item.key])
 
   renderItem: (item, el) ->
     html =  $(App.view(@template)(
       item: item
     ))
-    console.log('renderItem', item)
-    @renderList[item.id] = html
+    @renderList[item.key] = html
     if el is false
       return html
     else if !el

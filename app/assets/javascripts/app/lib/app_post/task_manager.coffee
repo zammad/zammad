@@ -75,19 +75,21 @@ class _taskManagerSingleton extends App.Controller
 
   init: ->
     @workers           = {}
-    @workersStarted    = {}
-    @tasksStarted      = {}
-    @allTasks          = []
+    @allTasksByKey     = {}
     @tasksToUpdate     = {}
     @activeTaskHistory = []
+    @queue             = []
+    @queueRunning      = false
 
   all: ->
 
     # sort by prio
-    @allTasks = _(@allTasks).sortBy( (task) ->
+    byPrios = []
+    for key, task of @allTasksByKey
+      byPrios.push task
+    _.sortBy(byPrios, (task) ->
       return task.prio
     )
-    return @allTasks
 
   allWithMeta: ->
     all = @all()
@@ -118,7 +120,7 @@ class _taskManagerSingleton extends App.Controller
 
   newPrio: ->
     prio = 1
-    for task in @allTasks
+    for task in @all()
       if task.prio && task.prio > prio
         prio = task.prio
     prio++
@@ -133,20 +135,29 @@ class _taskManagerSingleton extends App.Controller
     return
 
   execute: (params) ->
+    @queue.push params
+    @run()
+
+  run: ->
+    return if !@queue[0]
+    return if @queueRunning
+    @queueRunning = true
+    loop
+      param = @queue.shift()
+      @executeSingel(param)
+      if !@queue[0]
+        @queueRunning = false
+        break
+
+  executeSingel: (params) ->
 
     # input validation
     params.key = App.Utils.htmlAttributeCleanup(params.key)
 
     # in case an init execute arrives later but is aleady executed, ignore it
-    if params.init && @tasksStarted[params.key]
+    if params.init && @workers[params.key]
       #console.log('IGNORE LATER INIT', params)
       return
-
-    # remember started task / prevent to open task twice
-    createNewTask = true
-    if @tasksStarted[params.key]
-      createNewTask = false
-    @tasksStarted[params.key] = true
 
     # if we have init task startups, let the controller know this
     if params.init
@@ -166,10 +177,8 @@ class _taskManagerSingleton extends App.Controller
     # check if task already exists in storage / e. g. from last session
     task = @get(params.key)
 
-    #console.log 'debug', 'execute', params, 'task', task
-
     # create new online task if not exists and if not persistent
-    if !task && createNewTask && !params.persistent
+    if !task && !@workers[params.key] && !params.persistent
       #console.log 'debug', 'add, create new taskbar in backend'
       task = new App.Taskbar
       task.load(
@@ -181,12 +190,13 @@ class _taskManagerSingleton extends App.Controller
         notify:   false
         active:   params.show
       )
-      @allTasks.push task.attributes()
+      @allTasksByKey[params.key] = task.attributes()
 
       # save new task and update task collection
       ui = @
       task.save(
         done: ->
+          ui.allTasksByKey[params.key] = @attributes()
           for taskPosition of ui.allTasks
             if ui.allTasks[taskPosition] && ui.allTasks[taskPosition]['key'] is @key
               task = @attributes()
@@ -206,8 +216,8 @@ class _taskManagerSingleton extends App.Controller
 
     # set all tasks to active false, only new/selected one to active
     if params.show
-      for task in @allTasks
-        if task.key isnt params.key
+      for key, task of @allTasksByKey
+        if key isnt params.key
           if task.active
             task.active = false
             @taskUpdate(task)
@@ -237,10 +247,7 @@ class _taskManagerSingleton extends App.Controller
       params_app['doNotLog'] = 1
 
     # start controller if not already started
-    if !@workersStarted[params.key]
-      @workersStarted[params.key] = true
-
-      # create new controller instanz
+    if !@workers[params.key]
       @workers[params.key] = new App[params.controller](params_app)
 
     # if controller is started hidden, call hide of controller
@@ -252,7 +259,7 @@ class _taskManagerSingleton extends App.Controller
       @showControllerHideOthers(params.key, params_app)
 
   showControllerHideOthers: (thisKey, params_app) =>
-    for key of @workersStarted
+    for key of @workers
       if key is thisKey
         @show(key, params_app)
       else
@@ -294,9 +301,7 @@ class _taskManagerSingleton extends App.Controller
 
   # get task
   get: (key) =>
-    for task in @allTasks
-      if task.key is key
-        return task
+    @allTasksByKey[key]
 
   # get task
   getWithMeta: (key) =>
@@ -321,29 +326,17 @@ class _taskManagerSingleton extends App.Controller
   # remove task certain task from tasks
   remove: (key) =>
 
-    # remember started task
-    delete @tasksStarted[key]
-
-    task = @get(key)
-    return if !task
-
-    # update @allTasks
-    allTasks = _.filter(
-      @allTasks
-      (taskLocal) ->
-        return task if task.key isnt taskLocal.key
-        return
-    )
-    @allTasks = allTasks || []
-
-    # release task from dom and destroy controller
-    @release(key)
+    task = @allTasksByKey[key]
+    delete @allTasksByKey[key]
 
     # rerender taskbar
-    App.Event.trigger('taskRemove', [task.id])
+    App.Event.trigger('taskRemove', [task.key])
 
     # destroy in backend storage
     @taskDestroy(task)
+
+    # release task from dom and destroy controller
+    @release(key)
 
   # set notify of task
   notify: (key) =>
@@ -383,15 +376,13 @@ class _taskManagerSingleton extends App.Controller
     catch
       @log 'notice', "invalid key '#{key}'"
 
-    delete @workersStarted[ key ]
     delete @workers[ key ]
-    delete @tasksStarted[ key ]
 
   # reset while tasks
   reset: =>
 
     # release touch tasks
-    for task in @allTasks
+    for key, task of @allTasksByKey
       @release(key)
 
     # release persistent tasks
@@ -500,7 +491,7 @@ class _taskManagerSingleton extends App.Controller
     tasks = App.Taskbar.all()
     for task in tasks
       task.active = false
-      @allTasks.push task.attributes()
+      @allTasksByKey[task.key] = task.attributes()
 
     # reopen tasks
     App.Event.trigger 'taskbar:init'
@@ -524,13 +515,13 @@ class _taskManagerSingleton extends App.Controller
                   persistent: true
                   init:       true
                 )
-              task_count * 450
+              task_count * 350
               undefined
               'task'
             )
 
     # initial load of taskbar collection
-    for task in @allTasks
+    for key, task of @allTasksByKey
       task_count += 1
       do (task, task_count) =>
         App.Delay.set(
@@ -543,7 +534,7 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          task_count * 650
+          task_count * 350
           undefined
           'task'
         )

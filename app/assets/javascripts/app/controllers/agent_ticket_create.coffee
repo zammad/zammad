@@ -185,7 +185,6 @@ class App.TicketCreate extends App.Controller
     )
 
   render: (template = {}) ->
-    App.TaskManager.touch(@task_key)
 
     # get params
     params = {}

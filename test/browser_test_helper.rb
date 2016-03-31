@@ -333,7 +333,6 @@ class TestCase < Test::Unit::TestCase
     if !instance.find_elements(css: 'body')[0] || instance.find_elements(css: 'body')[0].text =~ /unavailable or too busy/i
       instance.navigate.refresh
     end
-    sleep 2
     screenshot(browser: instance, comment: 'reload_after')
   end
 
