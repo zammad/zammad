@@ -105,7 +105,8 @@ class App.ControllerGenericIndex extends App.Controller
     @title @pageData.title, true
 
     # set nav bar
-    @navupdate @pageData.navupdate
+    if @pageData.navupdate
+      @navupdate @pageData.navupdate
 
     # bind render after a change is done
     if !@disableRender
