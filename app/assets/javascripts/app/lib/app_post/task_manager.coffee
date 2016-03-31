@@ -192,6 +192,8 @@ class _taskManagerSingleton extends App.Controller
       )
       @allTasksByKey[params.key] = task.attributes()
 
+      @touch(params.key)
+
       # save new task and update task collection
       ui = @
       task.save(
@@ -515,7 +517,7 @@ class _taskManagerSingleton extends App.Controller
                   persistent: true
                   init:       true
                 )
-              task_count * 250
+              task_count * 350
               undefined
               'task'
             )
@@ -534,7 +536,7 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          task_count * 250
+          task_count * 350
           undefined
           'task'
         )
