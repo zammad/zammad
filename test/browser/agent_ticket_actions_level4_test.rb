@@ -50,6 +50,7 @@ class AgentTicketActionLevel4Test < TestCase
       css: '.active .sidebar[data-tab="customer"]',
       value: 'nicole',
     )
+    sleep 2
 
     # finally create ticket
     click(css: '.content.active .js-submit')
