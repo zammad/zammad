@@ -119,7 +119,7 @@ class App.TicketCreate extends App.Controller
     "#ticket/create/id/#{@id}"
 
   show: =>
-    @navupdate '#'
+    @navupdate(url: '#', type: 'menu')
 
   changed: =>
     formCurrent = @formParam( @$('.ticket-create') )
@@ -140,7 +140,7 @@ class App.TicketCreate extends App.Controller
         title = @$('[name=title]').val()
         if @latestTitle isnt title
           @latestTitle = title
-          @metaTaskUpdate()
+          App.TaskManager.touch(@task_key)
 
     @interval(update, 3000, @id)
 
@@ -185,6 +185,7 @@ class App.TicketCreate extends App.Controller
     )
 
   render: (template = {}) ->
+    App.TaskManager.touch(@task_key)
 
     # get params
     params = {}
@@ -317,7 +318,7 @@ class App.TicketCreate extends App.Controller
     @autosave()
 
     # update taskbar with new meta data
-    @metaTaskUpdate()
+    App.TaskManager.touch(@task_key)
 
   localUserInfo: (e) =>
 

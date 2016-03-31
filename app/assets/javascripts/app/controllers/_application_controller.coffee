@@ -559,15 +559,6 @@ class App.Controller extends Spine.Controller
   renderScreenUnauthorized: (data) ->
     @html App.view('generic/error/unauthorized')(data)
 
-  metaTaskUpdate: ->
-    delay = App.TaskManager.renderDelay()
-    return if !delay
-    App.Delay.set(
-      -> App.Event.trigger 'task:render'
-      delay
-      'meta-task-update'
-    )
-
   locationVerify: (e) =>
     newLocation = $(e.currentTarget).attr 'href'
     @log 'debug', "new location '#{newLocation}'"
@@ -587,7 +578,6 @@ class App.Controller extends Spine.Controller
     newLocation = newLocation.replace(/#/, '')
     @log 'debug', "execute controller again for '#{newLocation}' because of same hash"
     Spine.Route.matchRoutes(newLocation)
-    @metaTaskUpdate()
 
   logoUrl: ->
     "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"
@@ -812,7 +802,7 @@ class App.UpdateTastbar extends App.Controller
   update: (genericObject) =>
 
     # update taskbar with new meta data
-    @metaTaskUpdate()
+    App.TaskManager.touch(@task_key)
 
 class App.ControllerWidgetPermanent extends App.Controller
   constructor: (params) ->

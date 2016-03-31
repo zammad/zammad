@@ -6,22 +6,22 @@ class GeoLocationTest < ActiveSupport::TestCase
   # check
   test 'check simple results' do
 
-    result = Service::GeoLocation.geocode( 'Marienstrasse 13, 10117 Berlin' )
+    result = Service::GeoLocation.geocode('Marienstrasse 13, 10117 Berlin')
     assert(result)
     assert_equal(52.52204, result[0])
     assert_equal(13.38319, result[1])
 
-    result = Service::GeoLocation.geocode( 'Marienstrasse 13 10117 Berlin' )
+    result = Service::GeoLocation.geocode('Marienstrasse 13 10117 Berlin')
     assert(result)
     assert_equal(52.52204, result[0])
     assert_equal(13.38319, result[1])
 
-    result = Service::GeoLocation.geocode( 'Martinsbruggstrasse 35, 9016 St. Gallen' )
+    result = Service::GeoLocation.geocode('Martinsbruggstrasse 35, 9016 St. Gallen')
     assert(result)
     assert_equal(47.4366664, result[0])
     assert_equal(9.409814899999999, result[1])
 
-    result = Service::GeoLocation.geocode( 'Martinsbruggstrasse 35 9016 St. Gallen' )
+    result = Service::GeoLocation.geocode('Martinsbruggstrasse 35 9016 St. Gallen')
     assert(result)
     assert_equal(47.4366664, result[0])
     assert_equal(9.409814899999999, result[1])

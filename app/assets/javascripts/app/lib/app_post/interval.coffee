@@ -1,20 +1,20 @@
 class App.Interval
   _instance = undefined
 
-  @set: ( callback, timeout, key, level ) ->
+  @set: (callback, timeout, key, level) ->
     if _instance == undefined
       _instance ?= new _intervalSingleton
-    _instance.set( callback, timeout, key, level )
+    _instance.set(callback, timeout, key, level)
 
-  @clear: ( key, level ) ->
+  @clear: (key, level) ->
     if _instance == undefined
       _instance ?= new _intervalSingleton
-    _instance.clear( key, level )
+    _instance.clear(key, level)
 
-  @clearLevel: ( level ) ->
+  @clearLevel: (level) ->
     if _instance == undefined
       _instance ?= new _intervalSingleton
-    _instance.clearLevel( level )
+    _instance.clearLevel(level)
 
   @reset: ->
     if _instance == undefined
@@ -32,21 +32,21 @@ class _intervalSingleton extends Spine.Module
   constructor: ->
     @levelStack = {}
 
-  set: ( callback, timeout, key, level ) =>
+  set: (callback, timeout, key, level) =>
 
     if !level
       level = '_all'
 
     if key
-      @clear( key, level )
+      @clear(key, level)
 
     if !key
-      key = Math.floor( Math.random() * 99999 )
+      key = Math.floor(Math.random() * 99999)
 
     # setTimeout
     @log 'debug', 'set', key, timeout, level, callback
     callback()
-    interval_id = setInterval( callback, timeout )
+    interval_id = setInterval(callback, timeout)
 
     # remember all interval
     if !@levelStack[level]
@@ -59,7 +59,7 @@ class _intervalSingleton extends Spine.Module
 
     key.toString()
 
-  clear: ( key, level ) =>
+  clear: (key, level) =>
 
     if !level
       level = '_all'
@@ -71,23 +71,23 @@ class _intervalSingleton extends Spine.Module
     return if !data
 
     @log 'debug', 'clear', data
-    clearInterval( data['interval_id'] )
+    clearInterval(data['interval_id'])
 
     # cleanup if needed
     delete @levelStack[ level ][ key.toString() ]
-    if _.isEmpty( @levelStack[ level ] )
+    if _.isEmpty(@levelStack[ level ])
       delete @levelStack[ level ]
 
   clearLevel: (level) =>
     return if !@levelStack[ level ]
     for key, data of @levelStack[ level ]
-      @clear( key, level )
+      @clear(key, level)
     delete @levelStack[level]
 
   reset: =>
     for level, items of @levelStack
       for key, data of items
-        @clear( key, level )
+        @clear(key, level)
       @levelStack[level] = {}
     true
 

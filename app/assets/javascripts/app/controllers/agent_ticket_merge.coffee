@@ -65,30 +65,30 @@ class App.TicketMerge extends App.ControllerModal
         if data['result'] is 'success'
 
           # update collection
-          App.Collection.load( type: 'Ticket', data: [data.master_ticket] )
-          App.Collection.load( type: 'Ticket', data: [data.slave_ticket] )
+          App.Collection.load(type: 'Ticket', data: [data.master_ticket])
+          App.Collection.load(type: 'Ticket', data: [data.slave_ticket])
 
           # hide dialog
           @close()
 
           # view ticket
-          @log 'notice', 'nav...', App.Ticket.find( data.master_ticket['id'] )
+          @log 'notice', 'nav...', App.Ticket.find(data.master_ticket['id'])
           @navigate '#ticket/zoom/' + data.master_ticket['id']
 
           # notify UI
           @notify
             type:    'success'
-            msg:     App.i18n.translateContent( 'Ticket %s merged!', data.slave_ticket['number'] )
+            msg:     App.i18n.translateContent('Ticket %s merged!', data.slave_ticket['number'])
             timeout: 4000
 
-          App.TaskManager.remove( 'Ticket-' + data.slave_ticket['id'] )
+          App.TaskManager.remove("Ticket-#{data.slave_ticket['id']}")
 
         else
 
           # notify UI
           @notify
             type:    'error'
-            msg:     App.i18n.translateContent( data['message'] )
+            msg:     App.i18n.translateContent(data['message'])
             timeout: 6000
 
           @formEnable(e)

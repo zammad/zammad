@@ -36,12 +36,15 @@ class App.UserProfile extends App.Controller
 
   show: =>
     App.OnlineNotification.seen('User', @user_id)
-    @navupdate '#'
+    @navupdate(url: '#', type: 'menu')
 
   changed: ->
     false
 
   render: (user) =>
+
+    # update taskbar with new meta data
+    App.TaskManager.touch(@task_key)
 
     if !@doNotLog
       @doNotLog = 1
@@ -82,9 +85,6 @@ class Object extends App.Controller
     App.User.unsubscribe(@subscribeId)
 
   render: (user) =>
-
-    # update taskbar with new meta data
-    @metaTaskUpdate()
 
     # get display data
     userData = []

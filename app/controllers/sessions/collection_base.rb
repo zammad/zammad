@@ -4,14 +4,14 @@ module ExtraCollection
   def session( collections, assets, user )
 
     # all base stuff
-    collections[ Locale.to_app_model ] = Locale.where( active: true )
+    collections[ Locale.to_app_model ] = Locale.where(active: true)
 
-    collections[ Taskbar.to_app_model ] = Taskbar.where( user_id: user.id )
+    collections[ Taskbar.to_app_model ] = Taskbar.where(user_id: user.id)
     collections[ Taskbar.to_app_model ].each {|item|
       assets = item.assets(assets)
     }
 
-    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 50)
+    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 100)
     assets = ApplicationModel.assets_of_object_list(collections[ OnlineNotification.to_app_model ], assets)
 
     collections[ RecentView.to_app_model ] = RecentView.list(user, 10)
@@ -29,7 +29,7 @@ module ExtraCollection
 
     collections[ Organization.to_app_model ] = []
     if user.organization_id
-      Organization.where( id: user.organization_id ).each {|item|
+      Organization.where(id: user.organization_id).each {|item|
         assets = item.assets(assets)
       }
     end

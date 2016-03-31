@@ -34,12 +34,15 @@ class App.OrganizationProfile extends App.Controller
 
   show: =>
     App.OnlineNotification.seen('Organization', @organization_id)
-    @navupdate '#'
+    @navupdate(url: '#', type: 'menu')
 
   changed: ->
     false
 
   render: (organization) =>
+
+    # update taskbar with new meta data
+    App.TaskManager.touch(@task_key)
 
     if !@doNotLog
       @doNotLog = 1
@@ -79,9 +82,6 @@ class Object extends App.Controller
     App.Organization.unsubscribe(@subscribeId)
 
   render: (organization) =>
-
-    # update taskbar with new meta data
-    @metaTaskUpdate()
 
     # get display data
     organizationData = []

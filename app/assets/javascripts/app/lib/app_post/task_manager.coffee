@@ -7,6 +7,9 @@ class App.TaskManager
   @all: ->
     _instance.all()
 
+  @allWithMeta: ->
+    _instance.allWithMeta()
+
   @execute: (params) ->
     _instance.execute(params)
 
@@ -16,8 +19,8 @@ class App.TaskManager
   @update: (key, params) ->
     _instance.update(key, params)
 
-  @remove: (key, rerender = true) ->
-    _instance.remove(key, rerender)
+  @remove: (key) ->
+    _instance.remove(key)
 
   @notify: (key) ->
     _instance.notify(key)
@@ -27,6 +30,9 @@ class App.TaskManager
 
   @reorder: (order) ->
     _instance.reorder(order)
+
+  @touch: (key) ->
+    _instance.touch(key)
 
   @reset: ->
     _instance.reset()
@@ -39,9 +45,6 @@ class App.TaskManager
 
   @TaskbarId: ->
     _instance.TaskbarId()
-
-  @renderDelay: ->
-    _instance.renderDelay()
 
 class _taskManagerSingleton extends App.Controller
   @include App.LogInclude
@@ -78,18 +81,6 @@ class _taskManagerSingleton extends App.Controller
     @tasksToUpdate     = {}
     @activeTaskHistory = []
 
-    # speed improvements for certain browsers
-    @renderInitTime = 2200
-    @renderDelayTime = 3400
-    data = App.Browser.detection()
-    if data.browser
-      if data.browser.name is 'Chrome'
-        @renderInitTime = 1000
-        @renderDelayTime = 1600
-      else if data.browser.anem is 'Firefox'
-        @renderInitTime = 1200
-        @renderDelayTime = 1800
-
   all: ->
 
     # sort by prio
@@ -97,6 +88,33 @@ class _taskManagerSingleton extends App.Controller
       return task.prio
     )
     return @allTasks
+
+  allWithMeta: ->
+    all = @all()
+    for task in all
+      task = @getMeta(task)
+    all
+
+  getMeta: (task) ->
+
+    # collect meta data of task for task bar item
+    meta =
+      url:       '#'
+      id:        false
+      iconClass: 'loading'
+      title:     App.i18n.translateInline('Loading...')
+      head:      App.i18n.translateInline('Loading...')
+    worker = App.TaskManager.worker(task.key)
+    if worker
+      data = worker.meta()
+
+      # apply meta data of controller
+      if data
+        for key, value of data
+          meta[key] = value
+
+    task.meta = meta
+    task
 
   newPrio: ->
     prio = 1
@@ -192,7 +210,7 @@ class _taskManagerSingleton extends App.Controller
         if task.key isnt params.key
           if task.active
             task.active = false
-            @taskUpdate(task, true)
+            @taskUpdate(task)
         else
           changed = false
           if !task.active
@@ -202,24 +220,10 @@ class _taskManagerSingleton extends App.Controller
             changed = true
             task.notify = false
           if changed
-            @taskUpdate(task, true)
+            @taskUpdate(task)
 
     # start worker for task if not exists
     @startController(params)
-
-    # set active state
-    if !params.init
-      $('.nav-tab.task').each( (_index, element) =>
-        localElement = $(element)
-        key = localElement.data('key')
-        return if !key
-        task = @get(key)
-        return if !task
-        if task.active
-          localElement.addClass('is-active')
-        else
-          localElement.removeClass('is-active')
-      )
 
   startController: (params) =>
 
@@ -269,11 +273,6 @@ class _taskManagerSingleton extends App.Controller
     if controller.show && _.isFunction(controller.show)
       controller.show(params_app)
 
-    # update title
-    if controller.meta && _.isFunction(controller.meta)
-      meta = controller.meta()
-      @title meta.title
-
     true
 
   # hide task content
@@ -299,6 +298,12 @@ class _taskManagerSingleton extends App.Controller
       if task.key is key
         return task
 
+  # get task
+  getWithMeta: (key) =>
+    task = @get(key)
+    return if !task
+    @getMeta(task)
+
   # update task
   update: (key, params) =>
     task = @get(key)
@@ -314,7 +319,7 @@ class _taskManagerSingleton extends App.Controller
     @taskUpdate(task, mute)
 
   # remove task certain task from tasks
-  remove: (key, rerender) =>
+  remove: (key) =>
 
     # remember started task
     delete @tasksStarted[key]
@@ -335,8 +340,7 @@ class _taskManagerSingleton extends App.Controller
     @release(key)
 
     # rerender taskbar
-    if rerender
-      @metaTaskUpdate()
+    App.Event.trigger('taskRemove', [task.id])
 
     # destroy in backend storage
     @taskDestroy(task)
@@ -401,7 +405,7 @@ class _taskManagerSingleton extends App.Controller
     App.Taskbar.deleteAll()
 
     # rerender task bar
-    @metaTaskUpdate()
+    App.Event.trigger('taskInit')
 
   nextTaskUrl: =>
 
@@ -432,8 +436,21 @@ class _taskManagerSingleton extends App.Controller
   taskUpdate: (task, mute = false) ->
     @log 'debug', 'UPDATE task', task, mute
     @tasksToUpdate[ task.key ] = 'toUpdate'
-    if !mute
-      @metaTaskUpdate()
+    return if mute
+    @touch(task.key)
+
+  touch: (key) ->
+    delay = =>
+      task = @getWithMeta(key)
+      return if !task
+      #  throw "No such task with '#{key}' to touch"
+
+      # update title
+      if task.active && task.meta
+        @title task.meta.title
+
+      App.Event.trigger('taskUpdate', [task])
+    App.Delay.set(delay, 20, "task-#{key}")
 
   taskUpdateLoop: =>
     return if @offlineModus
@@ -482,6 +499,7 @@ class _taskManagerSingleton extends App.Controller
     # set taskbar collection stored in database
     tasks = App.Taskbar.all()
     for task in tasks
+      task.active = false
       @allTasks.push task.attributes()
 
     # reopen tasks
@@ -525,26 +543,9 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          task_count * 850
+          task_count * 650
           undefined
           'task'
         )
 
-    # handle init task rendering at loading time, prevent multible, not needed dom operations
-    @initTaskRenderInterval = App.Interval.set(
-      ->
-        App.Event.trigger('task:render')
-      @renderInitTime
-    )
-    App.Delay.set(
-      =>
-        App.Interval.clear(@initTaskRenderInterval)
-        @renderDelayTime = 20
-        App.Event.trigger('task:render')
-      task_count * 950
-    )
-
     App.Event.trigger 'taskbar:ready'
-
-  renderDelay: =>
-    @renderDelayTime

@@ -88,7 +88,7 @@ class App.TicketZoom extends App.Controller
 
   show: (params) =>
 
-    @navupdate '#'
+    @navupdate(url: '#', type: 'menu')
 
     # set all notifications to seen
     App.OnlineNotification.seen('Ticket', @ticket_id)
@@ -212,7 +212,7 @@ class App.TicketZoom extends App.Controller
           )
 
         # update taskbar with new meta data
-        @metaTaskUpdate()
+        App.TaskManager.touch(@task_key)
     )
 
 
@@ -284,7 +284,7 @@ class App.TicketZoom extends App.Controller
   render: =>
 
     # update taskbar with new meta data
-    @metaTaskUpdate()
+    App.TaskManager.touch(@task_key)
 
     @formEnable( @$('.submit') )
 

@@ -8,7 +8,7 @@ module Service
 
 lookup lat and lng for address
 
-  result = Service::GeoLocation.geocode( 'Marienstrasse 13, 10117 Berlin' )
+  result = Service::GeoLocation.geocode('Marienstrasse 13, 10117 Berlin')
 
 returns
 
@@ -30,7 +30,7 @@ returns
 
 lookup address for lat and lng
 
-  result = GeoLocation.reverse_geocode( 4.21312, 1.3123 )
+  result = GeoLocation.reverse_geocode(4.21312, 1.3123)
 
 returns
 
