@@ -210,9 +210,6 @@ class App.TicketZoom extends App.Controller
             detail:     detail
             objectName: 'Ticket'
           )
-
-        # update taskbar with new meta data
-        App.TaskManager.touch(@task_key)
     )
 
 

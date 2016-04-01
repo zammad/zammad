@@ -116,8 +116,6 @@ class App.ControllerGenericIndex extends App.Controller
       @log 'error', 'ajax', msg.status
       if msg.status is 401
         @log 'error', 'ajax', rec, msg, msg.status
-#        @navigate @pageData.navupdate
-#        alert('relogin')
         @navigate 'login'
 
     # execute fetch

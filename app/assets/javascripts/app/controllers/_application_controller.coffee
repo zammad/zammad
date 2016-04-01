@@ -551,12 +551,15 @@ class App.Controller extends Spine.Controller
     @clearDelay(@initLoadingDoneDelay)
 
   renderScreenError: (data) ->
+    App.TaskManager.touch(@task_key)
     @html App.view('generic/error/generic')(data)
 
   renderScreenNotFound: (data) ->
+    App.TaskManager.touch(@task_key)
     @html App.view('generic/error/not_found')(data)
 
   renderScreenUnauthorized: (data) ->
+    App.TaskManager.touch(@task_key)
     @html App.view('generic/error/unauthorized')(data)
 
   locationVerify: (e) =>
