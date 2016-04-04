@@ -764,6 +764,7 @@ class App.CollectionController extends App.Controller
   model: '_need_to_be_defined_'
   sortBy: 'name'
   order: 'ASC',
+  insertPosition: 'after'
 
   constructor: ->
     @events = @constructor.events unless @events
@@ -819,8 +820,14 @@ class App.CollectionController extends App.Controller
         @domChange(param[1])
       else if param[0] is 'domRemove'
         @domRemove(param[1])
+      else if param[0] is 'change'
+        @collectionSync(param[1])
+      else if param[0] is 'remove'
+        @collectionSync(param[1], 'destroy')
       else if param[0] is 'renderAll'
         @renderAll()
+      else
+        @log 'error', "Unknown type #{param[0]}", param[1]
       if !@queue[0]
         @onRenderEnd()
         @queueRunning = false
@@ -845,7 +852,7 @@ class App.CollectionController extends App.Controller
     if type is 'destroy'
       ids = []
       for item in items
-        ids.push item.id
+        ids.push item[@uniqKey]
       @queue.push ['domRemove', ids]
       @uIRunner()
       return
@@ -875,7 +882,9 @@ class App.CollectionController extends App.Controller
           lastOrderNew.push id
 
       # try to find positions of new items
+      @log 'debug', 'collectionSync lastOrderNew', lastOrderNew
       applyOrder = App.Utils.diffPositionAdd(lastOrderNew, newOrder)
+      @log 'debug', 'collectionSync applyOrder', applyOrder
       if !applyOrder
         @queue.push ['renderAll']
         @uIRunner()
@@ -888,7 +897,7 @@ class App.CollectionController extends App.Controller
 
       newItems = []
       for apply in applyOrder
-        item = App[@model].find(apply.id)
+        item = @itemGet(apply.id)
         item.meta_position = apply.position
         newItems.push item
       @queue.push ['domChange', newItems]
@@ -943,7 +952,7 @@ class App.CollectionController extends App.Controller
         for field of @observe
           @log 'debug', 'domChange|change|compare', field, currentItem[field], attributes[field]
           diff = !_.isEqual(currentItem[field], attributes[field])
-          @log 'debug', 'domChange|diff', diff, item
+          @log 'debug', 'domChange|diff', diff
           if diff
             changedItems.push item
             @itemAttributesSet(item[@uniqKey], attributes)
@@ -963,8 +972,10 @@ class App.CollectionController extends App.Controller
     @collectionOrderSet()
     @onRenderEnd()
 
+  itemDestroy: (id) =>
+    App[@model].destroy(id)
+
   itemsAll: =>
-    #App[@model].all()
     App[@model].search(sortBy: @sortBy, order: @order)
 
   itemAttributesDiff: (item) =>
@@ -993,6 +1004,9 @@ class App.CollectionController extends App.Controller
       attributes[field] = item[field]
     attributes
 
+  itemGet: (id) =>
+    App[@model].find(id)
+
   renderParts: (items) =>
     @log 'debug', 'renderParts', items
     for item in items
@@ -1009,14 +1023,20 @@ class App.CollectionController extends App.Controller
     html =  $(App.view(@template)(
       item: item
     ))
+    itemCount = Object.keys(@renderList).length
     @renderList[item[@uniqKey]] = html
     if el is false
       return html
     else if !el
-      position = item.meta_position + 1
-      console.log('!el', item, position, item.meta_position)
-      #if item.meta_position
-      @el.find(".js-item:nth-child(#{position})").before(html)
+      position = item.meta_position
+      if itemCount > position
+        position += 1
+      console.log('!el', item, position, item.meta_position, @el.find(".js-item:nth-child(#{position})"))
+      element = @el.find(".js-item:nth-child(#{position})")
+      if @insertPosition is 'before'
+        element.before(html)
+      else
+        element.after(html)
     else
       el.replaceWith(html)
 
@@ -1029,7 +1049,6 @@ class App.CollectionController extends App.Controller
   click: (e) =>
     row = $(e.target).closest('.js-item')
     id = row.data('id')
-    console.log('click id', id)
     @onClick(id, e)
 
   onClick: (id, e) ->
@@ -1041,7 +1060,7 @@ class App.CollectionController extends App.Controller
     row = $(e.target).closest('.js-item')
     id = row.data('id')
     @onRemove(id,e)
-    App[@model].destroy(id)
+    @itemDestroy(id)
 
   onRemove: (id, e) ->
     # nothing

@@ -1468,6 +1468,18 @@ test("check diffPosition format", function() {
   result = false
   verify = App.Utils.diffPositionAdd(a, b)
   deepEqual(verify, result)
+
+  a = ['Ticket-347', 'TicketCreateScreen-2217']
+  b = ['Ticket-347', 'TicketCreateScreen-2217', 'TicketCreateScreen-71517']
+  result = [
+    {
+      position: 2,
+      id: 'TicketCreateScreen-71517',
+    },
+  ]
+  verify = App.Utils.diffPositionAdd(a, b)
+  deepEqual(verify, result)
+
 });
 
 }

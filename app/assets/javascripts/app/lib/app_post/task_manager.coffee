@@ -332,7 +332,7 @@ class _taskManagerSingleton extends App.Controller
     delete @allTasksByKey[key]
 
     # rerender taskbar
-    App.Event.trigger('taskRemove', [task.key])
+    App.Event.trigger('taskRemove', [task])
 
     # destroy in backend storage
     @taskDestroy(task)
@@ -369,6 +369,7 @@ class _taskManagerSingleton extends App.Controller
       if task.prio isnt prio
         task.prio = prio
         @taskUpdate(task, true)
+    App.Event.trigger('taskCollectionOrderSet', order)
 
   # release one task
   release: (key) =>

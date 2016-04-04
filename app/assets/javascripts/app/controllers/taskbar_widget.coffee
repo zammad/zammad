@@ -34,20 +34,26 @@ class App.TaskbarWidget extends App.CollectionController
 
     # bind to changes
     @bind('taskInit', =>
-      console.log('renderAll aaa')
-      @renderAll()
-      console.log('renderAll bbb')
-      #@queue.push ['renderAll']
-      #@uIRunner()
+      @queue.push ['renderAll']
+      @uIRunner()
     )
     @bind('taskUpdate', (tasks) =>
-      @queue.push ['domChange', tasks]
+      @queue.push ['change', tasks]
       @uIRunner()
     )
-    @bind('taskRemove', (task_ids) =>
-      @queue.push ['domRemove', task_ids]
+    @bind('taskRemove', (tasks) =>
+      @queue.push ['remove', tasks]
       @uIRunner()
     )
+    @bind('taskCollectionOrderSet', (task_keys) =>
+      @collectionOrderSet(task_keys)
+    )
+
+  itemGet: (key) ->
+    App.TaskManager.get(key)
+
+  itemDestroy: (key) ->
+    App.TaskManager.remove(key)
 
   itemsAll: ->
     App.TaskManager.allWithMeta()

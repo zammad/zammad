@@ -136,6 +136,8 @@ class App.OnlineNotificationWidget extends App.Controller
       url:  "#{@apiPath}/online_notifications/mark_all_as_read"
       data: JSON.stringify('')
       processData: true
+      success: (data, status, xhr) =>
+        @fetch()
     )
 
   updateHeight: ->
@@ -219,6 +221,7 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
   sortBy: 'created_at'
   order: 'DESC'
   alreadyShown: {}
+  insertPosition: 'before'
 
   onRenderEnd: ->
     @container.counterGen()

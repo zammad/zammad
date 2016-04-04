@@ -19,12 +19,9 @@ class App.TicketCreate extends App.Controller
     @default_type = 'phone-in'
 
     # remember split info if exists
-    split = ''
+    @split = ''
     if @ticket_id && @article_id
-      split = "/#{@ticket_id}/#{@article_id}"
-
-    # update navbar highlighting
-    @navupdate "#ticket/create/id/#{@id}#{split}"
+      @split = "/#{@ticket_id}/#{@article_id}"
 
     # lisen if view need to be rerendered
     @bind 'ticket_create_rerender', (defaults) =>
@@ -119,7 +116,7 @@ class App.TicketCreate extends App.Controller
     "#ticket/create/id/#{@id}"
 
   show: =>
-    @navupdate(url: '#', type: 'menu')
+    @navupdate "#ticket/create/id/#{@id}#{@split}", type: 'menu'
 
   changed: =>
     formCurrent = @formParam( @$('.ticket-create') )

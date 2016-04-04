@@ -386,7 +386,7 @@ class Table extends App.Controller
             'click':  callbackCheckbox
       )
 
-    @setSelected( @selected )
+    @setSelected(@selected)
 
     # start user popups
     @userPopups()

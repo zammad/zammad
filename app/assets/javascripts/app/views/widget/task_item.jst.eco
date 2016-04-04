@@ -1,4 +1,4 @@
-<a href="<%- @item.meta.url %>" title="<%= @item.meta.title %>" class="nav-tab task js-locationVerify <%= @item.meta.class %><% if @item.active: %> is-active<% end %><% if @item.notify: %> is-modified<% end %>" data-key="<%- @item.key %>">
+<a href="<%- @item.meta.url %>" title="<%= @item.meta.title %>" class="nav-tab task js-item js-locationVerify <%= @item.meta.class %><% if @item.active: %> is-active<% end %><% if @item.notify: %> is-modified<% end %>" data-key="<%- @item.key %>">
   <div class="nav-tab-icon" title="<%- @Ti(@item.meta.iconTitle) %>">
     <% if @item.meta.type is 'task': %>
       <% if @item.notify: %>

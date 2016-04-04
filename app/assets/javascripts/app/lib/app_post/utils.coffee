@@ -632,15 +632,22 @@ class App.Utils
     newOrderMethod = (a, b, applyOrder) ->
       for position of b
         if a[position] isnt b[position]
+          positionInt = parseInt(position)
 
           # changes to complex, whole rerender
           if _.contains(a, b[position])
+            console.log('aaa too complex', a, b[position])
             return false
 
           # insert new item and try next
-          a.splice(position, 0, b[position])
+          a.splice(positionInt, 0, b[position])
+          positionNew = 0
+          for positionA of a
+            if b[positionA] is b[position]
+              positionNew = parseInt(positionA)
+              break
           apply =
-            position: parseInt(position)
+            position: positionNew
             id: b[position]
           applyOrder.push apply
           newOrderMethod(a, b, applyOrder)
