@@ -846,7 +846,6 @@ class App.CollectionController extends App.Controller
     @lastOrder = newOrder
 
   collectionSync: (items, type) =>
-    console.log('collectionSync', items, type)
 
     # remove items
     if type is 'destroy'
@@ -1031,7 +1030,6 @@ class App.CollectionController extends App.Controller
       position = item.meta_position
       if itemCount > position
         position += 1
-      console.log('!el', item, position, item.meta_position, @el.find(".js-item:nth-child(#{position})"))
       element = @el.find(".js-item:nth-child(#{position})")
       if @insertPosition is 'before'
         element.before(html)
