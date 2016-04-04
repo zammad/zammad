@@ -1,0 +1,22 @@
+<div class="js-item activity-entry activity-entry--removeable<% if @item.seen: %> is-inactive<% end %>" data-id="<%- @item.id %>">
+  <a class="activity-avatar user-popover" data-id="<%= @item.created_by_id %>" <% if @item.created_by_id isnt 1: %>href="<%- @item.created_by.uiUrl() %>"<% end %>>
+    <%- @item.created_by.avatar() %>
+  </a>
+  <div class="activity-body">
+    <a class="activity-message js-locationVerify" href="<%- @item.link %>">
+      <span class="activity-text">
+        <% if @item.objectNative && @item.objectNative.activityMessage: %>
+          <%- @item.objectNative.activityMessage(@item) %>
+        <% else: %>
+          Need objectNative in item <%= @item.object %>.find(<%= @item.o_id %>)
+        <% end %>
+      </span>
+      <%- @humanTime(@item.created_at, false, 'activity-time') %>
+    </a>
+    <div class="activity-remove js-remove">
+      <div class="activity-remove-icon-holder">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    </div>
+  </div>
+</div>

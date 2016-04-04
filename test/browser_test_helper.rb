@@ -186,7 +186,7 @@ class TestCase < Test::Unit::TestCase
     end
     instance.find_elements(css: '#login button')[0].click
 
-    sleep 5
+    sleep 4
     login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
     if login != params[:username]
       screenshot(browser: instance, comment: 'login_failed')
@@ -264,7 +264,7 @@ class TestCase < Test::Unit::TestCase
     return if !clues
     instance.execute_script("$('.js-modal--clue .js-close').click()")
     assert(true, 'clues closed')
-    sleep 2
+    sleep 1
   end
 
 =begin
@@ -1222,7 +1222,7 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
 
     (1..100).each do
-      sleep 0.1
+      #sleep 0.5
       begin
         if instance.find_elements(css: '.navigation .tasks .task:first-child')[0]
           instance.mouse.move_to(instance.find_elements(css: '.navigation .tasks .task:first-child')[0])
@@ -1245,6 +1245,85 @@ wait untill text in selector disabppears
       end
     end
     assert(true, 'all tasks closed')
+  end
+
+=begin
+
+  close_online_notitifcation(
+    browser: browser1,
+    data: {
+      #title: 'some title',
+      position: 3,
+    },
+  )
+
+=end
+
+  def close_online_notitifcation(params = {})
+    switch_window_focus(params)
+    log('close_online_notitifcation', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    if data[:title]
+      element = instance.find_elements(partial_link_text: data[:title])[0]
+      if !element
+        screenshot(browser: instance, comment: 'close_online_notitifcation')
+        raise "no online notification with title '#{data[:title]}' found"
+      end
+      instance.mouse.move_to(element)
+      sleep 0.1
+      instance.execute_script("$('.js-notificationsContainer .js-items .js-item .activity-text:contains(\"#{data[:title]}\") .js-remove').first().click()")
+
+    else
+      css = ".js-notificationsContainer .js-items .js-item:nth-child(#{data[:position]})"
+      element = instance.find_elements(css: css)[0]
+      if !element
+        screenshot(browser: instance, comment: 'close_online_notitifcation')
+        raise "no online notification with postion '#{css}' found"
+      end
+
+      instance.mouse.move_to(element)
+      sleep 0.1
+      instance.find_elements(css: "#{css} .js-remove")[0].click
+    end
+
+    true
+  end
+
+=begin
+
+  online_notitifcation_close_all(
+    browser: browser1,
+  )
+
+=end
+
+  def online_notitifcation_close_all(params = {})
+    switch_window_focus(params)
+    log('online_notitifcation_close_all', params)
+
+    instance = params[:browser] || @browser
+
+    (1..100).each do
+      sleep 0.5
+      begin
+        if instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0]
+          instance.mouse.move_to(instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0])
+          sleep 0.1
+          click_element = instance.find_elements(css: '.js-notificationsContainer .js-item:first-child .js-remove')[0]
+          if click_element
+            click_element.click
+          end
+        else
+          break
+        end
+      rescue
+        # try again
+      end
+    end
+    assert(true, 'all online notification closed')
   end
 
 =begin
@@ -1525,6 +1604,7 @@ wait untill text in selector disabppears
       customer: 'nico',
       group:    'Users', # optional / '-NONE-' # if group selection should not be shown
       priority: '2 normal',
+      state:    'open',
       title:    'overview #1',
       body:     'overview #1',
     },
@@ -1595,6 +1675,14 @@ wait untill text in selector disabppears
         browser:  instance,
         css:      '.active .newTicket select[name="priority_id"]',
         value:    data[:priority],
+        mute_log: true,
+      )
+    end
+    if data[:state]
+      select(
+        browser:  instance,
+        css:      '.active .newTicket select[name="state_id"]',
+        value:    data[:state],
         mute_log: true,
       )
     end

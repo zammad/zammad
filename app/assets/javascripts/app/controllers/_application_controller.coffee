@@ -487,24 +487,27 @@ class App.Controller extends Spine.Controller
 
   prepareForObjectList: (items) ->
     for item in items
-
-      item.link  = ''
-      item.title = '???'
-
-      # convert backend name space to local name space
-      item.object = item.object.replace('::', '')
-
-      # lookup real data
-      if App[item.object] && App[item.object].exists(item.o_id)
-        object            = App[item.object].find(item.o_id)
-        item.objectNative = object
-        item.link         = object.uiUrl()
-        item.title        = object.displayName()
-        item.object_name  = object.objectDisplayName()
-        item.cssIcon      = object.iconActivity(@Session.get())
-
-      item.created_by = App.User.find(item.created_by_id)
+      item = @prepareForObjectListItem(item)
     items
+
+  prepareForObjectListItem: (item) ->
+    item.link  = ''
+    item.title = '???'
+
+    # convert backend name space to local name space
+    item.object = item.object.replace('::', '')
+
+    # lookup real data
+    if App[item.object] && App[item.object].exists(item.o_id)
+      object            = App[item.object].find(item.o_id)
+      item.objectNative = object
+      item.link         = object.uiUrl()
+      item.title        = object.displayName()
+      item.object_name  = object.objectDisplayName()
+      item.cssIcon      = object.iconActivity(@Session.get())
+
+    item.created_by = App.User.find(item.created_by_id)
+    item
 
   # central method, is getting called on every ticket form change
   ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>

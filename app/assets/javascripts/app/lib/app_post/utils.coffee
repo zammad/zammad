@@ -626,3 +626,26 @@ class App.Utils
     $outer.remove()
 
     return 100 - widthWithScroll
+
+  @diffPositionAdd: (a, b) ->
+    applyOrder = []
+    newOrderMethod = (a, b, applyOrder) ->
+      for position of b
+        if a[position] isnt b[position]
+
+          # changes to complex, whole rerender
+          if _.contains(a, b[position])
+            return false
+
+          # insert new item and try next
+          a.splice(position, 0, b[position])
+          apply =
+            position: parseInt(position)
+            id: b[position]
+          applyOrder.push apply
+          newOrderMethod(a, b, applyOrder)
+      true
+
+    result = newOrderMethod(a, b, applyOrder)
+    return false if !result
+    applyOrder

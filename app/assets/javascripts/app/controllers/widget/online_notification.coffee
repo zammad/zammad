@@ -7,13 +7,11 @@ class App.OnlineNotificationWidget extends App.Controller
 
   events:
     'click .js-mark': 'markAllAsRead'
-    'click .js-item': 'hide'
-    'click .js-remove': 'removeItem'
-    'click .js-locationVerify': 'onItemClick'
     'click': 'stopPropagation'
 
   elements:
     '.js-mark': 'mark'
+    '.js-noNotifications': 'noNotifications'
     '.js-item': 'item'
     '.js-content': 'content'
     '.js-header': 'header'
@@ -25,7 +23,7 @@ class App.OnlineNotificationWidget extends App.Controller
     @bind 'OnlineNotification::changed', =>
       @delay(
         => @fetch()
-        2600
+        2200
         'online-notification-changed'
       )
 
@@ -48,20 +46,10 @@ class App.OnlineNotificationWidget extends App.Controller
       if !@access()
         @counterUpdate(0)
         return
-      if !@subscribeId
-        @subscribeId = App.OnlineNotification.subscribe(@updateContent)
-
-    if @access()
-      @subscribeId = App.OnlineNotification.subscribe(@updateContent)
-
-    @bind('ui:reshow', =>
-      @show()
-      'popover'
-    )
 
     $(window).on 'click.notifications', @hide
 
-    @updateContent()
+    @createContainer()
 
   release: ->
     $(window).off 'click.notifications'
@@ -84,14 +72,15 @@ class App.OnlineNotificationWidget extends App.Controller
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      @item.filter('.is-hover').find('.js-locationVerify').click()
+      @$('.js-item').filter('.is-hover').find('.js-locationVerify').click()
 
   nudge: (e, position) ->
 
     # get current
-    current = @item.filter('.is-hover')
+    items = @$('.js-item')
+    current = items.filter('.is-hover')
     if !current.size()
-      @item.first().addClass('is-hover')
+      items.first().addClass('is-hover')
       return
 
     if position is 1
@@ -110,27 +99,41 @@ class App.OnlineNotificationWidget extends App.Controller
     if prev
       @scrollToIfNeeded(prev, true)
 
-  counterUpdate: (count) =>
+  counterUpdate: (count, force = false) =>
     count = '' if count is 0
+
+    return if !force && @count is count
+    @count = count
 
     $('.js-notificationsCounter').text(count)
     App.Event.trigger('online_notification_counter', count.toString())
 
-    @count = count
-
     # show mark all as read if needed
     if !count
-      @mark.addClass('hidden')
+      @mark.addClass('hide')
     else
-      @mark.removeClass('hidden')
+      @mark.removeClass('hide')
 
-  markAllAsRead: (event) ->
-    event.preventDefault()
+  counterGen: (force = false) =>
+    items = App.OnlineNotification.all()
+    count = 0
+    for item in items
+      if !item.seen
+        count++
+    @counterUpdate(count, force)
+
+    if _.isEmpty(items)
+      @noNotifications.removeClass('hide')
+    else
+      @noNotifications.addClass('hide')
+
+  markAllAsRead: (e) ->
+    e.preventDefault()
     @counterUpdate(0)
     @ajax(
       id:   'markAllAsRead'
       type: 'POST'
-      url:  @apiPath + '/online_notifications/mark_all_as_read'
+      url:  "#{@apiPath}/online_notifications/mark_all_as_read"
       data: JSON.stringify('')
       processData: true
     )
@@ -143,13 +146,14 @@ class App.OnlineNotificationWidget extends App.Controller
     heightPopoverHeader     = @header.outerHeight(true)
     isOverflowing           = false
     heightPopoverContent    = 0
-    @item.each (i, el) =>
+    @$('.js-item').each (i, el) =>
 
       # accumulate height of items
       heightPopoverContent += el.clientHeight
 
       if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
-        @content.css 'height', heightApp - heightPopoverHeader - heightPopoverSpacer
+        containerHeight = heightApp - heightPopoverHeader - heightPopoverSpacer
+        @content.css 'height', containerHeight
         isOverflowing = true
         return false # exit .each loop
 
@@ -160,7 +164,6 @@ class App.OnlineNotificationWidget extends App.Controller
     load = (data) =>
       @fetchedData = true
       App.OnlineNotification.refresh(data.stream, clear: true)
-      @updateContent()
     App.OnlineNotification.fetchFull(load)
 
   toggle: =>
@@ -169,43 +172,23 @@ class App.OnlineNotificationWidget extends App.Controller
     else
       @show()
 
-  updateContent: =>
+  createContainer: =>
     if !@Session.get()
       @content.html('')
       return
 
-    items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC')
-    @count = 0
-    for item in items
-      if !item.seen
-        @count++
+    count = ''
+    localeEl = $( App.view('widget/online_notification')(
+      count: count
+    ))
 
-    @counterUpdate(@count)
-
-    # update content
-    items = @prepareForObjectList(items)
-
-    # generate desktop notifications
-    for item in items
-      if !@alreadyShown[item.id]
-        @alreadyShown[item.id] = true
-        if @fetchedData
-          if item.objectNative && item.objectNative.activityMessage
-            title = item.objectNative.activityMessage(item)
-          else
-            title = "Need objectNative in item #{item.object}.find(#{item.o_id})"
-          title = App.Utils.html2text(title.replace(/<.+?>/g, '"'))
-          @notifyDesktop(
-            url: item.link
-            title: title
-          )
-          App.OnlineNotification.play()
-
-    @html App.view('widget/online_notification')(
-      items: items
-      count: @count
+    new App.OnlineNotificationContentWidget(
+      el: localeEl.find('.js-items')
+      container: @
     )
 
+    @html localeEl
+    @counterGen(true)
     return if !@shown
     @show()
 
@@ -221,20 +204,43 @@ class App.OnlineNotificationWidget extends App.Controller
     @shown = false
     @el.hide()
 
-  onItemClick: (e) ->
-    @locationVerify(e)
-    @hide()
-
   stopPropagation: (e) ->
     e.stopPropagation()
 
-  removeItem: (e) =>
-    e.preventDefault()
-    e.stopPropagation()
-    row = $(e.target).closest('.js-item')
-    id = row.data('id')
-    App.OnlineNotification.destroy(id)
-    @updateHeight()
-
   remove: =>
     @el.remove()
+
+class App.OnlineNotificationContentWidget extends App.CollectionController
+  model: 'OnlineNotification'
+  template: 'widget/online_notification_item'
+  prepareForObjectListItemSupport: true
+  observe:
+    seen: true
+  sortBy: 'created_at'
+  order: 'DESC'
+  alreadyShown: {}
+
+  onRenderEnd: ->
+    @container.counterGen()
+    @container.updateHeight()
+
+    # generate desktop notifications
+    items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC')
+    for item in items
+      if !@alreadyShown[item.id]
+        @alreadyShown[item.id] = true
+        if @container.fetchedData
+          item = @prepareForObjectListItem(item)
+          if item.objectNative && item.objectNative.activityMessage
+            title = item.objectNative.activityMessage(item)
+          else
+            title = "Need objectNative in item #{item.object}.find(#{item.o_id})"
+          title = App.Utils.html2text(title.replace(/<.+?>/g, '"'))
+          @notifyDesktop(
+            url: item.link
+            title: title
+          )
+          App.OnlineNotification.play()
+
+  onClick: ->
+    @container.hide()

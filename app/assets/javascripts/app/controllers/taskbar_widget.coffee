@@ -1,36 +1,18 @@
-class App.TaskbarWidget extends App.Controller
+class App.TaskbarWidget extends App.CollectionController
   events:
     'click .js-close': 'remove'
     'click .js-locationVerify': 'location'
-  fields:
-    observe:
-      field1: true
-      field2: false
-      meta: true
-      active: true
-      notify: true
-    observeNot:
-      field1: true
-      field2: false
-  currentItems: {}
-    #1:
-    # a: 123
-    # b: 'some string'
-    #2:
-    # a: 123
-    # b: 'some string'
-  renderList: {}
-    #1: ..dom..ref..
-    #2: ..dom..ref..
+
+  model: false
   template: 'widget/task_item'
+  uniqKey: 'key'
+  observe:
+    meta: true
+    active: true
+    notify: true
 
   constructor: ->
     super
-
-    @queue = []
-    @queueRunning = false
-
-    @renderAll()
 
     dndOptions =
       tolerance:            'pointer'
@@ -51,108 +33,24 @@ class App.TaskbarWidget extends App.Controller
     @el.sortable(dndOptions)
 
     # bind to changes
-    @bind('taskInit', => @renderAll())
+    @bind('taskInit', =>
+      console.log('renderAll aaa')
+      @renderAll()
+      console.log('renderAll bbb')
+      #@queue.push ['renderAll']
+      #@uIRunner()
+    )
     @bind('taskUpdate', (tasks) =>
-      @queue.push ['taskUpdate', tasks]
+      @queue.push ['domChange', tasks]
       @uIRunner()
     )
     @bind('taskRemove', (task_ids) =>
-      @queue.push ['checkRemoves', task_ids]
+      @queue.push ['domRemove', task_ids]
       @uIRunner()
     )
 
-    # render on generic ui call
-    @bind('ui:rerender', =>
-      @queue.push ['renderAll']
-      @uIRunner()
-    )
-
-    # render on login
-    @bind('auth:login', =>
-      @queue.push ['renderAll']
-      @uIRunner()
-    )
-
-    # reset current tasks on logout
-    @bind('auth:logout', =>
-      @queue.push ['renderAll']
-      @uIRunner()
-    )
-
-  uIRunner: ->
-    return if !@queue[0]
-    return if @queueRunning
-    @queueRunning = true
-    loop
-      param = @queue.shift()
-      if param[0] is 'taskUpdate'
-        @checkChanges(param[1])
-      else if param[0] is 'checkRemoves'
-        @checkRemoves(param[1])
-      else if param[0] is 'renderAll'
-        @renderAll()
-      if !@queue[0]
-        @queueRunning = false
-        break
-
-  checkRemoves: (keys) ->
-    for key in keys
-      delete @currentItems[key]
-      if @renderList[key]
-        @renderList[key].remove()
-        delete @renderList[key]
-
-  checkChanges: (items) ->
-    changedItems = []
-    for item in items
-      attributes = {}
-      for field of @fields.observe
-        attributes[field] = item[field]
-      #console.log('item', item)
-      #attributes = item.attributes()
-      #console.log('item', @fields.observe, item, attributes)
-      if !@currentItems[item.key]
-        changedItems.push item
-        @currentItems[item.key] = attributes
-      else
-        currentItem = @currentItems[item.key]
-        hit = false
-        for field of @fields.observe
-          diff = _.isEqual(currentItem[field], attributes[field])
-          #console.log('diff', field, diff, currentItem[field], attributes[field])
-          if !hit && diff
-            changedItems.push item
-            @currentItems[item.key] = attributes
-            hit = true
-    return if _.isEmpty(changedItems)
-    @renderParts(changedItems)
-
-  renderAll: ->
-    #@html ''
-    items = App.TaskManager.allWithMeta()
-    localeEls = []
-    for item in items
-      localeEls.push @renderItem(item, false)
-    @html localeEls
-
-  renderParts: (items) ->
-    for item in items
-      if !@renderList[item.key]
-        @renderItem(item)
-      else
-        @renderItem(item, @renderList[item.key])
-
-  renderItem: (item, el) ->
-    html =  $(App.view(@template)(
-      item: item
-    ))
-    @renderList[item.key] = html
-    if el is false
-      return html
-    else if !el
-      @el.append(html)
-    else
-      el.replaceWith(html)
+  itemsAll: ->
+    App.TaskManager.allWithMeta()
 
   location: (e) =>
     return if !$(e.currentTarget).hasClass('is-modified')
