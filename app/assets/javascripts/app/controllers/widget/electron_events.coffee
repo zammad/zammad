@@ -4,8 +4,12 @@ class Widget
     electron = window.require('electron')
     return if !electron
     remote = electron.remote
+    ipc = electron.ipcRenderer
     App.Event.bind('online_notification_counter', (e) ->
       setBadge(e)
+    )
+    ipc.on('global-shortcut', (e, arg) ->
+      App.Event.trigger('global-shortcut', arg)
     )
 
     Menu = remote.Menu
@@ -13,22 +17,22 @@ class Widget
 
     createDefault = ->
       menu = new Menu()
-      menu.append(new MenuItem({
+      menu.append(new MenuItem(
         label: 'Cut',
         role: 'cut'
-      }))
-      menu.append(new MenuItem({
+      ))
+      menu.append(new MenuItem(
         label: 'Copy',
         role: 'copy'
-      }))
-      menu.append(new MenuItem({
+      ))
+      menu.append(new MenuItem(
         label: 'Paste',
         role: 'paste'
-      }))
-      menu.append(new MenuItem({
+      ))
+      menu.append(new MenuItem(
         label: 'Select All',
         role: 'selectall'
-      }))
+      ))
       menu
 
     menu = createDefault()
@@ -55,7 +59,7 @@ class Widget
       ctx.fillStyle = '#ffffff'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
-      ctx.font = (11 * scale) + 'px sans-serif'
+      ctx.font = (10 * scale) + 'px sans-serif'
       ctx.fillText(text, size / 2, size / 2, size)
 
       canvas.toDataURL()
@@ -69,7 +73,7 @@ class Widget
         })
 
       if content isnt ''
-        dataURL = badgeDataURL.createDataURL(content.toString())
+        dataURL = badgeDataURL(content.toString())
         sendBadge(dataURL, 'You have unread messages (' + content + ')')
       else
         sendBadge(null, 'You have no unread messages')
