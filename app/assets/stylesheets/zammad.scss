@@ -5939,7 +5939,7 @@ footer {
 }
 
 .checkbox.form-group .controls label {
-  padding: 3px 0 3px 20px;
+  padding: 2px 0;
   font: inherit;
   font-size: 13px;
   margin-bottom: 0;
@@ -5947,11 +5947,6 @@ footer {
   text-transform: inherit;
   letter-spacing: 0;
   @extend .u-clickable;
-}
-
-.checkbox.form-group input[type=checkbox] {
-  margin-top: 7px;
-  vertical-align: bottom;
 }
 
 .userSearch-label {
