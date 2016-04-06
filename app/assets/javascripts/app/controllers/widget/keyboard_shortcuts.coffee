@@ -31,19 +31,20 @@ class App.KeyboardShortcutWidget extends Spine.Module
     for area in areas
       for item in area.content
         for shortcut in item.shortcuts
-          modifier = ''
-          if shortcut.hotkeys
-            modifier += navigationHotkeys
-          if shortcut.key
-            if modifier isnt ''
-              modifier += '+'
-            modifier += shortcut.key
-            if shortcut.callback
-              @log 'debug', 'bind for', modifier
-              $(document).bind('keydown', modifier, (e) ->
-                e.preventDefault()
-                shortcut.callback()
-              )
+          do (shortcut) =>
+            modifier = ''
+            if shortcut.hotkeys
+              modifier += navigationHotkeys
+            if shortcut.key
+              if modifier isnt ''
+                modifier += '+'
+              modifier += shortcut.key
+              if shortcut.callback
+                @log 'debug', 'bind for', modifier
+                $(document).bind('keydown', modifier, (e) ->
+                  e.preventDefault()
+                  shortcut.callback()
+                )
 
     App.Event.bind('global-shortcut', (e) ->
       for area in areas
@@ -127,7 +128,7 @@ App.Config.set(
               hotkeys: true
               description: 'List of shortcuts'
               globalEvent: 'list-of-shortcuts'
-              callback: (e) =>
+              callback: =>
                 if @dialog && @dialog.exists()
                   @dialog.close()
                   @dialog = false
@@ -135,7 +136,7 @@ App.Config.set(
                 @dialog = new App.KeyboardShortcutModal()
             }
             {
-              key: 'x'
+              key: 'w'
               hotkeys: true
               description: 'Close current tab'
               globalEvent: 'close-current-tab'
@@ -397,7 +398,7 @@ App.Config.set(
               globalEvent: 'richtext-h3'
             }
             {
-              key: 'w'
+              key: 'x'
               hotkeys: true,
               description: 'Removes any hyperlink'
               globalEvent: 'richtext-remove-hyperlink'
