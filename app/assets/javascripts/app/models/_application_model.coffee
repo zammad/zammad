@@ -208,7 +208,6 @@ class App.Model extends Spine.Model
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
-    #console.log(attributesNew)
     attributesNew
 
   validate: (params = {}) ->
@@ -313,7 +312,6 @@ class App.Model extends Spine.Model
         (items, options) =>
           if !_.isArray(items)
             items = [items]
-          console.log('refresh', items, options)
           App.Log.debug('Model', "local collection refresh #{@className}", items)
           for key, callback of @SUBSCRIPTION_COLLECTION
             callback(items, 'refresh')

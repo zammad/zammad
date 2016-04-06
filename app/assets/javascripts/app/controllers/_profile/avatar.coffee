@@ -406,7 +406,6 @@ class Camera extends App.ControllerModal
 
   onSubmit: =>
     # send picture to the callback
-    console.log @cache.get(0).toDataURL()
     window.file = @cache.get(0).toDataURL()
     @callback @cache.get(0).toDataURL()
     @close()

@@ -636,7 +636,6 @@ class App.Utils
 
           # changes to complex, whole rerender
           if _.contains(a, b[position])
-            console.log('aaa too complex', a, b[position])
             return false
 
           # insert new item and try next

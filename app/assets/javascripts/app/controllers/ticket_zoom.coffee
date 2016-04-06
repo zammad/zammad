@@ -179,7 +179,6 @@ class App.TicketZoom extends App.Controller
         statusText = xhr.statusText
         status     = xhr.status
         detail     = xhr.responseText
-        #console.log('error', status, statusText)
 
         # ignore if request is aborted
         if statusText is 'abort'
@@ -476,7 +475,6 @@ class App.TicketZoom extends App.Controller
     params         = {}
     params.ticket  = @formParam(ticketForm)
     params.article = @formParam(articleForm)
-    #console.log('markFormDiff', diff, params)
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)

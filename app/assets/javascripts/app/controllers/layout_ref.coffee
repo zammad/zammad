@@ -427,7 +427,6 @@ class ModalForm extends App.ControllerModal
   onSubmit: (e) ->
     e.preventDefault()
     params = App.ControllerForm.params( $(e.target).closest('form') )
-    console.log('params', params)
 
 App.Config.set( 'layout_ref/modal_form', ModalForm, 'Routes' )
 
@@ -545,7 +544,6 @@ class App.ControllerWizard extends App.ControllerContent
   navigate: (e) =>
     target = $(e.currentTarget).attr('data-target')
     targetSlide = @$("[data-slide=#{ target }]")
-    console.log(e, target, targetSlide)
 
     if targetSlide
       @goToSlide targetSlide
@@ -683,13 +681,11 @@ class RichText extends App.ControllerContent
     return
 
     @$('.js-textarea').on('keyup', (e) =>
-      console.log('KU')
       textarea = @$('.js-textarea')
       App.Utils.htmlCleanup(textarea)
     )
 
     @$('.js-textarea').on('paste', (e) =>
-      console.log('paste')
       #console.log('PPP', e, e.originalEvent.clipboardData)
 
       execute = =>

@@ -156,7 +156,6 @@ class _taskManagerSingleton extends App.Controller
 
     # in case an init execute arrives later but is aleady executed, ignore it
     if params.init && @workers[params.key]
-      #console.log('IGNORE LATER INIT', params)
       return
 
     # if we have init task startups, let the controller know this
@@ -179,7 +178,6 @@ class _taskManagerSingleton extends App.Controller
 
     # create new online task if not exists and if not persistent
     if !task && !@workers[params.key] && !params.persistent
-      #console.log 'debug', 'add, create new taskbar in backend'
       task = new App.Taskbar
       task.load(
         key:      params.key
@@ -238,8 +236,7 @@ class _taskManagerSingleton extends App.Controller
     @startController(params)
 
   startController: (params) =>
-
-    #console.log 'debug', 'controller start try...', params
+    @log 'debug', 'controller start try...', params
 
     # create clean params
     params_app             = _.clone(params.params)
@@ -518,7 +515,7 @@ class _taskManagerSingleton extends App.Controller
                   persistent: true
                   init:       true
                 )
-              task_count * 350
+              task_count * 450
               undefined
               'task'
             )
@@ -537,7 +534,7 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          task_count * 350
+          task_count * 450
           undefined
           'task'
         )

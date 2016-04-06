@@ -58,7 +58,6 @@ class App.BusinessHours extends Spine.Controller
     slot = input.attr('data-slot')
     i = input.attr('data-i')
     @options.hours[day].timeframes[slot][i] = event.time.hoursAndMinutes
-    console.log event.time.hoursAndMinutes
 
     @el.toggleClass 'is-invalid', !@validate()
 
