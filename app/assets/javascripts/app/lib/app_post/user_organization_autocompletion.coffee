@@ -1,5 +1,5 @@
 class App.UserOrganizationAutocompletion extends App.Controller
-  className: 'dropdown js-recipientDropdown zIndex-2'
+  className: 'dropdown js-recipientDropdown'
   events:
     'hide.bs.dropdown .js-recipientDropdown': 'hideOrganizationMembers'
     'click .js-organization':                 'showOrganizationMembers'
