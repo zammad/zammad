@@ -5,6 +5,10 @@ class Widget
     return if !electron
     remote = electron.remote
     ipc = electron.ipcRenderer
+
+    App.Event.bind('window-title-set', (arg) ->
+      ipc.send('window-title-set', arg)
+    )
     App.Event.bind('online_notification_counter', (e) ->
       setBadge(e)
     )
