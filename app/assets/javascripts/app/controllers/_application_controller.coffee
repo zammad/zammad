@@ -88,7 +88,9 @@ class App.Controller extends Spine.Controller
     title = name
     if translate
       title = App.i18n.translatePlain(name)
-    document.title = @Config.get('product_name') + ' - ' + title
+    documentTitle = "#{@Config.get('product_name')} - #{title}"
+    document.title = documentTitle
+    App.Event.trigger('window-title-set', documentTitle)
 
   copyToClipboard: (text) ->
     if window.clipboardData # IE
