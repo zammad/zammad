@@ -37,7 +37,7 @@ class App.ColumnSelect extends Spine.Controller
     @values = []
     _.each @options.attribute.options, (option) =>
       if option.selected
-        @values.push option.value
+        @values.push option.value.toString()
 
     @html App.view('generic/column_select')
       attribute: @options.attribute
