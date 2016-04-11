@@ -128,6 +128,7 @@ class ApplicationController < ActionController::Base
       session[:user_agent],
       session[:remote_ip],
       session[:user_id],
+      'session',
     )
 
     # remember if location has changed
