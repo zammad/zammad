@@ -212,6 +212,7 @@ class UserDeviceTest < ActiveSupport::TestCase
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
       '91.115.248.231',
       @agent.id,
+      'session',
     )
     assert_equal(user_device1.id, user_device1_1.id)
     user_device1_2 = UserDevice.add(
@@ -237,6 +238,7 @@ class UserDeviceTest < ActiveSupport::TestCase
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
       '176.198.137.254',
       @agent.id,
+      'session',
     )
     assert_not_equal(user_device1.id, user_device2.id)
 
