@@ -93,6 +93,7 @@ store new device for user if device not already known
       os: browser[:plattform],
       browser: browser[:name],
       location: location,
+      fingerprint: fingerprint,
     )
 
     if user_device
@@ -141,11 +142,10 @@ log user device action
 
 =end
 
-  def self.action(user_device_id, _user_agent, ip, _user_id)
+  def self.action(user_device_id, user_agent, ip, user_id)
     user_device = UserDevice.find(user_device_id)
 
     # update location if needed
-    notify = false
     if user_device.ip != ip
       user_device.ip = ip
       location_details = Service::GeoIp.location(ip)
@@ -155,19 +155,19 @@ log user device action
 
       # notify if country has changed
       if user_device.location != location
-        notify = true
-        user_device.location = location
+        return UserDevice.add(
+          user_agent,
+          ip,
+          user_id,
+          user_device.fingerprint,
+          'session',
+        )
       end
     end
 
     # update attributes
     user_device.updated_at = Time.zone.now # force update, also if no other attribute has changed
     user_device.save
-
-    if notify
-      user_device.notification_send('user_device_new_location')
-    end
-
     user_device
   end
 
