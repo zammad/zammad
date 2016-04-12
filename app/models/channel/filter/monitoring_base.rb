@@ -1,9 +1,6 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Channel::Filter::MonitoringBase
-  # rubocop:disable Style/ClassVars
-  @@integration = 'to_be_defined'
-  # rubocop:enable Style/ClassVars
 
   # according
 
@@ -16,11 +13,11 @@ class Channel::Filter::MonitoringBase
   # https://github.com/NagiosEnterprises/nagioscore/blob/754218e67653929a58938b99ef6b6039b6474fe4/sample-config/template-object/commands.cfg.in#L35
 
   def self.run(_channel, mail)
-
-    return if !Setting.get("#{@@integration}_integration")
-    sender = Setting.get("#{@@integration}_sender")
-    auto_close = Setting.get("#{@@integration}_auto_close")
-    auto_close_state_id = Setting.get("#{@@integration}_auto_close_state_id")
+    integration = integration_name
+    return if !Setting.get("#{integration}_integration")
+    sender = Setting.get("#{integration}_sender")
+    auto_close = Setting.get("#{integration}_auto_close")
+    auto_close_state_id = Setting.get("#{integration}_auto_close_state_id")
     state_recovery_match = 'OK'
 
     return if !mail[:from]
@@ -53,11 +50,11 @@ class Channel::Filter::MonitoringBase
     Ticket.where(state: open_states).each {|ticket|
       next if !ticket.preferences
       next if !ticket.preferences['integration']
-      next if ticket.preferences['integration'] != @@integration
-      next if !ticket.preferences[@@integration]
-      next if !ticket.preferences[@@integration]['host']
-      next if ticket.preferences[@@integration]['host'] != result['host']
-      next if ticket.preferences[@@integration]['service'] != result['service']
+      next if ticket.preferences['integration'] != integration
+      next if !ticket.preferences[integration]
+      next if !ticket.preferences[integration]['host']
+      next if ticket.preferences[integration]['host'] != result['host']
+      next if ticket.preferences[integration]['service'] != result['service']
 
       # found open ticket for service+host
       mail[ 'x-zammad-ticket-id'.to_sym ] = ticket.id
@@ -78,8 +75,8 @@ class Channel::Filter::MonitoringBase
         mail[ 'x-zammad-ticket-preferences'.to_sym ] = {}
       end
       preferences = {}
-      preferences['integration'] = @@integration
-      preferences[@@integration] = result
+      preferences['integration'] = integration
+      preferences[integration] = result
       preferences.each {|key, value|
         mail[ 'x-zammad-ticket-preferences'.to_sym ][key] = value
       }
