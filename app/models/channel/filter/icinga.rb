@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 module Channel::Filter::Icinga
+  # rubocop:disable Style/ClassVars
+  @@integration = 'icinga'
+  # rubocop:enable Style/ClassVars
 
   # according
   # https://github.com/Icinga/icinga2/blob/master/etc/icinga2/scripts/mail-service-notification.sh
@@ -8,13 +11,11 @@ module Channel::Filter::Icinga
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#service-states
 
   def self.run(_channel, mail)
-    return if !Setting.get('ichinga_integration')
 
-    # set config
-    integration = 'ichinga'
-    sender = Setting.get('ichinga_sender')
-    auto_close = Setting.get('ichinga_auto_close')
-    auto_close_state_id = Setting.get('ichinga_auto_close_state_id')
+    return if !Setting.get("#{@@integration}_integration")
+    sender = Setting.get("#{@@integration}_sender")
+    auto_close = Setting.get("#{@@integration}_auto_close")
+    auto_close_state_id = Setting.get("#{@@integration}_auto_close_state_id")
     state_recovery_match = 'OK'
 
     return if !mail[:from]
@@ -22,7 +23,7 @@ module Channel::Filter::Icinga
     sender_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
     return if !sender_user_id
 
-    # check if sender is ichinga
+    # check if sender is monitoring
     return if !mail[:from].match(/#{sender}/i)
 
     # get mail attibutes like host and state
@@ -47,11 +48,11 @@ module Channel::Filter::Icinga
     Ticket.where(state: open_states).each {|ticket|
       next if !ticket.preferences
       next if !ticket.preferences['integration']
-      next if ticket.preferences['integration'] != integration
-      next if !ticket.preferences['ichinga']
-      next if !ticket.preferences['ichinga']['host']
-      next if ticket.preferences['ichinga']['host'] != result['host']
-      next if ticket.preferences['ichinga']['service'] != result['service']
+      next if ticket.preferences['integration'] != @@integration
+      next if !ticket.preferences[@@integration]
+      next if !ticket.preferences[@@integration]['host']
+      next if ticket.preferences[@@integration]['host'] != result['host']
+      next if ticket.preferences[@@integration]['service'] != result['service']
 
       # found open ticket for service+host
       mail[ 'x-zammad-ticket-id'.to_sym ] = ticket.id
@@ -72,8 +73,8 @@ module Channel::Filter::Icinga
         mail[ 'x-zammad-ticket-preferences'.to_sym ] = {}
       end
       preferences = {}
-      preferences['integration'] = integration
-      preferences['ichinga'] = result
+      preferences['integration'] = @@integration
+      preferences[@@integration] = result
       preferences.each {|key, value|
         mail[ 'x-zammad-ticket-preferences'.to_sym ][key] = value
       }

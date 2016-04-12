@@ -5,7 +5,7 @@ class IntegrationIcingaTest < ActiveSupport::TestCase
 
   test 'base tests' do
 
-    Setting.set('ichinga_integration', true)
+    Setting.set('icinga_integration', true)
 
     # not matching sender
     email_raw_string = "To: support@example.com
@@ -37,7 +37,7 @@ Comment: [] =
     assert_equal('new', ticket_p.state.name)
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['integration'])
-    assert_not(ticket_p.preferences['ichinga'])
+    assert_not(ticket_p.preferences['icinga'])
 
     # matching sender - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -69,11 +69,11 @@ Comment: [] =
     assert_equal('new', ticket_1.state.name)
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['integration'])
-    assert_equal('ichinga', ticket_1.preferences['integration'])
-    assert(ticket_1.preferences['ichinga'])
-    assert_equal('host.internal.loc', ticket_1.preferences['ichinga']['host'])
-    assert_equal('CPU Load', ticket_1.preferences['ichinga']['service'])
-    assert_equal('WARNING', ticket_1.preferences['ichinga']['state'])
+    assert_equal('icinga', ticket_1.preferences['integration'])
+    assert(ticket_1.preferences['icinga'])
+    assert_equal('host.internal.loc', ticket_1.preferences['icinga']['host'])
+    assert_equal('CPU Load', ticket_1.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_1.preferences['icinga']['state'])
 
     # matching sender - Disk Usage 123/host.internal.loc
     email_raw_string = "To: support@example.com
@@ -105,11 +105,11 @@ Comment: [] =
     assert_equal('new', ticket_2.state.name)
     assert(ticket_2.preferences)
     assert(ticket_2.preferences['integration'])
-    assert_equal('ichinga', ticket_2.preferences['integration'])
-    assert(ticket_2.preferences['ichinga'])
-    assert_equal('host.internal.loc', ticket_2.preferences['ichinga']['host'])
-    assert_equal('Disk Usage 123', ticket_2.preferences['ichinga']['service'])
-    assert_equal('WARNING', ticket_2.preferences['ichinga']['state'])
+    assert_equal('icinga', ticket_2.preferences['integration'])
+    assert(ticket_2.preferences['icinga'])
+    assert_equal('host.internal.loc', ticket_2.preferences['icinga']['host'])
+    assert_equal('Disk Usage 123', ticket_2.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_2.preferences['icinga']['state'])
     assert_not_equal(ticket_2.id, ticket_1.id)
 
     # matching sender - follow up - CPU Load/host.internal.loc
@@ -142,11 +142,11 @@ Comment: [] =
     assert_equal('new', ticket_1_1.state.name)
     assert(ticket_1_1.preferences)
     assert(ticket_1_1.preferences['integration'])
-    assert_equal('ichinga', ticket_1_1.preferences['integration'])
-    assert(ticket_1_1.preferences['ichinga'])
-    assert_equal('host.internal.loc', ticket_1_1.preferences['ichinga']['host'])
-    assert_equal('CPU Load', ticket_1_1.preferences['ichinga']['service'])
-    assert_equal('WARNING', ticket_1_1.preferences['ichinga']['state'])
+    assert_equal('icinga', ticket_1_1.preferences['integration'])
+    assert(ticket_1_1.preferences['icinga'])
+    assert_equal('host.internal.loc', ticket_1_1.preferences['icinga']['host'])
+    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
     assert_equal(ticket_1.id, ticket_1_1.id)
 
     # matching sender - follow up - recovery - CPU Load/host.internal.loc
@@ -180,13 +180,13 @@ Comment: [] =
     assert_equal('closed', ticket_1_2.state.name)
     assert(ticket_1_2.preferences)
     assert(ticket_1_2.preferences['integration'])
-    assert_equal('ichinga', ticket_1_2.preferences['integration'])
-    assert(ticket_1_2.preferences['ichinga'])
-    assert_equal('host.internal.loc', ticket_1_2.preferences['ichinga']['host'])
-    assert_equal('CPU Load', ticket_1_2.preferences['ichinga']['service'])
-    assert_equal('WARNING', ticket_1_2.preferences['ichinga']['state'])
+    assert_equal('icinga', ticket_1_2.preferences['integration'])
+    assert(ticket_1_2.preferences['icinga'])
+    assert_equal('host.internal.loc', ticket_1_2.preferences['icinga']['host'])
+    assert_equal('CPU Load', ticket_1_2.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_1_2.preferences['icinga']['state'])
 
-    #Setting.set('ichinga_integration', false)
+    #Setting.set('icinga_integration', false)
 
   end
 

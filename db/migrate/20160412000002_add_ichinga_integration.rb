@@ -56,7 +56,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
     )
     Setting.create_if_not_exists(
       title: 'Define postmaster filter.',
-      name: '5000_postmaster_filter_ichinga',
+      name: '5000_postmaster_filter_icinga',
       area: 'Postmaster::PreFilter',
       description: 'Define postmaster filter for manage Icinga (http://www.icinga.org) emails.',
       options: {},
@@ -65,7 +65,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
     )
     Setting.create_if_not_exists(
       title: 'Icinga integration',
-      name: 'ichinga_integration',
+      name: 'icinga_integration',
       area: 'Integration::Icinga',
       description: 'Define if Icinga (http://www.icinga.org) is enabled or not.',
       options: {
@@ -73,7 +73,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
           {
             display: '',
             null: true,
-            name: 'ichinga_integration',
+            name: 'icinga_integration',
             tag: 'boolean',
             options: {
               true  => 'yes',
@@ -88,7 +88,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
     )
     Setting.create_if_not_exists(
       title: 'Sender',
-      name: 'ichinga_sender',
+      name: 'icinga_sender',
       area: 'Integration::Icinga',
       description: 'Define the sender email address of Icinga emails.',
       options: {
@@ -96,7 +96,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
           {
             display: '',
             null: false,
-            name: 'ichinga_sender',
+            name: 'icinga_sender',
             tag: 'input',
           },
         ],
@@ -107,7 +107,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
     )
     Setting.create_if_not_exists(
       title: 'Auto close',
-      name: 'ichinga_auto_close',
+      name: 'icinga_auto_close',
       area: 'Integration::Icinga',
       description: 'Define if tickets should be closed if service is recovered.',
       options: {
@@ -115,7 +115,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
           {
             display: '',
             null: true,
-            name: 'ichinga_auto_close',
+            name: 'icinga_auto_close',
             tag: 'boolean',
             options: {
               true  => 'yes',
@@ -130,7 +130,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
     )
     Setting.create_if_not_exists(
       title: 'Auto close state',
-      name: 'ichinga_auto_close_state_id',
+      name: 'icinga_auto_close_state_id',
       area: 'Integration::Icinga',
       description: 'Define the ticket state of auto closed tickets.',
       options: {
@@ -138,7 +138,7 @@ class AddIchingaIntegration < ActiveRecord::Migration
           {
             display: '',
             null: false,
-            name: 'ichinga_auto_close_state_id',
+            name: 'icinga_auto_close_state_id',
             tag: 'select',
             relation: 'TicketState',
           },
