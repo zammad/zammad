@@ -2,6 +2,11 @@
 
 module Channel::Filter::Icinga
 
+  # according
+  # https://github.com/Icinga/icinga2/blob/master/etc/icinga2/scripts/mail-service-notification.sh
+  # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#host-states
+  # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#service-states
+
   def self.run(_channel, mail)
     return if !Setting.get('ichinga_integration')
 
