@@ -398,6 +398,9 @@ retrns
       if ticket
         set_attributes_by_x_headers(ticket, 'ticket', mail, 'followup')
 
+        # save changes set by x-zammad-ticket-followup-* headers
+        ticket.save if ticket.changed?
+
         state      = Ticket::State.find(ticket.state_id)
         state_type = Ticket::StateType.find(state.state_type_id)
 
