@@ -4,20 +4,24 @@ class App.Event
   @init: ->
     _instance = new _eventSingleton
 
-  @bind: ( events, callback, level ) ->
+  @bind: (events, callback, level) ->
     if _instance == undefined
       _instance ?= new _eventSingleton
-    _instance.bind( events, callback, level )
+    _instance.bind(events, callback, level, false)
 
-  @unbind: ( events, callback, level ) ->
-    if _instance == undefined
-      _instance ?= new _eventSingleton
-    _instance.unbind( events, callback, level )
+  one: (events, callback, level) ->
+    @bind(events, callback, level, true)
+    _instance.bind(events, callback, level, true)
 
-  @trigger: ( events, data ) ->
+  @unbind: (events, callback, level) ->
     if _instance == undefined
       _instance ?= new _eventSingleton
-    _instance.trigger( events, data )
+    _instance.unbind(events, callback, level)
+
+  @trigger: (events, data) ->
+    if _instance == undefined
+      _instance ?= new _eventSingleton
+    _instance.trigger( events, data)
 
   @unbindLevel: (level) ->
     if _instance == undefined
@@ -38,10 +42,10 @@ class _eventSingleton extends Spine.Module
   unbindLevel: (level) ->
     return if !@eventCurrent[level]
     for item in @eventCurrent[level]
-      @unbind( item.event, item.callback, level )
+      @unbind(item.event, item.callback, level)
     delete @eventCurrent[level]
 
-  bind: ( events, callback, level ) ->
+  bind: (events, callback, level, one = false) ->
 
     if !level
       level = '_all'
@@ -55,15 +59,20 @@ class _eventSingleton extends Spine.Module
 
       # remember all events
       @eventCurrent[ level ].push {
-        event:    event,
-        callback: callback,
+        event:    event
+        callback: callback
+        one:      false
       }
 
       # bind
-      @log 'debug', 'bind', event, callback
-      Spine.bind( event, callback )
+      if one
+        @log 'debug', 'one', event, callback
+        Spine.one(event, callback)
+      else
+        @log 'debug', 'bind', event, callback
+        Spine.bind(event, callback)
 
-  unbind: ( events, callback, level ) ->
+  unbind: (events, callback, level) ->
 
     if !level
       level = '_all'
@@ -82,9 +91,9 @@ class _eventSingleton extends Spine.Module
           return item if item.event isnt event
       )
       @log 'debug', 'unbind', event, callback
-      Spine.unbind( event, callback )
+      Spine.unbind(event, callback)
 
-  trigger: ( events, data ) ->
+  trigger: (events, data) ->
     eventList = events.split(' ')
     for event in eventList
       @log 'debug', 'trigger', event, data

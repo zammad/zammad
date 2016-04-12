@@ -43,7 +43,9 @@ class App.Run extends App.Controller
     App.Event.trigger(event + ':init')
     widgets = App.Config.get(config)
     if widgets
-      for key, widget of widgets
+      sortedKeys = Object.keys(widgets).sort()
+      for key in sortedKeys
+        widget = widgets[key]
         new widget(
           el:  el
           key: key

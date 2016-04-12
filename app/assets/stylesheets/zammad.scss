@@ -3730,6 +3730,7 @@ footer {
       padding-left: 0;
       padding-right: 0;
       overflow-y: auto;
+      margin-bottom: 10px;
     }
 
     &.is-overflowing .popover-notificationsHeader {
@@ -5879,7 +5880,7 @@ footer {
   .recipientList-controls:hover {
     @extend .u-clickable;
     padding: 0 10px !important;
-    background: hsl(206,7%,28%) !important;
+    background: hsl(206,7%,28%);
     
     & + li {
       box-shadow: 0 1px rgba(255,255,255,.13) inset;
@@ -5938,7 +5939,7 @@ footer {
 }
 
 .checkbox.form-group .controls label {
-  padding: 3px 0 3px 20px;
+  padding: 2px 0;
   font: inherit;
   font-size: 13px;
   margin-bottom: 0;
@@ -5946,11 +5947,6 @@ footer {
   text-transform: inherit;
   letter-spacing: 0;
   @extend .u-clickable;
-}
-
-.checkbox.form-group input[type=checkbox] {
-  margin-top: 7px;
-  vertical-align: bottom;
 }
 
 .userSearch-label {

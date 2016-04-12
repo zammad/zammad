@@ -2,12 +2,12 @@
 
 <p>Hi <%= d 'user.firstname' %>,</p>
 <br>
-<p>It looks like you signed into your <%= c 'product_name' %> account using a new device on "<%= d 'user_device.created_at' %>":</p>
+<p>It looks like you signed into your account <b>using a new device</b> on "<%= d 'user_device.created_at' %>":</p>
 <br>
 <p>
 Your device: <%= d 'user_device.name' %><br>
 Your location (relative): <%= d 'user_device.location' %><br>
-Your IP: <%= d 'user_device.ip' %><br
+Your IP: <%= d 'user_device.ip' %><br>
 </p>
 <br>
 <p>Your device has been added to your list of known devices, which you can view here:</p>

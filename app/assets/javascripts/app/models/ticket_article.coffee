@@ -34,12 +34,14 @@ class App.TicketArticle extends App.Model
     '???'
 
   iconActivity: (user) ->
+    return if !user
     ticket = App.Ticket.find(@ticket_id)
     if ticket.owner_id == user.id
       return 'important'
     ''
 
   activityMessage: (item) ->
+    return if !item
     if item.type is 'create'
       return App.i18n.translateContent('%s created Article for |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'

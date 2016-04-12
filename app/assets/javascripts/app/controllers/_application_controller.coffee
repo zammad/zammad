@@ -88,7 +88,9 @@ class App.Controller extends Spine.Controller
     title = name
     if translate
       title = App.i18n.translatePlain(name)
-    document.title = @Config.get('product_name') + ' - ' + title
+    documentTitle = "#{@Config.get('product_name')} - #{title}"
+    document.title = documentTitle
+    App.Event.trigger('window-title-set', documentTitle)
 
   copyToClipboard: (text) ->
     if window.clipboardData # IE
@@ -487,24 +489,27 @@ class App.Controller extends Spine.Controller
 
   prepareForObjectList: (items) ->
     for item in items
-
-      item.link  = ''
-      item.title = '???'
-
-      # convert backend name space to local name space
-      item.object = item.object.replace('::', '')
-
-      # lookup real data
-      if App[item.object] && App[item.object].exists(item.o_id)
-        object            = App[item.object].find(item.o_id)
-        item.objectNative = object
-        item.link         = object.uiUrl()
-        item.title        = object.displayName()
-        item.object_name  = object.objectDisplayName()
-        item.cssIcon      = object.iconActivity(@Session.get())
-
-      item.created_by = App.User.find(item.created_by_id)
+      item = @prepareForObjectListItem(item)
     items
+
+  prepareForObjectListItem: (item) ->
+    item.link  = ''
+    item.title = '???'
+
+    # convert backend name space to local name space
+    item.object = item.object.replace('::', '')
+
+    # lookup real data
+    if App[item.object] && App[item.object].exists(item.o_id)
+      object            = App[item.object].find(item.o_id)
+      item.objectNative = object
+      item.link         = object.uiUrl()
+      item.title        = object.displayName()
+      item.object_name  = object.objectDisplayName()
+      item.cssIcon      = object.iconActivity(@Session.get())
+
+    item.created_by = App.User.find(item.created_by_id)
+    item
 
   # central method, is getting called on every ticket form change
   ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>
@@ -551,22 +556,16 @@ class App.Controller extends Spine.Controller
     @clearDelay(@initLoadingDoneDelay)
 
   renderScreenError: (data) ->
+    App.TaskManager.touch(@task_key)
     @html App.view('generic/error/generic')(data)
 
   renderScreenNotFound: (data) ->
+    App.TaskManager.touch(@task_key)
     @html App.view('generic/error/not_found')(data)
 
   renderScreenUnauthorized: (data) ->
+    App.TaskManager.touch(@task_key)
     @html App.view('generic/error/unauthorized')(data)
-
-  metaTaskUpdate: ->
-    delay = App.TaskManager.renderDelay()
-    return if !delay
-    App.Delay.set(
-      -> App.Event.trigger 'task:render'
-      delay
-      'meta-task-update'
-    )
 
   locationVerify: (e) =>
     newLocation = $(e.currentTarget).attr 'href'
@@ -587,7 +586,6 @@ class App.Controller extends Spine.Controller
     newLocation = newLocation.replace(/#/, '')
     @log 'debug', "execute controller again for '#{newLocation}' because of same hash"
     Spine.Route.matchRoutes(newLocation)
-    @metaTaskUpdate()
 
   logoUrl: ->
     "#{@Config.get('image_path')}/#{@Config.get('product_logo')}"
@@ -812,7 +810,7 @@ class App.UpdateTastbar extends App.Controller
   update: (genericObject) =>
 
     # update taskbar with new meta data
-    @metaTaskUpdate()
+    App.TaskManager.touch(@task_key)
 
 class App.ControllerWidgetPermanent extends App.Controller
   constructor: (params) ->

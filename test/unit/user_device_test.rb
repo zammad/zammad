@@ -197,4 +197,51 @@ class UserDeviceTest < ActiveSupport::TestCase
 
   end
 
+  test 'ddd - api test' do
+
+    # signin with fingerprint A from country A via session -> new device #1
+    user_device1 = UserDevice.add(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      '91.115.248.231',
+      @agent.id,
+      'fingerprint1234',
+      'session',
+    )
+    user_device1_1 = UserDevice.action(
+      user_device1.id,
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      '91.115.248.231',
+      @agent.id,
+      'session',
+    )
+    assert_equal(user_device1.id, user_device1_1.id)
+    user_device1_2 = UserDevice.add(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      '91.115.248.231',
+      @agent.id,
+      'fingerprint1234',
+      'session',
+    )
+    assert_equal(user_device1.id, user_device1_2.id)
+    user_device1_3 = UserDevice.add(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      '91.115.248.231',
+      @agent.id,
+      'fingerprintABC',
+      'session',
+    )
+    assert_not_equal(user_device1.id, user_device1_3.id)
+
+    # log with fingerprint A from country B via session -> new device #2
+    user_device2 = UserDevice.action(
+      user_device1.id,
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      '176.198.137.254',
+      @agent.id,
+      'session',
+    )
+    assert_not_equal(user_device1.id, user_device2.id)
+
+  end
+
 end

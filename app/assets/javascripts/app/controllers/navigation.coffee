@@ -22,8 +22,8 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @renderPersonal()
 
     # update selected item
-    @bind 'navupdate', =>
-      @update(arguments[0])
+    @bind 'navupdate', (params) =>
+      @update(params)
 
     # rebuild nav bar with given user data
     @bind 'auth', (user) =>
@@ -86,18 +86,10 @@ class App.Navigation extends App.ControllerWidgetPermanent
       open_tab[href] = true
     )
 
-    # get active tabs to reactivate on rerender
-    active_tab = {}
-    @$('.is-active').each( (i,d) ->
-      href = $(d).attr('href')
-      active_tab[href] = true
-    )
-
     # render menu
     @$('.js-menu').html App.view('navigation/menu')(
       items:      items
       open_tab:   open_tab
-      active_tab: active_tab
     )
 
     # bind on switch changes and execute it on controller
@@ -121,17 +113,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
       open_tab[href] = true
     )
 
-    # get active tabs to reactivate on rerender
-    active_tab = {}
-    @$('.active').children('a').each( (i,d) ->
-      href = $(d).attr('href')
-      active_tab[href] = true
-    )
-
     @$('.navbar-items-personal').html App.view('navigation/personal')(
-      items:      items
-      open_tab:   open_tab
-      active_tab: active_tab
+      items:    items
+      open_tab: open_tab
     )
 
     # only start avatar widget on existing session
@@ -428,8 +412,15 @@ class App.Navigation extends App.ControllerWidgetPermanent
       if newlist[ item['prio'] ]
         @addPrioCount newlist, item
 
-  update: (url) =>
-    @$('.is-active').removeClass('is-active')
+  update: (params) =>
+    url = params
+    if _.isObject(params)
+      url = params.url
+      type = params.type
+    if type is 'menu'
+      @$('.js-menu .is-active').removeClass('is-active')
+    else
+      @$('.is-active').removeClass('is-active')
     return if !url || url is '#'
     @$("[href=\"#{url}\"]").addClass('is-active')
 

@@ -297,7 +297,8 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 200
     result = UserAgent.request(
-      'ftp://root.cern.ch/pub/README-root-build.txt',
+      #'ftp://root.cern.ch/pub/README-root-build.txt',
+      'ftp://ftp.gwdg.de/pub/rfc/rfc-index.txt',
     )
     assert(result)
     assert_equal(true, result.success?)
@@ -307,7 +308,8 @@ class UserAgentTest < ActiveSupport::TestCase
 
     # ftp / 401
     result = UserAgent.request(
-      'ftp://root.cern.ch/pub/not_existing.msg',
+      #'ftp://root.cern.ch/pub/not_existing.msg',
+      'ftp://ftp.gwdg.de/pub/rfc/not_existing.txt',
     )
     assert(result)
     assert_equal(false, result.success?)

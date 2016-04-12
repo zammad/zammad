@@ -123,12 +123,17 @@ class ApplicationController < ActionController::Base
     return if session[:user_device_update_at] && session[:user_device_update_at] > diff
     session[:user_device_update_at] = Time.zone.now
 
-    UserDevice.action(
+    user_device = UserDevice.action(
       session[:user_device_id],
       session[:user_agent],
       session[:remote_ip],
       session[:user_id],
+      'session',
     )
+
+    # remember if location has changed
+    return if !user_device
+    session[:user_device_id] = user_device.id
   end
 
   def user_device_log(user, type)
@@ -142,7 +147,7 @@ class ApplicationController < ActionController::Base
       return false
     end
 
-    # add defice if needed
+    # add device if needed
     user_device = UserDevice.add(
       request.env['HTTP_USER_AGENT'],
       request.remote_ip,

@@ -10,7 +10,7 @@ class Index extends App.ControllerContent
 
     # remove local session
     @Session.init()
-    App.Event.trigger( 'ui:rerender' )
+    App.Event.trigger('ui:rerender')
 
     # redirect to login
     redirect = =>

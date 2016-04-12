@@ -75,7 +75,7 @@ class KeyboardShortcutsTest < TestCase
     )
 
     # close again
-    shortcut(key: 'x')
+    shortcut(key: 'w')
 
     watch_for_disappear(
       css:     '.active.content',
@@ -94,7 +94,7 @@ class KeyboardShortcutsTest < TestCase
     sleep 5
 
     # close again
-    shortcut(key: 'x')
+    shortcut(key: 'w')
     watch_for_disappear(
       css:     '.active.content',
       value:   ticket1[:number],

@@ -6,7 +6,6 @@ class Widget extends App.Controller
     App.Event.bind(
       'session:maintenance'
       (data) =>
-        console.log('session:maintenance', data)
         @showMessage(data)
       'maintenance'
     )

@@ -74,7 +74,7 @@ class AgentTicketOverviewLevel0Test < TestCase
     click(
       css: '.active .bulkAction .js-submit',
     )
-    sleep 4
+    sleep 6
 
     exists_not(
       css: '.active table tr td input[value="' + ticket1[:id] + '"]',

@@ -51,7 +51,7 @@ class App.TicketZoom extends App.Controller
       update = =>
         @fetch(@ticket_id, false)
       if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-        @delay( update, 1200, 'ticket-zoom-' + @ticket_id )
+        @delay(update, 1200, "ticket-zoom-#{@ticket_id}")
     )
 
     # rerender view, e. g. on langauge change
@@ -88,7 +88,7 @@ class App.TicketZoom extends App.Controller
 
   show: (params) =>
 
-    @navupdate '#'
+    @navupdate(url: '#', type: 'menu')
 
     # set all notifications to seen
     App.OnlineNotification.seen('Ticket', @ticket_id)
@@ -100,7 +100,7 @@ class App.TicketZoom extends App.Controller
     @activeState = true
 
     # start autosave
-    @autosaveStart()
+    @delay(@autosaveStart, 800, "ticket-zoom-auto-save-#{@ticket_id}")
 
     # if ticket is shown the first time
     if !@shown
@@ -122,6 +122,7 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
     # stop autosave
+    @clearDelay("ticket-zoom-auto-save-#{@ticket_id}")
     @autosaveStop()
 
   changed: =>
@@ -178,7 +179,6 @@ class App.TicketZoom extends App.Controller
         statusText = xhr.statusText
         status     = xhr.status
         detail     = xhr.responseText
-        #console.log('error', status, statusText)
 
         # ignore if request is aborted
         if statusText is 'abort'
@@ -209,9 +209,6 @@ class App.TicketZoom extends App.Controller
             detail:     detail
             objectName: 'Ticket'
           )
-
-        # update taskbar with new meta data
-        @metaTaskUpdate()
     )
 
 
@@ -283,7 +280,7 @@ class App.TicketZoom extends App.Controller
   render: =>
 
     # update taskbar with new meta data
-    @metaTaskUpdate()
+    App.TaskManager.touch(@task_key)
 
     @formEnable( @$('.submit') )
 
@@ -478,7 +475,6 @@ class App.TicketZoom extends App.Controller
     params         = {}
     params.ticket  = @formParam(ticketForm)
     params.article = @formParam(articleForm)
-    #console.log('markFormDiff', diff, params)
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)
@@ -687,11 +683,11 @@ class App.TicketZoom extends App.Controller
       processData: false
     )
 
-    # reset edit ticket / reset new article
-    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id })
-
     # hide reset button
     @$('.js-reset').addClass('hide')
+
+    # reset edit ticket / reset new article
+    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id })
 
     # remove change flag on tab
     @$('.tabsSidebar-tab[data-tab="ticket"]').removeClass('is-changed')

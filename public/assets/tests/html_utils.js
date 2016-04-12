@@ -1400,4 +1400,86 @@ test("check formatTime format", function() {
   equal(verify, result, string)
 });
 
+// check diffPosition
+test("check diffPosition format", function() {
+
+  var a = [1,2,3,4]
+  var b = [1,2,3,4,5]
+  var result = [
+    {
+      position: 4,
+      id: 5,
+    },
+  ]
+  var verify = App.Utils.diffPositionAdd(a, b)
+  deepEqual(verify, result)
+
+  a = [2,3,4]
+  b = [1,2,3,4]
+  result = [
+    {
+      position: 0,
+      id: 1,
+    },
+  ]
+  verify = App.Utils.diffPositionAdd(a, b)
+  deepEqual(verify, result)
+
+  a = [2,3,4]
+  b = [1,2,3,4,5]
+  result = [
+    {
+      position: 0,
+      id: 1,
+    },
+    {
+      position: 4,
+      id: 5,
+    },
+  ]
+  verify = App.Utils.diffPositionAdd(a, b)
+  deepEqual(verify, result)
+
+  a = [2,3,4]
+  b = [1,99,12,2,3,4,5]
+  result = [
+    {
+      position: 0,
+      id: 1,
+    },
+    {
+      position: 1,
+      id: 99,
+    },
+    {
+      position: 2,
+      id: 12,
+    },
+    {
+      position: 6,
+      id: 5,
+    },
+  ]
+  verify = App.Utils.diffPositionAdd(a, b)
+  deepEqual(verify, result)
+
+  a = [4,3,1]
+  b = [1,2,3,4,5]
+  result = false
+  verify = App.Utils.diffPositionAdd(a, b)
+  deepEqual(verify, result)
+
+  a = ['Ticket-347', 'TicketCreateScreen-2217']
+  b = ['Ticket-347', 'TicketCreateScreen-2217', 'TicketCreateScreen-71517']
+  result = [
+    {
+      position: 2,
+      id: 'TicketCreateScreen-71517',
+    },
+  ]
+  verify = App.Utils.diffPositionAdd(a, b)
+  deepEqual(verify, result)
+
+});
+
 }

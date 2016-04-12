@@ -67,6 +67,7 @@ class App.Ticket extends App.Model
     "task-state-#{ @getState() }-color"
 
   iconActivity: (user) ->
+    return if !user
     if @owner_id == user.id
       return 'important'
     ''
@@ -79,6 +80,7 @@ class App.Ticket extends App.Model
     iconClass:  @getState()
 
   activityMessage: (item) ->
+    return if !item
     if item.type is 'create'
       return App.i18n.translateContent('%s created Ticket |%s|', item.created_by.displayName(), item.title)
     else if item.type is 'update'

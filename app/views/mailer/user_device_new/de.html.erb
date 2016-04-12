@@ -2,12 +2,12 @@
 
 <p>Hallo <%= d 'user.firstname' %>,</p>
 <br>
-<p>es sieht aus, als ob Du Dich bei <%= c 'product_name' %> mit einem neuen Gerät um "<%= d 'user_device.created_at' %>" angemeldet hast:</p>
+<p>es sieht aus, als ob Du Dich mit <b>einem neuen Gerät</b> um "<%= d 'user_device.created_at' %>" angemeldet hast:</p>
 <br>
 <p>
 Dein Gerät: <%= d 'user_device.name' %><br>
 Deine Lokation (relativ): <%= d 'user_device.location' %><br>
-Deine IP: <%= d 'user_device.ip' %><br
+Deine IP: <%= d 'user_device.ip' %><br>
 </p>
 <br>
 <p>Das Gerät wurde in die Liste der bekannten Geräte hinzugefügt, diese Liste kannst Du hier einsehen:</p>

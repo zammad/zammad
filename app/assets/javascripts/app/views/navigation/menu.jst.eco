@@ -16,12 +16,12 @@
         <% if item.navheader: %>
           <li class="dropdown-header"><%- @T( item.navheader ) %></li>
         <% end %>
-        <li<%- ' class="is-active"' if @active_tab[item.target] %>><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %></a></li>
+        <li><a href="<%= item.target %>"><%- @T( item.name ) %><% if item['count'] isnt undefined: %><span class="badge badge--text count"><%= item['count'] %></span><% end %></a></li>
       <% end %>
     </ul>
   </div>
   <% else: %>
-  <a class="menu-item js-<%- item.class %>MenuItem<%- ' is-active' if @active_tab[item.target] %>" href="<%= item.target %>" data-key="<%- item.key %>">
+  <a class="menu-item js-<%- item.class %>MenuItem" href="<%= item.target %>" data-key="<%- item.key %>">
     <%- @Icon(item.class, 'menu-item-icon') %>
     <span class="menu-item-name">
       <%- @T(item.name) %>

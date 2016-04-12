@@ -1,7 +1,7 @@
 class App.TicketZoomAttributeBar extends App.Controller
   elements:
     '.js-submitDropdown': 'buttonDropdown'
-    '.js-secondaryActionButtonLabel': 'secondaryActionButton'
+    '.js-reset': 'resetButton'
 
   events:
     'mousedown .js-openDropdownMacro':    'toggleDropdownMacro'
@@ -16,7 +16,7 @@ class App.TicketZoomAttributeBar extends App.Controller
 
     @secondaryAction = 'stayOnTab'
 
-    @subscribeId = App.Macro.subscribe(@render)
+    @subscribeId = App.Macro.subscribe(@checkMacroChanges)
     @render()
 
     # rerender, e. g. on language change
@@ -28,15 +28,31 @@ class App.TicketZoomAttributeBar extends App.Controller
     App.Macro.unsubscribe(@subscribeId)
 
   render: =>
+
+    # remember current reset state
+    resetButtonShown = false
+    if @resetButton.get(0) && !@resetButton.hasClass('hide')
+      resetButtonShown = true
+
     macros = App.Macro.all()
+    @macroLastUpdated = App.Macro.lastUpdatedAt()
+
     if _.isEmpty(macros) || !@isRole('Agent')
       macroDisabled = true
-    @html App.view('ticket_zoom/attribute_bar')(
+
+    localeEl = $(App.view('ticket_zoom/attribute_bar')(
       macros: macros
       macroDisabled: macroDisabled
       overview_id: @overview_id
-    )
-    @setSecondaryAction()
+      resetButtonShown: resetButtonShown
+    ))
+    @setSecondaryAction(@secondaryAction, localeEl)
+    @html localeEl
+
+  checkMacroChanges: =>
+    macroLastUpdated = App.Macro.lastUpdatedAt()
+    return if macroLastUpdated is @macroLastUpdated
+    @render()
 
   toggleDropdownMacro: =>
     if @buttonDropdown.hasClass 'is-open'
@@ -65,12 +81,12 @@ class App.TicketZoomAttributeBar extends App.Controller
 
   chooseSecondaryAction: (e) =>
     type = $(e.currentTarget).find('.js-secondaryActionLabel').data('type')
-    @setSecondaryAction(type)
+    @setSecondaryAction(type, @el)
 
-  setSecondaryAction: (type = @secondaryAction) =>
-    element = @$(".js-secondaryActionLabel[data-type=#{type}]")
+  setSecondaryAction: (type, localEl) ->
+    element = localEl.find(".js-secondaryActionLabel[data-type=#{type}]")
     text = element.text()
-    @$('.js-secondaryAction .js-selectedIcon.is-selected').removeClass('is-selected')
+    localEl.find('.js-secondaryAction .js-selectedIcon.is-selected').removeClass('is-selected')
     element.closest('.js-secondaryAction').find('.js-selectedIcon').addClass('is-selected')
-    @secondaryActionButton.text(text)
-    @secondaryActionButton.data('type', type)
+    localEl.find('.js-secondaryActionButtonLabel').text(text)
+    localEl.find('.js-secondaryActionButtonLabel').data('type', type)

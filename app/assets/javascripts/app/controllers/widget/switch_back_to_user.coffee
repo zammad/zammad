@@ -25,7 +25,6 @@ class Widget extends App.ControllerWidgetOnDemand
 
     # show switch back widget
     @html App.view('widget/switch_back_to_user')()
-    console.log('@el', @element())
     @element().on('click', '.js-close', (e) =>
       @switchBack(e)
     )

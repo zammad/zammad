@@ -31,16 +31,28 @@ class App.KeyboardShortcutWidget extends Spine.Module
     for area in areas
       for item in area.content
         for shortcut in item.shortcuts
-          modifier = ''
-          if shortcut.hotkeys
-            modifier += navigationHotkeys
-          if shortcut.key
-            if modifier isnt ''
-              modifier += '+'
-            modifier += shortcut.key
-            if shortcut.callback
-              @log 'debug', 'bind for', modifier
-              $(document).bind('keydown', modifier, shortcut.callback)
+          do (shortcut) =>
+            modifier = ''
+            if shortcut.hotkeys
+              modifier += navigationHotkeys
+            if shortcut.key
+              if modifier isnt ''
+                modifier += '+'
+              modifier += shortcut.key
+              if shortcut.callback
+                @log 'debug', 'bind for', modifier
+                $(document).bind('keydown', modifier, (e) ->
+                  e.preventDefault()
+                  shortcut.callback()
+                )
+
+    App.Event.bind('global-shortcut', (e) ->
+      for area in areas
+        for item in area.content
+          for shortcut in item.shortcuts
+            if shortcut.globalEvent is e
+              shortcut.callback()
+    )
 
 App.Config.set('keyboard_shortcuts', App.KeyboardShortcutWidget, 'Widgets')
 App.Config.set(
@@ -57,8 +69,8 @@ App.Config.set(
               key: 'd'
               hotkeys: true
               description: 'Dashboard'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'dashboard'
+              callback: ->
                 $('#global-search').blur()
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#dashboard'
@@ -67,8 +79,8 @@ App.Config.set(
               key: 'o'
               hotkeys: true
               description: 'Overviews'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'overview'
+              callback: ->
                 $('#global-search').blur()
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/view'
@@ -77,8 +89,8 @@ App.Config.set(
               key: 's'
               hotkeys: true
               description: 'Search'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'search'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 $('#global-search').focus()
             }
@@ -86,8 +98,8 @@ App.Config.set(
               key: 'a'
               hotkeys: true
               description: 'Notifications'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'notification'
+              callback: ->
                 $('#global-search').blur()
                 App.Event.trigger('keyboard_shortcuts_close')
                 $('#navigation .js-toggleNotifications').click()
@@ -96,8 +108,8 @@ App.Config.set(
               key: 'n'
               hotkeys: true
               description: 'New Ticket'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'new-ticket'
+              callback: ->
                 $('#global-search').blur()
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#ticket/create'
@@ -106,8 +118,8 @@ App.Config.set(
               key: 'e'
               hotkeys: true
               description: 'Logout'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'logout'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 window.location.hash = '#logout'
             }
@@ -115,8 +127,8 @@ App.Config.set(
               key: 'h'
               hotkeys: true
               description: 'List of shortcuts'
-              callback: (e) =>
-                e.preventDefault()
+              globalEvent: 'list-of-shortcuts'
+              callback: =>
                 if @dialog && @dialog.exists()
                   @dialog.close()
                   @dialog = false
@@ -124,11 +136,11 @@ App.Config.set(
                 @dialog = new App.KeyboardShortcutModal()
             }
             {
-              key: 'x'
+              key: 'w'
               hotkeys: true
               description: 'Close current tab'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'close-current-tab'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 $('#navigation .tasks .is-active .js-close').click()
             }
@@ -136,8 +148,8 @@ App.Config.set(
               key: 'tab'
               hotkeys: true
               description: 'Next in tab'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'next-in-tab'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 scollIfNeeded = (element) ->
                   return if !element
@@ -159,8 +171,8 @@ App.Config.set(
               key: 'shift+tab'
               hotkeys: true
               description: 'Previous tab'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'previous-in-tab'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 scollIfNeeded = (element) ->
                   return if !element
@@ -182,8 +194,8 @@ App.Config.set(
               key: 'return'
               hotkeys: true
               description: 'Confirm/submit dialog'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'submit'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
 
                 # check of primary modal exists
@@ -242,6 +254,7 @@ App.Config.set(
               key: 't'
               hotkeys: true
               description: 'Enable/disable inline translations'
+              globalEvent: 'translation-mode'
             }
           ]
         }
@@ -258,8 +271,8 @@ App.Config.set(
               key: 'm'
               hotkeys: true
               description: 'Open note box'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'article-note-open'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 $('.active.content .editControls .js-articleTypes [data-value="note"]').click()
                 $('.active.content .article-new .articleNewEdit-body').first().focus()
@@ -268,8 +281,8 @@ App.Config.set(
               key: 'g'
               hotkeys: true
               description: 'Reply to last article'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'article-reply'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 lastArticleWithReply = $('.active.content .ticket-article .icon-reply').last()
                 lastArticleWithReplyAll = lastArticleWithReply.parent().find('.icon-reply-all')
@@ -282,8 +295,8 @@ App.Config.set(
               key: 'j'
               hotkeys: true
               description: 'Set article to internal/public'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'article-internal-public'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 $('.active.content .editControls .js-selectInternalPublic').click()
             }
@@ -291,16 +304,16 @@ App.Config.set(
             #  key: 'm'
             #  hotkeys: true
             #  description: 'Open macro selection'
-            #  callback: (e) ->
-            #    e.preventDefault()
+            #  globalEvent: 'macro-open'
+            #  callback: ->
             #    window.location.hash = '#ticket/create'
             #}
             {
               key: 'c'
               hotkeys: true
               description: 'Update as closed'
-              callback: (e) ->
-                e.preventDefault()
+              globalEvent: 'task-update-close'
+              callback: ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 return if !$('.active.content .edit').get(0)
                 $('.active.content .edit [name="state_id"]').val(4)
@@ -322,61 +335,73 @@ App.Config.set(
               key: 'u'
               hotkeys: true
               description: 'Format as _underlined_'
+              globalEvent: 'richtext-underline'
             }
             {
               key: 'b'
               hotkeys: true
               description: 'Format as |bold|'
+              globalEvent: 'richtext-bold'
             }
             {
               key: 'i'
               hotkeys: true
               description: 'Format as ||italic||'
+              globalEvent: 'richtext-italic'
             }
             {
               key: 'v'
               hotkeys: true
               description: 'Format as //strikethrough//'
+              globalEvent: 'richtext-strikethrough'
             }
             {
               key: 'f'
               hotkeys: true
               description: 'Removes the formatting'
+              globalEvent: 'richtext-remove-formating'
             }
             {
               key: 'z'
               hotkeys: true,
               description: 'Inserts a horizontal rule'
+              globalEvent: 'richtext-hr'
             }
             {
               key: 'l'
               hotkeys: true,
               description: 'Format as unordered list'
+              globalEvent: 'richtext-ul'
             }
             {
               key: 'k'
               hotkeys: true,
               description: 'Format as ordered list'
+              globalEvent: 'richtext-ol'
             }
             {
               key: '1'
               hotkeys: true,
               description: 'Format as h1 heading'
+              globalEvent: 'richtext-h1'
             }
             {
               key: '2'
               hotkeys: true,
               description: 'Format as h2 heading'
+              globalEvent: 'richtext-h2'
             }
             {
               key: '3'
               hotkeys: true,
               description: 'Format as h3 heading'
+              globalEvent: 'richtext-h3'
             }
             {
-              key: 'w'
+              key: 'x'
               hotkeys: true,
               description: 'Removes any hyperlink'
+              globalEvent: 'richtext-remove-hyperlink'
             }
           ]
         }

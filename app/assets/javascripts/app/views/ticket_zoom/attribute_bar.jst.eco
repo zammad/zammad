@@ -1,4 +1,4 @@
-<div class="buttonDropdown btn js-reset hide"><%- @T('Discard your unsaved changes.') %></div>
+<div class="buttonDropdown btn js-reset <% if !@resetButtonShown: %>hide<% end %>"><%- @T('Discard your unsaved changes.') %></div>
 <div class="buttonDropdown dropdown dropdown--actions dropup">
   <div class="btn btn--text btn--icon--last" data-toggle="dropdown">
     <span class="js-secondaryActionButtonLabel"></span> <%- @Icon('arrow-up') %>

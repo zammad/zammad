@@ -21,12 +21,13 @@ class Index extends App.Controller
       type:  'GET'
       url:   "#{@apiPath}/user_devices"
       success: (data) =>
-        @render(data)
+        @data = data
+        @render()
     )
 
-  render: (data) =>
+  render: =>
     @html App.view('profile/devices')(
-      devices: data
+      devices: @data || []
     )
 
   delete: (e) =>

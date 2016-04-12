@@ -61,7 +61,7 @@ class _collectionSingleton extends Spine.Module
       return
 
     # reset in-memory
-    appObject.refresh(params.data, { clear: true })
+    appObject.refresh(params.data, clear: true)
 
   loadAssets: (assets) ->
     @log 'debug', 'loadAssets', assets

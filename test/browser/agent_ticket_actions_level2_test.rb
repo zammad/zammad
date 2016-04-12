@@ -249,7 +249,7 @@ class AgentTicketActionsLevel2Test < TestCase
     ticket_update(
       browser: browser1,
       data: {
-        body: 'some update 4711',
+        body: 'some update 4711/2',
       },
     )
     sleep 4

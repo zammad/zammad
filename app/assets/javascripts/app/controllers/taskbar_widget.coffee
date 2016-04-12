@@ -1,61 +1,18 @@
-class App.TaskbarWidget extends App.Controller
+class App.TaskbarWidget extends App.CollectionController
   events:
     'click .js-close': 'remove'
     'click .js-locationVerify': 'location'
 
+  model: false
+  template: 'widget/task_item'
+  uniqKey: 'key'
+  observe:
+    meta: true
+    active: true
+    notify: true
+
   constructor: ->
     super
-    @render()
-
-    # render on generic ui call
-    @bind 'ui:rerender', => @render()
-
-    # render view
-    @bind 'task:render', => @render()
-
-    # render on login
-    @bind 'auth:login', => @render()
-
-    # reset current tasks on logout
-    @bind 'auth:logout', => @render()
-
-  render: ->
-    return if !@Session.get()
-
-    tasks = App.TaskManager.all()
-    taskItems = []
-    for task in tasks
-
-      # collect meta data of task for task bar item
-      meta =
-        url:       '#'
-        id:        false
-        iconClass: 'loading'
-        title:     App.i18n.translateInline('Loading...')
-        head:      App.i18n.translateInline('Loading...')
-        active:    false
-      worker = App.TaskManager.worker(task.key)
-      if worker
-        data = worker.meta()
-
-        # apply meta data of controller
-        if data
-          for key, value of data
-            meta[key] = value
-
-      # collect new task bar items
-      item = {}
-      item.task = task
-      item.meta = meta
-      taskItems.push item
-
-      # update title
-      if task.active
-        @title meta.title
-
-    @html App.view('task_widget_tasks')(
-      taskItems: taskItems
-    )
 
     dndOptions =
       tolerance:            'pointer'
@@ -75,12 +32,39 @@ class App.TaskbarWidget extends App.Controller
 
     @el.sortable(dndOptions)
 
+    # bind to changes
+    @bind('taskInit', =>
+      @queue.push ['renderAll']
+      @uIRunner()
+    )
+    @bind('taskUpdate', (tasks) =>
+      @queue.push ['change', tasks]
+      @uIRunner()
+    )
+    @bind('taskRemove', (tasks) =>
+      @queue.push ['remove', tasks]
+      @uIRunner()
+    )
+    @bind('taskCollectionOrderSet', (task_keys) =>
+      @collectionOrderSet(task_keys)
+    )
+
+  itemGet: (key) ->
+    App.TaskManager.get(key)
+
+  itemDestroy: (key) ->
+    App.TaskManager.remove(key)
+
+  itemsAll: ->
+    App.TaskManager.allWithMeta()
+
   location: (e) =>
     return if !$(e.currentTarget).hasClass('is-modified')
     @locationVerify(e)
 
   remove: (e, key = false, force = false) =>
     e.preventDefault()
+    e.stopPropagation()
     if !key
       key = $(e.target).parents('a').data('key')
     if !key
@@ -92,7 +76,8 @@ class App.TaskbarWidget extends App.Controller
       if worker.changed()
         new Remove(
           key: key
-          ui:  @
+          ui: @
+          event: e
         )
         return
 
@@ -105,9 +90,7 @@ class App.TaskbarWidget extends App.Controller
         activeIsClosed = true
 
     # remove task
-    App.TaskManager.remove(key, false)
-
-    $(e.target).closest('.task').remove()
+    App.TaskManager.remove(key)
 
     # if we do not need to move to an other task
     return if !activeIsClosed
@@ -130,6 +113,6 @@ class Remove extends App.ControllerModal
   content: ->
     App.i18n.translateContent('Tab has changed, you really want to close it?')
 
-  onSubmit: (e) =>
+  onSubmit: =>
     @close()
-    @ui.remove(e, @key, true)
+    @ui.remove(@event, @key, true)

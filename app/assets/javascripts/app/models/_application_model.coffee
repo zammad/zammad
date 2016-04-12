@@ -208,7 +208,6 @@ class App.Model extends Spine.Model
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
-    #console.log(attributesNew)
     attributesNew
 
   validate: (params = {}) ->
@@ -309,11 +308,32 @@ class App.Model extends Spine.Model
 
       # subscribe and render data / fetch new data if triggered
       @bind(
-        'refresh change remove'
-        (items) =>
-          App.Log.debug('Model', "local collection refresh/change #{@className}", items)
+        'refresh'
+        (items, options) =>
+          if !_.isArray(items)
+            items = [items]
+          App.Log.debug('Model', "local collection refresh #{@className}", items)
           for key, callback of @SUBSCRIPTION_COLLECTION
-            callback(items)
+            callback(items, 'refresh')
+      )
+      @bind(
+        'change'
+        (items, subEvent) =>
+          return if subEvent is 'destroy'
+          if !_.isArray(items)
+            items = [items]
+          App.Log.debug('Model', "local collection change #{@className}", items)
+          for key, callback of @SUBSCRIPTION_COLLECTION
+            callback(items, 'change')
+      )
+      @bind(
+        'destroy'
+        (items) =>
+          if !_.isArray(items)
+            items = [items]
+          App.Log.debug('Model', "local collection destroy #{@className}", items)
+          for key, callback of @SUBSCRIPTION_COLLECTION
+            callback(items, 'destroy')
       )
 
       # fetch() all on network notify
@@ -666,3 +686,13 @@ class App.Model extends Spine.Model
 
   activityMessage: (item) ->
     return "Need own activityMessage() in model to generate text (#{@objectDisplayName()}/#{item.type})."
+
+  @lastUpdatedAt: ->
+    updated_at
+    for item in @all()
+      if item.updated_at
+        if !updated_at
+          updated_at = item.updated_at
+        else if item.updated_at > updated_at
+          updated_at = item.updated_at
+    updated_at

@@ -1,0 +1,20 @@
+<a href="<%- @item.meta.url %>" title="<%= @item.meta.title %>" class="nav-tab task js-item js-locationVerify <%= @item.meta.class %><% if @item.active: %> is-active<% end %><% if @item.notify: %> is-modified<% end %>" data-key="<%- @item.key %>">
+  <div class="nav-tab-icon" title="<%- @Ti(@item.meta.iconTitle) %>">
+    <% if @item.meta.type is 'task': %>
+      <% if @item.notify: %>
+        <%- @Icon('small-dot', "icon-status-modified-inner-circle icon-task-state #{@item.meta.iconClass}") %>
+        <%- @Icon('status-modified-outer-circle', "icon-task-state #{@item.meta.iconClass}") %>
+      <% else: %>
+        <%- @Icon('task-state', @item.meta.iconClass) %>
+      <% end %>
+    <% else: %>
+      <%- @Icon(@item.meta.iconClass) %>
+    <% end %>
+  </div>
+  <div class="nav-tab-name u-textTruncate flex"><%= @item.meta.head %></div>
+  <div class="nav-tab-close js-close" title="<%- @Ti('close') %>">
+    <div class="nav-tab-close-inner">
+      <%- @Icon('diagonal-cross') %>
+    </div>
+  </div>
+</a>
