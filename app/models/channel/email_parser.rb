@@ -346,16 +346,10 @@ retrns
     mail = parse(msg)
 
     # run postmaster pre filter
-    filters = {
-      '0010' => Channel::Filter::Trusted,
-      '0020' => Channel::Filter::AutoResponseCheck,
-      '0030' => Channel::Filter::OutOfOfficeCheck,
-      '0100' => Channel::Filter::FollowUpCheck,
-      '0900' => Channel::Filter::BounceCheck,
-      '1000' => Channel::Filter::Database,
+    filters = {}
+    Setting.where(area: 'Postmaster::PreFilter').each {|setting|
+      filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
-
-    # filter(channel, mail)
     filters.each {|_prio, backend|
       begin
         backend.run(channel, mail)
@@ -511,11 +505,9 @@ retrns
     Observer::Ticket::Notification.transaction
 
     # run postmaster post filter
-    filters = {
-      # '0010' => Channel::Filter::Trusted,
+    Setting.where(area: 'Postmaster::PostFilter').each {|setting|
+      filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
-
-    # filter( channel, mail )
     filters.each {|_prio, backend|
       begin
         backend.run(channel, mail, ticket, article, user)
