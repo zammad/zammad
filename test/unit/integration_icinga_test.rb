@@ -3,6 +3,11 @@ require 'test_helper'
 
 class IntegrationIcingaTest < ActiveSupport::TestCase
 
+  # according
+  # https://github.com/Icinga/icinga2/blob/master/etc/icinga2/scripts/mail-service-notification.sh
+  # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#host-states
+  # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#service-states
+
   test 'base tests' do
 
     Setting.set('icinga_integration', true)
@@ -14,7 +19,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-icinga-1@monitoring.znuny.com>
 From: icinga_not_matching@monitoring.example.com (icinga)
 
 ***** Icinga  *****
@@ -46,7 +51,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-2@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-icinga-2@monitoring.znuny.com>
 From: icinga@monitoring.example.com (icinga)
 
 ***** Icinga  *****
@@ -82,7 +87,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-3@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-icinga-3@monitoring.znuny.com>
 From: icinga@monitoring.example.com (icinga)
 
 ***** Icinga  *****
@@ -119,7 +124,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-4@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-icinga-4@monitoring.znuny.com>
 From: icinga@monitoring.example.com (icinga)
 
 ***** Icinga  *****
@@ -156,7 +161,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-5@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-icinga-5@monitoring.znuny.com>
 From: icinga@monitoring.example.com (icinga)
 
 ***** Icinga  *****
