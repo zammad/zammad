@@ -43,11 +43,17 @@ class Channel::EmailParser
     x-zammad-customer-firstname: '',
     x-zammad-customer-lastname:  '',
 
-    # ticket headers
+    # ticket headers (for new tickets)
     x-zammad-ticket-group:    'some_group',
     x-zammad-ticket-state:    'some_state',
     x-zammad-ticket-priority: 'some_priority',
     x-zammad-ticket-owner:    'some_owner_login',
+
+    # ticket headers (for existing tickets)
+    x-zammad-ticket-followup-group:    'some_group',
+    x-zammad-ticket-followup-state:    'some_state',
+    x-zammad-ticket-followup-priority: 'some_priority',
+    x-zammad-ticket-followup-owner:    'some_owner_login',
 
     # article headers
     x-zammad-article-internal: false,
@@ -66,7 +72,6 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.each { |field|
-
       next if !field.name
 
       # full line, encode, ready for storage
@@ -79,20 +84,15 @@ class Channel::EmailParser
     # get sender
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
-
       next if !mail[ item.to_sym ]
-
       from = mail[ item.to_sym ].value
-
       break if from
     }
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
     ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
-
       next if !mail[item.to_sym]
-
       if data['x-any-recipient'.to_sym] != ''
         data['x-any-recipient'.to_sym] += ', '
       end
@@ -347,7 +347,7 @@ retrns
 
     # run postmaster pre filter
     filters = {}
-    Setting.where(area: 'Postmaster::PreFilter').each {|setting|
+    Setting.where(area: 'Postmaster::PreFilter').order(:name).each {|setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
     filters.each {|_prio, backend|
@@ -373,35 +373,15 @@ retrns
       # reset current_user
       UserInfo.current_user_id = 1
 
-      # create sender
-      if mail[ 'x-zammad-customer-login'.to_sym ]
-        user = User.find_by(login: mail[ 'x-zammad-customer-login'.to_sym ])
+      # create sender if needed
+      sender_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
+      if !sender_user_id
+        raise 'No x-zammad-customer-id, no sender set!'
       end
+      user = User.lookup(id: sender_user_id)
       if !user
-        user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email])
+        raise "No user found for x-zammad-customer-id: #{sender_user_id}!"
       end
-      if !user
-        user = user_create(
-          login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-          lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
-          email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-        )
-      end
-
-      # create to and cc user
-      ['raw-to', 'raw-cc'].each { |item|
-        next if !mail[item.to_sym]
-        next if !mail[item.to_sym].addrs
-        items = mail[item.to_sym].addrs
-        items.each {|address_data|
-          user_create(
-            firstname: address_data.display_name,
-            lastname: '',
-            email: address_data.address,
-          )
-        }
-      }
 
       # set current user
       UserInfo.current_user_id = user.id
@@ -416,6 +396,8 @@ retrns
 
       # set ticket state to open if not new
       if ticket
+        set_attributes_by_x_headers(ticket, 'ticket', mail, 'followup')
+
         state      = Ticket::State.find(ticket.state_id)
         state_type = Ticket::StateType.find(state.state_type_id)
 
@@ -425,9 +407,11 @@ retrns
         end
 
         # set ticket to open again
-        if state_type.name != 'new' && !mail[ 'x-zammad-out-of-office'.to_sym ]
-          ticket.state = Ticket::State.find_by(name: 'open')
-          ticket.save
+        if !mail[ 'x-zammad-ticket-followup-state'.to_sym ]
+          if state_type.name != 'new' && !mail[ 'x-zammad-out-of-office'.to_sym ]
+            ticket.state = Ticket::State.find_by(name: 'open')
+            ticket.save
+          end
         end
       end
 
@@ -505,7 +489,7 @@ retrns
     Observer::Ticket::Notification.transaction
 
     # run postmaster post filter
-    Setting.where(area: 'Postmaster::PostFilter').each {|setting|
+    Setting.where(area: 'Postmaster::PostFilter').order(:name).each {|setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
     filters.each {|_prio, backend|
@@ -521,36 +505,7 @@ retrns
     [ticket, article, user, mail]
   end
 
-  def user_create(data)
-
-    # return existing
-    user = User.find_by(login: data[:email].downcase)
-    return user if user
-
-    # create new user
-    roles = Role.where(name: 'Customer')
-
-    # fillup
-    %w(firstname lastname).each { |item|
-      if data[item.to_sym].nil?
-        data[item.to_sym] = ''
-      end
-    }
-    data[:password]      = ''
-    data[:active]        = true
-    data[:roles]         = roles
-    data[:updated_by_id] = 1
-    data[:created_by_id] = 1
-
-    user = User.create(data)
-    user.update_attributes(
-      updated_by_id: user.id,
-      created_by_id: user.id,
-    )
-    user
-  end
-
-  def set_attributes_by_x_headers(item_object, header_name, mail)
+  def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
 
     # loop all x-zammad-hedaer-* headers
     item_object.attributes.each {|key, _value|
@@ -566,6 +521,9 @@ retrns
       if key_short == '_id'
         key_short = key[ 0, key.length - 3 ]
         header = "x-zammad-#{header_name}-#{key_short}"
+        if suffix
+          header = "x-zammad-#{header_name}-#{suffix}-#{key_short}"
+        end
         if mail[ header.to_sym ]
           Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
           item_object.class.reflect_on_all_associations.map { |assoc|

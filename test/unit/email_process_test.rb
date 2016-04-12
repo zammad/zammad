@@ -1996,6 +1996,7 @@ Some Text',
         data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject
+X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-priority: 3 high
 X-Zammad-Article-sender: System
 x-Zammad-Article-type: phone
@@ -2006,6 +2007,7 @@ Some Text',
         success: true,
         result: {
           0 => {
+            state: 'new',
             priority: '3 high',
             title: 'some subject',
           },
@@ -2026,6 +2028,7 @@ Some Text',
         data: 'From: me@example.com
 To: customer@example.com
 Subject: some subject
+X-Zammad-Ticket-Followup-State: closed
 X-Zammad-Ticket-Priority: 3 high
 X-Zammad-Article-Sender: System
 x-Zammad-Article-Type: phone
@@ -2036,6 +2039,7 @@ Some Text',
         success: true,
         result: {
           0 => {
+            state: 'new',
             priority: '2 normal',
             title: 'some subject',
           },
