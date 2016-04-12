@@ -346,6 +346,7 @@ retrns
     mail = parse(msg)
 
     # run postmaster pre filter
+    UserInfo.current_user_id = 1
     filters = {}
     Setting.where(area: 'Postmaster::PreFilter').order(:name).each {|setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
@@ -369,9 +370,6 @@ retrns
 
     # use transaction
     ActiveRecord::Base.transaction do
-
-      # reset current_user
-      UserInfo.current_user_id = 1
 
       # create sender if needed
       sender_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
