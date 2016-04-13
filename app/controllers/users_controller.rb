@@ -136,7 +136,7 @@ class UsersController < ApplicationController
       # send inviteation if needed / only if session exists
       if params[:invite] && current_user
         token = Token.create(action: 'PasswordReset', user_id: user.id)
-        NotificationFactory.notification(
+        NotificationFactory::Mailer.notification(
           template: 'user_invite',
           user: user,
           objects: {
@@ -150,7 +150,7 @@ class UsersController < ApplicationController
       # send email verify
       if params[:signup] && !current_user
         token = Token.create(action: 'EmailVerify', user_id: user.id)
-        NotificationFactory.notification(
+        NotificationFactory::Mailer.notification(
           template: 'signup',
           user: user,
           objects: {
@@ -421,7 +421,7 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
 
       # send mail
       user = result[:user]
-      NotificationFactory.notification(
+      NotificationFactory::Mailer.notification(
         template: 'password_reset',
         user: user,
         objects: result
@@ -478,7 +478,7 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
 
       # send mail
       if user
-        NotificationFactory.notification(
+        NotificationFactory::Mailer.notification(
           template: 'password_change',
           user: user,
           objects: {
@@ -547,7 +547,7 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
 
     user.update_attributes(password: params[:password_new])
 
-    NotificationFactory.notification(
+    NotificationFactory::Mailer.notification(
       template: 'password_change',
       user: user,
       objects: {

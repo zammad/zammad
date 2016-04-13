@@ -175,7 +175,7 @@ class FirstStepsController < ApplicationController
     customer = test_customer
     from = "#{customer.fullname} <#{customer.email}>"
     original_user_id = UserInfo.current_user_id
-    result = NotificationFactory.template(
+    result = NotificationFactory::Mailer.template(
       template: 'test_ticket',
       locale: agent.preferences[:locale] || 'en-us',
       objects:  {
