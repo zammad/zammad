@@ -417,9 +417,6 @@ returns
     # reset login failed
     self.login_failed = 0
 
-    # set updated by user
-    self.updated_by_id = id
-
     save
   end
 
