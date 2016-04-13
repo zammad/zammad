@@ -49,6 +49,7 @@ class User < ApplicationModel
     role: Z_ROLENAME_ADMIN,
     ignore_attributes: {
       last_login: true,
+      login_failed: true,
       image: true,
       image_source: true,
       preferences: true,
