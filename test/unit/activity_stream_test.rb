@@ -18,6 +18,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
   )
   current_user = User.lookup(email: 'nicole.braun@zammad.org')
 
+  activity_record_delay = if ENV['ZAMMAD_ACTIVITY_RECORD_DELAY']
+                            ENV['ZAMMAD_ACTIVITY_RECORD_DELAY'].to_i.seconds
+                          else
+                            90.seconds
+                          end
+
   test 'ticket+user' do
     tests = [
 
@@ -118,7 +124,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         article.update_attributes(test[:update][:article])
       end
 
-      sleep 21
+      sleep activity_record_delay + 1
       if test[:update][:ticket]
         ticket.update_attributes(test[:update][:ticket])
       end
@@ -194,7 +200,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         test[:check][1][:o_id]          = organization.id
         test[:check][1][:updated_at]    = organization.updated_at
         test[:check][1][:created_by_id] = current_user.id
-        sleep 19
+        sleep activity_record_delay - 1
       end
 
       if test[:update2][:organization]
@@ -340,7 +346,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       end
 
       # to verify update which need to be logged
-      sleep 21
+      sleep activity_record_delay + 1
 
       if test[:update2][:user]
         user.update_attributes(test[:update2][:user])
