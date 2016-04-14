@@ -486,7 +486,7 @@ condition example
       if selector['operator'] == 'is'
         if selector['pre_condition'] == 'not_set'
           if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
-            query += "#{attribute} NOT IN (?)"
+            query += "#{attribute} IN (?)"
             bind_params.push 1
           else
             query += "#{attribute} IS NOT NULL"
@@ -513,7 +513,7 @@ condition example
       elsif selector['operator'] == 'is not'
         if selector['pre_condition'] == 'not_set'
           if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
-            query += "#{attribute} IN (?)"
+            query += "#{attribute} NOT IN (?)"
             bind_params.push 1
           else
             query += "#{attribute} IS NULL"
