@@ -772,7 +772,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.owner_id' => {
         operator: 'is',
-        pre_condition: 'set',
+        pre_condition: 'not_set',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
@@ -794,7 +794,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.owner_id' => {
         operator: 'is not',
-        pre_condition: 'set',
+        pre_condition: 'not_set',
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
