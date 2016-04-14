@@ -85,9 +85,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1)
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = nil
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -120,9 +120,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1)
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = true
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -158,9 +158,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert( ticket1, 'ticket created - ticket notification simple' )
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = true
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -173,8 +173,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -195,8 +195,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent1.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -220,8 +220,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent1.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -254,8 +254,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent1.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
     assert(ticket2, 'ticket created')
@@ -270,8 +270,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket2.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -285,8 +285,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket2.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -319,8 +319,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent2.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
     assert(ticket3, 'ticket created')
@@ -335,8 +335,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket3.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -350,8 +350,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket3.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -363,8 +363,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     article_inbound.internal = true
     article_inbound.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -425,9 +425,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -440,8 +440,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -474,8 +474,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -488,8 +488,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority = Ticket::Priority.lookup(name: '3 high')
     ticket2.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -522,8 +522,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -536,8 +536,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority = Ticket::Priority.lookup(name: '3 high')
     ticket3.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -587,9 +587,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -602,8 +602,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket4.priority = Ticket::Priority.lookup(name: '3 high')
     ticket4.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -653,9 +653,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -668,8 +668,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket5.priority = Ticket::Priority.lookup(name: '3 high')
     ticket5.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -720,9 +720,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -737,8 +737,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket6.priority = Ticket::Priority.lookup(name: '3 high')
     ticket6.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -799,9 +799,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket transaction
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -816,8 +816,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket7.priority = Ticket::Priority.lookup(name: '3 high')
     ticket7.save
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -856,8 +856,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created')
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"

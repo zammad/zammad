@@ -296,8 +296,8 @@ result
                end
       to_article(post, ticket, page)
 
-      # execute ticket events
-      Observer::Ticket::Notification.transaction
+      # execute object transaction
+      Observer::Transaction.commit
     end
 
     ticket

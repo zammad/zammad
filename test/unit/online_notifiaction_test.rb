@@ -60,8 +60,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets = []
     tickets.push ticket1
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -79,8 +79,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -117,8 +117,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets = []
     tickets.push ticket2
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -136,8 +136,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -173,8 +173,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket3
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -192,8 +192,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -217,8 +217,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       internal: false
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -256,8 +256,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket4
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -275,8 +275,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -312,8 +312,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket5
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -331,8 +331,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket transaction
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 

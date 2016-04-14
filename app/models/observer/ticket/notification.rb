@@ -6,7 +6,9 @@ require 'notification_factory'
 class Observer::Ticket::Notification < ActiveRecord::Observer
   observe :ticket, 'ticket::_article'
 
-  def self.transaction
+  def self.transaction(params)
+
+    return if params[:disable_notification]
 
     # return if we run import mode
     return if Setting.get('import_mode')

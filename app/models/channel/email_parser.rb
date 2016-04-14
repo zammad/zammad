@@ -486,8 +486,8 @@ retrns
       end
     end
 
-    # execute ticket notification events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
 
     # run postmaster post filter
     Setting.where(area: 'Postmaster::PostFilter').order(:name).each {|setting|
