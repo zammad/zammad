@@ -49,6 +49,7 @@ class User < ApplicationModel
     role: Z_ROLENAME_ADMIN,
     ignore_attributes: {
       last_login: true,
+      login_failed: true,
       image: true,
       image_source: true,
       preferences: true,
@@ -416,9 +417,6 @@ returns
 
     # reset login failed
     self.login_failed = 0
-
-    # set updated by user
-    self.updated_by_id = id
 
     save
   end

@@ -6,16 +6,18 @@ require 'notification_factory'
 class Observer::Ticket::Notification < ActiveRecord::Observer
   observe :ticket, 'ticket::_article'
 
-  def self.transaction
+  def self.transaction(params)
+
+    return if params[:disable_notification]
 
     # return if we run import mode
     return if Setting.get('import_mode')
 
     # get buffer
-    list = EventBuffer.list
+    list = EventBuffer.list('notification')
 
     # reset buffer
-    EventBuffer.reset
+    EventBuffer.reset('notification')
 
     via_web = false
     if ENV['RACK_ENV'] || Rails.configuration.webserver_is_active
@@ -36,17 +38,29 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
   result = get_uniq_changes(events)
 
   result = {
-    :1 => {
-      :type       => 'create',
-      :ticket_id  => 123,
-      :article_id => 123,
+    1 => {
+      type: 'create',
+      ticket_id: 123,
+      article_id: 123,
     },
-    :9 = {
-      :type      => 'update',
-      :ticket_id => 123,
-      :changes   => {
-        :attribute1 => [before,now],
-        :attribute2 => [before,now],
+    9 => {
+      type: 'update',
+      ticket_id: 123,
+      changes: {
+        attribute1: [before, now],
+        attribute2: [before, now],
+      }
+    },
+  }
+
+  result = {
+    9 => {
+      type: 'update',
+      ticket_id: 123,
+      article_id: 123,
+      changes: {
+        attribute1: [before, now],
+        attribute2: [before, now],
       }
     },
   }
@@ -124,7 +138,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       data: record,
       id: record.id,
     }
-    EventBuffer.add(e)
+    EventBuffer.add('notification', e)
   end
 
   def before_update(record)
@@ -160,18 +174,7 @@ class Observer::Ticket::Notification < ActiveRecord::Observer
       changes: real_changes,
       id: record.id,
     }
-    EventBuffer.add(e)
+    EventBuffer.add('notification', e)
   end
 
-  def after_update(_record)
-
-    # return if we run import mode
-    return if Setting.get('import_mode')
-
-    # Rails.logger.info 'after_update'
-    # Rails.logger.info record.inspect
-    # Rails.logger.info '-----'
-    # Rails.logger.info @a.inspect
-    # AuditTrail.new(record, "UPDATED")
-  end
 end

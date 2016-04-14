@@ -235,8 +235,8 @@ class TweetBase
         raise "Unknown tweet type '#{tweet.class}'"
       end
 
-      # execute ticket events
-      Observer::Ticket::Notification.transaction
+      # execute object transaction
+      Observer::Transaction.commit
     end
 
     if @connection_type == 'stream'

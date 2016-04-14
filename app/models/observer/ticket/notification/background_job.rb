@@ -59,7 +59,7 @@ class Observer::Ticket::Notification::BackgroundJob
     end
     already_checked_recipient_ids = {}
     possible_recipients.each {|user|
-      result = NotificationFactory.notification_settings(user, ticket, @p[:type])
+      result = NotificationFactory::Mailer.notification_settings(user, ticket, @p[:type])
       next if !result
       next if already_checked_recipient_ids[result[:user].id]
       already_checked_recipient_ids[result[:user].id] = true
@@ -165,7 +165,7 @@ class Observer::Ticket::Notification::BackgroundJob
         raise "unknown type for notification #{@p[:type]}"
       end
 
-      NotificationFactory.notification(
+      NotificationFactory::Mailer.notification(
         template: template,
         user: user,
         objects: {

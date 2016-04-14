@@ -30,13 +30,16 @@
     color: #aaaaaa;
   }
 </style>
-
+<% if @objects[:standalone] != true %>
 <div class="header">
   <%= c 'product_name' %> <%= t 'Notification' %>
 </div>
+<% end %>
 
 <%= d 'message', false %>
 
+<% if @objects[:standalone] != true %>
 <div class="footer">
   <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'Manage your notifications settings' %></a> <% if !c('organization').empty? %>| <%= c 'organization' %><% end %>
 </div>
+<% end %>

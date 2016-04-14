@@ -189,7 +189,7 @@ send user notification about new device or new location for device
   def notification_send(template)
     user = User.find(user_id)
 
-    NotificationFactory.notification(
+    NotificationFactory::Mailer.notification(
       template: template,
       user: user,
       objects: {

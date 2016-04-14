@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   # execute events
   def trigger_events
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
   end
 
   # Finds the User with the ID stored in the session with the key
@@ -73,7 +73,10 @@ class ApplicationController < ActionController::Base
   # Sets the current user into a named Thread location so that it can be accessed
   # by models and observers
   def set_user
-    return if !current_user
+    if !current_user
+      UserInfo.current_user_id = 1
+      return
+    end
     UserInfo.current_user_id = current_user.id
   end
 

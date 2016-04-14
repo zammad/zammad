@@ -171,8 +171,8 @@ class HistoryTest < ActiveSupport::TestCase
         end
       end
 
-      # execute ticket events
-      Observer::Ticket::Notification.transaction
+      # execute object transaction
+      Observer::Transaction.commit
 
       # execute background jobs
       Delayed::Worker.new.work_off

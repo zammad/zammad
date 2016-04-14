@@ -60,8 +60,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets = []
     tickets.push ticket1
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -79,8 +79,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -117,8 +117,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     tickets = []
     tickets.push ticket2
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -136,8 +136,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -173,8 +173,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket3
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -192,15 +192,15 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket3.id))
-    assert_equal(1, NotificationFactory.already_sent?(ticket3, agent_user1, 'update'))
-    assert_equal(1, NotificationFactory.already_sent?(ticket3, agent_user2, 'update'))
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent_user1, 'update'))
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent_user2, 'update'))
     assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'update', customer_user, false))
     assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'update', customer_user, true))
     assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'update', customer_user, false))
@@ -217,8 +217,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       internal: false
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -228,8 +228,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'update', customer_user, true))
     assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'update', customer_user, false))
     assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'update', customer_user, true))
-    assert_equal(2, NotificationFactory.already_sent?(ticket3, agent_user1, 'update'))
-    assert_equal(2, NotificationFactory.already_sent?(ticket3, agent_user2, 'update'))
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent_user1, 'update'))
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent_user2, 'update'))
 
     # case #4
     ticket4 = Ticket.create(
@@ -256,8 +256,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket4
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -275,8 +275,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -312,8 +312,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     # remember ticket
     tickets.push ticket5
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
@@ -331,8 +331,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer_user.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 

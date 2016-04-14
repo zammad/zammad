@@ -49,7 +49,14 @@ add a new activity entry for an object
     ).order('created_at DESC, id DESC').first
 
     # resturn if old entry is really fresh
-    return result if result && result.created_at.to_i >= ( data[:created_at].to_i - 20 )
+    if result
+      activity_record_delay = if ENV['ZAMMAD_ACTIVITY_RECORD_DELAY']
+                                ENV['ZAMMAD_ACTIVITY_RECORD_DELAY'].to_i.seconds
+                              else
+                                90.seconds
+                              end
+      return result if result.created_at.to_i >= ( data[:created_at].to_i - activity_record_delay )
+    end
 
     # create history
     record = {

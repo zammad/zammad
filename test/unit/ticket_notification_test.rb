@@ -85,15 +85,15 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1)
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = nil
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # create ticket in group
     ticket1 = Ticket.create(
@@ -120,15 +120,15 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1)
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = true
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
   end
 
   test 'ticket notification - simple' do
@@ -158,29 +158,29 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert( ticket1, 'ticket created - ticket notification simple' )
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = true
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(2, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # add article to ticket
     Ticket::Article.create(
@@ -195,14 +195,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent1.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to not to agent1 but to agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(3, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # update ticket by user
     ticket1.owner_id      = agent1.id
@@ -220,14 +220,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent1.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to not to agent1 but to agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(3, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # create ticket with agent1 as owner
     ticket2 = Ticket.create(
@@ -254,15 +254,15 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent1.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
     assert(ticket2, 'ticket created')
 
     # verify notifications to no one
-    assert_equal(0, NotificationFactory.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #2"
@@ -270,14 +270,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket2.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal(0, NotificationFactory.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #3"
@@ -285,14 +285,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket2.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket2.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
 
     # create ticket with agent2 and agent1 as owner
     ticket3 = Ticket.create(
@@ -319,15 +319,15 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: agent2.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
     assert(ticket3, 'ticket created')
 
     # verify notifications to agent1 and not to agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #2"
@@ -335,14 +335,14 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority      = Ticket::Priority.lookup(name: '3 high')
     ticket3.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to no one
-    assert_equal(1, NotificationFactory.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #3"
@@ -350,27 +350,27 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket3.priority      = Ticket::Priority.lookup(name: '2 normal')
     ticket3.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 and not to agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
 
     # update article / not notification should be sent
     article_inbound.internal = true
     article_inbound.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications not to agent1 and not to agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
 
     delete = ticket1.destroy
     assert(delete, 'ticket1 destroy')
@@ -425,29 +425,29 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(2, NotificationFactory.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # create ticket in group
     ticket2 = Ticket.create(
@@ -474,28 +474,28 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
 
     # update ticket attributes
     ticket2.title    = "#{ticket2.title} - #2"
     ticket2.priority = Ticket::Priority.lookup(name: '3 high')
     ticket2.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(2, NotificationFactory.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
 
     # create ticket in group
     ticket3 = Ticket.create(
@@ -522,28 +522,28 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
 
     # update ticket attributes
     ticket3.title    = "#{ticket3.title} - #2"
     ticket3.priority = Ticket::Priority.lookup(name: '3 high')
     ticket3.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(2, NotificationFactory.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
@@ -587,29 +587,29 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket4, agent1, 'email'), ticket4.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket4, agent2, 'email'), ticket4.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email'), ticket4.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, agent2, 'email'), ticket4.id)
 
     # update ticket attributes
     ticket4.title    = "#{ticket4.title} - #2"
     ticket4.priority = Ticket::Priority.lookup(name: '3 high')
     ticket4.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket4, agent1, 'email'), ticket4.id)
-    assert_equal(2, NotificationFactory.already_sent?(ticket4, agent2, 'email'), ticket4.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email'), ticket4.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, agent2, 'email'), ticket4.id)
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
@@ -653,29 +653,29 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket5, agent1, 'email'), ticket5.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket5, agent2, 'email'), ticket5.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email'), ticket5.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket5, agent2, 'email'), ticket5.id)
 
     # update ticket attributes
     ticket5.title    = "#{ticket5.title} - #2"
     ticket5.priority = Ticket::Priority.lookup(name: '3 high')
     ticket5.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket5, agent1, 'email'), ticket5.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket5, agent2, 'email'), ticket5.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email'), ticket5.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket5, agent2, 'email'), ticket5.id)
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
@@ -720,33 +720,33 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory.already_sent?(ticket6, agent1, 'email'), ticket6.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket6, agent1, 'online'), ticket6.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket6, agent2, 'email'), ticket6.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket6, agent2, 'online'), ticket6.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email'), ticket6.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'online'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'email'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'online'), ticket6.id)
 
     # update ticket attributes
     ticket6.title    = "#{ticket6.title} - #2"
     ticket6.priority = Ticket::Priority.lookup(name: '3 high')
     ticket6.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory.already_sent?(ticket6, agent1, 'email'), ticket6.id)
-    assert_equal(2, NotificationFactory.already_sent?(ticket6, agent1, 'online'), ticket6.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket6, agent2, 'email'), ticket6.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket6, agent2, 'online'), ticket6.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email'), ticket6.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'online'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'email'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'online'), ticket6.id)
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
@@ -799,33 +799,33 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: customer.id,
     )
 
-    # execute ticket events
+    # execute object transaction
     Rails.configuration.webserver_is_active = false
-    Observer::Ticket::Notification.transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory.already_sent?(ticket7, agent1, 'email'), ticket7.id)
-    assert_equal(1, NotificationFactory.already_sent?(ticket7, agent1, 'online'), ticket7.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket7, agent2, 'email'), ticket7.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket7, agent2, 'online'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email'), ticket7.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'online'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'email'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'online'), ticket7.id)
 
     # update ticket attributes
     ticket7.title    = "#{ticket7.title} - #2"
     ticket7.priority = Ticket::Priority.lookup(name: '3 high')
     ticket7.save
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
     #puts Delayed::Job.all.inspect
     Delayed::Worker.new.work_off
 
     # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory.already_sent?(ticket7, agent1, 'email'), ticket7.id)
-    assert_equal(2, NotificationFactory.already_sent?(ticket7, agent1, 'online'), ticket7.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket7, agent2, 'email'), ticket7.id)
-    assert_equal(0, NotificationFactory.already_sent?(ticket7, agent2, 'online'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email'), ticket7.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'online'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'email'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'online'), ticket7.id)
 
   end
 
@@ -856,15 +856,15 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created')
 
-    # execute ticket events
-    Observer::Ticket::Notification.transaction
+    # execute object transaction
+    Observer::Transaction.commit
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
-    list         = EventBuffer.list
+    list         = EventBuffer.list('notification')
     list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
 
     assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
@@ -878,7 +878,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '1 low')
     ticket1.save
 
-    list         = EventBuffer.list
+    list         = EventBuffer.list('notification')
     list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
 
     assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
@@ -939,7 +939,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_not( human_changes['pending_till'] )
 
     # en notification
-    result = NotificationFactory.template(
+    result = NotificationFactory::Mailer.template(
       locale: agent2.preferences[:locale],
       template: 'ticket_update',
       objects: {
@@ -971,7 +971,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_not( human_changes['pending_till'] )
 
     # de notification
-    result = NotificationFactory.template(
+    result = NotificationFactory::Mailer.template(
       locale: agent1.preferences[:locale],
       template: 'ticket_update',
       objects: {
@@ -1015,7 +1015,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_not(human_changes['pending_till'])
 
     # de notification
-    result = NotificationFactory.template(
+    result = NotificationFactory::Mailer.template(
       locale: agent1.preferences[:locale],
       template: 'ticket_update',
       objects: {
@@ -1040,7 +1040,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     human_changes = bg.human_changes(agent2, ticket1)
 
     # en notification
-    result = NotificationFactory.template(
+    result = NotificationFactory::Mailer.template(
       locale: agent2.preferences[:locale],
       template: 'ticket_update',
       objects: {

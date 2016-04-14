@@ -157,8 +157,8 @@ returns
         ticket.save!
 
         # we do not have an destructor at this point, so we need to
-        # execute ticket events manually
-        Observer::Ticket::Notification.transaction
+        # execute object transaction manually
+        Observer::Transaction.commit
 
         result.push ticket
       }
@@ -473,7 +473,7 @@ condition example
       end
 
       # validate pre_condition values
-      return nil if selector['pre_condition'] && selector['pre_condition'] !~ /^(set|current_user\.|specific)/
+      return nil if selector['pre_condition'] && selector['pre_condition'] !~ /^(not_set|current_user\.|specific)/
 
       # get attributes
       attributes = attribute.split(/\./)
@@ -484,9 +484,9 @@ condition example
       end
 
       if selector['operator'] == 'is'
-        if selector['pre_condition'] == 'set'
+        if selector['pre_condition'] == 'not_set'
           if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
-            query += "#{attribute} NOT IN (?)"
+            query += "#{attribute} IN (?)"
             bind_params.push 1
           else
             query += "#{attribute} IS NOT NULL"
@@ -511,9 +511,9 @@ condition example
           # rubocop:enable Style/IfInsideElse
         end
       elsif selector['operator'] == 'is not'
-        if selector['pre_condition'] == 'set'
+        if selector['pre_condition'] == 'not_set'
           if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
-            query += "#{attribute} IN (?)"
+            query += "#{attribute} NOT IN (?)"
             bind_params.push 1
           else
             query += "#{attribute} IS NULL"
