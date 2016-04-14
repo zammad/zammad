@@ -60,8 +60,8 @@ class Job < ApplicationModel
             next if !changed
             ticket.save
 
-            # execute ticket transaction
-            Observer::Ticket::Transaction.commit(
+            # execute object transaction
+            Observer::Transaction.commit(
               disable_notification: job.disable_notification
             )
           end
