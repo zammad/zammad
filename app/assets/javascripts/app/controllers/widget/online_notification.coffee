@@ -178,12 +178,12 @@ class App.OnlineNotificationWidget extends App.Controller
     return if !@access()
     $(window).on 'keydown.notifications', @listNavigate
     @shown = true
-    @el.show()
+    @el.addClass 'is-visible'
 
   hide: =>
     $(window).off 'keydown.notifications'
     @shown = false
-    @el.hide()
+    @el.removeClass 'is-visible'
 
   stopPropagation: (e) ->
     e.stopPropagation()

@@ -3715,9 +3715,12 @@ footer {
     max-width: 400px;
     min-width: 350px;
     position: absolute;
-    display: flex;
     flex-direction: column;
     @extend .zIndex-5;
+    
+    &.is-visible {
+      display: flex;
+    }
     
     &.is-empty .popover-notificationsHeader {
       box-shadow: none;
