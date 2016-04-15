@@ -21,7 +21,7 @@
           <% end %>
         </td>
         <td><a href="<%- integration.target %>"><%= integration.name %></a></td>
-        <td><%= integration.description %></td>
+        <td><%- @T(integration.description) %></td>
       </tr>
     <% end %>
     </tbody>
