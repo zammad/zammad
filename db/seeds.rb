@@ -1600,7 +1600,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Icinga integration',
   name: 'icinga_integration',
-  area: 'Integration::Icinga',
+  area: 'Integration::Switch',
   description: 'Define if Icinga (http://www.icinga.org) is enabled or not.',
   options: {
     form: [
@@ -1632,6 +1632,7 @@ Setting.create_if_not_exists(
         null: false,
         name: 'icinga_sender',
         tag: 'input',
+        placeholder: 'icinga@monitoring.example.com',
       },
     ],
   },
@@ -1685,7 +1686,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Nagios integration',
   name: 'nagios_integration',
-  area: 'Integration::Nagios',
+  area: 'Integration::Switch',
   description: 'Define if Nagios (http://www.nagios.org) is enabled or not.',
   options: {
     form: [
@@ -1717,6 +1718,7 @@ Setting.create_if_not_exists(
         null: false,
         name: 'nagios_sender',
         tag: 'input',
+        placeholder: 'nagios@monitoring.example.com',
       },
     ],
   },
@@ -1766,6 +1768,59 @@ Setting.create_if_not_exists(
   state: 4,
   preferences: { prio: 4 },
   frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '0100_notification',
+  area: 'Transaction::Backend',
+  description: 'Define the transaction backend to send agent notifications.',
+  options: {},
+  state: 'Transaction::Notification',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '6000_slack_webhook',
+  area: 'Transaction::Backend',
+  description: 'Define the transaction backend which posts messages to (http://www.slack.com).',
+  options: {},
+  state: 'Transaction::Slack',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Slack integration',
+  name: 'slack_integration',
+  area: 'Integration::Switch',
+  description: 'Define if Slack (http://www.slack.org) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'slack_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  preferences: { prio: 1 },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Slack config',
+  name: 'slack_config',
+  area: 'Integration::Slack',
+  description: 'Define the slack config.',
+  options: {},
+  state: {
+    items: []
+  },
+  frontend: false,
+  preferences: { prio: 2 },
 )
 
 signature = Signature.create_if_not_exists(

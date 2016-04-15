@@ -864,8 +864,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
     ticket1.save
 
-    list         = EventBuffer.list('notification')
-    list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
+    list         = EventBuffer.list('transaction')
+    list_objects = Observer::Transaction.get_uniq_changes(list)
 
     assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
     assert_equal('some notification event test 1 - #2', list_objects[ticket1.id][:changes]['title'][1])
@@ -878,8 +878,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1.priority = Ticket::Priority.lookup(name: '1 low')
     ticket1.save
 
-    list         = EventBuffer.list('notification')
-    list_objects = Observer::Ticket::Notification.get_uniq_changes(list)
+    list         = EventBuffer.list('transaction')
+    list_objects = Observer::Transaction.get_uniq_changes(list)
 
     assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
     assert_equal('some notification event test 1 - #2 - #3', list_objects[ticket1.id][:changes]['title'][1])
@@ -916,7 +916,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created - ticket notification template')
 
-    bg = Observer::Ticket::Notification::BackgroundJob.new(
+    bg = Transaction::Notification.new(
       ticket_id: ticket1.id,
       article_id: article.id,
       type: 'update',
@@ -992,7 +992,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_no_match(/pending_till/, result[:body])
     assert_no_match(/i18n/, result[:body])
 
-    bg = Observer::Ticket::Notification::BackgroundJob.new(
+    bg = Transaction::Notification.new(
       ticket_id: ticket1.id,
       article_id: article.id,
       type: 'update',

@@ -267,6 +267,7 @@ GEM
     simplecov-html (0.10.0)
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
+    slack-notifier (1.5.1)
     slop (3.6.0)
     spring (1.6.4)
     sprockets (3.5.2)
@@ -361,6 +362,7 @@ DEPENDENCIES
   simple-rss
   simplecov
   simplecov-rcov
+  slack-notifier
   spring
   sprockets
   sqlite3

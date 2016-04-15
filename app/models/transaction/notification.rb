@@ -1,24 +1,29 @@
-# encoding: utf-8
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
-class Observer::Ticket::Notification::BackgroundJob
-  def initialize(params, via_web = false)
+class Transaction::Notification
 
 =begin
+  {
+    object: 'Ticket',
     type: 'update',
     ticket_id: 123,
+    via_web: true,
     changes: {
-      'attribute1' => [before,now],
-      'attribute2' => [before,now],
+      'attribute1' => [before, now],
+      'attribute2' => [before, now],
     }
+  },
 =end
-    @p = params
-    @via_web = via_web
+
+  def initialize(item, params = {})
+    @item = item
+    @params = params
   end
 
   def perform
-    ticket = Ticket.find(@p[:ticket_id])
-    if @p[:article_id]
-      article = Ticket::Article.find(@p[:article_id])
+    ticket = Ticket.find(@item[:ticket_id])
+    if @item[:article_id]
+      article = Ticket::Article.find(@item[:article_id])
     end
 
     # find recipients
@@ -59,7 +64,7 @@ class Observer::Ticket::Notification::BackgroundJob
     end
     already_checked_recipient_ids = {}
     possible_recipients.each {|user|
-      result = NotificationFactory::Mailer.notification_settings(user, ticket, @p[:type])
+      result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
       next if !result
       next if already_checked_recipient_ids[result[:user].id]
       already_checked_recipient_ids[result[:user].id] = true
@@ -73,7 +78,7 @@ class Observer::Ticket::Notification::BackgroundJob
       channels = item[:channels]
 
       # ignore user who changed it by him self via web
-      if @via_web
+      if @params[:via_web]
         next if article && article.updated_by_id == user.id
         next if !article && ticket.updated_by_id == user.id
       end
@@ -83,10 +88,10 @@ class Observer::Ticket::Notification::BackgroundJob
 
       # ignore if no changes has been done
       changes = human_changes(user, ticket)
-      next if @p[:type] == 'update' && !article && (!changes || changes.empty?)
+      next if @item[:type] == 'update' && !article && (!changes || changes.empty?)
 
       # check if today already notified
-      if @p[:type] == 'reminder_reached' || @p[:type] == 'escalation' || @p[:type] == 'escalation_warning'
+      if @item[:type] == 'reminder_reached' || @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
         identifier = user.email
         if !identifier || identifier == ''
           identifier = user.login
@@ -94,7 +99,7 @@ class Observer::Ticket::Notification::BackgroundJob
         already_notified = false
         History.list('Ticket', ticket.id).each {|history|
           next if history['type'] != 'notification'
-          next if history['value_to'] !~ /\(#{Regexp.escape(@p[:type])}:/
+          next if history['value_to'] !~ /\(#{Regexp.escape(@item[:type])}:/
           next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
           next if !history['created_at'].today?
           already_notified = true
@@ -110,59 +115,59 @@ class Observer::Ticket::Notification::BackgroundJob
         created_by_id = ticket.updated_by_id || 1
 
         # delete old notifications
-        if @p[:type] == 'reminder_reached'
+        if @item[:type] == 'reminder_reached'
           seen = false
           created_by_id = 1
-          OnlineNotification.remove_by_type('Ticket', ticket.id, @p[:type], user)
+          OnlineNotification.remove_by_type('Ticket', ticket.id, @item[:type], user)
 
-        elsif @p[:type] == 'escalation' || @p[:type] == 'escalation_warning'
+        elsif @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
           seen = false
           created_by_id = 1
           OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation', user)
           OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation_warning', user)
 
         # on updates without state changes create unseen messages
-        elsif @p[:type] != 'create' && (!@p[:changes] || @p[:changes].empty? || !@p[:changes]['state_id'])
+        elsif @item[:type] != 'create' && (!@item[:changes] || @item[:changes].empty? || !@item[:changes]['state_id'])
           seen = false
         else
           seen = ticket.online_notification_seen_state(user.id)
         end
 
         OnlineNotification.add(
-          type: @p[:type],
+          type: @item[:type],
           object: 'Ticket',
           o_id: ticket.id,
           seen: seen,
           created_by_id: created_by_id,
           user_id: user.id,
         )
-        Rails.logger.debug "sent ticket online notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
+        Rails.logger.debug "sent ticket online notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})"
       end
 
       # ignore email channel notificaiton and empty emails
       if !channels['email'] || !user.email || user.email == ''
-        add_recipient_list(ticket, user, used_channels, @p[:type])
+        add_recipient_list(ticket, user, used_channels, @item[:type])
         next
       end
 
       used_channels.push 'email'
-      add_recipient_list(ticket, user, used_channels, @p[:type])
+      add_recipient_list(ticket, user, used_channels, @item[:type])
 
       # get user based notification template
       # if create, send create message / block update messages
       template = nil
-      if @p[:type] == 'create'
+      if @item[:type] == 'create'
         template = 'ticket_create'
-      elsif @p[:type] == 'update'
+      elsif @item[:type] == 'update'
         template = 'ticket_update'
-      elsif @p[:type] == 'reminder_reached'
+      elsif @item[:type] == 'reminder_reached'
         template = 'ticket_reminder_reached'
-      elsif @p[:type] == 'escalation'
+      elsif @item[:type] == 'escalation'
         template = 'ticket_escalation'
-      elsif @p[:type] == 'escalation_warning'
+      elsif @item[:type] == 'escalation_warning'
         template = 'ticket_escalation_warning'
       else
-        raise "unknown type for notification #{@p[:type]}"
+        raise "unknown type for notification #{@item[:type]}"
       end
 
       NotificationFactory::Mailer.notification(
@@ -177,7 +182,7 @@ class Observer::Ticket::Notification::BackgroundJob
         references: ticket.get_references,
         main_object: ticket,
       )
-      Rails.logger.debug "sent ticket email notifiaction to agent (#{@p[:type]}/#{ticket.id}/#{user.email})"
+      Rails.logger.debug "sent ticket email notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})"
     end
 
   end
@@ -200,14 +205,14 @@ class Observer::Ticket::Notification::BackgroundJob
 
   def human_changes(user, record)
 
-    return {} if !@p[:changes]
+    return {} if !@item[:changes]
     locale = user.preferences[:locale] || 'en-us'
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
     #puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
-    @p[:changes].each {|key, value|
+    @item[:changes].each {|key, value|
 
       # if no config exists, use all attributes
       if !attribute_list || attribute_list.empty?

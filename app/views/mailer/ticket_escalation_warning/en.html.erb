@@ -1,14 +1,14 @@
-Ticket will escalated (<%= d 'ticket.title' %>)
+Ticket will escalate (<%= d 'ticket.title' %>)
 
 <p>Hi <%= d 'recipient.firstname' %>,</p>
 <br>
-<p>a ticket (<%= d 'ticket.title' %>) from "<b><%= d 'ticket.customer.longname' %></b>" will escalate at "<%= d 'ticket.escalation_time' %>"!</p>
+<p>A ticket (<%= d 'ticket.title' %>) from "<b><%= d 'ticket.customer.longname' %></b>" will escalate at "<%= d 'ticket.escalation_time' %>"!</p>
 <br>
 <% if @objects[:article] %>
   <p>
   <%= t 'Information' %>:
   <blockquote type="cite">
-  <%= a 'article' %>
+  <%= a_html 'article' %>
   </blockquote>
   </p>
 <% end %>

@@ -1,0 +1,11 @@
+# <%= d 'ticket.title' %>
+_<<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>|Ticket#<%= d 'ticket.number' %>>: Updated by <%= d 'ticket.updated_by.longname' %> at <%= d 'ticket.updated_at' %>_
+<% if @objects[:changes] && !@objects[:changes].empty? %>
+  <% @objects[:changes].each do |key, value| %>
+  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>
+  <% end %>
+<% end %>
+
+<% if @objects[:article] %>
+<%= a_text 'article' %>
+<% end %>

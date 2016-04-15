@@ -1,0 +1,21 @@
+<form>
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="15%"><%- @T('Title') %>
+          <th width="50%"><%- @T('Value') %>
+          <th width="35%"><%- @T('Description') %>
+      </thead>
+      <tbody>
+<% for setting in @settings: %>
+        <tr>
+          <td><%- @T(setting.title) %>
+          <td data-name="<%- setting.name %>">
+          <td><p class="help-text"><%- @RichText(setting.description) %></p>
+<% end %>
+      </tbody>
+    </table>
+  </div>
+  <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
+</form>

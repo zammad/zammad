@@ -58,4 +58,4 @@ class Index extends App.ControllerContent
           @load()
         )
 
-App.Config.set( 'Packages', { prio: 1000, name: 'Packages', parent: '#system', target: '#system/package', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Packages', { prio: 1000, name: 'Packages', parent: '#system', target: '#system/package', controller: Index, role: ['Admin'] }, 'NavBarAdmin')

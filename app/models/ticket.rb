@@ -180,12 +180,12 @@ returns
       tickets.each { |ticket|
 
         # send notification
-        bg = Observer::Ticket::Notification::BackgroundJob.new(
+        Transaction::BackgroundJob.run(
+          object: 'Ticket',
+          type: 'reminder_reached',
           ticket_id: ticket.id,
           article_id: ticket.articles.last.id,
-          type: 'reminder_reached',
         )
-        bg.perform
 
         result.push ticket
       }
@@ -220,23 +220,23 @@ returns
 
       # send escalation
       if ticket.escalation_time < Time.zone.now
-        bg = Observer::Ticket::Notification::BackgroundJob.new(
+        Transaction::BackgroundJob.run(
+          object: 'Ticket',
+          type: 'escalation',
           ticket_id: ticket.id,
           article_id: ticket.articles.last.id,
-          type: 'escalation',
         )
-        bg.perform
         result.push ticket
         next
       end
 
       # check if warning need to be sent
-      bg = Observer::Ticket::Notification::BackgroundJob.new(
+      Transaction::BackgroundJob.run(
+        object: 'Ticket',
+        type: 'escalation_warning',
         ticket_id: ticket.id,
         article_id: ticket.articles.last.id,
-        type: 'escalation_warning',
       )
-      bg.perform
       result.push ticket
     }
     result

@@ -88,6 +88,9 @@ gem 'writeexcel'
 gem 'icalendar'
 gem 'browser'
 
+# integrations
+gem 'slack-notifier'
+
 # event machine
 gem 'eventmachine'
 gem 'em-websocket'
