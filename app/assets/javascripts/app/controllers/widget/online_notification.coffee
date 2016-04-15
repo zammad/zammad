@@ -124,8 +124,10 @@ class App.OnlineNotificationWidget extends App.Controller
 
     if _.isEmpty(items)
       @noNotifications.removeClass('hide')
+      @el.addClass 'is-empty'
     else
       @noNotifications.addClass('hide')
+      @el.removeClass 'is-empty'
 
   markAllAsRead: (e) ->
     e.preventDefault()
@@ -139,28 +141,6 @@ class App.OnlineNotificationWidget extends App.Controller
       success: (data, status, xhr) =>
         @fetch()
     )
-
-  updateHeight: ->
-
-    # set height of notification popover
-    heightApp               = $('#app').height()
-    heightPopoverSpacer     = 22
-    heightPopoverHeader     = @header.outerHeight(true)
-    isOverflowing           = false
-    heightPopoverContent    = 0
-    @$('.js-item').each (i, el) =>
-
-      # accumulate height of items
-      heightPopoverContent += el.clientHeight
-
-      if (heightPopoverHeader + heightPopoverContent + heightPopoverSpacer) > heightApp
-        containerHeight = heightApp - heightPopoverHeader - heightPopoverSpacer
-        @content.css 'height', containerHeight
-        isOverflowing = true
-        return false # exit .each loop
-
-    @el.toggleClass('is-overflowing', isOverflowing)
-    @content.css 'height', '' if !isOverflowing
 
   fetch: =>
     load = (data) =>
@@ -199,7 +179,6 @@ class App.OnlineNotificationWidget extends App.Controller
     $(window).on 'keydown.notifications', @listNavigate
     @shown = true
     @el.show()
-    @updateHeight()
 
   hide: =>
     $(window).off 'keydown.notifications'
@@ -225,7 +204,6 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
 
   onRenderEnd: ->
     @container.counterGen()
-    @container.updateHeight()
 
     # generate desktop notifications
     items = App.OnlineNotification.search(sortBy: 'created_at', order: 'DESC')

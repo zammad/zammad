@@ -3707,17 +3707,20 @@ footer {
   }
 
   .popover--notifications {
+    padding: 0;
     left: $navigationWidth;
     margin: 8px 2px;
-    min-height: 91px;
+    max-height: calc(100% - 16px);
     width: auto;
     max-width: 400px;
     min-width: 350px;
     position: absolute;
+    display: flex;
+    flex-direction: column;
     @extend .zIndex-5;
-
-    &.fade {
-      display: inline-block !important;
+    
+    &.is-empty .popover-notificationsHeader {
+      box-shadow: none;
     }
 
     .arrow {
@@ -3729,15 +3732,25 @@ footer {
       flex: 1;
       padding-left: 0;
       padding-right: 0;
+      margin-bottom: 0;
       overflow-y: auto;
-      margin-bottom: 10px;
     }
 
-    &.is-overflowing .popover-notificationsHeader {
+    .popover-notificationsHeader {
       box-shadow:
         0 1px hsla(240,4%,95%,.5),
         0 2px hsla(240,4%,95%,.2);
-      padding-bottom: 17px;
+      padding-bottom: 14px;
+      flex-shrink: 0;
+      
+      .btn {
+        padding-top: 3px;
+        padding-bottom: 5px;
+      }
+    }
+
+    .activity-placeholder {
+      margin-bottom: 21px;
     }
   }
 
