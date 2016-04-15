@@ -2541,6 +2541,9 @@ ol.tabs li {
     vertical-align: middle;
   }
   
+  &.inactive {
+    fill: hsl(198,18%,86%);
+  }
   &.ok {
     fill: $supergood-color;
   }
