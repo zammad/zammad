@@ -1806,7 +1806,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: true,
+  state: false,
   preferences: { prio: 1 },
   frontend: false
 )

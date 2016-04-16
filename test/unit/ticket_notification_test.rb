@@ -383,6 +383,43 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
   end
 
+  test 'ticket notification - no notification' do
+
+    # create ticket in group
+    ticket1 = Ticket.create(
+      title: 'some notification test 1 - no notification',
+      group: Group.lookup(name: 'Users'),
+      customer: customer,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: customer.id,
+      created_by_id: customer.id,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: customer.id,
+      created_by_id: customer.id,
+    )
+    assert( ticket1, 'ticket created - ticket no notification' )
+
+    # execute object transaction
+    Observer::Transaction.commit(disable_notification: true)
+    Delayed::Worker.new.work_off
+
+    # verify notifications to agent1 + agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+
+  end
+
   test 'ticket notification - z preferences tests' do
 
     agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true

@@ -21,6 +21,8 @@ class Transaction::Notification
   end
 
   def perform
+    return if @params[:disable_notification]
+
     ticket = Ticket.find(@item[:ticket_id])
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
