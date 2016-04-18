@@ -7,7 +7,8 @@ class Index extends App.ControllerIntegrationBase
     ['To setup this Service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the Webhook URL below.', 'Slack']
   ]
 
-  form: (localEl) =>
+  render: =>
+    super
 
     params = App.Setting.get(@featureConfig)
     if params && params.items
@@ -24,10 +25,10 @@ class Index extends App.ControllerIntegrationBase
       { name: 'types',    display: 'Trigger',  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: 'Where notification is sent.' },
       { name: 'group_id', display: 'Group',    tag: 'select', relation: 'Group', multiple: true, 'null': false, note: 'Only for this groups.' },
       { name: 'webhook',  display: 'Webhook',  tag: 'input', type: 'text', limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
-      { name: 'username', display: 'username', tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
-      { name: 'channel',  display: 'channel',  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
+      { name: 'username', display: 'Username', tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
+      { name: 'channel',  display: 'Channel',  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
     ]
-    console.log('p', params)
+
     settings = []
     for item in configureAttributes
       setting =
@@ -54,7 +55,12 @@ class Index extends App.ControllerIntegrationBase
         params: localParams
       )
 
-    localEl.find('.js-form').html(formEl)
+    @$('.js-form').html(formEl)
+
+    new App.HttpLog(
+      el: @$('.js-log')
+      facility: 'slack_webhook'
+    )
 
 class State
   @current: ->

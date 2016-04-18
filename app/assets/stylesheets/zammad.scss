@@ -6929,7 +6929,9 @@ output {
   background: white;
   table-layout: auto;
   margin-bottom: 20px;
-  
+  word-break: break-all;
+  word-wrap: break-word;
+
   &.is-invalid {
     border-radius: 3px;
     box-shadow: 
@@ -6975,6 +6977,7 @@ output {
     letter-spacing: 0.05em;
     background: hsl(197,20%,93%);
     border-bottom: none;
+    word-break: normal;
   }
 
   td.empty-cell {

@@ -16,6 +16,8 @@ class App.ControllerIntegrationBase extends App.Controller
     return if !@authenticate(false, 'Admin')
     @title @featureName, true
 
+    @initalRender = true
+
     @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
   switch: =>
@@ -23,17 +25,14 @@ class App.ControllerIntegrationBase extends App.Controller
     App.Setting.set(@featureIntegration, value)
 
   render: =>
-    localEl = $( App.view('integration/base')(
-      header: @featureName
-      description: @description
-      feature: @featureIntegration
-      featureEnabled: App.Setting.get(@featureIntegration)
-    ))
-    @form localEl
-    @html localEl
-
-  form: (localEl) ->
-    console.log('implement own form method')
+    if @initalRender
+      @html App.view('integration/base')(
+        header: @featureName
+        description: @description
+        feature: @featureIntegration
+        featureEnabled: App.Setting.get(@featureIntegration)
+      )
+      @initalRender = false
 
   submit: (e) =>
     e.preventDefault()

@@ -1,0 +1,27 @@
+<div class="settings-entry">
+  <table class="settings-list" style="width: 100%;">
+    <tbody>
+      <tr>
+        <td width="20%"><%- @T('Direction') %>
+        <td><%- @T(@record.direction) %>
+      <tr>
+        <td><%- @T('URL') %>
+        <td><%= @record.url %>
+      <tr>
+        <td><%- @T('Method') %>
+        <td><%= @record.method %>
+      <tr>
+        <td><%- @T('Status') %>
+        <td><%= @record.status %>
+      <tr>
+        <td><%- @T('Request') %>
+        <td><%- App.Utils.text2html(@record.request.content) %>
+      <tr>
+        <td><%- @T('Response') %>
+        <td><%- App.Utils.text2html(@record.response.content) %>
+      <tr>
+        <td><%- @T('Created at') %>
+        <td><%- @datetime(@record.created_at) %>
+    </tbody>
+  </table>
+</div>

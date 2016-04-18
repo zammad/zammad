@@ -2,6 +2,14 @@
 
 class Transaction::Slack
 =begin
+
+backend = Transaction::Slack.new(
+    object: 'Ticket',
+    type: 'create',
+    ticket_id: 1,
+)
+backend.perform
+
   {
     object: 'Ticket',
     type: 'update',
@@ -83,24 +91,30 @@ class Transaction::Slack
 
       # check action
       if item['types']
-        hit = false
-        item['types'].each {|type|
-          next if type.to_s != @item[:type].to_s
-          hit = true
-          break
-        }
-        next if !hit
+        if item['types'].class == Array
+          hit = false
+          item['types'].each {|type|
+            next if type.to_s != @item[:type].to_s
+            hit = true
+            break
+          }
+          next if !hit
+        end
+        next if item['types'].to_s != @item[:type].to_s
       end
 
       # check group
       if item['group_ids']
-        hit = false
-        item['group_ids'].each {|group_id|
-          next if group_id.to_s != ticket.group_id.to_s
-          hit = true
-          break
-        }
-        next if !hit
+        if item['group_ids'].class == Array
+          hit = false
+          item['group_ids'].each {|group_id|
+            next if group_id.to_s != ticket.group_id.to_s
+            hit = true
+            break
+          }
+          next if !hit
+        end
+        next if item['group_ids'].to_s != ticket.group_id.to_s
       end
 
       Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{item['webhook']})"
@@ -108,8 +122,9 @@ class Transaction::Slack
         item['webhook'],
         channel: item['channel'],
         username: item['username'],
-        icon_url: logo_url,
+        #icon_url: logo_url,
         mrkdwn: true,
+        http_client: Transaction::Slack::Client,
       )
       if item['expand']
         body = "#{result[:subject]}\n#{result[:body]}"
@@ -123,11 +138,9 @@ class Transaction::Slack
         result = notifier.ping result[:subject],
                                attachments: [attachment]
       end
-      if !result
-        Rails.logger.error "Unable to post webhook: #{item['webhook']}"
-      end
-      if result.code.to_s != '200' && result.code.to_s != '201'
+      if !result.success?
         Rails.logger.error "Unable to post webhook: #{item['webhook']}: #{result.inspect}"
+        next
       end
       Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{item['webhook']})"
     }
@@ -222,6 +235,23 @@ class Transaction::Slack
                          end
     }
     changes
+  end
+
+  class Transaction::Slack::Client
+    def self.post(uri, params = {})
+      UserAgent.post(
+        uri.to_s,
+        params,
+        {
+          open_timeout: 4,
+          read_timeout: 10,
+          total_timeout: 20,
+          log: {
+            facility: 'slack_webhook',
+          }
+        },
+      )
+    end
   end
 
 end

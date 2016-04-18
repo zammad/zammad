@@ -62,9 +62,10 @@ returns
       total_timeout = options[:total_timeout] || 60
       Timeout.timeout(total_timeout) do
         response = http.request(request)
-        return process(response, uri, count, params, options)
+        return process(request, response, uri, count, params, options)
       end
     rescue => e
+      log(url, request, nil, options)
       return Result.new(
         error: e.inspect,
         success: false,
@@ -114,9 +115,10 @@ returns
       total_timeout = options[:total_timeout] || 60
       Timeout.timeout(total_timeout) do
         response = http.request(request)
-        return process(response, uri, count, params, options)
+        return process(request, response, uri, count, params, options)
       end
     rescue => e
+      log(url, request, nil, options)
       return Result.new(
         error: e.inspect,
         success: false,
@@ -165,9 +167,10 @@ returns
       total_timeout = options[:total_timeout] || 60
       Timeout.timeout(total_timeout) do
         response = http.request(request)
-        return process(response, uri, count, params, options)
+        return process(request, response, uri, count, params, options)
       end
     rescue => e
+      log(url, request, nil, options)
       return Result.new(
         error: e.inspect,
         success: false,
@@ -209,9 +212,10 @@ returns
       total_timeout = options[:total_timeout] || 60
       Timeout.timeout(total_timeout) do
         response = http.request(request)
-        return process(response, uri, count, {}, options)
+        return process(request, response, uri, count, {}, options)
       end
     rescue => e
+      log(url, request, nil, options)
       return Result.new(
         error: e.inspect,
         success: false,
@@ -293,7 +297,64 @@ returns
     request
   end
 
-  def self.process(response, uri, count, params, options)
+  def self.log(url, request, response, options)
+    return if !options[:log]
+
+    # request
+    request_data = {
+      content: '',
+      content_type: request['Content-Type'],
+      content_encoding: request['Content-Encoding'],
+      source: request['User-Agent'] || request['Server'],
+    }
+    request.each_header {|key, value|
+      request_data[:content] += "#{key}: #{value}\n"
+    }
+    body = request.body
+    if body
+      request_data[:content] += "\n" + body
+    end
+    request_data[:content] = request_data[:content].slice(0, 8000)
+
+    # response
+    response_data = {
+      code: 0,
+      content: '',
+      content_type: nil,
+      content_encoding: nil,
+      source: nil,
+    }
+    if response
+      response_data[:code] = response.code
+      response_data[:content_type] = response['Content-Type']
+      response_data[:content_encoding] = response['Content-Encoding']
+      response_data[:source] = response['User-Agent'] || response['Server']
+      response.each_header {|key, value|
+        response_data[:content] += "#{key}: #{value}\n"
+      }
+      body = response.body
+      if body
+        response_data[:content] += "\n" + body
+      end
+      response_data[:content] = response_data[:content].slice(0, 8000)
+    end
+
+    record = {
+      direction: 'out',
+      facility: options[:log][:facility],
+      url: url,
+      status: response_data[:code],
+      ip: nil,
+      request: request_data,
+      response: response_data,
+      method: request.method,
+    }
+    HttpLog.create(record)
+  end
+
+  def self.process(request, response, uri, count, params, options) # rubocop:disable Metrics/ParameterLists
+    log(uri.to_s, request, response, options)
+
     if !response
       return Result.new(
         error: "Can't connect to #{uri}, got no response!",

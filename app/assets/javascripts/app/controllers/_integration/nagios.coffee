@@ -7,10 +7,11 @@ class Index extends App.ControllerIntegrationBase
     ['If the host and service is recovered again, the ticket will be closed automatically.']
   ]
 
-  form: (localeEl) ->
+  render: =>
+    super
     new App.SettingsForm(
       area: 'Integration::Nagios'
-      el: localeEl.find('.js-form')
+      el: @$('.js-form')
     )
 
 class State
