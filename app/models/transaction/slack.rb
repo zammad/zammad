@@ -46,16 +46,20 @@ backend.perform
     # get user based notification template
     # if create, send create message / block update messages
     template = nil
+    sent_value = nil
     if @item[:type] == 'create'
       template = 'ticket_create'
     elsif @item[:type] == 'update'
       template = 'ticket_update'
     elsif @item[:type] == 'reminder_reached'
       template = 'ticket_reminder_reached'
+      sent_value = ticket.pending_time
     elsif @item[:type] == 'escalation'
       template = 'ticket_escalation'
+      sent_value = ticket.escalation_time
     elsif @item[:type] == 'escalation_warning'
       template = 'ticket_escalation_warning'
+      sent_value = ticket.escalation_time
     else
       raise "unknown type for notification #{@item[:type]}"
     end
@@ -88,6 +92,24 @@ backend.perform
 
     config['items'].each {|item|
 
+      # check if reminder_reached/escalation/escalation_warning is already sent today
+      md5_webhook = Digest::MD5.hexdigest(@item['webhook'])
+      cache_key = "slack::backend::#{@item[:type]}::#{md5_webhook}"
+      if sent_value
+        value = Cache.get(cache_key)
+        if value == sent_value
+          Rails.logger.debug "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{@item['webhook']})"
+          next
+        end
+        Cache.write(
+          cache_key,
+          sent_value,
+          {
+            expires_in: 24.hours
+          },
+        )
+      end
+
       # check action
       if item['types'].class == Array
         hit = false
@@ -119,7 +141,7 @@ backend.perform
         logo_url = item['logo_url']
       end
 
-      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{item['webhook']})"
+      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{@item['webhook']})"
 
       notifier = Slack::Notifier.new(
         item['webhook'],
@@ -142,10 +164,13 @@ backend.perform
                                attachments: [attachment]
       end
       if !result.success?
-        Rails.logger.error "Unable to post webhook: #{item['webhook']}: #{result.inspect}"
+        if sent_value
+          Cache.delete(cache_key)
+        end
+        Rails.logger.error "Unable to post webhook: #{@item['webhook']}: #{result.inspect}"
         next
       end
-      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{item['webhook']})"
+      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{@item['webhook']})"
     }
 
   end

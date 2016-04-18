@@ -34,7 +34,7 @@ class SlackTest < ActiveSupport::TestCase
     items = [
       {
         group_ids: [slack_group.id],
-        types: %w(create update),
+        types: %w(create update reminder_reached),
         webhook: webhook,
         channel: channel,
         username: 'zammad bot',
@@ -72,7 +72,7 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert_not(slack_check(channel, hash))
+    assert_equal(0, slack_check(channel, hash))
 
     ticket1.state = Ticket::State.find_by(name: 'open')
     ticket1.save
@@ -81,7 +81,7 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert_not(slack_check(channel, hash))
+    assert_equal(0, slack_check(channel, hash))
 
     # case 2
     hash = hash_gen
@@ -110,7 +110,7 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert(slack_check(channel, hash))
+    assert_equal(1, slack_check(channel, hash))
 
     hash = hash_gen
     text = "#{rand_word}... #{hash}"
@@ -122,7 +122,33 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert(slack_check(channel, hash))
+    assert_equal(1, slack_check(channel, hash))
+
+    ticket2.state = Ticket::State.find_by(name: 'pending reminder')
+    ticket2.pending_time = Time.zone.now - 2.days
+    ticket2.save
+
+    Observer::Transaction.commit
+    Delayed::Worker.new.work_off
+
+    # check if message exists
+    assert_equal(2, slack_check(channel, hash))
+
+    Ticket.process_pending
+
+    Observer::Transaction.commit
+    Delayed::Worker.new.work_off
+
+    # check if message exists
+    assert_equal(3, slack_check(channel, hash))
+
+    Ticket.process_pending
+
+    Observer::Transaction.commit
+    Delayed::Worker.new.work_off
+
+    # check if message exists
+    assert_equal(3, slack_check(channel, hash))
 
     items = [
       {
@@ -165,7 +191,7 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert_not(slack_check(channel, hash))
+    assert_equal(0, slack_check(channel, hash))
 
     ticket3.state = Ticket::State.find_by(name: 'open')
     ticket3.save
@@ -174,7 +200,7 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert_not(slack_check(channel, hash))
+    assert_equal(0, slack_check(channel, hash))
 
     # case 4
     hash = hash_gen
@@ -203,7 +229,7 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert(slack_check(channel, hash))
+    assert_equal(1, slack_check(channel, hash))
 
     hash = hash_gen
     text = "#{rand_word}... #{hash}"
@@ -215,7 +241,7 @@ class SlackTest < ActiveSupport::TestCase
     Delayed::Worker.new.work_off
 
     # check if message exists
-    assert_not(slack_check(channel, hash))
+    assert_equal(0, slack_check(channel, hash))
 
   end
 
@@ -271,15 +297,15 @@ class SlackTest < ActiveSupport::TestCase
     if !channel_history['messages']
       raise "ERROR: No history messages for channel #{channel_name}/#{channel_id}"
     end
+    message_count = 0
     channel_history['messages'].each {|message|
       next if !message['text']
       if message['text'] =~ /#{search_for}/i
-        p "SUCCESS: message with #{search_for} found!"
-        return true
+        message_count += 1
+        p "SUCCESS: message with #{search_for} found #{message_count} time(s)!"
       end
     }
-    #raise "ERROR: No such message containing #{search_for} in history of channel #{channel_name}/#{channel_id}"
-    false
+    message_count
   end
 
 end
