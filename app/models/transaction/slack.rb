@@ -90,30 +90,28 @@ backend.perform
     config['items'].each {|item|
 
       # check action
-      if item['types']
-        if item['types'].class == Array
-          hit = false
-          item['types'].each {|type|
-            next if type.to_s != @item[:type].to_s
-            hit = true
-            break
-          }
-          next if !hit
-        end
+      if item['types'].class == Array
+        hit = false
+        item['types'].each {|type|
+          next if type.to_s != @item[:type].to_s
+          hit = true
+          break
+        }
+        next if !hit
+      elsif item['types']
         next if item['types'].to_s != @item[:type].to_s
       end
 
       # check group
-      if item['group_ids']
-        if item['group_ids'].class == Array
-          hit = false
-          item['group_ids'].each {|group_id|
-            next if group_id.to_s != ticket.group_id.to_s
-            hit = true
-            break
-          }
-          next if !hit
-        end
+      if item['group_ids'].class == Array
+        hit = false
+        item['group_ids'].each {|group_id|
+          next if group_id.to_s != ticket.group_id.to_s
+          hit = true
+          break
+        }
+        next if !hit
+      elsif item['group_ids']
         next if item['group_ids'].to_s != ticket.group_id.to_s
       end
 
