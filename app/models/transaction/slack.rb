@@ -29,7 +29,6 @@ backend.perform
   def perform
     return if @item[:object] != 'Ticket'
     return if !Setting.get('slack_integration')
-    logo_url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/assets/images/#{Setting.get('product_logo')}"
 
     config = Setting.get('slack_config')
     return if !config
@@ -115,12 +114,18 @@ backend.perform
         next if item['group_ids'].to_s != ticket.group_id.to_s
       end
 
+      logo_url = 'https://zammad.com/assets/images/logo-200x200.png'
+      if !item['logo_url'].empty?
+        logo_url = item['logo_url']
+      end
+
       Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{item['webhook']})"
+
       notifier = Slack::Notifier.new(
         item['webhook'],
         channel: item['channel'],
         username: item['username'],
-        #icon_url: logo_url,
+        icon_url: logo_url,
         mrkdwn: true,
         http_client: Transaction::Slack::Client,
       )
