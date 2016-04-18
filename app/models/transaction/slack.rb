@@ -78,7 +78,7 @@ backend.perform
     # good, warning, danger
     color = '#000000'
     ticket_state_type = ticket.state.state_type.name
-    if ticket.escalation_time && ticket.escalation_time > Time.zone.now
+    if ticket.escalation_time && ticket.escalation_time < Time.zone.now
       color = '#f35912'
     elsif ticket_state_type == 'pending reminder'
       if ticket.pending_time && ticket.pending_time < Time.zone.now
