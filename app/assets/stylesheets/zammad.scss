@@ -1613,7 +1613,6 @@ textarea.form-control {
 }
 
 select.form-control:not([multiple]) {
-  padding-left: 10px;
   padding-right: 34px;
   word-wrap: normal;
 }
@@ -5386,8 +5385,8 @@ footer {
 
 .tokenfield .token {
   padding: 0 0 0 10px;
-  margin: 0 5px 8px 0;
-  height: 26px;
+  margin: 0 5px 7px 0;
+  height: 25px;
   line-height: 27px;
   color: white;
   background: hsl(198,19%,72%);
@@ -5399,9 +5398,14 @@ footer {
 
   .tokenfield .token-input {
     vertical-align: top;
-    margin: 2px 0 0 5px;
-    height: 25px;
+    padding: 0 10px 7px 0;
+    margin: 0;
+    height: 32px;
     display: inline-block;
+  }
+
+  .tokenfield .token ~ .token-input {
+    padding: 0 5px 7px 0;
   }
 
   .tokenfield .token .token-label {
@@ -5409,7 +5413,7 @@ footer {
   }
 
   .tokenfield.form-control {
-    padding-top: 8px;
+    padding: 7px 7px 0;
   }
 
   .tokenfield .token .close {
