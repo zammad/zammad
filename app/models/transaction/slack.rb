@@ -90,15 +90,16 @@ backend.perform
       color = '#38ad69'
     end
 
-    config['items'].each {|item|
+    config['items'].each {|local_config|
+      next if local_config['webhook'].empty?
 
       # check if reminder_reached/escalation/escalation_warning is already sent today
-      md5_webhook = Digest::MD5.hexdigest(@item['webhook'])
+      md5_webhook = Digest::MD5.hexdigest(local_config['webhook'])
       cache_key = "slack::backend::#{@item[:type]}::#{md5_webhook}"
       if sent_value
         value = Cache.get(cache_key)
         if value == sent_value
-          Rails.logger.debug "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{@item['webhook']})"
+          Rails.logger.debug "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})"
           next
         end
         Cache.write(
@@ -111,47 +112,47 @@ backend.perform
       end
 
       # check action
-      if item['types'].class == Array
+      if local_config['types'].class == Array
         hit = false
-        item['types'].each {|type|
+        local_config['types'].each {|type|
           next if type.to_s != @item[:type].to_s
           hit = true
           break
         }
         next if !hit
-      elsif item['types']
-        next if item['types'].to_s != @item[:type].to_s
+      elsif local_config['types']
+        next if local_config['types'].to_s != @item[:type].to_s
       end
 
       # check group
-      if item['group_ids'].class == Array
+      if local_config['group_ids'].class == Array
         hit = false
-        item['group_ids'].each {|group_id|
+        local_config['group_ids'].each {|group_id|
           next if group_id.to_s != ticket.group_id.to_s
           hit = true
           break
         }
         next if !hit
-      elsif item['group_ids']
-        next if item['group_ids'].to_s != ticket.group_id.to_s
+      elsif local_config['group_ids']
+        next if local_config['group_ids'].to_s != ticket.group_id.to_s
       end
 
       logo_url = 'https://zammad.com/assets/images/logo-200x200.png'
-      if !item['logo_url'].empty?
-        logo_url = item['logo_url']
+      if !local_config['logo_url'].empty?
+        logo_url = local_config['logo_url']
       end
 
-      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{@item['webhook']})"
+      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})"
 
       notifier = Slack::Notifier.new(
-        item['webhook'],
-        channel: item['channel'],
-        username: item['username'],
+        local_config['webhook'],
+        channel: local_config['channel'],
+        username: local_config['username'],
         icon_url: logo_url,
         mrkdwn: true,
         http_client: Transaction::Slack::Client,
       )
-      if item['expand']
+      if local_config['expand']
         body = "#{result[:subject]}\n#{result[:body]}"
         result = notifier.ping body
       else
@@ -167,10 +168,10 @@ backend.perform
         if sent_value
           Cache.delete(cache_key)
         end
-        Rails.logger.error "Unable to post webhook: #{@item['webhook']}: #{result.inspect}"
+        Rails.logger.error "Unable to post webhook: #{local_config['webhook']}: #{result.inspect}"
         next
       end
-      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{@item['webhook']})"
+      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})"
     }
 
   end
