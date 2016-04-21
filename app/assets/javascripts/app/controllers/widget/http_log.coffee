@@ -9,22 +9,23 @@ class App.HttpLog extends App.Controller
 
   fetch: =>
     @ajax(
-      id:    'http_logs'
-      type:  'GET'
-      url:   "#{@apiPath}/http_logs/#{@facility}"
+      id:   'http_logs'
+      type: 'GET'
+      url:  "#{@apiPath}/http_logs/#{@facility}"
       data:
         limit: @limit || 50
       processData: true
       success: (data) =>
-        @records = data
-        @render()
+        if !@records[0] || (data[0] && @records[0] && data[0].updated_at isnt @records[0].updated_at)
+          @records = data
+          @render()
+        @delay(@fetch, 20000)
     )
 
   render: =>
     @html App.view('widget/http_log')(
       records: @records
     )
-    #@delay(message, 2000)
 
   show: (e) =>
     e.preventDefault()
