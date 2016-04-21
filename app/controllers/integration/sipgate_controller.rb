@@ -79,8 +79,7 @@ class Integration::SipgateController < ApplicationController
       content = xml.Response('onHangup' => in_url, 'onAnswer' => in_url)
     end
 
-    send_data content,
-              type: 'application/xml; charset=UTF-8;'
+    send_data content, type: 'application/xml; charset=UTF-8;'
 
     # notify about outbound call
     Sessions.broadcast(
