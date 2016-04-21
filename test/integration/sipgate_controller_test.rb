@@ -179,6 +179,19 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('http://zammad.example.com/api/v1/sipgate/in', on_hangup)
     assert_equal('http://zammad.example.com/api/v1/sipgate/in', on_answer)
 
+    # no config
+    Setting.set('sipgate_config', {})
+    params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&callId=4991155921769858278&user%5B%5D=user+1&user%5B%5D=user+2'
+    post '/api/v1/sipgate/in', params
+    assert_response(500)
+    error = nil
+    content = @response.body
+    response = REXML::Document.new(content)
+    response.elements.each('Response/Error') do |element|
+      error = element.text
+    end
+    assert_equal('Feature not configured, please contact your admin!', error)
+
   end
 
 end

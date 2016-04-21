@@ -5,11 +5,11 @@ class Integration::SipgateController < ApplicationController
 
   # notify about inbound call / block inbound call
   def in
-    return if feature_disabled
+    return if !configured?
 
     config = Setting.get('sipgate_config')
-    config_inbound = config[:inbound]
-    block_caller_ids = config_inbound[:block_caller_ids]
+    config_inbound = config[:inbound] || {}
+    block_caller_ids = config_inbound[:block_caller_ids] || []
 
     if params['event'] == 'newCall'
 
@@ -49,7 +49,7 @@ class Integration::SipgateController < ApplicationController
 
   # set caller id of outbound call
   def out
-    return if feature_disabled
+    return if !configured?
 
     config = Setting.get('sipgate_config')
     config_outbound = config[:outbound][:routing_table]
@@ -91,15 +91,26 @@ class Integration::SipgateController < ApplicationController
 
   private
 
-  def feature_disabled
+  def configured?
     if !Setting.get('sipgate_integration')
-      render(
-        json: {},
-        status: :unauthorized
-      )
-      return true
+      xml_error('Feature is disable, please contact your admin to enable it!')
+      return false
     end
-    false
+    config = Setting.get('sipgate_config')
+    if !config || !config[:inbound] || !config[:outbound]
+      xml_error('Feature not configured, please contact your admin!')
+      return false
+    end
+    true
+  end
+
+  def xml_error(error)
+    xml = Builder::XmlMarkup.new(indent: 2)
+    xml.instruct!
+    content = xml.Response() do
+      xml.Error(error)
+    end
+    send_data content, type: 'application/xml; charset=UTF-8;', status: '500'
   end
 
   def base_url
