@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::Transaction < ActiveRecord::Observer
-  observe :ticket, 'ticket::_article'
+  observe :ticket, 'ticket::_article', :user, :organization
 
   def self.commit(params = {})
 
@@ -28,10 +28,10 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # get uniq objects
     list_objects = get_uniq_changes(list)
-    list_objects.each {|_id, item|
-
-      # send background job
-      Delayed::Job.enqueue(Transaction::BackgroundJob.new(item, params))
+    list_objects.each {|_object, objects|
+      objects.each {|_id, item|
+        Delayed::Job.enqueue(Transaction::BackgroundJob.new(item, params))
+      }
     }
   end
 
@@ -40,33 +40,37 @@ class Observer::Transaction < ActiveRecord::Observer
   result = get_uniq_changes(events)
 
   result = {
-    1 => {
-      object: 'Ticket',
-      type: 'create',
-      ticket_id: 123,
-      article_id: 123,
-    },
-    9 => {
-      object: 'Ticket',
-      type: 'update',
-      ticket_id: 123,
-      changes: {
-        attribute1: [before, now],
-        attribute2: [before, now],
-      }
+    'Ticket' =>
+      1 => {
+        object: 'Ticket',
+        type: 'create',
+        object_id: 123,
+        article_id: 123,
+      },
+      9 => {
+        object: 'Ticket',
+        type: 'update',
+        object_id: 123,
+        changes: {
+          attribute1: [before, now],
+          attribute2: [before, now],
+        },
+      },
     },
   }
 
   result = {
-    9 => {
-      object: 'Ticket',
-      type: 'update',
-      ticket_id: 123,
-      article_id: 123,
-      changes: {
-        attribute1: [before, now],
-        attribute2: [before, now],
-      }
+    'Ticket' =>
+      9 => {
+        object: 'Ticket',
+        type: 'update',
+        object_id: 123,
+        article_id: 123,
+        changes: {
+          attribute1: [before, now],
+          attribute2: [before, now],
+        },
+      },
     },
   }
 
@@ -76,57 +80,59 @@ class Observer::Transaction < ActiveRecord::Observer
     list_objects = {}
     events.each { |event|
 
-      # get current state of objects
-      if event[:name] == 'Ticket::Article'
+      # simulate article create as ticket update
+      article = nil
+      if event[:object] == 'Ticket::Article'
         article = Ticket::Article.lookup(id: event[:id])
-
-        # next if article is already deleted
         next if !article
+        next if event[:type] == 'update'
 
-        ticket = article.ticket
-        if !list_objects[ticket.id]
-          list_objects[ticket.id] = {}
+        # set new event infos
+        ticket = Ticket.lookup(id: article.ticket_id)
+        event[:object] = 'Ticket'
+        event[:id] = ticket.id
+        event[:type] = 'update'
+        event[:changes] = nil
+      end
+
+      # get current state of objects
+      object = Kernel.const_get(event[:object]).lookup(id: event[:id])
+
+      # next if object is already deleted
+      next if !object
+
+      if !list_objects[event[:object]]
+        list_objects[event[:object]] = {}
+      end
+      if !list_objects[event[:object]][object.id]
+        list_objects[event[:object]][object.id] = {}
+      end
+      store = list_objects[event[:object]][object.id]
+      store[:object] = event[:object]
+      store[:object_id] = object.id
+
+      if !store[:type] || store[:type] == 'update'
+        store[:type] = event[:type]
+      end
+
+      # merge changes
+      if event[:changes]
+        if !store[:changes]
+          store[:changes] = event[:changes]
+        else
+          event[:changes].each {|key, value|
+            if !store[:changes][key]
+              store[:changes][key] = value
+            else
+              store[:changes][key][1] = value[1]
+            end
+          }
         end
-        list_objects[ticket.id][:object] = 'Ticket'
-        list_objects[ticket.id][:article_id] = article.id
-        list_objects[ticket.id][:ticket_id]  = ticket.id
+      end
 
-        if !list_objects[ticket.id][:type]
-          list_objects[ticket.id][:type] = 'update'
-        end
-
-      elsif event[:name] == 'Ticket'
-        ticket = Ticket.lookup(id: event[:id])
-
-        # next if ticket is already deleted
-        next if !ticket
-
-        if !list_objects[ticket.id]
-          list_objects[ticket.id] = {}
-        end
-        list_objects[ticket.id][:object] = 'Ticket'
-        list_objects[ticket.id][:ticket_id] = ticket.id
-
-        if !list_objects[ticket.id][:type] || list_objects[ticket.id][:type] == 'update'
-          list_objects[ticket.id][:type] = event[:type]
-        end
-
-        # merge changes
-        if event[:changes]
-          if !list_objects[ticket.id][:changes]
-            list_objects[ticket.id][:changes] = event[:changes]
-          else
-            event[:changes].each {|key, value|
-              if !list_objects[ticket.id][:changes][key]
-                list_objects[ticket.id][:changes][key] = value
-              else
-                list_objects[ticket.id][:changes][key][1] = value[1]
-              end
-            }
-          end
-        end
-      else
-        raise "unknown object for integration #{event[:name]}"
+      # remember article id if exists
+      if article
+        store[:article_id] = article.id
       end
     }
     list_objects
@@ -138,7 +144,7 @@ class Observer::Transaction < ActiveRecord::Observer
     return if Setting.get('import_mode')
 
     e = {
-      name: record.class.name,
+      object: record.class.name,
       type: 'create',
       data: record,
       id: record.id,
@@ -150,9 +156,6 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # return if we run import mode
     return if Setting.get('import_mode')
-
-    # ignore updates on articles / we just want send integrations on ticket updates
-    return if record.class.name == 'Ticket::Article'
 
     # ignore certain attributes
     real_changes = {}
@@ -173,7 +176,7 @@ class Observer::Transaction < ActiveRecord::Observer
     return if real_changes.empty?
 
     e = {
-      name: record.class.name,
+      object: record.class.name,
       type: 'update',
       data: record,
       changes: real_changes,

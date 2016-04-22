@@ -1,0 +1,58 @@
+# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+require 'signature_detection'
+
+class Transaction::SignatureDetection
+
+=begin
+  {
+    object: 'Ticket',
+    type: 'update',
+    object_id: 123,
+    via_web: true,
+    changes: {
+      'attribute1' => [before, now],
+      'attribute2' => [before, now],
+    }
+  },
+=end
+
+  def initialize(item, params = {})
+    @item = item
+    @params = params
+  end
+
+  def perform
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
+    return if @item[:type] != 'create'
+    return if @item[:object] != 'Ticket'
+
+    ticket = Ticket.lookup(id: @item[:object_id])
+    return if !ticket
+    article = ticket.articles.first
+    return if !article
+
+    # if sender is not customer, do not change anything
+    sender = Ticket::Article::Sender.lookup(id: article.sender_id)
+    return if !sender
+    return if sender['name'] != 'Customer'
+
+    # set email attributes
+    type = Ticket::Article::Type.lookup(id: article.type_id)
+    return if type['name'] != 'email'
+
+    # add queue job to update current signature of user id
+    SignatureDetection.rebuild_user(article.created_by_id)
+
+    # user
+    user = User.lookup(id: article.created_by_id)
+    return if !user
+    return if !user.preferences
+    return if !user.preferences[:signature_detection]
+    article.preferences[:signature_detection] = SignatureDetection.find_signature_line(user.preferences[:signature_detection], article.body)
+    article.save
+  end
+
+end

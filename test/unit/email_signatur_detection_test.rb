@@ -73,6 +73,7 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     ticket1, article1, user1, mail = Channel::EmailParser.new.process({}, raw_email)
     assert(ticket1)
     assert(article1)
+    Delayed::Worker.new.work_off
 
     # process email II
     file = File.open("#{Rails.root}/test/fixtures/email_signature_detection/client_a_2.txt", 'rb')
@@ -80,8 +81,6 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     ticket2, article2, user2, mail = Channel::EmailParser.new.process({}, raw_email)
     assert(ticket2)
     assert(article2)
-
-    # process background jobs (user signature detection & article signature detection)
     Delayed::Worker.new.work_off
 
     # check if user2 has a signature_detection value
@@ -94,8 +93,10 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     ticket3, article3, user3, mail = Channel::EmailParser.new.process({}, raw_email)
     assert(ticket3)
     assert(article3)
+    Delayed::Worker.new.work_off
 
     # check if article3 has a signature_detection value
+    article3 = Ticket::Article.find(article3.id)
     assert_equal(article3.preferences[:signature_detection], 6)
 
     # relbuild all
