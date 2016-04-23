@@ -15,8 +15,8 @@
       <tbody>
         <% for item in @list: %>
         <tr>
-          <td><%= item.from %></td>
-          <td><%= item.to %></td>
+          <td><%= item.from %><% if item.from_comment: %> (<%= item.from_comment %>)<% end %></td>
+          <td><%= item.to %><% if item.to_comment: %> (<%= item.to_comment %>)<% end %></td>
           <td><%= item.state %></td>
           <td><%= item.comment %></td>
           <td><%- @humanTime(item.created_at) %></td>

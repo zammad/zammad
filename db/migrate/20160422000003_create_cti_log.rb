@@ -15,6 +15,9 @@ class CreateCtiLog < ActiveRecord::Migration
     add_index :cti_logs, [:direction]
     add_index :cti_logs, [:from]
 
+    # return if it's a new setup
+    return if !Setting.find_by(name: 'system_init_done')
+
     Role.create_if_not_exists(
       name: 'CTI',
       note: 'Access to CTI feature.',
