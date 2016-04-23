@@ -1915,6 +1915,13 @@ Role.create_if_not_exists(
   updated_by_id: 1,
   created_by_id: 1
 )
+Role.create_if_not_exists(
+  id: 6,
+  name: 'CTI',
+  note: 'Access to CTI feature.',
+  updated_by_id: 1,
+  created_by_id: 1
+)
 
 Group.create_if_not_exists(
   id: 1,
