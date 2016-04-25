@@ -1,6 +1,9 @@
 <div class="tokenfield form-control u-positionOrigin">
-  <input class="js-userId" type="hidden" name="<%- @attribute.name %>" tabindex="-1">
-  <input name="<%- @attribute.name %>_completion" class="user-select token-input js-userSelect" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+  <input class="js-userId" type="hidden" value="<%= @value %>" name="<%- @attribute.name %>" tabindex="-1">
+  <% if @attribute.multiple: %>
+    <%- @tokens %>
+  <% end %>
+  <input name="<%- @attribute.name %>_completion" class="user-select token-input js-userSelect" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="off" role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
   <%- @Icon('arrow-down', 'dropdown-arrow') %>
 </div>
 

@@ -32,12 +32,8 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @build()
 
     # set current value
-    if @attribute.value
-      if @attribute.multiple and typeof value is 'object'
-        for value in @attribute.value
-          @selectUser value, false
-      else
-        @selectUser @attribute.value, false
+    if @attribute.value and @callback
+      @callback(@attribute.value)
 
   element: =>
     @el
@@ -232,9 +228,37 @@ class App.UserOrganizationAutocompletion extends App.Controller
     App.view('generic/user_search/new_user')()
 
   build: =>
+    if @attribute.multiple
+      if typeof @attribute.value is not 'object'
+        @attribute.value = [@attribute.value]
+      
+      value = @attribute.value.join ','
+      tokens = ''
+      name = ''
+      for userId in @attribute.value
+        if App.User.exists userId
+          tokens += App.view('generic/token')(
+            name: App.User.find(userId).displayName()
+            value: userId
+          )
+        else
+          @log 'userId doesn\'t exist', userId
+    else
+      value = @attribute.value
+      tokens = ''
+      if value
+        if App.User.exists value
+          name = App.User.find(value).displayName()
+        else
+          @log 'userId doesn\'t exist', value
+
     @html App.view('generic/user_search/input')(
       attribute: @attribute
+      value: value
+      tokens: tokens
+      name: name
     )
+
     if !@attribute.disableCreateUser
       @recipientList.append(@buildUserNew())
 
