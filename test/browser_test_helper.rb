@@ -71,7 +71,15 @@ class TestCase < Test::Unit::TestCase
       # just try again
       sleep 10
       log('browser_instance', { rescure: true })
-      browser_instance_preferences(local_browser)
+      begin
+        browser_instance_preferences(local_browser)
+      rescue
+        # just try again
+        sleep 10
+        log('browser_instance', { rescure: true })
+        browser_instance_preferences(local_browser)
+      end
+
     end
 
     # upload files from remote dir
@@ -1383,11 +1391,6 @@ wait untill text in selector disabppears
     element.send_keys(params[:customer])
     sleep 2.5
 
-    # check if pulldown is open, it's not working stable via selenium
-    #instance.execute_script("$('#{params[:css]} .js-recipientDropdown').addClass('open')")
-    #sleep 0.5
-    element.send_keys(:arrow_down)
-    sleep 0.2
     element.send_keys(:enter)
     #instance.find_elements(css: params[:css] + ' .recipientList-entry.js-user.is-active')[0].click
     sleep 0.4
@@ -1721,11 +1724,6 @@ wait untill text in selector disabppears
       element.send_keys(data[:customer])
       sleep 2.5
 
-      # check if pulldown is open, it's not working stable via selenium
-      #instance.execute_script("$('.active .newTicket .js-recipientDropdown').addClass('open')")
-      #sleep 0.5
-      element.send_keys(:arrow_down)
-      sleep 0.2
       element.send_keys(:enter)
       #instance.find_elements(css: '.active .newTicket .recipientList-entry.js-user.is-active')[0].click
       sleep 0.4
@@ -1850,11 +1848,6 @@ wait untill text in selector disabppears
       element.send_keys(data[:customer])
       sleep 2.5
 
-      # check if pulldown is open, it's not working stable via selenium
-      #instance.execute_script("$('.modal .user_autocompletion .js-recipientDropdown').addClass('open')")
-      #sleep 0.5
-      element.send_keys(:arrow_down)
-      sleep 0.4
       element.send_keys(:enter)
       #instance.find_elements(css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active')[0].click
       sleep 0.2

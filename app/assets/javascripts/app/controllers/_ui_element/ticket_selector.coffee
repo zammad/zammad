@@ -274,12 +274,12 @@ class App.UiElement.ticket_selector
       options =
         'current_user.id': App.i18n.translateInline('current user')
         'specific': App.i18n.translateInline('specific user')
-        #'set': App.i18n.translateInline('set')
+        'not_set': App.i18n.translateInline('not set (not defined)')
     else if preCondition is 'org'
       options =
         'current_user.organization_id': App.i18n.translateInline('current user organization')
         'specific': App.i18n.translateInline('specific organization')
-        #'set': App.i18n.translateInline('set')
+        'not_set': App.i18n.translateInline('not set (not defined)')
 
     for key, value of options
       selected = ''
@@ -316,6 +316,12 @@ class App.UiElement.ticket_selector
         config['value'] = _.clone(attribute.value[groupAndAttribute]['value'])
       if 'multiple' of config
         config.multiple = true
+        config.nulloption = false
+      if config.relation is 'User'
+        config.multiple = false
+        config.nulloption = false
+      if config.relation is 'Organization'
+        config.multiple = false
         config.nulloption = false
       if config.tag is 'checkbox'
         config.tag = 'select'

@@ -44,7 +44,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
   open: =>
     # prevent rebinding of keydown event
     return if @el.hasClass 'open'
-    
+
     @el.addClass('open')
     $(window).on 'click.UserOrganizationAutocompletion', @close
     $(window).on 'keydown.UserOrganizationAutocompletion', @navigateByKeyboard
@@ -94,7 +94,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
     else
       if user.email
         name += " <#{user.email}>"
-      
+
       @userSelect.val(name)
 
     if @callback
@@ -116,7 +116,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
         return if not token.size()
       else
         token = which
-    
+
     # remove userId from input
     index = @$('.token').index(token)
     ids = @userId.val().split(',')
@@ -237,10 +237,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
     value = ''
 
     if @attribute.multiple && @attribute.value
-      # fallback for if the value is not an array
-      if typeof @attribute.value is not 'object'
-        @attribute.value = [@attribute.value]
 
+      # fallback for if the value is not an array
+      if typeof @attribute.value isnt 'object'
+        @attribute.value = [@attribute.value]
       value = @attribute.value.join ','
 
       # create tokens
@@ -256,7 +256,10 @@ class App.UserOrganizationAutocompletion extends App.Controller
       value = @attribute.value
       if value
         if App.User.exists value
-          name = App.User.find(value).displayName()
+          user = App.User.find(value)
+          name = user.displayName()
+          if user.email
+            name += " <#{user.email}>"
         else
           @log 'userId doesn\'t exist', value
 
