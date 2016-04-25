@@ -51,6 +51,7 @@ class Transaction::ClearbitEnrichment
     return if !user.email
     data = fetch(user.email)
     #p 'OO: ' + data.inspect
+    return if !data
 
     config = Setting.get('clearbit_config')
     return if !config
