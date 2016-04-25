@@ -6,7 +6,7 @@ class CreateExternalSync < ActiveRecord::Migration
       t.string  :object,                 limit: 100,  null: false
       t.integer :o_id,                                null: false
       t.text    :last_payload,           limit: 500.kilobytes + 1, null: true
-      t.timestamps                                    null: false
+      t.timestamps null: false
     end
     add_index :external_syncs, [:source, :source_id], unique: true
     add_index :external_syncs, [:source, :source_id, :object, :o_id]
