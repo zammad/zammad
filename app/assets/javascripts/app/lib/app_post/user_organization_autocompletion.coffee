@@ -23,7 +23,7 @@ class App.UserOrganizationAutocompletion extends App.Controller
   constructor: (params) ->
     super
 
-    @lazySearch = _.debounce(@searchUser, 200, true)
+    @lazySearch = _.debounce(@searchUser, 200)
 
     @key = Math.floor( Math.random() * 999999 ).toString()
 
@@ -260,6 +260,8 @@ class App.UserOrganizationAutocompletion extends App.Controller
           name = user.displayName()
           if user.email
             name += " <#{user.email}>"
+        else if @params && @params["#{@attribute.name}_completion"]
+          name = @params["#{@attribute.name}_completion"]
         else
           @log 'userId doesn\'t exist', value
 
