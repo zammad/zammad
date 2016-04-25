@@ -156,6 +156,17 @@ job_integration_slack:
     - ruby -I test test/integration/slack_test.rb
     - rake db:drop
 
+job_integration_clearbit:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test test/integration/clearbit_test.rb
+    - rake db:drop
+
 job_integration_es_mysql:
   stage: test
   tags:

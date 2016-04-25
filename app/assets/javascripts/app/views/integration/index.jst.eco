@@ -6,7 +6,7 @@
     <thead>
       <tr>
         <th style="width: 30px;"></th>
-        <th style="width: 40%;"><%- @T('Service') %></th>
+        <th style="width: 30%;"><%- @T('Service') %></th>
         <th><%- @T('Description') %></th>
       </tr>
     </thead>

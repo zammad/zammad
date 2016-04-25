@@ -148,7 +148,7 @@ App.Config.set(
   {
     name: 'sipgate.io'
     target: '#system/integration/sipgate'
-    description: 'VoIP services provide.'
+    description: 'VoIP service provider with realtime push.'
     controller: Index
     state: State
   }

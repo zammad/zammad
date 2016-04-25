@@ -220,6 +220,7 @@ class App extends Spine.Controller
 
       # define richtext helper
       params.RichText = (string) ->
+        return string if !string
         if string.match(/@T\('/)
           string = string.replace(/@T\('(.+?)'\)/g, (match, capture) ->
             App.i18n.translateContent(capture)

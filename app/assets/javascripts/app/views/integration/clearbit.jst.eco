@@ -1,0 +1,75 @@
+<form>
+
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="15%"><%- @T('Title') %>
+          <th width="50%"><%- @T('Value') %>
+          <th width="35%"><%- @T('Description') %>
+      </thead>
+      <tbody>
+<% for setting in @settings: %>
+        <tr>
+          <td><%- @T(setting.display) %>
+          <td data-name="<%- setting.name %>">
+          <td><p class="help-text"><%- @RichText(setting.note) %></p>
+<% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><%- @T('Mapping') %></h2>
+
+  <p><%- @T('What values of %s should be synced to users.', 'Clearbit') %></p>
+
+  <div class="settings-entry">
+    <table class="settings-list js-userSync" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="45%"><%- @T('Clearbit') %>
+          <th width="45%"><%- @T('Zammad') %>
+          <th width="10%"><%- @T('Action') %>
+      </thead>
+      <tbody>
+<% for source, destination of @config.user_sync: %>
+        <tr class="js-row">
+          <td class="settings-list-control-cell"><input name="source" value="<%= source %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="destination" value="<%= destination %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
+<% end %>
+        <tr>
+          <td class="settings-list-control-cell"><input name="source" value="" placeholder="person.attribute" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="destination" value="" placeholder="user.attribute" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
+      </tbody>
+    </table>
+  </div>
+
+  <p><%- @T('What values of %s should be synced to organization.', 'Clearbit') %></p>
+
+  <div class="settings-entry">
+    <table class="settings-list js-organizationSync" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="45%"><%- @T('Clearbit') %>
+          <th width="45%"><%- @T('Zammad') %>
+          <th width="10%"><%- @T('Action') %>
+      </thead>
+      <tbody>
+<% for source, destination of @config.organization_sync: %>
+        <tr class="js-row">
+          <td class="settings-list-control-cell"><input name="source" value="<%= source %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="destination" value="<%= destination %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
+<% end %>
+        <tr>
+          <td class="settings-list-control-cell"><input name="source" value="" placeholder="company.attribute" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="destination" value="" placeholder="organization.attribute" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="submit" class="btn btn--primary"><%- @T('Save') %></button>
+</form>

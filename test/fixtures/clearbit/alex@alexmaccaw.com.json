@@ -1,0 +1,188 @@
+{
+  "person": {
+    "id": "d54c54ad-40be-4305-8a34-0ab44710b90d",
+    "name": {
+      "fullName": "Alex MacCaw",
+      "givenName": "Alex",
+      "familyName": "MacCaw"
+    },
+    "email": "alex@alexmaccaw.com",
+    "gender": "male",
+    "location": "San Francisco, CA, US",
+    "timeZone": "America/Los_Angeles",
+    "utcOffset": -8,
+    "geo": {
+      "city": "San Francisco",
+      "state": "California",
+      "stateCode": "CA",
+      "country": "United States",
+      "countryCode": "US",
+      "lat": 37.7749295,
+      "lng": -122.4194155
+    },
+    "bio": "O'Reilly author, software engineer & traveller. Founder of https://clearbit.com",
+    "site": "http://alexmaccaw.com",
+    "avatar": "https://d1ts43dypk8bqh.cloudfront.net/v1/avatars/d54c54ad-40be-4305-8a34-0ab44710b90d",
+    "employment": {
+      "domain": "clearbit.com",
+      "name": "Clearbit",
+      "title": "Founder and CEO",
+      "role": "ceo",
+      "seniority": "executive"
+    },
+    "facebook": {
+      "handle": "amaccaw"
+    },
+    "github": {
+      "handle": "maccman",
+      "avatar": "https://avatars.githubusercontent.com/u/2142?v=2",
+      "company": "Clearbit",
+      "blog": "http://alexmaccaw.com",
+      "followers": 2932,
+      "following": 94
+    },
+    "twitter": {
+      "handle": "maccaw",
+      "id": "2006261",
+      "bio": "O'Reilly author, software engineer & traveller. Founder of https://clearbit.com",
+      "followers": 15248,
+      "following": 1711,
+      "location": "San Francisco",
+      "site": "http://alexmaccaw.com",
+      "avatar": "https://pbs.twimg.com/profile_images/1826201101/297606_10150904890650705_570400704_21211347_1883468370_n.jpeg"
+    },
+    "linkedin": {
+      "handle": "pub/alex-maccaw/78/929/ab5"
+    },
+    "googleplus": {
+      "handle": null
+    },
+    "angellist": {
+      "handle": "maccaw",
+      "bio": "O'Reilly author, engineer & traveller. Mostly harmless.",
+      "blog": "http://blog.alexmaccaw.com",
+      "site": "http://alexmaccaw.com",
+      "followers": 532,
+      "avatar": "https://d1qb2nb5cznatu.cloudfront.net/users/403357-medium_jpg?1405661263"
+    },
+    "aboutme": {
+      "handle": "maccaw",
+      "bio": "Software engineer & traveller. Walker, skier, reader, tennis player, breather, ginger beer drinker, scooterer & generally enjoying things :)",
+      "avatar": "http://o.aolcdn.com/dims-global/dims/ABOUTME/5/803/408/80/http://d3mod6n032mdiz.cloudfront.net/thumb2/m/a/c/maccaw/maccaw-840x560.jpg"
+    },
+    "gravatar": {
+      "handle": "maccman",
+      "urls": [
+        {
+          "value": "http://alexmaccaw.com",
+          "title": "Personal Website"
+        }
+      ],
+      "avatar": "http://2.gravatar.com/avatar/994909da96d3afaf4daaf54973914b64",
+      "avatars": [
+        {
+          "url": "http://2.gravatar.com/avatar/994909da96d3afaf4daaf54973914b64",
+          "type": "thumbnail"
+        }
+      ]
+    },
+    "fuzzy": false
+  },
+  "company": {
+    "id": "027b0d40-016c-40ea-8925-a076fa640992",
+    "name": "Uber",
+    "legalName": "Uber, Inc.",
+    "domain": "uber.com",
+    "domainAliases": [],
+    "url": "http://uber.com",
+    "site": {
+      "url": "http://uber.com",
+      "title": null,
+      "h1": null,
+      "metaDescription": null,
+      "metaAuthor": null,
+      "phoneNumbers": [
+        "+1 877-223-8023"
+      ],
+      "emailAddresses": [
+        "team@uber.com"
+      ]
+    },
+    "tags": [
+      "Transportation",
+      "Design",
+      "SEO",
+      "Automotive",
+      "Real Time",
+      "Limousines",
+      "Public Transportation",
+      "Transport"
+    ],
+    "description": "Uber is a mobile app connecting passengers with drivers for hire.",
+    "foundedDate": "2009-03-01",
+    "location": "1455 Market Street, San Francisco, CA 94103, USA",
+    "timeZone": "America/Los_Angeles",
+    "utcOffset": -8,
+    "geo": {
+      "streetNumber": "1455",
+      "streetName": "Market Street",
+      "subPremise": null,
+      "city": "San Francisco",
+      "state": "California",
+      "stateCode": "CA",
+      "postalCode": "94103",
+      "country": "United States",
+      "countryCode": "US",
+      "lat": 37.7752315,
+      "lng": -122.4175567
+    },
+    "metrics": {
+      "raised": 5900000000,
+      "employees": 3250,
+      "googleRank": 7,
+      "alexaUsRank": 649,
+      "alexaGlobalRank": 1071,
+      "marketCap": null,
+      "annualRevenue": null
+    },
+    "logo": "https://dqus23xyrtg1i.cloudfront.net/v1/logos/027b0d40-016c-40ea-8925-a076fa640992",
+    "facebook": {
+      "handle": "uber.IND"
+    },
+    "linkedin": {
+      "handle": "company/uber.com"
+    },
+    "twitter": {
+      "handle": "uber",
+      "id": 19103481,
+      "bio": "Everyone's Private Driver. Question, concern or praise? Tweet at your local community manager here: https://t.co/EUiTjLk0xj",
+      "followers": 176582,
+      "following": 330,
+      "location": "Global",
+      "site": "http://t.co/PtMbwFTeQA",
+      "avatar": "https://pbs.twimg.com/profile_images/378800000762572812/91ea09a6535666e18ca3c56f731f67ef_normal.jpeg"
+    },
+    "angellist": {
+      "id": 19163,
+      "handle": "uber",
+      "description": "Request a car from any mobile phone via text message, iPhone and Android apps. Within minutes, a professional driver in a sleek black car will arrive curbside. Automatically charged to your credit card on file, tip included.",
+      "followers": 2650,
+      "blogUrl": "http://blog.uber.com/"
+    },
+    "crunchbase": {
+      "handle": "uber"
+    },
+    "phone": "+1 877-223-8023",
+    "emailProvider": false,
+    "type": "private",
+    "tech": [
+      "google_analytics",
+      "double_click",
+      "mixpanel",
+      "optimizely",
+      "typekit_by_adobe",
+      "nginx",
+      "google_apps"
+    ]
+  }
+}

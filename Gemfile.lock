@@ -54,6 +54,8 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     clavius (1.0.2)
+    clearbit (0.2.3)
+      nestful (~> 1.1.0)
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -134,7 +136,7 @@ GEM
       faraday
       multi_json
     libv8 (3.16.14.13)
-    listen (3.0.6)
+    listen (3.1.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
     loofah (2.0.3)
@@ -154,6 +156,7 @@ GEM
     mysql2 (0.3.20)
     naught (1.1.0)
     nenv (0.3.0)
+    nestful (1.1.1)
     net-ldap (0.14.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -323,6 +326,7 @@ DEPENDENCIES
   autoprefixer-rails (>= 5.2)
   biz
   browser
+  clearbit
   coffee-rails
   coffee-script-source
   coffeelint

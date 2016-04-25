@@ -23,8 +23,13 @@ class Transaction::BackgroundJob
   def perform
     Setting.where(area: 'Transaction::Backend').order(:name).each {|setting|
       backend = Setting.get(setting.name)
-      integration = Kernel.const_get(backend).new(@item, @params)
-      integration.perform
+      begin
+        integration = Kernel.const_get(backend).new(@item, @params)
+        integration.perform
+      rescue => e
+        logger.error 'ERROR: ' + setting.inspect
+        logger.error 'ERROR: ' + e.inspect
+      end
     }
   end
 
