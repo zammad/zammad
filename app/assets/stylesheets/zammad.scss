@@ -1639,6 +1639,13 @@ select.form-control:not([multiple]) {
   }
 }
 
+.select.form-group,
+.user_autocompletion.form-group {
+  .form-control {
+    padding-right: 21px;
+  }
+}
+
 .form-control + .icon-arrow-down,
 .dropdown-arrow {
   position: absolute;
@@ -5382,54 +5389,74 @@ footer {
   fill: white;
 }
 
-.tokenfield .token {
+.token {
   padding: 0 0 0 10px;
-  margin: 0 5px 7px 0;
-  height: 25px;
-  line-height: 27px;
+  margin: 0 5px 6px 0;
+  height: 26px;
   color: white;
+  border-radius: 3px;
   background: hsl(198,19%,72%);
   border: none;
   float: none;
   display: inline-flex;
   align-items: center;
+  cursor: default;
 }
 
+  /* 
+    selector needs to be stronger than .token-input
+    in order to override input[type=text]
+  */
   .tokenfield .token-input {
     vertical-align: top;
-    padding: 0 10px 7px 0;
+    padding: 0 10px 7px 5px;
     margin: 0;
+    min-width: 60px;
     height: 32px;
     display: inline-block;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    flex: 1;
+    
+    &:focus {
+      box-shadow: none;
+    }
   }
 
   .tokenfield .token ~ .token-input {
     padding: 0 5px 7px 0;
   }
 
-  .tokenfield .token .token-label {
+  .token-label {
     padding: 0;
   }
 
   .tokenfield.form-control {
     padding: 7px 7px 0;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  .tokenfield .token .close {
+  .token .close,
+  .token-close {
     margin: 0;
-    padding: 0 9px 0 5px;
+    padding: 0 9px 0 12px;
     font-family: inherit;
-    font-weight: 300;
-    font-size: 30px;
+    font-weight: 100;
+    font-size: 28px;
     line-height: 1;
     color: white;
     text-shadow: none;
     opacity: .3;
     outline: none;
     height: auto;
+    cursor: pointer;
   }
 
-  .tokenfield .token .close:hover {
+  .token .close:hover,
+  .token-close:hover {
     opacity: .5;
   }
 
@@ -5862,7 +5889,8 @@ footer {
     opacity: 1;
   }
 
-  .recipientList-entry:hover .recipientList-icon {
+  .recipientList-entry:hover .recipientList-icon,
+  .recipientList-entry.is-active .recipientList-icon {
     opacity: 1;
   }
 

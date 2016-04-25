@@ -34,9 +34,11 @@
     <p>A date time</p>
     <div class="datetime form-group">
       <div class="controls controls--bundle">
-        <input type="text" value="<%- @Tdate('2015-10-28') %>" class="form-control js-datepicker4">
-        <div class="controls-label">at</div>
-        <input type="text" value="08:00" class="form-control time js-timepicker4">
+        <div class="u-positionOrigin horizontal">
+          <input type="text" value="<%- @Tdate('2015-10-28') %>" class="form-control js-datepicker4">
+          <div class="controls-label">at</div>
+          <input type="text" value="08:00" class="form-control time js-timepicker4">
+        </div>
       </div>
     </div>
 
@@ -99,8 +101,14 @@
     </div>
 
     <div class="select form-group">
-      <label for="b">Users (searchable ajax)</label>
+      <label for="b">User (searchable ajax)</label>
       <div class="searchableAjaxSelectPlaceholder"></div>
+    </div>
+    
+    <h2>User</h2>
+    <div class="select form-group">
+      <label for="b">User Select</label>
+      <div class="userOrganizationAutocompletePlaceholder"></div>
     </div>
 
     <h2>Checkbox</h2>
