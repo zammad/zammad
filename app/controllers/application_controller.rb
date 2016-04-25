@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user,
                 :authentication_check,
                 :config_frontend,
+                :http_log_config,
                 :role?,
                 :model_create_render,
                 :model_update_render,
@@ -18,7 +19,7 @@ class ApplicationController < ActionController::Base
   before_action :cors_preflight_check
 
   after_action  :user_device_update, :set_access_control_headers
-  after_action  :trigger_events
+  after_action  :trigger_events, :http_log
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers
@@ -45,6 +46,10 @@ class ApplicationController < ActionController::Base
     render text: '', content_type: 'text/plain'
 
     false
+  end
+
+  def http_log_config(config)
+    @http_log_support = config
   end
 
   private
@@ -96,6 +101,60 @@ class ApplicationController < ActionController::Base
     return if session[:user_agent]
 
     session[:user_agent] = request.env['HTTP_USER_AGENT']
+  end
+
+  # log http access
+  def http_log
+    return if !@http_log_support
+
+    # request
+    request_data = {
+      content: '',
+      content_type: request.headers['Content-Type'],
+      content_encoding: request.headers['Content-Encoding'],
+      source: request.headers['User-Agent'] || request.headers['Server'],
+    }
+    request.headers.each {|key, value|
+      next if key[0, 5] != 'HTTP_'
+      request_data[:content] += if key == 'HTTP_COOKIE'
+                                  "#{key}: xxxxx\n"
+                                else
+                                  "#{key}: #{value}\n"
+                                end
+    }
+    body = request.body.read
+    if body
+      request_data[:content] += "\n" + body
+    end
+    request_data[:content] = request_data[:content].slice(0, 8000)
+
+    # response
+    response_data = {
+      code: response.status = response.code,
+      content: '',
+      content_type: nil,
+      content_encoding: nil,
+      source: nil,
+    }
+    response.headers.each {|key, value|
+      response_data[:content] += "#{key}: #{value}\n"
+    }
+    body = response.body
+    if body
+      response_data[:content] += "\n" + body
+    end
+    response_data[:content] = response_data[:content].slice(0, 8000)
+    record = {
+      direction: 'in',
+      facility: @http_log_support[:facility],
+      url: url_for(only_path: false, overwrite_params: {}),
+      status: response.status,
+      ip: request.remote_ip,
+      request: request_data,
+      response: response_data,
+      method: request.method,
+    }
+    HttpLog.create(record)
   end
 
   # user device recent action update
@@ -228,12 +287,11 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def authentication_check(auth_param = {} )
+  def authentication_check(auth_param = {})
     result = authentication_check_only(auth_param)
 
     # check if basic_auth fallback is possible
     if auth_param[:basic_auth_promt] && result[:auth] == false
-
       return request_http_basic_authentication
     end
 

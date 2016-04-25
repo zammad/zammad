@@ -6,14 +6,14 @@ class Transaction::Slack
 backend = Transaction::Slack.new(
     object: 'Ticket',
     type: 'create',
-    ticket_id: 1,
+    object_id: 1,
 )
 backend.perform
 
   {
     object: 'Ticket',
     type: 'update',
-    ticket_id: 123,
+    object_id: 123,
     via_web: true,
     changes: {
       'attribute1' => [before, now],
@@ -27,6 +27,10 @@ backend.perform
   end
 
   def perform
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
     return if @item[:object] != 'Ticket'
     return if !Setting.get('slack_integration')
 
@@ -34,7 +38,7 @@ backend.perform
     return if !config
     return if !config['items']
 
-    ticket = Ticket.find(@item[:ticket_id])
+    ticket = Ticket.find(@item[:object_id])
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
     end

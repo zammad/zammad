@@ -6,7 +6,7 @@ class Transaction::Notification
   {
     object: 'Ticket',
     type: 'update',
-    ticket_id: 123,
+    object_id: 123,
     via_web: true,
     changes: {
       'attribute1' => [before, now],
@@ -21,9 +21,15 @@ class Transaction::Notification
   end
 
   def perform
+
+    # return if we run import mode
+    return if Setting.get('import_mode')
+
+    return if @item[:object] != 'Ticket'
+
     return if @params[:disable_notification]
 
-    ticket = Ticket.find(@item[:ticket_id])
+    ticket = Ticket.find(@item[:object_id])
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
     end

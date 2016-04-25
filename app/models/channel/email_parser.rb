@@ -490,6 +490,7 @@ retrns
     Observer::Transaction.commit
 
     # run postmaster post filter
+    filters = {}
     Setting.where(area: 'Postmaster::PostFilter').order(:name).each {|setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }

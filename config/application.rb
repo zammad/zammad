@@ -30,7 +30,6 @@ module Zammad
       'observer::_ticket::_article::_communicate_email',
       'observer::_ticket::_article::_communicate_facebook',
       'observer::_ticket::_article::_communicate_twitter',
-      'observer::_ticket::_article::_signature_detection',
       'observer::_ticket::_reset_new_state',
       'observer::_ticket::_escalation_calculation',
       'observer::_ticket::_ref_object_touch',

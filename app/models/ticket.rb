@@ -183,7 +183,7 @@ returns
         Transaction::BackgroundJob.run(
           object: 'Ticket',
           type: 'reminder_reached',
-          ticket_id: ticket.id,
+          object_id: ticket.id,
           article_id: ticket.articles.last.id,
         )
 
@@ -223,7 +223,7 @@ returns
         Transaction::BackgroundJob.run(
           object: 'Ticket',
           type: 'escalation',
-          ticket_id: ticket.id,
+          object_id: ticket.id,
           article_id: ticket.articles.last.id,
         )
         result.push ticket
@@ -234,7 +234,7 @@ returns
       Transaction::BackgroundJob.run(
         object: 'Ticket',
         type: 'escalation_warning',
-        ticket_id: ticket.id,
+        object_id: ticket.id,
         article_id: ticket.articles.last.id,
       )
       result.push ticket

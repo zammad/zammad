@@ -904,11 +904,11 @@ class TicketNotificationTest < ActiveSupport::TestCase
     list         = EventBuffer.list('transaction')
     list_objects = Observer::Transaction.get_uniq_changes(list)
 
-    assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
-    assert_equal('some notification event test 1 - #2', list_objects[ticket1.id][:changes]['title'][1])
-    assert_not(list_objects[ticket1.id][:changes]['priority'])
-    assert_equal(2, list_objects[ticket1.id][:changes]['priority_id'][0])
-    assert_equal(3, list_objects[ticket1.id][:changes]['priority_id'][1])
+    assert_equal('some notification event test 1', list_objects['Ticket'][ticket1.id][:changes]['title'][0])
+    assert_equal('some notification event test 1 - #2', list_objects['Ticket'][ticket1.id][:changes]['title'][1])
+    assert_not(list_objects['Ticket'][ticket1.id][:changes]['priority'])
+    assert_equal(2, list_objects['Ticket'][ticket1.id][:changes]['priority_id'][0])
+    assert_equal(3, list_objects['Ticket'][ticket1.id][:changes]['priority_id'][1])
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #3"
@@ -918,11 +918,11 @@ class TicketNotificationTest < ActiveSupport::TestCase
     list         = EventBuffer.list('transaction')
     list_objects = Observer::Transaction.get_uniq_changes(list)
 
-    assert_equal('some notification event test 1', list_objects[ticket1.id][:changes]['title'][0])
-    assert_equal('some notification event test 1 - #2 - #3', list_objects[ticket1.id][:changes]['title'][1])
-    assert_not(list_objects[ticket1.id][:changes]['priority'])
-    assert_equal(2, list_objects[ticket1.id][:changes]['priority_id'][0])
-    assert_equal(1, list_objects[ticket1.id][:changes]['priority_id'][1])
+    assert_equal('some notification event test 1', list_objects['Ticket'][ticket1.id][:changes]['title'][0])
+    assert_equal('some notification event test 1 - #2 - #3', list_objects['Ticket'][ticket1.id][:changes]['title'][1])
+    assert_not(list_objects['Ticket'][ticket1.id][:changes]['priority'])
+    assert_equal(2, list_objects['Ticket'][ticket1.id][:changes]['priority_id'][0])
+    assert_equal(1, list_objects['Ticket'][ticket1.id][:changes]['priority_id'][1])
 
   end
 

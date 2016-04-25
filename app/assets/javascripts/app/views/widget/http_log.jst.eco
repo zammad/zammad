@@ -1,6 +1,6 @@
 <hr>
 
-<%- @T('Recent logs') %>
+  <h2><%- @T('Recent logs') %></h2>
   <div class="settings-entry">
     <table class="settings-list" style="width: 100%;">
       <thead>
