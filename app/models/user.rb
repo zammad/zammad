@@ -460,12 +460,12 @@ returns
   def self.of_role(role, group_ids = nil)
     roles_ids = Role.where(active: true, name: role).map(&:id)
     if !group_ids
-      return User.where(active: true).joins(:users_roles).where('roles_users.role_id IN (?)', roles_ids)
+      return User.where(active: true).joins(:users_roles).where('roles_users.role_id IN (?)', roles_ids).order('users.updated_at DESC')
     end
     User.where(active: true)
         .joins(:users_roles)
         .joins(:users_groups)
-        .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids)
+        .where('roles_users.role_id IN (?) AND users_groups.group_ids IN (?)', roles_ids, group_ids).order('users.updated_at DESC')
   end
 
 =begin
