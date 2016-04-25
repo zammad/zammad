@@ -85,12 +85,16 @@ class App.UserOrganizationAutocompletion extends App.Controller
 
     return if !userId
     return if !App.User.exists(userId)
-    name = App.User.find(userId).displayName()
+    user = App.User.find(userId)
+    name = user.displayName()
 
     if @attribute.multiple
       # create token
       @createToken name, userId
     else
+      if user.email
+        name += " <#{user.email}>"
+      
       @userSelect.val(name)
 
     if @callback
@@ -228,13 +232,18 @@ class App.UserOrganizationAutocompletion extends App.Controller
     App.view('generic/user_search/new_user')()
 
   build: =>
-    if @attribute.multiple
+    tokens = ''
+    name = ''
+    value = ''
+
+    if @attribute.multiple && @attribute.value
+      # fallback for if the value is not an array
       if typeof @attribute.value is not 'object'
         @attribute.value = [@attribute.value]
-      
+
       value = @attribute.value.join ','
-      tokens = ''
-      name = ''
+
+      # create tokens
       for userId in @attribute.value
         if App.User.exists userId
           tokens += App.view('generic/token')(
@@ -245,7 +254,6 @@ class App.UserOrganizationAutocompletion extends App.Controller
           @log 'userId doesn\'t exist', userId
     else
       value = @attribute.value
-      tokens = ''
       if value
         if App.User.exists value
           name = App.User.find(value).displayName()
