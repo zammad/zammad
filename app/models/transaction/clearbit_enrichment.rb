@@ -48,7 +48,7 @@ class Transaction::ClearbitEnrichment
 
   def self.sync_user(user)
 
-    return if !user.email
+    return if user.email.empty?
     data = fetch(user.email)
     #p 'OO: ' + data.inspect
     return if !data
@@ -131,8 +131,8 @@ class Transaction::ClearbitEnrichment
       end
     end
 
-    # if no company record exists
-    if !data['company']
+    # if no company record exists or no organization should be created
+    if !data['company'] || config['organization_autocreate'] != true
       if user_has_changed
         user.save
       end
