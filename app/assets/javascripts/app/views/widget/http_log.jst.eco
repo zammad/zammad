@@ -7,7 +7,7 @@
         <tr>
           <th width="10%"><%- @T('Direction') %>
           <th><%- @T('Request') %>
-          <th width="20%"><%- @T('Created at') %>
+          <th width="25%"><%- @T('Created at') %>
       </thead>
       <tbody>
 <% for record in @records: %>
