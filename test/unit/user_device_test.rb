@@ -5,7 +5,7 @@ class UserDeviceTest < ActiveSupport::TestCase
 
     # create agent
     groups = Group.all
-    roles = Role.where( name: 'Agent' )
+    roles = Role.where(name: 'Agent')
 
     UserInfo.current_user_id = 1
 
@@ -207,6 +207,8 @@ class UserDeviceTest < ActiveSupport::TestCase
       'fingerprint1234',
       'session',
     )
+
+    # action with same fingerprint -> same device
     user_device1_1 = UserDevice.action(
       user_device1.id,
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
@@ -215,6 +217,8 @@ class UserDeviceTest < ActiveSupport::TestCase
       'session',
     )
     assert_equal(user_device1.id, user_device1_1.id)
+
+    # signin with same fingerprint -> same device
     user_device1_2 = UserDevice.add(
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
       '91.115.248.231',
@@ -223,6 +227,8 @@ class UserDeviceTest < ActiveSupport::TestCase
       'session',
     )
     assert_equal(user_device1.id, user_device1_2.id)
+
+    # action with different fingerprint -> new device
     user_device1_3 = UserDevice.add(
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
       '91.115.248.231',
@@ -232,7 +238,17 @@ class UserDeviceTest < ActiveSupport::TestCase
     )
     assert_not_equal(user_device1.id, user_device1_3.id)
 
-    # log with fingerprint A from country B via session -> new device #2
+    # signin with without accessable location -> new device
+    user_device1_4 = UserDevice.add(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      'not_existing_ip',
+      @agent.id,
+      'fingerprintABC',
+      'session',
+    )
+    assert_not_equal(user_device1.id, user_device1_4.id)
+
+    # action with fingerprint A from country B via session -> new device #2
     user_device2 = UserDevice.action(
       user_device1.id,
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
@@ -241,6 +257,16 @@ class UserDeviceTest < ActiveSupport::TestCase
       'session',
     )
     assert_not_equal(user_device1.id, user_device2.id)
+
+    # action with fingerprint A without accessable location -> use current device #2
+    user_device3 = UserDevice.action(
+      user_device2.id,
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      'not_existing_ip',
+      @agent.id,
+      'session',
+    )
+    assert_equal(user_device2.id, user_device3.id)
 
   end
 
