@@ -22,6 +22,12 @@ class ReportTest < ActiveSupport::TestCase
   # Setting.set('es_password', 'zammad')
   # Setting.set('es_attachment_max_size_in_mb', 1 )
 
+  # clear cache
+  Cache.clear
+
+  # remove background jobs
+  Delayed::Job.destroy_all
+
   Ticket.destroy_all
 
   # drop/create indexes
