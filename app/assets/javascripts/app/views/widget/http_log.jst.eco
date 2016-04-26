@@ -7,14 +7,14 @@
         <tr>
           <th width="10%"><%- @T('Direction') %>
           <th><%- @T('Request') %>
-          <th width="15%"><%- @T('Created at') %>
+          <th width="20%"><%- @T('Created at') %>
       </thead>
       <tbody>
 <% for record in @records: %>
         <tr data-id="<%= record.id %>" class="js-record">
           <td><%- @T(record.direction) %>
           <td><a href="#"><%= record.status %> <%= record.method %> <%= record.url %></a>
-          <td><%- @datetime(record.created_at) %>
+          <td><%- @humanTime(record.created_at) %>
 <% end %>
       </tbody>
     </table>
