@@ -5,10 +5,10 @@
 channel_id = nil
 channel = Channel.find_by(area: 'Email::Notification', active: true)
 if channel
-  channel_id = channel
+  channel_id = channel.id
 end
 
-email_address = EmailAddress.create_if_not_exists(
+email_address = EmailAddress.create_or_update(
   realname: 'Zammad',
   email: 'zammad@localhost',
   channel_id: channel_id,

@@ -36,11 +36,11 @@ create/update/delete index
 
   def self.index(data)
 
-    url = build_url( data[:name] )
+    url = build_url(data[:name])
     return if !url
 
     if data[:action] && data[:action] == 'delete'
-      return SearchIndexBackend.remove( data[:name] )
+      return SearchIndexBackend.remove(data[:name])
     end
 
     Rails.logger.info "# curl -X PUT \"#{url}\" \\"
@@ -66,13 +66,13 @@ create/update/delete index
 
 add new object to search index
 
-  SearchIndexBackend.add( 'Ticket', some_data_object )
+  SearchIndexBackend.add('Ticket', some_data_object)
 
 =end
 
   def self.add(type, data)
 
-    url = build_url( type, data['id'] )
+    url = build_url(type, data['id'])
     return if !url
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
@@ -98,14 +98,14 @@ add new object to search index
 
 remove whole data from index
 
-  SearchIndexBackend.remove( 'Ticket', 123 )
+  SearchIndexBackend.remove('Ticket', 123)
 
-  SearchIndexBackend.remove( 'Ticket' )
+  SearchIndexBackend.remove('Ticket')
 
 =end
 
-  def self.remove( type, o_id = nil )
-    url = build_url( type, o_id )
+  def self.remove(type, o_id = nil)
+    url = build_url(type, o_id)
     return if !url
 
     Rails.logger.info "# curl -X DELETE \"#{url}\""
@@ -129,9 +129,9 @@ remove whole data from index
 
 return search result
 
-  result = SearchIndexBackend.search( 'search query', limit, ['User', 'Organization'] )
+  result = SearchIndexBackend.search('search query', limit, ['User', 'Organization'])
 
-  result = SearchIndexBackend.search( 'search query', limit, 'User' )
+  result = SearchIndexBackend.search('search query', limit, 'User')
 
   result = [
     {
@@ -150,7 +150,7 @@ return search result
 
 =end
 
-  def self.search( query, limit = 10, index = nil, query_extention = {} )
+  def self.search(query, limit = 10, index = nil, query_extention = {})
     return [] if !query
 
     url = build_url()
@@ -445,7 +445,7 @@ return true if backend is configured
     true
   end
 
-  def self.build_url( type = nil, o_id = nil )
+  def self.build_url(type = nil, o_id = nil)
     return if !SearchIndexBackend.enabled?
     index = Setting.get('es_index').to_s + "_#{Rails.env}"
     url   = Setting.get('es_url')

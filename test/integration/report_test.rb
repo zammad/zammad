@@ -20,7 +20,7 @@ class ReportTest < ActiveSupport::TestCase
   # Setting.set('es_index', 'estest.local_zammad')
   # Setting.set('es_user', 'elasticsearch')
   # Setting.set('es_password', 'zammad')
-  # Setting.set('es_attachment_max_size_in_mb', 1 )
+  # Setting.set('es_attachment_max_size_in_mb', 1)
 
   # clear cache
   Cache.clear
