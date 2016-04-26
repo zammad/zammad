@@ -40,6 +40,9 @@ class ReportTest < ActiveSupport::TestCase
     updated_by_id: 1,
     created_by_id: 1
   )
+
+  load "#{Rails.root}/test/fixtures/seeds.rb"
+
   ticket1 = Ticket.create(
     title: 'test 1',
     group: Group.lookup(name: 'Report Test'),
