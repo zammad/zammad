@@ -162,8 +162,6 @@ class Transaction::ClearbitEnrichment
       if !organization
         organization = Organization.new(
           shared: config['organization_shared'],
-          updated_by_id: 1,
-          created_by_id: 1,
         )
         organization_sync_values.each {|destination, value|
           attribute = destination.sub(/^organization\./, '')
