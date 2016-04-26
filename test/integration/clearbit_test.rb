@@ -48,7 +48,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert(customer1)
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer1.id))
 
@@ -76,7 +76,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert(customer2)
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer2.id))
 
@@ -99,7 +99,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer2.id))
 
@@ -111,7 +111,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('Norsk-Data-Straße 1, 61352 Bad Homburg vor der Höhe, Germany', customer2_lookup.address)
 
     Transaction::ClearbitEnrichment.sync_user(customer2)
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     customer2_lookup = User.lookup(id: customer2.id)
 
@@ -127,7 +127,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
 
     Transaction::ClearbitEnrichment.sync_user(customer2)
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     customer2_lookup = User.lookup(id: customer2.id)
 
@@ -142,7 +142,7 @@ class ClearbitTest < ActiveSupport::TestCase
     )
 
     Transaction::ClearbitEnrichment.sync_user(customer2)
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     customer2_lookup = User.lookup(id: customer2.id)
 
@@ -168,7 +168,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert(customer3)
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer3.id))
 
@@ -199,7 +199,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert(customer4)
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer4.id))
 
@@ -228,7 +228,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert(customer5)
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer5.id))
 
@@ -259,7 +259,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert(customer6)
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer6.id))
 
@@ -322,7 +322,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert(customer1)
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer1.id))
 

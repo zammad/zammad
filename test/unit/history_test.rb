@@ -175,7 +175,7 @@ class HistoryTest < ActiveSupport::TestCase
       Observer::Transaction.commit
 
       # execute background jobs
-      Delayed::Worker.new.work_off
+      Scheduler.worker(true)
 
       # remember ticket
       tickets.push ticket

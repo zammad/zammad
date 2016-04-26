@@ -24,12 +24,12 @@ class Transaction::BackgroundJob
     Setting.where(area: 'Transaction::Backend').order(:name).each {|setting|
       backend = Setting.get(setting.name)
       begin
-        UserInfo.current_user_id = 1
+        UserInfo.current_user_id = nil
         integration = Kernel.const_get(backend).new(@item, @params)
         integration.perform
       rescue => e
-        logger.error 'ERROR: ' + setting.inspect
-        logger.error 'ERROR: ' + e.inspect
+        Rails.logger.error 'ERROR: ' + setting.inspect
+        Rails.logger.error 'ERROR: ' + e.inspect
       end
     }
   end

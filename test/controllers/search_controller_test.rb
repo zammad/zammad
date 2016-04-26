@@ -177,9 +177,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       system('rake searchindex:rebuild')
 
       # execute background jobs
-      # execute background jobs
-      #puts Delayed::Job.all.inspect
-      Delayed::Worker.new.work_off
+      Scheduler.worker(true)
 
       sleep 6
     end

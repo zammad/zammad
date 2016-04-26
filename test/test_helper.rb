@@ -24,9 +24,6 @@ class ActiveSupport::TestCase
   load "#{Rails.root}/db/seeds.rb"
   load "#{Rails.root}/test/fixtures/seeds.rb"
 
-  # proccess background jobs
-  Delayed::Worker.new.work_off
-
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
 
@@ -35,20 +32,11 @@ class ActiveSupport::TestCase
     # clear cache
     Cache.clear
 
+    # remove background jobs
+    Delayed::Job.destroy_all
+
     # set current user
     UserInfo.current_user_id = nil
-  end
-
-  # cleanup jobs
-  def teardown
-
-    # check if jobs are proccessed
-    return if Delayed::Job.all.empty?
-
-    Delayed::Job.where('failed_at != NULL').each {|job|
-      assert( false, "not processable job #{job.inspect}" )
-    }
-    Delayed::Job.all.destroy_all
   end
 
   # Add more helper methods to be used by all tests here...

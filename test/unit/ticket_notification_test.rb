@@ -88,8 +88,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = nil
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -123,8 +122,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = true
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -161,8 +159,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = true
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -175,8 +172,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -197,8 +193,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to not to agent1 but to agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -222,8 +217,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to not to agent1 but to agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -256,8 +250,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     assert(ticket2, 'ticket created')
 
     # verify notifications to no one
@@ -272,8 +265,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to no one
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
@@ -287,8 +279,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 and not to agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
@@ -321,8 +312,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     assert(ticket3, 'ticket created')
 
     # verify notifications to agent1 and not to agent2
@@ -337,8 +327,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to no one
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
@@ -352,8 +341,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 and not to agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
@@ -365,8 +353,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications not to agent1 and not to agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
@@ -412,7 +399,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit(disable_notification: true)
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -465,8 +452,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -479,8 +465,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
@@ -513,8 +498,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
@@ -527,8 +511,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
@@ -561,8 +544,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
@@ -575,8 +557,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
@@ -627,8 +608,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email'), ticket4.id)
@@ -641,8 +621,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email'), ticket4.id)
@@ -693,8 +672,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email'), ticket5.id)
@@ -707,8 +685,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email'), ticket5.id)
@@ -760,8 +737,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email'), ticket6.id)
@@ -776,8 +752,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email'), ticket6.id)
@@ -839,8 +814,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # execute object transaction
     Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email'), ticket7.id)
@@ -855,8 +829,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # verify notifications to agent1 + agent2
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email'), ticket7.id)

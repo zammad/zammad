@@ -69,7 +69,7 @@ class SlackTest < ActiveSupport::TestCase
     )
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -78,7 +78,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket1.save
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -107,7 +107,7 @@ class SlackTest < ActiveSupport::TestCase
     )
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(1, slack_check(channel, hash))
@@ -119,7 +119,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.save
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(1, slack_check(channel, hash))
@@ -129,7 +129,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket2.save
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(2, slack_check(channel, hash))
@@ -137,7 +137,7 @@ class SlackTest < ActiveSupport::TestCase
     Ticket.process_pending
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(3, slack_check(channel, hash))
@@ -145,7 +145,7 @@ class SlackTest < ActiveSupport::TestCase
     Ticket.process_pending
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(3, slack_check(channel, hash))
@@ -188,7 +188,7 @@ class SlackTest < ActiveSupport::TestCase
     )
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -197,7 +197,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket3.save
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))
@@ -226,7 +226,7 @@ class SlackTest < ActiveSupport::TestCase
     )
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(1, slack_check(channel, hash))
@@ -238,7 +238,7 @@ class SlackTest < ActiveSupport::TestCase
     ticket4.save
 
     Observer::Transaction.commit
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # check if message exists
     assert_equal(0, slack_check(channel, hash))

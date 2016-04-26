@@ -47,6 +47,7 @@ class Transaction::ClearbitEnrichment
   end
 
   def self.sync_user(user)
+    UserInfo.current_user_id = 1
 
     return if user.email.empty?
     data = fetch(user.email)
