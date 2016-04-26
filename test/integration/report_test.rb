@@ -77,7 +77,7 @@ class ReportTest < ActiveSupport::TestCase
 
   ticket2 = Ticket.create(
     title: 'test 2',
-    group: group1.id,
+    group: group1,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'new'),
     priority: Ticket::Priority.lookup(name: '2 normal'),
