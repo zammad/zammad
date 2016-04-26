@@ -1,16 +1,40 @@
 {
-  "person": null,
+  "person": {
+    "id": "4db7cfeb-8017-4aac-b4b9-debb6d3142c0-4",
+    "name": {
+      "fullName": "Fred Jupiter",
+      "givenName": "Fred",
+      "familyName": "Jupiter"
+    },
+    "email": "testing4@znuny.com",
+    "gender": null,
+    "location": "Berlin, Berlin, DE",
+    "timeZone": "Europe/Berlin",
+    "utcOffset": 2,
+    "geo": {
+      "city": "Berlin",
+      "state": "Berlin",
+      "stateCode": "Berlin",
+      "country": "Germany",
+      "countryCode": "DE",
+      "lat": 52.52000659999999,
+      "lng": 13.404954
+    },
+    "bio": "some_fred_bio",
+    "site": "http://example.com/",
+    "avatar": "https://d1ts43dypk8bqh.cloudfront.net/v1/avatars/4db7cfeb-8017-4aac-b4b9-debb6d3142c0"
+  },
   "company": {
-    "id": "273d8666-9d70-43dc-836b-a47a88293905",
-    "name": "Znuny / ES for OTRS",
+    "id": "273d8666-9d70-43dc-836b-a47a88293905-4",
+    "name": "ZnunyOfFred",
     "legalName": null,
-    "domain": "znuny.com",
+    "domain": "fred.znuny.com",
     "domainAliases": [
       "znuny.de"
     ],
-    "url": "http://znuny.com",
+    "url": "http://fred.znuny.com",
     "site": {
-      "url": "http://znuny.com",
+      "url": "http://fred.znuny.com",
       "title": "Support, Consulting, Development and Training for OTRS - Znuny GmbH",
       "h1": "We make OTRS support easy!",
       "metaDescription": "OTRS Support, Consulting, Development, Training and Customizing - Znuny GmbH",
@@ -37,7 +61,7 @@
       "Corporate & Business",
       "Information Technology & Services"
     ],
-    "description": "OTRS Support, Consulting, Development, Training and Customizing - Znuny GmbH",
+    "description": "ZnunyOfFred GmbH",
     "foundedDate": null,
     "location": "Marienstraße 11, 10117 Berlin, Germany",
     "timeZone": "Europe/Berlin",

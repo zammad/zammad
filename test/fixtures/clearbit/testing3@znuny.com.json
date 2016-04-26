@@ -1,33 +1,9 @@
 {
-  "person": {
-    "id": "4db7cfeb-8017-4aac-b4b9-debb6d3142c0-5",
-    "name": {
-      "fullName": "Alex Dont",
-      "givenName": "Alex",
-      "familyName": "Dont"
-    },
-    "email": "testing5@znuny.com",
-    "gender": null,
-    "location": "Berlin, Berlin, DE",
-    "timeZone": "Europe/Berlin",
-    "utcOffset": 2,
-    "geo": {
-      "city": "Berlin",
-      "state": "Berlin",
-      "stateCode": "Berlin",
-      "country": "Germany",
-      "countryCode": "DE",
-      "lat": 52.52000659999999,
-      "lng": 13.404954
-    },
-    "bio": "some_bio_alex",
-    "site": "http://example.com/",
-    "avatar": "https://d1ts43dypk8bqh.cloudfront.net/v1/avatars/4db7cfeb-8017-4aac-b4b9-debb6d3142c0"
-  },
+  "person": null,
   "company": {
     "id": "273d8666-9d70-43dc-836b-a47a88293905-3",
     "name": "Znuny / ES for OTRS",
-    "legalName": "Znuny GmbH",
+    "legalName": null,
     "domain": "znuny.com",
     "domainAliases": [
       "znuny.de"

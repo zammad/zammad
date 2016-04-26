@@ -149,6 +149,15 @@ class Transaction::ClearbitEnrichment
     # create new organization
     if !external_syn_organization
 
+      # if organization is already assigned, do not create a new one
+      if user.organization_id
+        if user_has_changed
+          user.save
+          Observer::Transaction.commit
+        end
+        return
+      end
+
       # can't create organization without name
       if organization_sync_values['organization.name'].empty?
         Observer::Transaction.commit

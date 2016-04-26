@@ -2,11 +2,11 @@
   "person": {
     "id": "4db7cfeb-8017-4aac-b4b9-debb6d3142c0-5",
     "name": {
-      "fullName": "Alex Dont",
-      "givenName": "Alex",
-      "familyName": "Dont"
+      "fullName": "Bob Smith",
+      "givenName": "Bob",
+      "familyName": "Smith"
     },
-    "email": "testing5@znuny.com",
+    "email": "testing6@znuny.com",
     "gender": null,
     "location": "Berlin, Berlin, DE",
     "timeZone": "Europe/Berlin",
@@ -20,14 +20,14 @@
       "lat": 52.52000659999999,
       "lng": 13.404954
     },
-    "bio": "some_bio_alex",
+    "bio": "some_bio",
     "site": "http://example.com/",
     "avatar": "https://d1ts43dypk8bqh.cloudfront.net/v1/avatars/4db7cfeb-8017-4aac-b4b9-debb6d3142c0"
   },
   "company": {
-    "id": "273d8666-9d70-43dc-836b-a47a88293905-3",
-    "name": "Znuny / ES for OTRS",
-    "legalName": "Znuny GmbH",
+    "id": "273d8666-9d70-43dc-836b-a47a88293905-5",
+    "name": "Znuny2",
+    "legalName": null,
     "domain": "znuny.com",
     "domainAliases": [
       "znuny.de"
@@ -61,7 +61,7 @@
       "Corporate & Business",
       "Information Technology & Services"
     ],
-    "description": "OTRS Support, Consulting, Development, Training and Customizing - Znuny GmbH",
+    "description": "Znuny2 GmbH",
     "foundedDate": null,
     "location": "Marienstraße 11, 10117 Berlin, Germany",
     "timeZone": "Europe/Berlin",

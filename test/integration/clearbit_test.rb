@@ -160,7 +160,7 @@ class ClearbitTest < ActiveSupport::TestCase
     customer3 = User.create(
       firstname: '',
       lastname: '',
-      email: 'testing4@znuny.com',
+      email: 'testing3@znuny.com',
       note: '',
       updated_by_id: 1,
       created_by_id: 1,
@@ -186,12 +186,13 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal(false, organization3_lookup.shared)
     assert_equal('OTRS Support, Consulting, Development, Training and Customizing - Znuny GmbH', organization3_lookup.note)
 
-    # case 4 - no person / real api call
+    # case 4 - person with organization but organization is already assigned (own created)
     customer4 = User.create(
       firstname: '',
       lastname: '',
-      email: 'testing5@clearbit.com',
+      email: 'testing4@znuny.com',
       note: '',
+      organization_id: 1,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -200,21 +201,81 @@ class ClearbitTest < ActiveSupport::TestCase
     Observer::Transaction.commit
     Delayed::Worker.new.work_off
 
-    assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer4.id))
+    assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer4.id))
 
     customer4_lookup = User.lookup(id: customer4.id)
     assert_not_equal(customer4.updated_at, customer4_lookup.updated_at)
 
-    assert_equal('', customer4_lookup.firstname)
-    assert_equal('', customer4_lookup.lastname)
-    assert_equal('', customer4_lookup.note)
-    assert_equal('http://clearbit.com', customer4_lookup.web)
-    assert_equal('', customer4_lookup.address)
+    assert_equal('Fred', customer4_lookup.firstname)
+    assert_equal('Jupiter', customer4_lookup.lastname)
+    assert_equal('some_fred_bio', customer4_lookup.note)
+    assert_equal('http://fred.znuny.com', customer4_lookup.web)
+    assert_equal('Marienstraße 11, 10117 Berlin, Germany', customer4_lookup.address)
 
-    organization4_lookup = Organization.find_by(name: 'Clearbit')
-    assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization4_lookup.id))
-    assert_equal(false, organization4_lookup.shared)
-    assert_equal('Clearbit provides powerful products and data APIs to help your business grow. Contact enrichment, lead generation, financial compliance, and more...', organization4_lookup.note)
+    organization4_lookup = Organization.find_by(name: 'ZnunyOfFred')
+    assert_not(organization4_lookup)
+
+    # case 5 - person with organization but organization is already assigned (own created)
+    customer5 = User.create(
+      firstname: '',
+      lastname: '',
+      email: 'testing5@znuny.com',
+      note: '',
+      organization_id: organization3_lookup.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(customer5)
+
+    Observer::Transaction.commit
+    Delayed::Worker.new.work_off
+
+    assert(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer5.id))
+
+    customer5_lookup = User.lookup(id: customer5.id)
+    assert_not_equal(customer5.updated_at, customer5_lookup.updated_at)
+
+    assert_equal('Alex', customer5_lookup.firstname)
+    assert_equal('Dont', customer5_lookup.lastname)
+    assert_equal('some_bio_alex', customer5_lookup.note)
+    assert_equal('http://znuny.com', customer5_lookup.web)
+    assert_equal('Marienstraße 11, 10117 Berlin, Germany', customer5_lookup.address)
+
+    organization5_lookup = Organization.find_by(name: 'Znuny GmbH')
+    assert_equal(organization3_lookup.id, organization5_lookup.id)
+    assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization5_lookup.id))
+    assert_equal(false, organization5_lookup.shared)
+    assert_equal('OTRS Support, Consulting, Development, Training and Customizing - Znuny GmbH', organization5_lookup.note)
+
+    # case 6 - no person / real api call
+    customer6 = User.create(
+      firstname: '',
+      lastname: '',
+      email: 'testing6@clearbit.com',
+      note: '',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(customer6)
+
+    Observer::Transaction.commit
+    Delayed::Worker.new.work_off
+
+    assert_not(ExternalSync.find_by(source: 'clearbit', object: 'User', o_id: customer6.id))
+
+    customer6_lookup = User.lookup(id: customer6.id)
+    assert_not_equal(customer6.updated_at, customer6_lookup.updated_at)
+
+    assert_equal('', customer6_lookup.firstname)
+    assert_equal('', customer6_lookup.lastname)
+    assert_equal('', customer6_lookup.note)
+    assert_equal('http://clearbit.com', customer6_lookup.web)
+    assert_equal('', customer6_lookup.address)
+
+    organization6_lookup = Organization.find_by(name: 'Clearbit')
+    assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization6_lookup.id))
+    assert_equal(false, organization6_lookup.shared)
+    assert_equal('Clearbit provides powerful products and data APIs to help your business grow. Contact enrichment, lead generation, financial compliance, and more...', organization6_lookup.note)
 
   end
 
@@ -253,7 +314,7 @@ class ClearbitTest < ActiveSupport::TestCase
     customer1 = User.create(
       firstname: '',
       lastname: 'Should be still there',
-      email: 'testing5@znuny.com',
+      email: 'testing6@znuny.com',
       note: '',
       updated_by_id: 1,
       created_by_id: 1,
