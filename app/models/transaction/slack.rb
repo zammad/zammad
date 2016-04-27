@@ -71,12 +71,19 @@ backend.perform
     end
 
     user = User.find(1)
+
+    current_user = User.lookup(id: @item[:user_id])
+    if !current_user
+      current_user = User.lookup(id: 1)
+    end
+
     result = NotificationFactory::Slack.template(
       template: template,
       locale: user[:preferences][:locale],
       objects: {
         ticket: ticket,
         article: article,
+        current_user: current_user,
         changes: changes,
       },
     )

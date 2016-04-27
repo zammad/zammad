@@ -179,7 +179,7 @@ class Transaction::Notification
         raise "unknown type for notification #{@item[:type]}"
       end
 
-      current_user = User.lookup(id: @item[:user_id] || 1)
+      current_user = User.lookup(id: @item[:user_id])
       if !current_user
         current_user = User.lookup(id: 1)
       end

@@ -24,6 +24,7 @@ class Ticket < ApplicationModel
   latest_change_support
 
   activity_stream_support ignore_attributes: {
+    organization_id: true, # organization_id will channge automatically on user update
     create_article_type_id: true,
     create_article_sender_id: true,
     article_count: true,
