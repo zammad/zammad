@@ -8,9 +8,8 @@
           <th style="width: 28px;"></th>
           <th><%- @T('From') %></th>
           <th><%- @T('To') %></th>
-          <th><%- @T('State') %></th>
-          <th><%- @T('Comment') %></th>
-          <th><%- @T('Duration') %></th>
+          <th style="width: 200px;"></th>
+          <th style="width: 100px;"><%- @T('Duration') %></th>
           <th><%- @T('Time') %></th>
         </tr>
       </thead>
@@ -20,8 +19,7 @@
           <td><% if item.state is 'hangup': %><input type="checkbox" class="js-check" <% if item.done: %>checked<% end %>><% end %>
           <td><% if item.from_comment: %><%= item.from_comment %><br><% end %><%= item.from %></td>
           <td><% if item.to_comment: %><%= item.to_comment %><br><% end %><%= item.to %></td>
-          <td><%= item.state %></td>
-          <td><%= item.comment %></td>
+          <td><%- @T(item.state_human) %></td>
           <td><%= item.duration %></td>
           <td><%- @humanTime(item.created_at) %></td>
         </tr>

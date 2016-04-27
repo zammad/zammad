@@ -63,16 +63,17 @@ class App.CTI extends App.Controller
     )
 
   notify: (data) ->
-    App.Event.trigger 'notify', {
-      type:    'notice'
-      msg:     App.i18n.translateContent('Call from %s for %s', data.from, data.to)
-      timeout: 12000
-    }
+    text = App.i18n.translateContent('Call from %s for %s', data.from_comment || data_from, data.to_comment || data.to)
+    title = App.Utils.html2text(text.replace(/<.+?>/g, '"'))
+    @notifyDesktop(
+      url: '#cti'
+      title: title
+    )
+    App.OnlineNotification.play()
 
   featureActive: =>
     return true
-    if @Config.get('sipgate_integration')
-      return true
+    return true if @Config.get('sipgate_integration')
     false
 
   render: ->
@@ -98,6 +99,30 @@ class App.CTI extends App.Controller
       "#{mins}:#{secs}"
 
     for item in @list
+      if item.state is 'newCall'
+        item.state_human = 'ringing'
+      else if item.state is 'answer'
+        item.state_human = 'connected'
+      else if item.state is 'hangup'
+        if item.comment is 'cancel'
+          item.state_human = 'not reached'
+        else if item.comment is 'noAnswer'
+          item.state_human = 'not reached'
+        else if item.comment is 'congestion'
+          item.state_human = 'not reached'
+        else if item.comment is 'busy'
+          item.state_human = 'busy'
+        else if item.comment is 'notFound'
+          item.state_human = 'not exist'
+        else if item.comment is 'normalClearing'
+          item.state_human = ''
+        else
+          item.state_human = item.comment
+      else
+        item.state_human = item.state
+        if item.comment
+          item.state_human += ", #{item.comment}"
+
       if item.start && item.end
         item.duration = format((Date.parse(item.end) - Date.parse(item.start))/1000)
     @html App.view('cti/index')(
@@ -121,7 +146,11 @@ class App.CTI extends App.Controller
     @navupdate '#cti'
 
   counter: =>
-    @meta.counter
+    count = 0
+    for item in @list
+      if item.state is 'hangup' && !item.done
+        count++
+    @meta.counter + count
 
   switch: (state = undefined) =>
 

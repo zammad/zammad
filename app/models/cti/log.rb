@@ -11,9 +11,9 @@ module Cti
   Cti::Log.create(
     direction: 'in',
     from: '007',
-    from_comment: '',
+    from_comment: 'AAA',
     to: '008',
-    to_comment: '',
+    to_comment: 'BBB',
     call_id: '1',
     comment: '',
     state: 'newCall',
