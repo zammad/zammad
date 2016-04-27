@@ -7,6 +7,7 @@ backend = Transaction::Slack.new(
     object: 'Ticket',
     type: 'create',
     object_id: 1,
+    user_id: 123,
 )
 backend.perform
 
@@ -19,6 +20,7 @@ backend.perform
       'attribute1' => [before, now],
       'attribute2' => [before, now],
     }
+    user_id: 123,
   },
 =end
   def initialize(item, params = {})

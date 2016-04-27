@@ -46,6 +46,7 @@ class Observer::Transaction < ActiveRecord::Observer
         type: 'create',
         object_id: 123,
         article_id: 123,
+        user_id: 123,
       },
       9 => {
         object: 'Ticket',
@@ -55,6 +56,7 @@ class Observer::Transaction < ActiveRecord::Observer
           attribute1: [before, now],
           attribute2: [before, now],
         },
+        user_id: 123,
       },
     },
   }
@@ -70,6 +72,7 @@ class Observer::Transaction < ActiveRecord::Observer
           attribute1: [before, now],
           attribute2: [before, now],
         },
+        user_id: 123,
       },
     },
   }
@@ -110,6 +113,7 @@ class Observer::Transaction < ActiveRecord::Observer
       store = list_objects[event[:object]][object.id]
       store[:object] = event[:object]
       store[:object_id] = object.id
+      store[:user_id] = event[:user_id]
 
       if !store[:type] || store[:type] == 'update'
         store[:type] = event[:type]
@@ -148,6 +152,7 @@ class Observer::Transaction < ActiveRecord::Observer
       type: 'create',
       data: record,
       id: record.id,
+      user_id: record.created_by_id,
     }
     EventBuffer.add('transaction', e)
   end
@@ -181,6 +186,7 @@ class Observer::Transaction < ActiveRecord::Observer
       data: record,
       changes: real_changes,
       id: record.id,
+      user_id: record.updated_by_id,
     }
     EventBuffer.add('transaction', e)
   end

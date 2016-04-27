@@ -2,7 +2,7 @@ New Ticket (<%= d 'ticket.title' %>)
 
 <p>Hi <%= d 'recipient.firstname' %>,</p>
 <br>
-<p>A new ticket (<%= d 'ticket.title' %>) has been created by "<b><%= d 'ticket.updated_by.longname' %></b>".</p>
+<p>A new ticket (<%= d 'ticket.title' %>) has been created by "<b><%= d 'current_user.longname' %></b>".</p>
 <br>
 <p>
 <%= t 'Group' %>: <%= d 'ticket.group.name' %><br>

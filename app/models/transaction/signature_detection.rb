@@ -13,6 +13,7 @@ class Transaction::SignatureDetection
       'attribute1' => [before, now],
       'attribute2' => [before, now],
     }
+    user_id: 123,
   },
 =end
 

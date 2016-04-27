@@ -185,6 +185,7 @@ returns
           type: 'reminder_reached',
           object_id: ticket.id,
           article_id: ticket.articles.last.id,
+          user_id: 1,
         )
 
         result.push ticket
@@ -225,6 +226,7 @@ returns
           type: 'escalation',
           object_id: ticket.id,
           article_id: ticket.articles.last.id,
+          user_id: 1,
         )
         result.push ticket
         next
@@ -236,6 +238,7 @@ returns
         type: 'escalation_warning',
         object_id: ticket.id,
         article_id: ticket.articles.last.id,
+        user_id: 1,
       )
       result.push ticket
     }

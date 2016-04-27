@@ -154,7 +154,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
-    assert( ticket1, 'ticket created - ticket notification simple' )
+    assert(ticket1, 'ticket created - ticket notification simple')
 
     # execute object transaction
     Rails.configuration.webserver_is_active = true
@@ -267,7 +267,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to no one
+    # verify notifications to none
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
     assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
 
@@ -395,7 +395,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: customer.id,
       created_by_id: customer.id,
     )
-    assert( ticket1, 'ticket created - ticket no notification' )
+    assert(ticket1, 'ticket created - ticket no notification')
 
     # execute object transaction
     Observer::Transaction.commit(disable_notification: true)
@@ -934,19 +934,20 @@ class TicketNotificationTest < ActiveSupport::TestCase
         'priority_id'  => [1, 2],
         'pending_time' => [nil, Time.zone.parse('2015-01-11 23:33:47 UTC')],
       },
+      user_id: ticket1.updated_by_id,
     )
 
     # check changed attributes
     human_changes = bg.human_changes(agent2, ticket1)
-    assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert( human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert_equal( '1 low', human_changes['Priority'][0] )
-    assert_equal( '2 normal', human_changes['Priority'][1] )
-    assert_equal( '', human_changes['Pending till'][0].to_s )
-    assert_equal( '2015-01-11 23:33:47 UTC', human_changes['Pending till'][1].to_s )
-    assert_not( human_changes['priority_id'] )
-    assert_not( human_changes['pending_time'] )
-    assert_not( human_changes['pending_till'] )
+    assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
+    assert(human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute')
+    assert_equal('1 low', human_changes['Priority'][0])
+    assert_equal('2 normal', human_changes['Priority'][1])
+    assert_equal('', human_changes['Pending till'][0].to_s)
+    assert_equal('2015-01-11 23:33:47 UTC', human_changes['Pending till'][1].to_s)
+    assert_not(human_changes['priority_id'])
+    assert_not(human_changes['pending_time'])
+    assert_not(human_changes['pending_till'])
 
     # en notification
     result = NotificationFactory::Mailer.template(
@@ -957,7 +958,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
         article: article,
         recipient: agent2,
         changes: human_changes,
-      }
+      },
     )
     assert_match(/Bobs's resumé/, result[:subject])
     assert_match(/Priority/, result[:body])
@@ -970,15 +971,15 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_no_match(/i18n/, result[:body])
 
     human_changes = bg.human_changes(agent1, ticket1)
-    assert( human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert( human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute' )
-    assert_equal( '1 niedrig', human_changes['Priority'][0] )
-    assert_equal( '2 normal', human_changes['Priority'][1] )
-    assert_equal( '', human_changes['Pending till'][0].to_s )
-    assert_equal( '2015-01-11 23:33:47 UTC', human_changes['Pending till'][1].to_s )
-    assert_not( human_changes['priority_id'] )
-    assert_not( human_changes['pending_time'] )
-    assert_not( human_changes['pending_till'] )
+    assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
+    assert(human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute')
+    assert_equal('1 niedrig', human_changes['Priority'][0])
+    assert_equal('2 normal', human_changes['Priority'][1])
+    assert_equal('', human_changes['Pending till'][0].to_s)
+    assert_equal('2015-01-11 23:33:47 UTC', human_changes['Pending till'][1].to_s)
+    assert_not(human_changes['priority_id'])
+    assert_not(human_changes['pending_time'])
+    assert_not(human_changes['pending_till'])
 
     # de notification
     result = NotificationFactory::Mailer.template(
@@ -989,7 +990,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
         article: article,
         recipient: agent1,
         changes: human_changes,
-      }
+      },
     )
 
     assert_match(/Bobs's resumé/, result[:subject])
@@ -1010,6 +1011,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
         title: ['some notification template test old 1', 'some notification template test 1 #2'],
         priority_id: [2, 3],
       },
+      user_id: customer.id,
     )
 
     # check changed attributes

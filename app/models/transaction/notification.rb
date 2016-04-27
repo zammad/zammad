@@ -12,6 +12,7 @@ class Transaction::Notification
       'attribute1' => [before, now],
       'attribute2' => [before, now],
     }
+    user_id: 123,
   },
 =end
 
@@ -88,7 +89,7 @@ class Transaction::Notification
       # ignore user who changed it by him self via web
       if @params[:via_web]
         next if article && article.updated_by_id == user.id
-        next if !article && ticket.updated_by_id == user.id
+        next if !article && @item[:user_id] == user.id
       end
 
       # ignore inactive users
@@ -120,7 +121,7 @@ class Transaction::Notification
       if channels['online']
         used_channels.push 'online'
 
-        created_by_id = ticket.updated_by_id || 1
+        created_by_id = @item[:user_id] || 1
 
         # delete old notifications
         if @item[:type] == 'reminder_reached'
@@ -178,6 +179,11 @@ class Transaction::Notification
         raise "unknown type for notification #{@item[:type]}"
       end
 
+      current_user = User.lookup(id: @item[:user_id] || 1)
+      if !current_user
+        current_user = User.lookup(id: 1)
+      end
+
       NotificationFactory::Mailer.notification(
         template: template,
         user: user,
@@ -185,6 +191,7 @@ class Transaction::Notification
           ticket: ticket,
           article: article,
           recipient: user,
+          current_user: current_user,
           changes: changes,
         },
         references: ticket.get_references,
@@ -207,7 +214,7 @@ class Transaction::Notification
       history_type: 'notification',
       history_object: 'Ticket',
       value_to: recipient_list,
-      created_by_id: ticket.updated_by_id || 1
+      created_by_id: @item[:user_id] || 1
     )
   end
 
