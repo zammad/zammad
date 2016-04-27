@@ -51,6 +51,12 @@ class App.CTI extends App.Controller
         @meta.counter = 0
     )
 
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      @render()
+      'cti_rerender'
+    )
+
   # fetch data, render view
   load: ->
     @ajax(
