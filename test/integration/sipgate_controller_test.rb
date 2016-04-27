@@ -68,7 +68,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     )
 
     groups = Group.where(name: 'Users')
-    roles  = Role.where(name: 'Agent')
+    roles  = Role.where(name: %w(Agent CTI))
     agent  = User.create_or_update(
       login: 'cti-agent@example.com',
       firstname: 'E',
@@ -225,6 +225,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.from_comment)
     assert_equal(nil, log.comment)
     assert_equal('newCall', log.state)
+    assert_equal(true, log.done)
 
     # outbound - I - hangup by agent
     params = 'event=hangup&direction=out&callId=1234567890-1&cause=cancel'
@@ -238,6 +239,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.from_comment)
     assert_equal('cancel', log.comment)
     assert_equal('hangup', log.state)
+    assert_equal(true, log.done)
 
     # outbound - II - new call
     params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=1234567890-2&user%5B%5D=user+1'
@@ -251,6 +253,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.from_comment)
     assert_equal(nil, log.comment)
     assert_equal('newCall', log.state)
+    assert_equal(true, log.done)
 
     # outbound - II - answer by customer
     params = 'event=answer&direction=out&callId=1234567890-2&from=4930600000000&to=4912347114711'
@@ -264,6 +267,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.from_comment)
     assert_equal(nil, log.comment)
     assert_equal('answer', log.state)
+    assert_equal(true, log.done)
 
     # outbound - II - hangup by customer
     params = 'event=hangup&direction=out&callId=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711'
@@ -277,6 +281,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.from_comment)
     assert_equal('normalClearing', log.comment)
     assert_equal('hangup', log.state)
+    assert_equal(true, log.done)
 
     # inbound - I - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-3&user%5B%5D=user+1'
@@ -290,6 +295,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.to_comment)
     assert_equal(nil, log.comment)
     assert_equal('newCall', log.state)
+    assert_equal(true, log.done)
 
     # inbound - I - answer by customer
     params = 'event=answer&direction=in&callId=1234567890-3&to=4930600000000&from=4912347114711'
@@ -303,6 +309,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.to_comment)
     assert_equal(nil, log.comment)
     assert_equal('answer', log.state)
+    assert_equal(true, log.done)
 
     # inbound - I - hangup by customer
     params = 'event=hangup&direction=in&callId=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711'
@@ -316,7 +323,79 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('user 1', log.to_comment)
     assert_equal('normalClearing', log.comment)
     assert_equal('hangup', log.state)
+    assert_equal(true, log.done)
 
+    # inbound - II - new call
+    params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-4&user%5B%5D=user+1,user+2'
+    post '/api/v1/sipgate/in', params
+    assert_response(200)
+    log = Cti::Log.find_by(call_id: '1234567890-4')
+    assert(log)
+    assert_equal('4930600000000', log.to)
+    assert_equal('4912347114711', log.from)
+    assert_equal('in', log.direction)
+    assert_equal('user 1,user 2', log.to_comment)
+    assert_equal(nil, log.comment)
+    assert_equal('newCall', log.state)
+    assert_equal(true, log.done)
+
+    # inbound - II - answer by voicemail
+    params = 'event=answer&direction=in&callId=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
+    post '/api/v1/sipgate/in', params
+    assert_response(200)
+    log = Cti::Log.find_by(call_id: '1234567890-4')
+    assert(log)
+    assert_equal('4930600000000', log.to)
+    assert_equal('4912347114711', log.from)
+    assert_equal('in', log.direction)
+    assert_equal('voicemail', log.to_comment)
+    assert_equal(nil, log.comment)
+    assert_equal('answer', log.state)
+    assert_equal(true, log.done)
+
+    # inbound - II - hangup by customer
+    params = 'event=hangup&direction=in&callId=1234567890-4&cause=normalClearing&to=4930600000000&from=4912347114711'
+    post '/api/v1/sipgate/in', params
+    assert_response(200)
+    log = Cti::Log.find_by(call_id: '1234567890-4')
+    assert(log)
+    assert_equal('4930600000000', log.to)
+    assert_equal('4912347114711', log.from)
+    assert_equal('in', log.direction)
+    assert_equal('voicemail', log.to_comment)
+    assert_equal('normalClearing', log.comment)
+    assert_equal('hangup', log.state)
+    assert_equal(false, log.done)
+
+    # inbound - III - new call
+    params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-5&user%5B%5D=user+1,user+2'
+    post '/api/v1/sipgate/in', params
+    assert_response(200)
+    log = Cti::Log.find_by(call_id: '1234567890-5')
+    assert(log)
+    assert_equal('4930600000000', log.to)
+    assert_equal('4912347114711', log.from)
+    assert_equal('in', log.direction)
+    assert_equal('user 1,user 2', log.to_comment)
+    assert_equal(nil, log.comment)
+    assert_equal('newCall', log.state)
+    assert_equal(true, log.done)
+
+    # inbound - III - hangup by customer
+    params = 'event=hangup&direction=in&callId=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
+    post '/api/v1/sipgate/in', params
+    assert_response(200)
+    log = Cti::Log.find_by(call_id: '1234567890-5')
+    assert(log)
+    assert_equal('4930600000000', log.to)
+    assert_equal('4912347114711', log.from)
+    assert_equal('in', log.direction)
+    assert_equal('user 1,user 2', log.to_comment)
+    assert_equal('normalClearing', log.comment)
+    assert_equal('hangup', log.state)
+    assert_equal(false, log.done)
+
+    # get caller list
     get '/api/v1/cti/log'
     assert_response(401)
 
@@ -326,7 +405,15 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Array)
-    assert_equal(3, result.count)
+    assert_equal(5, result.count)
+    assert_equal('hangup', result[1]['state'])
+    assert_equal('4930777000000', result[1]['from'])
+    assert_equal('user 1', result[1]['from_comment'])
+    assert_equal('4912347114711', result[1]['to'])
+    assert_equal(nil, result[1]['to_comment'])
+    assert_equal('1234567890-2', result[1]['call_id'])
+    assert_equal('normalClearing', result[1]['comment'])
+    assert_equal('hangup', result[1]['state'])
 
   end
 

@@ -5,20 +5,24 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
+          <th style="width: 28px;"></th>
           <th><%- @T('From') %></th>
           <th><%- @T('To') %></th>
           <th><%- @T('State') %></th>
           <th><%- @T('Comment') %></th>
+          <th><%- @T('Duration') %></th>
           <th><%- @T('Time') %></th>
         </tr>
       </thead>
       <tbody>
         <% for item in @list: %>
-        <tr>
-          <td><%= item.from %><% if item.from_comment: %> (<%= item.from_comment %>)<% end %></td>
-          <td><%= item.to %><% if item.to_comment: %> (<%= item.to_comment %>)<% end %></td>
+        <tr <% if item.state is 'hangup' && item.done: %>class="is-inactive"<% end %> data-id="<%- item.id %>">
+          <td><% if item.state is 'hangup': %><input type="checkbox" class="js-check" <% if item.done: %>checked<% end %>><% end %>
+          <td><% if item.from_comment: %><%= item.from_comment %><br><% end %><%= item.from %></td>
+          <td><% if item.to_comment: %><%= item.to_comment %><br><% end %><%= item.to %></td>
           <td><%= item.state %></td>
           <td><%= item.comment %></td>
+          <td><%= item.duration %></td>
           <td><%- @humanTime(item.created_at) %></td>
         </tr>
         <% end %>

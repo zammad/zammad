@@ -1,9 +1,17 @@
 class App.CTI extends App.Controller
+  events:
+    'click .js-check': 'done'
+
   constructor: ->
     super
 
+    return if !@isRole('CTI')
+
+    @list = []
     @meta =
       active: false
+      counter: 0
+      state: {}
 
     preferences = @Session.get('preferences') || {}
     @meta.active = preferences.cti || false
@@ -14,9 +22,20 @@ class App.CTI extends App.Controller
       'cti_event'
       (data) =>
         console.log('cti_event', data)
-        if data.state is 'newCall'
-          console.log('notify')
-          @notify(data)
+        if data.direction is 'in'
+          if data.state is 'newCall'
+            if @switch()
+              @notify(data)
+            return if @meta.state[data.id]
+            @meta.state[data.id] = true
+            @meta.counter += 1
+            @updateNavMenu()
+          if data.state is 'answer' || data.state is 'hangup'
+            return if !@meta.state[data.id]
+            delete @meta.state[data.id]
+            @meta.counter -= 1
+            @updateNavMenu()
+
       'cti_event'
     )
     App.Event.bind(
@@ -25,6 +44,11 @@ class App.CTI extends App.Controller
         @list = data
         @render()
       'cti_list_push'
+    )
+    App.Event.bind(
+      'auth'
+      (data) =>
+        @meta.counter = 0
     )
 
   # fetch data, render view
@@ -39,14 +63,11 @@ class App.CTI extends App.Controller
     )
 
   notify: (data) ->
-    console.log(data)
-    #return if !
-    if data.state is 'newCall' && data.direction is 'in'
-      App.Event.trigger 'notify', {
-        type:    'notice'
-        msg:     App.i18n.translateContent('Call from %s for %s', data.from, data.to)
-        timeout: 2500
-      }
+    App.Event.trigger 'notify', {
+      type:    'notice'
+      msg:     App.i18n.translateContent('Call from %s for %s', data.from, data.to)
+      timeout: 12000
+    }
 
   featureActive: =>
     return true
@@ -59,18 +80,48 @@ class App.CTI extends App.Controller
       @renderScreenUnauthorized(objectName: 'CTI')
       return
 
+    format = (time) ->
+      # Minutes and seconds
+      mins = ~~(time / 60)
+      secs = time % 60
+
+      # Hours, minutes and seconds
+      hrs = ~~(time / 3600)
+      mins = ~~((time % 3600) / 60)
+      secs = time % 60
+
+      # Output like "1:01" or "4:03:59" or "123:03:59"
+      mins = "0#{mins}" if mins < 10
+      secs = "0#{secs}" if secs < 10
+      if hrs > 0
+        return "#{hrs}:#{mins}:#{secs}"
+      "#{mins}:#{secs}"
+
+    for item in @list
+      if item.start && item.end
+        item.duration = format((Date.parse(item.end) - Date.parse(item.start))/1000)
     @html App.view('cti/index')(
       list: @list
     )
 
     @updateNavMenu()
 
+  done: (e) =>
+    element = $(e.currentTarget)
+    id = element.closest('tr').data('id')
+    done = element.prop('checked')
+    @ajax(
+      type:  'POST'
+      url:   "#{@apiPath}/cti/done/#{id}"
+      data:  JSON.stringify(done: done)
+    )
+
   show: (params) =>
     @title 'CTI', true
     @navupdate '#cti'
 
-  counter: ->
-    counter = 0
+  counter: =>
+    @meta.counter
 
   switch: (state = undefined) =>
 

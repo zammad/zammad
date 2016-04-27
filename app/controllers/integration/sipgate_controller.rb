@@ -12,6 +12,16 @@ class Integration::SipgateController < ApplicationController
     render json: list
   end
 
+  # set caller log to done
+  def done
+    return if !authentication_check
+    return if deny_if_not_role('CTI')
+    log = Cti::Log.find(params['id'])
+    log.done = params['done']
+    log.save
+    render json: {}
+  end
+
   # notify about inbound call / block inbound call
   def in
     http_log_config facility: 'sipgate.io'
@@ -143,12 +153,23 @@ class Integration::SipgateController < ApplicationController
       log = Cti::Log.find_by(call_id: params['callId'])
       raise "No such call_id #{params['callId']}" if !log
       log.state = 'answer'
+      log.start = Time.zone.now
+      if user
+        log.to_comment = user
+      end
       log.comment = comment
       log.save
     elsif params['event'] == 'hangup'
       log = Cti::Log.find_by(call_id: params['callId'])
       raise "No such call_id #{params['callId']}" if !log
+      if params['direction'] == 'in' && log.state == 'newCall'
+        log.done = false
+      end
+      if params['direction'] == 'in' && log.to_comment == 'voicemail'
+        log.done = false
+      end
       log.state = 'hangup'
+      log.end = Time.zone.now
       log.comment = comment
       log.save
     else
