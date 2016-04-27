@@ -69,7 +69,7 @@ class App.CTI extends App.Controller
     )
 
   notify: (data) ->
-    text = App.i18n.translateContent('Call from %s for %s', data.from_comment || data_from, data.to_comment || data.to)
+    text = App.i18n.translateContent('Call from %s for %s', data.from_comment || data.from, data.to_comment || data.to)
     title = App.Utils.html2text(text.replace(/<.+?>/g, '"'))
     @notifyDesktop(
       url: '#cti'
