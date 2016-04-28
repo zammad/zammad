@@ -135,7 +135,7 @@ GEM
       addressable
       faraday
       multi_json
-    libv8 (3.16.14.13)
+    libv8 (3.16.14.15)
     listen (3.1.1)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
@@ -150,7 +150,7 @@ GEM
     mime-types (2.99.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
-    multi_json (1.11.2)
+    multi_json (1.11.3)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mysql2 (0.3.20)
@@ -191,8 +191,9 @@ GEM
     omniauth-twitter (1.2.1)
       json (~> 1.3)
       omniauth-oauth (~> 1.1)
-    parser (2.3.0.7)
+    parser (2.3.1.0)
       ast (~> 2.2)
+    phony (2.15.21)
     pluginator (1.3.0)
     power_assert (0.2.7)
     powerpack (0.1.1)
@@ -246,7 +247,7 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-progressbar (1.7.5)
+    ruby-progressbar (1.8.0)
     rubyzip (1.2.0)
     sass (3.4.22)
     sass-rails (5.0.4)
@@ -354,6 +355,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-linkedin
   omniauth-twitter
+  phony
   pre-commit
   puma
   rack-livereload

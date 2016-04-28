@@ -8,7 +8,7 @@ class Integration::SipgateController < ApplicationController
   def index
     return if !authentication_check
     return if deny_if_not_role('CTI')
-    list = Cti::Log.order('created_at DESC').limit(60)
+    list = Cti::Log.order('created_at DESC, id DESC').limit(60)
     render json: list
   end
 
@@ -130,8 +130,10 @@ class Integration::SipgateController < ApplicationController
     to_comment = nil
     if params['direction'] == 'in'
       to_comment = user
+      from_comment = update_log_item('from')
     else
       from_comment = user
+      to_comment = update_log_item('to')
     end
     comment = nil
     if params['cause']
@@ -176,6 +178,37 @@ class Integration::SipgateController < ApplicationController
       raise "Unknown event #{params['event']}"
     end
 
+  end
+
+  def update_log_item(direction)
+    from_comment_known = ''
+    from_comment_maybe = ''
+    caller_ids = Cti::CallerId.lookup(params[direction])
+    caller_ids.each {|record|
+      comment = ''
+      if record.user_id
+        user = User.lookup(id: record.user_id)
+        if user
+          comment += user.fullname
+        end
+      elsif !record.comment.empty?
+        comment += record.comment
+      end
+      if record.level == 'known'
+        if !from_comment_known.empty?
+          from_comment_known += ','
+        end
+        from_comment_known += comment
+      else
+        if !from_comment_maybe.empty?
+          from_comment_maybe += ','
+        end
+        from_comment_maybe += comment
+      end
+    }
+    return from_comment_known if !from_comment_known.empty?
+    return "maybe #{from_comment_maybe}" if !from_comment_maybe.empty?
+    nil
   end
 
   def xml_error(error)

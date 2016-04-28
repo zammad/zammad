@@ -75,7 +75,6 @@ class App.CTI extends App.Controller
       url: '#cti'
       title: title
     )
-    App.OnlineNotification.play()
 
   featureActive: =>
     return true

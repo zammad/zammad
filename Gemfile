@@ -85,6 +85,7 @@ gem 'net-ldap'
 gem 'writeexcel'
 gem 'icalendar'
 gem 'browser'
+gem 'phony'
 
 # integrations
 gem 'slack-notifier'
