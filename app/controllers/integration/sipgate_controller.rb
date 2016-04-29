@@ -8,8 +8,7 @@ class Integration::SipgateController < ApplicationController
   def index
     return if !authentication_check
     return if deny_if_not_role('CTI')
-    list = Cti::Log.order('created_at DESC, id DESC').limit(60)
-    render json: list
+    render json: Cti::Log.log
   end
 
   # set caller log to done
@@ -128,13 +127,15 @@ class Integration::SipgateController < ApplicationController
     end
     from_comment = nil
     to_comment = nil
+    preferences = nil
     if params['direction'] == 'in'
       to_comment = user
-      from_comment = update_log_item('from')
+      from_comment, preferences = update_log_item('from')
     else
       from_comment = user
-      to_comment = update_log_item('to')
+      to_comment, preferences = update_log_item('to')
     end
+
     comment = nil
     if params['cause']
       comment = params['cause']
@@ -150,6 +151,7 @@ class Integration::SipgateController < ApplicationController
         call_id: params['callId'],
         comment: comment,
         state: params['event'],
+        preferences: preferences,
       )
     elsif params['event'] == 'answer'
       log = Cti::Log.find_by(call_id: params['callId'])
@@ -183,8 +185,17 @@ class Integration::SipgateController < ApplicationController
   def update_log_item(direction)
     from_comment_known = ''
     from_comment_maybe = ''
+    preferences_known = {}
+    preferences_known[direction] = []
+    preferences_maybe = {}
+    preferences_maybe[direction] = []
     caller_ids = Cti::CallerId.lookup(params[direction])
     caller_ids.each {|record|
+      if record.level == 'known'
+        preferences_known[direction].push record
+      else
+        preferences_maybe[direction].push record
+      end
       comment = ''
       if record.user_id
         user = User.lookup(id: record.user_id)
@@ -206,8 +217,8 @@ class Integration::SipgateController < ApplicationController
         from_comment_maybe += comment
       end
     }
-    return from_comment_known if !from_comment_known.empty?
-    return "maybe #{from_comment_maybe}" if !from_comment_maybe.empty?
+    return [from_comment_known, preferences_known] if !from_comment_known.empty?
+    return ["maybe #{from_comment_maybe}", preferences_maybe] if !from_comment_maybe.empty?
     nil
   end
 

@@ -41,8 +41,11 @@ class App.CTI extends App.Controller
     App.Event.bind(
       'cti_list_push'
       (data) =>
-        @list = data
-        @render()
+        if data.assets
+          App.Collection.loadAssets(data.assets)
+        if data.list
+          @list = data.list
+          @render()
       'cti_list_push'
     )
     App.Event.bind(
@@ -64,8 +67,11 @@ class App.CTI extends App.Controller
       type:  'GET'
       url:   "#{@apiPath}/cti/log"
       success: (data) =>
-        @list = data
-        @render()
+        if data.assets
+          App.Collection.loadAssets(data.assets)
+        if data.list
+          @list = data.list
+          @render()
     )
 
   notify: (data) ->
@@ -133,7 +139,7 @@ class App.CTI extends App.Controller
     @html App.view('cti/index')(
       list: @list
     )
-
+    @userPopups()
     @updateNavMenu()
 
   done: (e) =>

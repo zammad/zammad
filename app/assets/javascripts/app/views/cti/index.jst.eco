@@ -8,17 +8,57 @@
           <th style="width: 28px;"></th>
           <th><%- @T('From') %></th>
           <th><%- @T('To') %></th>
-          <th style="width: 200px;"></th>
+          <th style="width: 130px;"></th>
           <th style="width: 100px;"><%- @T('Duration') %></th>
-          <th><%- @T('Time') %></th>
+          <th style="width: 170px;"><%- @T('Time') %></th>
         </tr>
       </thead>
       <tbody>
         <% for item in @list: %>
         <tr <% if item.state is 'hangup' && item.done: %>class="is-inactive"<% end %> data-id="<%- item.id %>">
           <td><% if item.state is 'hangup': %><input type="checkbox" class="js-check" <% if item.done: %>checked<% end %>><% end %>
-          <td><% if item.from_comment: %><%= item.from_comment %><br><% end %><%= item.from %></td>
-          <td><% if item.to_comment: %><%= item.to_comment %><br><% end %><%= item.to %></td>
+          <td>
+            <% shown = false %>
+            <% if item.preferences.from && !_.isEmpty(item.preferences.from): %>
+              <% for caller_id in item.preferences.from: %>
+                <% if caller_id.user_id && App.User.exists(caller_id.user_id): %>
+                  <% shown = true %>
+                  <% user = App.User.find(caller_id.user_id) %>
+                  <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
+                  <span class="user-popover" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
+                <% else if caller_id.comment: %>
+                  <% shown = true %>
+                  <%- @T('maybe') %> <%= caller_id.comment %><br>
+                <% end %>
+              <% end %>
+            <% end %>
+            <% if !shown: %>
+              <% if item.from_comment: %><%= item.from_comment %><% end %>
+              <br>
+            <% end %>
+            <%= item.from %>
+          </td>
+          <td>
+            <% shown = false %>
+            <% if item.preferences.to && !_.isEmpty(item.preferences.to): %>
+              <% for caller_id in item.preferences.to: %>
+                <% if caller_id.user_id && App.User.exists(caller_id.user_id): %>
+                  <% shown = true %>
+                  <% user = App.User.find(caller_id.user_id) %>
+                  <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
+                  <span class="user-popover" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
+                <% else if caller_id.comment: %>
+                  <% shown = true %>
+                  <%- @T('maybe') %> <%= caller_id.comment %><br>
+                <% end %>
+              <% end %>
+            <% end %>
+            <% if !shown: %>
+              <% if item.to_comment: %><%= item.to_comment %><% end %>
+              <br>
+            <% end %>
+            <%= item.to %>
+          </td>
           <td><%- @T(item.state_human) %></td>
           <td><%= item.duration %></td>
           <td><%- @humanTime(item.created_at) %></td>

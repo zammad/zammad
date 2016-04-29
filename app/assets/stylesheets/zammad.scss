@@ -3785,6 +3785,12 @@ footer {
     padding-left: 3px;
   }
 
+.user-popover,
+.ticket-popover,
+.organization-popover {
+  @extend .u-clickable;
+}
+
 .stat-icon {
   position: relative;
 }

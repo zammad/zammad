@@ -45,9 +45,16 @@ returns
 =end
 
     def self.lookup(caller_id)
-      Cti::CallerId.where(
+      result = Cti::CallerId.where(
         caller_id: caller_id,
-      ).order('id DESC')
+      ).order('id DESC').limit(20)
+
+      # in case do lookups in external databases
+      if result.empty?
+        # ...
+      end
+
+      result
     end
 
 =begin
@@ -124,6 +131,7 @@ returns
 =end
 
     def self.rebuild
+      Cti::CallerId.delete_all
       map = config
       map.each {|item|
         level = item[:level]
