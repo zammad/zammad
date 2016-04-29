@@ -541,7 +541,7 @@ class App.Utils
   @checkAttachmentReference: (message) ->
     return false if !message
     return true if message.match(/attachment/i)
-    matchwords = ['Attachment', 'attachment', 'Attached', 'attached', 'Enclosed', 'enclosed']
+    matchwords = ['Attachment', 'attachment', 'Attached', 'attached', 'Enclosed', 'enclosed', 'Enclosure', 'enclosure']
     for word in matchwords
 
       # en
