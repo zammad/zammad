@@ -55,12 +55,7 @@ class App.ControllerIntegrationBase extends App.Controller
                   msg:     App.i18n.translateContent('Update successful!')
                   timeout: 2000
                 }
-                if @preferences
-                  if @preferences.render
-                    App.Event.trigger( 'ui:rerender' )
-
-                  if @preferences.session_check
-                    App.Auth.loginCheck()
+              App.Setting.preferencesPost(@)
 
             fail: (settings, details) ->
               App.Event.trigger 'notify', {
@@ -73,25 +68,4 @@ class App.ControllerIntegrationBase extends App.Controller
 
     value =
       items: [params]
-    App.Setting.set(
-      @featureConfig,
-      value,
-      done: ->
-        App.Event.trigger 'notify', {
-          type:    'success'
-          msg:     App.i18n.translateContent('Update successful!')
-          timeout: 2000
-        }
-        if @preferences
-          if @preferences.render
-            App.Event.trigger( 'ui:rerender' )
-
-          if @preferences.session_check
-            App.Auth.loginCheck()
-      fail: (settings, details) ->
-        App.Event.trigger 'notify', {
-          type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
-          timeout: 2000
-        }
-    )
+    App.Setting.set(@featureConfig, value)

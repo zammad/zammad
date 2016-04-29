@@ -29,10 +29,8 @@ class App.TicketOverview extends App.Controller
       @delay(update, 2800, 'overview:fetch')
 
   active: (state) =>
-    @activeState = state
-
-  isActive: =>
-    @activeState
+    return @shown if state is undefined
+    @shown = state
 
   url: =>
     "#ticket/view/#{@view}"
@@ -399,7 +397,7 @@ class Table extends App.Controller
       view: @view
 
     # start bulk action observ
-    @el.append( @bulkForm.el )
+    @el.append(@bulkForm.el)
     if @$('.table-overview').find('input[name="bulk"]:checked').length isnt 0
       @bulkForm.show()
 
@@ -431,7 +429,7 @@ class Table extends App.Controller
       ticket_id = $(element).val()
       for ticket_id_selected in ticketIDs
         if ticket_id_selected is ticket_id
-          $(element).attr( 'checked', true )
+          $(element).attr('checked', true)
     )
 
   viewmode: (e) =>
@@ -591,8 +589,8 @@ class BulkForm extends App.Controller
         params.ticket_id = ticket.id
         params.form_id   = @form_id
 
-        sender           = App.TicketArticleSender.findByAttribute( 'name', 'Agent' )
-        type             = App.TicketArticleType.find( params['type_id'] )
+        sender           = App.TicketArticleSender.findByAttribute('name', 'Agent')
+        type             = App.TicketArticleType.find(params['type_id'])
         params.sender_id = sender.id
 
         if !params['internal']
@@ -789,7 +787,7 @@ class TicketOverviewRouter extends App.ControllerPermanent
       persistent: true
     )
 
-App.Config.set( 'ticket/view', TicketOverviewRouter, 'Routes' )
-App.Config.set( 'ticket/view/:view', TicketOverviewRouter, 'Routes' )
-App.Config.set( 'TicketOverview', { controller: 'TicketOverview', authentication: true }, 'permanentTask' )
-App.Config.set( 'TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar' )
+App.Config.set('ticket/view', TicketOverviewRouter, 'Routes')
+App.Config.set('ticket/view/:view', TicketOverviewRouter, 'Routes')
+App.Config.set('TicketOverview', { controller: 'TicketOverview', authentication: true }, 'permanentTask')
+App.Config.set('TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', key: 'TicketOverview', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar')

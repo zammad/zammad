@@ -59,12 +59,10 @@ class App.Dashboard extends App.Controller
     @navigate '#clues'
 
   active: (state) =>
-    @activeState = state
+    return @shown if state is undefined
+    @shown = state
     if state
       @mayBeClues()
-
-  isActive: =>
-    @activeState
 
   url: ->
     '#dashboard'
@@ -80,9 +78,6 @@ class App.Dashboard extends App.Controller
 
     # highlight navbar
     @navupdate '#dashboard'
-
-  hide: ->
-    # no
 
   changed: ->
     false
@@ -112,6 +107,6 @@ class DashboardRouter extends App.ControllerPermanent
       persistent: true
     )
 
-App.Config.set( 'dashboard', DashboardRouter, 'Routes' )
-App.Config.set( 'Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', role: ['Agent'], class: 'dashboard' }, 'NavBar' )
-App.Config.set( 'Dashboard', { controller: 'Dashboard', authentication: true }, 'permanentTask' )
+App.Config.set('dashboard', DashboardRouter, 'Routes')
+App.Config.set('Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', key: 'Dashboard', role: ['Agent'], class: 'dashboard' }, 'NavBar')
+App.Config.set('Dashboard', { controller: 'Dashboard', authentication: true }, 'permanentTask')

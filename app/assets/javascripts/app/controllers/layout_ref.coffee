@@ -1801,11 +1801,6 @@ class CustomerChatRef extends App.Controller
     # write state
     App.SessionStorage.set('chat_layout_ref', state)
 
-  updateNavMenu: =>
-    delay = ->
-      App.Event.trigger('menu:render')
-    @delay(delay, 200)
-
   testChat: (chat, count) ->
     for i in [0..count]
       text = @questions[Math.floor(Math.random() * @questions.length)].question

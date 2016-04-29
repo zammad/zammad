@@ -1198,7 +1198,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { render: true },
+  preferences: { trigger: 'menu:render' },
   state: false,
   frontend: true
 )
@@ -1851,7 +1851,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1 },
+  preferences: { prio: 1, trigger: 'cti:reload' },
   frontend: false
 )
 Setting.create_if_not_exists(

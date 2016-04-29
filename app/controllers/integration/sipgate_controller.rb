@@ -4,23 +4,6 @@ require 'builder'
 
 class Integration::SipgateController < ApplicationController
 
-  # list current caller log
-  def index
-    return if !authentication_check
-    return if deny_if_not_role('CTI')
-    render json: Cti::Log.log
-  end
-
-  # set caller log to done
-  def done
-    return if !authentication_check
-    return if deny_if_not_role('CTI')
-    log = Cti::Log.find(params['id'])
-    log.done = params['done']
-    log.save
-    render json: {}
-  end
-
   # notify about inbound call / block inbound call
   def in
     http_log_config facility: 'sipgate.io'

@@ -86,8 +86,7 @@ class App.CustomerChat extends App.Controller
     )
 
   featureActive: =>
-    if @Config.get('chat')
-      return true
+    return true if @Config.get('chat')
     false
 
   render: ->
@@ -164,6 +163,10 @@ class App.CustomerChat extends App.Controller
     @title 'Customer Chat', true
     @navupdate '#customer_chat'
 
+  active: (state) =>
+    return @shown if state is undefined
+    @shown = state
+
   counter: =>
     counter = 0
 
@@ -238,11 +241,6 @@ class App.CustomerChat extends App.Controller
     else
       @stopPushState()
       @pushState()
-
-  updateNavMenu: =>
-    delay = ->
-      App.Event.trigger('menu:render')
-    @delay(delay, 200, 'updateNavMenu')
 
   updateMeta: =>
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()

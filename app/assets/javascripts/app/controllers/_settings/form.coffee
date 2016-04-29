@@ -72,13 +72,8 @@ class App.SettingsForm extends App.Controller
                 timeout: 2000
               }
 
-              # rerender ui || get new collections and session data
-              if @preferences
-                if @preferences.render
-                  App.Event.trigger( 'ui:rerender' )
-
-                if @preferences.session_check
-                  App.Auth.loginCheck()
+            # rerender ui || get new collections and session data
+            App.Setting.preferencesPost(@)
 
           fail: (settings, details) ->
             App.Event.trigger 'notify', {

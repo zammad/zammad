@@ -55,9 +55,10 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @notificationWidget = undefined
 
   renderMenu: =>
-    items = @getItems( navbar: @Config.get( 'NavBar' ) )
+    items = @getItems( navbar: @Config.get('NavBar') )
 
     # apply counter and switch info from persistant controllers (if exists)
+    activeTab = {}
     itemsNew = []
     for item in items
       shown = true
@@ -70,6 +71,8 @@ class App.Navigation extends App.ControllerWidgetPermanent
             item.counter = worker.counter()
           if worker.switch
             item.switch = worker.switch()
+          if worker.active && worker.active()
+            activeTab[item.target] = true
           if worker.featureActive
             if worker.featureActive()
               shown = true
@@ -80,16 +83,17 @@ class App.Navigation extends App.ControllerWidgetPermanent
     items = itemsNew
 
     # get open tabs to repopen on rerender
-    open_tab = {}
+    openTab = {}
     @$('.open').children('a').each( (i,d) ->
       href = $(d).attr('href')
-      open_tab[href] = true
+      openTab[href] = true
     )
 
     # render menu
     @$('.js-menu').html App.view('navigation/menu')(
-      items:      items
-      open_tab:   open_tab
+      items:     items
+      openTab:   openTab
+      activeTab: activeTab
     )
 
     # bind on switch changes and execute it on controller

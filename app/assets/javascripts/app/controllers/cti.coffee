@@ -8,6 +8,7 @@ class App.CTI extends App.Controller
     return if !@isRole('CTI')
 
     @list = []
+    @backends = []
     @meta =
       active: false
       counter: 0
@@ -18,40 +19,39 @@ class App.CTI extends App.Controller
 
     @load()
 
-    App.Event.bind(
+    @bind('cti_event', (data) =>
+      if data.direction is 'in'
+        if data.state is 'newCall'
+          if @switch()
+            @notify(data)
+          return if @meta.state[data.id]
+          @meta.state[data.id] = true
+          @meta.counter += 1
+          @updateNavMenu()
+        if data.state is 'answer' || data.state is 'hangup'
+          return if !@meta.state[data.id]
+          delete @meta.state[data.id]
+          @meta.counter -= 1
+          @updateNavMenu()
       'cti_event'
-      (data) =>
-        console.log('cti_event', data)
-        if data.direction is 'in'
-          if data.state is 'newCall'
-            if @switch()
-              @notify(data)
-            return if @meta.state[data.id]
-            @meta.state[data.id] = true
-            @meta.counter += 1
-            @updateNavMenu()
-          if data.state is 'answer' || data.state is 'hangup'
-            return if !@meta.state[data.id]
-            delete @meta.state[data.id]
-            @meta.counter -= 1
-            @updateNavMenu()
+    )
+    @bind('cti_list_push', (data) =>
+      if data.assets
+        App.Collection.loadAssets(data.assets)
+      if data.backends
+        @backends = data.backends
+      if data.list
+        @list = data.list
+        @render()
+      'cti_list_push'
+    )
+    @bind('auth', (data) =>
+      @meta.counter = 0
+    )
 
-      'cti_event'
-    )
-    App.Event.bind(
-      'cti_list_push'
-      (data) =>
-        if data.assets
-          App.Collection.loadAssets(data.assets)
-        if data.list
-          @list = data.list
-          @render()
-      'cti_list_push'
-    )
-    App.Event.bind(
-      'auth'
-      (data) =>
-        @meta.counter = 0
+    @bind('cti:reload', =>
+      @load()
+      'cti_reload'
     )
 
     # rerender view, e. g. on langauge change
@@ -69,6 +69,8 @@ class App.CTI extends App.Controller
       success: (data) =>
         if data.assets
           App.Collection.loadAssets(data.assets)
+        if data.backends
+          @backends = data.backends
         if data.list
           @list = data.list
           @render()
@@ -82,14 +84,25 @@ class App.CTI extends App.Controller
       title: title
     )
 
-  featureActive: =>
-    return true
-    return true if @Config.get('sipgate_integration')
-    false
+  featureActive: ->
+    true
 
   render: ->
     if !@isRole('CTI')
       @renderScreenUnauthorized(objectName: 'CTI')
+      return
+
+    # check if min one backend is enabled
+    backendEnabled = false
+    for backend in @backends
+      if backend.enabled
+        backendEnabled = true
+    if !backendEnabled
+      @html App.view('cti/not_configured')(
+        backends: @backends
+        isAdmin: @isRole('Admin')
+      )
+      @updateNavMenu()
       return
 
     format = (time) ->
@@ -158,6 +171,10 @@ class App.CTI extends App.Controller
     @title 'CTI', true
     @navupdate '#cti'
 
+  active: (state) =>
+    return @shown if state is undefined
+    @shown = state
+
   counter: =>
     count = 0
     for item in @list
@@ -181,11 +198,6 @@ class App.CTI extends App.Controller
       data:        JSON.stringify(user: {cti: state})
       processData: true
     )
-
-  updateNavMenu: =>
-    delay = ->
-      App.Event.trigger('menu:render')
-    @delay(delay, 200, 'updateNavMenu')
 
 class CTIRouter extends App.ControllerPermanent
   constructor: (params) ->

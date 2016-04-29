@@ -1,6 +1,6 @@
 <% for item in @items: %>
   <% if item.child: %>
-  <div class="dropdown<%- ' open' if @open_tab[item.target] %>">
+  <div class="dropdown<%- ' open' if @openTab[item.target] %>">
     <a href="<%= item.target %>" class="menu-item js-<%- item.class %>MenuItem dropdown-toggle" data-toggle="dropdown">
         <%- @Icon(item.class, 'menu-item-icon') %>
         <span class="menu-item-name flex">
@@ -21,7 +21,7 @@
     </ul>
   </div>
   <% else: %>
-  <a class="menu-item js-<%- item.class %>MenuItem" href="<%= item.target %>" data-key="<%- item.key %>">
+  <a class="menu-item js-<%- item.class %>MenuItem <% if @activeTab[item.target]: %>is-active<% end %>" href="<%= item.target %>" data-key="<%- item.key %>">
     <%- @Icon(item.class, 'menu-item-icon') %>
     <span class="menu-item-name">
       <%- @T(item.name) %>

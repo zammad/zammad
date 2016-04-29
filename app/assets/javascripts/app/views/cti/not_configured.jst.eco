@@ -1,0 +1,10 @@
+<div class="main flex">
+  <h1><%- @T('Caller log') %></h1>
+  <p><%- @T('Sorry, currently is no CTI backend enabled!') %></p>
+  <p><%- @T('We support') %>:</p>
+  <ul>
+  <% for backend in @backends: %>
+    <li><% if @isAdmin: %><a href="<%- backend.url %>"><% end %><%= backend.name %><% if @isAdmin: %></a><% end %>
+  <% end %>
+  </ul>
+</div>
