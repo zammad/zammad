@@ -136,6 +136,8 @@ class App.CTI extends App.Controller
 
       if item.start && item.end
         item.duration = format((Date.parse(item.end) - Date.parse(item.start))/1000)
+
+    @userPopupsDestroy()
     @html App.view('cti/index')(
       list: @list
     )

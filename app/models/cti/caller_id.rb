@@ -47,10 +47,22 @@ returns
     def self.lookup(caller_id)
       result = Cti::CallerId.where(
         caller_id: caller_id,
-      ).order('id DESC').limit(20)
+        level: 'known',
+      ).group(:user_id).order('id DESC').limit(20)
+      if !result[0]
+        result = Cti::CallerId.where(
+          caller_id: caller_id,
+          level: 'maybe',
+        ).group(:user_id).order('id DESC').limit(20)
+      end
+      if !result[0]
+        result = Cti::CallerId.where(
+          caller_id: caller_id,
+        ).order('id DESC').limit(20)
+      end
 
-      # in case do lookups in external databases
-      if result.empty?
+      # in case do lookups in external sources
+      if !result[0]
         # ...
       end
 

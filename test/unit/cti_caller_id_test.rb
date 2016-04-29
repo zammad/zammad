@@ -151,15 +151,15 @@ class CtiCallerIdTest < ActiveSupport::TestCase
     Cti::CallerId.rebuild
 
     caller_ids = Cti::CallerId.lookup('491111222277')
-    assert_equal(0, caller_ids.count)
+    assert_equal(0, caller_ids.length)
 
     caller_ids = Cti::CallerId.lookup('491111222223')
-    assert_equal(1, caller_ids.count)
+    assert_equal(1, caller_ids.length)
     assert_equal(agent1.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
 
     caller_ids = Cti::CallerId.lookup('492222222222')
-    assert_equal(2, caller_ids.count)
+    assert_equal(2, caller_ids.length)
     assert_equal(agent3.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
     assert_equal(agent2.id, caller_ids[1].user_id)
@@ -222,28 +222,115 @@ Mob: +49 333 1112222",
     Cti::CallerId.rebuild
 
     caller_ids = Cti::CallerId.lookup('491111222277')
-    assert_equal(0, caller_ids.count)
+    assert_equal(0, caller_ids.length)
 
     caller_ids = Cti::CallerId.lookup('491111222223')
-    assert_equal(1, caller_ids.count)
+    assert_equal(1, caller_ids.length)
     assert_equal(agent1.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
 
     caller_ids = Cti::CallerId.lookup('492222222222')
-    assert_equal(2, caller_ids.count)
+    assert_equal(2, caller_ids.length)
     assert_equal(agent3.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
     assert_equal(agent2.id, caller_ids[1].user_id)
     assert_equal('known', caller_ids[1].level)
 
     caller_ids = Cti::CallerId.lookup('492226112222')
-    assert_equal(1, caller_ids.count)
+    assert_equal(1, caller_ids.length)
     assert_equal(customer1.id, caller_ids[0].user_id)
     assert_equal('maybe', caller_ids[0].level)
 
     caller_ids = Cti::CallerId.lookup('492221112222')
-    assert_equal(0, caller_ids.count)
+    assert_equal(0, caller_ids.length)
 
   end
 
+  test '3 lookups' do
+
+    Cti::CallerId.destroy_all
+
+    Cti::CallerId.maybe_add(
+      caller_id: '4999999999',
+      level: 'maybe',
+      user_id: 2,
+      object: 'Ticket',
+      o_id: 2,
+    )
+
+    Cti::CallerId.maybe_add(
+      caller_id: '4912345678901',
+      comment: 'Hairdresser Bob Smith, San Francisco',
+      level: 'public',
+      user_id: 2,
+      object: 'GoYello',
+      o_id: 1,
+    )
+
+    caller_ids = Cti::CallerId.lookup('4912345678901')
+    assert_equal(1, caller_ids.length)
+    assert_equal('public', caller_ids[0].level)
+    assert_equal(2, caller_ids[0].user_id)
+    assert_equal('Hairdresser Bob Smith, San Francisco', caller_ids[0].comment)
+
+    Cti::CallerId.maybe_add(
+      caller_id: '4912345678901',
+      level: 'maybe',
+      user_id: 2,
+      object: 'Ticket',
+      o_id: 2,
+    )
+
+    caller_ids = Cti::CallerId.lookup('4912345678901')
+    assert_equal(1, caller_ids.length)
+    assert_equal('maybe', caller_ids[0].level)
+    assert_equal(2, caller_ids[0].user_id)
+    assert_equal(nil, caller_ids[0].comment)
+
+    Cti::CallerId.maybe_add(
+      caller_id: '4912345678901',
+      level: 'maybe',
+      user_id: 2,
+      object: 'Ticket',
+      o_id: 2,
+    )
+
+    caller_ids = Cti::CallerId.lookup('4912345678901')
+    assert_equal(1, caller_ids.length)
+    assert_equal('maybe', caller_ids[0].level)
+    assert_equal(2, caller_ids[0].user_id)
+    assert_equal(nil, caller_ids[0].comment)
+
+    Cti::CallerId.maybe_add(
+      caller_id: '4912345678901',
+      level: 'maybe',
+      user_id: 3,
+      object: 'Ticket',
+      o_id: 2,
+    )
+
+    caller_ids = Cti::CallerId.lookup('4912345678901')
+    assert_equal(2, caller_ids.length)
+    assert_equal('maybe', caller_ids[0].level)
+    assert_equal(3, caller_ids[0].user_id)
+    assert_equal(nil, caller_ids[0].comment)
+    assert_equal('maybe', caller_ids[1].level)
+    assert_equal(2, caller_ids[1].user_id)
+    assert_equal(nil, caller_ids[1].comment)
+
+    Cti::CallerId.maybe_add(
+      caller_id: '4912345678901',
+      level: 'known',
+      user_id: 3,
+      object: 'User',
+      o_id: 2,
+    )
+
+    caller_ids = Cti::CallerId.lookup('4912345678901')
+    assert_equal(1, caller_ids.length)
+    assert_equal('known', caller_ids[0].level)
+    assert_equal(3, caller_ids[0].user_id)
+    assert_equal(nil, caller_ids[0].comment)
+
+  end
 end
