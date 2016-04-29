@@ -48,12 +48,12 @@ returns
       result = Cti::CallerId.where(
         caller_id: caller_id,
         level: 'known',
-      ).group(:user_id).order('id DESC').limit(20)
+      ).group(:user_id, :id).order(id: 'DESC').limit(20)
       if !result[0]
         result = Cti::CallerId.where(
           caller_id: caller_id,
           level: 'maybe',
-        ).group(:user_id).order('id DESC').limit(20)
+        ).group(:user_id, :id).order(id: 'DESC').limit(20)
       end
       if !result[0]
         result = Cti::CallerId.where(
