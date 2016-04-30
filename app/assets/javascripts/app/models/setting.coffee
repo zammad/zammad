@@ -36,8 +36,12 @@ class App.Setting extends App.Model
       App.Event.trigger('ui:rerender')
 
     if setting.preferences.trigger
-      trigger = setting.preferences.trigger
-      delay = -> App.Event.trigger(trigger)
+      events = setting.preferences.trigger
+      if !_.isArray(setting.preferences.trigger)
+        events = [setting.preferences.trigger]
+      delay = ->
+        for event in events
+          App.Event.trigger(event)
       App.Delay.set(delay, 20)
 
     if setting.preferences.session_check

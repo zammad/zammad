@@ -1198,7 +1198,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { trigger: 'menu:render' },
+  preferences: { trigger: ['menu:render', 'chat:rerender'] },
   state: false,
   frontend: true
 )

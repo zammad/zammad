@@ -60,7 +60,7 @@ class App.CustomerChat extends App.Controller
     App.WebSocket.send(event:'chat_status_agent')
 
     # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
+    @bind('ui:rerender chat:rerender', =>
       return if !@authenticate(true)
       for session_id, chat of @chatWindows
         chat.el.remove()

@@ -8,7 +8,7 @@ class UpdateCti < ActiveRecord::Migration
 
     setting = Setting.find_by(name: 'chat')
     if setting
-      setting.preferences = { trigger: 'menu:render' }
+      setting.preferences = { trigger: ['menu:render', 'chat:rerender'] }
       setting.save
     end
   end
