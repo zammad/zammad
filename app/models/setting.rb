@@ -18,8 +18,10 @@ class Setting < ApplicationModel
   @@lookup_at      = nil # rubocop:disable Style/ClassVars
   @@lookup_timeout = if ENV['ZAMMAD_SETTING_TTL'] # rubocop:disable Style/ClassVars
                        ENV['ZAMMAD_SETTING_TTL'].to_i.seconds
-                     else
+                     elsif Rails.env.production?
                        2.minutes
+                     else
+                       15.seconds
                      end
 
 =begin
