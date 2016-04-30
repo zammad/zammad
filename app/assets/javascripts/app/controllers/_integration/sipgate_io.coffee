@@ -47,7 +47,7 @@ class Form extends App.Controller
     config
 
   setConfig: (value) ->
-    App.Setting.set('sipgate_config', value)
+    App.Setting.set('sipgate_config', value, {notify: true})
 
   render: =>
     @config = @currentConfig()

@@ -60,7 +60,7 @@ class Form extends App.Controller
     config
 
   setConfig: (value) ->
-    App.Setting.set('clearbit_config', value)
+    App.Setting.set('clearbit_config', value, {notify: true})
 
   render: =>
     @config = @currentConfig()

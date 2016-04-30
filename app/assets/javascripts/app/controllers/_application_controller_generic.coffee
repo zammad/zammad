@@ -355,6 +355,8 @@ class App.ControllerNavSidbar extends App.ControllerContent
   constructor: (params) ->
     super
 
+    @navupdate ''
+
     if @authenticateRequired
       return if !@authenticate()
 

@@ -68,4 +68,4 @@ class App.ControllerIntegrationBase extends App.Controller
 
     value =
       items: [params]
-    App.Setting.set(@featureConfig, value)
+    App.Setting.set(@featureConfig, value, {notify: true})

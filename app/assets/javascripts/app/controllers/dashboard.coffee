@@ -45,7 +45,7 @@ class App.Dashboard extends App.Controller
 
   mayBeClues: =>
     return if !@clueAccess
-    return if !@activeState
+    return if !@shown
     return if @Config.get('switch_back_to_possible')
     preferences = @Session.get('preferences')
     @clueAccess = false

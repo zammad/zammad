@@ -12,6 +12,12 @@ class App.Setting extends App.Model
     setting.state_current.value = value
     if !options.done
       options.done = ->
+        if options.notify
+          App.Event.trigger 'notify', {
+            type:    'success'
+            msg:     App.i18n.translateContent('Update successful!')
+            timeout: 2000
+          }
         App.Setting.preferencesPost(@)
 
     if !options.fail
