@@ -1641,12 +1641,19 @@ wait untill text in selector disabppears
       mute_log: true,
     )
 
-    element = instance.find_elements(css: '.active .newTicket')[0]
-    if !element
+    found = false
+    (1..4).each {
+      element = instance.find_elements(css: '.active .newTicket')[0]
+      if element
+        found = false
+        break
+      end
+      sleep 1
+    }
+    if !found
       screenshot(browser: instance, comment: 'ticket_create_failed')
       raise 'no ticket create screen found!'
     end
-    sleep 0.4
 
     if data[:group]
       if data[:group] == '-NONE-'
