@@ -16,6 +16,12 @@ class AgentUserProfileTest < TestCase
     # search and open user
     user_open_by_search(value: 'Braun')
 
+    verify_task(
+      data: {
+        title: 'Nicole Braun',
+      }
+    )
+
     watch_for(
       css: '.active .profile-window',
       value: 'note',
@@ -34,7 +40,7 @@ class AgentUserProfileTest < TestCase
     sleep 2
 
     # check and change note again in edit screen
-    click(css: '.active .js-action .icon-arrow-down')
+    click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
 
     watch_for(
@@ -47,6 +53,10 @@ class AgentUserProfileTest < TestCase
     )
 
     set(
+      css: '.modal [name="lastname"]',
+      value: 'B2',
+    )
+    set(
       css: '.modal [data-name="note"]',
       value: 'some note abc',
     )
@@ -55,6 +65,31 @@ class AgentUserProfileTest < TestCase
     watch_for(
       css: '.active .profile-window',
       value: 'some note abc',
+    )
+
+    verify_task(
+      data: {
+        title: 'Nicole B2',
+      }
+    )
+
+    # change lastname back
+    click(css: '.active .js-action .icon-arrow-down', fast: true)
+    click(css: '.active .js-action [data-type="edit"]')
+    watch_for(
+      css: '.active .modal',
+      value: 'note',
+    )
+    set(
+      css: '.modal [name="lastname"]',
+      value: 'Braun',
+    )
+    click(css: '.active .modal button.js-submit')
+
+    verify_task(
+      data: {
+        title: 'Nicole Braun',
+      }
     )
 
     # create new ticket
