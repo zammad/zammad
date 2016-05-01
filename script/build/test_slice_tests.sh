@@ -25,6 +25,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/aab_basic_urls_test.rb
   rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_overview_test.rb
+  rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_user_*.rb
   rm test/browser/auth_test.rb
@@ -50,6 +51,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/aab_unit_test.rb
   rm test/browser/aac_basic_richtext_test.rb
   rm test/browser/aab_basic_urls_test.rb
+  rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_ticket_*.rb
   rm test/browser/auth_test.rb

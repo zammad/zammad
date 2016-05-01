@@ -627,6 +627,7 @@ class App.ControllerContent extends App.Controller
     $('.content').addClass('hide')
     $('#content').removeClass('hide')
     @navShow()
+    App.TaskManager.hideAll()
 
 class App.ControllerModal extends App.Controller
   authenticateRequired: false
