@@ -1645,7 +1645,7 @@ wait untill text in selector disabppears
     (1..4).each {
       element = instance.find_elements(css: '.active .newTicket')[0]
       if element
-        found = false
+        found = true
         break
       end
       sleep 1
