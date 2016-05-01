@@ -3,7 +3,7 @@ class App.ChannelForm extends App.Controller
   events:
     'change form.js-params': 'updateParams'
     'keyup form.js-params': 'updateParams'
-    'click .js-formSetting': 'toggleFormSetting'
+    'change .js-formSetting input': 'toggleFormSetting'
 
   elements:
     '.js-paramsBlock': 'paramsBlock'
@@ -16,10 +16,11 @@ class App.ChannelForm extends App.Controller
 
   render: =>
     App.Setting.unsubscribe(@subscribeId)
-    setting = App.Setting.findByAttribute('name', 'form_ticket_create')
+
+    setting = App.Setting.get('form_ticket_create')
     @html App.view('channel/form')(
       baseurl: window.location.origin
-      formSetting: setting.state_current.value
+      formSetting: setting
     )
 
     @paramsBlock.each (i, block) ->
@@ -49,8 +50,6 @@ class App.ChannelForm extends App.Controller
 
   toggleFormSetting: =>
     value = @formSetting.prop('checked')
-    setting = App.Setting.findByAttribute('name', 'form_ticket_create')
-    setting.state_current = { value: value }
-    setting.save()
+    App.Setting.set('form_ticket_create', value)
 
 App.Config.set( 'Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, role: ['Admin'] }, 'NavBarAdmin' )

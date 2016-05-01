@@ -32,8 +32,6 @@ gem 'omniauth-facebook'
 gem 'omniauth-linkedin'
 gem 'omniauth-google-oauth2'
 
-gem 'zendesk_api'
-
 gem 'twitter'
 gem 'koala'
 gem 'mail'
@@ -87,6 +85,12 @@ gem 'net-ldap'
 gem 'writeexcel'
 gem 'icalendar'
 gem 'browser'
+gem 'phony'
+
+# integrations
+gem 'slack-notifier'
+gem 'clearbit'
+gem 'zendesk_api'
 
 # event machine
 gem 'eventmachine'

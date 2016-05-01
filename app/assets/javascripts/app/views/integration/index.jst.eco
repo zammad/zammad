@@ -1,0 +1,29 @@
+<div class="page-header-title">
+  <h1><%- @T(@head) %></h1>
+</div>
+<div class="page-content">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th style="width: 30px;"></th>
+        <th style="width: 30%;"><%- @T('Service') %></th>
+        <th><%- @T('Description') %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% for integration in @integrations: %>
+      <tr data-key="<%= integration.key %>">
+        <td>
+          <% if !integration.state.current(): %>
+            <%- @Icon('status', 'inactive inline') %>
+          <% else: %>
+            <%- @Icon('status', 'ok inline') %>
+          <% end %>
+        </td>
+        <td><a href="<%- integration.target %>"><%= integration.name %></a></td>
+        <td><%- @T(integration.description) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

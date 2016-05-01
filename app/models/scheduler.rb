@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
-# rubocop:disable Rails/Output
+
 class Scheduler < ApplicationModel
 
   # rubocop:disable Style/ClassVars
@@ -114,9 +114,25 @@ class Scheduler < ApplicationModel
     end
   end
 
-  def self.worker
-    wait = 8
+  def self.worker(foreground = false)
 
+    # used for tests
+    if foreground
+      original_user_id = UserInfo.current_user_id
+      UserInfo.current_user_id = nil
+      loop do
+        success, failure = Delayed::Worker.new.work_off
+        if failure != 0
+          raise "ERROR: #{failure} failed background jobs: #{Delayed::Job.where('last_error IS NOT NULL').inspect}"
+        end
+        break if success == 0
+      end
+      UserInfo.current_user_id = original_user_id
+      return
+    end
+
+    # used for production
+    wait = 8
     Thread.new {
       sleep wait
 
@@ -126,6 +142,7 @@ class Scheduler < ApplicationModel
         result = nil
 
         realtime = Benchmark.realtime do
+          logger.debug "*** worker thread, #{Delayed::Job.all.count} in queue"
           result = Delayed::Worker.new.work_off
         end
 
@@ -145,28 +162,4 @@ class Scheduler < ApplicationModel
 
   end
 
-  def self.check(name, time_warning = 10, time_critical = 20)
-    time_warning_time  = Time.zone.now - time_warning.minutes
-    time_critical_time = Time.zone.now - time_critical.minutes
-    scheduler = Scheduler.find_by( name: name )
-    if !scheduler
-      puts "CRITICAL - no such scheduler jobs '#{name}'"
-      return true
-    end
-    logger.debug scheduler.inspect
-    if !scheduler.last_run
-      puts "CRITICAL - scheduler jobs never started '#{name}'"
-      exit 2
-    end
-    if scheduler.last_run < time_critical_time
-      puts "CRITICAL - scheduler jobs was not running in last '#{time_critical}' minutes - last run at '#{scheduler.last_run}' '#{name}'"
-      exit 2
-    end
-    if scheduler.last_run < time_warning_time
-      puts "CRITICAL - scheduler jobs was not running in last '#{time_warning}' minutes - last run at '#{scheduler.last_run}' '#{name}'"
-      exit 2
-    end
-    puts "ok - scheduler jobs was running at '#{scheduler.last_run}' '#{name}'"
-    exit 0
-  end
 end

@@ -1,0 +1,7 @@
+# <%= d 'ticket.title' %>
+_<<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>|Ticket#<%= d 'ticket.number' %>>: Escalated at <%= d 'ticket.escalation_time' %>_
+A ticket (<%= d 'ticket.title' %>) from "<%= d 'ticket.customer.longname' %>" is escalated since "<%= d 'ticket.escalation_time' %>"!
+
+<% if @objects[:article] %>
+<%= a_text 'article' %>
+<% end %>

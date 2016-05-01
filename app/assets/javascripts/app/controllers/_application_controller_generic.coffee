@@ -102,7 +102,8 @@ class App.ControllerGenericIndex extends App.Controller
     super
 
     # set title
-    @title @pageData.title, true
+    if @pageData.title
+      @title @pageData.title, true
 
     # set nav bar
     if @pageData.navupdate
@@ -354,6 +355,8 @@ class App.ControllerTabs extends App.Controller
 class App.ControllerNavSidbar extends App.ControllerContent
   constructor: (params) ->
     super
+
+    @navupdate ''
 
     if @authenticateRequired
       return if !@authenticate()

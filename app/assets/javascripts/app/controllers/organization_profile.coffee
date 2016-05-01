@@ -26,7 +26,6 @@ class App.OrganizationProfile extends App.Controller
       meta.head       = organization.displayName()
       meta.title      = organization.displayName()
       meta.iconClass  = organization.icon()
-
     meta
 
   url: =>
@@ -41,9 +40,6 @@ class App.OrganizationProfile extends App.Controller
 
   render: (organization) =>
 
-    # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
-
     if !@doNotLog
       @doNotLog = 1
       @recentView('Organization', @organization_id)
@@ -55,6 +51,7 @@ class App.OrganizationProfile extends App.Controller
     new Object(
       el:           elLocal.find('.js-object-container')
       organization: organization
+      task_key:     @task_key
     )
 
     new App.TicketStats(
@@ -82,6 +79,9 @@ class Object extends App.Controller
     App.Organization.unsubscribe(@subscribeId)
 
   render: (organization) =>
+
+    # update taskbar with new meta data
+    App.TaskManager.touch(@task_key)
 
     # get display data
     organizationData = []
@@ -117,6 +117,7 @@ class Object extends App.Controller
         organization_id: organization.id
         container: @el.closest('.content')
       )
+
     editOrganization = =>
       new App.ControllerGenericEdit(
         id: organization.id

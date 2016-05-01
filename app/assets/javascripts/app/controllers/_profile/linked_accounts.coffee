@@ -37,7 +37,7 @@ class Index extends App.Controller
     }
     auth_providers = []
     for key, provider of auth_provider_all
-      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is 'true'
+      if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
         auth_providers.push provider
 
     @html App.view('profile/linked_accounts')(
@@ -52,19 +52,19 @@ class Index extends App.Controller
 
     # get data
     @ajax(
-      id:   'account'
-      type: 'DELETE'
-      url:  @apiPath + '/users/account'
-      data: JSON.stringify({ provider: provider, uid: uid })
+      id:          'account'
+      type:        'DELETE'
+      url:         @apiPath + '/users/account'
+      data:        JSON.stringify(provider: provider, uid: uid)
       processData: true
-      success: @success
-      error:   @error
+      success:     @success
+      error:       @error
     )
 
   success: (data, status, xhr) =>
     @notify(
       type: 'success'
-      msg:  App.i18n.translateContent( 'Successfully!' )
+      msg:  App.i18n.translateContent('Successfully!')
     )
     update = =>
       @render()
@@ -72,10 +72,10 @@ class Index extends App.Controller
 
   error: (xhr, status, error) =>
     @render()
-    data = JSON.parse( xhr.responseText )
+    data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent( data.message )
+      msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set( 'LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile' )
+App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile')

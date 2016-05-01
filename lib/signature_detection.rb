@@ -131,7 +131,6 @@ returns
 =end
 
   def self.by_user_id(user_id)
-
     type = Ticket::Article::Type.lookup(name: 'email')
     sender = Ticket::Article::Sender.lookup(name: 'Customer')
     article_bodies = []
@@ -142,7 +141,7 @@ returns
       article_bodies.push article.body
     }
 
-    find_signature( article_bodies )
+    find_signature(article_bodies)
   end
 
 =begin
@@ -167,7 +166,7 @@ returns
 
 =begin
 
-rebuild signature for user
+rebuild signature detection for user
 
   SignatureDetection.rebuild_user(user_id)
 

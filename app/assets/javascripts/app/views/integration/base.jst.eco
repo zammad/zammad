@@ -1,0 +1,18 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <div class="zammad-switch zammad-switch--small js-switch">
+       <input name="<%- @feature %>" type="checkbox" id="setting-switch" <% if @featureEnabled: %>checked<% end %>>
+       <label for="setting-switch"></label>
+    </div>
+    <h1><%- @T(@header) %></h1>
+  </div>
+</div>
+<div class="page-content">
+  <% if @description: %>
+    <% for item in @description: %>
+      <p><%- @T(item[0], item[1], item[2]) %></p>
+    <% end %>
+  <% end %>
+  <div class="js-form"></div>
+  <div class="js-log"></div>
+</div>

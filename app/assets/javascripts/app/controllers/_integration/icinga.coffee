@@ -1,12 +1,31 @@
-class Icinga extends App.ControllerTabs
-  header: 'Icinga'
-  constructor: ->
-    super
-    return if !@authenticate(false, 'Admin')
-    @title 'Icinga', true
-    @tabs = [
-      { name: 'Base', 'target': 'base', controller: App.SettingsArea, params: { area: 'Integration::Icinga' } }
-    ]
-    @render()
+class Index extends App.ControllerIntegrationBase
+  featureIntegration: 'icinga_integration'
+  featureName: 'Icinga'
+  featureConfig: 'icinga_config'
+  description: [
+    ['This service receives emails from %s and creates tickets with host and service.', 'Icinga']
+    ['If the host and service is recovered again, the ticket will be closed automatically.']
+  ]
 
-App.Config.set('IntegrationIcinga', { prio: 1100, parent: '#integration', name: 'Icinga', target: '#integration/icinga', controller: Icinga, role: ['Admin'] }, 'NavBarIntegration')
+  render: =>
+    super
+    new App.SettingsForm(
+      area: 'Integration::Icinga'
+      el: @$('.js-form')
+    )
+
+class State
+  @current: ->
+    App.Setting.get('icinga_integration')
+
+App.Config.set(
+  'IntegrationIcinga'
+  {
+    name: 'Icinga'
+    target: '#system/integration/icinga'
+    description: 'A open source monitoring tool.'
+    controller: Index
+    state: State
+  }
+  'NavBarIntegrations'
+)

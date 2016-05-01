@@ -46,6 +46,9 @@ class App.TaskManager
   @TaskbarId: ->
     _instance.TaskbarId()
 
+  @hideAll: ->
+    _instance.showControllerHideOthers()
+
 class _taskManagerSingleton extends App.Controller
   @include App.LogInclude
 

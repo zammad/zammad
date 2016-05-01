@@ -2,7 +2,7 @@ Neues Ticket (<%= d 'ticket.title' %>)
 
 <p>Hallo <%= d 'recipient.firstname' %>,</p>
 <br>
-<p>es wurde ein neues Ticket (<%= d 'ticket.title' %>) von "<b><%= d 'ticket.updated_by.longname' %></b>" erstellt.</p>
+<p>es wurde ein neues Ticket (<%= d 'ticket.title' %>) von "<b><%= d 'current_user.longname' %></b>" erstellt.</p>
 <br>
 <p>
 <%= t 'Group' %>: <%= d 'ticket.group.name' %><br>
@@ -14,7 +14,7 @@ Neues Ticket (<%= d 'ticket.title' %>)
   <p>
   <%= t 'Information' %>:
   <blockquote type="cite">
-  <%= a 'article' %>
+  <%= a_html 'article' %>
   </blockquote>
   </p>
 <% end %>

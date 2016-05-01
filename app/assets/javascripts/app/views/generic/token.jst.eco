@@ -1,0 +1,4 @@
+<div class="token" data-value="<%= @value %>">
+  <span class="token-label"><%= @name %></span>
+  <span class="token-close js-remove">×</span>
+</div>

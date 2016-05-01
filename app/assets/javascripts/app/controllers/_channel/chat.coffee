@@ -6,7 +6,7 @@ class App.ChannelChat extends App.Controller
     'click .js-selectBrowserWidth': 'selectBrowserWidth'
     'click .js-swatch': 'usePaletteColor'
     'click .js-toggle-chat': 'toggleChat'
-    'click .js-chatSetting': 'toggleChatSetting'
+    'change .js-chatSetting input': 'toggleChatSetting'
     'click .js-eyedropper': 'pickColor'
 
   elements:
@@ -307,12 +307,7 @@ class App.ChannelChat extends App.Controller
 
   toggleChatSetting: =>
     value = @chatSetting.prop('checked')
-    setting = App.Setting.findByAttribute('name', 'chat')
-    setting.state_current = { value: value }
-    setting.save()
-    @Config.set('chat', value)
-    delay = -> App.Event.trigger('ui:rerender')
-    @delay(delay, 200)
+    App.Setting.set('chat', value)
 
   updateParams: =>
     quote = (value) ->

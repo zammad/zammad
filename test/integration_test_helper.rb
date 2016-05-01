@@ -12,11 +12,15 @@ class ActiveSupport::TestCase
 
   # load seeds
   load "#{Rails.root}/db/seeds.rb"
+  load "#{Rails.root}/test/fixtures/seeds.rb"
 
   setup do
 
     # clear cache
     Cache.clear
+
+    # remove background jobs
+    Delayed::Job.destroy_all
 
     # set current user
     UserInfo.current_user_id = nil

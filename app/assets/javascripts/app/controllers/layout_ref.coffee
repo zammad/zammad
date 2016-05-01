@@ -1488,6 +1488,22 @@ class InputsRef extends App.ControllerContent
 
     @$('.searchableAjaxSelectPlaceholder').replaceWith( searchableAjaxSelectObject.element() )
 
+    # user organization autocomplete
+    userOrganizationAutocomplete = new App.UserOrganizationAutocompletion
+      attribute:
+        name: 'customer_id'
+        display: 'Customer'
+        tag: 'user_autocompletion'
+        type: 'text'
+        limit: 200
+        null: false
+        relation: 'User'
+        autocapitalize: false
+        disableCreateUser: true
+        multiple: true
+
+    @$('.userOrganizationAutocompletePlaceholder').replaceWith( userOrganizationAutocomplete.element() )
+
     # time and timeframe
     @$('.js-timepicker1, .js-timepicker2').timepicker()
 
@@ -1784,11 +1800,6 @@ class CustomerChatRef extends App.Controller
 
     # write state
     App.SessionStorage.set('chat_layout_ref', state)
-
-  updateNavMenu: =>
-    delay = ->
-      App.Event.trigger('menu:render')
-    @delay(delay, 200)
 
   testChat: (chat, count) ->
     for i in [0..count]

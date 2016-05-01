@@ -70,7 +70,7 @@ class ChatTest < TestCase
     sleep 15 # wait for rerendering
     switch(
       browser: agent,
-      css: '#navigation .js-switch',
+      css: '#navigation .js-chatMenuItem .js-switch',
       type: 'off',
     )
     click(
@@ -108,7 +108,7 @@ class ChatTest < TestCase
     )
     switch(
       browser: agent,
-      css: '#navigation .js-switch',
+      css: '#navigation .js-chatMenuItem .js-switch',
       type: 'on',
     )
     reload(
@@ -610,7 +610,7 @@ class ChatTest < TestCase
 
     exists(
       browser: agent,
-      css: '#navigation .js-switch input[checked]'
+      css: '#navigation .js-chatMenuItem .js-switch input[checked]'
     )
 
     # no customer action, hide widget
@@ -658,11 +658,11 @@ class ChatTest < TestCase
     # check if agent is offline, idle timeout, chat not answered
     exists_not(
       browser: agent,
-      css: '#navigation .js-switch input[checked]'
+      css: '#navigation .js-chatMenuItem .js-switch input[checked]'
     )
     switch(
       browser: agent,
-      css: '#navigation .js-switch',
+      css: '#navigation .js-chatMenuItem .js-switch',
       type: 'on',
     )
 

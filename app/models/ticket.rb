@@ -24,6 +24,7 @@ class Ticket < ApplicationModel
   latest_change_support
 
   activity_stream_support ignore_attributes: {
+    organization_id: true, # organization_id will channge automatically on user update
     create_article_type_id: true,
     create_article_sender_id: true,
     article_count: true,
@@ -180,12 +181,13 @@ returns
       tickets.each { |ticket|
 
         # send notification
-        bg = Observer::Ticket::Notification::BackgroundJob.new(
-          ticket_id: ticket.id,
-          article_id: ticket.articles.last.id,
+        Transaction::BackgroundJob.run(
+          object: 'Ticket',
           type: 'reminder_reached',
+          object_id: ticket.id,
+          article_id: ticket.articles.last.id,
+          user_id: 1,
         )
-        bg.perform
 
         result.push ticket
       }
@@ -220,23 +222,25 @@ returns
 
       # send escalation
       if ticket.escalation_time < Time.zone.now
-        bg = Observer::Ticket::Notification::BackgroundJob.new(
-          ticket_id: ticket.id,
-          article_id: ticket.articles.last.id,
+        Transaction::BackgroundJob.run(
+          object: 'Ticket',
           type: 'escalation',
+          object_id: ticket.id,
+          article_id: ticket.articles.last.id,
+          user_id: 1,
         )
-        bg.perform
         result.push ticket
         next
       end
 
       # check if warning need to be sent
-      bg = Observer::Ticket::Notification::BackgroundJob.new(
-        ticket_id: ticket.id,
-        article_id: ticket.articles.last.id,
+      Transaction::BackgroundJob.run(
+        object: 'Ticket',
         type: 'escalation_warning',
+        object_id: ticket.id,
+        article_id: ticket.articles.last.id,
+        user_id: 1,
       )
-      bg.perform
       result.push ticket
     }
     result

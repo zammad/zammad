@@ -1,0 +1,196 @@
+{
+  "person": {
+    "id": "4db7cfeb-8017-4aac-b4b9-debb6d3142c0",
+    "name": {
+      "fullName": "Martin Edenhofer",
+      "givenName": "Martin",
+      "familyName": "Edenhofer"
+    },
+    "email": "me@otrs.org",
+    "gender": null,
+    "location": "Berlin, Berlin, DE",
+    "timeZone": "Europe/Berlin",
+    "utcOffset": 2,
+    "geo": {
+      "city": "Berlin",
+      "state": "Berlin",
+      "stateCode": "Berlin",
+      "country": "Germany",
+      "countryCode": "DE",
+      "lat": 52.52000659999999,
+      "lng": 13.404954
+    },
+    "bio": "Open Source professional and geek. Also known as OTRS inventor. ;)\r\nEntrepreneur and Advisor for open source people in need.",
+    "site": "http://edenhofer.de/",
+    "avatar": "https://d1ts43dypk8bqh.cloudfront.net/v1/avatars/4db7cfeb-8017-4aac-b4b9-debb6d3142c0",
+    "employment": {
+      "domain": "otrs.org",
+      "name": "OTRS",
+      "title": "CEO",
+      "role": null,
+      "seniority": "executive"
+    },
+    "facebook": {
+      "handle": null
+    },
+    "github": {
+      "handle": null,
+      "id": null,
+      "avatar": null,
+      "company": null,
+      "blog": null,
+      "followers": null,
+      "following": null
+    },
+    "twitter": {
+      "handle": "medenhofer",
+      "id": 219826253,
+      "bio": "Open Source professional and geek. Also known as OTRS inventor. ;)\r\nEntrepreneur and Advisor for open source people in need.",
+      "followers": 215,
+      "following": 260,
+      "statuses": 114,
+      "favorites": 8,
+      "location": "",
+      "site": "http://edenhofer.de/",
+      "avatar": "https://pbs.twimg.com/profile_images/1216362658/DSC_0084-p.jpg"
+    },
+    "linkedin": {
+      "handle": "in/enjoyme"
+    },
+    "googleplus": {
+      "handle": null
+    },
+    "aboutme": {
+      "handle": null,
+      "bio": null,
+      "avatar": null
+    },
+    "gravatar": {
+      "handle": "bazzi",
+      "urls": [
+        {
+          "value": "http://edenhofer.de",
+          "title": "Blog"
+        },
+        {
+          "value": "http://znuny.com",
+          "title": "Znuny - OTRS related services"
+        }
+      ],
+      "avatar": "http://2.gravatar.com/avatar/0e321a416c45d214d1040a7667cb0b54",
+      "avatars": [
+        {
+          "url": "http://2.gravatar.com/avatar/0e321a416c45d214d1040a7667cb0b54",
+          "type": "thumbnail"
+        }
+      ]
+    },
+    "fuzzy": false
+  },
+  "company": {
+    "id": "2b30663f-f1a4-47a9-b2a9-0817b8d3ae7b",
+    "name": "OTRS",
+    "legalName": null,
+    "domain": "otrs.com",
+    "domainAliases": [
+      "otrs.org"
+    ],
+    "url": "http://otrs.com",
+    "site": {
+      "url": "http://otrs.com",
+      "title": "OTRS Simple Service Management",
+      "h1": "What is OTRS?",
+      "metaDescription": "OTRS is an Open Source helpdesk software and an IT Service Management software free of licence costs. Improve your Customer Service Management with OTRS.",
+      "metaAuthor": null,
+      "phoneNumbers": [
+        "+49 6172 681988",
+        "+1 408-549-1717",
+        "+49 5255 11689664",
+        "+49 6032 0355578",
+        "+49 9421 568181",
+        "+1 408-512-1748",
+        "+49 8523 6901503",
+        "+49 6032 7258038",
+        "+49 6032 0355568",
+        "+49 551 141308205"
+      ],
+      "emailAddresses": [
+        "sales@otrs.com",
+        "otrs-demo@otrs.org",
+        "itsm-demo@otrs.org",
+        "security@otrs.org",
+        "investor-relations@otrs.com"
+      ]
+    },
+    "category": {
+      "sector": "Information Technology",
+      "industryGroup": "Software & Services",
+      "industry": "Internet Software & Services",
+      "subIndustry": "Internet Software & Services"
+    },
+    "tags": [
+      "Information Technology & Services",
+      "Technology",
+      "Software"
+    ],
+    "description": "OTRS is an Open Source helpdesk software and an IT Service Management software free of licence costs. Improve your Customer Service Management with OTRS.",
+    "foundedDate": null,
+    "location": "Norsk-Data-Straße 1, 61352 Bad Homburg vor der Höhe, Germany",
+    "timeZone": "Europe/Berlin",
+    "utcOffset": 2,
+    "geo": {
+      "streetNumber": "1",
+      "streetName": "Norsk-Data-Straße",
+      "subPremise": null,
+      "city": "Bad Homburg vor der Höhe",
+      "postalCode": "61352",
+      "state": "Hessen",
+      "stateCode": "HE",
+      "country": "Germany",
+      "countryCode": "DE",
+      "lat": 50.21093,
+      "lng": 8.652809999999999
+    },
+    "logo": "https://logo.clearbit.com/otrs.com",
+    "facebook": {
+      "handle": "otrsgroup"
+    },
+    "linkedin": {
+      "handle": "company/otrs-ag"
+    },
+    "twitter": {
+      "handle": "OTRSGroup",
+      "id": "126673991",
+      "bio": "OTRS is the leading open source service management software including Help Desk and ITIL V3-certified IT service management (ITSM).",
+      "followers": 2988,
+      "following": 2484,
+      "location": "Cupertino, CA, Bad Homburg",
+      "site": "http://t.co/F09dcTEScJ",
+      "avatar": "https://pbs.twimg.com/profile_images/575314188848889856/F4KWmvVX_normal.png"
+    },
+    "crunchbase": {
+      "handle": "organization/otrs"
+    },
+    "emailProvider": false,
+    "type": "private",
+    "ticker": null,
+    "phone": null,
+    "metrics": {
+      "alexaUsRank": null,
+      "alexaGlobalRank": 116381,
+      "googleRank": 0,
+      "employees": 15,
+      "marketCap": null,
+      "raised": null,
+      "annualRevenue": null
+    },
+    "tech": [
+      "google_analytics",
+      "double_click",
+      "google_adwords",
+      "optimizely",
+      "wordpress",
+      "pardot"
+    ]
+  }
+}

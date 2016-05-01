@@ -1,0 +1,9 @@
+# <%= d 'ticket.title' %>
+_<<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>|Ticket#<%= d 'ticket.number' %>>: Created by <%= d 'current_user.longname' %> at <%= d 'ticket.updated_at' %>_
+* <%= t 'Group' %>: <%= d 'ticket.group.name' %>
+* <%= t 'Owner' %>: <%= d 'ticket.owner.fullname' %>
+* <%= t 'State' %>: <%= t d 'ticket.state.name' %>
+
+<% if @objects[:article] %>
+<%= a_text 'article' %>
+<% end %>

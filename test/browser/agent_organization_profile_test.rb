@@ -19,6 +19,13 @@ class AgentOrganizationProfileTest < TestCase
     organization_open_by_search(
       value: 'Zammad Foundation',
     )
+
+    verify_task(
+      data: {
+        title: 'Zammad Foundation',
+      }
+    )
+
     watch_for(
       css: '.active .profile-window',
       value: 'note',
@@ -50,6 +57,10 @@ class AgentOrganizationProfileTest < TestCase
     )
 
     set(
+      css: '.modal [name="name"]',
+      value: 'Z2',
+    )
+    set(
       css: '.active .modal [data-name="note"]',
       value: 'some note abc',
     )
@@ -58,6 +69,31 @@ class AgentOrganizationProfileTest < TestCase
     watch_for(
       css: '.active .profile-window',
       value: 'some note abc',
+    )
+
+    verify_task(
+      data: {
+        title: 'Z2',
+      }
+    )
+
+    # change lastname back
+    click(css: '.active .js-action .icon-arrow-down', fast: true)
+    click(css: '.active .js-action [data-type="edit"]')
+    watch_for(
+      css: '.active .modal',
+      value: 'note',
+    )
+    set(
+      css: '.modal [name="name"]',
+      value: 'Zammad Foundation',
+    )
+    click(css: '.active .modal button.js-submit')
+
+    verify_task(
+      data: {
+        title: 'Zammad Foundation',
+      }
     )
 
     # create new ticket

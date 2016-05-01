@@ -2,13 +2,13 @@ Reminder reached (<%= d 'ticket.title' %>)
 
 <p>Hi <%= d 'recipient.firstname' %>,</p>
 <br>
-<p>Ticket needs attention, reminder reached for ticket (<%= d 'ticket.title' %>) with customer "<b><%= d 'ticket.customer.longname' %></b>".</p>
+<p>A ticket needs attention, reminder reached for (<%= d 'ticket.title' %>) with customer "<b><%= d 'ticket.customer.longname' %></b>".</p>
 <br>
 <% if @objects[:article] %>
   <p>
   <%= t 'Information' %>:
   <blockquote type="cite">
-  <%= a 'article' %>
+  <%= a_html 'article' %>
   </blockquote>
   </p>
 <% end %>

@@ -1,0 +1,96 @@
+{
+  "person": null,
+  "company": {
+    "id": "273d8666-9d70-43dc-836b-a47a88293905-3",
+    "name": "Znuny / ES for OTRS",
+    "legalName": null,
+    "domain": "znuny.com",
+    "domainAliases": [
+      "znuny.de"
+    ],
+    "url": "http://znuny.com",
+    "site": {
+      "url": "http://znuny.com",
+      "title": "Support, Consulting, Development and Training for OTRS - Znuny GmbH",
+      "h1": "We make OTRS support easy!",
+      "metaDescription": "OTRS Support, Consulting, Development, Training and Customizing - Znuny GmbH",
+      "metaAuthor": null,
+      "phoneNumbers": [
+        "+49 30 6098541",
+        "+49 4107 15880339",
+        "+49 8601 81017925",
+        "+49 4107 15880186",
+        "+49 8602 16139061"
+      ],
+      "emailAddresses": [
+        "info@znuny.com"
+      ]
+    },
+    "category": {
+      "sector": "Industrials",
+      "industryGroup": "Commercial & Professional Services",
+      "industry": "Professional Services",
+      "subIndustry": "Consulting"
+    },
+    "tags": [
+      "Consulting & Professional Services",
+      "Corporate & Business",
+      "Information Technology & Services"
+    ],
+    "description": "OTRS Support, Consulting, Development, Training and Customizing - Znuny GmbH",
+    "foundedDate": null,
+    "location": "Marienstraße 11, 10117 Berlin, Germany",
+    "timeZone": "Europe/Berlin",
+    "utcOffset": 2,
+    "geo": {
+      "streetNumber": "11",
+      "streetName": "Marienstraße",
+      "subPremise": null,
+      "city": "Berlin",
+      "postalCode": "10117",
+      "state": "Berlin",
+      "stateCode": "Berlin",
+      "country": "Germany",
+      "countryCode": "DE",
+      "lat": 52.52182,
+      "lng": 13.38268
+    },
+    "logo": "https://logo.clearbit.com/znuny.com",
+    "facebook": {
+      "handle": null
+    },
+    "linkedin": {
+      "handle": "company/znuny-gmbh"
+    },
+    "twitter": {
+      "handle": "znuny",
+      "id": "293437546",
+      "bio": "Enterprise Services for OTRS! We love to do what we can do!",
+      "followers": 85,
+      "following": 63,
+      "location": "Berlin",
+      "site": "http://t.co/miuzrhoHeG",
+      "avatar": "https://pbs.twimg.com/profile_images/2460325455/hix7so4b0h0miq9gwkw8_normal.png"
+    },
+    "crunchbase": {
+      "handle": null
+    },
+    "emailProvider": false,
+    "type": "private",
+    "ticker": null,
+    "phone": null,
+    "metrics": {
+      "alexaUsRank": null,
+      "alexaGlobalRank": 10086408,
+      "googleRank": 3,
+      "employees": null,
+      "marketCap": null,
+      "raised": null,
+      "annualRevenue": null
+    },
+    "tech": [
+      "google_analytics",
+      "ruby_on_rails"
+    ]
+  }
+}

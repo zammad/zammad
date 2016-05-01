@@ -62,8 +62,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket1.id))
@@ -81,8 +80,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket1.id))
@@ -119,8 +117,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already closed
     assert(!OnlineNotification.all_seen?('Ticket', ticket2.id))
@@ -138,8 +135,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket2.id))
@@ -175,8 +171,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already new
     assert(!OnlineNotification.all_seen?('Ticket', ticket3.id))
@@ -194,8 +189,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket3.id))
@@ -219,8 +213,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already closed but an follow up arrived later
     assert(!OnlineNotification.all_seen?('Ticket', ticket3.id))
@@ -258,8 +251,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already new
     assert(!OnlineNotification.all_seen?('Ticket', ticket4.id))
@@ -277,8 +269,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket4.id))
@@ -314,8 +305,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already new
     assert(!OnlineNotification.all_seen?('Ticket', ticket5.id))
@@ -333,8 +323,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # execute object transaction
     Observer::Transaction.commit
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket5.id))
@@ -348,7 +337,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       ticket_id: tickets[1].id,
       user_id: 1,
     )
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     notifications = OnlineNotification.list_by_object('Ticket', tickets[0].id)
     assert(!notifications.empty?, 'should have notifications')
@@ -366,7 +355,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       assert(!found, 'Ticket destroyed')
 
       # check if notifications for ticket still exist
-      Delayed::Worker.new.work_off
+      Scheduler.worker(true)
       notifications = OnlineNotification.list_by_object('Ticket', ticket_id)
       assert(notifications.empty?, 'still notifications for destroyed ticket available')
     }

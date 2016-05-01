@@ -5,7 +5,7 @@ class App.WidgetTag extends App.Controller
 
   events:
     'click .js-newTagLabel': 'showInput'
-    'blur .js-newTagInput':  'hideInput'
+    'blur .js-newTagInput':  'hideOrAddInput'
     'click .js-newTagInput': 'onAddTag'
     'submit form':           'onAddTag'
     'click .js-delete':      'onRemoveTag'
@@ -45,10 +45,11 @@ class App.WidgetTag extends App.Controller
     @newTagLabel.addClass('hide')
     @newTagInput.removeClass('hide').focus()
 
-  hideInput: (e) ->
+  hideOrAddInput: (e) ->
     e.preventDefault()
     @newTagLabel.removeClass('hide')
     @newTagInput.addClass('hide')
+    @onAddTag(e)
 
   onAddTag: (e) =>
     e.preventDefault()

@@ -130,6 +130,11 @@ class App.Controller extends Spine.Controller
     return if !$('#navigation').is(':visible')
     $('#navigation').addClass('hide')
 
+  updateNavMenu: =>
+    delay = ->
+      App.Event.trigger('menu:render')
+    @delay(delay, 200)
+
   scrollTo: (x = 0, y = 0, delay = 0) ->
     a = ->
       window.scrollTo(x, y)
@@ -622,6 +627,7 @@ class App.ControllerContent extends App.Controller
     $('.content').addClass('hide')
     $('#content').removeClass('hide')
     @navShow()
+    App.TaskManager.hideAll()
 
 class App.ControllerModal extends App.Controller
   authenticateRequired: false

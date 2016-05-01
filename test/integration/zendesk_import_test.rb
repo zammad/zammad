@@ -46,7 +46,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
   test 'check counts' do
     assert_equal( 143, User.count, 'users' )
     assert_equal( 3, Group.count, 'groups' )
-    assert_equal( 5, Role.count, 'roles' )
+    assert_equal( 6, Role.count, 'roles' )
     assert_equal( 2, Organization.count, 'organizations' )
     assert_equal( 143, Ticket.count, 'tickets' )
     assert_equal( 151, Ticket::Article.count, 'ticket articles' )

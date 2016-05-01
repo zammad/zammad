@@ -30,8 +30,6 @@ module Zammad
       'observer::_ticket::_article::_communicate_email',
       'observer::_ticket::_article::_communicate_facebook',
       'observer::_ticket::_article::_communicate_twitter',
-      'observer::_ticket::_article::_signature_detection',
-      'observer::_ticket::_notification',
       'observer::_ticket::_reset_new_state',
       'observer::_ticket::_escalation_calculation',
       'observer::_ticket::_ref_object_touch',
@@ -42,7 +40,8 @@ module Zammad
       'observer::_user::_ticket_organization',
       'observer::_user::_geo',
       'observer::_organization::_ref_object_touch',
-      'observer::_sla::_ticket_rebuild_escalation'
+      'observer::_sla::_ticket_rebuild_escalation',
+      'observer::_transaction'
 
     # REST api path
     config.api_path = '/api/v1'

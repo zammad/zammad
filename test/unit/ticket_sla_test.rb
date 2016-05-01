@@ -74,8 +74,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -92,8 +91,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -155,8 +153,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.escalation_time verify 2' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escal_date verify 2' )
@@ -601,8 +598,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-03-21 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -691,8 +687,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 11:30:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-10-21 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -730,8 +725,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-10-21 08:00:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-10-21 08:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -885,8 +879,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 11:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -982,8 +975,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -1110,8 +1102,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.first_response_escal_date verify 1' )
@@ -1254,8 +1245,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal( ticket.escalation_time, nil, 'ticket.escalation_time verify 1' )
     assert_equal( ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.first_response_escal_date verify 1' )

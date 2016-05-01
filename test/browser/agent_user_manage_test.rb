@@ -91,14 +91,8 @@ class AgentUserManageTest < TestCase
       css: '.active .newTicket input[name="customer_id_completion"]',
       value: customer_user_email,
     )
-
-    # check if pulldown is open, it's not working stable via selenium
-    @browser.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
-
     sleep 3
-    sendkey( value: :arrow_down )
 
-    sleep 0.5
     click( css: '.active .newTicket .recipientList-entry.js-user.is-active' )
     sleep 1
 

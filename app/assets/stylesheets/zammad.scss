@@ -1613,7 +1613,6 @@ textarea.form-control {
 }
 
 select.form-control:not([multiple]) {
-  padding-left: 10px;
   padding-right: 34px;
   word-wrap: normal;
 }
@@ -1637,6 +1636,13 @@ select.form-control:not([multiple]) {
   
   &:focus {
     box-shadow: none;
+  }
+}
+
+.select.form-group,
+.user_autocompletion.form-group {
+  .form-control {
+    padding-right: 21px;
   }
 }
 
@@ -2541,6 +2547,9 @@ ol.tabs li {
     vertical-align: middle;
   }
   
+  &.inactive {
+    fill: hsl(198,18%,86%);
+  }
   &.ok {
     fill: $supergood-color;
   }
@@ -3707,17 +3716,23 @@ footer {
   }
 
   .popover--notifications {
+    padding: 0;
     left: $navigationWidth;
     margin: 8px 2px;
-    min-height: 91px;
+    max-height: calc(100% - 16px);
     width: auto;
     max-width: 400px;
     min-width: 350px;
     position: absolute;
+    flex-direction: column;
     @extend .zIndex-5;
-
-    &.fade {
-      display: inline-block !important;
+    
+    &.is-visible {
+      display: flex;
+    }
+    
+    &.is-empty .popover-notificationsHeader {
+      box-shadow: none;
     }
 
     .arrow {
@@ -3726,18 +3741,27 @@ footer {
     }
 
     .popover-content {
-      flex: 1;
       padding-left: 0;
       padding-right: 0;
+      margin-bottom: 0;
       overflow-y: auto;
-      margin-bottom: 10px;
     }
 
-    &.is-overflowing .popover-notificationsHeader {
+    .popover-notificationsHeader {
       box-shadow:
         0 1px hsla(240,4%,95%,.5),
         0 2px hsla(240,4%,95%,.2);
-      padding-bottom: 17px;
+      padding-bottom: 14px;
+      flex-shrink: 0;
+      
+      .btn {
+        padding-top: 3px;
+        padding-bottom: 5px;
+      }
+    }
+
+    .activity-placeholder {
+      margin-bottom: 21px;
     }
   }
 
@@ -3760,6 +3784,12 @@ footer {
     color: #e25253;
     padding-left: 3px;
   }
+
+.user-popover,
+.ticket-popover,
+.organization-popover {
+  @extend .u-clickable;
+}
 
 .stat-icon {
   position: relative;
@@ -5365,49 +5395,74 @@ footer {
   fill: white;
 }
 
-.tokenfield .token {
+.token {
   padding: 0 0 0 10px;
-  margin: 0 5px 8px 0;
+  margin: 0 5px 6px 0;
   height: 26px;
-  line-height: 27px;
   color: white;
+  border-radius: 3px;
   background: hsl(198,19%,72%);
   border: none;
   float: none;
   display: inline-flex;
   align-items: center;
+  cursor: default;
 }
 
+  /* 
+    selector needs to be stronger than .token-input
+    in order to override input[type=text]
+  */
   .tokenfield .token-input {
     vertical-align: top;
-    margin: 2px 0 0 5px;
-    height: 25px;
+    padding: 0 10px 7px 5px;
+    margin: 0;
+    min-width: 60px;
+    height: 32px;
     display: inline-block;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    flex: 1;
+    
+    &:focus {
+      box-shadow: none;
+    }
   }
 
-  .tokenfield .token .token-label {
+  .tokenfield .token ~ .token-input {
+    padding: 0 5px 7px 0;
+  }
+
+  .token-label {
     padding: 0;
   }
 
   .tokenfield.form-control {
-    padding-top: 8px;
+    padding: 7px 7px 0;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  .tokenfield .token .close {
+  .token .close,
+  .token-close {
     margin: 0;
-    padding: 0 9px 0 5px;
+    padding: 0 9px 0 12px;
     font-family: inherit;
-    font-weight: 300;
-    font-size: 30px;
+    font-weight: 100;
+    font-size: 28px;
     line-height: 1;
     color: white;
     text-shadow: none;
     opacity: .3;
     outline: none;
     height: auto;
+    cursor: pointer;
   }
 
-  .tokenfield .token .close:hover {
+  .token .close:hover,
+  .token-close:hover {
     opacity: .5;
   }
 
@@ -5840,7 +5895,8 @@ footer {
     opacity: 1;
   }
 
-  .recipientList-entry:hover .recipientList-icon {
+  .recipientList-entry:hover .recipientList-icon,
+  .recipientList-entry.is-active .recipientList-icon {
     opacity: 1;
   }
 
@@ -6910,7 +6966,9 @@ output {
   background: white;
   table-layout: auto;
   margin-bottom: 20px;
-  
+  word-break: break-all;
+  word-wrap: break-word;
+
   &.is-invalid {
     border-radius: 3px;
     box-shadow: 
@@ -6943,6 +7001,7 @@ output {
   }
   
   th, td {
+    vertical-align: top;
     padding: 10px;
     border: 1px solid hsl(198,18%,86%);
   }
@@ -6955,6 +7014,7 @@ output {
     letter-spacing: 0.05em;
     background: hsl(197,20%,93%);
     border-bottom: none;
+    word-break: normal;
   }
 
   td.empty-cell {

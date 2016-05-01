@@ -8,15 +8,12 @@ class App.UserProfile extends App.Controller
       return
 
     # fetch new data if needed
-    @subscribeId = App.User.full(@user_id, @render)
+    App.User.full(@user_id, @render)
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticate(true)
       @render(App.User.fullLocal(@user_id))
-
-  release: =>
-    App.User.unsubscribe(@subscribeId)
 
   meta: =>
     meta =
@@ -43,9 +40,6 @@ class App.UserProfile extends App.Controller
 
   render: (user) =>
 
-    # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
-
     if !@doNotLog
       @doNotLog = 1
       @recentView('User', @user_id)
@@ -55,8 +49,9 @@ class App.UserProfile extends App.Controller
     ))
 
     new Object(
-      el:   elLocal.find('.js-object-container')
-      user: user
+      el:       elLocal.find('.js-object-container')
+      user:     user
+      task_key: @task_key
     )
 
     new App.TicketStats(
@@ -69,7 +64,6 @@ class App.UserProfile extends App.Controller
     new App.UpdateTastbar(
       genericObject: user
     )
-
 
 class Object extends App.Controller
   events:
@@ -85,6 +79,9 @@ class Object extends App.Controller
     App.User.unsubscribe(@subscribeId)
 
   render: (user) =>
+
+    # update taskbar with new meta data
+    App.TaskManager.touch(@task_key)
 
     # get display data
     userData = []

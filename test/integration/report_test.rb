@@ -20,7 +20,13 @@ class ReportTest < ActiveSupport::TestCase
   # Setting.set('es_index', 'estest.local_zammad')
   # Setting.set('es_user', 'elasticsearch')
   # Setting.set('es_password', 'zammad')
-  # Setting.set('es_attachment_max_size_in_mb', 1 )
+  # Setting.set('es_attachment_max_size_in_mb', 1)
+
+  # clear cache
+  Cache.clear
+
+  # remove background jobs
+  Delayed::Job.destroy_all
 
   Ticket.destroy_all
 
@@ -29,14 +35,18 @@ class ReportTest < ActiveSupport::TestCase
   #Rake::Task["searchindex:create"].execute
   system('rake searchindex:rebuild')
 
-  Group.create_if_not_exists(
+  group1 = Group.lookup(name: 'Users')
+  group2 = Group.create_if_not_exists(
     name: 'Report Test',
     updated_by_id: 1,
     created_by_id: 1
   )
+
+  load "#{Rails.root}/test/fixtures/seeds.rb"
+
   ticket1 = Ticket.create(
     title: 'test 1',
-    group: Group.lookup(name: 'Report Test'),
+    group: group2,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'new'),
     priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -67,7 +77,7 @@ class ReportTest < ActiveSupport::TestCase
 
   ticket2 = Ticket.create(
     title: 'test 2',
-    group: Group.lookup(name: 'Users'),
+    group: group1,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'new'),
     priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -92,13 +102,13 @@ class ReportTest < ActiveSupport::TestCase
     created_by_id: 1,
   )
   ticket2.update_attributes(
-    group_id: Group.lookup(name: 'Report Test').id,
+    group_id: group2.id,
     updated_at: '2015-10-28 14:30:00 UTC',
   )
 
   ticket3 = Ticket.create(
     title: 'test 3',
-    group: Group.lookup(name: 'Users'),
+    group: group1,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'open'),
     priority: Ticket::Priority.lookup(name: '3 high'),
@@ -125,7 +135,7 @@ class ReportTest < ActiveSupport::TestCase
 
   ticket4 = Ticket.create(
     title: 'test 4',
-    group: Group.lookup(name: 'Users'),
+    group: group1,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'closed'),
     priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -153,7 +163,7 @@ class ReportTest < ActiveSupport::TestCase
 
   ticket5 = Ticket.create(
     title: 'test 5',
-    group: Group.lookup(name: 'Users'),
+    group: group1,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'closed'),
     priority: Ticket::Priority.lookup(name: '3 high'),
@@ -185,7 +195,7 @@ class ReportTest < ActiveSupport::TestCase
 
   ticket6 = Ticket.create(
     title: 'test 6',
-    group: Group.lookup(name: 'Users'),
+    group: group1,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'closed'),
     priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -213,7 +223,7 @@ class ReportTest < ActiveSupport::TestCase
 
   ticket7 = Ticket.create(
     title: 'test 7',
-    group: Group.lookup(name: 'Users'),
+    group: group1,
     customer_id: 2,
     state: Ticket::State.lookup(name: 'closed'),
     priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -240,8 +250,7 @@ class ReportTest < ActiveSupport::TestCase
   )
 
   # execute background jobs
-  #puts Delayed::Job.all.inspect
-  Delayed::Worker.new.work_off
+  Scheduler.worker(true)
 
   sleep 6
 

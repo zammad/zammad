@@ -1198,7 +1198,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { render: true },
+  preferences: { trigger: ['menu:render', 'chat:rerender'] },
   state: false,
   frontend: true
 )
@@ -1600,7 +1600,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Icinga integration',
   name: 'icinga_integration',
-  area: 'Integration::Icinga',
+  area: 'Integration::Switch',
   description: 'Define if Icinga (http://www.icinga.org) is enabled or not.',
   options: {
     form: [
@@ -1632,6 +1632,7 @@ Setting.create_if_not_exists(
         null: false,
         name: 'icinga_sender',
         tag: 'input',
+        placeholder: 'icinga@monitoring.example.com',
       },
     ],
   },
@@ -1685,7 +1686,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Nagios integration',
   name: 'nagios_integration',
-  area: 'Integration::Nagios',
+  area: 'Integration::Switch',
   description: 'Define if Nagios (http://www.nagios.org) is enabled or not.',
   options: {
     form: [
@@ -1717,6 +1718,7 @@ Setting.create_if_not_exists(
         null: false,
         name: 'nagios_sender',
         tag: 'input',
+        placeholder: 'nagios@monitoring.example.com',
       },
     ],
   },
@@ -1767,6 +1769,152 @@ Setting.create_if_not_exists(
   preferences: { prio: 4 },
   frontend: false
 )
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '0100_notification',
+  area: 'Transaction::Backend',
+  description: 'Define the transaction backend to send agent notifications.',
+  options: {},
+  state: 'Transaction::Notification',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '1000_signature_detection',
+  area: 'Transaction::Backend',
+  description: 'Define the transaction backend to detect customers signature in email.',
+  options: {},
+  state: 'Transaction::SignatureDetection',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '6000_slack_webhook',
+  area: 'Transaction::Backend',
+  description: 'Define the transaction backend which posts messages to (http://www.slack.com).',
+  options: {},
+  state: 'Transaction::Slack',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Slack integration',
+  name: 'slack_integration',
+  area: 'Integration::Switch',
+  description: 'Define if Slack (http://www.slack.org) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'slack_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: { prio: 1 },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Slack config',
+  name: 'slack_config',
+  area: 'Integration::Slack',
+  description: 'Define the slack config.',
+  options: {},
+  state: {
+    items: []
+  },
+  frontend: false,
+  preferences: { prio: 2 },
+)
+Setting.create_if_not_exists(
+  title: 'sipgate.io integration',
+  name: 'sipgate_integration',
+  area: 'Integration::Switch',
+  description: 'Define if sipgate.io (http://www.sipgate.io) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'sipgate_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: { prio: 1, trigger: 'cti:reload' },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'sipgate.io config',
+  name: 'sipgate_config',
+  area: 'Integration::Sipgate',
+  description: 'Define the sipgate.io config.',
+  options: {},
+  state: {},
+  frontend: false,
+  preferences: { prio: 2 },
+)
+Setting.create_if_not_exists(
+  title: 'Clearbit integration',
+  name: 'clearbit_integration',
+  area: 'Integration::Switch',
+  description: 'Define if Clearbit (http://www.clearbit.com) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'clearbit_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: { prio: 1 },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Clearbit config',
+  name: 'clearbit_config',
+  area: 'Integration::Clearbit',
+  description: 'Define the Clearbit config.',
+  options: {},
+  state: {},
+  frontend: false,
+  preferences: { prio: 2 },
+)
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '9000_clearbit_enrichment',
+  area: 'Transaction::Backend',
+  description: 'Define the transaction backend which will enrich customer and organization informations from (http://www.clearbit.com).',
+  options: {},
+  state: 'Transaction::ClearbitEnrichment',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '9100_cti_caller_id_detection',
+  area: 'Transaction::Backend',
+  description: 'Define the transaction backend which detects caller ids in objects and store them for cti lookups.',
+  options: {},
+  state: 'Transaction::CtiCallerIdDetection',
+  frontend: false
+)
 
 signature = Signature.create_if_not_exists(
   id: 1,
@@ -1815,6 +1963,13 @@ Role.create_if_not_exists(
   id: 5,
   name: 'Chat',
   note: 'Access to chat feature.',
+  updated_by_id: 1,
+  created_by_id: 1
+)
+Role.create_if_not_exists(
+  id: 6,
+  name: 'CTI',
+  note: 'Access to CTI feature.',
   updated_by_id: 1,
   created_by_id: 1
 )

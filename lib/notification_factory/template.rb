@@ -11,6 +11,8 @@ class NotificationFactory::Template
     ERB.new(@template).result(binding)
   end
 
+  # d - data of object
+  # d('user.firstname', htmlEscape)
   def d(key, escape = nil)
 
     # do validaton, ignore some methodes
@@ -45,19 +47,25 @@ class NotificationFactory::Template
     h placeholder
   end
 
+  # c - config
+  # c('fqdn', htmlEscape)
   def c(key, escape = nil)
     config = Setting.get(key)
     return config if escape == false || (escape.nil? && !@escape)
     h config
   end
 
+  # t - translation
+  # t('yes', htmlEscape)
   def t(key, escape = nil)
     translation = Translation.translate(@locale, key)
     return translation if escape == false || (escape.nil? && !@escape)
     h translation
   end
 
-  def a(article)
+  # a_html - article body in html
+  # a_html(article)
+  def a_html(article)
     content_type = d "#{article}.content_type", false
     if content_type =~ /html/
       return d "#{article}.body", false
@@ -65,6 +73,19 @@ class NotificationFactory::Template
     d("#{article}.body", false).text2html
   end
 
+  # a_text - article body in text
+  # a_text(article)
+  def a_text(article)
+    content_type = d "#{article}.content_type", false
+    body = d "#{article}.body", false
+    if content_type =~ /html/
+      body = body.html2text
+    end
+    (body.strip + "\n").gsub(/^(.*?)$/, '> \\1')
+  end
+
+  # h - htmlEscape
+  # h('fqdn', htmlEscape)
   def h(key)
     return key if !key
     CGI.escapeHTML(key.to_s)

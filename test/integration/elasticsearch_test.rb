@@ -215,8 +215,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     # execute background jobs
-    #puts Delayed::Job.all.inspect
-    Delayed::Worker.new.work_off
+    Scheduler.worker(true)
 
     sleep 6
 

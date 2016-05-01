@@ -29,7 +29,7 @@ store new device for user if device not already known
     # get location info
     location_details = Service::GeoIp.location(ip)
     location = 'unknown'
-    if location_details
+    if location_details && location_details['country_name']
       location = location_details['country_name']
     end
 
@@ -154,19 +154,23 @@ log user device action
     if user_device.ip != ip
       user_device.ip = ip
       location_details = Service::GeoIp.location(ip)
-      user_device.location_details = location_details
 
-      location = location_details['country_name']
+      # if we do not have any data from backend (e. g. geo ip ist out of service), ignore log
+      if location_details && location_details['country_name']
 
-      # notify if country has changed
-      if user_device.location != location
-        return UserDevice.add(
-          user_agent,
-          ip,
-          user_id,
-          user_device.fingerprint,
-          type,
-        )
+        user_device.location_details = location_details
+        location = location_details['country_name']
+
+        # notify if country has changed
+        if user_device.location != location
+          return UserDevice.add(
+            user_agent,
+            ip,
+            user_id,
+            user_device.fingerprint,
+            type,
+          )
+        end
       end
     end
 

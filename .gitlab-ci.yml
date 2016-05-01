@@ -143,6 +143,30 @@ job_integration_user_agent:
     - ruby -I test/ test/integration/user_agent_test.rb
     - rake db:drop
 
+job_integration_slack:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - echo "gem 'slack-api'" >> Gemfile.local
+    - bundle install
+    - ruby -I test test/integration/slack_test.rb
+    - rake db:drop
+
+job_integration_clearbit:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test test/integration/clearbit_test.rb
+    - rake db:drop
+
 job_integration_es_mysql:
   stage: test
   tags:

@@ -33,9 +33,9 @@ class App.SettingsArea extends App.Controller
     elements = []
     for setting in settings
       if setting.name is 'product_logo'
-        item = new App.SettingsAreaLogo( setting: setting )
+        item = new App.SettingsAreaLogo(setting: setting)
       else
-        item = new App.SettingsAreaItem( setting: setting )
+        item = new App.SettingsAreaItem(setting: setting)
       elements.push item.el
 
     @html elements
@@ -108,18 +108,13 @@ class App.SettingsAreaItem extends App.Controller
         }
 
         # rerender ui || get new collections and session data
-        if @setting.preferences
-          if @setting.preferences.render
-            ui.render()
-            App.Event.trigger( 'ui:rerender' )
+        App.Setting.preferencesPost(@setting)
 
-          if @setting.preferences.session_check
-            App.Auth.loginCheck()
-      fail: ->
+      fail: (settings, details) ->
         ui.formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent('Can\'t update item!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
           timeout: 2000
         }
     )
@@ -158,10 +153,10 @@ class App.SettingsAreaLogo extends App.Controller
     if file.size && file.size > 1024 * 1024 * maxSiteInMb
       App.Event.trigger 'notify', {
         type:    'error'
-        msg:     App.i18n.translateContent('File too big, max. %s MB allowed.', maxSiteInMb )
+        msg:     App.i18n.translateContent('File too big, max. %s MB allowed.', maxSiteInMb)
         timeout: 2000
       }
-      @logoPreview.attr( 'src', '' )
+      @logoPreview.attr('src', '')
       return
 
     reader.readAsDataURL(file)
@@ -209,4 +204,4 @@ class App.SettingsAreaLogo extends App.Controller
       )
 
     # add resized image
-    App.ImageService.resizeForApp( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
+    App.ImageService.resizeForApp(@params.logo, @logoPreview.width(), @logoPreview.height(), store)

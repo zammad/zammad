@@ -1,0 +1,7 @@
+# <%= d 'ticket.title' %>
+_<<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>|Ticket#<%= d 'ticket.number' %>>: Reminder reached!_
+A ticket needs attention, reminder reached for (<%= d 'ticket.title' %>) with customer "*<%= d 'ticket.customer.longname' %>*".
+
+<% if @objects[:article] %>
+<%= a_text 'article' %>
+<% end %>

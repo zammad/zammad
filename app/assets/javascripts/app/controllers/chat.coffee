@@ -60,7 +60,7 @@ class App.CustomerChat extends App.Controller
     App.WebSocket.send(event:'chat_status_agent')
 
     # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
+    @bind('ui:rerender chat:rerender', =>
       return if !@authenticate(true)
       for session_id, chat of @chatWindows
         chat.el.remove()
@@ -86,8 +86,7 @@ class App.CustomerChat extends App.Controller
     )
 
   featureActive: =>
-    if @Config.get('chat')
-      return true
+    return true if @Config.get('chat')
     false
 
   render: ->
@@ -164,6 +163,10 @@ class App.CustomerChat extends App.Controller
     @title 'Customer Chat', true
     @navupdate '#customer_chat'
 
+  active: (state) =>
+    return @shown if state is undefined
+    @shown = state
+
   counter: =>
     counter = 0
 
@@ -238,11 +241,6 @@ class App.CustomerChat extends App.Controller
     else
       @stopPushState()
       @pushState()
-
-  updateNavMenu: =>
-    delay = ->
-      App.Event.trigger('menu:render')
-    @delay(delay, 200, 'updateNavMenu')
 
   updateMeta: =>
     if @meta.waiting_chat_count && @maxChatWindows > @windowCount()

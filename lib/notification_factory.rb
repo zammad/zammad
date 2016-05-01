@@ -5,8 +5,17 @@ module NotificationFactory
   result = NotificationFactory.template_read(
     template: 'password_reset',
     locale: 'en-us',
-    format: 'html', # md
-    type: 'mailer', # slack
+    format: 'html',
+    type: 'mailer',
+  )
+
+or
+
+  result = NotificationFactory.template_read(
+    template: 'ticket_update',
+    locale: 'en-us',
+    format: 'md',
+    type: 'slack',
   )
 
 returns
@@ -56,8 +65,15 @@ returns
 =begin
 
   string = NotificationFactory.application_template_read(
-    format: 'html', # md
-    type: 'mailer', # slack
+    format: 'html',
+    type: 'mailer',
+  )
+
+or
+
+  string = NotificationFactory.application_template_read(
+    format: 'md',
+    type: 'slack',
   )
 
 returns

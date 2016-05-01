@@ -4,14 +4,22 @@ require 'test_helper'
 class SearchControllerTest < ActionDispatch::IntegrationTest
   setup do
 
+    # clear cache
+    Cache.clear
+
+    # remove background jobs
+    Delayed::Job.destroy_all
+
+    # set current user
+    UserInfo.current_user_id = 1
+
     # set accept header
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
     # create agent
-    roles  = Role.where( name: %w(Admin Agent) )
+    roles  = Role.where(name: %w(Admin Agent))
     groups = Group.all
 
-    UserInfo.current_user_id = 1
     @admin = User.create_or_update(
       login: 'search-admin',
       firstname: 'Search',
@@ -24,7 +32,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create agent
-    roles = Role.where( name: 'Agent' )
+    roles = Role.where(name: 'Agent')
     @agent = User.create_or_update(
       login: 'search-agent@example.com',
       firstname: 'Search 1234',
@@ -37,7 +45,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create customer without org
-    roles = Role.where( name: 'Customer' )
+    roles = Role.where(name: 'Customer')
     @customer_without_org = User.create_or_update(
       login: 'search-customer1@example.com',
       firstname: 'Search',
@@ -86,10 +94,10 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
     @ticket1 = Ticket.create(
       title: 'test 1234-1',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: @customer_without_org.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -109,10 +117,10 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     sleep 1
     @ticket2 = Ticket.create(
       title: 'test 1234-2',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: @customer_with_org2.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -132,10 +140,10 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     sleep 1
     @ticket3 = Ticket.create(
       title: 'test 1234-2',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: @customer_with_org3.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -164,7 +172,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       # Setting.set('es_password', 'zammad')
 
       # set max attachment size in mb
-      Setting.set('es_attachment_max_size_in_mb', 1 )
+      Setting.set('es_attachment_max_size_in_mb', 1)
 
       if ENV['ES_INDEX']
         #fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
@@ -177,9 +185,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       system('rake searchindex:rebuild')
 
       # execute background jobs
-      # execute background jobs
-      #puts Delayed::Job.all.inspect
-      Delayed::Worker.new.work_off
+      Scheduler.worker(true)
 
       sleep 6
     end
