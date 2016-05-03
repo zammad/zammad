@@ -90,7 +90,7 @@ class AddSlackIntegration < ActiveRecord::Migration
     Setting.create_or_update(
       title: 'Define transaction backend.',
       name: '0100_notification',
-      area: 'Transaction::Backend',
+      area: 'Transaction::Backend::Async',
       description: 'Define the transaction backend to send agent notifications.',
       options: {},
       state: 'Transaction::Notification',
@@ -99,7 +99,7 @@ class AddSlackIntegration < ActiveRecord::Migration
     Setting.create_or_update(
       title: 'Define transaction backend.',
       name: '6000_slack_webhook',
-      area: 'Transaction::Backend',
+      area: 'Transaction::Backend::Async',
       description: 'Define the transaction backend which posts messages to (http://www.slack.com).',
       options: {},
       state: 'Transaction::Slack',

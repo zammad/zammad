@@ -46,7 +46,7 @@ class CreateCtiLog < ActiveRecord::Migration
     Setting.create_if_not_exists(
       title: 'Define transaction backend.',
       name: '9100_cti_caller_id_detection',
-      area: 'Transaction::Backend',
+      area: 'Transaction::Backend::Async',
       description: 'Define the transaction backend which detects caller ids in objects and store them for cti lookups.',
       options: {},
       state: 'Transaction::CtiCallerIdDetection',

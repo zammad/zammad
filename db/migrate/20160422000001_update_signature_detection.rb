@@ -3,7 +3,7 @@ class UpdateSignatureDetection < ActiveRecord::Migration
     Setting.create_if_not_exists(
       title: 'Define transaction backend.',
       name: '1000_signature_detection',
-      area: 'Transaction::Backend',
+      area: 'Transaction::Backend::Async',
       description: 'Define the transaction backend to detect customers signature in email.',
       options: {},
       state: 'Transaction::SignatureDetection',

@@ -36,7 +36,7 @@ class AddClearbitIntegration < ActiveRecord::Migration
     Setting.create_if_not_exists(
       title: 'Define transaction backend.',
       name: '9000_clearbit_enrichment',
-      area: 'Transaction::Backend',
+      area: 'Transaction::Backend::Async',
       description: 'Define the transaction backend which will enrich customer and organization informations from (http://www.clearbit.com).',
       options: {},
       state: 'Transaction::ClearbitEnrichment',
