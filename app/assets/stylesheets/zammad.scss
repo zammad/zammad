@@ -848,6 +848,10 @@ table {
 
 .table {
   display: table;
+  
+  small {
+    color: inherit;
+  }
 }
 
 .table--light {
@@ -957,6 +961,10 @@ th.align-right {
   a {
     color: #bbb;
   }
+}
+
+.table tr.is-grayed-out {
+  opacity: 0.33;
 }
 
 .table .icon-draggable,
@@ -2555,6 +2563,9 @@ ol.tabs li {
   }
   &.error {
     fill: $superbad-color;
+  }
+  &.neutral {
+    fill: $ok-color;
   }
 }
 
@@ -8092,6 +8103,11 @@ output {
     border-bottom: 1px solid hsl(198,4%,90%);
     background: none;
   }
+}
+
+
+.pulsate-animation {
+  animation: pulsate 667ms ease-in-out infinite alternate;
 }
 
 /*

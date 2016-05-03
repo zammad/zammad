@@ -5,18 +5,26 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th style="width: 28px;"></th>
+          <th style="width: 40px;"></th>
           <th><%- @T('From') %></th>
           <th><%- @T('To') %></th>
-          <th style="width: 130px;"></th>
+          <th style="width: 130px;"><%- @T('Status') %></th>
           <th style="width: 100px;"><%- @T('Duration') %></th>
           <th style="width: 170px;"><%- @T('Time') %></th>
         </tr>
       </thead>
       <tbody>
         <% for item in @list: %>
-        <tr <% if item.state is 'hangup' && item.done: %>class="is-inactive"<% end %> data-id="<%- item.id %>">
-          <td><% if item.state is 'hangup': %><input type="checkbox" class="js-check" <% if item.done: %>checked<% end %>><% end %>
+        <tr <% if item.state is 'hangup' && item.done: %>class="is-grayed-out"<% end %> data-id="<%- item.id %>">
+          <td class="table-checkbox" style="vertical-align: middle">
+            <% if item.state is 'hangup': %>
+            <label class="checkbox-replacement">
+              <input type="checkbox" class="js-check" <% if item.done: %>checked<% end %>>
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
+            <% end %>
+          </td>
           <td>
             <% shown = false %>
             <% if item.preferences.from && !_.isEmpty(item.preferences.from): %>
@@ -36,7 +44,7 @@
               <% if item.from_comment: %><%= item.from_comment %><% end %>
               <br>
             <% end %>
-            <%= item.from %>
+            <small><%= item.from %></small>
           </td>
           <td>
             <% shown = false %>
@@ -57,11 +65,15 @@
               <% if item.to_comment: %><%= item.to_comment %><% end %>
               <br>
             <% end %>
-            <%= item.to %>
+            <small><%= item.to %></small>
           </td>
-          <td><%- @T(item.state_human) %></td>
-          <td><%= item.duration %></td>
-          <td><%- @humanTime(item.created_at) %></td>
+          <td style="vertical-align: middle">
+            <% if item.state_human: %>
+            <%- @Icon('status', "#{item.status_class} inline") %> <%- @T(item.state_human) %>
+            <% end %>
+          </td>
+          <td style="vertical-align: middle"><%= item.duration %></td>
+          <td style="vertical-align: middle"><%- @humanTime(item.created_at) %></td>
         </tr>
         <% end %>
       </tbody>
