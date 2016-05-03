@@ -848,6 +848,10 @@ table {
 
 .table {
   display: table;
+  
+  small {
+    color: inherit;
+  }
 }
 
 .table--light {
@@ -910,15 +914,11 @@ th.align-right {
 
 .table > tbody > tr > td {
   padding: 10px 10px 8px;
-  border: none;
-  box-shadow: 0 1px rgba(0,0,0,.03);
+  border-color: hsl(0,0%,95%);
 }
 
 .table-hover > tbody > tr:hover > td {
   background: white;
-  box-shadow: 
-    0 1px rgba(0,0,0,.03),
-    0 -1px rgba(0,0,0,.03);
 }
  
 .table-hover > tbody > tr:hover > th {
@@ -956,6 +956,14 @@ th.align-right {
   
   a {
     color: #bbb;
+  }
+}
+
+.table tr.is-grayed-out {
+  color: hsl(120,1%,77%);
+  
+  .icon {
+    opacity: 0.33;
   }
 }
 
@@ -1033,7 +1041,19 @@ th.align-right {
 
 .checkbox-replacement .icon-unchecked,
 .radio-replacement .icon-unchecked {
-  color: #9C9C9B;
+  color: hsl(60,1%,61%);
+}
+
+.checkbox-replacement.is-disabled,
+.radio-replacement.is-disabled {
+  cursor: default;
+}
+
+.checkbox-replacement input:disabled ~.icon,
+.radio-replacement input:disabled ~.icon {
+  opacity: 0.33;
+  fill: none;
+  cursor: default;
 }
 
 .checkbox-replacement input:not(:checked) ~ .icon-checked,
@@ -2555,6 +2575,9 @@ ol.tabs li {
   }
   &.error {
     fill: $superbad-color;
+  }
+  &.neutral {
+    fill: $ok-color;
   }
 }
 
@@ -8092,6 +8115,11 @@ output {
     border-bottom: 1px solid hsl(198,4%,90%);
     background: none;
   }
+}
+
+
+.pulsate-animation {
+  animation: pulsate 667ms ease-in-out infinite alternate;
 }
 
 /*
