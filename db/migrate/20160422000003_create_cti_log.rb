@@ -12,7 +12,8 @@ class CreateCtiLog < ActiveRecord::Migration
       t.timestamp :start,                             null: true
       t.timestamp :end,                               null: true
       t.boolean   :done,                              null: false, default: true
-      t.timestamps                                    null: false
+      t.text :preferences,            limit: 500.kilobytes + 1, null: true
+      t.timestamps null: false
     end
     add_index :cti_logs, [:call_id], unique: true
     add_index :cti_logs, [:direction]

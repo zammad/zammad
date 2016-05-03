@@ -38,11 +38,16 @@
                 <% end %>
               <% end %>
             <% end %>
-            <% if !shown: %>
+            <% if !shown && item.from_comment: %>
+              <% shown = true %>
               <% if item.from_comment: %><%= item.from_comment %><% end %>
               <br>
             <% end %>
-            <small><%= item.from %></small>
+            <% if shown: %>
+              <small><%= item.from %></small>
+            <% else: %>
+              <%= item.from %>
+            <% end %>
           </td>
           <td>
             <% shown = false %>
@@ -59,11 +64,16 @@
                 <% end %>
               <% end %>
             <% end %>
-            <% if !shown: %>
+            <% if !shown && item.to_comment: %>
+              <% shown = true %>
               <% if item.to_comment: %><%= item.to_comment %><% end %>
               <br>
             <% end %>
-            <small><%= item.to %></small>
+            <% if shown: %>
+              <small><%= item.to %></small>
+            <% else: %>
+              <%= item.to %>
+            <% end %>
           </td>
           <td style="vertical-align: middle">
             <% if item.state_human: %>
