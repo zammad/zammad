@@ -334,4 +334,170 @@ class TicketTriggerTest < ActiveSupport::TestCase
     Trigger.destroy_all
   end
 
+  test '3 auto replys' do
+    roles = Role.where(name: 'Customer')
+    customer1 = User.create_or_update(
+      login: 'postmaster@example.com',
+      firstname: 'Notification',
+      lastname: 'Customer1',
+      email: 'postmaster@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    customer2 = User.create_or_update(
+      login: 'ticket-auto-reply-customer2@example.com',
+      firstname: 'Notification',
+      lastname: 'Customer2',
+      email: 'ticket-auto-reply-customer2@example.com',
+      password: 'customerpw',
+      active: true,
+      organization_id: nil,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    trigger1 = Trigger.create_or_update(
+      name: 'auto reply - new ticket',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    trigger2 = Trigger.create_or_update(
+      name: 'not matching',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'closed').id.to_s,
+        }
+      },
+      perform: {
+        'notification.email' => {
+          'body' => '2some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'recipient' => 'ticket_customer',
+          'subject' => '2Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    # ticket #1
+    ticket1 = Ticket.create(
+      title: 'test auto reply 1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: customer1.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket1, 'ticket1 created')
+
+    assert_equal('test auto reply 1', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
+
+    Observer::Transaction.commit
+
+    ticket1 = Ticket.lookup(id: ticket1.id)
+    assert_equal('test auto reply 1', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
+
+    ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
+    ticket1.save
+
+    Observer::Transaction.commit
+
+    assert_equal('test auto reply 1', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
+
+    # ticket #2
+    ticket2 = Ticket.create(
+      title: 'test auto reply 2',
+      group: Group.lookup(name: 'Users'),
+      customer_id: customer2.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket2, 'ticket2 created')
+
+    assert_equal('test auto reply 2', ticket2.title, 'ticket2.title verify')
+    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
+    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
+    assert_equal(0, ticket2.articles.count, 'ticket2.articles verify')
+
+    Observer::Transaction.commit
+
+    ticket2 = Ticket.lookup(id: ticket2.id)
+    assert_equal('test auto reply 2', ticket2.title, 'ticket2.title verify')
+    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
+    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
+    assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
+    article1 = ticket2.articles.last
+    assert_match('Thanks for your inquiry (test auto reply 2)!', article1.subject)
+    assert_equal('text/html', article1.content_type)
+
+    ticket2.priority = Ticket::Priority.lookup(name: '2 normal')
+    ticket2.save
+
+    Observer::Transaction.commit
+
+    assert_equal('test auto reply 2', ticket2.title, 'ticket2.title verify')
+    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
+    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
+    assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
+    assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
+
+    # process mail without Precedence header
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+
+    assert_equal('new', ticket_p.state.name)
+    assert_equal(2, ticket_p.articles.count)
+
+    # process mail with Precedence header (no auto response)
+    content = IO.binread('test/fixtures/ticket_trigger/mail2.box')
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+
+    assert_equal('new', ticket_p.state.name)
+    assert_equal(1, ticket_p.articles.count)
+
+    Trigger.destroy_all
+  end
+
 end

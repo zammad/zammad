@@ -635,11 +635,11 @@ condition example
 
 perform changes on ticket
 
-  ticket.perform_changes({}, 'trigger')
+  ticket.perform_changes({}, 'trigger', item)
 
 =end
 
-  def perform_changes(perform, log)
+  def perform_changes(perform, log, item = nil)
     logger.debug "Perform #{log} #{perform.inspect} on Ticket.find(#{id})"
     changed = false
     perform.each do |key, value|
@@ -662,8 +662,14 @@ perform changes on ticket
         recipient_string = ''
         recipient_already = {}
         recipients.each {|user|
+
+          # send notifications only to email adresses
           next if !user.email
           next if user.email !~ /@/
+
+          # do not sent notifications to this recipients
+          next if user.email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
+
           email = user.email.downcase.strip
           next if recipient_already[email]
           recipient_already[email] = true
@@ -678,6 +684,39 @@ perform changes on ticket
         email_address = group.email_address
         next if !email_address
         next if !email_address.channel_id
+
+        # check if notification should be send because of customer emails
+        if item && item[:article_id]
+          article = Ticket::Article.lookup(id: item[:article_id])
+          if article
+            type = Ticket::Article::Type.lookup(id: article.type_id)
+            sender = Ticket::Article::Sender.lookup(id: article.sender_id)
+            if sender && sender.name == 'Customer' && type && type.name == 'email'
+
+              # get attachment
+              list = Store.list(
+                object: 'Ticket::Article::Mail',
+                o_id: article.id,
+              )
+              if list && list[0]
+                file = Store.find(list[0].id)
+                if file
+                  content = file.content
+                  if content
+                    parser = Channel::EmailParser.new
+                    mail = parser.parse(content)
+
+                    # check headers
+                    next if mail['x-loop'.to_sym] =~ /yes/i
+                    next if mail['precedence'.to_sym] =~ /bulk/i
+                    next if mail['auto-submitted'.to_sym] =~ /auto-generated/i
+                    next if mail['x-auto-response-suppress'.to_sym] =~ /yes/i
+                  end
+                end
+              end
+            end
+          end
+        end
 
         objects = {
           ticket: self,
@@ -703,7 +742,6 @@ perform changes on ticket
         )
         Ticket::Article.create(
           ticket_id: id,
-          #from: 'some_sender@example.com',
           to: recipient_string,
           subject: subject,
           content_type: 'text/html',

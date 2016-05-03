@@ -70,7 +70,7 @@ class Transaction::Trigger
         next if !match
       end
 
-      ticket.perform_changes(trigger.perform, 'trigger')
+      ticket.perform_changes(trigger.perform, 'trigger', @item)
     }
   end
 

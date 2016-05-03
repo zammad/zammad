@@ -9,7 +9,8 @@ class Channel::EmailParser
 
 =begin
 
-  mail = parse(msg_as_string)
+  parser = Channel::EmailParser.new
+  mail = parser.parse(msg_as_string)
 
   mail = {
     from:              'Some Name <some@example.com>',
