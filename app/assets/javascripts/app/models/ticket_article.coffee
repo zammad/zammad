@@ -3,19 +3,19 @@ class App.TicketArticle extends App.Model
   @extend Spine.Model.Ajax
   @url: @apiPath + '/ticket_articles'
   @configure_attributes = [
-      { name: 'ticket_id',      display: 'TicketID',    null: false, readonly: 1, },
+      { name: 'ticket_id',      display: 'TicketID',    null: false, readonly: 1, searchable: false },
       { name: 'from',           display: 'From',        tag: 'input',    type: 'text', limit: 100, null: false },
       { name: 'to',             display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true },
       { name: 'cc',             display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true },
       { name: 'subject',        display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'body',           display: 'Text',        tag: 'textarea', rows: 5,      limit: 100, null: false },
+      { name: 'body',           display: 'Text',        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: false },
       { name: 'type_id',        display: 'Type',        tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '' },
       { name: 'sender_id',      display: 'Sender',      tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '' },
       { name: 'internal',       display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' } },
       { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
-      { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1 },
-      { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1 },
-      { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1 },
+      { name: 'created_at',     display: 'Created',     tag: 'datetime', readonly: 1, searchable: false },
+      { name: 'updated_by_id',  display: 'Updated by',  relation: 'User', readonly: 1, searchable: false },
+      { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1, searchable: false },
     ]
 
   uiUrl: ->

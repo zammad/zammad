@@ -23,7 +23,7 @@ class Index extends App.ControllerContent
           { name: 'New Trigger', 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
-      #large: true
+      large: true
     )
 
 App.Config.set('Trigger', { prio: 3300, name: 'Trigger', parent: '#manage', target: '#manage/trigger', controller: Index, role: ['Admin'] }, 'NavBarAdmin')

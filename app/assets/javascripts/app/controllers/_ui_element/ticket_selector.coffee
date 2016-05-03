@@ -7,9 +7,9 @@ class App.UiElement.ticket_selector
       ticket:
         name: 'Ticket'
         model: 'Ticket'
-      #article:
-      #  name: 'Article'
-      #  model: 'TicketArticle'
+      article:
+        name: 'Article'
+        model: 'TicketArticle'
       customer:
         name: 'Customer'
         model: 'User'

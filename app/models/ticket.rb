@@ -726,6 +726,7 @@ perform changes on ticket
         }
 
         # get subject
+        value['subject'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", false %>')
         value['subject'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", false %>')
         subject = NotificationFactory::Mailer.template(
           templateInline: value['subject'],
@@ -734,6 +735,7 @@ perform changes on ticket
         )
         subject = subject_build(subject)
 
+        value['body'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", true %>')
         value['body'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", true %>')
         body = NotificationFactory::Mailer.template(
           templateInline: value['body'],

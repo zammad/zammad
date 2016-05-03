@@ -49,16 +49,33 @@ class Transaction::Trigger
         condition.delete('ticket.action')
       end
 
+      # check if selector is matching
       condition['ticket.id'] = {
         operator: 'is',
         value: ticket.id,
       }
+      if article
+        condition['article.id'] = {
+          operator: 'is',
+          value: article.id,
+        }
+      end
+
       ticket_count, tickets = Ticket.selectors(condition, 1)
       next if ticket_count == 0
       next if tickets.first.id != ticket.id
 
+      # check if min one article attribute is used
+      article_selector = false
+      trigger.condition.each do |key, _value|
+        (object_name, attribute) = key.split('.', 2)
+        next if object_name != 'article'
+        next if attribute == 'id'
+        article_selector = true
+      end
+
       # check in min one attribute has changed
-      if @item[:type] == 'update'
+      if @item[:type] == 'update' && !article_selector
         match = false
         trigger.condition.each do |key, _value|
           (object_name, attribute) = key.split('.', 2)

@@ -369,12 +369,30 @@ class TicketTriggerTest < ActiveSupport::TestCase
           'operator' => 'is',
           'value' => 'create',
         },
+        'ticket.state_id' => {
+          'operator' => 'is not',
+          'value' => '4',
+        },
+        'article.type_id' => {
+          'operator' => 'is',
+          'value' => [
+            Ticket::Article::Type.lookup(name: 'email').id,
+            Ticket::Article::Type.lookup(name: 'phone').id,
+            Ticket::Article::Type.lookup(name: 'web').id,
+          ],
+        },
       },
       perform: {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body' => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+<br/>
+<p>To provide additional information, please reply to this email or click on the following link:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</p>
+<br/>
+<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
           'recipient' => 'ticket_customer',
-          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})',
         },
       },
       disable_notification: true,
@@ -384,6 +402,44 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     trigger2 = Trigger.create_or_update(
+      name: 'auto reply (on follow up of tickets)',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'update',
+        },
+        'article.sender_id' => {
+          'operator' => 'is',
+          'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
+        },
+        'article.type_id' => {
+          'operator' => 'is',
+          'value' => [
+            Ticket::Article::Type.lookup(name: 'email').id,
+            Ticket::Article::Type.lookup(name: 'phone').id,
+            Ticket::Article::Type.lookup(name: 'web').id,
+          ],
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => '<p>Your follow up for (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+<br/>
+<p>To provide additional information, please reply to this email or click on the following link:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</p>
+<br/>
+<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your follow up (#{ticket.title})',
+        },
+      },
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    trigger3 = Trigger.create_or_update(
       name: 'not matching',
       condition: {
         'ticket.action' => {
@@ -408,80 +464,131 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    # ticket #1
-    ticket1 = Ticket.create(
-      title: 'test auto reply 1',
-      group: Group.lookup(name: 'Users'),
-      customer_id: customer1.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+    # process mail without Precedence header
+    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+
+    assert_equal('aaäöüßad asd', ticket_p.title)
+    assert_equal('Users', ticket_p.group.name)
+    assert_equal('new', ticket_p.state.name)
+    assert_equal(2, ticket_p.articles.count)
+    article_p = ticket_p.articles.last
+    assert_match('Thanks for your inquiry (aaäöüßad asd)', article_p.subject)
+    assert_match('Zammad <zammad@localhost>', article_p.from)
+    assert_no_match('config\.', article_p.body)
+    assert_match('http://zammad.example.com', article_p.body)
+    assert_no_match('ticket.', article_p.body)
+    assert_match(ticket_p.number, article_p.body)
+    assert_equal('text/html', article_p.content_type)
+
+    ticket_p.priority = Ticket::Priority.lookup(name: '2 normal')
+    ticket_p.save
+    Observer::Transaction.commit
+    assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
+    assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
+    assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
+    assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
+    assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
+
+    article_p = Ticket::Article.create(
+      ticket_id: ticket_p.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message note',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert(ticket1, 'ticket1 created')
-
-    assert_equal('test auto reply 1', ticket1.title, 'ticket1.title verify')
-    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
-    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
-    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
-
     Observer::Transaction.commit
+    assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
+    assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
+    assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
+    assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
+    assert_equal(3, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    ticket1 = Ticket.lookup(id: ticket1.id)
-    assert_equal('test auto reply 1', ticket1.title, 'ticket1.title verify')
-    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
-    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
-    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
-
-    ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
-    ticket1.save
-
-    Observer::Transaction.commit
-
-    assert_equal('test auto reply 1', ticket1.title, 'ticket1.title verify')
-    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
-    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
-    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
-
-    # ticket #2
-    ticket2 = Ticket.create(
-      title: 'test auto reply 2',
-      group: Group.lookup(name: 'Users'),
-      customer_id: customer2.id,
-      state: Ticket::State.lookup(name: 'new'),
-      priority: Ticket::Priority.lookup(name: '2 normal'),
+    article_p = Ticket::Article.create(
+      ticket_id: ticket_p.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message note',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert(ticket2, 'ticket2 created')
-
-    assert_equal('test auto reply 2', ticket2.title, 'ticket2.title verify')
-    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
-    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
-    assert_equal(0, ticket2.articles.count, 'ticket2.articles verify')
-
     Observer::Transaction.commit
+    assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
+    assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
+    assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
+    assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
+    assert_equal(4, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    ticket2 = Ticket.lookup(id: ticket2.id)
-    assert_equal('test auto reply 2', ticket2.title, 'ticket2.title verify')
-    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
-    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
-    assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
-    article1 = ticket2.articles.last
-    assert_match('Thanks for your inquiry (test auto reply 2)!', article1.subject)
-    assert_equal('text/html', article1.content_type)
-
-    ticket2.priority = Ticket::Priority.lookup(name: '2 normal')
-    ticket2.save
-
+    article_p = Ticket::Article.create(
+      ticket_id: ticket_p.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message note',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
     Observer::Transaction.commit
+    assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
+    assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
+    assert_equal('new', ticket_p.state.name, 'ticket_p.state verify')
+    assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
+    assert_equal(6, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    assert_equal('test auto reply 2', ticket2.title, 'ticket2.title verify')
-    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
-    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
-    assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
-    assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
+    article_p = ticket_p.articles.last
+    assert_match('Thanks for your follow up (aaäöüßad asd)', article_p.subject)
+    assert_match('Zammad <zammad@localhost>', article_p.from)
+    assert_no_match('config\.', article_p.body)
+    assert_match('http://zammad.example.com', article_p.body)
+    assert_no_match('ticket.', article_p.body)
+    assert_match(ticket_p.number, article_p.body)
+    assert_equal('text/html', article_p.content_type)
+
+    ticket_p.state = Ticket::State.lookup(name: 'open')
+    ticket_p.save
+    article_p = Ticket::Article.create(
+      ticket_id: ticket_p.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message note',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Observer::Transaction.commit
+    assert_equal('aaäöüßad asd', ticket_p.title, 'ticket_p.title verify')
+    assert_equal('Users', ticket_p.group.name, 'ticket_p.group verify')
+    assert_equal('open', ticket_p.state.name, 'ticket_p.state verify')
+    assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
+    assert_equal(8, ticket_p.articles.count, 'ticket_p.articles verify')
+
+    article_p = ticket_p.articles.last
+    assert_match('Thanks for your follow up (aaäöüßad asd)', article_p.subject)
+    assert_match('Zammad <zammad@localhost>', article_p.from)
+    assert_no_match('config\.', article_p.body)
+    assert_match('http://zammad.example.com', article_p.body)
+    assert_no_match('ticket.', article_p.body)
+    assert_match(ticket_p.number, article_p.body)
+    assert_equal('text/html', article_p.content_type)
 
     # process mail without Precedence header
     content = IO.binread('test/fixtures/ticket_trigger/mail1.box')

@@ -23,7 +23,7 @@ class Index extends App.ControllerContent
           { name: 'New Scheduler', 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
-      #large: true
+      large: true
     )
 
 App.Config.set('Job', { prio: 3400, name: 'Scheduler', parent: '#manage', target: '#manage/job', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
