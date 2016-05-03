@@ -1,6 +1,6 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.ticket_selector
-  @defaults: (attribute) ->
+  @defaults: (attribute = {}) ->
     defaults = ['ticket.state_id']
 
     groups =
@@ -38,8 +38,8 @@ class App.UiElement.ticket_selector
         tag: 'select'
         null: false
         options:
-          create: 'created'
-          update: 'updated'
+          create: 'Created'
+          update: 'Updated'
         operator: ['is', 'is not']
 
     for groupKey, groupMeta of groups

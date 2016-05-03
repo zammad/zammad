@@ -15,7 +15,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
         'notification.email' => {
           'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
           'recipient' => 'ticket_customer',
-          'subject' => 'Thanks for your inquery (#{ticket.title})!',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
         },
         'ticket.priority_id' => {
           'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
@@ -78,7 +78,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
     article1 = ticket1.articles.last
-    assert_match('Thanks for your inquery (some <b>title</b>  äöüß)!', article1.subject)
+    assert_match('Thanks for your inquiry (some <b>title</b>  äöüß)!', article1.subject)
     assert_match('Braun<br>some &lt;b&gt;title&lt;/b&gt;', article1.body)
     assert_equal('text/html', article1.content_type)
 
