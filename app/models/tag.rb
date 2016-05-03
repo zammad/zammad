@@ -13,11 +13,15 @@ class Tag < ApplicationModel
 
     # lookups
     if data[:object]
-      tag_object_id = tag_object_lookup( data[:object] )
+      tag_object_id = tag_object_lookup(data[:object])
     end
     if data[:item]
-      tag_item_id = tag_item_lookup( data[:item] )
+      tag_item_id = tag_item_lookup(data[:item].strip)
     end
+
+    # return in duplicate
+    current_tags = tag_list(data)
+    return true if current_tags.include?(data[:item].downcase.strip)
 
     # create history
     Tag.create(
@@ -33,10 +37,10 @@ class Tag < ApplicationModel
 
     # lookups
     if data[:object]
-      tag_object_id = tag_object_lookup( data[:object] )
+      tag_object_id = tag_object_lookup(data[:object])
     end
     if data[:item]
-      tag_item_id = tag_item_lookup( data[:item] )
+      tag_item_id = tag_item_lookup(data[:item].strip)
     end
 
     # create history
@@ -49,80 +53,76 @@ class Tag < ApplicationModel
     true
   end
 
-  def self.tag_list( data )
-    tag_object_id_requested = tag_object_lookup( data[:object] )
+  def self.tag_list(data)
+    tag_object_id_requested = tag_object_lookup(data[:object])
     tag_search = Tag.where(
       tag_object_id: tag_object_id_requested,
       o_id: data[:o_id],
     )
     tags = []
     tag_search.each {|tag|
-      tags.push tag_item_lookup_id( tag.tag_item_id )
+      tags.push tag_item_lookup_id(tag.tag_item_id)
     }
     tags
   end
 
-  def self.tag_item_lookup_id( id )
+  def self.tag_item_lookup_id(id)
 
     # use cache
-    return @@cache_item[ id ] if @@cache_item[ id ]
+    return @@cache_item[id] if @@cache_item[id]
 
     # lookup
     tag_item = Tag::Item.find(id)
-    @@cache_item[ id ] = tag_item.name
+    @@cache_item[id] = tag_item.name
     tag_item.name
   end
 
-  def self.tag_item_lookup( name )
+  def self.tag_item_lookup(name)
 
     name = name.downcase
 
     # use cache
-    return @@cache_item[ name ] if @@cache_item[ name ]
+    return @@cache_item[name] if @@cache_item[name]
 
     # lookup
-    tag_item = Tag::Item.find_by( name: name )
+    tag_item = Tag::Item.find_by(name: name)
     if tag_item
-      @@cache_item[ name ] = tag_item.id
+      @@cache_item[name] = tag_item.id
       return tag_item.id
     end
 
     # create
-    tag_item = Tag::Item.create(
-      name: name
-    )
-    @@cache_item[ name ] = tag_item.id
+    tag_item = Tag::Item.create(name: name)
+    @@cache_item[name] = tag_item.id
     tag_item.id
   end
 
-  def self.tag_object_lookup_id( id )
+  def self.tag_object_lookup_id(id)
 
     # use cache
-    return @@cache_object[ id ] if @@cache_object[ id ]
+    return @@cache_object[id] if @@cache_object[id]
 
     # lookup
     tag_object = Tag::Object.find(id)
-    @@cache_object[ id ] = tag_object.name
+    @@cache_object[id] = tag_object.name
     tag_object.name
   end
 
-  def self.tag_object_lookup( name )
+  def self.tag_object_lookup(name)
 
     # use cache
-    return @@cache_object[ name ] if @@cache_object[ name ]
+    return @@cache_object[name] if @@cache_object[name]
 
     # lookup
-    tag_object = Tag::Object.find_by( name: name )
+    tag_object = Tag::Object.find_by(name: name)
     if tag_object
-      @@cache_object[ name ] = tag_object.id
+      @@cache_object[name] = tag_object.id
       return tag_object.id
     end
 
     # create
-    tag_object = Tag::Object.create(
-      name: name
-    )
-    @@cache_object[ name ] = tag_object.id
+    tag_object = Tag::Object.create(name: name)
+    @@cache_object[name] = tag_object.id
     tag_object.id
   end
 

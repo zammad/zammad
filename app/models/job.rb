@@ -44,21 +44,7 @@ class Job < ApplicationModel
           # use transaction
           ActiveRecord::Base.transaction do
             UserInfo.current_user_id = 1
-
-            logger.debug "Perform job #{job.perform.inspect} in Ticket.find(#{ticket.id})"
-            changed = false
-            job.perform.each do |key, value|
-              (object_name, attribute) = key.split('.', 2)
-              raise "Unable to update object #{object_name}.#{attribute}, only can update tickets!" if object_name != 'ticket'
-
-              next if ticket[attribute].to_s == value['value'].to_s
-              changed = true
-
-              ticket[attribute] = value['value']
-              logger.debug "set #{object_name}.#{attribute} = #{value['value'].inspect}"
-            end
-            next if !changed
-            ticket.save
+            ticket.perform_changes(job.perform, 'job')
 
             # execute object transaction
             Observer::Transaction.commit(

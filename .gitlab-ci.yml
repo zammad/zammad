@@ -167,6 +167,17 @@ job_integration_clearbit:
     - ruby -I test test/integration/clearbit_test.rb
     - rake db:drop
 
+job_integration_sipgate:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test test/integration/sipgate_controller_test.rb
+    - rake db:drop
+
 job_integration_es_mysql:
   stage: test
   tags:

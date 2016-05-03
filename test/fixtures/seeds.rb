@@ -1,6 +1,9 @@
 # encoding: utf-8
 # inital data set as extention to db/seeds.rb
 
+Trigger.destroy_all
+Job.destroy_all
+
 # create email address and apply it to all groups
 channel_id = nil
 channel = Channel.find_by(area: 'Email::Notification', active: true)

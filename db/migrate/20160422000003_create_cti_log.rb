@@ -12,7 +12,8 @@ class CreateCtiLog < ActiveRecord::Migration
       t.timestamp :start,                             null: true
       t.timestamp :end,                               null: true
       t.boolean   :done,                              null: false, default: true
-      t.timestamps                                    null: false
+      t.text :preferences,            limit: 500.kilobytes + 1, null: true
+      t.timestamps null: false
     end
     add_index :cti_logs, [:call_id], unique: true
     add_index :cti_logs, [:direction]
@@ -46,7 +47,7 @@ class CreateCtiLog < ActiveRecord::Migration
     Setting.create_if_not_exists(
       title: 'Define transaction backend.',
       name: '9100_cti_caller_id_detection',
-      area: 'Transaction::Backend',
+      area: 'Transaction::Backend::Async',
       description: 'Define the transaction backend which detects caller ids in objects and store them for cti lookups.',
       options: {},
       state: 'Transaction::CtiCallerIdDetection',

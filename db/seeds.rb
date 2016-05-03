@@ -1770,9 +1770,18 @@ Setting.create_if_not_exists(
   frontend: false
 )
 Setting.create_if_not_exists(
+  title: 'Define sync transaction backend.',
+  name: '0100_trigger',
+  area: 'Transaction::Backend::Sync',
+  description: 'Define the transaction backend to execute triggers.',
+  options: {},
+  state: 'Transaction::Trigger',
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'Define transaction backend.',
   name: '0100_notification',
-  area: 'Transaction::Backend',
+  area: 'Transaction::Backend::Async',
   description: 'Define the transaction backend to send agent notifications.',
   options: {},
   state: 'Transaction::Notification',
@@ -1781,7 +1790,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Define transaction backend.',
   name: '1000_signature_detection',
-  area: 'Transaction::Backend',
+  area: 'Transaction::Backend::Async',
   description: 'Define the transaction backend to detect customers signature in email.',
   options: {},
   state: 'Transaction::SignatureDetection',
@@ -1790,7 +1799,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Define transaction backend.',
   name: '6000_slack_webhook',
-  area: 'Transaction::Backend',
+  area: 'Transaction::Backend::Async',
   description: 'Define the transaction backend which posts messages to (http://www.slack.com).',
   options: {},
   state: 'Transaction::Slack',
@@ -1900,7 +1909,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Define transaction backend.',
   name: '9000_clearbit_enrichment',
-  area: 'Transaction::Backend',
+  area: 'Transaction::Backend::Async',
   description: 'Define the transaction backend which will enrich customer and organization informations from (http://www.clearbit.com).',
   options: {},
   state: 'Transaction::ClearbitEnrichment',
@@ -1909,7 +1918,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Define transaction backend.',
   name: '9100_cti_caller_id_detection',
-  area: 'Transaction::Backend',
+  area: 'Transaction::Backend::Async',
   description: 'Define the transaction backend which detects caller ids in objects and store them for cti lookups.',
   options: {},
   state: 'Transaction::CtiCallerIdDetection',
@@ -3845,6 +3854,81 @@ Scheduler.create_or_update(
   active: true,
   updated_by_id: 1,
   created_by_id: 1,
+)
+
+Trigger.create_or_update(
+  name: 'auto reply (on new tickets)',
+  condition: {
+    'ticket.action' => {
+      'operator' => 'is',
+      'value' => 'create',
+    },
+    'ticket.state_id' => {
+      'operator' => 'is not',
+      'value' => '4',
+    },
+    'article.type_id' => {
+      'operator' => 'is',
+      'value' => [
+        Ticket::Article::Type.lookup(name: 'email').id,
+        Ticket::Article::Type.lookup(name: 'phone').id,
+        Ticket::Article::Type.lookup(name: 'web').id,
+      ],
+    },
+  },
+  perform: {
+    'notification.email' => {
+      'body' => '<p>Your request (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+<br/>
+<p>To provide additional information, please reply to this email or click on the following link:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</p>
+<br/>
+<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+      'recipient' => 'ticket_customer',
+      'subject' => 'Thanks for your inquiry (#{ticket.title})',
+    },
+  },
+  active: true,
+  created_by_id: 1,
+  updated_by_id: 1,
+)
+Trigger.create_or_update(
+  name: 'auto reply (on follow up of tickets)',
+  condition: {
+    'ticket.action' => {
+      'operator' => 'is',
+      'value' => 'update',
+    },
+    'article.sender_id' => {
+      'operator' => 'is',
+      'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
+    },
+    'article.type_id' => {
+      'operator' => 'is',
+      'value' => [
+        Ticket::Article::Type.lookup(name: 'email').id,
+        Ticket::Article::Type.lookup(name: 'phone').id,
+        Ticket::Article::Type.lookup(name: 'web').id,
+      ],
+    },
+  },
+  perform: {
+    'notification.email' => {
+      'body' => '<p>Your follow up for (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+<br/>
+<p>To provide additional information, please reply to this email or click on the following link:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</p>
+<br/>
+<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+      'recipient' => 'ticket_customer',
+      'subject' => 'Thanks for your follow up (#{ticket.title})',
+    },
+  },
+  active: true,
+  created_by_id: 1,
+  updated_by_id: 1,
 )
 
 # reset primary key sequences

@@ -457,6 +457,9 @@ condition example
       elsif selector[0] == 'owner'
         tables += ', users owners'
         query += 'tickets.owner_id = owners.id'
+      elsif selector[0] == 'article'
+        tables += ', ticket_articles articles'
+        query += 'tickets.id = articles.ticket_id'
       else
         raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
@@ -626,6 +629,169 @@ condition example
       end
     }
     [query, bind_params, tables]
+  end
+
+=begin
+
+perform changes on ticket
+
+  ticket.perform_changes({}, 'trigger', item)
+
+=end
+
+  def perform_changes(perform, log, item = nil)
+    logger.debug "Perform #{log} #{perform.inspect} on Ticket.find(#{id})"
+    changed = false
+    perform.each do |key, value|
+      (object_name, attribute) = key.split('.', 2)
+      raise "Unable to update object #{object_name}.#{attribute}, only can update tickets and send notifications!" if object_name != 'ticket' && object_name != 'notification'
+
+      # send notification
+      if object_name == 'notification'
+        recipients = []
+        if value['recipient'] == 'ticket_customer'
+          recipients.push User.lookup(id: customer_id)
+        elsif value['recipient'] == 'ticket_owner'
+          recipients.push User.lookup(id: owner_id)
+        elsif value['recipient'] == 'ticket_agents'
+          recipients = recipients.concat(agent_of_group)
+        else
+          logger.error "Unknown email notification recipient '#{value['recipient']}'"
+          next
+        end
+        recipient_string = ''
+        recipient_already = {}
+        recipients.each {|user|
+
+          # send notifications only to email adresses
+          next if !user.email
+          next if user.email !~ /@/
+
+          # do not sent notifications to this recipients
+          next if user.email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
+
+          email = user.email.downcase.strip
+          next if recipient_already[email]
+          recipient_already[email] = true
+          if recipient_string != ''
+            recipient_string += ', '
+          end
+          recipient_string += email
+        }
+        next if recipient_string == ''
+        group = self.group
+        next if !group
+        email_address = group.email_address
+        next if !email_address
+        next if !email_address.channel_id
+
+        # check if notification should be send because of customer emails
+        if item && item[:article_id]
+          article = Ticket::Article.lookup(id: item[:article_id])
+          if article
+            type = Ticket::Article::Type.lookup(id: article.type_id)
+            sender = Ticket::Article::Sender.lookup(id: article.sender_id)
+            if sender && sender.name == 'Customer' && type && type.name == 'email'
+
+              # get attachment
+              list = Store.list(
+                object: 'Ticket::Article::Mail',
+                o_id: article.id,
+              )
+              if list && list[0]
+                file = Store.find(list[0].id)
+                if file
+                  content = file.content
+                  if content
+                    parser = Channel::EmailParser.new
+                    mail = parser.parse(content)
+
+                    # check headers
+                    next if mail['x-loop'.to_sym] =~ /yes/i
+                    next if mail['precedence'.to_sym] =~ /bulk/i
+                    next if mail['auto-submitted'.to_sym] =~ /auto-generated/i
+                    next if mail['x-auto-response-suppress'.to_sym] =~ /yes/i
+                  end
+                end
+              end
+            end
+          end
+        end
+
+        objects = {
+          ticket: self,
+          article: articles.last,
+          #recipient: user,
+          #changes: changes,
+        }
+
+        # get subject
+        value['subject'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", false %>')
+        value['subject'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", false %>')
+        subject = NotificationFactory::Mailer.template(
+          templateInline: value['subject'],
+          locale: 'en-en',
+          objects: objects,
+        )
+        subject = subject_build(subject)
+
+        value['body'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", true %>')
+        value['body'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", true %>')
+        body = NotificationFactory::Mailer.template(
+          templateInline: value['body'],
+          locale: 'en-en',
+          objects: objects,
+        )
+        Ticket::Article.create(
+          ticket_id: id,
+          to: recipient_string,
+          subject: subject,
+          content_type: 'text/html',
+          body: body,
+          internal: false,
+          sender: Ticket::Article::Sender.find_by(name: 'System'),
+          type: Ticket::Article::Type.find_by(name: 'email'),
+          updated_by_id: 1,
+          created_by_id: 1,
+        )
+        next
+      end
+
+      # update tags
+      if key == 'ticket.tags'
+        next if value['value'].empty?
+        tags = value['value'].split(/,/)
+        if value['operator'] == 'add'
+          tags.each {|tag|
+            Tag.tag_add(
+              object: 'Ticket',
+              o_id: id,
+              item: tag,
+            )
+          }
+        elsif value['operator'] == 'remove'
+          tags.each {|tag|
+            Tag.tag_remove(
+              object: 'Ticket',
+              o_id: id,
+              item: tag,
+            )
+          }
+        else
+          logger.error "Unknown #{attribute} operator #{value['operator']}"
+        end
+        next
+      end
+
+      # update ticket
+      next if self[attribute].to_s == value['value'].to_s
+      changed = true
+
+      self[attribute] = value['value']
+      logger.debug "set #{object_name}.#{attribute} = #{value['value'].inspect}"
+    end
+    return if !changed
+    save
   end
 
 =begin

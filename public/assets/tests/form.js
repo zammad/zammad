@@ -474,7 +474,6 @@ test("form dependend fields check", function() {
   var test_params = {
     input1: "",
     input2: "some used default",
-    input3: undefined,
     select1: "false",
     select2: "false",
     selectmulti2: [ "true", "false" ],
@@ -503,7 +502,6 @@ test("form dependend fields check", function() {
   params = App.ControllerForm.params(el)
   test_params = {
     input1: "",
-    input2: undefined,
     input3: "some used default",
     select1: "true",
     select2: "false",
@@ -853,7 +851,6 @@ test("form required_if + shown_if", function() {
     input1: "some not used default33",
     input2: "some name66",
     input3: "some name77",
-    input4: undefined,
     active: true,
   };
   params = App.ControllerForm.params(el)
@@ -868,9 +865,6 @@ test("form required_if + shown_if", function() {
   el.find('[name="{boolean}active"]').val('false').trigger('change')
   test_params = {
     input1: "some not used default33",
-    input2: undefined,
-    input3: undefined,
-    input4: undefined,
     active: false,
   };
   params = App.ControllerForm.params(el)
@@ -886,7 +880,6 @@ test("form required_if + shown_if", function() {
     input1: "some not used default33",
     input2: "some name66",
     input3: "some name77",
-    input4: undefined,
     active: true,
   };
   params = App.ControllerForm.params(el)

@@ -10,7 +10,6 @@ class Index extends App.ControllerContent
       id: @id
       genericObject: 'Trigger'
       defaultSortBy: 'name'
-      #groupBy: 'role'
       pageData:
         title: 'Triggers'
         home: 'triggers'
@@ -24,7 +23,7 @@ class Index extends App.ControllerContent
           { name: 'New Trigger', 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
-      #large: true
+      large: true
     )
 
 App.Config.set('Trigger', { prio: 3300, name: 'Trigger', parent: '#manage', target: '#manage/trigger', controller: Index, role: ['Admin'] }, 'NavBarAdmin')

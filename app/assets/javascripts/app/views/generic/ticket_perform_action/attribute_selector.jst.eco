@@ -1,0 +1,15 @@
+<div class="flex horizontal">
+  <div class="controls">
+    <div class="u-positionOrigin js-operator">
+      <select></select>
+      <%- @Icon('arrow-down', 'dropdown-arrow') %>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="u-positionOrigin js-preCondition">
+      <select></select>
+      <%- @Icon('arrow-down', 'dropdown-arrow') %>
+    </div>
+  </div>
+  <div class="controls js-value"></div>
+</div>

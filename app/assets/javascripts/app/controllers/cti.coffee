@@ -123,25 +123,21 @@ class App.CTI extends App.Controller
       "#{mins}:#{secs}"
 
     for item in @list
+      item.status_class = ''
+
       if item.state is 'newCall'
         item.state_human = 'ringing'
+        item.status_class = 'neutral'
       else if item.state is 'answer'
         item.state_human = 'connected'
+        item.status_class = 'ok'
       else if item.state is 'hangup'
-        if item.comment is 'cancel'
-          item.state_human = 'not reached'
-        else if item.comment is 'noAnswer'
-          item.state_human = 'not reached'
-        else if item.comment is 'congestion'
-          item.state_human = 'not reached'
-        else if item.comment is 'busy'
-          item.state_human = 'busy'
-        else if item.comment is 'notFound'
-          item.state_human = 'not exist'
-        else if item.comment is 'normalClearing'
-          item.state_human = ''
-        else
-          item.state_human = item.comment
+        item.state_human = switch item.comment
+          when 'cancel', 'noAnswer', 'congestion' then 'not reached'
+          when 'busy' then 'busy'
+          when 'notFound' then 'not exist'
+          when 'normalClearing' then ''
+          else item.comment
       else
         item.state_human = item.state
         if item.comment
