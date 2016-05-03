@@ -914,15 +914,11 @@ th.align-right {
 
 .table > tbody > tr > td {
   padding: 10px 10px 8px;
-  border: none;
-  box-shadow: 0 1px rgba(0,0,0,.03);
+  border-color: hsl(0,0%,95%);
 }
 
 .table-hover > tbody > tr:hover > td {
   background: white;
-  box-shadow: 
-    0 1px rgba(0,0,0,.03),
-    0 -1px rgba(0,0,0,.03);
 }
  
 .table-hover > tbody > tr:hover > th {
@@ -964,7 +960,11 @@ th.align-right {
 }
 
 .table tr.is-grayed-out {
-  opacity: 0.33;
+  color: hsl(120,1%,77%);
+  
+  .icon {
+    opacity: 0.33;
+  }
 }
 
 .table .icon-draggable,

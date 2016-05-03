@@ -17,13 +17,11 @@
         <% for item in @list: %>
         <tr <% if item.state is 'hangup' && item.done: %>class="is-grayed-out"<% end %> data-id="<%- item.id %>">
           <td class="table-checkbox" style="vertical-align: middle">
-            <% if item.state is 'hangup': %>
-            <label class="checkbox-replacement">
-              <input type="checkbox" class="js-check" <% if item.done: %>checked<% end %>>
+            <label class="checkbox-replacement<% if item.state isnt 'hangup': %> is-disabled<% end %>">
+              <input type="checkbox" class="js-check"<% if item.done: %> checked<% end %><% if item.state isnt 'hangup': %> disabled<% end %>>
               <%- @Icon('checkbox', 'icon-unchecked') %>
               <%- @Icon('checkbox-checked', 'icon-checked') %>
             </label>
-            <% end %>
           </td>
           <td>
             <% shown = false %>

@@ -130,7 +130,7 @@ class App.CTI extends App.Controller
         item.status_class = 'neutral'
       else if item.state is 'answer'
         item.state_human = 'connected'
-        item.status_class = 'pulsate-animation ok'
+        item.status_class = 'ok'
       else if item.state is 'hangup'
         item.state_human = switch item.comment
           when 'cancel', 'noAnswer', 'congestion' then 'not reached'
