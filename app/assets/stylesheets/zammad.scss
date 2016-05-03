@@ -6999,6 +6999,17 @@ output {
       opacity: 0.33;
     }
   }
+
+  &.settings-list--placeholder {
+    th {
+      text-align: center;
+      border-bottom: 1px solid hsl(198, 18%, 86%);
+      border-radius: 4px;
+    }
+    td {
+      height: 40px;
+    }
+  }
   
   th, td {
     vertical-align: top;

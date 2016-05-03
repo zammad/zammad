@@ -2,7 +2,12 @@
 
   <h2><%- @T('Recent logs') %></h2>
   <div class="settings-entry">
-    <table class="settings-list" style="width: 100%;">
+<% if !@records.length: %>
+  <table class="settings-list settings-list--stretch settings-list--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% else: %>
+    <table class="settings-list settings-list--stretch">
       <thead>
         <tr>
           <th width="10%"><%- @T('Direction') %>
@@ -18,4 +23,5 @@
 <% end %>
       </tbody>
     </table>
+<% end %>
   </div>
