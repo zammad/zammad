@@ -26,13 +26,39 @@ class Observer::Transaction < ActiveRecord::Observer
     # reset buffer
     EventBuffer.reset('transaction')
 
+    # get asyn backends
+    sync_backends = []
+    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each {|setting|
+      backend = Setting.get(setting.name)
+      sync_backends.push Kernel.const_get(backend)
+    }
+
     # get uniq objects
     list_objects = get_uniq_changes(list)
     list_objects.each {|_object, objects|
       objects.each {|_id, item|
+
+        # execute sync backends
+        sync_backends.each {|backend|
+          execute_singel_backend(backend, item, params)
+        }
+
+        # execute async backends
         Delayed::Job.enqueue(Transaction::BackgroundJob.new(item, params))
       }
     }
+  end
+
+  def self.execute_singel_backend(backend, item, params)
+    Rails.logger.error "Execute singel backend #{backend}"
+    begin
+      UserInfo.current_user_id = nil
+      integration = backend.new(item, params)
+      integration.perform
+    rescue => e
+      Rails.logger.error 'ERROR: ' + backend.inspect
+      Rails.logger.error 'ERROR: ' + e.inspect
+    end
   end
 
 =begin

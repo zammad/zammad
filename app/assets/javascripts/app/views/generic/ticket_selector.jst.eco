@@ -30,7 +30,7 @@
     </div>
   </div>
 </div>
-<div class="js-preview">
+<div class="js-preview <% if @attribute.preview is false: %>hide<% end %>">
   <h3><%- @T('Preview') %><span class="subtitle js-previewCounterContainer hide"> <span class="u-highlight js-previewCounter">?</span> <%- @T('matches') %></span> <span class="tiny loading icon js-previewLoader hide" style="margin-left: 3px;"></span></h3>
   <div class="js-previewTable"></div>
 </div>

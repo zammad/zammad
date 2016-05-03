@@ -10,7 +10,6 @@ class Index extends App.ControllerContent
       id: @id
       genericObject: 'Trigger'
       defaultSortBy: 'name'
-      #groupBy: 'role'
       pageData:
         title: 'Triggers'
         home: 'triggers'

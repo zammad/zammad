@@ -410,8 +410,8 @@ class App.ControllerForm extends App.Controller
     for key in array
 
       # check if item is-hidden and should not be used
-      if lookupForm.find('[name="' + key.name + '"]').hasClass('is-hidden')
-        param[key.name] = undefined
+      if lookupForm.find('[name="' + key.name + '"]').hasClass('is-hidden') || lookupForm.find('div[data-name="' + key.name + '"]').hasClass('is-hidden')
+        delete param[key.name]
         continue
 
       # collect all params, push it to an array if already exists

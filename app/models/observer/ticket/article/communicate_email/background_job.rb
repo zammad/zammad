@@ -19,6 +19,12 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
 
     channel = ticket.group.email_address.channel
 
+    notification = false
+    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
+    if sender['name'] == 'System'
+      notification = true
+    end
+
     # get linked channel and send
     message = channel.deliver(
       {
@@ -32,7 +38,8 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         content_type: record.content_type,
         body: record.body,
         attachments: record.attachments
-      }
+      },
+      notification
     )
 
     # store mail plain

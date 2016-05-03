@@ -29,7 +29,7 @@ returns
 
     # right position
     if Setting.get('ticket_hook_position') == 'right'
-      return subject + " [#{ticket_hook}#{ticket_hook_divider}#{number}] "
+      return subject + " [#{ticket_hook}#{ticket_hook_divider}#{number}]"
     end
 
     # left position

@@ -1,6 +1,6 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.ticket_perform_action
-  @defaults: ->
+  @defaults: (attribute) ->
     defaults = ['ticket.state_id']
 
     groups =
@@ -8,31 +8,40 @@ class App.UiElement.ticket_perform_action
         name: 'Ticket'
         model: 'Ticket'
 
+    if attribute.notification
+      groups.notification =
+        name: 'Notification'
+        model: 'Notification'
+
     # megre config
     elements = {}
     for groupKey, groupMeta of groups
-      for row in App[groupMeta.model].configure_attributes
+      if !App[groupMeta.model]
+        elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
+      else
 
-        # ignore passwords and relations
-        if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
+        for row in App[groupMeta.model].configure_attributes
 
-          # ignore readonly attributes
-          if !row.readonly
-            config = _.clone(row)
-            if config.tag is 'tag'
-              config.operator = ['add', 'remove']
-            elements["#{groupKey}.#{config.name}"] = config
+          # ignore passwords and relations
+          if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
+
+            # ignore readonly attributes
+            if !row.readonly
+              config = _.clone(row)
+              if config.tag is 'tag'
+                config.operator = ['add', 'remove']
+              elements["#{groupKey}.#{config.name}"] = config
 
     [defaults, groups, elements]
 
   @render: (attribute, params = {}) ->
 
-    [defaults, groups, elements] = @defaults()
+    [defaults, groups, elements] = @defaults(attribute)
 
     selector = @buildAttributeSelector(groups, elements)
 
     # return item
-    item = $( App.view('generic/ticket_perform_action')( attribute: attribute ) )
+    item = $( App.view('generic/ticket_perform_action/index')( attribute: attribute ) )
     item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
@@ -65,8 +74,6 @@ class App.UiElement.ticket_perform_action
       selectorExists = false
       for groupAndAttribute, meta of params[attribute.name]
         selectorExists = true
-        value = meta.value
-        operator = meta.operator
 
         # get selector rows
         elementFirst = item.find('.js-filterElement').first()
@@ -149,7 +156,19 @@ class App.UiElement.ticket_perform_action
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
 
-    @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    if groupAndAttribute is 'notification.email'
+      elementRow.find('.js-setAttribute').html('')
+      @buildRecipientList(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    else
+      elementRow.find('.js-setNotification').html('')
+      if !elementRow.find('.js-setAttribute div').get(0)
+        attributeSelectorElement = $( App.view('generic/ticket_perform_action/attribute_selector')(
+          attribute: attribute
+          name: name
+          meta: meta || {}
+        ))
+        elementRow.find('.js-setAttribute').html(attributeSelectorElement)
+      @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
@@ -160,9 +179,7 @@ class App.UiElement.ticket_perform_action
     name = "#{attribute.name}::#{groupAndAttribute}::operator"
 
     selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
-
     attributeConfig = elements[groupAndAttribute]
-
     if !attributeConfig.operator
       elementRow.find('.js-operator').addClass('hide')
     else
@@ -282,7 +299,36 @@ class App.UiElement.ticket_perform_action
 
     elementRow.find('.js-value').removeClass('hide').html(item)
 
+  @buildRecipientList: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 
+    return if elementRow.find('.js-setNotification .js-body').get(0)
+
+    options =
+      'ticket_owner': 'Owner'
+      'ticket_customer': 'Customer'
+      'ticket_agents': 'All Agents'
+
+    name = "#{attribute.name}::notification.email"
+
+    selection = $("<select class=\"form-control\" name=\"#{name}::recipient\" ></select>")
+    for key, value of options
+      selected = ''
+      if key is meta.recipient
+        selected = 'selected="selected"'
+      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
+
+    notificationElement = $( App.view('generic/ticket_perform_action/notification_email')(
+      attribute: attribute
+      name: name
+      meta: meta || {}
+    ))
+    notificationElement.find('.js-recipient select').replaceWith(selection)
+    notificationElement.find('.js-body div[contenteditable="true"]').ce(
+      mode: 'richtext'
+      placeholder: 'message'
+      maxlength: 2000
+    )
+    elementRow.find('.js-setNotification').html(notificationElement)
 
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')

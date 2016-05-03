@@ -1,12 +1,15 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.ticket_selector
-  @defaults: ->
+  @defaults: (attribute) ->
     defaults = ['ticket.state_id']
 
     groups =
       ticket:
         name: 'Ticket'
         model: 'Ticket'
+      #article:
+      #  name: 'Article'
+      #  model: 'TicketArticle'
       customer:
         name: 'Customer'
         model: 'User'
@@ -25,13 +28,25 @@ class App.UiElement.ticket_selector
       '_id$': ['is', 'is not']
       '_ids$': ['is', 'is not']
 
-    # megre config
+    # merge config
     elements = {}
+
+    if attribute.action
+      elements['ticket.action'] =
+        name: 'action'
+        display: 'Action'
+        tag: 'select'
+        null: false
+        options:
+          create: 'created'
+          update: 'updated'
+        operator: ['is', 'is not']
+
     for groupKey, groupMeta of groups
       for row in App[groupMeta.model].configure_attributes
 
         # ignore passwords and relations
-        if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
+        if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids' && row.searchable isnt false
           config = _.clone(row)
           for operatorRegEx, operator of operators_type
             myRegExp = new RegExp(operatorRegEx, 'i')
@@ -47,15 +62,12 @@ class App.UiElement.ticket_selector
 
   @render: (attribute, params = {}) ->
 
-    [defaults, groups, elements] = @defaults()
+    [defaults, groups, elements] = @defaults(attribute)
 
     selector = @buildAttributeSelector(groups, elements)
 
-    search = =>
-      @preview(item)
-
     # return item
-    item = $( App.view('generic/ticket_selector')( attribute: attribute ) )
+    item = $( App.view('generic/ticket_selector')(attribute: attribute) )
     item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
@@ -65,7 +77,8 @@ class App.UiElement.ticket_selector
       element.after(elementClone)
       elementClone.find('.js-attributeSelector select').trigger('change')
       @updateAttributeSelectors(item)
-      @preview(item)
+      if attribute.preview isnt false
+        @preview(item)
     )
 
     # remove filter
@@ -73,7 +86,8 @@ class App.UiElement.ticket_selector
       return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
       @updateAttributeSelectors(item)
-      @preview(item)
+      if attribute.preview isnt false
+        @preview(item)
     )
 
     # build inital params
@@ -108,23 +122,6 @@ class App.UiElement.ticket_selector
         elementLast.after(elementClone)
       item.find('.js-filterElement').first().remove()
 
-    triggerSearch = ->
-      item.find('.js-previewCounterContainer').addClass('hide')
-      item.find('.js-previewLoader').removeClass('hide')
-      App.Delay.set(
-        search,
-        600,
-        'preview',
-      )
-
-    # bind for preview
-    item.on('change', 'select.form-control', (e) ->
-      triggerSearch()
-    )
-    item.on('change keyup', 'input.form-control', (e) ->
-      triggerSearch()
-    )
-
     # change attribute selector
     item.find('.js-attributeSelector select').bind('change', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
@@ -139,6 +136,27 @@ class App.UiElement.ticket_selector
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
     )
+
+    # bind for preview
+    if attribute.preview isnt false
+      search = =>
+        @preview(item)
+
+      triggerSearch = ->
+        item.find('.js-previewCounterContainer').addClass('hide')
+        item.find('.js-previewLoader').removeClass('hide')
+        App.Delay.set(
+          search,
+          600,
+          'preview',
+        )
+
+      item.on('change', 'select', (e) ->
+        triggerSearch()
+      )
+      item.on('change keyup', 'input', (e) ->
+        triggerSearch()
+      )
 
     item
 

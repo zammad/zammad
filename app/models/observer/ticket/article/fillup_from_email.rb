@@ -41,7 +41,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
       raise "No email address found for group '#{ticket.group.name}'"
     end
     system_sender = "#{email_address.realname} <#{email_address.email}>"
-    if Setting.get('ticket_define_email_from') == 'AgentNameSystemAddressName'
+    if record.created_by_id != 1 && Setting.get('ticket_define_email_from') == 'AgentNameSystemAddressName'
       seperator = Setting.get('ticket_define_email_from_seperator')
       sender    = User.find(record.created_by_id)
       record.from = "#{sender.firstname} #{sender.lastname} #{seperator} #{system_sender}"

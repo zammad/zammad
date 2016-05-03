@@ -268,7 +268,7 @@ test('form checks', function() {
     model: {
       configure_attributes: [
         { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', null: true },
-        { name: 'executions', display: 'Executions', tag: 'ticket_perform_action', null: true },
+        { name: 'executions', display: 'Executions', tag: 'ticket_perform_action', null: true, notification: true },
       ]
     },
     autofocus: true
@@ -290,7 +290,7 @@ test('form checks', function() {
   deepEqual(params, test_params, 'form param check');
 
   /* with params or defaults */
-  $('#forms').append('<hr><h1>form time check</h1><form id="form3"></form>')
+  $('#forms').append('<hr><h1>form 3</h1><form id="form3"></form>')
   var el = $('#form3')
   var defaults = {
     condition: {
@@ -342,6 +342,11 @@ test('form checks', function() {
         operator: 'remove',
         value: 'tag1, tag2',
       },
+      'notification.email': {
+        recipient: 'ticket_customer',
+        subject: 'some subject',
+        body: "some<br>\nbody",
+      },
     },
   }
   new App.ControllerForm({
@@ -349,7 +354,7 @@ test('form checks', function() {
     model:     {
       configure_attributes: [
         { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', null: true },
-        { name: 'executions', display: 'Executions', tag: 'ticket_perform_action', null: true },
+        { name: 'executions', display: 'Executions', tag: 'ticket_perform_action', null: true, notification: true },
       ]
     },
     params: defaults,
@@ -409,6 +414,11 @@ test('form checks', function() {
         operator: 'remove',
         value: 'tag1, tag2',
       },
+      'notification.email': {
+        recipient: 'ticket_customer',
+        subject: 'some subject',
+        body: "some<br>\nbody",
+      },
     },
   }
   deepEqual(params, test_params, 'form param check')
@@ -464,12 +474,172 @@ test('form checks', function() {
         operator: 'remove',
         value: 'tag1, tag2',
       },
+      'notification.email': {
+        recipient: 'ticket_customer',
+        subject: 'some subject',
+        body: "some<br>\nbody",
+      },
     },
   }
   deepEqual(params, test_params, 'form param check')
 
-  //deepEqual(el.find('[name="times::days"]').val(), ['mon', 'wed'], 'check times::days value')
-  //equal(el.find('[name="times::hours"]').val(), 2, 'check times::hours value')
-  //equal(el.find('[name="times::minutes"]').val(), null, 'check times::minutes value')
+  // change selector
+  el.find('[name="executions::notification.email::subject"]').closest('.js-filterElement').find('.js-remove').click()
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+      'ticket.created_at': {
+        operator: 'before (absolute)',
+        value: '2015-09-20T03:41:00.000Z',
+      },
+      'ticket.updated_at': {
+        operator: 'within last (relative)',
+        range: 'year',
+        value: '2',
+      },
+      'ticket.organization_id': {
+        operator: 'is not',
+        pre_condition: 'specific',
+        value: '12',
+      },
+      'ticket.owner_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: '47',
+        value_completion: 'Bob Smith <bod@example.com>',
+      },
+      'ticket.created_by_id': {
+        operator: 'is',
+        pre_condition: 'current_user.id',
+        value: '',
+        value_completion: ''
+      },
+    },
+    executions: {
+      'ticket.priority_id': {
+        value: '3',
+      },
+      'ticket.owner_id': {
+        pre_condition: 'specific',
+        value: '47',
+        value_completion: 'Bob Smith <bod@example.com>'
+      },
+      'ticket.tags': {
+        operator: 'remove',
+        value: 'tag1, tag2',
+      },
+    },
+  }
+  deepEqual(params, test_params, 'form param check')
+
+  // change selector
+  el.find('.js-attributeSelector').last().find('select').val('notification.email').trigger('change')
+  el.find('[name="executions::notification.email::subject"]').val('some subject')
+  el.find('[data-name="executions::notification.email::body"]').html('lala')
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+      'ticket.created_at': {
+        operator: 'before (absolute)',
+        value: '2015-09-20T03:41:00.000Z',
+      },
+      'ticket.updated_at': {
+        operator: 'within last (relative)',
+        range: 'year',
+        value: '2',
+      },
+      'ticket.organization_id': {
+        operator: 'is not',
+        pre_condition: 'specific',
+        value: '12',
+      },
+      'ticket.owner_id': {
+        operator: 'is',
+        pre_condition: 'specific',
+        value: '47',
+        value_completion: 'Bob Smith <bod@example.com>',
+      },
+      'ticket.created_by_id': {
+        operator: 'is',
+        pre_condition: 'current_user.id',
+        value: '',
+        value_completion: ''
+      },
+    },
+    executions: {
+      'ticket.priority_id': {
+        value: '3',
+      },
+      'ticket.owner_id': {
+        pre_condition: 'specific',
+        value: '47',
+        value_completion: 'Bob Smith <bod@example.com>'
+      },
+      'notification.email': {
+        recipient: 'ticket_owner',
+        subject: 'some subject',
+        body: 'lala',
+      },
+    },
+  }
+  deepEqual(params, test_params, 'form param check')
+
+  /* with params or defaults */
+  $('#forms').append('<hr><h1>form 4</h1><form id="form4"></form>')
+  var el = $('#form4')
+  var defaults = {
+    condition: {
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+    },
+    executions: {
+      'notification.email': {
+        recipient: 'ticket_customer',
+        subject: 'some subject',
+        body: "some<br>\nbody",
+      },
+    },
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', null: true },
+        { name: 'executions', display: 'Executions', tag: 'ticket_perform_action', null: true, notification: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'ticket.title': {
+        operator: 'contains',
+        value: 'some title',
+      },
+    },
+    executions: {
+
+      'notification.email': {
+        recipient: 'ticket_customer',
+        subject: 'some subject',
+        body: "some<br>\nbody",
+      },
+    },
+  }
+  deepEqual(params, test_params, 'form param check')
 
 });
