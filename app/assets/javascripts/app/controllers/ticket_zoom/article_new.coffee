@@ -175,11 +175,10 @@ class App.TicketZoomArticleNew extends App.Controller
     @setArticleType(@type)
 
     new App.WidgetAvatar(
-      el:       @$('.js-avatar')
-      user_id:  App.Session.get('id')
-      size:     40
-      position: 'right'
-      class:    'zIndex-5'
+      el:        @$('.js-avatar')
+      object_id: App.Session.get('id')
+      size:      40
+      position:  'right'
     )
 
     configure_attributes = [

@@ -1,5 +1,5 @@
 class App.Organization extends App.Model
-  @configure 'Organization', 'name', 'shared', 'note', 'active', 'updated_at'
+  @configure 'Organization', 'name', 'shared', 'note', 'member_ids', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/organizations'
   @configure_attributes = [
@@ -36,8 +36,8 @@ Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei be
     if data['member_ids']
       data['members'] = []
       for user_id in data['member_ids']
-        if App.User.exists( user_id )
-          user = App.User.find( user_id )
+        if App.User.exists(user_id)
+          user = App.User.find(user_id)
           data['members'].push user
     data
 

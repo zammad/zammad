@@ -1,0 +1,4 @@
+<div class="userList-entry">
+  <%- @user.avatar("40") %>
+  <a href="<%- @user.uiUrl() %>" class="userList-name user-popover" data-id="<%- @user.id %>"><%= @user.displayName() %></a>
+</div>

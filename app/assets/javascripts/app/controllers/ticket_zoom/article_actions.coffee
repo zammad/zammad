@@ -23,7 +23,7 @@ class App.TicketZoomArticleActions extends App.Controller
     else
       @html ''
 
-  publicInternal: (e) ->
+  publicInternal: (e) =>
     e.preventDefault()
     articleContainer = $(e.target).closest('.ticket-article-item')
     article_id = $(e.target).parents('[data-id]').data('id')
@@ -33,9 +33,8 @@ class App.TicketZoomArticleActions extends App.Controller
     internal = true
     if article.internal == true
       internal = false
-    article.updateAttributes(
-      internal: internal
-    )
+    @lastAttributres.internal = internal
+    article.updateAttributes(internal: internal)
 
     # runntime update
     if internal

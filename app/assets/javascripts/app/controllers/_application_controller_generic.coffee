@@ -1068,3 +1068,83 @@ class App.CollectionController extends App.Controller
 
   onRemoved: (id) ->
     # nothing
+
+class App.ObserverController extends App.Controller
+  model: 'Ticket'
+  template: 'ticket_zoom/title'
+
+  ###
+  observe:
+    title: true
+
+  observeNot:
+    title: true
+
+  ###
+
+  constructor: ->
+    super
+    #console.trace()
+    @log 'debug', 'new', @object_id, @model
+
+    object = App[@model].fullLocal(@object_id)
+    if !object
+      App[@model].full(@object_id, @maybeRender)
+    else
+      @maybeRender(object)
+
+    # rerender, e. g. on language change
+    @bind('ui:rerender', =>
+      @lastAttributres = undefined
+      object = App[@model].fullLocal(@object_id)
+      @maybeRender(object)
+    )
+
+  subscribe: (object) =>
+    console.log('subscribe', object)
+    @maybeRender(object)
+
+  maybeRender: (object) =>
+    @log 'debug', 'maybeRender', @object_id, object, @model
+
+    if !@subscribeId
+      @subscribeId = object.subscribe(@subscribe)
+
+    # remember current attributes
+    currentAttributes = {}
+    if @observe
+      for key, active of @observe
+        if active
+          currentAttributes[key] = object[key]
+    if @observeNot
+      attributes = object.attributes()
+      for key, value of attributes
+        if !@observeNot[key]
+          currentAttributes[key] = value
+
+    if !@lastAttributres
+      @lastAttributres = {}
+    else
+      diff = difference(currentAttributes, @lastAttributres)
+      if _.isEmpty(diff)
+        @log 'debug', 'maybeRender no diff, no rerender'
+        return
+
+    @log 'debug', 'maybeRender.diff', diff
+    @lastAttributres = currentAttributes
+
+    @render(object)
+
+  render: (object) =>
+    @log 'debug', 'render', @template, object
+    @html App.view(@template)(
+      object: object
+    )
+
+    if @renderPost
+      @renderPost(object)
+
+  release: =>
+    #console.trace()
+    @log 'debug', 'release', @object_id, @model
+    App[@model].unsubscribe(@subscribeId)

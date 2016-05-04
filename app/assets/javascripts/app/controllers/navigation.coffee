@@ -125,9 +125,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # only start avatar widget on existing session
     if App.Session.get('id')
       new App.WidgetAvatar(
-        el:       @$('.js-avatar')
-        user_id:  App.Session.get('id')
-        type:     'personal'
+        el:        @$('.js-avatar')
+        object_id: App.Session.get('id')
+        type:      'personal'
       )
 
   renderResult: (result = []) =>

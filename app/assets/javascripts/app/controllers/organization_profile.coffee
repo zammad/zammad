@@ -49,9 +49,9 @@ class App.OrganizationProfile extends App.Controller
     ))
 
     new Object(
-      el:           elLocal.find('.js-object-container')
-      organization: organization
-      task_key:     @task_key
+      el:        elLocal.find('.js-object-container')
+      object_id: organization.id
+      task_key:  @task_key
     )
 
     new App.TicketStats(
@@ -65,18 +65,19 @@ class App.OrganizationProfile extends App.Controller
       genericObject: organization
     )
 
-class Object extends App.Controller
+class Object extends App.ObserverController
+  model: 'Organization'
+  observeNot:
+    created_at: true
+    created_by_id: true
+    updated_at: true
+    updated_by_id: true
+    preferences: true
+    source: true
+    image_source: true
+
   events:
     'focusout [contenteditable]': 'update'
-
-  constructor: (params) ->
-    super
-
-    # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.Organization.full(@organization.id, @render, false, true)
-
-  release: =>
-    App.Organization.unsubscribe(@subscribeId)
 
   render: (organization) =>
 
@@ -110,6 +111,17 @@ class Object extends App.Controller
       multiline: true
       maxlength: 250
     })
+
+    # show members
+    members = []
+    for userId in organization.member_ids
+      el = $('<div></div>')
+      new Member(
+        object_id: userId
+        el: el
+      )
+      members.push el
+    @$('.js-userList').html(members)
 
     # start action controller
     showHistory = ->
@@ -151,13 +163,26 @@ class Object extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    org   = App.Organization.find(@organization.id)
+    org   = App.Organization.find(@object_id)
     if org[name] isnt value
+      @lastAttributres[name] = value
       data = {}
       data[name] = value
       org.updateAttributes(data)
       @log 'notice', 'update', name, value, org
 
+class Member extends App.ObserverController
+  model: 'User'
+  observe:
+    firstname: true
+    lastname: true
+    login: true
+    email: true
+
+  render: (user) =>
+    @html App.view('organization_profile/member')(
+      user: user
+    )
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

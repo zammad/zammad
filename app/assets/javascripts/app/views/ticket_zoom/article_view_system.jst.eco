@@ -1,0 +1,3 @@
+<div class="small task-subline">
+"<%= @article.subject %>" -&gt; "<%= @article.to %>"
+</div>

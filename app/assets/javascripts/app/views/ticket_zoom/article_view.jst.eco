@@ -29,7 +29,7 @@
   </div>
 </div>
 
-<div class="article-content zIndex-1">
+<div class="article-content">
   <% if @article.sender.name isnt 'Agent': %>
   <%    position = 'left' %>
   <% else: %>

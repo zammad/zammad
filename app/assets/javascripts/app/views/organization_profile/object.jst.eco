@@ -27,13 +27,6 @@
 <% if @organization.members: %>
 <div class="profile-section profile-memberSection">
   <label><%- @T('Members') %></label>
-  <div class="userList">
-    <% for user in @organization.members: %>
-      <div class="userList-entry">
-        <%- user.avatar("40") %>
-        <a href="<%- user.uiUrl() %>" class="userList-name user-popover" data-id="<%- user.id %>"><%= user.displayName() %></a>
-      </div>
-    <% end %>
-  </div>
+  <div class="userList js-userList"></div>
 </div>
 <% end %>

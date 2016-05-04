@@ -1,15 +1,11 @@
-class App.WidgetAvatar extends App.Controller
-  constructor: ->
-    super
-
-    # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.User.full(@user_id, @render, false, true)
-
-  release: =>
-    App.User.unsubscribe(@subscribeId)
+class App.WidgetAvatar extends App.ObserverController
+  model: 'User'
+  observe:
+    login: true
+    firstname: true
+    lastname: true
+    email: true
 
   render: (user) =>
-    @html user.avatar @size, @position, undefined, false, false, @type
-
-    # start user popups
+    @html(user.avatar @size, @position, undefined, false, false, @type)
     @userPopups(@position)

@@ -3,7 +3,7 @@
   <%- @user.avatar("80") %>
   <h1><%= @user.displayName() %></h1>
   <% if @user.organization: %>
-    <div class="profile-organization"><a href="<%- @user.organization.uiUrl() %>"><%= @user.organization.displayName() %></a></div>
+    <div class="profile-organization js-organization"></div>
   <% end %>
 </div>
 <div class="profile-section">
