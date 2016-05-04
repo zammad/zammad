@@ -3884,6 +3884,8 @@ Trigger.create_or_update(
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
 </p>
 <br/>
+<p>Your #{config.product_name} Team</p>
+<br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
       'recipient' => 'ticket_customer',
       'subject' => 'Thanks for your inquiry (#{ticket.title})',
@@ -3921,12 +3923,14 @@ Trigger.create_or_update(
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
 </p>
 <br/>
+<p>Your #{config.product_name} Team</p>
+<br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
       'recipient' => 'ticket_customer',
       'subject' => 'Thanks for your follow up (#{ticket.title})',
     },
   },
-  active: true,
+  active: false,
   created_by_id: 1,
   updated_by_id: 1,
 )
