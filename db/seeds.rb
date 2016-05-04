@@ -3878,7 +3878,7 @@ Trigger.create_or_update(
   },
   perform: {
     'notification.email' => {
-      'body' => '<p>Your request (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+      'body' => '<p>Your request (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
@@ -3917,7 +3917,7 @@ Trigger.create_or_update(
   },
   perform: {
     'notification.email' => {
-      'body' => '<p>Your follow up for (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+      'body' => '<p>Your follow up for (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>

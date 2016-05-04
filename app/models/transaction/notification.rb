@@ -33,6 +33,13 @@ class Transaction::Notification
     ticket = Ticket.find(@item[:object_id])
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
+
+      # ignore notifications
+      sender = Ticket::Article::Sender.lookup(id: article.sender_id)
+      if sender && sender.name == 'System'
+        return if @item[:changes].empty?
+        article = nil
+      end
     end
 
     # find recipients

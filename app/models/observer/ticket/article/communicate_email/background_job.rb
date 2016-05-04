@@ -23,6 +23,9 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     if sender['name'] == 'System'
       notification = true
+
+      # ignore notifications in developer mode
+      return if Setting.get('developer_mode') == true
     end
 
     # get linked channel and send
