@@ -8,45 +8,64 @@ class App.TaskManager
     _instance.all()
 
   @allWithMeta: ->
+    return [] if !_instance
     _instance.allWithMeta()
 
   @execute: (params) ->
+    return if !_instance
     _instance.execute(params)
 
   @get: (key) ->
+    return if !_instance
     _instance.get(key)
 
   @update: (key, params) ->
+    return if !_instance
     _instance.update(key, params)
 
   @remove: (key) ->
+    return if !_instance
     _instance.remove(key)
 
   @notify: (key) ->
+    return if !_instance
     _instance.notify(key)
 
   @mute: (key) ->
+    return if !_instance
     _instance.mute(key)
 
   @reorder: (order) ->
+    return if !_instance
     _instance.reorder(order)
 
   @touch: (key) ->
+    return if !_instance
     _instance.touch(key)
 
   @reset: ->
+    return if !_instance
     _instance.reset()
 
+  @tasksInitial: ->
+    if _instance == undefined
+      _instance ?= new _taskManagerSingleton
+    _instance.tasksInitial()
+
   @worker: (key) ->
+    return if !_instance
     _instance.worker(key)
 
   @nextTaskUrl: ->
+    return if !_instance
     _instance.nextTaskUrl()
 
   @TaskbarId: ->
+    return if !_instance
     _instance.TaskbarId()
 
   @hideAll: ->
+    return if !_instance
     _instance.showControllerHideOthers()
 
 class _taskManagerSingleton extends App.Controller
@@ -61,20 +80,8 @@ class _taskManagerSingleton extends App.Controller
     @offlineModus = params.offlineModus
     @tasksInitial()
 
-    # render on login
-    App.Event.bind('auth:login', =>
-      @tasksInitial()
-      'task'
-    )
-
-    # render on logout
-    App.Event.bind('auth:logout', =>
-      @reset()
-      'task'
-    )
-
     # send updates to server
-    App.Interval.set(@taskUpdateLoop, 2500, 'check_update_to_server_pending', 'task')
+    App.Interval.set(@taskUpdateLoop, 3000, 'check_update_to_server_pending', 'task')
 
   init: ->
     @workers           = {}
@@ -330,6 +337,7 @@ class _taskManagerSingleton extends App.Controller
 
     task = @allTasksByKey[key]
     delete @allTasksByKey[key]
+    return if !task
 
     # rerender taskbar
     App.Event.trigger('taskRemove', [task])
@@ -502,12 +510,12 @@ class _taskManagerSingleton extends App.Controller
     # initial load of permanent tasks
     authentication = App.Session.get('id')
     permanentTask  = App.Config.get('permanentTask')
-    task_count     = 0
+    taskCount     = 0
     if permanentTask
       for key, config of permanentTask
         if !config.authentication || (config.authentication && authentication)
-          task_count += 1
-          do (key, config, task_count) =>
+          taskCount += 1
+          do (key, config, taskCount) =>
             App.Delay.set(
               =>
                 @execute(
@@ -518,15 +526,15 @@ class _taskManagerSingleton extends App.Controller
                   persistent: true
                   init:       true
                 )
-              task_count * 450
+              taskCount * 350
               undefined
               'task'
             )
 
     # initial load of taskbar collection
     for key, task of @allTasksByKey
-      task_count += 1
-      do (task, task_count) =>
+      taskCount += 1
+      do (task, taskCount) =>
         App.Delay.set(
           =>
             @execute(
@@ -537,7 +545,7 @@ class _taskManagerSingleton extends App.Controller
               persistent: false
               init:       true
             )
-          task_count * 450
+          taskCount * 350
           undefined
           'task'
         )
