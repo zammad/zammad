@@ -26,13 +26,15 @@ class UpdateTrigger < ActiveRecord::Migration
       },
       perform: {
         'notification.email' => {
-          'body' => '<p>Your request (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
-    <br/>
-    <p>To provide additional information, please reply to this email or click on the following link:
-    <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
-    </p>
-    <br/>
-    <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+          'body' => '<p>Your request (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.<p>
+<br/>
+<p>To provide additional information, please reply to this email or click on the following link:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</p>
+<br/>
+<p>Your #{config.product_name} Team</p>
+<br/>
+<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
           'recipient' => 'ticket_customer',
           'subject' => 'Thanks for your inquiry (#{ticket.title})',
         },
@@ -63,13 +65,15 @@ class UpdateTrigger < ActiveRecord::Migration
       },
       perform: {
         'notification.email' => {
-          'body' => '<p>Your follow up for (#{config.ticket_hook}##{ticket.number}) has been received and will be reviewed by our support staff.<p>
-    <br/>
-    <p>To provide additional information, please reply to this email or click on the following link:
-    <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
-    </p>
-    <br/>
-    <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+          'body' => '<p>Your follow up for (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.<p>
+<br/>
+<p>To provide additional information, please reply to this email or click on the following link:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</p>
+<br/>
+<p>Your #{config.product_name} Team</p>
+<br/>
+<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
           'recipient' => 'ticket_customer',
           'subject' => 'Thanks for your follow up (#{ticket.title})',
         },

@@ -371,7 +371,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
         },
         'ticket.state_id' => {
           'operator' => 'is not',
-          'value' => '4',
+          'value' => Ticket::State.lookup(name: 'closed').id,
         },
         'article.type_id' => {
           'operator' => 'is',

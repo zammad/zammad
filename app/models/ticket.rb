@@ -265,21 +265,21 @@ returns
   def merge_to(data)
 
     # update articles
-    Ticket::Article.where( ticket_id: id ).each(&:touch)
+    Ticket::Article.where(ticket_id: id).each(&:touch)
 
     # quiet update of reassign of articles
-    Ticket::Article.where( ticket_id: id ).update_all( ['ticket_id = ?', data[:ticket_id] ] )
+    Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id] ])
 
     # touch new ticket (to broadcast change)
-    Ticket.find( data[:ticket_id] ).touch
+    Ticket.find(data[:ticket_id]).touch
 
     # update history
 
     # create new merge article
     Ticket::Article.create(
       ticket_id: id,
-      type_id: Ticket::Article::Type.lookup( name: 'note' ).id,
-      sender_id: Ticket::Article::Sender.lookup( name: Z_ROLENAME_AGENT ).id,
+      type_id: Ticket::Article::Type.lookup(name: 'note').id,
+      sender_id: Ticket::Article::Sender.lookup(name: Z_ROLENAME_AGENT).id,
       body: 'merged',
       internal: false,
       created_by_id: data[:user_id],
@@ -298,10 +298,10 @@ returns
     )
 
     # set state to 'merged'
-    self.state_id = Ticket::State.lookup( name: 'merged' ).id
+    self.state_id = Ticket::State.lookup(name: 'merged').id
 
     # rest owner
-    self.owner_id = User.find_by( login: '-' ).id
+    self.owner_id = User.find_by(login: '-').id
 
     # save ticket
     save

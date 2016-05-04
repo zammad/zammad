@@ -3,6 +3,45 @@ require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
 
+  Trigger.create_or_update(
+    name: 'auto reply - new ticket',
+    condition: {
+      'ticket.action' => {
+        'operator' => 'is',
+        'value' => 'create',
+      },
+      'ticket.state_id' => {
+        'operator' => 'is not',
+        'value' => Ticket::State.lookup(name: 'closed').id,
+      },
+      'article.type_id' => {
+        'operator' => 'is',
+        'value' => [
+          Ticket::Article::Type.lookup(name: 'email').id,
+          Ticket::Article::Type.lookup(name: 'phone').id,
+          Ticket::Article::Type.lookup(name: 'web').id,
+        ],
+      },
+    },
+    perform: {
+      'notification.email' => {
+        'body' => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+<br/>
+<p>To provide additional information, please reply to this email or click on the following link:
+<a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
+</p>
+<br/>
+<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+        'recipient' => 'ticket_customer',
+        'subject' => 'Thanks for your inquiry (#{ticket.title})',
+      },
+    },
+    disable_notification: true,
+    active: true,
+    created_by_id: 1,
+    updated_by_id: 1,
+  )
+
   # create agent1 & agent2
   groups = Group.where(name: 'Users')
   roles  = Role.where(name: 'Agent')
@@ -64,7 +103,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1 = Ticket.create(
       title: 'some notification test 1',
       group: Group.lookup(name: 'Users'),
-      customer: agent1,
+      customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: agent1.id,
@@ -98,7 +137,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     ticket1 = Ticket.create(
       title: 'some notification test 1',
       group: Group.lookup(name: 'Users'),
-      customer: agent1,
+      customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: agent1.id,

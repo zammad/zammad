@@ -37,6 +37,7 @@ class Transaction::Trigger
       article = Ticket::Article.lookup(id: @item[:article_id])
     end
 
+    original_user_id = UserInfo.current_user_id
     UserInfo.current_user_id = 1
 
     triggers.each {|trigger|
@@ -89,6 +90,7 @@ class Transaction::Trigger
 
       ticket.perform_changes(trigger.perform, 'trigger', @item)
     }
+    UserInfo.current_user_id = original_user_id
   end
 
 end
