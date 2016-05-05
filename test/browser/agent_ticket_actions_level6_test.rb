@@ -121,11 +121,11 @@ class AgentTicketActionLevel6Test < TestCase
       value: 'test 6 - ticket 1-1',
     )
     match_not(
-      css: '.active .ticket-article-item:nth-child(2) .attachments',
+      css: '.active .ticket-article-item:nth-child(3) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.active .ticket-article-item:nth-child(2) .attachments',
+      css: '.active .ticket-article-item:nth-child(3) .attachments',
       value: 'upload1.txt',
     )
 
@@ -176,11 +176,11 @@ class AgentTicketActionLevel6Test < TestCase
       },
     )
     match(
-      css: '.active .ticket-article-item:nth-child(3) .attachments',
+      css: '.active .ticket-article-item:nth-child(4) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.active .ticket-article-item:nth-child(3) .attachments',
+      css: '.active .ticket-article-item:nth-child(4) .attachments',
       value: 'upload1.txt',
     )
     #
