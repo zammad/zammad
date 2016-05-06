@@ -668,7 +668,14 @@ perform changes on ticket
           next if user.email !~ /@/
 
           # do not sent notifications to this recipients
-          next if user.email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
+          send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
+          begin
+            next if user.email =~ /#{send_no_auto_response_reg_exp}/i
+          rescue => e
+            logger.error "ERROR: Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
+            logger.error 'ERROR: ' + e.inspect
+            next if user.email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
+          end
 
           email = user.email.downcase.strip
           next if recipient_already[email]

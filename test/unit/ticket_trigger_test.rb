@@ -604,6 +604,13 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket_p.state.name)
     assert_equal(1, ticket_p.articles.count)
 
+    # process mail with abuse@ (no auto response)
+    content = IO.binread('test/fixtures/ticket_trigger/mail3.box')
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
+
+    assert_equal('new', ticket_p.state.name)
+    assert_equal(1, ticket_p.articles.count)
+
     Trigger.destroy_all
   end
 
