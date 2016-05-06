@@ -14,7 +14,8 @@ class App.WidgetPlaceholder extends App.Controller
         @bindElements = @el.textmodule()
       else
         @bindElements = @$('[contenteditable]').textmodule()
-    @update()
+
+    App.Setting.subscribe(@update, initFetch: true)
 
   update: =>
     all = []
@@ -28,15 +29,6 @@ class App.WidgetPlaceholder extends App.Controller
       created_at: true
       updated_at: true
     }
-    # add config
-    for setting in App.Setting.all()
-      if setting.preferences && setting.preferences.placeholder
-        all.push {
-          id: setting.name
-          keywords: setting.name
-          name: "#{App.i18n.translateInline('Config')} > #{setting.name}"
-          content: content
-        }
     for item in @objects
       list = {}
       if App[item.object] && App[item.object].configure_attributes
@@ -76,6 +68,18 @@ class App.WidgetPlaceholder extends App.Controller
               name: "#{App.i18n.translateInline(item.display)} > #{App.i18n.translateInline(attribute.display)}"
               content: content
             }
+
+    # add config
+    for setting in App.Setting.all()
+      if setting.frontend && setting.preferences && setting.preferences.placeholder
+        name = "#{App.i18n.translateInline('Config')} > #{App.i18n.translateInline(setting.title)}"
+        content = "\#{config.#{setting.name}}"
+        all.push {
+          id: setting.name
+          keywords: setting.name
+          name: name
+          content: content
+        }
 
     # set new data
     if @bindElements[0]

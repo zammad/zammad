@@ -61,7 +61,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { render: true, session_check: true, prio: 1 },
+  preferences: { render: true, session_check: true, prio: 1, placeholder: true },
   state: 'Zammad Helpdesk',
   frontend: true
 )
@@ -100,7 +100,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: '',
-  preferences: { prio: 2 },
+  preferences: { prio: 2, placeholder: true },
   frontend: true
 )
 options = {}
@@ -125,7 +125,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: system_id,
-  preferences: { online_service_disable: true },
+  preferences: { online_service_disable: true, placeholder: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -144,7 +144,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'zammad.example.com',
-  preferences: { online_service_disable: true },
+  preferences: { online_service_disable: true, placeholder: true },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -186,7 +186,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'http',
-  preferences: { online_service_disable: true },
+  preferences: { online_service_disable: true, placeholder: true },
   frontend: true
 )
 
@@ -747,7 +747,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { render: true },
+  preferences: { render: true, placeholder: true },
   state: 'Ticket#',
   frontend: true
 )
@@ -1174,7 +1174,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: '(MAILER-DAEMON|postmaster|abuse)@.+?\..+?',
+  state: '(mailer-daemon|postmaster|abuse|root)@.+?\..+?',
   preferences: { online_service_disable: true },
   frontend: false
 )
