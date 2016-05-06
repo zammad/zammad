@@ -49,7 +49,7 @@
                   <div class="formGroup-label">
                       <label for="Ticket_448391_customer_id">Customer <span>*</span></label>
                   </div>
-                  <div class="controls"><div class="dropdown js-recipientDropdown zIndex-2"><div class="u-positionOrigin">
+                  <div class="controls"><div class="dropdown js-recipientDropdown"><div class="u-positionOrigin">
                       <input type="hidden" name="customer_id" value="">
                       <input name="customer_id_completion" class="user-select form-control" autocapitalize="off" placeholder="Enter Person or Organization/Company" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
                       <svg class="icon icon-arrow-down dropdown-arrow"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-arrow-down"></use></svg>

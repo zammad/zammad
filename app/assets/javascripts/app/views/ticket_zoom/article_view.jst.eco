@@ -82,4 +82,4 @@
 
 <div class="js-article-actions"></div>
 
-<small class="task-subline zIndex-1"><%- @humanTime(@article.created_at) %></small>
+<small class="task-subline"><%- @humanTime(@article.created_at) %></small>
