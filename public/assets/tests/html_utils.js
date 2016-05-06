@@ -898,6 +898,39 @@ test("check replace tags", function() {
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
 
+  message = "<div>#{user.firstname} #{not.existing.test}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{not.existing.test}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      not: null,
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{not.existing.test}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      not: {},
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+
 });
 
 // check if last line is a empty line

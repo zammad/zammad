@@ -464,7 +464,7 @@ class App.Utils
           break
       if typeof dataRef is 'function'
         value = dataRef()
-      else if dataRef.toString
+      else if dataRef isnt undefined && dataRef isnt null && dataRef.toString
         value = dataRef.toString()
       else
         value = ''

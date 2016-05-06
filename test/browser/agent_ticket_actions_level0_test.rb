@@ -140,7 +140,7 @@ class AgentTicketActionLevel0Test < TestCase
     watch_for(
       browser: browser2,
       css: '.active div[data-name=body]',
-      value: 'some content ' + random,
+      value: 'some content -' + random,
     )
 
     ticket_customer_select(
