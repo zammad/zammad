@@ -300,15 +300,15 @@ class App.TicketZoom extends App.Controller
       )
 
       new App.TicketZoomTitle(
-        ticket:      @ticket
+        object_id:   @ticket.id
         overview_id: @overview_id
         el:          elLocal.find('.ticket-title')
         task_key:    @task_key
       )
 
       new App.TicketZoomMeta(
-        ticket: @ticket
-        el:     elLocal.find('.ticket-meta')
+        object_id: @ticket.id
+        el:        elLocal.find('.ticket-meta')
       )
 
       new App.TicketZoomAttributeBar(
@@ -352,9 +352,9 @@ class App.TicketZoom extends App.Controller
       else
         el = @el
       new App.WidgetAvatar(
-        el:      el.find('.ticketZoom-header .js-avatar')
-        user_id: @ticket.customer_id
-        size:    50
+        el:        el.find('.ticketZoom-header .js-avatar')
+        object_id: @ticket.customer_id
+        size:      50
       )
       @sidebar = new App.TicketZoomSidebar(
         el:           el.find('.tabsSidebar')

@@ -130,14 +130,13 @@ class App.Auth
 
     App.Event.trigger('auth:login', data.session)
     App.Event.trigger('ui:rerender')
-
+    App.TaskManager.tasksInitial()
 
   @_logout: (rerender = true) ->
     App.Log.debug 'Auth', '_logout'
 
     App.Ajax.abortAll()
-
-    # empty session
+    App.TaskManager.reset()
     App.Session.init()
 
     App.Event.trigger('auth')

@@ -23,7 +23,10 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     end
 
     # save ticket
-    return if !changed
+    if !changed
+      record.ticket.touch
+      return
+    end
     record.ticket.save
   end
 

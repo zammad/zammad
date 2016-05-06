@@ -13,7 +13,7 @@ class UpdateTrigger < ActiveRecord::Migration
         },
         'ticket.state_id' => {
           'operator' => 'is not',
-          'value' => '4',
+          'value' => Ticket::State.lookup(name: 'closed').id,
         },
         'article.type_id' => {
           'operator' => 'is',
@@ -22,6 +22,10 @@ class UpdateTrigger < ActiveRecord::Migration
             Ticket::Article::Type.lookup(name: 'phone').id,
             Ticket::Article::Type.lookup(name: 'web').id,
           ],
+        },
+        'article.sender_id' => {
+          'operator' => 'is',
+          'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
         },
       },
       perform: {

@@ -49,9 +49,9 @@ class App.UserProfile extends App.Controller
     ))
 
     new Object(
-      el:       elLocal.find('.js-object-container')
-      user:     user
-      task_key: @task_key
+      el:        elLocal.find('.js-object-container')
+      object_id: user.id
+      task_key:  @task_key
     )
 
     new App.TicketStats(
@@ -65,18 +65,22 @@ class App.UserProfile extends App.Controller
       genericObject: user
     )
 
-class Object extends App.Controller
+class Object extends App.ObserverController
+  model: 'User'
+  observeNot:
+    created_at: true
+    created_by_id: true
+    updated_at: true
+    updated_by_id: true
+    preferences: true
+    password: true
+    last_login: true
+    login_failed: true
+    source: true
+    image_source: true
+
   events:
     'focusout [contenteditable]': 'update'
-
-  constructor: (params) ->
-    super
-
-    # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.User.full(@user.id, @render, false, true)
-
-  release: =>
-    App.User.unsubscribe(@subscribeId)
 
   render: (user) =>
 
@@ -110,6 +114,12 @@ class Object extends App.Controller
       multiline: true
       maxlength: 250
     })
+
+    if user.organization_id
+      new Organization(
+        object_id: user.organization_id
+        el: @$('.js-organization')
+      )
 
     # start action controller
     showHistory = =>
@@ -151,12 +161,23 @@ class Object extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    user  = App.User.find(@user.id)
+    user  = App.User.find(@object_id)
     if user[name] isnt value
+      @lastAttributres[name] = value
       data = {}
       data[name] = value
       user.updateAttributes(data)
       @log 'notice', 'update', name, value, user
+
+class Organization extends App.ObserverController
+  model: 'Organization'
+  observe:
+    name: true
+
+  render: (organization) =>
+    @html App.view('user_profile/organization')(
+      organization: organization
+    )
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

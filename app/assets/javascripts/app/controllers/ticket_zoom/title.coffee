@@ -1,34 +1,13 @@
-class App.TicketZoomTitle extends App.Controller
+class App.TicketZoomTitle extends App.ObserverController
+  model: 'Ticket'
+  template: 'ticket_zoom/title'
+  observe:
+    title: true
+
   events:
     'blur .ticket-title-update': 'update'
 
-  constructor: ->
-    super
-    @render()
-
-    # rerender, e. g. on language change
-    @bind('ui:rerender', =>
-      @render()
-    )
-
-  render: (ticket) =>
-    if !ticket
-      ticket = App.Ticket.fullLocal(@ticket.id)
-
-    if !@subscribeId
-      @subscribeId = @ticket.subscribe(@render)
-
-    @title = ticket.title
-
-    # check if render is needed
-    if @lastTitle && @lastTitle is ticket.title
-      return
-    @lastTitle = ticket.title
-
-    @html App.view('ticket_zoom/title')(
-      ticket: ticket
-    )
-
+  renderPost: (object) =>
     @$('.ticket-title-update').ce({
       mode:      'textonly'
       multiline: false
@@ -39,21 +18,18 @@ class App.TicketZoomTitle extends App.Controller
     title = $(e.target).ceg() || ''
 
     # update title
-    if title isnt @title
-      ticket = App.Ticket.find(@ticket.id)
-      ticket.title = title
+    return if title is @lastAttributres.title
+    ticket = App.Ticket.find(@object_id)
+    ticket.title = title
 
-      # reset article - should not be resubmited on next ticket update
-      ticket.article = undefined
+    # reset article - should not be resubmited on next ticket update
+    ticket.article = undefined
 
-      ticket.save()
+    ticket.save()
 
-      App.TaskManager.mute(@task_key)
+    App.TaskManager.mute(@task_key)
 
-      # update taskbar with new meta data
-      App.TaskManager.touch(@task_key)
+    # update taskbar with new meta data
+    App.TaskManager.touch(@task_key)
 
-      App.Event.trigger('overview:fetch')
-
-  release: =>
-    App.Ticket.unsubscribe(@subscribeId)
+    App.Event.trigger('overview:fetch')

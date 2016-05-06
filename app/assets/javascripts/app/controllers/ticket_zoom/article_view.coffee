@@ -1,7 +1,7 @@
 class App.TicketZoomArticleView extends App.Controller
   constructor: ->
     super
-    @article_controller = {}
+    @articleController = {}
     @run()
 
   execute: (params) =>
@@ -11,20 +11,39 @@ class App.TicketZoomArticleView extends App.Controller
   run: =>
     all = []
     for ticket_article_id in @ticket_article_ids
-      if !@article_controller[ticket_article_id]
+      controllerKey = ticket_article_id.toString()
+      if !@articleController[controllerKey]
         el = $('<div></div>')
-        @article_controller[ticket_article_id] = new ArticleViewItem(
-          ticket:            @ticket
-          ticket_article_id: ticket_article_id
-          el:                el
-          ui:                @ui
-          highligher:        @highligher
+        @articleController[controllerKey] = new ArticleViewItem(
+          ticket:     @ticket
+          object_id:  ticket_article_id
+          el:         el
+          ui:         @ui
+          highligher: @highligher
         )
         all.push el
     @el.append(all)
 
-class ArticleViewItem extends App.Controller
-  hasChangedAttributes: ['from', 'to', 'cc', 'subject', 'body', 'preferences']
+    # check elements to remove
+    for article_id, controller of @articleController
+      exists = false
+      for localArticleId in @ticket_article_ids
+        if localArticleId.toString() is article_id.toString()
+          exists = true
+      if !exists
+        controller.remove()
+        delete @articleController[article_id.toString()]
+
+class ArticleViewItem extends App.ObserverController
+  model: 'TicketArticle'
+  observe:
+    from: true
+    to: true
+    cc: true
+    subject: true
+    body: true
+    internal: true
+    preferences: true
 
   elements:
     '.textBubble-content':           'textBubbleContent'
@@ -36,12 +55,7 @@ class ArticleViewItem extends App.Controller
     'click .js-unfold':    'unfold'
 
   constructor: ->
-    super
-
     @seeMore = false
-    @force = true
-
-    @render()
 
     # set expand of text area only once
     @bind('ui::ticket::shown', (data) =>
@@ -54,112 +68,75 @@ class ArticleViewItem extends App.Controller
       @setSeeMore()
     )
 
-    # rerender, e. g. on language change
-    @bind('ui:rerender', =>
-      @force = true
-      @render(undefined)
-    )
-
-    # subscribe to changes
-    @subscribeId = App.TicketArticle.full(@ticket_article_id, @render, false, true)
-
-  release: =>
-    App.TicketArticle.unsubscribe(@subscribeId)
+    super
 
   setHighlighter: =>
     return if @el.is(':hidden')
     # use delay do no ui blocking
-    #@highligher.loadHighlights(@ticket_article_id)
+    #@highligher.loadHighlights(@object_id)
     d = =>
-      @highligher.loadHighlights(@ticket_article_id)
+      @highligher.loadHighlights(@object_id)
     @delay(d, 200)
-
-  hasChanged: (article) =>
-
-    # if no last article exists, remember it and return true
-    if !@articleAttributesLastUpdate
-      @articleAttributesLastUpdate = {}
-      for item in @hasChangedAttributes
-        @articleAttributesLastUpdate[item] = article[item]
-      return true
-
-    # compare last and current article attributes
-    articleAttributesLastUpdateCheck = {}
-    for item in @hasChangedAttributes
-      articleAttributesLastUpdateCheck[item] = article[item]
-    diff = difference(@articleAttributesLastUpdate, articleAttributesLastUpdateCheck)
-    return false if !diff || _.isEmpty( diff )
-    @articleAttributesLastUpdate = articleAttributesLastUpdateCheck
-    true
 
   render: (article) =>
 
-    # get articles
-    @article = App.TicketArticle.fullLocal(@ticket_article_id)
-
     # set @el attributes
-    if !article
-      @el.addClass("ticket-article-item #{@article.sender.name.toLowerCase()}")
-      @el.attr('data-id', @article.id)
-      @el.attr('id', "article-#{@article.id}")
-
-    # set internal change directly in dom, without rerender while article
-    if !article || ( @lastArticle && @lastArticle.internal isnt @article.internal )
-      if @article.internal is true
-        @el.addClass('is-internal')
-      else
-        @el.removeClass('is-internal')
-
-    # check if rerender is needed
-    if !@force && !@hasChanged(@article)
-      @lastArticle = @article.attributes()
-      return
-    @force = false
+    @el.addClass("ticket-article-item #{article.sender.name.toLowerCase()}")
+    @el.attr('data-id', article.id)
+    @el.attr('id', "article-#{article.id}")
 
     # prepare html body
-    if @article.content_type is 'text/html'
-      if @article.sender.name is 'Agent'
-        @article['html'] = App.Utils.signatureIdentify(@article.body, false, true)
+    if article.content_type is 'text/html'
+      if article.sender.name is 'Agent'
+        article['html'] = App.Utils.signatureIdentify(article.body, false, true)
       else
-        @article['html'] = App.Utils.signatureIdentify(@article.body)
+        article['html'] = App.Utils.signatureIdentify(article.body)
     else
 
       # client signature detection
-      bodyHtml = App.Utils.text2html(@article.body)
-      @article['html'] = App.Utils.signatureIdentify(bodyHtml)
+      bodyHtml = App.Utils.text2html(article.body)
+      article['html'] = App.Utils.signatureIdentify(bodyHtml)
 
       # if no signature detected or within frist 25 lines, check if signature got detected in backend
-      if @article['html'] is bodyHtml || (@article.preferences && @article.preferences.signature_detection < 25)
+      if article['html'] is bodyHtml || (article.preferences && article.preferences.signature_detection < 25)
         signatureDetected = false
-        body = @article.body
-        if @article.preferences && @article.preferences.signature_detection
+        body = article.body
+        if article.preferences && article.preferences.signature_detection
           signatureDetected = '########SIGNATURE########'
           # coffeelint: disable=no_unnecessary_double_quotes
           body = body.split("\n")
-          body.splice(@article.preferences.signature_detection, 0, signatureDetected)
+          body.splice(article.preferences.signature_detection, 0, signatureDetected)
           body = body.join("\n")
           # coffeelint: enable=no_unnecessary_double_quotes
         if signatureDetected
           body = App.Utils.textCleanup(body)
-          @article['html'] = App.Utils.text2html(body)
-          @article['html']  = @article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
+          article['html'] = App.Utils.text2html(body)
+          article['html'] = article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
 
+    if article.sender.name is 'System'
+      @html App.view('ticket_zoom/article_view_system')(
+        ticket:     @ticket
+        article:    article
+        isCustomer: @isRole('Customer')
+      )
+      return
     @html App.view('ticket_zoom/article_view')(
       ticket:     @ticket
-      article:    @article
+      article:    article
       isCustomer: @isRole('Customer')
     )
 
     new App.WidgetAvatar(
-      el:      @$('.js-avatar')
-      user_id: @article.created_by_id
-      size:    40
+      el:        @$('.js-avatar')
+      object_id: article.created_by_id
+      size:      40
     )
 
     new App.TicketZoomArticleActions(
-      el:      @$('.js-article-actions')
-      ticket:  @ticket
-      article: @article
+      el:              @$('.js-article-actions')
+      ticket:          @ticket
+      article:         article
+      lastAttributres: @lastAttributres
     )
 
     # set see more
@@ -343,3 +320,6 @@ class ArticleViewItem extends App.Controller
           return false
       return true
     false
+
+  remove: =>
+    @el.remove()

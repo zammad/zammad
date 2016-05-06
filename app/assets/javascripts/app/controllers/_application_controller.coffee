@@ -260,7 +260,7 @@ class App.Controller extends Spine.Controller
 
     # open ticket in new task if curent user agent
     if @isRole('Agent')
-      @el.find('div.ticket-popover, span.ticket-popover').bind('click', (e) =>
+      @$('div.ticket-popover, span.ticket-popover').bind('click', (e) =>
         id = $(e.target).data('id')
         if id
           ticket = App.Ticket.find(id)
@@ -304,8 +304,7 @@ class App.Controller extends Spine.Controller
 
     # open user in new task if current user is agent
     return if !@isRole('Agent')
-
-    @el.find('div.user-popover, span.user-popover').bind('click', (e) =>
+    @$('div.user-popover, span.user-popover').bind('click', (e) =>
       id = $(e.target).data('id')
       if id
         user = App.User.find(id)
@@ -363,7 +362,7 @@ class App.Controller extends Spine.Controller
     # open org in new task if current user agent
     return if !@isRole('Agent')
 
-    @el.find('div.organization-popover, span.organization-popover').bind('click', (e) =>
+    @$('div.organization-popover, span.organization-popover').bind('click', (e) =>
       id = $(e.target).data('id')
       if id
         organization = App.Organization.find(id)

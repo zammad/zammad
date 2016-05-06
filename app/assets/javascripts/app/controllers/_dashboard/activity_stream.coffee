@@ -59,8 +59,8 @@ class App.DashboardActivityStream extends App.Controller
       item: item
     ))
     new App.WidgetAvatar(
-      el:       html.find('.js-avatar')
-      user_id:  item.created_by_id
-      size:     40
+      el:        html.find('.js-avatar')
+      object_id: item.created_by_id
+      size:      40
     )
     html

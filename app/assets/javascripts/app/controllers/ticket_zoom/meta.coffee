@@ -1,24 +1,12 @@
-class App.TicketZoomMeta extends App.Controller
-  constructor: ->
-    super
-    @render()
-
-    # rerender, e. g. on language change
-    @bind('ui:rerender', =>
-      @render()
-    )
+class App.TicketZoomMeta extends App.ObserverController
+  model: 'Ticket'
+  observe:
+    number: true
+    created_at: true
+    escalation_time: true
 
   render: (ticket) =>
-    if !ticket
-      ticket = App.Ticket.fullLocal(@ticket.id)
-
-    if !@subscribeId
-      @subscribeId = @ticket.subscribe(@render)
-
     @html App.view('ticket_zoom/meta')(
       ticket:     ticket
       isCustomer: @isRole('Customer')
     )
-
-  release: =>
-    App.Ticket.unsubscribe(@subscribeId)

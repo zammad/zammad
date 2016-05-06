@@ -266,6 +266,10 @@ class AgentTicketActionLevel5Test < TestCase
 
     # execute reply
     sleep 5 # time to recognice form changes
+    scroll_to(
+      position: 'botton',
+      css:      '.active [data-type="emailReply"]',
+    )
     click(
       css: '.active [data-type="emailReply"]',
     )
