@@ -7,7 +7,7 @@
   <h2>Article Reply</h2>
 
   <div class="article-new">
-    <div class="article-content zIndex-5">
+    <div class="article-content">
       <div class="internal-border">
         <div class="textBubble">
           <div class="bubble-arrow"></div>

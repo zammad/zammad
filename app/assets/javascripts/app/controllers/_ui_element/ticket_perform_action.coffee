@@ -328,6 +328,22 @@ class App.UiElement.ticket_perform_action
       placeholder: 'message'
       maxlength: 2000
     )
+    new App.WidgetPlaceholder(
+      el: notificationElement.find('.js-body div[contenteditable="true"]').parent()
+      objects: [
+        {
+          prefix: 'ticket'
+          object: 'Ticket'
+          display: 'Ticket'
+        },
+        {
+          prefix: 'user'
+          object: 'User'
+          display: 'Current User'
+        },
+      ]
+    )
+
     elementRow.find('.js-setNotification').html(notificationElement)
 
   @humanText: (condition) ->

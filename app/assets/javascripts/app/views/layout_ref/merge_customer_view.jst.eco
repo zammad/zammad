@@ -69,7 +69,7 @@
             </div>
           </div>
 
-          <div class="article-content zIndex-1">
+          <div class="article-content">
             <div class="js-avatar">
               <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span>
             </div>
@@ -155,7 +155,7 @@
             <div class="article-content article-actions horizontal stretch">
               <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="reply" href="#">reply</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/1">split</a>
             </div>
-          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" title="01/12/2015 13:58">01/12/2015</time></small>
+          </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-01-12T12:58:42.000Z" title="01/12/2015 13:58">01/12/2015</time></small>
         </div>
 
         <div class="ticket-article-item agent" data-id="2" id="article-2">
@@ -175,7 +175,7 @@
             </div>
           </div>
 
-          <div class="article-content zIndex-1">
+          <div class="article-content">
             <div class="js-avatar">
               <span class="avatar user-popover size-40" data-id="3" data-original-title="" style="background-image: url(api/v1/users/image/f8729042ca563c5a0161d232f045728a)" title=""></span>
             </div>
@@ -329,7 +329,7 @@
             <div class="article-content article-actions horizontal stretch">
               <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/2">split</a>
             </div>
-          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-01-12T14:02:35.000Z" title="01/12/2015 15:02">01/12/2015</time></small>
+          </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-01-12T14:02:35.000Z" title="01/12/2015 15:02">01/12/2015</time></small>
         </div>
 
         <div class="ticket-article-item agent" data-id="6" id="article-6">
@@ -349,7 +349,7 @@
             </div>
           </div>
 
-          <div class="article-content zIndex-1">
+          <div class="article-content">
             <div class="js-avatar">
               <span class="avatar user-popover size-40" data-id="4" data-original-title="" style="background-image: url(api/v1/users/image/f7d0245ed93f0ea29edc32252f6729c6)" title=""></span>
             </div>
@@ -393,7 +393,7 @@
             <div class="article-content article-actions horizontal stretch">
               <a class="article-action u-clickable" data-type="internal" href="">set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/6">split</a>
             </div>
-          </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-05-05T10:25:01.000Z" title="05/05/2015 12:25">05/05/2015</time></small>
+          </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-05-05T10:25:01.000Z" title="05/05/2015 12:25">05/05/2015</time></small>
         </div>
       </div>
 
@@ -427,7 +427,7 @@
             </div>
           </div>
 
-          <div class="article-content zIndex-5 bubble-gap">
+          <div class="article-content bubble-gap">
 
             <div class="internal-border">
               <div class="input form-group hide">

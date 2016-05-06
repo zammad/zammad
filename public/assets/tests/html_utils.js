@@ -857,7 +857,7 @@ test("check replace tags", function() {
   equal(verify, result)
 
   message = "<div>#{user.firstname} #{user.lastname}</div>"
-  result  = '<div>Bob </div>'
+  result  = '<div>Bob -</div>'
   data    = {
     user: {
       firstname: 'Bob',
@@ -865,6 +865,71 @@ test("check replace tags", function() {
   }
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
+
+  message = "<div>#{user.firstname} #{user.lastname}</div>"
+  result  = '<div>Bob 0</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      lastname: 0,
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{user.lastname}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      lastname: '',
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{user.not.existing.test}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{not.existing.test}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{not.existing.test}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      not: null,
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{not.existing.test}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      not: {},
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
 
 });
 

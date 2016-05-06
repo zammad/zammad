@@ -126,6 +126,41 @@ add a new attribute entry for an object
 
 =begin
 
+remove attribute entry for an object
+
+  ObjectManager::Attribute.remove(
+    object: 'Ticket',
+    name: 'group_id',
+  )
+
+use "force: true" to delete also not editable fields
+
+=end
+
+  def self.remove(data)
+
+    # lookups
+    if data[:object]
+      data[:object_lookup_id] = ObjectLookup.by_name(data[:object])
+    end
+
+    # check newest entry - is needed
+    result = ObjectManager::Attribute.find_by(
+      object_lookup_id: data[:object_lookup_id],
+      name: data[:name],
+    )
+    if !result
+      raise "ERROR: No such field #{data[:object]}.#{data[:name]}"
+    end
+
+    if !data[:force] && !result.editable
+      raise "ERROR: #{data[:object]}.#{data[:name]} can't be removed!"
+    end
+    result.destroy
+  end
+
+=begin
+
 get the attribute model based on object and name
 
   attribute = ObjectManager::Attribute.get(

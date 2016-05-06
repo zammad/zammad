@@ -84,6 +84,8 @@ class ArticleViewItem extends App.ObserverController
     @el.addClass("ticket-article-item #{article.sender.name.toLowerCase()}")
     @el.attr('data-id', article.id)
     @el.attr('id', "article-#{article.id}")
+    if article.internal
+      @el.addClass('is-internal')
 
     # prepare html body
     if article.content_type is 'text/html'

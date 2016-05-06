@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1">
+        <div class="article-content">
           <div class="js-avatar">
             <span class="avatar size-40 user-popover user-popover" data-id="2" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/550102263013056512/tq9PC8NT.jpeg)" title=""></span>
           </div>
@@ -95,7 +95,7 @@
           <div class="article-content article-actions horizontal stretch">
             <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="reply" href="#"><%- @Icon('reply', 'article-action-icon') %>reply</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/1"><%- @Icon('split', 'article-action-icon') %>split</a>
           </div>
-        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-05T12:56:33.000Z" title="10/05/2015 14:56">10/05/2015</time></small>
+        </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-10-05T12:56:33.000Z" title="10/05/2015 14:56">10/05/2015</time></small>
       </div>
       <div class="ticket-article-item agent" data-id="3" id="article-3">
         <div class="article-meta-clip top">
@@ -112,7 +112,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1">
+        <div class="article-content">
           <div class="js-avatar">
             <span class="avatar size-40 user-popover user-popover" data-id="3" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/473728709908647936/gc_1Mzqc.jpeg)" title=""></span>
           </div>
@@ -145,7 +145,7 @@
           <div class="article-content article-actions horizontal stretch">
             <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/3"><%- @Icon('split', 'article-action-icon') %>split</a>
           </div>
-        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+        </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
       </div>
       <div class="ticket-article-item customer" data-id="4" id="article-4">
         <div class="article-meta-clip top">
@@ -162,7 +162,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1">
+        <div class="article-content">
           <div class="js-avatar">
             <span class="avatar size-40 user-popover user-popover" data-id="2" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/550102263013056512/tq9PC8NT.jpeg)" title=""></span>
           </div>
@@ -195,7 +195,7 @@
           <div class="article-content article-actions horizontal stretch">
             <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/4"><%- @Icon('split', 'article-action-icon') %>split</a>
           </div>
-        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:27.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+        </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:27.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
       </div>
       <div class="ticket-article-item agent" data-id="3" id="article-3">
         <div class="article-meta-clip top">
@@ -212,7 +212,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1">
+        <div class="article-content">
           <div class="js-avatar">
             <span class="avatar size-40 user-popover user-popover" data-id="3" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/473728709908647936/gc_1Mzqc.jpeg)" title=""></span>
           </div>
@@ -245,7 +245,7 @@
           <div class="article-content article-actions horizontal stretch">
             <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/3"><%- @Icon('split', 'article-action-icon') %>split</a>
           </div>
-        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+        </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
       </div>
       <div class="ticket-article-item customer" data-id="4" id="article-4">
         <div class="article-meta-clip top">
@@ -262,7 +262,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1">
+        <div class="article-content">
           <div class="js-avatar">
             <span class="avatar size-40 user-popover user-popover" data-id="2" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/550102263013056512/tq9PC8NT.jpeg)" title=""></span>
           </div>
@@ -295,7 +295,7 @@
           <div class="article-content article-actions horizontal stretch">
             <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/4"><%- @Icon('split', 'article-action-icon') %>split</a>
           </div>
-        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:27.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+        </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:27.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
       </div>
       <div class="ticket-article-item agent" data-id="3" id="article-3">
         <div class="article-meta-clip top">
@@ -312,7 +312,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-1">
+        <div class="article-content">
           <div class="js-avatar">
             <span class="avatar size-40 user-popover user-popover" data-id="3" data-original-title="" style="background-image: url(https://pbs.twimg.com/profile_images/473728709908647936/gc_1Mzqc.jpeg)" title=""></span>
           </div>
@@ -345,7 +345,7 @@
           <div class="article-content article-actions horizontal stretch">
             <a class="article-action u-clickable" data-type="internal" href=""><%- @Icon('lock', 'article-action-icon') %>set to internal</a> <a class="article-action u-clickable" data-type="split" href="#ticket/create/1/3"><%- @Icon('split', 'article-action-icon') %>split</a>
           </div>
-        </div><small class="task-subline zIndex-1"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
+        </div><small class="task-subline"><time class="humanTimeFromNow" data-time="2015-10-16T16:17:23.000Z" title="10/16/2015 18:17">6 days 16 hours ago</time></small>
       </div>
     </div>
 
@@ -410,7 +410,7 @@
             </div>
           </div>
         </div>
-        <div class="article-content zIndex-5 bubble-gap">
+        <div class="article-content bubble-gap">
           <div class="internal-border">
             <div class="input form-group hide">
               <div class="formGroup-label">

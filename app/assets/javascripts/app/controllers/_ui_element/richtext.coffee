@@ -7,6 +7,13 @@ class App.UiElement.richtext
       mode:      attribute.type
       maxlength: attribute.maxlength
     )
+
+    if attribute.plugins
+      for plugin in attribute.plugins
+        params = plugin.params || {}
+        params.el = item.find('[contenteditable]').parent()
+        new App[plugin.controller](params)
+
     if attribute.upload
       item.append( $( App.view('generic/attachment')( attribute: attribute ) ) )
 

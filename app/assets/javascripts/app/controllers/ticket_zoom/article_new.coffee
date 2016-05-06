@@ -405,7 +405,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{ type }']").removeClass('hide')
 
     # detect current signature (use current group_id, if not set, use ticket.group_id)
-    ticketCurrent = App.Ticket.find(@ticket_id)
+    ticketCurrent = App.Ticket.fullLocal(@ticket_id)
     group_id = ticketCurrent.group_id
     task = App.TaskManager.get(@task_key)
     if task && task.state && task.state.ticket && task.state.ticket.group_id

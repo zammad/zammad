@@ -457,15 +457,20 @@ class App.Utils
       levels  = key.split(/\./)
       dataRef = objects
       for level in levels
-        if dataRef[level]
+        if level of dataRef
           dataRef = dataRef[level]
+        else
+          dataRef = ''
+          break
       if typeof dataRef is 'function'
         value = dataRef()
-      else if typeof dataRef is 'string'
-        value = dataRef
+      else if dataRef isnt undefined && dataRef isnt null && dataRef.toString
+        value = dataRef.toString()
       else
         value = ''
       #console.log( "tag replacement #{key}, #{value} env: ", objects)
+      if value is ''
+        value = '-'
       value
     )
 

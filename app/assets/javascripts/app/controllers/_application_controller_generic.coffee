@@ -1101,7 +1101,6 @@ class App.ObserverController extends App.Controller
     )
 
   subscribe: (object) =>
-    console.log('subscribe', object)
     @maybeRender(object)
 
   maybeRender: (object) =>
