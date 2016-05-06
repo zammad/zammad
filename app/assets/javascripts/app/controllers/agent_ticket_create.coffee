@@ -238,6 +238,23 @@ class App.TicketCreate extends App.Controller
         else
           @$('[data-name="body"]').find('[data-signature=true]').remove()
 
+    App.Ticket.configure_attributes.push {
+      name: 'cc'
+      display: 'Cc'
+      tag: 'input'
+      type: 'text'
+      maxlength: 1000
+      null: true
+      screen: {
+        create_top: {
+          Agent: {
+            null: true
+          }
+        }
+        create_middle: {}
+        edit: {}
+      }
+    }
     new App.ControllerForm(
       el:       @$('.ticket-form-top')
       form_id:  @form_id
@@ -290,6 +307,7 @@ class App.TicketCreate extends App.Controller
       filter:   @formMeta.filter
       params:   params
     )
+    App.Ticket.configure_attributes.pop()
 
     # set type selector
     @setFormTypeInUi( params['formSenderType'] )

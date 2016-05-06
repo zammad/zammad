@@ -2535,30 +2535,6 @@ ObjectManager::Attribute.add(
 )
 ObjectManager::Attribute.add(
   object: 'Ticket',
-  name: 'cc',
-  display: 'Cc',
-  data_type: 'input',
-  data_option: {
-    type: 'text',
-    maxlength: 1000,
-    null: true,
-  },
-  editable: false,
-  active: true,
-  screens: {
-    create_top: {
-      Agent: {
-        null: true,
-      },
-    },
-    create_middle: {},
-    edit: {}
-  },
-  pending_migration: false,
-  position: 11,
-)
-ObjectManager::Attribute.add(
-  object: 'Ticket',
   name: 'type',
   display: 'Type',
   data_type: 'select',
