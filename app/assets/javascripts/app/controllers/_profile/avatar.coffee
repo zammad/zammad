@@ -128,7 +128,7 @@ class Index extends App.Controller
       )
 
     # add resized image
-    App.ImageService.resizeForAvatar( src, 'auto', 160, store )
+    App.ImageService.resizeForAvatar(src, 'auto', 160, store)
 
   onUpload: (event) =>
     callback = @storeImage

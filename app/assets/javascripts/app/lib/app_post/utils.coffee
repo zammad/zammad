@@ -206,6 +206,13 @@ class App.Utils
       .removeAttr('lang')
       .removeAttr('type')
     html
+      .removeAttr('style')
+      .removeAttr('class')
+      .removeAttr('title')
+      .removeAttr('lang')
+      .removeAttr('type')
+
+    html
 
   @_removeComments: (html) ->
     html.contents().each( ->

@@ -191,10 +191,10 @@ class App.ControllerForm extends App.Controller
   ###
 
   formGenItem: (attribute_config, classname, form, attribute_count) ->
-    attribute = clone( attribute_config, true )
+    attribute = clone(attribute_config, true)
 
     # create item id
-    attribute.id = classname + '_' + attribute.name
+    attribute.id = "#{classname}_#{attribute.name}"
 
     # set label class name
     attribute.label_class = @model.labelClass

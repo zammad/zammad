@@ -187,6 +187,43 @@
       e.preventDefault()
       _this.log('paste')
 
+      // insert and in case, resize images
+      var clipboardData = e.originalEvent.clipboardData
+      if (clipboardData && clipboardData.items) {
+        var imageInserted = false
+        jQuery.each(clipboardData.items, function(index, item){
+          console.log(index, item)
+          if (item.kind == 'file' && item.type == 'image/png') {
+            _this.log('paste image', item)
+
+            var imageFile = item.getAsFile()
+            var reader = new FileReader()
+
+            reader.onload = function (e) {
+              var result = e.target.result
+              var img = document.createElement('img')
+              img.src = result
+
+              insert = function(dataUrl, width, height) {
+                //console.log('dataUrl', dataUrl)
+                _this.log('image inserted')
+                result = dataUrl
+                img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
+                document.execCommand('insertHTML', false, img)
+              }
+
+              // resize if to big
+              App.ImageService.resize(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
+            }
+            reader.readAsDataURL(imageFile)
+            imageInserted = true
+          }
+        })
+      }
+      if (imageInserted) {
+        return
+      }
+
       // check existing + paste text for limit
       var text = e.originalEvent.clipboardData.getData('text/html')
       var docType = 'html'

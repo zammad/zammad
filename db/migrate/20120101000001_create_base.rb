@@ -56,7 +56,7 @@ class CreateBase < ActiveRecord::Migration
 
     create_table :signatures do |t|
       t.string :name,                 limit: 100,  null: false
-      t.string :body,                 limit: 5000, null: true
+      t.text :body,                   limit: 10.megabytes + 1, null: true
       t.boolean :active,                           null: false, default: true
       t.string :note,                 limit: 250,  null: true
       t.integer :updated_by_id,                    null: false
