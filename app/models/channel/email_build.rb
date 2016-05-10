@@ -82,9 +82,23 @@ module Channel::EmailBuild
     if html_alternative
       html_container = Mail::Part.new { content_type 'multipart/related' }
       html_container.add_part html_alternative
-      alternative_bodies.add_part html_container
 
       # place to add inline attachments related to html alternative
+      if attr[:attachments]
+        attr[:attachments].each do |attachment|
+          next if attachment.class == Hash
+          next if attachment.preferences['Content-ID'].empty?
+          attachment = Mail::Part.new do
+            content_type attachment.preferences['Content-Type']
+            content_id attachment.preferences['Content-ID']
+            content_disposition attachment.preferences['Content-Disposition'] || 'inline'
+            content_transfer_encoding 'binary'
+            body attachment.content.force_encoding('BINARY')
+          end
+          html_container.add_part attachment
+        end
+      end
+      alternative_bodies.add_part html_container
     end
 
     mail.add_part alternative_bodies
@@ -96,11 +110,12 @@ module Channel::EmailBuild
           attachment['content-id'] = nil
           mail.attachments[ attachment[:filename] ] = attachment
         else
+          next if !attachment.preferences['Content-ID'].empty?
           mail.attachments[attachment.filename] = {
-            :content_type => attachment.preferences['Content-Type'],
-            :mime_type    => attachment.preferences['Mime-Type'],
-            :content      => attachment.content,
-            'content-id'  => nil,
+            content_disposition: attachment.preferences['Content-Disposition'] || 'attachment',
+            content_type: attachment.preferences['Content-Type'],
+            mime_type: attachment.preferences['Mime-Type'],
+            content: attachment.content,
           }
         end
       end

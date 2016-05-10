@@ -67,7 +67,7 @@ class SettingsController < ApplicationController
     if params[:logo_resize] && params[:logo_resize] =~ /^data:image/i
 
       # data:image/png;base64
-      file = StaticAssets.data_url_attributes( params[:logo_resize] )
+      file = StaticAssets.data_url_attributes(params[:logo_resize])
 
       # store image 1:1
       setting.state = StaticAssets.store( file[:content], file[:mime_type] )

@@ -7,5 +7,6 @@ class ContenteditableIamges < ActiveRecord::Migration
     change_column :text_modules, :content, :text, limit: 10.megabytes + 1, null: false
     change_column :signatures, :body, :text, limit: 10.megabytes + 1, null: true
     change_column :ticket_articles, :body, :text, limit: 20.megabytes + 1, null: false
+    change_column :taskbars, :state, :text, limit: 20.megabytes + 1, null: true
   end
 end

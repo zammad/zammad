@@ -250,7 +250,7 @@ class TicketsController < ApplicationController
     links.each { |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
-        linked_ticket = Ticket.lookup( id: item['link_object_value'] )
+        linked_ticket = Ticket.lookup(id: item['link_object_value'])
         assets = linked_ticket.assets(assets)
       end
     }
@@ -534,8 +534,30 @@ class TicketsController < ApplicationController
     # create article if given
     form_id = params[:form_id]
     params.delete(:form_id)
-    article = Ticket::Article.new( Ticket::Article.param_validation( params ) )
+    article = Ticket::Article.new(Ticket::Article.param_validation( params ))
     article.ticket_id = ticket.id
+
+    # store dataurl images to store
+    if form_id && article.body && article.content_type =~ %r{text/html}i
+      article.body.gsub!( %r{(<img\s.+?src=")(data:image/(jpeg|png);base64,.+?)">}i ) { |_item|
+        file_attributes = StaticAssets.data_url_attributes($2)
+        cid = "#{ticket.id}.#{form_id}.#{rand(999_999)}@#{Setting.get('fqdn')}"
+        headers_store = {
+          'Content-Type' => file_attributes[:mime_type],
+          'Mime-Type' => file_attributes[:mime_type],
+          'Content-ID' => cid,
+          'Content-Disposition' => 'inline',
+        }
+        store = Store.add(
+          object: 'UploadCache',
+          o_id: form_id,
+          data: file_attributes[:content],
+          filename: cid,
+          preferences: headers_store
+        )
+        "#{$1}cid:#{cid}\">"
+      }
+    end
 
     # find attachments in upload cache
     if form_id

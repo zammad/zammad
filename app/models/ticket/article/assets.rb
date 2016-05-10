@@ -39,6 +39,20 @@ returns
 
       # add attachment list to article
       data[ Ticket::Article.to_app_model ][ id ]['attachments'] = attachments
+
+      if !data[ Ticket::Article.to_app_model ][ id ]['attachments'].empty?
+        if data[ Ticket::Article.to_app_model ][ id ]['content_type'] =~ %r{text/html}i
+          if data[ Ticket::Article.to_app_model ][ id ]['body'] =~ /<img/i
+
+            # insert inline images with urls
+            attributes = Ticket::Article.insert_urls(
+              data[ Ticket::Article.to_app_model ][ id ],
+              data[ Ticket::Article.to_app_model ][ id ]['attachments']
+            )
+            data[ Ticket::Article.to_app_model ][ id ] = attributes
+          end
+        end
+      end
     end
 
     %w(created_by_id updated_by_id).each {|local_user_id|
