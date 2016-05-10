@@ -188,7 +188,18 @@
       _this.log('paste')
 
       // insert and in case, resize images
-      var clipboardData = e.originalEvent.clipboardData
+      var clipboardData
+      if (window.clipboardData) { // ie
+        clipboardData = window.clipboardData
+      }
+      else if (e.originalEvent.clipboardData) { // other browsers
+        clipboardData = e.originalEvent.clipboardData
+      }
+      else {
+        throw "No clipboardData support"
+      }
+
+      var clipboardData = e.clipboardData || e.originalEvent.clipboardData
       if (clipboardData && clipboardData.items) {
         var imageInserted = false
         jQuery.each(clipboardData.items, function(index, item){
@@ -225,15 +236,15 @@
       }
 
       // check existing + paste text for limit
-      var text = e.originalEvent.clipboardData.getData('text/html')
+      var text = clipboardData.getData('text/html')
       var docType = 'html'
       if (!text || text.length === 0) {
           docType = 'text'
-          text = e.originalEvent.clipboardData.getData('text/plain')
+          text = clipboardData.getData('text/plain')
       }
       if (!text || text.length === 0) {
           docType = 'text2'
-          text = e.originalEvent.clipboardData.getData('text')
+          text = clipboardData.getData('text')
       }
       _this.log('paste', docType, text)
 
@@ -277,6 +288,74 @@
       document.execCommand('insertHTML', false, text)
       return true
     })
+
+    this.$element.on('dragover', function (e) {
+      e.stopPropagation()
+      e.preventDefault()
+      _this.log('dragover')
+    })
+
+    this.$element.on('drop', function (e) {
+      e.stopPropagation();
+      e.preventDefault();
+      _this.log('drop')
+
+      var dataTransfer
+      if (window.dataTransfer) { // ie
+        dataTransfer = window.dataTransfer
+      }
+      else if (e.originalEvent.dataTransfer) { // other browsers
+        dataTransfer = e.originalEvent.dataTransfer
+      }
+      else {
+        throw "No clipboardData support"
+      }
+
+      // x and y coordinates of dropped item
+      x = e.clientX
+      y = e.clientY
+      var file = dataTransfer.files[0]
+
+      // look for images
+      if (file.type.match('image.*')) {
+        var reader = new FileReader()
+        reader.onload = (function(e) {
+          var result = e.target.result
+          var img = document.createElement('img')
+          img.src = result
+
+          //Insert the image at the carat
+          insert = function(dataUrl, width, height) {
+
+            //console.log('dataUrl', dataUrl)
+            _this.log('image inserted')
+            result = dataUrl
+            img = $("<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
+            img = img.get(0)
+
+            if (document.caretPositionFromPoint) {
+              var pos = document.caretPositionFromPoint(x, y)
+              range = document.createRange();
+              range.setStart(pos.offsetNode, pos.offset)
+              range.collapse()
+              range.insertNode(img)
+            }
+            else if (document.caretRangeFromPoint) {
+              range = document.caretRangeFromPoint(x, y)
+              range.insertNode(img)
+            }
+            else {
+              console.log('could not find carat')
+            }
+          }
+
+          // resize if to big
+          App.ImageService.resize(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
+        })
+        reader.readAsDataURL(file)
+      }
+    })
+
   }
 
   // check if key is allowed, even if length limit is reached
