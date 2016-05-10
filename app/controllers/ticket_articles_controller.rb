@@ -12,7 +12,7 @@ class TicketArticlesController < ApplicationController
 
   # GET /articles/1
   def show
-    @article = Ticket::Article.find( params[:id] )
+    @article = Ticket::Article.find(params[:id])
 
     render json: @article
   end
@@ -21,7 +21,7 @@ class TicketArticlesController < ApplicationController
   def create
     form_id = params[:ticket_article][:form_id]
     params[:ticket_article].delete(:form_id)
-    @article = Ticket::Article.new( Ticket::Article.param_validation( params[:ticket_article] ) )
+    @article = Ticket::Article.new(Ticket::Article.param_validation( params[:ticket_article]))
 
     # find attachments in upload cache
     if form_id
@@ -47,9 +47,9 @@ class TicketArticlesController < ApplicationController
 
   # PUT /articles/1
   def update
-    @article = Ticket::Article.find( params[:id] )
+    @article = Ticket::Article.find(params[:id])
 
-    if @article.update_attributes( Ticket::Article.param_validation( params[:ticket_article] ) )
+    if @article.update_attributes(Ticket::Article.param_validation(params[:ticket_article]))
       render json: @article, status: :ok
     else
       render json: @article.errors, status: :unprocessable_entity
@@ -58,7 +58,7 @@ class TicketArticlesController < ApplicationController
 
   # DELETE /articles/1
   def destroy
-    @article = Ticket::Article.find( params[:id] )
+    @article = Ticket::Article.find(params[:id])
     @article.destroy
 
     head :ok
@@ -125,14 +125,14 @@ class TicketArticlesController < ApplicationController
   def attachment
 
     # permission check
-    ticket = Ticket.find( params[:ticket_id] )
+    ticket = Ticket.lookup(id: params[:ticket_id])
     if !ticket_permission(ticket)
-      render( json: 'No such ticket.', status: :unauthorized )
+      render(json: 'No such ticket.', status: :unauthorized)
       return
     end
-    article = Ticket::Article.find( params[:article_id] )
+    article = Ticket::Article.find(params[:article_id])
     if ticket.id != article.ticket_id
-      render( json: 'No access, article_id/ticket_id is not matching.', status: :unauthorized )
+      render(json: 'No access, article_id/ticket_id is not matching.', status: :unauthorized)
       return
     end
 
@@ -144,7 +144,7 @@ class TicketArticlesController < ApplicationController
       end
     }
     if !access
-      render( json: 'Requested file id is not linked with article_id.', status: :unauthorized )
+      render(json: 'Requested file id is not linked with article_id.', status: :unauthorized)
       return
     end
 
@@ -162,8 +162,8 @@ class TicketArticlesController < ApplicationController
   def article_plain
 
     # permission check
-    article = Ticket::Article.find( params[:id] )
-    return if !ticket_permission( article.ticket )
+    article = Ticket::Article.find(params[:id])
+    return if !ticket_permission(article.ticket)
 
     list = Store.list(
       object: 'Ticket::Article::Mail',
