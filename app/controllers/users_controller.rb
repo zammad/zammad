@@ -50,7 +50,8 @@ class UsersController < ApplicationController
       return
     end
 
-    user = User.find(params[:id])
+    user = User.find(params[:id]).attributes_with_associations
+    user.delete('password')
     render json: user
   end
 
@@ -159,7 +160,8 @@ class UsersController < ApplicationController
           }
         )
       end
-      user_new = User.find(user.id)
+      user_new = User.find(user.id).attributes_with_associations
+      user_new.delete('password')
       render json: user_new, status: :created
     rescue => e
       render json: model_match_error(e.message), status: :unprocessable_entity
@@ -206,7 +208,8 @@ class UsersController < ApplicationController
       end
 
       # get new data
-      user_new = User.find( params[:id] )
+      user_new = User.find(params[:id]).attributes_with_associations
+      user_new.delete('password')
       render json: user_new, status: :ok
     rescue => e
       render json: { error: e.message }, status: :unprocessable_entity
