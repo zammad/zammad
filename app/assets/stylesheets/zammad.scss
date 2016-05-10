@@ -4330,6 +4330,7 @@ footer {
 .ticket-article-item {
   padding-bottom: 33px;
   position: relative;
+  z-index: 1; // fixed chrome 49 + flex issue, not shown article
 
   .avatar {
     position: absolute;
@@ -4590,6 +4591,7 @@ footer {
 
 .article-add {
   position: relative;
+  z-index: 1; // fixed chrome 49 + flex issue, not shown article
 }
 
 .article-new {
