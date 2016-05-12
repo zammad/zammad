@@ -8124,6 +8124,18 @@ output {
   animation: pulsate 667ms ease-in-out infinite alternate;
 }
 
+.richtext-content pre {
+  padding: 15px;
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 10px 0;
+  background: hsl(0,0%,97%);
+  white-space: pre-wrap;
+  border-radius: 3px;
+  border: none;
+  overflow: auto;
+}
+
 /*
 
   ----------------
