@@ -200,36 +200,35 @@
       }
 
       var clipboardData = e.clipboardData || e.originalEvent.clipboardData
-      if (clipboardData && clipboardData.items) {
+      if (clipboardData && clipboardData.items && clipboardData.items[0]) {
         var imageInserted = false
-        jQuery.each(clipboardData.items, function(index, item){
-          console.log(index, item)
-          if (item.kind == 'file' && item.type == 'image/png') {
-            _this.log('paste image', item)
+        var item = clipboardData.items[0]
+        if (item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')) {
+          _this.log('paste image', item)
+          console.log(item)
 
-            var imageFile = item.getAsFile()
-            var reader = new FileReader()
+          var imageFile = item.getAsFile()
+          var reader = new FileReader()
 
-            reader.onload = function (e) {
-              var result = e.target.result
-              var img = document.createElement('img')
-              img.src = result
+          reader.onload = function (e) {
+            var result = e.target.result
+            var img = document.createElement('img')
+            img.src = result
 
-              insert = function(dataUrl, width, height) {
-                //console.log('dataUrl', dataUrl)
-                _this.log('image inserted')
-                result = dataUrl
-                img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
-                document.execCommand('insertHTML', false, img)
-              }
-
-              // resize if to big
-              App.ImageService.resize(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
+            insert = function(dataUrl, width, height) {
+              //console.log('dataUrl', dataUrl)
+              _this.log('image inserted')
+              result = dataUrl
+              img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
+              document.execCommand('insertHTML', false, img)
             }
-            reader.readAsDataURL(imageFile)
-            imageInserted = true
+
+            // resize if to big
+            App.ImageService.resize(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
           }
-        })
+          reader.readAsDataURL(imageFile)
+          imageInserted = true
+        }
       }
       if (imageInserted) {
         return
