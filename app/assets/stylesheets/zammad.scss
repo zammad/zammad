@@ -5278,7 +5278,7 @@ footer {
   }
   
   & > .box {
-    flex: 1;
+    width: calc(50% - 47px);
     margin: 34px;
   }
 
@@ -5288,6 +5288,7 @@ footer {
   }
 
   .boxFade {
+    width: 94px;
     top: 34px;
     height: 100%;
     position: absolute;
