@@ -205,13 +205,16 @@ class App.Utils
       .removeAttr('title')
       .removeAttr('lang')
       .removeAttr('type')
+      .removeAttr('id')
+      .removeAttrs(/data-/)
     html
       .removeAttr('style')
       .removeAttr('class')
       .removeAttr('title')
       .removeAttr('lang')
       .removeAttr('type')
-
+      .removeAttr('id')
+      .removeAttrs(/data-/)
     html
 
   @_removeComments: (html) ->

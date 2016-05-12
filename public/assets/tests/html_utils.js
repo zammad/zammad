@@ -432,6 +432,11 @@ test("htmlCleanup", function() {
   result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
+  source = "<div><p id=\"123\" data-id=\"abc\">some link to somewhere</p></div>"
+  should = "<p>some link to somewhere</p>"
+  result = App.Utils.htmlCleanup($(source))
+  equal(result.html(), should, source)
+
   source = "<div><small>some link to somewhere</small></a>"
   //should = "<div>some link to somewhere</div>"
   should = "some link to somewhere"
