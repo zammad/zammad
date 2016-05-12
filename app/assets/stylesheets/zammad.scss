@@ -8127,8 +8127,9 @@ output {
 .richtext-content {
   p, table, pre {    
     margin-bottom: 16px;
-    
+  }
 
+  & > p, & > table, & > pre {
     &:first-child {
       margin-top: 6px;
     }
