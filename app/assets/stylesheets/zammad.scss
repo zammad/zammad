@@ -8124,16 +8124,63 @@ output {
   animation: pulsate 667ms ease-in-out infinite alternate;
 }
 
-.richtext-content pre {
-  padding: 15px;
-  font-size: 13px;
-  line-height: 1.45;
-  margin: 10px 0;
-  background: hsl(0,0%,97%);
-  white-space: pre-wrap;
-  border-radius: 3px;
-  border: none;
-  overflow: auto;
+.richtext-content {
+  p, table, pre {    
+    margin-bottom: 16px;
+    
+
+    &:first-child {
+      margin-top: 6px;
+    }
+
+    &:last-child {
+      margin-bottom: 6px;
+    }
+  }
+
+  table {
+    border: none;
+    table-layout: auto;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: keep-all;
+    
+    td, th {
+      padding: 7px 12px;
+      border: 1px solid hsl(0,0%,87%);
+    }
+
+    th {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+      background: hsl(0,0%,97%);
+    }
+
+    col {
+      width: auto;
+    }
+  }
+
+  code {
+    border: none;
+    background: hsl(0,0%,97%);
+    white-space: normal;
+  }
+
+  pre {
+    padding: 15px;
+    font-size: 13px;
+    line-height: 1.45;
+    background: hsl(0,0%,97%);
+    white-space: pre-wrap;
+    border-radius: 3px;
+    border: none;
+    overflow: auto;
+  }
 }
 
 /*
