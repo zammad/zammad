@@ -4430,12 +4430,6 @@ footer {
     p {
       margin: 0;
     }
-
-    blockquote,
-    pre {
-      margin: 0px;
-      padding: 8px 12px 8px 12px;
-    }
   }
 
   .ticket-article-item.state--folde-out .textBubble {
@@ -8126,11 +8120,17 @@ output {
 }
 
 .richtext-content {
-  p, table, pre {    
+  p,
+  table,
+  pre,
+  blockquote {    
     margin-bottom: 16px;
   }
 
-  & > p, & > table, & > pre {
+  & > p,
+  & > table,
+  & > pre,
+  & > blockquote {
     &:first-child {
       margin-top: 6px;
     }
@@ -8167,6 +8167,11 @@ output {
     }
   }
 
+  blockquote {
+    padding: 8px 12px;
+    border-left: 5px solid #eee;
+  }
+
   code {
     border: none;
     background: hsl(0,0%,97%);
@@ -8174,7 +8179,7 @@ output {
   }
 
   pre {
-    padding: 15px;
+    padding: 12px 15px;
     font-size: 13px;
     line-height: 1.45;
     background: hsl(0,0%,97%);
