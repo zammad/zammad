@@ -182,7 +182,7 @@ class ImageCropper extends App.ControllerModal
         @image.attr src: dataUrl
 
     # resize if to big
-    App.ImageService.resize(@imageSource, 800, 'auto', 2, 'image/jpeg', 0.9, show)
+    App.ImageService.resize(@imageSource, 600, 'auto', 2, 'image/jpeg', 0.9, show)
 
   orientateImage: (e) =>
     image  = e.currentTarget
