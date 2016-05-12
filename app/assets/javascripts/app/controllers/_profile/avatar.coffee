@@ -96,7 +96,7 @@ class Index extends App.Controller
           replaceAvatar.text(activeAvatar.text())
           replaceAvatar.addClass('unique')
         else
-          replaceAvatar.text( '' )
+          replaceAvatar.text('')
           replaceAvatar.removeClass('unique')
     )
     avatar
@@ -122,7 +122,7 @@ class Index extends App.Controller
         )
         processData: true
         success: (data, status, xhr) =>
-          avatarHolder = $(App.view('profile/avatar-holder')( src: src, avatar: data.avatar ) )
+          avatarHolder = $(App.view('profile/avatar-holder')(src: src, avatar: data.avatar))
           @avatarGallery.append(avatarHolder)
           @pick avatarHolder.find('.avatar')
       )
@@ -143,8 +143,7 @@ class Index extends App.Controller
 
       reader.readAsDataURL(@)
 
-App.Config.set( 'Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index }, 'NavBarProfile' )
-
+App.Config.set('Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index }, 'NavBarProfile')
 
 class ImageCropper extends App.ControllerModal
   buttonClose: true
@@ -173,13 +172,17 @@ class ImageCropper extends App.ControllerModal
     if @angle == undefined
       @angle = 0
 
-    if @angle != 0
-      @isOrientating = true
-      image = new Image()
-      image.addEventListener 'load', @orientateImage
-      image.src = @imageSource
-    else
-      @image.attr src: @imageSource
+    show = (dataUrl) =>
+      if @angle != 0
+        @isOrientating = true
+        image = new Image()
+        image.addEventListener 'load', @orientateImage
+        image.src = dataUrl
+      else
+        @image.attr src: dataUrl
+
+    # resize if to big
+    App.ImageService.resize(@imageSource, 800, 'auto', 2, 'image/jpeg', 0.9, show)
 
   orientateImage: (e) =>
     image  = e.currentTarget
@@ -215,11 +218,11 @@ class ImageCropper extends App.ControllerModal
       minContainerHeight: 300
       preview: '.imageCropper-preview'
 
-  onSubmit: =>
+  onSubmit: (e) =>
+    @formDisable(e)
     @callback( @image.cropper('getCroppedCanvas').toDataURL() )
     @image.cropper('destroy')
     @close()
-
 
 class Camera extends App.ControllerModal
   buttonClose: true
@@ -283,7 +286,7 @@ class Camera extends App.ControllerModal
     # in case the modal is closed before the
     # request was fullfilled
     if @hidden
-      @stream.stop()
+      @stopStream()
       return
 
     # cache stream so that we can later turn it off
@@ -401,11 +404,20 @@ class Camera extends App.ControllerModal
     @video.attr height: @size
 
   onClose: =>
-    @stream.stop() if @stream
+    @stopStream()
     @hidden = true
 
-  onSubmit: =>
+  onSubmit: (e) =>
+    @formDisable(e)
+
     # send picture to the callback
     window.file = @cache.get(0).toDataURL()
     @callback @cache.get(0).toDataURL()
     @close()
+
+  stopStream: =>
+    return if !@stream
+    if @stream.getTracks
+      @stream.getTracks().forEach( (track) -> track.stop() )
+    if @stream.stop
+      @stream.stop()
