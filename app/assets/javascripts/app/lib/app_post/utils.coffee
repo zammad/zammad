@@ -174,7 +174,7 @@ class App.Utils
     replacementTag = 'div';
 
     # Replace all x tags with the type of replacementTag
-    html.find('h1, h2, h3, h4, h5, h6, textarea').each( ->
+    html.find('textarea').each( ->
       outer = @outerHTML;
 
       # Replace opening tag
@@ -189,7 +189,7 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('font, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
+    html.find('font, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
 
     html
 

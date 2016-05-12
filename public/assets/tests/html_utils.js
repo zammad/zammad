@@ -428,8 +428,7 @@ test("htmlCleanup", function() {
   equal(result.html(), should, source)
 
   source = "<div><h1>some link to somewhere</h1></div>"
-  //should = "<div><div>some link to somewhere</div></div>"
-  should = "<div>some link to somewhere</div>"
+  should = "<h1>some link to somewhere</h1>"
   result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
@@ -446,9 +445,7 @@ test("htmlCleanup", function() {
   equal(result.html(), should, source)
 
   source = "<div><h1>some h1 for somewhere</h1><p><hr></p></div>"
-  //should = "<div><div>some h1 for somewhere</div><p></p><p></p></div>"
-  should = "<div>some h1 for somewhere</div><p></p><p></p>"
-  //should = '<div>some h1 for somewhere</div>'
+  should = "<h1>some h1 for somewhere</h1><p></p><hr><p></p>"
   result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
