@@ -1,18 +1,18 @@
 Ticket ist eskaliert (<%= d 'ticket.title' %>)
 
-<p>Hallo <%= d 'recipient.firstname' %>,</p>
+<div>Hallo <%= d 'recipient.firstname' %>,</div>
 <br>
-<p>Ticket (<%= d 'ticket.title' %>) von "<b><%= d 'ticket.customer.longname' %></b>" ist seit "<%= d 'ticket.escalation_time' %>" eskaliert!</p>
+<div>Ticket (<%= d 'ticket.title' %>) von "<b><%= d 'ticket.customer.longname' %></b>" ist seit "<%= d 'ticket.escalation_time' %>" eskaliert!</div>
 <br>
 <% if @objects[:article] %>
-  <p>
+  <div>
   <%= t 'Information' %>:
   <blockquote type="cite">
   <%= a_html 'article' %>
   </blockquote>
-  </p>
+  </div>
 <% end %>
 <br>
-<p>
+<div>
   <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>" target="zammad_app"><%= t 'View this in Zammad' %></a>
-</p>
+</div>

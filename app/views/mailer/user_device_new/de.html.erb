@@ -1,19 +1,19 @@
 <%= c 'product_name' %>-Anmeldung erfasst von einem neuen Gerät
 
-<p>Hallo <%= d 'user.firstname' %>,</p>
+<div>Hallo <%= d 'user.firstname' %>,</div>
 <br>
-<p>es sieht aus, als ob Du Dich mit <b>einem neuen Gerät</b> um "<%= d 'user_device.created_at' %>" angemeldet hast:</p>
+<div>es sieht aus, als ob Du Dich mit <b>einem neuen Gerät</b> um "<%= d 'user_device.created_at' %>" angemeldet hast:</div>
 <br>
-<p>
+<div>
 Dein Gerät: <%= d 'user_device.name' %><br>
 Deine Lokation (relativ): <%= d 'user_device.location' %><br>
 Deine IP: <%= d 'user_device.ip' %><br>
-</p>
+</div>
 <br>
-<p>Das Gerät wurde in die Liste der bekannten Geräte hinzugefügt, diese Liste kannst Du hier einsehen:</p>
+<div>Das Gerät wurde in die Liste der bekannten Geräte hinzugefügt, diese Liste kannst Du hier einsehen:</div>
 <br>
-<p><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</p>
+<div><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</div>
 <br>
-<p>Wenn dies nicht Du warst, entferne das Gerät aus der Liste, ändere Dein Account-Passwort und kontaktieren Deinen Administrator. Jemand könnte unberechtigten Zugriff auf Dein Konto bekommen haben.</p>
+<div>Wenn dies nicht Du warst, entferne das Gerät aus der Liste, ändere Dein Account-Passwort und kontaktieren Deinen Administrator. Jemand könnte unberechtigten Zugriff auf Dein Konto bekommen haben.</div>
 <br>
-<p>Dein <%= c 'product_name' %> Team</p>
+<div>Dein <%= c 'product_name' %> Team</div>

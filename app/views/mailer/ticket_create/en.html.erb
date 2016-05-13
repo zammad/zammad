@@ -1,24 +1,24 @@
 New Ticket (<%= d 'ticket.title' %>)
 
-<p>Hi <%= d 'recipient.firstname' %>,</p>
+<div>Hi <%= d 'recipient.firstname' %>,</div>
 <br>
-<p>A new ticket (<%= d 'ticket.title' %>) has been created by "<b><%= d 'current_user.longname' %></b>".</p>
+<div>A new ticket (<%= d 'ticket.title' %>) has been created by "<b><%= d 'current_user.longname' %></b>".</div>
 <br>
-<p>
+<div>
 <%= t 'Group' %>: <%= d 'ticket.group.name' %><br>
 <%= t 'Owner' %>: <%= d 'ticket.owner.fullname' %><br>
 <%= t 'State' %>: <%= t d 'ticket.state.name' %><br>
-</p>
+</div>
 <br>
 <% if @objects[:article] %>
-  <p>
+  <div>
   <%= t 'Information' %>:
   <blockquote type="cite">
   <%= a_html 'article' %>
   </blockquote>
-  </p>
+  </div>
 <% end %>
 <br>
-<p>
+<div>
   <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>" target="zammad_app"><%= t 'View this in Zammad' %></a>
-</p>
+</div>

@@ -1,19 +1,19 @@
 <%= c 'product_name' %> signin detected from a new country
 
-<p>Hi <%= d 'user.firstname' %>,</p>
+<div>Hi <%= d 'user.firstname' %>,</div>
 <br>
-<p>It looks like you used your account with an <b>known device but from a new country</b> on "<%= d 'user_device.created_at' %>":</p>
+<div>It looks like you used your account with an <b>known device but from a new country</b> on "<%= d 'user_device.created_at' %>":</div>
 <br>
-<p>
+<div>
 Your device: <%= d 'user_device.name' %><br>
 Your location (relative): <%= d 'user_device.location' %><br>
-Your IP: <%= d 'user_device.ip' %><br
-</p>
+Your IP: <%= d 'user_device.ip' %><br>
+</div>
 <br>
-<p>The country has been added to your list of known devices, which you can view here:</p>
+<div>The country has been added to your list of known devices, which you can view here:</div>
 <br>
-<p><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</p>
+<div><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</div>
 <br>
-<p>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</p>
+<div>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</div>
 <br>
-<p>Your <%= c 'product_name' %> Team</p>
+<div>Your <%= c 'product_name' %> Team</div>
