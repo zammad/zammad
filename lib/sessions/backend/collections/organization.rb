@@ -5,10 +5,9 @@ class Sessions::Backend::Collections::Organization < Sessions::Backend::Collecti
 
     # get whole collection
     all = []
-    if !@user.role?('Customer')
-      all = Organization.all
-    elsif @user.organization_id
-      all = Organization.where(id: @user.organization_id)
+
+    if @user.organization_id
+      all = Organization.lookup(id: @user.organization_id)
     end
 
     all
