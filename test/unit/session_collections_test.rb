@@ -110,7 +110,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(check_if_collection_exists(result3, :Group), 'check collections - after touch')
 
     # change collection
-    organization = Organization.create( name: "SomeSessionOrg1::#{rand(999_999)}", active: true )
+    organization = Organization.create(name: "SomeSessionOrg1::#{rand(999_999)}", active: true)
 
     # get whole collections
     result1 = collection_client1.push
@@ -145,7 +145,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # assigne new org to customer1
     customer1.organization = organization
     customer1.save
-    sleep 4
+    sleep 5
 
     # users have no organization, so collection should be empty
     result1 = collection_client1.push
@@ -186,12 +186,16 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
           # sort array, database result maybe unsorted
           item_attributes = item[ key.to_s ]
-          if item[ key.to_s ] == Array
+          if item[ key.to_s ].class == Array
             item_attributes.sort!
+          end
+          if value.class == Array
+            value.sort!
           end
 
           # compare values
           if item_attributes != value
+            #p "FAILED: #{key} -> #{item_attributes.inspect} vs. #{value.inspect}"
             match_all = false
           end
         }
