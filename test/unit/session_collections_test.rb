@@ -183,7 +183,15 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       result[:collection][collection].each {|item|
         match_all = true
         attributes.each {|key, value|
-          if item[ key.to_s ] != value
+
+          # sort array, database result maybe unsorted
+          item_attributes = item[ key.to_s ]
+          if item[ key.to_s ] == Array
+            item_attributes.sort!
+          end
+
+          # compare values
+          if item_attributes != value
             match_all = false
           end
         }
