@@ -176,8 +176,13 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
   test 'b check client and backends' do
     # create users
-    roles  = Role.where(name: ['Agent'])
-    groups = Group.all
+    roles        = Role.where(name: ['Agent'])
+    groups       = Group.all
+    organization = Organization.create(
+      name: 'SomeOrg::' + rand(999_999).to_s, active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
     UserInfo.current_user_id = 1
     agent1 = User.create_or_update(
@@ -187,6 +192,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       email: 'session-agent1@example.com',
       password: 'agentpw',
       active: true,
+      organization: organization,
       roles: roles,
       groups: groups,
     )
@@ -199,12 +205,12 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       email: 'session-agent2@example.com',
       password: 'agentpw',
       active: true,
+      organization: organization,
       roles: roles,
       groups: groups,
     )
     agent2.roles = roles
     agent2.save
-    org = Organization.create(name: 'SomeOrg::' + rand(999_999).to_s, active: true)
 
     # create sessions
     client_id1_0 = '1234-1'

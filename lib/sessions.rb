@@ -10,7 +10,7 @@ module Sessions
   end
 
   # get working directories
-  @path = "#{@root}/tmp/websocket"
+  @path = "#{@root}/tmp/websocket_#{Rails.env}"
 
   # create global vars for threads
   @@client_threads = {} # rubocop:disable Style/ClassVars
@@ -19,7 +19,7 @@ module Sessions
 
 start new session
 
-  Sessions.create( client_id, session_data, { type: 'websocket' } )
+  Sessions.create(client_id, session_data, { type: 'websocket' })
 
 returns
 
@@ -215,7 +215,7 @@ returns
     path = "#{@path}/#{client_id}"
     data[:meta][:last_ping] = Time.now.utc.to_i
     content = data.to_json
-    File.open( path + '/session', 'wb' ) { |file|
+    File.open("#{path}/session", 'wb' ) { |file|
       file.write content
     }
     true
@@ -394,7 +394,7 @@ returns
     path  = "#{@path}/#{client_id}/"
     data  = []
     files = []
-    Dir.foreach( path ) {|entry|
+    Dir.foreach(path) {|entry|
       next if entry == '.'
       next if entry == '..'
       files.push entry
@@ -432,7 +432,7 @@ returns
     path = "#{@path}/spool/"
     FileUtils.mkpath path
     file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
-    File.open( file_path, 'wb' ) { |file|
+    File.open(file_path, 'wb') { |file|
       data = {
         msg: msg,
         timestamp: Time.now.utc.to_i,

@@ -7,7 +7,10 @@ class Sessions::Backend::Collections::Organization < Sessions::Backend::Collecti
     all = []
 
     if @user.organization_id
-      all = Organization.lookup(id: @user.organization_id)
+      organization = Organization.lookup(id: @user.organization_id)
+      if organization
+        all = [organization]
+      end
     end
 
     all

@@ -7,7 +7,6 @@ require 'eventmachine'
 require 'em-websocket'
 require 'json'
 require 'fileutils'
-require 'sessions'
 require 'optparse'
 require 'daemons'
 
@@ -16,6 +15,8 @@ dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 Dir.chdir dir
 RAILS_ENV = ENV['RAILS_ENV'] || 'development'
 require File.join(dir, 'config', 'environment')
+
+require 'sessions'
 
 # Look for -o with argument, and -I and -D boolean arguments
 @options = {

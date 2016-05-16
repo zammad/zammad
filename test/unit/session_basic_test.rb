@@ -187,13 +187,30 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'c collections organization' do
     require 'sessions/backend/collections/organization.rb'
     UserInfo.current_user_id = 2
-    user = User.lookup(id: 1)
-    org = Organization.create( name: 'SomeOrg1::' + rand(999_999).to_s, active: true )
 
-    collection_client1 = Sessions::Backend::Collections::Organization.new(user, {}, false, '123-1', 3)
-    collection_client2 = Sessions::Backend::Collections::Organization.new(user, {}, false, '234-2', 3)
+    # create users
+    roles        = Role.where(name: ['Agent'])
+    groups       = Group.all
+    organization = Organization.create( name: "SomeOrg1::#{rand(999_999)}", active: true )
 
-    # get whole collections - should be nil, no org exists!
+    agent2 = User.create_or_update(
+      login: 'session-agent-2',
+      firstname: 'Session',
+      lastname: 'Agent 2',
+      email: 'session-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      organization: organization,
+    )
+    agent2.roles = roles
+    agent2.save
+
+    collection_client1 = Sessions::Backend::Collections::Organization.new(agent2, {}, false, '123-1', 3)
+    collection_client2 = Sessions::Backend::Collections::Organization.new(agent2, {}, false, '234-2', 3)
+
+    # get collection - should be nil, no chnaged org exists!
     result1 = collection_client1.push
     assert(!result1.empty?, 'check collections')
     result2 = collection_client2.push
@@ -208,10 +225,12 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert(!result2, 'check collections - recall')
 
     # change collection
-    org = Organization.create(name: 'SomeOrg2::' + rand(999_999).to_s, active: true)
+    organization.name = "#{organization.name}-2"
+    organization.save
+    #organization = Organization.create(name: "SomeOrg2::#{rand(999_999)}", active: true)
     sleep 4
 
-    # get whole collections
+    # get collection
     result1 = collection_client1.push
     assert(!result1.empty?, 'check collections - after create')
     result2 = collection_client2.push
@@ -230,7 +249,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     organization.touch
     sleep 4
 
-    # get whole collections
+    # get collection
     result1 = collection_client1.push
     assert(!result1.empty?, 'check collections - after touch')
     result2 = collection_client2.push
@@ -264,7 +283,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     agent1 = User.create_or_update(
       login: 'activity-stream-agent-1',
       firstname: 'Session',
-      lastname: 'activity stream ' + rand(99_999).to_s,
+      lastname: "activity stream #{rand(99_999)}",
       email: 'activity-stream-agent1@example.com',
       password: 'agentpw',
       active: true,

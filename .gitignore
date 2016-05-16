@@ -12,7 +12,7 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
-/tmp/websocket/*
+/tmp/websocket*
 /tmp/cache*
 /tmp/pids/*
 /tmp/*.png
