@@ -40,12 +40,34 @@ class Transaction::ClearbitEnrichment
     Transaction::ClearbitEnrichment.sync_user(user)
   end
 
+=begin
+
+sync all users against clearbit
+
+  Transaction::ClearbitEnrichment.sync
+
+=end
+
   def self.sync
     users = User.of_role('Customer')
     users.each {|user|
       sync_user(user)
     }
   end
+
+=begin
+
+sync one users against clearbit
+
+  Transaction::ClearbitEnrichment.sync_user(user)
+
+users = [...]
+
+  users.each {|user|
+    Transaction::ClearbitEnrichment.sync_user(user)
+  }
+
+=end
 
   def self.sync_user(user)
     UserInfo.current_user_id = 1
