@@ -109,57 +109,6 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(result3, 'check collections - after touch')
     assert(check_if_collection_exists(result3, :Group), 'check collections - after touch')
 
-    # change collection
-    organization = Organization.create(name: "SomeSessionOrg1::#{rand(999_999)}", active: true)
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(result1, 'check collections - after create')
-    assert(!check_if_collection_exists(result1, :Organization), 'check collections - after create')
-    result2 = collection_client2.push
-    assert(result2, 'check collections - after create')
-    assert(!check_if_collection_exists(result2, :Organization), 'check collections - after create')
-    result3 = collection_client3.push
-    assert(result3, 'check collections - after create')
-    assert(!check_if_collection_exists(result3, :Organization), 'check collections - after create')
-
-    # assigne new org to agent1
-    agent1.organization = organization
-    agent1.save
-    sleep 4
-
-    # user has new organization
-    result1 = collection_client1.push
-    assert(result1, 'check collections - after create')
-    assert(check_if_collection_exists(result1, :Organization, { id: organization.id, member_ids: [agent1.id] }), 'check collections - after create with attributes')
-    sleep 0.3
-
-    # users have no organization, so collection should be empty
-    result2 = collection_client2.push
-    assert(result2, 'check collections - after create')
-    assert(!check_if_collection_exists(result2, :Organization), 'check collections - after create')
-    result3 = collection_client3.push
-    assert(result3, 'check collections - after create')
-    assert(!check_if_collection_exists(result3, :Organization), 'check collections - after create')
-
-    # assigne new org to customer1
-    customer1.organization = organization
-    customer1.save
-    sleep 5
-
-    # users have no organization, so collection should be empty
-    result1 = collection_client1.push
-    assert(result1, 'check collections - after create')
-    assert(check_if_collection_exists(result1, :Organization, { id: organization.id, member_ids: [agent1.id, customer1.id] }), 'check collections - after create with attributes')
-    result2 = collection_client2.push
-    assert(result2, 'check collections - after create')
-    assert(!check_if_collection_exists(result2, :Organization), 'check collections - after create')
-
-    # user has new organization
-    result3 = collection_client3.push
-    assert(result3, 'check collections - after create')
-    assert(check_if_collection_exists(result3, :Organization, { id: organization.id, member_ids: [agent1.id, customer1.id] }), 'check collections - after create with attributes')
-
     # next check should be empty
     sleep 1
     result1 = collection_client1.push

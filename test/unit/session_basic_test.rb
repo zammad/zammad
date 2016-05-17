@@ -2,6 +2,12 @@
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
+
+  user = User.lookup(id: 1)
+  roles = Role.where(name: %w(Agent Admin))
+  user.roles = roles
+  user.save
+
   test 'a cache' do
     Sessions::CacheIn.set('last_run_test', true, { expires_in: 2.seconds })
     result = Sessions::CacheIn.get('last_run_test')
@@ -176,84 +182,6 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert(!result1, 'check collections - after destroy - recall')
     result2 = collection_client2.push
     assert(!result2, 'check collections - after destroy - recall')
-    assert_equal(result1, result2, 'check collections')
-  end
-
-  user = User.lookup(id: 1)
-  roles = Role.where(name: %w(Agent Admin))
-  user.roles = roles
-  user.save
-
-  test 'c collections organization' do
-    require 'sessions/backend/collections/organization.rb'
-    UserInfo.current_user_id = 2
-
-    # create users
-    roles        = Role.where(name: ['Agent'])
-    groups       = Group.all
-    organization = Organization.create( name: "SomeOrg1::#{rand(999_999)}", active: true )
-
-    agent2 = User.create_or_update(
-      login: 'session-agent-2',
-      firstname: 'Session',
-      lastname: 'Agent 2',
-      email: 'session-agent2@example.com',
-      password: 'agentpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-      organization: organization,
-    )
-    agent2.roles = roles
-    agent2.save
-
-    collection_client1 = Sessions::Backend::Collections::Organization.new(agent2, {}, false, '123-1', 3)
-    collection_client2 = Sessions::Backend::Collections::Organization.new(agent2, {}, false, '234-2', 3)
-
-    # get collection - should be nil, no chnaged org exists!
-    result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections')
-    result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections')
-    assert_equal(result1, result2, 'check collections')
-
-    # next check - should still be nil, no org exists!
-    result1 = collection_client1.push
-    assert(!result1, 'check collections - recall')
-    sleep 0.6
-    result2 = collection_client2.push
-    assert(!result2, 'check collections - recall')
-
-    # change collection
-    organization.name = "#{organization.name}-2"
-    organization.save
-    #organization = Organization.create(name: "SomeOrg2::#{rand(999_999)}", active: true)
-    sleep 4
-
-    # get collection
-    result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections - after create')
-    result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections - after create')
-    assert_equal(result1, result2, 'check collections')
-
-    sleep 4
-
-    # next check should be empty
-    result1 = collection_client1.push
-    assert(!result1, 'check collections - after create recall')
-    result2 = collection_client2.push
-    assert(!result2, 'check collections - after create recall')
-
-    organization = Organization.first
-    organization.touch
-    sleep 4
-
-    # get collection
-    result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections - after touch')
-    result2 = collection_client2.push
-    assert(!result1.empty?, 'check collections - after touch')
     assert_equal(result1, result2, 'check collections')
   end
 
