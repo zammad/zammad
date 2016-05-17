@@ -111,6 +111,7 @@
       //  altKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
       //  altKey + ctrlKey + v -> Toggles the current selection between strike and non-strike
       //  altKey + ctrlKey + f -> Removes the formatting tags from the current selection
+      //  altKey + ctrlKey + y -> Removes the formatting from while textarea
       //  altKey + ctrlKey + z -> Inserts a Horizontal Rule
       //  altKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
       //  altKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
@@ -125,7 +126,8 @@
         || e.keyCode == 76
         || e.keyCode == 75
         || e.keyCode == 86
-        || e.keyCode == 87)) {
+        || e.keyCode == 87
+        || e.keyCode == 89)) {
         e.preventDefault()
 
         // disable rich text b/u/i
@@ -144,6 +146,9 @@
         }
         if (e.keyCode == 70) {
           document.execCommand('RemoveFormat')
+        }
+        if (e.keyCode == 89) {
+          App.Utils.htmlRemoveRichtext(_this.$element)
         }
         if (e.keyCode == 90) {
           document.execCommand('insertHorizontalRule')

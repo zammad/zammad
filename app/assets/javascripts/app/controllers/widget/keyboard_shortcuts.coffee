@@ -362,6 +362,12 @@ App.Config.set(
               globalEvent: 'richtext-remove-formating'
             }
             {
+              key: 'y'
+              hotkeys: true
+              description: '... of whole textarea'
+              globalEvent: 'richtext-remove-formating-textarea'
+            }
+            {
               key: 'z'
               hotkeys: true,
               description: 'Inserts a horizontal rule'

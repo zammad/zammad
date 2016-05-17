@@ -180,7 +180,6 @@ Check if string is a complete html document. If not, add head and css styles.
       p, table, div, td {
         max-width: 600px;
       }
-      p,
       table,
       pre,
       blockquote {
@@ -203,7 +202,7 @@ Check if string is a complete html document. If not, add head and css styles.
       code {
         border: none;
         background: hsl(0,0%,97%);
-        white-space: normal;
+        white-space: pre-wrap;
       }
       blockquote {
         padding: 8px 12px;
