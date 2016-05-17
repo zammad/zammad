@@ -150,12 +150,7 @@ class _trackSingleton
         log:     newDataNew
       )
       crossDomain: true
-#      success: (data, status, xhr) =>
-#        @data = []
-#        console.log('done')
       error: =>
-
-        # queue all data
         for item in newDataNew
           @data.push item
     )
@@ -174,35 +169,51 @@ class _trackSingleton
 
 `
 (function() {
+  window.getStackTrace = function() {
+    var stack
+    try {
+      throw new Error('')
+    }
+    catch (error) {
+      stack = error.stack || ''
+    }
+
+    stack = stack.split('\n').map(function (line) { return line.trim() })
+    return stack.splice(stack[0] == 'Error' ? 2 : 1)
+  }
   window.onerrorOld = window.onerror
   window.onerror = function(errorMsg, url, lineNumber) {
-    console.error(errorMsg + " - in " + url + ", line " + lineNumber);
+    console.error(errorMsg + " - in " + url + ", line " + lineNumber + "\n" + window.getStackTrace().join('\n'));
     if (window.onerrorOld) {
-      window.onerrorOld(errorMsg, url, lineNumber);
+      window.onerrorOld(errorMsg, url, lineNumber)
     }
+    return true
   }
-}).call(this);
 
-(function() {
   var console = window.console
   if (!console) return
   function intercept(method){
     var original = console[method]
     console[method] = function(){
-
-      //alert('new m' + method)
       App.Track.log(
         'console.' + method,
         method,
         arguments
       )
+      if (method == 'error') {
+        App.Track.log(
+          'traceback',
+          method,
+          window.getStackTrace().join('\n')
+        )
+      }
 
       // do sneaky stuff
       if (original.apply){
         // Do this for normal browsers
         original.apply(console, arguments)
       }
-      else{
+      else {
         // Do this for IE
         var message = Array.prototype.slice.apply(arguments).join(' ')
         original(message)

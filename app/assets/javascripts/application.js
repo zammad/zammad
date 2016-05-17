@@ -154,11 +154,11 @@ function clone(item, full) {
 }
 
 // taken from https://github.com/epeli/underscore.string/blob/master/underscored.js
-function underscored (str) {
+function underscored(str) {
   return str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
 }
 
-function toCamelCase (str) {
+function toCamelCase(str) {
   return str
     .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
     .replace(/\s/g, '')
