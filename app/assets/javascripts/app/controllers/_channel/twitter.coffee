@@ -119,6 +119,9 @@ class Index extends App.ControllerContent
       e.preventDefault()
       id = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
+    if !channel
+      @navigate '#channels/twitter'
+      return
     content = $( App.view('twitter/account_edit')(channel: channel) )
 
     createGroupSelection = (selected_id, prefix) ->
