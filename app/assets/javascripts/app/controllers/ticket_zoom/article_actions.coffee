@@ -95,16 +95,17 @@ class App.TicketZoomArticleActions extends App.Controller
       forgeinRecipients = []
       recipientUsed = {}
       for recipient in recipients
-        localRecipientAddeess = recipient.address.toString().toLowerCase()
-        if !recipientUsed[localRecipientAddeess]
-          recipientUsed[localRecipientAddeess] = true
-          localAddess = false
-          for address in localAddresses
-            if localRecipientAddeess is address.email.toString().toLowerCase()
-              recipientUsed[localRecipientAddeess] = true
-              localAddess = true
-          if !localAddess
-            forgeinRecipients.push recipient
+        if !_.isEmpty(recipient.address)
+          localRecipientAddeess = recipient.address.toString().toLowerCase()
+          if !recipientUsed[localRecipientAddeess]
+            recipientUsed[localRecipientAddeess] = true
+            localAddess = false
+            for address in localAddresses
+              if localRecipientAddeess is address.email.toString().toLowerCase()
+                recipientUsed[localRecipientAddeess] = true
+                localAddess = true
+            if !localAddess
+              forgeinRecipients.push recipient
 
       # check if reply all is neede
       if forgeinRecipients.length > 1
@@ -289,7 +290,7 @@ class App.TicketZoomArticleActions extends App.Controller
       # filter for uniq recipients
       recipientAddresses = {}
       recipient = emailAddresses.parseAddressList(articleNew.to)
-      if recipient && recipient[0]
+      if recipient && recipient[0] && !_.isEmpty(recipient[0].address)
         recipientAddresses[ recipient[0].address.toString().toLowerCase() ] = true
       if all
         addAddresses = (lineNew, addressLine) ->
@@ -297,12 +298,12 @@ class App.TicketZoomArticleActions extends App.Controller
           recipients     = emailAddresses.parseAddressList(addressLine)
           if recipients
             for recipient in recipients
-              if recipient.address
+              if !_.isEmpty(recipient.address)
 
                 # check if addess is not local
                 localAddess = false
                 for address in localAddresses
-                  if recipient.address.toString().toLowerCase() == address.email.toString().toLowerCase()
+                  if !_.isEmpty(recipient.address) && recipient.address.toString().toLowerCase() == address.email.toString().toLowerCase()
                     localAddess = true
                 if !localAddess
 
