@@ -163,6 +163,7 @@ class App.SearchableSelect extends Spine.Controller
     @filterByQuery @query
 
   filterByQuery: (query) ->
+    query = escapeRegExp(query)
     regex = new RegExp(query.split(' ').join('.*'), 'i')
 
     @option_items
