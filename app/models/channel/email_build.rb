@@ -90,7 +90,7 @@ module Channel::EmailBuild
           next if attachment.preferences['Content-ID'].empty?
           attachment = Mail::Part.new do
             content_type attachment.preferences['Content-Type']
-            content_id attachment.preferences['Content-ID']
+            content_id "<#{attachment.preferences['Content-ID']}>"
             content_disposition attachment.preferences['Content-Disposition'] || 'inline'
             content_transfer_encoding 'binary'
             body attachment.content.force_encoding('BINARY')
@@ -111,10 +111,13 @@ module Channel::EmailBuild
           mail.attachments[ attachment[:filename] ] = attachment
         else
           next if !attachment.preferences['Content-ID'].empty?
+          filename = attachment.filename
+          encoded_filename = Mail::Encodings.decode_encode filename, :encode
+          disposition = attachment.preferences['Content-Disposition'] || 'attachment'
+          content_type = attachment.preferences['Content-Type'] || 'application/octet-stream'
           mail.attachments[attachment.filename] = {
-            content_disposition: attachment.preferences['Content-Disposition'] || 'attachment',
-            content_type: attachment.preferences['Content-Type'],
-            mime_type: attachment.preferences['Mime-Type'],
+            content_disposition: "#{disposition}; filename=\"#{encoded_filename}\"",
+            content_type: "#{content_type}; filename=\"#{encoded_filename}\"",
             content: attachment.content
           }
         end
