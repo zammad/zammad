@@ -183,11 +183,11 @@ class _trackSingleton
   }
   window.onerrorOld = window.onerror
   window.onerror = function(errorMsg, url, lineNumber) {
-    console.error(errorMsg + " - in " + url + ", line " + lineNumber + "\n" + window.getStackTrace().join('\n'));
+    console.error(errorMsg + " - in " + url + ", line " + lineNumber + "\n" + window.getStackTrace().join("\n"))
     if (window.onerrorOld) {
       window.onerrorOld(errorMsg, url, lineNumber)
     }
-    return true
+    return false
   }
 
   var console = window.console

@@ -148,7 +148,8 @@
           document.execCommand('RemoveFormat')
         }
         if (e.keyCode == 89) {
-          App.Utils.htmlRemoveRichtext(_this.$element)
+          var cleanHtml = App.Utils.htmlRemoveRichtext(_this.$element.html())
+          _this.$element.html(cleanHtml)
         }
         if (e.keyCode == 90) {
           document.execCommand('insertHorizontalRule')

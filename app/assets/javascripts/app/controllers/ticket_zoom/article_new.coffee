@@ -283,15 +283,24 @@ class App.TicketZoomArticleNew extends App.Controller
         params.type_id   = type.id
 
     if params.type is 'twitter status'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+      rawHTML = @$('[data-name=body]').html()
+      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
+      if cleanHTML && cleanHTML.html() != rawHTML
+        @$('[data-name=body]').html(cleanHTML)
       params.content_type = 'text/plain'
       params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
     if params.type is 'twitter direct-message'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+      rawHTML = @$('[data-name=body]').html()
+      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
+      if cleanHTML && cleanHTML.html() != rawHTML
+        @$('[data-name=body]').html(cleanHTML)
       params.content_type = 'text/plain'
       params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
     if params.type is 'facebook feed comment'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+      rawHTML = @$('[data-name=body]').html()
+      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
+      if cleanHTML && cleanHTML.html() != rawHTML
+        @$('[data-name=body]').html(cleanHTML)
       params.content_type = 'text/plain'
       params.body = App.Utils.html2text(params.body, true)
 
@@ -438,10 +447,11 @@ class App.TicketZoomArticleNew extends App.Controller
       @$('[data-name=body] [data-signature=true]').remove()
 
     # remove richtext
-    if @type is 'twitter status'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
-    if @type is 'twitter direct-message'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'))
+    if @type is 'twitter status' || @type is 'twitter direct-message'
+      rawHTML = @$('[data-name=body]').html()
+      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
+      if cleanHTML && cleanHTML.html() != rawHTML
+        @$('[data-name=body]').html(cleanHTML)
 
     # show/hide attributes/features
     @maxTextLength = undefined

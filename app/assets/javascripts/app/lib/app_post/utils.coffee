@@ -19,6 +19,7 @@ class App.Utils
 
   # rawText = App.Utils.html2text(html, no_trim)
   @html2text: (html, no_trim) ->
+    return html if !html
 
     if no_trim
       html = html
@@ -130,6 +131,8 @@ class App.Utils
 
   # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext(html)
   @htmlRemoveRichtext: (html) ->
+    return html if !html
+
     html = @_checkTypeOf(html)
 
     # remove comments
@@ -195,7 +198,6 @@ class App.Utils
 
   @_checkTypeOf: (item) ->
     return item if typeof item isnt 'string'
-    return $(item) if item.substr(0,9) isnt '<!DOCTYPE' && item.substr(0,5) isnt '<html'
     $("<div>#{item}</div>")
 
   @_removeAttributes: (html) ->
