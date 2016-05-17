@@ -182,10 +182,18 @@ class _trackSingleton
     return stack.splice(stack[0] == 'Error' ? 2 : 1)
   }
   window.onerrorOld = window.onerror
-  window.onerror = function(errorMsg, url, lineNumber) {
-    console.error(errorMsg + " - in " + url + ", line " + lineNumber + "\n" + window.getStackTrace().join("\n"))
+  window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
+    var stack = ''
+    if (errorObj !== undefined && errorObj.stack) {
+      stack = "\n" + errorObj.stack
+    }
+    App.Track.log(
+      'console.error',
+      'error',
+      errorMsg + " - in " + url + ", line " + lineNumber + stack
+    )
     if (window.onerrorOld) {
-      window.onerrorOld(errorMsg, url, lineNumber)
+      window.onerrorOld(errorMsg, url, lineNumber, column, errorObj)
     }
     return false
   }
