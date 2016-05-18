@@ -31,11 +31,14 @@ class _trackSingleton
     @browser = App.Browser.detection()
     @data    = []
 #    @url     = 'http://localhost:3005/api/v1/ui'
-    @url     = 'https://log.zammad.com/api/v1/ui'
+    @url      = 'https://log.zammad.com/api/v1/ui'
+    @logClick = true
+    @logAjax  = false
 
     @forceSending = false
 
     @log('start', 'notice', {})
+
 
     # start initial submit 30 sec. later to avoid ie10 cookie issues
     delay = =>
@@ -43,65 +46,65 @@ class _trackSingleton
     App.Delay.set delay, 30000
 
     # log clicks
-    $(document).bind(
-      'click'
-      (e) =>
-        w = window.screen.width
-        h = window.screen.height
-        aTag = $(e.target)
-        if !aTag.attr('href')
-          newTag = $(e.target).parents('a')
-          if newTag[0]
-            aTag = newTag
-        info =
-          level:   'notice'
-          href:    aTag.attr('href')
-          title:   aTag.attr('title')
-          text:    aTag.text()
-          clickX:  e.pageX
-          clickY:  e.pageY
-          screenX: w
-          screenY: h
-        @log('click', 'notice', info)
-    )
+    if @logClick
+      $(document).bind(
+        'click'
+        (e) =>
+          w = window.screen.width
+          h = window.screen.height
+          aTag = $(e.target)
+          if !aTag.attr('href')
+            newTag = $(e.target).parents('a')
+            if newTag[0]
+              aTag = newTag
+          info =
+            level:   'notice'
+            href:    aTag.attr('href')
+            title:   aTag.attr('title')
+            text:    aTag.text()
+            clickX:  e.pageX
+            clickY:  e.pageY
+            screenX: w
+            screenY: h
+          @log('click', 'notice', info)
+      )
 
     # log ajax calls
-    ### disabled, only needed for debugging
-    $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
+    if @logAjax
+      $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
 
-      # do not log ui requests
-      if settings.url && settings.url.substr(settings.url.length-3,3) isnt '/ui'
-        level = 'notice'
-        responseText = ''
-        if request.status >= 400
-          level = 'error'
-          responseText = request.responseText
+        # do not log ui requests
+        if settings.url && settings.url.substr(settings.url.length-3,3) isnt '/ui'
+          level = 'notice'
+          responseText = ''
+          if request.status >= 400
+            level = 'error'
+            responseText = request.responseText
 
-        if settings.data
+          if settings.data
 
-          # add length limitation
-          if settings.data.length > 3000
-            settings.data = settings.data.substr(0,3000)
+            # add length limitation
+            if settings.data.length > 3000
+              settings.data = settings.data.substr(0,3000)
 
-          # delete passwords form data
-          if typeof settings.data is 'string'
-            settings.data = settings.data.replace(/"password":".+?"/gi, '"password":"xxx"')
+            # delete passwords form data
+            if typeof settings.data is 'string'
+              settings.data = settings.data.replace(/"password":".+?"/gi, '"password":"xxx"')
 
-        @log(
-          'ajax.send',
-          level,
-          {
-            type:         settings.type
-            dataType:     settings.dataType
-            async:        settings.async
-            url:          settings.url
-            data:         settings.data
-            status:       request.status
-            responseText: responseText
-          }
-        )
-    )
-    ###
+          @log(
+            'ajax.send',
+            level,
+            {
+              type:         settings.type
+              dataType:     settings.dataType
+              async:        settings.async
+              url:          settings.url
+              data:         settings.data
+              status:       request.status
+              responseText: responseText
+            }
+          )
+      )
 
     $(window).bind(
       'beforeunload'
