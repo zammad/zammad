@@ -7,8 +7,7 @@ class TwitterTest < ActiveSupport::TestCase
   Setting.set('system_init_done', true)
 
   # needed to check correct behavior
-  Group.create_if_not_exists(
-    id: 2,
+  group = Group.create_if_not_exists(
     name: 'Twitter',
     note: 'All Tweets.',
     updated_by_id: 1,
@@ -29,6 +28,9 @@ class TwitterTest < ActiveSupport::TestCase
   if !ENV['TWITTER_SYSTEM_LOGIN']
     raise "ERROR: Need TWITTER_SYSTEM_LOGIN - hint TWITTER_SYSTEM_LOGIN='@system'"
   end
+  if !ENV['TWITTER_SYSTEM_ID']
+    raise "ERROR: Need TWITTER_SYSTEM_ID - hint TWITTER_SYSTEM_ID='1405469528'"
+  end
   if !ENV['TWITTER_SYSTEM_TOKEN']
     raise "ERROR: Need TWITTER_SYSTEM_TOKEN - hint TWITTER_SYSTEM_TOKEN='1234'"
   end
@@ -36,6 +38,7 @@ class TwitterTest < ActiveSupport::TestCase
     raise "ERROR: Need TWITTER_SYSTEM_TOKEN_SECRET - hint TWITTER_SYSTEM_TOKEN_SECRET='1234'"
   end
   system_login            = ENV['TWITTER_SYSTEM_LOGIN']
+  system_id               = ENV['TWITTER_SYSTEM_ID']
   system_login_without_at = system_login[1, system_login.length]
   system_token            = ENV['TWITTER_SYSTEM_TOKEN']
   system_token_secret     = ENV['TWITTER_SYSTEM_TOKEN_SECRET']
@@ -69,13 +72,13 @@ class TwitterTest < ActiveSupport::TestCase
       },
       user: {
         screen_name: system_login,
-        id: '1234',
+        id: system_id,
       },
       sync: {
         search: [
           {
             term: '#citheo42',
-            group_id: 2,
+            group_id: group.id,
           },
           {
             term: '#zarepl24',
@@ -83,10 +86,10 @@ class TwitterTest < ActiveSupport::TestCase
           },
         ],
         mentions: {
-          group_id: 2,
+          group_id: group.id,
         },
         direct_messages: {
-          group_id: 2,
+          group_id: group.id,
         }
       }
     },
@@ -103,7 +106,7 @@ class TwitterTest < ActiveSupport::TestCase
     ticket = Ticket.create(
       title:         text[0, 40],
       customer_id:   user.id,
-      group_id:      2,
+      group_id:      group.id,
       state:         Ticket::State.find_by(name: 'new'),
       priority:      Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
@@ -430,6 +433,42 @@ class TwitterTest < ActiveSupport::TestCase
     assert(article)
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_equal(nil, article.to, 'ticket article to')
+
+    # send reply
+    reply_text = "RE #{text}"
+    article = Ticket::Article.create(
+      ticket_id:     article.ticket_id,
+      body:          reply_text,
+      type:          Ticket::Article::Type.find_by(name: 'twitter status'),
+      sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+      internal:      false,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(article, "outbound article created, text: #{reply_text}")
+    assert_equal(system_login, article.from, 'ticket article from')
+    assert_equal('', article.to, 'ticket article to')
+    sleep 5
+
+    tweet_found = false
+    client.user_timeline(system_login_without_at).each { |local_tweet|
+      sleep 10
+      next if local_tweet.id.to_s != article.message_id.to_s
+      tweet_found = true
+      break
+    }
+    assert(tweet_found, "found outbound '#{reply_text}' tweet '#{article.message_id}'")
+
+    count = Ticket::Article.where(message_id: article.message_id).count
+    assert_equal(1, count)
+
+    channel_id = article.ticket.preferences[:channel_id]
+    assert(channel_id)
+    channel = Channel.find(channel_id)
+    assert_equal('', channel.last_log_out)
+    assert_equal('ok', channel.status_out)
+    #assert_equal('', channel.last_log_in)
+    #assert_equal('ok', channel.status_in)
 
     # get dm via stream
     client = Twitter::REST::Client.new(
