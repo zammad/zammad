@@ -1117,7 +1117,7 @@ class App.ObserverController extends App.Controller
           currentAttributes[key] = object[key]
     if @observeNot
       for key, value of object
-        if !@observeNot[key] && !_.isFunction(value)
+        if !@observeNot[key] && !_.isFunction(value) && !_.isObject(value)
           currentAttributes[key] = value
 
     if !@lastAttributres
