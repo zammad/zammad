@@ -68,6 +68,7 @@ class App.UserProfile extends App.Controller
 class Object extends App.ObserverController
   model: 'User'
   observeNot:
+    cid: true
     created_at: true
     created_by_id: true
     updated_at: true
