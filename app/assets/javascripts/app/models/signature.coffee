@@ -5,7 +5,24 @@ class App.Signature extends App.Model
 
   @configure_attributes = [
     { name: 'name',           display: 'Name',          tag: 'input',    type: 'text', limit: 100, 'null': false },
-    { name: 'body',           display: 'Text',          tag: 'richtext',               limit: 500, 'null': true, rows: 10 },
+    { name: 'body',           display: 'Text',          tag: 'richtext',               limit: 500, 'null': true, plugins: [
+      {
+        controller: 'WidgetPlaceholder'
+        params:
+          objects: [
+            {
+              prefix: 'ticket'
+              object: 'Ticket'
+              display: 'Ticket'
+            },
+            {
+              prefix: 'user'
+              object: 'User'
+              display: 'Current User'
+            },
+          ]
+      },
+    ]},
     { name: 'note',           display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, 'null': true },
     { name: 'active',         display: 'Active',        tag: 'active',    default: true },
     { name: 'created_by_id',  display: 'Created by',    relation: 'User', readonly: 1 },
