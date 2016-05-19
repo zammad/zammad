@@ -8,6 +8,7 @@ class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
         { name: 'yes', value: true }
         { name: 'no', value: false }
       ]
+      attribute.translate = true
 
     # set data type
     if attribute.name

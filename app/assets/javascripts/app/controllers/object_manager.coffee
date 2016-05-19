@@ -14,7 +14,7 @@ class Index extends App.ControllerTabs
     @ajax(
       id:    'object_manager_attributes_list'
       type:  'GET'
-      url:   @apiPath + '/object_manager_attributes_list'
+      url:   "#{@apiPath}/object_manager_attributes_list"
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -36,21 +36,20 @@ class Index extends App.ControllerTabs
 
 class Items extends App.ControllerContent
   events:
-    'click [data-type="delete"]': 'destroy'
-    'click .js-up':               'move'
-    'click .js-down':             'move'
-    'click .js-new':              'new'
-    'click .js-edit':             'edit'
+    'click .js-delete':  'destroy'
+    'click .js-new':     'new'
+    'click .js-edit':    'edit'
+    'click .js-discard': 'discard'
+    'click .js-execute': 'execute'
 
   constructor: ->
     super
+
     # check authentication
     return if !@authenticate()
 
     @subscribeId = App.ObjectManagerAttribute.subscribe(@render)
     App.ObjectManagerAttribute.fetch()
-
-    # ajax call
 
   release: =>
     if @subscribeId
@@ -63,63 +62,22 @@ class Items extends App.ControllerContent
       sortBy: 'position'
     )
 
+    itemsToChange = []
+    for item in App.ObjectManagerAttribute.search(sortBy: 'object')
+      if item.to_create is true || item.to_delete is true
+        itemsToChange.push item
+
     @html App.view('object_manager/index')(
-      head:  @object
-      items: items
+      head:          @object
+      items:         items
+      itemsToChange: itemsToChange
     )
-
-
-    ###
-    new App.ControllerTable(
-      el:         @el.find('.table-overview')
-      model:      App.ObjectManagerAttribute
-      objects:    objects
-      bindRow:
-        events:
-          'click': @edit
-    )
-    ###
-
-  move: (e) =>
-    e.preventDefault()
-    e.stopPropagation()
-    id        = $( e.target ).closest('tr').data('id')
-    direction = 'up'
-    if $( e.target ).hasClass('js-down')
-      direction = 'down'
-    console.log('M', id, direction)
-
-    items = App.ObjectManagerAttribute.search(
-      filter:
-        object: @object
-      sortBy: 'position'
-    )
-    count = 0
-    for item in items
-      if item.id is id
-        if direction is 'up'
-          itemToMove = items[ count - 1 ]
-        else
-          itemToMove = items[ count + 1 ]
-        if itemToMove
-          movePosition = itemToMove.position
-          if movePosition is item.position
-            if direction is 'up'
-              movePosition -= 1
-            else
-              movePosition += 1
-          itemToMove.position = item.position
-          itemToMove.save()
-          console.log(itemToMove, itemToMove.position, count)
-          item.position = movePosition
-          item.save()
-          console.log(item, movePosition, count)
-      count += 1
 
   new: (e) =>
     e.preventDefault()
-    new App.ControllerGenericNew(
+    new New(
       pageData:
+        head:      @object
         title:     'Attribute'
         home:      'object_manager'
         object:    'ObjectManagerAttribute'
@@ -127,6 +85,8 @@ class Items extends App.ControllerContent
         navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
       container:     @el.closest('.content')
+      item:
+        object: @object
     )
 
   edit: (e) =>
@@ -134,136 +94,135 @@ class Items extends App.ControllerContent
     id = $( e.target ).closest('tr').data('id')
     new Edit(
       pageData:
-        object: 'ObjectManagerAttribute'
+        head:      @object
+        title:     'Attribute'
+        home:      'object_manager'
+        object:    'ObjectManagerAttribute'
+        objects:   'ObjectManagerAttributes'
+        navupdate: '#object_manager'
       genericObject: 'ObjectManagerAttribute'
+      container:     @el.closest('.content')
       callback:      @render
       id:            id
-      container:     @el.closest('.content')
     )
 
   destroy: (e) ->
+    e.stopPropagation()
     e.preventDefault()
-    sessionId = $( e.target ).data('session-id')
+    id   = $(e.target).closest('tr').data('id')
+    item = App.ObjectManagerAttribute.find(id)
     @ajax(
-      id:    'sessions/' + sessionId
+      id:    "object_manager_attributes/#{id}"
       type:  'DELETE'
-      url:   @apiPath + '/sessions/' + sessionId
+      url:   "#{@apiPath}/object_manager_attributes/#{id}"
       success: (data) =>
-        @load()
+        @render()
     )
 
-class Edit extends App.ControllerModal
-  buttonClose: true
-  buttonCancel: true
-  buttonSubmit: true
-  head: 'Edit'
+  discard: (e) ->
+    e.preventDefault()
+    @ajax(
+      id:    'object_manager_attributes_discard_changes'
+      type:  'POST'
+      url:   "#{@apiPath}/object_manager_attributes_discard_changes"
+      success: (data) =>
+        @render()
+    )
+
+  execute: (e) ->
+    e.preventDefault()
+    @ajax(
+      id:    'object_manager_attributes_execute_migrations'
+      type:  'POST'
+      url:   "#{@apiPath}/object_manager_attributes_execute_migrations"
+      success: (data) =>
+        @render()
+    )
+
+class New extends App.ControllerGenericNew
+
+  onSubmit: (e) =>
+    params = @formParam(e.target)
+    params.object = @pageData.head
+    object = new App[ @genericObject ]
+    object.load(params)
+
+    # validate
+    errors = object.validate()
+    if errors
+      @log 'error', errors
+      @formValidate( form: e.target, errors: errors )
+      return false
+
+    # disable form
+    @formDisable(e)
+
+    # save object
+    ui = @
+    object.save(
+      done: ->
+        if ui.callback
+          item = App[ ui.genericObject ].fullLocal(@id)
+          ui.callback(item)
+        ui.close()
+
+      fail: (settings, details) ->
+        ui.log 'errors', details
+        ui.formEnable(e)
+        ui.controller.showAlert(details.error_human || details.error || 'Unable to create object!')
+    )
+
+class Edit extends App.ControllerGenericEdit
 
   content: =>
-    content = $( App.view('object_manager/edit')(
-      head:  @object
-      items: []
-    ) )
+    @item = App[ @genericObject ].find( @id )
+    @head = @pageData.head || @pageData.object
 
-    item = App.ObjectManagerAttribute.find(@id)
+    # set disabled attributes
+    configure_attributes = clone(App[ @genericObject ].configure_attributes)
+    for attribute in configure_attributes
+      if attribute.name is 'name'
+        attribute.disabled = true
+      #if attribute.name is 'data_type'
+      #  attribute.disabled = true
 
-    options =
-      input:    'Text (normal - one line)'
-      select:   'Selection'
-      datetime: 'Datetime'
-      date:     'Date'
-      textarea: 'Text (normal - multiline)'
-      richtext: 'Text (richtext)'
-      checkbox: 'Checkbox'
-      boolean:  'yes/no'
-
-    configureAttributesTop = [
-      { name: 'name',       display: 'Name',    tag: 'input',     type: 'text', limit: 100, 'null': false },
-      { name: 'display',    display: 'Anzeige', tag: 'input',     type: 'text', limit: 100, 'null': false },
-      { name: 'data_type',  display: 'Format',  tag: 'select',    multiple: false, nulloption: true, null: false, options: options, translate: true },
-    ]
-    controller = new App.ControllerForm(
-      model:     { configure_attributes: configureAttributesTop, className: '' },
-      params:    item
-      #screen:   @screen || 'edit'
-      el:        content.find('.js-top')
-      autofocus: true
-    )
-
-    # input
-    configureAttributesInput = [
-      { name: 'data_option::type',            display: 'Type',            tag: 'select', multiple: false, nulloption: true, null: false, options: { text: 'text', email: 'email', url: 'url', email: 'email', password: 'password', phone: 'phone'}, translate: true },
-      { name: 'data_option::maxlength',       display: 'Max. Length',     tag: 'input',  type: 'text', limit: 100, 'null': false },
-      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::autocomplete',    display: 'autocomplete',    tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::default',         display: 'Default',         tag: 'input', type: 'text', limit: 100, null: true },
-      { name: 'data_option::note',            display: 'note',            tag: 'input', type: 'text', limit: 100, null: true },
-    ]
-    controller = new App.ControllerForm(
-      model:     { configure_attributes: configureAttributesInput, className: '' },
-      params:    item
-      el:        content.find('.js-input')
-      autofocus: true
-    )
-
-    # textarea
-    configureAttributesTextarea = [
-      { name: 'data_option::maxlength',       display: 'Max. Length',     tag: 'input',  type: 'text', limit: 100, null: false },
-      { name: 'data_option::null',            display: 'Required',        tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::autocapitalize',  display: 'autocapitalize',  tag: 'select', multiple: false, nulloption: true, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::note',            display: 'autocomplete',    tag: 'input',  type: 'text', limit: 100, null: true },
-    ]
-    controller = new App.ControllerForm(
-      model:     { configure_attributes: configureAttributesTextarea, className: '' },
-      params:    item
-      el:        content.find('.js-textarea')
-      autofocus: true
-    )
-
-    # select
-    configureAttributesSelect = [
-      { name: 'data_option::nulloption',      display: 'Empty Selection', tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::null',            display: 'Required',        tag: 'boolean', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::relation',        display: 'Relation',        tag: 'input',  type: 'text', limit: 100, null: true },
-      { name: 'data_option::options',         display: 'Options',         tag: 'hash',   multiple: true, null: false },
-      { name: 'data_option::translate',       display: 'Übersetzen',      tag: 'select', multiple: false, nulloption: false, null: false, options: { true: 'no', false: 'yes' }, translate: true },
-      { name: 'data_option::note',            display: 'Note',            tag: 'input',  type: 'text', limit: 100, null: true },
-    ]
-    controller = new App.ControllerForm(
-      model:      { configure_attributes: configureAttributesSelect, className: '' },
-      params:     item
-      el:         content.find('.js-select')
+    @controller = new App.ControllerForm(
+      model:
+        configure_attributes: configure_attributes
+      params:     @item
+      screen:     @screen || 'edit'
       autofocus:  true
     )
+    @controller.form
 
-    ###
-        :options => {
-          'Incident' => 'Incident',
-          'Problem'  => 'Problem',
-          'Request for Change' => 'Request for Change',
-        },
-    ###
+  onSubmit: (e) =>
+    params = @formParam(e.target)
+    params.object = @pageData.head
+    @item.load(params)
 
-    content.find('[name=data_type]').on(
-      'change',
-      (e) ->
-        dataType = $( e.target ).val()
-        content.find('.js-middle > div').addClass('hide')
-        content.find(".js-#{dataType}").removeClass('hide')
+    # validate
+    errors = @item.validate()
+    if errors
+      @log 'error', errors
+      @formValidate( form: e.target, errors: errors )
+      return false
+
+    # disable form
+    @formDisable(e)
+
+    # save object
+    ui = @
+    @item.save(
+      done: ->
+        if ui.callback
+          item = App[ ui.genericObject ].fullLocal(@id)
+          ui.callback(item)
+        ui.close()
+
+      fail: (settings, details) ->
+        ui.log 'errors'
+        ui.formEnable(e)
+        ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
-    content.find('[name=data_type]').trigger('change')
-
-
-    configureAttributesBottom = [
-      { name: 'active', display: 'Active', tag: 'active', default: true },
-    ]
-    controller = new App.ControllerForm(
-      model:   { configure_attributes: configureAttributesBottom, className: '' },
-      params:  item
-      #screen: @screen || 'edit'
-      el:      content.find('.js-bottom')
-    )
-
-    controller.form
 
 App.Config.set( 'SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

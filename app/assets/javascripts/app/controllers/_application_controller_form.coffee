@@ -204,6 +204,8 @@ class App.ControllerForm extends App.Controller
       attribute.autofocus = 'autofocus'
 
     # set required option
+    if attribute.required is true
+      attribute.null = false
     if !attribute.null
       attribute.required = 'required'
     else
@@ -231,7 +233,7 @@ class App.ControllerForm extends App.Controller
       # check if we have a references
       parts = attribute.name.split '::'
       if parts[0] && parts[1]
-        if @params[ parts[0] ] && @params[ parts[0] ][ parts[1] ]
+        if @params[ parts[0] ] && parts[1] of @params[ parts[0] ]
           attribute.value = @params[ parts[0] ][ parts[1] ]
 
       # set params value to default
@@ -480,15 +482,22 @@ class App.ControllerForm extends App.Controller
     for key of param
       parts = key.split '::'
       if parts[0] && parts[1]
-        if !(parts[0] of inputSelectObject)
+        if parts[1] && !inputSelectObject[ parts[0] ]
           inputSelectObject[ parts[0] ] = {}
-        if !parts[2]
-          inputSelectObject[ parts[0] ][ parts[1] ] = param[ key ]
-        else
-          if !(parts[1] of inputSelectObject[ parts[0] ])
-            inputSelectObject[ parts[0] ][ parts[1] ] = {}
+        if parts[2] && !inputSelectObject[ parts[0] ][ parts[1] ]
+          inputSelectObject[ parts[0] ][ parts[1] ] = {}
+        if parts[3] && !inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ]
+          inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ] = {}
+
+        if parts[3]
+          inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ][ parts[3] ] = param[ key ]
+          delete param[ key ]
+        else if parts[2]
           inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ] = param[ key ]
-        delete param[ key ]
+          delete param[ key ]
+        else if parts[1]
+          inputSelectObject[ parts[0] ][ parts[1] ] = param[ key ]
+          delete param[ key ]
 
     # set new object params
     for key of inputSelectObject

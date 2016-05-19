@@ -2481,6 +2481,7 @@ Network::Item::Comment.create(
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'title',
   display: 'Title',
@@ -2501,11 +2502,14 @@ ObjectManager::Attribute.add(
     },
     edit: {},
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 15,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'customer_id',
   display: 'Customer',
@@ -2530,15 +2534,19 @@ ObjectManager::Attribute.add(
     },
     edit: {},
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 10,
 )
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'type',
   display: 'Type',
   data_type: 'select',
   data_option: {
+    default: '',
     options: {
       'Incident' => 'Incident',
       'Problem'  => 'Problem',
@@ -2549,7 +2557,7 @@ ObjectManager::Attribute.add(
     null: true,
     translate: true,
   },
-  editable: false,
+  editable: true,
   active: false,
   screens: {
     create_middle: {
@@ -2564,15 +2572,19 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 20,
 )
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'group_id',
   display: 'Group',
   data_type: 'select',
   data_option: {
+    default: '',
     relation: 'Group',
     relation_condition: { access: 'rw' },
     nulloption: true,
@@ -2596,15 +2608,19 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 25,
 )
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'owner_id',
   display: 'Owner',
   data_type: 'select',
   data_option: {
+    default: '',
     relation: 'User',
     relation_condition: { roles: 'Agent' },
     nulloption: true,
@@ -2627,10 +2643,13 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 30,
 )
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'state_id',
   display: 'State',
@@ -2674,10 +2693,13 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 40,
 )
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'pending_time',
   display: 'Pending till',
@@ -2710,10 +2732,13 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 41,
 )
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'priority_id',
   display: 'Priority',
@@ -2742,11 +2767,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 80,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Ticket',
   name: 'tags',
   display: 'Tags',
@@ -2766,11 +2794,14 @@ ObjectManager::Attribute.add(
     },
     edit: {},
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 900,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'TicketArticle',
   name: 'type_id',
   display: 'Type',
@@ -2793,11 +2824,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 100,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'TicketArticle',
   name: 'internal',
   display: 'Visibility',
@@ -2820,11 +2854,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 200,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'TicketArticle',
   name: 'to',
   display: 'To',
@@ -2844,10 +2881,13 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 300,
 )
 ObjectManager::Attribute.add(
+  force: true,
   object: 'TicketArticle',
   name: 'cc',
   display: 'Cc',
@@ -2868,11 +2908,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 400,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'TicketArticle',
   name: 'body',
   display: 'Text',
@@ -2901,11 +2944,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 600,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'login',
   display: 'Login',
@@ -2930,11 +2976,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 100,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'firstname',
   display: 'Firstname',
@@ -2974,11 +3023,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 200,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'lastname',
   display: 'Lastname',
@@ -3018,11 +3070,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 300,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'email',
   display: 'Email',
@@ -3062,11 +3117,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 400,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'web',
   display: 'Web',
@@ -3094,11 +3152,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 500,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'phone',
   display: 'Phone',
@@ -3126,11 +3187,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 600,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'mobile',
   display: 'Mobile',
@@ -3158,11 +3222,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 700,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'fax',
   display: 'Fax',
@@ -3190,11 +3257,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 800,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'organization_id',
   display: 'Organization',
@@ -3227,11 +3297,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 900,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'department',
   display: 'Department',
@@ -3242,7 +3315,7 @@ ObjectManager::Attribute.add(
     null: true,
     item_class: 'formGroup--halfSize',
   },
-  editable: false,
+  editable: true,
   active: true,
   screens: {
     signup: {},
@@ -3259,11 +3332,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1000,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'street',
   display: 'Street',
@@ -3290,11 +3366,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1100,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'zip',
   display: 'Zip',
@@ -3322,11 +3401,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1200,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'city',
   display: 'City',
@@ -3354,11 +3436,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1300,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'address',
   display: 'Address',
@@ -3386,11 +3471,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1350,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'password',
   display: 'Password',
@@ -3419,11 +3507,14 @@ ObjectManager::Attribute.add(
     },
     view: {}
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1400,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'vip',
   display: 'VIP',
@@ -3455,11 +3546,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1490,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'note',
   display: 'Note',
@@ -3491,50 +3585,21 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1500,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'role_ids',
-  display: 'Roles',
-  data_type: 'checkbox',
+  display: 'Permissions',
+  data_type: 'user_permission',
   data_option: {
-    multiple: true,
     null: false,
-    relation: 'Role',
-  },
-  editable: false,
-  active: true,
-  screens: {
-    signup: {},
-    invite_agent: {},
-    invite_customer: {},
-    edit: {
-      Admin: {
-        null: false,
-      },
-    },
-    view: {
-      '-all-' => {
-        shown: false,
-      },
-    },
-  },
-  pending_migration: false,
-  position: 1600,
-)
-
-ObjectManager::Attribute.add(
-  object: 'User',
-  name: 'group_ids',
-  display: 'Groups',
-  data_type: 'checkbox',
-  data_option: {
-    multiple: true,
-    null: true,
-    relation: 'Group',
+    item_class: 'checkbox',
   },
   editable: false,
   active: true,
@@ -3543,7 +3608,10 @@ ObjectManager::Attribute.add(
     invite_agent: {
       '-all-' => {
         null: false,
-        only_shown_if_selectable: true,
+        hideMode: {
+          rolesSelected: ['Agent'],
+          rolesNot: ['Customer'],
+        }
       },
     },
     invite_customer: {},
@@ -3558,16 +3626,20 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
-  position: 1700,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 1600,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'User',
   name: 'active',
   display: 'Active',
   data_type: 'active',
   data_option: {
+    null: true,
     default: true,
   },
   editable: false,
@@ -3587,11 +3659,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1800,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Organization',
   name: 'name',
   display: 'Name',
@@ -3616,17 +3691,19 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 200,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Organization',
   name: 'shared',
   display: 'Shared organization',
   data_type: 'boolean',
   data_option: {
-    maxlength: 250,
     null: true,
     default: true,
     note: 'Customers in the organization can view each other items.',
@@ -3650,11 +3727,14 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1400,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Organization',
   name: 'note',
   display: 'Note',
@@ -3679,16 +3759,20 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1500,
 )
 
 ObjectManager::Attribute.add(
+  force: true,
   object: 'Organization',
   name: 'active',
   display: 'Active',
   data_type: 'active',
   data_option: {
+    null: true,
     default: true,
   },
   editable: false,
@@ -3705,7 +3789,291 @@ ObjectManager::Attribute.add(
       },
     },
   },
-  pending_migration: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 1800,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'name',
+  display: 'Name',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 150,
+    null: false,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 200,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'assignment_timeout',
+  display: 'Assignment Timeout',
+  data_type: 'integer',
+  data_option: {
+    maxlength: 150,
+    null: true,
+    note: 'Assignment timeout in minutes if assigned agent is not working on it. Ticket will be shown as unassigend.',
+    min: 0,
+    max: 999_999,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 300,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'follow_up_possible',
+  display: 'Follow up possible',
+  data_type: 'select',
+  data_option: {
+    default: 'yes',
+    options: {
+      yes: 'yes',
+      reject: 'reject follow up/do not reopen Ticket',
+      new_ticket: 'do not reopen Ticket but create new Ticket'
+    },
+    null: false,
+    note: 'Follow up for closed ticket possible or not.',
+    translate: true
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 400,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'follow_up_assignment',
+  display: 'Assign Follow Ups',
+  data_type: 'select',
+  data_option: {
+    default: 'yes',
+    options: {
+      true: 'yes',
+      false: 'no',
+    },
+    null: false,
+    note: 'Assign follow up to latest agent again.',
+    translate: true
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 500,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'email_address_id',
+  display: 'Email',
+  data_type: 'select',
+  data_option: {
+    default: '',
+    multiple: false,
+    null: true,
+    relation: 'EmailAddress',
+    nulloption: true,
+    do_not_log: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 600,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'signature_id',
+  display: 'Signature',
+  data_type: 'select',
+  data_option: {
+    default: '',
+    multiple: false,
+    null: true,
+    relation: 'Signature',
+    nulloption: true,
+    do_not_log: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 600,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'note',
+  display: 'Note',
+  data_type: 'richtext',
+  data_option: {
+    type: 'text',
+    maxlength: 250,
+    null: true,
+    note: 'Notes are visible to agents only, never to customers.',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 1500,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Group',
+  name: 'active',
+  display: 'Active',
+  data_type: 'active',
+  data_option: {
+    null: true,
+    default: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    create: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    edit: {
+      Admin: {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: false,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
   position: 1800,
 )
 
@@ -3858,15 +4226,15 @@ Trigger.create_or_update(
   },
   perform: {
     'notification.email' => {
-      'body' => '<p>Your request (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.<p>
+      'body' => '<div>Your request (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.</div>
 <br/>
-<p>To provide additional information, please reply to this email or click on the following link:
+<div>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
-</p>
+</div>
 <br/>
-<p>Your #{config.product_name} Team</p>
+<div>Your #{config.product_name} Team</div>
 <br/>
-<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+<div><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></div>',
       'recipient' => 'ticket_customer',
       'subject' => 'Thanks for your inquiry (#{ticket.title})',
     },
@@ -3897,15 +4265,15 @@ Trigger.create_or_update(
   },
   perform: {
     'notification.email' => {
-      'body' => '<p>Your follow up for (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.<p>
+      'body' => '<div>Your follow up for (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.</div>
 <br/>
-<p>To provide additional information, please reply to this email or click on the following link:
+<div>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
-</p>
+</div>
 <br/>
-<p>Your #{config.product_name} Team</p>
+<div>Your #{config.product_name} Team</div>
 <br/>
-<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+<div><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></div>',
       'recipient' => 'ticket_customer',
       'subject' => 'Thanks for your follow up (#{ticket.title})',
     },

@@ -1,0 +1,22 @@
+<div class="checkbox <%= @attribute.class %> checkbox">
+<% for role in @roles: %>
+  <label class="inline-label checkbox-replacement">
+    <input type="checkbox" value="<%= role.id %>" name="role_ids" <% if @rolesSelected[role.id]: %>checked<% end %>/>
+    <%- @Icon('checkbox', 'icon-unchecked') %>
+    <%- @Icon('checkbox-checked', 'icon-checked') %>
+    <span class="label-text"><%= role.displayName() %> <% if role.note: %>- <span class="help-text"><%= role.note %></span><% end %></span>
+  </label>
+  <% if role.name is 'Agent': %>
+    <div style="padding-left: 20px;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+      <% for group in @groups: %>
+        <label class="inline-label checkbox-replacement">
+          <input type="checkbox" value="<%= group.id %>" name="group_ids" <% if @groupsSelected[group.id]: %>checked<% end %>/>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+          <span class="label-text"><%= group.displayName() %> <% if group.note: %>- <span class="help-text"><%= group.note %></span><% end %></span>
+        </label>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+</div>

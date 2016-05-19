@@ -61,6 +61,11 @@ class Ticket::Article < ApplicationModel
     article
   end
 
+  def self.last_customer_agent_article(ticket_id)
+    sender = Ticket::Article::Sender.lookup(name: 'System')
+    Ticket::Article.where('ticket_id = ? AND sender_id NOT IN (?)', ticket_id, sender.id).order('created_at DESC').first
+  end
+
   private
 
   # strip not wanted chars

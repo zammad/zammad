@@ -223,6 +223,7 @@ class UpdateOverview4 < ActiveRecord::Migration
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'Ticket',
       name: 'title',
       display: 'Title',
@@ -243,11 +244,14 @@ class UpdateOverview4 < ActiveRecord::Migration
         },
         edit: {},
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 15,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'Ticket',
       name: 'group_id',
       display: 'Group',
@@ -275,7 +279,9 @@ class UpdateOverview4 < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 25,
     )
 

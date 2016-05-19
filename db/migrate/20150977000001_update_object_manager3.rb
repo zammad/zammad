@@ -2,6 +2,7 @@ class UpdateObjectManager3 < ActiveRecord::Migration
   def up
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'organization_id',
       display: 'Organization',
@@ -29,13 +30,16 @@ class UpdateObjectManager3 < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 900,
       created_by_id: 1,
       updated_by_id: 1,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'Ticket',
       name: 'customer_id',
       display: 'Customer',
@@ -60,7 +64,9 @@ class UpdateObjectManager3 < ActiveRecord::Migration
         },
         edit: {},
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 10,
       created_by_id: 1,
       updated_by_id: 1,

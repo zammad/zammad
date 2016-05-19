@@ -1,0 +1,41 @@
+<div>
+  <div class="js-selectDefault"></div>
+  <div class="js-selectOption"></div>
+
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <tr>
+        <th><%- @T('Key') %>
+        <th><%- @T('Display') %>
+        <th style="width: 30px"><%- @T('Default') %>
+        <th style="width: 30px"><%- @T('Action') %>
+    </thead>
+    <tbody>
+      <% for key, display of @values: %>
+      <tr>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-summary" type="text" name="summary" value="<%= key %>" required/>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-summary" type="text" name="summary" value="<%= display %>" required/>
+        <td class="settings-list-row-control">
+          <input class="" type="radio" />
+        <td class="settings-list-row-control">
+          <div class="btn btn--text js-remove">
+            <%- @Icon('trash') %> <%- @T('Remove') %>
+          </div>
+      <% end %>
+
+      <tr>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-summary" type="text" placeholder="<%- @T('Key') %>"/>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-summary" type="text" placeholder="<%- @T('Display') %>"/>
+        <td class="settings-list-row-control">
+          <input class="" type="radio" />
+        <td class="settings-list-row-control">
+          <div class="btn btn--text btn--create js-add">
+            <%- @Icon('plus-small') %> <%- @T('Add') %>
+          </div>
+    </tbody>
+  </table>
+</div>

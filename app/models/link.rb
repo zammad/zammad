@@ -13,8 +13,8 @@ class Link < ApplicationModel
 =begin
 
   links = Link.list(
-    :link_object       => 'Ticket',
-    :link_object_value => 1
+    link_object: 'Ticket',
+    link_object_value: 1
   )
 
 =end
@@ -55,19 +55,19 @@ class Link < ApplicationModel
 =begin
 
    Link.add(
-    :link_type                => 'normal',
-    :link_object_source       => 'Ticket',
-    :link_object_source_value => 6,
-    :link_object_target       => 'Ticket',
-    :link_object_target_value => 31
+    link_type: 'normal',
+    link_object_source: 'Ticket',
+    link_object_source_value: 6,
+    link_object_target: 'Ticket',
+    link_object_target_value: 31
   )
 
   Link.add(
-    :link_types_id            => 12,
-    :link_object_source_id    => 1,
-    :link_object_source_value => 1,
-    :link_object_target_id    => 1,
-    :link_object_target_value => 1
+    link_types_id: 12,
+    link_object_source_id: 1,
+    link_object_source_value: 1,
+    link_object_target_id: 1,
+    link_object_target_value: 1
   )
 
 =end
@@ -98,11 +98,11 @@ class Link < ApplicationModel
 =begin
 
    Link.remove(
-    :link_type                => 'normal',
-    :link_object_source       => 'Ticket',
-    :link_object_source_value => 6,
-    :link_object_target       => 'Ticket',
-    :link_object_target_value => 31
+    link_type: 'normal',
+    link_object_source: 'Ticket',
+    link_object_source_value: 6,
+    link_object_target: 'Ticket',
+    link_object_target_value: 31
   )
 
 =end

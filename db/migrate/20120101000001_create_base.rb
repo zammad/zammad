@@ -447,7 +447,9 @@ class CreateBase < ActiveRecord::Migration
       t.column :editable,           :boolean,              null: false, default: true
       t.column :active,             :boolean,              null: false, default: true
       t.column :screens,            :string, limit: 2000,  null: true
-      t.column :pending_migration,  :boolean,              null: false, default: true
+      t.column :to_create,          :boolean,              null: false, default: true
+      t.column :to_migrate,         :boolean,              null: false, default: true
+      t.column :to_delete,          :boolean,              null: false, default: false
       t.column :position,           :integer,              null: false
       t.column :created_by_id,      :integer,              null: false
       t.column :updated_by_id,      :integer,              null: false

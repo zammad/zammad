@@ -1,0 +1,30 @@
+<div>
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <tr>
+        <th><%- @T('Role') %>
+        <th><%- @T('Screen') %>
+        <th style="width: 50%;"><%- @T('Options') %>
+    </thead>
+    <tbody>
+      <% for role, screenOptions of @data: %>
+        <tr>
+          <td class="settings-list-control-cell">
+            <%= role %>
+          <td class="settings-list-control-cell">
+          <td class="settings-list-row-control">
+        <% for screen, options of screenOptions: %>
+        <tr>
+          <td class="settings-list-control-cell">
+          <td class="settings-list-control-cell">
+            <%= screen %>
+          <td class="settings-list-row-control">
+            <% for key, defaultValue of options: %>
+              <%= @T(key) %>: <input name="{boolean}screens::<%= screen %>::<%= role %>::<%= key %>" type="checkbox" <% if (@init && defaultValue is true) || (@params && @params.screens && @params.screens[screen] && @params.screens[screen][role] && @params.screens[screen][role][key] is true) : %>checked<% end %> value="true">
+            <% end %>
+        <% end %>
+      <% end %>
+
+    </tbody>
+  </table>
+</div>
