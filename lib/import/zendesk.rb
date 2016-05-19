@@ -343,63 +343,51 @@ module Import::Zendesk
     }
 
     if zendesk_field.type == 'date'
-
       data_option = {
         future: true,
         past:   true,
         diff:   0,
-      }.merge( data_option )
-
+      }.merge(data_option)
     elsif zendesk_field.type == 'checkbox'
-
-      data_type   = 'checkbox'
+      data_type   = 'boolean'
       data_option = {
-        type: zendesk_field.type,
-        default: '',
-        options: {},
-      }.merge( data_option )
-
+        default: false,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      }.merge(data_option)
     elsif zendesk_field.type == 'regexp'
-
       data_type   = 'input'
       data_option = {
         type:  'text',
         maxlength: 255,
         regex: zendesk_field.regexp_for_validation,
-      }.merge( data_option )
-
+      }.merge(data_option)
     elsif zendesk_field.type == 'decimal'
-
       data_type   = 'input'
       data_option = {
         type:  'text',
         maxlength: 255,
-      }.merge( data_option )
-
+      }.merge(data_option)
     elsif zendesk_field.type == 'integer'
-
       data_type   = 'integer'
       data_option = {
         min:     0,
         max:     999_999_999,
-      }.merge( data_option )
-
+      }.merge(data_option)
     elsif zendesk_field.type == 'text'
-
       data_type   = 'input'
       data_option = {
         type: zendesk_field.type,
         maxlength: 255,
-      }.merge( data_option )
-
+      }.merge(data_option)
     elsif zendesk_field.type == 'textarea'
-
       data_type   = 'input'
       data_option = {
         type: zendesk_field.type,
         maxlength: 255,
-      }.merge( data_option )
-
+      }.merge(data_option)
     elsif zendesk_field.type == 'tagger' || zendesk_field.type == 'dropdown'
 
       # \"custom_field_options\"=>[{\"id\"=>28353445
@@ -432,7 +420,7 @@ module Import::Zendesk
       data_option = {
         default: '',
         options: options,
-      }.merge( data_option )
+      }.merge(data_option)
     end
 
     screens = {
@@ -1064,10 +1052,11 @@ module Import::Zendesk
     custom_fields.each { |custom_field|
       field_name  = @zendesk_field_mapping[ custom_field['id'] ].gsub(/\s/, '_')
       field_value = custom_field['value']
+      next if field_value.nil? # ignore nil values
       if @zendesk_ticket_field_value_mapping[ field_name ]
         field_value = @zendesk_ticket_field_value_mapping[ field_name ][ field_value ]
       end
-      fields[ field_name ] = field_value
+      fields[ field_name.to_sym ] = field_value
     }
     fields
   end

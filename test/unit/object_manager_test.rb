@@ -10,6 +10,8 @@ class ObjectManagerTest < ActiveSupport::TestCase
     list_objects = ObjectManager.list_frontend_objects
     assert_equal(%w(Ticket User Organization Group), list_objects)
 
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+
     # create simple attribute
     attribute1 = ObjectManager::Attribute.add(
       object: 'Ticket',
@@ -54,6 +56,12 @@ class ObjectManagerTest < ActiveSupport::TestCase
       object: 'Ticket',
       name: 'test1',
     )
+
+    attribute1 = ObjectManager::Attribute.get(
+      object: 'Ticket',
+      name: 'test1',
+    )
+    assert_not(attribute1)
 
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
     assert(ObjectManager::Attribute.migration_execute)
