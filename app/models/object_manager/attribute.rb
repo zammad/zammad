@@ -383,8 +383,10 @@ returns
       end
 
       data_type = nil
-      if attribute.data_type =~ /^input|select|richtext|textarea$/
+      if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
         data_type = :string
+      elsif attribute.data_type =~ /^integer$/
+        data_type = :integer
       elsif attribute.data_type =~ /^boolean|active$/
         data_type = :boolean
       elsif attribute.data_type =~ /^datetime$/
@@ -395,7 +397,7 @@ returns
 
       # change field
       if model.column_names.include?(attribute.name)
-        if attribute.data_type =~ /^input|select|richtext|textarea$/
+        if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -403,13 +405,21 @@ returns
             limit: attribute.data_option[:maxlength],
             null: true
           )
-        elsif attribute.data_type =~ /^boolean|active|datetime|date$/
+        elsif attribute.data_type =~ /^integer|datetime|date$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
             data_type,
             default: attribute.data_option[:default],
             null: true
+          )
+        elsif attribute.data_type =~ /^boolean|active$/
+          ActiveRecord::Migration.change_column(
+            model.table_name,
+            attribute.name,
+            data_type,
+            default: attribute.data_option[:default],
+            null: false
           )
         else
           raise "Unknown attribute.data_type '#{attribute.data_type}', can't update attribute"
@@ -424,12 +434,20 @@ returns
       end
 
       # create field
-      if attribute.data_type =~ /^input|select|richtext|textarea$/
+      if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
           data_type,
           limit: attribute.data_option[:maxlength],
+          null: true
+        )
+      elsif attribute.data_type =~ /^integer$/
+        ActiveRecord::Migration.add_column(
+          model.table_name,
+          attribute.name,
+          data_type,
+          default: attribute.data_option[:default],
           null: true
         )
       elsif attribute.data_type =~ /^boolean|active$/
@@ -471,7 +489,7 @@ returns
 
   def check_name
     if name
-      return true if name !~ /_(id|ids)$/i && name !~ /^id$/i
+      return true if name !~ /_(id|ids)$/i && name !~ /^id$/i && name !~ /\s/
     end
     raise "Name can't get used, *_id and *_ids are not allowed"
   end

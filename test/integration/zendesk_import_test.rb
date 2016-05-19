@@ -28,8 +28,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
     compare_statistic = {
       'Tickets'            => 143,
       'TicketFields'       => 13,
-      'UserFields'         => 1,
-      'OrganizationFields' => 1,
+      'UserFields'         => 2,
+      'OrganizationFields' => 2,
       'Groups'             => 2,
       'Organizations'      => 1,
       'Users'              => 141,
@@ -39,18 +39,18 @@ class ZendeskImportTest < ActiveSupport::TestCase
       'Automations'        => 5
     }
 
-    assert_equal( compare_statistic, remote_statistic, 'statistic' )
+    assert_equal(compare_statistic, remote_statistic, 'statistic')
   end
 
   # check count of imported items
   test 'check counts' do
-    assert_equal( 143, User.count, 'users' )
-    assert_equal( 3, Group.count, 'groups' )
-    assert_equal( 6, Role.count, 'roles' )
-    assert_equal( 2, Organization.count, 'organizations' )
-    assert_equal( 143, Ticket.count, 'tickets' )
-    assert_equal( 151, Ticket::Article.count, 'ticket articles' )
-    assert_equal( 2, Store.count, 'ticket article attachments' )
+    assert_equal(143, User.count, 'users')
+    assert_equal(3, Group.count, 'groups')
+    assert_equal(6, Role.count, 'roles')
+    assert_equal(2, Organization.count, 'organizations')
+    assert_equal(143, Ticket.count, 'tickets')
+    assert_equal(151, Ticket::Article.count, 'ticket articles')
+    assert_equal(2, Store.count, 'ticket article attachments')
 
     # TODO: Macros, Views, Automations...
   end
@@ -58,24 +58,25 @@ class ZendeskImportTest < ActiveSupport::TestCase
   # check imported users and permission
   test 'check users' do
 
-    role_admin    = Role.find_by( name: 'Admin' )
-    role_agent    = Role.find_by( name: 'Agent' )
-    role_customer = Role.find_by( name: 'Customer' )
+    role_admin    = Role.find_by(name: 'Admin')
+    role_agent    = Role.find_by(name: 'Agent')
+    role_customer = Role.find_by(name: 'Customer')
 
-    group_users            = Group.find_by( name: 'Users' )
-    group_support          = Group.find_by( name: 'Support' )
-    group_additional_group = Group.find_by( name: 'Additional Group' )
+    group_users            = Group.find_by(name: 'Users')
+    group_support          = Group.find_by(name: 'Support')
+    group_additional_group = Group.find_by(name: 'Additional Group')
 
     checks = [
       {
         id:   4,
         data: {
-          firstname: 'Bob',
-          lastname:  'Smith',
-          login:     '1150734731',
-          email:     'bob.smith@znuny.com',
-          active:    true,
-          phone:     '00114124',
+          firstname:     'Bob',
+          lastname:      'Smith',
+          login:         '1150734731',
+          email:         'bob.smith@znuny.com',
+          active:        true,
+          phone:         '00114124',
+          lieblingstier: 'Hundä',
         },
         roles:  [role_agent, role_admin],
         groups: [group_support],
@@ -83,11 +84,12 @@ class ZendeskImportTest < ActiveSupport::TestCase
       {
         id:   5,
         data: {
-          firstname: 'Hansimerkur',
-          lastname:  '',
-          login:     '1202726471',
-          email:     'hansimerkur@znuny.com',
-          active:    true,
+          firstname:     'Hansimerkur',
+          lastname:      '',
+          login:         '1202726471',
+          email:         'hansimerkur@znuny.com',
+          active:        true,
+          lieblingstier: nil,
         },
         roles:  [role_agent, role_admin],
         groups: [group_additional_group, group_support],
@@ -131,26 +133,18 @@ class ZendeskImportTest < ActiveSupport::TestCase
     ]
 
     checks.each { |check|
-      user = User.find( check[:id] )
-
-      assert_equal( check[:data][:firstname], user.firstname, 'firstname' )
-      assert_equal( check[:data][:lastname], user.lastname, 'lastname' )
-      assert_equal( check[:data][:login], user.login, 'login' )
-      assert_equal( check[:data][:email], user.email, 'email' )
-      assert_equal( check[:data][:phone], user.phone, 'phone' )
-      assert_equal( check[:data][:active], user.active, 'active' )
-
-      assert_equal( check[:roles], user.roles.to_a, "#{user.login} roles" )
-      assert_equal( check[:groups], user.groups.to_a, "#{user.login} groups" )
+      user = User.find(check[:id])
+      check[:data].each {|key, value|
+        assert_equal(value, user[key], "user.#{key} for user_id #{check[:id]}")
+      }
+      assert_equal(check[:roles], user.roles.to_a, "#{user.login} roles")
+      assert_equal(check[:groups], user.groups.to_a, "#{user.login} groups")
     }
   end
 
   # check user fields
   test 'check user fields' do
-
     local_fields = User.column_names
-
-    # TODO
     copmare_fields = %w(
       id
       organization_id
@@ -182,9 +176,11 @@ class ZendeskImportTest < ActiveSupport::TestCase
       updated_by_id
       created_by_id
       created_at
-      updated_at)
+      updated_at
+      lieblingstier
+      custom_dropdown)
 
-    assert_equal( copmare_fields, local_fields, 'user fields' )
+    assert_equal(copmare_fields, local_fields, 'user fields')
   end
 
   # check groups/queues
@@ -215,10 +211,10 @@ class ZendeskImportTest < ActiveSupport::TestCase
     ]
 
     checks.each { |check|
-      group = Group.find( check[:id] )
-
-      assert_equal( check[:data][:name], group.name, 'name' )
-      assert_equal( check[:data][:active], group.active, 'active' )
+      group = Group.find(check[:id])
+      check[:data].each {|key, value|
+        assert_equal(value, group[key], "group.#{key} for group_id #{check[:id]}")
+      }
     }
   end
 
@@ -231,6 +227,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
         data: {
           name: 'Zammad Foundation',
           note: '',
+          api_key: nil,
+          custom_dropdown: nil,
         },
       },
       {
@@ -238,24 +236,23 @@ class ZendeskImportTest < ActiveSupport::TestCase
         data: {
           name: 'Znuny',
           note: nil,
+          api_key: 'my api öäüß',
+          custom_dropdown: 'b',
         },
       },
     ]
 
     checks.each { |check|
-      organization = Organization.find( check[:id] )
-
-      assert_equal( check[:data][:name], organization.name, 'name' )
-      assert_equal( check[:data][:note], organization.note, 'note' )
+      organization = Organization.find(check[:id])
+      check[:data].each {|key, value|
+        assert_equal(value, organization[key], "organization.#{key} for organization_id #{check[:id]}")
+      }
     }
   end
 
   # check organization fields
   test 'check organization fields' do
-
     local_fields = Organization.column_names
-
-    # TODO
     copmare_fields = %w(
       id
       name
@@ -265,9 +262,11 @@ class ZendeskImportTest < ActiveSupport::TestCase
       updated_by_id
       created_by_id
       created_at
-      updated_at)
+      updated_at
+      api_key
+      custom_dropdown)
 
-    assert_equal( copmare_fields, local_fields, 'organization fields' )
+    assert_equal(copmare_fields, local_fields, 'organization fields')
   end
 
   # check imported tickets
@@ -278,7 +277,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
         id: 2,
         data: {
           title:                    'test',
-          note:                     'This is the first comment. Feel free to delete this sample ticket.',
+          #note:                     'This is the first comment. Feel free to delete this sample ticket.',
+          note:                     'test email',
           create_article_type_id:   1,
           create_article_sender_id: 2,
           article_count:            2,
@@ -288,13 +288,20 @@ class ZendeskImportTest < ActiveSupport::TestCase
           owner_id:                 1,
           customer_id:              6,
           organization_id:          2,
+          test_checkbox:          'f',
+          custom_integer:         999,
+          custom_dropdown:     'key2',
+          custom_decimal:        '1.6',
+          not_existing:            nil,
         },
       },
       {
         id: 3,
         data: {
           title:                    'Bob Smith, here is the test ticket you requested',
-          note:                     'test email',
+          note:                     'Hello! This is a Zendesk ticket. We are going to go through the basic support ticket operation in Zendesk.
+
+If you\'re reading this message in your email, click the ticket number link that immediately follows the line \'You have been assigned to this t',
           create_article_type_id:   10,
           create_article_sender_id: 2,
           article_count:            4,
@@ -304,13 +311,18 @@ class ZendeskImportTest < ActiveSupport::TestCase
           owner_id:                 1,
           customer_id:              7,
           organization_id:          nil,
+          test_checkbox:            'f',
+          custom_integer:           nil,
+          custom_dropdown:          '',
+          custom_decimal:           nil,
+          not_existing:             nil,
         },
       },
       {
         id: 5,
         data: {
           title:                    'Twitter',
-          note:                     '@DesafioCaracol sh q acaso sto se vale ver el jueg...',
+          note:                     "@gabyalanisr Brandon Arely Snuppy Jaz Jerry Liz Irvig &amp; Wera\nY Losa Otrs Yop \npero si quieres Los Que Puedas",
           create_article_type_id:   6,
           create_article_sender_id: 2,
           article_count:            1,
@@ -357,18 +369,10 @@ class ZendeskImportTest < ActiveSupport::TestCase
     ]
 
     checks.each { |check|
-      ticket = Ticket.find( check[:id] )
-
-      assert_equal( check[:data][:title], ticket.title, "title of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:create_article_type_id], ticket.create_article_type_id, "created_article_type_id of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:create_article_sender_id], ticket.create_article_sender_id, "created_article_sender_id of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:article_count], ticket.article_count, "article_count of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:state_id], ticket.state.id, "state_id of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:group_id], ticket.group.id, "group_id of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:priority_id], ticket.priority.id, "priority_id of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:owner_id], ticket.owner.id, "owner_id of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:customer_id], ticket.customer.id, "customer_id of Ticket.find(#{check[:id]})" )
-      assert_equal( check[:data][:organization_id], ticket.organization.try(:id), "organization_id of Ticket.find(#{check[:id]})" )
+      ticket = Ticket.find(check[:id])
+      check[:data].each {|key, value|
+        assert_equal(value, ticket[key], "ticket.#{key} for ticket_id #{check[:id]}")
+      }
     }
   end
 
@@ -404,27 +408,22 @@ class ZendeskImportTest < ActiveSupport::TestCase
     checks.each { |check|
       article = Ticket::Article.find(check[:id])
 
-      assert_equal( check[:data][:count], article.attachments.count, 'attachemnt count' )
+      assert_equal(check[:data][:count], article.attachments.count, 'attachemnt count')
 
-      (1..check[:data][:count] ).each { |attachment_counter|
+      (1..check[:data][:count]).each { |attachment_counter|
 
         attachment         = article.attachments[ attachment_counter - 1 ]
         compare_attachment = check[:data][ attachment_counter ]
 
-        assert_equal( compare_attachment[:filename], attachment.filename, 'attachment file name' )
-
-        assert_equal( compare_attachment[:preferences], attachment[:preferences], 'attachment preferences')
-
+        assert_equal(compare_attachment[:filename], attachment.filename, 'attachment file name')
+        assert_equal(compare_attachment[:preferences], attachment[:preferences], 'attachment preferences')
       }
     }
   end
 
   # check ticket fields
   test 'check ticket fields' do
-
     local_fields = Ticket.column_names
-
-    # TODO
     copmare_fields = %w(
       id
       group_id
@@ -463,9 +462,15 @@ class ZendeskImportTest < ActiveSupport::TestCase
       updated_by_id
       created_by_id
       created_at
-      updated_at)
+      updated_at
+      custom_decimal
+      test_checkbox
+      custom_date
+      custom_integer
+      custom_regex
+      custom_dropdown)
 
-    assert_equal( copmare_fields, local_fields, 'ticket fields' )
+    assert_equal(copmare_fields, local_fields, 'ticket fields')
   end
 
 end
