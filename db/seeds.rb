@@ -2425,7 +2425,6 @@ Network::Category.create_if_not_exists(
   allow_comments: true,
   network_category_type_id: Network::Category::Type.find_by(name: 'Question').id,
   network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
-  #network_categories_moderator_user_ids: User.find_by(:login => '-').id,
 )
 Network::Category.create_if_not_exists(
   id: 3,
