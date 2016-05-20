@@ -39,47 +39,7 @@ class OnlyOneGroup < ActiveRecord::Migration
       created_by_id: 1,
       updated_by_id: 1,
     )
-    ObjectManager::Attribute.add(
-      force: true,
-      object: 'User',
-      name: 'group_ids',
-      display: 'Groups',
-      data_type: 'checkbox',
-      data_option: {
-        default: '',
-        multiple: true,
-        null: true,
-        relation: 'Group',
-      },
-      editable: false,
-      active: true,
-      screens: {
-        signup: {},
-        invite_agent: {
-          '-all-' => {
-            null: false,
-            only_shown_if_selectable: true,
-          },
-        },
-        invite_customer: {},
-        edit: {
-          Admin: {
-            null: true,
-          },
-        },
-        view: {
-          '-all-' => {
-            shown: false,
-          },
-        },
-      },
-      to_create: false,
-      to_migrate: false,
-      to_delete: false,
-      position: 1700,
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
+
     ObjectManager::Attribute.add(
       force: true,
       object: 'User',
