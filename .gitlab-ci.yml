@@ -335,6 +335,7 @@ test:browser:twitter_ff:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -351,6 +352,7 @@ test:browser:facebook_ff:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -366,6 +368,7 @@ test:browser:autowizard_ff:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -386,6 +389,7 @@ test:browser:core:ff_1_mysql:
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -406,6 +410,7 @@ test:browser:core:ff_2_mysql:
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -422,6 +427,7 @@ test:browser:core:ff_3_mysql:
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -442,6 +448,7 @@ test:browser:core:ff_1_postgresql:
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -462,6 +469,7 @@ test:browser:core:ff_2_postgresql:
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -478,6 +486,7 @@ test:browser:core:ff_3_postgresql:
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -498,6 +507,7 @@ test:browser:core:chrome_1_mysql:
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -518,6 +528,7 @@ test:browser:core:chrome_2_mysql:
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -538,6 +549,7 @@ test:browser:core:chrome_3_mysql:
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -558,6 +570,7 @@ test:browser:core:chrome_1_postgresql:
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -578,6 +591,7 @@ test:browser:core:chrome_2_postgresql:
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -598,6 +612,7 @@ test:browser:core:chrome_3_postgresql:
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -614,6 +629,7 @@ test:browser:integration:twitter_chrome:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -630,6 +646,7 @@ test:browser:integration:facebook_chrome:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -644,6 +661,7 @@ test:browser:integration:otrs_chrome:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/otrs_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -659,6 +677,7 @@ test:browser:integration:autowizard_chrome:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -673,6 +692,7 @@ test:browser:integration:zendesk_chrome:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
+    - rake assets:precompile
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
     - ruby -I test/ test/integration/zendesk_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
