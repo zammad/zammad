@@ -1148,7 +1148,12 @@ get assets and record_ids of selector
     send(selector).each {|item, content|
       attribute = item.split(/\./)
       next if !attribute[1]
-      attribute_class = attribute[0].to_classname.constantize
+      begin
+        attribute_class = attribute[0].to_classname.constantize
+      rescue => e
+        logger.error "Unable to get asset for '#{attribute[0]}': #{e.inspect}"
+        next
+      end
       reflection = attribute[1].sub(/_id$/, '')
       #reflection = reflection.to_sym
       next if !models[attribute_class]

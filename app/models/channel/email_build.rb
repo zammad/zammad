@@ -199,6 +199,9 @@ Check if string is a complete html document. If not, add head and css styles.
       col {
         width: auto;
       }
+      p {
+        margin: 0;
+      }
       code {
         border: none;
         background: hsl(0,0%,97%);
@@ -238,8 +241,9 @@ Add/change markup to display html in any mail client nice.
   def self.html_mail_client_fixes(html)
 
     # https://github.com/martini/zammad/issues/165
-    html.gsub('<blockquote type="cite">', '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">')
-
+    new_html = html.gsub('<blockquote type="cite">', '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">')
+    new_html.gsub!('<p>', '<p style="margin: 0;">')
+    new_html
   end
 
 end

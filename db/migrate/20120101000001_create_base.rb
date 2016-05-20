@@ -66,13 +66,15 @@ class CreateBase < ActiveRecord::Migration
     add_index :signatures, [:name], unique: true
 
     create_table :email_addresses do |t|
-      t.string :realname,             limit: 250,  null: false
-      t.string :email,                limit: 250,  null: false
-      t.boolean :active,                           null: false, default: true
-      t.string :note,                 limit: 250,  null: true
-      t.integer :updated_by_id,                    null: false
-      t.integer :created_by_id,                    null: false
-      t.timestamps                                 null: false
+      t.integer :channel_id,                        null: true
+      t.string  :realname,             limit: 250,  null: false
+      t.string  :email,                limit: 250,  null: false
+      t.boolean :active,                            null: false, default: true
+      t.string  :note,                 limit: 250,  null: true
+      t.string  :preferences,          limit: 2000, null: true
+      t.integer :updated_by_id,                     null: false
+      t.integer :created_by_id,                     null: false
+      t.timestamps                                  null: false
     end
     add_index :email_addresses, [:email], unique: true
 
@@ -419,6 +421,21 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :schedulers, [:name], unique: true
 
+    create_table :calendars do |t|
+      t.string  :name,                   limit: 250, null: true
+      t.string  :timezone,               limit: 250, null: true
+      t.string  :business_hours,         limit: 1200, null: true
+      t.boolean :default,                            null: false, default: false
+      t.string  :ical_url,               limit: 500, null: true
+      t.text    :public_holidays,        limit: 500.kilobytes + 1, null: true
+      t.text    :last_log,               limit: 500.kilobytes + 1, null: true
+      t.timestamp :last_sync,            null: true
+      t.integer :updated_by_id,          null: false
+      t.integer :created_by_id,          null: false
+      t.timestamps                       null: false
+    end
+    add_index :calendars, [:name], unique: true
+
     create_table :user_devices do |t|
       t.references :user,             null: false
       t.string  :name,                 limit: 250, null: false
@@ -437,6 +454,12 @@ class CreateBase < ActiveRecord::Migration
     add_index :user_devices, [:fingerprint]
     add_index :user_devices, [:updated_at]
     add_index :user_devices, [:created_at]
+
+    create_table :external_credentials do |t|
+      t.string :name
+      t.string :credentials, limit: 2500, null: false
+      t.timestamps
+    end
 
     create_table :object_manager_attributes do |t|
       t.references :object_lookup,                         null: false

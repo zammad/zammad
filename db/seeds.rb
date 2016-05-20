@@ -1174,7 +1174,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: '(mailer-daemon|postmaster|abuse|root)@.+?\..+?',
+  state: '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?)@.+?\..+?',
   preferences: { online_service_disable: true },
   frontend: false
 )
@@ -2425,7 +2425,6 @@ Network::Category.create_if_not_exists(
   allow_comments: true,
   network_category_type_id: Network::Category::Type.find_by(name: 'Question').id,
   network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
-#  network_categories_moderator_user_ids: User.find_by(:login => '-').id,
 )
 Network::Category.create_if_not_exists(
   id: 3,
@@ -4199,6 +4198,15 @@ Scheduler.create_or_update(
   updated_by_id: 1,
   created_by_id: 1,
 )
+Scheduler.create_or_update(
+  name: 'Sync calendars with ical feeds.',
+  method: 'Calendar.sync',
+  period: 1.day,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
 
 Trigger.create_or_update(
   name: 'auto reply (on new tickets)',
@@ -4226,7 +4234,7 @@ Trigger.create_or_update(
   },
   perform: {
     'notification.email' => {
-      'body' => '<div>Your request (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.</div>
+      'body' => '<div>Your request <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
 <br/>
 <div>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
@@ -4265,7 +4273,7 @@ Trigger.create_or_update(
   },
   perform: {
     'notification.email' => {
-      'body' => '<div>Your follow up for (#{config.ticket_hook}#{ticket.number}) has been received and will be reviewed by our support staff.</div>
+      'body' => '<div>Your follow up for <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
 <br/>
 <div>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
