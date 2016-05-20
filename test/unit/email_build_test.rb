@@ -175,7 +175,6 @@ text
 text
 </blockquote>'
     html_with_fixes = Channel::EmailBuild.html_mail_client_fixes(html_raw)
-
     assert_not_equal(html_with_fixes, html_raw)
 
     html_should = '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">some
@@ -187,9 +186,20 @@ text
 <blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">some
 text
 </blockquote>'
-
     assert_equal(html_should, html_with_fixes)
 
+    html_raw = '<p>some
+text
+</p>
+<p>123</p>'
+    html_with_fixes = Channel::EmailBuild.html_mail_client_fixes(html_raw)
+    assert_not_equal(html_with_fixes, html_raw)
+
+    html_should = '<p style="margin: 0;">some
+text
+</p>
+<p style="margin: 0;">123</p>'
+    assert_equal(html_should, html_with_fixes)
   end
 
 end
