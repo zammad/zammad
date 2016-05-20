@@ -14,9 +14,9 @@ class RoleGroupRemove < ActiveRecord::Migration
       name: 'group_ids',
     )
     record.destroy if record
-    ObjectManager::Attribute.add(
-      force: true,
-      object: 'User',
+
+    ObjectManager::Attribute.create(
+      object_lookup_id: ObjectLookup.by_name('User'),
       name: 'role_ids',
       display: 'Permissions',
       data_type: 'user_permission',
@@ -49,9 +49,6 @@ class RoleGroupRemove < ActiveRecord::Migration
           },
         },
       },
-      to_create: false,
-      to_migrate: false,
-      to_delete: false,
       position: 1600,
       updated_by_id: 1,
       created_by_id: 1,

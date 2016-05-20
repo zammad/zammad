@@ -165,6 +165,8 @@ use "force: true" to delete also not editable fields
       data[:object_lookup_id] = ObjectLookup.by_name(data[:object])
     end
 
+    data[:name].downcase!
+
     # check newest entry - is needed
     record = ObjectManager::Attribute.find_by(
       object_lookup_id: data[:object_lookup_id],

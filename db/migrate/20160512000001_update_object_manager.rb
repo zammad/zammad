@@ -3,10 +3,10 @@ class UpdateObjectManager < ActiveRecord::Migration
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
-    add_column :object_manager_attributes, :to_create, :boolean, null: false, default: true
-    add_column :object_manager_attributes, :to_migrate, :boolean, null: false, default: true
+    add_column :object_manager_attributes, :to_create, :boolean, null: false, default: false
+    add_column :object_manager_attributes, :to_migrate, :boolean, null: false, default: false
     add_column :object_manager_attributes, :to_delete, :boolean, null: false, default: false
-
+    ObjectManager::Attribute.reset_column_information
     ObjectManager::Attribute.add(
       force: true,
       object: 'Group',
