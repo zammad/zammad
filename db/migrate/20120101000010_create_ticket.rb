@@ -13,6 +13,7 @@ class CreateTicket < ActiveRecord::Migration
       t.references :state_type, null: false
       t.column :name,                 :string, limit: 250,  null: false
       t.column :next_state_id,        :integer,             null: true
+      t.column :ignore_escalation,    :boolean,             null: false, default: false
       t.column :note,                 :string, limit: 250,  null: true
       t.column :active,               :boolean,             null: false, default: true
       t.column :updated_by_id,        :integer,             null: false
@@ -340,35 +341,122 @@ class CreateTicket < ActiveRecord::Migration
 
     create_table :channels do |t|
       t.references :group,                             null: true
-      t.column :adapter,        :string, limit: 100,   null: false
       t.column :area,           :string, limit: 100,   null: false
       t.column :options,        :string, limit: 2000,  null: true
       t.column :active,         :boolean,              null: false, default: true
+      t.column :preferences,    :string, limit: 2000, null: true
+      t.column :last_log_in,    :text,   limit: 500.kilobytes + 1, null: true
+      t.column :last_log_out,   :text,   limit: 500.kilobytes + 1, null: true
+      t.column :status_in,      :string, limit: 100,  null: true
+      t.column :status_out,     :string, limit: 100,  null: true
       t.column :updated_by_id,  :integer,              null: false
       t.column :created_by_id,  :integer,              null: false
       t.timestamps                                     null: false
     end
     add_index :channels, [:area]
-    add_index :channels, [:adapter]
 
     create_table :slas do |t|
       t.column :name,                 :string, limit: 150,      null: true
+      t.column :calendar_id,          :integer,                 null: false
       t.column :first_response_time,  :integer,                 null: true
       t.column :update_time,          :integer,                 null: true
-      t.column :close_time,           :integer,                 null: true
+      t.column :solution_time,        :integer,                 null: true
       t.column :condition,            :string, limit: 5000,     null: true
-      t.column :data,                 :string, limit: 5000,     null: true
-      t.column :timezone,             :string, limit: 50,       null: true
-      t.column :active,               :boolean,                 null: false, default: true
       t.column :updated_by_id,        :integer,                 null: false
       t.column :created_by_id,        :integer,                 null: false
       t.timestamps                                              null: false
     end
     add_index :slas, [:name], unique: true
 
+    create_table :macros do |t|
+      t.string  :name,                   limit: 250,  null: true
+      t.string  :perform,                limit: 5000, null: false
+      t.boolean :active,                              null: false, default: true
+      t.string  :note,                   limit: 250,  null: true
+      t.integer :updated_by_id,                       null: false
+      t.integer :created_by_id,                       null: false
+      t.timestamps                                    null: false
+    end
+    add_index :macros, [:name], unique: true
+
+    create_table :chats do |t|
+      t.string  :name,                   limit: 250,  null: true
+      t.integer :max_queue,                           null: false, default: 5
+      t.string  :note,                   limit: 250,  null: true
+      t.boolean :active,                              null: false, default: true
+      t.boolean :public,                              null: false, default: false
+      t.string  :preferences,            limit: 5000, null: true
+      t.integer :updated_by_id,                       null: false
+      t.integer :created_by_id,                       null: false
+      t.timestamps                                    null: false
+    end
+    add_index :chats, [:name], unique: true
+
+    create_table :chat_topics do |t|
+      t.integer :chat_id,                             null: false
+      t.string  :name,                   limit: 250,  null: false
+      t.string  :note,                   limit: 250,  null: true
+      t.integer :updated_by_id,                       null: false
+      t.integer :created_by_id,                       null: false
+      t.timestamps                                    null: false
+    end
+    add_index :chat_topics, [:name], unique: true
+
+    create_table :chat_sessions do |t|
+      t.integer :chat_id,                             null: false
+      t.string  :session_id,                          null: false
+      t.string  :name,                   limit: 250,  null: true
+      t.string  :state,                  limit:  50,  null: false, default: 'waiting' # running, closed
+      t.integer :user_id,                             null: true
+      t.text    :preferences,            limit: 100.kilobytes + 1, null: true
+      t.integer :updated_by_id,                       null: true
+      t.integer :created_by_id,                       null: true
+      t.timestamps                                    null: false
+    end
+    add_index :chat_sessions, [:session_id]
+    add_index :chat_sessions, [:state]
+    add_index :chat_sessions, [:user_id]
+    add_index :chat_sessions, [:chat_id]
+
+    create_table :chat_messages do |t|
+      t.integer :chat_session_id,                     null: false
+      t.string  :content,                limit: 5000, null: false
+      t.integer :created_by_id,                       null: true
+      t.timestamps                                    null: false
+    end
+    add_index :chat_messages, [:chat_session_id]
+
+    create_table :chat_agents do |t|
+      t.boolean :active,                              null: false, default: true
+      t.integer :concurrent,                          null: false, default: 5
+      t.integer :updated_by_id,                       null: false
+      t.integer :created_by_id,                       null: false
+      t.timestamps                                    null: false
+    end
+    add_index :chat_agents, [:active]
+    add_index :chat_agents, [:updated_by_id], unique: true
+    add_index :chat_agents, [:created_by_id], unique: true
+
+    create_table :report_profiles do |t|
+      t.column :name,           :string, limit: 150,   null: true
+      t.column :condition,      :string, limit: 6000,  null: true
+      t.column :active,         :boolean,              null: false, default: true
+      t.column :updated_by_id,  :integer,              null: false
+      t.column :created_by_id,  :integer,              null: false
+      t.timestamps                                     null: false
+    end
+    add_index :report_profiles, [:name], unique: true
+
   end
 
   def self.down
+    drop_table :report_profiles
+    drop_table :chat_topics
+    drop_table :chat_sessions
+    drop_table :chat_messages
+    drop_table :chat_agents
+    drop_table :chats
+    drop_table :macros
     drop_table :slas
     drop_table :channels
     drop_table :templates_groups

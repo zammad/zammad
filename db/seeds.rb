@@ -1174,7 +1174,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: '(mailer-daemon|postmaster|abuse|root)@.+?\..+?',
+  state: '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?)@.+?\..+?',
   preferences: { online_service_disable: true },
   frontend: false
 )
@@ -2425,7 +2425,7 @@ Network::Category.create_if_not_exists(
   allow_comments: true,
   network_category_type_id: Network::Category::Type.find_by(name: 'Question').id,
   network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
-#  network_categories_moderator_user_ids: User.find_by(:login => '-').id,
+  #network_categories_moderator_user_ids: User.find_by(:login => '-').id,
 )
 Network::Category.create_if_not_exists(
   id: 3,
@@ -4194,6 +4194,15 @@ Scheduler.create_or_update(
   name: 'Cleanup closed sessions.',
   method: 'Chat.cleanup',
   period: 5.days,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
+  name: 'Sync calendars with ical feeds.',
+  method: 'Calendar.sync',
+  period: 1.day,
   prio: 2,
   active: true,
   updated_by_id: 1,
