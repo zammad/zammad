@@ -8,7 +8,6 @@ before_script:
 stages:
   - pre
   - test
-  - build
   - browser
 
 pre:rubocop:
@@ -310,7 +309,7 @@ test:integration:otrs_31:
     - rake db:drop
 
 browser:build:
-  stage: build
+  stage: test
   tags:
     - core
   script:
