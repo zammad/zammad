@@ -147,6 +147,10 @@ blockquote {
   display: inline-block;
 }
 
+.u-notAllowed {
+  cursor: not-allowed;
+}
+
 .zIndex-1,
 .zIndex-2,
 .zIndex-3,
@@ -325,7 +329,7 @@ pre code.hljs {
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  
+
   .icon {
     vertical-align: middle;
     margin-top: -3px;
@@ -335,7 +339,7 @@ pre code.hljs {
   &.btn--icon--last .icon {
     margin-left: 5px; // so far only used in ticket_zoom secondaryAction dropup
   }
-  
+
   &:focus {
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
@@ -344,7 +348,7 @@ pre code.hljs {
     padding-top: 5px;
     padding-bottom: 4px;
   }
-  
+
   &.btn--slim {
     padding-left: 12px;
     padding-right: 12px;
@@ -361,7 +365,7 @@ pre code.hljs {
     border: none;
     margin: 5px 6px 0;
     vertical-align: baseline; /* calendar_subscriptions.jst.eco */
-    
+
     .icon {
       vertical-align: middle;
       margin-right: 5px;
@@ -389,7 +393,7 @@ pre code.hljs {
     padding: 2px 11px 0 !important;
     display: inline-flex;
     align-items: center;
-    
+
     .icon {
       margin: -2px 5px 0 -2px;
       fill: hsl(0,0%,60%);
@@ -398,11 +402,11 @@ pre code.hljs {
     .icon:only-child {
       margin: 0;
     }
-    
+
     &.btn--slim {
       padding-left: 7px !important;
       padding-right: 7px !important;
-      
+
       &.btn--small {
         padding-left: 5px !important;
         padding-right: 5px !important;
@@ -421,7 +425,7 @@ pre code.hljs {
   &.btn--onDark {
     background: none;
     color: white;
-    
+
     svg {
       fill: currentColor;
       opacity: 1;
@@ -449,7 +453,7 @@ pre code.hljs {
   &.btn--success {
     color: white;
     background: hsl(145,51%,45%);
-    
+
     &:active {
       background: hsl(145,51%,35%);
     }
@@ -457,7 +461,7 @@ pre code.hljs {
     &.btn--secondary {
       background: white;
       color: hsl(145,51%,45%);
-      
+
       &:active {
         background: hsl(0,0%,98%);
       }
@@ -482,7 +486,7 @@ pre code.hljs {
     &.btn--secondary {
       background: white;
       color: hsl(0,65%,55%);
-      
+
       &:active {
         background: hsl(0,0%,98%);
       }
@@ -498,12 +502,12 @@ pre code.hljs {
     background: none;
     vertical-align: baseline;
     text-align: left;
-    
+
     .icon {
       fill: currentColor;
       opacity: 1;
     }
-    
+
     &:active {
       color: hsl(203,65%,40%);
       background: none;
@@ -512,7 +516,7 @@ pre code.hljs {
     &.btn--secondary {
       color: hsl(0,0%,68%);
       text-decoration: underline;
-      
+
       &:active {
         color: hsl(0,0%,53%);
       }
@@ -520,7 +524,7 @@ pre code.hljs {
 
     &.btn--positive {
       color: hsl(145,51%,45%);
-      
+
       &:active {
         color: hsl(145,51%,30%);
         background: none;
@@ -529,7 +533,7 @@ pre code.hljs {
 
     &.btn--danger {
       color: hsl(0,65%,55%);
-      
+
       &:active {
         color: hsl(0,65%,40%);
         background: none;
@@ -539,7 +543,7 @@ pre code.hljs {
     &.btn--subtle {
       text-decoration: underline;
       color: hsl(0,0%,85%);
-      
+
       &:active {
         color: hsl(0,0%,75%);
       }
@@ -556,7 +560,7 @@ pre code.hljs {
 
   &.btn--quad {
     padding: 10px 12px 9px;
-    
+
     .icon {
       margin-top: -1px;
     }
@@ -577,7 +581,7 @@ pre code.hljs {
 
   &.btn--dropdown {
     position: relative;
-    
+
     select {
       opacity: 0;
       width: 100%;
@@ -623,13 +627,13 @@ pre code.hljs {
 
 .visibility-change {
   /*
-  
+
   Interactive Visibility Change Classes:
-  
+
     <div class="visibility-change">
       <svg class="icon-marker" data-visible="active"><use xlink:href="#icon-marker" /></svg>
     </div>
-    
+
     Important: HTML Order active > hover > normal
 
   */
@@ -641,7 +645,7 @@ pre code.hljs {
 
   &.is-active [data-visible=active] {
     display: block;
-    
+
     & ~ [data-visible=normal] {
       display: none
     }
@@ -649,7 +653,7 @@ pre code.hljs {
 
   &:hover [data-visible=hover] {
     display: block;
-    
+
     & ~ [data-visible=normal] {
       display: none
     }
@@ -659,7 +663,7 @@ pre code.hljs {
 .btn-group {
   display: inline-flex;
   flex-wrap: wrap;
-  
+
   &.btn-group--full {
     display: flex;
   }
@@ -667,7 +671,7 @@ pre code.hljs {
   & + .btn-group {
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid hsl(240,2%,92%);  
+    border-top: 1px solid hsl(240,2%,92%);
   }
 
   .btn + .btn {
@@ -678,7 +682,7 @@ pre code.hljs {
     padding: 6px 10px 5px; /* reporting main.eco */
     display: inline-block;
     border-radius: 3px;
-    
+
     &.is-selected {
       background: hsl(203,65%,55%);
       color: white;
@@ -691,11 +695,11 @@ pre code.hljs {
   align-items: center;
   position: relative;
   user-select: none;
-  
+
   .dropdown-menu {
     margin-bottom: 0;
   }
-  
+
   &.is-open .dropdown-menu {
     display: block;
   }
@@ -717,7 +721,7 @@ pre code.hljs {
   height: 34px;
   align-items: center;
   line-height: 35px;
-  
+
   &.is-clickable {
     background: hsl(203,65%,55%);
     color: white;
@@ -730,15 +734,15 @@ pre code.hljs {
   &.is-blinking {
     animation: pulsate 667ms ease-in-out infinite alternate;
   }
-  
+
   &:not(:last-child):not(:only-child) {
     border-right: none;
   }
-  
+
   &:first-child {
     border-radius: 5px 0 0 5px;
   }
-  
+
   &:last-child {
     border-radius: 0 5px 5px 0;
   }
@@ -771,9 +775,9 @@ pre code.hljs {
   line-height: 12px;
   opacity: 0.5;
   position: relative;
-  
-  /* 
-    border in its own layer to make it more 
+
+  /*
+    border in its own layer to make it more
     translucend but still depend on the currentColor
   */
   &:after {
@@ -848,7 +852,7 @@ table {
 
 .table {
   display: table;
-  
+
   small {
     color: inherit;
   }
@@ -872,7 +876,7 @@ table {
   }
   td {
     height: 40px;
-  } 
+  }
 }
 
 .table th:not(.noTruncate) .table-column-title,
@@ -920,7 +924,7 @@ th.align-right {
 .table-hover > tbody > tr:hover > td {
   background: white;
 }
- 
+
 .table-hover > tbody > tr:hover > th {
   background: rgba(0,8,14,.015);
 }
@@ -934,7 +938,7 @@ th.align-right {
   padding: 10px;
   margin-right: -10px;
   z-index: 1;
-  
+
   &:after {
     content: "";
     display: block;
@@ -953,7 +957,7 @@ th.align-right {
 .table tr.is-inactive {
   opacity: 0.5;
   text-decoration: line-through;
-  
+
   a {
     color: #bbb;
   }
@@ -961,7 +965,7 @@ th.align-right {
 
 .table tr.is-grayed-out {
   color: hsl(120,1%,77%);
-  
+
   .icon {
     opacity: 0.33;
   }
@@ -1206,7 +1210,7 @@ h3 {
   margin: 20px 0 8px;
   color: hsl(207,7%,29%);
   font-weight: normal;
-  
+
   .subtitle {
     display: inline;
     font-size: 12px;
@@ -1314,7 +1318,7 @@ fieldset > .form-group {
 
 .form-group {
   margin-bottom: 16px;
-  
+
   &.form-group--inactive {
     opacity: 0.5;
   }
@@ -1331,7 +1335,7 @@ fieldset > .form-group {
 .merge-group {
   display: flex;
   align-items: stretch;
-  
+
   &.merge-group--inactive {
   }
 
@@ -1349,7 +1353,7 @@ fieldset > .form-group {
       border-bottom: 1px solid #eee;
     }
   }
-  
+
   .merge-target,
   .merge-source {
     flex: 1;
@@ -1368,7 +1372,7 @@ fieldset > .form-group {
 
   &:first-of-type {
     margin-top: 6px;
-    
+
     .merge-source,
     .merge-target {
       border-top: 1px solid #eee;
@@ -1378,7 +1382,7 @@ fieldset > .form-group {
 
   &:last-of-type {
     margin-bottom: 6px;
-    
+
     .merge-source,
     .merge-target {
       border-bottom: 1px solid #eee;
@@ -1389,7 +1393,7 @@ fieldset > .form-group {
   .merge-value {
     margin-bottom: 3px;
   }
-  
+
   .form-group {
     padding: 0;
   }
@@ -1401,7 +1405,7 @@ fieldset > .form-group {
   &.merge-group--multi {
     .merge-value + .merge-value {
       margin-top: 12px;
-    } 
+    }
   }
 }
 
@@ -1409,7 +1413,7 @@ fieldset > .form-group {
   flex: 1;
   align-self: flex-end;
 }
-  
+
 .merge-control {
   margin-bottom: 5px;
   height: 31px;
@@ -1430,7 +1434,7 @@ fieldset > .form-group {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   .line-arrow {
     fill: #e6e6e6;
   }
@@ -1442,7 +1446,7 @@ fieldset > .form-group {
   position: relative;
   display: flex;
   align-items: center;
-  
+
   label {
     margin: 0;
   }
@@ -1484,7 +1488,7 @@ fieldset > .form-group {
   top: -2px;
   position: relative;
   margin-left: auto;
-  
+
   .icon-help {
     display: block;
   }
@@ -1497,7 +1501,7 @@ fieldset > .form-group {
 .form-group.formGroup--halfSize {
   width: 50%;
   float: left;
-  
+
   .form-control {
     min-width: initial;
   }
@@ -1516,7 +1520,7 @@ fieldset > .form-group {
   flex-shrink: 0;
 }
 
-input[type="radio"], 
+input[type="radio"],
 input[type="checkbox"] {
   margin: 0;
 }
@@ -1549,7 +1553,7 @@ textarea,
     padding: 5px 8px 4px;
     height: 31px;
     line-height: 20px;
-    
+
     &.form-control--multiline {
       min-height: 31px;
     }
@@ -1594,7 +1598,7 @@ input.time {
   padding: 0 6px;
   line-height: 42px;
   flex-shrink: 0;
-  
+
   &.form-control--small {
     line-height: 31px;
   }
@@ -1653,7 +1657,7 @@ select.form-control:not([multiple]) {
   padding: 0;
   line-height: inherit;
   height: auto;
-  
+
   &:focus {
     box-shadow: none;
   }
@@ -1732,22 +1736,22 @@ input.has-error {
 
 .controls--button {
   display: flex;
-  
+
   input,
   .form-control {
     flex: 1;
     border-right: none;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    
+
     &:focus + .controls-button {
       .controls-button-inner {
         border-color: hsl(200,71%,59%);
       }
-      
-      /* 
 
-        fake the form-control outline 
+      /*
+
+        fake the form-control outline
 
       */
       &:before {
@@ -1848,7 +1852,7 @@ input.has-error {
   align-items: center;
   justify-content: center;
   @extend .zIndex-8;
-  
+
   .modal-backdrop {
     bottom: 0;
     width: 200%;
@@ -1911,7 +1915,7 @@ input.has-error {
   .modal-control {
     padding-left: 14px;
     padding-right: 14px;
-        
+
     .btn.is-disabled {
       opacity: 1;
       color: hsl(240,5%,83%);
@@ -1954,7 +1958,7 @@ kbd {
   display: flex;
 }
 
-.pagination > li > a, 
+.pagination > li > a,
 .pagination > li > span {
   padding: 0;
   width: 31px;
@@ -1962,11 +1966,11 @@ kbd {
   border-color: #e5e5e5;
 }
 
-.pagination > .active > a, 
-.pagination > .active > span, 
-.pagination > .active > a:hover, 
-.pagination > .active > span:hover, 
-.pagination > .active > a:focus, 
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
 .pagination > .active > span:focus {
   background: #0F94D6;
   border-color: #0F94D6;
@@ -1997,7 +2001,7 @@ kbd {
 .page-header-title {
   display: flex;
   align-items: center;
-  
+
   .zammad-switch {
     margin-right: 9px;
   }
@@ -2013,7 +2017,7 @@ kbd {
   justify-self: center;
   padding-left: 9px;
   margin: 0 auto;
-  
+
   & + .page-header-meta {
     margin-left: 0;
     flex: none;
@@ -2027,7 +2031,7 @@ kbd {
   justify-content: flex-end;
   flex: 1;
   min-width: 0; /* firefox flexbug */
-  
+
   .btn {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2077,7 +2081,7 @@ kbd {
   align-items: center;
   justify-content: center;
 }
-  
+
 .page-loading-label {
   margin-left: 10px;
   margin-top: 1px;
@@ -2092,7 +2096,7 @@ kbd {
   margin: 0;
   color: #bcbcbc;
   font-size: 12px;
-  
+
   &.help-block--center {
     text-align: center;
   }
@@ -2122,7 +2126,7 @@ kbd {
   box-shadow:
     0 8px 17px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  
+
   label {
     color: hsl(0,0%,60%);
   }
@@ -2170,13 +2174,13 @@ kbd {
       radial-gradient(circle at 2.58% 98.57%, #392e3e, transparent 51%),
       radial-gradient(circle at 82.11% 97.15%, #5c404e, transparent 100%),
       radial-gradient(circle at 50% 50%, #8b6b76, #8b6b76 100%);
-      
+
     a {
       color: white;
     }
 
     .hero-unit {
-      box-shadow: 
+      box-shadow:
         0 8px 17px 0 rgba(0, 0, 0, 0.1),
         0 6px 20px 0 rgba(0, 0, 0, 0.09);
     }
@@ -2223,7 +2227,7 @@ kbd {
   bottom: 0;
   left: 0;
   right: 0;
-  
+
   .icon-logo {
     margin-right: 8px;
     margin-top: -11px;
@@ -2295,12 +2299,12 @@ ol.tabs li {
     flex: 1 1 auto;
     @extend .u-clickable;
     white-space: nowrap;
-    
+
     &.active {
       color: white;
       background: #444a4f;
       box-shadow: none;
-      
+
       .tab-badge {
         color: hsl(204,3%,65%);
       }
@@ -2312,19 +2316,19 @@ ol.tabs li {
     display: flex;
     align-items: center;
     justify-content: center;
-      
+
     .arrow {
       margin-left: 10px;
       opacity: 0.75;
     }
-    
+
     .icon {
       fill: hsl(0,0%,70%);
     }
-    
+
     &.active {
       background: white;
-      
+
       .icon {
         fill: #444a4f;
         opacity: 1;
@@ -2355,7 +2359,7 @@ ol.tabs li {
     display: inline-flex;
     margin-left: 0;
     margin-right: 0;
-    
+
     .tab {
       flex: none;
     }
@@ -2365,11 +2369,11 @@ ol.tabs li {
     margin: 28px auto;
     font-size: 14px;
     border-radius: 8px;
-    
+
     .tab {
       height: auto;
       padding: 10px 23px 9px;
-      
+
       &:first-child {
         border-radius: 8px 0 0 8px;
       }
@@ -2439,7 +2443,7 @@ ol.tabs li {
   align-items: center;
   text-decoration: none;
   width: calc(33.33% - 6px);
-  
+
   &.auth-provider--wide {
     padding-right: 25px;
   }
@@ -2534,11 +2538,11 @@ ol.tabs li {
 }
 
 @keyframes rotateplane {
-  0% { 
+  0% {
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-  } 50% { 
+  } 50% {
     transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-  } 100% { 
+  } 100% {
     transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
 }
@@ -2547,7 +2551,7 @@ ol.tabs li {
   padding: 2px;
   margin: -2px 0;
   cursor: pointer;
-  
+
   /* :after technique for bigger click area */
   &:after {
     content: "";
@@ -2561,12 +2565,12 @@ ol.tabs li {
 
 .icon-status {
   fill: $ok-color;
-  
+
   &.inline {
     margin-top: -3px;
     vertical-align: middle;
   }
-  
+
   &.inactive {
     fill: hsl(198,18%,86%);
   }
@@ -2607,7 +2611,7 @@ ol.tabs li {
  */
 form {
   margin: 0;
-  
+
   &.form--flexibleWidth .controls {
     display: table;
   }
@@ -2618,7 +2622,7 @@ form {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  
+
   .btn + .btn:not(.align-right) {
     margin-left: 20px;
   }
@@ -2684,13 +2688,13 @@ footer {
   height: 41px;
   display: none;
   align-items: center;
-  
+
   .tabsHolder {
     flex: 1;
     margin-right: 20px;
     min-width: 0; /* Firefox bug fix */
   }
-  
+
   .tabs {
     margin: 0;
     position: relative;
@@ -2722,11 +2726,11 @@ footer {
   min-width: $minWidth - $sidebarWidth - $navigationWidth;
   background: white;
   z-index: 1;
-  box-shadow: 
+  box-shadow:
     0 -1px rgba(0,0,0,.05),
     0 -2px rgba(0,0,0,.03),
     0 -3px rgba(0,0,0,.01);
-    
+
   @media only screen and (max-width: $largeScreenBreakpoint) {
     left: $navigationWidth;
     min-width: $minWidth - $sidebarWidth;
@@ -2851,7 +2855,7 @@ footer {
   justify-content: center;
   font-size: 16px;
   color: hsl(0,0%,45%);
-  
+
   .icon {
     margin-right: 10px;
     filter: grayscale(90%);
@@ -2927,7 +2931,7 @@ footer {
       input:not(:checked) + label { // switch background
         background: hsl(202,68%,43%);
       }
-      
+
       label:after {
         background: white;
       }
@@ -4330,6 +4334,7 @@ footer {
 .ticket-article-item {
   padding-bottom: 33px;
   position: relative;
+  z-index: 1; // fixed chrome 49 + flex issue, not shown article
 
   .avatar {
     position: absolute;
@@ -4428,12 +4433,6 @@ footer {
     /* email css reset */
     p {
       margin: 0;
-    }
-
-    blockquote,
-    pre {
-      margin: 0px;
-      padding: 8px 12px 8px 12px;
     }
   }
 
@@ -4555,7 +4554,7 @@ footer {
       margin: 0 0 4px;
     }
 
-    .attachments .icon {
+    .attachments .icon-paperclip {
       position: absolute;
       left: 33px;
       top: 27px;
@@ -4590,6 +4589,7 @@ footer {
 
 .article-add {
   position: relative;
+  z-index: 1; // fixed chrome 49 + flex issue, not shown article
 }
 
 .article-new {
@@ -5150,7 +5150,7 @@ footer {
   border-radius: 3px;
   color: white;
   border: none;
-  
+
   &.alert--info {
     background: hsl(203,65%,55%);
   }
@@ -5276,7 +5276,7 @@ footer {
   }
   
   & > .box {
-    flex: 1;
+    width: calc(50% - 47px);
     margin: 34px;
   }
 
@@ -5286,6 +5286,7 @@ footer {
   }
 
   .boxFade {
+    width: 94px;
     top: 34px;
     height: 100%;
     position: absolute;
@@ -6412,7 +6413,7 @@ label + .wizard-buttonList {
   [data-toggle=dropdown] {
     position: relative;
   }
-  
+
   .icon {
     opacity: 0.8;
   }
@@ -6429,10 +6430,10 @@ label + .wizard-buttonList {
   margin: 0 32px 32px 0;
   border-radius: 100%;
   box-shadow: 0 0 0 4px white;
-  
+
   .avatar {
     @extend .u-clickable;
-    
+
     &.is-active {
       box-shadow: 0 0 0 4px hsl(200,71%,59%);
     }
@@ -6464,7 +6465,7 @@ label + .wizard-buttonList {
       opacity: 0.5;
       fill: hsl(234,10%,19%);
     }
-    
+
     &:hover svg {
       opacity: 1;
     }
@@ -6502,13 +6503,13 @@ label + .wizard-buttonList {
 }
 
 .fileUpload input {
-  position: absolute; 
-  right: 0; 
+  position: absolute;
+  right: 0;
   top: 0;
-  font-size: 118px; 
-  margin: 0; 
-  padding: 0; 
-  cursor: pointer; 
+  font-size: 118px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
   opacity: 0;
 }
 
@@ -7119,11 +7120,11 @@ output {
     line-height: 1;
     padding-top: 11px;
     padding-bottom: 9px;
-    
+
     &:hover {
       color: hsl(60,1%,34%);
     }
-    
+
     .icon {
       fill: currentColor;
       vertical-align: top;
@@ -7134,7 +7135,7 @@ output {
 
   .settings-list-controls {
     padding: 0;
-    
+
     & > div {
       display: flex;
       min-height: 40px;
@@ -7150,7 +7151,7 @@ output {
 
   .settings-list-control-cell {
     padding: 5px;
-    
+
     & ~ .settings-list-row-control {
       padding-bottom: 7px;
     }
@@ -8120,6 +8121,76 @@ output {
 
 .pulsate-animation {
   animation: pulsate 667ms ease-in-out infinite alternate;
+}
+
+.richtext-content {
+  table,
+  pre,
+  blockquote {
+    margin-bottom: 16px;
+  }
+
+  & > p,
+  & > table,
+  & > pre,
+  & > blockquote {
+    &:first-child {
+      margin-top: 6px;
+    }
+
+    &:last-child {
+      margin-bottom: 6px;
+    }
+  }
+
+  table {
+    border: none;
+    table-layout: auto;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: keep-all;
+
+    td, th {
+      padding: 7px 12px;
+      border: 1px solid hsl(0,0%,87%);
+    }
+
+    th {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    tbody tr:nth-child(even) {
+      background: hsl(0,0%,97%);
+    }
+
+    col {
+      width: auto;
+    }
+  }
+
+  blockquote {
+    padding: 8px 12px;
+    border-left: 5px solid #eee;
+  }
+
+  code {
+    border: none;
+    background: hsl(0,0%,97%);
+    white-space: pre-wrap;
+  }
+
+  pre {
+    padding: 12px 15px;
+    font-size: 13px;
+    line-height: 1.45;
+    background: hsl(0,0%,97%);
+    white-space: pre-wrap;
+    border-radius: 3px;
+    border: none;
+    overflow: auto;
+  }
 }
 
 /*

@@ -21,7 +21,7 @@
   <% if @attribute.options.length > 10: %>
   <div class="columnSelect-search">
     <%- @Icon('magnifier') %>
-    <input class="js-search">
+    <input class="js-search" autocomplete="off">
     <div class="columnSelect-search-clear js-clear is-hidden">
       <%- @Icon('diagonal-cross') %>
     </div>

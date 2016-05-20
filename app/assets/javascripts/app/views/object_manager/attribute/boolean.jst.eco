@@ -1,0 +1,29 @@
+<div>
+  <div class="js-selectDefault"></div>
+  <div class="js-selectOption"></div>
+
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <tr>
+        <th><%- @T('Key') %>
+        <th><%- @T('Display') %>
+        <th style="width: 30px"><%- @T('Default') %>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="settings-list-control-cell">
+          true
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-summary" type="text" name="summary" value="<%= @display %>" placeholder="<%- @T('yes') %>" required/>
+        <td class="settings-list-row-control">
+          <input class="" type="radio" />
+      <tr>
+        <td class="settings-list-control-cell">
+          false
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-summary" type="text" name="summary" value="<%= @display %>" placeholder="<%- @T('no') %>" required/>
+        <td class="settings-list-row-control">
+          <input class="" type="radio" />
+    </tbody>
+  </table>
+</div>

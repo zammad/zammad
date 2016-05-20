@@ -551,6 +551,9 @@ retrns
 
       # check if attribute exists
       header = "x-zammad-#{header_name}-#{key}"
+      if suffix
+        header = "x-zammad-#{header_name}-#{suffix}-#{key}"
+      end
       if mail[ header.to_sym ]
         Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
         item_object[key] = mail[ header.to_sym ]

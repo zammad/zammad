@@ -2,6 +2,12 @@
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
+
+  user = User.lookup(id: 1)
+  roles = Role.where(name: %w(Agent Admin))
+  user.roles = roles
+  user.save
+
   test 'a cache' do
     Sessions::CacheIn.set('last_run_test', true, { expires_in: 2.seconds })
     result = Sessions::CacheIn.get('last_run_test')
@@ -179,65 +185,6 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(result1, result2, 'check collections')
   end
 
-  user = User.lookup(id: 1)
-  roles = Role.where(name: %w(Agent Admin))
-  user.roles = roles
-  user.save
-
-  test 'c collections organization' do
-    require 'sessions/backend/collections/organization.rb'
-    UserInfo.current_user_id = 2
-    user = User.lookup(id: 1)
-    org = Organization.create( name: 'SomeOrg1::' + rand(999_999).to_s, active: true )
-
-    collection_client1 = Sessions::Backend::Collections::Organization.new(user, {}, false, '123-1', 3)
-    collection_client2 = Sessions::Backend::Collections::Organization.new(user, {}, false, '234-2', 3)
-
-    # get whole collections - should be nil, no org exists!
-    result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections')
-    result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections')
-    assert_equal(result1, result2, 'check collections')
-
-    # next check - should still be nil, no org exists!
-    result1 = collection_client1.push
-    assert(!result1, 'check collections - recall')
-    sleep 0.6
-    result2 = collection_client2.push
-    assert(!result2, 'check collections - recall')
-
-    # change collection
-    org = Organization.create(name: 'SomeOrg2::' + rand(999_999).to_s, active: true)
-    sleep 4
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections - after create')
-    result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections - after create')
-    assert_equal(result1, result2, 'check collections')
-
-    sleep 4
-
-    # next check should be empty
-    result1 = collection_client1.push
-    assert(!result1, 'check collections - after create recall')
-    result2 = collection_client2.push
-    assert(!result2, 'check collections - after create recall')
-
-    organization = Organization.first
-    organization.touch
-    sleep 4
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections - after touch')
-    result2 = collection_client2.push
-    assert(!result1.empty?, 'check collections - after touch')
-    assert_equal(result1, result2, 'check collections')
-  end
-
   test 'c rss' do
     user = User.lookup(id: 1)
     collection_client1 = Sessions::Backend::Rss.new(user, {}, false, '123-1')
@@ -264,7 +211,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     agent1 = User.create_or_update(
       login: 'activity-stream-agent-1',
       firstname: 'Session',
-      lastname: 'activity stream ' + rand(99_999).to_s,
+      lastname: "activity stream #{rand(99_999)}",
       email: 'activity-stream-agent1@example.com',
       password: 'agentpw',
       active: true,

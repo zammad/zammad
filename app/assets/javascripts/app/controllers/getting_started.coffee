@@ -365,7 +365,7 @@ class Base extends App.WizardFullScreen
       )
 
     # add resized image
-    App.ImageService.resizeForApp( @params.logo, @logoPreview.width(), @logoPreview.height(), store )
+    App.ImageService.resizeForApp(@params.logo, @logoPreview.width(), @logoPreview.height(), store)
 
   hideAlerts: =>
     @$('.form-group').removeClass('has-error')

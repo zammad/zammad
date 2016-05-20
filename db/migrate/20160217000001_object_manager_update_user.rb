@@ -2,6 +2,7 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
   def up
     UserInfo.current_user_id = 1
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'login',
       display: 'Login',
@@ -26,11 +27,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 100,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'firstname',
       display: 'Firstname',
@@ -70,11 +74,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 200,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'lastname',
       display: 'Lastname',
@@ -114,11 +121,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 300,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'email',
       display: 'Email',
@@ -158,11 +168,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 400,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'web',
       display: 'Web',
@@ -190,11 +203,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 500,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'phone',
       display: 'Phone',
@@ -222,11 +238,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 600,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'mobile',
       display: 'Mobile',
@@ -254,11 +273,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 700,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'fax',
       display: 'Fax',
@@ -286,11 +308,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 800,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'organization_id',
       display: 'Organization',
@@ -323,11 +348,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 900,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'department',
       display: 'Department',
@@ -355,11 +383,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1000,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'street',
       display: 'Street',
@@ -386,11 +417,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1100,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'zip',
       display: 'Zip',
@@ -418,11 +452,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1200,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'city',
       display: 'City',
@@ -450,11 +487,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1300,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'address',
       display: 'Address',
@@ -482,11 +522,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1350,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'password',
       display: 'Password',
@@ -515,11 +558,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
         },
         view: {}
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1400,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'vip',
       display: 'VIP',
@@ -551,11 +597,14 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1490,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'note',
       display: 'Note',
@@ -587,16 +636,20 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1500,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'role_ids',
       display: 'Roles',
       data_type: 'checkbox',
       data_option: {
+        default: '',
         multiple: true,
         null: false,
         relation: 'Role',
@@ -618,51 +671,20 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1600,
     )
 
     ObjectManager::Attribute.add(
-      object: 'User',
-      name: 'group_ids',
-      display: 'Groups',
-      data_type: 'checkbox',
-      data_option: {
-        multiple: true,
-        null: true,
-        relation: 'Group',
-      },
-      editable: false,
-      active: true,
-      screens: {
-        signup: {},
-        invite_agent: {
-          '-all-' => {
-            null: false,
-          },
-        },
-        invite_customer: {},
-        edit: {
-          Admin: {
-            null: true,
-          },
-        },
-        view: {
-          '-all-' => {
-            shown: false,
-          },
-        },
-      },
-      pending_migration: false,
-      position: 1700,
-    )
-
-    ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'active',
       display: 'Active',
       data_type: 'active',
       data_option: {
+        null: true,
         default: true,
       },
       editable: false,
@@ -682,7 +704,9 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1800,
     )
 

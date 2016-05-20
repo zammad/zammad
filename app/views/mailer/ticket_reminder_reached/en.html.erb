@@ -1,18 +1,18 @@
 Reminder reached (<%= d 'ticket.title' %>)
 
-<p>Hi <%= d 'recipient.firstname' %>,</p>
+<div>Hi <%= d 'recipient.firstname' %>,</div>
 <br>
-<p>A ticket needs attention, reminder reached for (<%= d 'ticket.title' %>) with customer "<b><%= d 'ticket.customer.longname' %></b>".</p>
+<div>A ticket needs attention, reminder reached for (<%= d 'ticket.title' %>) with customer "<b><%= d 'ticket.customer.longname' %></b>".</div>
 <br>
 <% if @objects[:article] %>
-  <p>
+  <div>
   <%= t 'Information' %>:
   <blockquote type="cite">
   <%= a_html 'article' %>
   </blockquote>
-  </p>
+  </div>
 <% end %>
 <br>
-<p>
+<div>
   <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>" target="zammad_app"><%= t 'View this in Zammad' %></a>
-</p>
+</div>

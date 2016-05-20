@@ -38,18 +38,23 @@ class Index extends App.ControllerContent
       channel = App.Channel.find(channel_id)
       if channel && channel.options && channel.options.sync
         displayName = '-'
-        if channel.options.sync.wall.group_id
+        if channel.options.sync.wall && channel.options.sync.wall.group_id
           group = App.Group.find(channel.options.sync.wall.group_id)
           displayName = group.displayName()
+        if !channel.options.sync
+          channel.options.sync = {}
+        if !channel.options.sync.wall
+          channel.options.sync.wall = {}
         channel.options.sync.wall.groupName = displayName
-        for page in channel.options.pages
-          displayName = '-'
-          for page_id, pageParams of channel.options.sync.pages
-            if page.id is page_id
-              if pageParams.group_id
-                group = App.Group.find(pageParams.group_id)
-                displayName = group.displayName()
-                page.groupName = displayName
+        if channel.options && channel.options.pages
+          for page in channel.options.pages
+            displayName = '-'
+            for page_id, pageParams of channel.options.sync.pages
+              if page.id is page_id
+                if pageParams.group_id
+                  group = App.Group.find(pageParams.group_id)
+                  displayName = group.displayName()
+                  page.groupName = displayName
       channels.push channel
     @html App.view('facebook/list')(
       channels: channels
@@ -114,6 +119,9 @@ class Index extends App.ControllerContent
       e.preventDefault()
       id = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
+    if !channel
+      @navigate '#channels/facebook'
+      return
     if !channel.options.sync
       channel.options.sync = {}
     if !channel.options.sync.wall
@@ -136,14 +144,15 @@ class Index extends App.ControllerContent
       el.html(selection)
 
     groupSelection(channel.options.sync.wall.group_id, content.find('.js-wall .js-groups'), 'wall')
-    for page in channel.options.pages
-      pageConfigured = false
-      for page_id, pageParams of channel.options.sync.pages
-        if page.id is page_id
-          pageConfigured = true
-          groupSelection(pageParams.group_id, content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
-      if !pageConfigured
-        groupSelection('', content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
+    if channel.options.pages
+      for page in channel.options.pages
+        pageConfigured = false
+        for page_id, pageParams of channel.options.sync.pages
+          if page.id is page_id
+            pageConfigured = true
+            groupSelection(pageParams.group_id, content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
+        if !pageConfigured
+          groupSelection('', content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
 
     modal = new App.ControllerModal(
       head: 'Facebook Account'

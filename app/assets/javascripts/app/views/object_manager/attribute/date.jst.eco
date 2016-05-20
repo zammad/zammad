@@ -1,0 +1,5 @@
+<div>
+  <div class="js-dateFuture"></div>
+  <div class="js-datePast"></div>
+  <div class="js-dateDiff"></div>
+</div>

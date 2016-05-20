@@ -119,6 +119,7 @@ function clone(item, full) {
   // check if item is accepted to get cloned
   if (itemType && !_.contains(acceptedInstances, itemType)) {
     console.log('no acceptedInstances', itemType, item)
+    console.trace()
     return
   }
 
@@ -153,11 +154,11 @@ function clone(item, full) {
 }
 
 // taken from https://github.com/epeli/underscore.string/blob/master/underscored.js
-function underscored (str) {
+function underscored(str) {
   return str.trim().replace(/([a-z\d])([A-Z]+)/g, '$1_$2').replace(/[-\s]+/g, '_').toLowerCase();
 }
 
-function toCamelCase (str) {
+function toCamelCase(str) {
   return str
     .replace(/\s(.)/g, function($1) { return $1.toUpperCase(); })
     .replace(/\s/g, '')
@@ -174,12 +175,26 @@ jQuery.event.special.remove = {
 // native checkbox focus behaviour is the following:
 // tab to checkbox: :focus state and focus outline
 // click on checkbox: :focus state but no focus outline
-$('body').on('click', '.checkbox-replacement, .radio-replacement', function(event){ 
+$('body').on('click', '.checkbox-replacement, .radio-replacement', function(event){
   $(event.currentTarget).find('input').addClass('is-active')
 });
-$('body').on('blur', '.checkbox-replacement input, .radio-replacement input', function(){ 
+$('body').on('blur', '.checkbox-replacement input, .radio-replacement input', function(){
   $(this).removeClass('is-active')
 });
+
+// remove attributes by regex
+// http://stackoverflow.com/questions/8968767/remove-multiple-html5-data-attributes-with-jquery
+jQuery.fn.removeAttrs = function(regex) {
+  return this.each(function() {
+    var $this = $(this),
+      names = [];
+    $.each(this.attributes, function(i, attr) {
+      if (attr && attr.specified && regex.test(attr.name)) {
+        $this.removeAttr(attr.name);
+      }
+    });
+  });
+};
 
 // start application
 jQuery(function(){

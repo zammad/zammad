@@ -200,6 +200,75 @@ Some Text'
     assert_equal(false, article.internal)
 
     PostmasterFilter.destroy_all
+
+    # follow up with create post master filter test
+    PostmasterFilter.create(
+      name: 'used - empty selector',
+      match: {
+        from: {
+          operator: 'contains',
+          value: 'example.com',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group2.id,
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: follow up with create post master filter test
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process( { trusted: false }, data )
+
+    assert_equal(group2.name, ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('follow up with create post master filter test', ticket.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(false, article.internal)
+
+    # move ticket
+    ticket.group = group1
+    ticket.save
+    Observer::Transaction.commit
+
+    data = "From: me@example.com
+To: customer@example.com
+Subject: #{ticket.subject_build('some new subject')}
+
+Some Text"
+
+    article_count = ticket.articles.count
+
+    parser = Channel::EmailParser.new
+    ticket_followup, article, user = parser.process( { trusted: false }, data )
+
+    # check if group is still the old one
+    assert_equal(ticket.id, ticket_followup.id)
+    assert_equal(group1.name, ticket_followup.group.name)
+    assert_equal(group1.name, ticket_followup.group.name)
+    assert_equal('2 normal', ticket_followup.priority.name)
+    assert_equal('follow up with create post master filter test', ticket_followup.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(false, article.internal)
+    assert_equal(article_count+1, ticket_followup.articles.count)
+
+    PostmasterFilter.destroy_all
+
   end
 
 end

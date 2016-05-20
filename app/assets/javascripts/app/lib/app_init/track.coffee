@@ -31,11 +31,14 @@ class _trackSingleton
     @browser = App.Browser.detection()
     @data    = []
 #    @url     = 'http://localhost:3005/api/v1/ui'
-    @url     = 'https://log.zammad.com/api/v1/ui'
+    @url      = 'https://log.zammad.com/api/v1/ui'
+    @logClick = true
+    @logAjax  = false
 
     @forceSending = false
 
     @log('start', 'notice', {})
+
 
     # start initial submit 30 sec. later to avoid ie10 cookie issues
     delay = =>
@@ -43,65 +46,65 @@ class _trackSingleton
     App.Delay.set delay, 30000
 
     # log clicks
-    $(document).bind(
-      'click'
-      (e) =>
-        w = window.screen.width
-        h = window.screen.height
-        aTag = $(e.target)
-        if !aTag.attr('href')
-          newTag = $(e.target).parents('a')
-          if newTag[0]
-            aTag = newTag
-        info =
-          level:   'notice'
-          href:    aTag.attr('href')
-          title:   aTag.attr('title')
-          text:    aTag.text()
-          clickX:  e.pageX
-          clickY:  e.pageY
-          screenX: w
-          screenY: h
-        @log('click', 'notice', info)
-    )
+    if @logClick
+      $(document).bind(
+        'click'
+        (e) =>
+          w = window.screen.width
+          h = window.screen.height
+          aTag = $(e.target)
+          if !aTag.attr('href')
+            newTag = $(e.target).parents('a')
+            if newTag[0]
+              aTag = newTag
+          info =
+            level:   'notice'
+            href:    aTag.attr('href')
+            title:   aTag.attr('title')
+            text:    aTag.text()
+            clickX:  e.pageX
+            clickY:  e.pageY
+            screenX: w
+            screenY: h
+          @log('click', 'notice', info)
+      )
 
     # log ajax calls
-    ### disabled, only needed for debugging
-    $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
+    if @logAjax
+      $(document).bind( 'ajaxComplete', ( e, request, settings ) =>
 
-      # do not log ui requests
-      if settings.url && settings.url.substr(settings.url.length-3,3) isnt '/ui'
-        level = 'notice'
-        responseText = ''
-        if request.status >= 400
-          level = 'error'
-          responseText = request.responseText
+        # do not log ui requests
+        if settings.url && settings.url.substr(settings.url.length-3,3) isnt '/ui'
+          level = 'notice'
+          responseText = ''
+          if request.status >= 400
+            level = 'error'
+            responseText = request.responseText
 
-        if settings.data
+          if settings.data
 
-          # add length limitation
-          if settings.data.length > 3000
-            settings.data = settings.data.substr(0,3000)
+            # add length limitation
+            if settings.data.length > 3000
+              settings.data = settings.data.substr(0,3000)
 
-          # delete passwords form data
-          if typeof settings.data is 'string'
-            settings.data = settings.data.replace(/"password":".+?"/gi, '"password":"xxx"')
+            # delete passwords form data
+            if typeof settings.data is 'string'
+              settings.data = settings.data.replace(/"password":".+?"/gi, '"password":"xxx"')
 
-        @log(
-          'ajax.send',
-          level,
-          {
-            type:         settings.type
-            dataType:     settings.dataType
-            async:        settings.async
-            url:          settings.url
-            data:         settings.data
-            status:       request.status
-            responseText: responseText
-          }
-        )
-    )
-    ###
+          @log(
+            'ajax.send',
+            level,
+            {
+              type:         settings.type
+              dataType:     settings.dataType
+              async:        settings.async
+              url:          settings.url
+              data:         settings.data
+              status:       request.status
+              responseText: responseText
+            }
+          )
+      )
 
     $(window).bind(
       'beforeunload'
@@ -150,12 +153,7 @@ class _trackSingleton
         log:     newDataNew
       )
       crossDomain: true
-#      success: (data, status, xhr) =>
-#        @data = []
-#        console.log('done')
       error: =>
-
-        # queue all data
         for item in newDataNew
           @data.push item
     )
@@ -174,35 +172,59 @@ class _trackSingleton
 
 `
 (function() {
-  window.onerrorOld = window.onerror
-  window.onerror = function(errorMsg, url, lineNumber) {
-    console.error(errorMsg + " - in " + url + ", line " + lineNumber);
-    if (window.onerrorOld) {
-      window.onerrorOld(errorMsg, url, lineNumber);
+  window.getStackTrace = function() {
+    var stack
+    try {
+      throw new Error('')
     }
-  }
-}).call(this);
+    catch (error) {
+      stack = error.stack || ''
+    }
 
-(function() {
+    stack = stack.split('\n').map(function (line) { return line.trim() })
+    return stack.splice(stack[0] == 'Error' ? 2 : 1)
+  }
+  window.onerrorOld = window.onerror
+  window.onerror = function(errorMsg, url, lineNumber, column, errorObj) {
+    var stack = ''
+    if (errorObj !== undefined && errorObj.stack) {
+      stack = "\n" + errorObj.stack
+    }
+    App.Track.log(
+      'console.error',
+      'error',
+      errorMsg + " - in " + url + ", line " + lineNumber + stack
+    )
+    if (window.onerrorOld) {
+      window.onerrorOld(errorMsg, url, lineNumber, column, errorObj)
+    }
+    return false
+  }
+
   var console = window.console
   if (!console) return
   function intercept(method){
     var original = console[method]
     console[method] = function(){
-
-      //alert('new m' + method)
       App.Track.log(
         'console.' + method,
         method,
         arguments
       )
+      if (method == 'error') {
+        App.Track.log(
+          'traceback',
+          method,
+          window.getStackTrace().join('\n')
+        )
+      }
 
       // do sneaky stuff
       if (original.apply){
         // Do this for normal browsers
         original.apply(console, arguments)
       }
-      else{
+      else {
         // Do this for IE
         var message = Array.prototype.slice.apply(arguments).join(' ')
         original(message)

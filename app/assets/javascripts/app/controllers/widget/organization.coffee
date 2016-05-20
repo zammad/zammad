@@ -6,7 +6,7 @@ class App.WidgetOrganization extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.Organization.full( @organization_id, @render, false, true )
+    @subscribeId = App.Organization.full(@organization_id, @render, false, true)
 
   release: =>
     App.Organization.unsubscribe(@subscribeId)
@@ -58,9 +58,9 @@ class App.WidgetOrganization extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    org   = App.Organization.find( @organization_id )
+    org   = App.Organization.find(@organization_id)
     if org[name] isnt value
       data = {}
       data[name] = value
-      org.updateAttributes( data )
+      org.updateAttributes(data)
       @log 'notice', 'update', name, value, org

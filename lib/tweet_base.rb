@@ -202,6 +202,23 @@ class TweetBase
     # use transaction
     if @connection_type == 'stream'
       ActiveRecord::Base.connection.reconnect!
+
+      # if sender is a system account, wait until twitter message id is stored
+      # on article to prevent two (own created & twitter created) articles
+      tweet_user = user(tweet)
+      Channel.where(area: 'Twitter::Account').each {|local_channel|
+        next if !local_channel.options
+        next if !local_channel.options[:user]
+        next if !local_channel.options[:user][:id]
+        next if local_channel.options[:user][:id].to_s != tweet_user.id.to_s
+        sleep 5
+
+        # return if tweet already exists (send via system)
+        if Ticket::Article.find_by(message_id: tweet.id)
+          Rails.logger.debug "Do not import tweet.id #{tweet.id}, article already exists"
+          return nil
+        end
+      }
     end
     ActiveRecord::Base.transaction do
 

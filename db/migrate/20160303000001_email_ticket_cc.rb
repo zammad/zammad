@@ -2,6 +2,7 @@
 class EmailTicketCc < ActiveRecord::Migration
   def up
     ObjectManager::Attribute.add(
+      force: true,
       object: 'Ticket',
       name: 'cc',
       display: 'Cc',
@@ -22,7 +23,9 @@ class EmailTicketCc < ActiveRecord::Migration
         create_middle: {},
         edit: {}
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 11,
       created_by_id: 1,
       updated_by_id: 1,

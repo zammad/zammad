@@ -40,7 +40,6 @@ class App.DashboardFirstSteps extends App.Controller
       #container: @el.closest('.content')
       head: 'Invite Colleagues'
       screen: 'invite_agent'
-      role: 'Agent'
     )
 
   inviteCustomer: (e) ->

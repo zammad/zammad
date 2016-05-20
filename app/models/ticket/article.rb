@@ -37,6 +37,35 @@ class Ticket::Article < ApplicationModel
     self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
   end
 
+  # insert inline image urls
+  def self.insert_urls(article, attachments)
+    inline_attachments = {}
+    article['body'].gsub!( /(<img\s(style.+?|)src=")cid:(.+?)(">)/i ) { |item|
+      replace = item
+
+      # look for attachment
+      attachments.each {|file|
+        next if !file.preferences['Content-ID'] || file.preferences['Content-ID'] != $3
+        replace = "#{$1}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file.id}#{$4}"
+        inline_attachments[file.id] = true
+        break
+      }
+      replace
+    }
+    new_attachments = []
+    attachments.each {|file|
+      next if inline_attachments[file.id]
+      new_attachments.push file
+    }
+    article['attachments'] = new_attachments
+    article
+  end
+
+  def self.last_customer_agent_article(ticket_id)
+    sender = Ticket::Article::Sender.lookup(name: 'System')
+    Ticket::Article.where('ticket_id = ? AND sender_id NOT IN (?)', ticket_id, sender.id).order('created_at DESC').first
+  end
+
   private
 
   # strip not wanted chars

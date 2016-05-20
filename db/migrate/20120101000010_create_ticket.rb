@@ -153,7 +153,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :in_reply_to,          :string, limit: 3000,    null: true
       t.column :content_type,         :string, limit: 20,      null: false, default: 'text/plain'
       t.column :references,           :string, limit: 3200,    null: true
-      t.column :body,                 :text,   limit: 4.megabytes + 1
+      t.column :body,                 :text,   limit: 20.megabytes + 1, null: false
       t.column :internal,             :boolean,                null: false, default: false
       t.column :preferences,          :text,   limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,        :integer,                null: false
@@ -303,7 +303,7 @@ class CreateTicket < ActiveRecord::Migration
       t.references :user,                                    null: true
       t.column :name,                 :string,  limit: 250,  null: false
       t.column :keywords,             :string,  limit: 500,  null: true
-      t.column :content,              :string,  limit: 5000, null: false
+      t.column :content,              :text,    limit: 10.megabytes + 1, null: false
       t.column :note,                 :string,  limit: 250,  null: true
       t.column :active,               :boolean,              null: false, default: true
       t.column :updated_by_id,        :integer,              null: false

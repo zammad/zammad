@@ -597,33 +597,33 @@ class App.Model extends Spine.Model
     all_complied = []
     if !params
       for item in all
-        item_new = @find( item.id )
+        item_new = @find(item.id)
         all_complied.push @_fillUp(item_new)
       return all_complied
     for item in all
-      item_new = @find( item.id )
+      item_new = @find(item.id)
       all_complied.push @_fillUp(item_new)
 
     # filter search
     if params.filter
-      all_complied = @_filter( all_complied, params.filter )
+      all_complied = @_filter(all_complied, params.filter)
 
     # use extend filter search
     if params.filterExtended
-      all_complied = @_filterExtended( all_complied, params.filterExtended )
+      all_complied = @_filterExtended(all_complied, params.filterExtended)
 
     # sort by
     if params.sortBy != null
-      all_complied = @_sortBy( all_complied, params.sortBy )
+      all_complied = @_sortBy(all_complied, params.sortBy)
 
     # order
     if params.order
-      all_complied = @_order( all_complied, params.order )
+      all_complied = @_order(all_complied, params.order)
 
     all_complied
 
-  @_sortBy: ( collection, attribute ) ->
-    _.sortBy( collection, (item) ->
+  @_sortBy: (collection, attribute) ->
+    _.sortBy(collection, (item) ->
 
       # set displayName as default sort attribute
       if !attribute
@@ -646,20 +646,20 @@ class App.Model extends Spine.Model
       item[ attribute ]
     )
 
-  @_order: ( collection, attribute ) ->
+  @_order: (collection, attribute) ->
     if attribute is 'DESC'
       return collection.reverse()
     collection
 
-  @_filter: ( collection, filter ) ->
+  @_filter: (collection, filter) ->
     for key, value of filter
-      collection = _.filter( collection, (item) ->
+      collection = _.filter(collection, (item) ->
         if item[key] is value
           return item
       )
     collection
 
-  @_filterExtended: ( collection, filters ) ->
+  @_filterExtended: (collection, filters) ->
     collection = _.filter( collection, (item) ->
 
       # check all filters

@@ -43,16 +43,16 @@ class App.InviteUser extends App.WizardModal
     e.preventDefault()
     @showSlide('js-waiting')
     @formDisable(e)
-    @params          = @formParam(e.target)
-    @params.role_ids = [0]
+    @params = @formParam(e.target)
 
     # set invite flag
     @params.invite = true
 
     # find agent role
-    role = App.Role.findByAttribute('name', @role)
-    if role
-      @params.role_ids = role.id
+    if @role
+      role = App.Role.findByAttribute('name', @role)
+      if role
+        @params.role_ids = role.id
 
     user = new App.User
     user.load(@params)
@@ -62,7 +62,7 @@ class App.InviteUser extends App.WizardModal
     )
     if errors
       @log 'error new', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       @formEnable(e)
       @showSlide('js-user')
       return false

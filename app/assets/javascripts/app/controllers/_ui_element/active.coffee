@@ -4,7 +4,7 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
 
     # set attributes
     attribute.null = false
-    attribute.translation = true
+    attribute.translate = true
 
     # build options list
     attribute.options = [

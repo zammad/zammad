@@ -146,7 +146,7 @@ class App.Auth
     App.Event.trigger('clearStore')
 
   @_loginError: ->
-    App.Log.error 'Auth', '_loginError:error'
+    App.Log.debug 'Auth', '_loginError:error'
 
     # empty session
     App.Session.init()

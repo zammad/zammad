@@ -19,6 +19,7 @@ class App.Utils
 
   # rawText = App.Utils.html2text(html, no_trim)
   @html2text: (html, no_trim) ->
+    return html if !html
 
     if no_trim
       html = html
@@ -130,6 +131,8 @@ class App.Utils
 
   # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext(html)
   @htmlRemoveRichtext: (html) ->
+    return html if !html
+
     html = @_checkTypeOf(html)
 
     # remove comments
@@ -174,7 +177,7 @@ class App.Utils
     replacementTag = 'div';
 
     # Replace all x tags with the type of replacementTag
-    html.find('h1, h2, h3, h4, h5, h6, textarea').each( ->
+    html.find('textarea').each( ->
       outer = @outerHTML;
 
       # Replace opening tag
@@ -189,13 +192,12 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('font, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
+    html.find('font, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
 
     html
 
   @_checkTypeOf: (item) ->
     return item if typeof item isnt 'string'
-    return $(item) if item.substr(0,9) isnt '<!DOCTYPE' && item.substr(0,5) isnt '<html'
     $("<div>#{item}</div>")
 
   @_removeAttributes: (html) ->
@@ -205,6 +207,16 @@ class App.Utils
       .removeAttr('title')
       .removeAttr('lang')
       .removeAttr('type')
+      .removeAttr('id')
+      .removeAttrs(/data-/)
+    html
+      .removeAttr('style')
+      .removeAttr('class')
+      .removeAttr('title')
+      .removeAttr('lang')
+      .removeAttr('type')
+      .removeAttr('id')
+      .removeAttrs(/data-/)
     html
 
   @_removeComments: (html) ->

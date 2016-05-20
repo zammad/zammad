@@ -17,6 +17,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       lastname: 'collections 1',
       email: 'session-collections-agent-1@example.com',
       password: 'agentpw',
+      organization_id: nil,
       active: true,
       roles: roles,
       groups: groups,
@@ -33,6 +34,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       lastname: 'collections 2',
       email: 'session-collections-agent-2@example.com',
       password: 'agentpw',
+      organization_id: nil,
       active: true,
       roles: roles,
       groups: groups,
@@ -107,24 +109,6 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(result3, 'check collections - after touch')
     assert(check_if_collection_exists(result3, :Group), 'check collections - after touch')
 
-    # change collection
-    org = Organization.create(name: 'SomeOrg::' + rand(999_999).to_s, active: true, member_ids: [customer1.id])
-    sleep 4
-
-    # get whole collections
-    result1 = collection_client1.push
-    assert(result1, 'check collections - after create')
-    assert(check_if_collection_exists(result1, :Organization, { id: org.id, member_ids: [customer1.id] }), 'check collections - after create with attributes')
-    sleep 0.3
-    result2 = collection_client2.push
-    assert(result2, 'check collections - after create')
-    assert(check_if_collection_exists(result2, :Organization), 'check collections - after create')
-
-    # user has no organization, so collection should be empty
-    result3 = collection_client3.push
-    assert(result3, 'check collections - after create')
-    assert(!check_if_collection_exists(result3, :Organization), 'check collections - after create')
-
     # next check should be empty
     sleep 1
     result1 = collection_client1.push
@@ -148,7 +132,19 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       result[:collection][collection].each {|item|
         match_all = true
         attributes.each {|key, value|
-          if item[ key.to_s ] != value
+
+          # sort array, database result maybe unsorted
+          item_attributes = item[ key.to_s ]
+          if item[ key.to_s ].class == Array
+            item_attributes.sort!
+          end
+          if value.class == Array
+            value.sort!
+          end
+
+          # compare values
+          if item_attributes != value
+            #p "FAILED: #{key} -> #{item_attributes.inspect} vs. #{value.inspect}"
             match_all = false
           end
         }

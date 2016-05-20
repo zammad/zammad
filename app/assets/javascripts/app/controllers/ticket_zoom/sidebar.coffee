@@ -18,11 +18,10 @@ class App.TicketZoomSidebar extends App.Controller
         el.find('.edit').html('')
 
         defaults   = ticket.attributes()
+        delete defaults.article # ignore article infos
         task_state = @taskGet('ticket')
         modelDiff  = App.Utils.formDiff(task_state, defaults)
-        #if @isRole('Customer')
-        #  delete defaults['state_id']
-        #  delete defaults['state']
+
         if !_.isEmpty(task_state)
           defaults = _.extend(defaults, task_state)
 

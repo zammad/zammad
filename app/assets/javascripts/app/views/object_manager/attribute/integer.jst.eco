@@ -1,0 +1,5 @@
+<div>
+  <div class="js-integerDefault"></div>
+  <div class="js-integerMin"></div>
+  <div class="js-integerMax"></div>
+</div>

@@ -2,11 +2,13 @@
 class OnlyOneGroup < ActiveRecord::Migration
   def up
     ObjectManager::Attribute.add(
+      force: true,
       object: 'Ticket',
       name: 'group_id',
       display: 'Group',
       data_type: 'select',
       data_option: {
+        default: '',
         relation: 'Group',
         relation_condition: { access: 'rw' },
         nulloption: true,
@@ -30,49 +32,16 @@ class OnlyOneGroup < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 25,
       created_by_id: 1,
       updated_by_id: 1,
     )
+
     ObjectManager::Attribute.add(
-      object: 'User',
-      name: 'group_ids',
-      display: 'Groups',
-      data_type: 'checkbox',
-      data_option: {
-        multiple: true,
-        null: true,
-        relation: 'Group',
-      },
-      editable: false,
-      active: true,
-      screens: {
-        signup: {},
-        invite_agent: {
-          '-all-' => {
-            null: false,
-            only_shown_if_selectable: true,
-          },
-        },
-        invite_customer: {},
-        edit: {
-          Admin: {
-            null: true,
-          },
-        },
-        view: {
-          '-all-' => {
-            shown: false,
-          },
-        },
-      },
-      pending_migration: false,
-      position: 1700,
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
-    ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'street',
       display: 'Street',
@@ -99,13 +68,16 @@ class OnlyOneGroup < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1100,
       created_by_id: 1,
       updated_by_id: 1,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'zip',
       display: 'Zip',
@@ -133,13 +105,16 @@ class OnlyOneGroup < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1200,
       created_by_id: 1,
       updated_by_id: 1,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'city',
       display: 'City',
@@ -167,13 +142,16 @@ class OnlyOneGroup < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1300,
       created_by_id: 1,
       updated_by_id: 1,
     )
 
     ObjectManager::Attribute.add(
+      force: true,
       object: 'User',
       name: 'address',
       display: 'Address',
@@ -201,7 +179,9 @@ class OnlyOneGroup < ActiveRecord::Migration
           },
         },
       },
-      pending_migration: false,
+      to_create: false,
+      to_migrate: false,
+      to_delete: false,
       position: 1350,
       created_by_id: 1,
       updated_by_id: 1,

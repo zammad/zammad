@@ -180,12 +180,18 @@ returns
 
       tickets.each { |ticket|
 
+        article_id = nil
+        article = Ticket::Article.last_customer_agent_article(ticket.id)
+        if article
+          article_id = article.id
+        end
+
         # send notification
         Transaction::BackgroundJob.run(
           object: 'Ticket',
           type: 'reminder_reached',
           object_id: ticket.id,
-          article_id: ticket.articles.last.id,
+          article_id: article_id,
           user_id: 1,
         )
 
@@ -220,13 +226,19 @@ returns
       # get sla
       sla = ticket.escalation_calculation_get_sla
 
+      article_id = nil
+      article = Ticket::Article.last_customer_agent_article(ticket.id)
+      if article
+        article_id = article.id
+      end
+
       # send escalation
       if ticket.escalation_time < Time.zone.now
         Transaction::BackgroundJob.run(
           object: 'Ticket',
           type: 'escalation',
           object_id: ticket.id,
-          article_id: ticket.articles.last.id,
+          article_id: article_id,
           user_id: 1,
         )
         result.push ticket
@@ -238,7 +250,7 @@ returns
         object: 'Ticket',
         type: 'escalation_warning',
         object_id: ticket.id,
-        article_id: ticket.articles.last.id,
+        article_id: article_id,
         user_id: 1,
       )
       result.push ticket

@@ -1,1 +1,4 @@
-<input id="<%= @attribute.id %>" type="<%= @attribute.type %>" name="<%= @attribute.name %>" value="<%= @attribute.value %>" class="form-control <%= @attribute.class %>" <% if @attribute.placeholder: %>placeholder="<%- @Ti(@attribute.placeholder) %>"<% end %> <%= @attribute.required %> <%= @attribute.autofocus %> <%- @attribute.autocapitalize %> <%- @attribute.autocomplete %>/>
+<input id="<%= @attribute.id %>" type="<%= @attribute.type %>" name="<%= @attribute.name %>" value="<%= @attribute.value %>" class="form-control <%= @attribute.class %>" <% if @attribute.placeholder: %>placeholder="<%- @Ti(@attribute.placeholder) %>"<% end %> <%= @attribute.required %> <%= @attribute.autofocus %> <%- @attribute.autocapitalize %> <%- @attribute.autocomplete %> <% if @attribute.min isnt undefined: %> min="<%= @attribute.min %>"<% end %><% if @attribute.max isnt undefined: %> max="<%= @attribute.max %>"<% end %><% if @attribute.step: %> step="<%= @attribute.step %>"<% end %><% if @attribute.disabled: %> disabled<% end %>/>
+<% if @attribute.disabled: %>
+  <input type="hidden" name="<%= @attribute.name %>" value="<%= @attribute.value %>">
+<% end %>

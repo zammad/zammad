@@ -1,21 +1,42 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T( @head ) %> <small><%- @T( 'Object Manager' ) %></small></h1>
+    <h1><%- @T(@head) %> <small><%- @T('Object Manager') %></small></h1>
   </div>
   <div class="page-header-meta">
-    <a class="btn js-restore"><%- @T( 'Restore Defaults' ) %></a>
-    <a class="btn btn--success js-new"><%- @T( 'New Attribute' ) %></a>
+  <!--
+    <a class="btn js-restore"><%- @T('Restore Defaults') %></a>
+  -->
+    <a class="btn btn--success js-new"><%- @T('New Attribute') %></a>
   </div>
 </div>
 <div class="page-content">
+  <% if !_.isEmpty(@itemsToChange): %>
   <div class="box box--message">
     <h2>Database Update required</h2>
-    <p><%- @T( 'Changes were made that require a database update. This might take some time.' ) %></p>
+    <p>
+      <%- @T('Changes were made that require a database update.') %>
+      <%- @T('This might take some time where the system can\'t be used.') %>
+      <%- @T('Please update database changes only in a maintenance timeslot.') %>
+    </p>
+    <p>
+      <%- @T('Changes') %>:
+      <ul>
+      <% for item in @itemsToChange: %>
+        <li>
+          <% if item.to_create is true: %>
+            <%- @T('Create') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+          <% else if item.to_delete is true: %>
+            <%- @T('Delete') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+          <% end %>
+      <% end %>
+    </p>
     <div class="box-controls">
-      <div class="btn btn--text btn--secondary js-discard">Discard Changes</div>
-      <div class="btn btn--primary js-sync align-right"><%- @T( 'Update Database' ) %></div>
+      <div class="btn btn--text btn--secondary js-discard"><%- @T('Discard Changes') %></div>
+      <div class="btn btn--primary js-execute align-right"><%- @T('Update Database') %></div>
     </div>
   </div>
+  <% end %>
+<!--
   <div class="box box--message">
     <div class="box-progress">
       <div class="box-progress-title"><%- @T('Updating Database') %></div>
@@ -24,20 +45,31 @@
       </div>
     </div>
   </div>
+-->
   <table class="table table-striped table-hover is-disabled">
     <thead>
       <tr>
         <th class=""><%- @T('Display') %></th>
         <th class=""><%- @T('Name') %></th>
-        <th class=""><%- @T('Type') %></th>
+        <th class="" style="width: 200px;"><%- @T('Type') %></th>
+        <th class="" style="width: 140px;"><%- @T('Action') %></th>
       </tr>
     </thead>
     <tbody>
       <% for item in @items: %>
-      <tr class="<% if item.active is false: %>is-inactive<% end %> js-edit u-clickable" data-id="<%- item.id %>">
+      <tr class="<% if item.editable is false: %>is-grayed-out u-notAllowed<% else: %><% if item.active is false: %>is-inactive<% end %> js-edit u-clickable<% end %>" data-id="<%- item.id %>">
         <td><%= item.display %></td>
         <td><%= item.name %></td>
         <td><%= item.data_type %></td>
+        <td>
+          <% if item.to_create is true: %>
+            <%- @T('will be created') %>
+          <% else if item.to_delete is true: %>
+            <%- @T('will be deleted') %>
+          <% else if item.editable isnt false: %>
+            <a href="#" class="js-delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
+          <% end %>
+        </td>
       </tr>
       <% end %>
     </tbody>

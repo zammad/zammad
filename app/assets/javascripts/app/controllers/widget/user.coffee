@@ -6,7 +6,7 @@ class App.WidgetUser extends App.Controller
     super
 
     # subscribe and reload data / fetch new data if triggered
-    @subscribeId = App.User.full( @user_id, @render, false, true )
+    @subscribeId = App.User.full(@user_id, @render, false, true)
 
   release: =>
     App.User.unsubscribe(@subscribeId)
@@ -85,9 +85,9 @@ class App.WidgetUser extends App.Controller
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
-    user  = App.User.find( @user_id )
+    user  = App.User.find(@user_id)
     if user[name] isnt value
       data = {}
       data[name] = value
-      user.updateAttributes( data )
+      user.updateAttributes(data)
       @log 'notice', 'update', name, value, user

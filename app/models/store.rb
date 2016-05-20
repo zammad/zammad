@@ -18,8 +18,8 @@ add an attachment to storage
     o_id: 4711,
     data: binary_string,
     preferences: {
-      :content_type => 'image/png',
-      :content_id   => 234,
+      content_type: 'image/png',
+      content_id: 234,
     }
   )
 
@@ -69,8 +69,8 @@ returns
     size: 94123,
     filename: 'image.png',
     preferences: {
-      :content_type => 'image/png',
-      :content_id   => 234,
+      content_type: 'image/png',
+      content_id: 234,
     }
   }
   store1.content # binary_string

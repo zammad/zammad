@@ -182,21 +182,21 @@ module Import::Zendesk
   return
 
      {
-        :Group => {
-          :total => 1234,
-          :done  => 13,
+        Group: {
+          total: 1234,
+          done: 13,
         },
-        :Organization => {
-          :total => 1234,
-          :done  => 13,
+        Organization: {
+          total: 1234,
+          done: 13,
         },
-        :User => {
-          :total => 1234,
-          :done  => 13,
+        User: {
+          total: 1234,
+          done: 13,
         },
-        :Ticket => {
-          :total => 1234,
-          :done  => 13,
+        Ticket: {
+          total: 1234,
+          done: 13,
         },
      }
 
@@ -206,7 +206,6 @@ module Import::Zendesk
 
     data = statistic
 
-    # TODO: Ticket, User, Organization fields
     {
       Group: {
         done: Group.count,
@@ -334,8 +333,8 @@ module Import::Zendesk
              zendesk_field['key'] # TODO: y?!
            end
 
-    @zendesk_ticket_field_mapping ||= {}
-    @zendesk_ticket_field_mapping[ zendesk_field.id ] = name
+    @zendesk_field_mapping ||= {}
+    @zendesk_field_mapping[ zendesk_field.id ] = name
 
     data_type   = zendesk_field.type
     data_option = {
@@ -344,35 +343,52 @@ module Import::Zendesk
     }
 
     if zendesk_field.type == 'date'
-
       data_option = {
         future: true,
         past:   true,
-      }.merge( data_option )
-
+        diff:   0,
+      }.merge(data_option)
+    elsif zendesk_field.type == 'checkbox'
+      data_type   = 'boolean'
+      data_option = {
+        default: false,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      }.merge(data_option)
     elsif zendesk_field.type == 'regexp'
-
       data_type   = 'input'
       data_option = {
         type:  'text',
+        maxlength: 255,
         regex: zendesk_field.regexp_for_validation,
-      }.merge( data_option )
-
+      }.merge(data_option)
+    elsif zendesk_field.type == 'decimal'
+      data_type   = 'input'
+      data_option = {
+        type:  'text',
+        maxlength: 255,
+      }.merge(data_option)
+    elsif zendesk_field.type == 'integer'
+      data_type   = 'integer'
+      data_option = {
+        min:     0,
+        max:     999_999_999,
+      }.merge(data_option)
     elsif zendesk_field.type == 'text'
-
       data_type   = 'input'
       data_option = {
         type: zendesk_field.type,
-      }.merge( data_option )
-
+        maxlength: 255,
+      }.merge(data_option)
     elsif zendesk_field.type == 'textarea'
-
       data_type   = 'input'
       data_option = {
         type: zendesk_field.type,
-      }.merge( data_option )
-
-    elsif zendesk_field.type == 'tagger'
+        maxlength: 255,
+      }.merge(data_option)
+    elsif zendesk_field.type == 'tagger' || zendesk_field.type == 'dropdown'
 
       # \"custom_field_options\"=>[{\"id\"=>28353445
       # \"name\"=>\"Another Value\"
@@ -386,7 +402,6 @@ module Import::Zendesk
       #   \"name\"=>\"Value 2\"
       # \"raw_name\"=>\"Value 2\"
       # \"value\"=>\"key2\"}]}>
-
       # "
 
       options = {}
@@ -403,8 +418,9 @@ module Import::Zendesk
 
       data_type   = 'select'
       data_option = {
+        default: '',
         options: options,
-      }.merge( data_option )
+      }.merge(data_option)
     end
 
     screens = {
@@ -425,6 +441,7 @@ module Import::Zendesk
         }.merge(screens)
       }
     end
+    name.gsub!(/\s/, '_')
 
     ObjectManager::Attribute.add(
       object:            local_object,
@@ -435,11 +452,11 @@ module Import::Zendesk
       editable:          !zendesk_field.removable,
       active:            zendesk_field.active,
       screens:           screens,
-      pending_migration: false,
       position:          zendesk_field.position,
       created_by_id:     1,
       updated_by_id:     1,
     )
+    ObjectManager::Attribute.migration_execute
   end
 
   # OAuth
@@ -481,6 +498,7 @@ module Import::Zendesk
     @zendesk_organization_mapping = {}
 
     @client.organizations.each { |zendesk_organization|
+      custom_fields = get_fields(zendesk_organization.organization_fields)
 
       local_organization_fields = {
         name:          zendesk_organization.name,
@@ -490,10 +508,9 @@ module Import::Zendesk
         # }.merge(zendesk_organization.organization_fields) # TODO
         updated_by_id: 1,
         created_by_id: 1
-      }
+      }.merge(custom_fields)
 
-      local_organization = Organization.create_if_not_exists( local_organization_fields )
-
+      local_organization = Organization.create_if_not_exists(local_organization_fields)
       @zendesk_organization_mapping[ zendesk_organization.id ] = local_organization.id
     }
   end
@@ -511,7 +528,7 @@ module Import::Zendesk
     role_customer = Role.lookup(name: 'Customer')
 
     @client.users.all! { |zendesk_user|
-
+      custom_fields = get_fields(zendesk_user.user_fields)
       local_user_fields = {
         login:           zendesk_user.id.to_s, # Zendesk users may have no other identifier than the ID, e.g. twitter users
         firstname:       zendesk_user.name,
@@ -527,7 +544,7 @@ module Import::Zendesk
         last_login:      zendesk_user.last_login_at,
         updated_by_id:   1,
         created_by_id:   1
-      }
+      }.merge(custom_fields)
 
       if @zendesk_user_group_mapping[ zendesk_user.id ]
 
@@ -616,19 +633,7 @@ module Import::Zendesk
     article_type_facebook_feed_comment = Ticket::Article::Type.lookup(name: 'facebook feed comment')
 
     @client.tickets.all! { |zendesk_ticket|
-
-      zendesk_ticket_fields = {}
-      zendesk_ticket.custom_fields.each { |zendesk_ticket_field|
-
-        field_name  = @zendesk_ticket_field_mapping[ zendesk_ticket_field['id'] ]
-        field_value = zendesk_ticket_field['value']
-        if @zendesk_ticket_field_value_mapping[ field_name ]
-          field_value = @zendesk_ticket_field_value_mapping[ field_name ][ field_value ]
-        end
-
-        zendesk_ticket_fields[ field_name ] = field_value
-      }
-
+      custom_fields = get_custom_fields(zendesk_ticket.custom_fields)
       local_ticket_fields = {
         id:              zendesk_ticket.id,
         title:           zendesk_ticket.subject,
@@ -643,8 +648,7 @@ module Import::Zendesk
         created_at:      zendesk_ticket.created_at,
         updated_by_id:   @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1,
         created_by_id:   @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1,
-        # }.merge(zendesk_ticket_fields) TODO
-      }
+      }.merge(custom_fields)
       ticket_author = User.find( @zendesk_user_mapping[ zendesk_ticket.requester_id ] || 1 )
 
       local_ticket_fields[:create_article_sender_id] = if ticket_author.role?('Customer')
@@ -1040,6 +1044,30 @@ module Import::Zendesk
   def self._reset_pk(table)
     return if ActiveRecord::Base.connection_config[:adapter] != 'postgresql'
     ActiveRecord::Base.connection.reset_pk_sequence!(table)
+  end
+
+  def get_custom_fields(custom_fields)
+    return {} if !custom_fields
+    fields = {}
+    custom_fields.each { |custom_field|
+      field_name  = @zendesk_field_mapping[ custom_field['id'] ].gsub(/\s/, '_')
+      field_value = custom_field['value']
+      next if field_value.nil? # ignore nil values
+      if @zendesk_ticket_field_value_mapping[ field_name ]
+        field_value = @zendesk_ticket_field_value_mapping[ field_name ][ field_value ]
+      end
+      fields[ field_name.to_sym ] = field_value
+    }
+    fields
+  end
+
+  def get_fields(user_fields)
+    return {} if !user_fields
+    fields = {}
+    user_fields.each {|key, value|
+      fields[key] = value
+    }
+    fields
   end
 
 end

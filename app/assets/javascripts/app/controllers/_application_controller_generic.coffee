@@ -5,7 +5,7 @@ class App.ControllerGenericNew extends App.ControllerModal
   headPrefix: 'New'
 
   content: =>
-    @head = @pageData.object
+    @head = @pageData.head || @pageData.object
     @controller = new App.ControllerForm(
       model:     App[ @genericObject ]
       params:    @item
@@ -53,7 +53,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
 
   content: =>
     @item = App[ @genericObject ].find( @id )
-    @head = @pageData.object
+    @head = @pageData.head || @pageData.object
 
     @controller = new App.ControllerForm(
       model:      App[ @genericObject ]
@@ -1116,9 +1116,8 @@ class App.ObserverController extends App.Controller
         if active
           currentAttributes[key] = object[key]
     if @observeNot
-      attributes = object.attributes()
-      for key, value of attributes
-        if !@observeNot[key]
+      for key, value of object
+        if !@observeNot[key] && !_.isFunction(value) && !_.isObject(value)
           currentAttributes[key] = value
 
     if !@lastAttributres

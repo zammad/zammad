@@ -27,7 +27,7 @@ returns
 
 store image 1:1 in backend and return filename
 
-  filename = StaticAssets.store_raw( content, content_type )
+  filename = StaticAssets.store_raw(content, content_type)
 
 returns
 
