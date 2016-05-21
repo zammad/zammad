@@ -56,9 +56,9 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     customer1.roles = roles
     customer1.save
 
-    collection_client1 = Sessions::Backend::Collections.new(agent1, {}, nil, 'aaa-1', 2)
-    collection_client2 = Sessions::Backend::Collections.new(agent2, {}, nil, 'bbb-2', 2)
-    collection_client2 = Sessions::Backend::Collections.new(customer1, {}, nil, 'ccc-2', 2)
+    collection_client1 = Sessions::Backend::Collections.new(agent1, {}, nil, 'aaa-1', 3)
+    collection_client2 = Sessions::Backend::Collections.new(agent2, {}, nil, 'bbb-2', 3)
+    collection_client2 = Sessions::Backend::Collections.new(customer1, {}, nil, 'ccc-2', 3)
 
     # get whole collections
     result1 = collection_client1.push
@@ -95,7 +95,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    sleep 3
+    sleep 4
 
     # get whole collections
     result1 = collection_client1.push
