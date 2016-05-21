@@ -57,51 +57,51 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: "some title1\n äöüß",
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: customer1.id,
       owner_id: agent1.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert( ticket, 'ticket created' )
-    assert_equal( ticket.customer.id, customer1.id  )
-    assert_equal( ticket.organization.id, organization1.id  )
+    assert(ticket, 'ticket created')
+    assert_equal(ticket.customer.id, customer1.id )
+    assert_equal(ticket.organization.id, organization1.id )
 
     # check if customer and organization has been touched
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 4.seconds.ago
-      assert( true, 'customer1.updated_at has been updated' )
+    if customer1.updated_at > 3.seconds.ago
+      assert(true, 'customer1.updated_at has been updated')
     else
-      assert( false, 'customer1.updated_at has not been updated' )
+      assert(false, 'customer1.updated_at has not been updated')
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 4.seconds.ago
-      assert( true, 'organization1.updated_at has been updated' )
+    if organization1.updated_at > 3.seconds.ago
+      assert(true, 'organization1.updated_at has been updated')
     else
-      assert( false, 'organization1.updated_at has not been updated' )
+      assert(false, 'organization1.updated_at has not been updated')
     end
 
-    sleep 6
+    sleep 4
 
     delete = ticket.destroy
-    assert( delete, 'ticket destroy' )
+    assert(delete, 'ticket destroy')
 
     # check if customer and organization has been touched
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 4.seconds.ago
-      assert( true, 'customer1.updated_at has been updated' )
+    if customer1.updated_at > 3.seconds.ago
+      assert(true, 'customer1.updated_at has been updated')
     else
-      assert( false, 'customer1.updated_at has not been updated' )
+      assert(false, 'customer1.updated_at has not been updated')
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 4.seconds.ago
-      assert( true, 'organization1.updated_at has been updated' )
+    if organization1.updated_at > 3.seconds.ago
+      assert(true, 'organization1.updated_at has been updated')
     else
-      assert( false, 'organization1.updated_at has not been updated' )
+      assert(false, 'organization1.updated_at has not been updated')
     end
   end
 
@@ -110,51 +110,51 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
     sleep 6
     ticket = Ticket.create(
       title: "some title2\n äöüß",
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: customer2.id,
       owner_id: agent1.id,
-      state: Ticket::State.lookup( name: 'new' ),
-      priority: Ticket::Priority.lookup( name: '2 normal' ),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert( ticket, 'ticket created' )
-    assert_equal( ticket.customer.id, customer2.id  )
-    assert_equal( ticket.organization, nil  )
+    assert(ticket, 'ticket created')
+    assert_equal(ticket.customer.id, customer2.id)
+    assert_equal(ticket.organization, nil)
 
     # check if customer and organization has been touched
     customer2 = User.find(customer2.id)
-    if customer2.updated_at > 4.seconds.ago
-      assert( true, 'customer2.updated_at has been updated' )
+    if customer2.updated_at > 3.seconds.ago
+      assert(true, 'customer2.updated_at has been updated')
     else
-      assert( false, 'customer2.updated_at has not been updated' )
+      assert(false, 'customer2.updated_at has not been updated')
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 4.seconds.ago
-      assert( false, 'organization1.updated_at has been updated' )
+    if organization1.updated_at > 3.seconds.ago
+      assert(false, 'organization1.updated_at has been updated')
     else
-      assert( true, 'organization1.updated_at has not been updated' )
+      assert(true, 'organization1.updated_at has not been updated')
     end
 
-    sleep 6
+    sleep 4
 
     delete = ticket.destroy
-    assert( delete, 'ticket destroy' )
+    assert(delete, 'ticket destroy')
 
     # check if customer and organization has been touched
     customer2 = User.find(customer2.id)
-    if customer2.updated_at > 4.seconds.ago
-      assert( true, 'customer2.updated_at has been updated' )
+    if customer2.updated_at > 3.seconds.ago
+      assert(true, 'customer2.updated_at has been updated')
     else
-      assert( false, 'customer2.updated_at has not been updated' )
+      assert(false, 'customer2.updated_at has not been updated')
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 4.seconds.ago
-      assert( false, 'organization1.updated_at has been updated' )
+    if organization1.updated_at > 3.seconds.ago
+      assert(false, 'organization1.updated_at has been updated')
     else
-      assert( true, 'organization1.updated_at has not been updated' )
+      assert(true, 'organization1.updated_at has not been updated')
     end
 
   end
