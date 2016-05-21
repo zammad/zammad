@@ -428,6 +428,46 @@ test:browser:core:ff_3_mysql:
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
+test:browser:core:ff_4_mysql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - mysql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 4
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+test:browser:core:ff_5_mysql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - mysql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
 test:browser:core:ff_1_postgresql:
   stage: browser
   dependencies:
@@ -478,6 +518,46 @@ test:browser:core:ff_3_postgresql:
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - script/build/test_slice_tests.sh 3
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+test:browser:core:ff_4_postgresql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - postgresql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 4
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+test:browser:core:ff_5_postgresql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - postgresql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
@@ -564,6 +644,26 @@ test:browser:core:chrome_4_mysql:
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
 
+test:browser:core:chrome_5_mysql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-chrome
+    - mysql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
 test:browser:core:chrome_1_postgresql:
   stage: browser
   dependencies:
@@ -638,6 +738,26 @@ test:browser:core:chrome_4_postgresql:
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 4
+    - RAILS_ENV=test rake db:create
+    - script/bootstrap.sh
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+
+test:browser:core:chrome_5_postgresql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-chrome
+    - postgresql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
