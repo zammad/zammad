@@ -71,51 +71,51 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert( ticket, 'ticket created' )
-    assert_equal( ticket.customer.id, customer1.id  )
-    assert_equal( ticket.organization.id, organization1.id  )
+    assert(ticket, 'ticket created')
+    assert_equal(ticket.customer.id, customer1.id )
+    assert_equal(ticket.organization.id, organization1.id )
 
-    sleep 6
+    sleep 4
 
     organization1.name = 'Ref Object Update Org 1/1'
     organization1.save
 
     # check if ticket and customer has been touched
     ticket = Ticket.find(ticket.id)
-    if ticket.updated_at > 4.seconds.ago
-      assert( true, 'ticket.updated_at has been updated' )
+    if ticket.updated_at > 2.seconds.ago
+      assert(true, 'ticket.updated_at has been updated')
     else
-      assert( false, 'ticket.updated_at has not been updated' )
+      assert(false, 'ticket.updated_at has not been updated')
     end
 
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 4.seconds.ago
-      assert( true, 'customer1.updated_at has been updated' )
+    if customer1.updated_at > 2.seconds.ago
+      assert(true, 'customer1.updated_at has been updated')
     else
-      assert( false, 'customer1.updated_at has not been updated' )
+      assert(false, 'customer1.updated_at has not been updated')
     end
 
-    sleep 6
+    sleep 4
 
     customer2.organization_id = organization1.id
     customer2.save
 
     # check if customer1 and organization has been touched
     customer1 = User.find(customer1.id)
-    if customer1.updated_at > 4.seconds.ago
-      assert( true, 'customer1.updated_at has been updated' )
+    if customer1.updated_at > 2.seconds.ago
+      assert(true, 'customer1.updated_at has been updated')
     else
-      assert( false, 'customer1.updated_at has not been updated' )
+      assert(false, 'customer1.updated_at has not been updated')
     end
 
     organization1 = Organization.find(organization1.id)
-    if organization1.updated_at > 4.seconds.ago
-      assert( true, 'organization1.updated_at has been updated' )
+    if organization1.updated_at > 2.seconds.ago
+      assert(true, 'organization1.updated_at has been updated')
     else
-      assert( false, 'organization1.updated_at has not been updated' )
+      assert(false, 'organization1.updated_at has not been updated')
     end
 
     delete = ticket.destroy
-    assert( delete, 'ticket destroy' )
+    assert(delete, 'ticket destroy')
   end
 end

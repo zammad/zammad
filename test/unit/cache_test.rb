@@ -81,10 +81,10 @@ class CacheTest < ActiveSupport::TestCase
             key: 'some valueöäüß2',
           },
           param: {
-            expires_in: 5.seconds,
+            expires_in: 3.seconds,
           }
         },
-        sleep: 10,
+        sleep: 5,
         verify: {
           key: '123',
           data: nil
@@ -93,10 +93,10 @@ class CacheTest < ActiveSupport::TestCase
     ]
     tests.each { |test|
       if test[:set]
-        Cache.write( test[:set], test[:set][:data] )
+        Cache.write(test[:set], test[:set][:data])
       end
       if test[:delete]
-        Cache.delete( test[:delete][:key] )
+        Cache.delete(test[:delete][:key])
       end
       if test[:cleanup]
         Cache.clear
@@ -105,17 +105,17 @@ class CacheTest < ActiveSupport::TestCase
         sleep test[:sleep]
       end
       if test[:verify]
-        cache = Cache.get( test[:verify] )
-        assert_equal( cache, test[:verify][:data], 'verify' )
+        cache = Cache.get(test[:verify])
+        assert_equal(cache, test[:verify][:data], 'verify')
       end
     }
   end
 
   # verify if second cache write overwrite first one
   test 'cache reset' do
-    Cache.write( 'some_reset_key', 123 )
-    Cache.write( 'some_reset_key', 12_356 )
-    cache = Cache.get( 'some_reset_key' )
-    assert_equal( cache, 12_356, 'verify' )
+    Cache.write('some_reset_key', 123)
+    Cache.write('some_reset_key', 12_356)
+    cache = Cache.get('some_reset_key')
+    assert_equal(cache, 12_356, 'verify')
   end
 end
