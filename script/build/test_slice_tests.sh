@@ -54,16 +54,16 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/admin_overview_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_organization_profile_test.rb
-  # test/browser/agent_ticket_actions_level0.rb
-  # test/browser/agent_ticket_actions_level1.rb
-  # test/browser/agent_ticket_actions_level2.rb
-  # test/browser/agent_ticket_actions_level3.rb
-  # test/browser/agent_ticket_actions_level4.rb
-  rm test/browser/agent_ticket_actions_level5.rb
-  rm test/browser/agent_ticket_actions_level6.rb
-  rm test/browser/agent_ticket_actions_level7.rb
-  rm test/browser/agent_ticket_actions_level8.rb
-  rm test/browser/agent_ticket_actions_level9.rb
+  # test/browser/agent_ticket_actions_level0_test.rb
+  # test/browser/agent_ticket_actions_level1_test.rb
+  # test/browser/agent_ticket_actions_level2_test.rb
+  # test/browser/agent_ticket_actions_level3_test.rb
+  # test/browser/agent_ticket_actions_level4_test.rb
+  rm test/browser/agent_ticket_actions_level5_test.rb
+  rm test/browser/agent_ticket_actions_level6_test.rb
+  rm test/browser/agent_ticket_actions_level7_test.rb
+  rm test/browser/agent_ticket_actions_level8_test.rb
+  rm test/browser/agent_ticket_actions_level9_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
   rm test/browser/agent_user_manage_test.rb
@@ -96,16 +96,16 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/admin_overview_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_organization_profile_test.rb
-  rm test/browser/agent_ticket_actions_level0.rb
-  rm test/browser/agent_ticket_actions_level1.rb
-  rm test/browser/agent_ticket_actions_level2.rb
-  rm test/browser/agent_ticket_actions_level3.rb
-  rm test/browser/agent_ticket_actions_level4.rb
-  # test/browser/agent_ticket_actions_level5.rb
-  # test/browser/agent_ticket_actions_level6.rb
-  # test/browser/agent_ticket_actions_level7.rb
-  # test/browser/agent_ticket_actions_level8.rb
-  # test/browser/agent_ticket_actions_level9.rb
+  rm test/browser/agent_ticket_actions_level0_test.rb
+  rm test/browser/agent_ticket_actions_level1_test.rb
+  rm test/browser/agent_ticket_actions_level2_test.rb
+  rm test/browser/agent_ticket_actions_level3_test.rb
+  rm test/browser/agent_ticket_actions_level4_test.rb
+  # test/browser/agent_ticket_actions_level5_test.rb
+  # test/browser/agent_ticket_actions_level6_test.rb
+  # test/browser/agent_ticket_actions_level7_test.rb
+  # test/browser/agent_ticket_actions_level8_test.rb
+  # test/browser/agent_ticket_actions_level9_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
   rm test/browser/agent_user_manage_test.rb

@@ -50,6 +50,22 @@ class TestCase < Test::Unit::TestCase
       return local_browser
     end
 
+    # avoid "Cannot read property 'get_Current' of undefined" issues
+    (1..5).each {|count|
+      begin
+        local_browser = browser_instance_remote
+        break
+      rescue
+        wait_until_ready = rand(9)+5
+        sleep wait_until_ready
+        log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready })
+      end
+    }
+
+    local_browser
+  end
+
+  def browser_instance_remote
     caps = Selenium::WebDriver::Remote::Capabilities.send(browser)
     if ENV['BROWSER_OS']
       caps.platform = ENV['BROWSER_OS']
@@ -63,24 +79,7 @@ class TestCase < Test::Unit::TestCase
       desired_capabilities: caps,
     )
     @browsers[local_browser.hash] = local_browser
-
-    # avoid "Cannot read property 'get_Current' of undefined" issues
-    begin
-      browser_instance_preferences(local_browser)
-    rescue
-      # just try again
-      sleep 10
-      log('browser_instance', { rescure: true })
-      begin
-        browser_instance_preferences(local_browser)
-      rescue
-        # just try again
-        sleep 10
-        log('browser_instance', { rescure: true })
-        browser_instance_preferences(local_browser)
-      end
-
-    end
+    browser_instance_preferences(local_browser)
 
     # upload files from remote dir
     local_browser.file_detector = lambda do |args|
