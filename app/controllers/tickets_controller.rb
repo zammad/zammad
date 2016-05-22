@@ -116,20 +116,15 @@ class TicketsController < ApplicationController
     assets = ticket.assets({})
 
     # open tickets by customer
-    group_ids = Group.select('groups.id')
-                     .joins(:users)
-                     .where('groups_users.user_id = ?', current_user.id)
-                     .map(&:id)
-
-    access_condition = [ 'group_id IN (?)', group_ids ]
+    access_condition = Ticket.access_condition(current_user)
 
     ticket_lists = Ticket
                    .where(
                      customer_id: ticket.customer_id,
-                     state_id: Ticket::State.by_category( 'open' )
+                     state_id: Ticket::State.by_category('open')
                    )
                    .where(access_condition)
-                   .where( 'id != ?', [ ticket.id ] )
+                   .where('id != ?', [ ticket.id ])
                    .order('created_at DESC')
                    .limit(6)
 
@@ -174,7 +169,7 @@ class TicketsController < ApplicationController
     return if !ticket_permission(ticket_master)
 
     # check slave ticket
-    ticket_slave = Ticket.find_by(id: params[:slave_ticket_id] )
+    ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
     if !ticket_slave
       render json: {
         result: 'faild',
