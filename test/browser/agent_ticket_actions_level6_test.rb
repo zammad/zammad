@@ -53,8 +53,8 @@ class AgentTicketActionLevel6Test < TestCase
 
     # check if ticket is shown and attachment exists
     location_check(url: '#ticket/zoom/')
-    sleep 4
-    ticket_number = @browser.find_elements({ css: '.active .ticketZoom-header .ticket-number' } )[0].text
+    sleep 2
+    ticket_number = @browser.find_elements({ css: '.active .ticketZoom-header .ticket-number' })[0].text
     match(
       css: '.active .ticket-article-item:nth-child(1) .attachments',
       value: 'upload2.jpg',
@@ -77,9 +77,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # check warning
@@ -93,9 +91,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # no warning
@@ -136,9 +132,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # check warning
@@ -146,9 +140,7 @@ class AgentTicketActionLevel6Test < TestCase
       css: '.active .modal',
       value: 'missing',
     )
-    click(
-      css: '.active .modal .js-cancel',
-    )
+    click(css: '.active .modal .js-cancel')
     sleep 2
 
     ticket_update(
@@ -159,9 +151,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # discard changes should gone away

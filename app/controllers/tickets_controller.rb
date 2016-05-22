@@ -44,7 +44,7 @@ class TicketsController < ApplicationController
 
     # create article if given
     if params[:article]
-      article_create( ticket, params[:article] )
+      article_create(ticket, params[:article])
     end
 
     render json: ticket, status: :created
@@ -57,10 +57,10 @@ class TicketsController < ApplicationController
     # permission check
     return if !ticket_permission(ticket)
 
-    if ticket.update_attributes( Ticket.param_validation( params[:ticket] ) )
+    if ticket.update_attributes(Ticket.param_validation(params[:ticket]))
 
       if params[:article]
-        article_create( ticket, params[:article] )
+        article_create(ticket, params[:article])
       end
 
       render json: ticket, status: :ok
@@ -71,7 +71,7 @@ class TicketsController < ApplicationController
 
   # DELETE /api/v1/tickets/1
   def destroy
-    ticket = Ticket.find( params[:id] )
+    ticket = Ticket.find(params[:id])
 
     # permission check
     return if !ticket_permission(ticket)
@@ -97,10 +97,10 @@ class TicketsController < ApplicationController
   def ticket_history
 
     # get ticket data
-    ticket = Ticket.find( params[:id] )
+    ticket = Ticket.find(params[:id])
 
     # permission check
-    return if !ticket_permission( ticket )
+    return if !ticket_permission(ticket)
 
     # get history of ticket
     history = ticket.history_get(true)
@@ -112,15 +112,14 @@ class TicketsController < ApplicationController
   # GET /api/v1/ticket_related/1
   def ticket_related
 
-    ticket = Ticket.find( params[:ticket_id] )
+    ticket = Ticket.find(params[:ticket_id])
     assets = ticket.assets({})
 
     # open tickets by customer
-    group_ids = Group.select( 'groups.id' )
+    group_ids = Group.select('groups.id')
                      .joins(:users)
-                     .where( 'groups_users.user_id = ?', current_user.id )
-                     .where( 'groups.active = ?', true )
-                     .map( &:id )
+                     .where('groups_users.user_id = ?', current_user.id)
+                     .map(&:id)
 
     access_condition = [ 'group_id IN (?)', group_ids ]
 
@@ -142,11 +141,11 @@ class TicketsController < ApplicationController
     }
 
     ticket_ids_recent_viewed = []
-    recent_views = RecentView.list( current_user, 8, 'Ticket' )
+    recent_views = RecentView.list(current_user, 8, 'Ticket')
     recent_views.each {|recent_view|
       next if recent_view['object'] != 'Ticket'
       ticket_ids_recent_viewed.push recent_view['o_id']
-      recent_view_ticket = Ticket.find( recent_view['o_id'] )
+      recent_view_ticket = Ticket.find(recent_view['o_id'])
       assets             = recent_view_ticket.assets(assets)
     }
 
@@ -185,7 +184,7 @@ class TicketsController < ApplicationController
     end
 
     # permission check
-    return if !ticket_permission( ticket_slave )
+    return if !ticket_permission(ticket_slave)
 
     # check diffetent ticket ids
     if ticket_slave.id == ticket_master.id
@@ -214,7 +213,7 @@ class TicketsController < ApplicationController
   def ticket_full
 
     # permission check
-    ticket = Ticket.find( params[:id] )
+    ticket = Ticket.find(params[:id])
     return if !ticket_permission(ticket)
 
     # get attributes to update
@@ -225,7 +224,7 @@ class TicketsController < ApplicationController
     assets = ticket.assets(assets)
 
     # get related articles
-    articles = Ticket::Article.where(ticket_id: params[:id])
+    articles = Ticket::Article.where(ticket_id: params[:id]).order('created_at ASC, id ASC')
 
     # get related users
     article_ids = []
