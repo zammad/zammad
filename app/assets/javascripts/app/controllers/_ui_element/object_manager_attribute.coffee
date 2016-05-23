@@ -54,7 +54,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
             required: false
         Agent:
           create_bottom:
-            show: true
+            shown: true
             required: false
           edit:
             shown: true

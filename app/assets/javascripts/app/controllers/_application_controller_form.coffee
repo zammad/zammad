@@ -38,7 +38,7 @@ class App.ControllerForm extends App.Controller
     @form
 
   showAlert: (message) =>
-    @form.find('.alert').removeClass('hide').html(App.i18n.translateContent(message))
+    @form.find('.alert').first().removeClass('hide').html(App.i18n.translateInline(message))
 
   hideAlert: =>
     @form.find('.alert').addClass('hide').html()

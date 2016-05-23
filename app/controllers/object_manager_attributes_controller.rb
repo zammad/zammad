@@ -27,36 +27,59 @@ class ObjectManagerAttributesController < ApplicationController
   def create
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     check_params
-    object_manager_attribute = ObjectManager::Attribute.add(
+
+    # check if attribute already exists
+    exists = ObjectManager::Attribute.get(
       object: params[:object],
       name: params[:name],
-      display: params[:display],
-      data_type: params[:data_type],
-      data_option: params[:data_option],
-      active: params[:active],
-      screens: params[:screens],
-      position: 1550,
-      editable: true,
     )
-    render json: object_manager_attribute.attributes_with_associations, status: :created
+    if exists
+      render json: model_match_error('already exists'), status: :unprocessable_entity
+      return
+    end
+
+    begin
+      object_manager_attribute = ObjectManager::Attribute.add(
+        object: params[:object],
+        name: params[:name],
+        display: params[:display],
+        data_type: params[:data_type],
+        data_option: params[:data_option],
+        active: params[:active],
+        screens: params[:screens],
+        position: 1550,
+        editable: true,
+      )
+      render json: object_manager_attribute.attributes_with_associations, status: :created
+    rescue => e
+      logger.error e.message
+      logger.error e.backtrace.inspect
+      render json: model_match_error(e.message), status: :unprocessable_entity
+    end
   end
 
   # PUT /object_manager_attributes/1
   def update
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     check_params
-    object_manager_attribute = ObjectManager::Attribute.add(
-      object: params[:object],
-      name: params[:name],
-      display: params[:display],
-      data_type: params[:data_type],
-      data_option: params[:data_option],
-      active: params[:active],
-      screens: params[:screens],
-      position: 1550,
-      editable: true,
-    )
-    render json: object_manager_attribute.attributes_with_associations, status: :ok
+    begin
+      object_manager_attribute = ObjectManager::Attribute.add(
+        object: params[:object],
+        name: params[:name],
+        display: params[:display],
+        data_type: params[:data_type],
+        data_option: params[:data_option],
+        active: params[:active],
+        screens: params[:screens],
+        position: 1550,
+        editable: true,
+      )
+      render json: object_manager_attribute.attributes_with_associations, status: :ok
+    rescue => e
+      logger.error e.message
+      logger.error e.backtrace.inspect
+      render json: model_match_error(e.message), status: :unprocessable_entity
+    end
   end
 
   # DELETE /object_manager_attributes/1

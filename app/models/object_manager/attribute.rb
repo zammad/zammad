@@ -490,10 +490,15 @@ returns
   end
 
   def check_name
-    if name
-      return true if name !~ /_(id|ids)$/i && name !~ /^id$/i && name !~ /\s/
+    return if !name
+    if name =~ /_(id|ids)$/i || name =~ /^id$/i
+      raise 'Name can\'t get used, *_id and *_ids are not allowed'
+    elsif name =~ /\s/
+      raise 'Spaces in name are not allowed'
+    elsif name !~ /^[a-z0-9_]+$/
+      raise 'Only letters from a-z, numbers from 0-9, and _ are allowed'
     end
-    raise "Name can't get used, *_id and *_ids are not allowed"
+    true
   end
 
   def check_editable
