@@ -1,31 +1,31 @@
 _instance = undefined
 class App.LogInclude
-  @log: ( level, args... ) ->
+  @log: (level, args...) ->
     if _instance == undefined
       _instance ?= new _Singleton
     module = @constructor.name
-    _instance.log( module, level, args )
+    _instance.log(module, level, args)
 
 class App.Log
-  @debug: ( module, args... ) ->
+  @debug: (module, args...) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.log( module, 'debug', args )
+    _instance.log(module, 'debug', args)
 
-  @notice: ( module, args... ) ->
+  @notice: (module, args...) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.log( module, 'notice', args )
+    _instance.log(module, 'notice', args)
 
-  @error: ( module, args... ) ->
+  @error: (module, args...) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.log( module, 'error', args )
+    _instance.log(module, 'error', args)
 
-  @config: ( type, regex ) ->
+  @config: (type, regex) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.config( type, regex )
+    _instance.config(type, regex)
 
   @timeTrack: (message) ->
     if _instance == undefined
@@ -81,14 +81,14 @@ class _Singleton
     if window.localStorage
       window.localStorage.setItem('log_config', JSON.stringify(@currentConfig))
 
-  log: ( module, level, args ) ->
+  log: (module, level, args) ->
     if level is 'debug'
       return if !@currentConfigReady.module && !@currentConfigReady.content
       return if @currentConfigReady.module && !module.match(@currentConfigReady.module)
       return if @currentConfigReady.content && !args.toString().match(@currentConfigReady.content)
-    @_log( module, level, args )
+    @_log(module, level, args)
 
-  _log: ( module, level, args ) ->
+  _log: (module, level, args) ->
     prefixLength = 32
     prefix       = "App.#{module}(#{level})"
     if prefix.length < prefixLength
