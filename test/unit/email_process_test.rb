@@ -2137,7 +2137,6 @@ Some Text',
     ]
     process(files)
 
-    group_active_map = {}
     Group.all.each {|group|
       next if !group_active_map.key?(group.id)
       group.active = group_active_map[group.id]
