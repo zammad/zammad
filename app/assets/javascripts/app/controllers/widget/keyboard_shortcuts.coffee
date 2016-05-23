@@ -258,7 +258,7 @@ App.Config.set(
           where: 'Used in object views'
           shortcuts: [
             {
-              key: 'y'
+              key: '.'
               hotkeys: true
               description: 'Copy current object number (e. g. Ticket#) into clipboard'
               callback: (shortcut, lastKey, modifier) ->
@@ -284,13 +284,13 @@ App.Config.set(
             }
             {
               keyPrefix: '2x'
-              key: 'y'
+              key: '.'
               hotkeys: true
               description: '...add object title'
             }
             {
               keyPrefix: '3x'
-              key: 'y'
+              key: '.'
               hotkeys: true
               description: '...add object link url'
             }
@@ -420,7 +420,7 @@ App.Config.set(
             {
               key: 'y'
               hotkeys: true
-              description: '... of whole textarea'
+              description: '...of whole textarea'
               globalEvent: 'richtext-remove-formating-textarea'
             }
             {
