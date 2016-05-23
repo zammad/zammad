@@ -240,6 +240,20 @@ App.Config.set(
             }
           ]
         }
+        {
+          where: 'Used in object views'
+          shortcuts: [
+            {
+              key: 'y'
+              hotkeys: true
+              description: 'Copy current object number (e. g. Ticket#) into clipboard'
+              callback: ->
+                App.Event.trigger('keyboard_shortcuts_close')
+                text = $('.active.content .js-objectNumber').data('number') || ''
+                clipboard.copy(text)
+            }
+          ]
+        }
       ]
     }
     {
