@@ -7,8 +7,13 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     record = Ticket::Article.find(@article_id)
 
     # build subject
-    ticket  = Ticket.lookup(id: record.ticket_id)
-    subject = ticket.subject_build(record.subject)
+    ticket = Ticket.lookup(id: record.ticket_id)
+    article_count = Ticket::Article.where(ticket_id: ticket.id).count
+    subject = if article_count > 1
+                ticket.subject_build(record.subject, true)
+              else
+                ticket.subject_build(record.subject)
+              end
 
     # send email
     if !ticket.group.email_address_id

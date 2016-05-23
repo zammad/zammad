@@ -6,7 +6,7 @@ module Ticket::Subject
 build new subject with ticket number in there
 
   ticket = Ticket.find(123)
-  result = ticket.subject_build('some subject')
+  result = ticket.subject_build('some subject', is_reply_true_false)
 
 returns
 
@@ -14,13 +14,17 @@ returns
 
 =end
 
-  def subject_build (subject)
+  def subject_build(subject, is_reply = false)
 
     # clena subject
     subject = subject_clean(subject)
 
     ticket_hook         = Setting.get('ticket_hook')
     ticket_hook_divider = Setting.get('ticket_hook_divider')
+    ticket_subject_re   = Setting.get('ticket_subject_re')
+    if is_reply && !ticket_subject_re.empty?
+      subject = "#{ticket_subject_re}: #{subject}"
+    end
 
     # none position
     if Setting.get('ticket_hook_position') == 'none'
@@ -49,7 +53,7 @@ returns
 
 =end
 
-  def subject_clean (subject)
+  def subject_clean(subject)
     ticket_hook         = Setting.get('ticket_hook')
     ticket_hook_divider = Setting.get('ticket_hook_divider')
     ticket_subject_size = Setting.get('ticket_subject_size')
