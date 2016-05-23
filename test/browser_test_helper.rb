@@ -1808,28 +1808,28 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .ticket-title-update')[0]
+      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .js-objectTitle')[0]
       #element.clear
       #sleep 0.5
-      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .ticket-title-update')[0]
+      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .js-objectTitle')[0]
       #element.send_keys(data[:title])
       #sleep 0.5
       #element.send_keys(:tab)
 
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").focus()')
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").text("' + data[:title] + '")')
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").blur()')
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").trigger("blur")')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").focus()')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").text("' + data[:title] + '")')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").blur()')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").trigger("blur")')
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
-      #   :css          => '.content.active .ticketZoom-header .ticket-title-update',
+      #   :css          => '.content.active .ticketZoom-header .js-objectTitle',
       #   :value        => 'TTT',
       # },
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
-      #   :css          => '.content.active .ticketZoom-header .ticket-title-update',
+      #   :css          => '.content.active .ticketZoom-header .js-objectTitle',
       #   :value        => :tab,
       # },
     end
@@ -2007,7 +2007,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      title = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-title-update')[0].text.strip
+      title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle')[0].text.strip
       if title =~ /#{data[:title]}/i
         assert(true, "matching '#{data[:title]}' in title '#{title}'")
       else
@@ -2136,7 +2136,7 @@ wait untill text in selector disabppears
     #instance.find_element(partial_link_text: params[:title] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
-    title = instance.find_elements(css: '.active .ticketZoom-header .ticket-title-update')[0].text
+    title = instance.find_elements(css: '.active .ticketZoom-header .js-objectTitle')[0].text
     if title !~ /#{params[:title]}/
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
       raise "unable to search/find ticket #{params[:title]}!"

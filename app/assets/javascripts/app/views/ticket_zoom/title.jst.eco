@@ -1,1 +1,1 @@
-<div contenteditable="true" class="ticket-title-update" data-placeholder="<%- @Ti('Enter Title...') %>"><%= @object.title %></div>
+<div contenteditable="true" class="ticket-title-update js-objectTitle" data-placeholder="<%- @Ti('Enter Title...') %>"><%= @object.title %></div>

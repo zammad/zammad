@@ -24,6 +24,12 @@ class App.KeyboardShortcutWidget extends Spine.Module
 
   constructor: ->
     @observerKeys()
+    @lastKey = undefined
+
+    $(document).keyup((e) =>
+      return if e.keyCode isnt 27
+      @lastKey = undefined
+    )
 
   observerKeys: =>
     navigationHotkeys = 'alt+ctrl'
@@ -41,9 +47,17 @@ class App.KeyboardShortcutWidget extends Spine.Module
               modifier += shortcut.key
               if shortcut.callback
                 @log 'debug', 'bind for', modifier
-                $(document).bind('keydown', modifier, (e) ->
+                $(document).bind('keydown', modifier, (e) =>
                   e.preventDefault()
-                  shortcut.callback()
+                  if @lastKey && @lastKey.modifier is modifier && @lastKey.time + 5500  > new Date().getTime()
+                    @lastKey.count += 1
+                    @lastKey.time = new Date().getTime()
+                  else
+                    @lastKey =
+                      modifier: modifier
+                      count: 1
+                      time: new Date().getTime()
+                  shortcut.callback(shortcut, @lastKey, modifier)
                 )
 
     App.Event.bind('global-shortcut', (e) ->
@@ -51,7 +65,7 @@ class App.KeyboardShortcutWidget extends Spine.Module
         for item in area.content
           for shortcut in item.shortcuts
             if shortcut.globalEvent is e
-              shortcut.callback()
+              shortcut.callback(shortcut)
     )
 
 App.Config.set('keyboard_shortcuts', App.KeyboardShortcutWidget, 'Widgets')
@@ -247,10 +261,38 @@ App.Config.set(
               key: 'y'
               hotkeys: true
               description: 'Copy current object number (e. g. Ticket#) into clipboard'
-              callback: ->
+              callback: (shortcut, lastKey, modifier) ->
                 App.Event.trigger('keyboard_shortcuts_close')
-                text = $('.active.content .js-objectNumber').data('number') || ''
-                clipboard.copy(text)
+                text = $('.active.content .js-objectNumber').first().data('number') || ''
+                if lastKey && lastKey.count is 1
+                  clipboard.copy(text)
+                  return
+
+                title = $('.active.content .js-objectTitle').first().text()
+                if lastKey && lastKey.count is 2
+                  if title
+                    text += ": #{title}"
+                  clipboard.copy(text)
+                  return
+
+                url = window.location.toString()
+                if lastKey && lastKey.count is 3
+                  clipboard.copy(
+                    'text/plain': "#{text}: #{title}\n#{url}",
+                    'text/html': "<a href=\"#{url}\">#{text}</a>: #{title}"
+                  )
+            }
+            {
+              keyPrefix: '2x'
+              key: 'y'
+              hotkeys: true
+              description: '...add object title'
+            }
+            {
+              keyPrefix: '3x'
+              key: 'y'
+              hotkeys: true
+              description: '...add object link url'
             }
           ]
         }
