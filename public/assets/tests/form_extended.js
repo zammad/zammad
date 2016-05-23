@@ -31,6 +31,13 @@ test('form checks', function() {
       active:     true,
       created_at: '2014-06-10T10:17:54.000Z',
     },
+    {
+      id:         5,
+      name:       '5 xxx very high',
+      note:       'some note 5',
+      active:     false,
+      created_at: '2014-06-10T10:17:56.000Z',
+    },
   ])
 
   App.TicketState.refresh([
@@ -78,11 +85,13 @@ test('form checks', function() {
     },
   ])
 
-
   /* working hours and escalation_times */
   $('#forms').append('<hr><h1>form condition check</h1><form id="form1"></form>')
   var el = $('#form1')
   var defaults = {
+    priority1_id: '1',
+    priority2_id: ['1', '2'],
+    priority3_id: '2',
     working_hours: {
       mon: {
         active: true,
@@ -136,6 +145,9 @@ test('form checks', function() {
     el:        el,
     model:     {
       configure_attributes: [
+        { name: 'priority1_id', display: 'Priroity1', tag: 'select', relation: 'TicketPriority', null: true },
+        { name: 'priority2_id', display: 'Priroity2', tag: 'select', multiple: true, relation: 'TicketPriority', null: true },
+        { name: 'priority3_id', display: 'Priroity3', tag: 'select', relation: 'TicketPriority', null: true },
         { name: 'escalation_times', display: 'Times', tag: 'sla_times', null: true },
         { name: 'working_hours',    display: 'Hours', tag: 'business_hours', null: true },
       ]
@@ -145,6 +157,9 @@ test('form checks', function() {
   })
   var params = App.ControllerForm.params(el)
   var test_params = {
+    priority1_id: '1',
+    priority2_id: ['1', '2'],
+    priority3_id: '2',
     first_response_time: '150',
     first_response_time_in_text: '02:30',
     solution_time: '',
@@ -199,12 +214,20 @@ test('form checks', function() {
   }
   deepEqual(params, test_params, 'form param check')
 
+  // check possible options
+  equal(el.find('[name="priority1_id"] option').length, 3)
+  equal(el.find('[name="priority2_id"] option').length, 4)
+  equal(el.find('[name="priority3_id"] option').length, 4)
+
   // change sla times
   el.find('[name="first_response_time_in_text"]').val('0:30').trigger('blur')
   el.find('#update_time').click()
 
   var params = App.ControllerForm.params(el)
   var test_params = {
+    priority1_id: '1',
+    priority2_id: ['1', '2'],
+    priority3_id: '2',
     working_hours: {
       mon: {
         active: true,
@@ -258,7 +281,6 @@ test('form checks', function() {
     update_time_in_text: '',
   }
   deepEqual(params, test_params, 'form param check')
-
 
   /* empty params or defaults */
   $('#forms').append('<hr><h1>form condition check</h1><form id="form2"></form>')
@@ -369,7 +391,7 @@ test('form checks', function() {
       },
       'ticket.priority_id': {
         operator: 'is',
-        value: ['1', '3'],
+        value: ['1', '2', '3'], // show also invalid proirity, because it's selected
       },
       'ticket.created_at': {
         operator: 'before (absolute)',
