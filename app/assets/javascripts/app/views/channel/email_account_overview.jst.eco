@@ -72,7 +72,19 @@
         <hr>
 
         <h3><%- @T('Destination Group') %></h3>
-        <a href="#" class="js-channelGroupChange"><%= channel.group %></a>
+        <a href="#" class="js-channelGroupChange <% if channel.group.active is false: %>alert alert--danger<% end %>">
+          <% groupName = '' %>
+          <% if channel.group.displayName: %>
+            <% groupName = channel.group.displayName() %>
+          <% else: %>
+            <% groupName = channel.group %>
+          <% end %>
+          <% if channel.group.active is false: %>
+            <%- @T('%s is inactive, please select a active one.', groupName) %>
+          <% else: %>
+            <%= groupName %>
+          <% end %>
+        </a>
       </div>
       <div class="action-block action-block--flex">
         <div class="horizontal">

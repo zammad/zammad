@@ -427,8 +427,19 @@ retrns
           }
         end
 
+        # get default group where ticket is created
+        group = nil
+        if channel[:group_id]
+          group = Group.lookup(id: channel[:group_id])
+        end
+        if !group || group && !group.active
+          group = Group.where(active: true).order('id ASC').first
+        end
+        if !group
+          group = Group.first
+        end
         ticket = Ticket.new(
-          group_id: channel[:group_id] || 1,
+          group_id: group.id,
           customer_id: user.id,
           title: mail[:subject] || '',
           state_id: Ticket::State.find_by(name: 'new').id,
