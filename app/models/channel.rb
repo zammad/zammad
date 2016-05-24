@@ -208,7 +208,7 @@ send via account
 
     # ignore notifications in developer mode
     if notification == true && Setting.get('developer_mode') == true
-      logger.notice "Do not send notification #{mail_params.inspect} because of enabled developer_mode"
+      logger.info "Do not send notification #{mail_params.inspect} because of enabled developer_mode"
       return
     end
 
