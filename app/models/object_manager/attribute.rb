@@ -378,8 +378,8 @@ returns
         if model.column_names.include?(attribute.name)
           ActiveRecord::Migration.remove_column model.table_name, attribute.name
           model.reset_column_information
-          execute_count += 1
         end
+        execute_count += 1
         attribute.destroy
         next
       end
