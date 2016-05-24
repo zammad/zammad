@@ -206,6 +206,11 @@ send via account
 
   def deliver(mail_params, notification = false)
 
+    # ignore notifications in developer mode
+    if notification == true && Setting.get('developer_mode') == true
+      logger.notice "Do not send notification #{mail_params.inspect} because of enabled developer_mode"
+    end
+
     adapter         = options[:adapter]
     adapter_options = options
     if options[:outbound] && options[:outbound][:adapter]
