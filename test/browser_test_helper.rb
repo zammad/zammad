@@ -1620,6 +1620,25 @@ wait untill text in selector disabppears
       title: 'overview #1',
     }
 
+  ticket = ticket_create(
+    browser: browser1,
+    data: {
+      customer: 'nico',
+      group:    'Users', # optional / '-NONE-' # if group selection should not be shown
+      priority: '2 normal',
+      state:    'open',
+      title:    'overview #1',
+      body:     'overview #1',
+    },
+    custom_data_select: {
+      key1: 'some value',
+    },
+    custom_data_input: {
+      key1: 'some value',
+    },
+    disable_group_check: true,
+  )
+
 =end
 
   def ticket_create(params)
@@ -1668,8 +1687,10 @@ wait untill text in selector disabppears
       else
 
         # check count of agents, should be only 1 / - selection on init screen
-        count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
-        assert_equal(1, count, 'check if owner selection is empty per default')
+        if !params[:disable_group_check]
+          count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
+          assert_equal(1, count, 'check if owner selection is empty per default')
+        end
         select(
           browser:  instance,
           css:      '.active .newTicket select[name="group_id"]',
@@ -1735,6 +1756,28 @@ wait untill text in selector disabppears
       sleep 0.4
     end
 
+    if params[:custom_data_select]
+      params[:custom_data_select].each {|local_key, local_value|
+        select(
+          browser:  instance,
+          css:      ".active .newTicket select[name=\"#{local_key}\"]",
+          value:    local_value,
+          mute_log: true,
+        )
+      }
+    end
+    if params[:custom_data_input]
+      params[:custom_data_input].each {|local_key, local_value|
+        set(
+          browser:  instance,
+          css:      ".active .newTicket input[name=\"#{local_key}\"]",
+          value:    local_value,
+          clear:    true,
+          mute_log: true,
+        )
+      }
+    end
+
     if data[:attachment]
       file_upload(
         browser: instance,
@@ -1794,6 +1837,25 @@ wait untill text in selector disabppears
       group:    'some group', # optional
       priority: '1 low',
       state:    'closed',
+    },
+    do_not_submit: true,
+  )
+
+  ticket_update(
+    browser: browser1,
+    data: {
+      title:    '',
+      customer: 'some_customer@example.com',
+      body:     'some body',
+      group:    'some group', # optional
+      priority: '1 low',
+      state:    'closed',
+    },
+    custom_data_select: {
+      key1: 'some value',
+    },
+    custom_data_input: {
+      key1: 'some value',
     },
     do_not_submit: true,
   )
@@ -1933,7 +1995,29 @@ wait untill text in selector disabppears
       )
     end
 
-    if data[:state] || data[:group] || data[:body]
+    if params[:custom_data_select]
+      params[:custom_data_select].each {|local_key, local_value|
+        select(
+          browser:  instance,
+          css:      ".active .sidebar select[name=\"#{local_key}\"]",
+          value:    local_value,
+          mute_log: true,
+        )
+      }
+    end
+    if params[:custom_data_input]
+      params[:custom_data_input].each {|local_key, local_value|
+        set(
+          browser:  instance,
+          css:      ".active .sidebar input[name=\"#{local_key}\"]",
+          value:    local_value,
+          clear:    true,
+          mute_log: true,
+        )
+      }
+    end
+
+    if data[:state] || data[:group] || data[:body] || !params[:custom_data_select].empty? || !params[:custom_data_input].empty?
       found = nil
       (1..10).each {
 

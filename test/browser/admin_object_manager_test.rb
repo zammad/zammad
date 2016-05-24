@@ -2,8 +2,7 @@
 require 'browser_test_helper'
 
 class AdminObjectManagerTest < TestCase
-  def test_basic
-    name = "some overview #{rand(99_999_999)}"
+  def test_basic_a
 
     @browser = browser_instance
     login(
@@ -114,11 +113,38 @@ class AdminObjectManagerTest < TestCase
     click(css: '.modal button.js-submit')
 
     # create new ticket
+    ticket = ticket_create(
+      data: {
+        customer: 'nico',
+        group:    'Users',
+        priority: '2 normal',
+        state:    'open',
+        title:    'ticket attribute test #1',
+        body:     'ticket attribute test #1',
+      },
+      #custom_data_select: {
+      #  key1: 'some value',
+      #},
+      custom_data_input: {
+        browser_test1: 'some value öäüß',
+      },
+      disable_group_check: true,
+    )
 
     # update ticket
+    ticket_update(
+      data: {},
+      #custom_data_select: {
+      #  key1: 'some value',
+      #},
+      custom_data_input: {
+        browser_test1: 'some value ABC',
+      },
+    )
 
     # discard new attribute
-
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/object_manager"]')
     watch_for(
       css: '#content table',
       value: 'browser_test1',
