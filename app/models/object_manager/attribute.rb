@@ -81,6 +81,114 @@ preserved name are
 
  /(_id|_ids)$/
 
+possible types
+
+# input
+
+  data_type: 'input',
+  data_option: {
+    default: '',
+    type: 'text', # text|email|url|tel
+    maxlength: 200,
+    null: true,
+    note: 'some additional comment', # optional
+  },
+
+# select
+
+  data_type: 'select',
+  data_option: {
+    default: 'aa',
+    options: {
+      'aa' => 'aa (comment)',
+      'bb' => 'bb (comment)',
+    },
+    null: false,
+    multiple: false, # currently only "false" supported
+    translate: true, # optional
+    note: 'some additional comment', # optional
+  },
+
+# checkbox
+
+  data_type: 'checkbox',
+  data_option: {
+    default: 'aa',
+    options: {
+      'aa' => 'aa (comment)',
+      'bb' => 'bb (comment)',
+    },
+    null: false,
+    translate: true, # optional
+    note: 'some additional comment', # optional
+  },
+
+# integer
+
+  data_type: 'integer',
+  data_option: {
+    default: 5,
+    min: 15,
+    max: 999,
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# boolean
+
+  data_type: 'boolean',
+  data_option: {
+    default: true,
+    options: {
+      true => 'aa',
+      false => 'bb',
+    },
+    null: false,
+    translate: true, # optional
+    note: 'some additional comment', # optional
+  },
+
+# datetime
+
+  data_type: 'datetime',
+  data_option: {
+    future: true, # true|false
+    past: true, # true|false
+    diff: 12, # in hours
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# date
+
+  data_type: 'date',
+  data_option: {
+    future: true, # true|false
+    past: true, # true|false
+    diff: 15, # in days
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# textarea
+
+  data_type: 'textarea',
+  data_option: {
+    default: '',
+    rows: 15,
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# richtext
+
+  data_type: 'richtext',
+  data_option: {
+    default: '',
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
 =end
 
   def self.add(data)
@@ -484,7 +592,12 @@ returns
 
     # sent reload to clients
     if execute_count != 0
-      AppVersion.set(true)
+      pid = fork do
+        $stdout.reopen('out.txt', 'w')
+        $stderr.reopen('err.txt', 'w')
+        AppControl.restart
+      end
+
     end
     true
   end
