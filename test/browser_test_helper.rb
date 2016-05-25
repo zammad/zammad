@@ -133,6 +133,7 @@ class TestCase < Test::Unit::TestCase
     url:         'some url', # optional
     remember_me: true, # optional
     auto_wizard: false, # optional, in case of auto wizard, skip login
+    success:     false, #optional
   )
 
 =end
@@ -194,10 +195,26 @@ class TestCase < Test::Unit::TestCase
     instance.find_elements(css: '#login button')[0].click
 
     sleep 4
-    login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
-    if login != params[:username]
+    login_failed = false
+    if !instance.find_elements(css: '.user-menu .user a')[0]
+      login_failed = true
+    else
+      login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
+      if login != params[:username]
+        login_failed = true
+      end
+    end
+    if login_failed
+      if params[:success] == false
+        assert(true, 'login not successfull, like wanted')
+        return true
+      end
       screenshot(browser: instance, comment: 'login_failed')
       raise 'login failed'
+    end
+
+    if params[:success] == false
+      raise 'login successfull but should not'
     end
 
     clues_close(
@@ -2691,6 +2708,78 @@ wait untill text in selector disabppears
     }
     screenshot(browser: instance, comment: 'group_create_failed')
     raise 'group creation failed'
+  end
+
+=begin
+
+  object_manager_attribute_create(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+    },
+    error: 'already exists'
+  )
+
+=end
+
+  def object_manager_attribute_create(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+    sleep 4
+    click(
+      browser: instance,
+      css:  '#content .js-new',
+      mute_log: true,
+    )
+    modal_ready
+    element = instance.find_elements(css: '.modal input[name=name]')[0]
+    element.clear
+    element.send_keys(data[:name])
+    element = instance.find_elements(css: '.modal input[name=display]')[0]
+    element.clear
+    element.send_keys(data[:display])
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    if params[:error]
+      sleep 4
+      watch_for(
+        css: '.modal',
+        value: params[:error],
+      )
+      click(
+        browser: instance,
+        css:  '.modal .js-close',
+        mute_log: true,
+      )
+      return
+    end
+
+    (1..12).each {
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert(true, 'object manager attribute created')
+        sleep 1
+        return true
+      end
+      sleep 1
+    }
+    screenshot(browser: instance, comment: 'object_manager_attribute_create_failed')
+    raise 'object manager attribute creation failed'
   end
 
   def quote(string)

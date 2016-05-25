@@ -243,6 +243,12 @@ class ApplicationController < ActionController::Base
     # check sso based authentication
     sso_userdata = User.sso(params)
     if sso_userdata
+      if check_maintenance_only(sso_userdata)
+        return {
+          auth: false,
+          message: 'Maintenance mode enabled!',
+        }
+      end
       session[:persistent] = true
       return {
         auth: true
@@ -254,6 +260,12 @@ class ApplicationController < ActionController::Base
       logger.debug "http basic auth check '#{username}'"
       userdata = User.authenticate(username, password)
       next if !userdata
+      if check_maintenance_only(userdata)
+        return {
+          auth: false,
+          message: 'Maintenance mode enabled!',
+        }
+      end
       current_user_set(userdata)
       user_device_log(userdata, 'basic_auth')
       logger.debug "http basic auth for '#{userdata.login}'"
@@ -271,6 +283,12 @@ class ApplicationController < ActionController::Base
           name: token,
         )
         next if !userdata
+        if check_maintenance_only(userdata)
+          return {
+            auth: false,
+            message: 'Maintenance mode enabled!',
+          }
+        end
         current_user_set(userdata)
         user_device_log(userdata, 'token_auth')
         logger.debug "token auth for '#{userdata.login}'"
@@ -345,7 +363,7 @@ class ApplicationController < ActionController::Base
 
     # config
     config = {}
-    Setting.select('name').where(frontend: true ).each { |setting|
+    Setting.select('name').where(frontend: true).each { |setting|
       config[setting.name] = Setting.get(setting.name)
     }
 
@@ -480,4 +498,19 @@ class ApplicationController < ActionController::Base
     end
     data
   end
+
+  # check maintenance mode
+  def check_maintenance_only(user)
+    return false if Setting.get('maintenance_mode') != true
+    return false if user.role?('Admin')
+    Rails.logger.info "Maintenance mode enabled, denied login for user #{user.login}, it's no admin user."
+    true
+  end
+
+  def check_maintenance(user)
+    return false if !check_maintenance_only(user)
+    render json: { error: 'Maintenance mode enabled!' }, status: :unauthorized
+    true
+  end
+
 end

@@ -33,8 +33,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/first_steps_test.rb
   # test/browser/form_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  # test/browser/maintenance_app_version_test.rb
-  # test/browser/maintenance_message_test.rb
+  # test/browser/maintenance_test.rb
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
   # test/browser/signup_password_change_and_reset_test.rb
@@ -76,7 +75,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/first_steps_test.rb
   rm test/browser/form_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_*.rb
+  rm test/browser/maintenance_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
@@ -119,7 +118,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/first_steps_test.rb
   rm test/browser/form_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_*.rb
+  rm test/browser/maintenance_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb
@@ -162,7 +161,7 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/first_steps_test.rb
   rm test/browser/form_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_*.rb
+  rm test/browser/maintenance_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/prefereces_test.rb
   rm test/browser/setting_test.rb

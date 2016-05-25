@@ -44,8 +44,9 @@ get event data
 returnes
 
   {
-    event: 'app_version'
+    event: 'maintenance'
     data: {
+      type: 'app_version',
       app_version: app_version,
     }
   }
@@ -54,8 +55,9 @@ returnes
 
   def self.event_data
     {
-      event: 'app_version',
+      event: 'maintenance',
       data: {
+        type: 'app_version',
         app_version: get,
       }
     }

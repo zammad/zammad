@@ -1,30 +1,58 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T('Maintenance Message') %><small></small></h1>
+    <h1><%- @T('Maintenance') %><small></small></h1>
   </div>
 </div>
 <div class="page-content">
-  <form id="maintenanceForm">
-    <div class="form-group">
-      <label for="maintenance-title"><%- @T('Title') %></label>
-      <div class="controls">
-        <input type="text" id="maintenance-title" name="head" class="form-control" required>
+
+  <div class="settings-entry">
+    <div class="page-header-title">
+      <div class="zammad-switch zammad-switch--small js-modeSetting">
+         <input name="chat" type="checkbox" id="setting-mode" <% if @C('maintenance_mode'): %>checked<% end %>>
+         <label for="setting-mode"></label>
       </div>
+      <h2><%- @T('Mode') %></h2>
     </div>
-    <div class="form-group">
-      <label for="maintenance-message"><%- @T('Message') %></label>
-      <div class="controls">
-      <textarea id="maintenance-message" name="message" class="form-control" rows="8" required></textarea>
+    <p>⚠ <%- @T('Enable or disable the maintenance mode of Zammad. If enabled, _all non-administrators get logged out_ and _only administrators can start a new session_.') %></p>
+  </div>
+
+  <div class="settings-entry">
+    <div class="page-header-title">
+      <div class="zammad-switch zammad-switch--small js-loginSetting">
+         <input name="chat" type="checkbox" id="setting-login" <% if @C('maintenance_login'): %>checked<% end %>>
+         <label for="setting-login"></label>
       </div>
+      <h2>@<%- @T('Login') %></h2>
     </div>
-    <div class="form-group">
-      <label class="inline-label checkbox-replacement">
-        <input name="reload" type="checkbox" value="1">
-        <%- @Icon('checkbox', 'icon-unchecked') %>
-        <%- @Icon('checkbox-checked', 'icon-checked') %>
-        <span class="label-text"><%- @T('Reload application') %></span>
-      </label>
-    </div>
-    <button type="submit" class="btn btn--primary submit"><%- @T('Send to clients') %></button>
-  </form>
+    <p><%- @T('Put a message on the login page. To change it, click on the text area below and change it inline.') %></p>
+    <div class="js-loginPreview"></div>
+  </div>
+
+  <div class="settings-entry">
+    <h2><%- @T('Message') %></h2>
+    <p><%- @T('Send a message to all logged in users.') %></p>
+    <form class="js-Message">
+      <div class="form-group">
+        <label for="maintenance-title"><%- @T('Title') %></label>
+        <div class="controls">
+          <input type="text" id="maintenance-title" name="head" class="form-control" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="maintenance-message"><%- @T('Message') %></label>
+        <div class="controls">
+          <div contenteditable id="maintenance-message" data-name="message" class="form-control form-control--multiline js-textarea richtext-content"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="inline-label checkbox-replacement">
+          <input name="reload" type="checkbox" value="1">
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+          <span class="label-text"><%- @T('Reload application') %></span>
+        </label>
+      </div>
+      <button class="btn btn--primary js-submit"><%- @T('Send to clients') %></button>
+    </form>
+  </div>
 </div>

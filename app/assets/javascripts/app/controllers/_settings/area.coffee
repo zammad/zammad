@@ -132,10 +132,14 @@ class App.SettingsAreaLogo extends App.Controller
     @render()
 
   render: ->
-    @html App.view('settings/logo')(
+    localElement = $(App.view('settings/logo')(
       setting: @setting
+    ))
+    localElement.find('.js-loginPreview').html( App.view('generic/login_preview')(
       logoUrl: @logoUrl()
-    )
+      logoChange: true
+    ))
+    @html localElement
 
   onLogoPick: (event) =>
     reader = new FileReader()
@@ -146,8 +150,7 @@ class App.SettingsAreaLogo extends App.Controller
     file = event.target.files[0]
 
     # if no file is given, about in file upload was used
-    if !file
-      return
+    return if !file
 
     maxSiteInMb = 8
     if file.size && file.size > 1024 * 1024 * maxSiteInMb
@@ -189,9 +192,9 @@ class App.SettingsAreaLogo extends App.Controller
               msg:     App.i18n.translateContent('Update successful!')
               timeout: 2000
             }
-
-            for key, value of data.settings
-              App.Config.set( key, value )
+            for setting in data.settings
+              value = App.Setting.get(setting.name)
+              App.Config.set(name, value)
           else
             App.Event.trigger 'notify', {
               type:    'error'

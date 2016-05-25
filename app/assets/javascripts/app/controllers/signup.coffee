@@ -81,18 +81,21 @@ class Index extends App.ControllerContent
     # add notify
     @notify
       type:      'success'
-      msg:       'Thanks for joining. Email sent to "' + @params.email + '". Please verify your email address.'
+      msg:       App.i18n.translateContent('Thanks for joining. Email sent to "%s". Please verify your email address.', @params.email)
       removeAll: true
 
     # redirect to #
     @navigate '#'
 
   error: (xhr, statusText, error) =>
+    detailsRaw = xhr.responseText
+    details = {}
+    if !_.isEmpty(detailsRaw)
+      details = JSON.parse(detailsRaw)
 
-    # add notify
     @notify
-      type:      'warning'
-      msg:       'Wrong Username and Password combination.'
+      type:      'error'
+      msg:       App.i18n.translateContent(details.error || 'Wrong Username and Password combination.')
       removeAll: true
 
-App.Config.set( 'signup', Index, 'Routes' )
+App.Config.set('signup', Index, 'Routes')

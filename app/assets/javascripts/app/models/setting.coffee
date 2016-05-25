@@ -27,8 +27,8 @@ class App.Setting extends App.Model
           msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
           timeout: 2000
         }
-    setting.save(options)
     App.Config.set(name, value)
+    setting.save(options)
 
   @preferencesPost: (setting) ->
     return if !setting.preferences
