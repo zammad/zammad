@@ -110,6 +110,9 @@ class ObjectManagerAttributesController < ApplicationController
   private
 
   def check_params
+    if params[:data_option] && !params[:data_option].key?(:default)
+      params[:data_option][:default] = ''
+    end
     return if !params[:data_option][:null].nil?
     params[:data_option][:null] = true
   end

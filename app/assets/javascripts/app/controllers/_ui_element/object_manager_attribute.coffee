@@ -6,11 +6,10 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
     updateDataMap = (localParams, localAttribute, localAttributes, localClassname, localForm, localA) =>
       localItem = localForm.closest('.js-data')
-      values = []
-      values = {a: 123, b: 'aaa'}
+      console.log('updateDataMap', attribute, params)
       element = $(App.view("object_manager/attribute/#{localParams.data_type}")(
         attribute: attribute
-        values: values
+        params: params
       ))
       @[localParams.data_type](element, localParams, params)
       localItem.find('.js-dataMap').html(element)
@@ -20,10 +19,10 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       datetime: 'Datetime'
       date: 'Date'
       input: 'Text'
-    #  select: 'Select'
-    #  boolean: 'Boolean'
-    #  integer: 'Integer'
-    #  autocompletion: 'Autocompletion (AJAX remote URL)'
+      select: 'Select'
+      boolean: 'Boolean'
+      integer: 'Integer'
+      autocompletion: 'Autocompletion (AJAX remote URL)'
 
     configureAttributes = [
       { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled },
@@ -149,7 +148,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::type', display: 'Type', tag: 'select', null: false, default: 'text', options: {text: 'Text', phone: 'Phone', fax: 'Fax', email: 'Email', url: 'Url'}, translate: true },
+      { name: 'data_option::type', display: 'Type', tag: 'select', null: false, default: 'text', options: {text: 'Text', tel: 'Phone', email: 'Email', url: 'Url'}, translate: true },
     ]
     inputType = new App.ControllerForm(
       model:
@@ -267,6 +266,27 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     item.find('.js-integerMax').html(integerMax.form)
 
   @select: (item, localParams, params) ->
+    item.find('.js-add').on('click', (e) ->
+      addRow   = $(e.target).closest('tr')
+      key      = addRow.find('.js-key').val()
+      value    = addRow.find('.js-value').val()
+      addRow.find('.js-selected[value]').attr('value', key)
+      selected = addRow.find('.js-selected').prop('checked')
+      newRow   = item.find('.js-template').clone().removeClass('js-template')
+      newRow.find('.js-key').val(key)
+      newRow.find('.js-value').val(value)
+      newRow.find('.js-value[value]').attr('name', "data_option::options::#{key}")
+      newRow.find('.js-selected').prop('checked', selected)
+      newRow.find('.js-selected').val(key)
+      newRow.find('.js-selected').attr('name', 'data_option::default')
+      item.find('.js-Table tr').last().before(newRow)
+      addRow.find('.js-key').val('')
+      addRow.find('.js-value').val('')
+      addRow.find('.js-selected').prop('checked', false)
+    )
+    item.on('click', '.js-remove', (e) ->
+      $(e.target).closest('tr').remove()
+    )
 
   @boolean: (item, localParams, params) ->
 

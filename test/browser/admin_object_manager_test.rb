@@ -12,95 +12,55 @@ class AdminObjectManagerTest < TestCase
     )
     tasks_close_all()
 
-    click(css: 'a[href="#manage"]')
-    click(css: 'a[href="#system/object_manager"]')
-
-    click(css: '#content .js-new')
-
-    modal_ready()
-
     # already existing
-    set(
-      css: '.modal input[name="name"]',
-      value: 'customer_id',
-    )
-    set(
-      css: '.modal input[name="display"]',
-      value: 'Customer Should Not Creatable',
-    )
-    click(css: '.modal button.js-submit')
-    sleep 4
-    watch_for(
-      css: '.modal',
-      value: '(already exists)',
+    object_manager_attribute_create(
+      data: {
+        name: 'customer_id',
+        display: 'Customer Should Not Creatable',
+        data_type: 'Text',
+      },
+      error: 'already exists'
     )
 
     # invalid name
-    set(
-      css: '.modal input[name="name"]',
-      value: 'some_other_id',
-    )
-    set(
-      css: '.modal input[name="display"]',
-      value: 'Should Not Creatable',
-    )
-    click(css: '.modal button.js-submit')
-    sleep 4
-    watch_for(
-      css: '.modal',
-      value: '(are not allowed)',
+    object_manager_attribute_create(
+      data: {
+        name: 'some_other_id',
+        display: 'Should Not Creatable',
+        data_type: 'Text',
+      },
+      error: 'are not allowed'
     )
 
     # invalid name
-    set(
-      css: '.modal input[name="name"]',
-      value: 'some_other_ids',
-    )
-    set(
-      css: '.modal input[name="display"]',
-      value: 'Should Not Creatable',
-    )
-    click(css: '.modal button.js-submit')
-    sleep 4
-    watch_for(
-      css: '.modal',
-      value: '(are not allowed)',
+    object_manager_attribute_create(
+      data: {
+        name: 'some_other_ids',
+        display: 'Should Not Creatable',
+        data_type: 'Text',
+      },
+      error: 'are not allowed'
     )
 
     # invalid name
-    set(
-      css: '.modal input[name="name"]',
-      value: 'some spaces',
+    object_manager_attribute_create(
+      data: {
+        name: 'some spaces',
+        display: 'Should Not Creatable',
+        data_type: 'Text',
+      },
+      error: 'are not allowed'
     )
-    set(
-      css: '.modal input[name="display"]',
-      value: 'Should Not Creatable',
-    )
-    click(css: '.modal button.js-submit')
-    sleep 4
-    watch_for(
-      css: '.modal',
-      value: '(are not allowed)',
-    )
-    click(css: '.modal .js-close')
-    modal_ready()
 
     # valid name
-    click(css: '#content .js-new')
-    modal_ready()
-    set(
-      css: '.modal input[name="name"]',
-      value: 'browser_test1',
+    object_manager_attribute_create(
+      data: {
+        name: 'browser_test1',
+        display: 'Browser Test 1',
+        data_type: 'Text',
+      },
     )
-    set(
-      css: '.modal input[name="display"]',
-      value: 'Browser Test 1',
-    )
-    click(css: '.modal button.js-submit')
-    watch_for(
-      css: '#content table',
-      value: 'browser_test1',
-    )
+
     watch_for(
       css: '#content',
       value: 'Database Update required',
@@ -178,6 +138,40 @@ class AdminObjectManagerTest < TestCase
       css: '#content table',
       value: 'browser_test1',
     )
+  end
+
+  def test_basic_b
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    object_manager_attribute_create(
+      data: {
+        name: 'browser_test2',
+        display: 'Browser Test 2',
+        data_type: 'Select',
+        data_option: {
+          options: {
+            'aa' => 'AA',
+            'bb' => 'BB',
+          },
+        },
+      },
+    )
+
+    sleep 10
+
+    object_manager_attribute_discard_changes
+
+    #object_manager_attribute_delete(
+    #  data: {
+    #    name: 'browser_test2',
+    #  },
+    #)
   end
 
 end

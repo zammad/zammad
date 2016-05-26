@@ -368,6 +368,45 @@ class ObjectManagerTest < ActiveSupport::TestCase
     }
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
+    assert_raises(RuntimeError) {
+      attribute16 = ObjectManager::Attribute.add(
+        object: 'Ticket',
+        name: 'test16',
+        display: 'Test 16',
+        data_type: 'integer',
+        data_option: {
+          default: 2,
+          min: 1,
+          max: 999,
+        },
+        active: true,
+        screens: {},
+        position: 20,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+
+    assert_raises(RuntimeError) {
+      attribute17 = ObjectManager::Attribute.add(
+        object: 'Ticket',
+        name: 'test17',
+        display: 'Test 17',
+        data_type: 'integer',
+        data_option: {
+          default: 2,
+          min: 1,
+        },
+        active: true,
+        screens: {},
+        position: 20,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+
   end
 
   test 'b object manager attribute' do

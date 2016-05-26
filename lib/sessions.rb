@@ -351,7 +351,7 @@ send message to all authenticated client
 
 returns
 
-  true|false
+  [array_with_client_ids_of_recipients]
 
 broadcase also to not authenticated client
 
@@ -366,6 +366,7 @@ broadcase also not to sender
   def self.broadcast(data, recipient = 'autenticated', sender_user_id = nil)
 
     # list all current clients
+    recipients = []
     client_list = sessions
     client_list.each {|client_id|
       session = Sessions.get(client_id)
@@ -380,8 +381,9 @@ broadcase also not to sender
         next if session[:user] && session[:user]['id'] && session[:user]['id'].to_i == sender_user_id.to_i
       end
       Sessions.send(client_id, data)
+      recipients.push client_id
     }
-    true
+    recipients
   end
 
 =begin

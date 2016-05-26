@@ -2717,6 +2717,13 @@ wait untill text in selector disabppears
     data: {
       name: 'field_name' + random,
       display: 'Display Name of Field',
+      data_type: 'Text', # Text|Select|...
+      data_option: {
+        options: {
+          'aa' => 'AA',
+          'bb' => 'BB',
+        },
+      },
     },
     error: 'already exists'
   )
@@ -2753,6 +2760,26 @@ wait untill text in selector disabppears
     element = instance.find_elements(css: '.modal input[name=display]')[0]
     element.clear
     element.send_keys(data[:display])
+    select(
+      browser:  instance,
+      css:      '.modal select[name="data_type"]',
+      value:    data[:data_type],
+      mute_log: true,
+    )
+    if data[:data_option]
+      if data[:data_option][:options]
+        data[:data_option][:options].each {|key, value|
+          element = instance.find_elements(css: '.modal .js-Table .js-key').last
+          element.clear
+          element.send_keys(key)
+          element = instance.find_elements(css: '.modal .js-Table .js-value').last
+          element.clear
+          element.send_keys(value)
+          element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
+          element.click
+        }
+      end
+    end
     instance.find_elements(css: '.modal button.js-submit')[0].click
     if params[:error]
       sleep 4
@@ -2780,6 +2807,75 @@ wait untill text in selector disabppears
     }
     screenshot(browser: instance, comment: 'object_manager_attribute_create_failed')
     raise 'object manager attribute creation failed'
+  end
+
+=begin
+
+  object_manager_attribute_delete(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+    },
+  )
+
+=end
+
+  def object_manager_attribute_delete(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_delete', params)
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+    sleep 4
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+    r = instance.execute_script("$(\"#content td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
+    p "rrr #{r.inspect}"
+  end
+
+=begin
+
+  object_manager_attribute_discard_changes(
+    browser: browser2,
+  )
+
+=end
+
+  def object_manager_attribute_discard_changes(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_discard_changes', params)
+
+    instance = params[:browser] || @browser
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+    sleep 4
+
+    element = instance.find_elements(css: '#content .js-discard').first
+    element.click
+
+    watch_for_disappear(
+      browser: instance,
+      css:     '#content .js-discard',
+    )
+
   end
 
   def quote(string)

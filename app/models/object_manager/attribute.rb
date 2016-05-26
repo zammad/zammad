@@ -103,6 +103,7 @@ possible types
       'aa' => 'aa (comment)',
       'bb' => 'bb (comment)',
     },
+    nulloption: true,
     null: false,
     multiple: false, # currently only "false" supported
     translate: true, # optional
@@ -485,7 +486,7 @@ returns
       if attribute.to_delete
         if model.column_names.include?(attribute.name)
           ActiveRecord::Migration.remove_column model.table_name, attribute.name
-          model.reset_column_information
+          reset_database_info(model)
         end
         execute_count += 1
         attribute.destroy
@@ -538,7 +539,7 @@ returns
         # restart processes
         attribute.to_migrate = false
         attribute.save!
-        model.reset_column_information
+        reset_database_info(model)
         execute_count += 1
         next
       end
@@ -586,20 +587,20 @@ returns
       attribute.to_delete = false
       attribute.save!
 
-      model.reset_column_information
+      reset_database_info(model)
       execute_count += 1
     }
 
     # sent reload to clients
     if execute_count != 0
-      pid = fork do
-        $stdout.reopen('out.txt', 'w')
-        $stderr.reopen('err.txt', 'w')
-        AppControl.restart
-      end
-
+      AppVersion.set(true)
     end
     true
+  end
+
+  def self.reset_database_info(model)
+    model.connection.schema_cache.clear!
+    model.reset_column_information
   end
 
   def check_name
@@ -652,6 +653,9 @@ returns
     if data_type == 'select' || data_type == 'checkbox'
       raise 'Need data_option[:default] param' if data_option[:default].nil?
       raise 'Invalid data_option[:options] or data_option[:relation] param' if data_option[:options].nil? && data_option[:relation].nil?
+      if !data_option.key?(:nulloption)
+        data_option[:nulloption] = true
+      end
     end
 
     if data_type == 'boolean'
