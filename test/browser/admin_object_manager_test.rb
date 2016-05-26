@@ -68,9 +68,16 @@ class AdminObjectManagerTest < TestCase
     click(css: '#content .tab-pane.active div.js-execute')
     watch_for(
       css: '.modal',
-      value: 'New Version',
+      value: 'restart',
     )
-    click(css: '.modal button.js-submit')
+    watch_for_disappear(
+      css:     '.modal',
+      timeout: 26,
+    )
+    sleep 5
+    watch_for(
+      css: '#content',
+    )
 
     # create new ticket
     ticket = ticket_create(
@@ -126,10 +133,16 @@ class AdminObjectManagerTest < TestCase
     click(css: '#content .tab-pane.active div.js-execute')
     watch_for(
       css: '.modal',
-      value: 'New Version',
+      value: 'restart',
     )
-    click(css: '.modal button.js-submit')
+    watch_for_disappear(
+      css:     '.modal',
+      timeout: 26,
+    )
     sleep 5
+    watch_for(
+      css: '#content',
+    )
     match_not(
       css: '#content',
       value: 'Database Update required',

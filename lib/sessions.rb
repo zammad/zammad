@@ -355,7 +355,7 @@ returns
 
 broadcase also to not authenticated client
 
-  Sessions.broadcast(data, 'public')
+  Sessions.broadcast(data, 'public') # public|authenticated
 
 broadcase also not to sender
 
@@ -363,7 +363,7 @@ broadcase also not to sender
 
 =end
 
-  def self.broadcast(data, recipient = 'autenticated', sender_user_id = nil)
+  def self.broadcast(data, recipient = 'authenticated', sender_user_id = nil)
 
     # list all current clients
     recipients = []

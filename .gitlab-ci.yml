@@ -334,6 +334,7 @@ test:browser:twitter_ff:
     - twitter
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
@@ -350,6 +351,7 @@ test:browser:facebook_ff:
     - facebook
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/bootstrap.sh
@@ -365,6 +367,7 @@ test:browser:autowizard_ff:
     - browser-ff
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/bootstrap.sh
@@ -381,6 +384,7 @@ test:browser:core:ff_1_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -401,6 +405,7 @@ test:browser:core:ff_2_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -421,6 +426,7 @@ test:browser:core:ff_3_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
@@ -437,6 +443,7 @@ test:browser:core:ff_4_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -457,6 +464,7 @@ test:browser:core:ff_5_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -477,6 +485,7 @@ test:browser:core:ff_1_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -497,6 +506,7 @@ test:browser:core:ff_2_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -517,6 +527,7 @@ test:browser:core:ff_3_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
     - script/bootstrap.sh
@@ -533,6 +544,7 @@ test:browser:core:ff_4_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -553,6 +565,7 @@ test:browser:core:ff_5_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -573,6 +586,7 @@ test:browser:core:chrome_1_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -593,6 +607,7 @@ test:browser:core:chrome_2_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -613,6 +628,7 @@ test:browser:core:chrome_3_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -633,6 +649,7 @@ test:browser:core:chrome_4_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -653,6 +670,7 @@ test:browser:core:chrome_5_mysql:
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -673,6 +691,7 @@ test:browser:core:chrome_1_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -693,6 +712,7 @@ test:browser:core:chrome_2_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -713,6 +733,7 @@ test:browser:core:chrome_3_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -733,6 +754,7 @@ test:browser:core:chrome_4_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
@@ -753,6 +775,7 @@ test:browser:core:chrome_5_postgresql:
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1

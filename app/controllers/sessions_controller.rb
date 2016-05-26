@@ -273,6 +273,12 @@ class SessionsController < ApplicationController
     )
   end
 
+  def available
+    render json: {
+      app_version: AppVersion.get
+    }
+  end
+
   def list
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
     assets = {}

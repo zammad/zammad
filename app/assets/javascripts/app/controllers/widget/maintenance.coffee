@@ -1,4 +1,5 @@
 class Widget extends App.Controller
+  errorCount: 0
   constructor: ->
     super
 
@@ -13,8 +14,10 @@ class Widget extends App.Controller
           @maintanaceAppVersion(data)
         if data.type is 'config_changed'
           @maintanaceConfigChanged(data)
-        if data.type is 'restart'
-          @maintanaceRestart(data)
+        if data.type is 'restart_auto'
+          @maintanaceRestartAuto(data)
+        if data.type is 'restart_manual'
+          @maintanaceRestartManual(data)
       'maintenance'
     )
 
@@ -41,12 +44,12 @@ class Widget extends App.Controller
     return if !@authenticate(true)
     @navigate '#logout'
 
-  #App.Event.trigger('maintenance', {type:'restart'})
-  maintanaceRestart: (data) =>
-    return if @messageRestart
-    @messageRestart = new App.SessionMessage(
-      head:         'Restarting...'
-      message:      'Zammad is restarting... waiting...'
+  #App.Event.trigger('maintenance', {type:'restart_auto'})
+  maintanaceRestartAuto: (data) =>
+    return if @messageRestartAuto
+    @messageRestartAuto = new App.SessionMessage(
+      head:         'Zammad is restarting...'
+      message:      'Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again.'
       keyboard:     false
       backdrop:     false
       buttonClose:  false
@@ -54,12 +57,24 @@ class Widget extends App.Controller
       small:        true
       forceReload:  true
     )
+    @disconnectClient()
+    @checkAvailability()
 
-    # disconnect
-
-    # try if backend is reachable again
-
-    # reload app
+  #App.Event.trigger('maintenance', {type:'restart_manual'})
+  maintanaceRestartManual: (data) =>
+    return if @messageRestartManual
+    @messageRestartManual = new App.SessionMessage(
+      head:         'Zammad need a restart!'
+      message:      'Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP___RESTART___CMD="/path/to/your___app___script.sh restart".'
+      keyboard:     false
+      backdrop:     false
+      buttonClose:  false
+      buttonSubmit: false
+      small:        true
+      forceReload:  true
+    )
+    @disconnectClient()
+    @checkAvailability()
 
   maintanaceConfigChanged: (data) =>
     return if @messageConfigChanged
@@ -93,5 +108,22 @@ class Widget extends App.Controller
         forceReload:  true
       )
     @delay(message, 2000)
+
+  checkAvailability: (delay) =>
+    delay = =>
+      @ajax(
+        id:    'check_availability'
+        type:  'get'
+        url:   "#{@apiPath}/available"
+        success: (data) =>
+          if @errorCount is 0
+            @checkAvailability()
+            return
+          @windowReload()
+        error: =>
+          @errorCount += 1
+          @checkAvailability()
+      )
+    @delay(delay, 2000)
 
 App.Config.set('maintenance', Widget, 'Widgets')
