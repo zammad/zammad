@@ -24,38 +24,51 @@ set new app version and if browser reload is required
 
   AppVersion.set(true) # true == reload is required / false == no reload is required
 
+send also reload type to clients
+
+  AppVersion.set(true, 'restart_auto')
+
 =end
 
-  def self.set(reload_required = false)
+  def self.set(reload_required = false, type = false)
     return false if !Setting.find_by(name: 'app_version')
     version = "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}:#{reload_required}"
     Setting.set('app_version', version)
 
     # broadcast to clients
-    Sessions.broadcast(event_data)
+    Sessions.broadcast(event_data(type), 'public')
   end
 
 =begin
 
 get event data
 
-  AppVersion.event_data
+  AppVersion.event_data(type)
+
+types:
+
+  app_version -> new app version
+  restart_manual -> app needs restart
+  restart_auto -> app is restarting
+  config_changed -> config has changed
 
 returnes
 
   {
-    event: 'app_version'
+    event: 'maintenance'
     data: {
+      type: 'app_version',
       app_version: app_version,
     }
   }
 
 =end
 
-  def self.event_data
+  def self.event_data(type = 'app_version')
     {
-      event: 'app_version',
+      event: 'maintenance',
       data: {
+        type: type,
         app_version: get,
       }
     }

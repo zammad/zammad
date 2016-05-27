@@ -1,0 +1,43 @@
+<div class="login branding centered darkBackground vertical">
+
+  <% if @C('maintenance_mode'): %>
+    <div class="hero-unit alert alert--danger"><%- @T('Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
+  <% end %>
+
+  <% if !@logoChange || @C('maintenance_login'): %>
+  <form>
+    <div contenteditable id="maintenance-message" data-name="message" class="hero-unit alert alert--success js-textarea js-Login" <% if !@C('maintenance_login'): %>style="opacity: 0.5;"<% end %>><%- @C('maintenance_login_message') %></div>
+  </form>
+  <% end %>
+
+  <div class="hero-unit">
+
+    <% if @logoChange: %>
+      <img class="logo-preview" src="<%= @logoUrl %>">
+      <div class="logo-preview-placeholder"><%- @T('Your Logo') %></div>
+      <div class="centered">
+        <div class="btn btn--success fileUpload"><%- @T('Change') %><input type="file" class="js-upload" name="logo" accept="image/*"></div>
+      </div>
+    <% else: %>
+      <img class="company-logo" src="<%= @logoUrl %>">
+    <% end %>
+
+    <div class="form-group">
+      <label for="username"><%- @Ti('Username / email') %></label>
+      <input id="username" name="username" type="text" class="form-control" value="<%= @S('login') %>" autocapitalize="off" disabled="disabled"/>
+    </div>
+
+    <div class="form-group">
+      <label for="password"><%- @Ti('Password') %></label>
+      <input id="password" name="password" type="password" class="form-control" value="some_pass" disabled="disabled"/>
+    </div>
+
+    <div class="form-group">
+      <label><input name="remember_me" value="1" type="checkbox" disabled="disabled"/> <%- @T('Remember me') %></label>
+    </div>
+
+    <div class="form-controls">
+      <button class="btn btn--primary" type="submit" disabled="disabled"><%- @T('Sign in') %></button>
+    </div>
+  </div>
+</div>

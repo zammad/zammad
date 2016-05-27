@@ -38,7 +38,7 @@ class App.ControllerForm extends App.Controller
     @form
 
   showAlert: (message) =>
-    @form.find('.alert').removeClass('hide').html(App.i18n.translateContent(message))
+    @form.find('.alert').first().removeClass('hide').html(App.i18n.translateInline(message))
 
   hideAlert: =>
     @form.find('.alert').addClass('hide').html()
@@ -281,7 +281,7 @@ class App.ControllerForm extends App.Controller
 
               # lookup relation if needed
               if action.bind.relation
-                data = App[action.bind.relation].find( value )
+                data = App[action.bind.relation].find(value)
                 value = data.name
 
               # check if value is used in condition

@@ -4,6 +4,7 @@ require 'test_helper'
 
 class EmailPostmasterTest < ActiveSupport::TestCase
   test 'process with postmaster filter' do
+    group_default = Group.lookup(name: 'Users')
     group1 = Group.create_if_not_exists(
       name: 'Test Group1',
       created_by_id: 1,
@@ -83,7 +84,7 @@ Subject: some subject
 Some Text'
 
     parser = Channel::EmailParser.new
-    ticket, article, user = parser.process( { trusted: false }, data )
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
     assert_equal('Test Group1', ticket.group.name)
     assert_equal('2 normal', ticket.priority.name)
     assert_equal('some subject', ticket.title)
@@ -100,7 +101,7 @@ Subject: some subject
 Some Text'
 
     parser = Channel::EmailParser.new
-    ticket, article, user = parser.process( { trusted: false }, data )
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
 
     assert_equal('Test Group2', ticket.group.name)
     assert_equal('2 normal', ticket.priority.name)
@@ -144,7 +145,7 @@ Subject: some subject2
 Some Text'
 
     parser = Channel::EmailParser.new
-    ticket, article, user = parser.process( { trusted: false }, data )
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
 
     assert_equal('Test Group2', ticket.group.name)
     assert_equal('1 low', ticket.priority.name)
@@ -189,7 +190,7 @@ Subject: some subject - no selector
 Some Text'
 
     parser = Channel::EmailParser.new
-    ticket, article, user = parser.process( { trusted: false }, data )
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
 
     assert_equal('Users', ticket.group.name)
     assert_equal('2 normal', ticket.priority.name)
@@ -229,7 +230,7 @@ Subject: follow up with create post master filter test
 Some Text'
 
     parser = Channel::EmailParser.new
-    ticket, article, user = parser.process( { trusted: false }, data )
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
 
     assert_equal(group2.name, ticket.group.name)
     assert_equal('2 normal', ticket.priority.name)
@@ -253,7 +254,7 @@ Some Text"
     article_count = ticket.articles.count
 
     parser = Channel::EmailParser.new
-    ticket_followup, article, user = parser.process( { trusted: false }, data )
+    ticket_followup, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
 
     # check if group is still the old one
     assert_equal(ticket.id, ticket_followup.id)

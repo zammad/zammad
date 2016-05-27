@@ -11,9 +11,12 @@ class SessionsController < ApplicationController
     # authenticate user
     user = User.authenticate(params[:username], params[:password])
 
+    # check maintenance mode
+    return if check_maintenance(user)
+
     # auth failed
     if !user
-      render json: { error: 'login failed' }, status: :unauthorized
+      render json: { error: 'Wrong Username and Password combination.' }, status: :unauthorized
       return
     end
 
@@ -144,6 +147,12 @@ class SessionsController < ApplicationController
       authorization = Authorization.create_from_hash(auth, current_user)
     end
 
+    # check maintenance mode
+    if check_maintenance_only(authorization.user)
+      redirect_to '/#'
+      return
+    end
+
     # set current session user
     current_user_set(authorization.user)
 
@@ -166,6 +175,12 @@ class SessionsController < ApplicationController
 
     # Log the authorizing user in.
     if user
+
+      # check maintenance mode
+      if check_maintenance_only(user)
+        redirect_to '/#'
+        return
+      end
 
       # set current session user
       current_user_set(user)
@@ -256,6 +271,12 @@ class SessionsController < ApplicationController
         location: '',
       },
     )
+  end
+
+  def available
+    render json: {
+      app_version: AppVersion.get
+    }
   end
 
   def list

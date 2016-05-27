@@ -9,7 +9,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   user.save
 
   test 'a cache' do
-    Sessions::CacheIn.set('last_run_test', true, { expires_in: 2.seconds })
+    Sessions::CacheIn.set('last_run_test', true, { expires_in: 1.second })
     result = Sessions::CacheIn.get('last_run_test')
     assert_equal(true, result, 'check 1')
 
@@ -18,7 +18,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(false, result, 'check 1 - expired')
 
     # should be expired
-    sleep 3
+    sleep 2
     result = Sessions::CacheIn.expired('last_run_test')
     assert_equal(true, result, 'check 1 - expired')
 
@@ -31,7 +31,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(false, result, 'check 1 - expired')
 
     # ignore expired
-    sleep 3
+    sleep 2
     result = Sessions::CacheIn.get('last_run_test', ignore_expire: true)
     assert_equal(true, result, 'check 1 - ignore_expire')
 
@@ -109,8 +109,8 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 2
     user = User.lookup(id: 1)
-    collection_client1 = Sessions::Backend::Collections::Group.new(user, {}, false, '123-1', 3)
-    collection_client2 = Sessions::Backend::Collections::Group.new(user, {}, false, '234-2', 3)
+    collection_client1 = Sessions::Backend::Collections::Group.new(user, {}, false, '123-1', 2)
+    collection_client2 = Sessions::Backend::Collections::Group.new(user, {}, false, '234-2', 2)
 
     # get whole collections
     result1 = collection_client1.push
@@ -130,7 +130,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    sleep 4
+    sleep 3
 
     # get whole collections
     result1 = collection_client1.push
@@ -148,7 +148,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     group = Group.create(name: 'SomeGroup::' + rand(999_999).to_s, active: true)
-    sleep 4
+    sleep 3
 
     # get whole collections
     result1 = collection_client1.push
@@ -158,7 +158,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(result1, result2, 'check collections')
 
     # check again after create
-    sleep 4
+    sleep 3
     result1 = collection_client1.push
     assert(!result1, 'check collections - after create - recall')
     result2 = collection_client2.push
@@ -167,7 +167,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     group.destroy
-    sleep 4
+    sleep 3
 
     # get whole collections
     result1 = collection_client1.push
@@ -177,7 +177,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(result1, result2, 'check collections')
 
     # check again after destroy
-    sleep 4
+    sleep 3
     result1 = collection_client1.push
     assert(!result1, 'check collections - after destroy - recall')
     result2 = collection_client2.push
@@ -193,7 +193,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     result1 = collection_client1.push
     #puts "RSS1: #{result1.inspect}"
     assert(!result1.empty?, 'check rss')
-    sleep 1
+    sleep 0.5
 
     # next check should be empty
     result1 = collection_client1.push
@@ -221,7 +221,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     agent1.roles = roles
     assert(agent1.save, 'create/update agent1')
 
-    as_client1 = Sessions::Backend::ActivityStream.new(agent1, {}, false, '123-1', 3)
+    as_client1 = Sessions::Backend::ActivityStream.new(agent1, {}, false, '123-1', 2)
 
     # get as stream
     result1 = as_client1.push
@@ -233,14 +233,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert(!result1, 'check as agent1 - recall')
 
     # next check should be empty
-    sleep 4
+    sleep 3
     result1 = as_client1.push
     assert(!result1, 'check as agent1 - recall 2')
 
     agent1.update_attribute(:email, 'activity-stream-agent11@example.com')
     ticket = Ticket.create(title: '12323', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1)
 
-    sleep 4
+    sleep 3
 
     # get as stream
     result1 = as_client1.push
@@ -251,7 +251,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 2
     user = User.lookup(id: 1)
-    ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, {}, false, '123-1', 3)
+    ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, {}, false, '123-1', 2)
 
     # get as stream
     result1 = ticket_create_client1.push
@@ -269,7 +269,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     Group.create(name: 'SomeTicketCreateGroup::' + rand(999_999).to_s, active: true)
 
-    sleep 4
+    sleep 3
 
     # get as stream
     result1 = ticket_create_client1.push

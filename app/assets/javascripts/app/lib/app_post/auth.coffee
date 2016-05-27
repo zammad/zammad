@@ -87,7 +87,7 @@ class App.Auth
       App.Event.trigger('auth')
       App.Event.trigger('auth:logout')
       App.Event.trigger('ui:rerender')
-
+      App.TaskManager.tasksInitial()
       return false
 
     # clear local store

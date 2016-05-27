@@ -33,4 +33,24 @@ class AABBasicUrlsTest < TestCase
     )
   end
 
+  def test_ticket
+    @browser = browser_instance
+    location(
+      url: "#{browser_url}/#ticket/zoom/1",
+    )
+    location_check(
+      url: "#{browser_url}/#login",
+    )
+  end
+
+  def test_not_existing
+    @browser = browser_instance
+    location(
+      url: "#{browser_url}/#not_existing",
+    )
+    location_check(
+      url: "#{browser_url}/#not_existing",
+    )
+  end
+
 end

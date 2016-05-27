@@ -70,7 +70,7 @@ class SettingsController < ApplicationController
       file = StaticAssets.data_url_attributes(params[:logo_resize])
 
       # store image 1:1
-      setting.state = StaticAssets.store( file[:content], file[:mime_type] )
+      setting.state = StaticAssets.store(file[:content], file[:mime_type])
       setting.save
     end
 

@@ -50,6 +50,22 @@ class TestCase < Test::Unit::TestCase
       return local_browser
     end
 
+    # avoid "Cannot read property 'get_Current' of undefined" issues
+    (1..5).each {|count|
+      begin
+        local_browser = browser_instance_remote
+        break
+      rescue
+        wait_until_ready = rand(9) + 5
+        sleep wait_until_ready
+        log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready })
+      end
+    }
+
+    local_browser
+  end
+
+  def browser_instance_remote
     caps = Selenium::WebDriver::Remote::Capabilities.send(browser)
     if ENV['BROWSER_OS']
       caps.platform = ENV['BROWSER_OS']
@@ -63,24 +79,7 @@ class TestCase < Test::Unit::TestCase
       desired_capabilities: caps,
     )
     @browsers[local_browser.hash] = local_browser
-
-    # avoid "Cannot read property 'get_Current' of undefined" issues
-    begin
-      browser_instance_preferences(local_browser)
-    rescue
-      # just try again
-      sleep 10
-      log('browser_instance', { rescure: true })
-      begin
-        browser_instance_preferences(local_browser)
-      rescue
-        # just try again
-        sleep 10
-        log('browser_instance', { rescure: true })
-        browser_instance_preferences(local_browser)
-      end
-
-    end
+    browser_instance_preferences(local_browser)
 
     # upload files from remote dir
     local_browser.file_detector = lambda do |args|
@@ -134,6 +133,7 @@ class TestCase < Test::Unit::TestCase
     url:         'some url', # optional
     remember_me: true, # optional
     auto_wizard: false, # optional, in case of auto wizard, skip login
+    success:     false, #optional
   )
 
 =end
@@ -195,10 +195,26 @@ class TestCase < Test::Unit::TestCase
     instance.find_elements(css: '#login button')[0].click
 
     sleep 4
-    login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
-    if login != params[:username]
+    login_failed = false
+    if !instance.find_elements(css: '.user-menu .user a')[0]
+      login_failed = true
+    else
+      login = instance.find_elements(css: '.user-menu .user a')[0].attribute('title')
+      if login != params[:username]
+        login_failed = true
+      end
+    end
+    if login_failed
+      if params[:success] == false
+        assert(true, 'login not successfull, like wanted')
+        return true
+      end
       screenshot(browser: instance, comment: 'login_failed')
       raise 'login failed'
+    end
+
+    if params[:success] == false
+      raise 'login successfull but should not'
     end
 
     clues_close(
@@ -1621,6 +1637,25 @@ wait untill text in selector disabppears
       title: 'overview #1',
     }
 
+  ticket = ticket_create(
+    browser: browser1,
+    data: {
+      customer: 'nico',
+      group:    'Users', # optional / '-NONE-' # if group selection should not be shown
+      priority: '2 normal',
+      state:    'open',
+      title:    'overview #1',
+      body:     'overview #1',
+    },
+    custom_data_select: {
+      key1: 'some value',
+    },
+    custom_data_input: {
+      key1: 'some value',
+    },
+    disable_group_check: true,
+  )
+
 =end
 
   def ticket_create(params)
@@ -1642,7 +1677,7 @@ wait untill text in selector disabppears
     )
 
     found = false
-    (1..4).each {
+    (1..8).each {
       element = instance.find_elements(css: '.active .newTicket')[0]
       if element
         found = true
@@ -1669,8 +1704,10 @@ wait untill text in selector disabppears
       else
 
         # check count of agents, should be only 1 / - selection on init screen
-        count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
-        assert_equal(1, count, 'check if owner selection is empty per default')
+        if !params[:disable_group_check]
+          count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
+          assert_equal(1, count, 'check if owner selection is empty per default')
+        end
         select(
           browser:  instance,
           css:      '.active .newTicket select[name="group_id"]',
@@ -1736,6 +1773,28 @@ wait untill text in selector disabppears
       sleep 0.4
     end
 
+    if params[:custom_data_select]
+      params[:custom_data_select].each {|local_key, local_value|
+        select(
+          browser:  instance,
+          css:      ".active .newTicket select[name=\"#{local_key}\"]",
+          value:    local_value,
+          mute_log: true,
+        )
+      }
+    end
+    if params[:custom_data_input]
+      params[:custom_data_input].each {|local_key, local_value|
+        set(
+          browser:  instance,
+          css:      ".active .newTicket input[name=\"#{local_key}\"]",
+          value:    local_value,
+          clear:    true,
+          mute_log: true,
+        )
+      }
+    end
+
     if data[:attachment]
       file_upload(
         browser: instance,
@@ -1799,6 +1858,25 @@ wait untill text in selector disabppears
     do_not_submit: true,
   )
 
+  ticket_update(
+    browser: browser1,
+    data: {
+      title:    '',
+      customer: 'some_customer@example.com',
+      body:     'some body',
+      group:    'some group', # optional
+      priority: '1 low',
+      state:    'closed',
+    },
+    custom_data_select: {
+      key1: 'some value',
+    },
+    custom_data_input: {
+      key1: 'some value',
+    },
+    do_not_submit: true,
+  )
+
 =end
 
   def ticket_update(params)
@@ -1809,28 +1887,28 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .ticket-title-update')[0]
+      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .js-objectTitle')[0]
       #element.clear
       #sleep 0.5
-      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .ticket-title-update')[0]
+      #element = instance.find_elements(:css => '.content.active .ticketZoom-header .js-objectTitle')[0]
       #element.send_keys(data[:title])
       #sleep 0.5
       #element.send_keys(:tab)
 
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").focus()')
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").text("' + data[:title] + '")')
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").blur()')
-      instance.execute_script('$(".content.active .ticketZoom-header .ticket-title-update").trigger("blur")')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").focus()')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").text("' + data[:title] + '")')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").blur()')
+      instance.execute_script('$(".content.active .ticketZoom-header .js-objectTitle").trigger("blur")')
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
-      #   :css          => '.content.active .ticketZoom-header .ticket-title-update',
+      #   :css          => '.content.active .ticketZoom-header .js-objectTitle',
       #   :value        => 'TTT',
       # },
       # {
       #   :where        => :instance2,
       #   :execute      => 'sendkey',
-      #   :css          => '.content.active .ticketZoom-header .ticket-title-update',
+      #   :css          => '.content.active .ticketZoom-header .js-objectTitle',
       #   :value        => :tab,
       # },
     end
@@ -1934,7 +2012,29 @@ wait untill text in selector disabppears
       )
     end
 
-    if data[:state] || data[:group] || data[:body]
+    if params[:custom_data_select]
+      params[:custom_data_select].each {|local_key, local_value|
+        select(
+          browser:  instance,
+          css:      ".active .sidebar select[name=\"#{local_key}\"]",
+          value:    local_value,
+          mute_log: true,
+        )
+      }
+    end
+    if params[:custom_data_input]
+      params[:custom_data_input].each {|local_key, local_value|
+        set(
+          browser:  instance,
+          css:      ".active .sidebar input[name=\"#{local_key}\"]",
+          value:    local_value,
+          clear:    true,
+          mute_log: true,
+        )
+      }
+    end
+
+    if data[:state] || data[:group] || data[:body] || !params[:custom_data_select].empty? || !params[:custom_data_input].empty?
       found = nil
       (1..10).each {
 
@@ -2008,7 +2108,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      title = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-title-update')[0].text.strip
+      title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle')[0].text.strip
       if title =~ /#{data[:title]}/i
         assert(true, "matching '#{data[:title]}' in title '#{title}'")
       else
@@ -2137,7 +2237,7 @@ wait untill text in selector disabppears
     #instance.find_element(partial_link_text: params[:title] } ).click
     instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
-    title = instance.find_elements(css: '.active .ticketZoom-header .ticket-title-update')[0].text
+    title = instance.find_elements(css: '.active .ticketZoom-header .js-objectTitle')[0].text
     if title !~ /#{params[:title]}/
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
       raise "unable to search/find ticket #{params[:title]}!"
@@ -2608,6 +2708,174 @@ wait untill text in selector disabppears
     }
     screenshot(browser: instance, comment: 'group_create_failed')
     raise 'group creation failed'
+  end
+
+=begin
+
+  object_manager_attribute_create(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+      data_type: 'Text', # Text|Select|...
+      data_option: {
+        options: {
+          'aa' => 'AA',
+          'bb' => 'BB',
+        },
+      },
+    },
+    error: 'already exists'
+  )
+
+=end
+
+  def object_manager_attribute_create(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+    sleep 4
+    click(
+      browser: instance,
+      css:  '#content .js-new',
+      mute_log: true,
+    )
+    modal_ready
+    element = instance.find_elements(css: '.modal input[name=name]')[0]
+    element.clear
+    element.send_keys(data[:name])
+    element = instance.find_elements(css: '.modal input[name=display]')[0]
+    element.clear
+    element.send_keys(data[:display])
+    select(
+      browser:  instance,
+      css:      '.modal select[name="data_type"]',
+      value:    data[:data_type],
+      mute_log: true,
+    )
+    if data[:data_option]
+      if data[:data_option][:options]
+        data[:data_option][:options].each {|key, value|
+          element = instance.find_elements(css: '.modal .js-Table .js-key').last
+          element.clear
+          element.send_keys(key)
+          element = instance.find_elements(css: '.modal .js-Table .js-value').last
+          element.clear
+          element.send_keys(value)
+          element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
+          element.click
+        }
+      end
+    end
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    if params[:error]
+      sleep 4
+      watch_for(
+        css: '.modal',
+        value: params[:error],
+      )
+      click(
+        browser: instance,
+        css:  '.modal .js-close',
+        mute_log: true,
+      )
+      return
+    end
+
+    (1..12).each {
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert(true, 'object manager attribute created')
+        sleep 1
+        return true
+      end
+      sleep 1
+    }
+    screenshot(browser: instance, comment: 'object_manager_attribute_create_failed')
+    raise 'object manager attribute creation failed'
+  end
+
+=begin
+
+  object_manager_attribute_delete(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+    },
+  )
+
+=end
+
+  def object_manager_attribute_delete(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_delete', params)
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+    sleep 4
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+    r = instance.execute_script("$(\"#content td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
+    p "rrr #{r.inspect}"
+  end
+
+=begin
+
+  object_manager_attribute_discard_changes(
+    browser: browser2,
+  )
+
+=end
+
+  def object_manager_attribute_discard_changes(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_discard_changes', params)
+
+    instance = params[:browser] || @browser
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+    sleep 4
+
+    element = instance.find_elements(css: '#content .js-discard').first
+    element.click
+
+    watch_for_disappear(
+      browser: instance,
+      css:     '#content .js-discard',
+    )
+
   end
 
   def quote(string)

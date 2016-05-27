@@ -221,8 +221,14 @@
             var img = document.createElement('img')
             img.src = result
 
-            insert = function(dataUrl, width, height) {
+            insert = function(dataUrl, width, height, isRetina) {
               //console.log('dataUrl', dataUrl)
+
+              // adapt image if we are on retina devices
+              if (!isRetina && window.isRetina && window.isRetina()) {
+                width = width / 2
+                height = height / 2
+              }
               _this.log('image inserted')
               result = dataUrl
               img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
@@ -330,7 +336,13 @@
           img.src = result
 
           //Insert the image at the carat
-          insert = function(dataUrl, width, height) {
+          insert = function(dataUrl, width, height, isRetina) {
+
+            // adapt image if we are on retina devices
+            if (!isRetina && window.isRetina && window.isRetina()) {
+              width = width / 2
+              height = height / 2
+            }
 
             //console.log('dataUrl', dataUrl)
             _this.log('image inserted')

@@ -2,6 +2,11 @@
 RAILS_ENV=$1
 APP_PORT=$2
 WS_PORT=$3
+WITH_DB=$4 || 0
+
+if test $WITH_DB -eq 1; then
+  script/bootstrap.sh
+fi
 
 export ZAMMAD_SETTING_TTL=15
 

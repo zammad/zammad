@@ -24,6 +24,11 @@ Source: https://github.com/sliptree/bootstrap-tokenfield
 Copyright 2013-2014 Sliptree and other contributors
 License: MIT license
 -----------------------------------------------------------------------------
+clipboard.js
+Source: https://github.com/lgarron/clipboard.js
+Copyright: 2015 Lucas Garron (https://garron.net/)
+License: MIT license
+-----------------------------------------------------------------------------
 cropper.js
 Source: https://github.com/fengyuanchen/cropper
 Copyright: 2014-2015 Fengyuan Chen and contributors

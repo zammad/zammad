@@ -81,6 +81,115 @@ preserved name are
 
  /(_id|_ids)$/
 
+possible types
+
+# input
+
+  data_type: 'input',
+  data_option: {
+    default: '',
+    type: 'text', # text|email|url|tel
+    maxlength: 200,
+    null: true,
+    note: 'some additional comment', # optional
+  },
+
+# select
+
+  data_type: 'select',
+  data_option: {
+    default: 'aa',
+    options: {
+      'aa' => 'aa (comment)',
+      'bb' => 'bb (comment)',
+    },
+    nulloption: true,
+    null: false,
+    multiple: false, # currently only "false" supported
+    translate: true, # optional
+    note: 'some additional comment', # optional
+  },
+
+# checkbox
+
+  data_type: 'checkbox',
+  data_option: {
+    default: 'aa',
+    options: {
+      'aa' => 'aa (comment)',
+      'bb' => 'bb (comment)',
+    },
+    null: false,
+    translate: true, # optional
+    note: 'some additional comment', # optional
+  },
+
+# integer
+
+  data_type: 'integer',
+  data_option: {
+    default: 5,
+    min: 15,
+    max: 999,
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# boolean
+
+  data_type: 'boolean',
+  data_option: {
+    default: true,
+    options: {
+      true => 'aa',
+      false => 'bb',
+    },
+    null: false,
+    translate: true, # optional
+    note: 'some additional comment', # optional
+  },
+
+# datetime
+
+  data_type: 'datetime',
+  data_option: {
+    future: true, # true|false
+    past: true, # true|false
+    diff: 12, # in hours
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# date
+
+  data_type: 'date',
+  data_option: {
+    future: true, # true|false
+    past: true, # true|false
+    diff: 15, # in days
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# textarea
+
+  data_type: 'textarea',
+  data_option: {
+    default: '',
+    rows: 15,
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
+# richtext
+
+  data_type: 'richtext',
+  data_option: {
+    default: '',
+    null: false,
+    note: 'some additional comment', # optional
+  },
+
 =end
 
   def self.add(data)
@@ -364,9 +473,13 @@ returns
 
   [record1, record2, ...]
 
+to send no browser reload event, pass false
+
+  ObjectManager::Attribute.migration_execute(false)
+
 =end
 
-  def self.migration_execute
+  def self.migration_execute(send_event = true)
 
     # check if field already exists
     execute_count = 0
@@ -377,9 +490,9 @@ returns
       if attribute.to_delete
         if model.column_names.include?(attribute.name)
           ActiveRecord::Migration.remove_column model.table_name, attribute.name
-          model.reset_column_information
-          execute_count += 1
+          reset_database_info(model)
         end
+        execute_count += 1
         attribute.destroy
         next
       end
@@ -430,7 +543,7 @@ returns
         # restart processes
         attribute.to_migrate = false
         attribute.save!
-        model.reset_column_information
+        reset_database_info(model)
         execute_count += 1
         next
       end
@@ -478,22 +591,42 @@ returns
       attribute.to_delete = false
       attribute.save!
 
-      model.reset_column_information
+      reset_database_info(model)
       execute_count += 1
     }
 
-    # sent reload to clients
-    if execute_count != 0
-      AppVersion.set(true)
+    # sent maintenance message to clients
+    if send_event && execute_count != 0
+      if ENV['APP_RESTART_CMD']
+        AppVersion.set(true, 'restart_auto')
+        sleep 4
+        Delayed::Job.enqueue(Observer::AppVersionRestartJob.new(ENV['APP_RESTART_CMD']))
+      else
+        AppVersion.set(true, 'restart_manual')
+      end
     end
     true
   end
 
+  def self.reset_database_info(model)
+    model.connection.schema_cache.clear!
+    model.reset_column_information
+  end
+
   def check_name
-    if name
-      return true if name !~ /_(id|ids)$/i && name !~ /^id$/i && name !~ /\s/
+    return if !name
+    if name =~ /_(id|ids)$/i || name =~ /^id$/i
+      raise 'Name can\'t get used, *_id and *_ids are not allowed'
+    elsif name =~ /\s/
+      raise 'Spaces in name are not allowed'
+    elsif name !~ /^[a-z0-9_]+$/
+      raise 'Only letters from a-z, numbers from 0-9, and _ are allowed'
+    elsif name !~ /[a-z]/
+      raise 'At least one letters is needed'
+    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table)$/
+      raise "#{name} is a reserved word, please choose a different one"
     end
-    raise "Name can't get used, *_id and *_ids are not allowed"
+    true
   end
 
   def check_editable
@@ -534,6 +667,9 @@ returns
     if data_type == 'select' || data_type == 'checkbox'
       raise 'Need data_option[:default] param' if data_option[:default].nil?
       raise 'Invalid data_option[:options] or data_option[:relation] param' if data_option[:options].nil? && data_option[:relation].nil?
+      if !data_option.key?(:nulloption)
+        data_option[:nulloption] = true
+      end
     end
 
     if data_type == 'boolean'

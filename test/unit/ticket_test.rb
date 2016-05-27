@@ -263,4 +263,23 @@ class TicketTest < ActiveSupport::TestCase
     lookup_ticket = Ticket.find_by('pending_time <= ?', Time.zone.now)
     assert_nil(lookup_ticket, 'ticket.pending_time processed verify')
   end
+
+  test 'ticket subject' do
+
+    ticket1 = Ticket.create(
+      title: 'subject test 1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal('subject test 1', ticket1.title)
+    assert_equal("ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1'))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1', true))
+    ticket1.destroy
+
+  end
+
 end

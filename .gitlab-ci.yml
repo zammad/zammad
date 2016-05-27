@@ -10,21 +10,21 @@ stages:
   - test
   - browser
 
-rubocop:
+pre:rubocop:
   stage: pre
   tags:
     - core
   script:
     - bundle exec rubocop
 
-coffeelint:
+pre:coffeelint:
   stage: pre
   tags:
     - core
   script:
     - coffeelint app/
 
-bundle-audit:
+pre:bundle-audit:
   stage: pre
   tags:
     - core
@@ -33,7 +33,7 @@ bundle-audit:
     - bundle-audit update
     - bundle-audit
 
-job_unit_mysql:
+test:unit:mysql:
   stage: test
   tags:
     - core
@@ -47,7 +47,7 @@ job_unit_mysql:
     - rake test:controllers
     - rake db:drop
 
-job_unit_postgresql:
+test:unit:postgresql:
   stage: test
   tags:
     - core
@@ -61,7 +61,7 @@ job_unit_postgresql:
     - rake test:controllers
     - rake db:drop
 
-job_integration_email_helper:
+test:integration:email_helper:
   stage: test
   tags:
     - core
@@ -72,7 +72,7 @@ job_integration_email_helper:
     - ruby -I test/ test/integration/email_helper_test.rb
     - rake db:drop
 
-job_integration_twitter:
+test:integration:twitter:
   stage: test
   tags:
     - core
@@ -86,7 +86,7 @@ job_integration_twitter:
     - rake db:drop
   allow_failure: true
 
-job_integration_facebook:
+test:integration:facebook:
   stage: test
   tags:
     - core
@@ -99,7 +99,7 @@ job_integration_facebook:
     - rake db:drop
   allow_failure: true
 
-job_integration_geo_ip:
+test:integration:geo_ip:
   stage: test
   tags:
     - core
@@ -110,7 +110,7 @@ job_integration_geo_ip:
     - ruby -I test/ test/integration/geo_ip_test.rb
     - rake db:drop
 
-job_integration_geo_location:
+test:integration:geo_location:
   stage: test
   tags:
     - core
@@ -121,7 +121,7 @@ job_integration_geo_location:
     - ruby -I test/ test/integration/geo_location_test.rb
     - rake db:drop
 
-job_integration_geo_calendar:
+test:integration:geo_calendar:
   stage: test
   tags:
     - core
@@ -132,7 +132,7 @@ job_integration_geo_calendar:
     - ruby -I test/ test/integration/geo_calendar_test.rb
     - rake db:drop
 
-job_integration_user_agent:
+test:integration:user_agent:
   stage: test
   tags:
     - core
@@ -143,7 +143,7 @@ job_integration_user_agent:
     - ruby -I test/ test/integration/user_agent_test.rb
     - rake db:drop
 
-job_integration_slack:
+test:integration:slack:
   stage: test
   tags:
     - core
@@ -156,7 +156,7 @@ job_integration_slack:
     - ruby -I test test/integration/slack_test.rb
     - rake db:drop
 
-job_integration_clearbit:
+test:integration:clearbit:
   stage: test
   tags:
     - core
@@ -167,7 +167,7 @@ job_integration_clearbit:
     - ruby -I test test/integration/clearbit_test.rb
     - rake db:drop
 
-job_integration_sipgate:
+test:integration:sipgate:
   stage: test
   tags:
     - core
@@ -178,7 +178,7 @@ job_integration_sipgate:
     - ruby -I test test/integration/sipgate_controller_test.rb
     - rake db:drop
 
-job_integration_es_mysql:
+test:integration:es_mysql:
   stage: test
   tags:
     - core
@@ -194,7 +194,7 @@ job_integration_es_mysql:
     - ruby -I test/ test/integration/report_test.rb
     - rake db:drop
 
-job_integration_es_postgresql:
+test:integration:es_postgresql:
   stage: test
   tags:
     - core
@@ -210,7 +210,7 @@ job_integration_es_postgresql:
     - ruby -I test/ test/integration/report_test.rb
     - rake db:drop
 
-job_integration_zendesk_mysql:
+test:integration:zendesk_mysql:
   stage: test
   tags:
     - core
@@ -222,7 +222,7 @@ job_integration_zendesk_mysql:
     - ruby -I test/ test/integration/zendesk_import_test.rb
     - rake db:drop
 
-job_integration_zendesk_postgresql:
+test:integration:zendesk_postgresql:
   stage: test
   tags:
     - core
@@ -234,7 +234,7 @@ job_integration_zendesk_postgresql:
     - ruby -I test/ test/integration/zendesk_import_test.rb
     - rake db:drop
 
-job_integration_otrs_5_mysql:
+test:integration:otrs_5_mysql:
   stage: test
   tags:
     - core
@@ -247,7 +247,7 @@ job_integration_otrs_5_mysql:
     - ruby -I test/ test/integration/otrs_import_test.rb
     - rake db:drop
 
-job_integration_otrs_5_postgresql:
+test:integration:otrs_5_postgresql:
   stage: test
   tags:
     - core
@@ -260,7 +260,7 @@ job_integration_otrs_5_postgresql:
     - ruby -I test/ test/integration/otrs_import_test.rb
     - rake db:drop
 
-job_integration_otrs_4:
+test:integration:otrs_4:
   stage: test
   tags:
     - core
@@ -272,7 +272,7 @@ job_integration_otrs_4:
     - ruby -I test/ test/integration/otrs_import_test.rb
     - rake db:drop
 
-job_integration_otrs_33:
+test:integration:otrs_33:
   stage: test
   tags:
     - core
@@ -284,7 +284,7 @@ job_integration_otrs_33:
     - ruby -I test/ test/integration/otrs_import_test.rb
     - rake db:drop
 
-job_integration_otrs_32:
+test:integration:otrs_32:
   stage: test
   tags:
     - core
@@ -296,7 +296,7 @@ job_integration_otrs_32:
     - ruby -I test/ test/integration/otrs_import_test.rb
     - rake db:drop
 
-job_integration_otrs_31:
+test:integration:otrs_31:
   stage: test
   tags:
     - core
@@ -308,272 +308,466 @@ job_integration_otrs_31:
     - ruby -I test/ test/integration/otrs_import_test.rb
     - rake db:drop
 
-job_integration_twitter_ff:
+browser:build:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=production
+    - rake db:drop;
+    - rake db:create
+    - rake db:migrate
+    - rake assets:precompile
+    - rake db:drop
+  artifacts:
+    paths:
+    - public/assets/.sprockets-manifest*
+    - public/assets/application-*
+    - public/assets/print-*
+
+test:browser:twitter_ff:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - twitter
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_facebook_ff:
+test:browser:facebook_ff:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - facebook
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_autowizard_ff:
+test:browser:autowizard_ff:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_ff_1_mysql:
+test:browser:core:ff_1_mysql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_ff_2_mysql:
+test:browser:core:ff_2_mysql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_ff_3_mysql:
+test:browser:core:ff_3_mysql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_ff_1_postgresql:
+test:browser:core:ff_4_mysql:
   stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - mysql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 4
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:core:ff_5_mysql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - mysql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:core:ff_1_postgresql:
+  stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_ff_2_postgresql:
+test:browser:core:ff_2_postgresql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_ff_3_postgresql:
+test:browser:core:ff_3_postgresql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-ff
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_chrome_1_mysql:
+test:browser:core:ff_4_postgresql:
   stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - postgresql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 4
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:core:ff_5_postgresql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-ff
+    - postgresql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:core:chrome_1_mysql:
+  stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_chrome_2_mysql:
+test:browser:core:chrome_2_mysql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_chrome_3_mysql:
+test:browser:core:chrome_3_mysql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - mysql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_chrome_1_postgresql:
+test:browser:core:chrome_4_mysql:
   stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-chrome
+    - mysql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 4
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:core:chrome_5_mysql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-chrome
+    - mysql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:core:chrome_1_postgresql:
+  stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 1
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_chrome_2_postgresql:
+test:browser:core:chrome_2_postgresql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 2
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_browser_chrome_3_postgresql:
+test:browser:core:chrome_3_postgresql:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - postgresql
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
     - unset MAILBOX_AUTO2
     - unset MAILBOX_MANUAL1
     - unset MAILBOX_MANUAL2
     - script/build/test_slice_tests.sh 3
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_twitter_chrome:
+test:browser:core:chrome_4_postgresql:
   stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-chrome
+    - postgresql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 4
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:core:chrome_5_postgresql:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser-chrome
+    - postgresql
+  script:
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
+    - unset MAILBOX_AUTO1
+    - unset MAILBOX_AUTO2
+    - unset MAILBOX_MANUAL1
+    - unset MAILBOX_MANUAL2
+    - script/build/test_slice_tests.sh 5
+    - RAILS_ENV=test rake db:create
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
+test:browser:integration:twitter_chrome:
+  stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - twitter
@@ -581,14 +775,14 @@ job_integration_twitter_chrome:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/twitter_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_facebook_chrome:
+test:browser:integration:facebook_chrome:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
     - facebook
@@ -596,48 +790,46 @@ job_integration_facebook_chrome:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/facebook_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_otrs_chrome:
+test:browser:integration:otrs_chrome:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/otrs_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/otrs_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_autowizard_chrome:
+test:browser:integration:autowizard_chrome:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-job_integration_zendesk_chrome:
+test:browser:integration:zendesk_chrome:
   stage: browser
+  dependencies:
+    - browser:build
   tags:
     - browser-chrome
   script:
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
-    - script/bootstrap.sh
-    - rake assets:precompile
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
-    - ruby -I test/ test/integration/zendesk_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/zendesk_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1

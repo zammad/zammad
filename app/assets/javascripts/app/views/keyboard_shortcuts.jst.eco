@@ -6,8 +6,16 @@
     <% for item in area.content: %>
       <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
       <% for shortcut in item.shortcuts: %>
-        <% if shortcut.hotkeys: %><kbd>ctrl</kbd> <kbd>alt</kbd> <% end %>
-          <% if _.isArray(shortcut.key): %><% for key in shortcut.key: %> <kbd><%- key %></kbd><% end %>
+        <% if shortcut.hotkeys: %>
+          <kbd>ctrl</kbd> <kbd>alt</kbd>
+        <% end %>
+        <% if shortcut.keyPrefix: %>
+          <%= shortcut.keyPrefix %>
+        <% end %>
+        <% if _.isArray(shortcut.key): %>
+          <% for key in shortcut.key: %>
+            <kbd><%- key %></kbd>
+          <% end %>
         <% else: %>
           <kbd><%- shortcut.key %></kbd>
         <% end %>
@@ -24,8 +32,16 @@
     <% for item in area.content: %>
       <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
       <% for shortcut in item.shortcuts: %>
-        <% if shortcut.hotkeys: %><kbd>ctrl</kbd> <kbd>alt</kbd> <% end %>
-          <% if _.isArray(shortcut.key): %><% for key in shortcut.key: %> <kbd><%- key %></kbd><% end %>
+        <% if shortcut.hotkeys: %>
+          <kbd>ctrl</kbd> <kbd>alt</kbd>
+        <% end %>
+        <% if shortcut.keyPrefix: %>
+          <%= shortcut.keyPrefix %>
+        <% end %>
+        <% if _.isArray(shortcut.key): %>
+          <% for key in shortcut.key: %>
+            <kbd><%- key %></kbd>
+          <% end %>
         <% else: %>
           <kbd><%- shortcut.key %></kbd>
         <% end %>

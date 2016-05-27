@@ -49,6 +49,51 @@ class Sessions::Event::Base
     true
   end
 
+  def role_permission_check(role, event)
+    if !@session
+      error = {
+        event: "#{event}_error",
+        data: {
+          state: 'no_session',
+        },
+      }
+      Sessions.send(@client_id, error)
+      return
+    end
+    if !@session['id']
+      error = {
+        event: "#{event}_error",
+        data: {
+          state: 'no_session_user_id',
+        },
+      }
+      Sessions.send(@client_id, error)
+      return
+    end
+    user = User.lookup(id: @session['id'])
+    if !user
+      error = {
+        event: "#{event}_error",
+        data: {
+          state: 'no_such_user',
+        },
+      }
+      Sessions.send(@client_id, error)
+      return
+    end
+    if !user.role?(role)
+      error = {
+        event: "#{event}_error",
+        data: {
+          state: 'no_permission',
+        },
+      }
+      Sessions.send(@client_id, error)
+      return
+    end
+    true
+  end
+
   def log(level, data, client_id = nil)
     if !@options[:v]
       return if level == 'debug'

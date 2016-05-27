@@ -1,36 +1,8 @@
 <form class="settings-entry" id="<%= @setting.name %>">
-  <h2><%- @T( @setting.title ) %></h2>
-  <p><%- @T( @setting.description ) %></p>
-
-  <div class="login branding centered darkBackground">
-    <div class="hero-unit">
-      <img class="logo-preview" src="<%= @logoUrl %>">
-      <div class="logo-preview-placeholder"><%- @T('Your Logo') %></div>
-      <div class="centered">
-        <div class="btn btn--success fileUpload"><%- @T('Change') %><input type="file" class="js-upload" name="logo" accept="image/*"></div>
-      </div>
-
-      <div class="form-group">
-        <label for="username"><%- @Ti( 'Username / email' ) %></label>
-        <input id="username" name="username" type="text" class="form-control" value="<%= @S('login') %>" autocapitalize="off" disabled="disabled"/>
-      </div>
-
-      <div class="form-group">
-        <label for="password"><%- @Ti( 'Password' ) %></label>
-        <input id="password" name="password" type="password" class="form-control" value="some_pass" disabled="disabled"/>
-      </div>
-
-      <div class="form-group">
-        <label><input name="remember_me" value="1" type="checkbox" disabled="disabled"/> <%- @T( 'Remember me' ) %></label>
-      </div>
-
-      <div class="form-controls">
-        <button class="btn btn--primary" type="submit" disabled="disabled"><%- @T( 'Sign in' ) %></button>
-      </div>
-    </div>
-  </div>
-
+  <h2><%- @T(@setting.title) %></h2>
+  <p><%- @T(@setting.description) %></p>
+  <div class="js-loginPreview"></div>
   <div class="setting-controls">
-    <button type="submit" class="btn btn--primary"><%- @T( 'Submit' ) %></button>
+    <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
   </div>
 </form>

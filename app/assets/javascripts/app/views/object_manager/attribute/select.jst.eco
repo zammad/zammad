@@ -2,7 +2,7 @@
   <div class="js-selectDefault"></div>
   <div class="js-selectOption"></div>
 
-  <table class="settings-list" style="width: 100%;">
+  <table class="settings-list js-Table" style="width: 100%;">
     <thead>
       <tr>
         <th><%- @T('Key') %>
@@ -11,31 +11,46 @@
         <th style="width: 30px"><%- @T('Action') %>
     </thead>
     <tbody>
-      <% for key, display of @values: %>
-      <tr>
-        <td class="settings-list-control-cell">
-          <input class="form-control form-control--small js-summary" type="text" name="summary" value="<%= key %>" required/>
-        <td class="settings-list-control-cell">
-          <input class="form-control form-control--small js-summary" type="text" name="summary" value="<%= display %>" required/>
-        <td class="settings-list-row-control">
-          <input class="" type="radio" />
-        <td class="settings-list-row-control">
-          <div class="btn btn--text js-remove">
-            <%- @Icon('trash') %> <%- @T('Remove') %>
-          </div>
+      <% if @params.data_option && @params.data_option.options: %>
+        <% for key, display of @params.data_option.options: %>
+        <tr>
+          <td class="settings-list-control-cell">
+            <input class="form-control form-control--small js-key" type="text" value="<%= key %>" required/>
+          <td class="settings-list-control-cell">
+            <input class="form-control form-control--small js-value" type="text" value="<%= display %>" name="data_option::options::<%= key %>" required/>
+          <td class="settings-list-row-control">
+            <input class="js-selected" type="radio" name="data_option::default" value="<%= key %>" <% if @params.data_option.default is key: %>checked<% end %>/>
+          <td class="settings-list-row-control">
+            <div class="btn btn--text js-remove">
+              <%- @Icon('trash') %> <%- @T('Remove') %>
+            </div>
+        <% end %>
       <% end %>
-
       <tr>
         <td class="settings-list-control-cell">
-          <input class="form-control form-control--small js-summary" type="text" placeholder="<%- @T('Key') %>"/>
+          <input class="form-control form-control--small js-key" type="text" placeholder="<%- @T('Key') %>"/>
         <td class="settings-list-control-cell">
-          <input class="form-control form-control--small js-summary" type="text" placeholder="<%- @T('Display') %>"/>
+          <input class="form-control form-control--small js-value" type="text" placeholder="<%- @T('Display') %>"/>
         <td class="settings-list-row-control">
-          <input class="" type="radio" />
+          <input class="js-selected" type="radio"/>
         <td class="settings-list-row-control">
           <div class="btn btn--text btn--create js-add">
             <%- @Icon('plus-small') %> <%- @T('Add') %>
           </div>
     </tbody>
+  </table>
+  <table class="hidden">
+    <tbody>
+      <tr class="js-template">
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-key" type="text" value="" required/>
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-value" type="text" value="" required/>
+        <td class="settings-list-row-control">
+          <input class="js-selected" type="radio" name="data_option::default"/>
+        <td class="settings-list-row-control">
+          <div class="btn btn--text js-remove">
+            <%- @Icon('trash') %> <%- @T('Remove') %>
+          </div>
   </table>
 </div>

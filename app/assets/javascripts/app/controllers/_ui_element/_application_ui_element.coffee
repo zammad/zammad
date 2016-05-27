@@ -8,7 +8,7 @@ class App.UiElement.ApplicationUiElement
 
     return if !attribute.options
 
-    if _.isArray( attribute.options )
+    if _.isArray(attribute.options)
       # reverse if we have to exit early, if configured
       if attribute.order
         if attribute.order == 'DESC'
@@ -38,7 +38,7 @@ class App.UiElement.ApplicationUiElement
     return if !attribute.options
     return if !attribute.nulloption
     if _.isArray( attribute.options )
-      attribute.options.unshift( { name: '-', value: '' } )
+      attribute.options.unshift({ name: '-', value: '' })
     else
       attribute.options[''] = '-'
 
@@ -46,10 +46,10 @@ class App.UiElement.ApplicationUiElement
     return if !attribute.options
     selection = attribute.options
     attribute.options = []
-    if _.isArray( selection )
+    if _.isArray(selection)
       for row in selection
         if attribute.translate
-          row.name = App.i18n.translateInline( row.name )
+          row.name = App.i18n.translateInline(row.name)
         attribute.options.push row
     else
       order = _.sortBy(
@@ -59,7 +59,7 @@ class App.UiElement.ApplicationUiElement
       for key in order
         name_new = selection[key]
         if attribute.translate
-          name_new = App.i18n.translateInline( name_new )
+          name_new = App.i18n.translateInline(name_new)
         attribute.options.push {
           name:  name_new
           value: key
@@ -81,9 +81,9 @@ class App.UiElement.ApplicationUiElement
       if typeof attribute.filter is 'function'
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-function'
 
-        all = App[ attribute.relation ].search( sortBy: attribute.sortBy )
+        all = App[ attribute.relation ].search(sortBy: attribute.sortBy)
 
-        list = attribute.filter( all, 'collection', params )
+        list = attribute.filter(all, 'collection', params)
 
       # data based filter
       else if attribute.filter[ attribute.name ]
@@ -92,7 +92,7 @@ class App.UiElement.ApplicationUiElement
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data', filter
 
         # check all records
-        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy )
+        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy)
 
           # check all filter attributes
           for key in filter
@@ -108,7 +108,7 @@ class App.UiElement.ApplicationUiElement
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-array', attribute.filter
 
         # check all records
-        for record in App[ attribute.relation ].search( sortBy: attribute.sortBy )
+        for record in App[ attribute.relation ].search(sortBy: attribute.sortBy)
 
           # check all filter attributes
           for key in attribute.filter
@@ -125,29 +125,35 @@ class App.UiElement.ApplicationUiElement
             if value['id'].toString() is params[ attribute.name ].toString()
               hit = true
           if !hit
-            currentRecord = App[ attribute.relation ].find( params[ attribute.name ] )
+            currentRecord = App[ attribute.relation ].find(params[ attribute.name ])
             list.push currentRecord
 
       # no data filter matched
       else
         App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-data no filter matched'
-        list = App[ attribute.relation ].search( sortBy: attribute.sortBy )
+        list = App[ attribute.relation ].search(sortBy: attribute.sortBy)
     else
       App.Log.debug 'ControllerForm', '_getRelationOptionList:filter-no filter defined'
-      list = App[ attribute.relation ].search( sortBy: attribute.sortBy )
+      list = App[ attribute.relation ].search(sortBy: attribute.sortBy)
 
     App.Log.debug 'ControllerForm', '_getRelationOptionList', attribute, list
 
     # build options list
-    @buildOptionList( list, attribute )
+    @buildOptionList(list, attribute)
 
   # build options list
   @buildOptionList: (list, attribute) ->
 
     for item in list
 
+      # check if element is selected, show it anyway - ignore active state
+      activeSupport = ('active' of item)
+      isSelected = false
+      if activeSupport && !item.active
+        isSelected = @_selectedOptionsIsSelected(attribute.value, {name: item.name || '', value: item.id})
+
       # if active or if active doesn't exist
-      if item.active || !( 'active' of item )
+      if item.active || !activeSupport || isSelected
         name_new = '?'
         if item.displayName
           name_new = item.displayName()
@@ -169,34 +175,17 @@ class App.UiElement.ApplicationUiElement
     return if typeof attribute.filter isnt 'function'
     App.Log.debug 'ControllerForm', '_filterOption:filter-function'
 
-    attribute.options = attribute.filter( attribute.options, attribute )
+    attribute.options = attribute.filter(attribute.options, attribute)
 
   # set selected attributes
   @selectedOptions: (attribute) ->
     return if !attribute.options
 
-    # check if selected / checked need to be set
-    check = (value, record) ->
-      if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
-
-        # if name or value is matching
-        if record.value.toString() is value.toString() || record.name.toString() is value.toString()
-          record.selected = 'selected'
-          record.checked = 'checked'
-
-      else if ( value && record.value && _.include( value, record.value ) ) || ( value && record.name && _.include( value, record.name ) )
+    # lookup of any record, if it need to be selected
+    for record in attribute.options
+      if @_selectedOptionsIsSelected(attribute.value, record)
         record.selected = 'selected'
         record.checked = 'checked'
-
-    # lookup of any record
-    for record in attribute.options
-
-      if _.isArray( attribute.value )
-        for value in attribute.value
-          check( value, record )
-
-      if typeof attribute.value is 'string' || typeof attribute.value is 'number' || typeof attribute.value is 'boolean'
-        check( attribute.value, record )
 
     # if noting is selected / checked, use default as selected / checked
     selected = false
@@ -205,14 +194,34 @@ class App.UiElement.ApplicationUiElement
         selected = true
     if !selected
       for record in attribute.options
-        if typeof attribute.default is 'string' || typeof attribute.default is 'number' || typeof attribute.default is 'boolean'
-          check( attribute.default, record )
+        if @_selectedOptionsIsSelected(attribute.default, record)
+          record.selected = 'selected'
+          record.checked = 'checked'
+
+  @_selectedOptionsIsSelected: (value, record) ->
+    if _.isArray(value)
+      for valueItem in value
+        if @_selectedOptionsIsSelectedItem(valueItem, record)
+          return true
+    if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
+      if @_selectedOptionsIsSelectedItem(value, record)
+        return true
+    false
+
+  @_selectedOptionsIsSelectedItem: (value, record) ->
+    # if name or value is matching
+    if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
+      if record.value.toString() is value.toString() || record.name.toString() is value.toString()
+        return true
+    else if ( value && record.value && _.include(value, record.value) ) || ( value && record.name && _.include(value, record.name) )
+      return true
+    false
 
   # set disabled attributes
   @disabledOptions: (attribute) ->
 
     return if !attribute.options
-    return if !_.isArray( attribute.options )
+    return if !_.isArray(attribute.options)
 
     for record in attribute.options
       if record.disable is true

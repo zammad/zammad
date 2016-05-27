@@ -12,7 +12,7 @@
 <div class="page-content">
   <% if !_.isEmpty(@itemsToChange): %>
   <div class="box box--message">
-    <h2>Database Update required</h2>
+    <h2><%- @T('Database Update required') %></h2>
     <p>
       <%- @T('Changes were made that require a database update.') %>
       <%- @T('This might take some time where the system can\'t be used.') %>
@@ -24,9 +24,9 @@
       <% for item in @itemsToChange: %>
         <li>
           <% if item.to_create is true: %>
-            <%- @T('Create') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Create') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% else if item.to_delete is true: %>
-            <%- @T('Delete') %> <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
+            <%- @T('Delete') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% end %>
       <% end %>
     </p>

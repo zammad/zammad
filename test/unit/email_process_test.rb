@@ -11,7 +11,9 @@ To: customer@example.com
 Subject: some subject
 
 Some Text',
-        trusted: false,
+        channel: {
+          trusted: false,
+        },
         success: true,
       },
       {
@@ -20,7 +22,9 @@ To: customer@example.com
 Subject: äöü some subject
 
 Some Textäöü",
-        trusted: false,
+        channel: {
+          trusted: false,
+        },
         success: true,
         result: {
           0 => {
@@ -116,7 +120,9 @@ Subject: Subject: =?utf-8?B?44CQ5LiT5Lia5Li65oKo5rOo5YaM6aaZ5riv5Y+K5rW35aSW5YWs
         =?utf-8?B?5YWs5Y+46Zmi5aOr5bel5L2c56uZ5pel5YmN5q2j5byP5bu6Li4uW+ivpue7hl0=?=
 
 Some Text",
-        trusted: false,
+        channel: {
+          trusted: false,
+        },
         success: true,
         result: {
           0 => {
@@ -1834,7 +1840,9 @@ Cc: any@example.com
 Subject: some subject
 
 Some Text',
-        trusted: false,
+        channel: {
+          trusted: false,
+        },
         success: true,
         result: {
           0 => {
@@ -1989,7 +1997,9 @@ Subject: some subject
 X-Zammad-Ignore: true
 
 Some Text',
-        trusted: true,
+        channel: {
+          trusted: true,
+        },
         success: false,
       },
       {
@@ -2003,7 +2013,9 @@ x-Zammad-Article-type: phone
 x-Zammad-Article-Internal: true
 
 Some Text',
-        trusted: true,
+        channel: {
+          trusted: true,
+        },
         success: true,
         result: {
           0 => {
@@ -2035,7 +2047,9 @@ x-Zammad-Article-Type: phone
 x-Zammad-Article-Internal: true
 
 Some Text',
-        trusted: false,
+        channel: {
+          trusted: false,
+        },
         success: true,
         result: {
           0 => {
@@ -2054,9 +2068,85 @@ Some Text',
     process(files)
   end
 
+  test 'process inactive group - a' do
+    group3 = Group.create_if_not_exists(
+      name: 'Test Group Inactive',
+      active: false,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    files = [
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+
+Some Text',
+        channel: {
+          group_id: group3.id,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            group: 'Users',
+            priority: '2 normal',
+            title: 'some subject',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+    ]
+    process(files)
+  end
+
+  test 'process inactive group - b' do
+    group_active_map = {}
+    Group.all.each {|group|
+      group_active_map[group.id] = group.active
+      group.active = false
+      group.save
+    }
+    files = [
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+
+Some Text',
+        channel: {},
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            group: 'Users',
+            priority: '2 normal',
+            title: 'some subject',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+    ]
+    process(files)
+
+    Group.all.each {|group|
+      next if !group_active_map.key?(group.id)
+      group.active = group_active_map[group.id]
+      group.save
+    }
+  end
+
   def process(files)
     files.each { |file|
-      result = Channel::EmailParser.new.process( { trusted: file[:trusted] }, file[:data] )
+      result = Channel::EmailParser.new.process(file[:channel]||{}, file[:data])
       if file[:success]
         if result && result.class == Array && result[1]
           assert( true )
@@ -2065,9 +2155,9 @@ Some Text',
               if file[:result][level]
                 file[:result][level].each { |key, value|
                   if result[level].send(key).respond_to?('name')
-                    assert_equal( value.to_s, result[level].send(key).name )
+                    assert_equal(value.to_s, result[level].send(key).name)
                   else
-                    assert_equal( value, result[level].send(key), "result check #{level}, #{key}")
+                    assert_equal(value, result[level].send(key), "result check #{level}, #{key}")
                   end
                 }
               end
@@ -2079,31 +2169,31 @@ Some Text',
               file[:verify][:users].each { |user_result|
                 user = User.where(email: user_result[:email]).first
                 if !user
-                  assert( false, "No user '#{user_result[:email]}' found!" )
+                  assert(false, "No user '#{user_result[:email]}' found!")
                   return
                 end
                 user_result.each { |key, value|
-                  if user.respond_to?( key )
-                    assert_equal( value, user.send(key), "user check #{ key }"  )
+                  if user.respond_to?( key)
+                    assert_equal(value, user.send(key), "user check #{ key }")
                   else
-                    assert_equal( value, user[key], "user check #{ key }"  )
+                    assert_equal(value, user[key], "user check #{ key }" )
                   end
                 }
               }
             end
           end
         else
-          assert( false, 'ticket not created', file )
+          assert(false, 'ticket not created', file)
         end
       elsif !file[:success]
         if result && result.class == Array && result[1]
         puts result.inspect
-        assert( false, 'ticket should not be created but is created' )
+        assert(false, 'ticket should not be created but is created')
         else
-          assert( true, 'ticket not created - nice' )
+          assert(true, 'ticket not created - nice')
         end
       else
-        assert( false, 'UNKNOWN!' )
+        assert(false, 'UNKNOWN!')
       end
     }
   end

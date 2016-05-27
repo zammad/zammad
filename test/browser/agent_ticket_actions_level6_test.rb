@@ -29,7 +29,7 @@ class AgentTicketActionLevel6Test < TestCase
     sleep 1
 
     # submit form
-    click( css: '.content.active .js-submit' )
+    click(css: '.content.active .js-submit')
     sleep 2
 
     # check warning
@@ -45,16 +45,16 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click( css: '.content.active .js-submit' )
+    click(css: '.content.active .js-submit')
     sleep 5
 
     # no warning
     #alert = @browser.switch_to.alert
 
     # check if ticket is shown and attachment exists
-    location_check( url: '#ticket/zoom/' )
+    location_check(url: '#ticket/zoom/')
     sleep 2
-    ticket_number = @browser.find_elements( { css: '.active .ticketZoom-header .ticket-number' } )[0].text
+    ticket_number = @browser.find_elements({ css: '.active .ticketZoom-header .ticket-number' })[0].text
     match(
       css: '.active .ticket-article-item:nth-child(1) .attachments',
       value: 'upload2.jpg',
@@ -77,9 +77,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # check warning
@@ -93,9 +91,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # no warning
@@ -136,9 +132,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # check warning
@@ -146,9 +140,7 @@ class AgentTicketActionLevel6Test < TestCase
       css: '.active .modal',
       value: 'missing',
     )
-    click(
-      css: '.active .modal .js-cancel',
-    )
+    click(css: '.active .modal .js-cancel')
     sleep 2
 
     ticket_update(
@@ -159,9 +151,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # submit form
-    click(
-      css: '.active .js-submit',
-    )
+    click(css: '.active .js-submit')
     sleep 2
 
     # discard changes should gone away
@@ -226,7 +216,7 @@ class AgentTicketActionLevel6Test < TestCase
     )
 
     # check if customer has changed in second browser
-    click( browser: browser1, css: '.active .tabsSidebar-tab[data-tab="customer"]')
+    click(browser: browser1, css: '.active .tabsSidebar-tab[data-tab="customer"]')
     watch_for(
       browser: browser1,
       css: '.active .tabsSidebar',
@@ -238,14 +228,14 @@ class AgentTicketActionLevel6Test < TestCase
     #
 
     # modify customer
-    click( browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    click( browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
     sleep 2
-    set( browser: browser1, css: '.modal [name="address"]', value: 'some new address' )
-    click( browser: browser1, css: '.modal .js-submit')
+    set(browser: browser1, css: '.modal [name="address"]', value: 'some new address')
+    click(browser: browser1, css: '.modal .js-submit')
 
     # verify is customer has chnaged other browser too
-    click( browser: browser2, css: '.active .tabsSidebar-tab[data-tab="customer"]')
+    click(browser: browser2, css: '.active .tabsSidebar-tab[data-tab="customer"]')
     watch_for(
       browser: browser2,
       css: '.active .sidebar[data-tab="customer"]',
@@ -257,18 +247,18 @@ class AgentTicketActionLevel6Test < TestCase
     #
 
     # change org of customer, check if org is shown in sidebar
-    click( browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    click( browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
     sleep 2
-    set( browser: browser1, css: '.modal .js-input', value: 'zammad' )
-    click( browser: browser1, css: '.modal .js-input' )
-    click( browser: browser1, css: '.modal .js-option' )
+    set(browser: browser1, css: '.modal .js-input', value: 'zammad')
+    click(browser: browser1, css: '.modal .js-input')
+    click(browser: browser1, css: '.modal .js-option')
 
-    click( browser: browser1, css: '.modal .js-submit')
+    click(browser: browser1, css: '.modal .js-submit')
 
     # check if org has changed in second browser
     sleep 3
-    click( browser: browser2, css: '.active .tabsSidebar-tab[data-tab="organization"]')
+    click(browser: browser2, css: '.active .tabsSidebar-tab[data-tab="organization"]')
     watch_for(
       browser: browser2,
       css: '.active .sidebar[data-tab="organization"]',

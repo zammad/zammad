@@ -20,7 +20,7 @@
             <%= screen %>
           <td class="settings-list-row-control">
             <% for key, defaultValue of options: %>
-              <%= @T(key) %>: <input name="{boolean}screens::<%= screen %>::<%= role %>::<%= key %>" type="checkbox" <% if (@init && defaultValue is true) || (@params && @params.screens && @params.screens[screen] && @params.screens[screen][role] && @params.screens[screen][role][key] is true) : %>checked<% end %> value="true">
+              <%- @T(key) %>: <input name="{boolean}screens::<%= screen %>::<%= role %>::<%= key %>" type="checkbox" <% if (@init && defaultValue is true) || (@params && @params.screens && @params.screens[screen] && @params.screens[screen][role] && @params.screens[screen][role][key] is true) : %>checked<% end %> value="true">
             <% end %>
         <% end %>
       <% end %>

@@ -5,8 +5,8 @@ class Setting < ApplicationModel
   store         :state_current
   store         :state_initial
   store         :preferences
-  before_create :state_check, :set_initial
-  before_update :state_check
+  before_create :state_check, :set_initial, :check_broadcast
+  before_update :state_check, :check_broadcast
   after_create  :reset_cache
   after_update  :reset_cache
   after_destroy :reset_cache
@@ -167,5 +167,21 @@ reload config settings
     return if !state
     return if state && state.respond_to?('has_key?') && state.key?(:value)
     self.state_current = { value: state }
+  end
+
+  # notify clients about public config changes
+  def check_broadcast
+    return if frontend != true
+    value = state_current
+    if state_current.key?(:value)
+      value = state_current[:value]
+    end
+    Sessions.broadcast(
+      {
+        event: 'config_update',
+        data: { name: name, value: value }
+      },
+      'public'
+    )
   end
 end

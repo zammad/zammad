@@ -5,10 +5,10 @@ class App.TicketZoomTitle extends App.ObserverController
     title: true
 
   events:
-    'blur .ticket-title-update': 'update'
+    'blur .js-objectTitle': 'update'
 
   renderPost: (object) =>
-    @$('.ticket-title-update').ce({
+    @$('.js-objectTitle').ce({
       mode:      'textonly'
       multiline: false
       maxlength: 250

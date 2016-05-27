@@ -1,6 +1,13 @@
 class Index extends App.ControllerContent
   events:
-    'submit form': 'sendMessage'
+    'change .js-modeSetting input': 'setMode'
+    'change .js-loginSetting input': 'setLogin'
+    'blur .js-Login': 'updateMessage'
+    'submit .js-Message': 'sendMessage'
+
+  elements:
+    '.js-modeSetting input': 'modeSetting'
+    '.js-loginSetting input': 'loginSetting'
 
   constructor: ->
     super
@@ -10,20 +17,56 @@ class Index extends App.ControllerContent
 
     @title 'Maintenance', true
 
-    @render()
+    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
-  render: ->
-    @html App.view('maintenance')()
+  release: =>
+    App.Setting.unsubscribe(@subscribeId)
+
+  render: =>
+    localElement = $(App.view('maintenance')())
+    localElement.find('.js-loginPreview').html( App.view('generic/login_preview')(
+      logoUrl: @logoUrl()
+    ))
+
+    localElement.find('.js-textarea').ce({
+      mode:      'richtext'
+      multiline: true
+      maxlength: 20000
+    })
+
+    @html localElement
+
+  setMode: (e) =>
+    value = @modeSetting.prop('checked')
+    return if value && !confirm('Sure?')
+    App.Setting.set('maintenance_mode', value)
+    App.WebSocket.send(
+      event:'maintenance'
+      data:
+        type: 'mode'
+        on: value
+    )
+
+  setLogin: (e) =>
+    value = @loginSetting.prop('checked')
+    App.Setting.set('maintenance_login', value)
+
+  updateMessage: (e) =>
+    e.preventDefault()
+    params = @formParam(e.target)
+    App.Setting.set('maintenance_login_message', params.message)
+    @notify
+      type:      'success'
+      msg:       App.i18n.translateContent('Update successful!')
+      removeAll: true
 
   sendMessage: (e) ->
     e.preventDefault()
     params = @formParam(e.target)
-    App.Event.trigger(
-      'ws:send'
-        event: 'broadcast'
-        data:
-          event: 'session:maintenance'
-          data:  params
+    params.type = 'message'
+    App.WebSocket.send(
+      event:'maintenance'
+      data: params
     )
     @notify
       type:      'success'
@@ -31,4 +74,4 @@ class Index extends App.ControllerContent
       removeAll: true
     @render()
 
-App.Config.set( 'Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, role: ['Admin'] }, 'NavBarAdmin')

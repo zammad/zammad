@@ -222,13 +222,13 @@ class App.ChannelEmailAccountOverview extends App.Controller
   events:
     'click .js-channelNew': 'wizard'
     'click .js-channelDelete': 'delete'
-    'click .js-channelGroupChange': 'group_change'
-    'click .js-editInbound': 'edit_inbound'
-    'click .js-editOutbound': 'edit_outbound'
-    'click .js-emailAddressNew': 'email_address_new'
-    'click .js-emailAddressEdit': 'email_address_edit'
-    'click .js-emailAddressDelete': 'email_address_delete',
-    'click .js-editNotificationOutbound': 'edit_notification_outbound'
+    'click .js-channelGroupChange': 'groupChange'
+    'click .js-editInbound': 'editInbound'
+    'click .js-editOutbound': 'editOutbound'
+    'click .js-emailAddressNew': 'emailAddressNew'
+    'click .js-emailAddressEdit': 'emailAddressEdit'
+    'click .js-emailAddressDelete': 'emailAddressDelete',
+    'click .js-editNotificationOutbound': 'editNotificationOutbound'
 
   constructor: ->
     super
@@ -259,13 +259,13 @@ class App.ChannelEmailAccountOverview extends App.Controller
     for channel_id in data.account_channel_ids
       account_channel = App.Channel.fullLocal(channel_id)
       if account_channel.group_id
-        account_channel.group = App.Group.find(account_channel.group_id).displayName()
+        account_channel.group = App.Group.find(account_channel.group_id)
       else
         account_channel.group = '-'
       account_channels.push account_channel
 
     for channel in account_channels
-      email_addresses = App.EmailAddress.search( filter: { channel_id: channel.id } )
+      email_addresses = App.EmailAddress.search(filter: { channel_id: channel.id })
       channel.email_addresses = email_addresses
 
     # get all unlinked email addresses
@@ -294,7 +294,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       channelDriver: @channelDriver
     )
 
-  edit_inbound: (e) =>
+  editInbound: (e) =>
     e.preventDefault()
     id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
@@ -307,7 +307,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       channelDriver: @channelDriver
     )
 
-  edit_outbound: (e) =>
+  editOutbound: (e) =>
     e.preventDefault()
     id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
@@ -330,7 +330,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback:  @load
     )
 
-  group_change: (e) =>
+  groupChange: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     item = App.Channel.find(id)
@@ -340,7 +340,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback: @load
     )
 
-  email_address_new: (e) =>
+  emailAddressNew: (e) =>
     e.preventDefault()
     channel_id = $(e.target).closest('.action').data('id')
     new App.ControllerGenericNew(
@@ -353,7 +353,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback: @load
     )
 
-  email_address_edit: (e) =>
+  emailAddressEdit: (e) =>
     e.preventDefault()
     id = $(e.target).closest('li').data('id')
     new App.ControllerGenericEdit(
@@ -365,7 +365,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback: @load
     )
 
-  email_address_delete: (e) =>
+  emailAddressDelete: (e) =>
     e.preventDefault()
     id = $(e.target).closest('li').data('id')
     item = App.EmailAddress.find(id)
@@ -375,7 +375,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
       callback: @load
     )
 
-  edit_notification_outbound: (e) =>
+  editNotificationOutbound: (e) =>
     e.preventDefault()
     id      = $(e.target).closest('.action').data('id')
     channel = App.Channel.find(id)
@@ -395,7 +395,7 @@ class App.ChannelEmailEdit extends App.ControllerModal
 
   content: =>
     configureAttributesBase = [
-      { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
+      { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true, filter: { active: true } },
     ]
     @form = new App.ControllerForm(
       model:

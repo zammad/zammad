@@ -208,6 +208,7 @@ class App.Utils
       .removeAttr('lang')
       .removeAttr('type')
       .removeAttr('id')
+      .removeAttr('wrap')
       .removeAttrs(/data-/)
     html
       .removeAttr('style')
@@ -216,6 +217,7 @@ class App.Utils
       .removeAttr('lang')
       .removeAttr('type')
       .removeAttr('id')
+      .removeAttr('wrap')
       .removeAttrs(/data-/)
     html
 

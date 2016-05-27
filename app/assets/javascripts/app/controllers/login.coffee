@@ -21,6 +21,20 @@ class Index extends App.ControllerContent
     @render()
     @navupdate '#login'
 
+    # observe config changes related to login page
+    @bind('config_update_local', (data) =>
+      return if data.name != 'maintenance_mode' &&
+        data.name != 'maintenance_login' &&
+        data.name != 'maintenance_login_message' &&
+        data.name != 'user_lost_password' &&
+        data.name != 'user_create_account' &&
+        data.name != 'product_name' &&
+        data.name != 'product_logo' &&
+        data.name != 'fqdn'
+      @render()
+      'rerender'
+    )
+
   render: (data = {}) ->
     auth_provider_all = {
       facebook: {
@@ -100,11 +114,15 @@ class Index extends App.ControllerContent
       @navigate '#/'
 
   error: (xhr, statusText, error) =>
+    detailsRaw = xhr.responseText
+    details = {}
+    if !_.isEmpty(detailsRaw)
+      details = JSON.parse(detailsRaw)
 
     # add notify
     @notify
       type:      'error'
-      msg:       App.i18n.translateContent('Wrong Username and Password combination.')
+      msg:       App.i18n.translateContent(details.error || 'Wrong Username and Password combination.')
       removeAll: true
 
     # rerender login page

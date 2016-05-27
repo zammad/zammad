@@ -64,17 +64,17 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     sleep 1
-    Sessions.destory_idle_sessions(5)
+    Sessions.destory_idle_sessions(3)
     assert(Sessions.session_exists?(client_id1), 'check if session exists after 1 sec')
     assert(Sessions.session_exists?(client_id2), 'check if session exists after 1 sec')
     assert(Sessions.session_exists?(client_id3), 'check if session exists after 1 sec')
 
     # check if session still exists after idle cleanup with touched sessions
-    sleep 6
+    sleep 4
     Sessions.touch(client_id1)
     Sessions.touch(client_id2)
     Sessions.touch(client_id3)
-    Sessions.destory_idle_sessions(5)
+    Sessions.destory_idle_sessions(3)
     assert(Sessions.session_exists?(client_id1), 'check if session exists after touch')
     assert(Sessions.session_exists?(client_id2), 'check if session exists after touch')
     assert(Sessions.session_exists?(client_id3), 'check if session exists after touch')
@@ -145,7 +145,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     jobs = Thread.new {
       Sessions.jobs
     }
-    sleep 5
+    sleep 3
     #jobs.join
 
     # check client threads
@@ -154,15 +154,15 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert(Sessions.thread_client_exists?(client_id3), 'check if client is running')
 
     # check if session still exists after idle cleanup
-    sleep 8
-    client_ids = Sessions.destory_idle_sessions(5)
+    sleep 4
+    client_ids = Sessions.destory_idle_sessions(3)
 
     # check client sessions
     assert(!Sessions.session_exists?(client_id1), 'check if session is removed')
     assert(!Sessions.session_exists?(client_id2), 'check if session is removed')
     assert(!Sessions.session_exists?(client_id3), 'check if session is removed')
 
-    sleep 10
+    sleep 6
 
     # check client threads
     assert(!Sessions.thread_client_exists?(client_id1), 'check if client is running')
@@ -235,7 +235,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert(Sessions.session_exists?(client_id1_0), 'check if session exists')
     assert(Sessions.session_exists?(client_id1_1), 'check if session exists')
     assert(Sessions.session_exists?(client_id2), 'check if session exists')
-    sleep 11
+    sleep 8
 
     # check collections
     collections = {
@@ -254,7 +254,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     check_if_collection_reset_message_exists(client_id1_1, collections, 'init2')
     check_if_collection_reset_message_exists(client_id2, collections, 'init2')
 
-    sleep 11
+    sleep 8
 
     collections = {
       'Group' => nil,
@@ -268,7 +268,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     group = Group.first
     group.touch
 
-    sleep 11
+    sleep 8
 
     # check collections
     collections = {
@@ -280,8 +280,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     check_if_collection_reset_message_exists(client_id2, collections, 'update')
 
     # check if session still exists after idle cleanup
-    sleep 6
-    client_ids = Sessions.destory_idle_sessions(5)
+    sleep 4
+    client_ids = Sessions.destory_idle_sessions(3)
 
     # check client sessions
     assert(!Sessions.session_exists?(client_id1_0), 'check if session is removed')
