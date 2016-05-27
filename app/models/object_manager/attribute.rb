@@ -595,11 +595,8 @@ returns
     if execute_count != 0
       if ENV['APP_RESTART_CMD']
         AppVersion.set(true, 'restart_auto')
-        pid = fork do
-          sleep 5
-          system(ENV['APP_RESTART_CMD'])
-          Process.exit!(true)
-        end
+        sleep 4
+        Delayed::Job.enqueue(Observer::AppVersionRestartJob.new(ENV['APP_RESTART_CMD']))
       else
         AppVersion.set(true, 'restart_manual')
       end
@@ -622,7 +619,7 @@ returns
       raise 'Only letters from a-z, numbers from 0-9, and _ are allowed'
     elsif name !~ /[a-z]/
       raise 'At least one letters is needed'
-    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table)$/i
+    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table)$/
       raise "#{name} is a reserved word, please choose a different one"
     end
     true

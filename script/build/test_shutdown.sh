@@ -3,6 +3,8 @@ RAILS_ENV=$1
 APP_PORT=$2
 WS_PORT=$3
 EXIT=$4 || 0
+WITH_DB=$5 || 0
+
 SERVER_PID='tmp/pids/server.pid'
 
 script/scheduler.rb stop
@@ -13,7 +15,8 @@ if [ -f $SERVER_PID ]; then
    kill -9 $(cat $SERVER_PID)
 fi
 
-rake db:drop RAILS_ENV=test
-rake db:drop RAILS_ENV=production
+if WITH_DB; then
+  script/build/test_cleanup.sh
+fi
 
 exit $EXIT
