@@ -1,4 +1,4 @@
-[![build status](https://git.znuny.com/ci/projects/508/status.png?ref=master)](https://git.znuny.com/ci/projects/508/status.png?ref=master)
+[![build status](https://git.znuny.com/zammad/zammad/badges/master/build.svg)](https://git.znuny.com/zammad/zammad/builds)
 
 Welcome to Zammad
 =================
