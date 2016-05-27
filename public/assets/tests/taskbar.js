@@ -6,6 +6,7 @@ test( "taskbar basic tests", function() {
   App.TaskManager.init({
     el:           $('#taskbar1'),
     offlineModus: true,
+    force:        true,
   })
 
   // add tasks

@@ -1,7 +1,10 @@
 class App.TaskManager
   _instance = undefined
 
-  @init: (params) ->
+  @init: (params = {}) ->
+    if params.force
+      _instance = new _taskManagerSingleton(params)
+      return
     _instance ?= new _taskManagerSingleton(params)
 
   @all: ->
