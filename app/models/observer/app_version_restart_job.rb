@@ -4,7 +4,7 @@ class Observer::AppVersionRestartJob
   end
 
   def perform
-    output = `#{@cmd}`
-    Rails.logger.info "CMD: #{@cmd} -> #{output}"
+    system(@cmd)
+    Rails.logger.info "execute CMD: #{@cmd}"
   end
 end

@@ -72,7 +72,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 26,
+      timeout: 120,
     )
     sleep 5
     watch_for(
@@ -137,7 +137,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 26,
+      timeout: 120,
     )
     sleep 5
     watch_for(
