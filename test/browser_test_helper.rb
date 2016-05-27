@@ -1677,7 +1677,7 @@ wait untill text in selector disabppears
     )
 
     found = false
-    (1..4).each {
+    (1..8).each {
       element = instance.find_elements(css: '.active .newTicket')[0]
       if element
         found = true

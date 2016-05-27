@@ -19,6 +19,7 @@ class App.ImageService
     imageObject.onload = ->
       imageWidth  = imageObject.width
       imageHeight = imageObject.height
+      console.log('ImageService', 'current size', imageWidth, imageHeight)
       if y is 'auto' && x is 'auto'
         x = imageWidth
         y = imageHeight
@@ -68,10 +69,10 @@ class App.ImageService
       newDataUrl = canvas.toDataURL(type, quallity)
       if resize
         console.log('ImageService', 'resize', x/sizeFactor, y/sizeFactor, quallity, (newDataUrl.length * 0.75)/1024/1024, 'in mb')
-        callback(newDataUrl, x/sizeFactor, y/sizeFactor)
+        callback(newDataUrl, x/sizeFactor, y/sizeFactor, true)
         return
       console.log('ImageService', 'no resize', x, y, quallity, (newDataUrl.length * 0.75)/1024/1024, 'in mb')
-      callback(newDataUrl, x, y)
+      callback(newDataUrl, x, y, false)
 
     # load image from data url
     imageObject.src = dataURL
