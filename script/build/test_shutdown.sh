@@ -15,7 +15,7 @@ if [ -f $SERVER_PID ]; then
    kill -9 $(cat $SERVER_PID)
 fi
 
-if WITH_DB; then
+if test $WITH_DB -eq 1; then
   script/build/test_cleanup.sh
 fi
 
