@@ -304,6 +304,11 @@ test("htmlRemoveTags", function() {
   result = App.Utils.htmlRemoveRichtext($(source))
   equal(result.html(), should, source)
 
+  source = "<div><p wrap=\"\">test 123</p></div>"
+  should = "<p>test 123</p>"
+  result = App.Utils.htmlRemoveRichtext($(source))
+  equal(result.html(), should, source)
+
   source = "<div><font size=\"3\" color=\"red\">This is some text!</font></div>"
   should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext($(source))
