@@ -473,9 +473,13 @@ returns
 
   [record1, record2, ...]
 
+to send no browser reload event, pass false
+
+  ObjectManager::Attribute.migration_execute(false)
+
 =end
 
-  def self.migration_execute
+  def self.migration_execute(send_event = true)
 
     # check if field already exists
     execute_count = 0
@@ -592,7 +596,7 @@ returns
     }
 
     # sent maintenance message to clients
-    if execute_count != 0
+    if send_event && execute_count != 0
       if ENV['APP_RESTART_CMD']
         AppVersion.set(true, 'restart_auto')
         sleep 4

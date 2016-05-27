@@ -456,7 +456,7 @@ module Import::Zendesk
       created_by_id:     1,
       updated_by_id:     1,
     )
-    ObjectManager::Attribute.migration_execute
+    ObjectManager::Attribute.migration_execute(false)
   end
 
   # OAuth
@@ -1001,7 +1001,7 @@ module Import::Zendesk
   # https://developer.zendesk.com/rest_api/docs/core/automations
   def import_automations
 
-    @client.automations.all! { |zendesk_automation|
+    @client.automations.all! { |_zendesk_automation|
 
       # "url"        => "https://example.zendesk.com/api/v2/automations/60037892.json"
       # "id"         => 60037892
