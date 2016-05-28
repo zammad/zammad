@@ -23,7 +23,7 @@ list of all attributes
 =end
 
   def self.list_full
-    result = ObjectManager::Attribute.all
+    result = ObjectManager::Attribute.all.order('position ASC, name ASC')
     attributes = []
     assets = {}
     result.each {|item|
@@ -354,7 +354,7 @@ returns:
       active: true,
       to_create: false,
       to_delete: false,
-    ).order('position ASC')
+    ).order('position ASC, name ASC')
     attributes = []
     result.each {|item|
       data = {
@@ -534,7 +534,7 @@ to send no browser reload event, pass false
             attribute.name,
             data_type,
             default: attribute.data_option[:default],
-            null: false
+            null: true
           )
         else
           raise "Unknown attribute.data_type '#{attribute.data_type}', can't update attribute"
@@ -571,7 +571,7 @@ to send no browser reload event, pass false
           attribute.name,
           data_type,
           default: attribute.data_option[:default],
-          null: false
+          null: true
         )
       elsif attribute.data_type =~ /^datetime|date$/
         ActiveRecord::Migration.add_column(
@@ -623,7 +623,7 @@ to send no browser reload event, pass false
       raise 'Only letters from a-z, numbers from 0-9, and _ are allowed'
     elsif name !~ /[a-z]/
       raise 'At least one letters is needed'
-    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table)$/
+    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table|varchar|blob|date|datetime|timestamp)$/
       raise "#{name} is a reserved word, please choose a different one"
     end
     true
@@ -665,7 +665,7 @@ to send no browser reload event, pass false
     end
 
     if data_type == 'select' || data_type == 'checkbox'
-      raise 'Need data_option[:default] param' if data_option[:default].nil?
+      raise 'Need data_option[:default] param' if !data_option.key?(:default)
       raise 'Invalid data_option[:options] or data_option[:relation] param' if data_option[:options].nil? && data_option[:relation].nil?
       if !data_option.key?(:nulloption)
         data_option[:nulloption] = true
@@ -673,7 +673,7 @@ to send no browser reload event, pass false
     end
 
     if data_type == 'boolean'
-      raise 'Need data_option[:default] param true|false' if data_option[:default].nil?
+      raise 'Need data_option[:default] param true|false|undefined' if !data_option.key?(:default)
       raise 'Invalid data_option[:options] param' if data_option[:options].nil?
     end
 

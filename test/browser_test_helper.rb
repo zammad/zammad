@@ -1779,7 +1779,7 @@ wait untill text in selector disabppears
           browser:  instance,
           css:      ".active .newTicket select[name=\"#{local_key}\"]",
           value:    local_value,
-          mute_log: true,
+          #mute_log: true,
         )
       }
     end
@@ -1790,7 +1790,7 @@ wait untill text in selector disabppears
           css:      ".active .newTicket input[name=\"#{local_key}\"]",
           value:    local_value,
           clear:    true,
-          mute_log: true,
+          #mute_log: true,
         )
       }
     end
@@ -2018,7 +2018,7 @@ wait untill text in selector disabppears
           browser:  instance,
           css:      ".active .sidebar select[name=\"#{local_key}\"]",
           value:    local_value,
-          mute_log: true,
+          #mute_log: true,
         )
       }
     end
@@ -2029,7 +2029,7 @@ wait untill text in selector disabppears
           css:      ".active .sidebar input[name=\"#{local_key}\"]",
           value:    local_value,
           clear:    true,
-          mute_log: true,
+          #mute_log: true,
         )
       }
     end
@@ -2095,6 +2095,12 @@ wait untill text in selector disabppears
       body:  'some body',
 ##      group: 'some group',
 ##      state: 'closed',
+      custom_data_select: {
+        key1: 'some value',
+      },
+      custom_data_input: {
+        key1: 'some value',
+      },
     },
   )
 
@@ -2108,7 +2114,7 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     if data[:title]
-      title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle')[0].text.strip
+      title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle').first.text.strip
       if title =~ /#{data[:title]}/i
         assert(true, "matching '#{data[:title]}' in title '#{title}'")
       else
@@ -2117,13 +2123,37 @@ wait untill text in selector disabppears
     end
 
     if data[:body]
-      body = instance.find_elements(css: '.content.active [data-name="body"]')[0].text.strip
+      body = instance.find_elements(css: '.content.active [data-name="body"]').first.text.strip
       if body =~ /#{data[:body]}/i
         assert(true, "matching '#{data[:body]}' in body '#{body}'")
       else
         raise "not matching '#{data[:body]}' in body '#{body}'"
       end
     end
+
+    if params[:custom_data_select]
+      params[:custom_data_select].each {|local_key, local_value|
+        element = instance.find_elements(css: ".active .sidebar select[name=\"#{local_key}\"] option[selected]").first
+        value = element.text.strip
+        if value =~ /#{local_value}/i
+          assert(true, "matching '#{value}' in #{local_key} '#{local_value}'")
+        else
+          raise "not matching '#{value}' in #{local_key} '#{local_value}'"
+        end
+      }
+    end
+    if params[:custom_data_input]
+      params[:custom_data_input].each {|local_key, local_value|
+        element = instance.find_elements(css: ".active .sidebar input[name=\"#{local_key}\"]").first
+        value = element.text.strip
+        if value =~ /#{local_value}/i
+          assert(true, "matching '#{value}' in #{local_key} '#{local_value}'")
+        else
+          raise "not matching '#{value}' in #{local_key} '#{local_value}'"
+        end
+      }
+    end
+
     true
   end
 
@@ -2717,12 +2747,89 @@ wait untill text in selector disabppears
     data: {
       name: 'field_name' + random,
       display: 'Display Name of Field',
-      data_type: 'Text', # Text|Select|...
+      data_type: 'Select',
       data_option: {
         options: {
           'aa' => 'AA',
           'bb' => 'BB',
         },
+
+        default: 'abc',
+      },
+    },
+    error: 'already exists'
+  )
+
+  object_manager_attribute_create(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+      data_type: 'Text',
+      data_option: {
+        default: 'abc',
+      },
+    },
+    error: 'already exists'
+  )
+
+  object_manager_attribute_create(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+      data_type: 'Integer',
+      data_option: {
+        default: '15',
+        min: 1,
+        max: 999999,
+      },
+    },
+    error: 'already exists'
+  )
+
+  object_manager_attribute_create(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+      data_type: 'Datetime',
+      data_option: {
+        future: true,
+        past: true,
+        diff: 24,
+      },
+    },
+    error: 'already exists'
+  )
+
+  object_manager_attribute_create(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+      data_type: 'Date',
+      data_option: {
+        future: true,
+        past: true,
+        diff: 24,
+      },
+    },
+    error: 'already exists'
+  )
+
+  object_manager_attribute_create(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+      data_type: 'Boolean',
+      data_option: {
+        options: {
+          true: 'YES',
+          false: 'NO',
+        }
+        default: undefined,
       },
     },
     error: 'already exists'
@@ -2768,17 +2875,44 @@ wait untill text in selector disabppears
     )
     if data[:data_option]
       if data[:data_option][:options]
-        data[:data_option][:options].each {|key, value|
-          element = instance.find_elements(css: '.modal .js-Table .js-key').last
+        if data[:data_type] == 'Boolean'
+          element = instance.find_elements(css: '.modal .js-valueTrue').first
           element.clear
-          element.send_keys(key)
-          element = instance.find_elements(css: '.modal .js-Table .js-value').last
+          element.send_keys(data[:data_option][:options][:true])
+          element = instance.find_elements(css: '.modal .js-valueFalse').first
           element.clear
-          element.send_keys(value)
-          element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
-          element.click
-        }
+          element.send_keys(data[:data_option][:options][:false])
+        else
+          data[:data_option][:options].each {|key, value|
+            element = instance.find_elements(css: '.modal .js-Table .js-key').last
+            element.clear
+            element.send_keys(key)
+            element = instance.find_elements(css: '.modal .js-Table .js-value').last
+            element.clear
+            element.send_keys(value)
+            element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
+            element.click
+          }
+        end
       end
+
+      [:default, :min, :max, :diff].each {|key|
+        next if !data[:data_option].key?(key)
+        element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
+        element.clear
+        element.send_keys(data[:data_option][key])
+      }
+
+      [:future, :past].each {|key|
+        next if !data[:data_option].key?(key)
+        select(
+          browser:  instance,
+          css:      ".modal select[name=\"data_option::#{key}\"]",
+          value:    data[:data_option][key],
+          mute_log: true,
+        )
+      }
+
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
     if params[:error]
@@ -2823,6 +2957,9 @@ wait untill text in selector disabppears
   def object_manager_attribute_delete(params = {})
     switch_window_focus(params)
     log('object_manager_attribute_delete', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
 
     click(
       browser: instance,

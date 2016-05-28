@@ -4,5 +4,5 @@ class App.UiElement.integer
     attribute.type = 'number'
     attribute.step = '1'
     item = $( App.view('generic/input')(attribute: attribute) )
-    item.find('select').data('field-type', 'integer')
+    item.data('field-type', 'integer')
     item

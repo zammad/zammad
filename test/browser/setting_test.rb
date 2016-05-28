@@ -30,11 +30,11 @@ class SettingTest < TestCase
 
     # set yes
     select(
-      css: '#auth_facebook select[name="{boolean}auth_facebook"]',
+      css: '#auth_facebook select[name="auth_facebook"]',
       value: 'yes',
     )
     match(
-      css: '#auth_facebook select[name="{boolean}auth_facebook"]',
+      css: '#auth_facebook select[name="auth_facebook"]',
       value: 'yes',
     )
     click( css: '#auth_facebook button[type=submit]' )
@@ -44,17 +44,17 @@ class SettingTest < TestCase
     )
     sleep 4
     match(
-      css: '#auth_facebook select[name="{boolean}auth_facebook"]',
+      css: '#auth_facebook select[name="auth_facebook"]',
       value: 'yes',
     )
     match_not(
-      css: '#auth_facebook select[name="{boolean}auth_facebook"]',
+      css: '#auth_facebook select[name="auth_facebook"]',
       value: 'no',
     )
 
     # set no
     select(
-      css: '#auth_facebook select[name="{boolean}auth_facebook"]',
+      css: '#auth_facebook select[name="auth_facebook"]',
       value: 'no',
     )
     click( css: '#auth_facebook button[type=submit]' )
@@ -64,11 +64,11 @@ class SettingTest < TestCase
     )
     sleep 4
     match(
-      css: '#auth_facebook select[name="{boolean}auth_facebook"]',
+      css: '#auth_facebook select[name="auth_facebook"]',
       value: 'no',
     )
     match_not(
-      css: '#auth_facebook select[name="{boolean}auth_facebook"]',
+      css: '#auth_facebook select[name="auth_facebook"]',
       value: 'yes',
     )
 
