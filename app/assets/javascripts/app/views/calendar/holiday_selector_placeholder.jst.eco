@@ -1,7 +1,7 @@
 <tr class="" data-date="<%= @placeholderDate %>">
   <td>
     <label class="checkbox-replacement">
-      <input type="checkbox" checked class="js-active" name="<%= @nameActive %>" value="true">
+      <input type="checkbox" checked class="js-active js-boolean" name="<%= @nameActive %>" value="true">
       <%- @Icon('checkbox', 'icon-unchecked') %>
       <%- @Icon('checkbox-checked', 'icon-checked') %>
     </label>

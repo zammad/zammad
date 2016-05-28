@@ -1,7 +1,4 @@
 <div>
-  <div class="js-selectDefault"></div>
-  <div class="js-selectOption"></div>
-
   <table class="settings-list js-Table" style="width: 100%;">
     <thead>
       <tr>

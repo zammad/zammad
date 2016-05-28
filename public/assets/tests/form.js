@@ -862,7 +862,7 @@ test("form required_if + shown_if", function() {
   equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4 ')
 
 
-  el.find('[name="{boolean}active"]').val('false').trigger('change')
+  el.find('[name="active"]').val('false').trigger('change')
   test_params = {
     input1: "some not used default33",
     active: false,
@@ -875,7 +875,7 @@ test("form required_if + shown_if", function() {
   equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4')
 
 
-  el.find('[name="{boolean}active"]').val('true').trigger('change')
+  el.find('[name="active"]').val('true').trigger('change')
   test_params = {
     input1: "some not used default33",
     input2: "some name66",

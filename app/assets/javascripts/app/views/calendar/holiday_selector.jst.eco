@@ -11,7 +11,7 @@
     <tr <% if !meta.active: %>class="is-inactive"<% end %> data-date="<%= day %>">
       <td class="u-positionOrigin">
         <label class="checkbox-replacement checkbox-replacement--fullscreen">
-          <input type="checkbox" <% if meta.active: %>checked<% end %> class="js-active" name="{boolean}public_holidays::<%= day %>::active" value="true">
+          <input type="checkbox" <% if meta.active: %>checked<% end %> class="js-active js-boolean" name="public_holidays::<%= day %>::active" value="true">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>

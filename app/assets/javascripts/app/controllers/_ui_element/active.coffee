@@ -12,10 +12,6 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
       { name: 'inactive', value: false }
     ]
 
-    # set data type
-    if attribute.name
-      attribute.name = '{boolean}' + attribute.name
-
     # build options list based on config
     @getConfigOptionList(attribute, params)
 
@@ -26,4 +22,6 @@ class App.UiElement.active extends App.UiElement.ApplicationUiElement
     @selectedOptions(attribute, params)
 
     # return item
-    $( App.view('generic/select')( attribute: attribute ) )
+    item = $( App.view('generic/select')(attribute: attribute) )
+    item.find('select').data('field-type', 'boolean')
+    item

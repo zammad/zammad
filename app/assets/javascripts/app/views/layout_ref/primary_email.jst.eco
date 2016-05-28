@@ -366,7 +366,7 @@
 
               <div class="controls">
                 <div class="u-positionOrigin">
-                  <select class="form-control" id="User_510389_vip" name="{boolean}vip">
+                  <select class="form-control" id="User_510389_vip" name="vip">
                     <option selected value="false">
                       no
                     </option>
@@ -424,7 +424,7 @@
 
               <div class="controls">
                 <div class="u-positionOrigin">
-                  <select class="form-control" id="User_510389_active" name="{boolean}active" required="">
+                  <select class="form-control" id="User_510389_active" name="active" required="">
                     <option selected value="true">
                       active
                     </option>

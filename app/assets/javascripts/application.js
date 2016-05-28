@@ -203,6 +203,47 @@ jQuery.fn.removeAttrs = function(regex) {
   });
 };
 
+// based on jquery serializeArray
+// changes
+// - set type based on data('field-type')
+// - also catch [disabled] params
+jQuery.fn.extend( {
+  serializeArrayWithType: function() {
+    var r20 = /%20/g,
+      rbracket = /\[\]$/,
+      rCRLF = /\r?\n/g,
+      rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
+      rsubmittable = /^(?:input|select|textarea|keygen)/i;
+    var rcheckableType = ( /^(?:checkbox|radio)$/i );
+    return this.map( function() {
+
+      // Can add propHook for "elements" to filter or add form elements
+      var elements = jQuery.prop( this, "elements" );
+      return elements ? jQuery.makeArray( elements ) : this;
+    } )
+    .filter( function() {
+      var type = this.type;
+
+      return this.name &&
+        rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
+        ( this.checked || !rcheckableType.test( type ) );
+    } )
+    .map( function( i, elem ) {
+      var $elem = jQuery( this );
+      var val = $elem.val();
+      var type = $elem.data('field-type');
+
+      return val == null ?
+        null :
+        jQuery.isArray( val ) ?
+          jQuery.map( val, function( val ) {
+            return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+          } ) :
+          { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+    } ).get();
+  }
+} );
+
 // start application
 jQuery(function(){
   new App.Run();

@@ -10,10 +10,6 @@ class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
       ]
       attribute.translate = true
 
-    # set data type
-    if attribute.name
-      attribute.name = '{boolean}' + attribute.name
-
     # build options list based on config
     @getConfigOptionList(attribute, params)
 
@@ -23,5 +19,6 @@ class App.UiElement.boolean extends App.UiElement.ApplicationUiElement
     # finde selected/checked item of list
     @selectedOptions(attribute, params)
 
-    # return item
-    $(App.view('generic/select')(attribute: attribute))
+    item = $(App.view('generic/select')(attribute: attribute))
+    item.find('select').data('field-type', 'boolean')
+    item

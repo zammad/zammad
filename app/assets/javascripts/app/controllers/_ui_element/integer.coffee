@@ -3,4 +3,6 @@ class App.UiElement.integer
   @render: (attribute) ->
     attribute.type = 'number'
     attribute.step = '1'
-    $( App.view('generic/input')( attribute: attribute ) )
+    item = $( App.view('generic/input')(attribute: attribute) )
+    item.find('select').data('field-type', 'integer')
+    item

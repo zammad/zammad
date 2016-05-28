@@ -406,39 +406,43 @@ class App.ControllerForm extends App.Controller
         param[name] = $(element).ceg()
 
     # get form elements
-    array = lookupForm.serializeArray()
+    array = lookupForm.serializeArrayWithType()
 
     # array to names
-    for key in array
+    for item in array
 
       # check if item is-hidden and should not be used
-      if lookupForm.find('[name="' + key.name + '"]').hasClass('is-hidden') || lookupForm.find('div[data-name="' + key.name + '"]').hasClass('is-hidden')
-        delete param[key.name]
+      if lookupForm.find('[name="' + item.name + '"]').hasClass('is-hidden') || lookupForm.find('div[data-name="' + item.name + '"]').hasClass('is-hidden')
+        delete param[item.name]
         continue
 
       # collect all params, push it to an array if already exists
-      if param[key.name] isnt undefined
-        if typeof param[key.name] is 'string'
-          param[key.name] = [param[key.name], key.value.trim()]
+      value = item.value.trim()
+      if item.type is 'boolean'
+        if value is ''
+          value = undefined
+        else if value is 'true'
+          value = true
+        else if value is 'false'
+          value = false
+      if item.type is 'integer'
+        if value is ''
+          value = undefined
         else
-          param[key.name].push key.value.trim()
+          value = parseInt(value)
+      if param[item.name] isnt undefined
+        if typeof param[item.name] is 'string'
+          param[item.name] = [param[item.name], value]
+        else
+          param[item.name].push value
       else
-        param[key.name] = key.value.trim()
+        param[item.name] = value
 
     # data type conversion
     for key of param
 
-      # get boolean
-      if key.substr(0,9) is '{boolean}'
-        newKey = key.substr(9, key.length)
-        if param[key] && param[key].toString() is 'true'
-          param[newKey] = true
-        else
-          param[newKey] = false
-        delete param[key]
-
       # get {date}
-      else if key.substr(0,6) is '{date}'
+      if key.substr(0,6) is '{date}'
         newKey = key.substr(6, key.length)
         if lookupForm.find("[data-name=\"#{newKey}\"]").hasClass('is-hidden')
           param[newKey] = null
