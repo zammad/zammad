@@ -1776,21 +1776,19 @@ wait untill text in selector disabppears
     if params[:custom_data_select]
       params[:custom_data_select].each {|local_key, local_value|
         select(
-          browser:  instance,
-          css:      ".active .newTicket select[name=\"#{local_key}\"]",
-          value:    local_value,
-          #mute_log: true,
+          browser: instance,
+          css:     ".active .newTicket select[name=\"#{local_key}\"]",
+          value:   local_value,
         )
       }
     end
     if params[:custom_data_input]
       params[:custom_data_input].each {|local_key, local_value|
         set(
-          browser:  instance,
-          css:      ".active .newTicket input[name=\"#{local_key}\"]",
-          value:    local_value,
-          clear:    true,
-          #mute_log: true,
+          browser: instance,
+          css:     ".active .newTicket input[name=\"#{local_key}\"]",
+          value:   local_value,
+          clear:   true,
         )
       }
     end
@@ -2015,21 +2013,19 @@ wait untill text in selector disabppears
     if params[:custom_data_select]
       params[:custom_data_select].each {|local_key, local_value|
         select(
-          browser:  instance,
-          css:      ".active .sidebar select[name=\"#{local_key}\"]",
-          value:    local_value,
-          #mute_log: true,
+          browser: instance,
+          css:     ".active .sidebar select[name=\"#{local_key}\"]",
+          value:   local_value,
         )
       }
     end
     if params[:custom_data_input]
       params[:custom_data_input].each {|local_key, local_value|
         set(
-          browser:  instance,
-          css:      ".active .sidebar input[name=\"#{local_key}\"]",
-          value:    local_value,
-          clear:    true,
-          #mute_log: true,
+          browser: instance,
+          css:     ".active .sidebar input[name=\"#{local_key}\"]",
+          value:   local_value,
+          clear:   true,
         )
       }
     end
