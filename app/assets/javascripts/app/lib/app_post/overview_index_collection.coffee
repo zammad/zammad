@@ -17,6 +17,9 @@ class App.OverviewIndexCollection
   @unbind: (callback) ->
     _instance.unbind(callback)
 
+  @unbindById: (id) ->
+    _instance.unbindById(id)
+
   @trigger: ->
     _instance.trigger()
 

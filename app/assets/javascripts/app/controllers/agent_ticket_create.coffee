@@ -23,6 +23,12 @@ class App.TicketCreate extends App.Controller
     if @ticket_id && @article_id
       @split = "/#{@ticket_id}/#{@article_id}"
 
+    load = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
+      @buildScreen(params)
+    @bindId = App.TicketCreateCollection.one(load)
+
     # lisen if view need to be rerendered
     @bind 'ticket_create_rerender', (defaults) =>
       @log 'notice', 'error', defaults
@@ -33,11 +39,8 @@ class App.TicketCreate extends App.Controller
       return if !@authenticate(true)
       @render()
 
-    load = (data) =>
-      App.Collection.loadAssets(data.assets)
-      @formMeta = data.form_meta
-      @buildScreen(params)
-    @bindId = App.TicketCreateCollection.one(load)
+  release: =>
+    App.TicketCreateCollection.unbindById(@bindId)
 
   currentChannel: =>
     if !type
