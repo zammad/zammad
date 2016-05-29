@@ -405,7 +405,15 @@ class TestCase < Test::Unit::TestCase
 
     else
       sleep 0.5
-      instance.find_elements(partial_link_text: params[:text])[0].click
+      begin
+        instance.find_elements(partial_link_text: params[:text])[0].click
+      rescue => e
+        sleep 0.5
+
+        # just try again
+        log('click', { rescure: true })
+        instance.find_elements(partial_link_text: params[:text])[0].click
+      end
     end
     sleep 0.2 if !params[:fast]
     sleep params[:wait] if params[:wait]
