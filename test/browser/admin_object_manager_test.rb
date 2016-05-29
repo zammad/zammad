@@ -120,8 +120,11 @@ class AdminObjectManagerTest < TestCase
       css: '#content',
       value: 'Database Update required',
     )
-    click(css: '#content .tab-pane.active table tbody tr:last-child .js-delete')
-    sleep 4
+    object_manager_attribute_delete(
+      data: {
+        name: 'browser_test1',
+      },
+    )
     watch_for(
       css: '#content',
       value: 'Database Update required',

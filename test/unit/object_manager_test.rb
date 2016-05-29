@@ -546,6 +546,70 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(Time.zone.parse('2016-05-12 00:59:59 UTC'), ticket2.attribute3)
     assert_equal(Date.parse('2016-05-11'), ticket2.attribute4)
 
+    # update data_option null -> to_config
+    attribute1 = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: 'attribute1',
+      display: 'Attribute 1',
+      data_type: 'input',
+      data_option: {
+        maxlength: 200,
+        type: 'text',
+        null: false,
+      },
+      active: true,
+      screens: {},
+      position: 20,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    assert(attribute1)
+
+    assert_equal(true, ObjectManager::Attribute.pending_migration?)
+    assert_equal(0, ObjectManager::Attribute.where(to_migrate: true).count)
+    assert_equal(1, ObjectManager::Attribute.where(to_config: true).count)
+    assert_equal(1, ObjectManager::Attribute.migrations.count)
+
+    # execute migrations
+    assert(ObjectManager::Attribute.migration_execute)
+
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+    assert_equal(0, ObjectManager::Attribute.where(to_migrate: true).count)
+    assert_equal(0, ObjectManager::Attribute.where(to_config: true).count)
+    assert_equal(0, ObjectManager::Attribute.migrations.count)
+
+    # update data_option maxlength -> to_config && to_migrate
+    attribute1 = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: 'attribute1',
+      display: 'Attribute 1',
+      data_type: 'input',
+      data_option: {
+        maxlength: 250,
+        type: 'text',
+        null: false,
+      },
+      active: true,
+      screens: {},
+      position: 20,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    assert(attribute1)
+
+    assert_equal(true, ObjectManager::Attribute.pending_migration?)
+    assert_equal(1, ObjectManager::Attribute.where(to_migrate: true).count)
+    assert_equal(1, ObjectManager::Attribute.where(to_config: true).count)
+    assert_equal(1, ObjectManager::Attribute.migrations.count)
+
+    # execute migrations
+    assert(ObjectManager::Attribute.migration_execute)
+
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+    assert_equal(0, ObjectManager::Attribute.where(to_migrate: true).count)
+    assert_equal(0, ObjectManager::Attribute.where(to_config: true).count)
+    assert_equal(0, ObjectManager::Attribute.migrations.count)
+
     # remove attribute
     ObjectManager::Attribute.remove(
       object: 'Ticket',

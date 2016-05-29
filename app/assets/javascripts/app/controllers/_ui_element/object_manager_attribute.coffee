@@ -2,6 +2,11 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUiElement
   @render: (attribute, params = {}) ->
+
+    # if we have already changed settings, use them in edit screen
+    if params.data_option_new && !_.isEmpty(params.data_option_new)
+      params.data_option = params.data_option_new
+
     item = $(App.view('object_manager/attribute')(attribute: attribute))
 
     updateDataMap = (localParams, localAttribute, localAttributes, localClassname, localForm, localA) =>
