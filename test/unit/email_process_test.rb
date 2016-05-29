@@ -1985,6 +1985,42 @@ Some Text',
           ],
         }
       },
+      {
+        data: IO.binread('test/fixtures/mail37.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Example: Java 8 Neuerungen',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Example',
+              lastname: '',
+              fullname: 'Example',
+              email: 'info@example.com',
+            },
+            {
+              firstname: 'Ingo',
+              lastname: 'Best',
+              fullname: 'Ingo Best',
+              email: 'iw@example.com',
+            },
+            {
+              firstname: 'Max',
+              lastname: 'Kohl | [example.com]',
+              fullname: 'Max Kohl | [example.com]',
+              email: 'kohl@example.com',
+            },
+          ],
+        }
+      },
     ]
     process(files)
   end

@@ -720,6 +720,19 @@ Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B.
 [1] http://web.de',
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail37.box'),
+        body_md5: 'dd67e5037a740c053c2bf91f67be072f',
+        params: {
+          from: 'Example <info@example.com>',
+          from_email: 'info@example.com',
+          from_display_name: 'Example',
+          subject: 'Example: Java 8 Neuerungen',
+          to: 'Max Kohl | [example.com] <kohl@example.com>',
+          cc: 'Ingo Best <iw@example.com>',
+          body: "Tag Max / Ingo!\n",
+        },
+      },
     ]
 
     count = 0
@@ -727,13 +740,13 @@ Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B.
       count += 1
       #p "Count: #{count}"
       parser = Channel::EmailParser.new
-      data = parser.parse( file[:data] )
+      data = parser.parse(file[:data])
 
       #puts '++' + data[:body].to_s + '++'
       # check body
-      md5 = Digest::MD5.hexdigest( data[:body] )
+      md5 = Digest::MD5.hexdigest(data[:body])
       #puts "IS #{md5} / should #{file[:body_md5]}"
-      assert_equal( file[:body_md5], md5 )
+      assert_equal(file[:body_md5], md5)
 
       # check params
       file[:params].each { |key, value|
