@@ -273,9 +273,9 @@
               <select id="User_968887_active" class="form-control" name="active" required="">
 
 
-              <option value="{boolean}::true" selected="">active</option>
+              <option value="true" selected="">active</option>
 
-              <option value="{boolean}::false">inactive</option>
+              <option value="false">inactive</option>
 
 
               </select>

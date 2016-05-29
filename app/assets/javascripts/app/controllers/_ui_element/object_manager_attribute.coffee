@@ -2,6 +2,11 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUiElement
   @render: (attribute, params = {}) ->
+
+    # if we have already changed settings, use them in edit screen
+    if params.data_option_new && !_.isEmpty(params.data_option_new)
+      params.data_option = params.data_option_new
+
     item = $(App.view('object_manager/attribute')(attribute: attribute))
 
     updateDataMap = (localParams, localAttribute, localAttributes, localClassname, localForm, localA) =>
@@ -22,7 +27,6 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       select: 'Select'
       boolean: 'Boolean'
       integer: 'Integer'
-      autocompletion: 'Autocompletion (AJAX remote URL)'
 
     configureAttributes = [
       { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled },
@@ -37,7 +41,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     item.find('.js-dataType').html(dataType.form)
-
+    item.find('.js-boolean').data('field-type', 'boolean')
     item
 
   @dataScreens: (attribute, localParams, params) ->
@@ -130,12 +134,14 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     init = false
     if params && !params.id
       init = true
-    $(App.view('object_manager/screens')(
+    item = $(App.view('object_manager/screens')(
       attribute: attribute
       data: objects[object]
       params: params
       init: init
     ))
+    item.find('.js-boolean').data('field-type', 'boolean')
+    item
 
   @input: (item, localParams, params) ->
     configureAttributes = [
@@ -284,11 +290,36 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       addRow.find('.js-value').val('')
       addRow.find('.js-selected').prop('checked', false)
     )
+    item.on('change', '.js-key', (e) ->
+      key = $(e.target).val()
+      valueField = $(e.target).closest('tr').find('.js-value[name]')
+      valueField.attr('name', "data_option::options::#{key}")
+    )
     item.on('click', '.js-remove', (e) ->
       $(e.target).closest('tr').remove()
     )
+    lastSelected = undefined
+    item.on('click', '.js-selected', (e) ->
+      checked = $(e.target).prop('checked')
+      value = $(e.target).attr('value')
+      if checked && lastSelected && lastSelected is value
+        $(e.target).prop('checked', false)
+        lastSelected = false
+        return
+      lastSelected = value
+    )
 
   @boolean: (item, localParams, params) ->
+    lastSelected = undefined
+    item.on('click', '.js-selected', (e) ->
+      checked = $(e.target).prop('checked')
+      value = $(e.target).attr('value')
+      if checked && lastSelected && lastSelected is value
+        $(e.target).prop('checked', false)
+        lastSelected = false
+        return
+      lastSelected = value
+    )
 
   @autocompletion: (item, localParams, params) ->
     configureAttributes = [

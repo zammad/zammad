@@ -4,6 +4,7 @@ class ObjectManager::Attribute < ApplicationModel
   validates  :name, presence: true
   store      :screens
   store      :data_option
+  store      :data_option_new
 
   notify_clients_support
 
@@ -23,7 +24,7 @@ list of all attributes
 =end
 
   def self.list_full
-    result = ObjectManager::Attribute.all
+    result = ObjectManager::Attribute.all.order('position ASC, name ASC')
     attributes = []
     assets = {}
     result.each {|item|
@@ -75,6 +76,7 @@ add a new attribute entry for an object
     to_migrate: false,
     to_create: false,
     to_delete: false,
+    to_config: false,
   )
 
 preserved name are
@@ -103,6 +105,7 @@ possible types
       'aa' => 'aa (comment)',
       'bb' => 'bb (comment)',
     },
+    maxlength: 200,
     nulloption: true,
     null: false,
     multiple: false, # currently only "false" supported
@@ -218,7 +221,24 @@ possible types
         data.delete(:to_create)
         data.delete(:to_migrate)
         data.delete(:to_delete)
+        data.delete(:to_config)
       end
+
+      # if data_option has changed, store it for next migration
+      if !force
+        if record[:data_option] != data[:data_option]
+
+          # do we need a database migration?
+          if record[:data_option][:maxlength] && data[:data_option][:maxlength] && record[:data_option][:maxlength].to_s != data[:data_option][:maxlength].to_s
+            data[:to_migrate] = true
+          end
+
+          record[:data_option_new] = data[:data_option]
+          data.delete(:data_option)
+          data[:to_config] = true
+        end
+      end
+
       # update attributes
       data.each {|key, value|
         record[key.to_sym] = value
@@ -354,7 +374,7 @@ returns:
       active: true,
       to_create: false,
       to_delete: false,
-    ).order('position ASC')
+    ).order('position ASC, name ASC')
     attributes = []
     result.each {|item|
       data = {
@@ -423,8 +443,11 @@ returns
 
   def self.discard_changes
     ObjectManager::Attribute.where('to_create = ?', true).each(&:destroy)
-    ObjectManager::Attribute.where('to_delete = ?', true).each {|attribute|
+    ObjectManager::Attribute.where('to_delete = ? OR to_config = ?', true, true).each {|attribute|
+      attribute.to_migrate = false
       attribute.to_delete = false
+      attribute.to_config = false
+      attribute.data_option_new = {}
       attribute.save
     }
     true
@@ -460,7 +483,7 @@ returns
 =end
 
   def self.migrations
-    ObjectManager::Attribute.where('to_create = ? OR to_migrate = ? OR to_delete = ?', true, true, true)
+    ObjectManager::Attribute.where('to_create = ? OR to_migrate = ? OR to_delete = ? OR to_config = ?', true, true, true, true)
   end
 
 =begin
@@ -482,7 +505,8 @@ to send no browser reload event, pass false
   def self.migration_execute(send_event = true)
 
     # check if field already exists
-    execute_count = 0
+    execute_db_count = 0
+    execute_config_count = 0
     migrations.each {|attribute|
       model = Kernel.const_get(attribute.object_lookup.name)
 
@@ -492,9 +516,19 @@ to send no browser reload event, pass false
           ActiveRecord::Migration.remove_column model.table_name, attribute.name
           reset_database_info(model)
         end
-        execute_count += 1
+        execute_db_count += 1
         attribute.destroy
         next
+      end
+
+      # config changes
+      if attribute.to_config
+        execute_config_count += 1
+        attribute.data_option = attribute.data_option_new
+        attribute.data_option_new = {}
+        attribute.to_config = false
+        attribute.save!
+        next if !attribute.to_create && !attribute.to_migrate && !attribute.to_delete
       end
 
       data_type = nil
@@ -534,7 +568,7 @@ to send no browser reload event, pass false
             attribute.name,
             data_type,
             default: attribute.data_option[:default],
-            null: false
+            null: true
           )
         else
           raise "Unknown attribute.data_type '#{attribute.data_type}', can't update attribute"
@@ -544,7 +578,7 @@ to send no browser reload event, pass false
         attribute.to_migrate = false
         attribute.save!
         reset_database_info(model)
-        execute_count += 1
+        execute_db_count += 1
         next
       end
 
@@ -571,7 +605,7 @@ to send no browser reload event, pass false
           attribute.name,
           data_type,
           default: attribute.data_option[:default],
-          null: false
+          null: true
         )
       elsif attribute.data_type =~ /^datetime|date$/
         ActiveRecord::Migration.add_column(
@@ -592,17 +626,21 @@ to send no browser reload event, pass false
       attribute.save!
 
       reset_database_info(model)
-      execute_count += 1
+      execute_db_count += 1
     }
 
     # sent maintenance message to clients
-    if send_event && execute_count != 0
-      if ENV['APP_RESTART_CMD']
-        AppVersion.set(true, 'restart_auto')
-        sleep 4
-        Delayed::Job.enqueue(Observer::AppVersionRestartJob.new(ENV['APP_RESTART_CMD']))
-      else
-        AppVersion.set(true, 'restart_manual')
+    if send_event
+      if execute_db_count != 0
+        if ENV['APP_RESTART_CMD']
+          AppVersion.set(true, 'restart_auto')
+          sleep 4
+          Delayed::Job.enqueue(Observer::AppVersionRestartJob.new(ENV['APP_RESTART_CMD']))
+        else
+          AppVersion.set(true, 'restart_manual')
+        end
+      elsif execute_config_count != 0
+        AppVersion.set(true, 'config_changed')
       end
     end
     true
@@ -623,7 +661,7 @@ to send no browser reload event, pass false
       raise 'Only letters from a-z, numbers from 0-9, and _ are allowed'
     elsif name !~ /[a-z]/
       raise 'At least one letters is needed'
-    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table)$/
+    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table|varchar|blob|date|datetime|timestamp)$/
       raise "#{name} is a reserved word, please choose a different one"
     end
     true
@@ -652,7 +690,12 @@ to send no browser reload event, pass false
     # validate data_option
     if data_type == 'input'
       raise 'Need data_option[:type] param' if !data_option[:type]
-      raise "Invalid data_option[:type] param '#{data_option[:type]}'" if data_option[:type] !~ /^(text|password|phone|fax|email|url)$/
+      raise "Invalid data_option[:type] param '#{data_option[:type]}'" if data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
+      raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
+      raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
+    end
+
+    if data_type == 'richtext'
       raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
       raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
     end
@@ -665,15 +708,18 @@ to send no browser reload event, pass false
     end
 
     if data_type == 'select' || data_type == 'checkbox'
-      raise 'Need data_option[:default] param' if data_option[:default].nil?
+      raise 'Need data_option[:default] param' if !data_option.key?(:default)
       raise 'Invalid data_option[:options] or data_option[:relation] param' if data_option[:options].nil? && data_option[:relation].nil?
+      if !data_option.key?(:maxlength)
+        data_option[:maxlength] = 255
+      end
       if !data_option.key?(:nulloption)
         data_option[:nulloption] = true
       end
     end
 
     if data_type == 'boolean'
-      raise 'Need data_option[:default] param true|false' if data_option[:default].nil?
+      raise 'Need data_option[:default] param true|false|undefined' if !data_option.key?(:default)
       raise 'Invalid data_option[:options] param' if data_option[:options].nil?
     end
 

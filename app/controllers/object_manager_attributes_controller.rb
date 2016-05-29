@@ -110,8 +110,22 @@ class ObjectManagerAttributesController < ApplicationController
   private
 
   def check_params
+    if params[:data_type] =~ /^(boolean)$/
+      if params[:data_option][:options]
+        if params[:data_option][:options][:false]
+          params[:data_option][:options][false] = params[:data_option][:options][:false]
+          params[:data_option][:options].delete(:false)
+        end
+        if params[:data_option][:options][:true]
+          params[:data_option][:options][true] = params[:data_option][:options][:true]
+          params[:data_option][:options].delete(:true)
+        end
+      end
+    end
     if params[:data_option] && !params[:data_option].key?(:default)
-      params[:data_option][:default] = ''
+      params[:data_option][:default] = if params[:data_type] =~ /^(input|select)$/
+                                         ''
+                                       end
     end
     return if !params[:data_option][:null].nil?
     params[:data_option][:null] = true

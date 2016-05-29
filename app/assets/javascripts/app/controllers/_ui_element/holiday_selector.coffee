@@ -12,6 +12,8 @@ class App.UiElement.holiday_selector
 
     item = $( App.view('calendar/holiday_selector')( attribute: attribute, days: days_new ) )
 
+    item.find('.js-boolean').data('field-type', 'boolean')
+
     # add date picker
     attributeDatepicket =
       name: "#{attribute.name}_date"
@@ -68,9 +70,10 @@ class App.UiElement.holiday_selector
         placeholderDate: date
         placeholderSummary: summary
         nameSummary: "public_holidays::#{date}::summary"
-        nameActive: "{boolean}public_holidays::#{date}::active"
+        nameActive: "public_holidays::#{date}::active"
       )
       item.find('.settings-list-controlRow').before(template)
+      item.find('.js-boolean').data('field-type', 'boolean')
     )
 
     item

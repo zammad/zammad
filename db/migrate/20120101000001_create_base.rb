@@ -467,12 +467,14 @@ class CreateBase < ActiveRecord::Migration
       t.column :display,            :string, limit: 200,   null: false
       t.column :data_type,          :string, limit: 100,   null: false
       t.column :data_option,        :string, limit: 8000,  null: true
+      t.column :data_option_new,    :string, limit: 8000,  null: true
       t.column :editable,           :boolean,              null: false, default: true
       t.column :active,             :boolean,              null: false, default: true
       t.column :screens,            :string, limit: 2000,  null: true
       t.column :to_create,          :boolean,              null: false, default: false
       t.column :to_migrate,         :boolean,              null: false, default: false
       t.column :to_delete,          :boolean,              null: false, default: false
+      t.column :to_config,          :boolean,              null: false, default: false
       t.column :position,           :integer,              null: false
       t.column :created_by_id,      :integer,              null: false
       t.column :updated_by_id,      :integer,              null: false

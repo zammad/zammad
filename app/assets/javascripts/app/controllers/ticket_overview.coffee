@@ -126,8 +126,7 @@ class Navbar extends App.Controller
   release: =>
     if @vertical
       $(window).off 'resize.navbar', @autoFoldTabs
-    if @bindId
-      App.OverviewIndexCollection.unbind(@bindId)
+    App.OverviewIndexCollection.unbindById(@bindId)
 
   autoFoldTabs: =>
     items = App.OverviewIndexCollection.get()

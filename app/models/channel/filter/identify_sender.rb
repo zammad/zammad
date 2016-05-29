@@ -44,15 +44,40 @@ module Channel::Filter::IdentifySender
   def self.create_recipients(mail)
     ['raw-to', 'raw-cc'].each { |item|
       next if !mail[item.to_sym]
-      next if !mail[item.to_sym].addrs
-      items = mail[item.to_sym].addrs
-      items.each {|address_data|
-        user_create(
-          firstname: address_data.display_name,
-          lastname: '',
-          email: address_data.address,
-        )
-      }
+      begin
+        next if !mail[item.to_sym].addrs
+        items = mail[item.to_sym].addrs
+        items.each {|address_data|
+          user_create(
+            firstname: address_data.display_name,
+            lastname: '',
+            email: address_data.address,
+          )
+        }
+      rescue => e
+        # parse not parseable fields by mail gem like
+        #  - Max Kohl | [example.com] <kohl@example.com>
+        Rails.logger.error 'ERROR: ' + e.inspect
+        Rails.logger.error 'ERROR: try it by my self'
+        recipients = mail[item.to_sym].to_s.split(',')
+        recipients.each {|recipient|
+          address = nil
+          display_name = nil
+          if recipient =~ /<(.+?)>/
+            address = $1
+          end
+          if recipient =~ /^(.+?)<(.+?)>/
+            display_name = ($1).strip
+          end
+          next if address.empty?
+          user_create(
+            firstname: display_name,
+            lastname: '',
+            email: address,
+          )
+        }
+      end
+
     }
   end
 

@@ -16,32 +16,37 @@ class App._CollectionSingletonBase
       @set(data)
       @callback(data)
 
-  get: ->
-    @collection_data
+  get: =>
+    @collectionData
 
-  set: (data) ->
+  set: (data) =>
     App.SessionStorage.set("collection-#{@event}", data)
-    @collection_data = data
+    @collectionData = data
 
-  bind: (callback, init = true, one = false) ->
+  bind: (callback, init = true, one = false) =>
     @counter += 1
+    localCounter = @counter
 
     # start init call if needed
     if init
-      if @collection_data is undefined
+      if @collectionData is undefined
         @fetch()
       else
-        callback(@collection_data)
+        callback(@collectionData)
         return if one
 
-    @callbacks[@counter] =
+    @callbacks[localCounter] =
       callback: callback
       one: one
+    localCounter
 
-  unbind: (callback) ->
+  unbind: (callback) =>
     for counter, attr of @callbacks
       if callback is attr.callback
         delete @callbacks[counter]
+
+  unbindById: (counter) =>
+    delete @callbacks[counter]
 
   fetch: =>
     if App.WebSocket.support()

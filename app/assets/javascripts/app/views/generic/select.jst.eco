@@ -9,13 +9,4 @@
   <% if not @attribute.multiple: %>
     <%- @Icon('arrow-down') %>
   <% end %>
-<% if @attribute.disabled: %>
-<% if @attribute.options: %>
-<% for row in @attribute.options: %>
-  <% if row.selected: %>
-    <input type="hidden" name="<%= @attribute.name %>" value="<%= row.value %>">
-  <% end %>
-<% end %>
-<% end %>
-<% end %>
 </div>

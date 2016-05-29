@@ -6,21 +6,21 @@
     <div class="select-box-header"><%- @T('Day') %></div>
     <% for day, dayLong of @days: %>
       <div data-type="day" class="select-value <% if @attribute.value.days[day]: %>is-selected<% end %>" data-value="<%- day %>"><%- @T(dayLong) %></div>
-      <input type="hidden" name="{boolean}<%= @attribute.name %>::days::<%- day %>" value="<% if @attribute.value.days[day]: %>true<% else: %>false<% end %>">
+      <input type="hidden" class="js-boolean" name="<%= @attribute.name %>::days::<%- day %>" value="<% if @attribute.value.days[day]: %>true<% else: %>false<% end %>">
     <% end %>
   </div>
   <div class="select-box select-box--four js-hour">
     <div data-type="hour" class="select-box-header"><%- @T('Hour') %></div>
     <% for hour, hourLong of @hours: %>
       <div data-type="hour" class="select-value <% if @attribute.value.hours[hour]: %>is-selected<% end %>" data-value="<%- hour %>"><%- hourLong %></div>
-      <input type="hidden" name="{boolean}<%= @attribute.name %>::hours::<%- hour %>" value="<% if @attribute.value.hours[hour]: %>true<% else: %>false<% end %>">
+      <input type="hidden" class="js-boolean" name="<%= @attribute.name %>::hours::<%- hour %>" value="<% if @attribute.value.hours[hour]: %>true<% else: %>false<% end %>">
     <% end %>
   </div>
   <div class="select-box select-box--vertical js-minute">
     <div data-type="minute" class="select-box-header"><%- @T('Minute') %></div>
     <% for minute, minuteLong of @minutes: %>
       <div data-type="minute" class="select-value <% if @attribute.value.minutes[minute]: %>is-selected<% end %>" data-value="<%- minute %>"><%- minuteLong %></div>
-      <input type="hidden" name="{boolean}<%= @attribute.name %>::minutes::<%- minute %>" value="<% if @attribute.value.minutes[minute]: %>true<% else: %>false<% end %>">
+      <input type="hidden" class="js-boolean" name="<%= @attribute.name %>::minutes::<%- minute %>" value="<% if @attribute.value.minutes[minute]: %>true<% else: %>false<% end %>">
     <% end %>
   </div>
 </div>

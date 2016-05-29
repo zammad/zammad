@@ -80,7 +80,7 @@ class App.UiElement.timer
         0: true
 
     timer = $( App.view('generic/timer')( attribute: attribute, days: days, hours: hours, minutes: minutes ) )
-
+    timer.find('.js-boolean').data('field-type', 'boolean')
     timer.find('.select-value').bind('click', (e) =>
       @select(e)
     )
