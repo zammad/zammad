@@ -3194,7 +3194,7 @@ ObjectManager::Attribute.add(
   display: 'Phone',
   data_type: 'input',
   data_option: {
-    type: 'phone',
+    type: 'tel',
     maxlength: 100,
     null: true,
     item_class: 'formGroup--halfSize',
@@ -3229,7 +3229,7 @@ ObjectManager::Attribute.add(
   display: 'Mobile',
   data_type: 'input',
   data_option: {
-    type: 'phone',
+    type: 'tel',
     maxlength: 100,
     null: true,
     item_class: 'formGroup--halfSize',
@@ -3264,7 +3264,7 @@ ObjectManager::Attribute.add(
   display: 'Fax',
   data_type: 'input',
   data_option: {
-    type: 'phone',
+    type: 'tel',
     maxlength: 100,
     null: true,
     item_class: 'formGroup--halfSize',

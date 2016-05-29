@@ -64,7 +64,7 @@ class Items extends App.ControllerContent
 
     itemsToChange = []
     for item in App.ObjectManagerAttribute.search(sortBy: 'object')
-      if item.to_create is true || item.to_delete is true
+      if item.to_create is true || item.to_delete is true || item.to_migrate is true || item.to_config is true
         itemsToChange.push item
 
     @html App.view('object_manager/index')(

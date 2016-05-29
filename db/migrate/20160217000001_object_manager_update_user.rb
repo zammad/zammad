@@ -216,7 +216,7 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
       display: 'Phone',
       data_type: 'input',
       data_option: {
-        type: 'phone',
+        type: 'tel',
         maxlength: 100,
         null: true,
         item_class: 'formGroup--halfSize',
@@ -251,7 +251,7 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
       display: 'Mobile',
       data_type: 'input',
       data_option: {
-        type: 'phone',
+        type: 'tel',
         maxlength: 100,
         null: true,
         item_class: 'formGroup--halfSize',
@@ -286,7 +286,7 @@ class ObjectManagerUpdateUser < ActiveRecord::Migration
       display: 'Fax',
       data_type: 'input',
       data_option: {
-        type: 'phone',
+        type: 'tel',
         maxlength: 100,
         null: true,
         item_class: 'formGroup--halfSize',
