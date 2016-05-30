@@ -102,6 +102,15 @@ class App extends Spine.Controller
       isHtmlEscape = true
       result       = App.i18n.translateDate(result)
 
+    # transform input tel|url to make it clickable
+    if attribute_config.tag is 'input'
+      isHtmlEscape = true
+      result       = App.Utils.htmlEscape(result)
+      if attribute_config.type is 'tel'
+        result = "<a href=\"tel://#{result}\">#{result}</a>"
+      if attribute_config.type is 'url'
+        result = App.Utils.linkify(result)
+
     # use pretty time for datetime
     else if attribute_config.tag is 'datetime'
       isHtmlEscape = true
