@@ -141,6 +141,7 @@ class App.Auth
 
     App.Event.trigger('auth')
     App.Event.trigger('auth:logout')
+    window.location.href = '#login'
     if rerender
       App.Event.trigger('ui:rerender')
     App.Event.trigger('clearStore')

@@ -68,6 +68,8 @@
             <%- @T('will be created') %>
           <% else if item.to_delete is true: %>
             <%- @T('will be deleted') %>
+          <% else if item.to_migrate is true || item.to_config is true: %>
+            <%- @T('has changed') %>
           <% else if item.editable isnt false: %>
             <a href="#" class="js-delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
           <% end %>

@@ -6,10 +6,10 @@
   <% if @user[row.name] || row.name is 'note': %>
     <div class="sidebar-block">
     <% if row.tag isnt 'richtext': %>
-      <label><%- @T( row.display ) %></label>
-      <%- @P( @user, row.name ) %>
+      <label><%- @T(row.display) %></label>
+      <%- @P(@user, row.name) %>
     <% else: %>
-      <label><%- @T( row.display ) %></label>
+      <label><%- @T(row.display) %></label>
       <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @user[row.name] %></div>
     <% end %>
     </div>

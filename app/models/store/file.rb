@@ -9,11 +9,11 @@ class Store
 
 add new file to store
 
-    store_file_id = Store::File.add(binary_data)
+  store_file_id = Store::File.add(binary_data)
 
 do also verify of written data
 
-    store_file_id = Store::File.add(binary_data, true)
+  store_file_id = Store::File.add(binary_data, true)
 
 =end
 
@@ -51,9 +51,9 @@ do also verify of written data
 
 read content of a file
 
-    store = Store::File.find(123)
+  store = Store::File.find(123)
 
-    store.content # returns binary
+  store.content # returns binary
 
 =end
 
@@ -66,13 +66,13 @@ read content of a file
 
 file system check of store, check data and sha (in case fix it)
 
-    Store::File.verify
+  Store::File.verify
 
 read each file which should be in backend and verify agsinst sha hash
 
 in case of fixing sha hash use:
 
-    Store::File.verify(true)
+  Store::File.verify(true)
 
 =end
 

@@ -133,7 +133,7 @@ class App.Controller extends Spine.Controller
   updateNavMenu: =>
     delay = ->
       App.Event.trigger('menu:render')
-    @delay(delay, 200)
+    @delay(delay, 150)
 
   scrollTo: (x = 0, y = 0, delay = 0) ->
     a = ->
