@@ -165,7 +165,6 @@ class AaaGettingStartedTest < TestCase
     )
     location_check(
       url: '#clues',
-      #url: '#dashboard',
     )
 
     clues_close(
