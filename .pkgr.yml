@@ -2,20 +2,33 @@ targets:
   centos-6:
     dependencies:
       - httpd
-      - mysql-server
-
-user: "zammad"
-group: "zammad"
-
-after_install: packaging/hooks/postinstall.sh
+      - postgresql
+      - postgresql-server
+      - postgresql-devel
+  centos-7:
+    dependencies:
+      - httpd
+      - postgresql
+      - postgresql-server
+      - postgresql-devel
 
 before:
-  - cp config/database.yml.pkgr config/database.yml
   - uname -a
+  - ruby -v
+  - env
+  - cp config/database.yml.pkgr config/database.yml
+  - echo "gem 'pg'" >> Gemfile.local
+  - echo "gem 'mysql2', '~> 0.3.20'" >> Gemfile.local
+  - sed -i "s/specs:/specs:\\n    pg (0.18.4)/g" Gemfile.lock
+  - sed -i "s/DEPENDENCIES/DEPENDENCIES\\n  pg/g" Gemfile.lock
+  - "#cat Gemfile.lock"
 
 env:
   - RAILS_ENV=production
-  - RAILS_GROUPS=assets
+  - PORT=3000
+  - RAILS_SERVE_STATIC_FILES=true
+
+services:
+  - postgres
 
 notifications: false
-
