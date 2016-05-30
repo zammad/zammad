@@ -344,6 +344,25 @@ retrns
 =end
 
   def process(channel, msg)
+
+    _process(channel, msg)
+  rescue => e
+
+    # store unprocessable email for bug reporting
+    path = "#{Rails.root}/tmp/unprocessable_mail/"
+    FileUtils.mkpath path
+    md5 = Digest::MD5.hexdigest(msg)
+    filename = "#{path}/#{md5}.eml"
+    Rails.logger.error "ERROR: Can't process email, store it for bug reporting under #{filename}"
+    Rails.logger.error 'ERROR: ' + e.inspect
+    File.open(filename, 'wb') { |file|
+      file.write msg
+    }
+    raise e.inspect
+
+  end
+
+  def _process(channel, msg)
     mail = parse(msg)
 
     # run postmaster pre filter
