@@ -147,7 +147,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     # split url in http_type and fqdn
     settings = {}
     if !Setting.get('system_online_service')
-      if params[:url] =~ %r{/^(http|https)://(.+?)$}
+      if params[:url] =~ %r{/^(http|https)://(.+?)(:.+?|/.+?|)$}
         Setting.set('http_type', $1)
         settings[:http_type] = $1
         Setting.set('fqdn', $2)

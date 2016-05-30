@@ -1,6 +1,8 @@
 production:
-  adapter: sqlite3
-  database: db/test.sqlite3
-  timeout: 12000
+  adapter: postgresql
+  database: zammad_production
   pool: 50
-
+  timeout: 5000
+  encoding: utf8
+  username: zammad
+  password:

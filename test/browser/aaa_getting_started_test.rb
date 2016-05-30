@@ -165,7 +165,36 @@ class AaaGettingStartedTest < TestCase
     )
     location_check(
       url: '#clues',
-    #url: '#dashboard',
+    )
+
+    clues_close(
+      optional: false,
+    )
+
+    # verify organization and fqdn
+    click(
+      css: 'a[href="#manage"]',
+    )
+    click(
+      css: 'a[href="#settings/branding"]',
+    )
+
+    match(
+      css: '#content input[name="organization"]',
+      value: 'Some Organization',
+    )
+    click(
+      css: 'a[href="#settings/system"]',
+    )
+
+    fqdn = nil
+    if browser_url =~ %r{://(.+?)(:.+?|/.+?|)$}
+      fqdn = $1
+    end
+    raise "Unable to get fqdn based on #{browser_url}" if !fqdn
+    match(
+      css: '#content input[name="fqdn"]',
+      value: fqdn,
     )
   end
 

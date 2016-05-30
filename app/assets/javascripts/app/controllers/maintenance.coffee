@@ -38,7 +38,9 @@ class Index extends App.ControllerContent
 
   setMode: (e) =>
     value = @modeSetting.prop('checked')
-    return if value && !confirm('Sure?')
+    if value && !confirm('Sure?')
+      @modeSetting.prop('checked', false)
+      return value
     App.Setting.set('maintenance_mode', value)
     App.WebSocket.send(
       event:'maintenance'
