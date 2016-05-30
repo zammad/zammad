@@ -2714,7 +2714,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'group created')
-        sleep 1 # wait until modal has gone
+        modal_ready # wait until modal has gone
 
         # add member
         if data[:member]
