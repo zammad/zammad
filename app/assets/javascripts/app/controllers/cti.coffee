@@ -106,14 +106,11 @@ class App.CTI extends App.Controller
       return
 
     format = (time) ->
-      # Minutes and seconds
-      mins = ~~(time / 60)
-      secs = time % 60
 
       # Hours, minutes and seconds
-      hrs = ~~(time / 3600)
-      mins = ~~((time % 3600) / 60)
-      secs = time % 60
+      hrs = ~~parseInt((time / 3600))
+      mins = ~~parseInt(((time % 3600) / 60))
+      secs = parseInt(time % 60)
 
       # Output like "1:01" or "4:03:59" or "123:03:59"
       mins = "0#{mins}" if mins < 10

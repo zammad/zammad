@@ -43,6 +43,178 @@ module Cti
     state: 'hangup',
   )
 
+example data, can be used for demo
+
+  Cti::Log.create(
+    direction: 'in',
+    from: '4930609854180',
+    from_comment: 'Franz Bauer',
+    to: '4930609811111',
+    to_comment: 'Bob Smith',
+    call_id: '00001',
+    comment: '',
+    state: 'newCall',
+    done: false,
+    preferences: {
+      from: [
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'known',
+          object: 'User',
+          o_id: 2,
+          user_id: 2,
+        }
+      ]
+    }
+  )
+
+  Cti::Log.create(
+    direction: 'out',
+    from: '4930609854180',
+    from_comment: 'Franz Bauer',
+    to: '4930609811111',
+    to_comment: 'Bob Smith',
+    call_id: '00002',
+    comment: '',
+    state: 'newCall',
+    preferences: {
+      to: [
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'known',
+          object: 'User',
+          o_id: 2,
+          user_id: 2,
+        }
+      ]
+    }
+  )
+
+  Cti::Log.create(
+    direction: 'in',
+    from: '4930609854180',
+    from_comment: 'Franz Bauer',
+    to: '4930609811111',
+    to_comment: 'Bob Smith',
+    call_id: '00003',
+    comment: '',
+    state: 'answer',
+    preferences: {
+      from: [
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'known',
+          object: 'User',
+          o_id: 2,
+          user_id: 2,
+        }
+      ]
+    }
+  )
+
+  Cti::Log.create(
+    direction: 'in',
+    from: '4930609854180',
+    from_comment: 'Franz Bauer',
+    to: '4930609811111',
+    to_comment: 'Bob Smith',
+    call_id: '00004',
+    comment: '',
+    state: 'hangup',
+    comment: 'normalClearing',
+    done: false,
+    preferences: {
+      from: [
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'known',
+          object: 'User',
+          o_id: 2,
+          user_id: 2,
+        }
+      ]
+    }
+  )
+
+  Cti::Log.create(
+    direction: 'in',
+    from: '4930609854180',
+    from_comment: 'Franz Bauer',
+    to: '4930609811111',
+    to_comment: 'Bob Smith',
+    call_id: '00005',
+    comment: '',
+    state: 'hangup',
+    start: Time.zone.now - 15.seconds,
+    'end': Time.zone.now,
+    preferences: {
+      from: [
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'known',
+          object: 'User',
+          o_id: 2,
+          user_id: 2,
+        }
+      ]
+    }
+  )
+
+  Cti::Log.create(
+    direction: 'in',
+    from: '4930609854180',
+    from_comment: 'Franz Bauer',
+    to: '4930609811111',
+    to_comment: '',
+    call_id: '00006',
+    comment: '',
+    state: 'hangup',
+    start: Time.zone.now - 15.seconds,
+    'end': Time.zone.now,
+    preferences: {
+      from: [
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'known',
+          object: 'User',
+          o_id: 2,
+          user_id: 2,
+        }
+      ]
+    }
+  )
+
+  Cti::Log.create(
+    direction: 'in',
+    from: '4930609854180',
+    from_comment: 'Franz Bauer',
+    to: '4930609811111',
+    to_comment: 'Bob Smith',
+    call_id: '00007',
+    comment: '',
+    state: 'hangup',
+    start: Time.zone.now - 15.seconds,
+    'end': Time.zone.now,
+    preferences: {
+      from: [
+        {
+          caller_id: '4930726128135',
+          comment: nil,
+          level: 'maybe',
+          object: 'User',
+          o_id: 2,
+          user_id: 2,
+        }
+      ]
+    }
+  )
+
 =end
 
 =begin
