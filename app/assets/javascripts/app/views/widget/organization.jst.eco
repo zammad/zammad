@@ -11,10 +11,10 @@
   <% if @organization[row.name] || row.name is 'note': %>
     <div class="sidebar-block">
     <% if row.tag isnt 'richtext': %>
-      <label><%- @T( row.display ) %></label>
-      <%- @P( @organization, row.name ) %>
+      <label><%- @T(row.display) %></label>
+      <%- @P(@organization, row.name) %>
     <% else: %>
-      <label><%- @T( row.display ) %></label>
+      <label><%- @T(row.display) %></label>
       <div contenteditable="true" data-name="<%= row.name %>" data-type="update-org" data-placeholder="<%- @Ti('Add a Note') %>"><%- @organization[row.name] %></div>
     <% end %>
     </div>
