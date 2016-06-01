@@ -73,18 +73,19 @@ class UsersController < ApplicationController
 
       # if it's a signup, add user to customer role
       if !current_user
-        if !params[:signup]
-          render json: { error_human: 'Only signup is possible!' }, status: :unprocessable_entity
-          return
-        end
-        user.updated_by_id = 1
-        user.created_by_id = 1
 
         # check if feature is enabled
         if !Setting.get('user_create_account')
           render json: { error_human: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
+
+        if !params[:signup]
+          render json: { error_human: 'Only signup is possible!' }, status: :unprocessable_entity
+          return
+        end
+        user.updated_by_id = 1
+        user.created_by_id = 1
 
         # add first user as admin/agent and to all groups
         group_ids = []
