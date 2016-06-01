@@ -80,7 +80,8 @@ class UsersController < ApplicationController
           return
         end
 
-        if !params[:signup]
+        # check signup option only after admin account is created
+        if count > 2 && !params[:signup]
           render json: { error_human: 'Only signup is possible!' }, status: :unprocessable_entity
           return
         end
