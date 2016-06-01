@@ -56,8 +56,8 @@ returns
         stop = start + 1.minute
       end
       query, bind_params, tables = Ticket.selector2sql(params[:selector])
-      sender = Ticket::Article::Sender.lookup( name: params[:params][:sender] )
-      type   = Ticket::Article::Type.lookup( name: params[:params][:type] )
+      sender = Ticket::Article::Sender.lookup(name: params[:params][:sender])
+      type   = Ticket::Article::Type.lookup(name: params[:params][:type])
       count = Ticket::Article.joins('INNER JOIN tickets ON tickets.id = ticket_articles.ticket_id')
                              .where(query, *bind_params).joins(tables)
                              .where(
