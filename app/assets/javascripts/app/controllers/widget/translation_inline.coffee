@@ -49,6 +49,7 @@ class Widget extends App.Controller
       .on 'blur.translation', '.translation', (e) ->
         element = $(e.target)
         source = element.attr('title')
+        return if !source
 
         # get new translation
         translation_new = element.text()
@@ -62,6 +63,7 @@ class Widget extends App.Controller
         App.i18n.setMap(source, translation_new)
 
         # replace rest in page
+        source = source.replace('\'', '\\\'')
         $(".translation[title='#{source}']").text(translation_new)
 
         # update permanent translation mapString

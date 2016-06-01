@@ -375,7 +375,7 @@ returns
 
 =begin
 
-reset reset password with token and set new password
+reset password with token and set new password
 
   result = User.password_reset_via_token(token,password)
 
@@ -419,6 +419,63 @@ returns
     self.login_failed = 0
 
     save
+  end
+
+=begin
+
+generate new token for signup
+
+  result = User.signup_new_token(user) # or email
+
+returns
+
+  result = {
+    token: token,
+    user: user,
+  }
+
+=end
+
+  def self.signup_new_token(user)
+    return if !user
+    return if !user.email
+
+    # generate token
+    token = Token.create(action: 'Signup', user_id: user.id)
+
+    {
+      token: token,
+      user: user,
+    }
+  end
+
+=begin
+
+verify signup with token
+
+  result = User.signup_verify_via_token(token, user)
+
+returns
+
+  result = user_model # user_model if token was verified
+
+=end
+
+  def self.signup_verify_via_token(token, user = nil)
+
+    # check token
+    local_user = Token.check(action: 'Signup', name: token)
+    return if !local_user
+
+    # if requested user is different to current user
+    return if user && local_user.id != user.id
+
+    # set verified
+    local_user.update_attributes(verified: true)
+
+    # delete token
+    Token.find_by(action: 'Signup', name: token).destroy
+    local_user
   end
 
 =begin

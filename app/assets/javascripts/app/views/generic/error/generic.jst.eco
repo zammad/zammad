@@ -1,4 +1,4 @@
 <div class="fullscreenMessage">
   <%- @Icon('diagonal-cross', 'icon-error') %>
-  <h2><% if @status isnt undefined: %><%- @T('Status Code') %>: <%= @status %>. <% end %><%= @detail %></h2>
+  <h2><% if @status isnt undefined: %><%- @T('Status Code') %>: <%= @status %>. <% end %><%- @T(@detail) %></h2>
 </div>

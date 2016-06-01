@@ -28,5 +28,5 @@ class DefaultRouter extends App.Controller
 
     @navigate '#dashboard', true
 
-App.Config.set( '', DefaultRouter, 'Routes' )
-App.Config.set( '/', DefaultRouter, 'Routes' )
+App.Config.set('', DefaultRouter, 'Routes')
+App.Config.set('/', DefaultRouter, 'Routes')

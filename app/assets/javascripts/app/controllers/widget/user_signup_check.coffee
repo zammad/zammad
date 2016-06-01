@@ -1,0 +1,82 @@
+class Widget extends App.Controller
+  constructor: ->
+
+    # for browser test
+    App.Event.bind('user_signup_verify', (user) ->
+      new Modal(user: user)
+      'user_signup_verify'
+    )
+
+    App.Event.bind('auth:login', (user) =>
+      return if !user
+      @verifyLater(user.id)
+      'user_signup_verify'
+    )
+    currentUserId = App.Session.get('id')
+    return if !currentUserId
+    @verifyLater(currentUserId)
+
+  verifyLater: (userId) =>
+    delay = =>
+      @verify(userId)
+    @delay(delay, 5000, 'user_signup_verify_dialog')
+
+  verify: (userId) ->
+    return if !userId
+    user = App.User.find(userId)
+    return if user.source isnt 'signup'
+    return if user.verified is true
+    currentTime = new Date().getTime()
+    createdAt = Date.parse(user.created_at)
+    diff = currentTime - createdAt
+    max = 1000 * 60 * 30 # show message if account is older then 30 minutes
+    return if diff < max
+    new Modal(user: user)
+
+class Modal extends App.ControllerModal
+  backdrop: false
+  keyboard: false
+  head: 'Account not verified'
+  small: true
+  buttonClose: false
+  buttonCancel: false
+  buttonSubmit: 'Resend verification email'
+
+  constructor: ->
+    super
+
+  content: =>
+    if !@sent
+      return App.i18n.translateContent('Your account is not verified. Please click the link in the verification email.')
+    content = App.i18n.translateContent('We\'ve sent an email to _%s_. Click the link in the email to verify your account.', @user.email)
+    content += '<br><br>'
+    content += App.i18n.translateContent('If you don\'t see the email, check other places it might be, like your junk, spam, social, or other folders.')
+    content
+
+  onSubmit: =>
+    @ajax(
+      id:          'email_verify_send'
+      type:        'POST'
+      url:         @apiPath + '/users/email_verify_send'
+      data:        JSON.stringify(email: @user.email)
+      processData: true
+      success:     @success
+      error:       @error
+    )
+
+  success: (data) =>
+    @sent = true
+    @update()
+
+    # if in developer mode, redirect to verify
+    if data.token && @Config.get('developer_mode') is true
+      redirect = =>
+        @close()
+        @navigate "#email_verify/#{data.token}"
+      App.Delay.set(redirect, 4000)
+
+  error: =>
+    @contentInline = App.i18n.translateContent('Unable to send verify email.')
+    @update()
+
+App.Config.set('user_signup', Widget, 'Widgets')
