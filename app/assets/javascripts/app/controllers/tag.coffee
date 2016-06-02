@@ -87,6 +87,7 @@ class Table extends App.Controller
 
   destroy: (e) ->
     e.preventDefault()
+    e.stopPropagation()
     row = $(e.currentTarget).closest('tr')
     id = row.data('id')
     new DestroyConfirm(
