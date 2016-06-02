@@ -85,7 +85,12 @@ returns
       @imap.select(options[:folder])
     end
 
-    message_ids = @imap.search(['ALL'])
+    begin
+      message_ids = @imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+    rescue => e
+      Rails.logger.error "Unable to use imap sort: #{e.inspect}, use imap search now"
+      message_ids = @imap.search(['ALL'])
+    end
 
     # check mode only
     if check_type == 'check'
