@@ -160,7 +160,7 @@ class ReportsController < ApplicationController
       range = 'day'
     else
       start     = "#{params[:year]}-01-01"
-      stop_date = Date.parse(day_start).end_of_month
+      stop_date = Date.parse(start).end_of_month
       stop      = "#{stop_date.year}-#{stop_date.month}-#{stop_date.day}"
       range     = 'month'
     end
