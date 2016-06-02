@@ -21,7 +21,7 @@ class Tag < ApplicationModel
 
     # return in duplicate
     current_tags = tag_list(data)
-    return true if current_tags.include?(data[:item].downcase.strip)
+    return true if current_tags.include?(data[:item].strip)
 
     # create history
     Tag.create(
@@ -79,17 +79,16 @@ class Tag < ApplicationModel
 
   def self.tag_item_lookup(name)
 
-    name = name.downcase
-
     # use cache
     return @@cache_item[name] if @@cache_item[name]
 
     # lookup
-    tag_item = Tag::Item.find_by(name: name)
-    if tag_item
+    tag_items = Tag::Item.where(name: name)
+    tag_items.each {|tag_item|
+      next if tag_item.name != name
       @@cache_item[name] = tag_item.id
       return tag_item.id
-    end
+    }
 
     # create
     tag_item = Tag::Item.create(name: name)
@@ -130,6 +129,12 @@ class Tag < ApplicationModel
   end
 
   class Item < ActiveRecord::Base
+    before_save :fill_namedowncase
+
+    def fill_namedowncase
+      self.name_downcase = name.downcase
+    end
+
   end
 
 end

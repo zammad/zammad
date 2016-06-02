@@ -1514,6 +1514,29 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'New Tags',
+  name: 'tag_new',
+  area: 'Web::Base',
+  description: 'Allow users to crate new tags.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'tag_new',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  frontend: true
+)
+
+Setting.create_if_not_exists(
   title: 'Default calendar Tickets subscriptions',
   name: 'defaults_calendar_subscriptions_tickets',
   area: 'Defaults::CalendarSubscriptions',

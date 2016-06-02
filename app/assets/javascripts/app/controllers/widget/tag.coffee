@@ -1,4 +1,6 @@
 class App.WidgetTag extends App.Controller
+  possibleTags: {}
+  shiftHeld: false
   elements:
     '.js-newTagLabel': 'newTagLabel'
     '.js-newTagInput': 'newTagInput'
@@ -9,6 +11,8 @@ class App.WidgetTag extends App.Controller
     'click .js-newTagInput': 'onAddTag'
     'submit form':           'onAddTag'
     'click .js-delete':      'onRemoveTag'
+    'mousedown .js-tag':     'shiftHeldToogle'
+    'click .js-tag':         'searchTag'
 
   constructor: ->
     super
@@ -40,6 +44,17 @@ class App.WidgetTag extends App.Controller
       tags: @tags || [],
     )
 
+    source = "#{App.Config.get('api_path')}/tag_search"
+    @el.find('.js-newTagInput').autocomplete(
+      source: source
+      minLength: 2
+      response: (e, ui) =>
+        return if !ui
+        return if !ui.content
+        for item in ui.content
+          @possibleTags[item.value] = true
+    )
+
   showInput: (e) ->
     e.preventDefault()
     @newTagLabel.addClass('hide')
@@ -66,16 +81,16 @@ class App.WidgetTag extends App.Controller
     if _.contains(@tags, item)
       @render()
       return
-
+    return if App.Config.get('tag_new') is false && !@possibleTags[item]
     @tags.push item
     @render()
 
     @ajax(
-      type:  'GET',
-      url:   @apiPath + '/tags/add',
+      type:  'GET'
+      url:   @apiPath + '/tags/add'
       data:
-        object: @object_type,
-        o_id:   @object.id,
+        object: @object_type
+        o_id:   @object.id
         item:   item
       processData: true,
       success: (data, status, xhr) =>
@@ -104,3 +119,24 @@ class App.WidgetTag extends App.Controller
       success: (data, status, xhr) =>
         @fetch()
     )
+
+  searchTag: (e) =>
+    e.preventDefault()
+    item = $(e.target).text()
+    item = item.replace('"', '')
+    if item.match(/\W/)
+      item = "\"#{item}\""
+    searchAttribute = "tag:#{item}"
+    currentValue = $('#global-search').val()
+    if @shiftHeld && currentValue
+      currentValue += ' AND '
+      currentValue += searchAttribute
+    else
+      currentValue = searchAttribute
+    $('#global-search').val(currentValue)
+    delay = ->
+      $('#global-search').focus()
+    @delay(delay, 20)
+
+  shiftHeldToogle: (e) =>
+    @shiftHeld = e.shiftKey
