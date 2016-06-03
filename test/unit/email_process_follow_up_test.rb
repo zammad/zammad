@@ -127,6 +127,48 @@ no reference "
     assert_not_equal(ticket.id, ticket_p.id)
   end
 
+  test 'process with follow up check with two external reference headers' do
+
+    setting_orig = Setting.get('postmaster_follow_up_search_in')
+    Setting.set('postmaster_follow_up_search_in', %w(body attachment references))
+
+    data1 = "From: me@example.com
+To: z@example.com
+Subject: test 123
+Message-ID: <9d16181c-2db2-c6c1-ff7f-41f2da4e289a@linuxhotel.de>
+
+test 123
+"
+    ticket_p1, article_p1, user_p1 = Channel::EmailParser.new.process({}, data1)
+
+    sleep 1
+
+    data1 = "From: me@example.com
+To: z@example.com
+Subject: test 123
+Message-ID: <9d16181c-2db2-c6c1-ff7f-41f2da4e289a@linuxhotel.de>
+
+test 123
+"
+    ticket_p2, article_p2, user_p2 = Channel::EmailParser.new.process({}, data1)
+    assert_not_equal(ticket_p1.id, ticket_p2.id)
+
+    data2 = "From: you@example.com
+To: y@example.com
+Subject: RE: test 123
+Message-ID: <oknn9teOke2uqbFQdGj2umXUwTkqgu0CqWHkA6V4K8p@akmail>
+References: <9d16181c-2db2-c6c1-ff7f-41f2da4e289a@linuxhotel.de>
+
+test 123
+"
+    ticket_p3, article_p3, user_p3 = Channel::EmailParser.new.process({}, data2)
+
+    assert_equal(ticket_p2.id, ticket_p3.id)
+
+    Setting.set('postmaster_follow_up_search_in', setting_orig)
+
+  end
+
   test 'process with follow up check - with auto responses and no T# in subject_build' do
 
     ticket = Ticket.create(

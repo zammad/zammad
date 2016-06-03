@@ -244,9 +244,10 @@ class CreateBase < ActiveRecord::Migration
 
     create_table :tag_items do |t|
       t.string :name,                   limit: 250, null: false
+      t.string :name_downcase,          limit: 250, null: false
       t.timestamps                                  null: false
     end
-    add_index :tag_items, [:name], unique: true
+    add_index :tag_items, [:name_downcase]
 
     create_table :recent_views do |t|
       t.references :recent_view_object,             null: false

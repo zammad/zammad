@@ -73,14 +73,20 @@ class UsersController < ApplicationController
 
       # if it's a signup, add user to customer role
       if !current_user
-        user.updated_by_id = 1
-        user.created_by_id = 1
 
         # check if feature is enabled
         if !Setting.get('user_create_account')
           render json: { error_human: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
+
+        # check signup option only after admin account is created
+        if count > 2 && !params[:signup]
+          render json: { error_human: 'Only signup is possible!' }, status: :unprocessable_entity
+          return
+        end
+        user.updated_by_id = 1
+        user.created_by_id = 1
 
         # add first user as admin/agent and to all groups
         group_ids = []
@@ -99,6 +105,9 @@ class UsersController < ApplicationController
         end
         user.role_ids  = role_ids
         user.group_ids = group_ids
+
+        # remember source (in case show email verify banner)
+        user.source = 'signup'
 
       # else do assignment as defined
       else
@@ -150,14 +159,11 @@ class UsersController < ApplicationController
 
       # send email verify
       if params[:signup] && !current_user
-        token = Token.create(action: 'EmailVerify', user_id: user.id)
+        result = User.signup_new_token(user)
         NotificationFactory::Mailer.notification(
           template: 'signup',
           user: user,
-          objects: {
-            token: token,
-            user: user,
-          }
+          objects: result
         )
       end
       user_new = User.find(user.id).attributes_with_associations
@@ -389,6 +395,106 @@ class UsersController < ApplicationController
 
     # return result
     render json: history
+  end
+
+=begin
+
+Resource:
+POST /api/v1/users/email_verify
+
+Payload:
+{
+  "token": "SoMeToKeN",
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/email_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN"}'
+
+=end
+
+  def email_verify
+    if !params[:token]
+      render json: { message: 'No token!' }, status: :unprocessable_entity
+      return
+    end
+
+    user = User.signup_verify_via_token(params[:token], current_user)
+    if !user
+      render json: { message: 'Invalid token!' }, status: :unprocessable_entity
+      return
+    end
+
+    render json: { message: 'ok', user_email: user.email }, status: :ok
+  end
+
+=begin
+
+Resource:
+POST /api/v1/users/email_verify_send
+
+Payload:
+{
+  "email": "some_email@example.com"
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/email_verify_send.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"email": "some_email@example.com"}'
+
+=end
+
+  def email_verify_send
+
+    if !params[:email]
+      render json: { message: 'No email!' }, status: :unprocessable_entity
+      return
+    end
+
+    # check is verify is possible to send
+    user = User.find_by(email: params[:email].downcase)
+    if !user
+      render json: { error_human: 'No such user!' }, status: :unprocessable_entity
+      return
+    end
+
+    #if user.verified == true
+    #  render json: { error_human: 'Already verified!' }, status: :unprocessable_entity
+    #  return
+    #end
+
+    token = Token.create(action: 'Signup', user_id: user.id)
+
+    result = User.signup_new_token(user)
+    if result && result[:token]
+      user = result[:user]
+      NotificationFactory::Mailer.notification(
+        template: 'signup',
+        user: user,
+        objects: result
+      )
+
+      # only if system is in develop mode, send token back to browser for browser tests
+      if Setting.get('developer_mode') == true
+        render json: { message: 'ok', token: result[:token].name }, status: :ok
+        return
+      end
+
+      # token sent to user, send ok to browser
+      render json: { message: 'ok' }, status: :ok
+      return
+    end
+
+    # unable to generate token
+    render json: { message: 'failed' }, status: :ok
   end
 
 =begin

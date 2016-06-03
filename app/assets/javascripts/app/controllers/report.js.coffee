@@ -15,7 +15,7 @@ class Index extends App.ControllerContent
       success: (data) =>
         @stopLoading()
         @config = data.config
-        App.Collection.load( type: 'ReportProfile', data: data.profiles )
+        App.Collection.load(type: 'ReportProfile', data: data.profiles)
         @render()
     )
 
@@ -326,11 +326,9 @@ class TimeRangePicker extends App.Controller
     @el.find('.js-timeRange[data-type="' + @ui.params.timeRange + '"]').addClass('active')
 
   select: (e) =>
-    console.log('TS click')
     e.preventDefault()
     @ui.params.timeRange = $(e.target).data('type')
-    console.log 'SLOT', @ui.params.timeRange
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
 
 
 class TimePicker extends App.Controller
@@ -369,7 +367,7 @@ class TimePicker extends App.Controller
     @ui.params.day = $(e.target).data('type')
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
   selectTimeMonth: (e) =>
@@ -377,7 +375,7 @@ class TimePicker extends App.Controller
     @ui.params.month = $(e.target).data('type')
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
   selectTimeWeek: (e) =>
@@ -385,7 +383,7 @@ class TimePicker extends App.Controller
     @ui.params.week = $(e.target).data('type')
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
   selectTimeYear: (e) =>
@@ -393,7 +391,7 @@ class TimePicker extends App.Controller
     @ui.params.year = $(e.target).data('type')
     $(e.target).parent().parent().find('li').removeClass('active')
     $(e.target).parent().addClass('active')
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
   _timeSlotPicker: ->
@@ -488,7 +486,6 @@ class Sidebar extends App.Controller
 
     metrics = @config.metric
     profiles = App.ReportProfile.all()
-    console.log('Si', @params)
     @html App.view('report/sidebar')(
       metrics:  metrics
       params:   @params
@@ -500,16 +497,15 @@ class Sidebar extends App.Controller
     metric = $(e.target).closest('.panel').data('metric')
     return if @params.metric is metric
     @params.metric = metric
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
   selectProfile: (e) =>
     profile_id = $(e.target).val()
-    console.log('llll', profile_id)
     for key, value of @params.profileSelected
       delete @params.profileSelected[key]
     @params.profileSelected[profile_id] = true
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
   selectBackend: (e) =>
@@ -519,8 +515,8 @@ class Sidebar extends App.Controller
       @params.backendSelected[backend] = true
     else
       delete @params.backendSelected[backend]
-    App.Event.trigger( 'ui:report:rerender' )
+    App.Event.trigger('ui:report:rerender')
     @ui.storeParams()
 
-App.Config.set( 'report', Index, 'Routes' )
-App.Config.set( 'Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', role: ['Report'] }, 'NavBarRight' )
+App.Config.set('report', Index, 'Routes')
+App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', role: ['Report'] }, 'NavBarRight')

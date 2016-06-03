@@ -136,4 +136,4 @@ class Index extends App.ControllerContent
       600
     )
 
-App.Config.set( 'login', Index, 'Routes' )
+App.Config.set('login', Index, 'Routes')

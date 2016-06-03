@@ -1,0 +1,5 @@
+<form>
+  <div class="form-item">
+    <input type="text" name="name" class="" value="<%= @name %>" autocomplete="off">
+  </div>
+</form>

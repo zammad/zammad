@@ -1,8 +1,8 @@
-<label><%- @T( 'Tags' ) %></label>
+<label><%- @T('Tags') %></label>
 <ul class="list list--sidebar">
   <% for tag in @tags: %>
   <li class="list-item">
-    <div class="list-item-name js-tag"><%= tag %></div>
+    <a href="#" class="list-item-name js-tag"><%= tag %></a>
     <div class="list-item-delete js-delete">
       <%- @Icon('diagonal-cross') %>
     </div>

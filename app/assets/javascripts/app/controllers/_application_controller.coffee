@@ -223,7 +223,7 @@ class App.Controller extends Spine.Controller
     # remember requested url
     if !checkOnly
       location = window.location.hash
-      if location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
+      if location && location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
         @Config.set('requested_url', location)
 
     return false if checkOnly
@@ -559,16 +559,20 @@ class App.Controller extends Spine.Controller
     return if !@initLoadingDoneDelay
     @clearDelay(@initLoadingDoneDelay)
 
+  renderScreenSuccess: (data) ->
+    App.TaskManager.touch(@task_key) if @task_key
+    @html App.view('generic/error/success')(data)
+
   renderScreenError: (data) ->
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@task_key) if @task_key
     @html App.view('generic/error/generic')(data)
 
   renderScreenNotFound: (data) ->
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@task_key) if @task_key
     @html App.view('generic/error/not_found')(data)
 
   renderScreenUnauthorized: (data) ->
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@task_key) if @task_key
     @html App.view('generic/error/unauthorized')(data)
 
   locationVerify: (e) =>

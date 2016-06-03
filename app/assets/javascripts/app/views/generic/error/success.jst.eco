@@ -1,0 +1,4 @@
+<div class="fullscreenMessage">
+  <%- @Icon('checkmark') %>
+  <h2><%- @T(@detail) %></h2>
+</div>

@@ -243,6 +243,15 @@ class Channel::EmailParser
     data[:body].gsub!(/\r\n/, "\n")
     data[:body].tr!("\r", "\n")
 
+    # get mail date
+    begin
+      if mail.date
+        data[:date] = Time.zone.parse(mail.date.to_s)
+      end
+    rescue
+      data[:date] = nil
+    end
+
     # remember original mail instance
     data[:mail_instance] = mail
 
@@ -372,6 +381,7 @@ retrns
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
     filters.each {|_prio, backend|
+      Rails.logger.debug "run postmaster pre filter #{backend}"
       begin
         backend.run(channel, mail)
       rescue => e
@@ -526,6 +536,7 @@ retrns
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
     filters.each {|_prio, backend|
+      Rails.logger.debug "run postmaster post filter #{backend}"
       begin
         backend.run(channel, mail, ticket, article, user)
       rescue => e
@@ -544,8 +555,6 @@ retrns
     item_object.attributes.each {|key, _value|
 
       # ignore read only attributes
-      next if key == 'updated_at'
-      next if key == 'created_at'
       next if key == 'updated_by_id'
       next if key == 'created_by_id'
 

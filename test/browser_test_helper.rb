@@ -3019,6 +3019,47 @@ wait untill text in selector disabppears
 
   end
 
+=begin
+
+  tags_verify(
+    browser: browser2,
+    tags: {
+      'tag 1' => true,
+      'tag 2' => true,
+      'tag 3' => false,
+    },
+  )
+
+=end
+
+  def tags_verify(params = {})
+    switch_window_focus(params)
+    log('tags_verify', params)
+
+    instance = params[:browser] || @browser
+
+    tags = instance.find_elements({ css: '.content.active .js-tag' })
+    assert(tags)
+    assert(tags[0])
+
+    tags_found = {}
+    params[:tags].each {|key, _value|
+      tags_found[key] = false
+    }
+
+    tags.each {|element|
+      text = element.text
+      if tags_found.key?(text)
+        tags_found[text] = true
+      else
+        assert(false, "tag exists but is not in check to verify '#{text}'")
+      end
+    }
+    params[:tags].each {|key, value|
+      assert_equal(value, tags_found[key], "tag '#{key}'")
+    }
+  end
+
   def quote(string)
     string_quoted = string
     string_quoted.gsub!(/&/, '&amp;')

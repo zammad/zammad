@@ -27,9 +27,7 @@ class AgentTicketActionLevel8Test < TestCase
       css: '.active .ticket-form-bottom .token-input',
       value: 'tag1, tag2',
     )
-    sendkey(
-      value: :tab,
-    )
+    sendkey(value: :tab)
 
     # reload browser
     sleep 6
@@ -45,25 +43,14 @@ class AgentTicketActionLevel8Test < TestCase
     end
 
     # verify tags
-    tags = @browser.find_elements({ css: '.content.active .js-tag' })
-    assert(tags)
-    assert(tags[0])
-    tag1_found = false
-    tag2_found = false
-    tags.each {|element|
-      text = element.text
-      if text == 'tag1'
-        tag1_found = true
-        assert(true, 'tag1 exists')
-      elsif text == 'tag2'
-        tag2_found = true
-        assert(true, 'tag2 exists')
-      else
-        assert(false, "invalid tag '#{text}'")
-      end
-    }
-    assert(tag1_found, 'tag1 exists')
-    assert(tag2_found, 'tag2 exists')
+    tags_verify(
+      tags: {
+        'tag1' => true,
+        'tag2' => true,
+        'tag3' => false,
+        'tag4' => false,
+      }
+    )
 
     # set tag (by blur)
     ticket2 = ticket_create(
@@ -80,38 +67,22 @@ class AgentTicketActionLevel8Test < TestCase
       css: '.active .ticket-form-bottom .token-input',
       value: 'tag3, tag4',
     )
-    click(
-      css: '#global-search',
-    )
-
-    click(
-      css: '.active .newTicket button.js-submit',
-    )
+    click(css: '#global-search')
+    click(css: '.active .newTicket button.js-submit')
     sleep 5
     if @browser.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
       raise 'Unable to create ticket!'
     end
 
     # verify tags
-    tags = @browser.find_elements({ css: '.content.active .js-tag' })
-    assert(tags)
-    assert(tags[0])
-    tag3_found = false
-    tag4_found = false
-    tags.each {|element|
-      text = element.text
-      if text == 'tag3'
-        tag3_found = true
-        assert(true, 'tag 3 exists')
-      elsif text == 'tag4'
-        tag4_found = true
-        assert(true, 'tag 4 exists')
-      else
-        assert(false, "invalid tag '#{text}'")
-      end
-    }
-    assert(tag3_found, 'tag3 exists')
-    assert(tag4_found, 'tag4 exists')
+    tags_verify(
+      tags: {
+        'tag1' => false,
+        'tag2' => false,
+        'tag3' => true,
+        'tag4' => true,
+      }
+    )
 
     ticket3 = ticket_create(
       data: {
@@ -175,82 +146,202 @@ class AgentTicketActionLevel8Test < TestCase
     sleep 0.5
 
     # verify tags
-    tags = @browser.find_elements({ css: '.content.active .js-tag' })
-    assert(tags)
-    assert(tags[0])
-    tag1_found = false
-    tag2_found = false
-    tag3_found = false
-    tag4_found = false
-    tag5_found = false
-    tags.each {|element|
-      text = element.text
-      if text == 'tag1'
-        tag1_found = true
-        assert(true, 'tag1 exists')
-      elsif text == 'tag 2'
-        tag2_found = true
-        assert(true, 'tag 2 exists')
-      elsif text == 'tag3'
-        tag3_found = true
-        assert(true, 'tag3 exists')
-      elsif text == 'tag4'
-        tag4_found = true
-        assert(true, 'tag4 exists')
-      elsif text == 'tag5'
-        tag5_found = true
-        assert(true, 'tag5 exists')
-      else
-        assert(false, "invalid tag '#{text}'")
-      end
-    }
-    assert(tag1_found, 'tag1 exists')
-    assert(tag2_found, 'tag2 exists')
-    assert(tag3_found, 'tag3 exists')
-    assert(tag4_found, 'tag4 exists')
-    assert(tag5_found, 'tag5 exists')
+    tags_verify(
+      tags: {
+        'tag1' => true,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => true,
+        'tag4' => true,
+        'tag5' => true,
+      }
+    )
 
     # reload browser
     reload()
+    sleep 2
 
     # verify tags
-    tags = @browser.find_elements({ css: '.content.active .js-tag' })
-    assert(tags)
-    assert(tags[0])
-    tag1_found = false
-    tag2_found = false
-    tag3_found = false
-    tag4_found = false
-    tag5_found = false
-    tags.each {|element|
-      text = element.text
-      if text == 'tag1'
-        tag1_found = true
-        assert(true, 'tag1 exists')
-      elsif text == 'tag 2'
-        tag2_found = true
-        assert(true, 'tag 2 exists')
-      elsif text == 'tag3'
-        tag3_found = true
-        assert(true, 'tag3 exists')
-      elsif text == 'tag4'
-        tag4_found = true
-        assert(true, 'tag4 exists')
-      elsif text == 'tag5'
-        tag5_found = true
-        assert(true, 'tag5 exists')
-      else
-        assert(false, "invalid tag '#{text}'")
-      end
-    }
-    assert(tag1_found, 'tag1 exists')
-    assert(tag2_found, 'tag2 exists')
-    assert(tag3_found, 'tag3 exists')
-    assert(tag4_found, 'tag4 exists')
-    assert(tag5_found, 'tag5 exists')
+    tags_verify(
+      tags: {
+        'tag1' => true,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => true,
+        'tag4' => true,
+        'tag5' => true,
+      }
+    )
   end
 
-  def test_b_link
+  def test_b_tags
+    tag_prefix = "tag#{rand(999_999_999)}"
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#manage/tags"]')
+    switch(
+      css:  '#content .js-newTagSetting',
+      type: 'off',
+    )
+
+    set(
+      css: '#content .js-create input[name="name"]',
+      value: tag_prefix + ' A',
+    )
+    click(css: '#content .js-create .js-submit')
+    set(
+      css: '#content .js-create input[name="name"]',
+      value: tag_prefix + ' a',
+    )
+    click(css: '#content .js-create .js-submit')
+    set(
+      css: '#content .js-create input[name="name"]',
+      value: tag_prefix + ' B',
+    )
+    click(css: '#content .js-create .js-submit')
+    set(
+      css: '#content .js-create input[name="name"]',
+      value: tag_prefix + ' C',
+    )
+    click(css: '#content .js-create .js-submit')
+
+    # set tag (by tab)
+    ticket1 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'some subject 123äöü - tags no new 1',
+        body: 'some body 123äöü - tags no new 1',
+      },
+      do_not_submit: true,
+    )
+    sleep 1
+    set(
+      css: '.active .ticket-form-bottom .token-input',
+      value: "#{tag_prefix} A",
+    )
+    sleep 2
+    sendkey(value: :tab)
+    sleep 1
+    set(
+      css: '.active .ticket-form-bottom .token-input',
+      value: "#{tag_prefix} a",
+    )
+    sleep 2
+    sendkey(value: :tab)
+    sleep 1
+    set(
+      css: '.active .ticket-form-bottom .token-input',
+      value: "#{tag_prefix} B",
+    )
+    sleep 2
+    sendkey(value: :tab)
+    sleep 1
+    set(
+      css: '.active .ticket-form-bottom .token-input',
+      value: 'NOT EXISTING',
+    )
+    sleep 2
+    sendkey(value: :tab)
+    sleep 1
+
+    click(
+      css: '.active .newTicket button.js-submit',
+    )
+    sleep 5
+    if @browser.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
+      raise 'Unable to create ticket!'
+    end
+
+    # verify tags
+    tags_verify(
+      tags: {
+        "#{tag_prefix} A" => true,
+        "#{tag_prefix} a" => true,
+        "#{tag_prefix} B" => true,
+        'NOT EXISTING' => false,
+      }
+    )
+
+    # new ticket with tags in zoom
+    ticket1 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'some subject 123äöü - tags no new 2',
+        body: 'some body 223äöü - tags no new 1',
+      },
+    )
+
+    click(css: '.active .sidebar .js-newTagLabel')
+    set(
+      css: '.active .sidebar .js-newTagInput',
+      value: "#{tag_prefix} A",
+    )
+    sleep 2
+    sendkey(value: :tab)
+    click(css: '.active .sidebar .js-newTagLabel')
+    set(
+      css: '.active .sidebar .js-newTagInput',
+      value: "#{tag_prefix} a",
+    )
+    sleep 2
+    sendkey(value: :tab)
+    click(css: '.active .sidebar .js-newTagLabel')
+    set(
+      css: '.active .sidebar .js-newTagInput',
+      value: "#{tag_prefix} B",
+    )
+    sleep 2
+    sendkey(value: :tab)
+    click(css: '.active .sidebar .js-newTagLabel')
+    set(
+      css: '.active .sidebar .js-newTagInput',
+      value: 'NOT EXISTING',
+    )
+    sleep 2
+    sendkey(value: :tab)
+
+    # verify tags
+    tags_verify(
+      tags: {
+        "#{tag_prefix} A" => true,
+        "#{tag_prefix} a" => true,
+        "#{tag_prefix} B" => true,
+        'NOT EXISTING' => false,
+      }
+    )
+    reload()
+    sleep 2
+
+    # verify tags
+    tags_verify(
+      tags: {
+        "#{tag_prefix} A" => true,
+        "#{tag_prefix} a" => true,
+        "#{tag_prefix} B" => true,
+        'NOT EXISTING' => false,
+      }
+    )
+
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#manage/tags"]')
+    switch(
+      css:  '#content .js-newTagSetting',
+      type: 'on',
+    )
+
+  end
+
+  def test_c_link
 
     @browser = browser_instance
     login(

@@ -361,6 +361,22 @@ returns
     record
   end
 
+=begin
+
+execute all pending package migrations at once
+
+  Package.migration_execute
+
+=end
+
+  def self.migration_execute
+    Package.all.each {|package|
+      json_file = Package._get_bin(package.name, package.version)
+      package   = JSON.parse(json_file)
+      Package::Migration.migrate(package['name'])
+    }
+  end
+
   def self._get_bin(name, version)
     package = Package.find_by(
       name: name,

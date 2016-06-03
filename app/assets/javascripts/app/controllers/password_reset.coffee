@@ -64,8 +64,8 @@ class Index extends App.ControllerContent
       if data.token && @Config.get('developer_mode') is true
         redirect = =>
           @navigate "#password_reset_verify/#{data.token}"
-        @delay( redirect, 2000 )
-      @render( sent: true )
+        @delay(redirect, 2000)
+      @render(sent: true)
 
     else
       @$('[name=username]').val('')
@@ -75,7 +75,7 @@ class Index extends App.ControllerContent
       )
       @formEnable( @el.find('.form-password') )
 
-App.Config.set( 'password_reset', Index, 'Routes' )
+App.Config.set('password_reset', Index, 'Routes')
 
 class Verify extends App.ControllerContent
   events:
@@ -105,10 +105,10 @@ class Verify extends App.ControllerContent
       url:         @apiPath + '/users/password_reset_verify'
       data:        JSON.stringify(params)
       processData: true
-      success:     @render_change
+      success:     @renderChange
     )
 
-  render_change: (data) =>
+  renderChange: (data) =>
     if data.message is 'ok'
       configure_attributes = [
         { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input',  },
@@ -161,10 +161,10 @@ class Verify extends App.ControllerContent
       url:         @apiPath + '/users/password_reset_verify'
       data:        JSON.stringify(params)
       processData: true
-      success:     @render_changed
+      success:     @renderChanged
     )
 
-  render_changed: (data, status, xhr) =>
+  renderChanged: (data, status, xhr) =>
     if data.message is 'ok'
       App.Auth.login(
         data:

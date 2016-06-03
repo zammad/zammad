@@ -77,15 +77,25 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create user with disabled feature
     Setting.set('user_create_account', false)
-    post '/api/v1/users', {}, @headers
+    params = { email: 'some_new_customer@example.com' }
+    post '/api/v1/users', params.to_json, @headers
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result['error_human'])
     assert_equal('Feature not enabled!', result['error_human'])
 
-    # already existing user with enabled feature
     Setting.set('user_create_account', true)
-    params = { email: 'rest-customer1@example.com' }
+
+    # no signup param with enabled feature
+    params = { email: 'some_new_customer@example.com' }
+    post '/api/v1/users', params.to_json, @headers
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert(result['error_human'])
+    assert_equal('Only signup is possible!', result['error_human'])
+
+    # already existing user with enabled feature
+    params = { email: 'rest-customer1@example.com', signup: true }
     post '/api/v1/users', params.to_json, @headers
     assert_response(422)
     result = JSON.parse(@response.body)
@@ -93,7 +103,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal('User already exists!', result['error_human'])
 
     # create user with enabled feature
-    params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com' }
+    params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com', signup: true }
     post '/api/v1/users', params.to_json, @headers
     assert_response(201)
     result = JSON.parse(@response.body)
@@ -106,7 +116,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create user with admin role
     role = Role.lookup(name: 'Admin')
-    params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', role_ids: [ role.id ] }
+    params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', role_ids: [ role.id ], signup: true }
     post '/api/v1/users', params.to_json, @headers
     assert_response(201)
     result = JSON.parse(@response.body)
@@ -118,7 +128,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create user with agent role
     role = Role.lookup(name: 'Agent')
-    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', role_ids: [ role.id ] }
+    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', role_ids: [ role.id ], signup: true }
     post '/api/v1/users', params.to_json, @headers
     assert_response(201)
     result = JSON.parse(@response.body)

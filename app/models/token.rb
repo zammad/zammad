@@ -8,7 +8,7 @@ class Token < ActiveRecord::Base
 
 create new token
 
-  token = Token.create( action: 'PasswordReset', user_id: user.id )
+  token = Token.create(action: 'PasswordReset', user_id: user.id)
 
 returns
 
@@ -34,7 +34,7 @@ returns
 
 check token
 
-  user = Token.check( action: 'PasswordReset', name: 'TheTokenItSelf' )
+  user = Token.check(action: 'PasswordReset', name: 'TheTokenItSelf')
 
 returns
 
@@ -42,10 +42,10 @@ returns
 
 =end
 
-  def self.check( data )
+  def self.check(data)
 
     # fetch token
-    token = Token.find_by( action: data[:action], name: data[:name] )
+    token = Token.find_by(action: data[:action], name: data[:name])
     return if !token
 
     # check if token is still valid
@@ -81,8 +81,7 @@ cleanup old token
 
     loop do
       self.name = SecureRandom.hex(30)
-
-      break if !Token.exists?( name: name )
+      break if !Token.exists?(name: name)
     end
   end
 end
