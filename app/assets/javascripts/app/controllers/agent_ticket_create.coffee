@@ -142,7 +142,10 @@ class App.TicketCreate extends App.Controller
           @latestTitle = title
           App.TaskManager.touch(@task_key)
 
-    @interval(update, 3000, @id)
+    @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
+      @delay(update, 250, 'ticket-create-form-update')
+    )
+    @delay(update, 800, 'ticket-create-form-update')
 
   # get data / in case also ticket data for split
   buildScreen: (params) =>

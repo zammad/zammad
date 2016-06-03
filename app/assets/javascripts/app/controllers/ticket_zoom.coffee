@@ -100,7 +100,7 @@ class App.TicketZoom extends App.Controller
     @activeState = true
 
     # start autosave
-    @delay(@autosaveStart, 800, "ticket-zoom-auto-save-#{@ticket_id}")
+    @autosaveStart()
 
     # if ticket is shown the first time
     if !@shown
@@ -428,6 +428,7 @@ class App.TicketZoom extends App.Controller
     @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
       @delay(update, 250, 'ticket-zoom-form-update')
     )
+    @delay(update, 800, 'ticket-zoom-form-update')
 
   currentStore: =>
     return if !@ticket

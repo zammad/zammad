@@ -23,6 +23,7 @@ class Channel::EmailParser
     cc:                'Somebody <somebody@example.com>',
     subject:           'some message subject',
     body:              'some message body',
+    date:              Time.zone.now,
     attachments:       [
       {
         data:        'binary of attachment',
