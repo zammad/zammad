@@ -122,7 +122,6 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
     # stop autosave
-    @clearDelay("ticket-zoom-auto-save-#{@ticket_id}")
     @autosaveStop()
 
   changed: =>
@@ -404,6 +403,7 @@ class App.TicketZoom extends App.Controller
     @main.scrollTop( @main.prop('scrollHeight') )
 
   autosaveStop: =>
+    @clearDelay('ticket-zoom-form-update')
     @autosaveLast = {}
     @el.off('change.local blur.local keyup.local paste.local input.local')
 
