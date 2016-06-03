@@ -103,7 +103,6 @@ class AgentTicketActionsLevel3Test < TestCase
       },
       do_not_submit: true,
     )
-    sleep 6
     watch_for(
       browser: browser1,
       css: '.content.active .js-reset',
@@ -119,7 +118,6 @@ class AgentTicketActionsLevel3Test < TestCase
       },
       do_not_submit: true,
     )
-    sleep 6
     watch_for(
       browser: browser2,
       css: '.content.active .js-reset',

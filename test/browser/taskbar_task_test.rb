@@ -18,7 +18,7 @@ class TaskbarTaskTest < TestCase
       css: '.active .newTicket input[name="title"]',
       value: 'some test AAA',
     )
-    sleep 10
+    sleep 4
   end
 
   def test_persistant_task_b
@@ -73,7 +73,7 @@ class TaskbarTaskTest < TestCase
       css: '.active .newTicket [data-name="body"]',
       value: 'OUTBOUND BODY TEST#1',
     )
-    sleep 10
+    sleep 4
 
     logout()
     sleep 4
