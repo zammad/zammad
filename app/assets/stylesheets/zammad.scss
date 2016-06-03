@@ -3440,6 +3440,7 @@ footer {
   display: inline-block;
   vertical-align: bottom;
   position: relative;
+  flex-shrink: 0;
   
   &.size-30 {
     width: 30px;
