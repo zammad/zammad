@@ -22,7 +22,7 @@ class AgentTicketActionLevel4Test < TestCase
       },
       do_not_submit: true,
     )
-    sleep 8
+    sleep 6
 
     # check if customer is shown in sidebar
     match(
@@ -93,7 +93,7 @@ class AgentTicketActionLevel4Test < TestCase
 
     # reload
     reload()
-    sleep 5
+    sleep 4
 
     # check task title
     verify_task(

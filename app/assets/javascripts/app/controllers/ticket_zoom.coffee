@@ -100,7 +100,7 @@ class App.TicketZoom extends App.Controller
     @activeState = true
 
     # start autosave
-    @delay(@autosaveStart, 800, "ticket-zoom-auto-save-#{@ticket_id}")
+    @autosaveStart()
 
     # if ticket is shown the first time
     if !@shown
@@ -122,7 +122,6 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
     # stop autosave
-    @clearDelay("ticket-zoom-auto-save-#{@ticket_id}")
     @autosaveStop()
 
   changed: =>
@@ -359,7 +358,8 @@ class App.TicketZoom extends App.Controller
       @sidebar = new App.TicketZoomSidebar(
         el:           el.find('.tabsSidebar')
         sidebarState: @sidebarState
-        ticket:       @ticket
+        object_id:    @ticket.id
+        model:        'Ticket'
         taskGet:      @taskGet
         task_key:     @task_key
         tags:         @tags
@@ -403,8 +403,9 @@ class App.TicketZoom extends App.Controller
     @main.scrollTop( @main.prop('scrollHeight') )
 
   autosaveStop: =>
+    @clearDelay('ticket-zoom-form-update')
     @autosaveLast = {}
-    @clearInterval('autosave')
+    @el.off('change.local blur.local keyup.local paste.local input.local')
 
   autosaveStart: =>
     if !@autosaveLast
@@ -424,7 +425,10 @@ class App.TicketZoom extends App.Controller
       @markFormDiff(modelDiff)
       @taskUpdateAll(modelDiff)
 
-    @interval(update, 2800, 'autosave')
+    @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
+      @delay(update, 250, 'ticket-zoom-form-update')
+    )
+    @delay(update, 800, 'ticket-zoom-form-update')
 
   currentStore: =>
     return if !@ticket
@@ -458,6 +462,16 @@ class App.TicketZoom extends App.Controller
     currentParams
 
   formDiff: (currentParams, currentStore) ->
+
+    # do not compare null or undefined value
+    if currentStore.ticket
+      for key, value of currentStore.ticket
+        if value is null || value is undefined
+          currentStore.ticket[key] = ''
+    if currentParams.ticket
+      for key, value of currentParams.ticket
+        if value is null || value is undefined
+          currentParams.ticket[key] = ''
 
     # get diff of model
     modelDiff =

@@ -120,6 +120,10 @@ class App.TicketCreate extends App.Controller
 
   show: =>
     @navupdate "#ticket/create/id/#{@id}#{@split}", type: 'menu'
+    @autosaveStart()
+
+  hide: =>
+    @autosaveStop()
 
   changed: =>
     formCurrent = @formParam( @$('.ticket-create') )
@@ -127,22 +131,31 @@ class App.TicketCreate extends App.Controller
     return false if !diff || _.isEmpty(diff)
     return true
 
-  autosave: =>
+  autosaveStop: =>
+    @clearDelay('ticket-create-form-update')
+    @el.off('change.local blur.local keyup.local paste.local input.local')
+
+  autosaveStart: =>
+    if !@autosaveLast
+      @autosaveLast = App.TaskManager.get(@task_key).state || {}
     update = =>
       data = @formParam(@$('.ticket-create'))
+      return if _.isEmpty(data)
       diff = difference(@autosaveLast, data)
-      if !@autosaveLast || (diff && !_.isEmpty(diff))
+      if _.isEmpty(@autosaveLast) || !_.isEmpty(diff)
         @autosaveLast = data
         @log 'debug', 'form hash changed', diff, data
         App.TaskManager.update(@task_key, { 'state': data })
 
         # check it task title in task need to be updated
-        title = @$('[name=title]').val()
-        if @latestTitle isnt title
-          @latestTitle = title
+        if @latestTitle isnt data.title
+          @latestTitle = data.title
           App.TaskManager.touch(@task_key)
 
-    @interval(update, 3000, @id)
+    @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
+      @delay(update, 250, 'ticket-create-form-update')
+    )
+    @delay(update, 800, 'ticket-create-form-update')
 
   # get data / in case also ticket data for split
   buildScreen: (params) =>
@@ -330,9 +343,6 @@ class App.TicketCreate extends App.Controller
     )
 
     $('#tags').tokenfield()
-
-    # start auto save
-    @autosave()
 
     # update taskbar with new meta data
     App.TaskManager.touch(@task_key)

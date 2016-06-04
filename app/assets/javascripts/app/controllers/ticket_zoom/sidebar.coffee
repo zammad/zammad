@@ -1,12 +1,8 @@
-class App.TicketZoomSidebar extends App.Controller
-  constructor: ->
-    super
-    ticket       = App.Ticket.fullLocal(@ticket.id)
-    @subscribeId = ticket.subscribe(@render)
-    @render(ticket)
-
-  release: =>
-    App.Ticket.unsubscribe(@subscribeId)
+class App.TicketZoomSidebar extends App.ObserverController
+  model: 'Ticket'
+  observeNot:
+    created_at: true
+    updated_at: true
 
   render: (ticket) =>
 
@@ -17,13 +13,13 @@ class App.TicketZoomSidebar extends App.Controller
       show = (ticket) =>
         el.find('.edit').html('')
 
-        defaults   = ticket.attributes()
+        defaults = ticket.attributes()
         delete defaults.article # ignore article infos
-        task_state = @taskGet('ticket')
-        modelDiff  = App.Utils.formDiff(task_state, defaults)
+        taskState = @taskGet('ticket')
+        modelDiff = App.Utils.formDiff(taskState, defaults)
 
-        if !_.isEmpty(task_state)
-          defaults = _.extend(defaults, task_state)
+        if !_.isEmpty(taskState)
+          defaults = _.extend(defaults, taskState)
 
         new App.ControllerForm(
           el:       el.find('.edit')
@@ -36,7 +32,7 @@ class App.TicketZoomSidebar extends App.Controller
           params:    defaults
           #bookmarkable: true
         )
-        #console.log('Ichanges', modelDiff, task_state, ticket.attributes())
+        #console.log('Ichanges', modelDiff, taskState, ticket.attributes(), defaults)
         #@markFormDiff( modelDiff )
 
       show(ticket)

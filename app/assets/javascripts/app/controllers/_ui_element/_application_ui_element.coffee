@@ -203,13 +203,16 @@ class App.UiElement.ApplicationUiElement
       for valueItem in value
         if @_selectedOptionsIsSelectedItem(valueItem, record)
           return true
-    if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
+    if value is null || value is undefined || typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
       if @_selectedOptionsIsSelectedItem(value, record)
         return true
     false
 
-  @_selectedOptionsIsSelectedItem: (value, record) ->
+  @_selectedOptionsIsSelectedItem: (valueOrigin, record) ->
     # if name or value is matching
+    value = valueOrigin
+    if value is null || value is undefined
+      value = ''
     if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
       if record.value.toString() is value.toString() || record.name.toString() is value.toString()
         return true

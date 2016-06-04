@@ -92,7 +92,7 @@ class String
     link_list = ''
     counter   = 0
     if !string_only
-      string.gsub!( /<a\s.*?href=("|')(.+?)("|').*?>/ix ) {
+      string.gsub!(/<a\s.*?href=("|')(.+?)("|').*?>/ix) {
         link = $2
         counter = counter + 1
         link_list += "[#{counter}] #{link}\n"
@@ -101,31 +101,32 @@ class String
     end
 
     # remove style tags with content
-    string.gsub!( %r{<style(|\s.+?)>(.+?)</style>}im, '')
+    string.gsub!(%r{<style(|\s.+?)>(.+?)</style>}im, '')
+
     # remove empty lines
-    string.gsub!( /^\s*/m, '' )
+    string.gsub!(/^\s*/m, '')
 
     # pre/code handling 1/2
-    string.gsub!( %r{<pre>(.+?)</pre>}m ) { |placeholder|
+    string.gsub!(%r{<pre>(.+?)</pre>}m) { |placeholder|
       placeholder = placeholder.gsub(/\n/, '###BR###')
     }
-    string.gsub!( %r{<code>(.+?)</code>}m ) { |placeholder|
+    string.gsub!(%r{<code>(.+?)</code>}m) { |placeholder|
       placeholder = placeholder.gsub(/\n/, '###BR###')
     }
 
     # insert spaces on [A-z]\n[A-z]
-    string.gsub!( /([A-z])\n([A-z])/m, '\1 \2' )
+    string.gsub!(/([A-z])\n([A-z])/m, '\1 \2')
 
     # remove all new lines
     string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
 
     # blockquote handling
-    string.gsub!( %r{<blockquote(| [^>]*)>(.+?)</blockquote>}m ) {
+    string.gsub!(%r{<blockquote(| [^>]*)>(.+?)</blockquote>}m) {
       "\n" + $2.html2text(true).gsub(/^(.*)$/, '&gt; \1') + "\n"
     }
 
     # pre/code handling 2/2
-    string.gsub!(/###BR###/, "\n" )
+    string.gsub!(/###BR###/, "\n")
 
     # add counting
     string.gsub!(/<li(| [^>]*)>/i, "\n* ")
@@ -137,14 +138,14 @@ class String
     string.gsub!(%r{</h\d>}i, "\n")
 
     # add new lines
-    string.gsub!( %r{</div><div(|\s.+?)>}im, "\n" )
-    string.gsub!( %r{</p><p(|\s.+?)>}im, "\n" )
-    string.gsub!( %r{<(div|p|pre|br|table|h)(|/| [^>]*)>}i, "\n" )
-    string.gsub!( %r{</(tr|p|br|div)(|\s.+?)>}i, "\n" )
-    string.gsub!( %r{</td>}i, ' '  )
+    string.gsub!(%r{</div><div(|\s.+?)>}im, "\n")
+    string.gsub!(%r{</p><p(|\s.+?)>}im, "\n")
+    string.gsub!(%r{<(div|p|pre|br|table|h)(|/| [^>]*)>}i, "\n")
+    string.gsub!(%r{</(tr|p|br|div)(|\s.+?)>}i, "\n")
+    string.gsub!(%r{</td>}i, ' ')
 
     # strip all other tags
-    string.gsub!( /\<.+?\>/, '' )
+    string.gsub!(/\<.+?\>/, '')
 
     # replace multiple spaces with one
     string.gsub!(/  /, ' ')
@@ -156,19 +157,19 @@ class String
     rescue
 
       # strip all &amp; &lt; &gt; &quot;
-      string.gsub!( '&amp;', '&' )
-      string.gsub!( '&lt;', '<' )
-      string.gsub!( '&gt;', '>' )
-      string.gsub!( '&quot;', '"' )
-      string.gsub!( '&nbsp;', ' ' )
+      string.gsub!('&amp;', '&')
+      string.gsub!('&lt;', '<')
+      string.gsub!('&gt;', '>')
+      string.gsub!('&quot;', '"')
+      string.gsub!('&nbsp;', ' ')
 
       # encode html entities like "&#8211;"
-      string.gsub!( /(&\#(\d+);?)/x ) {
+      string.gsub!(/(&\#(\d+);?)/x) {
         $2.chr
       }
 
       # encode html entities like "&#3d;"
-      string.gsub!( /(&\#[xX]([0-9a-fA-F]+);?)/x ) {
+      string.gsub!(/(&\#[xX]([0-9a-fA-F]+);?)/x) {
         chr_orig = $1
         hex      = $2.hex
         if hex

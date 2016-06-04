@@ -36,7 +36,7 @@ test('form validation check', function() {
   equal(el.find('[name="select1"]').val(), '', 'check select1 value')
   equal(el.find('[name="select1"]').prop('required'), true, 'check select1 required')
 
-  equal(el.find('[name="selectmulti1"]').val(), null, 'check selectmulti1 value')
+  equal(el.find('[name="selectmulti1"]').val(), '', 'check selectmulti1 value')
   equal(el.find('[name="selectmulti1"]').prop('required'), true, 'check selectmulti1 required')
 
   equal(el.find('[name="autocompletion1"]').val(), '', 'check autocompletion1 value')
