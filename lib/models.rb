@@ -97,6 +97,7 @@ returns
 =end
 
   def self.references(object_name, object_id)
+    object_name = object_name.to_s
 
     # check if model exists
     object_model = load_adapter(object_name)

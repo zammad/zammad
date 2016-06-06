@@ -27,7 +27,7 @@ Example:
 =begin
 
 Resource:
-GET /api/v1/groups.json
+GET /api/v1/groups
 
 Response:
 [
@@ -44,7 +44,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/v1/groups.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/groups -v -u #{login}:#{password}
 
 =end
 
@@ -55,7 +55,7 @@ curl http://localhost/api/v1/groups.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/v1/groups/#{id}.json
+GET /api/v1/groups/#{id}
 
 Response:
 {
@@ -65,7 +65,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/groups/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/groups/#{id} -v -u #{login}:#{password}
 
 =end
 
@@ -76,7 +76,7 @@ curl http://localhost/api/v1/groups/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/v1/groups.json
+POST /api/v1/groups
 
 Payload:
 {
@@ -96,7 +96,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/groups -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -108,7 +108,7 @@ curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-
 =begin
 
 Resource:
-PUT /api/v1/groups/{id}.json
+PUT /api/v1/groups/{id}
 
 Payload:
 {
@@ -128,7 +128,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/groups -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -140,10 +140,13 @@ curl http://localhost/api/v1/groups.json -v -u #{login}:#{password} -H "Content-
 =begin
 
 Resource:
+DELETE /api/v1/groups/{id}
 
 Response:
+{}
 
 Test:
+curl http://localhost/api/v1/groups/{id} -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE -d '{}'
 
 =end
 

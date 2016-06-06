@@ -24,12 +24,14 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_priorities/:id',                         to: 'ticket_priorities#show',    via: :get
   match api_path + '/ticket_priorities',                             to: 'ticket_priorities#create',  via: :post
   match api_path + '/ticket_priorities/:id',                         to: 'ticket_priorities#update',  via: :put
+  match api_path + '/ticket_priorities/:id',                         to: 'ticket_priorities#destroy', via: :delete
 
   # ticket state
   match api_path + '/ticket_states',                                 to: 'ticket_states#index',       via: :get
   match api_path + '/ticket_states/:id',                             to: 'ticket_states#show',        via: :get
   match api_path + '/ticket_states',                                 to: 'ticket_states#create',      via: :post
   match api_path + '/ticket_states/:id',                             to: 'ticket_states#update',      via: :put
+  match api_path + '/ticket_states/:id',                             to: 'ticket_states#destroy',     via: :delete
 
   # ticket articles
   match api_path + '/ticket_articles',                               to: 'ticket_articles#index',     via: :get

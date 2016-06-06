@@ -65,7 +65,11 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Created User record.
   # @response_message 401        Invalid session.
   def create
-    user = User.new( User.param_cleanup(params, true) )
+
+    # in case of authentication, set current_user to access later
+    authentication_check_only({})
+
+    user = User.new(User.param_cleanup(params, true))
 
     begin
       # check if it's first user
@@ -76,13 +80,13 @@ class UsersController < ApplicationController
 
         # check if feature is enabled
         if !Setting.get('user_create_account')
-          render json: { error_human: 'Feature not enabled!' }, status: :unprocessable_entity
+          render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
 
         # check signup option only after admin account is created
         if count > 2 && !params[:signup]
-          render json: { error_human: 'Only signup is possible!' }, status: :unprocessable_entity
+          render json: { error: 'Only signup with not authenticate user possible!' }, status: :unprocessable_entity
           return
         end
         user.updated_by_id = 1
@@ -127,7 +131,7 @@ class UsersController < ApplicationController
       if user.email
         exists = User.where(email: user.email.downcase).first
         if exists
-          render json: { error_human: 'User already exists!' }, status: :unprocessable_entity
+          render json: { error: 'User already exists!' }, status: :unprocessable_entity
           return
         end
       end
@@ -233,6 +237,7 @@ class UsersController < ApplicationController
   # @response_message 401 Invalid session.
   def destroy
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if model_references_check(User, params)
     model_destory_render(User, params)
   end
 
@@ -462,12 +467,12 @@ curl http://localhost/api/v1/users/email_verify_send.json -v -u #{login}:#{passw
     # check is verify is possible to send
     user = User.find_by(email: params[:email].downcase)
     if !user
-      render json: { error_human: 'No such user!' }, status: :unprocessable_entity
+      render json: { error: 'No such user!' }, status: :unprocessable_entity
       return
     end
 
     #if user.verified == true
-    #  render json: { error_human: 'Already verified!' }, status: :unprocessable_entity
+    #  render json: { error: 'Already verified!' }, status: :unprocessable_entity
     #  return
     #end
 
@@ -917,13 +922,13 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       params[:role_ids].each {|role_id|
         role_local = Role.lookup(id: role_id)
         if !role_local
-          render json: { error_human: 'Invalid role_ids!' }, status: :unauthorized
+          render json: { error: 'Invalid role_ids!' }, status: :unauthorized
           logger.info "Invalid role_ids for current_user_id: #{current_user.id} role_ids #{role_id}"
           return false
         end
         role_name = role_local.name
         next if role_name != 'Admin' && role_name != 'Agent'
-        render json: { error_human: 'This role assignment is only allowed by admin!' }, status: :unauthorized
+        render json: { error: 'This role assignment is only allowed by admin!' }, status: :unauthorized
         logger.info "This role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{role_name}"
         return false
       }
@@ -934,7 +939,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
         params[:group_ids] = [params[:group_ids]]
       end
       if !params[:group_ids].empty?
-        render json: { error_human: 'Group relation is only allowed by admin!' }, status: :unauthorized
+        render json: { error: 'Group relation is only allowed by admin!' }, status: :unauthorized
         logger.info "Group relation is only allowed by admin! current_user_id: #{current_user.id} group_ids #{params[:group_ids].inspect}"
         return false
       end

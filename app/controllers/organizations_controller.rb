@@ -25,7 +25,7 @@ Example:
 =begin
 
 Resource:
-GET /api/v1/organizations.json
+GET /api/v1/organizations
 
 Response:
 [
@@ -42,7 +42,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
 
 =end
 
@@ -63,7 +63,7 @@ curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/v1/organizations/#{id}.json
+GET /api/v1/organizations/#{id}
 
 Response:
 {
@@ -73,7 +73,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
 
 =end
 
@@ -101,7 +101,7 @@ curl http://localhost/api/v1/organizations/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/v1/organizations.json
+POST /api/v1/organizations
 
 Payload:
 {
@@ -119,7 +119,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true,"shared": true,"note": "some note"}'
+curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true,"shared": true,"note": "some note"}'
 
 =end
 
@@ -131,7 +131,7 @@ curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "C
 =begin
 
 Resource:
-PUT /api/v1/organizations/{id}.json
+PUT /api/v1/organizations/{id}
 
 Payload:
 {
@@ -150,7 +150,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"id": 1,"name": "some_name","active": true,"shared": true,"note": "some note"}'
+curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"id": 1,"name": "some_name","active": true,"shared": true,"note": "some note"}'
 
 =end
 
@@ -162,15 +162,19 @@ curl http://localhost/api/v1/organizations.json -v -u #{login}:#{password} -H "C
 =begin
 
 Resource:
+DELETE /api/v1/organization/{id}
 
 Response:
+{}
 
 Test:
+curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE -d '{}'
 
 =end
 
   def destroy
-    return if deny_if_not_role('Agent')
+    return if deny_if_not_role(Z_ROLENAME_AGENT)
+    return if model_references_check(Organization, params)
     model_destory_render(Organization, params)
   end
 
@@ -184,7 +188,7 @@ Test:
     end
 
     # get organization data
-    organization = Organization.find( params[:id] )
+    organization = Organization.find(params[:id])
 
     # get history of organization
     history = organization.history_get(true)
