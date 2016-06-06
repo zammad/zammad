@@ -47,16 +47,38 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
 =end
 
   def index
+    offset = 0
+    per_page = 1000
+
+    if params[:page] && params[:per_page]
+      offset = (params[:page].to_i - 1) * params[:per_page].to_i
+      per_page = params[:per_page].to_i
+    end
 
     # only allow customer to fetch his own organization
     organizations = []
     if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
       if current_user.organization_id
-        organizations = Organization.where( id: current_user.organization_id )
+        organizations = Organization.where(id: current_user.organization_id).offset(offset).limit(per_page)
       end
     else
-      organizations = Organization.all
+      organizations = Organization.all.offset(offset).limit(per_page)
     end
+
+    if params[:full]
+      assets = {}
+      item_ids = []
+      organizations.each {|item|
+        item_ids.push item.id
+        assets = item.assets(assets)
+      }
+      render json: {
+        record_ids: item_ids,
+        assets: assets,
+      }, status: :ok
+      return
+    end
+
     render json: organizations
   end
 
@@ -176,6 +198,68 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     return if deny_if_not_role(Z_ROLENAME_AGENT)
     return if model_references_check(Organization, params)
     model_destory_render(Organization, params)
+  end
+
+  def search
+
+    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
+      response_access_deny
+      return
+    end
+
+    # set limit for pagination if needed
+    if params[:page] && params[:per_page]
+      params[:limit] = params[:page].to_i * params[:per_page].to_i
+    end
+
+    query_params = {
+      query: params[:term],
+      limit: params[:limit],
+      current_user: current_user,
+    }
+    if params[:role_ids] && !params[:role_ids].empty?
+      query_params[:role_ids] = params[:role_ids]
+    end
+
+    # do query
+    organization_all = Organization.search(query_params)
+
+    # do pagination if needed
+    if params[:page] && params[:per_page]
+      offset = (params[:page].to_i - 1) * params[:per_page].to_i
+      organization_all = organization_all.slice(offset, params[:per_page].to_i) || []
+    end
+
+    if params[:expand]
+      render json: organization_all
+      return
+    end
+
+    # build result list
+    if !params[:full]
+      organizations = []
+      organization_all.each { |organization|
+        a = { id: organization.id, label: organization.name }
+        organizations.push a
+      }
+
+      # return result
+      render json: organizations
+      return
+    end
+
+    organization_ids = []
+    assets = {}
+    organization_all.each { |organization|
+      assets = organization.assets(assets)
+      organization_ids.push organization.id
+    }
+
+    # return result
+    render json: {
+      assets: assets,
+      organization_ids: organization_ids.uniq,
+    }
   end
 
   # GET /api/v1/organizations/history/1

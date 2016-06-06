@@ -13,13 +13,34 @@ class UsersController < ApplicationController
   # @response_message 200 [Array<User>] List of matching User records.
   # @response_message 401               Invalid session.
   def index
+    offset = 0
+    per_page = 1000
+    if params[:page] && params[:per_page]
+      offset = (params[:page].to_i - 1) * params[:per_page].to_i
+      per_page = params[:per_page].to_i
+    end
 
     # only allow customer to fetch him self
     users = if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
-              User.where(id: current_user.id)
+              User.where(id: current_user.id).offset(offset).limit(per_page)
             else
-              User.all
+              User.all.offset(offset).limit(per_page)
             end
+
+    if params[:full]
+      assets = {}
+      item_ids = []
+      users.each {|item|
+        item_ids.push item.id
+        assets = item.assets(assets)
+      }
+      render json: {
+        record_ids: item_ids,
+        assets: assets,
+      }, status: :ok
+      return
+    end
+
     users_all = []
     users.each {|user|
       users_all.push User.lookup(id: user.id).attributes_with_associations
@@ -69,7 +90,10 @@ class UsersController < ApplicationController
     # in case of authentication, set current_user to access later
     authentication_check_only({})
 
-    user = User.new(User.param_cleanup(params, true))
+    clean_params = User.param_association_lookup(params)
+    clean_params = User.param_cleanup(clean_params, true)
+    user = User.new(clean_params)
+    user.param_set_associations(params)
 
     begin
       # check if it's first user
@@ -194,27 +218,30 @@ class UsersController < ApplicationController
     return if !permission_check
 
     user = User.find(params[:id])
+    clean_params = User.param_association_lookup(params)
+    clean_params = User.param_cleanup(clean_params, true)
 
     begin
 
       # permission check by role
       return if !permission_check_by_role(params)
-
-      user.update_attributes( User.param_cleanup(params) )
+      user.update_attributes(clean_params)
 
       # only allow Admin's and Agent's
-      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && params[:role_ids]
+      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:role_ids] || params[:roles])
         user.role_ids = params[:role_ids]
+        user.param_set_associations({ role_ids: params[:role_ids], roles: params[:roles] })
       end
 
       # only allow Admin's
-      if role?(Z_ROLENAME_ADMIN) && params[:group_ids]
+      if role?(Z_ROLENAME_ADMIN) && (params[:group_ids] || params[:groups])
         user.group_ids = params[:group_ids]
+        user.param_set_associations({ group_ids: params[:group_ids], groups: params[:groups] })
       end
 
       # only allow Admin's and Agent's
-      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && params[:organization_ids]
-        user.organization_ids = params[:organization_ids]
+      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:organization_ids] || params[:organizations])
+        user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
       end
 
       # get new data
@@ -262,9 +289,14 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def search
 
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
+    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
       response_access_deny
       return
+    end
+
+    # set limit for pagination if needed
+    if params[:page] && params[:per_page]
+      params[:limit] = params[:page].to_i * params[:per_page].to_i
     end
 
     query_params = {
@@ -278,6 +310,17 @@ class UsersController < ApplicationController
 
     # do query
     user_all = User.search(query_params)
+
+    # do pagination if needed
+    if params[:page] && params[:per_page]
+      offset = (params[:page].to_i - 1) * params[:per_page].to_i
+      user_all = user_all.slice(offset, params[:per_page].to_i) || []
+    end
+
+    if params[:expand]
+      render json: user_all
+      return
+    end
 
     # build result list
     if !params[:full]

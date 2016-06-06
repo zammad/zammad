@@ -381,8 +381,11 @@ class ApplicationController < ActionController::Base
   # model helper
   def model_create_render(object, params)
 
+    clean_params = object.param_association_lookup(params)
+    clean_params = object.param_cleanup(clean_params, true)
+
     # create object
-    generic_object = object.new(object.param_cleanup(params[object.to_app_model_url], true ))
+    generic_object = object.new(clean_params)
 
     # save object
     generic_object.save!
@@ -406,8 +409,11 @@ class ApplicationController < ActionController::Base
     # find object
     generic_object = object.find(params[:id])
 
+    clean_params = object.param_association_lookup(params)
+    clean_params = object.param_cleanup(clean_params, true)
+
     # save object
-    generic_object.update_attributes!(object.param_cleanup(params[object.to_app_model_url]))
+    generic_object.update_attributes!(clean_params)
 
     # set relations
     generic_object.param_set_associations(params)
@@ -458,12 +464,17 @@ class ApplicationController < ActionController::Base
   end
 
   def model_index_render(object, params)
+    offset = 0
+    per_page = 1000
     if params[:page] && params[:per_page]
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      generic_objects = object.limit(params[:per_page]).offset(offset)
-    else
-      generic_objects = object.all
+      limit = params[:per_page].to_i
     end
+    generic_objects = if offset > 0
+                        object.limit(params[:per_page]).offset(offset).limit(limit)
+                      else
+                        object.all.offset(offset).limit(limit)
+                      end
 
     if params[:full]
       assets = {}

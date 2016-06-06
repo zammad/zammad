@@ -4,12 +4,13 @@ Zammad::Application.routes.draw do
   # tickets
   match api_path + '/tickets/search',                                to: 'tickets#search',            via: [:get, :post]
   match api_path + '/tickets/selector',                              to: 'tickets#selector',          via: :post
+  match api_path + '/tickets',                                       to: 'tickets#index',             via: :get
   match api_path + '/tickets/:id',                                   to: 'tickets#show',              via: :get
   match api_path + '/tickets',                                       to: 'tickets#create',            via: :post
   match api_path + '/tickets/:id',                                   to: 'tickets#update',            via: :put
+  match api_path + '/tickets/:id',                                   to: 'tickets#destroy',           via: :delete
   match api_path + '/ticket_create',                                 to: 'tickets#ticket_create',     via: :get
   match api_path + '/ticket_split',                                  to: 'tickets#ticket_split',      via: :get
-  match api_path + '/ticket_full/:id',                               to: 'tickets#ticket_full',       via: :get
   match api_path + '/ticket_history/:id',                            to: 'tickets#ticket_history',    via: :get
   match api_path + '/ticket_customer',                               to: 'tickets#ticket_customer',   via: :get
   match api_path + '/ticket_related/:ticket_id',                     to: 'tickets#ticket_related',    via: :get

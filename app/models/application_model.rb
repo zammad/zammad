@@ -68,26 +68,35 @@ returns
 
 =end
 
-  def self.param_cleanup(params, newObject = false)
+  def self.param_cleanup(params, new_object = false)
+
+    if params.respond_to?('permit!')
+      params.permit!
+    end
 
     if params.nil?
       raise "No params for #{self}!"
     end
 
+    data = {}
+    params.each {|key, value|
+      data[key.to_sym] = value
+    }
+
     # ignore id for new objects
-    if newObject && params[:id]
-      params[:id] = nil
+    if new_object && params[:id]
+      data.delete(:id)
     end
 
     # only use object attributes
-    data = {}
-    new.attributes.each {|item|
-      next if !params.key?(item[0])
-      data[item[0].to_sym] = params[item[0]]
+    clean_params = {}
+    new.attributes.each {|attribute, _value|
+      next if !data.key?(attribute.to_sym)
+      clean_params[attribute.to_sym] = data[attribute.to_sym]
     }
 
     # we do want to set this via database
-    param_validation(data)
+    param_validation(clean_params)
   end
 
 =begin
@@ -105,22 +114,62 @@ returns
 
   def param_set_associations(params)
 
-    # set relations
+    # set relations by id/verify if ref exists
     self.class.reflect_on_all_associations.map { |assoc|
-      real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-
-      next if !params.key?(real_key.to_sym)
-
-      list_of_items = params[ real_key.to_sym ]
-      if params[ real_key.to_sym ].class != Array
-        list_of_items = [ params[ real_key.to_sym ] ]
+      real_ids = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
+      real_ids = real_ids.to_sym
+      next if !params.key?(real_ids)
+      list_of_items = params[real_ids]
+      if params[real_ids].class != Array
+        list_of_items = [ params[real_ids] ]
       end
       list = []
-      list_of_items.each {|item|
-        next if !item
-        list.push(assoc.klass.find(item))
+      list_of_items.each {|item_id|
+        next if !item_id
+        lookup = assoc.klass.lookup(id: item_id)
+
+        # complain if we found no reference
+        if !lookup
+          raise "No value found for '#{assoc.name}' with id #{item_id.inspect}"
+        end
+        list.push item_id
       }
-      send(assoc.name.to_s + '=', list)
+      #p "SEND #{real_ids} = #{list.inspect}"
+      send("#{real_ids}=", list)
+    }
+
+    # set relations by name/lookup
+    self.class.reflect_on_all_associations.map { |assoc|
+      real_ids = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
+      next if !respond_to?(real_ids)
+      real_values = assoc.name.to_s[0, assoc.name.to_s.length - 1] + 's'
+      real_values = real_values.to_sym
+      next if !respond_to?(real_values)
+      next if !params[real_values]
+      next if params[real_values].class != Array
+      list = []
+      class_object = assoc.klass
+      params[real_values].each {|value|
+        lookup = nil
+        if class_object == User
+          if !lookup
+            lookup = class_object.lookup(login: value)
+          end
+          if !lookup
+            lookup = class_object.lookup(email: value)
+          end
+        else
+          lookup = class_object.lookup(name: value)
+        end
+
+        # complain if we found no reference
+        if !lookup
+          raise "No lookup value found for '#{assoc.name}': #{value.inspect}"
+        end
+        list.push lookup.id
+      }
+      #p "SEND #{real_ids} = #{list.inspect}"
+      send("#{real_ids}=", list)
     }
   end
 
@@ -139,13 +188,12 @@ returns
 
   def attributes_with_associations
 
-    # set relations
+    # get relations
     attributes = self.attributes
     self.class.reflect_on_all_associations.map { |assoc|
-      real_key = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      if respond_to?(real_key)
-        attributes[ real_key ] = send(real_key)
-      end
+      real_ids = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
+      next if !respond_to?(real_ids)
+      attributes[real_ids] = send(real_ids)
     }
     attributes
   end
@@ -165,13 +213,67 @@ returns
   def self.param_validation(data)
 
     # we do want to set this via database
-    data.delete(:updated_at)
-    data.delete(:created_at)
-    data.delete(:updated_by_id)
-    data.delete(:created_by_id)
-    if data.respond_to?('permit!')
-      data.permit!
-    end
+    [:action, :controller, :updated_at, :created_at, :updated_by_id, :created_by_id, :updated_by, :created_by].each {|key|
+      data.delete(key)
+    }
+
+    data
+  end
+
+=begin
+
+do name/login/email based lookup for associations
+
+  attributes = Model.param_association_lookup(params)
+
+returns
+
+  attributes = params # params with possible lookups
+
+=end
+
+  def self.param_association_lookup(params)
+
+    data = {}
+    params.each {|key, value|
+      data[key.to_sym] = value
+    }
+
+    data.symbolize_keys!
+    available_attributes = attribute_names
+    reflect_on_all_associations.map { |assoc|
+      value = data[assoc.name.to_sym]
+      next if !value # next if we do not have a value
+      ref_name = "#{assoc.name}_id"
+      next if !available_attributes.include?(ref_name) # next if we do not have an _id attribute
+      next if data[ref_name.to_sym] # next if we have already the id filled
+
+      # get association class and do lookup
+      class_object = assoc.klass
+      lookup = nil
+      if class_object == User
+        if !lookup
+          lookup = class_object.lookup(login: value)
+        end
+        if !lookup
+          lookup = class_object.lookup(email: value)
+        end
+      else
+        lookup = class_object.lookup(name: value)
+      end
+
+      # complain if we found no reference
+      if !lookup
+        raise "No lookup value found for '#{assoc.name}': #{value.inspect}"
+      end
+
+      # release data value
+      data.delete(assoc.name.to_sym)
+
+      # remember id reference
+      data[ref_name.to_sym] = lookup.id
+    }
+
     data
   end
 
