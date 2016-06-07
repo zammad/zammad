@@ -29,7 +29,7 @@ class Edit extends App.ObserverController
     return if @resetBind
     @resetBind = true
     @bind('ui::ticket::taskReset', (data) =>
-      return if data.ticket_id isnt ticket.id
+      return if data.ticket_id.toString() isnt ticket.id.toString()
       @render(ticket)
     )
 

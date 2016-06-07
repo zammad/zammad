@@ -397,13 +397,11 @@ class App.TicketZoom extends App.Controller
     @main.scrollTop( @main.prop('scrollHeight') )
 
   autosaveStop: =>
-    console.log('autosaveStop')
     @clearDelay('ticket-zoom-form-update')
     @autosaveLast = {}
     @el.off('change.local blur.local keyup.local paste.local input.local')
 
   autosaveStart: =>
-    console.log('autosaveStart')
     @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
       @delay(@markForm, 250, 'ticket-zoom-form-update')
     )

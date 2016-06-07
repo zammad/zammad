@@ -122,14 +122,14 @@ class App.TicketZoomArticleNew extends App.Controller
 
     # set article type and expand text area
     @bind('ui::ticket::setArticleType', (data) =>
-      return if data.ticket.id isnt @ticket_id
+      return if data.ticket.id.toString() isnt @ticket_id.toString()
 
       @openTextarea(null, true)
       for key, value of data.article
         if key is 'body'
           @$('[data-name="' + key + '"]').html(value)
         else
-          @$('[name="' + key + '"]').val(value)
+          @$('[name="' + key + '"]').val(value).trigger('change')
 
       # preselect article type
       @setArticleType(data.type.name)
@@ -140,7 +140,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     # reset new article screen
     @bind('ui::ticket::taskReset', (data) =>
-      return if data.ticket_id isnt @ticket_id
+      return if data.ticket_id.toString() isnt @ticket_id.toString()
       @type     = 'note'
       @defaults = {}
       @render()
@@ -410,7 +410,7 @@ class App.TicketZoomArticleNew extends App.Controller
   setArticleType: (type) =>
     wasScrolledToBottom = @isScrolledToBottom()
     @type = type
-    @$('[name=type]').val(type)
+    @$('[name=type]').val(type).trigger('change')
     @articleNewEdit.attr('data-type', type)
     @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{ type }']").removeClass('hide')
 
