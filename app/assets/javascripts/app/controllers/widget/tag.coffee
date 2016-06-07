@@ -29,7 +29,7 @@ class App.WidgetTag extends App.Controller
     @ajax(
       id:    @key
       type:  'GET'
-      url:   @apiPath + '/tags'
+      url:   "#{@apiPath}/tags"
       data:
         object: @object_type
         o_id:   @object.id
@@ -39,7 +39,13 @@ class App.WidgetTag extends App.Controller
         @render()
     )
 
+  reload: (tags) ->
+    @tags = tags
+    @render()
+
   render: ->
+    return if @lastTags && _.isEqual(@lastTags, @tags)
+    lastTags = @tags
     @html App.view('widget/tag')(
       tags: @tags || [],
     )
@@ -87,7 +93,7 @@ class App.WidgetTag extends App.Controller
 
     @ajax(
       type:  'GET'
-      url:   @apiPath + '/tags/add'
+      url:   "#{@apiPath}/tags/add"
       data:
         object: @object_type
         o_id:   @object.id
@@ -110,7 +116,7 @@ class App.WidgetTag extends App.Controller
 
     @ajax(
       type:  'GET'
-      url:   @apiPath + '/tags/remove'
+      url:   "#{@apiPath}/tags/remove"
       data:
         object: @object_type
         o_id:   @object.id

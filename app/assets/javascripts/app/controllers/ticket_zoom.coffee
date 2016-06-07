@@ -18,11 +18,10 @@ class App.TicketZoom extends App.Controller
       App.TaskManager.remove(@task_key)
       return
 
-    @formMeta             = undefined
-    @ticket_id            = params.ticket_id
-    @article_id           = params.article_id
-    @sidebarState         = {}
-    @ticketLastAttributes = {}
+    @formMeta     = undefined
+    @ticket_id    = params.ticket_id
+    @article_id   = params.article_id
+    @sidebarState = {}
 
     # if we are in init task startup, ignore overview_id
     if !params.init
@@ -51,13 +50,105 @@ class App.TicketZoom extends App.Controller
       update = =>
         @fetch(@ticket_id, false)
       if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-        @delay(update, 1200, "ticket-zoom-#{@ticket_id}")
+        @delay(update, 1100, "ticket-zoom-#{@ticket_id}")
     )
 
     # rerender view, e. g. on langauge change
     @bind('ui:rerender', =>
       @fetch(@ticket_id, true)
     )
+
+  fetch: (ticket_id, force) ->
+    return if !@Session.get()
+
+    # get data
+    @ajax(
+      id:    "ticket_zoom_#{ticket_id}"
+      type:  'GET'
+      url:   "#{@apiPath}/tickets/#{ticket_id}?all=true"
+      processData: true
+      success: (data, status, xhr) =>
+
+        # check if ticket has changed
+        newTicketRaw = data.assets.Ticket[ticket_id]
+        if @ticketUpdatedAtLastCall && !force
+
+          # return if ticket hasnt changed
+          return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at
+
+          # notify if ticket changed not by my self
+          if newTicketRaw.updated_by_id isnt @Session.get('id')
+            App.TaskManager.notify(@task_key)
+
+        # remember current data
+        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+
+        @load(data)
+        App.SessionStorage(@key, data)
+
+        if !@doNotLog
+          @doNotLog = 1
+          @recentView('Ticket', ticket_id)
+
+      error: (xhr) =>
+        @renderDone = false
+        statusText = xhr.statusText
+        status     = xhr.status
+        detail     = xhr.responseText
+
+        # ignore if request is aborted
+        return if statusText is 'abort'
+
+        # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
+        if @ticketUpdatedAtLastCall && status is 0
+          console.log('network issues e. g. temp. not connection', status, statusText, detail)
+          return
+
+        # show error message
+        if status is 401 || statusText is 'Unauthorized'
+          @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
+          @taskIconClass = 'diagonal-cross'
+          @renderScreenUnauthorized(objectName: 'Ticket')
+        else if status is 404 || statusText is 'Not Found'
+          @taskHead      = '» ' + App.i18n.translateInline('Not Found') + ' «'
+          @taskIconClass = 'diagonal-cross'
+          @renderScreenNotFound(objectName: 'Ticket')
+        else
+          @taskHead      = '» ' + App.i18n.translateInline('Error') + ' «'
+          @taskIconClass = 'diagonal-cross'
+
+          if !detail
+            detail = 'General communication error, maybe internet is not available!'
+          @renderScreenError(
+            status:     status
+            detail:     detail
+            objectName: 'Ticket'
+          )
+    )
+
+  load: (data) =>
+
+    # remember article ids
+    @ticket_article_ids = data.ticket_article_ids
+
+    # remember link
+    @links = data.links
+
+    # remember tags
+    @tags = data.tags
+
+    # get edit form attributes
+    @formMeta = data.form_meta
+
+    # load assets
+    App.Collection.loadAssets(data.assets)
+
+    # get data
+    @ticket = App.Ticket.fullLocal(@ticket_id)
+    @ticket.article = undefined
+
+    # render page
+    @render()
 
   meta: =>
 
@@ -73,14 +164,14 @@ class App.TicketZoom extends App.Controller
       meta.head = @taskHead
 
     # set icon and title based on ticket
-    if @ticket
-      @ticket        = App.Ticket.fullLocal(@ticket.id)
-      meta.head      = @ticket.title
-      meta.title     = '#' + @ticket.number + ' - ' + @ticket.title
-      meta.class     = "task-state-#{ @ticket.getState() }"
+    if @ticket_id && App.Ticket.exists(@ticket_id)
+      ticket         = App.Ticket.find(@ticket_id)
+      meta.head      = ticket.title
+      meta.title     = "##{ticket.number} - #{ticket.title}"
+      meta.class     = "task-state-#{ ticket.getState() }"
       meta.type      = 'task'
-      meta.iconTitle = @ticket.iconTitle()
-      meta.iconClass = @ticket.iconClass()
+      meta.iconTitle = ticket.iconTitle()
+      meta.iconClass = ticket.iconClass()
     meta
 
   url: =>
@@ -137,106 +228,8 @@ class App.TicketZoom extends App.Controller
     @autosaveStop()
     @positionPageHeaderStop()
 
-  fetch: (ticket_id, force) ->
-    return if !@Session.get()
-
-    # get data
-    @ajax(
-      id:    "ticket_zoom_#{ticket_id}"
-      type:  'GET'
-      url:   "#{@apiPath}/tickets/#{ticket_id}?full=true"
-      processData: true
-      success: (data, status, xhr) =>
-
-        # check if ticket has changed
-        newTicketRaw = data.assets.Ticket[ticket_id]
-        if @ticketUpdatedAtLastCall && !force
-
-          # return if ticket hasnt changed
-          return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at
-
-          # notify if ticket changed not by my self
-          if newTicketRaw.updated_by_id isnt @Session.get('id')
-            App.TaskManager.notify(@task_key)
-
-        # remember current data
-        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
-
-        @load(data, force)
-        App.SessionStorage(@key, data)
-
-        if !@doNotLog
-          @doNotLog = 1
-          @recentView('Ticket', ticket_id)
-
-        # scroll to end of page
-        if force
-          @scrollToBottom()
-          @positionPageHeaderUpdate()
-
-      error: (xhr) =>
-        statusText = xhr.statusText
-        status     = xhr.status
-        detail     = xhr.responseText
-
-        # ignore if request is aborted
-        if statusText is 'abort'
-          return
-
-        # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
-        if @ticketUpdatedAtLastCall && status is 0
-          console.log('network issues e. g. temp. not connection', status, statusText, detail)
-          return
-
-        # show error message
-        if status is 401 || statusText is 'Unauthorized'
-          @taskHead      = '» ' + App.i18n.translateInline('Unauthorized') + ' «'
-          @taskIconClass = 'diagonal-cross'
-          @renderScreenUnauthorized(objectName: 'Ticket')
-        else if status is 404 || statusText is 'Not Found'
-          @taskHead      = '» ' + App.i18n.translateInline('Not Found') + ' «'
-          @taskIconClass = 'diagonal-cross'
-          @renderScreenNotFound(objectName: 'Ticket')
-        else
-          @taskHead      = '» ' + App.i18n.translateInline('Error') + ' «'
-          @taskIconClass = 'diagonal-cross'
-
-          if !detail
-            detail = 'General communication error, maybe internet is not available!'
-          @renderScreenError(
-            status:     status
-            detail:     detail
-            objectName: 'Ticket'
-          )
-    )
-
-
   muteTask: =>
     App.TaskManager.mute(@task_key)
-
-  load: (data, force) =>
-
-    # remember article ids
-    @ticket_article_ids = data.ticket_article_ids
-
-    # remember link
-    @links = data.links
-
-    # remember tags
-    @tags = data.tags
-
-    # get edit form attributes
-    @formMeta = data.form_meta
-
-    # load assets
-    App.Collection.loadAssets(data.assets)
-
-    # get data
-    @ticket = App.Ticket.fullLocal(@ticket_id)
-    @ticket.article = undefined
-
-    # render page
-    @render()
 
   positionPageHeaderStart: =>
 
@@ -281,10 +274,9 @@ class App.TicketZoom extends App.Controller
     # update taskbar with new meta data
     App.TaskManager.touch(@task_key)
 
-    @formEnable( @$('.submit') )
-
     if !@renderDone
       @renderDone = true
+      @autosaveLast = {}
       elLocal = $(App.view('ticket_zoom')
         ticket:         @ticket
         nav:            @nav
@@ -294,24 +286,23 @@ class App.TicketZoom extends App.Controller
 
       new App.TicketZoomOverviewNavigator(
         el:          elLocal.find('.overview-navigator')
-        ticket_id:   @ticket.id
+        ticket_id:   @ticket_id
         overview_id: @overview_id
       )
 
       new App.TicketZoomTitle(
-        object_id:   @ticket.id
+        object_id:   @ticket_id
         overview_id: @overview_id
         el:          elLocal.find('.ticket-title')
         task_key:    @task_key
       )
 
       new App.TicketZoomMeta(
-        object_id: @ticket.id
+        object_id: @ticket_id
         el:        elLocal.find('.ticket-meta')
       )
 
       new App.TicketZoomAttributeBar(
-        ticket:      @ticket
         el:          elLocal.find('.js-attributeBar')
         overview_id: @overview_id
         callback:    @submit
@@ -322,7 +313,7 @@ class App.TicketZoom extends App.Controller
 
       @articleNew = new App.TicketZoomArticleNew(
         ticket:    @ticket
-        ticket_id: @ticket.id
+        ticket_id: @ticket_id
         el:        elLocal.find('.article-new')
         formMeta:  @formMeta
         form_id:   @form_id
@@ -333,7 +324,7 @@ class App.TicketZoom extends App.Controller
 
       @highligher = new App.TicketZoomHighlighter(
         el:        elLocal.find('.highlighter')
-        ticket_id: @ticket.id
+        ticket_id: @ticket_id
       )
 
       @articleView = new App.TicketZoomArticleView(
@@ -344,27 +335,20 @@ class App.TicketZoom extends App.Controller
         ticket_article_ids: @ticket_article_ids
       )
 
-    # rerender whole sidebar if customer or organization has changed
-    if @ticketLastAttributes.customer_id isnt @ticket.customer_id || @ticketLastAttributes.organization_id isnt @ticket.organization_id
-      if elLocal
-        el = elLocal
-      else
-        el = @el
-      new App.WidgetAvatar(
-        el:        el.find('.ticketZoom-header .js-avatar')
-        object_id: @ticket.customer_id
-        size:      50
+      new App.TicketCustomerAvatar(
+        object_id: @ticket_id
+        el:        elLocal.find('.ticketZoom-header')
       )
+
       @sidebar = new App.TicketZoomSidebar(
-        el:           el.find('.tabsSidebar')
+        el:           elLocal
         sidebarState: @sidebarState
-        object_id:    @ticket.id
+        object_id:    @ticket_id
         model:        'Ticket'
         taskGet:      @taskGet
         task_key:     @task_key
-        tags:         @tags
-        links:        @links
         formMeta:     @formMeta
+        markForm:     @markForm
       )
 
     # render init content
@@ -377,24 +361,34 @@ class App.TicketZoom extends App.Controller
         ticket_article_ids: @ticket_article_ids
       )
 
+    if @sidebar
+
+      # update tags
+      if @sidebar.tagWidget
+        @sidebar.tagWidget.reload(@tags)
+
+      # update links
+      if @sidebar.linkWidget
+        @sidebar.linkWidget.reload(@links)
+
     # scroll to article if given
-    if @article_id && document.getElementById('article-' + @article_id)
-      offset = document.getElementById('article-' + @article_id).offsetTop
+    if @article_id && document.getElementById("article-#{@article_id}")
+      offset = document.getElementById("article-#{@article_id}").offsetTop
       offset = offset - 45
       scrollTo = ->
         @scrollTo(0, offset)
       @delay(scrollTo, 100, false)
 
-    @ticketLastAttributes = @ticket.attributes()
+    if @shown
 
-    if @shown && !@initDone
+      # scroll to end if new article has been added
+      if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
+        @last_ticket_article_ids = @ticket_article_ids
+        @scrollToBottom()
+        @positionPageHeaderUpdate()
+
+      return if @initDone
       @initDone = true
-
-      # scroll to end of page
-      @scrollToBottom()
-
-      # observe content header position
-      @positionPageHeaderStart()
 
       # trigger shown if init shown render
       App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
@@ -403,32 +397,34 @@ class App.TicketZoom extends App.Controller
     @main.scrollTop( @main.prop('scrollHeight') )
 
   autosaveStop: =>
+    console.log('autosaveStop')
     @clearDelay('ticket-zoom-form-update')
     @autosaveLast = {}
     @el.off('change.local blur.local keyup.local paste.local input.local')
 
   autosaveStart: =>
+    console.log('autosaveStart')
+    @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
+      @delay(@markForm, 250, 'ticket-zoom-form-update')
+    )
+    @delay(@markForm, 800, 'ticket-zoom-form-update')
+
+  markForm: (force) =>
     if !@autosaveLast
       @autosaveLast = @taskGet()
-    update = =>
-      return if !@ticket
-      currentParams = @formCurrent()
+    return if !@ticket
+    currentParams = @formCurrent()
 
-      # check changed between last autosave
-      sameAsLastSave = _.isEqual(currentParams, @autosaveLast)
-      return if sameAsLastSave
-      @autosaveLast = clone(currentParams)
+    # check changed between last autosave
+    sameAsLastSave = _.isEqual(currentParams, @autosaveLast)
+    return if !force && sameAsLastSave
+    @autosaveLast = clone(currentParams)
 
-      # update changes in ui
-      currentStore = @currentStore()
-      modelDiff = @formDiff(currentParams, currentStore)
-      @markFormDiff(modelDiff)
-      @taskUpdateAll(modelDiff)
-
-    @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
-      @delay(update, 250, 'ticket-zoom-form-update')
-    )
-    @delay(update, 800, 'ticket-zoom-form-update')
+    # update changes in ui
+    currentStore = @currentStore()
+    modelDiff = @formDiff(currentParams, currentStore)
+    @markFormDiff(modelDiff)
+    @taskUpdateAll(modelDiff)
 
   currentStore: =>
     return if !@ticket
@@ -534,7 +530,7 @@ class App.TicketZoom extends App.Controller
     ticketParams = @formParam( @$('.edit') )
 
     # validate ticket
-    ticket = App.Ticket.fullLocal(@ticket.id)
+    ticket = App.Ticket.find(@ticket_id)
 
     # reset article - should not be resubmited on next ticket update
     ticket.article = undefined
@@ -550,13 +546,13 @@ class App.TicketZoom extends App.Controller
 
         # apply tag changes
         if attributes[1] is 'tags'
-          if @sidebar && @sidebar.tagWidget
+          if @sidebar && @sidebar.edit && @sidebar.edit.tagWidget
             tags = content.value.split(',')
             for tag in tags
               if content.operator is 'remove'
-                @sidebar.tagWidget.remove(tag)
+                @sidebar.edit.tagWidget.remove(tag)
               else
-                @sidebar.tagWidget.add(tag)
+                @sidebar.edit.tagWidget.add(tag)
 
         # apply user changes
         else if attributes[1] is 'owner_id'
@@ -671,7 +667,7 @@ class App.TicketZoom extends App.Controller
 
         @autosaveStart()
         @muteTask()
-        @fetch(ticket.id, true)
+        @fetch(ticket.id, false)
 
         # enable form
         @formEnable(e)
@@ -701,7 +697,7 @@ class App.TicketZoom extends App.Controller
     @$('.js-reset').addClass('hide')
 
     # reset edit ticket / reset new article
-    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket.id })
+    App.Event.trigger('ui::ticket::taskReset', { ticket_id: @ticket_id })
 
     # remove change flag on tab
     @$('.tabsSidebar-tab[data-tab="ticket"]').removeClass('is-changed')
@@ -744,7 +740,7 @@ class TicketZoomRouter extends App.ControllerPermanent
       shown:      true
 
     App.TaskManager.execute(
-      key:        'Ticket-' + @ticket_id
+      key:        "Ticket-#{@ticket_id}"
       controller: 'TicketZoom'
       params:     clean_params
       show:       true

@@ -65,8 +65,17 @@ class _collectionSingleton extends Spine.Module
 
   loadAssets: (assets) ->
     @log 'debug', 'loadAssets', assets
+
+    # proess not existing assets / to avoid not exising ref errors
+    loadAssetsLater = []
     for type, collections of assets
-      @load(type: type, data: collections)
+      later = @load(type: type, data: collections, later: true)
+      if later
+        loadAssetsLater[type] = later
+
+    # proess existing assets
+    for type, collections of loadAssetsLater
+      App[type].refresh(collections)
 
   load: (params) ->
 
@@ -81,11 +90,13 @@ class _collectionSingleton extends Spine.Module
 
     # load full array once
     if _.isArray(params.data)
+      @log 'debug', 'refresh', params.data
       appObject.refresh(params.data)
       return
 
     # load data from object
     listToRefresh = []
+    listToRefreshLater = []
     for key, object of params.data
       if !params.refresh && appObject
         @log 'debug', 'refrest try', params.type, key
@@ -93,15 +104,22 @@ class _collectionSingleton extends Spine.Module
         # check if new object is newer, just load newer objects
         if object.updated_at && appObject.exists(key)
           exists = appObject.find(key)
+          objectToLoad = undefined
           if exists.updated_at
             if exists.updated_at < object.updated_at
-              listToRefresh.push object
+              objectToLoad = object
               @log 'debug', 'refrest newser', params.type, key
           else
-            listToRefresh.push object
+            objectToLoad = object
             @log 'debug', 'refrest try no updated_at', params.type, key
+          if objectToLoad
+            if params.later
+              listToRefreshLater.push objectToLoad
+            else
+              listToRefresh.push object
         else
           listToRefresh.push object
           @log 'debug', 'refrest new', params.type, key
-    return if _.isEmpty(listToRefresh)
+    return listToRefreshLater if _.isEmpty(listToRefresh)
     appObject.refresh(listToRefresh)
+    listToRefreshLater

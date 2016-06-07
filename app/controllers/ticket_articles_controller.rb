@@ -19,19 +19,24 @@ class TicketArticlesController < ApplicationController
 
   # POST /articles
   def create
-    form_id = params[:ticket_article][:form_id]
-    params[:ticket_article].delete(:form_id)
-    @article = Ticket::Article.new(Ticket::Article.param_validation( params[:ticket_article]))
+    form_id = params[:form_id]
+
+    clean_params = Ticket::Article.param_association_lookup(params)
+    clean_params = Ticket::Article.param_cleanup(clean_params, true)
+    article = Ticket::Article.new(clean_params)
+
+    # permission check
+    return if !article_permission(article)
 
     # find attachments in upload cache
     if form_id
-      @article.attachments = Store.list(
+      article.attachments = Store.list(
         object: 'UploadCache',
         o_id: form_id,
       )
     end
 
-    if @article.save
+    if article.save
 
       # remove attachments from upload cache
       Store.remove(
@@ -39,27 +44,34 @@ class TicketArticlesController < ApplicationController
         o_id: form_id,
       )
 
-      render json: @article, status: :created
+      render json: article, status: :created
     else
-      render json: @article.errors, status: :unprocessable_entity
+      render json: article.errors, status: :unprocessable_entity
     end
   end
 
   # PUT /articles/1
   def update
-    @article = Ticket::Article.find(params[:id])
 
-    if @article.update_attributes(Ticket::Article.param_validation(params[:ticket_article]))
-      render json: @article, status: :ok
+    # permission check
+    article = Ticket::Article.find(params[:id])
+    return if !article_permission(article)
+
+    clean_params = Ticket::Article.param_association_lookup(params)
+    clean_params = Ticket::Article.param_cleanup(clean_params, true)
+
+    if article.update_attributes(clean_params)
+      render json: article, status: :ok
     else
-      render json: @article.errors, status: :unprocessable_entity
+      render json: article.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /articles/1
   def destroy
-    @article = Ticket::Article.find(params[:id])
-    @article.destroy
+    article = Ticket::Article.find(params[:id])
+    return if !article_permission(article)
+    article.destroy
 
     head :ok
   end
@@ -121,18 +133,18 @@ class TicketArticlesController < ApplicationController
     }
   end
 
-  # GET /ticket_attachment/1
+  # GET /ticket_attachment/:ticket_id/:article_id/:id
   def attachment
 
     # permission check
     ticket = Ticket.lookup(id: params[:ticket_id])
     if !ticket_permission(ticket)
-      render(json: 'No such ticket.', status: :unauthorized)
+      render json: 'No such ticket.', status: :unauthorized
       return
     end
     article = Ticket::Article.find(params[:article_id])
     if ticket.id != article.ticket_id
-      render(json: 'No access, article_id/ticket_id is not matching.', status: :unauthorized)
+      render json: 'No access, article_id/ticket_id is not matching.', status: :unauthorized
       return
     end
 
@@ -144,7 +156,7 @@ class TicketArticlesController < ApplicationController
       end
     }
     if !access
-      render(json: 'Requested file id is not linked with article_id.', status: :unauthorized)
+      render json: 'Requested file id is not linked with article_id.', status: :unauthorized
       return
     end
 
@@ -163,7 +175,7 @@ class TicketArticlesController < ApplicationController
 
     # permission check
     article = Ticket::Article.find(params[:id])
-    return if !ticket_permission(article.ticket)
+    return if !article_permission(article)
 
     list = Store.list(
       object: 'Ticket::Article::Mail',

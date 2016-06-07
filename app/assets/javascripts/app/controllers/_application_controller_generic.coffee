@@ -1117,7 +1117,7 @@ class App.ObserverController extends App.Controller
           currentAttributes[key] = object[key]
     if @observeNot
       for key, value of object
-        if !@observeNot[key] && !_.isFunction(value) && !_.isObject(value)
+        if key isnt 'cid' && !@observeNot[key] && !_.isFunction(value) && !_.isObject(value)
           currentAttributes[key] = value
 
     if !@lastAttributres
@@ -1128,13 +1128,13 @@ class App.ObserverController extends App.Controller
         @log 'debug', 'maybeRender no diff, no rerender'
         return
 
-    @log 'debug', 'maybeRender.diff', diff
+    @log 'debug', 'maybeRender.diff', diff, @observe, @model
     @lastAttributres = currentAttributes
 
-    @render(object)
+    @render(object, diff)
 
-  render: (object) =>
-    @log 'debug', 'render', @template, object
+  render: (object, diff) =>
+    @log 'debug', 'render', @template, object, diff
     @html App.view(@template)(
       object: object
     )
@@ -1144,5 +1144,5 @@ class App.ObserverController extends App.Controller
 
   release: =>
     #console.trace()
-    @log 'debug', 'release', @object_id, @model
+    @log 'debug', 'release', @object_id, @model, @subscribeId
     App[@model].unsubscribe(@subscribeId)

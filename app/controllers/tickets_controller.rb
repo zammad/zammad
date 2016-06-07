@@ -41,7 +41,13 @@ class TicketsController < ApplicationController
     return if !ticket_permission(ticket)
 
     if params[:full]
-      render json: ticket_full(ticket)
+      full = Ticket.full(params[:id])
+      render json: full
+      return
+    end
+
+    if params[:all]
+      render json: ticket_all(ticket)
       return
     end
 
@@ -555,7 +561,7 @@ class TicketsController < ApplicationController
     )
   end
 
-  def ticket_full(ticket)
+  def ticket_all(ticket)
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(user: current_user, ticket: ticket)

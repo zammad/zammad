@@ -339,6 +339,13 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def article_permission(article)
+    ticket = Ticket.lookup(id: article.ticket_id)
+    return true if ticket.permission(current_user: current_user)
+    response_access_deny
+    false
+  end
+
   def deny_if_not_role(role_name)
     return false if role?(role_name)
     response_access_deny
@@ -444,6 +451,12 @@ class ApplicationController < ActionController::Base
   end
 
   def model_show_render (object, params)
+
+    if params[:expand]
+      generic_object = object.find(params[:id])
+      model_show_render_item(generic_object)
+      return
+    end
 
     if params[:full]
       generic_object_full = object.full(params[:id])

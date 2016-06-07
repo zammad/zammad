@@ -257,7 +257,8 @@ class App.TicketZoomArticleNew extends App.Controller
           ticket: ticket
           user: App.Session.get()
         )
-      @subscribeIdTextModule = ticket.subscribe(callback)
+      if !@subscribeIdTextModule
+        @subscribeIdTextModule = ticket.subscribe(callback)
 
   params: =>
     params = @formParam( @$('.article-add') )

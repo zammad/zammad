@@ -347,7 +347,7 @@ class App.Model extends Spine.Model
             clear: true
           )
 
-        'Collection::Subscribe::' + @className
+        "Collection::Subscribe::#{@className}"
       )
 
     key = @className + '-' + Math.floor( Math.random() * 99999 )
@@ -454,9 +454,9 @@ class App.Model extends Spine.Model
               if !genericObject || new Date(item.updated_at) >= new Date(genericObject.updated_at)
                 App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
                 @full(item.id, false, true)
-            App.Delay.set(callback, 500, item.id, "full-#{@className}")
+            App.Delay.set(callback, 500, item.id, "full-#{@className}-#{item.id}")
 
-        'Item::Subscribe::' + @className
+        "Item::Subscribe::#{@className}"
       )
 
     # remember item callback

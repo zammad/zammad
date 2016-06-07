@@ -113,7 +113,7 @@ curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
       end
     end
     if params[:full]
-      full = Organization.full( params[:id] )
+      full = Organization.full(params[:id])
       render json: full
       return
     end

@@ -1280,6 +1280,24 @@ get assets and record_ids of selector
     assets
   end
 
+=begin
+
+touch references by params
+
+  Model.touch_reference_by_params(
+    object: 'Ticket',
+    o_id: 123,
+  )
+
+=end
+
+  def self.touch_reference_by_params(data)
+    object_class = Kernel.const_get(data[:object])
+    object = object_class.lookup(id: data[:o_id])
+    return if !object
+    object.touch
+  end
+
   private
 
   def attachments_buffer
