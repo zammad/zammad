@@ -9,7 +9,8 @@ class UpdateSettingPlaceholder < ActiveRecord::Migration
       system_id
       fqdn
       http_type
-      ticket_hook)
+      ticket_hook
+    )
     names.each {|name|
       setting = Setting.find_by(name: name)
       next if !setting
