@@ -45,7 +45,7 @@ class App.WidgetTag extends App.Controller
 
   render: ->
     return if @lastTags && _.isEqual(@lastTags, @tags)
-    lastTags = @tags
+    @lastTags = @tags
     @html App.view('widget/tag')(
       tags: @tags || [],
     )
