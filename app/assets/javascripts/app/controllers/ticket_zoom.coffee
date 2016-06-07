@@ -50,7 +50,7 @@ class App.TicketZoom extends App.Controller
       update = =>
         @fetch(@ticket_id, false)
       if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-        @delay(update, 1100, "ticket-zoom-#{@ticket_id}")
+        @delay(update, 500, "ticket-zoom-#{@ticket_id}")
     )
 
     # rerender view, e. g. on langauge change
