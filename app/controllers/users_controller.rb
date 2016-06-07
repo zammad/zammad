@@ -96,20 +96,26 @@ class UsersController < ApplicationController
     user.param_set_associations(params)
 
     begin
-      # check if it's first user
+
+      # check if it's first user, tje admin user
+      # inital admin account
       count = User.all.count()
+      admin_account_exists = true
+      if count <= 2
+        admin_account_exists = false
+      end
 
       # if it's a signup, add user to customer role
       if !current_user
 
         # check if feature is enabled
-        if !Setting.get('user_create_account')
+        if admin_account_exists && !Setting.get('user_create_account')
           render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
 
         # check signup option only after admin account is created
-        if count > 2 && !params[:signup]
+        if admin_account_exists && !params[:signup]
           render json: { error: 'Only signup with not authenticate user possible!' }, status: :unprocessable_entity
           return
         end
@@ -135,7 +141,10 @@ class UsersController < ApplicationController
         user.group_ids = group_ids
 
         # remember source (in case show email verify banner)
-        user.source = 'signup'
+        # if not inital user creation
+        if admin_account_exists
+          user.source = 'signup'
+        end
 
       # else do assignment as defined
       else
@@ -162,7 +171,7 @@ class UsersController < ApplicationController
       user.save!
 
       # if first user was added, set system init done
-      if count <= 2
+      if !admin_account_exists
         Setting.set('system_init_done', true)
 
         # fetch org logo
@@ -191,7 +200,7 @@ class UsersController < ApplicationController
         NotificationFactory::Mailer.notification(
           template: 'signup',
           user: user,
-          objects: result
+          objects: result,
         )
       end
       user_new = User.find(user.id).attributes_with_associations
