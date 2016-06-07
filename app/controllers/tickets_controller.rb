@@ -3,23 +3,60 @@
 class TicketsController < ApplicationController
   before_action :authentication_check
 
+  # GET /api/v1/tickets
+  def index
+    offset = 0
+    per_page = 100
+
+    if params[:page] && params[:per_page]
+      offset = (params[:page].to_i - 1) * params[:per_page].to_i
+      per_page = params[:per_page].to_i
+    end
+
+    access_condition = Ticket.access_condition(current_user)
+    tickets = Ticket.where(access_condition).offset(offset).limit(per_page)
+
+    if params[:full]
+      assets = {}
+      item_ids = []
+      tickets.each {|item|
+        item_ids.push item.id
+        assets = item.assets(assets)
+      }
+      render json: {
+        record_ids: item_ids,
+        assets: assets,
+      }, status: :ok
+      return
+    end
+
+    render json: tickets
+  end
+
   # GET /api/v1/tickets/1
   def show
-    @ticket = Ticket.find( params[:id] )
 
     # permission check
-    return if !ticket_permission(@ticket)
+    ticket = Ticket.find(params[:id])
+    return if !ticket_permission(ticket)
 
-    render json: @ticket
+    if params[:full]
+      render json: ticket_full(ticket)
+      return
+    end
+
+    render json: ticket
   end
 
   # POST /api/v1/tickets
   def create
-    ticket = Ticket.new( Ticket.param_validation( params[:ticket] ) )
+    clean_params = Ticket.param_association_lookup(params)
+    clean_params = Ticket.param_cleanup(clean_params, true)
+    ticket = Ticket.new(clean_params)
 
     # check if article is given
     if !params[:article]
-      render json: 'article hash is missing', status: :unprocessable_entity
+      render json: { error: 'article hash is missing' }, status: :unprocessable_entity
       return
     end
 
@@ -52,12 +89,15 @@ class TicketsController < ApplicationController
 
   # PUT /api/v1/tickets/1
   def update
-    ticket = Ticket.find(params[:id])
 
     # permission check
+    ticket = Ticket.find(params[:id])
     return if !ticket_permission(ticket)
 
-    if ticket.update_attributes(Ticket.param_validation(params[:ticket]))
+    clean_params = Ticket.param_association_lookup(params)
+    clean_params = Ticket.param_cleanup(clean_params, true)
+
+    if ticket.update_attributes(clean_params)
 
       if params[:article]
         article_create(ticket, params[:article])
@@ -71,9 +111,9 @@ class TicketsController < ApplicationController
 
   # DELETE /api/v1/tickets/1
   def destroy
-    ticket = Ticket.find(params[:id])
 
     # permission check
+    ticket = Ticket.find(params[:id])
     return if !ticket_permission(ticket)
 
     ticket.destroy
@@ -201,68 +241,6 @@ class TicketsController < ApplicationController
       result: 'success',
       master_ticket: ticket_master.attributes,
       slave_ticket: ticket_slave.attributes,
-    }
-  end
-
-  # GET /api/v1/ticket_full/1
-  def ticket_full
-
-    # permission check
-    ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
-
-    # get attributes to update
-    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(user: current_user, ticket: ticket)
-
-    # get related users
-    assets = attributes_to_change[:assets]
-    assets = ticket.assets(assets)
-
-    # get related articles
-    articles = Ticket::Article.where(ticket_id: params[:id]).order('created_at ASC, id ASC')
-
-    # get related users
-    article_ids = []
-    articles.each {|article|
-
-      # ignore internal article if customer is requesting
-      next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
-
-      # load article ids
-      article_ids.push article.id
-
-      # load assets
-      assets = article.assets(assets)
-    }
-
-    # get links
-    links = Link.list(
-      link_object: 'Ticket',
-      link_object_value: ticket.id,
-    )
-    link_list = []
-    links.each { |item|
-      link_list.push item
-      if item['link_object'] == 'Ticket'
-        linked_ticket = Ticket.lookup(id: item['link_object_value'])
-        assets = linked_ticket.assets(assets)
-      end
-    }
-
-    # get tags
-    tags = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket.id,
-    )
-
-    # return result
-    render json: {
-      ticket_id: ticket.id,
-      ticket_article_ids: article_ids,
-      assets: assets,
-      links: link_list,
-      tags: tags,
-      form_meta: attributes_to_change[:form_meta],
     }
   end
 
@@ -528,7 +506,10 @@ class TicketsController < ApplicationController
     # create article if given
     form_id = params[:form_id]
     params.delete(:form_id)
-    article = Ticket::Article.new(Ticket::Article.param_validation( params ))
+
+    clean_params = Ticket::Article.param_association_lookup(params)
+    clean_params = Ticket::Article.param_cleanup(clean_params, true)
+    article = Ticket::Article.new(clean_params)
     article.ticket_id = ticket.id
 
     # store dataurl images to store
@@ -573,4 +554,62 @@ class TicketsController < ApplicationController
       o_id: form_id,
     )
   end
+
+  def ticket_full(ticket)
+
+    # get attributes to update
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(user: current_user, ticket: ticket)
+
+    # get related users
+    assets = attributes_to_change[:assets]
+    assets = ticket.assets(assets)
+
+    # get related articles
+    articles = Ticket::Article.where(ticket_id: ticket.id).order('created_at ASC, id ASC')
+
+    # get related users
+    article_ids = []
+    articles.each {|article|
+
+      # ignore internal article if customer is requesting
+      next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+
+      # load article ids
+      article_ids.push article.id
+
+      # load assets
+      assets = article.assets(assets)
+    }
+
+    # get links
+    links = Link.list(
+      link_object: 'Ticket',
+      link_object_value: ticket.id,
+    )
+    link_list = []
+    links.each { |item|
+      link_list.push item
+      if item['link_object'] == 'Ticket'
+        linked_ticket = Ticket.lookup(id: item['link_object_value'])
+        assets = linked_ticket.assets(assets)
+      end
+    }
+
+    # get tags
+    tags = Tag.tag_list(
+      object: 'Ticket',
+      o_id: ticket.id,
+    )
+
+    # return result
+    {
+      ticket_id: ticket.id,
+      ticket_article_ids: article_ids,
+      assets: assets,
+      links: link_list,
+      tags: tags,
+      form_meta: attributes_to_change[:form_meta],
+    }
+  end
+
 end

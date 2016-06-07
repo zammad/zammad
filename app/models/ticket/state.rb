@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::State < ApplicationModel
   belongs_to    :state_type, class_name: 'Ticket::StateType'
+  belongs_to    :next_state, class_name: 'Ticket::State'
   validates     :name, presence: true
 
   latest_change_support
@@ -20,27 +21,27 @@ returns:
   def self.by_category(category)
     if category == 'open'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: ['new', 'open', 'pending reminder', 'pending action'] )
+        state_type_id: Ticket::StateType.where(name: ['new', 'open', 'pending reminder', 'pending action'])
       )
     elsif category == 'pending_reminder'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: ['pending reminder'] )
+        state_type_id: Ticket::StateType.where(name: ['pending reminder'])
       )
     elsif category == 'pending_action'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: ['pending action'] )
+        state_type_id: Ticket::StateType.where(name: ['pending action'])
       )
     elsif category == 'work_on'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: %w(new open) )
+        state_type_id: Ticket::StateType.where(name: %w(new open))
       )
     elsif category == 'work_on_all'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: ['new', 'open', 'pending reminder'] )
+        state_type_id: Ticket::StateType.where(name: ['new', 'open', 'pending reminder'])
       )
     elsif category == 'closed'
       return Ticket::State.where(
-        state_type_id: Ticket::StateType.where( name: %w(closed) )
+        state_type_id: Ticket::StateType.where(name: %w(closed))
       )
     end
     raise "Unknown category '#{category}'"

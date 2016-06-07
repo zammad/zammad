@@ -58,7 +58,6 @@ class Index extends App.WizardFullScreen
 
 App.Config.set( 'getting_started', Index, 'Routes' )
 
-
 class AutoWizard extends App.WizardFullScreen
   constructor: ->
     super
@@ -122,9 +121,8 @@ class AutoWizard extends App.WizardFullScreen
   renderToken: ->
     @html App.view('getting_started/auto_wizard_enabled')()
 
-App.Config.set( 'getting_started/auto_wizard', AutoWizard, 'Routes' )
-App.Config.set( 'getting_started/auto_wizard/:token', AutoWizard, 'Routes' )
-
+App.Config.set('getting_started/auto_wizard', AutoWizard, 'Routes')
+App.Config.set('getting_started/auto_wizard/:token', AutoWizard, 'Routes')
 
 class Admin extends App.WizardFullScreen
   events:
@@ -171,7 +169,7 @@ class Admin extends App.WizardFullScreen
           return
 
         # load group collection
-        App.Collection.load( type: 'Group', data: data.groups )
+        App.Collection.load(type: 'Group', data: data.groups)
 
         # render page
         @render()
@@ -192,7 +190,7 @@ class Admin extends App.WizardFullScreen
     e.preventDefault()
     @formDisable(e)
     @params          = @formParam(e.target)
-    @params.role_ids = [0]
+    @params.role_ids = []
 
     user = new App.User
     user.load(@params)
@@ -202,7 +200,7 @@ class Admin extends App.WizardFullScreen
     )
     if errors
       @log 'error new', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       @formEnable(e)
       return false
 
@@ -239,8 +237,7 @@ class Admin extends App.WizardFullScreen
 
     @navigate 'getting_started/base'
 
-App.Config.set( 'getting_started/admin', Admin, 'Routes' )
-
+App.Config.set('getting_started/admin', Admin, 'Routes')
 
 class Base extends App.WizardFullScreen
   elements:
@@ -323,8 +320,8 @@ class Base extends App.WizardFullScreen
 
     maxSiteInMb = 8
     if file.size && file.size > 1024 * 1024 * maxSiteInMb
-      @showAlert( 'logo', App.i18n.translateInline( 'File too big, max. %s MB allowed.', maxSiteInMb ) )
-      @logoPreview.attr( 'src', '' )
+      @showAlert( 'logo', App.i18n.translateInline('File too big, max. %s MB allowed.', maxSiteInMb ))
+      @logoPreview.attr('src', '')
       return
 
     reader.readAsDataURL(file)
@@ -375,8 +372,7 @@ class Base extends App.WizardFullScreen
     @$("[name=#{field}]").closest('.form-group').addClass('has-error')
     @$("[name=#{field}]").closest('.form-group').find('.alert').removeClass('hide').text( App.i18n.translateInline( message ) )
 
-App.Config.set( 'getting_started/base', Base, 'Routes' )
-
+App.Config.set('getting_started/base', Base, 'Routes')
 
 class EmailNotification extends App.WizardFullScreen
   events:
@@ -495,8 +491,7 @@ class EmailNotification extends App.WizardFullScreen
         @enable(e)
     )
 
-App.Config.set( 'getting_started/email_notification', EmailNotification, 'Routes' )
-
+App.Config.set('getting_started/email_notification', EmailNotification, 'Routes')
 
 class Channel extends App.WizardFullScreen
   constructor: ->
@@ -547,7 +542,7 @@ class Channel extends App.WizardFullScreen
       adapters: @adapters
     )
 
-App.Config.set( 'getting_started/channel', Channel, 'Routes' )
+App.Config.set('getting_started/channel', Channel, 'Routes')
 
 class ChannelEmailPreConfigured extends App.WizardFullScreen
   constructor: ->
@@ -590,7 +585,7 @@ class ChannelEmailPreConfigured extends App.WizardFullScreen
       data
     )
 
-App.Config.set( 'getting_started/channel/email_pre_configured', ChannelEmailPreConfigured, 'Routes' )
+App.Config.set('getting_started/channel/email_pre_configured', ChannelEmailPreConfigured, 'Routes')
 
 class ChannelEmail extends App.WizardFullScreen
   events:
@@ -881,7 +876,7 @@ class ChannelEmail extends App.WizardFullScreen
         @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
     )
 
-App.Config.set( 'getting_started/channel/email', ChannelEmail, 'Routes' )
+App.Config.set('getting_started/channel/email', ChannelEmail, 'Routes')
 
 class Agent extends App.WizardFullScreen
   events:
@@ -916,7 +911,7 @@ class Agent extends App.WizardFullScreen
           return
 
         # load group collection
-        App.Collection.load( type: 'Group', data: data.groups )
+        App.Collection.load(type: 'Group', data: data.groups)
 
         # render page
         @render()
@@ -937,13 +932,13 @@ class Agent extends App.WizardFullScreen
     e.preventDefault()
     @formDisable(e)
     @params          = @formParam(e.target)
-    @params.role_ids = [0]
+    @params.role_ids = []
 
     # set invite flag
     @params.invite = true
 
     # find agent role
-    role = App.Role.findByAttribute( 'name', 'Agent' )
+    role = App.Role.findByAttribute('name', 'Agent')
     if role
       @params.role_ids = role.id
 
@@ -955,7 +950,7 @@ class Agent extends App.WizardFullScreen
     )
     if errors
       @log 'error new', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       @formEnable(e)
       return false
 
@@ -964,7 +959,7 @@ class Agent extends App.WizardFullScreen
       done: (r) =>
         App.Event.trigger 'notify', {
           type:    'success'
-          msg:     App.i18n.translateContent( 'Invitation sent!' )
+          msg:     App.i18n.translateContent('Invitation sent!')
           timeout: 3500
         }
 
@@ -975,12 +970,12 @@ class Agent extends App.WizardFullScreen
         @formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent( details.error_human || 'Can\'t create user!' )
+          msg:     App.i18n.translateContent(details.error_human || 'Can\'t create user!')
           timeout: 2500
         }
     )
 
-App.Config.set( 'getting_started/agents', Agent, 'Routes' )
+App.Config.set('getting_started/agents', Agent, 'Routes')
 
 class Channel extends App.WizardFullScreen
   constructor: ->
@@ -1007,4 +1002,4 @@ class Channel extends App.WizardFullScreen
       4300
     )
 
-App.Config.set( 'getting_started/finish', Channel, 'Routes' )
+App.Config.set('getting_started/finish', Channel, 'Routes')

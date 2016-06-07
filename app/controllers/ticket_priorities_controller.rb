@@ -28,6 +28,7 @@ class TicketPrioritiesController < ApplicationController
   # DELETE /ticket_priorities/1
   def destroy
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if model_references_check(Ticket::Priority, params)
     model_destory_render(Ticket::Priority, params)
   end
 end

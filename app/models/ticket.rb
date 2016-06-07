@@ -55,9 +55,9 @@ class Ticket < ApplicationModel
 
   search_index_support
 
-  belongs_to    :group
+  belongs_to    :group,                 class_name: 'Group'
   has_many      :articles,              class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
-  belongs_to    :organization
+  belongs_to    :organization,          class_name: 'Organization'
   belongs_to    :state,                 class_name: 'Ticket::State'
   belongs_to    :priority,              class_name: 'Ticket::Priority'
   belongs_to    :owner,                 class_name: 'User'

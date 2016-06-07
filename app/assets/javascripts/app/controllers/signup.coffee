@@ -44,7 +44,7 @@ class Index extends App.ControllerContent
       @params.login = @params.email
 
     @params.signup = true
-    @params.role_ids = [0]
+    @params.role_ids = []
     @log 'notice', 'updateAttributes', @params
     user = new App.User
     user.load(@params)
@@ -54,7 +54,7 @@ class Index extends App.ControllerContent
     )
     if errors
       @log 'error new', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       @formEnable(e)
       return false
 

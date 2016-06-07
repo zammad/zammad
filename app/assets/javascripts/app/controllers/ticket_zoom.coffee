@@ -144,7 +144,7 @@ class App.TicketZoom extends App.Controller
     @ajax(
       id:    "ticket_zoom_#{ticket_id}"
       type:  'GET'
-      url:   "#{@apiPath}/ticket_full/#{ticket_id}"
+      url:   "#{@apiPath}/tickets/#{ticket_id}?full=true"
       processData: true
       success: (data, status, xhr) =>
 

@@ -379,10 +379,13 @@ class ApplicationController < ActionController::Base
   end
 
   # model helper
-  def model_create_render (object, params)
+  def model_create_render(object, params)
+
+    clean_params = object.param_association_lookup(params)
+    clean_params = object.param_cleanup(clean_params, true)
 
     # create object
-    generic_object = object.new(object.param_cleanup(params[object.to_app_model_url], true ))
+    generic_object = object.new(clean_params)
 
     # save object
     generic_object.save!
@@ -397,17 +400,20 @@ class ApplicationController < ActionController::Base
     render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
-  def model_create_render_item (generic_object)
+  def model_create_render_item(generic_object)
     render json: generic_object.attributes_with_associations, status: :created
   end
 
-  def model_update_render (object, params)
+  def model_update_render(object, params)
 
     # find object
     generic_object = object.find(params[:id])
 
+    clean_params = object.param_association_lookup(params)
+    clean_params = object.param_cleanup(clean_params, true)
+
     # save object
-    generic_object.update_attributes!(object.param_cleanup(params[object.to_app_model_url]))
+    generic_object.update_attributes!(clean_params)
 
     # set relations
     generic_object.param_set_associations(params)
@@ -419,11 +425,11 @@ class ApplicationController < ActionController::Base
     render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
-  def model_update_render_item (generic_object)
+  def model_update_render_item(generic_object)
     render json: generic_object.attributes_with_associations, status: :ok
   end
 
-  def model_destory_render (object, params)
+  def model_destory_render(object, params)
     generic_object = object.find(params[:id])
     generic_object.destroy
     model_destory_render_item()
@@ -453,12 +459,22 @@ class ApplicationController < ActionController::Base
     render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
-  def model_show_render_item (generic_object)
+  def model_show_render_item(generic_object)
     render json: generic_object.attributes_with_associations, status: :ok
   end
 
-  def model_index_render (object, _params)
-    generic_objects = object.all
+  def model_index_render(object, params)
+    offset = 0
+    per_page = 1000
+    if params[:page] && params[:per_page]
+      offset = (params[:page].to_i - 1) * params[:per_page].to_i
+      limit = params[:per_page].to_i
+    end
+    generic_objects = if offset > 0
+                        object.limit(params[:per_page]).offset(offset).limit(limit)
+                      else
+                        object.all.offset(offset).limit(limit)
+                      end
 
     if params[:full]
       assets = {}
@@ -485,11 +501,11 @@ class ApplicationController < ActionController::Base
     render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
-  def model_index_render_result (generic_objects)
+  def model_index_render_result(generic_objects)
     render json: generic_objects, status: :ok
   end
 
-  def model_match_error (error)
+  def model_match_error(error)
     data = {
       error: error
     }
@@ -497,6 +513,25 @@ class ApplicationController < ActionController::Base
       data[:error_human] = 'Object already exists!'
     end
     data
+  end
+
+  def model_references_check(object, params)
+    generic_object = object.find(params[:id])
+    result = Models.references(object, generic_object.id)
+    return false if result.empty?
+    render json: { error: 'Can\'t delete, object has references.' }, status: :unprocessable_entity
+    true
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    render json: model_match_error(e.message), status: :unprocessable_entity
+  end
+
+  def not_found(e)
+    respond_to do |format|
+      format.json { render json: { error: e.message }, status: :not_found }
+      format.any { render text: "Error: #{e.message}", status: :not_found }
+    end
   end
 
   # check maintenance mode

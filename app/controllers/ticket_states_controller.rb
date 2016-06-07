@@ -28,6 +28,7 @@ class TicketStatesController < ApplicationController
   # DELETE /ticket_states/1
   def destroy
     return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    return if model_references_check(Ticket::State, params)
     model_destory_render(Ticket::State, params)
   end
 end

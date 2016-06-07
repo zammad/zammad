@@ -36,9 +36,9 @@ class User < ApplicationModel
   after_destroy   :avatar_destroy
   notify_clients_support
 
-  has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update
-  has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, class_name: 'Role'
+  has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
   has_many                :authorizations,  after_add: :cache_update, after_remove: :cache_update
   belongs_to              :organization,    class_name: 'Organization'

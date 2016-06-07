@@ -88,7 +88,7 @@ returns
 
           # get model with full data
           if !organization_exists
-            organizations.push Organization.find(organization_by_user)
+            organizations.push Organization.find(organization_by_user.id)
           end
         }
       end

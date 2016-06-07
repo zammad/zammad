@@ -4,12 +4,13 @@ Zammad::Application.routes.draw do
   # tickets
   match api_path + '/tickets/search',                                to: 'tickets#search',            via: [:get, :post]
   match api_path + '/tickets/selector',                              to: 'tickets#selector',          via: :post
+  match api_path + '/tickets',                                       to: 'tickets#index',             via: :get
   match api_path + '/tickets/:id',                                   to: 'tickets#show',              via: :get
   match api_path + '/tickets',                                       to: 'tickets#create',            via: :post
   match api_path + '/tickets/:id',                                   to: 'tickets#update',            via: :put
+  match api_path + '/tickets/:id',                                   to: 'tickets#destroy',           via: :delete
   match api_path + '/ticket_create',                                 to: 'tickets#ticket_create',     via: :get
   match api_path + '/ticket_split',                                  to: 'tickets#ticket_split',      via: :get
-  match api_path + '/ticket_full/:id',                               to: 'tickets#ticket_full',       via: :get
   match api_path + '/ticket_history/:id',                            to: 'tickets#ticket_history',    via: :get
   match api_path + '/ticket_customer',                               to: 'tickets#ticket_customer',   via: :get
   match api_path + '/ticket_related/:ticket_id',                     to: 'tickets#ticket_related',    via: :get
@@ -24,12 +25,14 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_priorities/:id',                         to: 'ticket_priorities#show',    via: :get
   match api_path + '/ticket_priorities',                             to: 'ticket_priorities#create',  via: :post
   match api_path + '/ticket_priorities/:id',                         to: 'ticket_priorities#update',  via: :put
+  match api_path + '/ticket_priorities/:id',                         to: 'ticket_priorities#destroy', via: :delete
 
   # ticket state
   match api_path + '/ticket_states',                                 to: 'ticket_states#index',       via: :get
   match api_path + '/ticket_states/:id',                             to: 'ticket_states#show',        via: :get
   match api_path + '/ticket_states',                                 to: 'ticket_states#create',      via: :post
   match api_path + '/ticket_states/:id',                             to: 'ticket_states#update',      via: :put
+  match api_path + '/ticket_states/:id',                             to: 'ticket_states#destroy',     via: :delete
 
   # ticket articles
   match api_path + '/ticket_articles',                               to: 'ticket_articles#index',     via: :get
