@@ -158,7 +158,7 @@ class App.TicketZoomArticleNew extends App.Controller
     if @subscribeIdTextModule
       App.Ticket.unsubscribe(@subscribeIdTextModule)
 
-    @(window).off 'click.ticket-zoom-select-type'
+    $(window).off 'click.ticket-zoom-select-type'
     $(window).on 'click.ticket-zoom-textarea'
 
   render: ->
