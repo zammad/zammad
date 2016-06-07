@@ -1292,10 +1292,15 @@ touch references by params
 =end
 
   def self.touch_reference_by_params(data)
+
     object_class = Kernel.const_get(data[:object])
     object = object_class.lookup(id: data[:o_id])
     return if !object
     object.touch
+  rescue => e
+    logger.error e.message
+    logger.error e.backtrace.inspect
+
   end
 
   private
