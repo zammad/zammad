@@ -387,11 +387,13 @@ class App.TicketZoom extends App.Controller
         @scrollToBottom()
         @positionPageHeaderUpdate()
 
-      return if @initDone
-      @initDone = true
+    return if @initDone
+    @initDone = true
 
-      # trigger shown if init shown render
-      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
+    # if shown was before init rendering, start actions again
+    if @shown
+      @positionPageHeaderStart()
+    App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
   scrollToBottom: =>
     @main.scrollTop( @main.prop('scrollHeight') )
