@@ -84,7 +84,7 @@ class App.TicketZoom extends App.Controller
         @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
         @load(data)
-        App.SessionStorage(@key, data)
+        App.SessionStorage.set(@key, data)
 
         if !@doNotLog
           @doNotLog = 1

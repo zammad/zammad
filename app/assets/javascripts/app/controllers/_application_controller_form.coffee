@@ -25,6 +25,10 @@ class App.ControllerForm extends App.Controller
     if @el
       @el.prepend(@form)
 
+    # if element to replace is given, replace form with
+    if @elReplace
+      @elReplace.html(@form)
+
     # trigger change to rebuild shown/hidden item and update sub selections
     if typeof @form is 'object'
       @form.find('input').trigger('change')
@@ -285,7 +289,7 @@ class App.ControllerForm extends App.Controller
                 value = data.name
 
               # check if value is used in condition
-              if _.contains( action.bind.value, value )
+              if _.contains(action.bind.value, value)
                 if action.change.action is 'hide'
                   ui.hide(action.change.name)
                 else
@@ -315,7 +319,7 @@ class App.ControllerForm extends App.Controller
 
       return fullItem
 
-  show: (name, el = @el) ->
+  show: (name, el = @form) ->
     if !_.isArray(name)
       name = [name]
     for key in name
@@ -329,7 +333,7 @@ class App.ControllerForm extends App.Controller
       el.find('.has-error').removeClass('has-error')
       el.find('.help-inline').html('')
 
-  hide: (name, el = @el) ->
+  hide: (name, el = @form) ->
     if !_.isArray(name)
       name = [name]
     for key in name
@@ -338,14 +342,14 @@ class App.ControllerForm extends App.Controller
       el.find('[data-name="' + key + '"]').closest('.form-group').addClass('hide')
       el.find('[data-name="' + key + '"]').addClass('is-hidden')
 
-  mandantory: (name, el = @el) ->
+  mandantory: (name, el = @form) ->
     if !_.isArray(name)
       name = [name]
     for key in name
       el.find('[name="' + key + '"]').attr('required', true)
       el.find('[name="' + key + '"]').parents('.form-group').find('label span').html('*')
 
-  optional: (name, el = @el) ->
+  optional: (name, el = @form) ->
     if !_.isArray(name)
       name = [name]
     for key in name
