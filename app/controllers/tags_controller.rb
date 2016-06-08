@@ -35,7 +35,7 @@ class TagsController < ApplicationController
     success = Tag.tag_add(
       object: params[:object],
       o_id: params[:o_id],
-      item: params[:item].strip,
+      item: params[:item],
     )
     if success
       render json: success, status: :created
@@ -49,7 +49,7 @@ class TagsController < ApplicationController
     success = Tag.tag_remove(
       object: params[:object],
       o_id: params[:o_id],
-      item: params[:item].strip,
+      item: params[:item],
     )
     if success
       render json: success, status: :created
@@ -76,41 +76,24 @@ class TagsController < ApplicationController
   # POST /api/v1/tag_list
   def admin_create
     return if deny_if_not_role('Admin')
-    name = params[:name].strip
-    if !Tag.tag_item_lookup(name)
-      Tag::Item.create(name: name)
-    end
+    Tag::Item.lookup_by_name_and_create(params[:name])
     render json: {}
   end
 
   # PUT /api/v1/tag_list/:id
   def admin_rename
     return if deny_if_not_role('Admin')
-    name = params[:name].strip
-    tag_item = Tag::Item.find(params[:id])
-    existing_tag_id = Tag.tag_item_lookup(name)
-    if existing_tag_id
-
-      # assign to already existing tag
-      Tag.where(tag_item_id: tag_item.id).update_all(tag_item_id: existing_tag_id)
-
-      # delete not longer used tag
-      tag_item.destroy
-
-    # update new tag name
-    else
-      tag_item.name = name
-      tag_item.save
-    end
+    Tag::Item.rename(
+      id: params[:id],
+      name: params[:name],
+    )
     render json: {}
   end
 
   # DELETE /api/v1/tag_list/:id
   def admin_delete
     return if deny_if_not_role('Admin')
-    tag_item = Tag::Item.find(params[:id])
-    Tag.where(tag_item_id: tag_item.id).destroy_all
-    tag_item.destroy
+    Tag::Item.remove(params[:id])
     render json: {}
   end
 
