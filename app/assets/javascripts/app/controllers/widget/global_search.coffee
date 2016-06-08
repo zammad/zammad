@@ -4,6 +4,7 @@ class App.GlobalSearchWidget extends Spine.Module
   constructor: ->
     $('body').on('mousedown', (e) =>
       @shiftHeldToogle(e)
+      true
     )
     App.Event.bind('global:search:set', (data) =>
       item = data[0]
