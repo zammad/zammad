@@ -174,20 +174,20 @@ returns
 
   result = [
     {
-      :id            => 2,
-      :o_id          => 2,
-      :created_by_id => 3,
-      :created_at    => '2013-09-28 00:57:21',
-      :object        => "User",
-      :type          => "created",
+      id: 2,
+      o_id: 2,
+      created_by_id: 3,
+      created_at: '2013-09-28 00:57:21',
+      object: "User",
+      type: "created",
     },
     {
-      :id            => 2,
-      :o_id          => 2,
-      :created_by_id => 3,
-      :created_at    => '2013-09-28 00:59:21',
-      :object        => "User",
-      :type          => "updated",
+      id: 2,
+      o_id: 2,
+      created_by_id: 3,
+      created_at: '2013-09-28 00:59:21',
+      object: "User",
+      type: "updated",
     },
   ]
 

@@ -27,6 +27,15 @@ class UsersController < ApplicationController
               User.all.offset(offset).limit(per_page)
             end
 
+    if params[:expand]
+      list = []
+      users.each {|user|
+        list.push user.attributes_with_relation_names
+      }
+      render json: list, status: :ok
+      return
+    end
+
     if params[:full]
       assets = {}
       item_ids = []
@@ -64,6 +73,12 @@ class UsersController < ApplicationController
 
     # access deny
     return if !permission_check
+
+    if params[:expand]
+      user = User.find(params[:id]).attributes_with_relation_names
+      render json: user, status: :ok
+      return
+    end
 
     if params[:full]
       full = User.full(params[:id])
@@ -203,6 +218,13 @@ class UsersController < ApplicationController
           objects: result,
         )
       end
+
+      if params[:expand]
+        user = User.find(user.id).attributes_with_relation_names
+        render json: user, status: :created
+        return
+      end
+
       user_new = User.find(user.id).attributes_with_associations
       user_new.delete('password')
       render json: user_new, status: :created
@@ -253,8 +275,14 @@ class UsersController < ApplicationController
         user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
       end
 
+      if params[:expand]
+        user = User.find(user.id).attributes_with_relation_names
+        render json: user, status: :ok
+        return
+      end
+
       # get new data
-      user_new = User.find(params[:id]).attributes_with_associations
+      user_new = User.find(user.id).attributes_with_associations
       user_new.delete('password')
       render json: user_new, status: :ok
     rescue => e
@@ -327,7 +355,11 @@ class UsersController < ApplicationController
     end
 
     if params[:expand]
-      render json: user_all
+      list = []
+      user_all.each {|user|
+        list.push user.attributes_with_relation_names
+      }
+      render json: list, status: :ok
       return
     end
 

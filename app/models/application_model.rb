@@ -175,7 +175,7 @@ returns
 
 =begin
 
-get rellations of model based on params
+get relations of model based on params
 
   model = Model.find(1)
   attributes = model.attributes_with_associations
@@ -195,6 +195,69 @@ returns
       next if !respond_to?(real_ids)
       attributes[real_ids] = send(real_ids)
     }
+    attributes
+  end
+
+=begin
+
+get relation name of model based on params
+
+  model = Model.find(1)
+  attributes = model.attributes_with_relation_names
+
+returns
+
+  hash with attributes, association ids, association names and relation name
+
+=end
+
+  def attributes_with_relation_names
+
+    # get relations
+    attributes = attributes_with_associations
+    self.class.reflect_on_all_associations.map { |assoc|
+      next if !respond_to?(assoc.name)
+      ref = send(assoc.name)
+      next if !ref
+      if ref.respond_to?(:first)
+        attributes[assoc.name.to_s] = []
+        ref.each {|item|
+          if item[:login]
+            attributes[assoc.name.to_s].push item[:login]
+            next
+          end
+          next if !item[:name]
+          attributes[assoc.name.to_s].push item[:name]
+        }
+        if ref.count > 0 && attributes[assoc.name.to_s].empty?
+          attributes.delete(assoc.name.to_s)
+        end
+        next
+      end
+      if ref[:login]
+        attributes[assoc.name.to_s] = ref[:login]
+        next
+      end
+      next if !ref[:name]
+      attributes[assoc.name.to_s] = ref[:name]
+    }
+
+    # fill created_by/updated_by
+    {
+      'created_by_id' => 'created_by',
+      'updated_by_id' => 'updated_by',
+    }.each {|source, destination|
+      next if !attributes[source]
+      user = User.lookup(id: attributes[source])
+      next if !user
+      attributes[destination] = user.login
+    }
+
+    # remove forbitten attributes
+    %w(password token tokens token_ids).each {|item|
+      attributes.delete(item)
+    }
+
     attributes
   end
 
