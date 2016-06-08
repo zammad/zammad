@@ -12,17 +12,17 @@ class Edit extends App.ObserverController
     if !_.isEmpty(taskState)
       defaults = _.extend(defaults, taskState)
 
-    form = new App.ControllerForm(
-      model:    App.Ticket
-      screen:   'edit'
-      handlers: [
+    new App.ControllerForm(
+      elReplace: @el
+      model:     App.Ticket
+      screen:    'edit'
+      handlers:  [
         @ticketFormChanges
       ]
       filter:    @formMeta.filter
       params:    defaults
       #bookmarkable: true
     )
-    @html form.html()
 
     @markForm(true)
 
