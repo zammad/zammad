@@ -54,6 +54,7 @@ class Table extends App.Controller
   events:
     'click .js-delete': 'destroy'
     'click .js-edit': 'edit'
+    'click .js-search': 'search'
 
   constructor: ->
     super
@@ -94,6 +95,12 @@ class Table extends App.Controller
       id: id
       row: row
     )
+
+  search: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    item = $(e.target).closest('tr').find('.js-name').text()
+    App.GlobalSearchWidget.search(item, 'tag')
 
 class Edit extends App.ControllerModal
   buttonClose: true
