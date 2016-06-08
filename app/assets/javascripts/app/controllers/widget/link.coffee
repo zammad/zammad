@@ -30,7 +30,13 @@ class App.WidgetLink extends App.Controller
         @render()
     )
 
+  reload: (links) ->
+    @links = links
+    @render()
+
   render: =>
+    return if @lastLinks && _.isEqual(@lastLinks, @links)
+    @lastLinks = @links
     list = {}
     for item in @links
       if !list[ item['link_type'] ]

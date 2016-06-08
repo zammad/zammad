@@ -16,6 +16,15 @@ class TicketsController < ApplicationController
     access_condition = Ticket.access_condition(current_user)
     tickets = Ticket.where(access_condition).offset(offset).limit(per_page)
 
+    if params[:expand]
+      list = []
+      tickets.each {|ticket|
+        list.push ticket.attributes_with_relation_names
+      }
+      render json: list, status: :ok
+      return
+    end
+
     if params[:full]
       assets = {}
       item_ids = []
@@ -40,8 +49,20 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     return if !ticket_permission(ticket)
 
+    if params[:expand]
+      result = ticket.attributes_with_relation_names
+      render json: result, status: :ok
+      return
+    end
+
     if params[:full]
-      render json: ticket_full(ticket)
+      full = Ticket.full(params[:id])
+      render json: full
+      return
+    end
+
+    if params[:all]
+      render json: ticket_all(ticket)
       return
     end
 
@@ -84,6 +105,12 @@ class TicketsController < ApplicationController
       article_create(ticket, params[:article])
     end
 
+    if params[:expand]
+      result = ticket.attributes_with_relation_names
+      render json: result, status: :created
+      return
+    end
+
     render json: ticket, status: :created
   end
 
@@ -101,6 +128,12 @@ class TicketsController < ApplicationController
 
       if params[:article]
         article_create(ticket, params[:article])
+      end
+
+      if params[:expand]
+        result = ticket.attributes_with_relation_names
+        render json: result, status: :ok
+        return
       end
 
       render json: ticket, status: :ok
@@ -284,6 +317,16 @@ class TicketsController < ApplicationController
       condition: params[:condition],
       current_user: current_user,
     )
+
+    if params[:expand]
+      list = []
+      tickets.each {|ticket|
+        list.push ticket.attributes_with_relation_names
+      }
+      render json: list, status: :ok
+      return
+    end
+
     assets = {}
     ticket_result = []
     tickets.each do |ticket|
@@ -555,7 +598,7 @@ class TicketsController < ApplicationController
     )
   end
 
-  def ticket_full(ticket)
+  def ticket_all(ticket)
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(user: current_user, ticket: ticket)

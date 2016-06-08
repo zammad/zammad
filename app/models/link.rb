@@ -75,21 +75,29 @@ class Link < ApplicationModel
   def self.add(data)
 
     if data.key?(:link_type)
-      linktype = link_type_get( name: data[:link_type] )
+      linktype = link_type_get(name: data[:link_type])
       data[:link_type_id] = linktype.id
-      data.delete( :link_type )
+      data.delete(:link_type)
     end
 
     if data.key?(:link_object_source)
-      linkobject = link_object_get( name: data[:link_object_source] )
+      linkobject = link_object_get(name: data[:link_object_source])
       data[:link_object_source_id] = linkobject.id
-      data.delete( :link_object_source )
+      touch_reference_by_params(
+        object: data[:link_object_source],
+        o_id: data[:link_object_source_value],
+      )
+      data.delete(:link_object_source)
     end
 
     if data.key?(:link_object_target)
-      linkobject = link_object_get( name: data[:link_object_target] )
+      linkobject = link_object_get(name: data[:link_object_target])
       data[:link_object_target_id] = linkobject.id
-      data.delete( :link_object_target )
+      touch_reference_by_params(
+        object: data[:link_object_target],
+        o_id: data[:link_object_target_value],
+      )
+      data.delete(:link_object_target)
     end
 
     Link.create(data)
@@ -109,18 +117,18 @@ class Link < ApplicationModel
 
   def self.remove(data)
     if data.key?(:link_object_source)
-      linkobject = link_object_get( name: data[:link_object_source] )
+      linkobject = link_object_get(name: data[:link_object_source])
       data[:link_object_source_id] = linkobject.id
     end
 
     if data.key?(:link_object_target)
-      linkobject = link_object_get( name: data[:link_object_target] )
+      linkobject = link_object_get(name: data[:link_object_target])
       data[:link_object_target_id] = linkobject.id
     end
 
     # from one site
     if data.key?(:link_type)
-      linktype = link_type_get( name: data[:link_type] )
+      linktype = link_type_get(name: data[:link_type])
       data[:link_type_id] = linktype.id
     end
     links = Link.where(
@@ -130,11 +138,23 @@ class Link < ApplicationModel
       link_object_target_id: data[:link_object_target_id],
       link_object_target_value: data[:link_object_target_value]
     )
-    links.each(&:destroy)
+
+    # touch references
+    links.each {|link|
+      link.destroy
+      touch_reference_by_params(
+        object: Link::Object.lookup(id: link.link_object_source_id).name,
+        o_id: link.link_object_source_value,
+      )
+      touch_reference_by_params(
+        object: Link::Object.lookup(id: link.link_object_target_id).name,
+        o_id: link.link_object_target_value,
+      )
+    }
 
     # from the other site
     if data.key?(:link_type)
-      linktype = link_type_get( name: @map[ data[:link_type] ] )
+      linktype = link_type_get(name: @map[ data[:link_type] ])
       data[:link_type_id] = linktype.id
     end
     links = Link.where(
@@ -144,25 +164,33 @@ class Link < ApplicationModel
       link_object_source_id: data[:link_object_target_id],
       link_object_source_value: data[:link_object_target_value]
     )
-    links.each(&:destroy)
+
+    # touch references
+    links.each {|link|
+      link.destroy
+      touch_reference_by_params(
+        object: Link::Object.lookup(id: link.link_object_source_id).name,
+        o_id: link.link_object_source_value,
+      )
+      touch_reference_by_params(
+        object: Link::Object.lookup(id: link.link_object_target_id).name,
+        o_id: link.link_object_target_value,
+      )
+    }
   end
 
   def self.link_type_get(data)
-    linktype = Link::Type.find_by( name: data[:name] )
+    linktype = Link::Type.find_by(name: data[:name])
     if !linktype
-      linktype = Link::Type.create(
-        name: data[:name]
-      )
+      linktype = Link::Type.create(name: data[:name])
     end
     linktype
   end
 
   def self.link_object_get(data)
-    linkobject = Link::Object.find_by( name: data[:name] )
+    linkobject = Link::Object.find_by(name: data[:name])
     if !linkobject
-      linkobject = Link::Object.create(
-        name: data[:name]
-      )
+      linkobject = Link::Object.create(name: data[:name])
     end
     linkobject
   end

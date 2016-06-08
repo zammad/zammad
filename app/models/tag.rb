@@ -7,7 +7,20 @@ class Tag < ApplicationModel
   # rubocop:disable Style/ClassVars
   @@cache_item = {}
   @@cache_object = {}
-  # rubocop:enable Style/ClassVars
+# rubocop:enable Style/ClassVars
+
+=begin
+
+add tags for certain object
+
+  Tag.tag_add(
+    object: 'Ticket',
+    o_id: ticket.id,
+    item: 'some tag',
+    created_by_id: current_user.id,
+  )
+
+=end
 
   def self.tag_add(data)
 
@@ -30,8 +43,24 @@ class Tag < ApplicationModel
       o_id: data[:o_id],
       created_by_id: data[:created_by_id],
     )
+
+    # touch reference
+    touch_reference_by_params(data)
     true
   end
+
+=begin
+
+remove tags of certain object
+
+  Tag.tag_add(
+    object: 'Ticket',
+    o_id: ticket.id,
+    item: 'some tag',
+    created_by_id: current_user.id,
+  )
+
+=end
 
   def self.tag_remove(data)
 
@@ -50,8 +79,28 @@ class Tag < ApplicationModel
       o_id: data[:o_id],
     )
     result.each(&:destroy)
+
+    # touch reference
+    touch_reference_by_params(data)
     true
   end
+
+=begin
+
+tag list for certain object
+
+  tags = Tag.tag_list(
+    object: 'Ticket',
+    o_id: ticket.id,
+    item: 'some tag',
+    created_by_id: current_user.id,
+  )
+
+returns
+
+  ['tag 1', 'tag2', ...]
+
+=end
 
   def self.tag_list(data)
     tag_object_id_requested = tag_object_lookup(data[:object])

@@ -5,13 +5,13 @@ class TaskbarController < ApplicationController
 
   def index
 
-    current_user_tasks = Taskbar.where( user_id: current_user.id )
+    current_user_tasks = Taskbar.where(user_id: current_user.id)
     model_index_render_result(current_user_tasks)
 
   end
 
   def show
-    taskbar = Taskbar.find( params[:id] )
+    taskbar = Taskbar.find(params[:id])
     return if !access(taskbar)
 
     model_show_render_item(taskbar)
@@ -22,15 +22,15 @@ class TaskbarController < ApplicationController
   end
 
   def update
-    taskbar = Taskbar.find( params[:id] )
+    taskbar = Taskbar.find(params[:id])
     return if !access(taskbar)
 
-    taskbar.update_attributes!( Taskbar.param_cleanup(params) )
+    taskbar.update_attributes!(Taskbar.param_cleanup(params))
     model_update_render_item(taskbar)
   end
 
   def destroy
-    taskbar = Taskbar.find( params[:id] )
+    taskbar = Taskbar.find(params[:id])
     return if !access(taskbar)
 
     taskbar.destroy

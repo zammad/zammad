@@ -86,6 +86,8 @@ class ArticleViewItem extends App.ObserverController
     @el.attr('id', "article-#{article.id}")
     if article.internal
       @el.addClass('is-internal')
+    else
+      @el.removeClass('is-internal')
 
     # prepare html body
     if article.content_type is 'text/html'

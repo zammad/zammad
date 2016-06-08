@@ -27,6 +27,15 @@ class UsersController < ApplicationController
               User.all.offset(offset).limit(per_page)
             end
 
+    if params[:expand]
+      list = []
+      users.each {|user|
+        list.push user.attributes_with_relation_names
+      }
+      render json: list, status: :ok
+      return
+    end
+
     if params[:full]
       assets = {}
       item_ids = []
@@ -65,6 +74,12 @@ class UsersController < ApplicationController
     # access deny
     return if !permission_check
 
+    if params[:expand]
+      user = User.find(params[:id]).attributes_with_relation_names
+      render json: user, status: :ok
+      return
+    end
+
     if params[:full]
       full = User.full(params[:id])
       render json: full
@@ -96,20 +111,26 @@ class UsersController < ApplicationController
     user.param_set_associations(params)
 
     begin
-      # check if it's first user
+
+      # check if it's first user, tje admin user
+      # inital admin account
       count = User.all.count()
+      admin_account_exists = true
+      if count <= 2
+        admin_account_exists = false
+      end
 
       # if it's a signup, add user to customer role
       if !current_user
 
         # check if feature is enabled
-        if !Setting.get('user_create_account')
+        if admin_account_exists && !Setting.get('user_create_account')
           render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
           return
         end
 
         # check signup option only after admin account is created
-        if count > 2 && !params[:signup]
+        if admin_account_exists && !params[:signup]
           render json: { error: 'Only signup with not authenticate user possible!' }, status: :unprocessable_entity
           return
         end
@@ -135,7 +156,10 @@ class UsersController < ApplicationController
         user.group_ids = group_ids
 
         # remember source (in case show email verify banner)
-        user.source = 'signup'
+        # if not inital user creation
+        if admin_account_exists
+          user.source = 'signup'
+        end
 
       # else do assignment as defined
       else
@@ -162,7 +186,7 @@ class UsersController < ApplicationController
       user.save!
 
       # if first user was added, set system init done
-      if count <= 2
+      if !admin_account_exists
         Setting.set('system_init_done', true)
 
         # fetch org logo
@@ -191,9 +215,16 @@ class UsersController < ApplicationController
         NotificationFactory::Mailer.notification(
           template: 'signup',
           user: user,
-          objects: result
+          objects: result,
         )
       end
+
+      if params[:expand]
+        user = User.find(user.id).attributes_with_relation_names
+        render json: user, status: :created
+        return
+      end
+
       user_new = User.find(user.id).attributes_with_associations
       user_new.delete('password')
       render json: user_new, status: :created
@@ -244,8 +275,14 @@ class UsersController < ApplicationController
         user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
       end
 
+      if params[:expand]
+        user = User.find(user.id).attributes_with_relation_names
+        render json: user, status: :ok
+        return
+      end
+
       # get new data
-      user_new = User.find(params[:id]).attributes_with_associations
+      user_new = User.find(user.id).attributes_with_associations
       user_new.delete('password')
       render json: user_new, status: :ok
     rescue => e
@@ -318,7 +355,11 @@ class UsersController < ApplicationController
     end
 
     if params[:expand]
-      render json: user_all
+      list = []
+      user_all.each {|user|
+        list.push user.attributes_with_relation_names
+      }
+      render json: list, status: :ok
       return
     end
 

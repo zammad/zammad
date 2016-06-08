@@ -339,6 +339,13 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def article_permission(article)
+    ticket = Ticket.lookup(id: article.ticket_id)
+    return true if ticket.permission(current_user: current_user)
+    response_access_deny
+    false
+  end
+
   def deny_if_not_role(role_name)
     return false if role?(role_name)
     response_access_deny
@@ -393,6 +400,11 @@ class ApplicationController < ActionController::Base
     # set relations
     generic_object.param_set_associations(params)
 
+    if params[:expand]
+      render json: generic_object.attributes_with_relation_names, status: :created
+      return
+    end
+
     model_create_render_item(generic_object)
   rescue => e
     logger.error e.message
@@ -417,6 +429,11 @@ class ApplicationController < ActionController::Base
 
     # set relations
     generic_object.param_set_associations(params)
+
+    if params[:expand]
+      render json: generic_object.attributes_with_relation_names, status: :ok
+      return
+    end
 
     model_update_render_item(generic_object)
   rescue => e
@@ -444,6 +461,12 @@ class ApplicationController < ActionController::Base
   end
 
   def model_show_render (object, params)
+
+    if params[:expand]
+      generic_object = object.find(params[:id])
+      render json: generic_object.attributes_with_relation_names, status: :ok
+      return
+    end
 
     if params[:full]
       generic_object_full = object.full(params[:id])
@@ -475,6 +498,15 @@ class ApplicationController < ActionController::Base
                       else
                         object.all.offset(offset).limit(limit)
                       end
+
+    if params[:expand]
+      list = []
+      generic_objects.each {|generic_object|
+        list.push generic_object.attributes_with_relation_names
+      }
+      render json: list, status: :ok
+      return
+    end
 
     if params[:full]
       assets = {}

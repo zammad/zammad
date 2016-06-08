@@ -178,7 +178,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
       created_at
       updated_at
       lieblingstier
-      custom_dropdown)
+      custom_dropdown
+    )
 
     assert_equal(copmare_fields, local_fields, 'user fields')
   end
@@ -264,7 +265,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
       created_at
       updated_at
       api_key
-      custom_dropdown)
+      custom_dropdown
+    )
 
     assert_equal(copmare_fields, local_fields, 'organization fields')
   end
@@ -468,7 +470,8 @@ If you\'re reading this message in your email, click the ticket number link that
       custom_date
       custom_integer
       custom_regex
-      custom_dropdown)
+      custom_dropdown
+    )
 
     assert_equal(copmare_fields, local_fields, 'ticket fields')
   end

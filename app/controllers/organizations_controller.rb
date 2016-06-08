@@ -65,6 +65,15 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       organizations = Organization.all.offset(offset).limit(per_page)
     end
 
+    if params[:expand]
+      list = []
+      organizations.each {|organization|
+        list.push organization.attributes_with_relation_names
+      }
+      render json: list, status: :ok
+      return
+    end
+
     if params[:full]
       assets = {}
       item_ids = []
@@ -112,11 +121,19 @@ curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
         return
       end
     end
+
+    if params[:expand]
+      organization = Organization.find(params[:id]).attributes_with_relation_names
+      render json: organization, status: :ok
+      return
+    end
+
     if params[:full]
-      full = Organization.full( params[:id] )
+      full = Organization.full(params[:id])
       render json: full
       return
     end
+
     model_show_render(Organization, params)
   end
 
@@ -200,6 +217,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     model_destory_render(Organization, params)
   end
 
+  # GET /api/v1/organizations/search
   def search
 
     if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
@@ -231,7 +249,11 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     end
 
     if params[:expand]
-      render json: organization_all
+      list = []
+      organization_all.each {|organization|
+        list.push organization.attributes_with_relation_names
+      }
+      render json: list, status: :ok
       return
     end
 

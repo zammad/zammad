@@ -93,6 +93,19 @@ class AgentTicketActionLevel8Test < TestCase
       },
     )
 
+    # verify changes in second browser
+    browser2 = browser_instance
+    login(
+      browser: browser2,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    ticket_open_by_search(
+      browser: browser2,
+      number:  ticket3[:number],
+    )
+
     # set tag #1
     click(
       css: '.content.active .js-newTagLabel',
@@ -157,6 +170,19 @@ class AgentTicketActionLevel8Test < TestCase
       }
     )
 
+    sleep 4
+    tags_verify(
+      browser: browser2,
+      tags: {
+        'tag1' => true,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => true,
+        'tag4' => true,
+        'tag5' => true,
+      }
+    )
+
     # reload browser
     reload()
     sleep 2
@@ -165,6 +191,47 @@ class AgentTicketActionLevel8Test < TestCase
     tags_verify(
       tags: {
         'tag1' => true,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => true,
+        'tag4' => true,
+        'tag5' => true,
+      }
+    )
+
+    tags_verify(
+      browser: browser2,
+      tags: {
+        'tag1' => true,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => true,
+        'tag4' => true,
+        'tag5' => true,
+      }
+    )
+
+    # remove tag1
+    click(
+      css: '.content.active .tags .js-delete',
+    )
+    sleep 4
+
+    # verify tags
+    tags_verify(
+      tags: {
+        'tag1' => false,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => true,
+        'tag4' => true,
+        'tag5' => true,
+      }
+    )
+    tags_verify(
+      browser: browser2,
+      tags: {
+        'tag1' => false,
         'tag 2' => true,
         'tag2' => false,
         'tag3' => true,
@@ -369,6 +436,19 @@ class AgentTicketActionLevel8Test < TestCase
       },
     )
 
+    # verify changes in second browser
+    browser2 = browser_instance
+    login(
+      browser: browser2,
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    ticket_open_by_search(
+      browser: browser2,
+      number:  ticket1[:number],
+    )
+
     click(
       css: '.content.active .links .js-add',
     )
@@ -391,6 +471,12 @@ class AgentTicketActionLevel8Test < TestCase
       value: ticket1[:title],
     )
 
+    watch_for(
+      browser: browser2,
+      css: '.content.active .ticketLinks',
+      value: ticket2[:title],
+    )
+
     reload()
 
     watch_for(
@@ -404,6 +490,11 @@ class AgentTicketActionLevel8Test < TestCase
       css: '.content.active .ticketLinks',
       value: ticket1[:title],
     )
+    watch_for_disappear(
+      browser: browser2,
+      css: '.content.active .ticketLinks',
+      value: ticket2[:title],
+    )
 
     reload()
 
@@ -411,7 +502,11 @@ class AgentTicketActionLevel8Test < TestCase
       css: '.content.active .ticketLinks',
       value: ticket1[:title],
     )
-
+    watch_for_disappear(
+      browser: browser2,
+      css: '.content.active .ticketLinks',
+      value: ticket2[:title],
+    )
   end
 
 end

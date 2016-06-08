@@ -1,59 +1,66 @@
-class App.TicketZoomSidebar extends App.ObserverController
+class Edit extends App.ObserverController
   model: 'Ticket'
   observeNot:
     created_at: true
     updated_at: true
 
+  render: (ticket, diff) =>
+    defaults = ticket.attributes()
+    delete defaults.article # ignore article infos
+    taskState = @taskGet('ticket')
+
+    if !_.isEmpty(taskState)
+      defaults = _.extend(defaults, taskState)
+
+    form = new App.ControllerForm(
+      model:    App.Ticket
+      screen:   'edit'
+      handlers: [
+        @ticketFormChanges
+      ]
+      filter:    @formMeta.filter
+      params:    defaults
+      #bookmarkable: true
+    )
+    @html form.html()
+
+    @markForm(true)
+
+    return if @resetBind
+    @resetBind = true
+    @bind('ui::ticket::taskReset', (data) =>
+      return if data.ticket_id.toString() isnt ticket.id.toString()
+      @render(ticket)
+    )
+
+class App.TicketZoomSidebar extends App.ObserverController
+  model: 'Ticket'
+  observe:
+    customer_id: true
+    organization_id: true
+
   render: (ticket) =>
 
     editTicket = (el) =>
-      el.append('<form class="edit"></form>')
-      @editEl = el
+      el.append('<form><fieldset class="edit"></fieldset></form><div class="tags"></div><div class="links"></div>')
 
-      show = (ticket) =>
-        el.find('.edit').html('')
-
-        defaults = ticket.attributes()
-        delete defaults.article # ignore article infos
-        taskState = @taskGet('ticket')
-        modelDiff = App.Utils.formDiff(taskState, defaults)
-
-        if !_.isEmpty(taskState)
-          defaults = _.extend(defaults, taskState)
-
-        new App.ControllerForm(
-          el:       el.find('.edit')
-          model:    App.Ticket
-          screen:   'edit'
-          handlers: [
-            @ticketFormChanges
-          ]
-          filter:    @formMeta.filter
-          params:    defaults
-          #bookmarkable: true
-        )
-        #console.log('Ichanges', modelDiff, taskState, ticket.attributes(), defaults)
-        #@markFormDiff( modelDiff )
-
-      show(ticket)
-      @bind(
-        'ui::ticket::taskReset'
-        (data) ->
-          if data.ticket_id is ticket.id
-            show(ticket)
+      @edit = new Edit(
+        object_id: ticket.id
+        el:        el.find('.edit')
+        taskGet:   @taskGet
+        formMeta:  @formMeta
+        markForm:  @markForm
       )
 
       if !@isRole('Customer')
-        el.append('<div class="tags"></div>')
         @tagWidget = new App.WidgetTag(
-          el:          el.find('.tags')
+          el:          @el.find('.tags')
           object_type: 'Ticket'
           object:      ticket
           tags:        @tags
         )
-        el.append('<div class="links"></div>')
         @linkWidget = new App.WidgetLink(
-          el:          el.find('.links')
+          el:          @el.find('.links')
           object_type: 'Ticket'
           object:      ticket
           links:       @links
@@ -166,7 +173,7 @@ class App.TicketZoomSidebar extends App.ObserverController
           callback: showOrganization
         }
     new App.Sidebar(
-      el:           @el
+      el:           @el.find('.tabsSidebar')
       sidebarState: @sidebarState
       items:        @sidebarItems
     )

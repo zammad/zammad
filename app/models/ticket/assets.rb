@@ -6,16 +6,16 @@ module Ticket::Assets
 get all assets / related models for this ticket
 
   ticket = Ticket.find(123)
-  result = ticket.assets( assets_if_exists )
+  result = ticket.assets(assets_if_exists)
 
 returns
 
   result = {
-    :users => {
-      123  => user_model_123,
-      1234 => user_model_1234,
-    }
-    :tickets => [ ticket_model1 ]
+    users: {
+      123: user_model_123,
+      1234: user_model_1234,
+    },
+    tickets: [ ticket_model1 ]
   }
 
 =end
