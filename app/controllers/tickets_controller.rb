@@ -201,6 +201,18 @@ class TicketsController < ApplicationController
                    .order('created_at DESC')
                    .limit(6)
 
+    # if we do not have open related tickets, search for any tickets
+    if ticket_lists.empty?
+      ticket_lists = Ticket
+                     .where(
+                       customer_id: ticket.customer_id,
+                     )
+                     .where(access_condition)
+                     .where('id != ?', [ ticket.id ])
+                     .order('created_at DESC')
+                     .limit(6)
+    end
+
     # get related assets
     ticket_ids_by_customer = []
     ticket_lists.each {|ticket_list|
