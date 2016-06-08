@@ -215,6 +215,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       return
     else if e.keyCode is 13 # enter
       href = @$('#global-search-result .nav-tab.is-hover').attr('href')
+      return if !href
       @locationExecute(href)
       @emptyAndClose()
       return
