@@ -10,8 +10,8 @@
     <% for item in @list: %>
     <tr data-id="<%= item.id %>" class="js-edit u-clickable">
       <td class="js-name"><%= item.name %></td>
-      <td><%= item.count %></td>
-      <td><a href="#" class="js-delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a></td>
+      <td class="js-search"><a href="#"><%= item.count %></a></td>
+      <td class="js-delete"><a href="#" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a></td>
     </tr>
     <% end %>
   </tbody>

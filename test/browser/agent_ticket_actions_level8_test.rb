@@ -239,6 +239,111 @@ class AgentTicketActionLevel8Test < TestCase
         'tag5' => true,
       }
     )
+
+    # verify changes via admin interface
+    click(
+      browser: browser2,
+      css: 'a[href="#manage"]',
+    )
+    click(
+      browser: browser2,
+      css: 'a[href="#manage/tags"]',
+    )
+    sleep 3
+    execute(
+      browser: browser2,
+      js: "$('#content .js-name:contains(\"tag3\")').click()",
+    )
+    sleep 2
+    set(
+      browser: browser2,
+      css: '.modal [name="name"]',
+      value: 'TAGXX',
+    )
+    click(
+      browser: browser2,
+      css: '.modal .js-submit',
+    )
+    sleep 4
+    ticket_open_by_search(
+      browser: browser2,
+      number:  ticket3[:number],
+    )
+
+    # verify tags
+    tags_verify(
+      tags: {
+        'tag1' => false,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => false,
+        'tag4' => true,
+        'tag5' => true,
+        'TAGXX' => true,
+      }
+    )
+    tags_verify(
+      browser: browser2,
+      tags: {
+        'tag1' => false,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => false,
+        'tag4' => true,
+        'tag5' => true,
+        'TAGXX' => true,
+      }
+    )
+
+    click(
+      browser: browser2,
+      css: 'a[href="#manage"]',
+    )
+    click(
+      browser: browser2,
+      css: 'a[href="#manage/tags"]',
+    )
+    sleep 3
+    execute(
+      browser: browser2,
+      js: "$('#content .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').click()",
+    )
+    sleep 2
+    click(
+      browser: browser2,
+      css: '.modal .js-submit',
+    )
+    sleep 4
+    ticket_open_by_search(
+      browser: browser2,
+      number:  ticket3[:number],
+    )
+
+    # verify tags
+    tags_verify(
+      tags: {
+        'tag1' => false,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => false,
+        'tag4' => true,
+        'tag5' => false,
+        'TAGXX' => true,
+      }
+    )
+    tags_verify(
+      browser: browser2,
+      tags: {
+        'tag1' => false,
+        'tag 2' => true,
+        'tag2' => false,
+        'tag3' => false,
+        'tag4' => true,
+        'tag5' => false,
+        'TAGXX' => true,
+      }
+    )
+
   end
 
   def test_b_tags

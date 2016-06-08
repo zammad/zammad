@@ -17,6 +17,7 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
       history_object: 'Ticket',
       history_attribute: 'tag',
       value_to: record.tag_item.name,
+      created_by_id: record.created_by_id,
     )
   end
 
@@ -32,6 +33,7 @@ class Observer::Tag::TicketHistory < ActiveRecord::Observer
       history_object: 'Ticket',
       history_attribute: 'tag',
       value_to: record.tag_item.name,
+      created_by_id: record.created_by_id,
     )
   end
 end

@@ -1,6 +1,5 @@
 class App.WidgetTag extends App.Controller
   possibleTags: {}
-  shiftHeld: false
   elements:
     '.js-newTagLabel': 'newTagLabel'
     '.js-newTagInput': 'newTagInput'
@@ -11,7 +10,6 @@ class App.WidgetTag extends App.Controller
     'click .js-newTagInput': 'onAddTag'
     'submit form':           'onAddTag'
     'click .js-delete':      'onRemoveTag'
-    'mousedown .js-tag':     'shiftHeldToogle'
     'click .js-tag':         'searchTag'
 
   constructor: ->
@@ -126,23 +124,7 @@ class App.WidgetTag extends App.Controller
         @fetch()
     )
 
-  searchTag: (e) =>
+  searchTag: (e) ->
     e.preventDefault()
     item = $(e.target).text()
-    item = item.replace('"', '')
-    if item.match(/\W/)
-      item = "\"#{item}\""
-    searchAttribute = "tag:#{item}"
-    currentValue = $('#global-search').val()
-    if @shiftHeld && currentValue
-      currentValue += ' AND '
-      currentValue += searchAttribute
-    else
-      currentValue = searchAttribute
-    $('#global-search').val(currentValue)
-    delay = ->
-      $('#global-search').focus()
-    @delay(delay, 20)
-
-  shiftHeldToogle: (e) =>
-    @shiftHeld = e.shiftKey
+    App.GlobalSearchWidget.search(item, 'tag')
