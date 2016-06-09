@@ -1,8 +1,21 @@
 class App.Navigation extends App.ControllerWidgetPermanent
   className: 'navigation vertical'
 
+  elements:
+    '#global-search': 'searchInput'
+    '#global-search-result': 'searchResult'
+    '.search': 'searchContainer'
+
   events:
     'click .js-toggleNotifications': 'toggleNotifications'
+    'click .js-emptySearch': 'emptyAndClose'
+    'dblclick .search-holder .icon-magnifier': 'openExtendedSearch'
+    'submit form.search-holder': 'ignore'
+    'focus #global-search': 'searchFocus'
+    'blur #global-search': 'searchBlur'
+    'keydown #global-search': 'listNavigate'
+    'click #global-search-result': 'andClose'
+    'change .js-menu .js-switch input': 'switch'
 
   constructor: ->
     super
@@ -96,15 +109,14 @@ class App.Navigation extends App.ControllerWidgetPermanent
       activeTab: activeTab
     )
 
-    # bind on switch changes and execute it on controller
-    @$('.js-menu .js-switch input').bind('change', (e) ->
-      val = $(e.target).prop('checked')
-      key = $(e.target).closest('.menu-item').data('key')
-      return if !key
-      worker = App.TaskManager.worker(key)
-      return if !worker
-      worker.switch(val)
-    )
+  #  on switch changes and execute it on controller
+  switch: (e) ->
+    val = $(e.target).prop('checked')
+    key = $(e.target).closest('.menu-item').data('key')
+    return if !key
+    worker = App.TaskManager.worker(key)
+    return if !worker
+    worker.switch(val)
 
   renderPersonal: =>
     @recentViewNavbarItemsRebuild()
@@ -131,22 +143,21 @@ class App.Navigation extends App.ControllerWidgetPermanent
       )
 
   renderResult: (result = []) =>
-    el = @$('#global-search-result')
 
     # remove result if not result exists
     if _.isEmpty(result)
-      @$('.search').removeClass('open')
-      el.html('')
+      @searchContainer.removeClass('open')
+      @searchResult.html('')
       return
 
     # build markup
     html = App.view('navigation/result')(
       result: result
     )
-    el.html(html)
+    @searchResult.html(html)
 
     # show result list
-    @$('.search').addClass('open')
+    @searchContainer.addClass('open')
 
     # start ticket popups
     @ticketPopups()
@@ -175,33 +186,31 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # renderPersonal
     @renderPersonal()
 
-    # observer search box
-    @$('#global-search').bind('focusout', (e) =>
-      # delay to be able to click x
-      update = =>
-        @$('.search').removeClass('focused')
-      @delay(update, 100, 'removeFocused')
-    )
-    @$('#global-search').bind('focusin', (e) =>
-      @query = '' # reset query cache
-      @$('.search').addClass('focused')
-      @anyPopoversDestroy()
-      @searchFunction(0)
-    )
-    @$('form.search').on('submit', (e) ->
-      e.preventDefault()
-    )
-    @$('#global-search').on('keydown', @listNavigate)
-
-    # bind to empty search
-    @$('.empty-search').on('click', =>
-      @emptyAndClose()
-    )
-
     if @notificationWidget
       @notificationWidget.remove()
     @notificationWidget = new App.OnlineNotificationWidget()
     $('#app').append @notificationWidget.el
+
+  ignore: (e) ->
+    e.preventDefault()
+
+  searchFocus: (e) =>
+    @query = '' # reset query cache
+    @searchContainer.addClass('focused')
+    @anyPopoversDestroy()
+    @searchFunction(0)
+
+  searchBlur: (e) =>
+
+    # delay to be able to click x
+    update = =>
+      query = @searchInput.val().trim()
+      if !query
+        @emptyAndClose()
+        return
+      @searchContainer.removeClass('focused')
+
+    @delay(update, 100, 'removeFocused')
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
@@ -218,6 +227,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       return if !href
       @locationExecute(href)
       @emptyAndClose()
+      @searchInput.blur()
       return
 
     # on other keys, show result
@@ -226,10 +236,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
   nudge: (e, position) =>
 
     # get current
-    navigationResult = @$('#global-search-result')
-    current = navigationResult.find('.nav-tab.is-hover')
+    current = @searchResult.find('.nav-tab.is-hover')
     if !current.get(0)
-      navigationResult.find('.nav-tab').first().addClass('is-hover')
+      @searchResult.find('.nav-tab').first().addClass('is-hover')
       return
 
     if position is 1
@@ -249,25 +258,25 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @scrollToIfNeeded(prev, false)
 
   emptyAndClose: =>
-    @$('#global-search').val('').blur()
-    @$('.search').removeClass('filled').removeClass('open')
+    @searchInput.val('')
+    @searchContainer.removeClass('filled').removeClass('open').removeClass('focused')
 
     # remove not needed popovers
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
 
   andClose: =>
-    @$('#global-search').blur()
-    @$('.search').removeClass('open')
+    @searchInput.blur()
+    @searchContainer.removeClass('open')
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
 
   searchFunction: (delay) =>
 
     search = =>
-      query = @$('#global-search').val().trim()
+      query = @searchInput.val().trim()
       return if !query
       return if query is @query
       @query = query
-      @$('.search').toggleClass('filled', !!@query)
+      @searchContainer.toggleClass('filled', !!@query)
 
       # use cache for search result
       if @searchResultCache[@query]
@@ -278,7 +287,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       App.Ajax.request(
         id:    'search'
         type:  'GET'
-        url:   @apiPath + '/search'
+        url:   "#{@apiPath}/search"
         data:
           query: @query
         processData: true,
@@ -312,10 +321,6 @@ class App.Navigation extends App.ControllerWidgetPermanent
           return if diff isnt false && _.isEmpty(diff)
 
           @renderResult(result)
-
-          @$('#global-search-result').on('click', 'a', =>
-            @andClose()
-          )
       )
     @delay(search, 200, 'search')
 
@@ -473,8 +478,16 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @renderPersonal()
     App.RecentView.fetchFull(load)
 
-  toggleNotifications: (event) ->
-    event.stopPropagation()
+  toggleNotifications: (e) ->
+    e.stopPropagation()
     @notificationWidget.toggle()
+
+  openExtendedSearch: =>
+    query = @searchInput.val()
+    @searchInput.val('').blur()
+    if query
+      @navigate("#search/#{encodeURIComponent(query)}")
+      return
+    @navigate('#search')
 
 App.Config.set('navigation', App.Navigation, 'Navigations')
