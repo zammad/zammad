@@ -198,7 +198,6 @@ class App.TicketZoom extends App.Controller
     "#ticket/zoom/#{@ticket_id}"
 
   show: (params) =>
-
     @navupdate(url: '#', type: 'menu')
 
     # set all notifications to seen
@@ -413,8 +412,8 @@ class App.TicketZoom extends App.Controller
     @initDone = true
 
     # if shown was before init rendering, start actions again
-    if @shown
-      @positionPageHeaderStart()
+    return if !@shown
+    @positionPageHeaderStart()
     App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
   scrollToBottom: =>

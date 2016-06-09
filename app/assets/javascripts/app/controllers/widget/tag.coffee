@@ -1,4 +1,6 @@
 class App.WidgetTag extends App.Controller
+  editMode: false
+  pendingRefresh: false
   possibleTags: {}
   elements:
     '.js-newTagLabel': 'newTagLabel'
@@ -18,12 +20,14 @@ class App.WidgetTag extends App.Controller
     @key = "tags::#{@object_type}::#{@object.id}"
 
     if @tags
+      @localTags = _.clone(@tags)
       @render()
       return
 
     @fetch()
 
   fetch: =>
+    @pendingRefresh = false
     @ajax(
       id:    @key
       type:  'GET'
@@ -33,19 +37,22 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id
       processData: true
       success: (data, status, xhr) =>
-        @tags = data.tags
+        @localTags = data.tags
         @render()
     )
 
-  reload: (tags) ->
-    @tags = tags
+  reload: (tags) =>
+    if @editMode
+      @pendingRefresh = true
+      return
+    @localTags = _.clone(tags)
     @render()
 
-  render: ->
-    return if @lastTags && _.isEqual(@lastTags, @tags)
-    @lastTags = @tags
+  render: =>
+    return if @lastLocalTags && _.isEqual(@lastLocalTags, @localTags)
+    @lastLocalTags = _.clone(@localTags)
     @html App.view('widget/tag')(
-      tags: @tags || [],
+      tags: @localTags || [],
     )
 
     source = "#{App.Config.get('api_path')}/tag_search"
@@ -59,21 +66,26 @@ class App.WidgetTag extends App.Controller
           @possibleTags[item.value] = true
     )
 
-  showInput: (e) ->
+  showInput: (e) =>
     e.preventDefault()
     @newTagLabel.addClass('hide')
     @newTagInput.removeClass('hide').focus()
+    @editMode = true
 
-  hideOrAddInput: (e) ->
+  hideOrAddInput: (e) =>
     e.preventDefault()
     @newTagLabel.removeClass('hide')
     @newTagInput.addClass('hide')
     @onAddTag(e)
+    @editMode = false
 
   onAddTag: (e) =>
     e.preventDefault()
     item = @$('[name="new_tag"]').val().trim()
-    return if !item
+    if !item
+      if @pendingRefresh
+        @fetch()
+      return
     @add(item)
 
   add: (items) =>
@@ -82,11 +94,11 @@ class App.WidgetTag extends App.Controller
       @addItem(item)
 
   addItem: (item) =>
-    if _.contains(@tags, item)
+    if _.contains(@localTags, item)
       @render()
       return
     return if App.Config.get('tag_new') is false && !@possibleTags[item]
-    @tags.push item
+    @localTags.push item
     @render()
 
     @ajax(
@@ -97,8 +109,6 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id
         item:   item
       processData: true,
-      success: (data, status, xhr) =>
-        @fetch()
     )
 
   onRemoveTag: (e) =>
@@ -109,7 +119,7 @@ class App.WidgetTag extends App.Controller
 
   remove: (item) =>
 
-    @tags = _.filter(@tags, (tagItem) -> return tagItem if tagItem isnt item)
+    @localTags = _.filter(@localTags, (tagItem) -> return tagItem if tagItem isnt item)
     @render()
 
     @ajax(
@@ -120,8 +130,6 @@ class App.WidgetTag extends App.Controller
         o_id:   @object.id
         item:   item
       processData: true
-      success: (data, status, xhr) =>
-        @fetch()
     )
 
   searchTag: (e) ->
