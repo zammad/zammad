@@ -53,7 +53,7 @@ class TaskbarTaskTest < TestCase
     tasks_close_all()
 
     click(css: 'a[href="#new"]')
-    click(css: 'a[href="#ticket/create"]', wait: 2)
+    click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
       css: '.active .newTicket input[name="title"]',
       value: 'INBOUND TEST#1',
@@ -62,9 +62,10 @@ class TaskbarTaskTest < TestCase
       css: '.active .newTicket [data-name="body"]',
       value: 'INBOUND BODY TEST#1',
     )
+    sleep 2
 
     click(css: 'a[href="#new"]')
-    click(css: 'a[href="#ticket/create"]', wait: 2)
+    click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
       css: '.active .newTicket input[name="title"]',
       value: 'OUTBOUND TEST#1',
@@ -73,7 +74,7 @@ class TaskbarTaskTest < TestCase
       css: '.active .newTicket [data-name="body"]',
       value: 'OUTBOUND BODY TEST#1',
     )
-    sleep 4
+    sleep 2
 
     logout()
     sleep 4

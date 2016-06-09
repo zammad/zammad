@@ -9,9 +9,11 @@ class App.WidgetLink extends App.Controller
 
     # if links are given, do not init fetch
     if @links
+      @localLinks = _.clone(@links)
       @render()
-    else
-      @fetch()
+      return
+
+    @fetch()
 
   fetch: =>
     # fetch item on demand
@@ -25,20 +27,20 @@ class App.WidgetLink extends App.Controller
         link_object_value: @object.id
       processData: true
       success: (data, status, xhr) =>
-        @links = data.links
+        @localLinks = data.links
         App.Collection.loadAssets(data.assets)
         @render()
     )
 
-  reload: (links) ->
-    @links = links
+  reload: (links) =>
+    @localLinks = _.clone(links)
     @render()
 
   render: =>
-    return if @lastLinks && _.isEqual(@lastLinks, @links)
-    @lastLinks = @links
+    return if @lastLocalLinks && _.isEqual(@lastLocalLinks, @localLinks)
+    @lastLocalLinks = _.clone(@localLinks)
     list = {}
-    for item in @links
+    for item in @localLinks
       if !list[ item['link_type'] ]
         list[ item['link_type'] ] = []
 

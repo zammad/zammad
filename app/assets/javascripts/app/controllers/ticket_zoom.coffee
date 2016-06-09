@@ -29,14 +29,14 @@ class App.TicketZoom extends App.Controller
     else
       @overview_id = false
 
-    @key = 'ticket::' + @ticket_id
+    @key = "ticket::#{@ticket_id}"
     cache = App.SessionStorage.get(@key)
     if cache
       @load(cache)
-    update = =>
-      @fetch(@ticket_id, false)
 
     # check if ticket has beed updated every 30 min
+    update = =>
+      @fetch()
     @interval(update, 1800000, 'pull_check')
 
     # fetch new data if triggered
@@ -48,29 +48,46 @@ class App.TicketZoom extends App.Controller
       # check if we already have the request queued
       #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
       update = =>
-        @fetch(@ticket_id, false)
+        @fetch()
       if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-        @delay(update, 500, "ticket-zoom-#{@ticket_id}")
+        @delay(update, 1200, "ticket-zoom-#{@ticket_id}")
     )
 
     # rerender view, e. g. on langauge change
     @bind('ui:rerender', =>
-      @fetch(@ticket_id, true)
+      @fetch(true)
     )
 
-  fetch: (ticket_id, force) ->
+  fetchStart: (force) =>
+    if !force && @fetchIsRunning
+      @fetchIsRunningAgain = true
+      return false
+    if force
+      @fetchIsRunningAgain = false
+    @fetchIsRunning = true
+    true
+
+  fetchDone: =>
+    @fetchIsRunning = false
+    if @fetchIsRunningAgain
+      @fetchIsRunningAgain = false
+      @fetch()
+
+  fetch: (force) =>
     return if !@Session.get()
+    return if !@fetchStart(force)
 
     # get data
     @ajax(
-      id:    "ticket_zoom_#{ticket_id}"
+      id:    "ticket_zoom_#{@ticket_id}"
       type:  'GET'
-      url:   "#{@apiPath}/tickets/#{ticket_id}?all=true"
+      url:   "#{@apiPath}/tickets/#{@ticket_id}?all=true"
       processData: true
       success: (data, status, xhr) =>
+        @fetchDone()
 
         # check if ticket has changed
-        newTicketRaw = data.assets.Ticket[ticket_id]
+        newTicketRaw = data.assets.Ticket[@ticket_id]
         if @ticketUpdatedAtLastCall && !force
 
           # return if ticket hasnt changed
@@ -88,16 +105,19 @@ class App.TicketZoom extends App.Controller
 
         if !@doNotLog
           @doNotLog = 1
-          @recentView('Ticket', ticket_id)
+          @recentView('Ticket', @ticket_id)
 
       error: (xhr) =>
-        @renderDone = false
+        @fetchDone()
+
         statusText = xhr.statusText
         status     = xhr.status
         detail     = xhr.responseText
 
         # ignore if request is aborted
         return if statusText is 'abort'
+
+        @renderDone = false
 
         # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
         if @ticketUpdatedAtLastCall && status is 0
@@ -178,7 +198,6 @@ class App.TicketZoom extends App.Controller
     "#ticket/zoom/#{@ticket_id}"
 
   show: (params) =>
-
     @navupdate(url: '#', type: 'menu')
 
     # set all notifications to seen
@@ -189,9 +208,6 @@ class App.TicketZoom extends App.Controller
       @scrollToBottom()
       return
     @activeState = true
-
-    # start autosave
-    @autosaveStart()
 
     # if ticket is shown the first time
     if !@shown
@@ -205,6 +221,9 @@ class App.TicketZoom extends App.Controller
 
     # observe content header position
     @positionPageHeaderStart()
+
+    # start autosave
+    @autosaveStart()
 
   hide: =>
     @activeState = false
@@ -349,6 +368,8 @@ class App.TicketZoom extends App.Controller
         task_key:     @task_key
         formMeta:     @formMeta
         markForm:     @markForm
+        tags:         @tags
+        links:        @links
       )
 
     # render init content
@@ -391,8 +412,8 @@ class App.TicketZoom extends App.Controller
     @initDone = true
 
     # if shown was before init rendering, start actions again
-    if @shown
-      @positionPageHeaderStart()
+    return if !@shown
+    @positionPageHeaderStart()
     App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
   scrollToBottom: =>
@@ -667,7 +688,7 @@ class App.TicketZoom extends App.Controller
 
         @autosaveStart()
         @muteTask()
-        @fetch(ticket.id, false)
+        @fetch()
 
         # enable form
         @formEnable(e)

@@ -361,7 +361,7 @@ class App.TicketCreate extends App.Controller
     e.preventDefault()
     @navigate '#'
 
-  submit: (e) ->
+  submit: (e) =>
     e.preventDefault()
 
     # get params
@@ -443,49 +443,48 @@ class App.TicketCreate extends App.Controller
         form:   e.target
         errors: errors
       )
+      return
 
     # save ticket, create article
-    else
-
-      # check attachment
-      if article['body']
-        if App.Utils.checkAttachmentReference(article['body'])
-          if @$('.richtext .attachments .attachment').length < 1
-            if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
-              return
-
-      # disable form
-      @formDisable(e)
-      ui = @
-      ticket.save(
-        done: ->
-
-          # notify UI
-          ui.notify
-            type:    'success'
-            msg:     App.i18n.translateInline('Ticket %s created!', @number)
-            link:    "#ticket/zoom/#{@id}"
-            timeout: 4000
-
-          # close ticket create task
-          App.TaskManager.remove(ui.task_key)
-
-          # scroll to top
-          ui.scrollTo()
-
-          # access to group
-          group_ids = _.map(App.Session.get('group_ids'), (id) -> id.toString())
-          if group_ids && _.contains(group_ids, @group_id.toString())
-            ui.navigate "#ticket/zoom/#{@id}"
+    # check attachment
+    if article['body']
+      if App.Utils.checkAttachmentReference(article['body'])
+        if @$('.richtext .attachments .attachment').length < 1
+          if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
             return
 
-          # if not, show start screen
-          ui.navigate '#'
+    # disable form
+    @formDisable(e)
+    ui = @
+    ticket.save(
+      done: ->
 
-        fail: ->
-          ui.log 'save failed!'
-          ui.formEnable(e)
-      )
+        # notify UI
+        ui.notify
+          type:    'success'
+          msg:     App.i18n.translateInline('Ticket %s created!', @number)
+          link:    "#ticket/zoom/#{@id}"
+          timeout: 4000
+
+        # close ticket create task
+        App.TaskManager.remove(ui.task_key)
+
+        # scroll to top
+        ui.scrollTo()
+
+        # access to group
+        group_ids = _.map(App.Session.get('group_ids'), (id) -> id.toString())
+        if group_ids && _.contains(group_ids, @group_id.toString())
+          ui.navigate "#ticket/zoom/#{@id}"
+          return
+
+        # if not, show start screen
+        ui.navigate '#'
+
+      fail: ->
+        ui.log 'save failed!'
+        ui.formEnable(e)
+    )
 
 class Sidebar extends App.Controller
   constructor: ->
