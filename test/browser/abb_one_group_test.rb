@@ -88,9 +88,12 @@ class AgentTicketActionLevel0Test < TestCase
 
     # customer ticket create
     click(css: 'a[href="#new"]')
-    click(css: 'a[href="#customer_ticket_new"]', wait: 5)
+    click(css: 'a[href="#customer_ticket_new"]')
 
-    exists(css: '.newTicket')
+    watch_for(
+      css: '.newTicket',
+      value: 'New Ticket',
+    )
     exists_not(css: '.newTicket select[name="group_id"]')
 
     set(

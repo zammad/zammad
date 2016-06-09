@@ -29,7 +29,6 @@ class FormTest < TestCase
       css: '#content .js-formSetting',
       type: 'off',
     )
-    sleep 2
 
     customer = browser_instance
     location(
@@ -47,7 +46,6 @@ class FormTest < TestCase
       css: '#content .js-formSetting',
       type: 'on',
     )
-    sleep 2
 
     reload(
       browser: customer,
