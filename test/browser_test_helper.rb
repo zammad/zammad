@@ -97,12 +97,14 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_instance_preferences(local_browser)
-    local_browser.manage.window.resize_to(1024, 800)
+    browser_width = ENV['BROWSER_WIDTH'] || 1024
+    browser_height = ENV['BROWSER_HEIGHT'] || 800
+    local_browser.manage.window.resize_to(browser_width, browser_height)
     if ENV['REMOTE_URL'] !~ /saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i
       if @browsers.count == 1
         local_browser.manage.window.move_to(0, 0)
       else
-        local_browser.manage.window.move_to(1024, 0)
+        local_browser.manage.window.move_to(browser_width, 0)
       end
     end
     local_browser.manage.timeouts.implicit_wait = 3 # seconds
@@ -1374,13 +1376,13 @@ wait untill text in selector disabppears
 
     # empty search box by x
     begin
-      instance.find_elements(css: '.search .empty-search')[0].click
+      instance.find_elements(css: '.search .js-emptySearch')[0].click
     rescue
 
       # in issues with ff & selenium, sometimes exeption appears
       # "Element is not currently visible and so may not be interacted with"
       log('empty_search via js')
-      instance.execute_script('$(".search .empty-search").click()')
+      instance.execute_script('$(".search .js-emptySearch").click()')
     end
     sleep 0.5
     text = instance.find_elements(css: '#global-search')[0].attribute('value')
@@ -2720,7 +2722,7 @@ wait untill text in selector disabppears
         if data[:member]
           data[:member].each {|login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
-            sleep 0.5
+            sleep 1
             instance.find_elements(css: 'a[href="#manage/users"]')[0].click
             sleep 3
             element = instance.find_elements(css: '#content [name="search"]')[0]
