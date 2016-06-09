@@ -177,13 +177,13 @@ text
     html_with_fixes = Channel::EmailBuild.html_mail_client_fixes(html_raw)
     assert_not_equal(html_with_fixes, html_raw)
 
-    html_should = '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">some
+    html_should = '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0 0 16px; padding: 8px 12px 8px 12px;">some
 text
 </blockquote>
 
 123
 
-<blockquote type="cite" style="border-left: 2px solid blue; margin: 0px; padding: 8px 12px 8px 12px;">some
+<blockquote type="cite" style="border-left: 2px solid blue; margin: 0 0 16px; padding: 8px 12px 8px 12px;">some
 text
 </blockquote>'
     assert_equal(html_should, html_with_fixes)
