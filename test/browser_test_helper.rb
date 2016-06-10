@@ -469,6 +469,27 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  modal_disappear(
+    browser:  browser1,
+  )
+
+=end
+
+  def modal_disappear(params = {})
+    switch_window_focus(params)
+    log('modal_disappear', params)
+
+    instance = params[:browser] || @browser
+
+    watch_for_disappear(
+      browser: instance,
+      css:     '.modal',
+      timeout: 6,
+    )
+  end
+
+=begin
+
   execute(
     browser: browser1,
     js:      '.some_class',
@@ -1069,6 +1090,7 @@ class TestCase < Test::Unit::TestCase
     if params[:discard_changes]
       modal_ready()
       instance.find_elements(css: '.modal button.js-submit')[0].click
+      modal_disappear(browser: instance)
     end
 
     true
@@ -1510,6 +1532,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -1610,6 +1633,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -1949,10 +1973,7 @@ wait untill text in selector disabppears
 
       click(browser: instance, css: '.modal .js-submit')
 
-      watch_for_disappear(
-        browser: instance,
-        css: '.modal',
-      )
+      modal_disappear(browser: instance)
 
       watch_for(
         browser: instance,
@@ -2465,7 +2486,7 @@ wait untill text in selector disabppears
       css:     '.modal input[name=role_ids][value=3]',
     )
     instance.find_elements(css: '.modal button.js-submit')[0].click
-    sleep 3.5
+    modal_disappear(browser: instance)
     set(
       browser: instance,
       css: '.content .js-search',
@@ -2523,6 +2544,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(data[:first_response_time_in_text])
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..8).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2584,6 +2606,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(data[:content])
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..8).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2647,6 +2670,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(data[:body])
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2713,6 +2737,7 @@ wait untill text in selector disabppears
       dropdown.select_by(:text, data[:signature])
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2737,7 +2762,8 @@ wait untill text in selector disabppears
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
             instance.find_elements(css: '.modal button.js-submit')[0].click
-            sleep 3
+            sleep 5
+            modal_disappear(browser: instance)
           }
         end
       end
@@ -2932,8 +2958,8 @@ wait untill text in selector disabppears
       click(
         browser: instance,
         css:  '.modal .js-close',
-        mute_log: true,
       )
+      modal_disappear(browser: instance)
       return
     end
 
