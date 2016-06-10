@@ -453,7 +453,7 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   modal_ready(
-    browser:  browser1,
+    browser: browser1,
   )
 
 =end
@@ -464,13 +464,13 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    sleep 2
+    sleep 3
   end
 
 =begin
 
   modal_disappear(
-    browser:  browser1,
+    browser: browser1,
   )
 
 =end
@@ -1088,7 +1088,7 @@ class TestCase < Test::Unit::TestCase
 
     # accept task close warning
     if params[:discard_changes]
-      modal_ready()
+      modal_ready(browser: instance)
       instance.find_elements(css: '.modal button.js-submit')[0].click
       modal_disappear(browser: instance)
     end
@@ -1485,7 +1485,7 @@ wait untill text in selector disabppears
       css:  '#content a[data-type="new"]',
       mute_log: true,
     )
-    sleep 2
+    modal_ready(browser: instance)
     if data[:name]
       set(
         browser:  instance,
@@ -2464,8 +2464,7 @@ wait untill text in selector disabppears
       css:  'a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=firstname]')[0]
     element.clear
     element.send_keys(data[:firstname])
@@ -2535,8 +2534,7 @@ wait untill text in selector disabppears
       css:  'a.js-new',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2594,8 +2592,7 @@ wait untill text in selector disabppears
       css:  'a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2661,8 +2658,7 @@ wait untill text in selector disabppears
       css:  '#content #c-signature a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2722,8 +2718,7 @@ wait untill text in selector disabppears
       css:  'a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2743,7 +2738,7 @@ wait untill text in selector disabppears
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'group created')
-        modal_ready # wait until modal has gone
+        modal_disappear(browser: instance) # wait until modal has gone
 
         # add member
         if data[:member]
@@ -2762,7 +2757,6 @@ wait untill text in selector disabppears
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
             instance.find_elements(css: '.modal button.js-submit')[0].click
-            sleep 5
             modal_disappear(browser: instance)
           }
         end
@@ -2894,7 +2888,7 @@ wait untill text in selector disabppears
       css:  '#content .js-new',
       mute_log: true,
     )
-    modal_ready
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
