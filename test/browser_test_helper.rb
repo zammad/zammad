@@ -295,6 +295,32 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  notify_close(
+    browser: browser1,
+    optional: true,
+  )
+
+=end
+
+  def notify_close(params = {})
+    switch_window_focus(params)
+    log('notify_close', params)
+
+    instance = params[:browser] || @browser
+
+    notify = instance.find_elements(css: '.noty_inline_layout_container.i-am-new')[0]
+    if !params[:optional] && !notify
+      screenshot(browser: instance, comment: 'no_notify')
+      raise 'Unable to closes notify, no notify found!'
+    end
+    return if !notify
+    notify.click
+    assert(true, 'notify closed')
+    sleep 1
+  end
+
+=begin
+
   location(
     browser: browser1,
     url:     'http://someurl',
