@@ -143,6 +143,17 @@ test:integration:user_agent:
     - ruby -I test/ test/integration/user_agent_test.rb
     - rake db:drop
 
+test:integration:user_device:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/user_device_controller_test.rb
+    - rake db:drop
+
 test:integration:slack:
   stage: test
   tags:
