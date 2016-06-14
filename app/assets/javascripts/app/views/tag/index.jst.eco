@@ -16,7 +16,7 @@
     <p>⚠ <%- @T('Allow users to add new tags.') %></p>
   </div>
 
-  <div class="settings-entry">
+  <div class="settings-entry vertical">
     <h2><%- @T('Manage Tags') %></h2>
     <form class="horizontal form-group formGroup--halfSize js-create">
       <div class="form-item">
