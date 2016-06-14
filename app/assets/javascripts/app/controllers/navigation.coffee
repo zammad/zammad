@@ -10,7 +10,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     'click .js-toggleNotifications': 'toggleNotifications'
     'click .js-emptySearch': 'emptyAndClose'
     'dblclick .search-holder .icon-magnifier': 'openExtendedSearch'
-    'submit form.search-holder': 'ignore'
+    'submit form.search-holder': 'preventDefault'
     'focus #global-search': 'searchFocus'
     'blur #global-search': 'searchBlur'
     'keydown #global-search': 'listNavigate'
@@ -191,9 +191,6 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @notificationWidget = new App.OnlineNotificationWidget()
     $('#app').append @notificationWidget.el
 
-  ignore: (e) ->
-    e.preventDefault()
-
   searchFocus: (e) =>
     @query = '' # reset query cache
     @searchContainer.addClass('focused')
@@ -322,7 +319,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
           @renderResult(result)
       )
-    @delay(search, 200, 'search')
+    @delay(search, delay, 'search')
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)
