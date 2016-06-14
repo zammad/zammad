@@ -30,6 +30,7 @@ class ApplicationModel < ActiveRecord::Base
 
   after_create  :search_index_update
   after_update  :search_index_update
+  after_touch   :search_index_update
   after_destroy :search_index_destroy
 
   before_destroy :recent_view_destroy
