@@ -4,7 +4,6 @@
   <input type="text" name="ticket_number" value="" class="span2" required/>
   <%- @T('as') %>
   <select name="link_type" class="span2" required>
-    <option value="">-</option>
     <option value="normal"><%- @T('Normal') %></option>
     <option value="child"><%- @T('Child') %></option>
     <option value="parent"><%- @T('Parent') %></option>
