@@ -3132,6 +3132,7 @@ wait untill text in selector disabppears
       if instance
         logs = instance.manage.logs.get(:browser)
         logs.each {|log|
+          next if log.level == 'WARNING' && log.message =~ /Declaration\sdropped./ # ignore ff css warnings
           time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
           puts "#{time}/#{log.level}: #{log.message}"
         }
