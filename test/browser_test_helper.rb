@@ -3127,13 +3127,17 @@ wait untill text in selector disabppears
   end
 
   def log(method, params = {})
-    instance = params[:browser] || @browser
-    if instance
-      logs = instance.manage.logs.get(:browser)
-      logs.each {|log|
-        time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
-        puts "#{time}/#{log.level}: #{log.message}"
-      }
+    begin
+      instance = params[:browser] || @browser
+      if instance
+        logs = instance.manage.logs.get(:browser)
+        logs.each {|log|
+          time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
+          puts "#{time}/#{log.level}: #{log.message}"
+        }
+      end
+    rescue
+      # faild to get logs
     end
     return if !@@debug
     return if params[:mute_log]
