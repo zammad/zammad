@@ -17,12 +17,14 @@ class TestCase < Test::Unit::TestCase
       browser_profile['intl.locale.matchOS']      = false
       browser_profile['intl.accept_languages']    = 'en-US'
       browser_profile['general.useragent.locale'] = 'en-US'
+      browser_profile['loggingPref']              = { browser: :all }
     elsif browser == 'chrome'
 
       # profile are only working on remote selenium
       if ENV['REMOTE_URL']
         browser_profile = Selenium::WebDriver::Chrome::Profile.new
         browser_profile['intl.accept_languages'] = 'en'
+        browser_profile['loggingPref']           = { browser: :all }
       end
     end
     browser_profile
@@ -148,9 +150,6 @@ class TestCase < Test::Unit::TestCase
     if params[:url]
       instance.get(params[:url])
     end
-
-    # submit logs anyway
-    instance.execute_script('App.Track.force()')
 
     element = instance.find_elements(css: '#login input[name="username"]')[0]
     if !element
@@ -297,7 +296,7 @@ class TestCase < Test::Unit::TestCase
 
   notify_close(
     browser: browser1,
-    optional: true,
+    optional: false,
   )
 
 =end
@@ -3128,6 +3127,14 @@ wait untill text in selector disabppears
   end
 
   def log(method, params = {})
+    instance = params[:browser] || @browser
+    if instance
+      logs = instance.manage.logs.get(:browser)
+      logs.each {|log|
+        time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
+        puts "#{time}/#{log.level}: #{log.message}"
+      }
+    end
     return if !@@debug
     return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"
