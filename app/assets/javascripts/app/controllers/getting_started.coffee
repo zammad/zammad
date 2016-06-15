@@ -110,7 +110,7 @@ class AutoWizard extends App.WizardFullScreen
         delay = =>
           App.Auth.loginCheck()
           @navigate '#'
-        @delay(delay, 800)
+        @delay(delay, 1200)
         return
     )
 
