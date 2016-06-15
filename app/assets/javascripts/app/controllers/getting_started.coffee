@@ -107,8 +107,10 @@ class AutoWizard extends App.WizardFullScreen
           return
 
         # login check / get session user
-        App.Auth.loginCheck()
-        @navigate '#'
+        delay = =>
+          App.Auth.loginCheck()
+          @navigate '#'
+        @delay(delay, 800)
         return
     )
 

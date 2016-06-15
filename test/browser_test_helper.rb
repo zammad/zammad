@@ -151,6 +151,9 @@ class TestCase < Test::Unit::TestCase
       instance.get(params[:url])
     end
 
+    # submit logs anyway
+    instance.execute_script('App.Track.force()')
+
     element = instance.find_elements(css: '#login input[name="username"]')[0]
     if !element
 
