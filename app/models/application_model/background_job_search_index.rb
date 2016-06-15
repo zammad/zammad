@@ -6,6 +6,11 @@ class ApplicationModel::BackgroundJobSearchIndex
   end
 
   def perform
-    Object.const_get(@object).find(@o_id).search_index_update_backend
+    record = Object.const_get(@object).lookup(id: @o_id)
+    if !record
+      Rails.logger.info "Can't index #{@object}.find(#{@o_id}), no such record found"
+      return
+    end
+    record.search_index_update_backend
   end
 end

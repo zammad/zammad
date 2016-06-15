@@ -54,7 +54,6 @@ class App.OnlineNotificationWidget extends App.Controller
   release: ->
     $(window).off 'click.notifications'
     $(window).off 'keydown.notifications'
-    App.OnlineNotification.unsubscribe(@subscribeId)
     super
 
   access: ->

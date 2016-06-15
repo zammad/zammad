@@ -41,6 +41,9 @@ class App.Controller extends Spine.Controller
           window.history.replaceState(null, null, oldLocation)
     super location
 
+  preventDefault: (e) ->
+    e.preventDefault()
+
   bind: (event, callback) =>
     App.Event.bind(
       event

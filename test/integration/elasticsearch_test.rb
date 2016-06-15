@@ -162,7 +162,12 @@ class ElasticsearchTest < ActiveSupport::TestCase
       preferences: {},
       created_by_id: 1,
     )
-
+    Tag.tag_add(
+      object: 'Ticket',
+      o_id: ticket1.id,
+      item: 'someTagA',
+      created_by_id: 1,
+    )
     sleep 1
 
     ticket2 = Ticket.create(
@@ -188,7 +193,12 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-
+    Tag.tag_add(
+      object: 'Ticket',
+      o_id: ticket2.id,
+      item: 'someTagB',
+      created_by_id: 1,
+    )
     sleep 1
 
     ticket3 = Ticket.create(
@@ -217,7 +227,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # execute background jobs
     Scheduler.worker(true)
 
-    sleep 6
+    sleep 4
 
     # search as agent
 
@@ -325,6 +335,66 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket3.id)
+
+    # search for tags
+    result = Ticket.search(
+      current_user: agent,
+      query: 'tag:someTagA',
+      limit: 15,
+    )
+    assert(result[0], 'record 1')
+    assert(!result[1], 'record 1')
+    assert_equal(result[0].id, ticket1.id)
+
+    result = Ticket.search(
+      current_user: agent,
+      query: 'tag:someTagB',
+      limit: 15,
+    )
+    assert(result[0], 'record 2')
+    assert(!result[1], 'record 2')
+    assert_equal(result[0].id, ticket2.id)
+
+    # rename tag (e. g. via admin interface)
+    tag_item = Tag::Item.lookup(name: 'someTagA')
+    Tag::Item.rename(
+      id: tag_item.id,
+      name: 'someTagC',
+      updated_by_id: 1,
+    )
+
+    # execute background jobs
+    Scheduler.worker(true)
+
+    sleep 4
+
+    # search for tags
+    result = Ticket.search(
+      current_user: agent,
+      query: 'tag:someTagA',
+      limit: 15,
+    )
+    assert(!result[0], 'record 1')
+    assert(!result[1], 'record 1')
+
+    result = Ticket.search(
+      current_user: agent,
+      query: 'tag:someTagB',
+      limit: 15,
+    )
+    assert(result[0], 'record 2')
+    assert(!result[1], 'record 2')
+    assert_equal(result[0].id, ticket2.id)
+
+    result = Ticket.search(
+      current_user: agent,
+      query: 'tag:someTagC',
+      limit: 15,
+    )
+    assert(result[0], 'record 1')
+    assert(!result[1], 'record 1')
+    assert_equal(result[0].id, ticket1.id)
+
   end
 
   # check users and search it

@@ -49,6 +49,7 @@ class TranslationTest < TestCase
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/translation"]')
 
+    notify_close(optional: true) # to be not in click area
     set(
       css: '#content input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',

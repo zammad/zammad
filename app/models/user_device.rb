@@ -193,6 +193,8 @@ send user notification about new device or new location for device
   def notification_send(template)
     user = User.find(user_id)
 
+    Rails.logger.debug "Send notification (#{template}) to: #{user.email}"
+
     NotificationFactory::Mailer.notification(
       template: template,
       user: user,

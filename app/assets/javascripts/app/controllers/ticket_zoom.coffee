@@ -417,6 +417,17 @@ class App.TicketZoom extends App.Controller
     App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
   scrollToBottom: =>
+
+    # because of .ticketZoom { min-: 101% } (force to show scrollbar to set layout correctly),
+    # we need to check if we need to really scroll bottom, in case of content isn't really 100%,
+    # just return (otherwise just a part of movable header is shown down)
+    realContentHeight = 0
+    realContentHeight += @$('.ticketZoom-controls').height()
+    realContentHeight += @$('.ticketZoom-header').height()
+    realContentHeight += @$('.ticket-article').height()
+    realContentHeight += @$('.article-new').height()
+    viewableContentHeight = @$('.main').height()
+    return if viewableContentHeight > realContentHeight
     @main.scrollTop( @main.prop('scrollHeight') )
 
   autosaveStop: =>

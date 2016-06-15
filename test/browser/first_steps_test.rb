@@ -115,7 +115,6 @@ class FirstStepsTest < TestCase
       css: '#content .js-formSetting',
       type: 'on',
     )
-    sleep 2
     click(css: '#navigation a[href="#dashboard"]')
     hit = false
     (1..38).each {

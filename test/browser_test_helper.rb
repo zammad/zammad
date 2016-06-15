@@ -17,12 +17,14 @@ class TestCase < Test::Unit::TestCase
       browser_profile['intl.locale.matchOS']      = false
       browser_profile['intl.accept_languages']    = 'en-US'
       browser_profile['general.useragent.locale'] = 'en-US'
+      browser_profile['loggingPref']              = { browser: :all }
     elsif browser == 'chrome'
 
       # profile are only working on remote selenium
       if ENV['REMOTE_URL']
         browser_profile = Selenium::WebDriver::Chrome::Profile.new
         browser_profile['intl.accept_languages'] = 'en'
+        browser_profile['loggingPref']           = { browser: :all }
       end
     end
     browser_profile
@@ -97,12 +99,14 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_instance_preferences(local_browser)
-    local_browser.manage.window.resize_to(1024, 800)
+    browser_width = ENV['BROWSER_WIDTH'] || 1024
+    browser_height = ENV['BROWSER_HEIGHT'] || 800
+    local_browser.manage.window.resize_to(browser_width, browser_height)
     if ENV['REMOTE_URL'] !~ /saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i
       if @browsers.count == 1
         local_browser.manage.window.move_to(0, 0)
       else
-        local_browser.manage.window.move_to(1024, 0)
+        local_browser.manage.window.move_to(browser_width, 0)
       end
     end
     local_browser.manage.timeouts.implicit_wait = 3 # seconds
@@ -146,9 +150,6 @@ class TestCase < Test::Unit::TestCase
     if params[:url]
       instance.get(params[:url])
     end
-
-    # submit logs anyway
-    instance.execute_script('App.Track.force()')
 
     element = instance.find_elements(css: '#login input[name="username"]')[0]
     if !element
@@ -288,6 +289,32 @@ class TestCase < Test::Unit::TestCase
     return if !clues
     instance.execute_script("$('.js-modal--clue .js-close').click()")
     assert(true, 'clues closed')
+    sleep 1
+  end
+
+=begin
+
+  notify_close(
+    browser: browser1,
+    optional: false,
+  )
+
+=end
+
+  def notify_close(params = {})
+    switch_window_focus(params)
+    log('notify_close', params)
+
+    instance = params[:browser] || @browser
+
+    notify = instance.find_elements(css: '.noty_inline_layout_container.i-am-new')[0]
+    if !params[:optional] && !notify
+      screenshot(browser: instance, comment: 'no_notify')
+      raise 'Unable to closes notify, no notify found!'
+    end
+    return if !notify
+    notify.click
+    assert(true, 'notify closed')
     sleep 1
   end
 
@@ -451,7 +478,7 @@ class TestCase < Test::Unit::TestCase
 =begin
 
   modal_ready(
-    browser:  browser1,
+    browser: browser1,
   )
 
 =end
@@ -462,7 +489,28 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    sleep 2
+    sleep 3
+  end
+
+=begin
+
+  modal_disappear(
+    browser: browser1,
+  )
+
+=end
+
+  def modal_disappear(params = {})
+    switch_window_focus(params)
+    log('modal_disappear', params)
+
+    instance = params[:browser] || @browser
+
+    watch_for_disappear(
+      browser: instance,
+      css:     '.modal',
+      timeout: 6,
+    )
   end
 
 =begin
@@ -647,9 +695,11 @@ class TestCase < Test::Unit::TestCase
     if !checked
       if params[:type] == 'on'
         instance.find_elements(css: "#{params[:css]} label")[0].click
+        sleep 2
       end
     elsif params[:type] == 'off'
       instance.find_elements(css: "#{params[:css]} label")[0].click
+      sleep 2
     end
   end
 
@@ -1063,8 +1113,9 @@ class TestCase < Test::Unit::TestCase
 
     # accept task close warning
     if params[:discard_changes]
-      modal_ready()
+      modal_ready(browser: instance)
       instance.find_elements(css: '.modal button.js-submit')[0].click
+      modal_disappear(browser: instance)
     end
 
     true
@@ -1374,13 +1425,13 @@ wait untill text in selector disabppears
 
     # empty search box by x
     begin
-      instance.find_elements(css: '.search .empty-search')[0].click
+      instance.find_elements(css: '.search .js-emptySearch')[0].click
     rescue
 
       # in issues with ff & selenium, sometimes exeption appears
       # "Element is not currently visible and so may not be interacted with"
       log('empty_search via js')
-      instance.execute_script('$(".search .empty-search").click()')
+      instance.execute_script('$(".search .js-emptySearch").click()')
     end
     sleep 0.5
     text = instance.find_elements(css: '#global-search')[0].attribute('value')
@@ -1459,7 +1510,7 @@ wait untill text in selector disabppears
       css:  '#content a[data-type="new"]',
       mute_log: true,
     )
-    sleep 2
+    modal_ready(browser: instance)
     if data[:name]
       set(
         browser:  instance,
@@ -1506,6 +1557,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -1606,6 +1658,7 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -1945,10 +1998,7 @@ wait untill text in selector disabppears
 
       click(browser: instance, css: '.modal .js-submit')
 
-      watch_for_disappear(
-        browser: instance,
-        css: '.modal',
-      )
+      modal_disappear(browser: instance)
 
       watch_for(
         browser: instance,
@@ -2439,8 +2489,7 @@ wait untill text in selector disabppears
       css:  'a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=firstname]')[0]
     element.clear
     element.send_keys(data[:firstname])
@@ -2461,7 +2510,7 @@ wait untill text in selector disabppears
       css:     '.modal input[name=role_ids][value=3]',
     )
     instance.find_elements(css: '.modal button.js-submit')[0].click
-    sleep 3.5
+    modal_disappear(browser: instance)
     set(
       browser: instance,
       css: '.content .js-search',
@@ -2510,8 +2559,7 @@ wait untill text in selector disabppears
       css:  'a.js-new',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2519,6 +2567,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(data[:first_response_time_in_text])
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..8).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2568,8 +2617,7 @@ wait untill text in selector disabppears
       css:  'a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2580,6 +2628,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(data[:content])
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..8).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2634,8 +2683,7 @@ wait untill text in selector disabppears
       css:  '#content #c-signature a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2643,6 +2691,7 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(data[:body])
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
@@ -2694,8 +2743,7 @@ wait untill text in selector disabppears
       css:  'a[data-type="new"]',
       mute_log: true,
     )
-
-    sleep 2
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2709,18 +2757,19 @@ wait untill text in selector disabppears
       dropdown.select_by(:text, data[:signature])
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
     (1..12).each {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
         assert(true, 'group created')
-        modal_ready # wait until modal has gone
+        modal_disappear(browser: instance) # wait until modal has gone
 
         # add member
         if data[:member]
           data[:member].each {|login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
-            sleep 0.5
+            sleep 1
             instance.find_elements(css: 'a[href="#manage/users"]')[0].click
             sleep 3
             element = instance.find_elements(css: '#content [name="search"]')[0]
@@ -2733,7 +2782,7 @@ wait untill text in selector disabppears
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
             instance.find_elements(css: '.modal button.js-submit')[0].click
-            sleep 3
+            modal_disappear(browser: instance)
           }
         end
       end
@@ -2864,7 +2913,7 @@ wait untill text in selector disabppears
       css:  '#content .js-new',
       mute_log: true,
     )
-    modal_ready
+    modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
@@ -2928,8 +2977,8 @@ wait untill text in selector disabppears
       click(
         browser: instance,
         css:  '.modal .js-close',
-        mute_log: true,
       )
+      modal_disappear(browser: instance)
       return
     end
 
@@ -3078,6 +3127,18 @@ wait untill text in selector disabppears
   end
 
   def log(method, params = {})
+    begin
+      instance = params[:browser] || @browser
+      if instance
+        logs = instance.manage.logs.get(:browser)
+        logs.each {|log|
+          time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
+          puts "#{time}/#{log.level}: #{log.message}"
+        }
+      end
+    rescue
+      # faild to get logs
+    end
     return if !@@debug
     return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"

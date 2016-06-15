@@ -26,11 +26,14 @@ set new app version and if browser reload is required
 
 send also reload type to clients
 
+  AppVersion.set(true, 'app_version')
+  AppVersion.set(true, 'restart_manual')
   AppVersion.set(true, 'restart_auto')
+  AppVersion.set(true, 'config_changed')
 
 =end
 
-  def self.set(reload_required = false, type = false)
+  def self.set(reload_required = false, type = 'app_version')
     return false if !Setting.find_by(name: 'app_version')
     version = "#{Time.zone.now.strftime('%Y%m%d%H%M%S')}:#{reload_required}"
     Setting.set('app_version', version)

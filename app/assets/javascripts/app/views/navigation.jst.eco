@@ -1,24 +1,19 @@
-<form class="search">
-  <div class="search-holder">
+<div class="search">
+  <form class="search-holder">
     <input id="global-search" type="search" autocomplete="off">
     <%- @Icon('magnifier') %>
-    <div class="empty-search">
+    <div class="empty-search js-emptySearch">
       <%- @Icon('diagonal-cross') %>
     </div>
-  </div>
+  </form>
   <div class="logo js-toggleNotifications">
     <%- @Icon('logo') %>
     <div class="activity-counter js-notificationsCounter"></div>
   </div>
   <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
-</form>
-
+</div>
 <div class="menu js-menu"></div>
-
 <div class="tasks tasks-navigation"></div>
-
 <% if !_.isEmpty(@user): %>
-  <!--<a href="#bell" class="glyphicon glyphicon-bell"></a>-->
-
   <ul class="user-menu navbar-items-personal"></ul>
 <% end %>
