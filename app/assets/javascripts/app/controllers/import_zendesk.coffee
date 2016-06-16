@@ -23,26 +23,26 @@ class Index extends App.ControllerContent
     # set title
     @title 'Import'
 
+    # redirect to login if master user already exists
+    if @Config.get('system_init_done')
+      @navigate '#login'
+      return
+
     @fetch()
 
   fetch: ->
 
     # get data
     @ajax(
-      id:          'getting_started',
-      type:        'GET',
-      url:         @apiPath + '/getting_started',
-      processData: true,
+      id:          'getting_started'
+      type:        'GET'
+      url:         "#{@apiPath}/getting_started"
+      processData: true
       success:     (data, status, xhr) =>
-
-        # redirect to login if master user already exists
-        if @Config.get('system_init_done')
-          @navigate '#login'
-          return
 
         # check if import is active
         if data.import_mode == true && data.import_backend != 'zendesk'
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # render page
@@ -63,11 +63,11 @@ class Index extends App.ControllerContent
     # get data
     callback = =>
       @ajax(
-        id:          'import_zendesk_url',
-        type:        'POST',
-        url:         @apiPath + '/import/zendesk/url_check',
+        id:          'import_zendesk_url'
+        type:        'POST'
+        url:         "#{@apiPath}/import/zendesk/url_check"
         data:        JSON.stringify(url: @zendeskUrl.val())
-        processData: true,
+        processData: true
         success:     (data, status, xhr) =>
 
           # validate form
@@ -78,7 +78,7 @@ class Index extends App.ControllerContent
             @nextEnterCredentials.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @linkErrorMessage.text( data.message_human || data.message )
+            @linkErrorMessage.text( data.message_human || data.message)
             @nextEnterCredentials.addClass('hide')
 
       )
@@ -91,11 +91,11 @@ class Index extends App.ControllerContent
     # get data
     callback = =>
       @ajax(
-        id:          'import_zendesk_api_token',
-        type:        'POST',
-        url:         @apiPath + '/import/zendesk/credentials_check',
+        id:          'import_zendesk_api_token'
+        type:        'POST'
+        url:         "#{@apiPath}/import/zendesk/credentials_check"
         data:        JSON.stringify(username: @zendeskEmail.val(), token: @zendeskApiToken.val())
-        processData: true,
+        processData: true
         success:     (data, status, xhr) =>
 
           # validate form
@@ -106,11 +106,11 @@ class Index extends App.ControllerContent
             @nextStartMigration.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @apiTokenErrorMessage.text( data.message_human || data.message )
+            @apiTokenErrorMessage.text(data.message_human || data.message)
             @nextStartMigration.addClass('hide')
 
       )
-    @delay( callback, 700, 'import_zendesk_api_token' )
+    @delay(callback, 700, 'import_zendesk_api_token')
 
   showCredentials: (e) =>
     e.preventDefault()
@@ -129,25 +129,25 @@ class Index extends App.ControllerContent
     e.preventDefault()
     @showImportState()
     @ajax(
-      id:          'import_start',
-      type:        'POST',
-      url:         @apiPath + '/import/zendesk/import_start',
-      processData: true,
+      id:          'import_start'
+      type:        'POST'
+      url:         "#{@apiPath}/import/zendesk/import_start"
+      processData: true
       success:     (data, status, xhr) =>
 
         # validate form
         console.log(data)
         if data.result is 'ok'
-          @delay( @updateMigration, 3000 )
+          @delay(@updateMigration, 3000)
     )
 
   updateMigration: =>
     @showImportState()
     @ajax(
-      id:          'import_status',
-      type:        'GET',
-      url:         @apiPath + '/import/zendesk/import_status',
-      processData: true,
+      id:          'import_status'
+      type:        'GET'
+      url:         "#{@apiPath}/import/zendesk/import_status"
+      processData: true
       success:     (data, status, xhr) =>
 
         if data.result is 'import_done'
@@ -173,13 +173,13 @@ class Index extends App.ControllerContent
               element.addClass('is-done')
             else
               element.removeClass('is-done')
-        @delay( @updateMigration, 5000 )
+        @delay(@updateMigration, 5000)
     )
 
-App.Config.set( 'import/zendesk', Index, 'Routes' )
-App.Config.set( 'zendesk', {
+App.Config.set('import/zendesk', Index, 'Routes')
+App.Config.set('zendesk', {
   title: 'Zendesk'
   name:  'Zendesk'
   class: 'js-zendesk'
   url:   '#import/zendesk'
-}, 'ImportPlugins' )
+}, 'ImportPlugins')

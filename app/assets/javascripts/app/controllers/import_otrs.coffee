@@ -16,26 +16,26 @@ class Index extends App.ControllerContent
     # set title
     @title 'Import'
 
+    # redirect to login if master user already exists
+    if @Config.get('system_init_done')
+      @navigate '#login'
+      return
+
     @fetch()
 
   fetch: ->
 
     # get data
     @ajax(
-      id:          'getting_started',
-      type:        'GET',
-      url:         @apiPath + '/getting_started',
-      processData: true,
+      id:          'getting_started'
+      type:        'GET'
+      url:         "#{@apiPath}/getting_started"
+      processData: true
       success:     (data, status, xhr) =>
-
-        # redirect to login if master user already exists
-        if @Config.get('system_init_done')
-          @navigate '#login'
-          return
 
         # check if import is active
         if data.import_mode == true && data.import_backend != 'otrs'
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # render page
@@ -71,11 +71,11 @@ class Index extends App.ControllerContent
     # get data
     callback = =>
       @ajax(
-        id:          'import_otrs_url',
-        type:        'POST',
-        url:         @apiPath + '/import/otrs/url_check',
+        id:          'import_otrs_url'
+        type:        'POST'
+        url:         "#{@apiPath}/import/otrs/url_check"
         data:        JSON.stringify(url: url)
-        processData: true,
+        processData: true
         success:     (data, status, xhr) =>
 
           # validate form
@@ -85,7 +85,7 @@ class Index extends App.ControllerContent
             @nextStartMigration.removeClass('hide')
           else
             @urlStatus.attr('data-state', 'error')
-            @linkErrorMessage.text( data.message_human || data.message )
+            @linkErrorMessage.text(data.message_human || data.message)
             @nextStartMigration.addClass('hide')
 
       )
@@ -95,23 +95,22 @@ class Index extends App.ControllerContent
     e.preventDefault()
     @showImportState()
     @ajax(
-      id:          'import_start',
-      type:        'POST',
-      url:         @apiPath + '/import/otrs/import_start',
-      processData: true,
+      id:          'import_start'
+      type:        'POST'
+      url:         "#{@apiPath}/import/otrs/import_start"
+      processData: true
       success:     (data, status, xhr) =>
         if data.result is 'ok'
           @delay(@updateMigration, 3000)
     )
 
-
   updateMigration: =>
     @showImportState()
     @ajax(
-      id:          'import_status',
-      type:        'GET',
-      url:         @apiPath + '/import/otrs/import_status',
-      processData: true,
+      id:          'import_status'
+      type:        'GET'
+      url:         "#{@apiPath}/import/otrs/import_status"
+      processData: true
       success:     (data, status, xhr) =>
 
         if data.result is 'import_done'
@@ -128,11 +127,11 @@ class Index extends App.ControllerContent
           for key, item of data.data
             if item.done > item.total
               item.done = item.total
-            element = @$('.js-' + key.toLowerCase() )
+            element = @$('.js-' + key.toLowerCase())
             element.find('.js-done').text(item.done)
             element.find('.js-total').text(item.total)
-            element.find('progress').attr('max', item.total )
-            element.find('progress').attr('value', item.done )
+            element.find('progress').attr('max', item.total)
+            element.find('progress').attr('value', item.done)
             if item.total <= item.done
               element.addClass('is-done')
             else
@@ -140,11 +139,11 @@ class Index extends App.ControllerContent
         @delay(@updateMigration, 6500)
     )
 
-App.Config.set( 'import/otrs', Index, 'Routes' )
-App.Config.set( 'otrs', {
+App.Config.set('import/otrs', Index, 'Routes')
+App.Config.set('otrs', {
   image: 'otrs-logo.png'
   title: 'OTRS'
   name:  'OTRS'
   class: 'js-otrs'
   url:   '#import/otrs'
-}, 'ImportPlugins' )
+}, 'ImportPlugins')
