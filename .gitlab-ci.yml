@@ -75,8 +75,7 @@ test:integration:email_helper:
 test:integration:twitter:
   stage: test
   tags:
-    - core
-    - twitter
+    - core-twitter
   script:
     - export RAILS_ENV=test
     - rake db:create
@@ -89,7 +88,7 @@ test:integration:twitter:
 test:integration:facebook:
   stage: test
   tags:
-    - core
+    - core-facebook
   script:
     - export RAILS_ENV=test
     - rake db:create
@@ -341,9 +340,10 @@ test:browser:twitter_ff:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - twitter
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - RAILS_ENV=test rake db:create
@@ -357,9 +357,10 @@ test:browser:facebook_ff:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - facebook
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - RAILS_ENV=test rake db:create
@@ -373,8 +374,9 @@ test:browser:autowizard_ff:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - RAILS_ENV=test rake db:create
@@ -388,9 +390,10 @@ test:browser:core:ff_1_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - mysql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -408,9 +411,10 @@ test:browser:core:ff_2_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - mysql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -428,9 +432,10 @@ test:browser:core:ff_3_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - mysql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - script/build/test_slice_tests.sh 3
@@ -444,9 +449,10 @@ test:browser:core:ff_4_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - mysql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -464,9 +470,10 @@ test:browser:core:ff_5_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - mysql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -484,9 +491,10 @@ test:browser:core:ff_1_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - postgresql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -504,9 +512,10 @@ test:browser:core:ff_2_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - postgresql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -524,9 +533,10 @@ test:browser:core:ff_3_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - postgresql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - script/build/test_slice_tests.sh 3
@@ -540,9 +550,10 @@ test:browser:core:ff_4_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - postgresql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -560,9 +571,10 @@ test:browser:core:ff_5_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-ff
+    - browser
     - postgresql
   script:
+    - export BROWSER=firefox
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -580,9 +592,10 @@ test:browser:core:chrome_1_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - mysql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -600,9 +613,10 @@ test:browser:core:chrome_2_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - mysql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -620,9 +634,10 @@ test:browser:core:chrome_3_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - mysql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -640,9 +655,10 @@ test:browser:core:chrome_4_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - mysql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -660,9 +676,10 @@ test:browser:core:chrome_5_mysql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - mysql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -680,9 +697,10 @@ test:browser:core:chrome_1_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - postgresql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -700,9 +718,10 @@ test:browser:core:chrome_2_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - postgresql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -720,9 +739,10 @@ test:browser:core:chrome_3_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - postgresql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -740,9 +760,10 @@ test:browser:core:chrome_4_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - postgresql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -760,9 +781,10 @@ test:browser:core:chrome_5_postgresql:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - postgresql
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - export APP_RESTART_CMD="script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 && script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 0"
     - unset MAILBOX_AUTO1
@@ -780,9 +802,10 @@ test:browser:integration:twitter_chrome:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - twitter
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
@@ -795,9 +818,10 @@ test:browser:integration:facebook_chrome:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
     - facebook
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
@@ -810,8 +834,9 @@ test:browser:integration:otrs_chrome:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
@@ -823,8 +848,9 @@ test:browser:integration:autowizard_chrome:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
@@ -837,8 +863,9 @@ test:browser:integration:zendesk_chrome:
   dependencies:
     - browser:build
   tags:
-    - browser-chrome
+    - browser
   script:
+    - export BROWSER=chrome
     - export BROWSER_URL=http://$IP:$BROWSER_PORT
     - RAILS_ENV=test rake db:create
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
