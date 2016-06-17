@@ -118,7 +118,7 @@ class AgentTicketActionLevel8Test < TestCase
     sendkey(
       value: :enter,
     )
-    sleep 2
+    sleep 3
 
     # set tag #2
     click(
@@ -131,7 +131,7 @@ class AgentTicketActionLevel8Test < TestCase
     sendkey(
       value: :enter,
     )
-    sleep 2
+    sleep 3
 
     # set tag #3 + #4
     click(
@@ -144,7 +144,7 @@ class AgentTicketActionLevel8Test < TestCase
     sendkey(
       value: :enter,
     )
-    sleep 2
+    sleep 3
 
     # set tag #5
     click(
@@ -157,7 +157,7 @@ class AgentTicketActionLevel8Test < TestCase
     click(
       css: '#global-search',
     )
-    sleep 2
+    sleep 3
 
     # verify tags
     tags_verify(
