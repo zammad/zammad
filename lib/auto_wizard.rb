@@ -33,7 +33,7 @@ returns
   def self.data
     auto_wizard_file_location = file_location
     raise "So such file #{auto_wizard_file_location}" if !File.file?(auto_wizard_file_location)
-    JSON.parse( File.read(auto_wizard_file_location) )
+    JSON.parse(File.read(auto_wizard_file_location))
   end
 
 =begin
@@ -77,38 +77,34 @@ returns
       }
     end
 
-    # create Organizations
-    if auto_wizard_hash['Organizations']
-      auto_wizard_hash['Organizations'].each { |organization_data|
-        Organization.create_or_update(organization_data.symbolize_keys)
+    # create EmailAddresses/Channels/Signatures
+    model_map = {
+      'Organizations' => 'Organization',
+    }
+    model_map.each {|map_name, model|
+      next if !auto_wizard_hash[map_name]
+      auto_wizard_hash[map_name].each {|data|
+        generic_object = Kernel.const_get(model)
+        data.symbolize_keys!
+        generic_object.create_or_update_with_ref(data)
       }
-    end
+    }
 
     # create Users
     if auto_wizard_hash['Users']
-
-      roles  = Role.where( name: %w(Agent Admin) )
-      groups = Group.all
-
       auto_wizard_hash['Users'].each { |user_data|
+        user_data.symbolize_keys!
 
-        # lookup organization
-        if user_data['organization'] && !user_data['organization'].empty?
-          organization = Organization.find_by(name: user_data['organization'])
-          if organization
-            user_data['organization_id'] = organization.id
+        if admin_user.id == 1
+          if !user_data[:roles] && !user_data[:role_ids]
+            user_data[:roles] = Role.where(name: %w(Agent Admin))
+          end
+          if !user_data[:groups] && !user_data[:group_ids]
+            user_data[:groups] = Group.all
           end
         end
-        user_data.delete('organization')
 
-        user_data_symbolized = user_data.symbolize_keys.merge(
-          {
-            active: true,
-            roles: roles,
-            groups: groups,
-          }
-        )
-        created_user = User.create_or_update(user_data_symbolized)
+        created_user = User.create_or_update_with_ref(user_data)
 
         # use first created user as admin
         next if admin_user.id != 1
@@ -133,11 +129,9 @@ returns
     model_map.each {|map_name, model|
       next if !auto_wizard_hash[map_name]
       auto_wizard_hash[map_name].each {|data|
-        if data['id'] || data['name']
-          Kernel.const_get(model).create_or_update(data.symbolize_keys)
-        else
-          Kernel.const_get(model).create(data.symbolize_keys)
-        end
+        generic_object = Kernel.const_get(model)
+        data.symbolize_keys!
+        generic_object.create_or_update_with_ref(data)
       }
     }
 

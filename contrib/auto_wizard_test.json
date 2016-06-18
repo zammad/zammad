@@ -12,7 +12,14 @@
       "firstname": "Agent 1",
       "lastname": "Test",
       "email": "agent1@example.com",
-      "password": "test"
+      "password": "test",
+      "roles": ["Agent"]
+    }
+  ],
+  "Groups": [
+    {
+      "name": "some group1",
+      "users": ["master@example.com","agent1@example.com"]
     }
   ],
   "Settings": [
