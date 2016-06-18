@@ -4,7 +4,7 @@ require 'browser_test_helper'
 class AutoWizardTest < TestCase
   def test_auto_wizard
     @browser = browser_instance
-    location( url: browser_url )
+    location(url: browser_url)
 
     watch_for(
       css: 'body',
@@ -12,7 +12,7 @@ class AutoWizardTest < TestCase
       timeout: 10,
     )
 
-    location( url: "#{browser_url}/#getting_started/auto_wizard" )
+    location(url: "#{browser_url}/#getting_started/auto_wizard")
 
     watch_for(
       css: 'body',
@@ -20,7 +20,7 @@ class AutoWizardTest < TestCase
       timeout: 10,
     )
 
-    location( url: "#{browser_url}/#getting_started/auto_wizard/secret_token" )
+    location(url: "#{browser_url}/#getting_started/auto_wizard/secret_token")
 
     watch_for(
       css: '.user-menu .user a',
