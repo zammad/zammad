@@ -97,7 +97,7 @@ returns
 
         if admin_user.id == 1
           if !user_data[:roles] && !user_data[:role_ids]
-            user_data[:roles] = Role.where(name: %w(Agent Admin))
+            user_data[:roles] = Role.where(name: %w(Agent Admin Chat))
           end
           if !user_data[:groups] && !user_data[:group_ids]
             user_data[:groups] = Group.all

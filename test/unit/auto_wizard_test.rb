@@ -46,7 +46,7 @@ class AutoWizardTest < ActiveSupport::TestCase
     assert_equal(false, AutoWizard.enabled?)
 
     # check first user roles
-    auto_wizard_data[:Users][0][:roles] = %w(Agent Admin)
+    auto_wizard_data[:Users][0][:roles] = %w(Agent Admin Chat)
 
     auto_wizard_data[:Users].each {|local_user|
       user = User.find_by(login: local_user[:login])

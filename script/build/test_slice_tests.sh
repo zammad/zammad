@@ -13,7 +13,7 @@ if [ "$LEVEL" == '1' ]; then
   # test/browser/aab_basic_urls_test.rb
   # test/browser/aab_unit_test.rb
   # test/browser/aac_basic_richtext_test.rb
-  # test/browser/abb_one_group_test.rb
+  rm test/browser/abb_one_group_test.rb
   rm test/browser/admin_channel_email_test.rb
   rm test/browser/admin_object_manager_test.rb
   rm test/browser/admin_overview_test.rb
@@ -39,7 +39,7 @@ if [ "$LEVEL" == '1' ]; then
   # test/browser/form_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
   # test/browser/maintenance_test.rb
-  rm test/browser/prefereces_test.rb
+  rm test/browser/preferences_test.rb
   rm test/browser/setting_test.rb
   # test/browser/signup_password_change_and_reset_test.rb
   # test/browser/swich_to_user_test.rb
@@ -83,7 +83,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_test.rb
   rm test/browser/manage_test.rb
-  rm test/browser/prefereces_test.rb
+  rm test/browser/preferences_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
@@ -127,7 +127,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_test.rb
   rm test/browser/manage_test.rb
-  rm test/browser/prefereces_test.rb
+  rm test/browser/preferences_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
@@ -171,7 +171,7 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/keyboard_shortcuts_test.rb
   rm test/browser/maintenance_test.rb
   rm test/browser/manage_test.rb
-  rm test/browser/prefereces_test.rb
+  rm test/browser/preferences_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
