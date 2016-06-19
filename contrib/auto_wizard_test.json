@@ -20,6 +20,41 @@
     {
       "name": "some group1",
       "users": ["master@example.com","agent1@example.com"]
+    },
+    {
+      "name": "Users",
+      "users": ["master@example.com","agent1@example.com"],
+      "signature": "default",
+      "email_address_id": 1
+    }
+  ],
+  "Channels": [
+    {
+      "id": 1,
+      "area": "Email::Account",
+      "group": "Users",
+      "options": {
+        "inbound": {
+          "adapter": "imap",
+          "options": {
+            "host": "mx1.example.com",
+            "user": "not_existing",
+            "password": "not_existing",
+            "ssl": true
+          }
+        },
+        "outbound": {
+          "adapter": "sendmail"
+        }
+      }
+    }
+  ],
+  "EmailAddresses": [
+    {
+      "id": 1,
+      "channel_id": 1,
+      "realname": "Zammad Helpdesk",
+      "email": "zammad@localhost"
     }
   ],
   "Settings": [
