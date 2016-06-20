@@ -2,107 +2,116 @@
 require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
-
-  Trigger.create_or_update(
-    name: 'auto reply - new ticket',
-    condition: {
-      'ticket.action' => {
-        'operator' => 'is',
-        'value' => 'create',
+  agent1 = nil
+  agent2 = nil
+  customer = nil
+  test 'aaa - setup' do
+    Trigger.create_or_update(
+      name: 'auto reply - new ticket',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is not',
+          'value' => Ticket::State.lookup(name: 'closed').id,
+        },
+        'article.type_id' => {
+          'operator' => 'is',
+          'value' => [
+            Ticket::Article::Type.lookup(name: 'email').id,
+            Ticket::Article::Type.lookup(name: 'phone').id,
+            Ticket::Article::Type.lookup(name: 'web').id,
+          ],
+        },
       },
-      'ticket.state_id' => {
-        'operator' => 'is not',
-        'value' => Ticket::State.lookup(name: 'closed').id,
-      },
-      'article.type_id' => {
-        'operator' => 'is',
-        'value' => [
-          Ticket::Article::Type.lookup(name: 'email').id,
-          Ticket::Article::Type.lookup(name: 'phone').id,
-          Ticket::Article::Type.lookup(name: 'web').id,
-        ],
-      },
-    },
-    perform: {
-      'notification.email' => {
-        'body' => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
+      perform: {
+        'notification.email' => {
+          'body' => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
 </p>
 <br/>
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
-        'recipient' => 'ticket_customer',
-        'subject' => 'Thanks for your inquiry (#{ticket.title})',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})',
+        },
       },
-    },
-    disable_notification: true,
-    active: true,
-    created_by_id: 1,
-    updated_by_id: 1,
-  )
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
 
-  # create agent1 & agent2
-  groups = Group.where(name: 'Users')
-  roles  = Role.where(name: 'Agent')
-  agent1 = User.create_or_update(
-    login: 'ticket-notification-agent1@example.com',
-    firstname: 'Notification',
-    lastname: 'Agent1',
-    email: 'ticket-notification-agent1@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: groups,
-    preferences: {
-      locale: 'de-de',
-    },
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  agent2 = User.create_or_update(
-    login: 'ticket-notification-agent2@example.com',
-    firstname: 'Notification',
-    lastname: 'Agent2',
-    email: 'ticket-notification-agent2@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: groups,
-    preferences: {
-      locale: 'en-ca',
-    },
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  Group.create_if_not_exists(
-    name: 'WithoutAccess',
-    note: 'Test for notification check.',
-    updated_by_id: 1,
-    created_by_id: 1
-  )
+    # create agent1 & agent2
+    Group.create_or_update(
+      name: 'TicketNotificationTest',
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    groups = Group.where(name: 'TicketNotificationTest')
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create_or_update(
+      login: 'ticket-notification-agent1@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent1',
+      email: 'ticket-notification-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      preferences: {
+        locale: 'de-de',
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    agent2 = User.create_or_update(
+      login: 'ticket-notification-agent2@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent2',
+      email: 'ticket-notification-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      preferences: {
+        locale: 'en-ca',
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Group.create_if_not_exists(
+      name: 'WithoutAccess',
+      note: 'Test for notification check.',
+      updated_by_id: 1,
+      created_by_id: 1
+    )
 
-  # create customer
-  roles    = Role.where(name: 'Customer')
-  customer = User.create_or_update(
-    login: 'ticket-notification-customer@example.com',
-    firstname: 'Notification',
-    lastname: 'Customer',
-    email: 'ticket-notification-customer@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: groups,
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
+    # create customer
+    roles = Role.where(name: 'Customer')
+    customer = User.create_or_update(
+      login: 'ticket-notification-customer@example.com',
+      firstname: 'Notification',
+      lastname: 'Customer',
+      email: 'ticket-notification-customer@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+  end
 
   test 'ticket notification - to all agents / to explicit agents' do
 
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification test 1',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -135,8 +144,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create(
-      title: 'some notification test 1',
-      group: Group.lookup(name: 'Users'),
+      title: 'some notification test 2',
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -172,8 +181,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ticket1 = Ticket.create(
-      title: 'some notification test 1',
-      group: Group.lookup(name: 'Users'),
+      title: 'some notification test 3',
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -264,8 +273,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket with agent1 as owner
     ticket2 = Ticket.create(
-      title: 'some notification test 2',
-      group: Group.lookup(name: 'Users'),
+      title: 'some notification test 4',
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer_id: 2,
       owner_id: agent1.id,
       state: Ticket::State.lookup(name: 'new'),
@@ -326,8 +335,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket with agent2 and agent1 as owner
     ticket3 = Ticket.create(
-      title: 'some notification test 3',
-      group: Group.lookup(name: 'Users'),
+      title: 'some notification test 5',
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer_id: 2,
       owner_id: agent1.id,
       state: Ticket::State.lookup(name: 'new'),
@@ -414,7 +423,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification test 1 - no notification',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -467,7 +476,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification test - z preferences tests 1',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -513,7 +522,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket2 = Ticket.create(
       title: 'some notification test - z preferences tests 2',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       owner: agent1,
       state: Ticket::State.lookup(name: 'new'),
@@ -559,7 +568,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket3 = Ticket.create(
       title: 'some notification test - z preferences tests 3',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       owner: agent2,
       state: Ticket::State.lookup(name: 'new'),
@@ -608,7 +617,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
     agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'Users').id.to_s]
+    agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'TicketNotificationTest').id.to_s]
     agent1.save
 
     agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
@@ -623,7 +632,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket4 = Ticket.create(
       title: 'some notification test - z preferences tests 4',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -672,7 +681,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
     agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
     agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'Users').id.to_s]
+    agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'TicketNotificationTest').id.to_s]
     agent1.save
 
     agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
@@ -687,7 +696,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket5 = Ticket.create(
       title: 'some notification test - z preferences tests 5',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -751,7 +760,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket6 = Ticket.create(
       title: 'some notification test - z preferences tests 6',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       owner: agent1,
       state: Ticket::State.lookup(name: 'new'),
@@ -828,7 +837,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket7 = Ticket.create(
       title: 'some notification test - z preferences tests 7',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       owner: agent1,
       state: Ticket::State.lookup(name: 'new'),
@@ -883,7 +892,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification event test 1',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
@@ -943,7 +952,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # create ticket in group
     ticket1 = Ticket.create(
       title: 'some notification template test 1 Bobs\'s resumé',
-      group: Group.lookup(name: 'Users'),
+      group: Group.lookup(name: 'TicketNotificationTest'),
       customer: customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),

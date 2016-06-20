@@ -28,7 +28,14 @@ write a cache
     if !params[:expires_in]
       params[:expires_in] = 7.days
     end
-    Rails.cache.write(key.to_s, data, params)
+
+    # in certain cases, caches are deleted by other thread at same
+    # time, just log it
+    begin
+      Rails.cache.write(key.to_s, data, params)
+    rescue => e
+      Rails.logger.error "Can't write cache #{key}: #{e.inspect}"
+    end
   end
 
 =begin

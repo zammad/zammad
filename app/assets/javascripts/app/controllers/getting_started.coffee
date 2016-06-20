@@ -9,8 +9,13 @@ class Index extends App.WizardFullScreen
     # set title
     @title 'Get Started'
 
+    # redirect to login if master user already exists
+    if @Config.get('system_init_done')
+      @navigate '#login'
+      return
+
     # if not import backend exists, go ahead
-    if !App.Config.get('ImportPlugins')
+    if !@Config.get('ImportPlugins')
       @navigate 'getting_started/admin'
       return
 
@@ -25,14 +30,9 @@ class Index extends App.WizardFullScreen
     @ajax(
       id:          'getting_started'
       type:        'GET'
-      url:         @apiPath + '/getting_started'
+      url:         "#{@apiPath}/getting_started"
       processData: true
       success:     (data, status, xhr) =>
-
-        # redirect to login if master user already exists
-        if @Config.get('system_init_done')
-          @navigate '#login'
-          return
 
         # check if auto wizard is executed
         if data.auto_wizard == true
@@ -43,7 +43,7 @@ class Index extends App.WizardFullScreen
 
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # render page
@@ -56,7 +56,7 @@ class Index extends App.WizardFullScreen
   renderAutoWizard: ->
     @html App.view('getting_started/auto_wizard_enabled')()
 
-App.Config.set( 'getting_started', Index, 'Routes' )
+App.Config.set('getting_started', Index, 'Routes')
 
 class AutoWizard extends App.WizardFullScreen
   constructor: ->
@@ -65,6 +65,11 @@ class AutoWizard extends App.WizardFullScreen
     # if already logged in, got to #
     if @authenticate(true, 'Admin')
       @navigate '#'
+      return
+
+    # redirect to login if master user already exists
+    if @Config.get('system_init_done')
+      @navigate '#login'
       return
 
     # set title
@@ -89,14 +94,19 @@ class AutoWizard extends App.WizardFullScreen
       processData: true
       success:     (data, status, xhr) =>
 
-        # redirect to login if master user already exists
-        if @Config.get('system_init_done')
-          @navigate '#login'
-          return
-
         # check if auto wizard enabled
         if data.auto_wizard is false
           @navigate '#'
+          return
+
+        # auto wizard setup was successful
+        if data.auto_wizard_success is true
+
+          # login check / get session user
+          delay = =>
+            App.Auth.loginCheck()
+            @navigate '#'
+          @delay(delay, 800)
           return
 
         if data.auto_wizard_success is false
@@ -106,10 +116,8 @@ class AutoWizard extends App.WizardFullScreen
             @renderToken()
           return
 
-        # login check / get session user
-        App.Auth.loginCheck()
-        @navigate '#'
-        return
+        # redirect to login if master user already exists
+        @navigate '#login'
     )
 
   renderFailed: (data) ->
@@ -138,6 +146,11 @@ class Admin extends App.WizardFullScreen
     # set title
     @title 'Create Admin'
 
+    # redirect to login if master user already exists
+    if @Config.get('system_init_done')
+      @navigate '#login'
+      return
+
     @fetch()
 
   release: =>
@@ -149,7 +162,7 @@ class Admin extends App.WizardFullScreen
     @ajax(
       id:    'getting_started'
       type:  'GET'
-      url:   @apiPath + '/getting_started'
+      url:   "#{@apiPath}/getting_started"
       processData: true
       success: (data, status, xhr) =>
 
@@ -158,14 +171,9 @@ class Admin extends App.WizardFullScreen
         #  @navigate '#getting_started/base'
         #  return
 
-        # redirect to login if master user already exists
-        if @Config.get('system_init_done')
-          @navigate '#login'
-          return
-
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # load group collection
@@ -215,7 +223,7 @@ class Admin extends App.WizardFullScreen
           error: ->
             App.Event.trigger 'notify', {
               type:    'error'
-              msg:     App.i18n.translateContent( 'Signin failed! Please contact the support team!' )
+              msg:     App.i18n.translateContent('Signin failed! Please contact the support team!')
               timeout: 2500
             }
         )
@@ -225,16 +233,14 @@ class Admin extends App.WizardFullScreen
         @formEnable(e)
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent( details.error_human || 'Can\'t create user!' )
+          msg:     App.i18n.translateContent(details.error_human || 'Can\'t create user!')
           timeout: 2500
         }
     )
 
   relogin: (data, status, xhr) =>
     @log 'notice', 'relogin:success', data
-
     App.Event.trigger 'notify:removeall'
-
     @navigate 'getting_started/base'
 
 App.Config.set('getting_started/admin', Admin, 'Routes')
@@ -269,13 +275,13 @@ class Base extends App.WizardFullScreen
     @ajax(
       id:    'getting_started',
       type:  'GET',
-      url:   @apiPath + '/getting_started',
+      url:   "#{@apiPath}/getting_started",
       processData: true,
       success: (data, status, xhr) =>
 
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # import config options
@@ -342,7 +348,7 @@ class Base extends App.WizardFullScreen
       @ajax(
         id:          'getting_started_base'
         type:        'POST'
-        url:         @apiPath + '/getting_started/base'
+        url:         "#{@apiPath}/getting_started/base"
         data:        JSON.stringify(@params)
         processData: true
         success:     (data, status, xhr) =>
@@ -404,15 +410,15 @@ class EmailNotification extends App.WizardFullScreen
 
     # get data
     @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      processData: true,
+      id:    'getting_started'
+      type:  'GET'
+      url:   "#{@apiPath}/getting_started"
+      processData: true
       success: (data, status, xhr) =>
 
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         @channelDriver = data.channel_driver
@@ -467,8 +473,8 @@ class EmailNotification extends App.WizardFullScreen
     @ajax(
       id:   'email_notification'
       type: 'POST'
-      url:  @apiPath + '/channels/email_notification'
-      data: JSON.stringify( params )
+      url:  "#{@apiPath}/channels/email_notification"
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -522,15 +528,15 @@ class Channel extends App.WizardFullScreen
 
     # get data
     @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      processData: true,
+      id:    'getting_started'
+      type:  'GET'
+      url:   "#{@apiPath}/getting_started"
+      processData: true
       success: (data, status, xhr) =>
 
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # render page
@@ -565,15 +571,15 @@ class ChannelEmailPreConfigured extends App.WizardFullScreen
 
     # get data
     @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      processData: true,
+      id:    'getting_started'
+      type:  'GET'
+      url:   "#{@apiPath}/getting_started"
+      processData: true
       success: (data, status, xhr) =>
 
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # render page
@@ -626,15 +632,15 @@ class ChannelEmail extends App.WizardFullScreen
 
     # get data
     @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      processData: true,
+      id:    'getting_started'
+      type:  'GET'
+      url:   "#{@apiPath}/getting_started"
+      processData: true
       success: (data, status, xhr) =>
 
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         @channelDriver = data.channel_driver
@@ -716,8 +722,8 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_probe'
       type: 'POST'
-      url:  @apiPath + '/channels/email_probe'
-      data: JSON.stringify( params )
+      url:  "#{@apiPath}/channels/email_probe"
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -765,8 +771,8 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_inbound'
       type: 'POST'
-      url:  @apiPath + '/channels/email_inbound'
-      data: JSON.stringify( params )
+      url:  "#{@apiPath}/channels/email_inbound"
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -818,8 +824,8 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_outbound'
       type: 'POST'
-      url:  @apiPath + '/channels/email_outbound'
-      data: JSON.stringify( params )
+      url:  "#{@apiPath}/channels/email_outbound"
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -830,12 +836,12 @@ class ChannelEmail extends App.WizardFullScreen
           @verify(@account)
         else
           @showSlide('js-outbound')
-          @showAlert('js-outbound', data.message_human || data.message )
+          @showAlert('js-outbound', data.message_human || data.message)
           @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
       fail: =>
         @showSlide('js-outbound')
-        @showAlert('js-outbound', data.message_human || data.message )
+        @showAlert('js-outbound', data.message_human || data.message)
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
@@ -846,8 +852,8 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_verify'
       type: 'POST'
-      url:  @apiPath + '/channels/email_verify'
-      data: JSON.stringify( account )
+      url:  "#{@apiPath}/channels/email_verify"
+      data: JSON.stringify(account)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -855,11 +861,11 @@ class ChannelEmail extends App.WizardFullScreen
         else
           if data.source is 'inbound' || data.source is 'outbound'
             @showSlide("js-#{data.source}")
-            @showAlert("js-#{data.source}", data.message_human || data.message )
+            @showAlert("js-#{data.source}", data.message_human || data.message)
             @showInvalidField("js-#{data.source}", data.invalid_field)
           else
             if count is 2
-              @showAlert('js-verify', data.message_human || data.message )
+              @showAlert('js-verify', data.message_human || data.message)
               @delay(
                 =>
                   @showSlide('js-intro')
@@ -873,7 +879,7 @@ class ChannelEmail extends App.WizardFullScreen
               @verify( @account, count + 1 )
       fail: =>
         @showSlide('js-intro')
-        @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.' )
+        @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
     )
 
 App.Config.set('getting_started/channel/email', ChannelEmail, 'Routes')
@@ -899,15 +905,15 @@ class Agent extends App.WizardFullScreen
 
     # get data
     @ajax(
-      id:    'getting_started',
-      type:  'GET',
-      url:   @apiPath + '/getting_started',
-      processData: true,
+      id:    'getting_started'
+      type:  'GET'
+      url:   "#{@apiPath}/getting_started"
+      processData: true
       success: (data, status, xhr) =>
 
         # check if import is active
         if data.import_mode == true
-          @navigate '#import/' + data.import_backend
+          @navigate "#import/#{data.import_backend}"
           return
 
         # load group collection

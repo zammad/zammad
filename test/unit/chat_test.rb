@@ -2,36 +2,40 @@
 require 'test_helper'
 
 class ChatTest < ActiveSupport::TestCase
+  agent1 = nil
+  agent2 = nil
+  test 'aaa - setup' do
 
-  # create base
-  groups = Group.all
-  roles  = Role.where( name: %w(Agent Chat) )
-  agent1 = User.create_or_update(
-    login: 'ticket-chat-agent1@example.com',
-    firstname: 'Notification',
-    lastname: 'Agent1',
-    email: 'ticket-chat-agent1@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: groups,
-    updated_at: '2015-02-05 16:37:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  agent2 = User.create_or_update(
-    login: 'ticket-chat-agent2@example.com',
-    firstname: 'Notification',
-    lastname: 'Agent2',
-    email: 'ticket-chat-agent2@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: groups,
-    updated_at: '2015-02-05 16:38:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
+    # create base
+    groups = Group.all
+    roles  = Role.where( name: %w(Agent Chat) )
+    agent1 = User.create_or_update(
+      login: 'ticket-chat-agent1@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent1',
+      email: 'ticket-chat-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    agent2 = User.create_or_update(
+      login: 'ticket-chat-agent2@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent2',
+      email: 'ticket-chat-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_at: '2015-02-05 16:38:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+  end
 
   test 'default test' do
 

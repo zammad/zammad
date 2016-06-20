@@ -2,27 +2,32 @@
 require 'test_helper'
 
 class ActivityStreamTest < ActiveSupport::TestCase
-  role  = Role.lookup(name: 'Admin')
-  group = Group.lookup(name: 'Users')
-  admin_user = User.create_or_update(
-    login: 'admin',
-    firstname: 'Bob',
-    lastname: 'Smith',
-    email: 'bob@example.com',
-    password: 'some_pass',
-    active: true,
-    role_ids: [role.id],
-    group_ids: [group.id],
-    updated_by_id: 1,
-    created_by_id: 1
-  )
-  current_user = User.lookup(email: 'nicole.braun@zammad.org')
+  admin_user = nil
+  current_user = nil
+  activity_record_delay = nil
+  test 'aaa - setup' do
+    role  = Role.lookup(name: 'Admin')
+    group = Group.lookup(name: 'Users')
+    admin_user = User.create_or_update(
+      login: 'admin',
+      firstname: 'Bob',
+      lastname: 'Smith',
+      email: 'bob@example.com',
+      password: 'some_pass',
+      active: true,
+      role_ids: [role.id],
+      group_ids: [group.id],
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    current_user = User.lookup(email: 'nicole.braun@zammad.org')
 
-  activity_record_delay = if ENV['ZAMMAD_ACTIVITY_RECORD_DELAY']
-                            ENV['ZAMMAD_ACTIVITY_RECORD_DELAY'].to_i.seconds
-                          else
-                            90.seconds
-                          end
+    activity_record_delay = if ENV['ZAMMAD_ACTIVITY_RECORD_DELAY']
+                              ENV['ZAMMAD_ACTIVITY_RECORD_DELAY'].to_i.seconds
+                            else
+                              90.seconds
+                            end
+  end
 
   test 'ticket+user' do
     tests = [

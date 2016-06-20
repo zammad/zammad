@@ -288,11 +288,29 @@ returns
 
 do name/login/email based lookup for associations
 
+  params = {
+    login: 'some login',
+    firstname: 'some firstname',
+    lastname: 'some lastname',
+    email: 'some email',
+    organization: 'some organization',
+    roles: ['Agent', 'Admin'],
+  }
+
   attributes = Model.param_association_lookup(params)
 
 returns
 
   attributes = params # params with possible lookups
+
+  attributes = {
+    login: 'some login',
+    firstname: 'some firstname',
+    lastname: 'some lastname',
+    email: 'some email',
+    organization_id: 123,
+    role_ids: [2,1],
+  }
 
 =end
 
@@ -309,33 +327,84 @@ returns
       value = data[assoc.name.to_sym]
       next if !value # next if we do not have a value
       ref_name = "#{assoc.name}_id"
-      next if !available_attributes.include?(ref_name) # next if we do not have an _id attribute
-      next if data[ref_name.to_sym] # next if we have already the id filled
+
+      # handle _id values
+      if available_attributes.include?(ref_name) # if we do have an _id attribute
+        next if data[ref_name.to_sym] # next if we have already the _id filled
+
+        # get association class and do lookup
+        class_object = assoc.klass
+        lookup = nil
+        if class_object == User
+          if value.class == String
+            if !lookup
+              lookup = class_object.lookup(login: value)
+            end
+            if !lookup
+              lookup = class_object.lookup(email: value)
+            end
+          else
+            raise "String is needed as ref value #{value.inspect} for '#{assoc.name}'"
+          end
+        else
+          lookup = class_object.lookup(name: value)
+        end
+
+        # complain if we found no reference
+        if !lookup
+          raise "No lookup value found for '#{assoc.name}': #{value.inspect}"
+        end
+
+        # release data value
+        data.delete(assoc.name.to_sym)
+
+        # remember id reference
+        data[ref_name.to_sym] = lookup.id
+        next
+      end
+
+      next if value.class != Array
+      next if value.empty?
+      next if value[0].class != String
+
+      # handle _ids values
+      ref_names = "#{assoc.name[0, assoc.name.length - 1]}_ids"
+      generic_object_tmp = new
+      next unless generic_object_tmp.respond_to?(ref_names) # if we do have an _ids attribute
+      next if data[ref_names.to_sym] # next if we have already the _ids filled
 
       # get association class and do lookup
       class_object = assoc.klass
-      lookup = nil
-      if class_object == User
-        if !lookup
-          lookup = class_object.lookup(login: value)
+      lookup_ids = []
+      value.each {|item|
+        lookup = nil
+        if class_object == User
+          if item.class == String
+            if !lookup
+              lookup = class_object.lookup(login: item)
+            end
+            if !lookup
+              lookup = class_object.lookup(email: item)
+            end
+          else
+            raise "String is needed in array ref as ref value #{value.inspect} for '#{assoc.name}'"
+          end
+        else
+          lookup = class_object.lookup(name: item)
         end
-        if !lookup
-          lookup = class_object.lookup(email: value)
-        end
-      else
-        lookup = class_object.lookup(name: value)
-      end
 
-      # complain if we found no reference
-      if !lookup
-        raise "No lookup value found for '#{assoc.name}': #{value.inspect}"
-      end
+        # complain if we found no reference
+        if !lookup
+          raise "No lookup value found for '#{assoc.name}': #{item.inspect}"
+        end
+        lookup_ids.push lookup.id
+      }
 
       # release data value
       data.delete(assoc.name.to_sym)
 
       # remember id reference
-      data[ref_name.to_sym] = lookup.id
+      data[ref_names.to_sym] = lookup_ids
     }
 
     data
@@ -613,6 +682,23 @@ returns
 
 =begin
 
+Model.create_if_not_exists with ref lookups
+
+  result = Model.create_if_not_exists_with_ref(attributes)
+
+returns
+
+  result = model # with all attributes
+
+=end
+
+  def self.create_if_not_exists_with_ref(data)
+    data = param_association_lookup(data)
+    create_or_update(data)
+  end
+
+=begin
+
 create or update model (check exists based on id, name, login, email or locale)
 
   result = Model.create_or_update(attributes)
@@ -704,6 +790,23 @@ returns
     else
       raise 'Need name, login, email or locale for create_or_update()'
     end
+  end
+
+=begin
+
+Model.create_or_update with ref lookups
+
+  result = Model.create_or_update(attributes)
+
+returns
+
+  result = model # with all attributes
+
+=end
+
+  def self.create_or_update_with_ref(data)
+    data = param_association_lookup(data)
+    create_or_update(data)
   end
 
 =begin

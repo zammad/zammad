@@ -151,6 +151,9 @@ class TestCase < Test::Unit::TestCase
       instance.get(params[:url])
     end
 
+    # submit logs anyway
+    instance.execute_script('App.Track.force()')
+
     element = instance.find_elements(css: '#login input[name="username"]')[0]
     if !element
 
@@ -3132,6 +3135,7 @@ wait untill text in selector disabppears
       if instance
         logs = instance.manage.logs.get(:browser)
         logs.each {|log|
+          next if log.level == 'WARNING' && log.message =~ /Declaration\sdropped./ # ignore ff css warnings
           time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
           puts "#{time}/#{log.level}: #{log.message}"
         }

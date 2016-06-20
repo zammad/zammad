@@ -10,13 +10,37 @@ class KeyboardShortcutsTest < TestCase
       url: browser_url,
     )
     tasks_close_all()
+    sleep 2
 
     # show shortkeys
     shortcut(key: 'h')
+
+    # ff issue, sometimes shortcut is not fired in browser test env
+    if ENV['BROWSER'] && ENV['BROWSER'] =~ /firefox/i
+      exists = false
+      (1..4).each {|_count|
+        sleep 1
+        next if !@browser.find_elements(css: '.modal')[0]
+        exists = true
+      }
+      if !exists
+        reload
+        sleep 4
+        shortcut(key: 'h')
+        (1..4).each {|_count|
+          sleep 1
+          next if !@browser.find_elements(css: '.modal')[0]
+          exists = true
+        }
+      end
+      if !exists
+        shortcut(key: 'h')
+      end
+    end
     watch_for(
       css:     '.modal',
       value:   'Keyboard Shortcuts',
-      timeout: 2,
+      timeout: 6,
     )
 
     # hide shortkeys

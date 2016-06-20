@@ -146,12 +146,6 @@ class TweetBase
     Rails.logger.debug user.inspect
     Rails.logger.debug ticket.inspect
 
-    # set ticket state to open if not new
-    if ticket.state.name != 'new'
-      ticket.state = Ticket::State.find_by(name: 'open')
-      ticket.save
-    end
-
     # import tweet
     to = nil
     from = nil
@@ -180,6 +174,12 @@ class TweetBase
     end
 
     UserInfo.current_user_id = user.id
+
+    # set ticket state to open if not new
+    if ticket.state.name != 'new'
+      ticket.state = Ticket::State.find_by(name: 'open')
+      ticket.save
+    end
 
     Ticket::Article.create(
       from:        from,

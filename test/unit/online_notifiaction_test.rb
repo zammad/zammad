@@ -2,33 +2,43 @@
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
-  role        = Role.lookup(name: 'Agent')
-  group       = Group.lookup(name: 'Users')
-  agent_user1 = User.create_or_update(
-    login: 'agent_online_notify1',
-    firstname: 'Bob',
-    lastname: 'Smith',
-    email: 'agent_online_notify1@example.com',
-    password: 'some_pass',
-    active: true,
-    role_ids: [role.id],
-    group_ids: [group.id],
-    updated_by_id: 1,
-    created_by_id: 1
-  )
-  agent_user2 = User.create_or_update(
-    login: 'agent_online_notify2',
-    firstname: 'Bob',
-    lastname: 'Smith',
-    email: 'agent_online_notify2@example.com',
-    password: 'some_pass',
-    active: true,
-    role_ids: [role.id],
-    group_ids: [group.id],
-    updated_by_id: 1,
-    created_by_id: 1
-  )
-  customer_user = User.lookup(email: 'nicole.braun@zammad.org')
+  group = nil
+  agent_user1 = nil
+  agent_user2 = nil
+  customer_user = nil
+  test 'aaa - setup' do
+    role  = Role.lookup(name: 'Agent')
+    group = Group.create_or_update(
+      name: 'OnlineNotificationTest',
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    agent_user1 = User.create_or_update(
+      login: 'agent_online_notify1',
+      firstname: 'Bob',
+      lastname: 'Smith',
+      email: 'agent_online_notify1@example.com',
+      password: 'some_pass',
+      active: true,
+      role_ids: [role.id],
+      group_ids: [group.id],
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    agent_user2 = User.create_or_update(
+      login: 'agent_online_notify2',
+      firstname: 'Bob',
+      lastname: 'Smith',
+      email: 'agent_online_notify2@example.com',
+      password: 'some_pass',
+      active: true,
+      role_ids: [role.id],
+      group_ids: [group.id],
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    customer_user = User.lookup(email: 'nicole.braun@zammad.org')
+  end
 
   test 'ticket notification' do
 
@@ -36,7 +46,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # case #1
     ticket1 = Ticket.create(
-      group_id: Group.lookup(name: 'Users').id,
+      group: group,
       customer_id: customer_user.id,
       owner_id: User.lookup(login: '-').id,
       title: 'Unit Test 1 (äöüß)!',
@@ -91,7 +101,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # case #2
     ticket2 = Ticket.create(
-      group_id: Group.lookup(name: 'Users').id,
+      group: group,
       customer_id: customer_user.id,
       owner_id: agent_user1.id,
       title: 'Unit Test 1 (äöüß)!',
@@ -146,7 +156,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # case #3
     ticket3 = Ticket.create(
-      group_id: Group.lookup(name: 'Users').id,
+      group: group,
       customer_id: customer_user.id,
       owner_id: User.lookup(login: '-').id,
       title: 'Unit Test 2 (äöüß)!',
@@ -226,7 +236,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # case #4
     ticket4 = Ticket.create(
-      group_id: Group.lookup(name: 'Users').id,
+      group: group,
       customer_id: customer_user.id,
       owner_id: agent_user1.id,
       title: 'Unit Test 3 (äöüß)!',
@@ -280,7 +290,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # case #5
     ticket5 = Ticket.create(
-      group_id: Group.lookup(name: 'Users').id,
+      group: group,
       customer_id: customer_user.id,
       owner_id: User.lookup(login: '-').id,
       title: 'Unit Test 4 (äöüß)!',
@@ -364,7 +374,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
   test 'ticket notification item check' do
     ticket1 = Ticket.create(
       title: 'some title',
-      group: Group.lookup(name: 'Users'),
+      group: group,
       customer_id: customer_user.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),

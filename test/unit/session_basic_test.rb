@@ -2,13 +2,14 @@
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
+  test 'aaa - setup' do
+    user = User.lookup(id: 1)
+    roles = Role.where(name: %w(Agent Admin))
+    user.roles = roles
+    user.save
+  end
 
-  user = User.lookup(id: 1)
-  roles = Role.where(name: %w(Agent Admin))
-  user.roles = roles
-  user.save
-
-  test 'a cache' do
+  test 'b cache' do
     Sessions::CacheIn.set('last_run_test', true, { expires_in: 1.second })
     result = Sessions::CacheIn.get('last_run_test')
     assert_equal(true, result, 'check 1')
