@@ -17,7 +17,9 @@ class TestCase < Test::Unit::TestCase
       browser_profile['intl.locale.matchOS']      = false
       browser_profile['intl.accept_languages']    = 'en-US'
       browser_profile['general.useragent.locale'] = 'en-US'
-      browser_profile['loggingPref']              = { browser: :all }
+      # currently console log not working for firefox
+      # https://github.com/SeleniumHQ/selenium/issues/1161
+      #browser_profile['loggingPref']              = { browser: :all }
     elsif browser == 'chrome'
 
       # profile are only working on remote selenium
