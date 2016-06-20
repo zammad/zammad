@@ -5,16 +5,34 @@ class TicketArticlesController < ApplicationController
 
   # GET /articles
   def index
-    @articles = Ticket::Article.all
-
-    render json: @articles
+    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    model_index_render(Ticket::Article, params)
   end
 
   # GET /articles/1
   def show
-    @article = Ticket::Article.find(params[:id])
 
-    render json: @article
+    # permission check
+    article = Ticket::Article.find(params[:id])
+    return if !article_permission(article)
+
+    if params[:expand]
+      result = article.attributes_with_relation_names
+
+      # add attachments
+      result[:attachments] = article.attachments
+
+      render json: result, status: :ok
+      return
+    end
+
+    if params[:full]
+      full = Ticket::Article.full(params[:id])
+      render json: full
+      return
+    end
+
+    render json: article
   end
 
   # POST /articles
