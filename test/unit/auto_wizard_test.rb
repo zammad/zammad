@@ -3,7 +3,7 @@ require 'test_helper'
 
 class AutoWizardTest < ActiveSupport::TestCase
 
-  test 'simple' do
+  test 'a simple' do
     auto_wizard_data = {
       Users: [
         {
@@ -76,7 +76,7 @@ class AutoWizardTest < ActiveSupport::TestCase
     }
   end
 
-  test 'complex' do
+  test 'b complex' do
     auto_wizard_data = {
       Organizations: [
         {
