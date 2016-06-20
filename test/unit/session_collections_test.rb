@@ -74,6 +74,19 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(check_if_collection_exists(result2, :Role), 'check collections - after init')
     assert(check_if_collection_exists(result2, :Signature), 'check collections - after init')
     assert(check_if_collection_exists(result2, :EmailAddress), 'check collections - after init')
+
+    assert_equal(result1.length, result2.length, 'check collections')
+    assert_equal(result1[0], result2[0], 'check collections')
+    assert_equal(result1[1], result2[1], 'check collections')
+    assert_equal(result1[2], result2[2], 'check collections')
+    assert_equal(result1[3], result2[3], 'check collections')
+    assert_equal(result1[4], result2[4], 'check collections')
+    assert_equal(result1[5], result2[5], 'check collections')
+    assert_equal(result1[6], result2[6], 'check collections')
+    assert_equal(result1[7], result2[7], 'check collections')
+    assert_equal(result1[8], result2[8], 'check collections')
+    assert_equal(result1[9], result2[9], 'check collections')
+
     assert_equal(result1, result2, 'check collections')
 
     result3 = collection_client3.push

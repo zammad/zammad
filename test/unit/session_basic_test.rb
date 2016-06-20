@@ -119,7 +119,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     sleep 0.6
     result2 = collection_client2.push
     assert(!result2.empty?, 'check collections')
-    assert_equal(result1, result2, 'check collections')
+    assert_equal(result1.to_yaml, result2.to_yaml, 'check collections')
 
     # next check should be empty
     result1 = collection_client1.push
@@ -138,7 +138,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert(!result1.empty?, 'check collections - after touch')
     result2 = collection_client2.push
     assert(!result2.empty?, 'check collections - after touch')
-    assert_equal(result1, result2, 'check collections')
+    assert_equal(result1.to_yaml, result2.to_yaml, 'check collections')
 
     # check again after touch
     result1 = collection_client1.push
