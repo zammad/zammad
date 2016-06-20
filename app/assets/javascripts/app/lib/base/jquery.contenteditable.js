@@ -102,6 +102,20 @@
           e.preventDefault()
           document.execCommand('Insertparagraph')
           document.execCommand('Outdent')
+          return
+        }
+
+        // ff issue, inserts <br></br> inside of <li> - not content can be inserted
+        // to reproduce
+        // 1. ctrl+alt+l
+        // 2. 1+enter, 2+enter, 3+enter, 4+enter
+        // 3. use arrows to move after 2, press enter, press arrow down, press enter
+        // 4. no content can be inserted anymore in this area
+        // see also https://github.com/martini/zammad/issues/176
+        if (node.context && node.context.localName == 'ul') {
+          e.preventDefault()
+          document.execCommand('insertHTML', false, '<p></p>')
+          console.log('ff issue, inserts <br></br> inside of <li> - not content can be inserted anymore in this area')
         }
       }
 
@@ -136,16 +150,16 @@
         }
 
         if (e.keyCode == 66) {
-          document.execCommand('Bold')
+          document.execCommand('bold')
         }
         if (e.keyCode == 73) {
-          document.execCommand('Italic')
+          document.execCommand('italic')
         }
         if (e.keyCode == 85) {
-          document.execCommand('Underline')
+          document.execCommand('underline')
         }
         if (e.keyCode == 70) {
-          document.execCommand('RemoveFormat')
+          document.execCommand('removeFormat')
         }
         if (e.keyCode == 89) {
           var cleanHtml = App.Utils.htmlRemoveRichtext(_this.$element.html())
@@ -155,16 +169,16 @@
           document.execCommand('insertHorizontalRule')
         }
         if (e.keyCode == 76) {
-          document.execCommand('InsertUnorderedList')
+          document.execCommand('insertUnorderedList')
         }
         if (e.keyCode == 75) {
-          document.execCommand('InsertOrderedList')
+          document.execCommand('insertOrderedList')
         }
         if (e.keyCode == 86) {
-          document.execCommand('StrikeThrough')
+          document.execCommand('strikeThrough')
         }
         if (e.keyCode == 87) {
-          document.execCommand('Unlink')
+          document.execCommand('unlink')
         }
         if (e.keyCode == 49) {
           _this.toggleBlock('h1')
