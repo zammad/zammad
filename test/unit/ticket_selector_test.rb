@@ -2,76 +2,84 @@
 require 'test_helper'
 
 class TicketSelectorTest < ActiveSupport::TestCase
+  agent1 = nil
+  agent2 = nil
+  group = nil
+  organization1 = nil
+  customer1 = nil
+  customer2 = nil
+  test 'aaa - setup' do
 
-  # create base
-  group = Group.create_or_update(
-    name: 'SelectorTest',
-    updated_at: '2015-02-05 16:37:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  roles  = Role.where(name: 'Agent')
-  agent1 = User.create_or_update(
-    login: 'ticket-selector-agent1@example.com',
-    firstname: 'Notification',
-    lastname: 'Agent1',
-    email: 'ticket-selector-agent1@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: [group],
-    updated_at: '2015-02-05 16:37:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  agent2 = User.create_or_update(
-    login: 'ticket-selector-agent2@example.com',
-    firstname: 'Notification',
-    lastname: 'Agent2',
-    email: 'ticket-selector-agent2@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    #groups: groups,
-    updated_at: '2015-02-05 16:38:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  roles = Role.where(name: 'Customer')
-  organization1 = Organization.create_if_not_exists(
-    name: 'Selector Org',
-    updated_at: '2015-02-05 16:37:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  customer1 = User.create_or_update(
-    login: 'ticket-selector-customer1@example.com',
-    firstname: 'Notification',
-    lastname: 'Customer1',
-    email: 'ticket-selector-customer1@example.com',
-    password: 'customerpw',
-    active: true,
-    organization_id: organization1.id,
-    roles: roles,
-    updated_at: '2015-02-05 16:37:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  customer2 = User.create_or_update(
-    login: 'ticket-selector-customer2@example.com',
-    firstname: 'Notification',
-    lastname: 'Customer2',
-    email: 'ticket-selector-customer2@example.com',
-    password: 'customerpw',
-    active: true,
-    organization_id: nil,
-    roles: roles,
-    updated_at: '2015-02-05 16:37:00',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
+    # create base
+    group = Group.create_or_update(
+      name: 'SelectorTest',
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create_or_update(
+      login: 'ticket-selector-agent1@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent1',
+      email: 'ticket-selector-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: [group],
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    agent2 = User.create_or_update(
+      login: 'ticket-selector-agent2@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent2',
+      email: 'ticket-selector-agent2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      #groups: groups,
+      updated_at: '2015-02-05 16:38:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles = Role.where(name: 'Customer')
+    organization1 = Organization.create_if_not_exists(
+      name: 'Selector Org',
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    customer1 = User.create_or_update(
+      login: 'ticket-selector-customer1@example.com',
+      firstname: 'Notification',
+      lastname: 'Customer1',
+      email: 'ticket-selector-customer1@example.com',
+      password: 'customerpw',
+      active: true,
+      organization_id: organization1.id,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    customer2 = User.create_or_update(
+      login: 'ticket-selector-customer2@example.com',
+      firstname: 'Notification',
+      lastname: 'Customer2',
+      email: 'ticket-selector-customer2@example.com',
+      password: 'customerpw',
+      active: true,
+      organization_id: nil,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
-  Ticket.where(group_id: group.id).destroy_all
+    Ticket.where(group_id: group.id).destroy_all
+  end
 
   test 'ticket create' do
 

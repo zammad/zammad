@@ -155,8 +155,8 @@ class AutoWizardTest < ActiveSupport::TestCase
         {
           id: 1,
           channel_id: 1,
-          realname: 'some realname',
-          email: 'helpdesk@example.com',
+          realname: 'Zammad',
+          email: 'zammad@localhost',
         }
       ],
     }
