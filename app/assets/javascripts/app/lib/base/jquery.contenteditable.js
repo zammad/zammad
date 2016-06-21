@@ -59,6 +59,12 @@
 
     this.preventInput = false
 
+    // detect firefox / handle contenteditable issues
+    this.browser = undefined
+    if ( navigator && navigator.userAgent && navigator.userAgent.search('Firefox') != -1) {
+      this.browser = 'ff'
+    }
+
     this.init();
   }
 
@@ -104,18 +110,35 @@
           document.execCommand('Outdent')
           return
         }
+      }
 
-        // ff issue, inserts <br></br> inside of <li> - not content can be inserted
-        // to reproduce
-        // 1. ctrl+alt+l
-        // 2. 1+enter, 2+enter, 3+enter, 4+enter
-        // 3. use arrows to move after 2, press enter, press arrow down, press enter
-        // 4. no content can be inserted anymore in this area
-        // see also https://github.com/martini/zammad/issues/176
-        if (node.context && node.context.localName == 'ul') {
-          e.preventDefault()
-          document.execCommand('insertHTML', false, '<p></p>')
-          console.log('ff issue, inserts <br></br> inside of <li> - not content can be inserted anymore in this area')
+      // return & space key being pressed
+      if (e.keyCode === 13 ) {
+
+        if (_this.browser === 'ff') {
+
+          // ff issue, inserts <br></br> right after contenteditable tag (still in ff47)
+          // https://bugzilla.mozilla.org/show_bug.cgi?id=911201
+          if (node.parent().hasClass('js-textarea')) {
+            e.preventDefault()
+            document.execCommand('insertHTML', false, '<p></p>')
+            console.log('ff issue, inserts <br></br> -> <p></p>')
+            return
+          }
+
+          // ff issue, inserts <br></br> inside of <li> - not content can be inserted
+          // to reproduce
+          // 1. ctrl+alt+l
+          // 2. 1+enter, 2+enter, 3+enter, 4+enter
+          // 3. use arrows to move after 2, press enter, press arrow down, press enter
+          // 4. no content can be inserted anymore in this area
+          // see also https://github.com/martini/zammad/issues/176
+          if (node.context && node.context.localName == 'ul') {
+            e.preventDefault()
+            document.execCommand('insertHTML', false, '<p></p>')
+            console.log('ff issue, inserts <br></br> inside of <li> - not content can be inserted anymore in this area')
+            return
+          }
         }
       }
 
