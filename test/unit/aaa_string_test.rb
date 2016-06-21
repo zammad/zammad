@@ -333,4 +333,92 @@ Men-----------------------'
 
   end
 
+  test 'html2html_strict function' do
+
+    html   = 'test'
+    result = 'test'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '  test '
+    result = 'test'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "\n\n  test \n\n\n"
+    result = 'test'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<b>test</b>'
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<B>test</B>'
+    result = '<B>test</B>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<i>test</i>'
+    result = '<i>test</i>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<h1>test</h1>'
+    result = '<h1>test</h1>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<h2>test</h2>'
+    result = '<h2>test</h2>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<h3>test</h3>'
+    result = '<h3>test</h3>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<b\n>test</b>"
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<b >test</b>'
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<b >test</b >'
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<b >test< /b >'
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<b\n>test<\n/b>"
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<b id=123 classs=\"\nsome_class\">test</b>"
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<b id=123 classs=\"\nsome_class\"\n>test<\n/b>"
+    result = '<b>test</b>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<ul id=123 classs=\"\nsome_class\"\n><li>test</li>\n<li class=\"asasd\">test</li><\n/ul>"
+    result = '<ul><li>test</li><li>test</li></ul>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<html><head><base href="x-msg://2849/"></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space; "><span class="Apple-style-span" style="border-collapse: separate; font-family: Helvetica; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; font-size: medium; "><div lang="DE" link="blue" vlink="purple"><div class="Section1" style="page: Section1; "><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Hallo Martin,<o:p></o:p></span></div>'
+    result = 'Hallo Martin,'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="mailto:john.smith@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>'
+    result = 'john.smith@example.com'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="MAILTO:john.smith@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>'
+    result = 'john.smith@example.com'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="mailto:john.smith2@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>'
+    result = 'john.smith@example.com (mailto:john.smith2@example.com)'
+    assert_equal(result, html.html2html_strict)
+
+  end
+
 end
