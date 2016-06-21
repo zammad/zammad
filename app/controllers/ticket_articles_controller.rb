@@ -32,7 +32,61 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    render json: article
+    render json: article.attributes_with_relation_names
+  end
+
+  # GET /ticket_articles/by_ticket/1
+  def index_by_ticket
+
+    # permission check
+    ticket = Ticket.find(params[:id])
+    return if !ticket_permission(ticket)
+
+    articles = []
+
+    if params[:expand]
+      ticket.articles.each {|article|
+
+        # ignore internal article if customer is requesting
+        next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+
+        result = article.attributes_with_relation_names
+
+        # add attachments
+        result[:attachments] = article.attachments
+        articles.push result
+      }
+
+      render json: articles, status: :ok
+      return
+    end
+
+    if params[:full]
+      assets = {}
+      record_ids = []
+      ticket.articles.each {|article|
+
+        # ignore internal article if customer is requesting
+        next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+
+        record_ids.push article.id
+        assets = article.assets({})
+      }
+      render json: {
+        record_ids: record_ids,
+        assets: assets,
+      }
+      return
+    end
+
+    ticket.articles.each {|article|
+
+      # ignore internal article if customer is requesting
+      next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+
+      articles.push article.attributes_with_relation_names
+    }
+    render json: articles
   end
 
   # POST /articles
