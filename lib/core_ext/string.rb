@@ -88,6 +88,9 @@ class String
       string = string.chars.select(&:valid_encoding?).join
     end
 
+    # remove html comments
+    string.gsub!(/<!--.+?-->/m, '')
+
     # find <a href=....> and replace it with [x]
     link_list = ''
     counter   = 0

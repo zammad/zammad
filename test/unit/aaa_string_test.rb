@@ -141,6 +141,19 @@ class AaaStringTest < ActiveSupport::TestCase
     result = "test\n\n___"
     assert_equal(result, html.html2text)
 
+    html = "Ihr RZ-Team<br />
+<br />
+<!--[if gte mso 9]><xml> <o:DocumentProperties>  <o:Author>test</o:Author> =
+ <o:Template>A75DB76E.dotm</o:Template>  <o:LastAuthor>test</o:LastAuthor> =
+ <o:Revision>5</o:Revision>  <o:Created>2011-05-18T07:08:00Z</o:Created>  <=
+o:LastSaved>2011-07-04T17:59:00Z</o:LastSaved>  <o:Pages>1</o:Pages>  <o:Wo=
+rds>189</o:Words>  <o:Characters>1192</o:Characters>  <o:Lines>9</o:Lines> =
+ <o:Paragraphs>2</o:Paragraphs>  <o:CharactersWithSpaces>1379</o:Characters=
+WithSpaces>  <o:Version>11.5606</o:Version> </o:DocumentProperties></xml><!=
+[endif]-->"
+    result = 'Ihr RZ-Team'
+    assert_equal(result, html.html2text)
+
     html = ' line&nbsp;1<br>
 you<br/>
 -----&amp;'
