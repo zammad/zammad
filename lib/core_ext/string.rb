@@ -221,6 +221,9 @@ class String
     # remove tailing empty spaces
     string.gsub!(/[[:blank:]]+$/, '')
 
+    # remove double multiple empty lines
+    string.gsub!(/\n\n\n/, "\n\n")
+
     # add extracted links
     if link_list != ''
       string += "\n\n\n" + link_list
