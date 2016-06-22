@@ -78,6 +78,7 @@ class SessionsController < ApplicationController
       render json: {
         error: 'no valid session',
         config: config_frontend,
+        models: models,
         collections: {
           Locale.to_app_model => Locale.where(active: true)
         },
