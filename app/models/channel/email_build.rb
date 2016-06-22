@@ -242,7 +242,8 @@ Add/change markup to display html in any mail client nice.
 
     # https://github.com/martini/zammad/issues/165
     new_html = html.gsub('<blockquote type="cite">', '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0 0 16px; padding: 8px 12px 8px 12px;">')
-    new_html.gsub!('<p>', '<p style="margin: 0;">')
+    new_html.gsub!(/<p>/mxi, '<p style="margin: 0;">')
+    new_html.gsub!(%r{</?hr>}mxi, '<hr style="margin-top: 6px; margin-bottom: 6px; border: 0; border-top: 1px solid #dfdfdf;">')
     new_html
   end
 

@@ -59,7 +59,9 @@ class EmailBuildTest < ActiveSupport::TestCase
     data = parser.parse(mail.to_s)
 
     # check body
+    should = '&gt; Welcome!<br>&gt;<br>&gt; Thank you for installing Zammad. äöüß<br>&gt;'
     assert_equal(should, data[:body])
+    assert_equal('text/html', data[:content_type])
 
     # check count of attachments, only 2, because 3 part is text message and is already in body
     assert_equal(2, data[:attachments].length)
@@ -199,6 +201,13 @@ text
 text
 </p>
 <p style="margin: 0;">123</p>'
+    assert_equal(html_should, html_with_fixes)
+
+    html_raw = '<p>sometext</p><hr><p>123</p>'
+    html_with_fixes = Channel::EmailBuild.html_mail_client_fixes(html_raw)
+    assert_not_equal(html_with_fixes, html_raw)
+
+    html_should = '<p style="margin: 0;">sometext</p><hr style="margin-top: 6px; margin-bottom: 6px; border: 0; border-top: 1px solid #dfdfdf;"><p style="margin: 0;">123</p>'
     assert_equal(html_should, html_with_fixes)
   end
 

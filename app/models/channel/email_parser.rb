@@ -23,6 +23,7 @@ class Channel::EmailParser
     cc:                'Somebody <somebody@example.com>',
     subject:           'some message subject',
     body:              'some message body',
+    content_type:      'text/html', # text/plain
     date:              Time.zone.now,
     attachments:       [
       {
@@ -128,33 +129,33 @@ class Channel::EmailParser
     # multi part email
     if mail.multipart?
 
+      # html attachment/body may exists and will be converted to strict html
+      if mail.html_part && mail.html_part.body
+        data[:body] = mail.html_part.body.to_s
+        data[:body] = Encode.conv(mail.html_part.charset.to_s, data[:body])
+        data[:body] = data[:body].html2html_strict.to_s.force_encoding('utf-8')
+
+        if !data[:body].force_encoding('UTF-8').valid_encoding?
+          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+        end
+        data[:content_type] = 'text/html'
+      end
+
       # text attachment/body exists
-      if mail.text_part
+      if data[:body].empty? && mail.text_part
         data[:body] = mail.text_part.body.decoded
         data[:body] = Encode.conv(mail.text_part.charset, data[:body])
 
         if !data[:body].valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
         end
+        data[:content_type] = 'text/plain'
       end
 
-      # html attachment/body may exists and will be converted to text
-      if !mail.text_part || !data[:body] || data[:body] == ''
-        filename = '-no name-'
-        if mail.html_part && mail.html_part.body
-          filename = 'message.html'
-          data[:body] = mail.html_part.body.to_s
-          data[:body] = Encode.conv(mail.html_part.charset.to_s, data[:body])
-          data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
-
-          if !data[:body].force_encoding('UTF-8').valid_encoding?
-            data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-          end
-
-        # any other attachments
-        else
-          data[:body] = 'no visible content'
-        end
+      # any other attachments
+      if data[:body].empty?
+        data[:body] = 'no visible content'
+        data[:content_type] = 'text/plain'
       end
 
       # add html attachment/body as real attachment
@@ -194,6 +195,35 @@ class Channel::EmailParser
 
     # not multipart email
 
+    # html part only, convert to text and add it as attachment
+    elsif mail.mime_type && mail.mime_type.to_s.casecmp('text/html').zero?
+      filename = 'message.html'
+      data[:body] = mail.body.decoded
+      data[:body] = Encode.conv(mail.charset, data[:body])
+      data[:body] = data[:body].html2html_strict.to_s.force_encoding('utf-8')
+
+      if !data[:body].valid_encoding?
+        data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+      end
+      data[:content_type] = 'text/html'
+
+      # add body as attachment
+      headers_store = {
+        'content-alternative' => true,
+      }
+      if mail.mime_type
+        headers_store['Mime-Type'] = mail.mime_type
+      end
+      if mail.charset
+        headers_store['Charset'] = mail.charset
+      end
+      attachment = {
+        data: mail.body.decoded,
+        filename: mail.filename || filename,
+        preferences: headers_store
+      }
+      data[:attachments].push attachment
+
     # text part only
     elsif !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.casecmp('text/plain').zero?
       data[:body] = mail.body.decoded
@@ -202,24 +232,10 @@ class Channel::EmailParser
       if !data[:body].force_encoding('UTF-8').valid_encoding?
         data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
       end
-
-    # html part only, convert to text and add it as attachment
+      data[:content_type] = 'text/plain'
     else
       filename = '-no name-'
-      if mail.mime_type.to_s.casecmp('text/html').zero?
-        filename = 'message.html'
-        data[:body] = mail.body.decoded
-        data[:body] = Encode.conv(mail.charset, data[:body])
-        data[:body] = data[:body].html2text.to_s.force_encoding('utf-8')
-
-        if !data[:body].valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-        end
-
-        # any other attachments
-      else
-        data[:body] = 'no visible content'
-      end
+      data[:body] = 'no visible content'
 
       # add body as attachment
       headers_store = {
@@ -490,6 +506,7 @@ retrns
         ticket_id: ticket.id,
         type_id: Ticket::Article::Type.find_by(name: 'email').id,
         sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+        content_type: mail[:content_type],
         body: mail[:body],
         from: mail[:from],
         to: mail[:to],

@@ -78,7 +78,7 @@ class String
 
 =end
 
-  def html2text(string_only = false)
+  def html2text(string_only = false, strict = false)
     string = "#{self}" # rubocop:disable Style/UnneededInterpolation
 
     # in case of invalid encodeing, strip invalid chars
@@ -98,6 +98,26 @@ class String
         link_list += "[#{counter}] #{link}\n"
         "[#{counter}] "
       }
+    else
+      string.gsub!(%r{<a\s+href=("|')(.+?)("|')(\s*|\s+[^>]*)>(.+?)<\s*/a\s*>}mxi) {|_placeholder|
+        link = $2
+        if !link.empty?
+          link.strip!
+        end
+        text = $5
+        if !text.empty?
+          text.strip!
+        end
+        placeholder = if !link.empty? && text.empty?
+                        link
+                      elsif link.empty? && !text.empty?
+                        text
+                      elsif !link.empty? && !text.empty? && (link.downcase == text.downcase || link.downcase == "mailto:#{text}".downcase || link.downcase == "http://#{text}".downcase)
+                        text
+                      else
+                        "#{text} (#{link})"
+                      end
+      }
     end
 
     # remove style tags with content
@@ -105,6 +125,9 @@ class String
 
     # remove empty lines
     string.gsub!(/^\s*/m, '')
+    if strict
+      string.gsub!(%r{< \s* (/*) \s* (b|i|ul|ol|li|u|h1|h2|h3|hr) (\s*|\s+[^>]*) >}mxi, '######\1\2######')
+    end
 
     # pre/code handling 1/2
     string.gsub!(%r{<pre>(.+?)</pre>}m) { |placeholder|
@@ -140,8 +163,8 @@ class String
     # add new lines
     string.gsub!(%r{</div><div(|\s.+?)>}im, "\n")
     string.gsub!(%r{</p><p(|\s.+?)>}im, "\n")
-    string.gsub!(%r{<(div|p|pre|br|table|h)(|/| [^>]*)>}i, "\n")
-    string.gsub!(%r{</(tr|p|br|div)(|\s.+?)>}i, "\n")
+    string.gsub!(%r{<(div|p|pre|br|table|tr|h)(|/| [^>]*)>}i, "\n")
+    string.gsub!(%r{</(p|br|div)(|\s.+?)>}i, "\n")
     string.gsub!(%r{</td>}i, ' ')
 
     # strip all other tags
@@ -221,6 +244,19 @@ class String
     text = CGI.escapeHTML(self)
     text.gsub!(/\n/, '<br>')
     text.chomp
+  end
+
+=begin
+
+  html = text_string.text2html
+
+=end
+
+  def html2html_strict
+    string = html2text(true, true)
+    string = string.text2html
+    string.gsub!(/######(.+?)######/, '<\1>')
+    string.chomp
   end
 
 end

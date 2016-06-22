@@ -679,7 +679,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 6,
-  frontend: true
+  frontend: false
 )
 Setting.create_if_not_exists(
   title: '2 lower and 2 upper characters',
@@ -701,7 +701,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 0,
-  frontend: true
+  frontend: false
 )
 Setting.create_if_not_exists(
   title: 'Digit required',
@@ -723,7 +723,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 1,
-  frontend: true
+  frontend: false
 )
 Setting.create_if_not_exists(
   title: 'Maximal failed logins',
@@ -759,7 +759,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: 10,
-  frontend: true
+  frontend: false
 )
 
 Setting.create_if_not_exists(
@@ -1260,7 +1260,7 @@ Setting.create_if_not_exists(
   description: 'Define the models which can be searched for.',
   options: {},
   state: [],
-  frontend: false,
+  frontend: true,
 )
 
 Setting.create_if_not_exists(
@@ -1379,7 +1379,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  frontend: true
+  frontend: false
 )
 
 Setting.create_if_not_exists(

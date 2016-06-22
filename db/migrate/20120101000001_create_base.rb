@@ -459,7 +459,7 @@ class CreateBase < ActiveRecord::Migration
     create_table :external_credentials do |t|
       t.string :name
       t.string :credentials, limit: 2500, null: false
-      t.timestamps
+      t.timestamps                        null: false
     end
 
     create_table :object_manager_attributes do |t|

@@ -8192,6 +8192,13 @@ output {
     border: none;
     overflow: auto;
   }
+
+  hr {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border: 0;
+    border-top: 1px solid #dfdfdf;
+  }
 }
 
 /*
