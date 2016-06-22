@@ -93,6 +93,18 @@ class AaaStringTest < ActiveSupport::TestCase
     result = 'test'
     assert_equal(result, html.html2text)
 
+    html   = "<div>test<br><br> <br> \n<br> \n<br> \n</div>"
+    result = 'test'
+    assert_equal(result, html.html2text)
+
+    html   = "<div>test<br><br>&nbsp;<br>&nbsp;\n<br>&nbsp;\n<br>&nbsp;\n</div>"
+    result = 'test'
+    assert_equal(result, html.html2text)
+
+    html   = "<div>test<br><br>&nbsp;<br>&nbsp;\n<br>&nbsp;\n<br>&nbsp;\n</div>&nbsp;"
+    result = 'test'
+    assert_equal(result, html.html2text)
+
     html   = "<pre>test\n\ntest</pre>"
     result = "test\ntest"
     assert_equal(result, html.html2text)
@@ -102,7 +114,7 @@ class AaaStringTest < ActiveSupport::TestCase
     assert_equal(result, html.html2text)
 
     html   = '<table><tr><td>test</td><td>col</td></td></tr><tr><td>test</td><td>4711</td></tr></table>'
-    result = "test col \ntest 4711"
+    result = "test col\ntest 4711"
     assert_equal(result, html.html2text)
 
     html   = "<p><span>Was\nsoll verbessert werden:</span></p>"
@@ -299,7 +311,7 @@ some text later'
     result = 'some head
 some content
 > line 1
-> 
+>
 > line 2
 some text later'
     assert_equal(result, html.html2text)

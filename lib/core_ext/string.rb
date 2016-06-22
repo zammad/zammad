@@ -124,7 +124,7 @@ class String
     string.gsub!(%r{<style(|\s.+?)>(.+?)</style>}im, '')
 
     # remove empty lines
-    string.gsub!(/^\s*/m, '')
+    string.gsub!(/^[[:space:]]*/m, '')
     if strict
       string.gsub!(%r{< \s* (/*) \s* (b|i|ul|ol|li|u|h1|h2|h3|hr) (\s*|\s+[^>]*) >}mxi, '######\1\2######')
     end
@@ -138,7 +138,7 @@ class String
     }
 
     # insert spaces on [A-z]\n[A-z]
-    string.gsub!(/([A-z])\n([A-z])/m, '\1 \2')
+    string.gsub!(/([A-z])[[:space:]]([A-z])/m, '\1 \2')
 
     # remove all new lines
     string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
@@ -219,17 +219,15 @@ class String
     end
 
     # remove tailing empty spaces
-    string.gsub!(/\s+\n$/, "\n")
-
-    # remove multiple empty lines
-    string.gsub!(/\n\n\n/, "\n\n")
-
-    string.strip!
+    string.gsub!(/[[:blank:]]+$/, '')
 
     # add extracted links
     if link_list != ''
       string += "\n\n\n" + link_list
     end
+
+    # remove double multiple empty lines
+    string.gsub!(/\n\n\n/, "\n\n")
 
     string.strip
   end
