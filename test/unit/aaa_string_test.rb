@@ -93,6 +93,18 @@ class AaaStringTest < ActiveSupport::TestCase
     result = 'test'
     assert_equal(result, html.html2text)
 
+    html   = "<div>test<br><br> <br> \n<br> \n<br> \n</div>"
+    result = 'test'
+    assert_equal(result, html.html2text)
+
+    html   = "<div>test<br><br>&nbsp;<br>&nbsp;\n<br>&nbsp;\n<br>&nbsp;\n</div>"
+    result = 'test'
+    assert_equal(result, html.html2text)
+
+    html   = "<div>test<br><br>&nbsp;<br>&nbsp;\n<br>&nbsp;\n<br>&nbsp;\n</div>&nbsp;"
+    result = 'test'
+    assert_equal(result, html.html2text)
+
     html   = "<pre>test\n\ntest</pre>"
     result = "test\ntest"
     assert_equal(result, html.html2text)
@@ -102,7 +114,7 @@ class AaaStringTest < ActiveSupport::TestCase
     assert_equal(result, html.html2text)
 
     html   = '<table><tr><td>test</td><td>col</td></td></tr><tr><td>test</td><td>4711</td></tr></table>'
-    result = "test col \ntest 4711"
+    result = "test col\ntest 4711"
     assert_equal(result, html.html2text)
 
     html   = "<p><span>Was\nsoll verbessert werden:</span></p>"
@@ -127,6 +139,19 @@ class AaaStringTest < ActiveSupport::TestCase
     test<br><br><br>\n<hr/>\n<br>\n
     </div>"
     result = "test\n\n___"
+    assert_equal(result, html.html2text)
+
+    html = "Ihr RZ-Team<br />
+<br />
+<!--[if gte mso 9]><xml> <o:DocumentProperties>  <o:Author>test</o:Author> =
+ <o:Template>A75DB76E.dotm</o:Template>  <o:LastAuthor>test</o:LastAuthor> =
+ <o:Revision>5</o:Revision>  <o:Created>2011-05-18T07:08:00Z</o:Created>  <=
+o:LastSaved>2011-07-04T17:59:00Z</o:LastSaved>  <o:Pages>1</o:Pages>  <o:Wo=
+rds>189</o:Words>  <o:Characters>1192</o:Characters>  <o:Lines>9</o:Lines> =
+ <o:Paragraphs>2</o:Paragraphs>  <o:CharactersWithSpaces>1379</o:Characters=
+WithSpaces>  <o:Version>11.5606</o:Version> </o:DocumentProperties></xml><!=
+[endif]-->"
+    result = 'Ihr RZ-Team'
     assert_equal(result, html.html2text)
 
     html = ' line&nbsp;1<br>
@@ -299,7 +324,7 @@ some text later'
     result = 'some head
 some content
 > line 1
-> 
+>
 > line 2
 some text later'
     assert_equal(result, html.html2text)
