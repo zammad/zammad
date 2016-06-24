@@ -267,7 +267,6 @@
       _this.log('paste', docType, text)
 
       if (docType == 'html') {
-        text = '<div>' + text + '</div>' // to prevent multible dom object. we need it at level 0
         if (_this.options.mode === 'textonly') {
           if (!_this.options.multiline) {
             text = App.Utils.htmlRemoveTags(text)
