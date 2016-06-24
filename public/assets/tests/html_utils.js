@@ -313,7 +313,8 @@ test("htmlRemoveTags", function() {
   should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext($(source))
   equal(result.html(), should, source)
-  should = "<div>This is some text!</div>"
+
+  should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext(source)
   equal(result.html(), should, source)
 
@@ -403,7 +404,7 @@ test("htmlRemoveRichtext", function() {
 
   source = "<div><div><label for=\"Ticket_888344_group_id\">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for=\"Ticket_888344_owner_id\">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href=\"http://localhost:3000/assets/images/icons.svg#icon-arrow-down\"></use></svg></div><span></span><span></span></div></div><div><div>    <label for=\"Ticket_888344_state_id\">Status <span>*</span></label></div></div></div>\n"
   //should = "<div>test 123</div>"
-  should = '<div><div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div></div>' + "\n"
+  should = '<div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div>'
   result = App.Utils.htmlRemoveRichtext(source)
   equal(result.html(), should, source)
 
@@ -412,7 +413,7 @@ test("htmlRemoveRichtext", function() {
   result = App.Utils.htmlRemoveRichtext($(source))
   equal(result.html(), should, source)
 
-  should = "<div>This is some text!</div>"
+  should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext(source)
   equal(result.html(), should, source)
 
@@ -425,6 +426,21 @@ test("htmlCleanup", function() {
   //var should = "<div>test</div>"
   var should = "test"
   var result = App.Utils.htmlCleanup($(source))
+  equal(result.html(), should, source)
+
+  source = "<div><!--test comment--><a href=\"test\">test</a></div>"
+  should = "test"
+  result = App.Utils.htmlCleanup(source)
+  equal(result.html(), should, source)
+
+  source = "some link to somewhere"
+  should = "some link to somewhere"
+  result = App.Utils.htmlCleanup(source)
+  equal(result.html(), should, source)
+
+  source = "<li>a</li><li>b</li>"
+  should = "<li>a</li><li>b</li>"
+  result = App.Utils.htmlCleanup(source)
   equal(result.html(), should, source)
 
   source = "<a href=\"some_link\">some link to somewhere</a>"
@@ -503,7 +519,7 @@ test("htmlCleanup", function() {
 
   source = "<div><div><label for=\"Ticket_888344_group_id\">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for=\"Ticket_888344_owner_id\">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href=\"http://localhost:3000/assets/images/icons.svg#icon-arrow-down\"></use></svg></div><span></span><span></span></div></div><div><div>    <label for=\"Ticket_888344_state_id\">Status <span>*</span></label></div></div></div>\n"
   //should = "<div>test 123</div>"
-  should = '<div><div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div></div>' + "\n"
+  should = '<div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div>'
   result = App.Utils.htmlCleanup(source)
   equal(result.html(), should, source)
 
