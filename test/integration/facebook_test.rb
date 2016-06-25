@@ -36,11 +36,6 @@ class FacebookTest < ActiveSupport::TestCase
   customer_id = ENV['FACEBOOK_CUSTOMER'].split(':')[1]
   customer_access_token = ENV['FACEBOOK_CUSTOMER'].split(':')[2]
 
-  #app_id = '16148802753996712'
-  #app_secret = '4ff83ae48ae7a375ca25576956cd51dc12'
-  #oauth = Koala::Facebook::OAuth.new(app_id, app_secret)
-  #customer_access_token = oauth.exchange_access_token(customer_access_token)
-
   provider_options = {
     adapter: 'facebook',
     auth: {
@@ -125,6 +120,8 @@ class FacebookTest < ActiveSupport::TestCase
     message         = "I've got an issue with my hat, serial number ##{rand(99_999)}"
     post            = customer_client.put_wall_post(message, {}, page_id)
 
+    sleep 8
+
     # fetch check system account
     Channel.fetch
 
@@ -146,6 +143,8 @@ class FacebookTest < ActiveSupport::TestCase
     post_comment = "Any updates yet? It's urgent. I love my hat."
     comment      = customer_client.put_comment(post['id'], post_comment)
 
+    sleep 8
+
     # fetch check system account
     Channel.fetch
 
@@ -164,6 +163,8 @@ class FacebookTest < ActiveSupport::TestCase
     customer_client = Koala::Facebook::API.new(customer_access_token)
     feed_post       = "I've got an issue with my hat, serial number ##{rand(99_999)}"
     post            = customer_client.put_wall_post(feed_post, {}, page_id)
+
+    sleep 8
 
     # fetch check system account
     Channel.fetch
@@ -199,6 +200,8 @@ class FacebookTest < ActiveSupport::TestCase
 
     post_comment = 'The peacock feather is fallen off.'
     comment      = customer_client.put_comment(post['id'], post_comment)
+
+    sleep 8
 
     # fetch check system account
     Channel.fetch
