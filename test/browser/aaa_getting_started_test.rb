@@ -3,7 +3,6 @@ require 'browser_test_helper'
 
 class AaaGettingStartedTest < TestCase
   def test_a_getting_started
-    #return # TODO: temp disable
     if !ENV['MAILBOX_INIT']
       #raise "Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
       puts "NOTICE: Need MAILBOX_INIT as ENV variable like export MAILBOX_INIT='unittest01@znuny.com:somepass'"
