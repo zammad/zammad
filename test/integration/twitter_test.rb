@@ -125,6 +125,10 @@ class TwitterTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    article = Ticket::Article.find(article.id)
     assert(article, "outbound article created, text: #{text}")
     assert_equal(system_login, article.from, 'ticket article from')
     assert_equal('', article.to, 'ticket article to')
@@ -223,6 +227,10 @@ class TwitterTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    article = Ticket::Article.find(article.id)
     assert(article, "outbound article created, text: #{reply_text}")
     assert_equal(system_login, article.from, 'ticket article from')
     assert_equal(customer_login, article.to, 'ticket article to')
@@ -306,6 +314,10 @@ class TwitterTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
     assert_equal(2, outbound_article.ticket.articles.count, 'ticket article outbound count')
     assert_equal(system_login, outbound_article.from, 'ticket article from')
@@ -445,6 +457,10 @@ class TwitterTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    article = Ticket::Article.find(article.id)
     assert(article, "outbound article created, text: #{reply_text}")
     assert_equal(system_login, article.from, 'ticket article from')
     assert_equal('', article.to, 'ticket article to')
