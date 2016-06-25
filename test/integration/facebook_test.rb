@@ -36,6 +36,11 @@ class FacebookTest < ActiveSupport::TestCase
   customer_id = ENV['FACEBOOK_CUSTOMER'].split(':')[1]
   customer_access_token = ENV['FACEBOOK_CUSTOMER'].split(':')[2]
 
+  #app_id = '16148802753996712'
+  #app_secret = '4ff83ae48ae7a375ca25576956cd51dc12'
+  #oauth = Koala::Facebook::OAuth.new(app_id, app_secret)
+  #customer_access_token = oauth.exchange_access_token(customer_access_token)
+
   provider_options = {
     adapter: 'facebook',
     auth: {
@@ -184,6 +189,10 @@ class FacebookTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
     assert_equal(outbound_article.from, 'Hansi Merkurs Hutfabrik', 'ticket article outbound count')
     assert_equal(outbound_article.ticket.articles.count, 2, 'ticket article outbound count')
@@ -209,6 +218,10 @@ class FacebookTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
     assert_equal(outbound_article.from, 'Hansi Merkurs Hutfabrik', 'ticket article outbound count')
     assert_equal(outbound_article.ticket.articles.count, 4, 'ticket article outbound count')
