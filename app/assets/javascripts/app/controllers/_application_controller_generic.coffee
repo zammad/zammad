@@ -813,7 +813,7 @@ class App.CollectionController extends App.Controller
     if @subscribeId
       App[@model].unsubscribe(@subscribeId)
 
-  uIRunner: ->
+  uIRunner: =>
     return if !@queue[0]
     return if @queueRunning
     @queueRunning = true
@@ -1025,6 +1025,8 @@ class App.CollectionController extends App.Controller
     html =  $(App.view(@template)(
       item: item
     ))
+    if @onRenderItemEnd
+      @onRenderItemEnd(item, html)
     itemCount = Object.keys(@renderList).length
     @renderList[item[@uniqKey]] = html
     if el is false
@@ -1044,7 +1046,7 @@ class App.CollectionController extends App.Controller
   onRenderEnd: ->
     # nothing
 
-  location: (e) ->
+  location: (e) =>
     @locationVerify(e)
 
   click: (e) =>

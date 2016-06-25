@@ -1,7 +1,15 @@
-class App.DashboardActivityStream extends App.Controller
+class App.DashboardActivityStream extends App.CollectionController
+  model: false
+  template: 'dashboard/activity_stream_item'
+  uniqKey: 'id'
+  observe:
+    updated_at: true
+  prepareForObjectListItemSupport: true
+  items: []
+  insertPosition: 'before'
+
   constructor: ->
     super
-
     @fetch()
 
     # bind to rebuild view event
@@ -19,48 +27,39 @@ class App.DashboardActivityStream extends App.Controller
       @ajax(
         id:    'dashoard_activity_stream'
         type:  'GET'
-        url:   @apiPath + '/activity_stream'
-        data:  {
+        url:   "#{@apiPath}/activity_stream"
+        data:
           limit: @limit || 8
-        }
         processData: true
         success: (data) =>
           @load(data)
       )
 
   load: (data) =>
-
     App.SessionStorage.set('activity_stream', data)
-
-    items = data.activity_stream
-
+    @items = data.activity_stream
     App.Collection.loadAssets(data.assets)
+    @collectionSync(@items)
 
-    @render(items)
+  itemGet: (key) =>
+    for item in @items
+      return item if key is item.id
 
-  render: (items) ->
+  itemDestroy: (key) ->
+    # nothing
 
-    # show description of activity stream
-    return if _.isEmpty(items)
+  itemsAll: =>
+    @items
+
+  onRenderEnd: =>
+    return if _.isEmpty(@items)
 
     # remove description of activity stream
-    @$('.activity-description').removeClass('activity-description')
+    @el.removeClass('activity-description').addClass('activity-entries')
 
-    items = @prepareForObjectList(items)
-
-    html = $('<div class="activity-entries"></div>')
-    for item in items
-      html.append(@renderItem(item))
-
-    @el.html html
-
-  renderItem: (item) ->
-    html = $(App.view('dashboard/activity_stream')(
-      item: item
-    ))
+  onRenderItemEnd: (item, el) ->
     new App.WidgetAvatar(
-      el:        html.find('.js-avatar')
+      el:        el.find('.js-avatar')
       object_id: item.created_by_id
       size:      40
     )
-    html

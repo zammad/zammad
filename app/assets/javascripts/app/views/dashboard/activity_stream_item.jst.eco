@@ -1,4 +1,4 @@
-<div class="activity-entry">
+<div class="js-item activity-entry">
   <div class="activity-avatar js-avatar"></div>
   <a href="<%- @item.link %>" class="activity-body">
     <span class="activity-message">
