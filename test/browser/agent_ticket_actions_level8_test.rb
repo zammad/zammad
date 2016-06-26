@@ -615,4 +615,36 @@ class AgentTicketActionLevel8Test < TestCase
     )
   end
 
+  def test_d_macro
+
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    ticket1 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'some subject - macro#1',
+        body: 'some body - macro#1',
+      },
+    )
+
+    click(css: '.active.content .js-submitDropdown .js-openDropdownMacro')
+    click(css: '.active.content .js-submitDropdown .js-dropdownActionMacro')
+
+    # verify tags
+    tags_verify(
+      tags: {
+        'spam' => true,
+        'tag1' => false,
+      }
+    )
+
+  end
+
 end
