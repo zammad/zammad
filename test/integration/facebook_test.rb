@@ -120,6 +120,8 @@ class FacebookTest < ActiveSupport::TestCase
     message         = "I've got an issue with my hat, serial number ##{rand(99_999)}"
     post            = customer_client.put_wall_post(message, {}, page_id)
 
+    sleep 8
+
     # fetch check system account
     Channel.fetch
 
@@ -141,6 +143,8 @@ class FacebookTest < ActiveSupport::TestCase
     post_comment = "Any updates yet? It's urgent. I love my hat."
     comment      = customer_client.put_comment(post['id'], post_comment)
 
+    sleep 8
+
     # fetch check system account
     Channel.fetch
 
@@ -159,6 +163,8 @@ class FacebookTest < ActiveSupport::TestCase
     customer_client = Koala::Facebook::API.new(customer_access_token)
     feed_post       = "I've got an issue with my hat, serial number ##{rand(99_999)}"
     post            = customer_client.put_wall_post(feed_post, {}, page_id)
+
+    sleep 8
 
     # fetch check system account
     Channel.fetch
@@ -184,12 +190,18 @@ class FacebookTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
     assert_equal(outbound_article.from, 'Hansi Merkurs Hutfabrik', 'ticket article outbound count')
     assert_equal(outbound_article.ticket.articles.count, 2, 'ticket article outbound count')
 
     post_comment = 'The peacock feather is fallen off.'
     comment      = customer_client.put_comment(post['id'], post_comment)
+
+    sleep 8
 
     # fetch check system account
     Channel.fetch
@@ -209,6 +221,10 @@ class FacebookTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
+    Scheduler.worker(true)
+
+    outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
     assert_equal(outbound_article.from, 'Hansi Merkurs Hutfabrik', 'ticket article outbound count')
     assert_equal(outbound_article.ticket.articles.count, 4, 'ticket article outbound count')

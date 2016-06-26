@@ -104,7 +104,7 @@ class HistoryTest < ActiveSupport::TestCase
             owner_id: current_user.id,
           },
           article: {
-            from: 'Unit 2 Test 2 <unittest@example.com>',
+            body: 'Unit Test 123 - 2',
           },
         },
         history_check: [
@@ -140,9 +140,9 @@ class HistoryTest < ActiveSupport::TestCase
             result: true,
             history_object: 'Ticket::Article',
             history_type: 'updated',
-            history_attribute: 'from',
-            value_from: 'Unit Test <unittest@example.com>',
-            value_to: 'Unit 2 Test 2 <unittest@example.com>',
+            history_attribute: 'body',
+            value_from: 'Unit Test 123',
+            value_to: 'Unit Test 123 - 2',
           },
         ]
       },

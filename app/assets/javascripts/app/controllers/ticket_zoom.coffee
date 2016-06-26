@@ -578,13 +578,13 @@ class App.TicketZoom extends App.Controller
 
         # apply tag changes
         if attributes[1] is 'tags'
-          if @sidebar && @sidebar.edit && @sidebar.edit.tagWidget
+          if @sidebar && @sidebar.tagWidget
             tags = content.value.split(',')
             for tag in tags
               if content.operator is 'remove'
-                @sidebar.edit.tagWidget.remove(tag)
+                @sidebar.tagWidget.remove(tag)
               else
-                @sidebar.edit.tagWidget.add(tag)
+                @sidebar.tagWidget.add(tag)
 
         # apply user changes
         else if attributes[1] is 'owner_id'

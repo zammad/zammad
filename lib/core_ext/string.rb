@@ -225,7 +225,7 @@ class String
     string.gsub!(/[[:blank:]]+$/, '')
 
     # remove double multiple empty lines
-    string.gsub!(/\n\n\n/, "\n\n")
+    string.gsub!(/\n\n\n+/, "\n\n")
 
     # add extracted links
     if link_list != ''
@@ -233,7 +233,7 @@ class String
     end
 
     # remove double multiple empty lines
-    string.gsub!(/\n\n\n/, "\n\n")
+    string.gsub!(/\n\n\n+/, "\n\n")
 
     string.strip
   end

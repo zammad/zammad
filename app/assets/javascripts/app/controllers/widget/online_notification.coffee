@@ -201,7 +201,7 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
   alreadyShown: {}
   insertPosition: 'before'
 
-  onRenderEnd: ->
+  onRenderEnd: =>
     @container.counterGen()
 
     # generate desktop notifications
@@ -222,5 +222,5 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
           )
           App.OnlineNotification.play()
 
-  onClick: ->
+  onClick: =>
     @container.hide()

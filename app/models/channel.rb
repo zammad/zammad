@@ -244,6 +244,7 @@ send via account
       self.status_out = 'error'
       self.last_log_out = error
       save
+      raise error
     end
     result
   end

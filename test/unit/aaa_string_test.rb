@@ -1,6 +1,7 @@
 # encoding: utf-8
+# rubocop:disable all
 require 'test_helper'
-# rubocop:disable TrailingWhitespace
+
 class AaaStringTest < ActiveSupport::TestCase
 
   test 'to_filename ref' do
@@ -131,7 +132,7 @@ class AaaStringTest < ActiveSupport::TestCase
     html = "\n<div><a href=\"http://zammad.org\">Best Tool of the World</a>
      some other text</div>
     <div>"
-    result = "[1] Best Tool of the Worldsome other text\n\n\n[1] http://zammad.org"
+    result = "[1] Best Tool of the Worldsome other text\n\n[1] http://zammad.org"
     assert_equal(result, html.html2text)
 
     html = "<!-- some comment -->
@@ -139,6 +140,10 @@ class AaaStringTest < ActiveSupport::TestCase
     test<br><br><br>\n<hr/>\n<br>\n
     </div>"
     result = "test\n\n___"
+    assert_equal(result, html.html2text)
+
+    html = "test<br><br><br>--<br>abc</div>"
+    result = "test\n\n--\nabc"
     assert_equal(result, html.html2text)
 
     html = "Ihr RZ-Team<br />
@@ -152,6 +157,56 @@ rds>189</o:Words>  <o:Characters>1192</o:Characters>  <o:Lines>9</o:Lines> =
 WithSpaces>  <o:Version>11.5606</o:Version> </o:DocumentProperties></xml><!=
 [endif]-->"
     result = 'Ihr RZ-Team'
+    assert_equal(result, html.html2text)
+
+html = '<html>
+<head>
+<title>Neues Fax von 1234-93900</title>
+</head>
+<body style="margin: 0px;padding: 0px;font-family: Arial, sans-serif;font-size: 12px;">
+<table cellpadding="0" cellspacing="0" width="100%" height="100%" bgcolor="#d9e7f0" id="mailbg" style="empty-cells:show;font-size: 12px;line-height: 18px;color: #000000;font-family: Arial, sans-serif;width: 100%;height: 100%;background-color: #d9e7f0;padding: 0px;margin: 0px;">
+<tr>
+<td valign="top">
+<center>
+<br><br>
+<table width="560" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" id="mailcontainer" style="empty-cells:show;font-size: 12px;line-height: 18px;color: #000000;font-family: Arial, sans-serif;width: 560px;margin: 0px auto;padding: 0px;background-color: #FFFFFF;">
+<tr>
+<td colspan="3" width="560" id="mail_header" valign="top" style="width: 560px;background-color: #FFFFFF;font-family: Arial, sans-serif;color: #000000;padding: 0px;margin: 0px;">
+<table width="560" cellpadding="0" cellspacing="0" style="empty-cells:show;font-size: 12px;line-height: 18px;color: #000000;font-family: Arial, sans-serif;">
+<tr>
+<td height="10" colspan="4" style="font-size:0px;line-height: 0px;padding:0px;height:10px;"><img src="http://www.example.docm/static/example.docm/mailtemplates/de_DE/team/img/tpl_header.gif" style="padding: 0px;margin: 0px;"></td>
+</tr>
+<tr>
+<td height="12" colspan="4"><span style="font-size:0px;line-height:0px;"> </span></td>
+</tr>
+<tr>
+<td height="27" width="30"> </td>
+<td height="27" width="397"><span class="mailtitle" style="font-family: Arial, sans-serif;color: #000000;font-size: 18px;line-height: 18px;font-weight: normal;">Neues Fax</span></td>
+<td height="27" width="103"><img src="http://www.example.docm/static/example.docm/mailtemplates/de_DE/team/img/tpl_logo-example.gif" style="padding: 0px;margin: 0px;"></td>
+<td height="27" width="30"></td>
+</tr>
+<tr>
+<td height="20" colspan="4"><span style="font-size:0px;line-height:0px;"> </span></td>
+</tr>
+<tr>
+<td height="1" colspan="4" style="font-size:0px;line-height: 0px;padding:0px;"><img src="http://www.example.docm/static/example.docm/mailtemplates/de_DE/team/img/tpl_line-grey.gif" style="padding: 0px;margin: 0px;"></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="3" width="560"> </td>
+</tr>
+<tr>
+<td width="30"> </td>
+<td width="500" height="30" valign="middle" align="right"><span class="accountno" style="font-family: Arial, sans-serif;font-size: 10px;color: #666666;">Ihre Kundennummer: 12345678</span></td>
+<td width="30"> </td>
+</tr>'
+    result = 'Neues Fax von 1234-93900
+
+ Neues Fax
+
+ Ihre Kundennummer: 12345678'
     assert_equal(result, html.html2text)
 
     html = ' line&nbsp;1<br>
@@ -338,7 +393,6 @@ some text later'
 Your Team Team
 P.S.: You receive this e-mail because you are listed in our database as person who ordered a Team license. Please click [1] here to unsubscribe from further e-mails.
 -----------------------------
-
 
 [1] http://www.teamviewer.example/en/company/unsubscribe.aspx?id=1009645&ident=xxx'
     assert_equal(result, html.html2text)

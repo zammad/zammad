@@ -28,6 +28,10 @@ class Ticket::Article < ApplicationModel
     type_id: true,
     sender_id: true,
     preferences: true,
+    message_id: true,
+    from: true,
+    to: true,
+    cc: true,
   }
 
   # fillup md5 of message id to search easier on very long message ids

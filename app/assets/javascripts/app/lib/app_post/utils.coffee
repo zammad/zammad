@@ -132,7 +132,6 @@ class App.Utils
   # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext(html)
   @htmlRemoveRichtext: (html) ->
     return html if !html
-
     html = @_checkTypeOf(html)
 
     # remove comments
@@ -156,6 +155,7 @@ class App.Utils
 
   # cleanHtmlWithRichText = App.Utils.htmlCleanup(html)
   @htmlCleanup: (html) ->
+    return html if !html
     html = @_checkTypeOf(html)
 
     # remove comments
@@ -198,7 +198,21 @@ class App.Utils
 
   @_checkTypeOf: (item) ->
     return item if typeof item isnt 'string'
-    $("<div>#{item}</div>")
+
+    try
+      result = $(item)
+
+      # if we have more then on element at first level
+      if result.length > 1
+        return $("<div>#{item}</div>")
+
+      # if we have just a text string without html markup
+      if !result || !result.get(0)
+        return $("<div>#{item}</div>")
+
+      return result
+    catch err
+      return $("<div>#{item}</div>")
 
   @_removeAttributes: (html) ->
     html.find('*')
@@ -229,6 +243,7 @@ class App.Utils
     html
 
   @_removeWordMarkup: (html) ->
+    return html if !html.get(0)
     match = false
     htmlTmp = html.get(0).outerHTML
     regex = new RegExp('<(/w|w)\:[A-Za-z]')
