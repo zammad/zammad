@@ -246,7 +246,6 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_raises(RuntimeError) {
       Scheduler.worker(true)
     }
-
     article2_lookup = Ticket::Article.find(article2.id)
     assert_equal(2, ticket1.articles.count)
     assert_equal(3, article2_lookup.preferences['delivery_retry'])
@@ -255,8 +254,9 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert(article2_lookup.preferences['delivery_status_message'])
 
     sleep 16
-    Scheduler.worker(true)
-
+    assert_raises(RuntimeError) {
+      Scheduler.worker(true)
+    }
     article2_lookup = Ticket::Article.find(article2.id)
     article_delivery_system = ticket1.articles.last
     assert_equal(3, ticket1.articles.count)
