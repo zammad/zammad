@@ -1,0 +1,232 @@
+class App.Search extends App.Controller
+  searchResultCache: {}
+  elements:
+    '.js-search': 'searchInput'
+
+  events:
+    'submit form.search-holder': 'preventDefault'
+    'keydown .js-search': 'listNavigate'
+    'click .js-tab': 'showTab'
+
+  constructor: ->
+    super
+
+    # check authentication
+    if !@authenticate(false)
+      App.TaskManager.remove(@task_key)
+      return
+
+    # update taskbar with new meta data
+    App.TaskManager.touch(@task_key)
+
+    @render()
+
+  meta: =>
+    title = App.i18n.translateInline('Extended Search')
+    if @query
+      title += ": #{App.Utils.htmlEscape(@query)}"
+    meta =
+      url:   @url()
+      id:    ''
+      head:  title
+      title: title
+      iconClass: 'magnifier'
+    meta
+
+  url: ->
+    '#search'
+
+  show: (params) =>
+    @navupdate(url: '#search', type: 'menu')
+    console.log('par', params)
+    return if !params.query
+    @$('.js-search').val(decodeURIComponent(params.query)).trigger('change')
+    @searchFunction(200, true)
+
+  hide: ->
+    # nothing
+
+  changed: ->
+    # nothing
+
+  render: ->
+    currentState = App.TaskManager.get(@task_key).state
+    if !@query
+      if currentState && currentState.query
+        @query = currentState.query
+
+    if !@model
+      if currentState && currentState.model
+        @model = currentState.model
+      else
+        @model = 'Ticket'
+
+    @tabs = []
+    for model in App.Config.get('models_searchable')
+      tab =
+        name: model
+        model: model
+        count: 0
+        active: false
+      if @model == model
+        tab.active = true
+      @tabs.push tab
+
+    # build view
+    @html App.view('search/index')(
+      query: @query
+      tabs: @tabs
+    )
+
+    if @query
+      @searchFunction(200, true)
+
+  listNavigate: (e) =>
+    if e.keyCode is 27 # close on esc
+      @empty()
+      return
+
+    # on other keys, show result
+    @searchFunction(200)
+
+  empty: =>
+    @searchInput.val('')
+
+    # remove not needed popovers
+    @delay(@anyPopoversDestroy, 100, 'removePopovers')
+
+  searchFunction: (delay, force = false) =>
+
+    search = =>
+      query = @searchInput.val().trim()
+      if !force
+        return if !query
+        return if query is @query
+      @query = query
+
+      # use cache for search result
+      if @searchResultCache[@query]
+        @renderResult(@searchResultCache[@query].result)
+        currentTime = new Date
+        return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+
+      @updateTask()
+
+      App.Ajax.request(
+        id:    'search'
+        type:  'GET'
+        url:   "#{@apiPath}/search"
+        data:
+          query: @query
+          limit: 200
+        processData: true,
+        success: (data, status, xhr) =>
+          App.Collection.loadAssets(data.assets)
+          result = {}
+          for item in data.result
+            if App[item.type] && App[item.type].find
+              if !result[item.type]
+                result[item.type] = []
+              item_object = App[item.type].find(item.id)
+              if item_object.searchResultAttributes
+                item_object_search_attributes = item_object.searchResultAttributes()
+                result[item.type].push item_object_search_attributes
+              else
+                @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
+            else
+              @log 'error', "No such model App.#{item.type}"
+
+          diff = false
+          if @searchResultCache[@query]
+            diff = difference(@searchResultCache[@query].resultRaw, data.result)
+
+          # cache search result
+          @searchResultCache[@query] =
+            result: result
+            resultRaw: data.result
+            time: new Date
+
+          # if result hasn't changed, do not rerender
+          return if diff isnt false && _.isEmpty(diff)
+
+          @renderResult(result)
+      )
+    @delay(search, delay, 'search')
+
+  renderResult: (result = []) =>
+    @result = result
+    for tab in @tabs
+      count = 0
+      if result[tab.model]
+        count = result[tab.model].length
+      if @model is tab.model
+        @renderTab(tab.model, result[tab.model] || [])
+      @$(".js-tab#{tab.model} .js-counter").text("(#{count})")
+
+  showTab: (e) =>
+    tabs = $(e.currentTarget).closest('.tabs')
+    tabModel = $(e.currentTarget).data('tab-content')
+    tabs.find('.js-tab').removeClass('active')
+    $(e.currentTarget).addClass('active')
+    @renderTab(tabModel, @result[tabModel] || [])
+
+  renderTab: (model, localList) =>
+
+    # remember last shown model
+    if @model isnt model
+      @model = model
+      @updateTask()
+
+    list = []
+    for item in localList
+      object = App[model].fullLocal(item.id)
+      list.push object
+    if model is 'Ticket'
+      ticket_ids = []
+      for item in localList
+        ticket_ids.push item.id
+      new App.TicketList(
+        table_id:   "find_#{model}"
+        el:         @$('.js-content')
+        columns:    [ 'number', 'title', 'customer', 'group', 'owner', 'created_at' ]
+        ticket_ids: ticket_ids
+        radio:      false
+      )
+    else
+      openObject = (id,e) =>
+        object = App[@model].fullLocal(id)
+        @navigate object.uiUrl()
+      new App.ControllerTable(
+        table_id: "find_#{model}"
+        el:       @$('.js-content')
+        model:    App[model]
+        objects:  list
+        bindRow:
+          events:
+            'click': openObject
+      )
+
+  updateTask: =>
+    current = App.TaskManager.get(@task_key).state
+    current.query = @query
+    current.model = @model
+    App.TaskManager.update(@task_key, { state: current })
+    App.TaskManager.touch(@task_key)
+
+class Router extends App.ControllerPermanent
+  constructor: (params) ->
+    super
+
+    # cleanup params
+    clean_params =
+      query: params.query
+
+    App.TaskManager.execute(
+      key:        'Search'
+      controller: 'Search'
+      params:     clean_params
+      show:       true
+    )
+
+App.Config.set('search', Router, 'Routes')
+App.Config.set('search/:query', Router, 'Routes')

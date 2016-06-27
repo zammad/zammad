@@ -6,8 +6,14 @@ class App.TicketList extends App.Controller
 
   render: =>
 
+    openTicket = (id,e) =>
+      ticket = App.Ticket.fullLocal(id)
+      @navigate ticket.uiUrl()
     callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) ->
       attribute.title = object.title
+      value
+    callbackLinkToTicket = (value, object, attribute, attributes, refObject) ->
+      attribute.link = object.uiUrl()
       value
     callbackUserPopover = (value, object, attribute, attributes, refObject) ->
       attribute.class = 'user-popover'
@@ -44,10 +50,14 @@ class App.TicketList extends App.Controller
       list.push ticketItem
     @el.html('')
     new App.ControllerTable(
+      table_id: @table_id
       el:       @el
-      overview: [ 'number', 'title', 'customer', 'group', 'created_at' ]
+      overview: @columns || [ 'number', 'title', 'customer', 'group', 'created_at' ]
       model:    App.Ticket
       objects:  list
+      #bindRow:
+      #  events:
+      #    'click': openTicket
       callbackHeader: [ callbackIconHeader ]
       callbackAttributes:
         icon:
@@ -59,7 +69,9 @@ class App.TicketList extends App.Controller
         owner_id:
           [ callbackUserPopover ]
         title:
-          [ callbackTicketTitleAdd ]
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        number:
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
       radio: @radio
     )
 
