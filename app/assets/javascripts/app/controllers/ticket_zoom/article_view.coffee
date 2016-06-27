@@ -117,7 +117,14 @@ class ArticleViewItem extends App.ObserverController
           article['html'] = App.Utils.text2html(body)
           article['html'] = article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
 
-    if article.sender.name is 'System' && !article.preferences.delivery_message
+    if article.preferences.delivery_message
+      @html App.view('ticket_zoom/article_view_delivery_failed')(
+        ticket:     @ticket
+        article:    article
+        isCustomer: @isRole('Customer')
+      )
+      return
+    if article.sender.name is 'System'
     #if article.sender.name is 'System' && article.preferences.perform_origin is 'trigger'
       @html App.view('ticket_zoom/article_view_system')(
         ticket:     @ticket

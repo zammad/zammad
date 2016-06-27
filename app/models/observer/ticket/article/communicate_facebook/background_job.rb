@@ -46,7 +46,7 @@ class Observer::Ticket::Article::CommunicateFacebook::BackgroundJob
     end
 
     if !post
-      log_error(article, 'Unable to send message to facebook')
+      log_error(article, 'Got no post!')
       return
     end
 
@@ -73,7 +73,7 @@ class Observer::Ticket::Article::CommunicateFacebook::BackgroundJob
       Ticket::Article.create(
         ticket_id: local_record.ticket_id,
         content_type: 'text/plain',
-        body: "Unable to send tweet: #{message}",
+        body: "Unable to send post: #{message}",
         internal: true,
         sender: Ticket::Article::Sender.find_by(name: 'System'),
         type: Ticket::Article::Type.find_by(name: 'note'),
@@ -84,7 +84,6 @@ class Observer::Ticket::Article::CommunicateFacebook::BackgroundJob
         updated_by_id: 1,
         created_by_id: 1,
       )
-      return
     end
 
     raise message

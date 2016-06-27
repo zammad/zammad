@@ -31,7 +31,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
       return
     end
     if !tweet
-      log_error(article, 'Unable to send message to twitter')
+      log_error(article, 'Got no tweet!')
       return
     end
 
@@ -94,7 +94,6 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
         updated_by_id: 1,
         created_by_id: 1,
       )
-      return
     end
 
     raise message

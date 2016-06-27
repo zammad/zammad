@@ -23,9 +23,9 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
 
     # send email
     if !ticket.group.email_address_id
-      log_error(record, "Unable to send email, no email address definde for group id '#{ticket.group.id}'")
+      log_error(record, "No email address definde for group id '#{ticket.group.id}'!")
     elsif !ticket.group.email_address.channel_id
-      log_error(record, "Unable to send email, no channel definde for email_address id '#{ticket.group.email_address_id}'")
+      log_error(record, "No channel definde for email_address id '#{ticket.group.email_address_id}'!")
     end
 
     channel = ticket.group.email_address.channel
@@ -129,7 +129,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
       Ticket::Article.create(
         ticket_id: local_record.ticket_id,
         content_type: 'text/plain',
-        body: "Unable to send email to '#{recipient_list}'\n#{message}",
+        body: "Unable to send email to '#{recipient_list}': #{message}",
         internal: true,
         sender: Ticket::Article::Sender.find_by(name: 'System'),
         type: Ticket::Article::Type.find_by(name: 'note'),
@@ -140,7 +140,6 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         updated_by_id: 1,
         created_by_id: 1,
       )
-      return
     end
 
     raise message
