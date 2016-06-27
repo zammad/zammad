@@ -58,7 +58,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
       return
     end
     if !message
-      log_error(record, 'Unable to send email')
+      log_error(record, 'Unable to get sent email')
       return
     end
 
@@ -113,13 +113,30 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     Rails.logger.error message
 
     if local_record.preferences['delivery_retry'] > 3
+
+      recipient_list = ''
+      [:to, :cc].each { |key|
+
+        next if !local_record[key]
+        next if local_record[key] == ''
+
+        if recipient_list != ''
+          recipient_list += ','
+        end
+        recipient_list += local_record[key]
+      }
+
       Ticket::Article.create(
         ticket_id: local_record.ticket_id,
         content_type: 'text/plain',
-        body: "Unable to send email: #{message}",
+        body: "Unable to send email to '#{recipient_list}'\n#{message}",
         internal: true,
         sender: Ticket::Article::Sender.find_by(name: 'System'),
         type: Ticket::Article::Type.find_by(name: 'note'),
+        preferences: {
+          delivery_article_id_related: local_record.id,
+          delivery_message: true,
+        },
         updated_by_id: 1,
         created_by_id: 1,
       )

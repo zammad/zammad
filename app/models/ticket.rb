@@ -651,8 +651,8 @@ perform changes on ticket
 
 =end
 
-  def perform_changes(perform, log, item = nil)
-    logger.debug "Perform #{log} #{perform.inspect} on Ticket.find(#{id})"
+  def perform_changes(perform, perform_origin, item = nil)
+    logger.debug "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})"
     changed = false
     perform.each do |key, value|
       (object_name, attribute) = key.split('.', 2)
@@ -770,6 +770,9 @@ perform changes on ticket
           internal: false,
           sender: Ticket::Article::Sender.find_by(name: 'System'),
           type: Ticket::Article::Type.find_by(name: 'email'),
+          preferences: {
+            perform_origin: perform_origin,
+          },
           updated_by_id: 1,
           created_by_id: 1,
         )

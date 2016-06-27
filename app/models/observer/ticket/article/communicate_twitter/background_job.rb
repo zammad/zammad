@@ -87,6 +87,10 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
         internal: true,
         sender: Ticket::Article::Sender.find_by(name: 'System'),
         type: Ticket::Article::Type.find_by(name: 'note'),
+        preferences: {
+          delivery_article_id_related: local_record.id,
+          delivery_message: true,
+        },
         updated_by_id: 1,
         created_by_id: 1,
       )
