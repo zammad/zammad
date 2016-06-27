@@ -450,8 +450,81 @@ Men-----------------------'
     result = '<h3>test</h3>'
     assert_equal(result, html.html2html_strict)
 
-    html   = "<b\n>test</b>"
-    result = '<b>test</b>'
+    html   = '<a href="http://example.com">http://example.com</a>'
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<A href="http://example.com?a=1;">http://example.com?a=1;</A>'
+    result = '<a href="http://example.com?a=1;" target="_blank">http://example.com?a=1;</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://web.de">web.de</a>'
+    result = '<a href="http://web.de" target="_blank">web.de</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a id="123" href="http://web.de">web.de</a>'
+    result = '<a href="http://web.de" target="_blank">web.de</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<br>https://www.facebook.com/test<br>'
+    result = '<a href="https://www.facebook.com/test" target="_blank">https://www.facebook.com/test</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text http://example.com some other text'
+    result = 'some text <a href="http://example.com" target="_blank">http://example.com</a> some other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text www.example.com some other text'
+    result = 'some text <a href="http://www.example.com" target="_blank">http://www.example.com</a> some other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com">http://what-different.example.com</a>'
+    result = 'http://example.com (<a href="http://what-different.example.com" target="_blank">http://what-different.example.com</a>)'
+    result = 'http://example.com (<a href="http://what-different.example.com" target="_blank">http://what-different.example.com</a>)'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com">http://EXAMPLE.com</a>'
+    result = '<a href="http://example.com" target="_blank">http://EXAMPLE.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com" class="abc">http://example.com</a>'
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com/" class="abc">http://example.com</a>'
+    result = '<a href="http://example.com/" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://example.com/\n\" class=\"abc\">http://example.com</a>"
+    result = '<a href="http://example.com/" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://example.com/\n \" class=\"abc\n\"\n>http://example.com</a>"
+    result = '<a href="http://example.com/" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com</div>"
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com.</div>"
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>.'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com, and so on</div>"
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>, and so on'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com?lala=me, and so on</div>"
+    result = '<a href="http://example.com?lala=me" target="_blank">http://example.com?lala=me</a>, and so on'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://facebook.de/examplesrbog\"><span lang=\"EN-US\" style='color:blue'>http://facebook.de/examplesrbog</span></a>"
+    result = "<a href=\"http://facebook.de/examplesrbog\" target=\"_blank\">http://facebook.de/examplesrbog</a>"
+    assert_equal(result, html.html2html_strict)
+
+    html   = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den <a href=\"http://newsletters.cylex.de/\" class=\"\">Link des Adventkalenders</a> in<br class=\"\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ihrer Lesezeichen-Symbolleiste zu ergänzen.</p><div class=\"\">&nbsp;"
+    result = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href=\"http://newsletters.cylex.de/\" target=\"_blank\">http://newsletters.cylex.de/</a>) in<br>      Ihrer Lesezeichen-Symbolleiste zu ergänzen."
     assert_equal(result, html.html2html_strict)
 
     html   = '<b >test</b>'
@@ -495,7 +568,8 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="mailto:john.smith2@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>'
-    result = 'john.smith@example.com (mailto:john.smith2@example.com)'
+    #result = 'john.smith@example.com (mailto:john.smith2@example.com)'
+    result = 'john.smith@example.com'
     assert_equal(result, html.html2html_strict)
 
   end
