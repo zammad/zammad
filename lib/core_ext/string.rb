@@ -287,13 +287,93 @@ class String
 
 =end
 
-  def html2html_strict
+  def html2html_strict(force = false)
     string = html2text(true, true)
+    string.signature_identify(force)
     string = string.text2html
     string.gsub!(%r{######LINKEXT:(.+?)/TEXT:(.+?)######}, '<a href="\1" target="_blank">\2</a>')
     string.gsub!(/######LINKRAW:(.+?)######/, '<a href="\1" target="_blank">\1</a>')
+    marker_template = '<span class="js-signatureMarker"></span>'
+    string.sub!(/######SIGNATURE_MARKER######/, marker_template)
+    string.gsub!(/######SIGNATURE_MARKER######/, '')
     string.gsub!(/######(.+?)######/, '<\1>')
     string.chomp
   end
 
+  def signature_identify(force = false)
+    string = self
+
+    # if we do have less then 10 lines and less then 300 chars ignore this
+    if !force
+      lines = string.split("\n")
+      return if lines.count < 10 && string.length < 300
+    end
+
+    marker = '######SIGNATURE_MARKER######'
+
+    # search for signature seperator "--\n"
+    string.sub!(/^\s{0,2}--\s{0,2}$/) { |placeholder|
+      placeholder = "#{marker}#{placeholder}"
+    }
+
+    map = {}
+    # Apple Mail
+    # On 01/04/15 10:55, Bob Smith wrote:
+    map['apple-en'] = '^(On)[[:space:]].{6,20}[[:space:]].{3,10}[[:space:]].{1,250}[[:space:]](wrote):'
+
+    # Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:
+    map['apple-de'] = '^(Am)[[:space:]].{6,20}[[:space:]](um)[[:space:]].{3,10}[[:space:]](schrieb)[[:space:]].{1,250}:'
+
+    # Thunderbird
+    # Am 04.03.2015 um 12:47 schrieb Alf Aardvark:
+    map['thunderbird-de'] = '^(Am)[[:space:]].{6,20}[[:space:]](um)[[:space:]].{3,10}[[:space:]](schrieb)[[:space:]].{1,250}:'
+
+    # Thunderbird default - http://kb.mozillazine.org/Reply_header_settings
+    # On 01-01-2007 11:00 AM, Alf Aardvark wrote:
+    map['thunderbird-en-default'] = '^(On)[[:space:]].{6,20}[[:space:]].{3,10},[[:space:]].{1,250}(wrote):'
+
+    # http://kb.mozillazine.org/Reply_header_settings
+    # Alf Aardvark wrote, on 01-01-2007 11:00 AM:
+    map['thunderbird-en'] = '^.{1,250}[[:space:]](wrote),[[:space:]]on[[:space:]].{3,20}:'
+
+    # otrs
+    # 25.02.2015 10:26 - edv hotline wrote:
+    # 25.02.2015 10:26 - edv hotline schrieb:
+    map['otrs-en-de'] = '^.{6,10}[[:space:]].{3,10}[[:space:]]-[[:space:]].{1,250}[[:space:]](wrote|schrieb):'
+
+    # Ms
+    # rubocop:disable Style/AsciiComments
+    # From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]
+    # Send: Donnerstag, 2. April 2015 10:00
+    # To/Cc/Bcc: xxx
+    # Subject: xxx
+    # - or -
+    # From: xxx
+    # To/Cc/Bcc: xxx
+    # Date: 01.04.2015 12:41
+    # Subject: xxx
+    # - or -
+    # De : xxx
+    # À/?/?: xxx
+    # Envoyé : mercredi 29 avril 2015 17:31
+    # Objet : xxx
+    # rubocop:enable Style/AsciiComments
+
+    # en/de/fr | sometimes ms adds a space to "xx : value"
+    map['ms-en-de-fr_from'] = '^(From|Von|De)( ?):[[:space:]].+?'
+    map['ms-en-de-fr_from_html'] = "\n######b######(From|Von|De)([[:space:]]?):([[:space:]]?)(######\/b######)[[:space:]].+?"
+
+    # word 14
+    # edv hotline wrote:
+    # edv hotline schrieb:
+    #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
+
+    map.each {|_key, regexp|
+      string.sub!(/#{regexp}/) { |placeholder|
+        placeholder = "#{marker}#{placeholder}"
+      }
+    }
+
+    string
+  end
 end
