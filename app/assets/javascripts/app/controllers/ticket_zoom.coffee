@@ -219,20 +219,15 @@ class App.TicketZoom extends App.Controller
       # scroll to end of page
       @scrollToBottom()
 
-    # observe content header position
     @positionPageHeaderStart()
-
-    # start autosave
     @autosaveStart()
+    @shortcutNavigationStart()
 
   hide: =>
     @activeState = false
-
-    # stop observing content header position
     @positionPageHeaderStop()
-
-    # stop autosave
     @autosaveStop()
+    @shortcutNavigationstop()
 
   changed: =>
     return false if !@ticket
@@ -249,6 +244,50 @@ class App.TicketZoom extends App.Controller
 
   muteTask: =>
     App.TaskManager.mute(@task_key)
+
+  shortcutNavigationStart: =>
+    @articlePager =
+      article_id: undefined
+
+    modifier = 'alt+ctrl+left'
+    $(document).bind("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+      @articleNavigate('up')
+    )
+    modifier = 'alt+ctrl+right'
+    $(document).bind("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+      @articleNavigate('down')
+    )
+
+  shortcutNavigationstop: =>
+    $(document).unbind("keydown.ticket_zoom#{@ticket_id}")
+
+  articleNavigate: (direction) =>
+    articleStates = []
+    @$('.ticket-article .ticket-article-item').each( (_index, element) ->
+      $element   = $(element)
+      article_id = $element.data('id')
+      visible    = $element.visible(true)
+      articleStates.push {
+        article_id: article_id
+        visible: visible
+      }
+    )
+
+    # navigate to article
+    if direction is 'up'
+      articleStates = articleStates.reverse()
+    jumpTo = undefined
+    for articleState in articleStates
+      if jumpTo
+        @scrollToArticle(articleState.article_id)
+        @articlePager.article_id = articleState.article_id
+        return
+      if @articlePager.article_id
+        if @articlePager.article_id is articleState.article_id
+          jumpTo = articleState.article_id
+      else
+        if articleState.visible
+          jumpTo = articleState.article_id
 
   positionPageHeaderStart: =>
 
@@ -393,12 +432,10 @@ class App.TicketZoom extends App.Controller
         @sidebar.linkWidget.reload(@links)
 
     # scroll to article if given
-    if @article_id && document.getElementById("article-#{@article_id}")
-      offset = document.getElementById("article-#{@article_id}").offsetTop
-      offset = offset - 45
-      scrollTo = ->
-        @scrollTo(0, offset)
-      @delay(scrollTo, 100, false)
+    if @article_id
+      scrollTo = =>
+        @scrollToArticle(@article_id)
+      @delay(scrollTo, 200)
 
     if @shown
 
@@ -415,6 +452,13 @@ class App.TicketZoom extends App.Controller
     return if !@shown
     @positionPageHeaderStart()
     App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
+
+  scrollToArticle: (article_id) =>
+    articleContainer = document.getElementById("article-#{article_id}")
+    return if !articleContainer
+    distanceToTop = articleContainer.offsetTop - 100
+    #@main.scrollTop(distanceToTop)
+    @main.animate(scrollTop: distanceToTop, 100)
 
   scrollToBottom: =>
 

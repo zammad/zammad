@@ -375,6 +375,11 @@ App.Config.set(
                 $('.active.content .edit [name="state_id"]').val(4)
                 $('.active.content .js-attributeBar .js-submit').first().click()
             }
+            {
+              key: ['◀', '▶']
+              hotkeys: true
+              description: 'Navigate through article'
+            }
           ]
         }
 
