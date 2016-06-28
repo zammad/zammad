@@ -138,7 +138,7 @@ returns
       max_message_size = Setting.get('postmaster_max_size').to_f
       real_message_size = mail.size.to_f / 1024 / 1024
       if real_message_size > max_message_size
-        info = "  - ignore message #{count}/#{count_all} - because message is to big (is:#{real_message_size} MB/max:#{max_message_size} MB)"
+        info = "  - ignore message #{count}/#{count_all} - because message is too big (is:#{real_message_size} MB/max:#{max_message_size} MB)"
         Rails.logger.info info
         notice += "#{info}\n"
         next
