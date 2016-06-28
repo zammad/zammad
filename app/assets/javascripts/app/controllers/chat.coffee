@@ -611,6 +611,7 @@ class ChatWindow extends App.Controller
       @isTyping = true
       @maybeAddTimestamp()
       @body.append App.view('customer_chat/chat_loader')()
+      return if !@el.find('.js-loader').visible(true)
       @scrollToBottom()
 
     # clear old delay, set new

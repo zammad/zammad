@@ -668,6 +668,8 @@ do($ = window.jQuery, window) ->
 
       @el.find('.zammad-chat-body').append @view('typingIndicator')()
 
+      # only if typing indicator is shown
+      return if !@isVisible(@el.find('.zammad-chat-message--typing'), true)
       @scrollToBottom()
 
     onAgentTypingEnd: =>
@@ -897,5 +899,57 @@ do($ = window.jQuery, window) ->
       @scrollRoot.css
         overflow: ''
         position: ''
+
+    # based on https://github.com/customd/jquery-visible/blob/master/jquery.visible.js
+    # to have not dependency, port to coffeescript
+    isVisible: (el, partial, hidden, direction) ->
+      return if el.length < 1
+
+      $w         = $(window)
+      $t         = if el.length > 1 then el.eq(0) else el
+      t          = $t.get(0)
+      vpWidth    = $w.width()
+      vpHeight   = $w.height()
+      direction  = if direction then direction else 'both'
+      clientSize = if hidden is true then t.offsetWidth * t.offsetHeight else true
+
+      if typeof t.getBoundingClientRect is 'function'
+
+        # Use this native browser method, if available.
+        rec      = t.getBoundingClientRect()
+        tViz     = rec.top >= 0 && rec.top    <  vpHeight
+        bViz     = rec.bottom >  0 && rec.bottom <= vpHeight
+        lViz     = rec.left >= 0 && rec.left   <  vpWidth
+        rViz     = rec.right  >  0 && rec.right <= vpWidth
+        vVisible = if partial then tViz || bViz else tViz && bViz
+        hVisible = if partial then lViz || rViz else lViz && rViz
+
+        if direction is 'both'
+          return clientSize && vVisible && hVisible
+        else if direction is 'vertical'
+          return clientSize && vVisible
+        else if direction is 'horizontal'
+          return clientSize && hVisible
+      else
+        viewTop         = $w.scrollTop()
+        viewBottom      = viewTop + vpHeight
+        viewLeft        = $w.scrollLeft()
+        viewRight       = viewLeft + vpWidth
+        offset          = $t.offset()
+        _top            = offset.top
+        _bottom         = _top + $t.height()
+        _left           = offset.left
+        _right          = _left + $t.width()
+        compareTop      = if partial is true then _bottom else _top
+        compareBottom   = if partial is true then _top else _bottom
+        compareLeft     = if partial is true then _right else _left
+        compareRight    = if partial is true then _left else _right
+
+        if direction is 'both'
+          return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop)) && ((compareRight <= viewRight) && (compareLeft >= viewLeft))
+        else if direction is 'vertical'
+          return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop))
+        else if direction is 'horizontal'
+          return !!clientSize && ((compareRight <= viewRight) && (compareLeft >= viewLeft))
 
   window.ZammadChat = ZammadChat
