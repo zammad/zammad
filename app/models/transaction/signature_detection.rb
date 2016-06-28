@@ -44,7 +44,7 @@ class Transaction::SignatureDetection
     type = Ticket::Article::Type.lookup(id: article.type_id)
     return if type['name'] != 'email'
 
-    # add queue job to update current signature of user id
+    # update current signature of user id
     SignatureDetection.rebuild_user(article.created_by_id)
 
     # user
@@ -52,7 +52,11 @@ class Transaction::SignatureDetection
     return if !user
     return if !user.preferences
     return if !user.preferences[:signature_detection]
-    article.preferences[:signature_detection] = SignatureDetection.find_signature_line(user.preferences[:signature_detection], article.body)
+    article.preferences[:signature_detection] = SignatureDetection.find_signature_line(
+      user.preferences[:signature_detection],
+      article.body,
+      article.content_type,
+    )
     article.save
   end
 

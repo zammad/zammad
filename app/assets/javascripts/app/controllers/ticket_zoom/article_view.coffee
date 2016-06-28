@@ -91,10 +91,14 @@ class ArticleViewItem extends App.ObserverController
 
     # prepare html body
     if article.content_type is 'text/html'
-      if article.sender.name is 'Agent'
-        article['html'] = App.Utils.signatureIdentify(article.body, false, true)
-      else
-        article['html'] = App.Utils.signatureIdentify(article.body)
+      body = article.body
+      if article.preferences && article.preferences.signature_detection
+        signatureDetected = '<span class="js-signatureMarker"></span>'
+        body = body.replace(signatureDetected, '')
+        body = body.split('<br>')
+        body.splice(article.preferences.signature_detection, 0, signatureDetected)
+        body = body.join('<br>')
+      article['html'] = body
     else
 
       # client signature detection
@@ -117,7 +121,15 @@ class ArticleViewItem extends App.ObserverController
           article['html'] = App.Utils.text2html(body)
           article['html'] = article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
 
+    if article.preferences.delivery_message
+      @html App.view('ticket_zoom/article_view_delivery_failed')(
+        ticket:     @ticket
+        article:    article
+        isCustomer: @isRole('Customer')
+      )
+      return
     if article.sender.name is 'System'
+    #if article.sender.name is 'System' && article.preferences.perform_origin is 'trigger'
       @html App.view('ticket_zoom/article_view_system')(
         ticket:     @ticket
         article:    article
@@ -174,13 +186,16 @@ class ArticleViewItem extends App.ObserverController
     bubbleOvervlowContainer.css('opacity', '')
 
     # remember offset of "see more"
-    offsetTop = bubbleContent.find('.js-signatureMarker').position()
+    signatureMarker = bubbleContent.find('.js-signatureMarker')
+    if !signatureMarker.get(0)
+      signatureMarker = bubbleContent.find('div [data-signature=true]')
+    offsetTop = signatureMarker.position()
 
     # safari - workaround
     # in safari somethimes the marker is directly on top via .top and inspector but it isn't
     # in this case use the next element
     if offsetTop && offsetTop.top is 0
-      offsetTop = bubbleContent.find('.js-signatureMarker').next('div, p').position()
+      offsetTop = signatureMarker.next('div, p, br').position()
 
     # remember bubble heigth
     heigth = bubbleContent.height()

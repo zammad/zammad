@@ -1,64 +1,3 @@
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
-
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   slice = [].slice,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -955,6 +894,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       }
       this.maybeAddTimestamp();
       this.el.find('.zammad-chat-body').append(this.view('typingIndicator')());
+      if (!this.isVisible(this.el.find('.zammad-chat-message--typing'), true)) {
+        return;
+      }
       return this.scrollToBottom();
     };
 
@@ -1235,11 +1177,123 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       });
     };
 
+    ZammadChat.prototype.isVisible = function(el, partial, hidden, direction) {
+      var $t, $w, _bottom, _left, _right, _top, bViz, clientSize, compareBottom, compareLeft, compareRight, compareTop, hVisible, lViz, offset, rViz, rec, t, tViz, vVisible, viewBottom, viewLeft, viewRight, viewTop, vpHeight, vpWidth;
+      if (el.length < 1) {
+        return;
+      }
+      $w = $(window);
+      $t = el.length > 1 ? el.eq(0) : el;
+      t = $t.get(0);
+      vpWidth = $w.width();
+      vpHeight = $w.height();
+      direction = direction ? direction : 'both';
+      clientSize = hidden === true ? t.offsetWidth * t.offsetHeight : true;
+      if (typeof t.getBoundingClientRect === 'function') {
+        rec = t.getBoundingClientRect();
+        tViz = rec.top >= 0 && rec.top < vpHeight;
+        bViz = rec.bottom > 0 && rec.bottom <= vpHeight;
+        lViz = rec.left >= 0 && rec.left < vpWidth;
+        rViz = rec.right > 0 && rec.right <= vpWidth;
+        vVisible = partial ? tViz || bViz : tViz && bViz;
+        hVisible = partial ? lViz || rViz : lViz && rViz;
+        if (direction === 'both') {
+          return clientSize && vVisible && hVisible;
+        } else if (direction === 'vertical') {
+          return clientSize && vVisible;
+        } else if (direction === 'horizontal') {
+          return clientSize && hVisible;
+        }
+      } else {
+        viewTop = $w.scrollTop();
+        viewBottom = viewTop + vpHeight;
+        viewLeft = $w.scrollLeft();
+        viewRight = viewLeft + vpWidth;
+        offset = $t.offset();
+        _top = offset.top;
+        _bottom = _top + $t.height();
+        _left = offset.left;
+        _right = _left + $t.width();
+        compareTop = partial === true ? _bottom : _top;
+        compareBottom = partial === true ? _top : _bottom;
+        compareLeft = partial === true ? _right : _left;
+        compareRight = partial === true ? _left : _right;
+        if (direction === 'both') {
+          return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop)) && ((compareRight <= viewRight) && (compareLeft >= viewLeft));
+        } else if (direction === 'vertical') {
+          return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+        } else if (direction === 'horizontal') {
+          return !!clientSize && ((compareRight <= viewRight) && (compareLeft >= viewLeft));
+        }
+      }
+    };
+
     return ZammadChat;
 
   })(Base);
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
+
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
 
 /*!
  * ----------------------------------------------------------------------------

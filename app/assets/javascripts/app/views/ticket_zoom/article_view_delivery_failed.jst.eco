@@ -1,0 +1,7 @@
+<div class="article-meta-clip"></div>
+<div class="article-content">
+  <div class="small task-subline alert alert--warning">
+    <%- @T('Delivery failed') %>: "<%= @article.body %>"
+  </div>
+</div>
+<div class="article-meta-clip"></div>

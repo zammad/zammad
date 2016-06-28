@@ -5,7 +5,7 @@ class ActivityStreamController < ApplicationController
 
   # GET /api/v1/activity_stream
   def show
-    activity_stream = current_user.activity_stream( params[:limit], true )
+    activity_stream = current_user.activity_stream(params[:limit], true)
 
     # return result
     render json: activity_stream

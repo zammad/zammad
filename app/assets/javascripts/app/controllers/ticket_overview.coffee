@@ -359,7 +359,7 @@ class Table extends App.Controller
         class: 'table--light'
         bindRow:
           events:
-            'click':  openTicket
+            'click': openTicket
         #bindCol:
         #  customer_id:
         #    events:

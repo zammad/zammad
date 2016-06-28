@@ -125,7 +125,7 @@ License: MIT license
 -----------------------------------------------------------------------------
 jquery.js
 Source: http://jquery.com/
-Copyright 2005, 2014 jQuery Foundation, Inc.
+Copyright: 2005, 2014 jQuery Foundation, Inc.
 License: MIT license
 -----------------------------------------------------------------------------
 jquery-ui.js
@@ -135,8 +135,13 @@ License: MIT license
 -----------------------------------------------------------------------------
 jquery.hotkeys.js
 Source: https://github.com/jeresig/jquery.hotkeys
-Copyright 2010, John Resig
+Copyright: 2010 John Resig
 License: Dual licensed under the MIT or GPL Version 2 licenses.
+-----------------------------------------------------------------------------
+jquery.visible.js
+Source: https://github.com/customd/jquery-visible
+Copyright: 2012, Digital Fusion
+License: MIT license
 -----------------------------------------------------------------------------
 underscore.js
 Source: http://underscorejs.org
@@ -155,6 +160,6 @@ License: MIT license
 -----------------------------------------------------------------------------
 word_filter.js
 Source: https://gist.github.com/sbrin/6801034
-Copyright (c) 20015, sbrin - https://github.com/sbrin
+Copyright: 2015, sbrin - https://github.com/sbrin
 License: MIT license
 -----------------------------------------------------------------------------

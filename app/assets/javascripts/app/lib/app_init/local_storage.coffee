@@ -26,6 +26,11 @@ class App.LocalStorage
       _instance ?= new _storeSingleton
     _instance.list()
 
+  @usage: ->
+    if _instance == undefined
+      _instance ?= new _storeSingleton
+    _instance.usage()
+
 # The actual Singleton class
 class _storeSingleton
   constructor: ->
@@ -37,9 +42,7 @@ class _storeSingleton
         key = "personal::#{user_id}::#{key}"
       localStorage.setItem(key, JSON.stringify(value))
     catch e
-      if e is QUOTA_EXCEEDED_ERR
-        # do something nice to notify your users
-        App.Log.error 'App.LocalStorage', 'Local storage quote exceeded!'
+      App.Log.error 'App.LocalStorage', 'Local storage error!', e
 
   # get item
   get: (key, user_id) ->
@@ -62,3 +65,12 @@ class _storeSingleton
   # return list of all keys
   list: ->
     window.localStorage
+
+  # get usage
+  usage: ->
+    total = ''
+    for key of window.localStorage
+      value = localStorage.getItem(key)
+      if _.isString(value)
+        total += value
+    byteLength(total)

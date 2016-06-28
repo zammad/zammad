@@ -26,6 +26,11 @@ class App.SessionStorage
       _instance ?= new _storeSingleton
     _instance.list()
 
+  @usage: ->
+    if _instance == undefined
+      _instance ?= new _storeSingleton
+    _instance.usage()
+
 # The actual Singleton class
 class _storeSingleton
   constructor: ->
@@ -38,9 +43,8 @@ class _storeSingleton
     try
       sessionStorage.setItem(key, JSON.stringify(value))
     catch e
-      if e is QUOTA_EXCEEDED_ERR
-        # do something nice to notify your users
-        App.Log.error 'App.SessionStorage', 'Session storage quote exceeded!'
+      @clear()
+      App.Log.error 'App.SessionStorage', 'Session storage error!', e
 
   # get item
   get: (key) ->
@@ -59,3 +63,12 @@ class _storeSingleton
   # return list of all keys
   list: ->
     window.sessionStorage
+
+  # get usage
+  usage: ->
+    total = ''
+    for key of window.sessionStorage
+      value = sessionStorage.getItem(key)
+      if _.isString(value)
+        total += value
+    byteLength(total)

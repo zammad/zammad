@@ -450,8 +450,81 @@ Men-----------------------'
     result = '<h3>test</h3>'
     assert_equal(result, html.html2html_strict)
 
-    html   = "<b\n>test</b>"
-    result = '<b>test</b>'
+    html   = '<a href="http://example.com">http://example.com</a>'
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<A href="http://example.com?a=1;">http://example.com?a=1;</A>'
+    result = '<a href="http://example.com?a=1;" target="_blank">http://example.com?a=1;</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://web.de">web.de</a>'
+    result = '<a href="http://web.de" target="_blank">web.de</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a id="123" href="http://web.de">web.de</a>'
+    result = '<a href="http://web.de" target="_blank">web.de</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<br>https://www.facebook.com/test<br>'
+    result = '<a href="https://www.facebook.com/test" target="_blank">https://www.facebook.com/test</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text http://example.com some other text'
+    result = 'some text <a href="http://example.com" target="_blank">http://example.com</a> some other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text www.example.com some other text'
+    result = 'some text <a href="http://www.example.com" target="_blank">http://www.example.com</a> some other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com">http://what-different.example.com</a>'
+    result = 'http://example.com (<a href="http://what-different.example.com" target="_blank">http://what-different.example.com</a>)'
+    result = 'http://example.com (<a href="http://what-different.example.com" target="_blank">http://what-different.example.com</a>)'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com">http://EXAMPLE.com</a>'
+    result = '<a href="http://example.com" target="_blank">http://EXAMPLE.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com" class="abc">http://example.com</a>'
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<a href="http://example.com/" class="abc">http://example.com</a>'
+    result = '<a href="http://example.com/" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://example.com/\n\" class=\"abc\">http://example.com</a>"
+    result = '<a href="http://example.com/" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://example.com/\n \" class=\"abc\n\"\n>http://example.com</a>"
+    result = '<a href="http://example.com/" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com</div>"
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com.</div>"
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>.'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com, and so on</div>"
+    result = '<a href="http://example.com" target="_blank">http://example.com</a>, and so on'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>http://example.com?lala=me, and so on</div>"
+    result = '<a href="http://example.com?lala=me" target="_blank">http://example.com?lala=me</a>, and so on'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://facebook.de/examplesrbog\"><span lang=\"EN-US\" style='color:blue'>http://facebook.de/examplesrbog</span></a>"
+    result = "<a href=\"http://facebook.de/examplesrbog\" target=\"_blank\">http://facebook.de/examplesrbog</a>"
+    assert_equal(result, html.html2html_strict)
+
+    html   = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den <a href=\"http://newsletters.cylex.de/\" class=\"\">Link des Adventkalenders</a> in<br class=\"\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ihrer Lesezeichen-Symbolleiste zu ergänzen.</p><div class=\"\">&nbsp;"
+    result = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href=\"http://newsletters.cylex.de/\" target=\"_blank\">http://newsletters.cylex.de/</a>) in<br>      Ihrer Lesezeichen-Symbolleiste zu ergänzen."
     assert_equal(result, html.html2html_strict)
 
     html   = '<b >test</b>'
@@ -495,8 +568,91 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="mailto:john.smith2@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>'
-    result = 'john.smith@example.com (mailto:john.smith2@example.com)'
+    #result = 'john.smith@example.com (mailto:john.smith2@example.com)'
+    result = 'john.smith@example.com'
     assert_equal(result, html.html2html_strict)
+
+  end
+
+  test 'signature_identify function' do
+    marker_template = '######SIGNATURE_MARKER######'
+
+    source = 'test'
+    result = 'test'
+    assert_equal(result, source.signature_identify(true))
+
+    source = "test\n--\nend"
+    result = "test\n#{marker_template}--\nend"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "On 01/04/15 10:55, Bob Smith wrote:"
+    result = "#{marker_template}On 01/04/15 10:55, Bob Smith wrote:"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:"
+    result = "#{marker_template}Am 03.04.2015 um 20:58 schrieb Martin Edenhofer <me@znuny.ink>:"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "\ntest 123 \n1\n2\n3\n4\n5\n6\n7\n8\n9\n--\nBob Smith\n"
+    result = "\ntest 123 \n1\n2\n3\n4\n5\n6\n7\n8\n9\n#{marker_template}--\nBob Smith\n"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "test 123 \n--no not match--\n--\nBob Smith\n"
+    result = "test 123 \n--no not match--\n#{marker_template}--\nBob Smith\n"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "test 123 \n--no not match--\n -- \nBob Smith\n"
+    result = "test 123 \n--no not match--\n#{marker_template} -- \nBob Smith\n"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "test 123 \n\n--\nBob Smith\n\n\n\n\n--\nBob Smith\n"
+    result = "test 123 \n#{marker_template}\n--\nBob Smith\n\n\n\n\n--\nBob Smith\n"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "test 123\ntest 123\n--\nBob Smith\n"
+    result = "test 123\ntest 123\n#{marker_template}--\nBob Smith\n"
+    assert_equal(result, source.signature_identify(true))
+
+    source = "test 123\ntest 123\n--\nBob Smith\n\n"
+    result = "test 123\ntest 123\n#{marker_template}--\nBob Smith\n\n"
+    assert_equal(result, source.signature_identify(true))
+
+    # apple
+    # en
+    source = "test 123 \n--no not match--\nBob Smith\nOn 01/04/15 10:55, Bob Smith wrote:\nlalala\n--\nsome test"
+    result = "test 123 \n--no not match--\nBob Smith\n#{marker_template}On 01/04/15 10:55, Bob Smith wrote:\nlalala\n#{marker_template}--\nsome test"
+    assert_equal(result, source.signature_identify(true))
+
+    # de
+    source = "test 123 \n\n--no not match--\n\nBob Smith\nAm 03.04.2015 um 20:58 schrieb Bob Smith <bob@example.com>:\nlalala"
+    result = "test 123 \n\n--no not match--\n\nBob Smith\n#{marker_template}Am 03.04.2015 um 20:58 schrieb Bob Smith <bob@example.com>:\nlalala"
+    assert_equal(result, source.signature_identify(true))
+
+    # ms
+    # en
+    source = "test 123 \n\n--no not match--\n\nBob Smith\nFrom: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nSent: Donnerstag, 2. April 2015 10:00\nlalala</div>"
+    result = "test 123 \n\n--no not match--\n\nBob Smith\n#{marker_template}From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nSent: Donnerstag, 2. April 2015 10:00\nlalala</div>"
+    assert_equal(result, source.signature_identify(true))
+
+    # de
+    source = "test 123 \n\n--no not match--\n\nBob Smith\nVon: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nGesendet: Donnerstag, 2. April 2015 10:00\nBetreff: lalala\n"
+    result = "test 123 \n\n--no not match--\n\nBob Smith\n#{marker_template}Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nGesendet: Donnerstag, 2. April 2015 10:00\nBetreff: lalala\n"
+    assert_equal(result, source.signature_identify(true))
+
+    # fr
+    source = "\ntest 123 \n\n--no not match--\n\nBob Smith\nDe : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nEnvoyé : mercredi 29 avril 2015 17:31\nObjet : lalala\n"
+    result = "\ntest 123 \n\n--no not match--\n\nBob Smith\n#{marker_template}De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]\nEnvoyé : mercredi 29 avril 2015 17:31\nObjet : lalala\n"
+    assert_equal(result, source.signature_identify(true))
+
+
+    marker_template = '<span class="js-signatureMarker"></span>'
+    html   = "<br>lalala<br>--<br>Max Mix"
+    result = "lalala<br>#{marker_template}--<br>Max Mix"
+    assert_equal(result, html.html2html_strict(true))
+
+    html   = "den.<br><br><b>Von:</b> Fritz Bauer [mailto:me@example.com]<br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's<br><br>Hallo,<br><br>ich versuche an den Punkten"
+    result = "den.<br>#{marker_template}<br><b>Von:</b> Fritz Bauer [mailto:me@example.com]<br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI&#39;s<br><br>Hallo,<br><br>ich versuche an den Punkten"
+    assert_equal(result, html.html2html_strict(true))
 
   end
 

@@ -80,6 +80,19 @@ function difference(object1, object2) {
   return changes;
 }
 
+// returns the byte length of an utf8 string
+// taken from http://stackoverflow.com/questions/5515869/string-length-in-bytes-in-javascript
+function byteLength(str) {
+  var s = str.length
+  for (var i=str.length-1; i>=0; i--) {
+    var code = str.charCodeAt(i)
+    if (code > 0x7f && code <= 0x7ff) s++
+    else if (code > 0x7ff && code <= 0xffff) s+=2
+    if (code >= 0xDC00 && code <= 0xDFFF) i-- //trail surrogate
+  }
+  return s
+}
+
 // clone, just data, no instances of objects
 function clone(item, full) {
 

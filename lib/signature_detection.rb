@@ -4,7 +4,14 @@ module SignatureDetection
 
 try to detect the signature in list of articles for example
 
-  signature = SignatureDetection.find_signature(string_list)
+  messages = [
+    {
+      content: 'some content',
+      content_type: 'text/plain',
+    },
+  ]
+
+  signature = SignatureDetection.find_signature(messages)
 
 returns
 
@@ -12,13 +19,22 @@ returns
 
 =end
 
-  def self.find_signature(string_list)
+  def self.find_signature(messages)
+
+    string_list = []
+    messages.each {|message|
+      if message[:content_type] =~ %r{text/html}i
+        string_list.push message[:content].html2text(true)
+        next
+      end
+      string_list.push message[:content]
+    }
 
     # hash with possible signature and count of matches in string list
     possible_signatures = {}
 
     # loop all strings in array
-    ( 0..string_list.length - 1 ).each {|main_string_index|
+    string_list.each_with_index { |_main_string, main_string_index|
       break if main_string_index + 1 > string_list.length - 1
 
       # loop all all strings in array except of the previous index
@@ -95,7 +111,7 @@ returns
 
 this function will search for a signature string in a string (e.g. article) and return the line number of the signature start
 
-  signature_line = SignatureDetection.find_signature_line(signature, string)
+  signature_line = SignatureDetection.find_signature_line(signature, message, content_type)
 
 returns
 
@@ -107,7 +123,11 @@ returns
 
 =end
 
-  def self.find_signature_line(signature, string)
+  def self.find_signature_line(signature, string, content_type)
+
+    if content_type =~ %r{text/html}i
+      string = string.html2text(true)
+    end
 
     # try to find the char position of the signature
     search_position = string.index(signature)
@@ -133,12 +153,20 @@ returns
   def self.by_user_id(user_id)
     type = Ticket::Article::Type.lookup(name: 'email')
     sender = Ticket::Article::Sender.lookup(name: 'Customer')
+    tickets = Ticket.where(
+      created_by_id: user_id,
+      create_article_type_id: type.id,
+      create_article_sender_id: sender.id
+    ).limit(5).order(id: :desc)
     article_bodies = []
-    tickets = Ticket.where(created_by_id: user_id, create_article_type_id: type.id, create_article_sender_id: sender.id).limit(5).order(id: :desc)
     tickets.each {|ticket|
       article = ticket.articles.first
       next if !article
-      article_bodies.push article.body
+      data = {
+        content: article.body,
+        content_type: article.content_type,
+      }
+      article_bodies.push data
     }
 
     find_signature(article_bodies)
@@ -157,7 +185,6 @@ returns
 =end
 
   def self.rebuild_all_user
-
     User.select('id').where(active: true).order(id: :desc).each {|local_user|
       rebuild_user(local_user.id)
     }
@@ -209,7 +236,11 @@ returns
       user = User.find(article.created_by_id)
       next if !user.preferences[:signature_detection]
 
-      signature_line = find_signature_line(user.preferences[:signature_detection], article.body)
+      signature_line = find_signature_line(
+        user.preferences[:signature_detection],
+        article.body,
+        article.content_type,
+      )
       next if !signature_line
       next if article.preferences[:signature_detection] == signature_line
 
