@@ -1237,7 +1237,7 @@ label,
   margin-bottom: 4px;
   text-align: left;
   padding: 0;
-  user-select: none;
+  /* user-select: none; disabled because of chrome51 https://github.com/martini/zammad/issues/183 */
 }
 
 /* circumventing the label:not(.inline-label) selector because it's too strong */
