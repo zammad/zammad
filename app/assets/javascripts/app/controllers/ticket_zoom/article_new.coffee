@@ -436,12 +436,14 @@ class App.TicketZoomArticleNew extends App.Controller
       # apply new signature
       signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent })
 
-      body = @$('[data-name=body]').html() || ''
-      if App.Utils.signatureCheck(body, signatureFinished)
-        if !App.Utils.lastLineEmpty(body)
-          body = body + '<br>'
-        body = body + "<div><div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div></div>"
-        @$('[data-name=body]').html(body)
+      body = @$('[data-name=body]')
+      if App.Utils.signatureCheck(body.html() || '', signatureFinished)
+        if !App.Utils.htmlLastLineEmpty(body)
+          body.append('<br><br>')
+        signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
+        App.Utils.htmlStrip(signature)
+        body.append(signature)
+        @$('[data-name=body]').replaceWith(body)
 
     # remove old signature
     else
