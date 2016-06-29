@@ -55,7 +55,7 @@ class App.DashboardActivityStream extends App.CollectionController
     return if _.isEmpty(@items)
 
     # remove description of activity stream
-    @el.removeClass('activity-description').addClass('activity-entries')
+    @el.closest('.sidebar').find('.activity-description').addClass('hidden')
 
   onRenderItemEnd: (item, el) ->
     new App.WidgetAvatar(
