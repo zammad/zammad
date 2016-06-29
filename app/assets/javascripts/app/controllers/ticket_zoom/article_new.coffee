@@ -440,7 +440,7 @@ class App.TicketZoomArticleNew extends App.Controller
       if App.Utils.signatureCheck(body, signatureFinished)
         if !App.Utils.lastLineEmpty(body)
           body = body + '<br>'
-        body = body + "<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>"
+        body = body + "<div><div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div></div>"
         @$('[data-name=body]').html(body)
 
     # remove old signature
