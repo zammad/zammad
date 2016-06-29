@@ -431,13 +431,13 @@ class App.TicketZoom extends App.Controller
       if @sidebar.linkWidget
         @sidebar.linkWidget.reload(@links)
 
-    # scroll to article if given
-    if @article_id
-      scrollTo = =>
-        @scrollToArticle(@article_id)
-      @delay(scrollTo, 200)
-
     if @shown
+
+      # scroll to article if given
+      if @article_id
+        scrollTo = =>
+          @scrollToArticle(@article_id)
+        @delay(scrollTo, 300)
 
       # scroll to end if new article has been added
       if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
@@ -652,9 +652,6 @@ class App.TicketZoom extends App.Controller
       @formEnable(e)
       return
 
-    # submit ticket & article
-    @log 'notice', 'update ticket', ticket
-
     # stop autosave
     @autosaveStop()
 
@@ -672,8 +669,6 @@ class App.TicketZoom extends App.Controller
       @formEnable(e)
       @autosaveStart()
       return
-
-    console.log('ticket validateion ok')
 
     articleParams = @articleNew.params()
     if articleParams && articleParams.body
