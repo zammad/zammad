@@ -73,16 +73,19 @@ returns
           # or if the current line is the last line of the diff result
           next if line !~ /^(\\|\+|\-)/i && diff_string_index != diff_result_array.length - 1
 
-          # if the count of the lines without any difference is higher than 5 lines
-          if diff_string_index - match_block > 5
+          # if the count of the lines without any difference is higher than 4 lines
+          if diff_string_index - match_block > 4
 
             # define the block size without any difference
             # except "-" because in this case 1 line is removed to much
             match_block_total = diff_string_index + (line =~ /^(\\|\+)/i ? -1 : 0)
 
-            # get string of possible signature
+            # get string of possible signature, use only the first 10 lines
+            match_max_content = 0
             match_content = ''
             ( match_block..match_block_total ).each {|match_block_index|
+              break if match_max_content == 10
+              match_max_content += 1
               match_content += "#{diff_result_array[match_block_index][1..-1]}\n"
             }
 
