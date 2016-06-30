@@ -157,7 +157,7 @@ returns
 
 =end
 
-  def find_signature_line_by_article(user, article)
+  def self.find_signature_line_by_article(user, article)
     return if !user.preferences[:signature_detection]
     SignatureDetection.find_signature_line(
       user.preferences[:signature_detection],

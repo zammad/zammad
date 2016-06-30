@@ -52,10 +52,11 @@ class Transaction::SignatureDetection
     return if !user
     return if !user.preferences
     return if !user.preferences[:signature_detection]
-    article.preferences[:signature_detection] = SignatureDetection.find_signature_line_by_article(
+    line = SignatureDetection.find_signature_line_by_article(
       user,
       article
     )
+    article.preferences[:signature_detection] = line
     article.save
   end
 
