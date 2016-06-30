@@ -203,9 +203,22 @@ class App.TicketZoom extends App.Controller
     # set all notifications to seen
     App.OnlineNotification.seen('Ticket', @ticket_id)
 
+    scrollToPosition = (position, delay) =>
+      scrollToDelay = =>
+        if position is 'article'
+          @scrollToArticle(@last_article_id)
+          return
+        @scrollToBottom()
+      @delay(scrollToDelay, delay, 'scrollToPosition')
+
+    # scroll to article if given
+    if params.article_id && params.article_id isnt @last_article_id
+      @last_article_id = params.article_id
+      scrollToPosition('article', 300)
+
     # if controller is executed twice, go to latest article (e. g. click on notification)
     if @activeState
-      @scrollToBottom()
+      scrollToPosition('bottom', 300)
       return
     @activeState = true
 
@@ -217,7 +230,7 @@ class App.TicketZoom extends App.Controller
       App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
 
       # scroll to end of page
-      @scrollToBottom()
+      scrollToPosition('bottom', 100)
 
     @positionPageHeaderStart()
     @autosaveStart()
@@ -431,13 +444,14 @@ class App.TicketZoom extends App.Controller
       if @sidebar.linkWidget
         @sidebar.linkWidget.reload(@links)
 
-    # scroll to article if given
-    if @article_id
-      scrollTo = =>
-        @scrollToArticle(@article_id)
-      @delay(scrollTo, 200)
-
     if @shown
+
+      # scroll to article if given
+      if @article_id && @article_id isnt @last_article_id
+        @last_article_id = @article_id
+        scrollTo = =>
+          @scrollToArticle(@article_id)
+        @delay(scrollTo, 300)
 
       # scroll to end if new article has been added
       if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
@@ -652,9 +666,6 @@ class App.TicketZoom extends App.Controller
       @formEnable(e)
       return
 
-    # submit ticket & article
-    @log 'notice', 'update ticket', ticket
-
     # stop autosave
     @autosaveStop()
 
@@ -672,8 +683,6 @@ class App.TicketZoom extends App.Controller
       @formEnable(e)
       @autosaveStart()
       return
-
-    console.log('ticket validateion ok')
 
     articleParams = @articleNew.params()
     if articleParams && articleParams.body

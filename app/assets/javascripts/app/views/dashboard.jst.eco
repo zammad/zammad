@@ -8,7 +8,11 @@
 </div>
 <div class="sidebar optional">
   <h2><%- @T('Activity Stream') %></h2>
-  <div class="activity-description js-activityContent">
+  <div class="activity-description">
+    <p><%- @T('Here you will find latest activities in your system.') %></p>
+    <p><%- @T('E. g. recent changed tickets, users or organizations.') %></p>
+  </div>
+  <div class="activity-entries js-activityContent">
     <p><%- @T('Here you will find latest activities in your system.') %></p>
     <p><%- @T('E. g. recent changed tickets, users or organizations.') %></p>
   </div>

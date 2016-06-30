@@ -199,13 +199,17 @@ class ArticleViewItem extends App.ObserverController
 
     # remember bubble heigth
     heigth = bubbleContent.height()
-    if offsetTop && heigth
+
+    # if signature marker exists and heigth is within maxHeight
+    if offsetTop && heigth < maxHeight
       newHeigth = offsetTop.top + 30
       if newHeigth < minHeight
         newHeigth = minHeight
       bubbleContent.attr('data-height', heigth)
       bubbleContent.css('height', "#{newHeigth}px")
       bubbleOvervlowContainer.removeClass('hide')
+
+    # if heigth is higher then maxHeight
     else if heigth > maxHeight
       bubbleContent.attr('data-height', heigth)
       bubbleContent.css('height', "#{maxHeight}px")

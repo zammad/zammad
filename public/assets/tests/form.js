@@ -113,6 +113,8 @@ test("form params check", function() {
     textarea2: 'lalu <l> lalu',
     select1: false,
     select2: true,
+    select3: null,
+    select4: undefined,
     selectmulti1: false,
     selectmulti2: [ false, true ],
     selectmultioption1: false,
@@ -145,6 +147,8 @@ test("form params check", function() {
         { name: 'textarea2', display: 'Textarea2', tag: 'textarea', rows: 6, limit: 100, null: false, upload: true },
         { name: 'select1', display: 'Select1', tag: 'select', null: true, options: { true: 'internal', false: 'public' } },
         { name: 'select2', display: 'Select2', tag: 'select', null: false, options: { true: 'internal', false: 'public' } },
+        { name: 'select3', display: 'Select3', tag: 'select', null: false, nulloption: true, options: { aa: 'aa', bb: 'bb', select3: 'select3' } },
+        { name: 'select4', display: 'Select4', tag: 'select', null: false, nulloption: true,  options: { aa: 'aa', bb: 'bb', select3: 'select4' } },
         { name: 'selectmulti1', display: 'SelectMulti1', tag: 'select', null: true, multiple: true, options: { true: 'internal', false: 'public' } },
         { name: 'selectmulti2', display: 'SelectMulti2', tag: 'select', null: false, multiple: true, options: { true: 'internal', false: 'public' } },
         { name: 'selectmultioption1', display: 'SelectMultiOption1', tag: 'select', null: true, multiple: true, options: [{ value: true, name: 'internal' }, { value: false, name: 'public' }] },
@@ -208,6 +212,14 @@ test("form params check", function() {
   equal(el.find('[name="select2"]').prop('required'), true, 'check select2 required')
   equal(el.find('[name="select2"]').is(":focus"), false, 'check select2 focus')
 
+  equal(el.find('[name="select3"]').val(), '', 'check select3 value')
+  equal(el.find('[name="select3"]').prop('required'), true, 'check select3 required')
+  equal(el.find('[name="select3"]').is(":focus"), false, 'check select3 focus')
+
+  equal(el.find('[name="select4"]').val(), '', 'check select4 value')
+  equal(el.find('[name="select4"]').prop('required'), true, 'check select4 required')
+  equal(el.find('[name="select4"]').is(":focus"), false, 'check select4 focus')
+
   equal(el.find('[name="selectmulti1"]').val(), 'false', 'check selectmulti1 value')
   equal(el.find('[name="selectmulti1"]').prop('required'), false, 'check selectmulti1 required')
   equal(el.find('[name="selectmulti1"]').is(":focus"), false, 'check selectmulti1 focus')
@@ -229,6 +241,8 @@ test("form params check", function() {
     textarea2: 'lalu <l> lalu',
     select1: 'false',
     select2: 'true',
+    select3: '',
+    select4: '',
     selectmulti1: 'false',
     selectmulti2: [ 'true', 'false' ],
     selectmultioption1: 'false',
@@ -889,5 +903,43 @@ test("form required_if + shown_if", function() {
   equal(el.find('[name="input3"]').attr('required'), 'required', 'check required attribute of input3')
   equal(el.find('[name="input3"]').is(":visible"), true, 'check visible attribute of input3')
   equal(el.find('[name="input4"]').is(":visible"), false, 'check visible attribute of input4')
+
+});
+
+test("form params check", function() {
+
+  $('#forms').append('<hr><h1>form params check</h1><form id="form9"></form>')
+  var el = $('#form9')
+  var defaults = {
+    select1: false,
+    select2: true,
+    select3: null,
+    select4: undefined,
+  }
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'select1', display: 'Select1', tag: 'select', null: true, options: { true: 'internal', false: 'public' } },
+        { name: 'select2', display: 'Select2', tag: 'select', null: false, options: { true: 'internal', false: 'public' } },
+        { name: 'select3', display: 'Select3', tag: 'select', null: false, nulloption: true, options: { aa: 'aa', bb: 'bb', select3: 'select3' } },
+        { name: 'select4', display: 'Select4', tag: 'select', null: false, nulloption: true,  options: { aa: 'aa', bb: 'bb', select3: 'select4' } },
+      ],
+    },
+    params: defaults,
+    autofocus: true
+  });
+
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    select1: 'false',
+    select2: 'true',
+    select3: '',
+    select4: '',
+  }
+  console.log('params', params)
+  console.log('test_params', test_params)
+  deepEqual(params, test_params, 'form param check')
 
 });

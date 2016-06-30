@@ -19,7 +19,7 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     end
 
     signature = SignatureDetection.find_signature(fixture_messages)
-    expected_signature = "\nMit freundlichen Grüßen\n\nBob Smith\nBerechtigungen und dez. Department\n________________________________\n\nMusik AG\nBerechtigungen und dez. Department (ITPBM)\nKastanien 2\n12345 Hornhausen\nTel.: +49 911 6760\nFax: +49 911 85 6760\nMobil: +49 173 911\nE-Mail: Bob.Smith@music.com\nhttp://www.music.com\n\nMusik AG | Kastanien 2 | 12345 Hornhausen\nSitz der AG: Hornhausen, HRB xxxxx | USt.-ID: DE 111222333444\nVorstand: Marc Smith, Weber Huber\nAufsichtsrat: Max Mix (Vors.)"
+    expected_signature = "\nMit freundlichen Grüßen\n\nBob Smith\nBerechtigungen und dez. Department\n________________________________\n\nMusik AG\nBerechtigungen und dez. Department (ITPBM)\nKastanien 2"
     assert_equal(expected_signature, signature)
 
     fixture_files.each do |_filepath, value|
@@ -42,7 +42,7 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     end
 
     signature = SignatureDetection.find_signature(fixture_messages)
-    expected_signature = "\nFreundliche Grüße\n\nGünter Lässig\nLokale Daten\n\nMusic GmbH\nBaustraße 123, 12345 Max City\nTelefon 0123 5432114\nTelefax 0123 5432139\nE-Mail Günter.Lässig@example.com<mailto:Günter.Lässig@example.com>\n\nExample. Zusammen für eine bessere Welt.\n[cid:image001.png@01CE92A6.EC495B60]<http://www.example.com/>\n\n[cid:image002.png@01CE92A6.EC495B60]<http://www.facebook.com/example.com>\n\n[cid:image003.png@01CE92A6.EC495B60]<http://twitter.com/example>\n\n[cid:image004.png@01CE92A6.EC495B60]<https://www.xing.com/companies/example/neu-example>\n\n[cid:image005.jpg@01CE92A6.EC495B60]<http://www.youtube.com/example>\n\n[cid:image006.png@01CE92A6.EC495B60]<http://www.example.com/no_cache/privatkunden/aktuelles/news-presse/newsletter.html>\n\nSitz der Gesellschaft: Max City, Amtsgericht Max City HRB Nr. 1234\nGeschäftsführer: Bob Smith\nVorsitzender des Aufsichtsrats: Alex Marx"
+    expected_signature = "\nFreundliche Grüße\n\nGünter Lässig\nLokale Daten\n\nMusic GmbH\nBaustraße 123, 12345 Max City\nTelefon 0123 5432114\nTelefax 0123 5432139"
     assert_equal(expected_signature, signature)
 
     fixture_files.each do |_filepath, value|
@@ -65,7 +65,7 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     end
 
     signature = SignatureDetection.find_signature(fixture_messages)
-    expected_signature = "\nChristianSmith\nTechnik\n\nTel: +49 12 34 56 78 441\nFax: +49 12 34 56 78 499\nEmail: Christian.Smith@example.com\nWeb: www.example.com\nABC KFZ- und Flugzeug B.V. & Co. KG\nHauptverwaltung\nOst Straße 2\n12345 Somewhere"
+    expected_signature = "\nChristianSmith\nTechnik\n\nTel: +49 12 34 56 78 441\nFax: +49 12 34 56 78 499\nEmail: Christian.Smith@example.com\nWeb: www.example.com\nABC KFZ- und Flugzeug B.V. & Co. KG\nHauptverwaltung"
     assert_equal(expected_signature, signature)
 
     fixture_files.each do |filepath, value|

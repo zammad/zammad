@@ -66,6 +66,42 @@ test("text2html", function() {
 
 });
 
+// htmlStrip
+test("htmlStrip", function() {
+
+  var source = $('<div><br><b>lala</b></div>')
+  var should = '<div><b>lala</b></div>'
+  App.Utils.htmlStrip(source)
+  equal(source.get(0).outerHTML, should)
+
+  source = $('<div><br><br><br><b>lala</b></div>')
+  should = '<div><b>lala</b></div>'
+  App.Utils.htmlStrip(source)
+  equal(source.get(0).outerHTML, should)
+
+  source = $('<div><br><br><br><b>lala</b><br><br></div>')
+  should = '<div><b>lala</b></div>'
+  App.Utils.htmlStrip(source)
+  equal(source.get(0).outerHTML, should)
+
+  source = $('<div><br><br><div><br></div><b>lala</b><br><br></div>')
+  should = '<div><div><br></div><b>lala</b></div>'
+  App.Utils.htmlStrip(source)
+  equal(source.get(0).outerHTML, should)
+
+});
+
+// lastLineEmpty
+test("htmlLastLineEmpty", function() {
+
+  var source = $('<div><br><b>lala</b></div>')
+  equal(App.Utils.htmlLastLineEmpty(source), false)
+
+  source = $('<div><br><b>lala</b><br></div>')
+  equal(App.Utils.htmlLastLineEmpty(source), true)
+
+});
+
 // html2text
 test("html2text", function() {
 
@@ -952,57 +988,6 @@ test("check replace tags", function() {
   }
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
-
-
-});
-
-// check if last line is a empty line
-test("check if last line is a empty line", function() {
-
-  var message = "123"
-  var result  = false
-  var verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<div>123</div>"
-  result  = false
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<p><div>123 </div></p>"
-  result  = false
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<div></div>"
-  result  = true
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<div class=\"some_class\"></div>"
-  result  = true
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<div class=\"some_class\"></div>  "
-  result  = true
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<div class=\"some_class\"></div>  \n  \n\t"
-  result  = true
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<div class=\"some_class\">  </div>  \n  \n\t"
-  result  = true
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
-
-  message = "<div class=\"some_class\"\n>  \n</div>  \n  \n\t"
-  result  = true
-  verify  = App.Utils.lastLineEmpty(message)
-  equal(verify, result, message)
 
 
 });
