@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def index
     offset = 0
-    per_page = 1000
+    per_page = 500
     if params[:page] && params[:per_page]
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
       per_page = params[:per_page].to_i

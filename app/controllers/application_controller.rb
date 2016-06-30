@@ -460,7 +460,7 @@ class ApplicationController < ActionController::Base
 
   def model_index_render(object, params)
     offset = 0
-    per_page = 1000
+    per_page = 500
     if params[:page] && params[:per_page]
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
       limit = params[:per_page].to_i
