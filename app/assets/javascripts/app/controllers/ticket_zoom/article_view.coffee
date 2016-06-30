@@ -200,8 +200,12 @@ class ArticleViewItem extends App.ObserverController
     # remember bubble heigth
     heigth = bubbleContent.height()
 
+    # get marker heigth
+    if offsetTop
+      markerHeight = offsetTop.top
+
     # if signature marker exists and heigth is within maxHeight
-    if offsetTop && heigth < maxHeight
+    if markerHeight && markerHeight < maxHeight
       newHeigth = offsetTop.top + 30
       if newHeigth < minHeight
         newHeigth = minHeight
