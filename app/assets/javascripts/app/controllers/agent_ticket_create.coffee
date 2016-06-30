@@ -232,23 +232,21 @@ class App.TicketCreate extends App.Controller
         if signature isnt undefined &&  signature.body && type is 'email-out'
           signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get() })
 
-          # get current body
-          body = @$('[data-name="body"]').html() || ''
-          if App.Utils.signatureCheck(body, signatureFinished)
+          body = @$('[data-name=body]')
+          if App.Utils.signatureCheck(body.html() || '', signatureFinished)
 
-            # if signature has changed, replace it
+            # if signature has changed, in case remove old signature
             signature_id = @$('[data-signature=true]').data('signature-id')
             if signature_id && signature_id.toString() isnt signature.id.toString()
 
-              # remove old signature
               @$('[data-signature="true"]').remove()
-              body = @$('[data-name="body"]').html() || ''
 
-            if !App.Utils.lastLineEmpty(body)
-              body = body + '<br>'
-            body = body + "<div><div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div></div>"
-
-            @$('[data-name="body"]').html(body)
+            if !App.Utils.htmlLastLineEmpty(body)
+              body.append('<br><br>')
+            signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
+            App.Utils.htmlStrip(signature)
+            body.append(signature)
+            @$('[data-name=body]').replaceWith(body)
 
         # remove old signature
         else

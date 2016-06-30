@@ -109,6 +109,33 @@ class App.Utils
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;')
 
+  # App.Utils.htmlStrip(element)
+  @htmlStrip: (element) ->
+    loop
+      el = element.get(0)
+      break if !el
+      child = el.firstChild
+      break if !child
+      break if child.nodeType isnt 1 || child.tagName isnt 'BR'
+      child.remove()
+
+    loop
+      el = element.get(0)
+      break if !el
+      child = el.lastChild
+      break if !child
+      break if child.nodeType isnt 1 || child.tagName isnt 'BR'
+      child.remove()
+
+  # true|false = App.Utils.htmlLastLineEmpty(element)
+  @htmlLastLineEmpty: (element) ->
+    el = element.get(0)
+    return false if !el
+    child = el.lastChild
+    return false if !child
+    return false if child.nodeType isnt 1 || child.tagName isnt 'BR'
+    true
+
   # textWithoutTags = App.Utils.htmlRemoveTags(html)
   @htmlRemoveTags: (html) ->
     html = @_checkTypeOf(html)
@@ -502,13 +529,6 @@ class App.Utils
         value = '-'
       value
     )
-
-  # true|false = App.Utils.lastLineEmpty(message)
-  @lastLineEmpty: (message) ->
-    messageCleanup = message.replace(/>\s+</g, '><').replace(/(\n|\r|\t)/g, '').trim()
-    return true if messageCleanup.match(/<(br|\s+?|\/)>$/im)
-    return true if messageCleanup.match(/<div(|\s.+?)><\/div>$/im)
-    false
 
   # string = App.Utils.removeEmptyLines(stringWithEmptyLines)
   @removeEmptyLines: (string) ->
