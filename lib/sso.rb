@@ -25,7 +25,7 @@ returns
     ]
 
     # added configured backends
-    Setting.where( area: 'Security::SSO' ).each {|setting|
+    Setting.where( area: 'Security::SSO' ).each { |setting|
       if setting.state_current[:value]
         config.push setting.state_current[:value]
       end
@@ -33,7 +33,7 @@ returns
 
     # try to login against configure auth backends
     user_auth = nil
-    config.each {|config_item|
+    config.each { |config_item|
       next if !config_item[:adapter]
 
       # load backend

@@ -113,7 +113,7 @@ e. g.
         (1..groups).each {
           group = Group.create( name: 'FillGroup::' + rand(999_999).to_s, active: true )
           group_pool.push group
-          Role.where(name: 'Agent').first.users.where(active: true).each {|user|
+          Role.where(name: 'Agent').first.users.where(active: true).each { |user|
             user_groups = user.groups
             user_groups.push group
             user.groups = user_groups

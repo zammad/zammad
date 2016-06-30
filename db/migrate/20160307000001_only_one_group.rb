@@ -188,7 +188,7 @@ class OnlyOneGroup < ActiveRecord::Migration
     )
 
     list = []
-    User.all {|user|
+    User.all { |user|
       next if !user.zip.empty? && !user.city.empty? && !user.street.empty?
       #next if !user.address.empty?
       list.push user

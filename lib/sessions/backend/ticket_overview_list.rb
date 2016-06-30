@@ -100,7 +100,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       if asset_needed?(overview)
         assets = overview.assets(assets)
       end
-      index[:tickets].each {|ticket_meta|
+      index[:tickets].each { |ticket_meta|
         ticket = Ticket.lookup(id: ticket_meta[:id])
         next if !asset_needed?(ticket)
         assets = ticket.assets(assets)

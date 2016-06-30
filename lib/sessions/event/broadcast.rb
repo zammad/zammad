@@ -4,7 +4,7 @@ class Sessions::Event::Broadcast < Sessions::Event::Base
 
     # list all current clients
     client_list = Sessions.list
-    client_list.each {|local_client_id, local_client|
+    client_list.each { |local_client_id, local_client|
       if local_client_id == @client_id
         log 'notice', 'do not send broadcast to it self'
         next

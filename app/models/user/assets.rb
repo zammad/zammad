@@ -62,7 +62,7 @@ returns
         end
         local_attributes['role_ids'] = local_role_ids
         if local_role_ids
-          local_role_ids.each {|role_id|
+          local_role_ids.each { |role_id|
             role = Role.lookup(id: role_id)
             data = role.assets(data)
           }
@@ -77,7 +77,7 @@ returns
         end
         local_attributes['group_ids'] = local_group_ids
         if local_group_ids
-          local_group_ids.each {|group_id|
+          local_group_ids.each { |group_id|
             group = Group.lookup(id: group_id)
             next if !group
             data = group.assets(data)
@@ -93,7 +93,7 @@ returns
         end
         local_attributes['organization_ids'] = local_organization_ids
         if local_organization_ids
-          local_organization_ids.each {|organization_id|
+          local_organization_ids.each { |organization_id|
             organization = Organization.lookup(id: organization_id)
             next if !organization
             data = organization.assets(data)
@@ -112,7 +112,7 @@ returns
           end
         end
       end
-      %w(created_by_id updated_by_id).each {|local_user_id|
+      %w(created_by_id updated_by_id).each { |local_user_id|
         next if !self[ local_user_id ]
         next if data[ User.to_app_model ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])

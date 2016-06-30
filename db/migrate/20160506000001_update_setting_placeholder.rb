@@ -11,7 +11,7 @@ class UpdateSettingPlaceholder < ActiveRecord::Migration
       http_type
       ticket_hook
     )
-    names.each {|name|
+    names.each { |name|
       setting = Setting.find_by(name: name)
       next if !setting
       setting.preferences[:placeholder] = true

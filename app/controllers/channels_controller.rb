@@ -47,11 +47,11 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
   def twitter_index
     assets = {}
-    ExternalCredential.where(name: 'twitter').each {|external_credential|
+    ExternalCredential.where(name: 'twitter').each { |external_credential|
       assets = external_credential.assets(assets)
     }
     channel_ids = []
-    Channel.order(:id).each {|channel|
+    Channel.order(:id).each { |channel|
       next if channel.area != 'Twitter::Account'
       assets = channel.assets(assets)
       channel_ids.push channel.id
@@ -70,11 +70,11 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
   def facebook_index
     assets = {}
-    ExternalCredential.where(name: 'facebook').each {|external_credential|
+    ExternalCredential.where(name: 'facebook').each { |external_credential|
       assets = external_credential.assets(assets)
     }
     channel_ids = []
-    Channel.order(:id).each {|channel|
+    Channel.order(:id).each { |channel|
       next if channel.area != 'Facebook::Account'
       assets = channel.assets(assets)
       channel_ids.push channel.id
@@ -100,10 +100,10 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     not_used_email_address_ids = []
     accounts_fixed = []
     assets = {}
-    Channel.order(:id).each {|channel|
+    Channel.order(:id).each { |channel|
       if system_online_service && channel.preferences && channel.preferences['online_service_disable']
         email_addresses = EmailAddress.where(channel_id: channel.id)
-        email_addresses.each {|email_address|
+        email_addresses.each { |email_address|
           accounts_fixed.push email_address
         }
         next
@@ -116,7 +116,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
         assets = channel.assets(assets)
       end
     }
-    EmailAddress.all.each {|email_address|
+    EmailAddress.all.each { |email_address|
       next if system_online_service && email_address.preferences && email_address.preferences['online_service_disable']
       email_address_ids.push email_address.id
       assets = email_address.assets(assets)
@@ -299,7 +299,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     # save settings
     if result[:result] == 'ok'
 
-      Channel.where(area: 'Email::Notification').each {|channel|
+      Channel.where(area: 'Email::Notification').each { |channel|
         active = false
         if adapter =~ /^#{channel.options[:outbound][:adapter]}$/i
           active = true
@@ -322,7 +322,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   private
 
   def email_account_duplicate?(result, channel_id = nil)
-    Channel.where(area: 'Email::Account').each {|channel|
+    Channel.where(area: 'Email::Account').each { |channel|
       next if !channel.options
       next if !channel.options[:inbound]
       next if !channel.options[:inbound][:adapter]

@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
     return if !get_params
 
     result = {}
-    get_params[:metric][:backend].each {|backend|
+    get_params[:metric][:backend].each { |backend|
       condition = get_params[:profile].condition
       if backend[:condition]
         backend[:condition].merge(condition)
@@ -75,7 +75,7 @@ class ReportsController < ApplicationController
 
     # get data
     result = {}
-    get_params[:metric][:backend].each {|backend|
+    get_params[:metric][:backend].each { |backend|
       next if params[:downloadBackendSelected] != backend[:name]
       condition = get_params[:profile].condition
       if backend[:condition]
@@ -116,7 +116,7 @@ class ReportsController < ApplicationController
     if params[:profile_id]
       profile = Report::Profile.find(params[:profile_id])
     else
-      params[:profiles].each {|profile_id, active|
+      params[:profiles].each { |profile_id, active|
         next if !active
         profile = Report::Profile.find(profile_id)
       }
@@ -203,7 +203,7 @@ class ReportsController < ApplicationController
     worksheet.write(2, 7, 'Closed at', format_header )
 
     row = 2
-    result[:ticket_ids].each {|ticket_id|
+    result[:ticket_ids].each { |ticket_id|
       ticket = Ticket.lookup(id: ticket_id)
       row += 1
       worksheet.write(row, 0, ticket.number )

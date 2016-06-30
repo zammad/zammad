@@ -28,18 +28,18 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # get asyn backends
     sync_backends = []
-    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each {|setting|
+    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each { |setting|
       backend = Setting.get(setting.name)
       sync_backends.push Kernel.const_get(backend)
     }
 
     # get uniq objects
     list_objects = get_uniq_changes(list)
-    list_objects.each {|_object, objects|
-      objects.each {|_id, item|
+    list_objects.each { |_object, objects|
+      objects.each { |_id, item|
 
         # execute sync backends
-        sync_backends.each {|backend|
+        sync_backends.each { |backend|
           execute_singel_backend(backend, item, params)
         }
 
@@ -150,7 +150,7 @@ class Observer::Transaction < ActiveRecord::Observer
         if !store[:changes]
           store[:changes] = event[:changes]
         else
-          event[:changes].each {|key, value|
+          event[:changes].each { |key, value|
             if !store[:changes][key]
               store[:changes][key] = value
             else
@@ -190,7 +190,7 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # ignore certain attributes
     real_changes = {}
-    record.changes.each {|key, value|
+    record.changes.each { |key, value|
       next if key == 'updated_at'
       next if key == 'first_response'
       next if key == 'close_time'

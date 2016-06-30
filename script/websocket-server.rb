@@ -99,7 +99,7 @@ EventMachine.run {
   EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: tls_options ) do |ws|
 
     # register client connection
-    ws.onopen {|handshake|
+    ws.onopen { |handshake|
       headers = handshake.headers
       remote_ip = get_remote_ip(headers)
       client_id = ws.object_id.to_s
@@ -194,12 +194,12 @@ EventMachine.run {
     # ajax
     client_list = Sessions.list
     clients = 0
-    client_list.each {|_client_id, client|
+    client_list.each { |_client_id, client|
       next if client[:meta][:type] == 'websocket'
       clients = clients + 1
     }
     log 'notice', "Status: ajax clients: #{clients}"
-    client_list.each {|client_id, client|
+    client_list.each { |client_id, client|
       next if client[:meta][:type] == 'websocket'
       log 'notice', 'working...', client_id
     }

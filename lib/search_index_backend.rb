@@ -314,7 +314,7 @@ get count of tickets and tickets which match on selector
 
     if !aggs_interval || !aggs_interval[:interval]
       ticket_ids = []
-      response.data['hits']['hits'].each {|item|
+      response.data['hits']['hits'].each { |item|
         ticket_ids.push item['_id']
       }
       return {
@@ -331,7 +331,7 @@ get count of tickets and tickets which match on selector
     query_must = []
     query_must_not = []
     if selector && !selector.empty?
-      selector.each {|key, data|
+      selector.each { |key, data|
         key_tmp = key.sub(/^.+?\./, '')
         t = {}
         if data['value'].class == Array

@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
     if params[:expand]
       list = []
-      users.each {|user|
+      users.each { |user|
         list.push user.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     if params[:full]
       assets = {}
       item_ids = []
-      users.each {|item|
+      users.each { |item|
         item_ids.push item.id
         assets = item.assets(assets)
       }
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     end
 
     users_all = []
-    users.each {|user|
+    users.each { |user|
       users_all.push User.lookup(id: user.id).attributes_with_associations
     }
     render json: users_all, status: :ok
@@ -341,7 +341,7 @@ class UsersController < ApplicationController
 
     if params[:expand]
       list = []
-      user_all.each {|user|
+      user_all.each { |user|
         list.push user.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -753,7 +753,7 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
 
     if params[:user]
       user = User.find(current_user.id)
-      params[:user].each {|key, value|
+      params[:user].each { |key, value|
         user.preferences[key.to_sym] = value
       }
       user.save
@@ -954,7 +954,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       if params[:role_ids].class != Array
         params[:role_ids] = [params[:role_ids]]
       end
-      params[:role_ids].each {|role_id|
+      params[:role_ids].each { |role_id|
         role_local = Role.lookup(id: role_id)
         if !role_local
           logger.info "Invalid role_ids for current_user_id: #{current_user.id} role_ids #{role_id}"

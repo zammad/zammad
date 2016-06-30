@@ -54,13 +54,13 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
       # calendars
       assets = {}
       calendar_ids = []
-      Calendar.all.each {|calendar|
+      Calendar.all.each { |calendar|
         assets = calendar.assets(assets)
       }
 
       # slas
       sla_ids = []
-      Sla.all.each {|item|
+      Sla.all.each { |item|
         sla_ids.push item.id
         assets = item.assets(assets)
       }

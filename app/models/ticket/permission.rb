@@ -37,7 +37,7 @@ returns
     return true if owner_id == data[:current_user].id
 
     # access if requestor is in group
-    data[:current_user].groups.each {|group|
+    data[:current_user].groups.each { |group|
       return true if self.group.id == group.id
     }
     false

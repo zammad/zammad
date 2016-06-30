@@ -34,7 +34,7 @@ class SearchController < ApplicationController
       next if !preferences
       objects_in_order_hash[preferences[:prio]] = object
     }
-    objects_in_order_hash.keys.sort.reverse_each {|prio|
+    objects_in_order_hash.keys.sort.reverse_each { |prio|
       objects_in_order.push objects_in_order_hash[prio]
     }
 
@@ -78,7 +78,7 @@ class SearchController < ApplicationController
       # sort order by object priority
       result_in_order = []
       objects_in_order.each { |object|
-        result.each {|item|
+        result.each { |item|
           next if item[:type] != object
           item[:id] = item[:id].to_i
           result_in_order.push item

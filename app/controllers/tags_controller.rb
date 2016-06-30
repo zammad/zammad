@@ -7,7 +7,7 @@ class TagsController < ApplicationController
   def search
     list = Tag::Item.where('name_downcase LIKE ?', "#{params[:term].strip.downcase}%").order('name ASC').limit(params[:limit] || 10)
     results = []
-    list.each {|item|
+    list.each { |item|
       result = {
         id: item.id,
         value: item.name,
@@ -62,7 +62,7 @@ class TagsController < ApplicationController
   def admin_list
     list = Tag::Item.order('name ASC').limit(params[:limit] || 1000)
     results = []
-    list.each {|item|
+    list.each { |item|
       result = {
         id: item.id,
         name: item.name,

@@ -11,7 +11,7 @@ class Sessions::Event::ChatStatusAgent < Sessions::Event::ChatBase
     Chat::Agent.state(@session['id'], state)
 
     # update recipients of existing sessions
-    Chat::Session.where(state: 'running', user_id: @session['id']).order('created_at ASC').each {|chat_session|
+    Chat::Session.where(state: 'running', user_id: @session['id']).order('created_at ASC').each { |chat_session|
       chat_session.add_recipient(@client_id, true)
     }
     {

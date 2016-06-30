@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
 
     if params[:expand]
       list = []
-      tickets.each {|ticket|
+      tickets.each { |ticket|
         list.push ticket.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -28,7 +28,7 @@ class TicketsController < ApplicationController
     if params[:full]
       assets = {}
       item_ids = []
-      tickets.each {|item|
+      tickets.each { |item|
         item_ids.push item.id
         assets = item.assets(assets)
       }
@@ -90,7 +90,7 @@ class TicketsController < ApplicationController
     # create tags if given
     if params[:tags] && !params[:tags].empty?
       tags = params[:tags].split(/,/)
-      tags.each {|tag|
+      tags.each { |tag|
         Tag.tag_add(
           object: 'Ticket',
           o_id: ticket.id,
@@ -215,14 +215,14 @@ class TicketsController < ApplicationController
 
     # get related assets
     ticket_ids_by_customer = []
-    ticket_lists.each {|ticket_list|
+    ticket_lists.each { |ticket_list|
       ticket_ids_by_customer.push ticket_list.id
       assets = ticket_list.assets(assets)
     }
 
     ticket_ids_recent_viewed = []
     recent_views = RecentView.list(current_user, 8, 'Ticket')
-    recent_views.each {|recent_view|
+    recent_views.each { |recent_view|
       next if recent_view['object'] != 'Ticket'
       ticket_ids_recent_viewed.push recent_view['o_id']
       recent_view_ticket = Ticket.find(recent_view['o_id'])
@@ -332,7 +332,7 @@ class TicketsController < ApplicationController
 
     if params[:expand]
       list = []
-      tickets.each {|ticket|
+      tickets.each { |ticket|
         list.push ticket.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -433,7 +433,7 @@ class TicketsController < ApplicationController
       user_tickets_closed_ids = assets_of_tickets(user_tickets_closed, assets)
 
       # generate stats by user
-      (0..11).each {|month_back|
+      (0..11).each { |month_back|
         date_to_check = now - month_back.month
         date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
@@ -507,7 +507,7 @@ class TicketsController < ApplicationController
       org_tickets_closed_ids = assets_of_tickets(org_tickets_closed, assets)
 
       # generate stats by org
-      (0..11).each {|month_back|
+      (0..11).each { |month_back|
         date_to_check = now - month_back.month
         date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
@@ -624,7 +624,7 @@ class TicketsController < ApplicationController
 
     # get related users
     article_ids = []
-    articles.each {|article|
+    articles.each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)

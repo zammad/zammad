@@ -134,7 +134,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
     checks.each { |check|
       user = User.find(check[:id])
-      check[:data].each {|key, value|
+      check[:data].each { |key, value|
         assert_equal(value, user[key], "user.#{key} for user_id #{check[:id]}")
       }
       assert_equal(check[:roles], user.roles.to_a, "#{user.login} roles")
@@ -213,7 +213,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
     checks.each { |check|
       group = Group.find(check[:id])
-      check[:data].each {|key, value|
+      check[:data].each { |key, value|
         assert_equal(value, group[key], "group.#{key} for group_id #{check[:id]}")
       }
     }
@@ -245,7 +245,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
     checks.each { |check|
       organization = Organization.find(check[:id])
-      check[:data].each {|key, value|
+      check[:data].each { |key, value|
         assert_equal(value, organization[key], "organization.#{key} for organization_id #{check[:id]}")
       }
     }
@@ -372,7 +372,7 @@ If you\'re reading this message in your email, click the ticket number link that
 
     checks.each { |check|
       ticket = Ticket.find(check[:id])
-      check[:data].each {|key, value|
+      check[:data].each { |key, value|
         assert_equal(value, ticket[key], "ticket.#{key} for ticket_id #{check[:id]}")
       }
     }

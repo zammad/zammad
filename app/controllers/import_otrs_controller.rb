@@ -26,7 +26,7 @@ class ImportOtrsController < ApplicationController
 
     if !response.success? && response.code.to_s !~ /^40.$/
       message_human = ''
-      translation_map.each {|key, message|
+      translation_map.each { |key, message|
         if response.error.to_s =~ /#{Regexp.escape(key)}/i
           message_human = message
         end

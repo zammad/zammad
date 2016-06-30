@@ -67,7 +67,7 @@ returns
 
   def self.searchable
     models = []
-    all.each {|model_class, _options|
+    all.each { |model_class, _options|
       next if !model_class
       next if !model_class.respond_to? :search_preferences
       models.push model_class
@@ -115,13 +115,13 @@ returns
       ref_attributes.push 'created_by_id'
       ref_attributes.push 'updated_by_id'
     end
-    list.each {|model_class, model_attributes|
+    list.each { |model_class, model_attributes|
       if !references[model_class.to_s]
         references[model_class.to_s] = {}
       end
 
       next if !model_attributes[:attributes]
-      ref_attributes.each {|item|
+      ref_attributes.each { |item|
         next if !model_attributes[:attributes].include?(item)
 
         count = model_class.where("#{item} = ?", object_id).count
@@ -135,9 +135,9 @@ returns
     }
 
     # find relations via reflections
-    list.each {|model_class, model_attributes|
+    list.each { |model_class, model_attributes|
       next if !model_attributes[:reflections]
-      model_attributes[:reflections].each {|_reflection_key, reflection_value|
+      model_attributes[:reflections].each { |_reflection_key, reflection_value|
 
         next if reflection_value.macro != :belongs_to
         col_name = "#{reflection_value.name}_id"
@@ -167,7 +167,7 @@ returns
     }
 
     # cleanup, remove models with empty references
-    references.each {|k, v|
+    references.each { |k, v|
       next if !v.empty?
       references.delete(k)
     }
@@ -190,8 +190,8 @@ returns
   def self.references_total(object_name, object_id)
     references = references(object_name, object_id)
     total = 0
-    references.each {|_model, model_references|
-      model_references.each {|_col, count|
+    references.each { |_model, model_references|
+      model_references.each { |_col, count|
         total += count
       }
     }
@@ -222,14 +222,14 @@ returns
 
     # update references
     references = references(object_name, object_id_to_merge)
-    references.each {|model, attributes|
+    references.each { |model, attributes|
       model_object = Object.const_get(model)
 
       # collect items and attributes to update
       items_to_update = {}
-      attributes.each {|attribute, _count|
+      attributes.each { |attribute, _count|
         Rails.logger.debug "#{object_name}: #{model}.#{attribute}->#{object_id_to_merge}->#{object_id_primary}"
-        model_object.where("#{attribute} = ?", object_id_to_merge).each {|item|
+        model_object.where("#{attribute} = ?", object_id_to_merge).each { |item|
           if !items_to_update[item.id]
             items_to_update[item.id] = item
           end
@@ -239,7 +239,7 @@ returns
 
       # update items
       ActiveRecord::Base.transaction do
-        items_to_update.each {|_id, item|
+        items_to_update.each { |_id, item|
           item.save
         }
       end

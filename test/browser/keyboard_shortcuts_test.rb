@@ -18,7 +18,7 @@ class KeyboardShortcutsTest < TestCase
     # ff issue, sometimes shortcut is not fired in browser test env
     if ENV['BROWSER'] && ENV['BROWSER'] =~ /firefox/i
       exists = false
-      (1..4).each {|_count|
+      (1..4).each { |_count|
         sleep 1
         next if !@browser.find_elements(css: '.modal')[0]
         exists = true
@@ -27,7 +27,7 @@ class KeyboardShortcutsTest < TestCase
         reload
         sleep 4
         shortcut(key: 'h')
-        (1..4).each {|_count|
+        (1..4).each { |_count|
           sleep 1
           next if !@browser.find_elements(css: '.modal')[0]
           exists = true

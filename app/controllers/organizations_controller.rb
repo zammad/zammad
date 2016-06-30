@@ -67,7 +67,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
 
     if params[:expand]
       list = []
-      organizations.each {|organization|
+      organizations.each { |organization|
         list.push organization.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -77,7 +77,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
     if params[:full]
       assets = {}
       item_ids = []
-      organizations.each {|item|
+      organizations.each { |item|
         item_ids.push item.id
         assets = item.assets(assets)
       }
@@ -246,7 +246,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
     if params[:expand]
       list = []
-      organization_all.each {|organization|
+      organization_all.each { |organization|
         list.push organization.attributes_with_relation_names
       }
       render json: list, status: :ok

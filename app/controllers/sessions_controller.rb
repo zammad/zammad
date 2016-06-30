@@ -280,7 +280,7 @@ class SessionsController < ApplicationController
     deny_if_not_role(Z_ROLENAME_ADMIN)
     assets = {}
     sessions_clean = []
-    SessionHelper.list.each {|session|
+    SessionHelper.list.each { |session|
       next if !session.data['user_id']
       sessions_clean.push session
       if session.data['user_id']

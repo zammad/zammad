@@ -22,7 +22,7 @@ class Transaction::BackgroundJob
   end
 
   def perform
-    Setting.where(area: 'Transaction::Backend::Async').order(:name).each {|setting|
+    Setting.where(area: 'Transaction::Backend::Async').order(:name).each { |setting|
       backend = Kernel.const_get(Setting.get(setting.name))
       Observer::Transaction.execute_singel_backend(backend, @item, @params)
     }

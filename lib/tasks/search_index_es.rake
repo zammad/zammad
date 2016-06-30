@@ -42,7 +42,7 @@ namespace :searchindex do
   task :reload, [:opts] => :environment do |_t, _args|
 
     puts 'reload data...'
-    Models.searchable.each {|model_class|
+    Models.searchable.each { |model_class|
       puts " reload #{model_class}"
       started_at = Time.zone.now
       puts "  - started at #{started_at}"

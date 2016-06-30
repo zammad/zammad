@@ -45,7 +45,7 @@ class TicketArticlesController < ApplicationController
     articles = []
 
     if params[:expand]
-      ticket.articles.each {|article|
+      ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
@@ -64,7 +64,7 @@ class TicketArticlesController < ApplicationController
     if params[:full]
       assets = {}
       record_ids = []
-      ticket.articles.each {|article|
+      ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
@@ -79,7 +79,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    ticket.articles.each {|article|
+    ticket.articles.each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
@@ -220,7 +220,7 @@ class TicketArticlesController < ApplicationController
 
     list = article.attachments || []
     access = false
-    list.each {|item|
+    list.each { |item|
       if item.id.to_i == params[:id].to_i
         access = true
       end

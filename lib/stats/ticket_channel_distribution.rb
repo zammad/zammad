@@ -34,12 +34,12 @@ class Stats::TicketChannelDistribution
     result = {}
     total_in = 0
     total_out = 0
-    channels.each {|channel|
+    channels.each { |channel|
       result[channel[:sender].to_sym] = {
         icon: channel[:icon]
       }
       type_ids = []
-      Ticket::Article::Type.all.each {|type|
+      Ticket::Article::Type.all.each { |type|
         next if type.name !~ /^#{channel[:sender]}/i
         type_ids.push type.id
       }
@@ -64,7 +64,7 @@ class Stats::TicketChannelDistribution
     }
 
     # append in percent
-    channels.each {|channel|
+    channels.each { |channel|
       count = result[channel[:sender].to_sym][:inbound]
       #puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
       in_process_precent = if count.zero?

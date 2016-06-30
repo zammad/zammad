@@ -221,7 +221,7 @@ returns
 
     tickets = where('escalation_time <= ?', Time.zone.now + 15.minutes)
 
-    tickets.each {|ticket|
+    tickets.each { |ticket|
 
       # get sla
       sla = ticket.escalation_calculation_get_sla
@@ -452,7 +452,7 @@ condition example
 
     # get tables to join
     tables = ''
-    selectors.each {|attribute, selector|
+    selectors.each { |attribute, selector|
       selector = attribute.split(/\./)
       next if !selector[1]
       next if selector[0] == 'ticket'
@@ -478,7 +478,7 @@ condition example
     }
 
     # add conditions
-    selectors.each {|attribute, selector_raw|
+    selectors.each { |attribute, selector_raw|
 
       # validation
       raise "Invalid selector #{selector_raw.inspect}" if !selector_raw
@@ -673,7 +673,7 @@ perform changes on ticket
         end
         recipient_string = ''
         recipient_already = {}
-        recipients.each {|user|
+        recipients.each { |user|
 
           # send notifications only to email adresses
           next if !user.email
@@ -784,7 +784,7 @@ perform changes on ticket
         next if value['value'].empty?
         tags = value['value'].split(/,/)
         if value['operator'] == 'add'
-          tags.each {|tag|
+          tags.each { |tag|
             Tag.tag_add(
               object: 'Ticket',
               o_id: id,
@@ -792,7 +792,7 @@ perform changes on ticket
             )
           }
         elsif value['operator'] == 'remove'
-          tags.each {|tag|
+          tags.each { |tag|
             Tag.tag_remove(
               object: 'Ticket',
               o_id: id,
@@ -838,7 +838,7 @@ result
 
   def get_references(ignore = [])
     references = []
-    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each {|article|
+    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each { |article|
       if !article.in_reply_to.empty?
         references.push article.in_reply_to
       end
@@ -846,7 +846,7 @@ result
       next if article.message_id.empty?
       references.push article.message_id
     }
-    ignore.each {|item|
+    ignore.each { |item|
       references.delete(item)
     }
     references

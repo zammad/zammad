@@ -117,7 +117,7 @@ class FirstStepsTest < TestCase
     )
     click(css: '#navigation a[href="#dashboard"]')
     hit = false
-    (1..38).each {
+    37.times {
       next if !@browser.find_elements(css: '.active.content a[href="#channels/form"].todo.is-done')[0]
       hit = true
       break

@@ -23,7 +23,7 @@ check and if channel not exists reset configured channels for email addresses
 =end
 
   def self.channel_cleanup
-    EmailAddress.all.each {|email_address|
+    EmailAddress.all.each { |email_address|
 
       # set to active if channel exists
       if email_address.channel_id && Channel.find_by(id: email_address.channel_id)

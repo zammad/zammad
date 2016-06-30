@@ -179,7 +179,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # set changed settings
-    settings.each {|key, value|
+    settings.each { |key, value|
       Setting.set(key, value)
     }
 

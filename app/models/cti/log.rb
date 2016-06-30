@@ -235,11 +235,11 @@ returns
 
       # add assets
       assets = {}
-      list.each {|item|
+      list.each { |item|
         next if !item.preferences
-        %w(from to).each {|direction|
+        %w(from to).each { |direction|
           next if !item.preferences[direction]
-          item.preferences[direction].each {|caller_id|
+          item.preferences[direction].each { |caller_id|
             next if !caller_id['user_id']
             user = User.lookup(id: caller_id['user_id'])
             next if !user
@@ -256,7 +256,7 @@ returns
 
     def push_event
       users = User.of_role('CTI')
-      users.each {|user|
+      users.each { |user|
 
         # send notify about event
         Sessions.send_to(
@@ -273,7 +273,7 @@ returns
       list = Cti::Log.log
 
       users = User.of_role('CTI')
-      users.each {|user|
+      users.each { |user|
 
         # send notify on create/update/delete
         Sessions.send_to(

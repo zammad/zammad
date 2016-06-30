@@ -82,7 +82,7 @@ returns
 
     # get related objects
     history = History.list(self.class.name, self['id'], nil, true)
-    history[:list].each {|item|
+    history[:list].each { |item|
       record = Kernel.const_get(item['object']).find(item['o_id'])
 
       history[:assets] = record.assets(history[:assets])

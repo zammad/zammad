@@ -20,7 +20,7 @@ returns
     # default ignored attributes
     ignore_attributes = {}
     if self.class.search_index_support_config[:ignore_attributes]
-      self.class.search_index_support_config[:ignore_attributes].each {|key, value|
+      self.class.search_index_support_config[:ignore_attributes].each { |key, value|
         ignore_attributes[key] = value
       }
     end
@@ -31,7 +31,7 @@ returns
 
     # remove ignored attributes
     attributes = ticket.attributes
-    ignore_attributes.each {|key, value|
+    ignore_attributes.each { |key, value|
       next if value != true
       attributes.delete( key.to_s )
     }
@@ -54,12 +54,12 @@ returns
     # collect article data
     articles = Ticket::Article.where( ticket_id: id )
     attributes['articles'] = []
-    articles.each {|article|
+    articles.each { |article|
       article_attributes = article.attributes
 
       # remove note needed attributes
       ignore = %w(message_id_md5)
-      ignore.each {|attribute|
+      ignore.each { |attribute|
         article_attributes.delete( attribute )
       }
 
@@ -72,7 +72,7 @@ returns
       end
 
       # lookup attachments
-      article.attachments.each {|attachment|
+      article.attachments.each { |attachment|
         if !article_attributes['attachments']
           article_attributes['attachments'] = []
         end

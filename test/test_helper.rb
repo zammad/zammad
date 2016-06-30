@@ -5,9 +5,10 @@ require 'cache'
 require 'simplecov'
 require 'simplecov-rcov'
 
-ActiveSupport::TestCase.test_order = :sorted
+#ActiveSupport::TestCase.test_order = :sorted
 
 class ActiveSupport::TestCase
+  self.test_order = :sorted
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
@@ -54,7 +55,7 @@ class ActiveSupport::TestCase
       lines.push line
     end
     count = 0
-    lines.reverse.each {|line|
+    lines.reverse.each { |line|
       break if line =~ /\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/
       next if line !~ /Send notification \(#{type}\)/
       next if line !~ /to:\s#{recipient}/

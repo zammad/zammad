@@ -307,7 +307,7 @@ returns
       content_encoding: request['Content-Encoding'],
       source: request['User-Agent'] || request['Server'],
     }
-    request.each_header {|key, value|
+    request.each_header { |key, value|
       request_data[:content] += "#{key}: #{value}\n"
     }
     body = request.body
@@ -329,7 +329,7 @@ returns
       response_data[:content_type] = response['Content-Type']
       response_data[:content_encoding] = response['Content-Encoding']
       response_data[:source] = response['User-Agent'] || response['Server']
-      response.each_header {|key, value|
+      response.each_header { |key, value|
         response_data[:content] += "#{key}: #{value}\n"
       }
       body = response.body

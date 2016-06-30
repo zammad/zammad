@@ -45,10 +45,10 @@ returns
     if state_type && !state_types.include?(state_type.name)
       state_ids.push params[:ticket].state.id
     end
-    state_types.each {|type|
+    state_types.each { |type|
       state_type = Ticket::StateType.find_by(name: type)
       next if !state_type
-      state_type.states.each {|state|
+      state_type.states.each { |state|
         assets = state.assets(assets)
         state_ids.push state.id
       }
@@ -69,7 +69,7 @@ returns
       if params[:ticket].group.email_address_id
         types.push 'email'
       end
-      types.each {|type_name|
+      types.each { |type_name|
         type = Ticket::Article::Type.lookup( name: type_name )
         if type
           type_ids.push type.id
@@ -88,7 +88,7 @@ returns
     Group.where(active: true).each { |group|
       assets = group.assets(assets)
       dependencies[:group_id][group.id] = { owner_id: [] }
-      group.users.each {|user|
+      group.users.each { |user|
         next if !agents[ user.id ]
         assets = user.assets(assets)
         dependencies[:group_id][ group.id ][ :owner_id ].push user.id
@@ -136,7 +136,7 @@ returns
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     assets = {}
     ticket_ids_open = []
-    tickets_open.each {|ticket|
+    tickets_open.each { |ticket|
       ticket_ids_open.push ticket.id
       assets = ticket.assets(assets)
     }
@@ -146,7 +146,7 @@ returns
       state_id: state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     ticket_ids_closed = []
-    tickets_closed.each {|ticket|
+    tickets_closed.each { |ticket|
       ticket_ids_closed.push ticket.id
       assets = ticket.assets(assets)
     }

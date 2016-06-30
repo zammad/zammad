@@ -27,7 +27,7 @@ list of all attributes
     result = ObjectManager::Attribute.all.order('position ASC, name ASC')
     attributes = []
     assets = {}
-    result.each {|item|
+    result.each { |item|
       attribute = item.attributes
       attribute[:object] = ObjectLookup.by_id(item.object_lookup_id)
       attribute.delete('object_lookup_id')
@@ -240,7 +240,7 @@ possible types
       end
 
       # update attributes
-      data.each {|key, value|
+      data.each { |key, value|
         record[key.to_sym] = value
       }
 
@@ -376,7 +376,7 @@ returns:
       to_delete: false,
     ).order('position ASC, name ASC')
     attributes = []
-    result.each {|item|
+    result.each { |item|
       data = {
         name: item.name,
         display: item.display,
@@ -385,9 +385,9 @@ returns:
       }
       if item.screens
         data[:screen] = {}
-        item.screens.each {|screen, roles_options|
+        item.screens.each { |screen, roles_options|
           data[:screen][screen] = {}
-          roles_options.each {|role, options|
+          roles_options.each { |role, options|
             if role == '-all-'
               data[:screen][screen] = options
             elsif user && user.role?(role)
@@ -423,7 +423,7 @@ returns:
   def self.by_object_as_hash(object, user)
     list = by_object(object, user)
     hash = {}
-    list.each {|item|
+    list.each { |item|
       hash[ item[:name] ] = item
     }
     hash
@@ -443,7 +443,7 @@ returns
 
   def self.discard_changes
     ObjectManager::Attribute.where('to_create = ?', true).each(&:destroy)
-    ObjectManager::Attribute.where('to_delete = ? OR to_config = ?', true, true).each {|attribute|
+    ObjectManager::Attribute.where('to_delete = ? OR to_config = ?', true, true).each { |attribute|
       attribute.to_migrate = false
       attribute.to_delete = false
       attribute.to_config = false
@@ -507,7 +507,7 @@ to send no browser reload event, pass false
     # check if field already exists
     execute_db_count = 0
     execute_config_count = 0
-    migrations.each {|attribute|
+    migrations.each { |attribute|
       model = Kernel.const_get(attribute.object_lookup.name)
 
       # remove field
@@ -701,7 +701,7 @@ to send no browser reload event, pass false
     end
 
     if data_type == 'integer'
-      [:min, :max].each {|item|
+      [:min, :max].each { |item|
         raise "Need data_option[#{item.inspect}] param" if !data_option[item]
         raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if data_option[item].to_s !~ /^\d+?$/
       }

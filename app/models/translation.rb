@@ -24,13 +24,13 @@ dedicated:
     locales_list = []
     if !dedicated_locale
       locales = Locale.to_sync
-      locales.each {|locale|
+      locales.each { |locale|
         locales_list.push locale.locale
       }
     else
       locales_list = [dedicated_locale]
     end
-    locales_list.each {|locale|
+    locales_list.each { |locale|
       url = "https://i18n.zammad.com/api/v1/translations/#{locale}"
       if !UserInfo.current_user_id
         UserInfo.current_user_id = 1
@@ -48,11 +48,11 @@ dedicated:
 
       translations = Translation.where(locale: locale).all
       ActiveRecord::Base.transaction do
-        result.data.each {|translation_raw|
+        result.data.each { |translation_raw|
 
           # handle case insensitive sql
           translation = nil
-          translations.each {|item|
+          translations.each { |item|
             next if item.format != translation_raw['format']
             next if item.source != translation_raw['source']
             translation = item
@@ -62,7 +62,7 @@ dedicated:
 
             # verify if update is needed
             update_needed = false
-            translation_raw.each {|key, _value|
+            translation_raw.each { |key, _value|
               if translation_raw[key] != translation[key]
                 update_needed = true
                 break
@@ -94,7 +94,7 @@ push translations to online
     # only push changed translations
     translations         = Translation.where(locale: locale)
     translations_to_push = []
-    translations.each {|translation|
+    translations.each { |translation|
       if translation.target != translation.target_initial
         translations_to_push.push translation
       end
@@ -142,7 +142,7 @@ reset translations to origin
 
     # only push changed translations
     translations = Translation.where(locale: locale)
-    translations.each {|translation|
+    translations.each { |translation|
       if !translation.target_initial || translation.target_initial.empty?
         translation.destroy
       elsif translation.target != translation.target_initial
@@ -203,8 +203,8 @@ get list of translations
 
     # add presorted on top
     presorted_list = []
-    %w(yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each {|presort|
-      list.each {|item|
+    %w(yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each { |presort|
+      list.each { |item|
         next if item[1] != presort
         presorted_list.push item
         list.delete item
@@ -233,13 +233,13 @@ translate strings in ruby context, e. g. for notifications
 
     # translate string
     records = Translation.where(locale: locale, source: string)
-    records.each {|record|
+    records.each { |record|
       return record.target if record.source == string
     }
 
     # fallback lookup in en
     records = Translation.where(locale: 'en', source: string)
-    records.each {|record|
+    records.each { |record|
       return record.target if record.source == string
     }
 

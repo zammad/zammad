@@ -266,7 +266,7 @@ class AssetsTest < ActiveSupport::TestCase
 
   def diff(o1, o2)
     return true if o1 == o2
-    %w(updated_at created_at).each {|item|
+    %w(updated_at created_at).each { |item|
       if o1[item]
         o1[item] = o1[item].to_s
       end

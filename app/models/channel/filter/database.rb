@@ -7,11 +7,11 @@ module Channel::Filter::Database
 
     # process postmaster filter
     filters = PostmasterFilter.where( active: true, channel: 'email' ).order(:name, :created_at)
-    filters.each {|filter|
+    filters.each { |filter|
       Rails.logger.info " proccess filter #{filter.name} ..."
       all_matches_ok = true
       min_one_rule_exists = false
-      filter[:match].each {|key, meta|
+      filter[:match].each { |key, meta|
         begin
           next if !meta || !meta['value'] || meta['value'].empty?
           min_one_rule_exists = true
@@ -41,7 +41,7 @@ module Channel::Filter::Database
       next if !min_one_rule_exists
       next if !all_matches_ok
 
-      filter[:perform].each {|key, meta|
+      filter[:perform].each { |key, meta|
         Rails.logger.info "  perform '#{key.downcase}' = '#{meta.inspect}'"
         mail[ key.downcase.to_sym ] = meta['value']
       }

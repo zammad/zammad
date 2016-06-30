@@ -20,7 +20,7 @@ returns
     # default ignored attributes
     ignore_attributes = {}
     if self.class.search_index_support_config[:ignore_attributes]
-      self.class.search_index_support_config[:ignore_attributes].each {|key, value|
+      self.class.search_index_support_config[:ignore_attributes].each { |key, value|
         ignore_attributes[key] = value
       }
     end
@@ -31,7 +31,7 @@ returns
 
     # remove ignored attributes
     attributes = data.attributes
-    ignore_attributes.each {|key, value|
+    ignore_attributes.each { |key, value|
       next if value != true
       attributes.delete(key.to_s)
     }
@@ -86,7 +86,7 @@ returns
   def search_index_attribute_lookup(attributes, ref_object)
 
     attributes_new = {}
-    attributes.each {|key, value|
+    attributes.each { |key, value|
       next if !value
 
       # get attribute name

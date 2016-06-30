@@ -43,7 +43,7 @@ class Sessions::Client
 
         # create new pool
         backend_pool = []
-        backends.each {|backend|
+        backends.each { |backend|
           item = backend.constantize.new(user, asset_lookup, self, @client_id)
           backend_pool.push item
         }

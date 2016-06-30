@@ -38,7 +38,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     end
 
     # touch old/current customer
-    member_ids.uniq.each {|user_id|
+    member_ids.uniq.each { |user_id|
       if user_id != record.id
         User.find(user_id).touch
       end

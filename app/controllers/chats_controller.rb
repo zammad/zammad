@@ -7,7 +7,7 @@ class ChatsController < ApplicationController
     deny_if_not_role(Z_ROLENAME_ADMIN)
     chat_ids = []
     assets = {}
-    Chat.order(:id).each {|chat|
+    Chat.order(:id).each { |chat|
       chat_ids.push chat.id
       assets = chat.assets(assets)
     }

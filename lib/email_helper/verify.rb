@@ -77,7 +77,7 @@ or
       end
 
       # looking for verify email
-      (1..10).each {
+      9.times {
         sleep 5
 
         # fetch mailbox

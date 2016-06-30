@@ -39,7 +39,7 @@ class ExternalCredential::Twitter
     user = client.user
 
     # check if account already exists
-    Channel.where(area: 'Twitter::Account').each {|channel|
+    Channel.where(area: 'Twitter::Account').each { |channel|
       next if !channel.options
       next if !channel.options['user']
       next if !channel.options['user']['id']

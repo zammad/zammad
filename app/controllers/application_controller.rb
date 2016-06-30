@@ -119,7 +119,7 @@ class ApplicationController < ActionController::Base
       content_encoding: request.headers['Content-Encoding'],
       source: request.headers['User-Agent'] || request.headers['Server'],
     }
-    request.headers.each {|key, value|
+    request.headers.each { |key, value|
       next if key[0, 5] != 'HTTP_'
       request_data[:content] += if key == 'HTTP_COOKIE'
                                   "#{key}: xxxxx\n"
@@ -141,7 +141,7 @@ class ApplicationController < ActionController::Base
       content_encoding: nil,
       source: nil,
     }
-    response.headers.each {|key, value|
+    response.headers.each { |key, value|
       response_data[:content] += "#{key}: #{value}\n"
     }
     body = response.body
@@ -473,7 +473,7 @@ class ApplicationController < ActionController::Base
 
     if params[:expand]
       list = []
-      generic_objects.each {|generic_object|
+      generic_objects.each { |generic_object|
         list.push generic_object.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -483,7 +483,7 @@ class ApplicationController < ActionController::Base
     if params[:full]
       assets = {}
       item_ids = []
-      generic_objects.each {|item|
+      generic_objects.each { |item|
         item_ids.push item.id
         assets = item.assets(assets)
       }
@@ -495,7 +495,7 @@ class ApplicationController < ActionController::Base
     end
 
     generic_objects_with_associations = []
-    generic_objects.each {|item|
+    generic_objects.each { |item|
       generic_objects_with_associations.push item.attributes_with_associations
     }
     model_index_render_result(generic_objects_with_associations)

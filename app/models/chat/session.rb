@@ -22,7 +22,7 @@ class Chat::Session < ApplicationModel
     return true if !preferences
     return true if !preferences[:participants]
     count = 0
-    preferences[:participants].each {|client_id|
+    preferences[:participants].each { |client_id|
       next if !Sessions.session_exists?(client_id)
       count += 1
     }
@@ -31,7 +31,7 @@ class Chat::Session < ApplicationModel
   end
 
   def send_to_recipients(message, ignore_client_id = nil)
-    preferences[:participants].each {|local_client_id|
+    preferences[:participants].each { |local_client_id|
       next if local_client_id == ignore_client_id
       Sessions.send(local_client_id, message)
     }
@@ -41,7 +41,7 @@ class Chat::Session < ApplicationModel
   def position
     return if state != 'waiting'
     position = 0
-    Chat::Session.where(state: 'waiting').order('created_at ASC').each {|chat_session|
+    Chat::Session.where(state: 'waiting').order('created_at ASC').each { |chat_session|
       position += 1
       break if chat_session.id == id
     }
@@ -60,7 +60,7 @@ class Chat::Session < ApplicationModel
 
   def self.active_chats_by_user_id(user_id)
     actice_sessions = []
-    Chat::Session.where(state: 'running', user_id: user_id).order('created_at ASC').each {|session|
+    Chat::Session.where(state: 'running', user_id: user_id).order('created_at ASC').each { |session|
       session_attributes = session.attributes
       session_attributes['messages'] = []
       Chat::Message.where(chat_session_id: session.id).each { |message|

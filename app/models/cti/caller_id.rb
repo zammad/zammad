@@ -79,7 +79,7 @@ returns
       map = config
       level = nil
       model = nil
-      map.each {|item|
+      map.each { |item|
         next if item[:model] != record.class
         level = item[:level]
         model = item[:model]
@@ -114,7 +114,7 @@ returns
       # get caller ids
       caller_ids = []
       attributes = record.attributes
-      attributes.each {|_attribute, value|
+      attributes.each { |_attribute, value|
         next if value.class != String
         next if value.empty?
         local_caller_ids = Cti::CallerId.parse_text(value)
@@ -124,7 +124,7 @@ returns
 
       # store caller ids
       Cti::CallerId.where(object: model.to_s, o_id: record.id).destroy_all
-      caller_ids.each {|caller_id|
+      caller_ids.each { |caller_id|
         Cti::CallerId.maybe_add(
           caller_id: caller_id,
           level: level,
@@ -145,7 +145,7 @@ returns
     def self.rebuild
       Cti::CallerId.delete_all
       map = config
-      map.each {|item|
+      map.each { |item|
         level = item[:level]
         model = item[:model]
         item[:model].find_each(batch_size: 500) do |record|

@@ -53,7 +53,7 @@ class ExternalCredential::Facebook
     }
 
     # check if account already exists
-    Channel.where(area: 'Facebook::Account').each {|channel|
+    Channel.where(area: 'Facebook::Account').each { |channel|
       next if !channel.options
       next if !channel.options['user']
       next if !channel.options['user']['id']

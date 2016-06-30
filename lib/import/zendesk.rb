@@ -1064,7 +1064,7 @@ module Import::Zendesk
   def get_fields(user_fields)
     return {} if !user_fields
     fields = {}
-    user_fields.each {|key, value|
+    user_fields.each { |key, value|
       fields[key] = value
     }
     fields

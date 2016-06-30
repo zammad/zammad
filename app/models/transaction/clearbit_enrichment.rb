@@ -50,7 +50,7 @@ sync all users against clearbit
 
   def self.sync
     users = User.of_role('Customer')
-    users.each {|user|
+    users.each { |user|
       sync_user(user)
     }
   end
@@ -84,7 +84,7 @@ users = [...]
     user_sync = config['user_sync']
     user_sync_values = {}
     if user_sync
-      user_sync.each {|callback, destination|
+      user_sync.each { |callback, destination|
         next if !user_sync_values[destination].empty?
         value = _replace(callback, data)
         next if !value
@@ -96,7 +96,7 @@ users = [...]
     organization_sync = config['organization_sync']
     organization_sync_values = {}
     if organization_sync
-      organization_sync.each {|callback, destination|
+      organization_sync.each { |callback, destination|
         next if !organization_sync_values[destination].empty?
         value = _replace(callback, data)
         next if !value
@@ -115,7 +115,7 @@ users = [...]
         o_id: user.id,
       )
       if external_syn_user && external_syn_user.last_payload
-        user_sync.each {|callback, destination|
+        user_sync.each { |callback, destination|
           next if !user_sync_values_last_time[destination].empty?
           value = _replace(callback, external_syn_user.last_payload)
           next if !value
@@ -126,7 +126,7 @@ users = [...]
 
     # if person record exists
     user_has_changed = false
-    user_sync_values.each {|destination, value|
+    user_sync_values.each { |destination, value|
       attribute = destination.sub(/^user\./, '')
       next if user[attribute] == value
       next if !user[attribute].empty? && user_sync_values_last_time[destination] != user[attribute]
@@ -196,7 +196,7 @@ users = [...]
         organization = Organization.new(
           shared: config['organization_shared'],
         )
-        organization_sync_values.each {|destination, value|
+        organization_sync_values.each { |destination, value|
           attribute = destination.sub(/^organization\./, '')
           next if !organization[attribute].empty?
           begin
@@ -227,7 +227,7 @@ users = [...]
     # get latest organization synced attributes
     organization_sync_values_last_time = {}
     if external_syn_organization && external_syn_organization.last_payload
-      organization_sync.each {|callback, destination|
+      organization_sync.each { |callback, destination|
         next if !organization_sync_values_last_time[destination].empty?
         value = _replace(callback, external_syn_organization.last_payload)
         next if !value
@@ -238,7 +238,7 @@ users = [...]
     # update existing organization
     organization = Organization.find(external_syn_organization[:o_id])
     organization_has_changed = false
-    organization_sync_values.each {|destination, value|
+    organization_sync_values.each { |destination, value|
       attribute = destination.sub(/^organization\./, '')
       next if organization[attribute] == value
       next if !organization[attribute].empty? && organization_sync_values_last_time[destination] != organization[attribute]
@@ -292,7 +292,7 @@ users = [...]
       object_refs      = data[object_name]
       object_methods   = object_method.split('.')
       object_methods_s = ''
-      object_methods.each {|method|
+      object_methods.each { |method|
         if object_methods_s != ''
           object_methods_s += '.'
         end

@@ -161,7 +161,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 10
     article = nil
-    (1..2).each {
+    1.times {
       Channel.fetch
 
       # check if follow up article has been created
@@ -203,7 +203,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 20
     article = nil
-    (1..3).each {
+    2.times {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -261,7 +261,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token_secret = system_token_secret
     end
     dms = client.direct_messages(count: 100)
-    dms.each {|dm|
+    dms.each { |dm|
       client.destroy_direct_message(dm.id)
     }
     client = Twitter::REST::Client.new(
@@ -271,7 +271,7 @@ class TwitterTest < ActiveSupport::TestCase
       access_token_secret: customer_token_secret
     )
     dms = client.direct_messages(count: 100)
-    dms.each {|dm|
+    dms.each { |dm|
       client.destroy_direct_message(dm.id)
     }
     hash  = "#citheo44 #{hash_gen}"
@@ -285,7 +285,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    (1..2).each {
+    1.times {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -335,7 +335,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    (1..2).each {
+    1.times {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -368,7 +368,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    (1..2).each {
+    1.times {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -413,7 +413,7 @@ class TwitterTest < ActiveSupport::TestCase
     )
     sleep 10
     article = nil
-    (1..2).each {
+    1.times {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       sleep 15
@@ -437,7 +437,7 @@ class TwitterTest < ActiveSupport::TestCase
     ActiveRecord::Base.connection.reconnect!
     sleep 10
     article = nil
-    (1..2).each {
+    1.times {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       sleep 15
@@ -503,7 +503,7 @@ class TwitterTest < ActiveSupport::TestCase
     #ActiveRecord::Base.connection.reconnect!
     sleep 10
     article = nil
-    (1..2).each {
+    1.times {
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
       sleep 10

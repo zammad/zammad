@@ -48,7 +48,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
       if tweet.user_mentions
         to = ''
         twitter_mention_ids = []
-        tweet.user_mentions.each {|user|
+        tweet.user_mentions.each { |user|
           if to != ''
             to += ' '
           end

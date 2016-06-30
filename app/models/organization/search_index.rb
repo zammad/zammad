@@ -18,7 +18,7 @@ returns
 
     def search_index_attribute_lookup(attributes, ref_object)
       attributes_new = {}
-      attributes.each {|key, value|
+      attributes.each { |key, value|
         next if !value
 
         # get attribute name

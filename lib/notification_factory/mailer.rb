@@ -38,7 +38,7 @@ returns
             hit = true
           else
             hit = false
-            selected_group_ids.each {|selected_group_id|
+            selected_group_ids.each { |selected_group_id|
               if selected_group_id.to_s == ticket.group_id.to_s
                 hit = true
                 break
@@ -165,7 +165,7 @@ retunes
   def self.already_sent?(ticket, recipient, type)
     result = ticket.history_get()
     count  = 0
-    result.each {|item|
+    result.each { |item|
       next if item['type'] != 'notification'
       next if item['object'] != 'Ticket'
       next if item['value_to'] !~ /#{recipient.email}/i

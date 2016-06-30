@@ -24,7 +24,7 @@ class Channel::Driver::Facebook
 
   def send(options, fb_object_id, article, _notification = false)
     access_token = nil
-    options['pages'].each {|page|
+    options['pages'].each { |page|
       next if page['id'].to_s != fb_object_id.to_s
       access_token = page['access_token']
     }
@@ -52,7 +52,7 @@ class Channel::Driver::Facebook
   private
 
   def get_page(page_id)
-    @pages.each {|page|
+    @pages.each { |page|
       return page if page['id'].to_s == page_id.to_s
     }
     nil
@@ -62,7 +62,7 @@ class Channel::Driver::Facebook
     return if !@sync
     return if !@sync['pages']
 
-    @sync['pages'].each {|page_to_sync_id, page_to_sync_params|
+    @sync['pages'].each { |page_to_sync_id, page_to_sync_params|
       page = get_page(page_to_sync_id)
       next if !page
       next if !page_to_sync_params['group_id']
@@ -70,7 +70,7 @@ class Channel::Driver::Facebook
       page_client = Facebook.new(page['access_token'])
 
       posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,comments')
-      posts.each {|post|
+      posts.each { |post|
         page_client.to_group(post, page_to_sync_params['group_id'], @channel, page)
       }
     }

@@ -282,7 +282,7 @@ class SlackTest < ActiveSupport::TestCase
     client = Slack::Client.new
     channels = client.channels_list['channels']
     channel_id = nil
-    channels.each {|channel|
+    channels.each { |channel|
       next if channel['name'] != channel_name
       channel_id = channel['id']
     }
@@ -298,7 +298,7 @@ class SlackTest < ActiveSupport::TestCase
       raise "ERROR: No history messages for channel #{channel_name}/#{channel_id}"
     end
     message_count = 0
-    channel_history['messages'].each {|message|
+    channel_history['messages'].each { |message|
       next if !message['text']
       if message['text'] =~ /#{search_for}/i
         message_count += 1

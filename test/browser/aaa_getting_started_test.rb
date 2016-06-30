@@ -200,7 +200,7 @@ class AaaGettingStartedTest < TestCase
   def test_b_accounts_auto
     #return # TODO: temp disable
     accounts = []
-    (1..10).each {|count|
+    (1..10).each { |count|
       next if !ENV["MAILBOX_AUTO#{count}"]
       mailbox_user     = ENV["MAILBOX_AUTO#{count}"].split(':')[0]
       mailbox_password = ENV["MAILBOX_AUTO#{count}"].split(':')[1]
@@ -222,7 +222,7 @@ class AaaGettingStartedTest < TestCase
       password: 'test',
       url: browser_url,
     )
-    accounts.each {|account|
+    accounts.each { |account|
 
       # getting started - auto mail
       location(url: browser_url + '/#getting_started/channel')
@@ -263,7 +263,7 @@ class AaaGettingStartedTest < TestCase
   def test_b_accounts_manual
     #return # TODO: temp disable
     accounts = []
-    (1..10).each {|count|
+    (1..10).each { |count|
       next if !ENV["MAILBOX_MANUAL#{count}"]
       mailbox_user     = ENV["MAILBOX_MANUAL#{count}"].split(':')[0]
       mailbox_password = ENV["MAILBOX_MANUAL#{count}"].split(':')[1]
@@ -294,7 +294,7 @@ class AaaGettingStartedTest < TestCase
       password: 'test',
       url: browser_url,
     )
-    accounts.each {|account|
+    accounts.each { |account|
 
       # getting started - manual mail
       location(url: browser_url + '/#getting_started/channel')

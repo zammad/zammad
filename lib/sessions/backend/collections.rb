@@ -11,7 +11,7 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
 
   def push
     results = []
-    @backends.each {|backend|
+    @backends.each { |backend|
       #puts "B: #{backend.inspect}"
       result = backend.push
       #puts "R: #{result.inspect}"
