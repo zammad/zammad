@@ -346,7 +346,7 @@ browser:build:
     - public/assets/application-*
     - public/assets/print-*
 
-test:integration:api_client_ruby:
+test:browser:integration:api_client_ruby:
   stage: browser
   dependencies:
     - browser:build
@@ -358,6 +358,7 @@ test:integration:api_client_ruby:
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - git clone git@github.com:martini/zammad_api_client_ruby.git || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - cd zammad_api_client_ruby
+    - bundle install
     - export TEST_URL=http://$IP:$BROWSER_PORT
     - rspec spec/zammad_api_spec.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - ../script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
