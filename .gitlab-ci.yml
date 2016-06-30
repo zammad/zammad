@@ -347,7 +347,7 @@ browser:build:
     - public/assets/print-*
 
 test:integration:api_client_ruby:
-  stage: test
+  stage: browser
   dependencies:
     - browser:build
   tags:
