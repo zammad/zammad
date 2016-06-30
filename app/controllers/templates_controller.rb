@@ -47,7 +47,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password}
 =end
 
   def index
-    return if deny_if_not_role('Agent')
+    deny_if_not_role('Agent')
     model_index_render(Template, params)
   end
 
@@ -69,7 +69,7 @@ curl http://localhost/api/v1/templates/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    return if deny_if_not_role('Agent')
+    deny_if_not_role('Agent')
     model_show_render(Template, params)
   end
 
@@ -97,7 +97,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def create
-    return if deny_if_not_role('Agent')
+    deny_if_not_role('Agent')
     model_create_render(Template, params)
   end
 
@@ -125,7 +125,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def update
-    return if deny_if_not_role('Agent')
+    deny_if_not_role('Agent')
     model_update_render(Template, params)
   end
 
@@ -143,7 +143,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def destroy
-    return if deny_if_not_role('Agent')
+    deny_if_not_role('Agent')
     model_destory_render(Template, params)
   end
 end

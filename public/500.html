@@ -3,8 +3,19 @@
 <meta charset="utf-8">
 <title>500: Something went wrong</title>
 <link rel="stylesheet" href="/assets/error/style.css">
-
+<body <% if @traceback %>class="error-message"<% end %>>
 <h1>500: We're sorry, but something went wrong.</h1>
-<div class="error-image" style="background-image: url(/assets/error/error-2.svg)"></div>
-<p>We're sorry, but something went wrong.</p>
+<% if !@traceback %>
+  <div class="error-image" style="background-image: url(/assets/error/error-2.svg)"></div>
+  <p>We're sorry, but something went wrong.</p>
+<% else %>
+  <div><%= @exception.message %></div>
+  <% if @exception.backtrace %>
+    <div>Traceback:</div>
+    <% @exception.backtrace.each {|row| %>
+      <%= row %><br>
+    <% } %>
+  <% end %>
+<% end %>
+</body>
 </html>

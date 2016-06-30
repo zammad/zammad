@@ -1,4 +1,5 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+require 'exceptions'
 
 class ApplicationController < ActionController::Base
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
@@ -17,6 +18,13 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   before_action :set_user, :session_update, :user_device_check, :cors_preflight_check
   after_action  :trigger_events, :http_log, :set_access_control_headers
+
+  rescue_from StandardError, with: :server_error
+  rescue_from ExecJS::RuntimeError, with: :server_error
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ArgumentError, with: :unprocessable_entity
+  rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
+  rescue_from Exceptions::NotAuthorized, with: :unauthorized
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers
@@ -192,8 +200,7 @@ class ApplicationController < ActionController::Base
     # for sessions we need the fingperprint
     if type == 'session'
       if !session[:user_device_updated_at] && !params[:fingerprint] && !session[:user_device_fingerprint]
-        render json: { error: 'Need fingerprint param!' }, status: :unprocessable_entity
-        return false
+        raise Exceptions::UnprocessableEntity, 'Need fingerprint param!'
       end
       if params[:fingerprint]
         session[:user_device_fingerprint] = params[:fingerprint]
@@ -310,13 +317,7 @@ class ApplicationController < ActionController::Base
 
     # return auth not ok
     if result[:auth] == false
-      render(
-        json: {
-          error: result[:message],
-        },
-        status: :unauthorized
-      )
-      return false
+      raise Exceptions::NotAuthorized, result[:message]
     end
 
     # return auth ok
@@ -330,35 +331,27 @@ class ApplicationController < ActionController::Base
 
   def ticket_permission(ticket)
     return true if ticket.permission(current_user: current_user)
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 
   def article_permission(article)
     ticket = Ticket.lookup(id: article.ticket_id)
     return true if ticket.permission(current_user: current_user)
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 
   def deny_if_not_role(role_name)
     return false if role?(role_name)
-    response_access_deny
-    true
+    raise Exceptions::NotAuthorized
   end
 
   def valid_session_with_user
     return true if current_user
-    render json: { message: 'No session user!' }, status: :unprocessable_entity
-    false
+    raise Exceptions::UnprocessableEntity, 'No session user!'
   end
 
   def response_access_deny
-    render(
-      json: {},
-      status: :unauthorized
-    )
-    false
+    raise Exceptions::NotAuthorized
   end
 
   def config_frontend
@@ -401,10 +394,6 @@ class ApplicationController < ActionController::Base
     end
 
     model_create_render_item(generic_object)
-  rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_create_render_item(generic_object)
@@ -431,10 +420,6 @@ class ApplicationController < ActionController::Base
     end
 
     model_update_render_item(generic_object)
-  rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_update_render_item(generic_object)
@@ -445,17 +430,13 @@ class ApplicationController < ActionController::Base
     generic_object = object.find(params[:id])
     generic_object.destroy
     model_destory_render_item()
-  rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_destory_render_item ()
     render json: {}, status: :ok
   end
 
-  def model_show_render (object, params)
+  def model_show_render(object, params)
 
     if params[:expand]
       generic_object = object.find(params[:id])
@@ -471,10 +452,6 @@ class ApplicationController < ActionController::Base
 
     generic_object = object.find(params[:id])
     model_show_render_item(generic_object)
-  rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_show_render_item(generic_object)
@@ -522,10 +499,6 @@ class ApplicationController < ActionController::Base
       generic_objects_with_associations.push item.attributes_with_associations
     }
     model_index_render_result(generic_objects_with_associations)
-  rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    render json: model_match_error(e.message), status: :unprocessable_entity
   end
 
   def model_index_render_result(generic_objects)
@@ -546,18 +519,62 @@ class ApplicationController < ActionController::Base
     generic_object = object.find(params[:id])
     result = Models.references(object, generic_object.id)
     return false if result.empty?
-    render json: { error: 'Can\'t delete, object has references.' }, status: :unprocessable_entity
-    true
+    raise Exceptions::UnprocessableEntity, 'Can\'t delete, object has references.'
   rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    render json: model_match_error(e.message), status: :unprocessable_entity
+    raise Exceptions::UnprocessableEntity, e
   end
 
   def not_found(e)
+    logger.error e.message
+    logger.error e.backtrace.inspect
     respond_to do |format|
-      format.json { render json: { error: e.message }, status: :not_found }
-      format.any { render text: "Error: #{e.message}", status: :not_found }
+      format.json { render json: model_match_error(e.message), status: :not_found }
+      format.any {
+        @exception = e
+        @traceback = !Rails.env.production?
+        file = File.open(Rails.root.join('public', '404.html'), 'r')
+        render inline: file.read, status: :not_found
+      }
+    end
+  end
+
+  def unprocessable_entity(e)
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    respond_to do |format|
+      format.json { render json: model_match_error(e.message), status: :unprocessable_entity }
+      format.any {
+        @exception = e
+        @traceback = !Rails.env.production?
+        file = File.open(Rails.root.join('public', '422.html'), 'r')
+        render inline: file.read, status: :unprocessable_entity
+      }
+    end
+  end
+
+  def server_error(e)
+    logger.error e.message
+    logger.error e.backtrace.inspect
+    respond_to do |format|
+      format.json { render json: model_match_error(e.message), status: 500 }
+      format.any {
+        @exception = e
+        @traceback = !Rails.env.production?
+        file = File.open(Rails.root.join('public', '500.html'), 'r')
+        render inline: file.read, status: 500
+      }
+    end
+  end
+
+  def unauthorized(e)
+    respond_to do |format|
+      format.json { render json: model_match_error(e.message), status: :unauthorized }
+      format.any {
+        @exception = e
+        @traceback = !Rails.env.production?
+        file = File.open(Rails.root.join('public', '401.html'), 'r')
+        render inline: file.read, status: :unauthorized
+      }
     end
   end
 
@@ -571,8 +588,7 @@ class ApplicationController < ActionController::Base
 
   def check_maintenance(user)
     return false if !check_maintenance_only(user)
-    render json: { error: 'Maintenance mode enabled!' }, status: :unauthorized
-    true
+    raise Exceptions::NotAuthorized, 'Maintenance mode enabled!'
   end
 
 end

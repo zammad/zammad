@@ -8,7 +8,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
     # create agent
-    roles  = Role.where( name: %w(Admin Agent) )
+    roles  = Role.where(name: %w(Admin Agent))
     groups = Group.all
 
     UserInfo.current_user_id = 1
@@ -24,7 +24,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create agent
-    roles = Role.where( name: 'Agent' )
+    roles = Role.where(name: 'Agent')
     @agent = User.create_or_update(
       login: 'packages-agent@example.com',
       firstname: 'Rest',
@@ -37,7 +37,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create customer without org
-    roles = Role.where( name: 'Customer' )
+    roles = Role.where(name: 'Customer')
     @customer_without_org = User.create_or_update(
       login: 'packages-customer1@example.com',
       firstname: 'Packages',
@@ -53,7 +53,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   test 'settings index with nobody' do
 
     # index
-    get '/api/v1/settings'
+    get '/api/v1/settings', {}, @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)

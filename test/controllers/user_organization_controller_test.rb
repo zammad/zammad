@@ -8,7 +8,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
     # create agent
-    roles  = Role.where( name: %w(Admin Agent) )
+    roles  = Role.where(name: %w(Admin Agent))
     groups = Group.all
 
     UserInfo.current_user_id = 1
@@ -24,7 +24,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create agent
-    roles = Role.where( name: 'Agent' )
+    roles = Role.where(name: 'Agent')
     @agent = User.create_or_update(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
@@ -37,7 +37,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create customer without org
-    roles = Role.where( name: 'Customer' )
+    roles = Role.where(name: 'Customer')
     @customer_without_org = User.create_or_update(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
@@ -217,7 +217,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result.class, Hash)
     assert_equal(result['email'], 'rest-agent@example.com')
 
-    get "/api/v1/users/#{@customer_without_org.id}", {}, 'Authorization' => credentials
+    get "/api/v1/users/#{@customer_without_org.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert(result)
@@ -320,7 +320,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
-    assert(result.empty?)
+    assert(result['error'])
 
     # create user with admin role
     role = Role.lookup(name: 'Admin')
@@ -356,10 +356,9 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     get "/api/v1/users/#{@customer_without_org.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(401)
-    #puts @response.body
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
-    assert(result.empty?)
+    assert(result['error'])
 
   end
 

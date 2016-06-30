@@ -3,8 +3,19 @@
 <meta charset="utf-8">
 <title>404: Not Found</title>
 <link rel="stylesheet" href="/assets/error/style.css">
-
-<h1>404: Requested Page was not found.</h1>
-<div class="error-image" style="background-image: url(/assets/error/error-2.svg)"></div>
-<p>Sorry, but the Phoenix is not able to find your page. Try checking the URL for errors.</p>
+<body <% if @traceback %>class="error-message"<% end %>>
+  <h1>404: Requested Ressource was not found.</h1>
+<% if !@traceback %>
+  <div class="error-image" style="background-image: url(/assets/error/error-2.svg)"></div>
+  <p>Sorry, but the Phoenix is not able to find your ressource. Try checking the URL for errors.</p>
+<% else %>
+  <div><%= @exception.message %></div>
+  <% if @exception.backtrace %>
+    <div>Traceback:</div>
+    <% @exception.backtrace.each {|row| %>
+      <%= row %><br>
+    <% } %>
+  <% end %>
+<% end %>
+</body>
 </html>

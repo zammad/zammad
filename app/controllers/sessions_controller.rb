@@ -15,10 +15,7 @@ class SessionsController < ApplicationController
     return if check_maintenance(user)
 
     # auth failed
-    if !user
-      render json: { error: 'Wrong Username and Password combination.' }, status: :unauthorized
-      return
-    end
+    raise Exceptions::NotAuthorized, 'Wrong Username and Password combination.' if !user
 
     # remember me - set session cookie to expire later
     request.env['rack.session.options'][:expire_after] = if params[:remember_me]
@@ -198,7 +195,7 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # check user
     if !params[:id]
@@ -280,7 +277,7 @@ class SessionsController < ApplicationController
   end
 
   def list
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     assets = {}
     sessions_clean = []
     SessionHelper.list.each {|session|
@@ -298,7 +295,7 @@ class SessionsController < ApplicationController
   end
 
   def delete
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     SessionHelper.destroy(params[:id])
     render json: {}
   end

@@ -101,7 +101,7 @@ curl http://localhost/api/v1/groups -v -u #{login}:#{password} -H "Content-Type:
 =end
 
   def create
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Group, params)
   end
 
@@ -133,7 +133,7 @@ curl http://localhost/api/v1/groups -v -u #{login}:#{password} -H "Content-Type:
 =end
 
   def update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Group, params)
   end
 
@@ -151,7 +151,7 @@ curl http://localhost/api/v1/groups/{id} -v -u #{login}:#{password} -H "Content-
 =end
 
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Group, params)
   end
 end

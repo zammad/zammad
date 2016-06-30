@@ -17,8 +17,8 @@ curl http://localhost/api/v1/group/channels.json -v -u #{login}:#{password} -H "
 =end
 
   def group_update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    return if !check_access
+    deny_if_not_role(Z_ROLENAME_ADMIN)
+    check_access
 
     channel = Channel.find(params[:id])
     channel.group_id = params[:group_id]
@@ -40,8 +40,8 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 =end
 
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    return if !check_access
+    deny_if_not_role(Z_ROLENAME_ADMIN)
+    check_access
     model_destory_render(Channel, params)
   end
 
@@ -64,7 +64,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   end
 
   def twitter_verify
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Channel, params)
   end
 
@@ -87,12 +87,12 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   end
 
   def facebook_verify
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Channel, params)
   end
 
   def email_index
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     system_online_service = Setting.get('system_online_service')
     account_channel_ids = []
     notification_channel_ids = []
@@ -143,7 +143,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def email_probe
 
     # check admin permissions
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # probe settings based on email and password
     result = EmailHelper::Probe.full(
@@ -163,7 +163,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def email_outbound
 
     # check admin permissions
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
@@ -175,7 +175,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def email_inbound
 
     # check admin permissions
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
@@ -192,7 +192,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def email_verify
 
     # check admin permissions
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     email = params[:email] || params[:meta][:email]
     email = email.downcase
@@ -284,10 +284,10 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
   def email_notification
 
-    return if !check_online_service
+    check_online_service
 
     # check admin permissions
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     adapter = params[:adapter].downcase
 
@@ -341,8 +341,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
   def check_online_service
     return true if !Setting.get('system_online_service')
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 
   def check_access(id = nil)
@@ -354,7 +353,6 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     channel = Channel.find(id)
     return true if channel.preferences && !channel.preferences[:online_service_disable]
 
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 end

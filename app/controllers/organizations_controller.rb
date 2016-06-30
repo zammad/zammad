@@ -116,10 +116,7 @@ curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
         render json: {}
         return
       end
-      if params[:id].to_i != current_user.organization_id
-        response_access_deny
-        return
-      end
+      raise Exceptions::NotAuthorized if params[:id].to_i != current_user.organization_id
     end
 
     if params[:expand]
@@ -163,7 +160,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Conten
 =end
 
   def create
-    return if deny_if_not_role(Z_ROLENAME_AGENT)
+    deny_if_not_role(Z_ROLENAME_AGENT)
     model_create_render(Organization, params)
   end
 
@@ -194,7 +191,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Conten
 =end
 
   def update
-    return if deny_if_not_role(Z_ROLENAME_AGENT)
+    deny_if_not_role(Z_ROLENAME_AGENT)
     model_update_render(Organization, params)
   end
 
@@ -212,8 +209,8 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_AGENT)
-    return if model_references_check(Organization, params)
+    deny_if_not_role(Z_ROLENAME_AGENT)
+    model_references_check(Organization, params)
     model_destory_render(Organization, params)
   end
 
@@ -221,8 +218,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   def search
 
     if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
-      response_access_deny
-      return
+      raise Exceptions::NotAuthorized
     end
 
     # set limit for pagination if needed
@@ -289,8 +285,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
     # permission check
     if !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
-      response_access_deny
-      return
+      raise Exceptions::NotAuthorized
     end
 
     # get organization data

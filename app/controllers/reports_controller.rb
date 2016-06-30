@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/config
   def reporting_config
-    return if deny_if_not_role('Report')
+    deny_if_not_role('Report')
     render json: {
       config: Report.config,
       profiles: Report::Profile.list,
@@ -16,7 +16,7 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/generate
   def generate
-    return if deny_if_not_role('Report')
+    deny_if_not_role('Report')
 
     get_params = params_all
     return if !get_params
@@ -61,7 +61,7 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/sets
   def sets
-    return if deny_if_not_role('Report')
+    deny_if_not_role('Report')
 
     get_params = params_all
     return if !get_params
@@ -111,10 +111,7 @@ class ReportsController < ApplicationController
   def params_all
     profile = nil
     if !params[:profiles] && !params[:profile_id]
-      render json: {
-        error: 'No such profiles param',
-      }, status: :unprocessable_entity
-      return
+      raise Exceptions::UnprocessableEntity, 'No such profiles param'
     end
     if params[:profile_id]
       profile = Report::Profile.find(params[:profile_id])
@@ -125,18 +122,12 @@ class ReportsController < ApplicationController
       }
     end
     if !profile
-      render json: {
-        error: 'No such active profile',
-      }, status: :unprocessable_entity
-      return
+      raise Exceptions::UnprocessableEntity, 'No such active profile'
     end
 
     local_config = Report.config
     if !local_config || !local_config[:metric] || !local_config[:metric][params[:metric].to_sym]
-      render json: {
-        error: "No such metric #{params[:metric]}"
-      }, status: :unprocessable_entity
-      return
+      raise Exceptions::UnprocessableEntity, "No such metric #{params[:metric]}"
     end
     metric = local_config[:metric][params[:metric].to_sym]
 

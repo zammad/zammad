@@ -96,7 +96,7 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def create
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Signature, params)
   end
 
@@ -125,7 +125,7 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Signature, params)
   end
 
@@ -140,7 +140,7 @@ Test:
 =end
 
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Signature, params)
   end
 end

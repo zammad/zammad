@@ -47,7 +47,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     if params[:expand]
       result = ticket.attributes_with_relation_names
@@ -119,7 +119,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     clean_params = Ticket.param_association_lookup(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
@@ -147,7 +147,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     ticket.destroy
 
@@ -173,7 +173,7 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
 
     # permission check
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     # get history of ticket
     history = ticket.history_get(true)
@@ -251,7 +251,7 @@ class TicketsController < ApplicationController
     end
 
     # permission check
-    return if !ticket_permission(ticket_master)
+    ticket_permission(ticket_master)
 
     # check slave ticket
     ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
@@ -264,7 +264,7 @@ class TicketsController < ApplicationController
     end
 
     # permission check
-    return if !ticket_permission(ticket_slave)
+    ticket_permission(ticket_slave)
 
     # check diffetent ticket ids
     if ticket_slave.id == ticket_master.id
@@ -294,7 +294,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:ticket_id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
     assets = ticket.assets({})
 
     # get related articles
@@ -356,7 +356,7 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/tickets/selector
   def selector
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     ticket_count, tickets = Ticket.selectors(params[:condition], 6)
 
@@ -385,7 +385,7 @@ class TicketsController < ApplicationController
     end
 
     # permission check
-    #return if !ticket_permission(ticket)
+    #ticket_permission(ticket)
 
     # lookup open user tickets
     limit                      = 100

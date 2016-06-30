@@ -15,19 +15,19 @@ class TicketStatesController < ApplicationController
 
   # POST /ticket_states
   def create
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Ticket::State, params)
   end
 
   # PUT /ticket_states/1
   def update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Ticket::State, params)
   end
 
   # DELETE /ticket_states/1
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     return if model_references_check(Ticket::State, params)
     model_destory_render(Ticket::State, params)
   end
