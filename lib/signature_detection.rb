@@ -143,6 +143,31 @@ returns
 
 =begin
 
+find signature line of message by user and article
+
+  signature_line = SignatureDetection.find_signature_line_by_article(user, article)
+
+returns
+
+  signature_line = 123
+
+  or
+
+  signature_line = nil
+
+=end
+
+  def find_signature_line_by_article(user, article)
+    return if !user.preferences[:signature_detection]
+    SignatureDetection.find_signature_line(
+      user.preferences[:signature_detection],
+      article.body,
+      article.content_type,
+    )
+  end
+
+=begin
+
 this function will search for a signature string in all articles of a given user_id
 
   signature = SignatureDetection.by_user_id(user_id)
