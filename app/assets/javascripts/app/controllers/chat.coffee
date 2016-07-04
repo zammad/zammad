@@ -690,6 +690,8 @@ class ChatWindow extends App.Controller
 
   showScrollHint: ->
     @scrollHint.removeClass('is-hidden')
+    # compensate scroll
+    @scrollHolder.scrollTop(@scrollHolder.scrollTop() + @scrollHint.outerHeight())
 
   onScrollHintClick: ->
     # animate scroll
