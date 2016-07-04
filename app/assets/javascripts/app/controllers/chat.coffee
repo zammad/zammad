@@ -372,7 +372,7 @@ class ChatWindow extends App.Controller
     @chat = App.Chat.find(@session.chat_id)
     @name = "#{@chat.displayName()} ##{@session.id}"
 
-    @on 'layout-change', @scrollToBottom
+    @on 'layout-change', @onLayoutChange
 
     @bind('chat_session_typing', (data) =>
       return if data.session_id isnt @session.session_id
@@ -405,6 +405,9 @@ class ChatWindow extends App.Controller
       return if data.session_id isnt @session.session_id
       @focus()
     )
+
+  onLayoutChange: =>
+    @scrollToBottom()
 
   render: ->
     @html App.view('customer_chat/chat_window')
@@ -609,7 +612,7 @@ class ChatWindow extends App.Controller
       isNew: isNew
       timestamp: Date.now()
 
-    @scrollToBottom()
+    @scrollToBottom showHint: true
 
   showWritingLoader: =>
     if !@isTyping
@@ -685,16 +688,19 @@ class ChatWindow extends App.Controller
     scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.height()
     @scrolledToBottom = Math.abs(scrollBottom - @scrollHolder.prop('scrollHeight')) <= @scrollSnapTolerance
 
+  showScrollHint: ->
+    @scrollHint.removeClass('is-hidden')
+
   onScrollHintClick: ->
     # animate scroll
     @scrollHolder.animate({scrollTop: @scrollHolder.prop('scrollHeight')}, 300)
     @scrollHint.addClass('is-hidden')
 
-  scrollToBottom: ->
+  scrollToBottom: ({ showHint } = { showHint: false }) ->
     if @scrolledToBottom
       @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
-    else
-      @scrollHint.removeClass('is-hidden')
+    else if showHint
+      @showScrollHint()
 
 class Setting extends App.ControllerModal
   buttonClose: true
