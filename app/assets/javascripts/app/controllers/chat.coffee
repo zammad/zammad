@@ -343,14 +343,16 @@ class ChatWindow extends App.Controller
     'click .js-send':                'sendMessage'
     'click .js-close':               'close'
     'click .js-disconnect':          'disconnect'
+    'click .js-scrollHint':          'onScrollHintClick'
 
   elements:
-    '.js-customerChatInput': 'input'
-    '.js-status':            'status'
-    '.js-close':            'closeButton'
-    '.js-disconnect':            'disconnectButton'
-    '.js-body':              'body'
-    '.js-scrollHolder':      'scrollHolder'
+    '.js-customerChatInput':         'input'
+    '.js-status':                    'status'
+    '.js-close':                     'closeButton'
+    '.js-disconnect':                'disconnectButton'
+    '.js-body':                      'body'
+    '.js-scrollHolder':              'scrollHolder'
+    '.js-scrollHint':                'scrollHint'
 
   sounds:
     message: new Audio('assets/sounds/chat_message.mp3')
@@ -364,6 +366,7 @@ class ChatWindow extends App.Controller
     @isTyping = false
     @isAgentTyping = false
     @resetUnreadMessages()
+    @scrolledToBottom = true
 
     @chat = App.Chat.find(@session.chat_id)
     @name = "#{@chat.displayName()} ##{@session.id}"
@@ -407,6 +410,7 @@ class ChatWindow extends App.Controller
       name: @name
 
     @el.one 'transitionend', @onTransitionend
+    @scrollHolder.scroll @detectScrolledtoBottom
 
     # force repaint
     @el.prop('offsetHeight')
@@ -611,7 +615,6 @@ class ChatWindow extends App.Controller
       @isTyping = true
       @maybeAddTimestamp()
       @body.append App.view('customer_chat/chat_loader')()
-      return if !@el.find('.js-loader').visible(true)
       @scrollToBottom()
 
     # clear old delay, set new
@@ -677,8 +680,20 @@ class ChatWindow extends App.Controller
 
     @scrollToBottom()
 
+  detectScrolledtoBottom: =>
+    scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.height()
+    @scrolledToBottom = scrollBottom == @scrollHolder.prop('scrollHeight')
+
+  onScrollHintClick: ->
+    # animate scroll
+    @scrollHolder.animate({scrollTop: @scrollHolder.prop('scrollHeight')}, 300)
+    @scrollHint.addClass('is-hidden')
+
   scrollToBottom: ->
-    @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+    if @scrolledToBottom
+      @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+    else
+      @scrollHint.removeClass('is-hidden')
 
 class Setting extends App.ControllerModal
   buttonClose: true
