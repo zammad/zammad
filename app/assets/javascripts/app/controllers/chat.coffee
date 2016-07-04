@@ -367,6 +367,7 @@ class ChatWindow extends App.Controller
     @isAgentTyping = false
     @resetUnreadMessages()
     @scrolledToBottom = true
+    @scrollSnapTolerance = 10 # pixels
 
     @chat = App.Chat.find(@session.chat_id)
     @name = "#{@chat.displayName()} ##{@session.id}"
@@ -682,7 +683,7 @@ class ChatWindow extends App.Controller
 
   detectScrolledtoBottom: =>
     scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.height()
-    @scrolledToBottom = scrollBottom == @scrollHolder.prop('scrollHeight')
+    @scrolledToBottom = Math.abs(scrollBottom - @scrollHolder.prop('scrollHeight')) <= @scrollSnapTolerance
 
   onScrollHintClick: ->
     # animate scroll
