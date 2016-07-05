@@ -16,7 +16,7 @@
         <%- @Icon('searchdetail') %>
       </div>
       <div class="nav-tab-name flex u-textTruncate">
-        <%= @T('Show Search Details') %>
+        <%- @T('Show Search Details') %>
         <%- @Icon('long-arrow-right') %>
       </div>
     </a>

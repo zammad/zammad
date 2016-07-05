@@ -147,6 +147,8 @@ class App.Controller extends Spine.Controller
   scrollToIfNeeded: (element, position = true) ->
     return if !element
     return if !element.get(0)
+    if position is true
+      return if element.visible(true)
     element.get(0).scrollIntoView(position)
 
   shake: (element) ->

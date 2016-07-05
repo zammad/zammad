@@ -6,7 +6,7 @@ class App.Search extends App.Controller
   events:
     'click .js-emptySearch': 'empty'
     'submit form.search-holder': 'preventDefault'
-    'keydown .js-search': 'listNavigate'
+    'keyup .js-search': 'listNavigate'
     'click .js-tab': 'showTab'
     'input .js-search': 'updateFilledClass'
 
@@ -24,6 +24,11 @@ class App.Search extends App.Controller
     @throttledSearch = _.throttle @search, 200
 
     @render()
+
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      @render()
+    )
 
   meta: =>
     if @query
@@ -95,7 +100,9 @@ class App.Search extends App.Controller
 
   empty: =>
     @searchInput.val('')
+    @query = ''
     @updateFilledClass()
+    @updateTask()
 
     # remove not needed popovers
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
@@ -106,53 +113,11 @@ class App.Search extends App.Controller
       return if !query
       return if query is @query
     @query = query
-
-    # use cache for search result
-    if @searchResultCache[@query]
-      @renderResult(@searchResultCache[@query].result)
-      currentTime = new Date
-      return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
-
     @updateTask()
 
-    App.Ajax.request(
-      id:    'search'
-      type:  'GET'
-      url:   "#{@apiPath}/search"
-      data:
-        query: @query
-        limit: 200
-      processData: true,
-      success: (data, status, xhr) =>
-        App.Collection.loadAssets(data.assets)
-        result = {}
-        for item in data.result
-          if App[item.type] && App[item.type].find
-            if !result[item.type]
-              result[item.type] = []
-            item_object = App[item.type].find(item.id)
-            if item_object.searchResultAttributes
-              item_object_search_attributes = item_object.searchResultAttributes()
-              result[item.type].push item_object_search_attributes
-            else
-              @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
-          else
-            @log 'error', "No such model App.#{item.type}"
-
-        diff = false
-        if @searchResultCache[@query]
-          diff = difference(@searchResultCache[@query].resultRaw, data.result)
-
-        # cache search result
-        @searchResultCache[@query] =
-          result: result
-          resultRaw: data.result
-          time: new Date
-
-        # if result hasn't changed, do not rerender
-        return if diff isnt false && _.isEmpty(diff)
-
-        @renderResult(result)
+    App.GlobalSearch.execute(
+      query: @query
+      render: @renderResult
     )
 
   renderResult: (result = []) =>
@@ -210,6 +175,7 @@ class App.Search extends App.Controller
 
   updateTask: =>
     current = App.TaskManager.get(@task_key).state
+    return if !current
     current.query = @query
     current.model = @model
     App.TaskManager.update(@task_key, { state: current })
