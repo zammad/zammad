@@ -20,7 +20,7 @@
 </div>
 <div class="chat-scroll-hint js-scrollHint is-hidden">
   <%- @Icon('chat') %>
-  <div class="chat-scroll-hint-message">Scroll down to see new messages</div>
+  <%- @T('Scroll down to see new messages') %>
 </div>
 <div class="chat-body-holder js-scrollHolder">
   <div class="chat-body js-body"></div>
