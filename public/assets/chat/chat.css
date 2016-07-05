@@ -191,6 +191,25 @@
   margin-right: 8px;
   vertical-align: middle; }
 
+.zammad-scroll-hint {
+  background: #f9fafa;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 7px 10px 6px;
+  color: #999999;
+  cursor: pointer; }
+  .zammad-scroll-hint.is-hidden {
+    display: none; }
+
+.zammad-scroll-hint-icon {
+  fill: #c4c7ca;
+  margin-right: 8px; }
+
 .zammad-chat-body {
   padding: 0.5em 1em;
   overflow: auto;

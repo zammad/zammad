@@ -158,6 +158,7 @@ do($ = window.jQuery, window) ->
       buttonClass: 'open-zammad-chat'
       inactiveClass: 'is-inactive'
       title: '<strong>Chat</strong> with us!'
+      scrollHint: 'Scrolle nach unten um neue Nachrichten zu sehen'
       idleTimeout: 6
       idleTimeoutIntervallCheck: 0.5
       inactiveTimeout: 8
@@ -180,6 +181,7 @@ do($ = window.jQuery, window) ->
     translations:
       de:
         '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!'
+        'Scroll down to see new messages': 'Scrolle nach unten um neue Nachrichten zu sehen'
         'Online': 'Online'
         'Online': 'Online'
         'Offline': 'Offline'
@@ -194,6 +196,8 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.'
     sessionId: undefined
+    scrolledToBottom: true
+    scrollSnapTolerance: 10
 
     T: (string, items...) =>
       if @options.lang && @options.lang isnt 'en'
@@ -295,7 +299,8 @@ do($ = window.jQuery, window) ->
 
     renderBase: ->
       @el = $(@view('chat')(
-        title: @options.title
+        title: @options.title,
+        scrollHint: @options.scrollHint
       ))
       @options.target.append @el
 
@@ -305,6 +310,8 @@ do($ = window.jQuery, window) ->
       @el.find('.js-chat-open').click @open
       @el.find('.js-chat-toggle').click @toggle
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
+      @el.find('.zammad-chat-body').on 'scroll', @detectScrolledtoBottom
+      @el.find('.zammad-scroll-hint').click @onScrollHintClick
       @input.on
         keydown: @checkForEnter
         input: @onInput
@@ -503,11 +510,12 @@ do($ = window.jQuery, window) ->
         id: data.id
         from: 'agent'
 
+      @scrollToBottom showHint: true
+
     renderMessage: (data) =>
       @lastAddedType = "message--#{ data.from }"
       data.unreadClass = if document.hidden then ' zammad-chat-message--unread' else ''
       @el.find('.zammad-chat-body').append @view('message')(data)
-      @scrollToBottom()
 
     open: =>
       if @isOpen
@@ -717,8 +725,25 @@ do($ = window.jQuery, window) ->
 
       @scrollToBottom()
 
-    scrollToBottom: ->
-      @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
+    detectScrolledtoBottom: =>
+      scrollBottom = @el.find('.zammad-chat-body').scrollTop() + @el.find('.zammad-chat-body').outerHeight()
+      @scrolledToBottom = Math.abs(scrollBottom - @el.find('.zammad-chat-body').prop('scrollHeight')) <= @scrollSnapTolerance
+      @el.find('.zammad-scroll-hint').addClass('is-hidden') if @scrolledToBottom
+
+    showScrollHint: ->
+      @el.find('.zammad-scroll-hint').removeClass('is-hidden')
+      # compensate scroll
+      @el.find('.zammad-chat-body').scrollTop(@el.find('.zammad-chat-body').scrollTop() + @el.find('.zammad-scroll-hint').outerHeight())
+
+    onScrollHintClick: =>
+      # animate scroll
+      @el.find('.zammad-chat-body').animate({scrollTop: @el.find('.zammad-chat-body').prop('scrollHeight')}, 300)
+
+    scrollToBottom: ({ showHint } = { showHint: false }) ->
+      if @scrolledToBottom
+        @el.find('.zammad-chat-body').scrollTop($('.zammad-chat-body').prop('scrollHeight'))
+      else if showHint
+        @showScrollHint()
 
     destroy: (params = {}) =>
       @log.debug 'destroy widget', params

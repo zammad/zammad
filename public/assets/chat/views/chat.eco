@@ -15,6 +15,10 @@
     </div>
   </div>
   <div class="zammad-chat-modal"></div>
+  <div class="zammad-scroll-hint is-hidden">
+    <svg class="zammad-scroll-hint-icon" width="20" height="18" viewBox="0 0 20 18"><path d="M0,2.00585866 C0,0.898053512 0.898212381,0 1.99079514,0 L18.0092049,0 C19.1086907,0 20,0.897060126 20,2.00585866 L20,11.9941413 C20,13.1019465 19.1017876,14 18.0092049,14 L1.99079514,14 C0.891309342,14 0,13.1029399 0,11.9941413 L0,2.00585866 Z M10,14 L16,18 L16,14 L10,14 Z" fill-rule="evenodd"/></svg>
+    <%- @T(@scrollHint) %>
+  </div>
   <div class="zammad-chat-body"></div>
   <form class="zammad-chat-controls">
     <textarea class="zammad-chat-input" rows="1" placeholder="<%- @T('Compose your message...') %>"></textarea>
