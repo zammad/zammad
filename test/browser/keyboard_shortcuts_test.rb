@@ -131,6 +131,7 @@ class KeyboardShortcutsTest < TestCase
     exists(css: '#navigation .search.open')
     sleep 2
     window_keys(value: :arrow_down)
+    window_keys(value: :arrow_down)
     window_keys(value: :enter)
     watch_for(
       css:     '.active.content',
@@ -143,6 +144,7 @@ class KeyboardShortcutsTest < TestCase
     shortcut(key: 's')
     window_keys(value: ticket1[:number])
     sleep 2
+    window_keys(value: :arrow_down)
     window_keys(value: :arrow_down)
     window_keys(value: :enter)
 
