@@ -264,8 +264,8 @@
 .zammad-chat-loading-circle {
   background: #d9d9d9;
   border-radius: 100%;
-  height: 0.72em;
-  width: 0.72em;
+  height: 0.55em;
+  width: 0.55em;
   display: inline-block;
   -webkit-animation: ease-in-out load-fade 600ms infinite alternate;
   animation: ease-in-out load-fade 600ms infinite alternate; }
