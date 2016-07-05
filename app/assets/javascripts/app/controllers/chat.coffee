@@ -685,8 +685,9 @@ class ChatWindow extends App.Controller
     @scrollToBottom()
 
   detectScrolledtoBottom: =>
-    scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.height()
+    scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.outerHeight()
     @scrolledToBottom = Math.abs(scrollBottom - @scrollHolder.prop('scrollHeight')) <= @scrollSnapTolerance
+    @scrollHint.addClass('is-hidden') if @scrolledToBottom
 
   showScrollHint: ->
     @scrollHint.removeClass('is-hidden')
@@ -696,7 +697,6 @@ class ChatWindow extends App.Controller
   onScrollHintClick: ->
     # animate scroll
     @scrollHolder.animate({scrollTop: @scrollHolder.prop('scrollHeight')}, 300)
-    @scrollHint.addClass('is-hidden')
 
   scrollToBottom: ({ showHint } = { showHint: false }) ->
     if @scrolledToBottom
