@@ -4,9 +4,11 @@ class App.Search extends App.Controller
     '.js-search': 'searchInput'
 
   events:
+    'click .js-emptySearch': 'empty'
     'submit form.search-holder': 'preventDefault'
     'keydown .js-search': 'listNavigate'
     'click .js-tab': 'showTab'
+    'input .js-search': 'updateFilledClass'
 
   constructor: ->
     super
@@ -19,18 +21,21 @@ class App.Search extends App.Controller
     # update taskbar with new meta data
     App.TaskManager.touch(@task_key)
 
+    @throttledSearch = _.throttle @search, 200
+
     @render()
 
   meta: =>
-    title = App.i18n.translateInline('Extended Search')
     if @query
-      title += ": #{App.Utils.htmlEscape(@query)}"
+      title = App.Utils.htmlEscape(@query)
+    else
+      title = App.i18n.translateInline('Extended Search')
     meta =
       url:   @url()
       id:    ''
       head:  title
       title: title
-      iconClass: 'magnifier'
+      iconClass: 'searchdetail'
     meta
 
   url: ->
@@ -38,10 +43,9 @@ class App.Search extends App.Controller
 
   show: (params) =>
     @navupdate(url: '#search', type: 'menu')
-    console.log('par', params)
     return if !params.query
     @$('.js-search').val(decodeURIComponent(params.query)).trigger('change')
-    @searchFunction(200, true)
+    @throttledSearch(true)
 
   hide: ->
     # nothing
@@ -79,7 +83,7 @@ class App.Search extends App.Controller
     )
 
     if @query
-      @searchFunction(200, true)
+      @throttledSearch(true)
 
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
@@ -87,71 +91,69 @@ class App.Search extends App.Controller
       return
 
     # on other keys, show result
-    @searchFunction(200)
+    @throttledSearch(200)
 
   empty: =>
     @searchInput.val('')
+    @updateFilledClass()
 
     # remove not needed popovers
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
 
-  searchFunction: (delay, force = false) =>
+  search: (force = false) =>
+    query = @searchInput.val().trim()
+    if !force
+      return if !query
+      return if query is @query
+    @query = query
 
-    search = =>
-      query = @searchInput.val().trim()
-      if !force
-        return if !query
-        return if query is @query
-      @query = query
+    # use cache for search result
+    if @searchResultCache[@query]
+      @renderResult(@searchResultCache[@query].result)
+      currentTime = new Date
+      return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
 
-      # use cache for search result
-      if @searchResultCache[@query]
-        @renderResult(@searchResultCache[@query].result)
-        currentTime = new Date
-        return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+    @updateTask()
 
-      @updateTask()
-
-      App.Ajax.request(
-        id:    'search'
-        type:  'GET'
-        url:   "#{@apiPath}/search"
-        data:
-          query: @query
-          limit: 200
-        processData: true,
-        success: (data, status, xhr) =>
-          App.Collection.loadAssets(data.assets)
-          result = {}
-          for item in data.result
-            if App[item.type] && App[item.type].find
-              if !result[item.type]
-                result[item.type] = []
-              item_object = App[item.type].find(item.id)
-              if item_object.searchResultAttributes
-                item_object_search_attributes = item_object.searchResultAttributes()
-                result[item.type].push item_object_search_attributes
-              else
-                @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
+    App.Ajax.request(
+      id:    'search'
+      type:  'GET'
+      url:   "#{@apiPath}/search"
+      data:
+        query: @query
+        limit: 200
+      processData: true,
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        result = {}
+        for item in data.result
+          if App[item.type] && App[item.type].find
+            if !result[item.type]
+              result[item.type] = []
+            item_object = App[item.type].find(item.id)
+            if item_object.searchResultAttributes
+              item_object_search_attributes = item_object.searchResultAttributes()
+              result[item.type].push item_object_search_attributes
             else
-              @log 'error', "No such model App.#{item.type}"
+              @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
+          else
+            @log 'error', "No such model App.#{item.type}"
 
-          diff = false
-          if @searchResultCache[@query]
-            diff = difference(@searchResultCache[@query].resultRaw, data.result)
+        diff = false
+        if @searchResultCache[@query]
+          diff = difference(@searchResultCache[@query].resultRaw, data.result)
 
-          # cache search result
-          @searchResultCache[@query] =
-            result: result
-            resultRaw: data.result
-            time: new Date
+        # cache search result
+        @searchResultCache[@query] =
+          result: result
+          resultRaw: data.result
+          time: new Date
 
-          # if result hasn't changed, do not rerender
-          return if diff isnt false && _.isEmpty(diff)
+        # if result hasn't changed, do not rerender
+        return if diff isnt false && _.isEmpty(diff)
 
-          @renderResult(result)
-      )
-    @delay(search, delay, 'search')
+        @renderResult(result)
+    )
 
   renderResult: (result = []) =>
     @result = result
@@ -161,7 +163,7 @@ class App.Search extends App.Controller
         count = result[tab.model].length
       if @model is tab.model
         @renderTab(tab.model, result[tab.model] || [])
-      @$(".js-tab#{tab.model} .js-counter").text("(#{count})")
+      @$(".js-tab#{tab.model} .js-counter").text(count)
 
   showTab: (e) =>
     tabs = $(e.currentTarget).closest('.tabs')
@@ -212,6 +214,9 @@ class App.Search extends App.Controller
     current.model = @model
     App.TaskManager.update(@task_key, { state: current })
     App.TaskManager.touch(@task_key)
+
+  updateFilledClass: ->
+    @searchInput.toggleClass 'is-empty', !@searchInput.val()
 
 class Router extends App.ControllerPermanent
   constructor: (params) ->

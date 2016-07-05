@@ -2297,7 +2297,7 @@ wait untill text in selector disabppears
 
     # open ticket
     #instance.find_element(partial_link_text: params[:number] } ).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
@@ -2332,7 +2332,7 @@ wait untill text in selector disabppears
 
     # open ticket
     #instance.find_element(partial_link_text: params[:title] } ).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
     title = instance.find_elements(css: '.active .ticketZoom-header .js-objectTitle')[0].text
     if title !~ /#{params[:title]}/
@@ -2420,7 +2420,7 @@ wait untill text in selector disabppears
     element.send_keys(params[:value])
     sleep 2
     #instance.find_element(partial_link_text: params[:value] } ).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/
@@ -2453,7 +2453,7 @@ wait untill text in selector disabppears
     element.send_keys(params[:value])
     sleep 3
     #instance.find_element(partial_link_text: params[:value]).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/

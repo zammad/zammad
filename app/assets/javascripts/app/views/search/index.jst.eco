@@ -1,19 +1,26 @@
-<div class="flex vertical">
+<div class="flex main vertical">
 
-  <div class="searchfield">
-    <%- @Icon('magnifier') %>
-    <input class="js-search form-control" name="query" placeholder="<%- @Ti('Find what you search. E. g. "search phrase"') %>" value="<%= @query %>" type="search" autocomplete="off">
-    <div class="empty-search js-emptySearch">
-      <%- @Icon('diagonal-cross') %>
+  <div class="detail-search">
+    <div class="detail-search-header">
+      <div class="searchfield">
+        <%- @Icon('magnifier') %>
+        <input class="js-search form-control<%= if !@query then ' is-empty' %>" name="query" placeholder="<%- @Ti('Find what you search. E. g. "search phrase"') %>" value="<%= @query %>" type="search" autocomplete="off">
+        <div class="empty-search js-emptySearch">
+          <%- @Icon('diagonal-cross') %>
+        </div>
+      </div>
+
+      <div class="tabs tabs-wide">
+        <% for tab in @tabs: %>
+          <div data-tab-content="<%- tab.model %>" class="tab js-tab js-tab<%- tab.model %><% if tab.active: %> active<% end %>">
+            <span class="tab-name"><%- @T(tab.name) %></span>
+            <span class="tab-badge js-counter"><%- tab.count %></span>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
 
-  <div class="tabs tabs-wide">
-    <% for tab in @tabs: %>
-      <div data-tab-content="<%- tab.model %>" class="tab js-tab js-tab<%- tab.model %><% if tab.active: %> active<% end %>"><%- @T(tab.name) %> <span class="js-counter"><%- tab.count %></span></div>
-    <% end %>
+    <div class="js-content"></div>
   </div>
-
-  <div class="js-content"></div>
 
 </div>

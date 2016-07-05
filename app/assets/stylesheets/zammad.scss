@@ -1800,11 +1800,26 @@ input.has-error {
     appearance: textfield;
     border-radius: 19px;
     padding: 0 17px 0 42px;
+    
+    &.is-empty + .empty-search {
+      visibility: hidden;
+    }
   }
 
   input[type="search"]::-webkit-search-cancel-button,
   input[type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
+  }
+
+  .empty-search {
+    height: 41px;
+    width: 50px;
+    visibility: visible;
+    
+    .icon {
+      position: static;
+      opacity: 0.5;
+    }
   }
 }
 
@@ -3038,19 +3053,17 @@ footer {
   }
 
   .nav-tab-icon {
-    margin-right: 7px;
-    margin-left: 7px;
     margin-top: -3px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    width: 16px;
+    width: 30px;
   }
 
   .nav-tab-icon .icon {
-    width: 16px;
-    height: 16px;
+    max-width: 18px;
+    max-height: 18px;
     fill: #808080;
   }
 
@@ -3193,7 +3206,7 @@ footer {
     cursor: pointer;
   }
 
-  .empty-search .icon-diagonal-cross {
+  .search .empty-search .icon-diagonal-cross {
     fill: white;
     opacity: 0.5;
   }
@@ -3272,10 +3285,7 @@ footer {
       display: none;
     }
 
-  .search .custom-dropdown-menu {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  .global-search-menu {
     background: #26272e;
     position: absolute;
     left: 0;
@@ -3285,16 +3295,47 @@ footer {
     z-index: 900;
     display: none;
     overflow: auto;
+
+    .divider {
+      height: 1px;
+      background: #2f3238;
+      margin: 14px 0 17px;
+    }
   }
 
-  .search.open .custom-dropdown-menu {
+  .search.open .global-search-menu {
     display: block;
   }
 
-  .search .custom-dropdown-menu .divider {
-    height: 1px;
-    background: #2f3238;
-    margin: 14px 0 17px;
+  .global-search-detail-link {
+    padding: 9px 15px 8px 0;
+    margin-bottom: 7px;
+    height: auto !important;
+    
+    .nav-tab-icon {
+      width: 18px;
+      margin-left: 10px;
+      margin-right: 10px;
+      
+      .icon {
+        width: 18px;
+        height: 14px;
+      }
+    }
+
+    .nav-tab-name {
+      .icon {
+        fill: currentColor;
+        margin: -2px 0 0 3px;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .global-search-result {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .user-menu {
@@ -8216,6 +8257,10 @@ output {
     border: 0;
     border-top: 1px solid #dfdfdf;
   }
+}
+
+.detail-search-header {
+  margin: 20px 0 32px;
 }
 
 /*

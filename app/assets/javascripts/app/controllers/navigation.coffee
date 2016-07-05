@@ -3,23 +3,25 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   elements:
     '#global-search': 'searchInput'
-    '#global-search-result': 'searchResult'
+    '.js-global-search-result': 'searchResult'
     '.search': 'searchContainer'
 
   events:
     'click .js-toggleNotifications': 'toggleNotifications'
     'click .js-emptySearch': 'emptyAndClose'
-    'dblclick .search-holder .icon-magnifier': 'openExtendedSearch'
     'submit form.search-holder': 'preventDefault'
     'focus #global-search': 'searchFocus'
     'blur #global-search': 'searchBlur'
     'keydown #global-search': 'listNavigate'
-    'click #global-search-result': 'andClose'
+    'click .js-global-search-result': 'andClose'
     'change .js-menu .js-switch input': 'switch'
+    'click .js-details-link': 'openExtendedSearch'
 
   constructor: ->
     super
     @render()
+
+    @throttledSearch = _.throttle @search, 200
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
@@ -195,7 +197,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @query = '' # reset query cache
     @searchContainer.addClass('focused')
     @anyPopoversDestroy()
-    @searchFunction(0)
+    @search()
 
   searchBlur: (e) =>
 
@@ -220,7 +222,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      href = @$('#global-search-result .nav-tab.is-hover').attr('href')
+      href = @$('.global-search-result .nav-tab.is-hover').attr('href')
       return if !href
       @locationExecute(href)
       @emptyAndClose()
@@ -228,7 +230,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       return
 
     # on other keys, show result
-    @searchFunction(200)
+    @throttledSearch()
 
   nudge: (e, position) =>
 
@@ -266,60 +268,57 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @searchContainer.removeClass('open')
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
 
-  searchFunction: (delay) =>
+  search: =>
+    query = @searchInput.val().trim()
+    return if !query
+    return if query is @query
+    @query = query
+    @searchContainer.toggleClass('filled', !!@query)
 
-    search = =>
-      query = @searchInput.val().trim()
-      return if !query
-      return if query is @query
-      @query = query
-      @searchContainer.toggleClass('filled', !!@query)
+    # use cache for search result
+    if @searchResultCache[@query]
+      @renderResult(@searchResultCache[@query].result)
+      currentTime = new Date
+      return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
 
-      # use cache for search result
-      if @searchResultCache[@query]
-        @renderResult(@searchResultCache[@query].result)
-        currentTime = new Date
-        return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
-
-      App.Ajax.request(
-        id:    'search'
-        type:  'GET'
-        url:   "#{@apiPath}/search"
-        data:
-          query: @query
-        processData: true,
-        success: (data, status, xhr) =>
-          App.Collection.loadAssets(data.assets)
-          result = {}
-          for item in data.result
-            if App[item.type] && App[item.type].find
-              if !result[item.type]
-                result[item.type] = []
-              item_object = App[item.type].find(item.id)
-              if item_object.searchResultAttributes
-                item_object_search_attributes = item_object.searchResultAttributes()
-                result[item.type].push item_object_search_attributes
-              else
-                @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
+    App.Ajax.request(
+      id:    'search'
+      type:  'GET'
+      url:   "#{@apiPath}/search"
+      data:
+        query: @query
+      processData: true,
+      success: (data, status, xhr) =>
+        App.Collection.loadAssets(data.assets)
+        result = {}
+        for item in data.result
+          if App[item.type] && App[item.type].find
+            if !result[item.type]
+              result[item.type] = []
+            item_object = App[item.type].find(item.id)
+            if item_object.searchResultAttributes
+              item_object_search_attributes = item_object.searchResultAttributes()
+              result[item.type].push item_object_search_attributes
             else
-              @log 'error', "No such model App.#{item.type}"
+              @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
+          else
+            @log 'error', "No such model App.#{item.type}"
 
-          diff = false
-          if @searchResultCache[@query]
-            diff = difference(@searchResultCache[@query].resultRaw, data.result)
+        diff = false
+        if @searchResultCache[@query]
+          diff = difference(@searchResultCache[@query].resultRaw, data.result)
 
-          # cache search result
-          @searchResultCache[@query] =
-            result: result
-            resultRaw: data.result
-            time: new Date
+        # cache search result
+        @searchResultCache[@query] =
+          result: result
+          resultRaw: data.result
+          time: new Date
 
-          # if result hasn't changed, do not rerender
-          return if diff isnt false && _.isEmpty(diff)
+        # if result hasn't changed, do not rerender
+        return if diff isnt false && _.isEmpty(diff)
 
-          @renderResult(result)
-      )
-    @delay(search, delay, 'search')
+        @renderResult(result)
+    )
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)
@@ -479,12 +478,15 @@ class App.Navigation extends App.ControllerWidgetPermanent
     e.stopPropagation()
     @notificationWidget.toggle()
 
-  openExtendedSearch: =>
+  openExtendedSearch: (event) ->
+    event.preventDefault()
     query = @searchInput.val()
     @searchInput.val('').blur()
     if query
       @navigate("#search/#{encodeURIComponent(query)}")
       return
     @navigate('#search')
+
+
 
 App.Config.set('navigation', App.Navigation, 'Navigations')
