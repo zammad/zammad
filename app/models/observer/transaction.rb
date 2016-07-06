@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::Transaction < ActiveRecord::Observer
-  observe :ticket, 'ticket::_article', :user, :organization
+  observe :ticket, 'ticket::_article', :user, :organization, :tag
 
   def self.commit(params = {})
 
@@ -206,13 +206,20 @@ class Observer::Transaction < ActiveRecord::Observer
     # do not send anything if nothing has changed
     return if real_changes.empty?
 
+    changed_by_id = nil
+    if record.respond_to?('updated_by_id')
+      changed_by_id = record.updated_by_id
+    else
+      changed_by_id = record.created_by_id
+    end
+
     e = {
       object: record.class.name,
       type: 'update',
       data: record,
       changes: real_changes,
       id: record.id,
-      user_id: record.updated_by_id,
+      user_id: changed_by_id,
     }
     EventBuffer.add('transaction', e)
   end

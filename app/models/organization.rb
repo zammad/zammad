@@ -5,6 +5,7 @@ class Organization < ApplicationModel
   load 'organization/assets.rb'
   include Organization::Assets
   extend Organization::Search
+  load 'organization/search_index.rb'
   include Organization::SearchIndex
 
   has_and_belongs_to_many :users

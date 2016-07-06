@@ -108,10 +108,10 @@ returns
                       .where('groups.active = ?', true)
         group_condition = []
         groups.each { |group|
-          group_condition.push group.name
+          group_condition.push group.id
         }
         access_condition = {
-          'query_string' => { 'default_field' => 'Ticket.group.name', 'query' => "\"#{group_condition.join('" OR "')}\"" }
+          'query_string' => { 'default_field' => 'Ticket.group_id', 'query' => "\"#{group_condition.join('" OR "')}\"" }
         }
       else
         access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )

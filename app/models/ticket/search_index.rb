@@ -3,47 +3,27 @@ module Ticket::SearchIndex
 
 =begin
 
-build and send data for search index to backend
+lookup name of ref. objects
 
   ticket = Ticket.find(123)
-  result = ticket.search_index_update_backend
+  result = ticket.search_index_attribute_lookup
 
 returns
 
-  result = true # false
+  attributes # object with lookup data
 
 =end
 
-  def search_index_update_backend
-    return if !self.class.search_index_support_config
+  def search_index_attribute_lookup
+    attributes = super
+    return if !attributes
 
-    # default ignored attributes
-    ignore_attributes = {}
-    if self.class.search_index_support_config[:ignore_attributes]
-      self.class.search_index_support_config[:ignore_attributes].each { |key, value|
-        ignore_attributes[key] = value
-      }
-    end
-
-    # for performance reasons, Model.search_index_reload will only collect if of object
-    # get whole data here
-    ticket = self.class.find(id)
-
-    # remove ignored attributes
-    attributes = ticket.attributes
-    ignore_attributes.each { |key, value|
-      next if value != true
-      attributes.delete( key.to_s )
-    }
-
+    # collect article data
     # add tags
-    tags = Tag.tag_list( object: 'Ticket', o_id: id )
+    tags = Tag.tag_list(object: 'Ticket', o_id: id)
     if tags && !tags.empty?
       attributes[:tag] = tags
     end
-
-    # lookup attributes of ref. objects (normally name and note)
-    attributes = search_index_attribute_lookup( attributes, ticket )
 
     # list ignored file extentions
     attachments_ignore = Setting.get('es_attachment_ignore') || [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe' ]
@@ -52,7 +32,7 @@ returns
     attachment_max_size_in_mb = Setting.get('es_attachment_max_size_in_mb') || 40
 
     # collect article data
-    articles = Ticket::Article.where( ticket_id: id )
+    articles = Ticket::Article.where(ticket_id: id)
     attributes['articles'] = []
     articles.each { |article|
       article_attributes = article.attributes
@@ -60,11 +40,11 @@ returns
       # remove note needed attributes
       ignore = %w(message_id_md5)
       ignore.each { |attribute|
-        article_attributes.delete( attribute )
+        article_attributes.delete(attribute)
       }
 
       # lookup attributes of ref. objects (normally name and note)
-      article_attributes = search_index_attribute_lookup( article_attributes, article )
+      article_attributes = article.search_index_attribute_lookup
 
       # index raw text body
       if article_attributes['content_type'] && article_attributes['content_type'] == 'text/html' && article_attributes['body']
@@ -87,18 +67,18 @@ returns
         filename_extention = attachment.filename.downcase
         filename_extention.gsub!(/^.*(\..+?)$/, '\\1')
 
-        next if attachments_ignore.include?( filename_extention.downcase )
+        next if attachments_ignore.include?(filename_extention.downcase)
 
         data = {
           '_name'    => attachment.filename,
-          '_content' => Base64.encode64( attachment.content )
+          '_content' => Base64.encode64(attachment.content)
         }
         article_attributes['attachments'].push data
       }
       attributes['articles'].push article_attributes
     }
 
-    return if !attributes
-    SearchIndexBackend.add(self.class.to_s, attributes)
+    attributes
   end
+
 end
