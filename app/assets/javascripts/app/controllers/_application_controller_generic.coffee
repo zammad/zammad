@@ -1101,7 +1101,6 @@ class App.ObserverController extends App.Controller
     # rerender, e. g. on language change
     if @globalRerender
       @bind('ui:rerender', =>
-        console.log('REREN')
         @lastAttributres = undefined
         object = App[@model].fullLocal(@object_id)
         @maybeRender(object)
