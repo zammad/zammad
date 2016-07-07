@@ -1072,11 +1072,19 @@ reload search index with full data
   def self.search_index_reload
     config = @search_index_support_config
     return if !config
+    tolerance = 5
+    tolerance_count = 0
     all_ids = select('id').all.order('created_at DESC')
     all_ids.each { |item_with_id|
       next if config[:ignore_ids] && config[:ignore_ids].include?(item_with_id.id)
       item = find(item_with_id.id)
-      item.search_index_update_backend
+      begin
+        item.search_index_update_backend
+      rescue => e
+        logger.error "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}"
+        tolerance_count += 1
+        raise "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}" if tolerance_count == tolerance
+      end
     }
   end
 
