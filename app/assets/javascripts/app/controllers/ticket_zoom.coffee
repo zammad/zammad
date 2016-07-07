@@ -53,17 +53,10 @@ class App.TicketZoom extends App.Controller
         @delay(update, 1200, "ticket-zoom-#{@ticket_id}")
     )
 
-    # rerender view, e. g. on langauge change
-    @bind('ui:rerender', =>
-      @fetch(true)
-    )
-
-  fetchStart: (force) =>
-    if !force && @fetchIsRunning
+  fetchStart: =>
+    if @fetchIsRunning
       @fetchIsRunningAgain = true
       return false
-    if force
-      @fetchIsRunningAgain = false
     @fetchIsRunning = true
     true
 
@@ -73,9 +66,9 @@ class App.TicketZoom extends App.Controller
       @fetchIsRunningAgain = false
       @fetch()
 
-  fetch: (force) =>
+  fetch: =>
     return if !@Session.get()
-    return if !@fetchStart(force)
+    return if !@fetchStart()
 
     # get data
     @ajax(
@@ -88,7 +81,7 @@ class App.TicketZoom extends App.Controller
 
         # check if ticket has changed
         newTicketRaw = data.assets.Ticket[@ticket_id]
-        if @ticketUpdatedAtLastCall && !force
+        if @ticketUpdatedAtLastCall
 
           # return if ticket hasnt changed
           return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at

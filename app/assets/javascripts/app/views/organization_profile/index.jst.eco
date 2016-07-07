@@ -1,5 +1,12 @@
 <div class="profile">
   <div class="profile-window">
+    <div class="profile-section vertical centered">
+      <div class="align-right profile-action js-action"></div>
+      <div class="profile-organizationIcon">
+        <%- @Icon('organization') %>
+      </div>
+      <h1><%= @organization.displayName() %></h1>
+    </div>
     <div class="js-object-container"></div>
     <div class="profile-section js-ticket-stats"></div>
   </div>

@@ -51,6 +51,12 @@ class App.OnlineNotificationWidget extends App.Controller
 
     @createContainer()
 
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      @createContainer()
+      'online_notification'
+    )
+
   release: ->
     $(window).off 'click.notifications'
     $(window).off 'keydown.notifications'
@@ -202,6 +208,7 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
   order: 'DESC'
   alreadyShown: {}
   insertPosition: 'before'
+  globalRerender: false
 
   onRenderEnd: =>
     @container.counterGen()

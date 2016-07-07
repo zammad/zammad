@@ -359,8 +359,8 @@ class App.Model extends Spine.Model
       if param.clear is true || param.clear is false
         clear = param.clear
       if !@initFetchActive
-        @one 'refresh', (collection) =>
-          @initFetchActive = true
+        @initFetchActive = true
+        @one 'refresh', (collection) ->
           callback(collection)
         @fetchFull(
           ->

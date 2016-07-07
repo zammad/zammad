@@ -463,7 +463,7 @@ class App.Controller extends Spine.Controller
     fetch = (params) =>
       @ajax(
         type:  'GET'
-        url:   @Config.get('api_path') + '/ticket_customer'
+        url:   "#{@Config.get('api_path')}/ticket_customer"
         data:
           customer_id: params.user_id
         processData: true

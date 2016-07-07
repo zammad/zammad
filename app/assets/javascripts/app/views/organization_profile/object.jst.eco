@@ -1,23 +1,16 @@
-<div class="profile-section vertical centered">
-  <div class="align-right profile-action js-action"></div>
-  <div class="profile-organizationIcon">
-    <%- @Icon('organization') %>
-  </div>
-  <h1><%= @organization.displayName() %></h1>
-</div>
 <div class="profile-section">
   <div class="profile-details horizontal wrap">
     <% for row in @organizationData: %>
       <% if row.tag is 'richtext': %>
         <div class="profile-detailsEntry" style="width: 100%;">
-          <label><%- @Ti( row.display ) %></label>
+          <label><%- @T(row.display) %></label>
           <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @organization[row.name] %></div>
         </div>
       <% else: %>
         <% if @organization[row.name]: %>
           <div class="profile-detailsEntry">
-            <label><%- @Ti( row.display ) %></label>
-            <%- @P( @organization, row.name ) %>
+            <label><%- @T(row.display) %></label>
+            <%- @P(@organization, row.name) %>
           </div>
         <% end %>
       <% end %>

@@ -3,6 +3,7 @@ class App.TicketZoomTitle extends App.ObserverController
   template: 'ticket_zoom/title'
   observe:
     title: true
+  globalRerender: false
 
   events:
     'blur .js-objectTitle': 'update'

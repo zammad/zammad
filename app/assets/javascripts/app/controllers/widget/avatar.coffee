@@ -6,6 +6,7 @@ class App.WidgetAvatar extends App.ObserverController
     lastname: true
     email: true
     image: true
+  globalRerender: false
 
   render: (user) =>
     @html(user.avatar @size, @position, undefined, false, false, @type)

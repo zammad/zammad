@@ -244,7 +244,7 @@ class ArticleViewItem extends App.ObserverController
     metaTop        = article.find('.article-content-meta.top')
     metaBottom     = article.find('.article-content-meta.bottom')
 
-    if @elementContainsSelection( article.get(0) )
+    if @elementContainsSelection(article.get(0))
       @stopPropagation(e)
       return false
 
