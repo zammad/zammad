@@ -53,8 +53,6 @@ returns
     attributes
   end
 
-  private
-
 =begin
 
 lookup name of ref. objects
