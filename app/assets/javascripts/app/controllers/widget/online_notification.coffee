@@ -65,9 +65,11 @@ class App.OnlineNotificationWidget extends App.Controller
       @hide()
       return
     else if e.keyCode is 38 # up
+      e.preventDefault()
       @nudge(e, -1)
       return
     else if e.keyCode is 40 # down
+      e.preventDefault()
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
