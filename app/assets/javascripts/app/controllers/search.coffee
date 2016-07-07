@@ -122,6 +122,7 @@ class App.Search extends App.Controller
     App.GlobalSearch.execute(
       query: @query
       render: @renderResult
+      limit: 50
     )
 
   renderResult: (result = []) =>

@@ -15,12 +15,13 @@ class _globalSearchSingleton extends Spine.Module
   execute: (params) ->
     query = params.query
     render = params.render
+    limit = params.limit || 10
 
     # use cache for search result
     if @searchResultCache[query]
       render(@searchResultCache[query].result)
       currentTime = new Date
-      return if @searchResultCache[query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+      return if @searchResultCache[query].limit is limit && @searchResultCache[query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
 
     App.Ajax.request(
       id:    'search'
@@ -28,6 +29,7 @@ class _globalSearchSingleton extends Spine.Module
       url:   "#{@apiPath}/search"
       data:
         query: query
+        limit: limit
       processData: true,
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
@@ -53,6 +55,7 @@ class _globalSearchSingleton extends Spine.Module
         @searchResultCache[query] =
           result: result
           resultRaw: data.result
+          limit: limit
           time: new Date
 
         # if result hasn't changed, do not rerender
