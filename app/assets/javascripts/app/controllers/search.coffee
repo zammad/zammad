@@ -18,6 +18,10 @@ class App.Search extends App.Controller
       App.TaskManager.remove(@task_key)
       return
 
+    current = App.TaskManager.get(@task_key).state
+    if current && current.query
+      @query = current.query
+
     # update taskbar with new meta data
     App.TaskManager.touch(@task_key)
 
@@ -48,8 +52,8 @@ class App.Search extends App.Controller
 
   show: (params) =>
     @navupdate(url: '#search', type: 'menu')
-    return if !params.query
-    @$('.js-search').val(decodeURIComponent(params.query)).trigger('change')
+    return if _.isEmpty(params.query)
+    @$('.js-search').val(params.query).trigger('change')
     @throttledSearch(true)
 
   hide: ->
@@ -188,9 +192,13 @@ class Router extends App.ControllerPermanent
   constructor: (params) ->
     super
 
+    query = undefined
+    if !_.isEmpty(params.query)
+      query = decodeURIComponent(params.query)
+
     # cleanup params
     clean_params =
-      query: params.query
+      query: query
 
     App.TaskManager.execute(
       key:        'Search'
