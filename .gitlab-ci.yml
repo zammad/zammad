@@ -71,6 +71,7 @@ test:integration:email_helper:
     - rake db:migrate
     - ruby -I test/ test/integration/email_helper_test.rb
     - rake db:drop
+  allow_failure: true
 
 test:integration:email_deliver:
   stage: test
