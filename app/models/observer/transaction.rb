@@ -207,11 +207,11 @@ class Observer::Transaction < ActiveRecord::Observer
     return if real_changes.empty?
 
     changed_by_id = nil
-    if record.respond_to?('updated_by_id')
-      changed_by_id = record.updated_by_id
-    else
-      changed_by_id = record.created_by_id
-    end
+    changed_by_id = if record.respond_to?('updated_by_id')
+                      record.updated_by_id
+                    else
+                      record.created_by_id
+                    end
 
     e = {
       object: record.class.name,
