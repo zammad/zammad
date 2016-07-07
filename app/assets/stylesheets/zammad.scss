@@ -2597,10 +2597,10 @@ ol.tabs li {
 
 .icon-status-modified-inner-circle {
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 0;
   will-change: opacity;
-  transform: translateZ(0);
+  transform: translate3d(-50%,0,0);
   animation: fade 1.8s ease-in-out infinite;
 }
 
