@@ -59,7 +59,7 @@ create/update/delete index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise response.inspect
+    raise "Unable to proccess PUT at #{url}\n#{response.inspect}"
   end
 
 =begin
@@ -91,7 +91,7 @@ add new object to search index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise response.inspect
+    raise "Unable to proccess POST at #{url} (size: #{data.to_json.bytesize / 1024 / 1024}M)\n#{response.inspect}"
   end
 
 =begin
@@ -121,7 +121,7 @@ remove whole data from index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    #Rails.logger.info "NOTICE: can't drop index: " + response.inspect
+    #Rails.logger.info "NOTICE: can't delete index #{url}: " + response.inspect
     false
   end
 
@@ -151,6 +151,19 @@ return search result
 =end
 
   def self.search(query, limit = 10, index = nil, query_extention = {})
+    return [] if !query
+    if index.class == Array
+      ids = []
+      index.each { |local_index|
+        local_ids = search_by_index(query, limit, local_index, query_extention)
+        ids = ids.concat(local_ids)
+      }
+      return ids
+    end
+    search_by_index(query, limit, index, query_extention)
+  end
+
+  def self.search_by_index(query, limit = 10, index = nil, query_extention = {})
     return [] if !query
 
     url = build_url()
@@ -215,7 +228,7 @@ return search result
 
     Rails.logger.info "# #{response.code}"
     if !response.success?
-      Rails.logger.error "ERROR: #{response.inspect}"
+      Rails.logger.error "ERROR: POST on #{url}\n#{response.inspect}"
       return []
     end
     data = response.data
@@ -308,7 +321,7 @@ get count of tickets and tickets which match on selector
 
     Rails.logger.info "# #{response.code}"
     if !response.success?
-      raise "ERROR: #{response.inspect}"
+      raise "Unable to proccess POST at #{url}\n#{response.inspect}"
     end
     Rails.logger.debug response.data.to_json
 
@@ -447,7 +460,7 @@ return true if backend is configured
 
   def self.build_url(type = nil, o_id = nil)
     return if !SearchIndexBackend.enabled?
-    index = Setting.get('es_index').to_s + "_#{Rails.env}"
+    index = "#{Setting.get('es_index')}_#{Rails.env}"
     url   = Setting.get('es_url')
     url = if type
             if o_id
