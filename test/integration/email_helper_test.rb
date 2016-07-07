@@ -457,6 +457,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       email: mailbox_user,
       password: mailbox_password,
     )
+    assert_equal(nil, result[:reason])
     assert_equal('ok', result[:result])
     assert_equal('pop.gmail.com', result[:setting][:inbound][:options][:host])
     assert_equal('smtp.gmail.com', result[:setting][:outbound][:options][:host])

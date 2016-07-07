@@ -81,8 +81,8 @@ class ReportTest < ActiveSupport::TestCase
     customer_id: 2,
     state: Ticket::State.lookup(name: 'new'),
     priority: Ticket::Priority.lookup(name: '2 normal'),
-    created_at: '2015-10-28 09:30:00 UTC',
-    updated_at: '2015-10-28 09:30:00 UTC',
+    created_at: '2015-10-28 09:30:01 UTC',
+    updated_at: '2015-10-28 09:30:01 UTC',
     updated_by_id: 1,
     created_by_id: 1,
   )
@@ -96,8 +96,8 @@ class ReportTest < ActiveSupport::TestCase
     internal: false,
     sender: Ticket::Article::Sender.where(name: 'Customer').first,
     type: Ticket::Article::Type.where(name: 'email').first,
-    created_at: '2015-10-28 09:30:00 UTC',
-    updated_at: '2015-10-28 09:30:00 UTC',
+    created_at: '2015-10-28 09:30:01 UTC',
+    updated_at: '2015-10-28 09:30:01 UTC',
     updated_by_id: 1,
     created_by_id: 1,
   )
@@ -746,6 +746,7 @@ class ReportTest < ActiveSupport::TestCase
       params:      { field: 'created_at' },
     )
     assert(result)
+
     assert_equal(ticket7.id, result[:ticket_ids][0].to_i)
     assert_equal(ticket6.id, result[:ticket_ids][1].to_i)
     assert_equal(ticket5.id, result[:ticket_ids][2].to_i)
