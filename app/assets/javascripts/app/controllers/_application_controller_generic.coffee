@@ -768,6 +768,7 @@ class App.CollectionController extends App.Controller
   sortBy: 'name'
   order: 'ASC',
   insertPosition: 'after'
+  globalRerender: true
 
   constructor: ->
     @events = @constructor.events unless @events
@@ -788,10 +789,11 @@ class App.CollectionController extends App.Controller
       @subscribeId = App[@model].subscribe(@collectionSync)
 
     # render on generic ui call
-    @bind('ui:rerender', =>
-      @queue.push ['renderAll']
-      @uIRunner()
-    )
+    if @globalRerender
+      @bind('ui:rerender', =>
+        @queue.push ['renderAll']
+        @uIRunner()
+      )
 
     # render on login
     @bind('auth:login', =>
@@ -1074,6 +1076,7 @@ class App.CollectionController extends App.Controller
 class App.ObserverController extends App.Controller
   model: 'Ticket'
   template: 'ticket_zoom/title'
+  globalRerender: true
 
   ###
   observe:
@@ -1096,11 +1099,12 @@ class App.ObserverController extends App.Controller
       @maybeRender(object)
 
     # rerender, e. g. on language change
-    @bind('ui:rerender', =>
-      @lastAttributres = undefined
-      object = App[@model].fullLocal(@object_id)
-      @maybeRender(object)
-    )
+    if @globalRerender
+      @bind('ui:rerender', =>
+        @lastAttributres = undefined
+        object = App[@model].fullLocal(@object_id)
+        @maybeRender(object)
+      )
 
   subscribe: (object) =>
     @maybeRender(object)

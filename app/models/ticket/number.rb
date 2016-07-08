@@ -18,7 +18,7 @@ returns
   def self.generate
 
     # generate number
-    (1..50_000).each {
+    49_999.times {
       number = adapter.generate
       ticket = Ticket.find_by( number: number )
       return number if !ticket

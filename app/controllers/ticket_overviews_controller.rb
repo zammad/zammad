@@ -36,7 +36,7 @@ class TicketOverviewsController < ApplicationController
 
       overview = Overview.lookup(id: index[:overview][:id])
       assets = overview.assets(assets)
-      index[:tickets].each {|ticket_meta|
+      index[:tickets].each { |ticket_meta|
         ticket = Ticket.lookup(id: ticket_meta[:id])
         assets = ticket.assets(assets)
       }

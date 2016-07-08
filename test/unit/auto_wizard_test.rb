@@ -48,7 +48,7 @@ class AutoWizardTest < ActiveSupport::TestCase
     # check first user roles
     auto_wizard_data[:Users][0][:roles] = %w(Agent Admin Chat)
 
-    auto_wizard_data[:Users].each {|local_user|
+    auto_wizard_data[:Users].each { |local_user|
       user = User.find_by(login: local_user[:login])
       assert_equal(local_user[:login], user.login)
       assert_equal(local_user[:firstname], user.firstname)
@@ -56,21 +56,21 @@ class AutoWizardTest < ActiveSupport::TestCase
       assert_equal(local_user[:email], user.email)
       assert_equal(local_user[:roles].count, user.role_ids.count)
       next unless local_user[:roles]
-      local_user[:roles].each {|local_role_name|
+      local_user[:roles].each { |local_role_name|
         local_role = Role.find_by(name: local_role_name)
         assert(user.role_ids.include?(local_role.id))
       }
     }
-    auto_wizard_data[:Groups].each {|local_group|
+    auto_wizard_data[:Groups].each { |local_group|
       group = Group.find_by(name: local_group[:name])
       assert_equal(local_group[:name], group.name)
       next unless local_group[:users]
-      local_group[:users].each {|local_user_login|
+      local_group[:users].each { |local_user_login|
         local_user = User.find_by(login: local_user_login)
         assert(group.user_ids.include?(local_user.id))
       }
     }
-    auto_wizard_data[:Settings].each {|local_setting|
+    auto_wizard_data[:Settings].each { |local_setting|
       setting_value = Setting.get(local_setting[:name])
       assert_equal(local_setting[:value], setting_value)
     }
@@ -166,7 +166,7 @@ class AutoWizardTest < ActiveSupport::TestCase
     AutoWizard.setup
     assert_equal(false, AutoWizard.enabled?)
 
-    auto_wizard_data[:Users].each {|local_user|
+    auto_wizard_data[:Users].each { |local_user|
       user = User.find_by(login: local_user[:login])
       assert_equal(local_user[:login], user.login)
       assert_equal(local_user[:firstname], user.firstname)
@@ -174,16 +174,16 @@ class AutoWizardTest < ActiveSupport::TestCase
       assert_equal(local_user[:email], user.email)
       next unless local_user[:roles]
       assert_equal(local_user[:roles].count, user.role_ids.count)
-      local_user[:roles].each {|local_role_name|
+      local_user[:roles].each { |local_role_name|
         local_role = Role.find_by(name: local_role_name)
         assert(user.role_ids.include?(local_role.id))
       }
     }
-    auto_wizard_data[:Groups].each {|local_group|
+    auto_wizard_data[:Groups].each { |local_group|
       group = Group.find_by(name: local_group[:name])
       assert_equal(local_group[:name], group.name)
       if local_group[:users]
-        local_group[:users].each {|local_user_login|
+        local_group[:users].each { |local_user_login|
           local_user = User.find_by(login: local_user_login)
           assert(group.user_ids.include?(local_user.id))
         }
@@ -193,20 +193,20 @@ class AutoWizardTest < ActiveSupport::TestCase
         assert_equal('default', signature.name)
       end
     }
-    auto_wizard_data[:EmailAddresses].each {|local_email_address|
+    auto_wizard_data[:EmailAddresses].each { |local_email_address|
       email_address = EmailAddress.find_by(email: local_email_address[:email])
       assert_equal(local_email_address[:email], email_address.email)
       assert_equal(local_email_address[:realname], email_address.realname)
       channel = email_address.channel
       assert_equal(local_email_address[:channel_id], email_address.channel.id)
     }
-    auto_wizard_data[:Channels].each {|local_channel|
+    auto_wizard_data[:Channels].each { |local_channel|
       channel = Channel.find_by(id: local_channel[:id])
       assert_equal(local_channel[:area], channel.area)
       group = channel.group
       assert_equal(local_channel[:group], group.name)
     }
-    auto_wizard_data[:Settings].each {|local_setting|
+    auto_wizard_data[:Settings].each { |local_setting|
       setting_value = Setting.get(local_setting[:name])
       assert_equal(local_setting[:value], setting_value)
     }

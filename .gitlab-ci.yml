@@ -71,6 +71,7 @@ test:integration:email_helper:
     - rake db:migrate
     - ruby -I test/ test/integration/email_helper_test.rb
     - rake db:drop
+  allow_failure: true
 
 test:integration:email_deliver:
   stage: test
@@ -345,6 +346,23 @@ browser:build:
     - public/assets/.sprockets-manifest*
     - public/assets/application-*
     - public/assets/print-*
+
+test:browser:integration:api_client_ruby:
+  stage: browser
+  dependencies:
+    - browser:build
+  tags:
+    - browser
+  script:
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_test.json auto_wizard.json
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - git clone git@github.com:martini/zammad_api_client_ruby.git || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - cd zammad_api_client_ruby
+    - bundle install
+    - export TEST_URL=http://$IP:$BROWSER_PORT
+    - rspec spec/zammad_api_spec.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:twitter_ff:
   stage: browser

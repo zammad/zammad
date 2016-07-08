@@ -10,11 +10,6 @@ class App.OrganizationProfile extends App.Controller
     # fetch new data if needed
     App.Organization.full(@organization_id, @render)
 
-    # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', =>
-      return if !@authenticate(true)
-      @render(App.Organization.fullLocal(@organization_id))
-
   meta: =>
     meta =
       url: @url()
@@ -48,6 +43,11 @@ class App.OrganizationProfile extends App.Controller
       organization: organization
     ))
 
+    new ActionRow(
+      el:        elLocal.find('.js-action')
+      object_id: organization.id
+    )
+
     new Object(
       el:        elLocal.find('.js-object-container')
       object_id: organization.id
@@ -63,6 +63,50 @@ class App.OrganizationProfile extends App.Controller
 
     new App.UpdateTastbar(
       genericObject: organization
+    )
+
+class ActionRow extends App.ObserverController
+  model: 'Organization'
+  observe:
+    member_ids: true
+
+  render: (organization) =>
+
+    # start action controller
+    showHistory = ->
+      new App.OrganizationHistory(
+        organization_id: organization.id
+        container: @el.closest('.content')
+      )
+
+    editOrganization = =>
+      new App.ControllerGenericEdit(
+        id: organization.id
+        genericObject: 'Organization'
+        screen: 'edit'
+        pageData:
+          title: 'Organizations'
+          object: 'Organization'
+          objects: 'Organizations'
+        container: @el.closest('.content')
+      )
+
+    actions = [
+      {
+        name:     'edit'
+        title:    'Edit'
+        callback: editOrganization
+      }
+      {
+        name:     'history'
+        title:    'History'
+        callback: showHistory
+      }
+    ]
+
+    new App.ActionRow(
+      el:    @el
+      items: actions
     )
 
 class Object extends App.ObserverController
@@ -124,43 +168,6 @@ class Object extends App.ObserverController
       members.push el
     @$('.js-userList').html(members)
 
-    # start action controller
-    showHistory = ->
-      new App.OrganizationHistory(
-        organization_id: organization.id
-        container: @el.closest('.content')
-      )
-
-    editOrganization = =>
-      new App.ControllerGenericEdit(
-        id: organization.id
-        genericObject: 'Organization'
-        screen: 'edit'
-        pageData:
-          title: 'Organizations'
-          object: 'Organization'
-          objects: 'Organizations'
-        container: @el.closest('.content')
-      )
-
-    actions = [
-      {
-        name:     'edit'
-        title:    'Edit'
-        callback: editOrganization
-      }
-      {
-        name:     'history'
-        title:    'History'
-        callback: showHistory
-      }
-    ]
-
-    new App.ActionRow(
-      el:    @el.find('.js-action')
-      items: actions
-    )
-
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
@@ -179,6 +186,7 @@ class Member extends App.ObserverController
     lastname: true
     login: true
     email: true
+  globalRerender: false
 
   render: (user) =>
     @html App.view('organization_profile/member')(

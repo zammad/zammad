@@ -9,7 +9,7 @@ module Channel::Filter::BounceCheck
     return if !mail[:attachments]
     return if mail[ 'x-zammad-ticket-id'.to_sym ]
 
-    mail[:attachments].each {|attachment|
+    mail[:attachments].each { |attachment|
       next if !attachment[:preferences]
       next if attachment[:preferences]['Mime-Type'] != 'message/rfc822'
       next if !attachment[:data]

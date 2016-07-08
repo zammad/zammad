@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/config
   def reporting_config
-    return if deny_if_not_role('Report')
+    deny_if_not_role('Report')
     render json: {
       config: Report.config,
       profiles: Report::Profile.list,
@@ -16,13 +16,13 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/generate
   def generate
-    return if deny_if_not_role('Report')
+    deny_if_not_role('Report')
 
     get_params = params_all
     return if !get_params
 
     result = {}
-    get_params[:metric][:backend].each {|backend|
+    get_params[:metric][:backend].each { |backend|
       condition = get_params[:profile].condition
       if backend[:condition]
         backend[:condition].merge(condition)
@@ -61,7 +61,7 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/sets
   def sets
-    return if deny_if_not_role('Report')
+    deny_if_not_role('Report')
 
     get_params = params_all
     return if !get_params
@@ -75,7 +75,7 @@ class ReportsController < ApplicationController
 
     # get data
     result = {}
-    get_params[:metric][:backend].each {|backend|
+    get_params[:metric][:backend].each { |backend|
       next if params[:downloadBackendSelected] != backend[:name]
       condition = get_params[:profile].condition
       if backend[:condition]
@@ -111,32 +111,23 @@ class ReportsController < ApplicationController
   def params_all
     profile = nil
     if !params[:profiles] && !params[:profile_id]
-      render json: {
-        error: 'No such profiles param',
-      }, status: :unprocessable_entity
-      return
+      raise Exceptions::UnprocessableEntity, 'No such profiles param'
     end
     if params[:profile_id]
       profile = Report::Profile.find(params[:profile_id])
     else
-      params[:profiles].each {|profile_id, active|
+      params[:profiles].each { |profile_id, active|
         next if !active
         profile = Report::Profile.find(profile_id)
       }
     end
     if !profile
-      render json: {
-        error: 'No such active profile',
-      }, status: :unprocessable_entity
-      return
+      raise Exceptions::UnprocessableEntity, 'No such active profile'
     end
 
     local_config = Report.config
     if !local_config || !local_config[:metric] || !local_config[:metric][params[:metric].to_sym]
-      render json: {
-        error: "No such metric #{params[:metric]}"
-      }, status: :unprocessable_entity
-      return
+      raise Exceptions::UnprocessableEntity, "No such metric #{params[:metric]}"
     end
     metric = local_config[:metric][params[:metric].to_sym]
 
@@ -212,7 +203,7 @@ class ReportsController < ApplicationController
     worksheet.write(2, 7, 'Closed at', format_header )
 
     row = 2
-    result[:ticket_ids].each {|ticket_id|
+    result[:ticket_ids].each { |ticket_id|
       ticket = Ticket.lookup(id: ticket_id)
       row += 1
       worksheet.write(row, 0, ticket.number )

@@ -18,6 +18,10 @@
     <div class="btn btn--action btn--small"><%- @T('close') %></div>
   </div>
 </div>
+<div class="chat-scroll-hint js-scrollHint is-hidden">
+  <%- @Icon('chat') %>
+  <%- @T('Scroll down to see new messages') %>
+</div>
 <div class="chat-body-holder js-scrollHolder">
   <div class="chat-body js-body"></div>
 </div>

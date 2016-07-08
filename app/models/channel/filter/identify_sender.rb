@@ -47,7 +47,7 @@ module Channel::Filter::IdentifySender
       begin
         next if !mail[item.to_sym].addrs
         items = mail[item.to_sym].addrs
-        items.each {|address_data|
+        items.each { |address_data|
           user_create(
             firstname: address_data.display_name,
             lastname: '',
@@ -60,7 +60,7 @@ module Channel::Filter::IdentifySender
         Rails.logger.error 'ERROR: ' + e.inspect
         Rails.logger.error 'ERROR: try it by my self'
         recipients = mail[item.to_sym].to_s.split(',')
-        recipients.each {|recipient|
+        recipients.each { |recipient|
           address = nil
           display_name = nil
           if recipient =~ /<(.+?)>/

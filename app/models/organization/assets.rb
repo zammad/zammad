@@ -45,7 +45,7 @@ returns
         end
         local_attributes['member_ids'] = local_member_ids
         if local_member_ids
-          local_member_ids.each {|local_user_id|
+          local_member_ids.each { |local_user_id|
             next if data[ User.to_app_model ][ local_user_id ]
             user = User.lookup(id: local_user_id)
             next if !user
@@ -55,7 +55,7 @@ returns
 
         data[ Organization.to_app_model ][ id ] = local_attributes
       end
-      %w(created_by_id updated_by_id).each {|local_user_id|
+      %w(created_by_id updated_by_id).each { |local_user_id|
         next if !self[ local_user_id ]
         next if data[ User.to_app_model ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])

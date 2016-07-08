@@ -57,10 +57,7 @@ class LongPollingController < ApplicationController
 
     # check client id
     client_id = client_id_verify
-    if !client_id
-      render json: { error: 'Invalid client_id receive!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'Invalid client_id receive!' if !client_id
 
     # check queue to send
     begin
@@ -95,10 +92,7 @@ class LongPollingController < ApplicationController
         end
       end
     rescue => e
-      logger.error e.inspect
-      logger.error e.backtrace
-      render json: { error: 'Invalid client_id in receive loop!' }, status: :unprocessable_entity
-      return
+      raise Exceptions::UnprocessableEntity, 'Invalid client_id in receive loop!'
     end
   end
 

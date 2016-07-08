@@ -16,7 +16,7 @@ class Integration::SipgateController < ApplicationController
       block_caller_ids = config_inbound[:block_caller_ids] || []
 
       # check if call need to be blocked
-      block_caller_ids.each {|item|
+      block_caller_ids.each { |item|
         next unless item[:caller_id] == params['from']
         xml = Builder::XmlMarkup.new(indent: 2)
         xml.instruct!
@@ -61,7 +61,7 @@ class Integration::SipgateController < ApplicationController
     to      = params[:to]
     from    = nil
     if to
-      config_outbound.each {|row|
+      config_outbound.each { |row|
         dest = row[:dest].gsub(/\*/, '.+?')
         next if to !~ /^#{dest}$/
         from = row[:caller_id]
@@ -173,7 +173,7 @@ class Integration::SipgateController < ApplicationController
     preferences_maybe = {}
     preferences_maybe[direction] = []
     caller_ids = Cti::CallerId.lookup(params[direction])
-    caller_ids.each {|record|
+    caller_ids.each { |record|
       if record.level == 'known'
         preferences_known[direction].push record
       else

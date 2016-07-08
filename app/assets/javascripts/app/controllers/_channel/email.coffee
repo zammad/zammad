@@ -906,7 +906,7 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
-          @el.remove()
+          @el.modal('hide')
         else
           @showSlide('js-outbound')
           @showAlert('js-outbound', data.message_human || data.message)

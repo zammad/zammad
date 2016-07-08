@@ -65,7 +65,7 @@ install all packages located under auto_install/*.zpm
         data.push entry
       end
     end
-    data.each {|file|
+    data.each { |file|
       install(file: "#{path}/#{file}")
     }
     data
@@ -370,7 +370,7 @@ execute all pending package migrations at once
 =end
 
   def self.migration_execute
-    Package.all.each {|package|
+    Package.all.each { |package|
       json_file = Package._get_bin(package.name, package.version)
       package   = JSON.parse(json_file)
       Package::Migration.migrate(package['name'])
@@ -435,16 +435,16 @@ execute all pending package migrations at once
 
     # check if directories need to be created
     directories = location.split '/'
-    (0..(directories.length - 2) ).each {|position|
+    (0..(directories.length - 2) ).each { |position|
       tmp_path = ''
-      (1..position).each {|count|
+      (1..position).each { |count|
         tmp_path = "#{tmp_path}/#{directories[count]}"
       }
 
       next if tmp_path == ''
       next if File.exist?(tmp_path)
 
-      Dir.mkdir(tmp_path, 0755)
+      Dir.mkdir(tmp_path, 0o755)
     }
 
     # install file
@@ -490,7 +490,7 @@ execute all pending package migrations at once
 
       # get existing migrations
       migrations_existing = []
-      Dir.foreach(location) {|entry|
+      Dir.foreach(location) { |entry|
         next if entry == '.'
         next if entry == '..'
         migrations_existing.push entry
@@ -504,7 +504,7 @@ execute all pending package migrations at once
         migrations_existing = migrations_existing.reverse
       end
 
-      migrations_existing.each {|migration|
+      migrations_existing.each { |migration|
         next if migration !~ /\.rb$/
         version = nil
         name    = nil

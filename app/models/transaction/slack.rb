@@ -110,7 +110,7 @@ backend.perform
       color = '#38ad69'
     end
 
-    config['items'].each {|local_config|
+    config['items'].each { |local_config|
       next if local_config['webhook'].empty?
 
       # check if reminder_reached/escalation/escalation_warning is already sent today
@@ -134,7 +134,7 @@ backend.perform
       # check action
       if local_config['types'].class == Array
         hit = false
-        local_config['types'].each {|type|
+        local_config['types'].each { |type|
           next if type.to_s != @item[:type].to_s
           hit = true
           break
@@ -147,7 +147,7 @@ backend.perform
       # check group
       if local_config['group_ids'].class == Array
         hit = false
-        local_config['group_ids'].each {|group_id|
+        local_config['group_ids'].each { |group_id|
           next if group_id.to_s != ticket.group_id.to_s
           hit = true
           break
@@ -206,7 +206,7 @@ backend.perform
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
     #puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
-    @item[:changes].each {|key, value|
+    @item[:changes].each { |key, value|
 
       # if no config exists, use all attributes
       if !attribute_list || attribute_list.empty?
@@ -219,7 +219,7 @@ backend.perform
     }
 
     changes = {}
-    user_related_changes.each {|key, value|
+    user_related_changes.each { |key, value|
 
       # get attribute name
       attribute_name           = key.to_s

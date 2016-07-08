@@ -134,7 +134,7 @@ Setting.create_if_not_exists(
   frontend: true
 )
 options = {}
-(10..99).each {|item|
+(10..99).each { |item|
   options[item] = item
 }
 system_id = rand(10..99)

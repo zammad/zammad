@@ -3,6 +3,7 @@ class Edit extends App.ObserverController
   observeNot:
     created_at: true
     updated_at: true
+  globalRerender: false
 
   render: (ticket, diff) =>
     defaults = ticket.attributes()

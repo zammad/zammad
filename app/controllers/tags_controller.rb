@@ -7,7 +7,7 @@ class TagsController < ApplicationController
   def search
     list = Tag::Item.where('name_downcase LIKE ?', "#{params[:term].strip.downcase}%").order('name ASC').limit(params[:limit] || 10)
     results = []
-    list.each {|item|
+    list.each { |item|
       result = {
         id: item.id,
         value: item.name,
@@ -62,7 +62,7 @@ class TagsController < ApplicationController
   def admin_list
     list = Tag::Item.order('name ASC').limit(params[:limit] || 1000)
     results = []
-    list.each {|item|
+    list.each { |item|
       result = {
         id: item.id,
         name: item.name,
@@ -75,14 +75,14 @@ class TagsController < ApplicationController
 
   # POST /api/v1/tag_list
   def admin_create
-    return if deny_if_not_role('Admin')
+    deny_if_not_role('Admin')
     Tag::Item.lookup_by_name_and_create(params[:name])
     render json: {}
   end
 
   # PUT /api/v1/tag_list/:id
   def admin_rename
-    return if deny_if_not_role('Admin')
+    deny_if_not_role('Admin')
     Tag::Item.rename(
       id: params[:id],
       name: params[:name],
@@ -92,7 +92,7 @@ class TagsController < ApplicationController
 
   # DELETE /api/v1/tag_list/:id
   def admin_delete
-    return if deny_if_not_role('Admin')
+    deny_if_not_role('Admin')
     Tag::Item.remove(params[:id])
     render json: {}
   end

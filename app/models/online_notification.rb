@@ -218,7 +218,7 @@ returns:
 
   def self.all_seen?(object, o_id)
     notifications = OnlineNotification.list_by_object(object, o_id)
-    notifications.each {|onine_notification|
+    notifications.each { |onine_notification|
       return false if !onine_notification['seen']
     }
     true
@@ -240,7 +240,7 @@ returns:
   def self.exists?(user, object, o_id, type, created_by_user, seen)
     # rubocop:enable Metrics/ParameterLists
     notifications = OnlineNotification.list(user, 10)
-    notifications.each {|notification|
+    notifications.each { |notification|
       next if notification['o_id'] != o_id
       next if notification['object'] != object
       next if notification['type'] != type
@@ -269,7 +269,7 @@ with dedicated times
 
   def self.cleanup(max_age = Time.zone.now - 9.months, max_own_seen = Time.zone.now - 10.minutes, max_auto_seen = Time.zone.now - 8.hours)
     OnlineNotification.where('created_at < ?', max_age).delete_all
-    OnlineNotification.where('seen = ? AND updated_at < ?', true, max_own_seen).each {|notification|
+    OnlineNotification.where('seen = ? AND updated_at < ?', true, max_own_seen).each { |notification|
 
       # delete own "seen" notificatons after 1 hour
       next if notification.user_id == notification.updated_by_id && notification.updated_at > max_own_seen
@@ -281,7 +281,7 @@ with dedicated times
     }
 
     # notify all agents
-    User.of_role('Agent').each {|user|
+    User.of_role('Agent').each { |user|
       Sessions.send_to(
         user.id,
         {

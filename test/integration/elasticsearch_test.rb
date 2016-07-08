@@ -52,6 +52,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
   roles = Role.where(name: 'Customer')
   organization1 = Organization.create_if_not_exists(
     name: 'Customer Organization Update',
+    note: 'some note',
     updated_by_id: 1,
     created_by_id: 1,
   )
@@ -93,8 +94,87 @@ class ElasticsearchTest < ActiveSupport::TestCase
     created_by_id: 1,
   )
 
+  # check search attributes
+  test 'a - objects' do
+
+    # user
+    attributes = agent.search_index_data
+    assert_equal('E', attributes['firstname'])
+    assert_equal('S', attributes['lastname'])
+    assert_equal('es-agent@example.com', attributes['email'])
+    assert_not(attributes['password'])
+    assert_not(attributes['organization'])
+
+    attributes = agent.search_index_attribute_lookup
+    assert_equal('E', attributes['firstname'])
+    assert_equal('S', attributes['lastname'])
+    assert_equal('es-agent@example.com', attributes['email'])
+    assert_not(attributes['password'])
+    assert_not(attributes['organization'])
+
+    # organization
+    attributes = organization1.search_index_data
+    assert_equal('Customer Organization Update', attributes['name'])
+    assert_equal('some note', attributes['note'])
+    assert_not(attributes['members'])
+
+    attributes = organization1.search_index_attribute_lookup
+    assert_equal('Customer Organization Update', attributes['name'])
+    assert_equal('some note', attributes['note'])
+    assert(attributes['members'])
+
+    # ticket/article
+    ticket1 = Ticket.create(
+      title: 'some title äöüß',
+      group: Group.lookup(name: 'Users'),
+      customer_id: customer1.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article1 = Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    attributes = ticket1.search_index_attribute_lookup
+
+    assert_equal('Users', attributes['group'])
+    assert_equal('new', attributes['state'])
+    assert_equal('2 normal', attributes['priority'])
+
+    assert_equal('ES', attributes['customer']['firstname'])
+    assert_equal('Customer1', attributes['customer']['lastname'])
+    assert_equal('es-customer1@example.com', attributes['customer']['email'])
+    assert_not(attributes['customer']['password'])
+    assert_equal('Customer Organization Update', attributes['customer']['organization'])
+
+    assert_equal('-', attributes['owner']['login'])
+    assert_equal('-', attributes['owner']['firstname'])
+    assert_not(attributes['owner']['password'])
+    assert_not(attributes['owner']['organization'])
+
+    ticket1.destroy
+
+    # execute background jobs
+    Scheduler.worker(true)
+
+  end
+
   # check tickets and search it
-  test 'a - tickets' do
+  test 'b - tickets' do
+
+    system('rake searchindex:rebuild')
 
     ticket1 = Ticket.create(
       title: "some title\n äöüß",
@@ -398,7 +478,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
   end
 
   # check users and search it
-  test 'b - users' do
+  test 'c - users' do
 
     # search as agent
     result = User.search(

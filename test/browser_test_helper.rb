@@ -55,7 +55,7 @@ class TestCase < Test::Unit::TestCase
     end
 
     # avoid "Cannot read property 'get_Current' of undefined" issues
-    (1..5).each {|count|
+    (1..5).each { |count|
       begin
         local_browser = browser_instance_remote
         break
@@ -258,7 +258,7 @@ class TestCase < Test::Unit::TestCase
       mute_log: true,
     )
 
-    (1..6).each {
+    5.times {
       sleep 1
       login = instance.find_elements(css: '#login')[0]
 
@@ -611,7 +611,7 @@ class TestCase < Test::Unit::TestCase
     else
       element.send_keys('')
       keys = params[:value].to_s.split('')
-      keys.each {|key|
+      keys.each { |key|
         instance.action.send_keys(key).perform
       }
     end
@@ -766,7 +766,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if params[:value].class == Array
-      params[:value].each {|key|
+      params[:value].each { |key|
         instance.action.send_keys(key).perform
       }
       return
@@ -803,7 +803,7 @@ class TestCase < Test::Unit::TestCase
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       success  = false
       if dropdown.selected_options
-        dropdown.selected_options.each {|option|
+        dropdown.selected_options.each { |option|
           if option.text == params[:value]
             success = true
           end
@@ -939,7 +939,7 @@ class TestCase < Test::Unit::TestCase
     end
 
     cookies = instance.manage.all_cookies
-    cookies.each {|cookie|
+    cookies.each { |cookie|
       #puts "CCC #{cookie.inspect}"
       # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
       next if cookie[:name] !~ /#{params[:name]}/i
@@ -1142,7 +1142,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    params[:files].each {|file|
+    params[:files].each { |file|
       instance.find_elements(css: params[:css])[0].send_keys "#{Rails.root}/#{file}"
     }
     sleep 2 * params[:files].count
@@ -1309,7 +1309,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    (1..100).each do
+    99.times do
       #sleep 0.5
       begin
         if instance.find_elements(css: '.navigation .tasks .task:first-child')[0]
@@ -1394,7 +1394,7 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    (1..100).each do
+    99.times do
       sleep 0.5
       begin
         if instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0]
@@ -1533,7 +1533,7 @@ wait untill text in selector disabppears
     end
 
     if data[:selector]
-      data[:selector].each {|key, value|
+      data[:selector].each { |key, value|
         select(
           browser:  instance,
           css:      '.modal .ticket_selector .js-attributeSelector select',
@@ -1562,7 +1562,7 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    (1..12).each {
+    11.times {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1634,7 +1634,7 @@ wait untill text in selector disabppears
     end
 
     if data[:selector]
-      data[:selector].each {|key, value|
+      data[:selector].each { |key, value|
         select(
           browser:  instance,
           css:      '.modal .ticket_selector .js-attributeSelector select',
@@ -1663,7 +1663,7 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    (1..12).each {
+    11.times {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1742,7 +1742,7 @@ wait untill text in selector disabppears
     )
 
     found = false
-    (1..8).each {
+    7.times {
       element = instance.find_elements(css: '.active .newTicket')[0]
       if element
         found = true
@@ -1849,7 +1849,7 @@ wait untill text in selector disabppears
     end
 
     if params[:custom_data_select]
-      params[:custom_data_select].each {|local_key, local_value|
+      params[:custom_data_select].each { |local_key, local_value|
         select(
           browser: instance,
           css:     ".active .newTicket select[name=\"#{local_key}\"]",
@@ -1858,7 +1858,7 @@ wait untill text in selector disabppears
       }
     end
     if params[:custom_data_input]
-      params[:custom_data_input].each {|local_key, local_value|
+      params[:custom_data_input].each { |local_key, local_value|
         set(
           browser: instance,
           css:     ".active .newTicket input[name=\"#{local_key}\"]",
@@ -1889,7 +1889,7 @@ wait untill text in selector disabppears
     )
 
     sleep 1
-    (1..10).each {
+    9.times {
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
         assert(true, 'ticket created')
         sleep 2.5
@@ -2082,7 +2082,7 @@ wait untill text in selector disabppears
     end
 
     if params[:custom_data_select]
-      params[:custom_data_select].each {|local_key, local_value|
+      params[:custom_data_select].each { |local_key, local_value|
         select(
           browser: instance,
           css:     ".active .sidebar select[name=\"#{local_key}\"]",
@@ -2091,7 +2091,7 @@ wait untill text in selector disabppears
       }
     end
     if params[:custom_data_input]
-      params[:custom_data_input].each {|local_key, local_value|
+      params[:custom_data_input].each { |local_key, local_value|
         set(
           browser: instance,
           css:     ".active .sidebar input[name=\"#{local_key}\"]",
@@ -2103,7 +2103,7 @@ wait untill text in selector disabppears
 
     if data[:state] || data[:group] || data[:body] || !params[:custom_data_select].empty? || !params[:custom_data_input].empty?
       found = nil
-      (1..10).each {
+      9.times {
 
         break if found
 
@@ -2136,7 +2136,7 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.content.active .js-submit')[0].click
 
-    (1..10).each {
+    9.times {
       begin
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
         if !text || text.empty?
@@ -2199,7 +2199,7 @@ wait untill text in selector disabppears
     end
 
     if params[:custom_data_select]
-      params[:custom_data_select].each {|local_key, local_value|
+      params[:custom_data_select].each { |local_key, local_value|
         element = instance.find_elements(css: ".active .sidebar select[name=\"#{local_key}\"] option[selected]").first
         value = element.text.strip
         if value =~ /#{local_value}/i
@@ -2210,7 +2210,7 @@ wait untill text in selector disabppears
       }
     end
     if params[:custom_data_input]
-      params[:custom_data_input].each {|local_key, local_value|
+      params[:custom_data_input].each { |local_key, local_value|
         element = instance.find_elements(css: ".active .sidebar input[name=\"#{local_key}\"]").first
         value = element.text.strip
         if value =~ /#{local_value}/i
@@ -2297,7 +2297,7 @@ wait untill text in selector disabppears
 
     # open ticket
     #instance.find_element(partial_link_text: params[:number] } ).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
@@ -2332,7 +2332,7 @@ wait untill text in selector disabppears
 
     # open ticket
     #instance.find_element(partial_link_text: params[:title] } ).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
     title = instance.find_elements(css: '.active .ticketZoom-header .js-objectTitle')[0].text
     if title !~ /#{params[:title]}/
@@ -2375,14 +2375,14 @@ wait untill text in selector disabppears
     #)
 
     overviews = {}
-    instance.find_elements(css: '.content.active .sidebar a[href]').each {|element|
+    instance.find_elements(css: '.content.active .sidebar a[href]').each { |element|
       url = element.attribute('href')
       url.gsub!(%r{(http|https)://.+?/(.+?)$}, '\\2')
       overviews[url] = 0
       #puts url.inspect
       #puts element.inspect
     }
-    overviews.each {|url, _value|
+    overviews.each { |url, _value|
       count          = instance.find_elements(css: ".content.active .sidebar a[href=\"#{url}\"] .badge")[0].text
       overviews[url] = count.to_i
     }
@@ -2420,7 +2420,7 @@ wait untill text in selector disabppears
     element.send_keys(params[:value])
     sleep 2
     #instance.find_element(partial_link_text: params[:value] } ).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/
@@ -2453,7 +2453,7 @@ wait untill text in selector disabppears
     element.send_keys(params[:value])
     sleep 3
     #instance.find_element(partial_link_text: params[:value]).click
-    instance.execute_script("$(\"#global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.active h1')[0].text
     if name !~ /#{params[:value]}/
@@ -2581,7 +2581,7 @@ wait untill text in selector disabppears
     element.send_keys(data[:first_response_time_in_text])
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    (1..8).each {
+    7.times {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2642,7 +2642,7 @@ wait untill text in selector disabppears
     element.send_keys(data[:content])
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    (1..8).each {
+    7.times {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2705,7 +2705,7 @@ wait untill text in selector disabppears
     element.send_keys(data[:body])
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    (1..12).each {
+    11.times {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2771,7 +2771,7 @@ wait untill text in selector disabppears
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    (1..12).each {
+    11.times {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2780,7 +2780,7 @@ wait untill text in selector disabppears
 
         # add member
         if data[:member]
-          data[:member].each {|login|
+          data[:member].each { |login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
             instance.find_elements(css: 'a[href="#manage/users"]')[0].click
@@ -2949,7 +2949,7 @@ wait untill text in selector disabppears
           element.clear
           element.send_keys(data[:data_option][:options][:false])
         else
-          data[:data_option][:options].each {|key, value|
+          data[:data_option][:options].each { |key, value|
             element = instance.find_elements(css: '.modal .js-Table .js-key').last
             element.clear
             element.send_keys(key)
@@ -2962,14 +2962,14 @@ wait untill text in selector disabppears
         end
       end
 
-      [:default, :min, :max, :diff].each {|key|
+      [:default, :min, :max, :diff].each { |key|
         next if !data[:data_option].key?(key)
         element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
         element.clear
         element.send_keys(data[:data_option][key])
       }
 
-      [:future, :past].each {|key|
+      [:future, :past].each { |key|
         next if !data[:data_option].key?(key)
         select(
           browser:  instance,
@@ -2995,7 +2995,7 @@ wait untill text in selector disabppears
       return
     end
 
-    (1..12).each {
+    11.times {
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -3105,11 +3105,11 @@ wait untill text in selector disabppears
     assert(tags[0])
 
     tags_found = {}
-    params[:tags].each {|key, _value|
+    params[:tags].each { |key, _value|
       tags_found[key] = false
     }
 
-    tags.each {|element|
+    tags.each { |element|
       text = element.text
       if tags_found.key?(text)
         tags_found[text] = true
@@ -3117,7 +3117,7 @@ wait untill text in selector disabppears
         assert(false, "tag exists but is not in check to verify '#{text}'")
       end
     }
-    params[:tags].each {|key, value|
+    params[:tags].each { |key, value|
       assert_equal(value, tags_found[key], "tag '#{key}'")
     }
   end
@@ -3144,7 +3144,7 @@ wait untill text in selector disabppears
       instance = params[:browser] || @browser
       if instance
         logs = instance.manage.logs.get(:browser)
-        logs.each {|log|
+        logs.each { |log|
           next if log.level == 'WARNING' && log.message =~ /Declaration\sdropped./ # ignore ff css warnings
           time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
           puts "#{time}/#{log.level}: #{log.message}"

@@ -48,7 +48,7 @@ class Ticket::Article < ApplicationModel
       replace = item
 
       # look for attachment
-      attachments.each {|file|
+      attachments.each { |file|
         next if !file.preferences['Content-ID'] || file.preferences['Content-ID'] != $3
         replace = "#{$1}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file.id}#{$4}"
         inline_attachments[file.id] = true
@@ -57,7 +57,7 @@ class Ticket::Article < ApplicationModel
       replace
     }
     new_attachments = []
-    attachments.each {|file|
+    attachments.each { |file|
       next if inline_attachments[file.id]
       new_attachments.push file
     }

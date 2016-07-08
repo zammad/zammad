@@ -79,7 +79,7 @@ class Transaction::Notification
       possible_recipients.push ticket.owner
     end
     already_checked_recipient_ids = {}
-    possible_recipients.each {|user|
+    possible_recipients.each { |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
       next if !result
       next if already_checked_recipient_ids[result[:user].id]
@@ -113,7 +113,7 @@ class Transaction::Notification
           identifier = user.login
         end
         already_notified = false
-        History.list('Ticket', ticket.id).each {|history|
+        History.list('Ticket', ticket.id).each { |history|
           next if history['type'] != 'notification'
           next if history['value_to'] !~ /\(#{Regexp.escape(@item[:type])}:/
           next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
@@ -234,7 +234,7 @@ class Transaction::Notification
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
     #puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
-    @item[:changes].each {|key, value|
+    @item[:changes].each { |key, value|
 
       # if no config exists, use all attributes
       if !attribute_list || attribute_list.empty?
@@ -247,7 +247,7 @@ class Transaction::Notification
     }
 
     changes = {}
-    user_related_changes.each {|key, value|
+    user_related_changes.each { |key, value|
 
       # get attribute name
       attribute_name           = key.to_s

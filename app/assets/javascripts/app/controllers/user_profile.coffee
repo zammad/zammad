@@ -10,11 +10,6 @@ class App.UserProfile extends App.Controller
     # fetch new data if needed
     App.User.full(@user_id, @render)
 
-    # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', =>
-      return if !@authenticate(true)
-      @render(App.User.fullLocal(@user_id))
-
   meta: =>
     meta =
       url: @url()
@@ -48,6 +43,11 @@ class App.UserProfile extends App.Controller
       user: user
     ))
 
+    new ActionRow(
+      el:        elLocal.find('.js-action')
+      object_id: user.id
+    )
+
     new Object(
       el:        elLocal.find('.js-object-container')
       object_id: user.id
@@ -63,6 +63,50 @@ class App.UserProfile extends App.Controller
 
     new App.UpdateTastbar(
       genericObject: user
+    )
+
+class ActionRow extends App.ObserverController
+  model: 'User'
+  observe:
+    organization_id: true
+
+  render: (user) =>
+
+    # start action controller
+    showHistory = =>
+      new App.UserHistory(
+        user_id: user.id
+        container: @el.closest('.content')
+      )
+
+    editUser = =>
+      new App.ControllerGenericEdit(
+        id: user.id
+        genericObject: 'User'
+        screen: 'edit'
+        pageData:
+          title: 'Users'
+          object: 'User'
+          objects: 'Users'
+        container: @el.closest('.content')
+      )
+
+    actions = [
+      {
+        name:     'edit'
+        title:    'Edit'
+        callback: editUser
+      }
+      {
+        name:     'history'
+        title:    'History'
+        callback: showHistory
+      }
+    ]
+
+    new App.ActionRow(
+      el:    @el
+      items: actions
     )
 
 class Object extends App.ObserverController
@@ -121,43 +165,6 @@ class Object extends App.ObserverController
         object_id: user.organization_id
         el: @$('.js-organization')
       )
-
-    # start action controller
-    showHistory = =>
-      new App.UserHistory(
-        user_id: user.id
-        container: @el.closest('.content')
-      )
-
-    editUser = =>
-      new App.ControllerGenericEdit(
-        id: user.id
-        genericObject: 'User'
-        screen: 'edit'
-        pageData:
-          title: 'Users'
-          object: 'User'
-          objects: 'Users'
-        container: @el.closest('.content')
-      )
-
-    actions = [
-      {
-        name:     'edit'
-        title:    'Edit'
-        callback: editUser
-      }
-      {
-        name:     'history'
-        title:    'History'
-        callback: showHistory
-      }
-    ]
-
-    new App.ActionRow(
-      el:    @el.find('.js-action')
-      items: actions
-    )
 
   update: (e) =>
     name  = $(e.target).attr('data-name')

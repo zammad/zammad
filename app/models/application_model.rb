@@ -80,7 +80,7 @@ returns
     end
 
     data = {}
-    params.each {|key, value|
+    params.each { |key, value|
       data[key.to_sym] = value
     }
 
@@ -91,7 +91,7 @@ returns
 
     # only use object attributes
     clean_params = {}
-    new.attributes.each {|attribute, _value|
+    new.attributes.each { |attribute, _value|
       next if !data.key?(attribute.to_sym)
       clean_params[attribute.to_sym] = data[attribute.to_sym]
     }
@@ -125,7 +125,7 @@ returns
         list_of_items = [ params[real_ids] ]
       end
       list = []
-      list_of_items.each {|item_id|
+      list_of_items.each { |item_id|
         next if !item_id
         lookup = assoc.klass.lookup(id: item_id)
 
@@ -150,7 +150,7 @@ returns
       next if params[real_values].class != Array
       list = []
       class_object = assoc.klass
-      params[real_values].each {|value|
+      params[real_values].each { |value|
         lookup = nil
         if class_object == User
           if !lookup
@@ -222,7 +222,7 @@ returns
       next if !ref
       if ref.respond_to?(:first)
         attributes[assoc.name.to_s] = []
-        ref.each {|item|
+        ref.each { |item|
           if item[:login]
             attributes[assoc.name.to_s].push item[:login]
             next
@@ -247,7 +247,7 @@ returns
     {
       'created_by_id' => 'created_by',
       'updated_by_id' => 'updated_by',
-    }.each {|source, destination|
+    }.each { |source, destination|
       next if !attributes[source]
       user = User.lookup(id: attributes[source])
       next if !user
@@ -255,7 +255,7 @@ returns
     }
 
     # remove forbitten attributes
-    %w(password token tokens token_ids).each {|item|
+    %w(password token tokens token_ids).each { |item|
       attributes.delete(item)
     }
 
@@ -277,7 +277,7 @@ returns
   def self.param_validation(data)
 
     # we do want to set this via database
-    [:action, :controller, :updated_at, :created_at, :updated_by_id, :created_by_id, :updated_by, :created_by].each {|key|
+    [:action, :controller, :updated_at, :created_at, :updated_by_id, :created_by_id, :updated_by, :created_by].each { |key|
       data.delete(key)
     }
 
@@ -317,7 +317,7 @@ returns
   def self.param_association_lookup(params)
 
     data = {}
-    params.each {|key, value|
+    params.each { |key, value|
       data[key.to_sym] = value
     }
 
@@ -376,7 +376,7 @@ returns
       # get association class and do lookup
       class_object = assoc.klass
       lookup_ids = []
-      value.each {|item|
+      value.each { |item|
         lookup = nil
         if class_object == User
           if item.class == String
@@ -528,7 +528,7 @@ returns
 
   def self.genrate_uniq_name(name)
     return name if !find_by(name: name)
-    (1..100).each {|counter|
+    (1..100).each { |counter|
       name = "#{name}_#{counter}"
       exists = find_by(name: name)
       next if exists
@@ -570,7 +570,7 @@ returns
                 else
                   where(name: data[:name])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         if loop_record.name == data[:name]
           cache_set(data[:name], loop_record)
           return loop_record
@@ -587,7 +587,7 @@ returns
                 else
                   where(login: data[:login])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         if loop_record.login == data[:login]
           cache_set(data[:login], loop_record)
           return loop_record
@@ -604,7 +604,7 @@ returns
                 else
                   where(email: data[:email])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         if loop_record.email == data[:email]
           cache_set(data[:email], loop_record)
           return loop_record
@@ -640,7 +640,7 @@ returns
                 else
                   where(name: data[:name])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         return loop_record if loop_record.name == data[:name]
       }
     elsif data[:login]
@@ -651,7 +651,7 @@ returns
                 else
                   where(login: data[:login])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         return loop_record if loop_record.login == data[:login]
       }
     elsif data[:email]
@@ -662,7 +662,7 @@ returns
                 else
                   where(email: data[:email])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         return loop_record if loop_record.email == data[:email]
       }
     elsif data[:locale] && data[:source]
@@ -673,7 +673,7 @@ returns
                 else
                   where(locale: data[:locale], source: data[:source])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         return loop_record if loop_record.source == data[:source]
       }
     end
@@ -727,7 +727,7 @@ returns
                 else
                   where(name: data[:name])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         if loop_record.name == data[:name]
           loop_record.update_attributes(data)
           return loop_record
@@ -744,7 +744,7 @@ returns
                 else
                   where(login: data[:login])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         if loop_record.login.casecmp(data[:login]).zero?
           loop_record.update_attributes(data)
           return loop_record
@@ -761,7 +761,7 @@ returns
                 else
                   where(email: data[:email])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         if loop_record.email.casecmp(data[:email]).zero?
           loop_record.update_attributes(data)
           return loop_record
@@ -778,7 +778,7 @@ returns
                 else
                   where(locale: data[:locale])
                 end
-      records.each {|loop_record|
+      records.each { |loop_record|
         if loop_record.locale.casecmp(data[:locale]).zero?
           loop_record.update_attributes(data)
           return loop_record
@@ -1072,11 +1072,19 @@ reload search index with full data
   def self.search_index_reload
     config = @search_index_support_config
     return if !config
+    tolerance = 5
+    tolerance_count = 0
     all_ids = select('id').all.order('created_at DESC')
     all_ids.each { |item_with_id|
       next if config[:ignore_ids] && config[:ignore_ids].include?(item_with_id.id)
       item = find(item_with_id.id)
-      item.search_index_update_backend
+      begin
+        item.search_index_update_backend
+      rescue => e
+        logger.error "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}"
+        tolerance_count += 1
+        raise "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}" if tolerance_count == tolerance
+      end
     }
   end
 
@@ -1130,13 +1138,13 @@ log object update activity stream, if configured - will be executed automaticall
       updated_by_id: true,
     }
     if self.class.activity_stream_support_config[:ignore_attributes]
-      self.class.activity_stream_support_config[:ignore_attributes].each {|key, value|
+      self.class.activity_stream_support_config[:ignore_attributes].each { |key, value|
         ignore_attributes[key] = value
       }
     end
 
     log = false
-    changes.each {|key, _value|
+    changes.each { |key, _value|
 
       # do not log created_at and updated_at attributes
       next if ignore_attributes[key.to_sym] == true
@@ -1217,7 +1225,7 @@ log object update history with all updated attributes, if configured - will be e
     # new record also triggers update, so ignore new records
     changes = self.changes
     if history_changes_last_done
-      history_changes_last_done.each {|key, value|
+      history_changes_last_done.each { |key, value|
         if changes.key?(key) && changes[key] == value
           changes.delete(key)
         end
@@ -1236,12 +1244,12 @@ log object update history with all updated attributes, if configured - will be e
       updated_by_id: true,
     }
     if self.class.history_support_config[:ignore_attributes]
-      self.class.history_support_config[:ignore_attributes].each {|key, value|
+      self.class.history_support_config[:ignore_attributes].each { |key, value|
         ignore_attributes[key] = value
       }
     end
 
-    changes.each {|key, value|
+    changes.each { |key, value|
 
       # do not log created_at and updated_at attributes
       next if ignore_attributes[key.to_sym] == true
@@ -1384,7 +1392,7 @@ get assets of object list
 =end
 
   def self.assets_of_object_list(list, assets = {})
-    list.each {|item|
+    list.each { |item|
       require item['object'].to_filename
       record = Kernel.const_get(item['object']).find(item['o_id'])
       assets = record.assets(assets)
@@ -1414,7 +1422,7 @@ get assets and record_ids of selector
 
     # get assets of condition
     models = Models.all
-    send(selector).each {|item, content|
+    send(selector).each { |item, content|
       attribute = item.split(/\./)
       next if !attribute[1]
       begin
@@ -1431,7 +1439,7 @@ get assets and record_ids of selector
       next if !models[attribute_class][:reflections][reflection].klass
       attribute_ref_class = models[attribute_class][:reflections][reflection].klass
       if content['value'].class == Array
-        content['value'].each {|item_id|
+        content['value'].each { |item_id|
           attribute_object = attribute_ref_class.find_by(id: item_id)
           if attribute_object
             assets = attribute_object.assets(assets)
@@ -1520,7 +1528,7 @@ check string/varchar size and cut them if needed
 =end
 
   def check_limits
-    attributes.each {|attribute|
+    attributes.each { |attribute|
       next if !self[ attribute[0] ]
       next if self[ attribute[0] ].class != String
       next if self[ attribute[0] ].empty?

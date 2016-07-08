@@ -97,7 +97,7 @@ curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password} -H 
 =end
 
   def create
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(EmailAddress, params)
   end
 
@@ -128,7 +128,7 @@ curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{passwor
 =end
 
   def update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(EmailAddress, params)
   end
 
@@ -146,7 +146,7 @@ curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{passwor
 =end
 
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(EmailAddress, params)
   end
 end

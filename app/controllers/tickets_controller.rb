@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
 
     if params[:expand]
       list = []
-      tickets.each {|ticket|
+      tickets.each { |ticket|
         list.push ticket.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -28,7 +28,7 @@ class TicketsController < ApplicationController
     if params[:full]
       assets = {}
       item_ids = []
-      tickets.each {|item|
+      tickets.each { |item|
         item_ids.push item.id
         assets = item.assets(assets)
       }
@@ -47,7 +47,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     if params[:expand]
       result = ticket.attributes_with_relation_names
@@ -90,7 +90,7 @@ class TicketsController < ApplicationController
     # create tags if given
     if params[:tags] && !params[:tags].empty?
       tags = params[:tags].split(/,/)
-      tags.each {|tag|
+      tags.each { |tag|
         Tag.tag_add(
           object: 'Ticket',
           o_id: ticket.id,
@@ -119,7 +119,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     clean_params = Ticket.param_association_lookup(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
@@ -147,7 +147,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     ticket.destroy
 
@@ -173,7 +173,7 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
 
     # permission check
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     # get history of ticket
     history = ticket.history_get(true)
@@ -215,14 +215,14 @@ class TicketsController < ApplicationController
 
     # get related assets
     ticket_ids_by_customer = []
-    ticket_lists.each {|ticket_list|
+    ticket_lists.each { |ticket_list|
       ticket_ids_by_customer.push ticket_list.id
       assets = ticket_list.assets(assets)
     }
 
     ticket_ids_recent_viewed = []
     recent_views = RecentView.list(current_user, 8, 'Ticket')
-    recent_views.each {|recent_view|
+    recent_views.each { |recent_view|
       next if recent_view['object'] != 'Ticket'
       ticket_ids_recent_viewed.push recent_view['o_id']
       recent_view_ticket = Ticket.find(recent_view['o_id'])
@@ -251,7 +251,7 @@ class TicketsController < ApplicationController
     end
 
     # permission check
-    return if !ticket_permission(ticket_master)
+    ticket_permission(ticket_master)
 
     # check slave ticket
     ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
@@ -264,7 +264,7 @@ class TicketsController < ApplicationController
     end
 
     # permission check
-    return if !ticket_permission(ticket_slave)
+    ticket_permission(ticket_slave)
 
     # check diffetent ticket ids
     if ticket_slave.id == ticket_master.id
@@ -294,7 +294,7 @@ class TicketsController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:ticket_id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
     assets = ticket.assets({})
 
     # get related articles
@@ -332,7 +332,7 @@ class TicketsController < ApplicationController
 
     if params[:expand]
       list = []
-      tickets.each {|ticket|
+      tickets.each { |ticket|
         list.push ticket.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -356,7 +356,7 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/tickets/selector
   def selector
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     ticket_count, tickets = Ticket.selectors(params[:condition], 6)
 
@@ -385,7 +385,7 @@ class TicketsController < ApplicationController
     end
 
     # permission check
-    #return if !ticket_permission(ticket)
+    #ticket_permission(ticket)
 
     # lookup open user tickets
     limit                      = 100
@@ -433,7 +433,7 @@ class TicketsController < ApplicationController
       user_tickets_closed_ids = assets_of_tickets(user_tickets_closed, assets)
 
       # generate stats by user
-      (0..11).each {|month_back|
+      (0..11).each { |month_back|
         date_to_check = now - month_back.month
         date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
@@ -507,7 +507,7 @@ class TicketsController < ApplicationController
       org_tickets_closed_ids = assets_of_tickets(org_tickets_closed, assets)
 
       # generate stats by org
-      (0..11).each {|month_back|
+      (0..11).each { |month_back|
         date_to_check = now - month_back.month
         date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
         date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
@@ -624,7 +624,7 @@ class TicketsController < ApplicationController
 
     # get related users
     article_ids = []
-    articles.each {|article|
+    articles.each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)

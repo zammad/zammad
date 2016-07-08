@@ -28,7 +28,7 @@ module Channel::Filter::FollowUpCheck
 
     # get ticket# from attachment
     if setting.include?('attachment') && mail[:attachments]
-      mail[:attachments].each {|attachment|
+      mail[:attachments].each { |attachment|
         next if !attachment[:data]
         ticket = Ticket::Number.check(attachment[:data])
         next if !ticket
@@ -54,7 +54,7 @@ module Channel::Filter::FollowUpCheck
       end
       if references != ''
         message_ids = references.split(/\s+/)
-        message_ids.each {|message_id|
+        message_ids.each { |message_id|
           message_id_md5 = Digest::MD5.hexdigest(message_id)
           article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
           next if !article

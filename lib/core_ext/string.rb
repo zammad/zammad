@@ -58,7 +58,7 @@ class String
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
   def utf8_to_3bytesutf8
     return self if Rails.application.config.db_4bytes_utf8
-    each_char.select {|c|
+    each_char.select { |c|
       if c.bytes.count > 3
         Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{self}'"
         next
@@ -102,7 +102,7 @@ class String
         "[#{counter}] "
       }
     else
-      string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) {|_placeholder|
+      string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) { |_placeholder|
         link = $3
         text = $6
         text.gsub!(/\<.+?\>/, '')
@@ -192,7 +192,7 @@ class String
 
     # add hyperlinks
     if strict
-      string.gsub!(%r{([[:space:]])((http|https|ftp|tel)://.+?|(www..+?))([[:space:]]|\.[[:space:]]|,[[:space:]])}mxi) {|_placeholder|
+      string.gsub!(%r{([[:space:]])((http|https|ftp|tel)://.+?|(www..+?))([[:space:]]|\.[[:space:]]|,[[:space:]])}mxi) { |_placeholder|
         pre = $1
         content = $2
         post = $5
@@ -368,7 +368,7 @@ class String
     # edv hotline schrieb:
     #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
-    map.each {|_key, regexp|
+    map.each { |_key, regexp|
       string.sub!(/#{regexp}/) { |placeholder|
         placeholder = "#{marker}#{placeholder}"
       }

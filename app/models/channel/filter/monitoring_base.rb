@@ -47,7 +47,7 @@ class Channel::Filter::MonitoringBase
 
     # follow up detection by meta data
     open_states = Ticket::State.by_category('open')
-    Ticket.where(state: open_states).each {|ticket|
+    Ticket.where(state: open_states).each { |ticket|
       next if !ticket.preferences
       next if !ticket.preferences['integration']
       next if ticket.preferences['integration'] != integration
@@ -77,7 +77,7 @@ class Channel::Filter::MonitoringBase
       preferences = {}
       preferences['integration'] = integration
       preferences[integration] = result
-      preferences.each {|key, value|
+      preferences.each { |key, value|
         mail[ 'x-zammad-ticket-preferences'.to_sym ][key] = value
       }
     end

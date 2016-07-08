@@ -200,8 +200,12 @@ class ArticleViewItem extends App.ObserverController
     # remember bubble heigth
     heigth = bubbleContent.height()
 
+    # get marker heigth
+    if offsetTop
+      markerHeight = offsetTop.top
+
     # if signature marker exists and heigth is within maxHeight
-    if offsetTop && heigth < maxHeight
+    if markerHeight && markerHeight < maxHeight
       newHeigth = offsetTop.top + 30
       if newHeigth < minHeight
         newHeigth = minHeight
@@ -240,7 +244,7 @@ class ArticleViewItem extends App.ObserverController
     metaTop        = article.find('.article-content-meta.top')
     metaBottom     = article.find('.article-content-meta.bottom')
 
-    if @elementContainsSelection( article.get(0) )
+    if @elementContainsSelection(article.get(0))
       @stopPropagation(e)
       return false
 

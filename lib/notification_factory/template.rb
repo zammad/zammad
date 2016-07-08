@@ -25,7 +25,7 @@ class NotificationFactory::Template
     object_name      = object_methods.shift.to_sym
     object_refs      = @objects[object_name]
     object_methods_s = ''
-    object_methods.each {|method|
+    object_methods.each { |method|
       if object_methods_s != ''
         object_methods_s += '.'
       end

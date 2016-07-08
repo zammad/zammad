@@ -147,6 +147,8 @@ class App.Controller extends Spine.Controller
   scrollToIfNeeded: (element, position = true) ->
     return if !element
     return if !element.get(0)
+    if position is true
+      return if element.visible(true)
     element.get(0).scrollIntoView(position)
 
   shake: (element) ->
@@ -461,7 +463,7 @@ class App.Controller extends Spine.Controller
     fetch = (params) =>
       @ajax(
         type:  'GET'
-        url:   @Config.get('api_path') + '/ticket_customer'
+        url:   "#{@Config.get('api_path')}/ticket_customer"
         data:
           customer_id: params.user_id
         processData: true

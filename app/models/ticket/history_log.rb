@@ -64,7 +64,7 @@ returns
 
     # get related objects
     assets = {}
-    list.each {|item|
+    list.each { |item|
       record = Kernel.const_get(item['object']).find(item['o_id'])
       assets = record.assets(assets)
 

@@ -3,25 +3,25 @@
     <div class="article-meta top">
     <% if @article.from: %>
       <div class="horizontal article-meta-row">
-        <div class="article-meta-key u-textTruncate"><%- @T( 'From' ) %></div>
+        <div class="article-meta-key u-textTruncate"><%- @T('From') %></div>
         <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.from) %></div>
       </div>
     <% end %>
     <% if @article.to: %>
       <div class="horizontal article-meta-row">
-        <div class="article-meta-key u-textTruncate"><%- @T( 'To' ) %></div>
+        <div class="article-meta-key u-textTruncate"><%- @T('To') %></div>
         <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.to) %></div>
       </div>
     <% end %>
     <% if @article.cc: %>
       <div class="horizontal article-meta-row">
-        <div class="article-meta-key u-textTruncate"><%- @T( 'Cc' ) %></div>
+        <div class="article-meta-key u-textTruncate"><%- @T('Cc') %></div>
         <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.cc) %></div>
       </div>
     <% end %>
     <% if @article.subject: %>
       <div class="horizontal article-meta-row">
-        <div class="article-meta-key u-textTruncate"><%- @T( 'Subject' ) %></div>
+        <div class="article-meta-key u-textTruncate"><%- @T('Subject') %></div>
         <div class="article-meta-value flex contain-text"><%= @article.subject %></div>
       </div>
     <% end %>
@@ -67,7 +67,7 @@
   <div class="article-content-meta bottom hide">
     <div class="article-meta bottom">
       <div class="horizontal article-meta-row">
-        <div class="article-meta-key"><%- @T( 'Channel' ) %></div>
+        <div class="article-meta-key"><%- @T('Channel') %></div>
         <div class="article-meta-value">
           <%- @Icon(@article.type.name, 'article-meta-icon') %>
           <%- @T(@article.type.name) %>

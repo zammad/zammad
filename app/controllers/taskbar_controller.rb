@@ -12,7 +12,7 @@ class TaskbarController < ApplicationController
 
   def show
     taskbar = Taskbar.find(params[:id])
-    return if !access(taskbar)
+    access(taskbar)
 
     model_show_render_item(taskbar)
   end
@@ -23,7 +23,7 @@ class TaskbarController < ApplicationController
 
   def update
     taskbar = Taskbar.find(params[:id])
-    return if !access(taskbar)
+    access(taskbar)
 
     taskbar.update_attributes!(Taskbar.param_cleanup(params))
     model_update_render_item(taskbar)
@@ -31,7 +31,7 @@ class TaskbarController < ApplicationController
 
   def destroy
     taskbar = Taskbar.find(params[:id])
-    return if !access(taskbar)
+    access(taskbar)
 
     taskbar.destroy
     model_destory_render_item()
@@ -40,10 +40,6 @@ class TaskbarController < ApplicationController
   private
 
   def access(taskbar)
-    if taskbar.user_id != current_user.id
-      render json: { error: 'Not allowed to access this task.' }, status: :unprocessable_entity
-      return false
-    end
-    true
+    raise Exceptions::UnprocessableEntity, 'Not allowed to access this task.' if taskbar.user_id != current_user.id
   end
 end

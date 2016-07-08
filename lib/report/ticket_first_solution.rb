@@ -38,7 +38,7 @@ returns
       start = Time.zone.parse(params[:range_start])
       stop_interval = 60
     end
-    (1..stop_interval).each {|_counter|
+    (1..stop_interval).each { |_counter|
       if params[:interval] == 'month'
         stop = start.next_month
       elsif params[:interval] == 'week'
@@ -57,7 +57,7 @@ returns
         stop,
       ).where(query, *bind_params).joins(tables)
       count = 0
-      ticket_list.each {|ticket|
+      ticket_list.each { |ticket|
         closed_at  = ticket.close_time
         created_at = ticket.created_at
         if (closed_at - (60 * 15) ) < created_at
@@ -98,7 +98,7 @@ returns
     count = 0
     assets = {}
     ticket_ids = []
-    ticket_list.each {|ticket|
+    ticket_list.each { |ticket|
       closed_at  = ticket.close_time
       created_at = ticket.created_at
       if (closed_at - (60 * 15) ) < created_at

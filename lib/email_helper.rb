@@ -213,7 +213,7 @@ returns
 
   def self.provider_inbound_mx(user, email, password, mx_domains)
     inbounds = []
-    mx_domains.each {|domain|
+    mx_domains.each { |domain|
       inbound = [
         {
           adapter: 'imap',
@@ -412,7 +412,7 @@ returns
 
   def self.provider_outbound_mx(user, email, password, mx_domains)
     outbounds = []
-    mx_domains.each {|domain|
+    mx_domains.each { |domain|
       outbound = [
         {
           adapter: 'smtp',

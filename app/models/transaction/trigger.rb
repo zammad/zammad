@@ -40,7 +40,7 @@ class Transaction::Trigger
     original_user_id = UserInfo.current_user_id
     UserInfo.current_user_id = 1
 
-    triggers.each {|trigger|
+    triggers.each { |trigger|
       condition = trigger.condition
 
       # check action
@@ -49,7 +49,28 @@ class Transaction::Trigger
         next if condition['ticket.action']['operator'] != 'is' && condition['ticket.action']['value'] == @item[:type]
         condition.delete('ticket.action')
       end
+=begin
+      # check "has changed" options
+      has_changed = true
+      trigger.condition.each do |key, value|
+        next if !value
+        next if !value['operator']
+        next if !value['operator']['has changed']
 
+        # next if has changed? && !@item[:changes][attribute]
+        (object_name, attribute) = key.split('.', 2)
+
+        # remove condition item, because it has changed
+        if @item[:changes][attribute]
+          #condition.delete(key)
+          next
+        end
+        has_changed = false
+        break
+        #{"ticket.state_id"=>{"operator"=>"has changed"
+      end
+      next if !has_changed
+=end
       # check if selector is matching
       condition['ticket.id'] = {
         operator: 'is',

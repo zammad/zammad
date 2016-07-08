@@ -24,7 +24,7 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     Ticket.select('id').where( organization_id: record.id ).each(&:touch)
 
     # touch current members
-    record.member_ids.uniq.each {|user_id|
+    record.member_ids.uniq.each { |user_id|
       User.find(user_id).touch
     }
   end

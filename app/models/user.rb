@@ -28,6 +28,8 @@ class User < ApplicationModel
   load 'user/assets.rb'
   include User::Assets
   extend User::Search
+  load 'user/search_index.rb'
+  include User::SearchIndex
 
   before_create   :check_name, :check_email, :check_login, :check_password, :check_preferences_default
   before_update   :check_password, :check_email, :check_login, :check_preferences_default
@@ -290,7 +292,7 @@ returns
     roles = Role.where(name: 'Customer')
     url = ''
     if hash['info']['urls']
-      hash['info']['urls'].each {|_name, local_url|
+      hash['info']['urls'].each { |_name, local_url|
         next if !local_url
         next if local_url.empty?
         url = local_url
@@ -539,7 +541,7 @@ returns
 
   def self.update_default_preferences(role_name)
     role = Role.lookup(name: role_name)
-    User.of_role(role_name).each {|user|
+    User.of_role(role_name).each { |user|
       user.check_notifications(role)
       user.check_preferences_default
       user.save
@@ -555,7 +557,7 @@ returns
     if !@preferences_default
       @preferences_default = {}
     end
-    default[o.name].each {|key, value|
+    default[o.name].each { |key, value|
       next if @preferences_default[key]
       @preferences_default[key] = value
     }

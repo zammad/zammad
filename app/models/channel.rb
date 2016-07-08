@@ -138,7 +138,7 @@ stream all accounts
       logger.debug 'stream controll loop'
       current_channels = []
       channels = Channel.where('active = ? AND area LIKE ?', true, '%::Account')
-      channels.each {|channel|
+      channels.each { |channel|
         next if channel.options[:adapter] != 'twitter'
 
         current_channels.push channel.id
@@ -181,7 +181,7 @@ stream all accounts
       }
 
       # cleanup deleted channels
-      last_channels.each {|channel_id|
+      last_channels.each { |channel_id|
         next if !@@channel_stream[channel_id]
         next if current_channels.include?(channel_id)
         logger.debug "channel (#{channel_id}) not longer active, stop thread"

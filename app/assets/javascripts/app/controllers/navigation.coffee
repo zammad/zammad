@@ -3,23 +3,27 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   elements:
     '#global-search': 'searchInput'
-    '#global-search-result': 'searchResult'
     '.search': 'searchContainer'
+    '.js-global-search-result': 'searchResult'
+    '.js-details-link': 'searchDetails'
 
   events:
     'click .js-toggleNotifications': 'toggleNotifications'
     'click .js-emptySearch': 'emptyAndClose'
-    'dblclick .search-holder .icon-magnifier': 'openExtendedSearch'
     'submit form.search-holder': 'preventDefault'
+    'dblclick form.search-holder .icon-magnifier': 'openExtendedSearch'
     'focus #global-search': 'searchFocus'
     'blur #global-search': 'searchBlur'
-    'keydown #global-search': 'listNavigate'
-    'click #global-search-result': 'andClose'
+    'keyup #global-search': 'listNavigate'
+    'click .js-global-search-result': 'andClose'
+    'click .js-details-link': 'openExtendedSearch'
     'change .js-menu .js-switch input': 'switch'
 
   constructor: ->
     super
     @render()
+
+    @throttledSearch = _.throttle @search, 200
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
@@ -56,7 +60,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
         @$('.bell').addClass('show')
         App.Audio.play( 'https://www.sounddogs.com/previews/2193/mp3/219024_SOUNDDOGS__be.mp3' )
         @delay(
-          -> App.Event.trigger('bell', 'off' )
+          -> App.Event.trigger('bell', 'off')
           3000
         )
       else
@@ -195,7 +199,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @query = '' # reset query cache
     @searchContainer.addClass('focused')
     @anyPopoversDestroy()
-    @searchFunction(0)
+    @search()
 
   searchBlur: (e) =>
 
@@ -212,6 +216,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
   listNavigate: (e) =>
     if e.keyCode is 27 # close on esc
       @emptyAndClose()
+      @searchInput.blur()
       return
     else if e.keyCode is 38 # up
       @nudge(e, -1)
@@ -220,23 +225,36 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
-      href = @$('#global-search-result .nav-tab.is-hover').attr('href')
+      if @$('.global-search-menu .js-details-link.is-hover').get(0)
+        @openExtendedSearch()
+        return
+      href = @$('.global-search-result .nav-tab.is-hover').attr('href')
       return if !href
-      @locationExecute(href)
+      @navigate(href)
       @emptyAndClose()
       @searchInput.blur()
       return
 
     # on other keys, show result
-    @searchFunction(200)
+    @throttledSearch()
 
   nudge: (e, position) =>
+
+    return if !@searchContainer.hasClass('open')
 
     # get current
     current = @searchResult.find('.nav-tab.is-hover')
     if !current.get(0)
-      @searchResult.find('.nav-tab').first().addClass('is-hover')
-      return
+
+      # if down, select detail search of first result
+      if position is 1
+        if !@searchDetails.hasClass('is-hover')
+          @searchDetails.addClass('is-hover')
+          return
+
+        @searchDetails.removeClass('is-hover')
+        @searchResult.find('.nav-tab').first().addClass('is-hover').popover('show')
+        return
 
     if position is 1
       next = current.closest('li').nextAll('li').not('.divider').first().find('.nav-tab')
@@ -248,6 +266,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
       if prev.get(0)
         current.removeClass('is-hover').popover('hide')
         prev.addClass('is-hover').popover('show')
+      else
+        current.removeClass('is-hover').popover('hide')
+        @searchDetails.addClass('is-hover')
 
     if next
       @scrollToIfNeeded(next, true)
@@ -266,60 +287,17 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @searchContainer.removeClass('open')
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
 
-  searchFunction: (delay) =>
+  search: =>
+    query = @searchInput.val().trim()
+    return if !query
+    return if query is @query
+    @query = query
+    @searchContainer.toggleClass('filled', !!@query)
 
-    search = =>
-      query = @searchInput.val().trim()
-      return if !query
-      return if query is @query
-      @query = query
-      @searchContainer.toggleClass('filled', !!@query)
-
-      # use cache for search result
-      if @searchResultCache[@query]
-        @renderResult(@searchResultCache[@query].result)
-        currentTime = new Date
-        return if @searchResultCache[@query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
-
-      App.Ajax.request(
-        id:    'search'
-        type:  'GET'
-        url:   "#{@apiPath}/search"
-        data:
-          query: @query
-        processData: true,
-        success: (data, status, xhr) =>
-          App.Collection.loadAssets(data.assets)
-          result = {}
-          for item in data.result
-            if App[item.type] && App[item.type].find
-              if !result[item.type]
-                result[item.type] = []
-              item_object = App[item.type].find(item.id)
-              if item_object.searchResultAttributes
-                item_object_search_attributes = item_object.searchResultAttributes()
-                result[item.type].push item_object_search_attributes
-              else
-                @log 'error', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()"
-            else
-              @log 'error', "No such model App.#{item.type}"
-
-          diff = false
-          if @searchResultCache[@query]
-            diff = difference(@searchResultCache[@query].resultRaw, data.result)
-
-          # cache search result
-          @searchResultCache[@query] =
-            result: result
-            resultRaw: data.result
-            time: new Date
-
-          # if result hasn't changed, do not rerender
-          return if diff isnt false && _.isEmpty(diff)
-
-          @renderResult(result)
-      )
-    @delay(search, delay, 'search')
+    App.GlobalSearch.execute(
+      query: @query
+      render: @renderResult
+    )
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)
@@ -425,7 +403,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       url = params.url
       type = params.type
     if type is 'menu'
-      @$('.js-menu .is-active').removeClass('is-active')
+      @$('.js-menu .is-active, .js-details-link.is-active').removeClass('is-active')
     else
       @$('.is-active').removeClass('is-active')
     return if !url || url is '#'
@@ -479,7 +457,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
     e.stopPropagation()
     @notificationWidget.toggle()
 
-  openExtendedSearch: =>
+  openExtendedSearch: (e) ->
+    if e
+      e.preventDefault()
     query = @searchInput.val()
     @searchInput.val('').blur()
     if query

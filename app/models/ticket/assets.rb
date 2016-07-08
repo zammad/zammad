@@ -28,7 +28,7 @@ returns
     if !data[ Ticket.to_app_model ][ id ]
       data[ Ticket.to_app_model ][ id ] = attributes_with_associations
     end
-    %w(created_by_id updated_by_id owner_id customer_id).each {|local_user_id|
+    %w(created_by_id updated_by_id owner_id customer_id).each { |local_user_id|
       next if !self[ local_user_id ]
       next if data[ User.to_app_model ] && data[ User.to_app_model ][ self[ local_user_id ] ]
       user = User.lookup(id: self[ local_user_id ])

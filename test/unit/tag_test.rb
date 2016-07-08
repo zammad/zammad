@@ -140,7 +140,7 @@ class TagTest < ActiveSupport::TestCase
         assert(success, 'Tag.tag_remove successful')
       end
       list = Tag.tag_list(tags)
-      test[:verify][:items].each {|key, value|
+      test[:verify][:items].each { |key, value|
         if value == true
           assert(list.include?(key), "Tag verify - should exists but exists #{key}")
         else

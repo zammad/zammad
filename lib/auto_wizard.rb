@@ -81,9 +81,9 @@ returns
     model_map = {
       'Organizations' => 'Organization',
     }
-    model_map.each {|map_name, model|
+    model_map.each { |map_name, model|
       next if !auto_wizard_hash[map_name]
-      auto_wizard_hash[map_name].each {|data|
+      auto_wizard_hash[map_name].each { |data|
         generic_object = Kernel.const_get(model)
         data.symbolize_keys!
         generic_object.create_or_update_with_ref(data)
@@ -126,9 +126,9 @@ returns
       'Signatures'     => 'Signature',
       'Groups'         => 'Group',
     }
-    model_map.each {|map_name, model|
+    model_map.each { |map_name, model|
       next if !auto_wizard_hash[map_name]
-      auto_wizard_hash[map_name].each {|data|
+      auto_wizard_hash[map_name].each { |data|
         generic_object = Kernel.const_get(model)
         data.symbolize_keys!
         generic_object.create_or_update_with_ref(data)

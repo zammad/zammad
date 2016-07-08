@@ -88,7 +88,7 @@ class TokenTest < ActiveSupport::TestCase
         if !user
           assert( false, test[:test_name] + ': token verification failed' )
         else
-          test[:verify].each {|key, value|
+          test[:verify].each { |key, value|
             assert_equal( user[key], value, 'verify' )
           }
         end

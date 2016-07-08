@@ -7,7 +7,7 @@ module Channel::Filter::Trusted
 
     # check if trust x-headers
     if !channel[:trusted]
-      mail.each {|key, _value|
+      mail.each { |key, _value|
         next if key !~ /^x-zammad/i
         mail.delete(key)
       }

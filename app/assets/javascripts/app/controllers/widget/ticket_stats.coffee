@@ -14,9 +14,14 @@ class App.TicketStats extends App.Controller
 
     # subscribe and reload data / fetch new data if triggered
     if @user
-      @subscribeIdUser = App.User.full( @user.id, @load, false, true )
+      @subscribeIdUser = App.User.full(@user.id, @load, false, true)
     else if @organization
-      @subscribeIdOrganization = App.Organization.full( @organization.id, @load, false, true )
+      @subscribeIdOrganization = App.Organization.full(@organization.id, @load, false, true)
+
+    # rerender view, e. g. on langauge change
+    @bind 'ui:rerender', =>
+      return if !@authenticate(true)
+      @render()
 
   release: =>
     if @subscribeIdUser
@@ -35,13 +40,14 @@ class App.TicketStats extends App.Controller
         user_id:         @user.id
         organization_id: @user.organization_id
     @ajax(
-      id:          'ticket_stats_' + ajaxKey
+      id:          "ticket_stats_#{ajaxKey}"
       type:        'GET'
-      url:         @apiPath + '/ticket_stats'
+      url:         "#{@apiPath}/ticket_stats"
       data:        data
       processData: true
       success:     (data) =>
-        App.Collection.loadAssets( data.assets )
+        App.Collection.loadAssets(data.assets)
+        @data = data
         @render(data)
       )
 
@@ -58,6 +64,8 @@ class App.TicketStats extends App.Controller
     @orgTab.addClass('hide')
 
   render: (data) =>
+    if !data
+      data = @data
 
     @html App.view('widget/ticket_stats')(
       user:         @user

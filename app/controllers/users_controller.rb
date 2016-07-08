@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def index
     offset = 0
-    per_page = 1000
+    per_page = 500
     if params[:page] && params[:per_page]
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
       per_page = params[:per_page].to_i
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
     if params[:expand]
       list = []
-      users.each {|user|
+      users.each { |user|
         list.push user.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     if params[:full]
       assets = {}
       item_ids = []
-      users.each {|item|
+      users.each { |item|
         item_ids.push item.id
         assets = item.assets(assets)
       }
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     end
 
     users_all = []
-    users.each {|user|
+    users.each { |user|
       users_all.push User.lookup(id: user.id).attributes_with_associations
     }
     render json: users_all, status: :ok
@@ -110,127 +110,117 @@ class UsersController < ApplicationController
     user = User.new(clean_params)
     user.param_set_associations(params)
 
-    begin
-
-      # check if it's first user, tje admin user
-      # inital admin account
-      count = User.all.count()
-      admin_account_exists = true
-      if count <= 2
-        admin_account_exists = false
-      end
-
-      # if it's a signup, add user to customer role
-      if !current_user
-
-        # check if feature is enabled
-        if admin_account_exists && !Setting.get('user_create_account')
-          render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
-          return
-        end
-
-        # check signup option only after admin account is created
-        if admin_account_exists && !params[:signup]
-          render json: { error: 'Only signup with not authenticate user possible!' }, status: :unprocessable_entity
-          return
-        end
-        user.updated_by_id = 1
-        user.created_by_id = 1
-
-        # add first user as admin/agent and to all groups
-        group_ids = []
-        role_ids  = []
-        if count <= 2
-          Role.where(name: [ Z_ROLENAME_ADMIN, 'Agent', 'Chat']).each { |role|
-            role_ids.push role.id
-          }
-          Group.all().each { |group|
-            group_ids.push group.id
-          }
-
-          # everybody else will go as customer per default
-        else
-          role_ids.push Role.where(name: Z_ROLENAME_CUSTOMER).first.id
-        end
-        user.role_ids  = role_ids
-        user.group_ids = group_ids
-
-        # remember source (in case show email verify banner)
-        # if not inital user creation
-        if admin_account_exists
-          user.source = 'signup'
-        end
-
-      # else do assignment as defined
-      else
-
-        # permission check by role
-        return if !permission_check_by_role(params)
-
-        if params[:role_ids]
-          user.role_ids = params[:role_ids]
-        end
-        if params[:group_ids]
-          user.group_ids = params[:group_ids]
-        end
-      end
-
-      # check if user already exists
-      if user.email
-        exists = User.where(email: user.email.downcase).first
-        if exists
-          render json: { error: 'User already exists!' }, status: :unprocessable_entity
-          return
-        end
-      end
-      user.save!
-
-      # if first user was added, set system init done
-      if !admin_account_exists
-        Setting.set('system_init_done', true)
-
-        # fetch org logo
-        if user.email
-          Service::Image.organization_suggest(user.email)
-        end
-      end
-
-      # send inviteation if needed / only if session exists
-      if params[:invite] && current_user
-        token = Token.create(action: 'PasswordReset', user_id: user.id)
-        NotificationFactory::Mailer.notification(
-          template: 'user_invite',
-          user: user,
-          objects: {
-            token: token,
-            user: user,
-            current_user: current_user,
-          }
-        )
-      end
-
-      # send email verify
-      if params[:signup] && !current_user
-        result = User.signup_new_token(user)
-        NotificationFactory::Mailer.notification(
-          template: 'signup',
-          user: user,
-          objects: result,
-        )
-      end
-
-      if params[:expand]
-        user = User.find(user.id).attributes_with_relation_names
-        render json: user, status: :created
-        return
-      end
-
-      user_new = User.find(user.id).attributes_with_associations
-      user_new.delete('password')
-      render json: user_new, status: :created
-    rescue => e
-      render json: model_match_error(e.message), status: :unprocessable_entity
+    # check if it's first user, tje admin user
+    # inital admin account
+    count = User.all.count()
+    admin_account_exists = true
+    if count <= 2
+      admin_account_exists = false
     end
+
+    # if it's a signup, add user to customer role
+    if !current_user
+
+      # check if feature is enabled
+      if admin_account_exists && !Setting.get('user_create_account')
+        raise Exceptions::UnprocessableEntity, 'Feature not enabled!'
+      end
+
+      # check signup option only after admin account is created
+      if admin_account_exists && !params[:signup]
+        raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
+      end
+      user.updated_by_id = 1
+      user.created_by_id = 1
+
+      # add first user as admin/agent and to all groups
+      group_ids = []
+      role_ids  = []
+      if count <= 2
+        Role.where(name: [ Z_ROLENAME_ADMIN, 'Agent', 'Chat']).each { |role|
+          role_ids.push role.id
+        }
+        Group.all().each { |group|
+          group_ids.push group.id
+        }
+
+        # everybody else will go as customer per default
+      else
+        role_ids.push Role.where(name: Z_ROLENAME_CUSTOMER).first.id
+      end
+      user.role_ids  = role_ids
+      user.group_ids = group_ids
+
+      # remember source (in case show email verify banner)
+      # if not inital user creation
+      if admin_account_exists
+        user.source = 'signup'
+      end
+
+    # else do assignment as defined
+    else
+
+      # permission check by role
+      permission_check_by_role(params)
+
+      if params[:role_ids]
+        user.role_ids = params[:role_ids]
+      end
+      if params[:group_ids]
+        user.group_ids = params[:group_ids]
+      end
+    end
+
+    # check if user already exists
+    if user.email
+      exists = User.where(email: user.email.downcase).first
+      raise Exceptions::UnprocessableEntity, 'User already exists!' if exists
+    end
+    user.save!
+
+    # if first user was added, set system init done
+    if !admin_account_exists
+      Setting.set('system_init_done', true)
+
+      # fetch org logo
+      if user.email
+        Service::Image.organization_suggest(user.email)
+      end
+    end
+
+    # send inviteation if needed / only if session exists
+    if params[:invite] && current_user
+      token = Token.create(action: 'PasswordReset', user_id: user.id)
+      NotificationFactory::Mailer.notification(
+        template: 'user_invite',
+        user: user,
+        objects: {
+          token: token,
+          user: user,
+          current_user: current_user,
+        }
+      )
+    end
+
+    # send email verify
+    if params[:signup] && !current_user
+      result = User.signup_new_token(user)
+      NotificationFactory::Mailer.notification(
+        template: 'signup',
+        user: user,
+        objects: result,
+      )
+    end
+
+    if params[:expand]
+      user = User.find(user.id).attributes_with_relation_names
+      render json: user, status: :created
+      return
+    end
+
+    user_new = User.find(user.id).attributes_with_associations
+    user_new.delete('password')
+    render json: user_new, status: :created
   end
 
   # @path       [PUT] /users/{id}
@@ -252,42 +242,37 @@ class UsersController < ApplicationController
     clean_params = User.param_association_lookup(params)
     clean_params = User.param_cleanup(clean_params, true)
 
-    begin
+    # permission check by role
+    permission_check_by_role(params)
+    user.update_attributes(clean_params)
 
-      # permission check by role
-      return if !permission_check_by_role(params)
-      user.update_attributes(clean_params)
-
-      # only allow Admin's and Agent's
-      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:role_ids] || params[:roles])
-        user.role_ids = params[:role_ids]
-        user.param_set_associations({ role_ids: params[:role_ids], roles: params[:roles] })
-      end
-
-      # only allow Admin's
-      if role?(Z_ROLENAME_ADMIN) && (params[:group_ids] || params[:groups])
-        user.group_ids = params[:group_ids]
-        user.param_set_associations({ group_ids: params[:group_ids], groups: params[:groups] })
-      end
-
-      # only allow Admin's and Agent's
-      if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:organization_ids] || params[:organizations])
-        user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
-      end
-
-      if params[:expand]
-        user = User.find(user.id).attributes_with_relation_names
-        render json: user, status: :ok
-        return
-      end
-
-      # get new data
-      user_new = User.find(user.id).attributes_with_associations
-      user_new.delete('password')
-      render json: user_new, status: :ok
-    rescue => e
-      render json: { error: e.message }, status: :unprocessable_entity
+    # only allow Admin's and Agent's
+    if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:role_ids] || params[:roles])
+      user.role_ids = params[:role_ids]
+      user.param_set_associations({ role_ids: params[:role_ids], roles: params[:roles] })
     end
+
+    # only allow Admin's
+    if role?(Z_ROLENAME_ADMIN) && (params[:group_ids] || params[:groups])
+      user.group_ids = params[:group_ids]
+      user.param_set_associations({ group_ids: params[:group_ids], groups: params[:groups] })
+    end
+
+    # only allow Admin's and Agent's
+    if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:organization_ids] || params[:organizations])
+      user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
+    end
+
+    if params[:expand]
+      user = User.find(user.id).attributes_with_relation_names
+      render json: user, status: :ok
+      return
+    end
+
+    # get new data
+    user_new = User.find(user.id).attributes_with_associations
+    user_new.delete('password')
+    render json: user_new, status: :ok
   end
 
   # @path    [DELETE] /users/{id}
@@ -300,8 +285,8 @@ class UsersController < ApplicationController
   # @response_message 200 User successfully deleted.
   # @response_message 401 Invalid session.
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    return if model_references_check(User, params)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
+    model_references_check(User, params)
     model_destory_render(User, params)
   end
 
@@ -356,7 +341,7 @@ class UsersController < ApplicationController
 
     if params[:expand]
       list = []
-      user_all.each {|user|
+      user_all.each { |user|
         list.push user.attributes_with_relation_names
       }
       render json: list, status: :ok
@@ -507,16 +492,10 @@ curl http://localhost/api/v1/users/email_verify.json -v -u #{login}:#{password} 
 =end
 
   def email_verify
-    if !params[:token]
-      render json: { message: 'No token!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No token!' if !params[:token]
 
     user = User.signup_verify_via_token(params[:token], current_user)
-    if !user
-      render json: { message: 'Invalid token!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'Invalid token!' if !user
 
     render json: { message: 'ok', user_email: user.email }, status: :ok
   end
@@ -543,17 +522,11 @@ curl http://localhost/api/v1/users/email_verify_send.json -v -u #{login}:#{passw
 
   def email_verify_send
 
-    if !params[:email]
-      render json: { message: 'No email!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No email!' if !params[:email]
 
     # check is verify is possible to send
     user = User.find_by(email: params[:email].downcase)
-    if !user
-      render json: { error: 'No such user!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No such user!' if !user
 
     #if user.verified == true
     #  render json: { error: 'Already verified!' }, status: :unprocessable_entity
@@ -609,10 +582,7 @@ curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password
   def password_reset_send
 
     # check if feature is enabled
-    if !Setting.get('user_lost_password')
-      render json: { error: 'Feature not enabled!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'Feature not enabled!' if !Setting.get('user_lost_password')
 
     result = User.password_reset_new_token(params[:username])
     if result && result[:token]
@@ -779,13 +749,11 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
 =end
 
   def preferences
-    if !current_user
-      render json: { message: 'No current user!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
+
     if params[:user]
       user = User.find(current_user.id)
-      params[:user].each {|key, value|
+      params[:user].each { |key, value|
         user.preferences[key.to_sym] = value
       }
       user.save
@@ -815,20 +783,11 @@ curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "C
 =end
 
   def account_remove
-    if !current_user
-      render json: { message: 'No current user!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
 
     # provider + uid to remove
-    if !params[:provider]
-      render json: { message: 'provider needed!' }, status: :unprocessable_entity
-      return
-    end
-    if !params[:uid]
-      render json: { message: 'uid needed!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'provider needed!' if !params[:provider]
+    raise Exceptions::UnprocessableEntity, 'uid needed!' if !params[:uid]
 
     # remove from database
     record = Authorization.where(
@@ -836,10 +795,8 @@ curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "C
       provider: params[:provider],
       uid: params[:uid],
     )
-    if !record.first
-      render json: { message: 'No record found!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No record found!' if !record.first
+
     record.destroy_all
     render json: { message: 'ok' }, status: :ok
   end
@@ -938,10 +895,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return if !valid_session_with_user
 
     # get & validate image
-    if !params[:id]
-      render json: { message: 'No id of avatar!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No id of avatar!' if !params[:id]
 
     # set as default
     avatar = Avatar.set_default('User', current_user.id, params[:id])
@@ -957,10 +911,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     return if !valid_session_with_user
 
     # get & validate image
-    if !params[:id]
-      render json: { message: 'No id of avatar!' }, status: :unprocessable_entity
-      return
-    end
+    raise Exceptions::UnprocessableEntity, 'No id of avatar!' if !params[:id]
 
     # remove avatar
     Avatar.remove_one('User', current_user.id, params[:id])
@@ -1003,18 +954,16 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       if params[:role_ids].class != Array
         params[:role_ids] = [params[:role_ids]]
       end
-      params[:role_ids].each {|role_id|
+      params[:role_ids].each { |role_id|
         role_local = Role.lookup(id: role_id)
         if !role_local
-          render json: { error: 'Invalid role_ids!' }, status: :unauthorized
           logger.info "Invalid role_ids for current_user_id: #{current_user.id} role_ids #{role_id}"
-          return false
+          raise Exceptions::NotAuthorized, 'Invalid role_ids!'
         end
         role_name = role_local.name
         next if role_name != 'Admin' && role_name != 'Agent'
-        render json: { error: 'This role assignment is only allowed by admin!' }, status: :unauthorized
         logger.info "This role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{role_name}"
-        return false
+        raise Exceptions::NotAuthorized, 'This role assignment is only allowed by admin!'
       }
     end
 
@@ -1023,9 +972,8 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
         params[:group_ids] = [params[:group_ids]]
       end
       if !params[:group_ids].empty?
-        render json: { error: 'Group relation is only allowed by admin!' }, status: :unauthorized
         logger.info "Group relation is only allowed by admin! current_user_id: #{current_user.id} group_ids #{params[:group_ids].inspect}"
-        return false
+        raise Exceptions::NotAuthorized, 'Group relation is only allowed by admin!'
       end
     end
 

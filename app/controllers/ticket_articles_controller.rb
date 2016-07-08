@@ -5,7 +5,7 @@ class TicketArticlesController < ApplicationController
 
   # GET /articles
   def index
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_index_render(Ticket::Article, params)
   end
 
@@ -14,7 +14,7 @@ class TicketArticlesController < ApplicationController
 
     # permission check
     article = Ticket::Article.find(params[:id])
-    return if !article_permission(article)
+    article_permission(article)
 
     if params[:expand]
       result = article.attributes_with_relation_names
@@ -40,12 +40,12 @@ class TicketArticlesController < ApplicationController
 
     # permission check
     ticket = Ticket.find(params[:id])
-    return if !ticket_permission(ticket)
+    ticket_permission(ticket)
 
     articles = []
 
     if params[:expand]
-      ticket.articles.each {|article|
+      ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
@@ -64,7 +64,7 @@ class TicketArticlesController < ApplicationController
     if params[:full]
       assets = {}
       record_ids = []
-      ticket.articles.each {|article|
+      ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
@@ -79,7 +79,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    ticket.articles.each {|article|
+    ticket.articles.each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
@@ -98,7 +98,7 @@ class TicketArticlesController < ApplicationController
     article = Ticket::Article.new(clean_params)
 
     # permission check
-    return if !article_permission(article)
+    article_permission(article)
 
     # find attachments in upload cache
     if form_id
@@ -127,7 +127,7 @@ class TicketArticlesController < ApplicationController
 
     # permission check
     article = Ticket::Article.find(params[:id])
-    return if !article_permission(article)
+    article_permission(article)
 
     clean_params = Ticket::Article.param_association_lookup(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
@@ -142,7 +142,7 @@ class TicketArticlesController < ApplicationController
   # DELETE /articles/1
   def destroy
     article = Ticket::Article.find(params[:id])
-    return if !article_permission(article)
+    article_permission(article)
     article.destroy
 
     head :ok
@@ -211,26 +211,21 @@ class TicketArticlesController < ApplicationController
     # permission check
     ticket = Ticket.lookup(id: params[:ticket_id])
     if !ticket_permission(ticket)
-      render json: 'No such ticket.', status: :unauthorized
-      return
+      raise Exceptions::NotAuthorized, 'No such ticket.'
     end
     article = Ticket::Article.find(params[:article_id])
     if ticket.id != article.ticket_id
-      render json: 'No access, article_id/ticket_id is not matching.', status: :unauthorized
-      return
+      raise Exceptions::NotAuthorized, 'No access, article_id/ticket_id is not matching.'
     end
 
     list = article.attachments || []
     access = false
-    list.each {|item|
+    list.each { |item|
       if item.id.to_i == params[:id].to_i
         access = true
       end
     }
-    if !access
-      render json: 'Requested file id is not linked with article_id.', status: :unauthorized
-      return
-    end
+    raise Exceptions::NotAuthorized, 'Requested file id is not linked with article_id.' if !access
 
     # find file
     file = Store.find(params[:id])
@@ -247,7 +242,7 @@ class TicketArticlesController < ApplicationController
 
     # permission check
     article = Ticket::Article.find(params[:id])
-    return if !article_permission(article)
+    article_permission(article)
 
     list = Store.list(
       object: 'Ticket::Article::Mail',

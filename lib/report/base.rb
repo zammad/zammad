@@ -128,7 +128,7 @@ class Report::Base
                            'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ?', data[:start], data[:end], history_object.id, history_type.id
                          )
                          .where(query, *bind_params).joins(tables)
-      histories.each {|history|
+      histories.each { |history|
         count += 1
         ticket_ids.push history.o_id
       }
@@ -209,7 +209,7 @@ class Report::Base
                                data[:id_to],
                              )
         end
-        histories.each {|history|
+        histories.each { |history|
           count += 1
           ticket_ids.push history.o_id
         }
@@ -232,7 +232,7 @@ class Report::Base
                         .where(query, *bind_params).joins(tables)
     tickets = 0
     time_total = 0
-    ticket_list.each {|ticket|
+    ticket_list.each { |ticket|
       timestamp = ticket[ data[:type].to_sym ]
       next if !timestamp
       #          puts 'FR:' + first_response.to_s
@@ -264,7 +264,7 @@ class Report::Base
     tickets = 0
     time_min = 0
     ticket_ids = []
-    ticket_list.each {|ticket|
+    ticket_list.each { |ticket|
       timestamp = ticket[ data[:type].to_sym ]
       next if !timestamp
       ticket_ids.push ticket.id
@@ -301,7 +301,7 @@ class Report::Base
     tickets = 0
     time_max = 0
     ticket_ids = []
-    ticket_list.each {|ticket|
+    ticket_list.each { |ticket|
       timestamp = ticket[ data[:type].to_sym ]
       next if !timestamp
       ticket_ids.push ticket.id
@@ -331,7 +331,7 @@ class Report::Base
   def self.ticket_condition(ticket_id, condition)
     ticket = Ticket.lookup( id: ticket_id )
     match = true
-    condition.each {|key, value|
+    condition.each { |key, value|
       if ticket[key.to_sym] != value
         return false
       end

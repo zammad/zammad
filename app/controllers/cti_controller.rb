@@ -5,7 +5,7 @@ class CtiController < ApplicationController
 
   # list current caller log
   def index
-    return if deny_if_not_role('CTI')
+    deny_if_not_role('CTI')
 
     backends = [
       {
@@ -22,7 +22,7 @@ class CtiController < ApplicationController
 
   # set caller log to done
   def done
-    return if deny_if_not_role('CTI')
+    deny_if_not_role('CTI')
     log = Cti::Log.find(params['id'])
     log.done = params['done']
     log.save

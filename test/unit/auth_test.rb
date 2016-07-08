@@ -68,7 +68,7 @@ class AuthTest < ActiveSupport::TestCase
         if !user
           assert(false, 'auth faild')
         else
-          test[:verify].each {|key, value|
+          test[:verify].each { |key, value|
             assert_equal(user[key], value, 'verify')
           }
         end

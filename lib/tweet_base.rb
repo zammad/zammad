@@ -46,7 +46,7 @@ class TweetBase
       }
 
       # ignore if value is already set
-      map.each {|target, source|
+      map.each { |target, source|
         next if user[target] && !user[target].empty?
         new_value = tweet_user.send(source).to_s
         next if !new_value || new_value.empty?
@@ -159,7 +159,7 @@ class TweetBase
       article_type = 'twitter status'
       from = "@#{tweet.user.screen_name}"
       if tweet.user_mentions
-        tweet.user_mentions.each {|local_user|
+        tweet.user_mentions.each { |local_user|
           if !to
             to = ''
           else
@@ -206,7 +206,7 @@ class TweetBase
       # if sender is a system account, wait until twitter message id is stored
       # on article to prevent two (own created & twitter created) articles
       tweet_user = user(tweet)
-      Channel.where(area: 'Twitter::Account').each {|local_channel|
+      Channel.where(area: 'Twitter::Account').each { |local_channel|
         next if !local_channel.options
         next if !local_channel.options[:user]
         next if !local_channel.options[:user][:id]

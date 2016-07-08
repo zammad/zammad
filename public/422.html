@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html class="dark">
 <meta charset="utf-8">
-<title>422: Not Found</title>
+<title>422: Unprocessable Entity</title>
 <link rel="stylesheet" href="/assets/error/style.css">
-
-<h1>422: The change you wanted was rejected.</h1>
-<div class="error-image" style="background-image: url(/assets/error/error-1.svg)"></div>
-<p>Maybe you tried to change something you didn't have access to.</p>
+<body <% if @traceback %>class="error-message"<% end %>>
+  <h1>422: The change you wanted was rejected.</h1>
+<% if !@traceback %>
+  <div class="error-image" style="background-image: url(/assets/error/error-1.svg)"></div>
+  <p>Maybe you tried to change something you didn't have access to.</p>
+<% else %>
+  <div><%= @exception.message %></div>
+  <% if @exception.backtrace %>
+    <div>Traceback:</div>
+    <% @exception.backtrace.each {|row| %>
+      <%= row %><br>
+    <% } %>
+  <% end %>
+<% end %>
 </html>

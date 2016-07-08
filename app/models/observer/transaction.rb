@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::Transaction < ActiveRecord::Observer
-  observe :ticket, 'ticket::_article', :user, :organization
+  observe :ticket, 'ticket::_article', :user, :organization, :tag
 
   def self.commit(params = {})
 
@@ -28,18 +28,18 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # get asyn backends
     sync_backends = []
-    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each {|setting|
+    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each { |setting|
       backend = Setting.get(setting.name)
       sync_backends.push Kernel.const_get(backend)
     }
 
     # get uniq objects
     list_objects = get_uniq_changes(list)
-    list_objects.each {|_object, objects|
-      objects.each {|_id, item|
+    list_objects.each { |_object, objects|
+      objects.each { |_id, item|
 
         # execute sync backends
-        sync_backends.each {|backend|
+        sync_backends.each { |backend|
           execute_singel_backend(backend, item, params)
         }
 
@@ -150,7 +150,7 @@ class Observer::Transaction < ActiveRecord::Observer
         if !store[:changes]
           store[:changes] = event[:changes]
         else
-          event[:changes].each {|key, value|
+          event[:changes].each { |key, value|
             if !store[:changes][key]
               store[:changes][key] = value
             else
@@ -190,7 +190,7 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # ignore certain attributes
     real_changes = {}
-    record.changes.each {|key, value|
+    record.changes.each { |key, value|
       next if key == 'updated_at'
       next if key == 'first_response'
       next if key == 'close_time'
@@ -206,13 +206,20 @@ class Observer::Transaction < ActiveRecord::Observer
     # do not send anything if nothing has changed
     return if real_changes.empty?
 
+    changed_by_id = nil
+    changed_by_id = if record.respond_to?('updated_by_id')
+                      record.updated_by_id
+                    else
+                      record.created_by_id
+                    end
+
     e = {
       object: record.class.name,
       type: 'update',
       data: record,
       changes: real_changes,
       id: record.id,
-      user_id: record.updated_by_id,
+      user_id: changed_by_id,
     }
     EventBuffer.add('transaction', e)
   end

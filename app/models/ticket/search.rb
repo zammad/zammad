@@ -107,11 +107,11 @@ returns
                       .where('groups_users.user_id = ?', current_user.id)
                       .where('groups.active = ?', true)
         group_condition = []
-        groups.each {|group|
-          group_condition.push group.name
+        groups.each { |group|
+          group_condition.push group.id
         }
         access_condition = {
-          'query_string' => { 'default_field' => 'Ticket.group.name', 'query' => "\"#{group_condition.join('" OR "')}\"" }
+          'query_string' => { 'default_field' => 'Ticket.group_id', 'query' => "\"#{group_condition.join('" OR "')}\"" }
         }
       else
         access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
@@ -134,7 +134,7 @@ returns
       items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention)
       if !full
         ids = []
-        items.each {|item|
+        items.each { |item|
           ids.push item[:id]
         }
         return ids

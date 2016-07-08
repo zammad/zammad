@@ -22,7 +22,7 @@ returns
   def self.find_signature(messages)
 
     string_list = []
-    messages.each {|message|
+    messages.each { |message|
       if message[:content_type] =~ %r{text/html}i
         string_list.push message[:content].html2text(true)
         next
@@ -38,7 +38,7 @@ returns
       break if main_string_index + 1 > string_list.length - 1
 
       # loop all all strings in array except of the previous index
-      ( main_string_index + 1..string_list.length - 1 ).each {|second_string_index|
+      ( main_string_index + 1..string_list.length - 1 ).each { |second_string_index|
 
         # get content of string 1
         string1_content = string_list[main_string_index]
@@ -56,7 +56,7 @@ returns
         match_block = nil
 
         # loop of lines of the diff result
-        ( 0..diff_result_array.length - 1 ).each {|diff_string_index|
+        ( 0..diff_result_array.length - 1 ).each { |diff_string_index|
 
           # if no block with difference is defined then we try to find a string block without a difference
           if !match_block
@@ -83,7 +83,7 @@ returns
             # get string of possible signature, use only the first 10 lines
             match_max_content = 0
             match_content = ''
-            ( match_block..match_block_total ).each {|match_block_index|
+            ( match_block..match_block_total ).each { |match_block_index|
               break if match_max_content == 10
               match_max_content += 1
               match_content += "#{diff_result_array[match_block_index][1..-1]}\n"
@@ -143,6 +143,31 @@ returns
 
 =begin
 
+find signature line of message by user and article
+
+  signature_line = SignatureDetection.find_signature_line_by_article(user, article)
+
+returns
+
+  signature_line = 123
+
+  or
+
+  signature_line = nil
+
+=end
+
+  def self.find_signature_line_by_article(user, article)
+    return if !user.preferences[:signature_detection]
+    SignatureDetection.find_signature_line(
+      user.preferences[:signature_detection],
+      article.body,
+      article.content_type,
+    )
+  end
+
+=begin
+
 this function will search for a signature string in all articles of a given user_id
 
   signature = SignatureDetection.by_user_id(user_id)
@@ -162,7 +187,7 @@ returns
       create_article_sender_id: sender.id
     ).limit(5).order(id: :desc)
     article_bodies = []
-    tickets.each {|ticket|
+    tickets.each { |ticket|
       article = ticket.articles.first
       next if !article
       data = {
@@ -188,7 +213,7 @@ returns
 =end
 
   def self.rebuild_all_user
-    User.select('id').where(active: true).order(id: :desc).each {|local_user|
+    User.select('id').where(active: true).order(id: :desc).each { |local_user|
       rebuild_user(local_user.id)
     }
     true
@@ -234,7 +259,7 @@ returns
   def self.rebuild_all_articles
 
     article_type = Ticket::Article::Type.lookup(name: 'email')
-    Ticket::Article.select('id').where(type_id: article_type.id).order(id: :desc).each {|local_article|
+    Ticket::Article.select('id').where(type_id: article_type.id).order(id: :desc).each { |local_article|
       article = Ticket::Article.find(local_article.id)
       user = User.find(article.created_by_id)
       next if !user.preferences[:signature_detection]

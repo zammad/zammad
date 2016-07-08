@@ -25,7 +25,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     # check role based access
     if self.class.roles
       access = false
-      self.class.roles.each {|role|
+      self.class.roles.each { |role|
         next if !@user.role?(role)
         access = true
         break
@@ -34,7 +34,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     end
     if self.class.not_roles
       access = false
-      self.class.not_roles.each {|role|
+      self.class.not_roles.each { |role|
         next if @user.role?(role)
         access = true
         break
@@ -61,13 +61,13 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
 
     # get relations of data
     all = []
-    items.each {|item|
+    items.each { |item|
       all.push item.attributes_with_associations
     }
 
     # collect assets
     assets = {}
-    items.each {|item|
+    items.each { |item|
       next if !asset_needed?(item)
       assets = item.assets(assets)
     }

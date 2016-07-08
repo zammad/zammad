@@ -10,7 +10,18 @@
     <%- @Icon('logo') %>
     <div class="activity-counter js-notificationsCounter"></div>
   </div>
-  <ul id="global-search-result" class="custom-dropdown-menu" role="menu"></ul>
+  <div class="global-search-menu">
+    <a href="#search" class="global-search-detail-link nav-tab nav-tab--search js-details-link">
+      <div class="nav-tab-icon">
+        <%- @Icon('searchdetail') %>
+      </div>
+      <div class="nav-tab-name flex u-textTruncate">
+        <%- @T('Show Search Details') %>
+        <%- @Icon('long-arrow-right') %>
+      </div>
+    </a>
+    <ul class="global-search-result js-global-search-result" role="menu"></ul>
+  </div>
 </div>
 <div class="menu js-menu"></div>
 <div class="tasks tasks-navigation"></div>

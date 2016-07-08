@@ -29,7 +29,7 @@
   * rails r "Setting.set('es_attachment_ignore', [ '.png', '.jpg', '.jpeg', '.mpeg', '.mpg', '.mov', '.bin', '.exe', '.box', '.mbox' ] )"
 
   # optional - max attachment size which is used by es, default is 50 mb
-  * rails r "Setting.set('es_attachment_max_size_in_mb', 50 )"
+  * rails r "Setting.set('es_attachment_max_size_in_mb', 50)"
 
 
 * Create elastic search indexes

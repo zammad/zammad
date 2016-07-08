@@ -343,14 +343,16 @@ class ChatWindow extends App.Controller
     'click .js-send':                'sendMessage'
     'click .js-close':               'close'
     'click .js-disconnect':          'disconnect'
+    'click .js-scrollHint':          'onScrollHintClick'
 
   elements:
-    '.js-customerChatInput': 'input'
-    '.js-status':            'status'
-    '.js-close':            'closeButton'
-    '.js-disconnect':            'disconnectButton'
-    '.js-body':              'body'
-    '.js-scrollHolder':      'scrollHolder'
+    '.js-customerChatInput':         'input'
+    '.js-status':                    'status'
+    '.js-close':                     'closeButton'
+    '.js-disconnect':                'disconnectButton'
+    '.js-body':                      'body'
+    '.js-scrollHolder':              'scrollHolder'
+    '.js-scrollHint':                'scrollHint'
 
   sounds:
     message: new Audio('assets/sounds/chat_message.mp3')
@@ -364,11 +366,13 @@ class ChatWindow extends App.Controller
     @isTyping = false
     @isAgentTyping = false
     @resetUnreadMessages()
+    @scrolledToBottom = true
+    @scrollSnapTolerance = 10 # pixels
 
     @chat = App.Chat.find(@session.chat_id)
     @name = "#{@chat.displayName()} ##{@session.id}"
 
-    @on 'layout-change', @scrollToBottom
+    @on 'layout-change', @onLayoutChange
 
     @bind('chat_session_typing', (data) =>
       return if data.session_id isnt @session.session_id
@@ -402,11 +406,15 @@ class ChatWindow extends App.Controller
       @focus()
     )
 
+  onLayoutChange: =>
+    @scrollToBottom()
+
   render: ->
     @html App.view('customer_chat/chat_window')
       name: @name
 
     @el.one 'transitionend', @onTransitionend
+    @scrollHolder.scroll @detectScrolledtoBottom
 
     # force repaint
     @el.prop('offsetHeight')
@@ -604,14 +612,13 @@ class ChatWindow extends App.Controller
       isNew: isNew
       timestamp: Date.now()
 
-    @scrollToBottom()
+    @scrollToBottom showHint: true
 
   showWritingLoader: =>
     if !@isTyping
       @isTyping = true
       @maybeAddTimestamp()
       @body.append App.view('customer_chat/chat_loader')()
-      return if !@el.find('.js-loader').visible(true)
       @scrollToBottom()
 
     # clear old delay, set new
@@ -677,8 +684,25 @@ class ChatWindow extends App.Controller
 
     @scrollToBottom()
 
-  scrollToBottom: ->
-    @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+  detectScrolledtoBottom: =>
+    scrollBottom = @scrollHolder.scrollTop() + @scrollHolder.outerHeight()
+    @scrolledToBottom = Math.abs(scrollBottom - @scrollHolder.prop('scrollHeight')) <= @scrollSnapTolerance
+    @scrollHint.addClass('is-hidden') if @scrolledToBottom
+
+  showScrollHint: ->
+    @scrollHint.removeClass('is-hidden')
+    # compensate scroll
+    @scrollHolder.scrollTop(@scrollHolder.scrollTop() + @scrollHint.outerHeight())
+
+  onScrollHintClick: ->
+    # animate scroll
+    @scrollHolder.animate({scrollTop: @scrollHolder.prop('scrollHeight')}, 300)
+
+  scrollToBottom: ({ showHint } = { showHint: false }) ->
+    if @scrolledToBottom
+      @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
+    else if showHint
+      @showScrollHint()
 
 class Setting extends App.ControllerModal
   buttonClose: true

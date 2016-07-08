@@ -157,7 +157,7 @@ returns
       'Venezuela' => 'en.ve',
     }
     all_feeds = {}
-    gfeeds.each {|key, name|
+    gfeeds.each { |key, name|
       all_feeds["http://www.google.com/calendar/ical/#{name}%23holiday%40group.v.calendar.google.com/public/basic.ics"] = key
     }
     all_feeds
@@ -232,14 +232,14 @@ returns
       end
 
       # remove old ical entries if feed has changed
-      public_holidays.each {|day, meta|
+      public_holidays.each { |day, meta|
         next if !public_holidays[day]['feed']
         next if meta['feed'] == Digest::MD5.hexdigest(ical_url)
         public_holidays.delete(day)
       }
 
       # sync new ical feed dates
-      events.each {|day, summary|
+      events.each { |day, summary|
         if !public_holidays[day]
           public_holidays[day] = {}
         end
@@ -280,7 +280,7 @@ returns
     cals = Icalendar.parse(cal_file)
     cal = cals.first
     events = {}
-    cal.events.each {|event|
+    cal.events.each { |event|
       next if event.dtstart < Time.zone.now - 1.year
       next if event.dtstart > Time.zone.now + 3.years
       day = "#{event.dtstart.year}-#{format('%02d', event.dtstart.month)}-#{format('%02d', event.dtstart.day)}"
@@ -302,7 +302,7 @@ returns
   # if changed calendar is default, set all others default to false
   def sync_default
     return if !default
-    Calendar.all.each {|calendar|
+    Calendar.all.each { |calendar|
       next if calendar.id == id
       next if !calendar.default
       calendar.default = false
@@ -312,7 +312,7 @@ returns
 
   # check if min one is set to default true
   def min_one_check
-    Calendar.all.each {|calendar|
+    Calendar.all.each { |calendar|
       return true if calendar.default
     }
     first = Calendar.order(:created_at, :id).limit(1).first
@@ -320,7 +320,7 @@ returns
     first.save
 
     # check if sla's are refer to an existing calendar
-    Sla.all.each {|sla|
+    Sla.all.each { |sla|
       if !sla.calendar_id
         sla.calendar_id = first.id
         sla.save
@@ -342,7 +342,7 @@ returns
   def validate_public_holidays
 
     # fillup feed info
-    public_holidays.each {|day, meta|
+    public_holidays.each { |day, meta|
       if public_holidays_was && public_holidays_was[day] && public_holidays_was[day]['feed']
         meta['feed'] = public_holidays_was[day]['feed']
       end

@@ -64,7 +64,7 @@ module Auth::Ldap
         source: 'ldap',
         updated_by_id: 1,
       }
-      config[:sync_params].each {|local_data, ldap_data|
+      config[:sync_params].each { |local_data, ldap_data|
         if user_data[ ldap_data.downcase.to_sym ]
           user_attributes[ local_data.downcase.to_sym] = user_data[ ldap_data.downcase.to_sym ]
         end
@@ -91,7 +91,7 @@ module Auth::Ldap
     # set always roles
     if config[:always_roles]
       role_ids = user.role_ids
-      config[:always_roles].each {|role_name|
+      config[:always_roles].each { |role_name|
         role = Role.where( name: role_name ).first
         next if !role
         if !role_ids.include?( role.id )
@@ -105,7 +105,7 @@ module Auth::Ldap
     # set always groups
     if config[:always_groups]
       group_ids = user.group_ids
-      config[:always_groups].each {|group_name|
+      config[:always_groups].each { |group_name|
         group = Group.where( name: group_name ).first
         next if !group
         if !group_ids.include?( group.id )

@@ -409,7 +409,7 @@ module Import::OTRS
         ActiveRecord::Base.connection.close
       }
     }
-    (1..thread_count).each {|thread|
+    (1..thread_count).each { |thread|
       threads[thread].join
     }
 
@@ -591,7 +591,7 @@ module Import::OTRS
       },
     }
 
-    result.each {|record|
+    result.each { |record|
 
       # cleanup values
       _cleanup(record)
@@ -901,7 +901,7 @@ module Import::OTRS
     }
 
     # rename states to handle not uniq issues
-    Ticket::State.all.each {|state|
+    Ticket::State.all.each { |state|
       state.name = state.name + '_tmp'
       state.save
     }
@@ -1100,8 +1100,8 @@ module Import::OTRS
     queue_ids = []
 
     # lookup by groups
-    user['GroupIDs'].each {|group_id, permissions|
-      queues.each {|queue_lookup|
+    user['GroupIDs'].each { |group_id, permissions|
+      queues.each { |queue_lookup|
 
         next if queue_lookup['GroupID'] != group_id
         next if !permissions
@@ -1125,8 +1125,8 @@ module Import::OTRS
     local_role_ids = []
 
     # apply group permissions
-    user['GroupIDs'].each {|group_id, permissions|
-      groups.each {|group_lookup|
+    user['GroupIDs'].each { |group_id, permissions|
+      groups.each { |group_lookup|
 
         next if group_id != group_lookup['ID']
         next if !permissions
@@ -1143,15 +1143,15 @@ module Import::OTRS
     }
 
     # apply role permissions
-    user['RoleIDs'].each {|role_id|
+    user['RoleIDs'].each { |role_id|
 
       # get groups of role
-      roles.each {|role|
+      roles.each { |role|
         next if role['ID'] != role_id
 
         # verify group names
-        role['GroupIDs'].each {|group_id, permissions|
-          groups.each {|group_lookup|
+        role['GroupIDs'].each { |group_id, permissions|
+          groups.each { |group_lookup|
 
             next if group_id != group_lookup['ID']
             next if !permissions
@@ -1169,7 +1169,7 @@ module Import::OTRS
       }
     }
 
-    local_roles.each {|role|
+    local_roles.each { |role|
       role_lookup = Role.lookup(name: role)
       next if !role_lookup
       local_role_ids.push role_lookup.id
@@ -1248,7 +1248,7 @@ module Import::OTRS
   def self.get_organization_id(user, organizations)
     organization_id = nil
     if user['UserCustomerID']
-      organizations.each {|organization|
+      organizations.each { |organization|
         next if user['UserCustomerID'] != organization['CustomerID']
         organization    = Organization.lookup(name: organization['CustomerCompanyName'])
         organization_id = organization.id
@@ -1372,7 +1372,7 @@ module Import::OTRS
 
   # cleanup invalid values
   def self._cleanup(record)
-    record.each {|key, value|
+    record.each { |key, value|
       if value == '0000-00-00 00:00:00'
         record[key] = nil
       end

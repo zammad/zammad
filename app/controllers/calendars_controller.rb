@@ -4,12 +4,12 @@ class CalendarsController < ApplicationController
   before_action :authentication_check
 
   def index
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     # calendars
     assets = {}
     calendar_ids = []
-    Calendar.all.order(:name, :created_at).each {|calendar|
+    Calendar.all.order(:name, :created_at).each { |calendar|
       calendar_ids.push calendar.id
       assets = calendar.assets(assets)
     }
@@ -25,22 +25,22 @@ class CalendarsController < ApplicationController
   end
 
   def show
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(Calendar, params)
   end
 
   def create
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Calendar, params)
   end
 
   def update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Calendar, params)
   end
 
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Calendar, params)
   end
 end

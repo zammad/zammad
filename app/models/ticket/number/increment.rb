@@ -31,7 +31,7 @@ module Ticket::Number::Increment
       min_digs = min_digs.to_i - 1
     end
     fillup = Setting.get('system_id').to_s || '1'
-    (1..100).each {
+    99.times {
 
       next if (fillup.length.to_i + counter_increment.to_s.length.to_i) >= min_digs.to_i
 

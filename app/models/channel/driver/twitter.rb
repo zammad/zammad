@@ -189,7 +189,7 @@ returns
     filter = {}
     if sync['search']
       hashtags = []
-      sync['search'].each {|item|
+      sync['search'].each { |item|
         hashtags.push item['term']
       }
       filter[:track] = hashtags.join(',')
@@ -219,7 +219,7 @@ returns
       if sync['mentions'] && sync['mentions']['group_id'] != ''
         hit = false
         if tweet.user_mentions
-          tweet.user_mentions.each {|user|
+          tweet.user_mentions.each { |user|
             if user.id.to_s == @channel.options['user']['id'].to_s
               hit = true
             end
@@ -234,8 +234,8 @@ returns
       # check hashtags
       if sync['search'] && tweet.hashtags
         hit = false
-        sync['search'].each {|item|
-          tweet.hashtags.each {|hashtag|
+        sync['search'].each { |item|
+          tweet.hashtags.each { |hashtag|
             next if item['term'] !~ /^#/
             if item['term'].sub(/^#/, '') == hashtag.text
               hit = item
@@ -252,7 +252,7 @@ returns
       if sync['search']
         hit = false
         body = tweet.text
-        sync['search'].each {|item|
+        sync['search'].each { |item|
           next if item['term'] =~ /^#/
           if body =~ /#{item['term']}/
             hit = item

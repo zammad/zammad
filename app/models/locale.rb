@@ -30,7 +30,7 @@ class Locale < ApplicationModel
     raise "Can't load locales from #{url}: #{result.error}" if !result.success?
 
     ActiveRecord::Base.transaction do
-      result.data.each {|locale|
+      result.data.each { |locale|
         exists = Locale.find_by(locale: locale['locale'])
         if exists
           exists.update(locale.symbolize_keys!)

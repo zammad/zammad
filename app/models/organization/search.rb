@@ -78,9 +78,9 @@ returns
         organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
           'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
         ).order('organizations.name').limit(limit)
-        organizations_by_user.each {|organization_by_user|
+        organizations_by_user.each { |organization_by_user|
           organization_exists = false
-          organizations.each {|organization|
+          organizations.each { |organization|
             if organization.id == organization_by_user.id
               organization_exists = true
             end

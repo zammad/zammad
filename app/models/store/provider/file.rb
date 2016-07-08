@@ -53,7 +53,7 @@ class Store::Provider::File
     # check if dir need to be removed
     base = "#{Rails.root}/storage/fs"
     locations = location.split('/')
-    (0..locations.count).reverse_each {|count|
+    (0..locations.count).reverse_each { |count|
       local_location = locations[0, count].join('/')
       break if local_location =~ %r{storage/fs/{0,4}$}
       break if !Dir["#{local_location}/*"].empty?
@@ -71,17 +71,17 @@ class Store::Provider::File
     length2 = 5
     length3 = 7
     last_position = 0
-    (0..1).each {|_count|
+    (0..1).each { |_count|
       end_position = last_position + length1
       parts.push sha[last_position, length1]
       last_position = end_position
     }
-    (0..1).each {|_count|
+    (0..1).each { |_count|
       end_position = last_position + length2
       parts.push sha[last_position, length2]
       last_position = end_position
     }
-    (0..1).each {|_count|
+    (0..1).each { |_count|
       end_position = last_position + length3
       parts.push sha[last_position, length3]
       last_position = end_position

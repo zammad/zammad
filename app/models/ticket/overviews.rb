@@ -26,7 +26,7 @@ returns
                     Overview.where(role_id: role.id, organization_shared: false, active: true).order(:prio)
                   end
       overviews_list = []
-      overviews.each {|overview|
+      overviews.each { |overview|
         user_ids = overview.user_ids
         next if !user_ids.empty? && !user_ids.include?(data[:current_user].id)
         overviews_list.push overview
@@ -39,7 +39,7 @@ returns
     role = Role.find_by(name: 'Agent')
     overviews = Overview.where(role_id: role.id, active: true).order(:prio)
     overviews_list = []
-    overviews.each {|overview|
+    overviews.each { |overview|
       user_ids = overview.user_ids
       next if !user_ids.empty? && !user_ids.include?(data[:current_user].id)
       overviews_list.push overview
@@ -91,7 +91,7 @@ returns
     access_condition = Ticket.access_condition(user)
 
     list = []
-    overviews.each {|overview|
+    overviews.each { |overview|
       query_condition, bind_condition = Ticket.selector2sql(overview.condition, user)
 
       order_by = "#{overview.order[:by]} #{overview.order[:direction]}"

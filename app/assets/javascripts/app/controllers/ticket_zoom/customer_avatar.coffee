@@ -2,6 +2,7 @@ class App.TicketCustomerAvatar extends App.ObserverController
   model: 'Ticket'
   observe:
     customer_id: true
+  globalRerender: false
 
   render: (ticket) =>
     new App.WidgetAvatar(

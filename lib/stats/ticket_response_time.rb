@@ -27,7 +27,7 @@ class Stats::TicketResponseTime
     total = 0
     count_own = 0
     own = 0
-    items.each {|_item|
+    items.each { |_item|
       ticket = Ticket.lookup(id: data[:ticket_id])
       if ticket.owner_id == user.id
         count_own += 1

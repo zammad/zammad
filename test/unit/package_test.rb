@@ -350,7 +350,7 @@ class PackageTest < ActiveSupport::TestCase
       elsif test[:action] == 'auto_install'
         if test[:zpm]
           if !File.exist?( Rails.root.to_s + '/auto_install/' )
-            Dir.mkdir( Rails.root.to_s + '/auto_install/', 0755)
+            Dir.mkdir( Rails.root.to_s + '/auto_install/', 0o755)
           end
           location = Rails.root.to_s + '/auto_install/unittest.zpm'
           file = File.new( location, 'wb' )
@@ -373,7 +373,7 @@ class PackageTest < ActiveSupport::TestCase
       next if !test[:verify]
       next if !test[:verify][:check_files]
 
-      test[:verify][:check_files].each {|item|
+      test[:verify][:check_files].each { |item|
         exists = File.exist?( item[:location] )
         if item[:result]
           assert( exists, "'#{item[:location]}' exists" )

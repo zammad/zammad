@@ -31,7 +31,7 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
 
     # check if condition has changed
     changed = false
-    %w(condition calendar_id first_response_time update_time solution_time).each {|item|
+    %w(condition calendar_id first_response_time update_time solution_time).each { |item|
       next if !record.changes[item]
       next if record.changes[item][0] == record.changes[item][1]
       changed = true

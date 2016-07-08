@@ -27,7 +27,7 @@ returns
     closed = Report::TicketGenericTime.aggs(local_params)
 
     result = []
-    (0..created.length - 1).each {|position|
+    (0..created.length - 1).each { |position|
       count = created[position] - closed[position]
       result.push count
     }

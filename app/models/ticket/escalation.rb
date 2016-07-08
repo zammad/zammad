@@ -72,11 +72,11 @@ returns
 
       # get business hours
       hours = {}
-      calendar.business_hours.each {|day, meta|
+      calendar.business_hours.each { |day, meta|
         next if !meta[:active]
         next if !meta[:timeframes]
         hours[day.to_sym] = {}
-        meta[:timeframes].each {|frame|
+        meta[:timeframes].each { |frame|
           next if !frame[0]
           next if !frame[1]
           hours[day.to_sym][frame[0]] = frame[1]
@@ -90,7 +90,7 @@ returns
       # get holidays
       holidays = []
       if calendar.public_holidays
-        calendar.public_holidays.each {|day, meta|
+        calendar.public_holidays.each { |day, meta|
           next if !meta
           next if !meta['active']
           next if meta['removed']
@@ -212,7 +212,7 @@ returns
       sla_list = Sla.all.order(:name, :created_at)
       Cache.write('SLA::List::Active', sla_list, { expires_in: 1.hour })
     end
-    sla_list.each {|sla|
+    sla_list.each { |sla|
       if !sla.condition || sla.condition.empty?
         sla_selected = sla
       elsif sla.condition

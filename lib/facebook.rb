@@ -141,7 +141,7 @@ result
       }
 
       # ignore if value is already set
-      map.each {|target, source|
+      map.each { |target, source|
         next if user[target] && !user[target].empty?
         new_value = tweet_user.send(source).to_s
         next if !new_value || new_value.empty?
@@ -240,7 +240,7 @@ result
 
     to = nil
     if post['to'] && post['to']['data']
-      post['to']['data'].each {|to_entry|
+      post['to']['data'].each { |to_entry|
         if !to
           to = ''
         else

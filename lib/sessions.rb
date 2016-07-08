@@ -332,7 +332,7 @@ returns
 
     # list all current clients
     client_list = sessions
-    client_list.each {|client_id|
+    client_list.each { |client_id|
       session = Sessions.get(client_id)
       next if !session
       next if !session[:user]
@@ -368,7 +368,7 @@ broadcase also not to sender
     # list all current clients
     recipients = []
     client_list = sessions
-    client_list.each {|client_id|
+    client_list.each { |client_id|
       session = Sessions.get(client_id)
       next if !session
 
@@ -411,12 +411,12 @@ returns
     path  = "#{@path}/#{client_id}/"
     data  = []
     files = []
-    Dir.foreach(path) {|entry|
+    Dir.foreach(path) { |entry|
       next if entry == '.'
       next if entry == '..'
       files.push entry
     }
-    files.sort.each {|entry|
+    files.sort.each { |entry|
       filename = "#{path}/#{entry}"
       if /^send/ =~ entry
         data.push Sessions.queue_file_read(path, entry)
@@ -464,12 +464,12 @@ returns
     data      = []
     to_delete = []
     files     = []
-    Dir.foreach(path) {|entry|
+    Dir.foreach(path) { |entry|
       next if entry == '.'
       next if entry == '..'
       files.push entry
     }
-    files.sort.each {|entry|
+    files.sort.each { |entry|
       filename = "#{path}/#{entry}"
       next if !File.exist?(filename)
       File.open(filename, 'rb') { |file|
@@ -528,7 +528,7 @@ returns
         end
       }
     }
-    to_delete.each {|file|
+    to_delete.each { |file|
       File.delete(file)
     }
     data
@@ -637,7 +637,7 @@ returns
   end
 
   def self.symbolize_keys(hash)
-    hash.each_with_object({}) {|(key, value), result|
+    hash.each_with_object({}) { |(key, value), result|
       new_key = case key
                 when String then key.to_sym
                 else key

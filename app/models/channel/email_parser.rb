@@ -280,7 +280,7 @@ class Channel::EmailParser
     # check if sub parts are available
     if !file.parts.empty?
       a = []
-      file.parts.each {|p|
+      file.parts.each { |p|
         attachment = _get_attachment(p, attachments, mail)
         a.concat(attachment)
       }
@@ -324,10 +324,10 @@ class Channel::EmailParser
     # generate file name
     if !filename || filename.empty?
       attachment_count = 0
-      (1..1000).each {|count|
+      (1..1000).each { |count|
         filename_exists = false
         filename = 'file-' + count.to_s
-        attachments.each {|attachment|
+        attachments.each { |attachment|
           if attachment[:filename] == filename
             filename_exists = true
           end
@@ -394,10 +394,10 @@ retrns
     # run postmaster pre filter
     UserInfo.current_user_id = 1
     filters = {}
-    Setting.where(area: 'Postmaster::PreFilter').order(:name).each {|setting|
+    Setting.where(area: 'Postmaster::PreFilter').order(:name).each { |setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
-    filters.each {|_prio, backend|
+    filters.each { |_prio, backend|
       Rails.logger.debug "run postmaster pre filter #{backend}"
       begin
         backend.run(channel, mail)
@@ -550,10 +550,10 @@ retrns
 
     # run postmaster post filter
     filters = {}
-    Setting.where(area: 'Postmaster::PostFilter').order(:name).each {|setting|
+    Setting.where(area: 'Postmaster::PostFilter').order(:name).each { |setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     }
-    filters.each {|_prio, backend|
+    filters.each { |_prio, backend|
       Rails.logger.debug "run postmaster post filter #{backend}"
       begin
         backend.run(channel, mail, ticket, article, user)
@@ -570,7 +570,7 @@ retrns
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
 
     # loop all x-zammad-hedaer-* headers
-    item_object.attributes.each {|key, _value|
+    item_object.attributes.each { |key, _value|
 
       # ignore read only attributes
       next if key == 'updated_by_id'

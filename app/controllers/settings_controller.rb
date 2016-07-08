@@ -5,32 +5,32 @@ class SettingsController < ApplicationController
 
   # GET /settings
   def index
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_index_render(Setting, params)
   end
 
   # GET /settings/1
   def show
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(Setting, params)
   end
 
   # POST /settings
   def create
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Setting, params)
   end
 
   # PUT /settings/1
   def update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    return if !check_access
+    deny_if_not_role(Z_ROLENAME_ADMIN)
+    check_access
     model_update_render(Setting, params)
   end
 
   # PUT /settings/image/:id
   def update_image
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     if !params[:logo]
       render json: {
@@ -82,8 +82,8 @@ class SettingsController < ApplicationController
 
   # DELETE /settings/1
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
-    return if !check_access
+    deny_if_not_role(Z_ROLENAME_ADMIN)
+    check_access
     model_destory_render(Setting, params)
   end
 
@@ -91,11 +91,8 @@ class SettingsController < ApplicationController
 
   def check_access
     return true if !Setting.get('system_online_service')
-
     setting = Setting.find(params[:id])
     return true if setting.preferences && !setting.preferences[:online_service_disable]
-
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 end

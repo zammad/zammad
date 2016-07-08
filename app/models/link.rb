@@ -140,7 +140,7 @@ class Link < ApplicationModel
     )
 
     # touch references
-    links.each {|link|
+    links.each { |link|
       link.destroy
       touch_reference_by_params(
         object: Link::Object.lookup(id: link.link_object_source_id).name,
@@ -166,7 +166,7 @@ class Link < ApplicationModel
     )
 
     # touch references
-    links.each {|link|
+    links.each { |link|
       link.destroy
       touch_reference_by_params(
         object: Link::Object.lookup(id: link.link_object_source_id).name,

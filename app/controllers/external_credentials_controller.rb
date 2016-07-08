@@ -4,27 +4,27 @@ class ExternalCredentialsController < ApplicationController
   before_action :authentication_check
 
   def index
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_index_render(ExternalCredential, params)
   end
 
   def show
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(ExternalCredential, params)
   end
 
   def create
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(ExternalCredential, params)
   end
 
   def update
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(ExternalCredential, params)
   end
 
   def destroy
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(ExternalCredential, params)
   end
 
@@ -37,7 +37,7 @@ class ExternalCredentialsController < ApplicationController
   end
 
   def link_account
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     provider = params[:provider].downcase
     attributes = ExternalCredential.request_account_to_link(provider)
     session[:request_token] = attributes[:request_token]
@@ -45,7 +45,7 @@ class ExternalCredentialsController < ApplicationController
   end
 
   def callback
-    return if deny_if_not_role(Z_ROLENAME_ADMIN)
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     provider = params[:provider].downcase
     channel = ExternalCredential.link_account(provider, session[:request_token], params)
     session[:request_token] = nil

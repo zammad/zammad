@@ -3,7 +3,7 @@ require 'test_helper'
 
 class EmailSignaturDetectionTest < ActiveSupport::TestCase
 
-  test 'test case I - sender a' do
+  test 'test case 1 - sender a' do
 
     # fixtures of sender a
     fixture_files = {
@@ -27,7 +27,7 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     end
   end
 
-  test 'test case II - sender b' do
+  test 'test case 2 - sender b' do
 
     fixture_files = {
       'email_signature_detection/client_b_1.txt' => { line: 26, content_type: 'text/plain' },
@@ -50,7 +50,14 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     end
   end
 
-  test 'test case III - sender c' do
+  test 'test case 3 - just tests' do
+    signature = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nBob Smith\nABC Organisation\n\nEXAMPLE IT-Service GmbH\nDorten 5 F&E\n12345 Da / Germany\nPhone: +49 (0) 1234 567 890 / +49 (0) 1234 567 891\nFax:     +49 (0) 1234 567 892"
+    message = File.new("#{Rails.root}/test/fixtures/email_signature_detection/example1.html", 'r').read
+    signature_line = SignatureDetection.find_signature_line(signature, message, 'text/html')
+    assert_equal(11, signature_line)
+  end
+
+  test 'test case 4 - sender c' do
 
     fixture_files = {
       'email_signature_detection/client_c_1.html' => { line: 8, content_type: 'text/html' },

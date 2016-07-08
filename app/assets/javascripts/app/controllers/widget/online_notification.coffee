@@ -51,6 +51,12 @@ class App.OnlineNotificationWidget extends App.Controller
 
     @createContainer()
 
+    # rerender view, e. g. on langauge change
+    @bind('ui:rerender', =>
+      @createContainer()
+      'online_notification'
+    )
+
   release: ->
     $(window).off 'click.notifications'
     $(window).off 'keydown.notifications'
@@ -65,9 +71,11 @@ class App.OnlineNotificationWidget extends App.Controller
       @hide()
       return
     else if e.keyCode is 38 # up
+      e.preventDefault()
       @nudge(e, -1)
       return
     else if e.keyCode is 40 # down
+      e.preventDefault()
       @nudge(e, 1)
       return
     else if e.keyCode is 13 # enter
@@ -94,9 +102,9 @@ class App.OnlineNotificationWidget extends App.Controller
         prev.addClass('is-hover')
 
     if next
-      @scrollToIfNeeded(next, false)
+      @scrollToIfNeeded(next, true)
     if prev
-      @scrollToIfNeeded(prev, true)
+      @scrollToIfNeeded(prev, false)
 
   counterUpdate: (count, force = false) =>
     count = '' if count is 0
@@ -200,6 +208,7 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
   order: 'DESC'
   alreadyShown: {}
   insertPosition: 'before'
+  globalRerender: false
 
   onRenderEnd: =>
     @container.counterGen()
