@@ -1977,6 +1977,66 @@ Setting.create_if_not_exists(
   state: 'Transaction::CtiCallerIdDetection',
   frontend: false
 )
+Setting.create_if_not_exists(
+  title: 'Define transaction backend.',
+  name: '9200_karma',
+  area: 'Transaction::Backend::Async',
+  description: 'Define the transaction backend which creates the karma score.',
+  options: {},
+  state: 'Transaction::Karma',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define karma levels.',
+  name: 'karma_levels',
+  area: 'Core::Karma',
+  description: 'Define the karma levels.',
+  options: {},
+  state: [
+    {
+      name: 'Beginner',
+      start: 0,
+      end: 499,
+    },
+    {
+      name: 'Newbie',
+      start: 500,
+      end: 1999,
+    },
+    {
+      name: 'Intermediate',
+      start: 2000,
+      end: 4999,
+    },
+    {
+      name: 'Professional',
+      start: 5000,
+      end: 6999,
+    },
+    {
+      name: 'Expert',
+      start: 7000,
+      end: 8999,
+    },
+    {
+      name: 'Master',
+      start: 9000,
+      end: 18999,
+    },
+    {
+      name: 'Evangelist',
+      start: 19000,
+      end: 45999,
+    },
+    {
+      name: 'Hero',
+      start: 50000,
+      end: nil,
+    },
+  ],
+  frontend: false
+)
+
 
 signature = Signature.create_if_not_exists(
   id: 1,
