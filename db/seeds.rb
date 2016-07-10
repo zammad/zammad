@@ -2021,22 +2021,21 @@ Setting.create_if_not_exists(
     {
       name: 'Master',
       start: 9000,
-      end: 18999,
+      end: 18_999,
     },
     {
       name: 'Evangelist',
-      start: 19000,
-      end: 45999,
+      start: 19_000,
+      end: 45_999,
     },
     {
       name: 'Hero',
-      start: 50000,
+      start: 50_000,
       end: nil,
     },
   ],
   frontend: false
 )
-
 
 signature = Signature.create_if_not_exists(
   id: 1,
