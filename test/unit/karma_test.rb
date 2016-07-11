@@ -430,7 +430,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(0, Karma.score_by_user(customer1))
 
     calendar1 = Calendar.create_or_update(
-      name: 'EU 1',
+      name: 'EU 1 - karma test',
       timezone: 'Europe/Berlin',
       business_hours: {
         mon: {
@@ -468,7 +468,7 @@ class KarmaTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    sla = Sla.create_or_update(
+    sla1 = Sla.create_or_update(
       name: 'test sla 1',
       condition: {},
       first_response_time: 20,
@@ -512,8 +512,6 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5 + 10 + 4, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Ticket.destroy_all
-
     # test score/level
     assert_equal('Beginner', Karma::User.level_by_score(0))
     assert_equal('Beginner', Karma::User.level_by_score(400))
@@ -531,6 +529,12 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal('Evangelist', Karma::User.level_by_score(19_000))
     assert_equal('Evangelist', Karma::User.level_by_score(45_999))
     assert_equal('Hero', Karma::User.level_by_score(50_000))
+
+    # cleanup
+    ticket1.destroy
+    ticket2.destroy
+    calendar1.destroy
+    sla1.destroy
 
   end
 
