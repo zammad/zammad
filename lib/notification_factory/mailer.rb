@@ -82,6 +82,7 @@ returns
     body:         'some body',
     content_type: '', # optional, e. g. 'text/html'
     references:   ['message-id123', 'message-id456'],
+    attachments:  [attachments...], # optional
   )
 
 =end
@@ -106,6 +107,7 @@ returns
         references: data[:references],
         body: data[:body],
         content_type: content_type,
+        attachments: data[:attachments],
       },
       true
     )
@@ -122,6 +124,7 @@ returns
     main_object: ticket.find(123), # optional
     references: ['message-id123', 'message-id456'],
     standalone: true, # default: false - will send header & footer
+    attachments: [attachments...], # optional
   )
 
 =end
@@ -147,6 +150,7 @@ returns
       body: result[:body],
       content_type: 'text/html',
       references: data[:references],
+      attachments: data[:attachments],
     )
   end
 

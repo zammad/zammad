@@ -41,10 +41,24 @@ class Ticket::Article < ApplicationModel
     self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
   end
 
-  # insert inline image urls
+=begin
+
+insert inline image urls to body
+
+  article_attributes = Ticket::Article.insert_urls(
+    article_attributes,
+    attachments,
+  )
+
+returns
+
+  article_attributes_with_body_and_urls
+
+=end
+
   def self.insert_urls(article, attachments)
     inline_attachments = {}
-    article['body'].gsub!( /(<img\s(style.+?|)src=")cid:(.+?)(">)/i ) { |item|
+    article['body'].gsub!( /(<img[[:space:]](.+?|)src=")cid:(.+?)(">)/i ) { |item|
       replace = item
 
       # look for attachment
@@ -63,6 +77,38 @@ class Ticket::Article < ApplicationModel
     }
     article['attachments'] = new_attachments
     article
+  end
+
+=begin
+
+get inline attachments of article
+
+  article = Ticket::Article.find(123)
+  attachments = article.attachments_inline
+
+returns
+
+  [attachment1, attachment2, ...]
+
+=end
+
+  def attachments_inline
+    inline_attachments = {}
+    body.gsub( /<img[[:space:]](.+?|)src="cid:(.+?)">/i ) { |_item|
+
+      # look for attachment
+      attachments.each { |file|
+        next if !file.preferences['Content-ID'] || file.preferences['Content-ID'] != $2
+        inline_attachments[file.id] = true
+        break
+      }
+    }
+    new_attachments = []
+    attachments.each { |file|
+      next if !inline_attachments[file.id]
+      new_attachments.push file
+    }
+    new_attachments
   end
 
   def self.last_customer_agent_article(ticket_id)
