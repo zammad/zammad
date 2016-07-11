@@ -498,6 +498,22 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5 + 10 + 4, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
+    # check min score
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    Karma::ActivityLog.add('ticket escalated', ticket2.owner, 'Ticket', ticket2.id, true)
+    assert_equal(0, Karma.score_by_user(agent1), 'block - score, min is 0')
+    assert_equal(5 + 10 + 4, Karma.score_by_user(agent2))
+    assert_equal(0, Karma.score_by_user(customer1))
+
+    Ticket.destroy_all
+
     # test score/level
     assert_equal('Beginner', Karma::User.level_by_score(0))
     assert_equal('Beginner', Karma::User.level_by_score(400))

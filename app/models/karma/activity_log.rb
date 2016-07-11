@@ -5,7 +5,7 @@ class Karma::ActivityLog < ApplicationModel
 
   self.table_name = 'karma_activity_logs'
 
-  def self.add(action, user, object, o_id)
+  def self.add(action, user, object, o_id, force = false)
     activity = Karma::Activity.lookup(name: action)
 
     if object
@@ -20,10 +20,15 @@ class Karma::ActivityLog < ApplicationModel
         o_id: o_id,
         activity_id: activity.id,
       ).find_by('created_at >= ?', Time.zone.now - activity.once_ttl.seconds)
-      return false if latest_activity
+      return false if !force && latest_activity
       score_total = 0
       if last_activity
         score_total = last_activity.score_total
+      end
+
+      local_score_total = score_total + activity.score
+      if local_score_total < 0
+        local_score_total = 0
       end
 
       Karma::ActivityLog.create(
@@ -32,7 +37,7 @@ class Karma::ActivityLog < ApplicationModel
         user_id: user.id,
         activity_id: activity.id,
         score: activity.score,
-        score_total: score_total + activity.score,
+        score_total: local_score_total,
       )
     end
 

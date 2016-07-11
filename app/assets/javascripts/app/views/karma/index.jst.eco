@@ -42,7 +42,7 @@
 
 <h2><%- @T('What affects your Zammad Karma?') %></h2>
 
-<p><%- @T('You accumulate "positive Karma" when you regularly answer and close tickets on time and when you use advanced features such as text modules, ticket reminders or tagging tickets. Zammad Karma will decrease when you have re-opend tickets, escalated tickets or tickets that are two or more days overdue.') %></p>
+<p><%- @T('You |accumulate positive Karma| when you regularly answer and close tickets on time and when you use advanced features such as text modules, ticket reminders or tagging tickets. Zammad |Karma will decrease| when you have re-opend tickets, escalated tickets or tickets that are two or more days overdue.') %></p>
 
 <!--
 <p><%- @T('You’re able to set goals regarding the number of tickets you want to answer or close you want to complete either daily or weekly. Reaching these self-set goals will result in bonus Karma. Zammad also tracks how many days/weeks you have attained your goals, and achieving ongoing "streaks" will similarly result in positive Karma.') %></p>
