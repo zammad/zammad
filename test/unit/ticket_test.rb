@@ -359,9 +359,9 @@ class TicketTest < ActiveSupport::TestCase
     assert_no_match('15.274327094.140938@zammad.example.com', article_attributes['body'])
     assert_no_match('15.274327094.140939@zammad.example.com', article_attributes['body'])
     assert_no_match('15.274327094.99999@zammad.example.com', article_attributes['body'])
-    assert_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/1", article_attributes['body'])
-    assert_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/2", article_attributes['body'])
-    assert_no_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/3", article_attributes['body'])
+    assert_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store1.id}", article_attributes['body'])
+    assert_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store2.id}", article_attributes['body'])
+    assert_no_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store3.id}", article_attributes['body'])
 
     article1 = Ticket::Article.find(article1.id)
     attachments = article1.attachments_inline
