@@ -191,6 +191,10 @@ class Transaction::Notification
         current_user = User.lookup(id: 1)
       end
 
+      attachments = []
+      if article
+        attachments = article.attachments_inline
+      end
       NotificationFactory::Mailer.notification(
         template: template,
         user: user,
@@ -203,6 +207,7 @@ class Transaction::Notification
         },
         references: ticket.get_references,
         main_object: ticket,
+        attachments: attachments,
       )
       Rails.logger.debug "sent ticket email notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})"
     end
