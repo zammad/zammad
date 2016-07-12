@@ -116,7 +116,7 @@ class Transaction::Karma
     return if !type.communication
 
     ### answer sent (check last action time / within what time?)
-    articles = Ticket::Article.where(ticket_id: article.ticket_id).order(created_at: :asc)
+    articles = Ticket::Article.where(ticket_id: article.ticket_id).order(created_at: :asc, id: :asc)
     if articles.count > 1
       last_sender_customer = nil
       last_customer_contact = nil
@@ -142,7 +142,7 @@ class Transaction::Karma
       }
       if last_sender_customer && last_customer_contact
         diff =  article.created_at - last_customer_contact
-        if diff > 0
+        if diff >= 0
           if diff < 1.hour
             Karma::ActivityLog.add('ticket answer 1h', user, 'Ticket', @item[:object_id])
           elsif diff < 2.hours

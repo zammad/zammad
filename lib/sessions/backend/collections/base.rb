@@ -13,7 +13,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
   def load
 
     # get whole collection
-    self.class.model.constantize.all
+    self.class.model.constantize.all.order(id: :asc)
   end
 
   def client_key

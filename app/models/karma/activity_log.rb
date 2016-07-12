@@ -13,7 +13,7 @@ class Karma::ActivityLog < ApplicationModel
     end
 
     Karma::ActivityLog.transaction do
-      last_activity = Karma::ActivityLog.where(user_id: user.id).order(id: :desc).lock(true).first
+      last_activity = Karma::ActivityLog.where(user_id: user.id).order(created_at: :desc, id: :desc).lock(true).first
       latest_activity = Karma::ActivityLog.where(
         user_id: user.id,
         object_lookup_id: object_id,
