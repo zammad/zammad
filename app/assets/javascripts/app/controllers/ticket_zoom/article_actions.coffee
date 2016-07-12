@@ -68,7 +68,7 @@ class App.TicketZoomArticleActions extends App.Controller
     #if @article.type.name is 'note'
     #     actions.push []
     group = @ticket.group
-    if group.email_address_id && (article.type.name is 'email' || article.type.name is 'phone' || article.type.name is 'web')
+    if group.email_address_id && (article.type.name is 'email' || article.type.name is 'web')
       actions.push {
         name: 'reply'
         type: 'emailReply'
@@ -115,6 +115,13 @@ class App.TicketZoomArticleActions extends App.Controller
           icon: 'reply-all'
           href: '#'
         }
+    if article.sender.name is 'Customer' && article.type.name is 'phone'
+      actions.push {
+        name: 'reply'
+        type: 'emailReply'
+        icon: 'reply'
+        href: '#'
+      }
     if article.type.name is 'twitter status'
       actions.push {
         name: 'reply'

@@ -6,7 +6,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
   test 'notifications send' do
     result = NotificationFactory::Mailer.send(
       recipient: User.find(2),
-      subject: 'sime subject',
+      subject: 'some subject',
       body: 'some body',
       content_type: '',
     )
@@ -16,7 +16,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     result = NotificationFactory::Mailer.send(
       recipient: User.find(2),
-      subject: 'sime subject',
+      subject: 'some subject',
       body: 'some body',
       content_type: 'text/plain',
     )
@@ -26,7 +26,7 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
 
     result = NotificationFactory::Mailer.send(
       recipient: User.find(2),
-      subject: 'sime subject',
+      subject: 'some subject',
       body: 'some <span>body</span>',
       content_type: 'text/html',
     )
@@ -34,6 +34,50 @@ class NotificationFactoryMailerTest < ActiveSupport::TestCase
     assert_match('text/plain', result.to_s)
     assert_match('<span>body</span>', result.to_s)
     assert_match('text/html', result.to_s)
+
+    attachments = []
+    attachments.push Store.add(
+      object: 'TestMailer',
+      o_id: 1,
+      data: 'content_file1_normally_should_be_an_image',
+      filename: 'some_file1.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938@zammad.example.com',
+        'Content-Disposition' => 'inline'
+      },
+      created_by_id: 1,
+    )
+    attachments.push Store.add(
+      object: 'TestMailer',
+      o_id: 1,
+      data: 'content_file2',
+      filename: 'some_file2.txt',
+      preferences: {
+        'Content-Type' => 'text/stream',
+        'Mime-Type'    => 'text/stream',
+      },
+      created_by_id: 1,
+    )
+
+    result = NotificationFactory::Mailer.send(
+      recipient: User.find(2),
+      subject: 'some subject',
+      body: 'some <span>body</span><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<br>',
+      content_type: 'text/html',
+      attachments:  attachments,
+    )
+    assert_match('some body', result.to_s)
+    assert_match('text/plain', result.to_s)
+    assert_match('<span>body</span>', result.to_s)
+    assert_match('text/html', result.to_s)
+    assert_match('Content-Type: image/jpeg', result.to_s)
+    assert_match('Content-Disposition: inline', result.to_s)
+    assert_match('Content-ID: <15.274327094.140938@zammad.example.com>', result.to_s)
+    assert_match('text/stream', result.to_s)
+    assert_match('some_file2.txt', result.to_s)
+
   end
 
   test 'notifications settings' do
