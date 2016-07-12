@@ -55,6 +55,7 @@ class App.TicketZoomArticleNew extends App.Controller
         name:       'note'
         icon:       'note'
         attributes: []
+        internal:   true,
         features:   ['attachment']
       }
     if possibleArticleType.email
@@ -62,6 +63,7 @@ class App.TicketZoomArticleNew extends App.Controller
         name:       'email'
         icon:       'email'
         attributes: ['to', 'cc']
+        internal:   false,
         features:   ['attachment']
       }
     if possibleArticleType['facebook feed comment']
@@ -69,6 +71,7 @@ class App.TicketZoomArticleNew extends App.Controller
         name:       'facebook feed comment'
         icon:       'facebook'
         attributes: []
+        internal:   false,
         features:   []
       }
     if possibleArticleType['twitter status']
@@ -76,6 +79,7 @@ class App.TicketZoomArticleNew extends App.Controller
         name:              'twitter status'
         icon:              'twitter'
         attributes:        []
+        internal:          false,
         features:          ['body:limit']
         maxTextLength:     140
         warningTextLength: 30
@@ -85,6 +89,7 @@ class App.TicketZoomArticleNew extends App.Controller
         name:              'twitter direct-message'
         icon:              'twitter'
         attributes:        ['to']
+        internal:          false,
         features:          ['body:limit']
         maxTextLength:     10000
         warningTextLength: 500
@@ -94,6 +99,7 @@ class App.TicketZoomArticleNew extends App.Controller
         name:       'phone'
         icon:       'phone'
         attributes: []
+        internal:   false,
         features:   ['attachment']
       }
 
@@ -104,6 +110,7 @@ class App.TicketZoomArticleNew extends App.Controller
           name:       'note'
           icon:       'note'
           attributes: []
+          internal:   false,
           features:   ['attachment']
         },
       ]
@@ -376,20 +383,12 @@ class App.TicketZoomArticleNew extends App.Controller
   changeType: (e) ->
     $(e.target).addClass('active').siblings('.active').removeClass('active')
 
-  toggleVisibility: (event) ->
-    event.stopPropagation()
-    if @articleNewEdit.hasClass 'is-public'
-      @articleNewEdit
-        .removeClass 'is-public'
-        .addClass 'is-internal'
-
-      @$('[name=internal]').val 'true'
+  toggleVisibility: (e, internal) ->
+    e.stopPropagation()
+    if @articleNewEdit.hasClass('is-public')
+      @setArticleInternal(true)
     else
-      @articleNewEdit
-        .addClass 'is-public'
-        .removeClass 'is-internal'
-
-      @$('[name=internal]').val ''
+      @setArticleInternal(false)
 
   showSelectableArticleType: (event) =>
     event.stopPropagation()
@@ -407,12 +406,39 @@ class App.TicketZoomArticleNew extends App.Controller
   hideSelectableArticleType: =>
     @el.find('.js-articleTypes').addClass('is-hidden')
 
+  setArticleInternal: (internal) =>
+    if internal is true
+      @articleNewEdit
+        .removeClass('is-public')
+        .addClass('is-internal')
+
+      @$('[name=internal]').val('true')
+      return
+
+    @articleNewEdit
+      .addClass('is-public')
+      .removeClass('is-internal')
+
+    @$('[name=internal]').val('')
+
   setArticleType: (type) =>
     wasScrolledToBottom = @isScrolledToBottom()
     @type = type
     @$('[name=type]').val(type).trigger('change')
     @articleNewEdit.attr('data-type', type)
-    @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{ type }']").removeClass('hide')
+    @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{type}']").removeClass('hide')
+
+    # get config
+    config = {}
+    for articleTypeConfig in @articleTypes
+      if articleTypeConfig.name is type
+        config = articleTypeConfig
+
+    if config
+      if config.internal
+        @setArticleInternal(true)
+      else
+        @setArticleInternal(false)
 
     # detect current signature (use current group_id, if not set, use ticket.group_id)
     ticketCurrent = App.Ticket.fullLocal(@ticket_id)

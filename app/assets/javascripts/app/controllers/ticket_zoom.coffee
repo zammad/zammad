@@ -520,7 +520,7 @@ class App.TicketZoom extends App.Controller
         cc:          ''
         type:        'note'
         body:        ''
-        internal:    ''
+        internal:    'true'
         in_reply_to: ''
     currentStore
 
