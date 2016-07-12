@@ -130,6 +130,7 @@ class Transaction::Karma
 
         local_sender = Ticket::Article::Sender.lookup(id: local_article.sender_id)
         return false if !local_sender
+        next if local_sender.name == 'System'
 
         last_sender_customer = if local_sender.name == 'Customer'
                                  true
