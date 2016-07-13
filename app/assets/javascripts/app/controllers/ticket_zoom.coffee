@@ -522,6 +522,10 @@ class App.TicketZoom extends App.Controller
         body:        ''
         internal:    'true'
         in_reply_to: ''
+
+    if  @isRole('Customer')
+      currentStore.article.internal = ''
+
     currentStore
 
   formCurrent: =>
