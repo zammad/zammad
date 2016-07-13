@@ -202,8 +202,8 @@
 
       // insert and in case, resize images
       var clipboardData
-      if (window.clipboardData) { // ie
-        clipboardData = window.clipboardData
+      if (e.clipboardData) { // ie
+        clipboardData = e.clipboardData
       }
       else if (e.originalEvent.clipboardData) { // other browsers
         clipboardData = e.originalEvent.clipboardData
@@ -212,7 +212,6 @@
         throw "No clipboardData support"
       }
 
-      var clipboardData = e.clipboardData || e.originalEvent.clipboardData
       if (clipboardData && clipboardData.items && clipboardData.items[0]) {
         var imageInserted = false
         var item = clipboardData.items[0]
