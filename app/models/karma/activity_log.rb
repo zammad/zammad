@@ -47,7 +47,7 @@ class Karma::ActivityLog < ApplicationModel
     true
   end
 
-  def self.latest(user, limit = 20)
+  def self.latest(user, limit = 12)
     result = []
     logs = Karma::ActivityLog.where(user_id: user.id).order(id: :desc).limit(limit)
     logs.each { |log|
