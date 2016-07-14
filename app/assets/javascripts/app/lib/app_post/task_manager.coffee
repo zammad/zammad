@@ -193,13 +193,13 @@ class _taskManagerSingleton extends App.Controller
     if !task && !@workers[params.key] && !params.persistent
       task = new App.Taskbar
       task.load(
-        key:      params.key
-        params:   params.params
-        callback: params.controller
+        key:       params.key
+        params:    params.params
+        callback:  params.controller
         client_id: 123
-        prio:     @newPrio()
-        notify:   false
-        active:   params.show
+        prio:      @newPrio()
+        notify:    false
+        active:    params.show
       )
       @allTasksByKey[params.key] = task.attributes()
 
@@ -269,6 +269,8 @@ class _taskManagerSingleton extends App.Controller
     # hide all other controller / show current controller
     else
       @showControllerHideOthers(params.key, params_app)
+
+    @tasksAutoCleanupDelay()
 
   showControllerHideOthers: (thisKey, params_app) =>
     for key of @workers
@@ -497,6 +499,26 @@ class _taskManagerSingleton extends App.Controller
     # if task isnt already stored on backend
     return if !task.id
     App.Taskbar.destroy(task.id)
+
+  tasksAutoCleanupDelay: =>
+    delay = =>
+      @tasksAutoCleanup()
+    App.Delay.set(delay, 10000, 'task-autocleanup')
+
+  tasksAutoCleanup: =>
+
+    # auto cleanup of old tasks
+    currentTaskCount = =>
+      Object.keys(@allTasksByKey).length
+
+    maxTaskCount = 30
+    if currentTaskCount() > maxTaskCount
+      for task in App.Taskbar.search(sortBy:'updated_at', order:'ASC')
+        if currentTaskCount() > maxTaskCount
+          if !task.active
+            if _.isEmpty(task.state) || (_.isEmpty(task.state.ticket) && _.isEmpty(task.state.article))
+              @log 'notice', "More then #{maxTaskCount} tasks open, close oldest untouched task #{task.key}"
+              @remove(task.key)
 
   tasksInitial: =>
     @init()
