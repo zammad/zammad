@@ -54,15 +54,15 @@ Source: https://github.com/exif-js/exif-js
 Copyright: Jacob Seidelin, Roald de Vries
 License: MIT license
 -----------------------------------------------------------------------------
-jquery.flot.js
-Source: https://github.com/dnschnur/flot
-Copyright: Ole Laursen, IOLA
-License: MIT license
------------------------------------------------------------------------------
 highlight.pack.js
 Source: https://highlightjs.org
 Copyright: 2006 Ivan Sagalaev (https://github.com/isagalaev)
 License: BSD License
+-----------------------------------------------------------------------------
+jquery.flot.js
+Source: https://github.com/dnschnur/flot
+Copyright: Ole Laursen, IOLA
+License: MIT license
 -----------------------------------------------------------------------------
 jquery-scrollto.js
 Source: https://github.com/balupton/jquery-scrollto
@@ -87,6 +87,26 @@ Copyright: @leChanteaux <santiago at mural.ly>
            Mural.ly Dev Team <dev at mural.ly>
 License: dfyw
 -----------------------------------------------------------------------------
+jquery.js
+Source: http://jquery.com/
+Copyright: 2005, 2014 jQuery Foundation, Inc.
+License: MIT license
+-----------------------------------------------------------------------------
+jquery-ui.js
+Source: https://jqueryui.com
+Copyright: 2014 jQuery Foundation
+License: MIT license
+-----------------------------------------------------------------------------
+jquery.hotkeys.js
+Source: https://github.com/jeresig/jquery.hotkeys
+Copyright: 2010 John Resig
+License: Dual licensed under the MIT or GPL Version 2 licenses.
+-----------------------------------------------------------------------------
+jquery.visible.js
+Source: https://github.com/customd/jquery-visible
+Copyright: 2012, Digital Fusion
+License: MIT license
+-----------------------------------------------------------------------------
 marked.js
 Source: https://github.com/chjj/marked
 Copyright: 2011-2014, Christopher Jeffrey
@@ -102,6 +122,11 @@ Copyright: Faruk Ates (https://twitter.com/KuraFire)
            Stu Cox (https://twitter.com/stucoxmedia)
            Richard Herrera (https://twitter.com/doctyper)
 License: MIT license & BSD license
+-----------------------------------------------------------------------------
+rangy.js
+Source: https://github.com/timdown/rangy
+Copyright: 2015, Tim Down
+License: MIT license
 -----------------------------------------------------------------------------
 seedrandom.js
 Source: https://github.com/davidbau/seedrandom
@@ -123,26 +148,6 @@ Source: https://github.com/julianshapiro/velocity
 Copyright: 2014 The jQuery Foundation
 License: MIT license
 -----------------------------------------------------------------------------
-jquery.js
-Source: http://jquery.com/
-Copyright: 2005, 2014 jQuery Foundation, Inc.
-License: MIT license
------------------------------------------------------------------------------
-jquery-ui.js
-Source: https://jqueryui.com
-Copyright: 2014 jQuery Foundation
-License: MIT license
------------------------------------------------------------------------------
-jquery.hotkeys.js
-Source: https://github.com/jeresig/jquery.hotkeys
-Copyright: 2010 John Resig
-License: Dual licensed under the MIT or GPL Version 2 licenses.
------------------------------------------------------------------------------
-jquery.visible.js
-Source: https://github.com/customd/jquery-visible
-Copyright: 2012, Digital Fusion
-License: MIT license
------------------------------------------------------------------------------
 underscore.js
 Source: http://underscorejs.org
 Copyright: 2009-2015 Jeremy Ashkenas, DocumentCloud
@@ -151,11 +156,6 @@ License: MIT license
 spine.js
 Source: http://spinejs.com
 Copyright: 2011 Alex MacCaw <info@eribium.org>
-License: MIT license
------------------------------------------------------------------------------
-rangy.js
-Source: https://github.com/timdown/rangy
-Copyright: 2015, Tim Down
 License: MIT license
 -----------------------------------------------------------------------------
 word_filter.js
