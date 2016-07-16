@@ -11,7 +11,8 @@ class Transaction::Trigger
     changes: {
       'attribute1' => [before, now],
       'attribute2' => [before, now],
-    }
+    },
+    created_at: Time.zone.now,
     user_id: 123,
   },
 =end
@@ -49,28 +50,30 @@ class Transaction::Trigger
         next if condition['ticket.action']['operator'] != 'is' && condition['ticket.action']['value'] == @item[:type]
         condition.delete('ticket.action')
       end
-=begin
+
       # check "has changed" options
-      has_changed = true
-      trigger.condition.each do |key, value|
+      has_changed_condition_exists = false
+      has_changed = false
+      condition.each do |key, value|
         next if !value
         next if !value['operator']
         next if !value['operator']['has changed']
+        has_changed_condition_exists = true
 
         # next if has changed? && !@item[:changes][attribute]
         (object_name, attribute) = key.split('.', 2)
 
         # remove condition item, because it has changed
         if @item[:changes][attribute]
-          #condition.delete(key)
+          has_changed = true
+          condition.delete(key)
           next
         end
-        has_changed = false
         break
-        #{"ticket.state_id"=>{"operator"=>"has changed"
       end
-      next if !has_changed
-=end
+
+      next if has_changed_condition_exists && !has_changed
+
       # check if selector is matching
       condition['ticket.id'] = {
         operator: 'is',
@@ -99,12 +102,16 @@ class Transaction::Trigger
       # check in min one attribute has changed
       if @item[:type] == 'update' && !article_selector
         match = false
-        trigger.condition.each do |key, _value|
-          (object_name, attribute) = key.split('.', 2)
-          next if object_name != 'ticket'
-          next if !@item[:changes][attribute]
+        if has_changed_condition_exists && has_changed
           match = true
-          break
+        else
+          trigger.condition.each do |key, _value|
+            (object_name, attribute) = key.split('.', 2)
+            next if object_name != 'ticket'
+            next if !@item[:changes][attribute]
+            match = true
+            break
+          end
         end
         next if !match
       end

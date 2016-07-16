@@ -8,6 +8,7 @@ backend = Transaction::Slack.new(
     type: 'create',
     object_id: 1,
     user_id: 123,
+    created_at: Time.zone.now,
 )
 backend.perform
 
@@ -19,7 +20,8 @@ backend.perform
     changes: {
       'attribute1' => [before, now],
       'attribute2' => [before, now],
-    }
+    },
+    created_at: Time.zone.now,
     user_id: 123,
   },
 =end

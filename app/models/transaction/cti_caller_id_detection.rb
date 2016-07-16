@@ -10,6 +10,7 @@ class Transaction::CtiCallerIdDetection
     object_id: 123,
     via_web: true,
     user_id: 123,
+    created_at: Time.zone.now,
   },
   {
     object: 'User',
@@ -20,6 +21,7 @@ class Transaction::CtiCallerIdDetection
       'attribute1' => [before, now],
       'attribute2' => [before, now],
     }
+    created_at: Time.zone.now,
     user_id: 123,
   },
 =end

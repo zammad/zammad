@@ -590,6 +590,10 @@ class App.Model extends Spine.Model
 
       [ array of objects ]
 
+    examples:
+
+      list = App.Model.search({sortBy:'updated_at', order:'DESC'})
+
   ###
 
   @search: (params) ->

@@ -24,9 +24,22 @@ class App.UiElement.ticket_selector
       '^input$': ['contains', 'contains not']
       '^textarea$': ['contains', 'contains not']
 
+    if attribute.hasChanged
+      operators_type =
+        '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)', 'has changed']
+        '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)', 'has changed']
+        'boolean$': ['is', 'is not', 'has changed']
+        '^input$': ['contains', 'contains not', 'has changed']
+        '^textarea$': ['contains', 'contains not', 'has changed']
+
     operators_name =
       '_id$': ['is', 'is not']
       '_ids$': ['is', 'is not']
+
+    if attribute.hasChanged
+      operators_name =
+        '_id$': ['is', 'is not', 'has changed']
+        '_ids$': ['is', 'is not', 'has changed']
 
     # merge config
     elements = {}
@@ -37,9 +50,10 @@ class App.UiElement.ticket_selector
         display: 'Action'
         tag: 'select'
         null: false
+        translate: true
         options:
-          create: 'Created'
-          update: 'Updated'
+          create: 'created'
+          update: 'updated'
         operator: ['is', 'is not']
 
     for groupKey, groupMeta of groups
@@ -226,21 +240,37 @@ class App.UiElement.ticket_selector
   @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
 
-    if !meta.operator
-      meta.operator = currentOperator
-
     name = "#{attribute.name}::#{groupAndAttribute}::operator"
+
+    if !meta.operator && currentOperator
+      meta.operator = currentOperator
 
     selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
 
     attributeConfig = elements[groupAndAttribute]
     if attributeConfig.operator
+
+      # check if operator exists
+      operatorExists = false
+      for operator in attributeConfig.operator
+        if meta.operator is operator
+          operatorExists = true
+          break
+
+      if !operatorExists
+        for operator in attributeConfig.operator
+          meta.operator = operator
+          break
+
       for operator in attributeConfig.operator
         operatorName = App.i18n.translateInline(operator)
         selected = ''
-        if meta.operator is operator
-          selected = 'selected="selected"'
-        selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
+        if !groupAndAttribute.match(/^ticket/) && operator is 'has changed'
+          # do nothing, only show "has changed" in ticket attributes
+        else
+          if meta.operator is operator
+            selected = 'selected="selected"'
+          selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
       selection
 
     elementRow.find('.js-operator select').replaceWith(selection)
@@ -355,6 +385,11 @@ class App.UiElement.ticket_selector
       item = App.UiElement['time_range'].render(config, {})
 
     elementRow.find('.js-value').removeClass('hide').html(item)
+    if meta.operator is 'has changed'
+      elementRow.find('.js-value').addClass('hide')
+      elementRow.find('.js-preCondition').addClass('hide')
+    else
+      elementRow.find('.js-value').removeClass('hide')
 
   @humanText: (condition) ->
     none = App.i18n.translateContent('No filter.')
