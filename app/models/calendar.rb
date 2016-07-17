@@ -277,7 +277,7 @@ returns
       cal_file = File.open(location)
     end
 
-    cals = Icalendar.parse(cal_file)
+    cals = Icalendar::Calendar.parse(cal_file)
     cal = cals.first
     events = {}
     cal.events.each { |event|
