@@ -42,7 +42,7 @@ class Channel::Driver::Facebook
 
 =end
 
-  def fetchable?(_channel)
+  def fetchable?(channel)
     return true if Rails.env.test?
 
     # because of new page rate limit - https://developers.facebook.com/blog/post/2016/06/16/page-level-rate-limits/
