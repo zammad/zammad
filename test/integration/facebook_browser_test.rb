@@ -141,6 +141,7 @@ class FacebookBrowserTest < TestCase
     )
 
     select(css: '#content .modal [name="pages::' + page_id + '::group_id"]', value: 'Users')
+    sleep 1
     click(css: '#content .modal .js-submit')
     sleep 5
 
@@ -178,13 +179,6 @@ class FacebookBrowserTest < TestCase
     exists_not(
       css: '#content .main .action:nth-child(2)'
     )
-    sleep 50
-
-    # post new posting
-    hash = "##{rand(999_999)}"
-    customer_client = Koala::Facebook::API.new(customer_access_token)
-    message         = "I need some help for your product #{hash}"
-    post            = customer_client.put_wall_post(message, {}, page_id)
 
     # watch till post is in app
     click(text: 'Overviews')
@@ -195,13 +189,21 @@ class FacebookBrowserTest < TestCase
     )
 
     click(text: 'Unassigned & Open')
-    sleep 6 # till overview is rendered
+
+    sleep 50
+
+    # post new posting
+    hash = "##{rand(999_999)}"
+    customer_client = Koala::Facebook::API.new(customer_access_token)
+    message         = "I need some help for your product #{hash}"
+    post            = customer_client.put_wall_post(message, {}, page_id)
 
     watch_for(
       css: '.content.active',
       value: hash,
-      timeout: 40,
+      timeout: 320,
     )
+    sleep 6
 
     ticket_open_by_title(
       title: hash,
