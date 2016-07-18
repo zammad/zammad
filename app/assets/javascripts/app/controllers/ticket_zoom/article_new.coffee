@@ -224,6 +224,7 @@ class App.TicketZoomArticleNew extends App.Controller
           onAborted: =>
             @attachmentPlaceholder.removeClass('hide')
             @attachmentUpload.addClass('hide')
+            @$('.article-attachment input').val('')
 
           # Called after received response from the server
           onCompleted: (response) =>
@@ -239,6 +240,7 @@ class App.TicketZoomArticleNew extends App.Controller
             @progressText.text('')
 
             @renderAttachment(response.data)
+            @$('.article-attachment input').val('')
 
           # Called during upload progress, first parameter
           # is decimal value from 0 to 100.

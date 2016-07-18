@@ -12,7 +12,8 @@ class Transaction::BackgroundJob
     changes: {
       'attribute1' => [before,now],
       'attribute2' => [before,now],
-    }
+    },
+    created_at: Time.zone.now,
     user_id: 123,
   },
 =end

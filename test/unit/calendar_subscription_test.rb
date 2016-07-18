@@ -223,7 +223,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     calendar_subscriptions = CalendarSubscriptions.new(agent1)
 
     ical_file = calendar_subscriptions.all
-    cals      = Icalendar.parse(ical_file)
+    cals      = Icalendar::Calendar.parse(ical_file)
     assert_equal(cals.count, 1)
     cal = cals.first
     assert_equal(cals.count, 1)
@@ -272,7 +272,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     calendar_subscriptions = CalendarSubscriptions.new(agent1)
 
     ical_file = calendar_subscriptions.all
-    cals      = Icalendar.parse(ical_file)
+    cals      = Icalendar::Calendar.parse(ical_file)
     assert_equal(cals.count, 1)
     cal = cals.first
     assert_equal(cals.count, 1)
@@ -322,7 +322,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     calendar_subscriptions = CalendarSubscriptions.new(agent2)
 
     ical_file = calendar_subscriptions.all
-    cals      = Icalendar.parse(ical_file)
+    cals      = Icalendar::Calendar.parse(ical_file)
     assert_equal(cals.count, 1)
     cal = cals.first
     assert_equal(cals.count, 1)
@@ -367,7 +367,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
     calendar_subscriptions = CalendarSubscriptions.new(agent2)
 
     ical_file = calendar_subscriptions.all
-    cals      = Icalendar.parse(ical_file)
+    cals      = Icalendar::Calendar.parse(ical_file)
     assert_equal(cals.count, 1)
     cal = cals.first
     assert_equal(cals.count, 1)

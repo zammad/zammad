@@ -76,6 +76,8 @@ returns
       subject = subject[ 0, ticket_subject_size.to_i ] + '[...]'
     end
 
+    subject.gsub!(/^[[:space:]]+/, '')
+    subject.gsub!(/[[:space:]]+$/, '')
     subject
   end
 end

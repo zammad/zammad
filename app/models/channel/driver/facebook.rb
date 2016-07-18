@@ -42,7 +42,14 @@ class Channel::Driver::Facebook
 
 =end
 
-  def fetchable?(_channel)
+  def fetchable?(channel)
+    return true if Rails.env.test?
+
+    # because of new page rate limit - https://developers.facebook.com/blog/post/2016/06/16/page-level-rate-limits/
+    # only fetch once in 5 minutes
+    return true if !channel.preferences
+    return true if !channel.preferences[:last_fetch]
+    return false if channel.preferences[:last_fetch] > Time.zone.now - 5.minutes
     true
   end
 

@@ -79,6 +79,7 @@ class App.UiElement.richtext
             onAborted: =>
               @attachmentPlaceholder.removeClass('hide')
               @attachmentUpload.addClass('hide')
+              item.find('input').val('')
 
             # Called after received response from the server
             onCompleted: (response) =>
@@ -93,6 +94,7 @@ class App.UiElement.richtext
               @progressText.text('')
 
               renderAttachment(response.data)
+              item.find('input').val('')
 
               App.Log.debug 'UiElement.richtext', 'upload complete', response.data
 

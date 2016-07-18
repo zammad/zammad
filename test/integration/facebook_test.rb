@@ -175,8 +175,7 @@ class FacebookTest < ActiveSupport::TestCase
 
     # check customer
     customer = ticket.customer
-    assert_equal('Bernd', customer.firstname)
-    assert_equal('Hofbecker', customer.lastname)
+    assert_equal(customer_name, "#{customer.firstname} #{customer.lastname}")
 
     # reply via ticket
     reply_text = "What's your issue Bernd?"
@@ -195,7 +194,7 @@ class FacebookTest < ActiveSupport::TestCase
 
     outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
-    assert_equal(outbound_article.from, 'Hansi Merkurs Hutfabrik', 'ticket article outbound count')
+    assert_equal(outbound_article.from, page_name, 'ticket article outbound count')
     assert_equal(outbound_article.ticket.articles.count, 2, 'ticket article outbound count')
 
     post_comment = 'The peacock feather is fallen off.'
@@ -226,7 +225,7 @@ class FacebookTest < ActiveSupport::TestCase
 
     outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
-    assert_equal(outbound_article.from, 'Hansi Merkurs Hutfabrik', 'ticket article outbound count')
+    assert_equal(outbound_article.from, page_name, 'ticket article outbound count')
     assert_equal(outbound_article.ticket.articles.count, 4, 'ticket article outbound count')
   end
 

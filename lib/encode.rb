@@ -15,26 +15,26 @@ module Encode
       begin
 
         # return if encoding is valid
-        utf8 = string.force_encoding('UTF-8')
+        utf8 = string.dup.force_encoding('UTF-8')
         return utf8 if utf8.valid_encoding?
 
         # try to encode from Windows-1252 to utf8
-        string.encode!( 'UTF-8', 'Windows-1252' )
+        string.encode!('UTF-8', 'Windows-1252')
 
       rescue EncodingError => e
         Rails.logger.error "Bad encoding: #{string.inspect}"
-        string = string.encode!( 'UTF-8', invalid: :replace, undef: :replace, replace: '?' )
+        string = string.encode!('UTF-8', invalid: :replace, undef: :replace, replace: '?')
       end
       return string
     end
 
     # convert string
     begin
-      string.encode!( 'UTF-8', charset )
+      string.encode!('UTF-8', charset)
     rescue => e
       Rails.logger.error 'ERROR: ' + e.inspect
       string
     end
-    #Iconv.conv( 'UTF8', charset, string )
+    #Iconv.conv( 'UTF8', charset, string)
   end
 end

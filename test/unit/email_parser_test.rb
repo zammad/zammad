@@ -342,7 +342,7 @@ Liebe Grüße!
       },
       {
         data: IO.binread('test/fixtures/mail21.box'),
-        body_md5: 'ca181b534e98acc7674a70e8497e9791',
+        body_md5: 'f7de1c4d9f266a85897b6e8b9403d62d',
         params: {
           from: 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
           from_email: 'pharmacy_affordable1@ertelecom.ru',

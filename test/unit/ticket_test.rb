@@ -278,6 +278,8 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal('subject test 1', ticket1.title)
     assert_equal("ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1'))
     assert_equal("RE: ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1', true))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('  ABC subject test 1', true))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1  ', true))
     ticket1.destroy
 
   end
