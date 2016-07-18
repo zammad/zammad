@@ -4,6 +4,6 @@ class UpdateChannel < ActiveRecord::Migration
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
-    change_column :channels, :options, :string, limit: 500.kilobytes + 1,  null: true
+    change_column :channels, :options, :text, limit: 500.kilobytes + 1,  null: true
   end
 end

@@ -342,7 +342,7 @@ class CreateTicket < ActiveRecord::Migration
     create_table :channels do |t|
       t.references :group,                             null: true
       t.column :area,           :string, limit: 100,   null: false
-      t.column :options,        :string, limit: 500.kilobytes + 1,  null: true
+      t.column :options,        :text,   limit: 500.kilobytes + 1,  null: true
       t.column :active,         :boolean,              null: false, default: true
       t.column :preferences,    :string, limit: 2000, null: true
       t.column :last_log_in,    :text,   limit: 500.kilobytes + 1, null: true
