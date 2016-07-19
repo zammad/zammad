@@ -559,6 +559,109 @@ end
           body: "Tag Max / Ingo!\n",
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail38.box'),
+        body_md5: 'dcd25707eed638ea568644b206a8596e',
+        params: {
+          from: 'Martin Edenhofer <me@example.com>',
+          from_email: 'me@example.com',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'test 1234 äöü sig test without attachment ',
+          to: 'Martin Edenhofer <me@example.net>',
+          cc: nil,
+          body: "test 1234 äöü sig test without attachment\n\n",
+        },
+        attachments: [
+          {
+            md5: '85223228046c010ce4298947018fa33f',
+            filename: 'signature.asc',
+          },
+        ],
+      },
+      {
+        data: IO.binread('test/fixtures/mail39.box'),
+        body_md5: 'b583c4705270fa73a28796b978e1e9ab',
+        params: {
+          from: 'Martin Edenhofer <me@example.com>',
+          from_email: 'me@example.com',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'test 1234 äöü sig test with attachment ',
+          to: 'Martin Edenhofer <me@example.net>',
+          cc: nil,
+          body: 'test 1234 äöü sig test with attachment',
+        },
+        attachments: [
+          {
+            md5: 'c0b9a38d7c02516db9f016dc8063d1e8',
+            filename: 'signature.asc',
+          },
+          {
+            md5: 'de909e05b3dd8b8ea50e8db422d0971e',
+            filename: 'HKT_Super_Seven_GTS.jpeg',
+          },
+          {
+            md5: '72c2f9aecd24606b6490ff06ea9361ec',
+            filename: 'message.html',
+          },
+        ],
+      },
+      {
+        data: IO.binread('test/fixtures/mail40.box'),
+        body_md5: '5db91cb79f889f80bbf8b47ad98efac9',
+        params: {
+          from: 'Martin Edenhofer <me@example.com>',
+          from_email: 'me@example.com',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'smime signed 123 öäüß',
+          to: 'Martin Edenhofer <me@example.net>',
+          cc: nil,
+          body: 'smime signed 123 öäüß',
+        },
+        attachments: [
+          {
+            md5: '6a0434efa5a2eebf4efe46b04f7b3a9c',
+            filename: 'smime.p7s',
+          },
+        ],
+      },
+      {
+        data: IO.binread('test/fixtures/mail41.box'),
+        body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
+        params: {
+          from: 'Martin Edenhofer <me@example.com>',
+          from_email: 'me@example.com',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'smime sign & crypt',
+          to: 'Martin Edenhofer <me@example.com>',
+          cc: nil,
+          body: 'no visible content',
+        },
+        attachments: [
+          {
+            md5: 'fc68cdcbf343c72e456fbf9477501a72',
+            filename: 'smime.p7m',
+          },
+        ],
+      },
+      {
+        data: IO.binread('test/fixtures/mail42.box'),
+        body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
+        params: {
+          from: 'Martin Edenhofer <me@example.com>',
+          from_email: 'me@example.com',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'pgp sign & crypt',
+          to: 'Martin Edenhofer <me@example.com>',
+          cc: nil,
+          body: 'no visible content',
+        },
+        attachments: [
+          {
+            md5: '8d23752cf0211ab3eba43bc3a530e8ab',
+            filename: 'encrypted.asc',
+          },
+        ],
+      },
     ]
 
     count = 0
@@ -580,9 +683,9 @@ end
           #puts 'md5'
           #puts '++' + data[:body].to_s + '++'
           #puts '++' + file[:params][key.to_sym].to_s + '++'
-          assert_equal( Digest::MD5.hexdigest( file[:params][key.to_sym].to_s ), Digest::MD5.hexdigest( data[:body].to_s ) )
+          assert_equal(Digest::MD5.hexdigest(file[:params][key.to_sym].to_s), Digest::MD5.hexdigest(data[:body].to_s))
         else
-          assert_equal( file[:params][key.to_sym], data[key.to_sym], "check #{key}" )
+          assert_equal(file[:params][key.to_sym], data[key.to_sym], "check #{key}")
         end
       }
 
@@ -599,11 +702,11 @@ end
             #puts 'Attachment:' + attachment_parser.inspect + '-' + file_md5
             if attachment[:md5] == file_md5
               found = true
-              assert_equal( attachment[:filename], attachment_parser[:filename] )
+              assert_equal(attachment[:filename], attachment_parser[:filename])
             end
           }
           if !found
-            assert( false, "Attachment not found! MD5: #{attachment[:md5]} - #{attachment[:filename].to_s}" )
+            assert(false, "Attachment not found! MD5: #{attachment[:md5]} - #{attachment[:filename]}")
           end
         }
         assert_equal( attachment_count_config, attachment_count_email )

@@ -236,6 +236,7 @@ class Channel::EmailParser
     else
       filename = '-no name-'
       data[:body] = 'no visible content'
+      data[:content_type] = 'text/plain'
 
       # add body as attachment
       headers_store = {
