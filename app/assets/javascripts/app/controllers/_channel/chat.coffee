@@ -115,6 +115,8 @@ class App.ChannelChat extends App.Controller
 
     @load()
 
+    @permanent =
+      chatId: 1
     @widgetDesignerPermanentParams =
       id: 'id'
 
@@ -129,6 +131,11 @@ class App.ChannelChat extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
+
+        firstChat = App.Chat.first()
+        if firstChat
+          @permanent =
+            chatId: firstChat.id
         @stopLoading()
         @render(data)
     )
@@ -150,6 +157,7 @@ class App.ChannelChat extends App.Controller
 
     @updatePreview()
     @updateParams()
+    @changeDemoWebsite()
 
     # bind updatePreview with parameter animate = false
     $(window).on 'resize.chat-designer', => @updatePreview false
