@@ -129,6 +129,8 @@
     </fieldset>
   </form>
 
+  <hr>
+
   <h2><%- @T('Usage') %></h2>
 
   <p><%- marked(@T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the §</body>§ closing tag.')) %></p>
@@ -174,6 +176,8 @@ $(function() {
     </ol>
     <%- @T('When you turn on debugging by setting the option §debug§ to §true§ the reason gets printed to the javascript console.') %>
   </p>
+
+  <hr>
 
   <h3><%- @T('Options') %></h3>
 

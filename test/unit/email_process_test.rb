@@ -1969,6 +1969,34 @@ Some Text',
           ],
         }
       },
+      {
+        data: IO.binread('test/fixtures/mail41.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'smime sign & crypt',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail42.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'pgp sign & crypt',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+      },
     ]
     process(files)
   end

@@ -425,7 +425,7 @@ class CreateBase < ActiveRecord::Migration
     create_table :calendars do |t|
       t.string  :name,                   limit: 250, null: true
       t.string  :timezone,               limit: 250, null: true
-      t.string  :business_hours,         limit: 1200, null: true
+      t.string  :business_hours,         limit: 3000, null: true
       t.boolean :default,                            null: false, default: false
       t.string  :ical_url,               limit: 500, null: true
       t.text    :public_holidays,        limit: 500.kilobytes + 1, null: true

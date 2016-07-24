@@ -1,0 +1,53 @@
+Return-Path: <me@example.com>
+X-Original-To: me@example.net
+Delivered-To: martin@arber.example.com
+Received: from [10.8.0.6] (kanzel.example.com [5.9.62.170])
+	by arber.example.com (Postfix) with ESMTPSA id B277D601E0
+	for <me@example.net>; Tue, 19 Jul 2016 13:55:37 +0200 (CEST)
+From: Martin Edenhofer <me@example.com>
+X-Pgp-Agent: GPGMail
+Content-Type: multipart/signed; boundary="Apple-Mail=_145CC1F4-7271-407C-B5D2-D9E0653251C7"; protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: =?utf-8?Q?test_1234_=C3=A4=C3=B6=C3=BC_sig_test_without_attachme?=
+ =?utf-8?Q?nt_?=
+Date: Tue, 19 Jul 2016 13:57:07 +0200
+Message-Id: <5CDFC2DC-B880-4329-B98C-200B6ED3476B@example.com>
+To: Martin Edenhofer <me@example.net>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
+
+
+--Apple-Mail=_145CC1F4-7271-407C-B5D2-D9E0653251C7
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+test 1234 =C3=A4=C3=B6=C3=BC sig test without attachment
+
+
+--Apple-Mail=_145CC1F4-7271-407C-B5D2-D9E0653251C7
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP using GPGMail
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
+
+iQIcBAEBCgAGBQJXjhWXAAoJEDZIwfYs2Fy5FvYQAKkG0qRe6iEBusrNuu7FNGMw
+bXhefZ6D4SDUgMGHywYmm3ssPY+a3SYiRRaN0m4FavVVtQ7JTcKm7I2e60czWUX7
+jcgQEVmQZCyH2rQ4sWiMDyS8CMSzj1uDOiHIHGXD6CmHLzrSog2H275BGzd00V3F
+FNmr1esSiMuf69t+WQthsi5FJEeeLvuJqDqGAHXJvsxCMRZJMxFLWJI+Ovqts1q5
+fKO91RKXtIuXoEQJVmqOkiGdD7idsvC9Ul5Iv7PFHuk+0Jg/UjcuZRhnieGgcs1d
+aK/DFmwIAd4IT4acYoljovvqG9rvDDG9q0j83MzmazjmIn7U3hwjR5v5u/fXRcgD
+CR5jgvkL1gT2AJF0J8vul0RebySNKcCRSSVSLSBdM0t4FIqWGQ/Iyzq2fpVeOLnw
+LIJZ9c7cywMqZ0jK6DZ+F7UxrDIvckkPVe6YnND3/pC1X8Fehj0tWWb/hkIKRvHg
+JReLLldwxDYzYLzhdwsE/w8wRKCnqUWDWuA1zlG1uWcHqo2RXn/YCKPcAMiMImoK
+ZvxKpVA0QB+wuUx6TVr2I5La1rgyqkwo2TokfWuUVB7Kn/ugwSxloudQCtxTaTKZ
+JrBf2SCw3+UDFFvURcnLzNmyNmnQI/5OIVliJERrw5I7b/auR7Royk9k7+DPEl+c
+Teozs8ZFAE985ycipXRQ
+=HLIq
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_145CC1F4-7271-407C-B5D2-D9E0653251C7--
