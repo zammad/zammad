@@ -133,7 +133,7 @@ Source: https://github.com/davidbau/seedrandom
 Copyright: 2014 David Bau.
 License: MIT license
 -----------------------------------------------------------------------------
-tinycolor-min.js
+tinycolor.js
 Source: https://github.com/bgrins/TinyColor
 Copyright: Brian Grinstead
 License: MIT license

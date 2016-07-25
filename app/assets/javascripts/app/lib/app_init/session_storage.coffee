@@ -45,6 +45,7 @@ class _storeSingleton
     catch e
       @clear()
       App.Log.error 'App.SessionStorage', 'Session storage error!', e
+      sessionStorage.setItem(key, JSON.stringify(value))
 
   # get item
   get: (key) ->
