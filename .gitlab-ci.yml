@@ -61,7 +61,7 @@ test:unit:postgresql:
     - rake test:controllers
     - rake db:drop
 
-test:browser:autowizard:
+test:integration:autowizard:
   stage: test
   tags:
     - core
