@@ -159,12 +159,23 @@ class AutoWizardTest < ActiveSupport::TestCase
           email: 'zammad@localhost',
         }
       ],
+      TextModuleLocale: {
+        Locale: 'de-de',
+      },
+      CalendarSetup: {
+        Ip: '195.65.29.254',
+      },
     }
     assert_equal(false, AutoWizard.enabled?)
     auto_wizard_file_write(auto_wizard_data)
     assert_equal(true, AutoWizard.enabled?)
     AutoWizard.setup
     assert_equal(false, AutoWizard.enabled?)
+
+    assert_not_equal(0, TextModule.count)
+    assert_equal(1, Calendar.count)
+    assert_equal('Switzerland', Calendar.first.name)
+    assert_equal('Europe/Zurich', Calendar.first.timezone)
 
     auto_wizard_data[:Users].each { |local_user|
       user = User.find_by(login: local_user[:login])

@@ -3,6 +3,9 @@
   "CalendarSetup": {
     "Ip": "195.65.29.254"
   },
+  "TextModuleLocale": {
+    "Locale": "en-us"
+  },
   "Users": [
     {
       "login": "hans.atila@zammad.org",

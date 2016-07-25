@@ -66,5 +66,8 @@
       "name": "product_name",
       "value": "Zammad Test System"
     }
-  ]
+  ],
+  "TextModuleLocale": {
+    "Locale": "de-de"
+  }
 }
