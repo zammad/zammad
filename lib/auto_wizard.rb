@@ -70,6 +70,17 @@ returns
       end
     end
 
+    # load text modules
+    if auto_wizard_hash['TextModuleLocale']
+      if auto_wizard_hash['TextModuleLocale']['Locale']
+        begin
+          TextModule.load(auto_wizard_hash['TextModuleLocale']['Locale'])
+        rescue => e
+          Rails.logger.error "Unable to load text modules #{auto_wizard_hash['TextModuleLocale']['Locale']}: #{e.message}"
+        end
+      end
+    end
+
     # set Settings
     if auto_wizard_hash['Settings']
       auto_wizard_hash['Settings'].each { |setting_data|

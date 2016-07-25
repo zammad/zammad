@@ -186,6 +186,16 @@ class UsersController < ApplicationController
       if user.email
         Service::Image.organization_suggest(user.email)
       end
+
+      # load calendar
+      Calendar.init_setup(request.remote_ip)
+
+      # load text modules
+      begin
+        TextModule.load(request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us')
+      rescue => e
+        logger.error "Unable to load text modules #{request.env['HTTP_ACCEPT_LANGUAGE'] || 'en-us'}: #{e.message}"
+      end
     end
 
     # send inviteation if needed / only if session exists
