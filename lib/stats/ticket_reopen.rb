@@ -24,7 +24,7 @@ class Stats::TicketReopen
     end
 
     reopen_in_precent = 0
-    if total != 0
+    if total.nonzero?
       reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(3)
     end
     {

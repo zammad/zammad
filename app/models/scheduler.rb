@@ -122,10 +122,10 @@ class Scheduler < ApplicationModel
       UserInfo.current_user_id = nil
       loop do
         success, failure = Delayed::Worker.new.work_off
-        if failure != 0
+        if failure.nonzero?
           raise "ERROR: #{failure} failed background jobs: #{Delayed::Job.where('last_error IS NOT NULL').inspect}"
         end
-        break if success == 0
+        break if success.zero?
       end
       UserInfo.current_user_id = original_user_id
       return

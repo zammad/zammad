@@ -35,7 +35,7 @@ class Stats::TicketResponseTime
       end
       total += data[:time]
     }
-    if total != 0
+    if total.nonzero?
       own = (own / count_own).round
     end
     {

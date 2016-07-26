@@ -56,7 +56,7 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     clavius (1.0.2)
-    clearbit (0.2.3)
+    clearbit (0.2.4)
       nestful (~> 1.1.0)
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -82,6 +82,8 @@ GEM
     docile (1.1.5)
     domain_name (0.5.20160615)
       unf (>= 0.0.5, < 1.0.0)
+    doorkeeper (4.0.0)
+      railties (>= 4.2)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -100,7 +102,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffi (1.9.14)
     formatador (0.2.5)
-    globalid (0.3.6)
+    globalid (0.3.7)
       activesupport (>= 4.1.0)
     guard (2.14.0)
       formatador (>= 0.2.4)
@@ -181,13 +183,20 @@ GEM
       rack (>= 1.0, < 3)
     omniauth-facebook (3.0.0)
       omniauth-oauth2 (~> 1.2)
+    omniauth-github (1.1.2)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.1)
+    omniauth-gitlab (1.0.2)
+      omniauth (~> 1.0)
+      omniauth-oauth2 (~> 1.0)
     omniauth-google-oauth2 (0.4.1)
       jwt (~> 1.5.2)
       multi_json (~> 1.3)
       omniauth (>= 1.1.1)
       omniauth-oauth2 (>= 1.3.1)
-    omniauth-linkedin (0.2.0)
-      omniauth-oauth (~> 1.0)
+    omniauth-linkedin-oauth2 (0.1.5)
+      omniauth (~> 1.0)
+      omniauth-oauth2
     omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
@@ -200,7 +209,7 @@ GEM
     parser (2.3.1.2)
       ast (~> 2.2)
     pg (0.18.4)
-    phony (2.15.26)
+    phony (2.15.27)
     pkg-config (1.1.7)
     pluginator (1.3.0)
     power_assert (0.3.0)
@@ -211,7 +220,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    puma (3.4.0)
+    puma (3.6.0)
     rack (1.6.4)
     rack-livereload (0.3.16)
       rack
@@ -249,7 +258,7 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     ref (2.0.0)
-    rubocop (0.41.2)
+    rubocop (0.42.0)
       parser (>= 2.3.1.1, < 3.0)
       powerpack (~> 0.1)
       rainbow (>= 1.99.1, < 3.0)
@@ -259,7 +268,7 @@ GEM
     ruby_dep (1.3.1)
     rubyzip (1.2.0)
     sass (3.4.22)
-    sass-rails (5.0.5)
+    sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -283,7 +292,7 @@ GEM
     slack-notifier (1.5.1)
     slop (3.6.0)
     spring (1.7.2)
-    sprockets (3.6.3)
+    sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (3.1.1)
@@ -291,7 +300,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.11)
-    test-unit (3.2.0)
+    test-unit (3.2.1)
       power_assert
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
@@ -343,6 +352,7 @@ DEPENDENCIES
   daemons
   delayed_job_active_record
   diffy
+  doorkeeper
   eco
   em-websocket
   email_verifier
@@ -359,10 +369,14 @@ DEPENDENCIES
   mime-types
   mysql2 (~> 0.3.20)
   net-ldap
+  oauth2
   omniauth
   omniauth-facebook
+  omniauth-github
+  omniauth-gitlab
   omniauth-google-oauth2
-  omniauth-linkedin
+  omniauth-linkedin-oauth2
+  omniauth-oauth2
   omniauth-twitter
   pg
   phony

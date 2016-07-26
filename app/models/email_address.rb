@@ -67,7 +67,7 @@ check and if channel not exists reset configured channels for email addresses
   def update_email_address_id
     not_configured = Group.where(email_address_id: nil).count
     total = Group.count
-    return if not_configured == 0
+    return if not_configured.zero?
     return if total != 1
     group = Group.find_by(email_address_id: nil)
     group.email_address_id = id

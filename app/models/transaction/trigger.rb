@@ -87,7 +87,7 @@ class Transaction::Trigger
       end
 
       ticket_count, tickets = Ticket.selectors(condition, 1)
-      next if ticket_count == 0
+      next if ticket_count.zero?
       next if tickets.first.id != ticket.id
 
       # check if min one article attribute is used
