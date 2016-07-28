@@ -242,7 +242,7 @@ class FirstStepsController < ApplicationController
     if !test_customer
       test_ticket_active = false
     end
-    if Group.where(active: true, name: 'Users').count == 0
+    if Group.where(active: true, name: 'Users').count.zero?
       test_ticket_active = false
     end
     return result if test_ticket_active

@@ -20,7 +20,7 @@ class Stats::TicketLoadMeasure
       total = count
     end
 
-    if total != 0
+    if total.nonzero?
       load_measure_precent = ( count.to_f / (total.to_f / 100) ).round(3)
     end
     {

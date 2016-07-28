@@ -307,6 +307,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :content,              :text,    limit: 10.megabytes + 1, null: false
       t.column :note,                 :string,  limit: 250,  null: true
       t.column :active,               :boolean,              null: false, default: true
+      t.column :foreign_id,           :integer,               null: true
       t.column :updated_by_id,        :integer,              null: false
       t.column :created_by_id,        :integer,              null: false
       t.timestamps                                           null: false

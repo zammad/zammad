@@ -1,0 +1,57 @@
+<div class="page-header">
+  <div class="page-header-title"><h1><%- @T('Token Access') %></h1></div>
+</div>
+
+<p><%- @T('You can generate a personal access token for each application you use that needs access to the Zammad API.') %></p>
+
+<h2><%- @T('Add a Personal Access Token') %></h2>
+
+<p><%- @T('Pick a name for the application, and we\'ll give you a unique token.') %></p>
+<form class="page-content js-create">
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="token-label"><%- @T('Name') %></label>
+    </div>
+    <div class="controls"><input id="token-label" type="text" name="label" value="" class="form-control js-input" required></div>
+  </div>
+  <button class="btn btn--primary js-submit"><%- @T('Create') %></button>
+</form>
+
+<hr>
+
+<h2><%- @T('Personal Access Tokens') %></h2>
+<table class="settings-list js-tokenList">
+  <thead>
+    <tr>
+      <th><%- @T('Name') %></th>
+      <th><%- @T('Created') %></th>
+<!--
+      <th><%- @T('Expires') %></th>
+      <th><%- @T('Last used') %></th>
+-->
+      <th><%- @T('Delete') %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% if _.isEmpty(@tokens): %>
+    <tr>
+      <td colspan="3"><%- @T('none') %>
+  <% else: %>
+    <% for token in @tokens: %>
+      <tr>
+        <td><%= token.label %></td>
+        <td><%- @humanTime(token.created_at) %></td>
+  <!--
+        <td><%- @humanTime(token.expired_at) %></td>
+        <td><%- @humanTime(token.last_used_at) %></td>
+  -->
+        <td class="settings-list-controls">
+          <div>
+            <a class="settings-list-control" href="#" data-token-id="<%- token.id %>" data-type="delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
+          </div>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+

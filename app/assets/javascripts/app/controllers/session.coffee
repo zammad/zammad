@@ -53,4 +53,4 @@ class Index extends App.ControllerContent
         @load()
     )
 
-App.Config.set('Session', { prio: 3700, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Session', { prio: 3800, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )

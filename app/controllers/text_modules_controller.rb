@@ -99,6 +99,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def create
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(TextModule, params)
   end
 
@@ -128,6 +129,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def update
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(TextModule, params)
   end
 
@@ -145,6 +147,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
+    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(TextModule, params)
   end
 end

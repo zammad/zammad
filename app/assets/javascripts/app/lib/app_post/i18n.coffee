@@ -141,10 +141,10 @@ class _i18nSingleton extends Spine.Module
 
     @mapString = {}
     App.Ajax.request(
-      id:    'i18n-set-' + @locale,
-      type:   'GET',
-      url:    App.Config.get('api_path') + '/translations/lang/' + @locale,
-      async:  false,
+      id:    "i18n-set-#{@locale}"
+      type:   'GET'
+      url:    "#{App.Config.get('api_path')}/translations/lang/#{@locale}"
+      async:  false
       success: (data, status, xhr) =>
 
         # total count of translations as ref.

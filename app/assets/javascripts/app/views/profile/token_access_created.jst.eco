@@ -1,0 +1,7 @@
+<%- @T('For security reasons, the API token is shown only once. You\'ll need to copy it somewhere safe before continuing.') %>
+
+<form>
+  <div class="input form-group">
+    <div class="controls"><input type="text" value="<%= @name %>" class="form-control input js-select" readonly></div>
+  </div>
+</form>

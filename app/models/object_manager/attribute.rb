@@ -631,7 +631,7 @@ to send no browser reload event, pass false
 
     # sent maintenance message to clients
     if send_event
-      if execute_db_count != 0
+      if execute_db_count.nonzero?
         if ENV['APP_RESTART_CMD']
           AppVersion.set(true, 'restart_auto')
           sleep 4
@@ -639,7 +639,7 @@ to send no browser reload event, pass false
         else
           AppVersion.set(true, 'restart_manual')
         end
-      elsif execute_config_count != 0
+      elsif execute_config_count.nonzero?
         AppVersion.set(true, 'config_changed')
       end
     end

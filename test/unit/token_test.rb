@@ -86,20 +86,20 @@ class TokenTest < ActiveSupport::TestCase
 
       if test[:result] == true
         if !user
-          assert( false, test[:test_name] + ': token verification failed' )
+          assert(false, test[:test_name] + ': token verification failed')
         else
           test[:verify].each { |key, value|
-            assert_equal( user[key], value, 'verify' )
+            assert_equal(user[key], value, 'verify')
           }
         end
       else
-        assert_equal( test[:result], user, test[:test_name] + ': failed or not existing' )
+        assert_equal(test[:result], user, test[:test_name] + ': failed or not existing')
       end
 
       if test[:name]
         #puts test[:test_name] + ': deleting token '+ test[:name]
 
-        token = Token.where( name: test[:name] ).first
+        token = Token.find_by(name: test[:name])
 
         if token
           token.destroy

@@ -129,7 +129,7 @@ class Job < ApplicationModel
     # loop week days
     (0..7).each do |day_counter|
       time_to_check = nil
-      day_to_check = if day_counter == 0
+      day_to_check = if day_counter.zero?
                        time
                      else
                        time + 1.day
@@ -163,10 +163,10 @@ class Job < ApplicationModel
       day_to_check = day_to_check - day_to_check.sec.seconds
 
       # loop minutes till next full hour
-      if day_to_check.min != 0
+      if day_to_check.min.nonzero?
         (0..5).each do |minute_counter|
-          if minute_counter != 0
-            break if day_to_check.min == 0
+          if minute_counter.nonzero?
+            break if day_to_check.min.zero?
             day_to_check = day_to_check + 10.minutes
           end
           next if !timeplan['hours'][day_to_check.hour] && !timeplan['hours'][day_to_check.hour.to_s]

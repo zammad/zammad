@@ -15,12 +15,17 @@ class Index extends App.Controller
     )
 
   # fetch data, render view
-  load: =>
+  load: (force = false) =>
     @ajax(
       id:    'user_devices'
       type:  'GET'
       url:   "#{@apiPath}/user_devices"
       success: (data) =>
+
+        # verify is rerender is needed
+        if !force && @lastestUpdated && data && data[0] && @lastestUpdated.updated_at is data[0].updated_at
+          return
+        @lastestUpdated = data[0]
         @data = data
         @render()
     )
@@ -39,8 +44,9 @@ class Index extends App.Controller
       type:        'DELETE'
       url:         "#{@apiPath}/user_devices/#{id}"
       processData: true
-      success:     @load
-      error:       @error
+      success: =>
+        @load(true)
+      error: @error
     )
 
   error: (xhr, status, error) =>

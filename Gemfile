@@ -26,11 +26,17 @@ end
 
 gem 'autoprefixer-rails', '>=5.2'
 
+gem 'oauth2'
+gem 'doorkeeper'
+
 gem 'omniauth'
-gem 'omniauth-twitter'
+gem 'omniauth-oauth2'
 gem 'omniauth-facebook'
-gem 'omniauth-linkedin'
+gem 'omniauth-github'
+gem 'omniauth-gitlab'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-twitter'
 
 gem 'twitter'
 gem 'koala'

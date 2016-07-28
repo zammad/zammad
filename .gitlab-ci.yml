@@ -61,6 +61,17 @@ test:unit:postgresql:
     - rake test:controllers
     - rake db:drop
 
+test:integration:autowizard:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/auto_wizard_test.rb
+    - rake db:drop
+
 test:integration:email_helper:
   stage: test
   tags:
@@ -71,7 +82,6 @@ test:integration:email_helper:
     - rake db:migrate
     - ruby -I test/ test/integration/email_helper_test.rb
     - rake db:drop
-  allow_failure: true
 
 test:integration:email_deliver:
   stage: test
@@ -411,7 +421,7 @@ test:browser:autowizard_ff:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - ruby -I test/ test/integration/auto_wizard_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_1_mysql:
@@ -968,7 +978,7 @@ test:browser:integration:autowizard_chrome:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_example.json auto_wizard.json
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - ruby -I test/ test/integration/auto_wizard_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - ruby -I test/ test/integration/auto_wizard_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:integration:zendesk_chrome:

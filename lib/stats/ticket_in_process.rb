@@ -39,7 +39,7 @@ class Stats::TicketInProcess
     state = 'supergood'
     average_in_percent = '-'
 
-    if total != 0
+    if total.nonzero?
       in_process_precent = ( count.to_f / (total.to_f / 100) ).round(1)
     end
 

@@ -1,5 +1,5 @@
 <div class="page-header">
-  <div class="page-header-title"><h1><%- @T( 'Devices' ) %></h1></div>
+  <div class="page-header-title"><h1><%- @T('Devices') %></h1></div>
 </div>
 
 <form class="page-content">

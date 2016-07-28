@@ -102,7 +102,7 @@ push translations to online
 
     return true if translations_to_push.empty?
 
-    url = 'https://i18n.zammad.com/api/v1/thanks_for_your_support'
+    url = 'https://i18n.zammad.com/api/v1/translations/thanks_for_your_support'
 
     translator_key = Setting.get('translator_key')
 

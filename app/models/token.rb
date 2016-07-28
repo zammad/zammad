@@ -80,7 +80,7 @@ cleanup old token
   def generate_token
 
     loop do
-      self.name = SecureRandom.hex(30)
+      self.name = SecureRandom.urlsafe_base64(48)
       break if !Token.exists?(name: name)
     end
   end

@@ -43,7 +43,6 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # return result
-    Calendar.init_setup(request.remote_ip)
     render json: {
       setup_done: setup_done,
       import_mode: Setting.get('import_mode'),

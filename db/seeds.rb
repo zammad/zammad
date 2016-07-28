@@ -554,7 +554,7 @@ Setting.create_if_not_exists(
   title: 'Authentication via Google',
   name: 'auth_google_oauth2',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via Google.',
+  description: 'Enables user authentication via Google. Register your app first at [Google API Console Site](https://console.developers.google.com/apis/credentials)',
   options: {
     form: [
       {
@@ -601,7 +601,7 @@ Setting.create_if_not_exists(
   title: 'Authentication via LinkedIn',
   name: 'auth_linkedin',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via LinkedIn.',
+  description: 'Enables user authentication via LinkedIn. Register your app first at [Linkedin Developer Site](https://www.linkedin.com/developer/apps)',
   options: {
     form: [
       {
@@ -1207,6 +1207,51 @@ Setting.create_if_not_exists(
   },
   state: '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?\..+?',
   preferences: { online_service_disable: true },
+  frontend: false
+)
+
+Setting.create_or_update(
+  title: 'API Token Access',
+  name: 'api_token_access',
+  area: 'API::Base',
+  description: 'Enable REST API using tokens (not username/email addeess and password). Each user need to create own access tokens in user profile.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'api_token_access',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  frontend: false
+)
+Setting.create_or_update(
+  title: 'API Password Access',
+  name: 'api_password_access',
+  area: 'API::Base',
+  description: 'Enable REST API access using the username/email address and password for the authentication user.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'api_password_access',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
   frontend: false
 )
 
