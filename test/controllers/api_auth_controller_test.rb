@@ -167,4 +167,26 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test 'token auth - invalid user - admin' do
+
+    admin_token = Token.create(
+      action:     'api',
+      persistent: true,
+      user_id:    @admin.id,
+    )
+    admin_credentials = "Token token=#{admin_token.name}"
+
+    @admin.active = false
+    @admin.save!
+
+    Setting.set('api_token_access', false)
+    get '/api/v1/settings', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(401)
+
+    Setting.set('api_token_access', true)
+    get '/api/v1/settings', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(401)
+
+  end
+
 end

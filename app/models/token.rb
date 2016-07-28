@@ -58,8 +58,13 @@ returns
       return
     end
 
+    user = token.user
+
+    # persistent token not valid if user is inative
+    return if token.persistent && user.active == false
+
     # return token user
-    token.user
+    user
   end
 
 =begin
