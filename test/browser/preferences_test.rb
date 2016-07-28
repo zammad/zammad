@@ -376,6 +376,22 @@ class PreferencesTest < TestCase
       css: '.content.active',
       value: 'Meine'
     )
+
+    # switch to en again
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
+    select(
+      css: '.language_item [name="locale"]',
+      value: 'English (United States)',
+    )
+    click(css: '.content button[type="submit"]')
+    sleep 2
+    watch_for(
+      css: 'body',
+      value: 'Language',
+    )
+
   end
 
   def test_token_access
