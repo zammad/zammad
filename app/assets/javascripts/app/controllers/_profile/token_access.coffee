@@ -12,7 +12,7 @@ class Index extends App.Controller
     @interval(
       =>
         @load()
-      12000
+      62000
     )
 
   # fetch data, render view
