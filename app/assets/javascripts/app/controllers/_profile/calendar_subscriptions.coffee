@@ -66,7 +66,7 @@ class CalendarSubscriptions extends App.Controller
     @ajax(
       id:          'preferences'
       type:        'PUT'
-      url:         @apiPath + '/users/preferences'
+      url:         "#{@apiPath}/users/preferences"
       data:        JSON.stringify data
       success:     @success
       error:       @error
@@ -91,4 +91,4 @@ class CalendarSubscriptions extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set( 'CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', role: ['Agent'], controller: CalendarSubscriptions }, 'NavBarProfile' )
+App.Config.set('CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', role: ['Agent'], controller: CalendarSubscriptions }, 'NavBarProfile')

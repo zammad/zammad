@@ -260,6 +260,12 @@ class ApplicationController < ActionController::Base
     # check http basic based authentication
     authenticate_with_http_basic do |username, password|
       logger.debug "http basic auth check '#{username}'"
+      if Setting.get('api_password_access') == false
+        return {
+          auth: false,
+          message: 'API password access disabled!',
+        }
+      end
       userdata = User.authenticate(username, password)
       next if !userdata
       if check_maintenance_only(userdata)
@@ -276,10 +282,10 @@ class ApplicationController < ActionController::Base
       }
     end
 
-    # check http token based authentication
+    # check http token action based authentication
     if auth_param[:token_action]
       authenticate_with_http_token do |token, _options|
-        logger.debug "token auth check '#{token}'"
+        logger.debug "token action auth check '#{token}'"
         userdata = Token.check(
           action: auth_param[:token_action],
           name: token,
@@ -293,11 +299,39 @@ class ApplicationController < ActionController::Base
         end
         current_user_set(userdata)
         user_device_log(userdata, 'token_auth')
-        logger.debug "token auth for '#{userdata.login}'"
+        logger.debug "token action auth for '#{userdata.login}'"
         return {
           auth: true
         }
       end
+    end
+
+    # check http token based authentication
+    authenticate_with_http_token do |token, _options|
+      logger.debug "token auth check '#{token}'"
+      if Setting.get('api_token_access') == false
+        return {
+          auth: false,
+          message: 'API token access disabled!',
+        }
+      end
+      userdata = Token.check(
+        action: 'api',
+        name: token,
+      )
+      next if !userdata
+      if check_maintenance_only(userdata)
+        return {
+          auth: false,
+          message: 'Maintenance mode enabled!',
+        }
+      end
+      current_user_set(userdata)
+      user_device_log(userdata, 'token_auth')
+      logger.debug "token auth for '#{userdata.login}'"
+      return {
+        auth: true
+      }
     end
 
     logger.debug error_message

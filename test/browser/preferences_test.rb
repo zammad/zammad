@@ -27,6 +27,10 @@ class PreferencesTest < TestCase
       css: '.content .NavBarProfile',
       value: 'Calendar',
     )
+    match(
+      css: '.content .NavBarProfile',
+      value: 'Token Access',
+    )
   end
 
   def test_permission_customer
@@ -54,9 +58,13 @@ class PreferencesTest < TestCase
       css: '.content .NavBarProfile',
       value: 'Calendar',
     )
+    match_not(
+      css: '.content .NavBarProfile',
+      value: 'Token Access',
+    )
   end
 
-  def test_preferences
+  def test_lang_change
     @browser = browser_instance
     login(
       username: 'master@example.com',
@@ -368,5 +376,58 @@ class PreferencesTest < TestCase
       css: '.content.active',
       value: 'Meine'
     )
+  end
+
+  def test_token_access
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/token_access"]')
+
+    set(
+      css:   '#content .js-create .js-input',
+      value: 'Some App#1',
+    )
+    click(css: '#content .js-create .js-submit')
+    watch_for(
+      css: '.modal .modal-title',
+      value: 'Your New Personal Access Token'
+    )
+    click(css: '.modal .js-submit')
+    watch_for(
+      css: '#content .js-tokenList',
+      value: 'Some App#1'
+    )
+
+    set(
+      css:   '#content .js-create .js-input',
+      value: 'Some App#2',
+    )
+    click(css: '#content .js-create .js-submit')
+    watch_for(
+      css: '.modal .modal-title',
+      value: 'Your New Personal Access Token'
+    )
+    click(css: '.modal .js-submit')
+    watch_for(
+      css: '#content .js-tokenList',
+      value: 'Some App#2'
+    )
+
+    click(css: '#content .js-tokenList a')
+    sleep 1
+    alert = @browser.switch_to.alert
+    alert.accept()
+    watch_for_disappear(
+      css: '#content .js-tokenList',
+      value: 'Some App#2'
+    )
+
   end
 end

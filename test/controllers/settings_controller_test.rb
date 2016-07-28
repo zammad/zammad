@@ -13,10 +13,10 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
     @admin = User.create_or_update(
-      login: 'packages-admin',
-      firstname: 'Packages',
+      login: 'setting-admin',
+      firstname: 'Setting',
       lastname: 'Admin',
-      email: 'packages-admin@example.com',
+      email: 'setting-admin@example.com',
       password: 'adminpw',
       active: true,
       roles: roles,
@@ -26,10 +26,10 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     # create agent
     roles = Role.where(name: 'Agent')
     @agent = User.create_or_update(
-      login: 'packages-agent@example.com',
-      firstname: 'Rest',
+      login: 'setting-agent@example.com',
+      firstname: 'Setting',
       lastname: 'Agent',
-      email: 'packages-agent@example.com',
+      email: 'setting-agent@example.com',
       password: 'agentpw',
       active: true,
       roles: roles,
@@ -39,10 +39,10 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     # create customer without org
     roles = Role.where(name: 'Customer')
     @customer_without_org = User.create_or_update(
-      login: 'packages-customer1@example.com',
-      firstname: 'Packages',
+      login: 'setting-customer1@example.com',
+      firstname: 'Setting',
       lastname: 'Customer1',
-      email: 'packages-customer1@example.com',
+      email: 'setting-customer1@example.com',
       password: 'customer1pw',
       active: true,
       roles: roles,
@@ -63,7 +63,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   test 'settings index with admin' do
 
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-admin@example.com', 'adminpw')
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-admin@example.com', 'adminpw')
 
     # index
     get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
@@ -76,7 +76,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   test 'settings index with agent' do
 
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-agent@example.com', 'adminpw')
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-agent@example.com', 'agentpw')
 
     # index
     get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
@@ -89,7 +89,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
   test 'settings index with customer' do
 
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-customer1@example.com', 'customer1pw')
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-customer1@example.com', 'customer1pw')
 
     # index
     get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)

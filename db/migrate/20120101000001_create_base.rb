@@ -188,6 +188,7 @@ class CreateBase < ActiveRecord::Migration
       t.boolean :persistent
       t.string  :name,                limit: 100, null: false
       t.string  :action,              limit: 40,  null: false
+      t.string  :label,               limit: 255, null: true
       t.timestamps                                null: false
     end
     add_index :tokens, :user_id

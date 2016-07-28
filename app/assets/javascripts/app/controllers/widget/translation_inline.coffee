@@ -63,8 +63,8 @@ class Widget extends App.Controller
         App.i18n.setMap(source, translation_new)
 
         # replace rest in page
-        source = source.replace('\'', '\\\'')
-        $(".translation[title='#{source}']").text(translation_new)
+        sourceQuoted = source.replace('\'', '\\\'')
+        $(".translation[title='#{sourceQuoted}']").text(translation_new)
 
         # update permanent translation mapString
         translation = App.Translation.findByAttribute('source', source)
