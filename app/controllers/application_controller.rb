@@ -232,9 +232,19 @@ class ApplicationController < ActionController::Base
     # already logged in, early exit
     if session.id && session[:user_id]
       logger.debug 'session based auth check'
-      userdata = User.lookup(id: session[:user_id])
-      current_user_set(userdata)
-      logger.debug "session based auth for '#{userdata.login}'"
+      user = User.lookup(id: session[:user_id])
+
+      # check scopes / permission check
+      # auth_param[:permission]
+      #if auth_param[:permission] && !user.permission?(auth_param[:permission])
+      #  return {
+      #    auth: false,
+      #    message: 'No permission!',
+      #  }
+      #end
+
+      current_user_set(user)
+      logger.debug "session based auth for '#{user.login}'"
       return {
         auth: true
       }
@@ -243,9 +253,9 @@ class ApplicationController < ActionController::Base
     error_message = 'authentication failed'
 
     # check sso based authentication
-    sso_userdata = User.sso(params)
-    if sso_userdata
-      if check_maintenance_only(sso_userdata)
+    sso_user = User.sso(params)
+    if sso_user
+      if check_maintenance_only(sso_user)
         return {
           auth: false,
           message: 'Maintenance mode enabled!',
@@ -259,6 +269,7 @@ class ApplicationController < ActionController::Base
 
     # check http basic based authentication
     authenticate_with_http_basic do |username, password|
+      request.session_options[:skip] = true # do not send a session cookie
       logger.debug "http basic auth check '#{username}'"
       if Setting.get('api_password_access') == false
         return {
@@ -266,17 +277,17 @@ class ApplicationController < ActionController::Base
           message: 'API password access disabled!',
         }
       end
-      userdata = User.authenticate(username, password)
-      next if !userdata
-      if check_maintenance_only(userdata)
+      user = User.authenticate(username, password)
+      next if !user
+      if check_maintenance_only(user)
         return {
           auth: false,
           message: 'Maintenance mode enabled!',
         }
       end
-      current_user_set(userdata)
-      user_device_log(userdata, 'basic_auth')
-      logger.debug "http basic auth for '#{userdata.login}'"
+      current_user_set(user)
+      user_device_log(user, 'basic_auth')
+      logger.debug "http basic auth for '#{user.login}'"
       return {
         auth: true
       }
@@ -285,21 +296,22 @@ class ApplicationController < ActionController::Base
     # check http token action based authentication
     if auth_param[:token_action]
       authenticate_with_http_token do |token, _options|
-        logger.debug "token action auth check '#{token}'"
-        userdata = Token.check(
+        request.session_options[:skip] = true # do not send a session cookie
+        logger.debug "http token action auth check '#{token}'"
+        user = Token.check(
           action: auth_param[:token_action],
           name: token,
         )
-        next if !userdata
-        if check_maintenance_only(userdata)
+        next if !user
+        if check_maintenance_only(user)
           return {
             auth: false,
             message: 'Maintenance mode enabled!',
           }
         end
-        current_user_set(userdata)
-        user_device_log(userdata, 'token_auth')
-        logger.debug "token action auth for '#{userdata.login}'"
+        current_user_set(user)
+        user_device_log(user, 'token_auth')
+        logger.debug "http token action auth for '#{user.login}'"
         return {
           auth: true
         }
@@ -308,32 +320,84 @@ class ApplicationController < ActionController::Base
 
     # check http token based authentication
     authenticate_with_http_token do |token, _options|
-      logger.debug "token auth check '#{token}'"
+      logger.debug "http token auth check '#{token}'"
+      request.session_options[:skip] = true # do not send a session cookie
       if Setting.get('api_token_access') == false
         return {
           auth: false,
           message: 'API token access disabled!',
         }
       end
-      userdata = Token.check(
+      user = Token.check(
         action: 'api',
         name: token,
       )
-      next if !userdata
-      if check_maintenance_only(userdata)
+      next if !user
+      if check_maintenance_only(user)
         return {
           auth: false,
           message: 'Maintenance mode enabled!',
         }
       end
-      current_user_set(userdata)
-      user_device_log(userdata, 'token_auth')
-      logger.debug "token auth for '#{userdata.login}'"
+
+      # permission check
+      # auth_param[:permission]
+      current_user_set(user)
+      user_device_log(user, 'token_auth')
+      logger.debug "http token auth for '#{user.login}'"
       return {
         auth: true
       }
     end
 
+=begin
+    # check oauth2 token based authentication
+    token = Doorkeeper::OAuth::Token.from_bearer_authorization(request)
+    if token
+      request.session_options[:skip] = true # do not send a session cookie
+      logger.debug "oauth2 token auth check '#{token}'"
+      access_token = Doorkeeper::AccessToken.by_token(token)
+
+      # check expire
+      if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now
+        return {
+          auth: false,
+          message: 'OAuth2 token is expired!',
+        }
+      end
+
+      user = User.find(access_token.resource_owner_id)
+      if !user || user.active == false
+        return {
+          auth: false,
+          message: 'OAuth2 resource owner inactive!',
+        }
+      end
+
+      if check_maintenance_only(user)
+        return {
+          auth: false,
+          message: 'Maintenance mode enabled!',
+        }
+      end
+
+      # check scopes / permission check
+      # auth_param[:permission]
+      if access_token.scopes.empty?
+        return {
+          auth: false,
+          message: 'OAuth2 scope missing for token!',
+        }
+      end
+
+      current_user_set(user)
+      user_device_log(user, 'token_auth')
+      logger.debug "oauth token auth for '#{user.login}'"
+      return {
+        auth: true
+      }
+    end
+=end
     logger.debug error_message
     {
       auth: false,
@@ -462,7 +526,7 @@ class ApplicationController < ActionController::Base
 
   def model_destory_render(object, params)
     generic_object = object.find(params[:id])
-    generic_object.destroy
+    generic_object.destroy!
     model_destory_render_item()
   end
 
@@ -601,8 +665,12 @@ class ApplicationController < ActionController::Base
   end
 
   def unauthorized(e)
+    error = model_match_error(e.message)
+    if error && error[:error]
+      response.headers['X-Failure'] = error[:error_human] || error[:error]
+    end
     respond_to do |format|
-      format.json { render json: model_match_error(e.message), status: :unauthorized }
+      format.json { render json: error, status: :unauthorized }
       format.any {
         @exception = e
         @traceback = !Rails.env.production?
