@@ -102,13 +102,13 @@ class Index extends App.ControllerContent
   success: (data, status, xhr) =>
 
     # redirect to #
-    requested_url = @Config.get( 'requested_url' )
+    requested_url = @Config.get('requested_url')
     if requested_url && requested_url isnt '#login' && requested_url isnt '#logout'
       @log 'notice', "REDIRECT to '#{requested_url}'"
       @navigate requested_url
 
       # reset
-      @Config.set( 'requested_url', '' )
+      @Config.set('requested_url', '')
     else
       @log 'notice', 'REDIRECT to -#/-'
       @navigate '#/'
