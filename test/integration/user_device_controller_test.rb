@@ -278,9 +278,12 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Array)
     user_device_last = UserDevice.last
+    assert_equal(user_device_last.id, user_device_first.id)
     assert_equal(user_device_last.updated_at.to_s, user_device_first.updated_at.to_s)
 
-    ENV['USER_DEVICE_UPDATED_AT'] = (Time.zone.now - 4.hours).to_s
+    user_device_last.updated_at = Time.zone.now - 4.hours
+    user_device_last.save!
+
     params = {}
     get '/api/v1/users', params, @headers.merge('Authorization' => credentials)
     assert_response(200)
@@ -293,8 +296,9 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Array)
     user_device_last = UserDevice.last
-    assert_not_equal(user_device_last.updated_at.to_s, user_device_first.updated_at.to_s)
-    ENV['USER_DEVICE_UPDATED_AT'] = nil
+    assert_equal(user_device_last.id, user_device_first.id)
+    assert(user_device_last.updated_at > user_device_first.updated_at)
+
   end
 
   test '07 - login index with admin with basic auth' do

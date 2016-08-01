@@ -148,7 +148,7 @@ log user device action
 =end
 
   def self.action(user_device_id, user_agent, ip, user_id, type)
-    user_device = UserDevice.find(user_device_id)
+    user_device = UserDevice.lookup(id: user_device_id)
 
     # update location if needed
     if user_device.ip != ip
@@ -174,9 +174,12 @@ log user device action
       end
     end
 
+    # only update updated_at every 5 min.
+    return user_device if type != 'session' && (user_device.updated_at + 5.minutes) > Time.zone.now
+
     # update attributes
     user_device.updated_at = Time.zone.now # force update, also if no other attribute has changed
-    user_device.save
+    user_device.save!
     user_device
   end
 
