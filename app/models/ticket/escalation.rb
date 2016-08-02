@@ -106,11 +106,7 @@ returns
     # fist response
     # calculate first response escalation
     if sla.first_response_time
-      self.first_response_escal_date = biz.time(sla.first_response_time, :minutes).after(created_at)
-      pending_time = pending_minutes(created_at, first_response_escal_date, biz)
-      if pending_time && pending_time > 0
-        self.first_response_escal_date = biz.time(pending_time, :minutes).after(first_response_escal_date)
-      end
+      self.first_response_escal_date = destination_time(created_at, sla.first_response_time, biz)
     end
 
     # get response time in min
@@ -139,11 +135,7 @@ returns
       last_update = last_contact_customer
     end
     if sla.update_time && last_update
-      self.update_time_escal_date = biz.time(sla.update_time, :minutes).after(last_update)
-      pending_time = pending_minutes(last_update, update_time_escal_date, biz)
-      if pending_time && pending_time > 0
-        self.update_time_escal_date = biz.time(pending_time, :minutes).after(update_time_escal_date)
-      end
+      self.update_time_escal_date = destination_time(last_update, sla.update_time, biz)
     end
     if update_time_escal_date && ((!escalation_time && update_time_escal_date) || update_time_escal_date < escalation_time)
       self.escalation_time = update_time_escal_date
@@ -162,11 +154,7 @@ returns
     # close time
     # calculate close time escalation
     if sla.solution_time
-      self.close_time_escal_date = biz.time(sla.solution_time, :minutes).after(created_at)
-      pending_time = pending_minutes(created_at, first_response_escal_date, biz)
-      if pending_time && pending_time > 0
-        self.close_time_escal_date = biz.time(pending_time, :minutes).after(close_time_escal_date)
-      end
+      self.close_time_escal_date = destination_time(created_at, sla.solution_time, biz)
     end
 
     # get close time in min
@@ -228,17 +216,54 @@ returns
 
   private
 
+=begin
+
+return destination_time for time range
+
+  destination_time = destination_time(start_time, move_minutes, biz)
+
+returns
+
+  destination_time = Time.zone.parse('2016-08-02T11:11:11Z')
+
+=end
+
+  def destination_time(start_time, move_minutes, biz)
+    destination_time = biz.time(move_minutes, :minutes).after(start_time)
+
+    # go step by step to end of pending_minutes until pending_minutes is 0
+    pending_start_time = start_time
+    500.times.each {
+
+      # check if we have pending time in the range to the destination time
+      pending_minutes = pending_minutes(pending_start_time, destination_time, biz)
+
+      # skip if no pending time is given
+      break if !pending_minutes || pending_minutes <= 0
+
+      # set pending destination to start time and add pending time to destination time
+      pending_start_time = destination_time
+      destination_time   = biz.time(pending_minutes, :minutes).after(destination_time)
+    }
+
+    destination_time
+  end
+
   # get business minutes of pending time
   #  type = business_minutes (pending time in business minutes)
   #  type = non_business_minutes (pending time in non business minutes)
   def pending_minutes(start_time, end_time, biz, type = 'non_business_minutes')
 
-    working_time_in_min = 0
-    total_time_in_min = 0
-    last_state = nil
-    last_state_change = nil
-    last_state_is_pending = false
-    pending_minutes = 0
+    working_time_in_min      = 0
+    total_time_in_min        = 0
+    last_state               = nil
+    last_state_change        = nil
+    last_state_is_pending    = false
+    pending_minutes          = 0
+    ignore_escalation_states = Ticket::State.where(
+      ignore_escalation: true,
+    ).map(&:name)
+
     history_get.each { |history_item|
 
       # ignore if it isn't a state change
@@ -264,9 +289,7 @@ returns
 
       # check if time need to be counted
       counted = true
-      if history_item['value_from'] == 'pending reminder'
-        counted = false
-      elsif history_item['value_from'] == 'close'
+      if ignore_escalation_states.include?(history_item['value_from'])
         counted = false
       end
 
@@ -279,11 +302,10 @@ returns
       end
       total_time_in_min = total_time_in_min + diff
 
-      last_state_is_pending = if history_item['value_to'] == 'pending reminder'
-                                true
-                              else
-                                false
-                              end
+      last_state_is_pending = false
+      if ignore_escalation_states.include?(history_item['value_to'])
+        last_state_is_pending = true
+      end
 
       # remember for next loop last state
       last_state        = history_item['value_to']
