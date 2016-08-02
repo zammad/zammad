@@ -160,9 +160,9 @@ class CreateBase < ActiveRecord::Migration
 
     create_table :translations do |t|
       t.string :locale,               limit: 10,   null: false
-      t.string :source,               limit: 255,  null: false
-      t.string :target,               limit: 255,  null: false
-      t.string :target_initial,       limit: 255,  null: false
+      t.string :source,               limit: 500,  null: false
+      t.string :target,               limit: 500,  null: false
+      t.string :target_initial,       limit: 500,  null: false
       t.string :format,               limit: 20,   null: false, default: 'string'
       t.integer :updated_by_id,                    null: false
       t.integer :created_by_id,                    null: false
