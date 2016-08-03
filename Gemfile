@@ -24,7 +24,7 @@ group :assets do
   gem 'eco'
 end
 
-gem 'autoprefixer-rails', '>=5.2'
+gem 'autoprefixer-rails'
 
 gem 'oauth2'
 gem 'doorkeeper'
@@ -120,7 +120,7 @@ group :development, :test do
   gem 'selenium-webdriver'
 
   # livereload on template changes (html, js, css)
-  gem 'guard', '>= 2.2.2', require: false
+  gem 'guard',             require: false
   gem 'guard-livereload',  require: false
   gem 'rack-livereload'
   gem 'rb-fsevent',        require: false
