@@ -20,6 +20,7 @@ class Widget extends App.Controller
 
   toogle: =>
     if @active
+      $('.translation:focus').trigger('blur')
       @disable()
       @active = false
       return
