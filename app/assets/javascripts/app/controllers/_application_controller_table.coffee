@@ -281,7 +281,8 @@ class App.ControllerTable extends App.Controller
         @objects = @objects.concat groupObjects[group]
         groupObjects[group] = [] # release old array
 
-    @calculateHeaderWidths()
+    if @table_id
+      @calculateHeaderWidths()
 
     # get content
     table = App.view('generic/table')(
@@ -406,8 +407,7 @@ class App.ControllerTable extends App.Controller
       container: @container
 
   calculateHeaderWidths: ->
-    if !@headers
-      return
+    return if !@headers
 
     if @availableWidth is 0
       @availableWidth = @minTableWidth
@@ -448,7 +448,7 @@ class App.ControllerTable extends App.Controller
     if @dndCallback
       widths += @sortableColWidth
 
-    return widths
+    widths
 
   setHeaderWidths: =>
     @calculateHeaderWidths()
