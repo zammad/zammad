@@ -472,7 +472,7 @@ class App.Model extends Spine.Model
 
   unsubscribe from model or collection
 
-  App.Model.unsubscribe( @subscribeId )
+  App.Model.unsubscribe(@subscribeId)
 
   ###
 

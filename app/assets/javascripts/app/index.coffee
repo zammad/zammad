@@ -52,7 +52,7 @@ class App extends Spine.Controller
   @viewPrintItem: (item, attribute_config = {}, valueRef) ->
     return '-' if item is undefined
     return '-' if item is ''
-    return item if !item
+    return item if item is null
     result = item
 
     # lookup relation
@@ -91,6 +91,13 @@ class App extends Spine.Controller
     if !_.isEmpty(attribute_config.options)
       if attribute_config.options[result]
         result = attribute_config.options[result]
+
+    # transform boolean
+    if attribute_config.tag is 'boolean'
+      if result is true
+        result = 'yes'
+      else if result is false
+        result = 'no'
 
     # translate content
     if attribute_config.translate || (isObject && item.translate && item.translate())
