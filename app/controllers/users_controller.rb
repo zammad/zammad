@@ -146,7 +146,7 @@ class UsersController < ApplicationController
 
         # everybody else will go as customer per default
       else
-        role_ids.push Role.signup_role_ids
+        role_ids = Role.signup_role_ids
       end
       user.role_ids  = role_ids
       user.group_ids = group_ids
