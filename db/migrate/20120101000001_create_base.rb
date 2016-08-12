@@ -95,7 +95,7 @@ class CreateBase < ActiveRecord::Migration
 
     create_table :roles do |t|
       t.string :name,                   limit: 100, null: false
-      t.string :preferences,            limit: 500.kilobytes + 1, null: true
+      t.text   :preferences,            limit: 500.kilobytes + 1, null: true
       t.boolean :default_at_signup,                 null: true, default: false
       t.boolean :active,                            null: false, default: true
       t.string :note,                   limit: 250, null: true
@@ -204,7 +204,7 @@ class CreateBase < ActiveRecord::Migration
       t.string  :name,                limit: 100, null: false
       t.string  :action,              limit: 40,  null: false
       t.string  :label,               limit: 255, null: true
-      t.string  :preferences,         limit: 500.kilobytes + 1, null: true
+      t.text    :preferences,         limit: 500.kilobytes + 1, null: true
       t.timestamps                                null: false
     end
     add_index :tokens, :user_id
