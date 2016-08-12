@@ -775,7 +775,7 @@ returns
     role_ids.each { |role_id|
       role = Role.lookup(id: role_id)
       raise "Unable to find role for id #{role_id}" if !role
-      next unless role.preferences[:not]
+      next if !role.preferences[:not]
       role.preferences[:not].each { |local_role_name|
         local_role = Role.lookup(name: local_role_name)
         next if !local_role

@@ -192,16 +192,15 @@ class App.Model extends Spine.Model
 
     # in case if no configure_attributes exist
     return {} if !attributes
-    attributesNew = {}
 
     # check params of screen if screen is requested
+    attributesNew = {}
     if screen
       for attribute in attributes
-        if attribute.screen
-          if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty(attribute.screen[ screen ])
-            for item, value of attribute.screen[ screen ]
-              attribute[item] = value
-            attributesNew[ attribute.name ] = attribute
+        if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty(attribute.screen[ screen ])
+          for item, value of attribute.screen[ screen ]
+            attribute[item] = value
+          attributesNew[ attribute.name ] = attribute
 
     # if no screen is given or no attribute has this screen - use default attributes
     if !screen || _.isEmpty(attributesNew)

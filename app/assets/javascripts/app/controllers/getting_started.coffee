@@ -2,7 +2,7 @@ class Index extends App.WizardFullScreen
   constructor: ->
     super
 
-    if !@permissionCheck('admin.wizard')
+    if @authenticateCheck() && !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -63,7 +63,7 @@ class AutoWizard extends App.WizardFullScreen
     super
 
     # if already logged in, got to #
-    if !@permissionCheck('admin.wizard')
+    if @authenticateCheck() && !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -139,7 +139,7 @@ class Admin extends App.WizardFullScreen
   constructor: ->
     super
 
-    if !@permissionCheck('admin.wizard')
+    if @authenticateCheck() && !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
