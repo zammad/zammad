@@ -132,10 +132,10 @@ class App.TicketCreate extends App.Controller
 
   autosaveStart: =>
     if !@autosaveLast
-      state = App.TaskManager.get(@task_key)
-      if !state
-        state = {}
-      @autosaveLast = state || {}
+      task = App.TaskManager.get(@task_key)
+      if task && !task.state
+        task.state = {}
+      @autosaveLast = task.state || {}
     update = =>
       data = @formParam(@$('.ticket-create'))
       return if _.isEmpty(data)
