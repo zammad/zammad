@@ -2492,7 +2492,10 @@ agent.permission_grand('chat.agent')
 agent.permission_grand('cti.agent')
 
 customer = Role.find_by(name: 'Customer')
-customer.permission_grand('user_preferences')
+customer.permission_grand('user_preferences.password')
+customer.permission_grand('user_preferences.language')
+customer.permission_grand('user_preferences.linked_accounts')
+customer.permission_grand('user_preferences.avatar')
 customer.permission_grand('ticket.customer')
 
 Group.create_if_not_exists(
