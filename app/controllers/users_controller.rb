@@ -321,7 +321,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def search
 
-    if !current_user.permissions('ticket.agent') && !current_user.permissions('admin.user')
+    if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
       response_access_deny
       return
     end
