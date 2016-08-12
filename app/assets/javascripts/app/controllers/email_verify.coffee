@@ -1,14 +1,14 @@
 class Index extends App.Controller
   constructor: ->
     super
-    return if !@authenticate()
+    @authenticateCheckRedirect()
     @verifyCall()
 
   verifyCall: =>
     @ajax(
       id:          'email_verify'
       type:        'POST'
-      url:         @apiPath + '/users/email_verify'
+      url:         "#{@apiPath}/users/email_verify"
       data:        JSON.stringify(token: @token)
       processData: true
       success:     @success

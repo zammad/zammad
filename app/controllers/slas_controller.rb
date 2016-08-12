@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class SlasController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'admin.sla') }
 
 =begin
 
@@ -47,7 +47,6 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 =end
 
   def index
-    deny_if_not_role(Z_ROLENAME_ADMIN)
 
     if params[:full]
 
@@ -92,7 +91,6 @@ curl http://localhost/api/v1/slas/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(Sla, params)
   end
 
@@ -121,7 +119,6 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password} -H "Content-Ty
 =end
 
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Sla, params)
   end
 
@@ -150,7 +147,6 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password} -H "Content-Ty
 =end
 
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Sla, params)
   end
 
@@ -168,7 +164,7 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password} -H "Content-Ty
 =end
 
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Sla, params)
   end
+
 end

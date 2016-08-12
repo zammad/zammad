@@ -1,9 +1,7 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.trigger'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     new App.ControllerGenericIndex(
       el: @el
@@ -26,4 +24,4 @@ class Index extends App.ControllerContent
       large: true
     )
 
-App.Config.set('Trigger', { prio: 3300, name: 'Trigger', parent: '#manage', target: '#manage/trigger', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Trigger', { prio: 3300, name: 'Trigger', parent: '#manage', target: '#manage/trigger', controller: Index, permission: ['admin.trigger'] }, 'NavBarAdmin')

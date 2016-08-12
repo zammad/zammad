@@ -95,6 +95,8 @@ class CreateBase < ActiveRecord::Migration
 
     create_table :roles do |t|
       t.string :name,                   limit: 100, null: false
+      t.string :preferences,            limit: 500.kilobytes + 1, null: true
+      t.boolean :default_at_signup,                 null: true, default: false
       t.boolean :active,                            null: false, default: true
       t.string :note,                   limit: 250, null: true
       t.integer :updated_by_id,                     null: false
@@ -102,6 +104,19 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps                                  null: false
     end
     add_index :roles, [:name], unique: true
+
+    create_table :permissions do |t|
+      t.string :name, limit: 255, null: false
+      t.string :note, limit: 500, null: true
+      t.string :preferences, limit: 10_000, null: true
+      t.timestamps
+    end
+    add_index :permissions, [:name], unique: true
+
+    create_table :permissions_roles, id: false do |t|
+      t.belongs_to :role, index: true
+      t.belongs_to :permission, index: true
+    end
 
     create_table :organizations do |t|
       t.string :name,                   limit: 100, null: false
@@ -189,6 +204,7 @@ class CreateBase < ActiveRecord::Migration
       t.string  :name,                limit: 100, null: false
       t.string  :action,              limit: 40,  null: false
       t.string  :label,               limit: 255, null: true
+      t.string  :preferences,         limit: 500.kilobytes + 1, null: true
       t.timestamps                                null: false
     end
     add_index :tokens, :user_id
@@ -264,7 +280,7 @@ class CreateBase < ActiveRecord::Migration
     create_table :activity_streams do |t|
       t.references :activity_stream_type,           null: false
       t.references :activity_stream_object,         null: false
-      t.references :role,                           null: true
+      t.references :permission,                     null: true
       t.references :group,                          null: true
       t.integer :o_id,                              null: false
       t.integer :created_by_id,                     null: false
@@ -272,7 +288,7 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :activity_streams, [:o_id]
     add_index :activity_streams, [:created_by_id]
-    add_index :activity_streams, [:role_id]
+    add_index :activity_streams, [:permission_id]
     add_index :activity_streams, [:group_id]
     add_index :activity_streams, [:created_at]
     add_index :activity_streams, [:activity_stream_object_id]

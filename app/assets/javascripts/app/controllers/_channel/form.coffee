@@ -1,5 +1,6 @@
 # coffeelint: disable=no_unnecessary_double_quotes
-class App.ChannelForm extends App.Controller
+class App.ChannelForm extends App.ControllerContent
+  requiredPermission: 'admin.channel_form'
   events:
     'change form.js-params': 'updateParams'
     'keyup form.js-params': 'updateParams'
@@ -52,4 +53,4 @@ class App.ChannelForm extends App.Controller
     value = @formSetting.prop('checked')
     App.Setting.set('form_ticket_create', value)
 
-App.Config.set( 'Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, permission: ['admin.formular'] }, 'NavBarAdmin')

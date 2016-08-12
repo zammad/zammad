@@ -41,7 +41,7 @@ class Widget extends App.Controller
 
   maintanaceMode: (data = {}) =>
     return if data.on isnt true
-    return if !@authenticate(true)
+    @authenticateCheckRedirect()
     @navigate '#logout'
 
   #App.Event.trigger('maintenance', {type:'restart_auto'})

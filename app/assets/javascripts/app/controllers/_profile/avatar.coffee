@@ -1,4 +1,5 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.avatar'
   elements:
     '.js-upload':      'fileInput'
     '.avatar-gallery': 'avatarGallery'
@@ -11,7 +12,6 @@ class Index extends App.Controller
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Avatar', true
     @avatars = []
     @loadAvatarList()
@@ -143,7 +143,7 @@ class Index extends App.Controller
 
       reader.readAsDataURL(@)
 
-App.Config.set('Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index }, 'NavBarProfile')
+App.Config.set('Avatar', { prio: 1100, name: 'Avatar', parent: '#profile', target: '#profile/avatar', controller: Index, permission: ['user_preferences.avatar'] }, 'NavBarProfile')
 
 class ImageCropper extends App.ControllerModal
   buttonClose: true

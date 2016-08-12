@@ -13,7 +13,6 @@ class App.ControllerIntegrationBase extends App.Controller
   constructor: ->
     super
 
-    return if !@authenticate(false, 'Admin')
     @title @featureName, true
 
     @initalRender = true

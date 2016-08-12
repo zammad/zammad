@@ -1,8 +1,9 @@
 class Ticket extends App.ControllerTabs
+  requiredPermission: 'admin.ticket'
   header: 'Ticket'
   constructor: ->
     super
-    return if !@authenticate(false, 'Admin')
+
     @title 'Ticket', true
     @tabs = [
       { name: 'Base',   'target': 'base',   controller: App.SettingsArea, params: { area: 'Ticket::Base' } }
@@ -10,4 +11,4 @@ class Ticket extends App.ControllerTabs
     ]
     @render()
 
-App.Config.set('SettingTicket', { prio: 1700, parent: '#settings', name: 'Ticket', target: '#settings/ticket', controller: Ticket, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('SettingTicket', { prio: 1700, parent: '#settings', name: 'Ticket', target: '#settings/ticket', controller: Ticket, permission: ['admin.ticket'] }, 'NavBarAdmin')

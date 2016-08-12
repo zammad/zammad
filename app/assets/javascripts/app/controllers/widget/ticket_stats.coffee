@@ -20,7 +20,7 @@ class App.TicketStats extends App.Controller
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
-      return if !@authenticate(true)
+      return if !@authenticateCheck()
       @render()
 
   release: =>

@@ -1,11 +1,11 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.access_token'
   events:
     'click [data-type=delete]': 'delete'
     'submit form.js-create': 'create'
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Token Access', true
 
     @load()
@@ -89,4 +89,4 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: Index, role: [ 'Agent', 'Admin' ]  }, 'NavBarProfile')
+App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: Index, permission: ['user_preferences.access_token']  }, 'NavBarProfile')

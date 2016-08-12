@@ -28,10 +28,6 @@ class Form extends App.Controller
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
-
     @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
   currentConfig: ->

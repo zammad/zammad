@@ -1959,7 +1959,7 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1, trigger: 'cti:reload' },
+  preferences: { prio: 1, trigger: ['menu:render', 'cti:reload'] },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2126,20 +2126,358 @@ Role.create_if_not_exists(
   created_by_id: 1,
   updated_by_id: 1,
 )
-Role.create_if_not_exists(
-  id: 5,
-  name: 'Chat',
-  note: 'Access to chat feature.',
-  updated_by_id: 1,
-  created_by_id: 1
+
+Permission.create_if_not_exists(
+  name: 'admin',
+  note: 'Admin Interface',
+  preferences: {},
 )
-Role.create_if_not_exists(
-  id: 6,
-  name: 'CTI',
-  note: 'Access to CTI feature.',
-  updated_by_id: 1,
-  created_by_id: 1
+Permission.create_if_not_exists(
+  name: 'admin.user',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Users']
+  },
 )
+Permission.create_if_not_exists(
+  name: 'admin.group',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Groups']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.role',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Roles']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.organization',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Organizations']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.overview',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Overviews']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.text_module',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Text Modules']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.macro',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Macros']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.tag',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Tags']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.calendar',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Calendar']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.sla',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['SLA']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.scheduler',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Scheduler']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.report_profile',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Report Profiles']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_web',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Web']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_formular',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Formular']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_web',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Web']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_email',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Email']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_twitter',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Twitter']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_facebook',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Facebook']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_chat',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Chat']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.branding',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Branding']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.setting_system',
+  note: 'Manage %s Settings',
+  preferences: {
+    translations: ['System']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.security',
+  note: 'Manage %s Settings',
+  preferences: {
+    translations: ['Security']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.ticket',
+  note: 'Manage %s Settings',
+  preferences: {
+    translations: ['Ticket']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.package',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Packages']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.integration',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Integrations']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.api',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['API']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.object',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Objects']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.translation',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Translations']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.maintenance',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Maintenance']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.session',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Sessions']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences',
+  note: 'User Preferences',
+  preferences: {},
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.password',
+  note: 'Change %s',
+  preferences: {
+    translations: ['Password']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.notifications',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Notifications'],
+    required: ['ticket.agent'],
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.access_token',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Token Access']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.language',
+  note: 'Change %s',
+  preferences: {
+    translations: ['Language']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.linked_accounts',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Linked Accounts']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.device',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Devices']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.avatar',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Avatar']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.calendar',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['Calendars'],
+    required: ['ticket.agent'],
+  },
+)
+
+Permission.create_if_not_exists(
+  name: 'report',
+  note: 'Report Interface',
+  preferences: {},
+)
+Permission.create_if_not_exists(
+  name: 'ticket',
+  note: 'Ticket Interface',
+  preferences: {
+    disabled: true
+  },
+)
+Permission.create_if_not_exists(
+  name: 'ticket.agent',
+  note: 'Access to Agent Tickets based on Group Access',
+  preferences: {
+    not: ['ticket.customer'],
+    plugin: ['groups']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'ticket.customer',
+  note: 'Access to Customer Tickets based on current_user.id and current_user.organization_id',
+  preferences: {
+    not: ['ticket.agent'],
+  },
+)
+Permission.create_if_not_exists(
+  name: 'chat',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['Chat']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'chat.agent',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['Chat'],
+    not: ['chat.customer'],
+  },
+)
+Permission.create_if_not_exists(
+  name: 'cti',
+  note: 'CTI',
+  preferences: {
+    disabled: true
+  },
+)
+Permission.create_if_not_exists(
+  name: 'cti.agent',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['CTI'],
+    not: ['cti.customer'],
+  },
+)
+
+admin = Role.find_by(name: 'Admin')
+admin.permission_grand('user_preferences')
+admin.permission_grand('admin')
+admin.permission_grand('report')
+
+agent = Role.find_by(name: 'Agent')
+agent.permission_grand('user_preferences')
+agent.permission_grand('ticket.agent')
+agent.permission_grand('chat.agent')
+agent.permission_grand('cti.agent')
+
+customer = Role.find_by(name: 'Customer')
+customer.permission_grand('user_preferences')
+customer.permission_grand('ticket.customer')
 
 Group.create_if_not_exists(
   id: 1,
@@ -3765,10 +4103,7 @@ ObjectManager::Attribute.add(
     invite_agent: {
       '-all-' => {
         null: false,
-        hideMode: {
-          rolesSelected: ['Agent'],
-          rolesNot: ['Customer'],
-        }
+        default: [Role.lookup(name: 'Agent').id],
       },
     },
     invite_customer: {},
@@ -3866,9 +4201,10 @@ ObjectManager::Attribute.add(
     note: 'Customers in the organization can view each other items.',
     item_class: 'formGroup--halfSize',
     options: {
-      true: 'Yes',
-      false: 'No',
-    }
+      true: 'yes',
+      false: 'no',
+    },
+    translate: true,
   },
   editable: false,
   active: true,

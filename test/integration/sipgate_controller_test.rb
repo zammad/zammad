@@ -68,7 +68,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     )
 
     groups = Group.where(name: 'Users')
-    roles  = Role.where(name: %w(Agent CTI))
+    roles  = Role.where(name: %w(Agent))
     agent  = User.create_or_update(
       login: 'cti-agent@example.com',
       firstname: 'E',

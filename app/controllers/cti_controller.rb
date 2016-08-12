@@ -1,12 +1,10 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class CtiController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'cti.agent') }
 
   # list current caller log
   def index
-    deny_if_not_role('CTI')
-
     backends = [
       {
         name: 'sipgate.io',
@@ -22,7 +20,6 @@ class CtiController < ApplicationController
 
   # set caller log to done
   def done
-    deny_if_not_role('CTI')
     log = Cti::Log.find(params['id'])
     log.done = params['done']
     log.save

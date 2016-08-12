@@ -88,7 +88,7 @@ module Channel::Filter::IdentifySender
     return user if user
 
     # create new user
-    roles = Role.where(name: 'Customer')
+    role_ids = Role.signup_role_ids
 
     # fillup
     %w(firstname lastname).each { |item|
@@ -98,7 +98,7 @@ module Channel::Filter::IdentifySender
     }
     data[:password]      = ''
     data[:active]        = true
-    data[:roles]         = roles
+    data[:role_ids]      = role_ids
     data[:updated_by_id] = 1
     data[:created_by_id] = 1
 

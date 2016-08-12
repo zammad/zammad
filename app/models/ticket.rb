@@ -3,6 +3,7 @@
 class Ticket < ApplicationModel
   include Ticket::Escalation
   include Ticket::Subject
+  load 'ticket/permission.rb'
   include Ticket::Permission
   load 'ticket/assets.rb'
   include Ticket::Assets
@@ -23,35 +24,40 @@ class Ticket < ApplicationModel
 
   latest_change_support
 
-  activity_stream_support ignore_attributes: {
-    organization_id: true, # organization_id will channge automatically on user update
-    create_article_type_id: true,
-    create_article_sender_id: true,
-    article_count: true,
-    first_response: true,
-    first_response_escal_date: true,
-    first_response_sla_time: true,
-    first_response_in_min: true,
-    first_response_diff_in_min: true,
-    close_time: true,
-    close_time_escal_date: true,
-    close_time_sla_time: true,
-    close_time_in_min: true,
-    close_time_diff_in_min: true,
-    update_time_escal_date: true,
-    update_time_sla_time: true,
-    update_time_in_min: true,
-    update_time_diff_in_min: true,
-    last_contact: true,
-    last_contact_agent: true,
-    last_contact_customer: true,
-  }
+  activity_stream_support(
+    permission: 'ticket.agent',
+    ignore_attributes: {
+      organization_id: true, # organization_id will channge automatically on user update
+      create_article_type_id: true,
+      create_article_sender_id: true,
+      article_count: true,
+      first_response: true,
+      first_response_escal_date: true,
+      first_response_sla_time: true,
+      first_response_in_min: true,
+      first_response_diff_in_min: true,
+      close_time: true,
+      close_time_escal_date: true,
+      close_time_sla_time: true,
+      close_time_in_min: true,
+      close_time_diff_in_min: true,
+      update_time_escal_date: true,
+      update_time_sla_time: true,
+      update_time_in_min: true,
+      update_time_diff_in_min: true,
+      last_contact: true,
+      last_contact_agent: true,
+      last_contact_customer: true,
+    }
+  )
 
-  history_support ignore_attributes: {
-    create_article_type_id: true,
-    create_article_sender_id: true,
-    article_count: true,
-  }
+  history_support(
+    ignore_attributes: {
+      create_article_type_id: true,
+      create_article_sender_id: true,
+      article_count: true,
+    }
+  )
 
   search_index_support
 
@@ -85,10 +91,12 @@ returns
 =end
 
   def agent_of_group
+    roles = Role.with_permissions('ticket.agent')
+    role_ids = roles.map(&:id)
     Group.find(group_id)
          .users.where(active: true)
          .joins(:roles)
-         .where('roles.name' => Z_ROLENAME_AGENT, 'roles.active' => true)
+         .where('roles.id' => role_ids, 'roles.active' => true)
          .order('users.login')
          .uniq()
   end
@@ -107,7 +115,7 @@ returns
 
   def self.access_condition(user)
     access_condition = []
-    if user.role?(Z_ROLENAME_AGENT)
+    if user.permissions?('ticket.agent')
       group_ids = Group.select('groups.id').joins(:users)
                        .where('groups_users.user_id = ?', user.id)
                        .where('groups.active = ?', true)
@@ -291,7 +299,7 @@ returns
     Ticket::Article.create(
       ticket_id: id,
       type_id: Ticket::Article::Type.lookup(name: 'note').id,
-      sender_id: Ticket::Article::Sender.lookup(name: Z_ROLENAME_AGENT).id,
+      sender_id: Ticket::Article::Sender.lookup(name: 'Agent').id,
       body: 'merged',
       internal: false,
       created_by_id: data[:user_id],

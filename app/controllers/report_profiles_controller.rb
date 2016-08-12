@@ -1,5 +1,5 @@
 class ReportProfilesController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'admin.report_profile') }
 
 =begin
 
@@ -138,4 +138,5 @@ curl http://localhost/api/report_profiles.json -v -u #{login}:#{password} -H "Co
   def destroy
     model_destory_render(Report::Profile, params)
   end
+
 end

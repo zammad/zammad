@@ -5,7 +5,7 @@ class TicketArticlesController < ApplicationController
 
   # GET /articles
   def index
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin')
     model_index_render(Ticket::Article, params)
   end
 
@@ -48,7 +48,7 @@ class TicketArticlesController < ApplicationController
       ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
-        next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+        next if article.internal == true && current_user.permissions?('ticket.customer')
 
         result = article.attributes_with_relation_names
 
@@ -67,7 +67,7 @@ class TicketArticlesController < ApplicationController
       ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
-        next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+        next if article.internal == true && current_user.permissions?('ticket.customer')
 
         record_ids.push article.id
         assets = article.assets({})
@@ -82,7 +82,7 @@ class TicketArticlesController < ApplicationController
     ticket.articles.each { |article|
 
       # ignore internal article if customer is requesting
-      next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+      next if article.internal == true && current_user.permissions?('ticket.customer')
 
       articles.push article.attributes_with_relation_names
     }

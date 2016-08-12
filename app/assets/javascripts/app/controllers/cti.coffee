@@ -5,8 +5,6 @@ class App.CTI extends App.Controller
   constructor: ->
     super
 
-    return if !@isRole('CTI')
-
     @list = []
     @backends = []
     @meta =
@@ -84,11 +82,12 @@ class App.CTI extends App.Controller
       title: title
     )
 
-  featureActive: ->
-    true
+  featureActive: =>
+    return true if @Config.get('sipgate_integration')
+    false
 
   render: ->
-    if !@isRole('CTI')
+    if !@permissionCheck('cti.agent')
       @renderScreenUnauthorized(objectName: 'CTI')
       return
 
@@ -100,7 +99,7 @@ class App.CTI extends App.Controller
     if !backendEnabled
       @html App.view('cti/not_configured')(
         backends: @backends
-        isAdmin: @isRole('Admin')
+        isAdmin: @permissionCheck('admin.integration')
       )
       @updateNavMenu()
       return
@@ -193,11 +192,9 @@ class App.CTI extends App.Controller
     )
 
 class CTIRouter extends App.ControllerPermanent
+  requiredPermission: 'cti.agent'
   constructor: (params) ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'CTI')
 
     App.TaskManager.execute(
       key:        'CTI'
@@ -209,4 +206,4 @@ class CTIRouter extends App.ControllerPermanent
 
 App.Config.set('cti', CTIRouter, 'Routes')
 App.Config.set('CTI', { controller: 'CTI', authentication: true }, 'permanentTask')
-App.Config.set('CTI', { prio: 1300, parent: '', name: 'Phone', target: '#cti', key: 'CTI', shown: false, role: ['CTI'], class: 'phone' }, 'NavBar')
+App.Config.set('CTI', { prio: 1300, parent: '', name: 'Phone', target: '#cti', key: 'CTI', shown: false, permission: ['cti.agent'], class: 'phone' }, 'NavBar')

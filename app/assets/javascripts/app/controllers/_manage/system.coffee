@@ -1,8 +1,9 @@
 class System extends App.ControllerTabs
+  requiredPermission: 'admin.setting_system'
   header: 'System'
   constructor: ->
     super
-    return if !@authenticate(false, 'Admin')
+
     @title 'System', true
     @tabs = []
     if !App.Config.get('system_online_service')
@@ -13,4 +14,4 @@ class System extends App.ControllerTabs
     @tabs.push { name: 'Frontend',   'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } }
     @render()
 
-App.Config.set('SettingSystem', { prio: 1400, parent: '#settings', name: 'System', target: '#settings/system', controller: System, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('SettingSystem', { prio: 1400, parent: '#settings', name: 'System', target: '#settings/system', controller: System, permission: ['admin.setting_system'] }, 'NavBarAdmin')

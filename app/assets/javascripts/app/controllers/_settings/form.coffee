@@ -6,7 +6,7 @@ class App.SettingsForm extends App.Controller
     super
 
     # check authentication
-    return if !@authenticate()
+    @authenticateCheckRedirect()
 
     @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 

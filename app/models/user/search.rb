@@ -23,7 +23,7 @@ returns if user has no permissions to search
 =end
 
     def search_preferences(current_user)
-      return false if !current_user.role?('Agent') && !current_user.role?(Z_ROLENAME_ADMIN)
+      return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
       {
         prio: 2000,
         direct_search_index: true,
@@ -35,7 +35,7 @@ returns if user has no permissions to search
 search user
 
   result = User.search(
-    query: 'some search term'
+    query: 'some search term',
     limit: 15,
     current_user: user_model,
   )

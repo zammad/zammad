@@ -56,9 +56,8 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get '/api/v1/settings', {}, @headers
     assert_response(401)
     result = JSON.parse(@response.body)
-    assert_equal(result.class, Hash)
+    assert_equal(Hash, result.class)
     assert_not(result['settings'])
-
   end
 
   test 'settings index with admin' do
@@ -71,7 +70,6 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
-
   end
 
   test 'settings index with agent' do
@@ -82,9 +80,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
-    assert_equal(result.class, Hash)
+    assert_equal(Hash, result.class)
     assert_not(result['settings'])
-
+    assert_equal('No permission!', result['error'])
   end
 
   test 'settings index with customer' do
@@ -95,9 +93,9 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
-    assert_equal(result.class, Hash)
+    assert_equal(Hash, result.class)
     assert_not(result['settings'])
-
+    assert_equal('No permission!', result['error'])
   end
 
 end

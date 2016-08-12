@@ -13,9 +13,7 @@ class Index extends App.ControllerContent
       return
 
     # if we are logged in, no passwort reset is wanted, redirect to app
-    if @authenticate(true)
-      @navigate '#'
-      return
+    @authenticateCheckRedirect()
 
     @navHide()
 
@@ -27,7 +25,7 @@ class Index extends App.ControllerContent
 
   render: (params) ->
     configure_attributes = [
-      { name: 'username', display: 'Enter your username or email address', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4',  },
+      { name: 'username', display: 'Enter your username or email address', tag: 'input', type: 'text', limit: 100, null: false, class: 'input span4' }
     ]
 
     @html App.view('password/reset')(params)
@@ -51,7 +49,7 @@ class Index extends App.ControllerContent
     @ajax(
       id:          'password_reset'
       type:        'POST'
-      url:         @apiPath + '/users/password_reset'
+      url:         "#{@apiPath}/users/password_reset"
       data:        JSON.stringify(params)
       processData: true
       success:     @success
@@ -71,7 +69,7 @@ class Index extends App.ControllerContent
       @$('[name=username]').val('')
       @notify(
         type: 'error'
-        msg:  App.i18n.translateContent( 'Username or email address invalid, please try again.' )
+        msg:  App.i18n.translateContent('Username or email address invalid, please try again.')
       )
       @formEnable( @el.find('.form-password') )
 
@@ -86,9 +84,7 @@ class Verify extends App.ControllerContent
     super
 
     # if we are logged in, no passwort reset is wanted, redirect to app
-    if @authenticate(true)
-      @navigate '#'
-      return
+    @authenticateCheckRedirect()
 
     @navHide()
 
@@ -102,7 +98,7 @@ class Verify extends App.ControllerContent
     @ajax(
       id:          'password_reset_verify'
       type:        'POST'
-      url:         @apiPath + '/users/password_reset_verify'
+      url:         "#{@apiPath}/users/password_reset_verify"
       data:        JSON.stringify(params)
       processData: true
       success:     @renderChange
@@ -111,7 +107,7 @@ class Verify extends App.ControllerContent
   renderChange: (data) =>
     if data.message is 'ok'
       configure_attributes = [
-        { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input',  },
+        { name: 'password', display: 'Password', tag: 'input', type: 'password', limit: 100, null: false, class: 'input' }
       ]
 
       @html App.view('password/reset_change')()
@@ -158,7 +154,7 @@ class Verify extends App.ControllerContent
     @ajax(
       id:          'password_reset_verify'
       type:        'POST'
-      url:         @apiPath + '/users/password_reset_verify'
+      url:         "#{@apiPath}/users/password_reset_verify"
       data:        JSON.stringify(params)
       processData: true
       success:     @renderChanged

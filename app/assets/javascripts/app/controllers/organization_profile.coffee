@@ -2,10 +2,7 @@ class App.OrganizationProfile extends App.Controller
   constructor: (params) ->
     super
 
-    # check authentication
-    if !@authenticate()
-      App.TaskManager.remove(@task_key)
-      return
+    @authenticateCheckRedirect(true)
 
     # fetch new data if needed
     App.Organization.full(@organization_id, @render)
@@ -194,6 +191,7 @@ class Member extends App.ObserverController
     )
 
 class Router extends App.ControllerPermanent
+  requiredPermission: 'ticket.agent'
   constructor: (params) ->
     super
 
@@ -202,7 +200,7 @@ class Router extends App.ControllerPermanent
       organization_id:  params.organization_id
 
     App.TaskManager.execute(
-      key:        'Organization-' + @organization_id
+      key:        "Organization-#{@organization_id}"
       controller: 'OrganizationProfile'
       params:     clean_params
       show:       true

@@ -3,6 +3,7 @@
 class Token < ActiveRecord::Base
   before_create :generate_token
   belongs_to    :user
+  store         :preferences
 
 =begin
 
@@ -17,9 +18,14 @@ returns
 create new persistent token
 
   token = Token.create(
-    action:     'CalendarSubscriptions',
+    action:     'api',
     persistent: true,
     user_id:    user.id,
+    preferences: {
+      permission: {
+        'user_preferences.calendar' => true,
+      }
+    }
   )
 
 in case if you use it via an controller, e. g. you can verify via "curl -H "Authorization: Token token=33562a00d7eda2a7c2fb639b91c6bcb8422067b6" http://...
@@ -35,6 +41,10 @@ returns
 check token
 
   user = Token.check(action: 'PasswordReset', name: 'TheTokenItSelf')
+
+check api token with permissions
+
+  user = Token.check(action: 'api', name: 'TheTokenItSelf', permission: 'admin.session')
 
 returns
 
@@ -61,7 +71,16 @@ returns
     user = token.user
 
     # persistent token not valid if user is inative
-    return if token.persistent && user.active == false
+    if !data[:inactive_user]
+      return if token.persistent && user.active == false
+    end
+
+    # add permission check
+    if data[:permission]
+      return if !user.permissions?(data[:permission])
+      return if !token.preferences[:permission]
+      return if token.preferences[:permission][data[:permission]] != true
+    end
 
     # return token user
     user

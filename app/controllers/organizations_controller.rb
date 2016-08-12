@@ -57,7 +57,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
 
     # only allow customer to fetch his own organization
     organizations = []
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
+    if !current_user.permissions?('admin.organization') && !current_user.permissions?('ticket.agent')
       if current_user.organization_id
         organizations = Organization.where(id: current_user.organization_id).offset(offset).limit(per_page)
       end
@@ -111,7 +111,7 @@ curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
   def show
 
     # only allow customer to fetch his own organization
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
+    if !current_user.permissions?('admin.organization') && !current_user.permissions?('ticket.agent')
       if !current_user.organization_id
         render json: {}
         return
@@ -160,7 +160,8 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Conten
 =end
 
   def create
-    deny_if_not_role(Z_ROLENAME_AGENT)
+    permission_check('ticket.agent')
+    #permission_check('admin.organization')
     model_create_render(Organization, params)
   end
 
@@ -191,7 +192,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password} -H "Conten
 =end
 
   def update
-    deny_if_not_role(Z_ROLENAME_AGENT)
+    permission_check('ticket.agent')
     model_update_render(Organization, params)
   end
 
@@ -209,7 +210,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    deny_if_not_role(Z_ROLENAME_AGENT)
+    permission_check('ticket.agent')
     model_references_check(Organization, params)
     model_destory_render(Organization, params)
   end
@@ -217,7 +218,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   # GET /api/v1/organizations/search
   def search
 
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
+    if !current_user.permissions?('admin.organization') && !current_user.permissions?('ticket.agent')
       raise Exceptions::NotAuthorized
     end
 
@@ -284,7 +285,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   def history
 
     # permission check
-    if !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
+    if !current_user.permissions?('admin.organization') && !current_user.permissions?('ticket.agent')
       raise Exceptions::NotAuthorized
     end
 

@@ -1,9 +1,7 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.scheduler'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     new App.ControllerGenericIndex(
       el: @el
@@ -26,4 +24,4 @@ class Index extends App.ControllerContent
       large: true
     )
 
-App.Config.set('Job', { prio: 3400, name: 'Scheduler', parent: '#manage', target: '#manage/job', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Job', { prio: 3400, name: 'Scheduler', parent: '#manage', target: '#manage/job', controller: Index, permission: ['admin.scheduler'] }, 'NavBarAdmin')

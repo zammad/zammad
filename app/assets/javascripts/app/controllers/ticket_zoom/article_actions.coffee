@@ -45,7 +45,7 @@ class App.TicketZoomArticleActions extends App.Controller
     @render()
 
   actionRow: (article) ->
-    if @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       return []
 
     actions = []

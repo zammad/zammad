@@ -172,13 +172,6 @@ class App.Controller extends Spine.Controller
     element.css('position', 'relative')
     shakeMe(element, position, 20)
 
-  isRole: (name) ->
-    roles = @Session.get('roles')
-    return false if !roles
-    for role in roles
-      return true if role.name is name
-    return false
-
   # get all params of the form
   formParam: (form) ->
     App.ControllerForm.params(form)
@@ -214,28 +207,50 @@ class App.Controller extends Spine.Controller
       callback: data.callback
     )
 
-  authenticate: (checkOnly = false, role) ->
-
-    # role check
-    if role && !@isRole(role)
-      return false if checkOnly
-      @navigate '#login'
-      return false
-
-    # return true if session exists
-    return true if @Session.get()
+  permissionCheckRedirect: (key, closeTab = false) ->
+    return true if @permissionCheck(key)
 
     # remember requested url
-    if !checkOnly
-      location = window.location.hash
-      if location && location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
-        @Config.set('requested_url', location)
+    location = window.location.hash
+    if location && location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
+      App.Config.set('requested_url', location)
 
-    return false if checkOnly
+    if closeTab
+      App.TaskManager.remove(@task_key)
 
     # redirect to login
     @navigate '#login'
-    return false
+
+    throw "No permission for #{key}"
+
+    false
+
+  permissionCheck: (key) ->
+    user_id = App.Session.get('id')
+    return false if !user_id
+    user = App.User.find(user_id)
+    return false if !user
+    user.permission(key)
+
+  authenticateCheckRedirect: ->
+    return true if @authenticateCheck()
+
+    # remember requested url
+    location = window.location.hash
+    if location && location isnt '#login' && location isnt '#logout' && location isnt '#keyboard_shortcuts'
+      @Config.set('requested_url', location)
+
+    # redirect to login
+    @navigate '#login'
+
+    throw 'No exsisting session'
+
+    false
+
+  authenticateCheck: ->
+    # return true if session exists
+    return true if @Session.get()
+    false
 
   frontendTime: (timestamp, row = {}) ->
     if !row['subclass']
@@ -264,7 +279,7 @@ class App.Controller extends Spine.Controller
   ticketPopups: (position = 'right') ->
 
     # open ticket in new task if curent user agent
-    if @isRole('Agent')
+    if @permissionCheck('ticket.agent')
       @$('div.ticket-popover, span.ticket-popover').bind('click', (e) =>
         id = $(e.target).data('id')
         if id
@@ -308,7 +323,7 @@ class App.Controller extends Spine.Controller
   userPopups: (position = 'right') ->
 
     # open user in new task if current user is agent
-    return if !@isRole('Agent')
+    return if !@permissionCheck('ticket.agent')
     @$('div.user-popover, span.user-popover').bind('click', (e) =>
       id = $(e.target).data('id')
       if id
@@ -365,7 +380,7 @@ class App.Controller extends Spine.Controller
   organizationPopups: (position = 'right') ->
 
     # open org in new task if current user agent
-    return if !@isRole('Agent')
+    return if !@permissionCheck('ticket.agent')
 
     @$('div.organization-popover, span.organization-popover').bind('click', (e) =>
       id = $(e.target).data('id')
@@ -626,12 +641,22 @@ class App.Controller extends Spine.Controller
 class App.ControllerPermanent extends App.Controller
   constructor: ->
     super
+
+    # check authentication
+    if @requiredPermission
+      @permissionCheckRedirect(@requiredPermission, true)
+
     $('.content').addClass('hide')
     @navShow()
 
 class App.ControllerContent extends App.Controller
   constructor: ->
     super
+
+    # check authentication
+    if @requiredPermission
+      @permissionCheckRedirect(@requiredPermission)
+
     $('.content').addClass('hide')
     $('#content').removeClass('hide')
     @navShow()
@@ -667,7 +692,7 @@ class App.ControllerModal extends App.Controller
     super
 
     if @authenticateRequired
-      return if !@authenticate()
+      return if !@authenticateCheckRedirect()
 
     # rerender view, e. g. on langauge change
     @bind('ui:rerender', =>

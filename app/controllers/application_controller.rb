@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
                 :authentication_check,
                 :config_frontend,
                 :http_log_config,
-                :role?,
                 :model_create_render,
                 :model_update_render,
                 :model_restory_render,
@@ -171,6 +170,7 @@ class ApplicationController < ActionController::Base
     switched_from_user_id = ENV['SWITCHED_FROM_USER_ID'] || session[:switched_from_user_id]
     return true if switched_from_user_id
     return true if !user
+    return true if !user.permissions?('user_preferences.device')
 
     time_to_check = true
     user_device_updated_at = session[:user_device_updated_at]
@@ -223,7 +223,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authentication_check_only(auth_param)
-
     #logger.debug 'authentication_check'
     #logger.debug params.inspect
     #logger.debug session.inspect
@@ -233,38 +232,16 @@ class ApplicationController < ActionController::Base
     if session.id && session[:user_id]
       logger.debug 'session based auth check'
       user = User.lookup(id: session[:user_id])
-
-      # check scopes / permission check
-      # auth_param[:permission]
-      #if auth_param[:permission] && !user.permission?(auth_param[:permission])
-      #  return {
-      #    auth: false,
-      #    message: 'No permission!',
-      #  }
-      #end
-
-      current_user_set(user)
-      logger.debug "session based auth for '#{user.login}'"
-      return {
-        auth: true
-      }
+      return authentication_check_prerequesits(user, 'session', auth_param) if user
     end
-
-    error_message = 'authentication failed'
 
     # check sso based authentication
     sso_user = User.sso(params)
     if sso_user
-      if check_maintenance_only(sso_user)
-        return {
-          auth: false,
-          message: 'Maintenance mode enabled!',
-        }
+      if authentication_check_prerequesits(sso_user, 'session', auth_param)
+        session[:persistent] = true
+        return sso_user
       end
-      session[:persistent] = true
-      return {
-        auth: true
-      }
     end
 
     # check http basic based authentication
@@ -272,50 +249,10 @@ class ApplicationController < ActionController::Base
       request.session_options[:skip] = true # do not send a session cookie
       logger.debug "http basic auth check '#{username}'"
       if Setting.get('api_password_access') == false
-        return {
-          auth: false,
-          message: 'API password access disabled!',
-        }
+        raise Exceptions::NotAuthorized, 'API password access disabled!'
       end
       user = User.authenticate(username, password)
-      next if !user
-      if check_maintenance_only(user)
-        return {
-          auth: false,
-          message: 'Maintenance mode enabled!',
-        }
-      end
-      current_user_set(user)
-      user_device_log(user, 'basic_auth')
-      logger.debug "http basic auth for '#{user.login}'"
-      return {
-        auth: true
-      }
-    end
-
-    # check http token action based authentication
-    if auth_param[:token_action]
-      authenticate_with_http_token do |token, _options|
-        request.session_options[:skip] = true # do not send a session cookie
-        logger.debug "http token action auth check '#{token}'"
-        user = Token.check(
-          action: auth_param[:token_action],
-          name: token,
-        )
-        next if !user
-        if check_maintenance_only(user)
-          return {
-            auth: false,
-            message: 'Maintenance mode enabled!',
-          }
-        end
-        current_user_set(user)
-        user_device_log(user, 'token_auth')
-        logger.debug "http token action auth for '#{user.login}'"
-        return {
-          auth: true
-        }
-      end
+      return authentication_check_prerequesits(user, 'basic_auth', auth_param) if user
     end
 
     # check http token based authentication
@@ -323,31 +260,16 @@ class ApplicationController < ActionController::Base
       logger.debug "http token auth check '#{token}'"
       request.session_options[:skip] = true # do not send a session cookie
       if Setting.get('api_token_access') == false
-        return {
-          auth: false,
-          message: 'API token access disabled!',
-        }
+        raise Exceptions::NotAuthorized, 'API token access disabled!'
       end
       user = Token.check(
         action: 'api',
         name: token,
+        permission: auth_param[:permission],
+        inactive_user: true,
       )
-      next if !user
-      if check_maintenance_only(user)
-        return {
-          auth: false,
-          message: 'Maintenance mode enabled!',
-        }
-      end
-
-      # permission check
-      # auth_param[:permission]
-      current_user_set(user)
-      user_device_log(user, 'token_auth')
-      logger.debug "http token auth for '#{user.login}'"
-      return {
-        auth: true
-      }
+      @_token_auth = token # remember for permission_check
+      return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
 
 =begin
@@ -360,71 +282,55 @@ class ApplicationController < ActionController::Base
 
       # check expire
       if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now
-        return {
-          auth: false,
-          message: 'OAuth2 token is expired!',
-        }
+        raise Exceptions::NotAuthorized, 'OAuth2 token is expired!'
+      end
+
+      if access_token.scopes.empty?
+        raise Exceptions::NotAuthorized, 'OAuth2 scope missing for token!'
       end
 
       user = User.find(access_token.resource_owner_id)
-      if !user || user.active == false
-        return {
-          auth: false,
-          message: 'OAuth2 resource owner inactive!',
-        }
-      end
-
-      if check_maintenance_only(user)
-        return {
-          auth: false,
-          message: 'Maintenance mode enabled!',
-        }
-      end
-
-      # check scopes / permission check
-      # auth_param[:permission]
-      if access_token.scopes.empty?
-        return {
-          auth: false,
-          message: 'OAuth2 scope missing for token!',
-        }
-      end
-
-      current_user_set(user)
-      user_device_log(user, 'token_auth')
-      logger.debug "oauth token auth for '#{user.login}'"
-      return {
-        auth: true
-      }
+      return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
 =end
-    logger.debug error_message
-    {
-      auth: false,
-      message: error_message,
-    }
+    false
+  end
+
+  def authentication_check_prerequesits(user, auth_type, auth_param)
+    if check_maintenance_only(user)
+      raise Exceptions::NotAuthorized, 'Maintenance mode enabled!'
+    end
+
+    if user.active == false
+      raise Exceptions::NotAuthorized, 'User is inactive!'
+    end
+
+    # check scopes / permission check
+    if auth_param[:permission] && !user.permissions?(auth_param[:permission])
+      raise Exceptions::NotAuthorized, 'No permission!'
+    end
+
+    current_user_set(user)
+    user_device_log(user, auth_type)
+    logger.debug "#{auth_type} for '#{user.login}'"
+    true
   end
 
   def authentication_check(auth_param = {})
-    result = authentication_check_only(auth_param)
+    user = authentication_check_only(auth_param)
 
     # check if basic_auth fallback is possible
-    if auth_param[:basic_auth_promt] && result[:auth] == false
+    if auth_param[:basic_auth_promt] && !user
       return request_http_basic_authentication
     end
 
     # return auth not ok
-    if result[:auth] == false
-      raise Exceptions::NotAuthorized, result[:message]
+    if !user
+      raise Exceptions::NotAuthorized, 'authentication failed'
     end
 
     # return auth ok
     true
-  end
-
-  def role?(role_name)
-    return false if !current_user
-    current_user.role?(role_name)
   end
 
   def ticket_permission(ticket)
@@ -438,9 +344,19 @@ class ApplicationController < ActionController::Base
     raise Exceptions::NotAuthorized
   end
 
-  def deny_if_not_role(role_name)
-    return false if role?(role_name)
-    raise Exceptions::NotAuthorized
+  def permission_check(key)
+    if @_token_auth
+      user = Token.check(
+        action: 'api',
+        name: @_token_auth,
+        permission: key,
+      )
+      return false if user
+      raise Exceptions::NotAuthorized, 'No permission!'
+    end
+
+    return false if current_user && current_user.permissions?(key)
+    raise Exceptions::NotAuthorized, 'No permission!'
   end
 
   def valid_session_with_user
@@ -683,7 +599,7 @@ class ApplicationController < ActionController::Base
   # check maintenance mode
   def check_maintenance_only(user)
     return false if Setting.get('maintenance_mode') != true
-    return false if user.role?('Admin')
+    return false if user.permissions?('admin.maintenance')
     Rails.logger.info "Maintenance mode enabled, denied login for user #{user.login}, it's no admin user."
     true
   end

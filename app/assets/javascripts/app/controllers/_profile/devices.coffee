@@ -1,12 +1,11 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.device'
   events:
     'click [data-type=delete]': 'delete'
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Devices', true
-
     @load()
     @interval(
       =>
@@ -56,4 +55,4 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('Devices', { prio: 3100, name: 'Devices', parent: '#profile', target: '#profile/devices', controller: Index }, 'NavBarProfile')
+App.Config.set('Devices', { prio: 3100, name: 'Devices', parent: '#profile', target: '#profile/devices', controller: Index, permission: ['user_preferences.device'] }, 'NavBarProfile')

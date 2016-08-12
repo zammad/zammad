@@ -1897,7 +1897,7 @@ class CustomerChatRef extends App.Controller
 #     super
 
 #     # check authentication
-#     return if !@authenticate()
+#     @authenticateCheckRedirect()
 
 #     App.TaskManager.execute(
 #       key:        'CustomerChatRef'
@@ -2226,7 +2226,5 @@ class ChatToTicketRef extends App.ControllerContent
       y1: y1
       y2: y1 + @attachments.outerHeight()
 
-App.Config.set( 'layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes' )
-
-
-App.Config.set( 'LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
+App.Config.set('layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes')
+App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', permission: [ 'admin' ] }, 'NavBarRight')

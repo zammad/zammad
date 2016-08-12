@@ -49,6 +49,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password}
 =end
 
   def index
+    permission_check('ticket.agent')
     model_index_render(TextModule, params)
   end
 
@@ -70,6 +71,7 @@ curl http://localhost/api/v1/text_modules/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
+    permission_check('ticket.agent')
     model_show_render(TextModule, params)
   end
 
@@ -99,7 +101,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.text_module')
     model_create_render(TextModule, params)
   end
 
@@ -129,7 +131,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.text_module')
     model_update_render(TextModule, params)
   end
 
@@ -147,7 +149,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.text_module')
     model_destory_render(TextModule, params)
   end
 end

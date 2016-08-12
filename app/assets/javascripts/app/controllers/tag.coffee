@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.tag'
   events:
     'change .js-newTagSetting input': 'setTagNew'
     'submit .js-create': 'create'
@@ -8,12 +9,7 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
-
     @title 'Tags', true
-
     @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
   release: =>
@@ -154,4 +150,4 @@ class DestroyConfirm extends App.ControllerModal
         @close()
     )
 
-App.Config.set('Tags', { prio: 2320, name: 'Tags', parent: '#manage', target: '#manage/tags', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Tags', { prio: 2320, name: 'Tags', parent: '#manage', target: '#manage/tags', controller: Index, permission: ['admin.tag'] }, 'NavBarAdmin')

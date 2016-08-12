@@ -23,10 +23,13 @@ class UserAccessTokenController < ApplicationController
       raise Exceptions::UnprocessableEntity, 'Need label!'
     end
     token = Token.create(
-      action:     'api',
-      label:      params[:label],
-      persistent: true,
-      user_id:    current_user.id,
+      action:      'api',
+      label:       params[:label],
+      persistent:  true,
+      user_id:     current_user.id,
+      preferences: {
+        permission: params[:permission]
+      }
     )
     render json: {
       name: token.name,

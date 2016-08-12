@@ -33,7 +33,7 @@ returns
         access = false
         if UserInfo.current_user_id
           user = User.lookup(id: UserInfo.current_user_id)
-          if user.role?('Admin')
+          if user.permissions?('admin.channel')
             access = true
           end
         end

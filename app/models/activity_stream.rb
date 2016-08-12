@@ -12,7 +12,7 @@ add a new activity entry for an object
   ActivityStream.add(
     type: 'update',
     object: 'Ticket',
-    role: 'Admin',
+    permission: 'admin.user',
     o_id: ticket.id,
     created_by_id: 1,
     created_at: '2013-06-04 10:00:00',
@@ -30,20 +30,20 @@ add a new activity entry for an object
       object_id = ObjectLookup.by_name(data[:object])
     end
 
-    role_id = nil
-    if data[:role]
-      role = Role.lookup(name: data[:role])
-      if !role
-        raise "No such Role #{data[:role]}"
+    permission_id = nil
+    if data[:permission]
+      permission = Permission.lookup(name: data[:permission])
+      if !permission
+        raise "No such Permission #{data[:permission]}"
       end
-      role_id = role.id
+      permission_id = permission.id
     end
 
     # check newest entry - is needed
     result = ActivityStream.where(
       o_id: data[:o_id],
       #:activity_stream_type_id  => type_id,
-      role_id: role_id,
+      permission_id: permission_id,
       activity_stream_object_id: object_id,
       created_by_id: data[:created_by_id]
     ).order('created_at DESC, id DESC').first
@@ -63,7 +63,7 @@ add a new activity entry for an object
       o_id: data[:o_id],
       activity_stream_type_id: type_id,
       activity_stream_object_id: object_id,
-      role_id: role_id,
+      permission_id: permission_id,
       group_id: data[:group_id],
       created_at: data[:created_at],
       created_by_id: data[:created_by_id]
@@ -92,26 +92,28 @@ remove whole activity entries of an object
 
 return all activity entries of an user
 
-  activity_stream = ActivityStream.list(user)
+  activity_stream = ActivityStream.list(user, limit)
 
 =end
 
   def self.list(user, limit)
-    role_ids  = user.role_ids
+    # do not return an activity stream for custoers
+    return [] if !user.permissions?('ticket.agent') && !user.permissions?('admin')
+
+    permission_ids = []
+    user.roles.each { |role|
+      permission_ids = permission_ids.concat(role.permission_ids)
+    }
     group_ids = user.group_ids
 
-    # do not return an activity stream for custoers
-    customer_role = Role.lookup(name: 'Customer')
-
-    return [] if role_ids.include?(customer_role.id)
     stream = if group_ids.empty?
-               ActivityStream.where('(role_id IN (?) AND group_id is NULL)', role_ids )
-                             .order( 'created_at DESC, id DESC' )
-                             .limit( limit )
+               ActivityStream.where('(permission_id IN (?) AND group_id is NULL)', permission_ids)
+                             .order('created_at DESC, id DESC')
+                             .limit(limit)
              else
-               ActivityStream.where('(role_id IN (?) AND group_id is NULL) OR ( role_id IN (?) AND group_id IN (?) ) OR ( role_id is NULL AND group_id IN (?) )', role_ids, role_ids, group_ids, group_ids )
-                             .order( 'created_at DESC, id DESC' )
-                             .limit( limit )
+               ActivityStream.where('(permission_id IN (?) AND group_id is NULL) OR (permission_id IN (?) AND group_id IN (?)) OR (permission_id is NULL AND group_id IN (?))', permission_ids, permission_ids, group_ids, group_ids)
+                             .order('created_at DESC, id DESC')
+                             .limit(limit)
              end
     list = []
     stream.each do |item|

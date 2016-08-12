@@ -1,4 +1,5 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.notifications+ticket.agent'
   events:
     'submit form': 'update'
     'change .js-notificationSound': 'previewSound'
@@ -44,7 +45,6 @@ class Index extends App.Controller
 
   constructor: ->
     super
-    return if !@authenticate(false, 'Agent')
     @title 'Notifications', true
     @render()
 
@@ -193,5 +193,4 @@ class Index extends App.Controller
     return if !params.notification_sound.file
     App.OnlineNotification.play(params.notification_sound.file)
 
-
-App.Config.set( 'Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', role: ['Agent'], controller: Index }, 'NavBarProfile' )
+App.Config.set('Notifications', { prio: 2600, name: 'Notifications', parent: '#profile', target: '#profile/notifications', permission: ['user_preferences.notifications+ticket.agent'], controller: Index }, 'NavBarProfile')

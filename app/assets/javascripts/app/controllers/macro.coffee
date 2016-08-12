@@ -1,9 +1,7 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.macro'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     new App.ControllerGenericIndex(
       el: @el
@@ -24,4 +22,4 @@ class Index extends App.ControllerContent
       container: @el.closest('.content')
     )
 
-App.Config.set( 'Macros', { prio: 2310, name: 'Macros', parent: '#manage', target: '#manage/macros', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Macros', { prio: 2310, name: 'Macros', parent: '#manage', target: '#manage/macros', controller: Index, permission: ['admin.macro'] }, 'NavBarAdmin')

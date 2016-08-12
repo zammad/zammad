@@ -156,8 +156,8 @@ result
       else
         user_data[:firstname] = item_user['name']
       end
-      user_data[:active] = true
-      user_data[:roles]  = Role.where(name: 'Customer')
+      user_data[:active]   = true
+      user_data[:role_ids] = Role.signup_role_ids
 
       user = User.create(user_data)
     end

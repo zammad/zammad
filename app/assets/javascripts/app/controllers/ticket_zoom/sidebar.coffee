@@ -53,7 +53,7 @@ class App.TicketZoomSidebar extends App.ObserverController
         markForm:  @markForm
       )
 
-      if !@isRole('Customer')
+      if !@permissionCheck('ticket.customer')
         @tagWidget = new App.WidgetTag(
           el:          @el.find('.tags')
           object_type: 'Ticket'
@@ -91,7 +91,7 @@ class App.TicketZoomSidebar extends App.ObserverController
         callback: editTicket
       }
     ]
-    if !@isRole('Customer')
+    if !@permissionCheck('ticket.customer')
       @sidebarItems[0]['actions'] = [
         {
           name:     'ticket-history'
@@ -109,7 +109,7 @@ class App.TicketZoomSidebar extends App.ObserverController
           callback: changeCustomer
         },
       ]
-    if !@isRole('Customer')
+    if !@permissionCheck('ticket.customer')
       editCustomer = (e, el) =>
         new App.ControllerGenericEdit(
           id: ticket.customer_id

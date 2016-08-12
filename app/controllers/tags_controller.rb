@@ -60,6 +60,7 @@ class TagsController < ApplicationController
 
   # GET /api/v1/tag_list
   def admin_list
+    permission_check('admin.tag')
     list = Tag::Item.order('name ASC').limit(params[:limit] || 1000)
     results = []
     list.each { |item|
@@ -75,14 +76,14 @@ class TagsController < ApplicationController
 
   # POST /api/v1/tag_list
   def admin_create
-    deny_if_not_role('Admin')
+    permission_check('admin.tag')
     Tag::Item.lookup_by_name_and_create(params[:name])
     render json: {}
   end
 
   # PUT /api/v1/tag_list/:id
   def admin_rename
-    deny_if_not_role('Admin')
+    permission_check('admin.tag')
     Tag::Item.rename(
       id: params[:id],
       name: params[:name],
@@ -92,7 +93,7 @@ class TagsController < ApplicationController
 
   # DELETE /api/v1/tag_list/:id
   def admin_delete
-    deny_if_not_role('Admin')
+    permission_check('admin.tag')
     Tag::Item.remove(params[:id])
     render json: {}
   end

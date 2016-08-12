@@ -132,7 +132,7 @@ class Navbar extends App.Controller
     items = App.OverviewIndexCollection.get()
     @html App.view("agent_ticket_view/navbar#{ if @vertical then '_vertical' }")
       items: items
-      isAgent: @isRole('Agent')
+      isAgent: @permissionCheck('ticket.agent')
 
     while @clone.width() > @tabsHolder.width()
       @tabClone.not('.hide').last().addClass('hide')
@@ -203,7 +203,7 @@ class Table extends App.Controller
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
-      return if !@authenticate(true)
+      return if !@authenticateCheck()
       @render(App.OverviewListCollection.get(@view))
 
   release: =>
@@ -237,7 +237,7 @@ class Table extends App.Controller
       ticket_list_show.push App.Ticket.fullLocal(ticket.id)
 
     # if customer and no ticket exists, show the following message only
-    if !ticket_list_show[0] && @isRole('Customer')
+    if !ticket_list_show[0] && @permissionCheck('ticket.customer')
       @html App.view('customer_not_ticket_exists')()
       return
 
@@ -249,9 +249,9 @@ class Table extends App.Controller
     # render init page
     checkbox = true
     edit     = false
-    if @isRole('Admin')
+    if @permissionCheck('admin')
       edit = true
-    if @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       checkbox = false
       edit     = false
     view_modes = [
@@ -266,7 +266,7 @@ class Table extends App.Controller
         class: 'active' if @view_mode is 'm'
       }
     ]
-    if @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       view_modes = []
     html = App.view('agent_ticket_view/content')(
       overview:   @overview
@@ -768,11 +768,10 @@ class App.OverviewSettings extends App.ControllerModal
     )
 
 class TicketOverviewRouter extends App.ControllerPermanent
+  requiredPermission: ['ticket.agent', 'ticket.customer']
+
   constructor: (params) ->
     super
-
-    # check authentication
-    return if !@authenticate()
 
     # cleanup params
     clean_params =
@@ -789,4 +788,4 @@ class TicketOverviewRouter extends App.ControllerPermanent
 App.Config.set('ticket/view', TicketOverviewRouter, 'Routes')
 App.Config.set('ticket/view/:view', TicketOverviewRouter, 'Routes')
 App.Config.set('TicketOverview', { controller: 'TicketOverview', authentication: true }, 'permanentTask')
-App.Config.set('TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', key: 'TicketOverview', role: ['Agent', 'Customer'], class: 'overviews' }, 'NavBar')
+App.Config.set('TicketOverview', { prio: 1000, parent: '', name: 'Overviews', target: '#ticket/view', key: 'TicketOverview', permission: ['ticket.agent', 'ticket.customer'], class: 'overviews' }, 'NavBar')

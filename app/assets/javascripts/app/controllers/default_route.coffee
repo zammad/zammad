@@ -18,7 +18,7 @@ class DefaultRouter extends App.Controller
       return
 
     # check role
-    if @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       @navigate '#ticket/view/my_tickets', true
       return
 

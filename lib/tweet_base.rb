@@ -60,7 +60,7 @@ class TweetBase
       user_data[:note]      = tweet_user.description
       user_data[:address]   = tweet_user.location
       user_data[:active]    = true
-      user_data[:roles]     = Role.where(name: 'Customer')
+      user_data[:role_ids]  = Role.signup_role_ids
 
       user = User.create(user_data)
     end

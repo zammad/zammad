@@ -37,7 +37,7 @@ class App.TicketZoomAttributeBar extends App.Controller
     macros = App.Macro.all()
     @macroLastUpdated = App.Macro.lastUpdatedAt()
 
-    if _.isEmpty(macros) || !@isRole('Agent')
+    if _.isEmpty(macros) || !@permissionCheck('ticket.agent')
       macroDisabled = true
 
     localeEl = $(App.view('ticket_zoom/attribute_bar')(

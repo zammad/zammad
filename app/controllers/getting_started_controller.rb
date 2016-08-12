@@ -110,7 +110,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
   def base
 
     # check admin permissions
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.wizard')
 
     # validate url
     messages = {}

@@ -1,9 +1,7 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.report_profile'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
 
     new App.ControllerGenericIndex(
       el: @el
@@ -24,4 +22,4 @@ class Index extends App.ControllerContent
       container: @el.closest('.content')
     )
 
-App.Config.set( 'ReportProfile', { prio: 8000, name: 'Report Profiles', parent: '#manage', target: '#manage/report_profiles', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('ReportProfile', { prio: 8000, name: 'Report Profiles', parent: '#manage', target: '#manage/report_profiles', controller: Index, permission: ['admin.report_profile'] }, 'NavBarAdmin')

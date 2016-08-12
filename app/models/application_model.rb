@@ -1093,7 +1093,7 @@ reload search index with full data
 serve methode to configure and enable activity stream support for this model
 
 class Model < ApplicationModel
-  activity_stream_support role: 'Admin'
+  activity_stream_support permission: 'admin.user'
 end
 
 =end

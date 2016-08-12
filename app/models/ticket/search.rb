@@ -102,7 +102,7 @@ returns
       query_extention['bool'] = {}
       query_extention['bool']['must'] = []
 
-      if current_user.role?('Agent')
+      if current_user.permissions?('ticket.agent')
         groups = Group.joins(:users)
                       .where('groups_users.user_id = ?', current_user.id)
                       .where('groups.active = ?', true)

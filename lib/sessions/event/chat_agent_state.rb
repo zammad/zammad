@@ -4,7 +4,7 @@ class Sessions::Event::ChatAgentState < Sessions::Event::ChatBase
     return super if super
 
     # check if user has permissions
-    return if !role_permission_check('Agent', 'chat')
+    return if !permission_check('chat.agent', 'chat')
 
     Chat::Agent.state(@session['id'], @payload['data']['active'])
 

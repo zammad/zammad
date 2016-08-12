@@ -74,14 +74,14 @@ class FormController < ApplicationController
 
     customer = User.find_by(email: email)
     if !customer
-      roles = Role.where(name: 'Customer')
+      role_ids = Role.signup_role_ids
       customer = User.create(
         firstname: name,
         lastname: '',
         email: email,
         password: '',
         active: true,
-        roles: roles,
+        role_ids: role_ids,
         updated_by_id: 1,
         created_by_id: 1,
       )

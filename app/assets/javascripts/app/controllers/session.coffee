@@ -1,15 +1,11 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.session'
   events:
     'click .js-delete': 'destroy'
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
-
     @title 'Sessions', true
-
     @load()
     @interval(
       =>
@@ -23,7 +19,7 @@ class Index extends App.ControllerContent
     @ajax(
       id:    'sessions'
       type:  'GET'
-      url:   @apiPath + '/sessions'
+      url:   "#{@apiPath}/sessions"
       success: (data) =>
         @stopLoading()
         App.Collection.loadAssets(data.assets)
@@ -46,11 +42,11 @@ class Index extends App.ControllerContent
     e.preventDefault()
     sessionId = $(e.target ).closest('a').data('session-id')
     @ajax(
-      id:    'sessions/' + sessionId
+      id:    "sessions/#{sessionId}"
       type:  'DELETE'
-      url:   @apiPath + '/sessions/' + sessionId
+      url:   "#{@apiPath}/sessions/#{sessionId}"
       success: (data) =>
         @load()
     )
 
-App.Config.set('Session', { prio: 3800, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Session', { prio: 3800, name: 'Sessions', parent: '#system', target: '#system/sessions', controller: Index, permission: ['admin.session'] }, 'NavBarAdmin' )

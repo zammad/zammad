@@ -5,7 +5,7 @@ class HttpLogsController < ApplicationController
 
   # GET /http_logs/:facility
   def index
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.*')
     list = if params[:facility]
              HttpLog.where(facility: params[:facility]).order('created_at DESC').limit(params[:limit] || 50)
            else
@@ -16,7 +16,7 @@ class HttpLogsController < ApplicationController
 
   # POST /http_logs
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.*')
     model_create_render(HttpLog, params)
   end
 
