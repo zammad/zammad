@@ -72,7 +72,7 @@ class App.DashboardFirstSteps extends App.Controller
           )
           $('.modal .modal-body').html(finish)
       )
-    @delay(create, 1800)
+    @delay(create, 2800)
     template
 
   testTicketFinish: (data) ->

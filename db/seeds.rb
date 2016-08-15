@@ -110,7 +110,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { prio: 3 },
+  preferences: { prio: 3, controller: 'SettingsAreaLogo' },
   state: 'logo.svg',
   frontend: true
 )
@@ -432,10 +432,14 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via LDAP',
+  title: 'Authentication via %s',
   name: 'auth_ldap',
   area: 'Security::Authentication',
-  description: 'Enables user authentication via LDAP.',
+  description: 'Enables user authentication via %s.',
+  preferences: {
+    title_i18n: ['LDAP'],
+    description_i18n: ['LDAP']
+  },
   state: {
     adapter: 'Auth::Ldap',
     host: 'localhost',
@@ -457,10 +461,10 @@ Setting.create_if_not_exists(
   frontend: false
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via Twitter',
+  title: 'Authentication via %s',
   name: 'auth_twitter',
   area: 'Security::ThirdPartyAuthentication',
-  description: "@T('Enables user authentication via twitter. Register your app first at [Twitter Developer Site](https://dev.twitter.com/apps)')",
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -475,13 +479,19 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_twitter_credentials'],
+    title_i18n: ['Twitter'],
+    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps']
+  },
   state: false,
   frontend: true
 )
 Setting.create_if_not_exists(
   title: 'Twitter App Credentials',
   name: 'auth_twitter_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Twitter',
   description: 'App credentials for Twitter.',
   options: {
     form: [
@@ -503,10 +513,10 @@ Setting.create_if_not_exists(
   frontend: false
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via Facebook',
+  title: 'Authentication via %s',
   name: 'auth_facebook',
   area: 'Security::ThirdPartyAuthentication',
-  description: "@T('Enables user authentication via Facebook. Register your app first at [Facebook Developer Site](https://developers.facebook.com/apps/)')",
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -521,6 +531,12 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_facebook_credentials'],
+    title_i18n: ['Facebook'],
+    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/']
+  },
   state: false,
   frontend: true
 )
@@ -528,7 +544,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Facebook App Credentials',
   name: 'auth_facebook_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Facebook',
   description: 'App credentials for Facebook.',
   options: {
     form: [
@@ -551,10 +567,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Authentication via Google',
+  title: 'Authentication via %s',
   name: 'auth_google_oauth2',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via Google. Register your app first at [Google API Console Site](https://console.developers.google.com/apis/credentials)',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -569,13 +585,19 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_google_oauth2_credentials'],
+    title_i18n: ['Google'],
+    description_i18n: ['Google', 'Google API Console Site', 'https://console.developers.google.com/apis/credentials']
+  },
   state: false,
   frontend: true
 )
 Setting.create_if_not_exists(
   title: 'Google App Credentials',
   name: 'auth_google_oauth2_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Google',
   description: 'Enables user authentication via Google.',
   options: {
     form: [
@@ -598,10 +620,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Authentication via LinkedIn',
+  title: 'Authentication via %s',
   name: 'auth_linkedin',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via LinkedIn. Register your app first at [Linkedin Developer Site](https://www.linkedin.com/developer/apps)',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -616,13 +638,19 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_linkedin_credentials'],
+    title_i18n: ['LinkedIn'],
+    description_i18n: ['LinkedIn', 'Linkedin Developer Site', 'https://www.linkedin.com/developer/apps']
+  },
   state: false,
   frontend: true
 )
 Setting.create_if_not_exists(
   title: 'LinkedIn App Credentials',
   name: 'auth_linkedin_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Linkedin',
   description: 'Enables user authentication via LinkedIn.',
   options: {
     form: [
@@ -637,6 +665,199 @@ Setting.create_if_not_exists(
         null: true,
         name: 'app_secret',
         tag: 'input',
+      },
+    ],
+  },
+  state: {},
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
+  name: 'auth_github',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_github',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_github_credentials'],
+    title_i18n: ['Github'],
+    description_i18n: ['Github', 'Github OAuth Applications', 'https://github.com/settings/applications']
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Github App Credentials',
+  name: 'auth_github_credentials',
+  area: 'Security::ThirdPartyAuthentication::Github',
+  description: 'Enables user authentication via Github.',
+  options: {
+    form: [
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+    ],
+  },
+  state: {},
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
+  name: 'auth_gitlab',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_gitlab',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_gitlab_credentials'],
+    title_i18n: ['Gitlab'],
+    description_i18n: ['Gitlab', 'Gitlab Applications', 'https://your-gitlab-host/admin/applications']
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Gitlab App Credentials',
+  name: 'auth_gitlab_credentials',
+  area: 'Security::ThirdPartyAuthentication::Gitlab',
+  description: 'Enables user authentication via Gitlab.',
+  options: {
+    form: [
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+      {
+        display: 'Site',
+        null: true,
+        name: 'site',
+        tag: 'input',
+        placeholder: 'https://gitlab.YOURDOMAIN.com',
+      },
+    ],
+  },
+  state: {},
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
+  name: 'auth_oauth2',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via Generic OAuth2. Register your app first,',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_oauth2',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_oauth2_credentials'],
+    title_i18n: ['Generic OAuth2'],
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Generic OAuth2 App Credentials',
+  name: 'auth_oauth2_credentials',
+  area: 'Security::ThirdPartyAuthentication::GenericOAuth',
+  description: 'Enables user authentication via Generic OAuth2.',
+  options: {
+    form: [
+      {
+        display: 'Name',
+        null: true,
+        name: 'name',
+        tag: 'input',
+        placeholder: 'Some Provider Name',
+      },
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+      {
+        display: 'Site',
+        null: true,
+        name: 'site',
+        tag: 'input',
+        placeholder: 'https://gitlab.YOURDOMAIN.com',
+      },
+      {
+        display: 'authorize_url',
+        null: true,
+        name: 'authorize_url',
+        tag: 'input',
+        placeholder: '/oauth/authorize',
+      },
+      {
+        display: 'token_url',
+        null: true,
+        name: 'token_url',
+        tag: 'input',
+        placeholder: '/oauth/token',
       },
     ],
   },

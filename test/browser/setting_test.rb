@@ -12,123 +12,132 @@ class SettingTest < TestCase
     tasks_close_all()
 
     # make sure, that we have english frontend
-    click( css: 'a[href="#current_user"]' )
-    click( css: 'a[href="#profile"]' )
-    click( css: 'a[href="#profile/language"]' )
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
     select(
       css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
-    click( css: '.content button[type="submit"]' )
+    click(css: '.content button[type="submit"]')
     sleep 2
 
     # change settings
-    click( css: 'a[href="#manage"]' )
-    click( css: 'a[href="#settings/security"]' )
-    click( css: 'a[href="#third_party_auth"]' )
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#settings/security"]')
+    click(css: 'a[href="#third_party_auth"]')
     sleep 2
+    switch(
+      css: '#content .js-setting[data-name="auth_facebook"]',
+      type: 'off',
+    )
+
+    browser2 = browser_instance
+    location(
+      browser: browser2,
+      url: browser_url,
+    )
+    watch_for(
+      browser: browser2,
+      css: 'body',
+      value: 'login',
+    )
+    match_not(
+      browser: browser2,
+      css: 'body',
+      value: 'facebook',
+    )
 
     # set yes
-    select(
-      css: '#auth_facebook select[name="auth_facebook"]',
-      value: 'yes',
-    )
-    match(
-      css: '#auth_facebook select[name="auth_facebook"]',
-      value: 'yes',
-    )
-    click( css: '#auth_facebook button[type=submit]' )
-    watch_for(
-      css: '#notify',
-      value: 'update successful',
-    )
-    sleep 4
-    match(
-      css: '#auth_facebook select[name="auth_facebook"]',
-      value: 'yes',
-    )
-    match_not(
-      css: '#auth_facebook select[name="auth_facebook"]',
-      value: 'no',
-    )
-
-    # set no
-    select(
-      css: '#auth_facebook select[name="auth_facebook"]',
-      value: 'no',
-    )
-    click( css: '#auth_facebook button[type=submit]' )
-    watch_for(
-      css: '#notify',
-      value: 'update successful',
-    )
-    sleep 4
-    match(
-      css: '#auth_facebook select[name="auth_facebook"]',
-      value: 'no',
-    )
-    match_not(
-      css: '#auth_facebook select[name="auth_facebook"]',
-      value: 'yes',
+    switch(
+      css: '#content .js-setting[data-name="auth_facebook"]',
+      type: 'on',
     )
 
     # set key and secret
     set(
-      css: '#auth_facebook_credentials input[name=app_id]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_id]',
       value: 'id_test1234äöüß',
     )
     set(
-      css: '#auth_facebook_credentials input[name=app_secret]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_secret]',
       value: 'secret_test1234äöüß',
     )
-    click( css: '#auth_facebook_credentials button[type=submit]' )
+    click( css: '[data-name="auth_facebook_credentials"] button[type=submit]')
     watch_for(
       css: '#notify',
       value: 'update successful',
     )
     sleep 4
     match(
-      css: '#auth_facebook_credentials input[name=app_id]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_id]',
       value: 'id_test1234äöüß',
     )
     match(
-      css: '#auth_facebook_credentials input[name=app_secret]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_secret]',
       value: 'secret_test1234äöüß',
+    )
+
+    # verify login page
+    sleep 2
+    watch_for(
+      browser: browser2,
+      css: 'body',
+      value: 'facebook',
     )
 
     # set key and secret again
     set(
-      css: '#auth_facebook_credentials input[name=app_id]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_id]',
       value: '---',
     )
     set(
-      css: '#auth_facebook_credentials input[name=app_secret]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_secret]',
       value: '---',
     )
-    click( css: '#auth_facebook_credentials button[type=submit]' )
+    click(css: '[data-name="auth_facebook_credentials"] button[type=submit]')
     watch_for(
       css: '#notify',
       value: 'update successful',
     )
     sleep 4
     match(
-      css: '#auth_facebook_credentials input[name=app_id]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_id]',
       value: '---',
     )
     match(
-      css: '#auth_facebook_credentials input[name=app_secret]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_secret]',
       value: '---',
     )
 
     reload()
 
+    click(css: 'a[href="#settings/security"]')
+    click(css: 'a[href="#third_party_auth"]')
     watch_for(
-      css: '#auth_facebook_credentials input[name=app_id]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_id]',
       value: '---',
     )
     watch_for(
-      css: '#auth_facebook_credentials input[name=app_secret]',
+      css: '[data-name="auth_facebook_credentials"] input[name=app_secret]',
       value: '---',
+    )
+    sleep 2
+    switch(
+      css: '#content .js-setting[data-name="auth_facebook"]',
+      type: 'off',
+    )
+
+    sleep 2
+    watch_for(
+      browser: browser2,
+      css: 'body',
+      value: 'login',
+    )
+    match_not(
+      browser: browser2,
+      css: 'body',
+      value: 'facebook',
     )
   end
 end
