@@ -557,6 +557,9 @@ class UpdateSettingAuth < ActiveRecord::Migration
       state: {},
       frontend: false
     )
+    setting = Setting.find_by(name: 'product_logo')
+    setting.preferences[:controller] = 'SettingsAreaLogo'
+    setting.save
 
   end
 end
