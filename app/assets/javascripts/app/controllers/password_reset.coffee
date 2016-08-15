@@ -13,7 +13,9 @@ class Index extends App.ControllerContent
       return
 
     # if we are logged in, no passwort reset is wanted, redirect to app
-    @authenticateCheckRedirect()
+    if @authenticateCheck()
+      @navigate '#'
+      return
 
     @navHide()
 
@@ -83,8 +85,15 @@ class Verify extends App.ControllerContent
   constructor: ->
     super
 
+    # go back if feature is not enabled
+    if !@Config.get('user_lost_password')
+      @navigate '#'
+      return
+
     # if we are logged in, no passwort reset is wanted, redirect to app
-    @authenticateCheckRedirect()
+    if @authenticateCheck()
+      @navigate '#'
+      return
 
     @navHide()
 
