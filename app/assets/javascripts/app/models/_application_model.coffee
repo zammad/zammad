@@ -494,6 +494,7 @@ class App.Model extends Spine.Model
   App.Model.fetchFull(
     @callback
     clear: true
+    force: false # only do server call if no record exsits
   )
 
 
@@ -501,6 +502,11 @@ class App.Model extends Spine.Model
   @fetchFull: (callback, params = {}) ->
     url = "#{@url}/?full=true"
     App.Log.debug('Model', "fetchFull collection #{@className}", url)
+    if params.force is false && App[@className].count() isnt 0
+      if callback
+        callback(App[@className].all())
+      return
+
     App.Ajax.request(
       type:  'GET'
       url:   url

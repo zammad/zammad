@@ -4,11 +4,11 @@ class App.SettingsArea extends App.Controller
 
     # check authentication
     @authenticateCheckRedirect()
-    if App.Setting.count() is 0
-      App.Setting.fetchFull(@render)
-      return
-    @render()
-    #@subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
+
+    App.Setting.fetchFull(
+      @render
+      force: false
+    )
 
   render: =>
 

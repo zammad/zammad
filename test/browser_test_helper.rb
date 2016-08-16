@@ -701,10 +701,18 @@ class TestCase < Test::Unit::TestCase
       if params[:type] == 'on'
         instance.find_elements(css: "#{params[:css]} label")[0].click
         sleep 2
+
+        element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
+        checked = element.attribute('checked')
+        raise 'Switch not on!' if !checked
       end
     elsif params[:type] == 'off'
       instance.find_elements(css: "#{params[:css]} label")[0].click
       sleep 2
+
+      element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
+      checked = element.attribute('checked')
+      raise 'Switch not off!' if checked
     end
   end
 

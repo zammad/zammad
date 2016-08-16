@@ -17,5 +17,5 @@
       </tbody>
     </table>
   </div>
-  <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
+  <button type="submit" class="btn btn--primary js-submit"><%- @T('Submit') %></button>
 </form>

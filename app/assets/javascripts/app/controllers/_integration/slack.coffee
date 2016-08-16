@@ -6,6 +6,10 @@ class Index extends App.ControllerIntegrationBase
     ['This service sends notifications to your %s channel.', 'Slack']
     ['To setup this Service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the Webhook URL below.', 'Slack']
   ]
+  events:
+    'click .js-submit': 'update'
+    'submit .js-form': 'update'
+    'change .js-switch input': 'switch'
 
   render: =>
     super
@@ -62,6 +66,13 @@ class Index extends App.ControllerIntegrationBase
       el: @$('.js-log')
       facility: 'slack_webhook'
     )
+
+  update: (e) =>
+    e.preventDefault()
+    params = @formParam(e.target)
+    value =
+      items: [params]
+    App.Setting.set(@featureConfig, value, {notify: true})
 
 class State
   @current: ->

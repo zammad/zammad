@@ -344,11 +344,11 @@ class CreateBase < ActiveRecord::Migration
       t.string :area,                   limit: 100,  null: false
       t.string :description,            limit: 2000, null: false
       t.string :options,                limit: 2000, null: true
-      t.string :state_current,          limit: 2000, null: true
+      t.string :state_current,          limit: 200.kilobytes + 1, null: true
       t.string :state_initial,          limit: 2000, null: true
       t.boolean :frontend,                           null: false
-      t.string :preferences,            limit: 2000, null: true
-      t.timestamps                                   null: false
+      t.text :preferences,              limit: 200.kilobytes + 1, null: true
+      t.timestamps null: false
     end
     add_index :settings, [:name], unique: true
     add_index :settings, [:area]

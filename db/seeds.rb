@@ -110,7 +110,10 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { prio: 3, controller: 'SettingsAreaLogo' },
+  preferences: {
+    prio: 3,
+    controller: 'SettingsAreaLogo',
+  },
   state: 'logo.svg',
   frontend: true
 )

@@ -13,11 +13,12 @@ class App.ChannelForm extends App.ControllerContent
   constructor: ->
     super
     @title 'Form'
-    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
+    App.Setting.fetchFull(
+      @render
+      force: false
+    )
 
   render: =>
-    App.Setting.unsubscribe(@subscribeId)
-
     setting = App.Setting.get('form_ticket_create')
     @html App.view('channel/form')(
       baseurl: window.location.origin
@@ -28,9 +29,6 @@ class App.ChannelForm extends App.ControllerContent
       hljs.highlightBlock block
 
     @updateParams()
-
-  release: =>
-    App.Setting.unsubscribe(@subscribeId)
 
   updateParams: ->
     quote = (string) ->

@@ -28,7 +28,7 @@ class Form extends App.Controller
 
   constructor: ->
     super
-    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
+    @render()
 
   currentConfig: ->
     config = App.Setting.get('sipgate_config')
@@ -101,11 +101,11 @@ class Form extends App.Controller
     element = $(e.currentTarget).closest('tr')
     caller_id = element.find('input[name="caller_id"]').val()
     note = element.find('input[name="note"]').val()
+    return if _.isEmpty(caller_id) || _.isEmpty(note)
     @config.inbound.block_caller_ids.push {
       caller_id: @cleanupInput(caller_id)
       note: note
     }
-    @setConfig(@config)
     @render()
 
   addOutboundRouting: (e) =>
@@ -115,12 +115,12 @@ class Form extends App.Controller
     dest = @cleanupInput(element.find('input[name="dest"]').val())
     caller_id = @cleanupInput(element.find('input[name="caller_id"]').val())
     note = element.find('input[name="note"]').val()
+    return if _.isEmpty(caller_id) || _.isEmpty(dest) || _.isEmpty(note)
     @config.outbound.routing_table.push {
       dest: dest
       caller_id: caller_id
       note: note
     }
-    @setConfig(@config)
     @render()
 
   removeInboundBlockCallerId: (e) =>
@@ -128,12 +128,14 @@ class Form extends App.Controller
     @updateCurrentConfig()
     element = $(e.currentTarget).closest('tr')
     element.remove()
+    @updateCurrentConfig()
 
   removeOutboundRouting: (e) =>
     e.preventDefault()
     @updateCurrentConfig()
     element = $(e.currentTarget).closest('tr')
     element.remove()
+    @updateCurrentConfig()
 
 class State
   @current: ->

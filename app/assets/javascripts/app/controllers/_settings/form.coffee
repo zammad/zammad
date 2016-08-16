@@ -8,7 +8,10 @@ class App.SettingsForm extends App.Controller
     # check authentication
     @authenticateCheckRedirect()
 
-    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
+    App.Setting.fetchFull(
+      @render
+      force: false
+    )
 
   render: =>
 
@@ -51,6 +54,7 @@ class App.SettingsForm extends App.Controller
 
   update: (e) =>
     e.preventDefault()
+    #e.stopPropagation()
     @formDisable(e)
     params = @formParam(e.target)
 

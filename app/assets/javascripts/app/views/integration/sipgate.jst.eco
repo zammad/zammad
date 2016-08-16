@@ -74,5 +74,5 @@
     </table>
   </div>
 
-  <button type="submit" class="btn btn--primary"><%- @T('Save') %></button>
+  <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
 </form>
