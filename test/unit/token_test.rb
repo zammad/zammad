@@ -83,10 +83,7 @@ class TokenTest < ActiveSupport::TestCase
       persistent:  true,
       user_id:     agent1.id,
       preferences: {
-        permission: {
-          'admin' => true, # agent has no access to admin.*
-          'ticket.agent' => true,
-        }
+        permission: ['admin', 'ticket.agent'], # agent has no access to admin.*
       }
     )
     user = Token.check(

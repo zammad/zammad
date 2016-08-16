@@ -114,9 +114,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
       persistent:  true,
       user_id:     @admin.id,
       preferences: {
-        permission: {
-          'admin.session' => true,
-        }
+        permission: ['admin.session'],
       },
     )
     admin_credentials = "Token token=#{admin_token.name}"
@@ -135,7 +133,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert(result)
 
-    admin_token.preferences[:permission]['admin.session'] = false
+    admin_token.preferences[:permission] = ['admin.session_not_existing']
     admin_token.save!
 
     get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
@@ -144,7 +142,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert_equal('No permission!', result['error'])
 
-    admin_token.preferences[:permission] = {}
+    admin_token.preferences[:permission] = []
     admin_token.save!
 
     get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
@@ -162,7 +160,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert_equal('User is inactive!', result['error'])
 
-    admin_token.preferences[:permission]['admin.session'] = true
+    admin_token.preferences[:permission] = ['admin.session']
     admin_token.save!
 
     get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
@@ -179,6 +177,22 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert(result)
+
+    get '/api/v1/roles', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('No permission!', result['error'])
+
+    admin_token.preferences[:permission] = ['admin.session_not_existing', 'admin.role']
+    admin_token.save!
+
+    get '/api/v1/roles', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+
   end
 
   test 'token auth - agent' do

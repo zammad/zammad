@@ -17,14 +17,22 @@ class UserAccessTokenController < ApplicationController
     local_permissions.each { |key, _value|
       keys = Object.const_get('Permission').with_parents(key)
       keys.each { |local_key|
-        next if local_permissions_new[local_key]
+        next if local_permissions_new.key?([local_key])
+        if local_permissions[local_key] == true
+          local_permissions_new[local_key] = true
+          next
+        end
         local_permissions_new[local_key] = false
       }
     }
     permissions = []
     Permission.all.order(:name).each { |permission|
       next if !local_permissions_new.key?(permission.name)
-      permissions.push permission
+      permission_attributes = permission.attributes
+      if local_permissions_new[permission.name] == false
+        permission_attributes['preferences']['disabled'] = true
+      end
+      permissions.push permission_attributes
     }
 
     render json: {

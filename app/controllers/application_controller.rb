@@ -265,9 +265,17 @@ class ApplicationController < ActionController::Base
       user = Token.check(
         action: 'api',
         name: token,
-        permission: auth_param[:permission],
         inactive_user: true,
       )
+      if user && auth_param[:permission]
+        user = Token.check(
+          action: 'api',
+          name: token,
+          permission: auth_param[:permission],
+          inactive_user: true,
+        )
+        raise Exceptions::NotAuthorized, 'No permission!' if !user
+      end
       @_token_auth = token # remember for permission_check
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end

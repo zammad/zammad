@@ -79,7 +79,7 @@ returns
     if data[:permission]
       return if !user.permissions?(data[:permission])
       return if !token.preferences[:permission]
-      return if token.preferences[:permission][data[:permission]] != true
+      return if !token.preferences[:permission].include?(data[:permission])
     end
 
     # return token user
