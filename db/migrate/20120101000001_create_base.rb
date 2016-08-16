@@ -344,7 +344,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :area,                   limit: 100,  null: false
       t.string :description,            limit: 2000, null: false
       t.string :options,                limit: 2000, null: true
-      t.string :state_current,          limit: 200.kilobytes + 1, null: true
+      t.text :state_current,            limit: 200.kilobytes + 1, null: true
       t.string :state_initial,          limit: 2000, null: true
       t.boolean :frontend,                           null: false
       t.text :preferences,              limit: 200.kilobytes + 1, null: true
