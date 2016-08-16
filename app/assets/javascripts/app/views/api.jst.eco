@@ -1,0 +1,79 @@
+<div class="page-header-title">
+  <h1><%- @T('API') %> <small><%- @T('Management') %></small></h1>
+</div>
+
+<div class="page-content">
+
+  <div class="page-header-title">
+    <div class="zammad-switch zammad-switch--small js-TokenAccess">
+       <input name="api_token_access" type="checkbox" id="api_token_access" <% if App.Setting.get('api_token_access'): %>checked<% end %>>
+       <label for="api_token_access"></label>
+    </div>
+    <h2><%- @T('Token Access') %> (HTTP Token Authentication)</h2>
+  </div>
+
+<p><%- @T('Enable REST API using tokens (not username/email addeess and password). Each user need to create own access tokens in user profile.') %></p>
+
+<p><%- @T('Example') %>:</p>
+
+<code>
+curl -H "Authorization: Token token=YOUR_TOKEN" <%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/groups
+</code>
+
+<hr>
+
+  <div class="page-header-title">
+    <div class="zammad-switch zammad-switch--small js-PasswordAccess">
+       <input name="api_password_access" type="checkbox" id="api_password_access" <% if App.Setting.get('api_password_access'): %>checked<% end %>>
+       <label for="api_password_access"></label>
+    </div>
+    <h2><%- @T('Password Access') %> (HTTP Basic Authentication)</h2>
+  </div>
+
+<p><%- @T('Enable REST API access using the username/email address and password for the authentication user.') %></p>
+
+<p><%- @T('Example') %>:</p>
+
+<code>
+curl -u <%= @S('email') %>:some_password <%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/groups
+</code>
+
+<hr>
+
+  <div class="page-header-title">
+    <h2><%- @T('Applications') %> (OAuth Authentication)</h2>
+    &nbsp;
+  </div>
+
+<p><%- @T('Manage applications that can use Zammad as an OAuth provider and applications that you\'ve authorized to use your account.') %></p>
+
+<div class="js-appList"></div>
+
+<button class="btn js-appNew"><%- @T('New Application') %></button>
+
+<br>
+
+<div>
+OAuth URLs are:
+
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <tr>
+        <th width="40%"><%- @T('Title') %>
+        <th width="60%"><%- @T('URL') %>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%- @T('Requesting the Grant') %>
+        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/authorize
+      <tr>
+        <td><%- @T('Getting an Access Token') %>
+        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/token
+      <tr>
+        <td><%- @T('Revoking Access') %>
+        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/applications
+    </tbody>
+  </table>
+</div>
+
+</div>
