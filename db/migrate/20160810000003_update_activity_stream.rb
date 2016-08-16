@@ -7,6 +7,9 @@ class UpdateActivityStream < ActiveRecord::Migration
     add_column :activity_streams, :permission_id, :integer, null: true
     remove_column :activity_streams, :role_id
 
+    ActivityStream.connection.schema_cache.clear!
+    ActivityStream.reset_column_information
+
     Setting.create_or_update(
       title: 'sipgate.io integration',
       name: 'sipgate_integration',

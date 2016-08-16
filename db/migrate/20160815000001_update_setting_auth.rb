@@ -7,6 +7,9 @@ class UpdateSettingAuth < ActiveRecord::Migration
     change_column :settings, :preferences, :text, limit: 200.kilobytes + 1, null: true
     change_column :settings, :state_current, :text, limit: 200.kilobytes + 1, null: true
 
+    Setting.connection.schema_cache.clear!
+    Setting.reset_column_information
+
     Setting.create_if_not_exists(
       title: 'Authentication via %s',
       name: 'auth_ldap',

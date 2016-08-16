@@ -7,6 +7,9 @@ class UpdateRole < ActiveRecord::Migration
     add_column :roles, :preferences, :text, limit: 500.kilobytes + 1, null: true
     add_column :roles, :default_at_signup, :boolean, null: true, default: false
 
+    Role.connection.schema_cache.clear!
+    Role.reset_column_information
+
     Role.create_or_update(
       id: 1,
       name: 'Admin',
