@@ -410,6 +410,7 @@ class PreferencesTest < TestCase
       css:   '#content .js-create .js-input',
       value: 'Some App#1',
     )
+    click(css: '#content input[value="ticket.agent"] ~ .label-text')
     click(css: '#content .js-create .js-submit')
     watch_for(
       css: '.modal .modal-title',
@@ -425,6 +426,7 @@ class PreferencesTest < TestCase
       css:   '#content .js-create .js-input',
       value: 'Some App#2',
     )
+    click(css: '#content input[value="ticket.agent"] ~ .label-text')
     click(css: '#content .js-create .js-submit')
     watch_for(
       css: '.modal .modal-title',
