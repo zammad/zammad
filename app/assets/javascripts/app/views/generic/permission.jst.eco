@@ -1,4 +1,4 @@
-<div class="checkbox <%= @attribute.class %> checkbox">
+<div class="checkbox <%= @attribute.class %>">
 <% for permission in @permissions: %>
   <% if !permission.name.match(/\./): %>
   <label class="inline-label checkbox-replacement">
