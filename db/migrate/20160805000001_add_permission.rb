@@ -327,6 +327,7 @@ class AddPermission < ActiveRecord::Migration
       name: 'chat',
       note: 'Access to %s',
       preferences: {
+        disabled: true,
         translations: ['Chat']
       },
     )

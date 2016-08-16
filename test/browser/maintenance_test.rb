@@ -267,9 +267,10 @@ class MaintenanceTest < TestCase
     )
 
     switch(
-      browser: browser1,
-      css:  '#content .js-modeSetting',
-      type: 'on',
+      browser:  browser1,
+      css:      '#content .js-modeSetting',
+      type:     'on',
+      no_check: true,
     )
 
     # check warning
@@ -348,9 +349,10 @@ class MaintenanceTest < TestCase
     )
 
     switch(
-      browser: browser1,
-      css:  '#content .js-modeSetting',
-      type: 'on',
+      browser:  browser1,
+      css:      '#content .js-modeSetting',
+      type:     'on',
+      no_check: true,
     )
     # check warning
     alert = browser1.switch_to.alert

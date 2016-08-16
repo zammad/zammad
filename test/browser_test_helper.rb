@@ -685,6 +685,7 @@ class TestCase < Test::Unit::TestCase
     browser: browser1,
     css:  '.some_class',
     type: 'on', # 'off'
+    no_check: true, # do not check is switch has changed, in case if js alert
   )
 
 =end
@@ -697,22 +698,27 @@ class TestCase < Test::Unit::TestCase
 
     element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
     checked = element.attribute('checked')
+
     if !checked
       if params[:type] == 'on'
         instance.find_elements(css: "#{params[:css]} label")[0].click
         sleep 2
 
-        element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
-        checked = element.attribute('checked')
-        raise 'Switch not on!' if !checked
+        if params[:no_check] != true
+          element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
+          checked = element.attribute('checked')
+          raise 'Switch not on!' if !checked
+        end
       end
     elsif params[:type] == 'off'
       instance.find_elements(css: "#{params[:css]} label")[0].click
       sleep 2
 
-      element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
-      checked = element.attribute('checked')
-      raise 'Switch not off!' if checked
+      if params[:no_check] != true
+        element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
+        checked = element.attribute('checked')
+        raise 'Switch not off!' if checked
+      end
     end
   end
 
