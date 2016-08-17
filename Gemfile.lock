@@ -45,7 +45,7 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     ast (2.3.0)
-    autoprefixer-rails (6.4.0.1)
+    autoprefixer-rails (6.4.0.2)
       execjs
     biz (1.6.0)
       clavius (~> 1.0)
