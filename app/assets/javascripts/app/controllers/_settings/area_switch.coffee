@@ -36,7 +36,6 @@ class App.SettingsAreaSwitch extends App.Controller
       subSetting: @subSetting
     )
     for localSetting in @subSetting
-      console.log('localSetting', localSetting.state_current)
       new App.ControllerForm(
         el: @$('.form-item')
         params: localSetting.state_current.value
