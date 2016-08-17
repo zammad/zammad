@@ -90,6 +90,8 @@ class UpdateRole < ActiveRecord::Migration
       to_migrate: false,
       to_delete: false,
       position: 1400,
+      created_by_id: 1,
+      updated_by_id: 1,
     )
 
     ObjectManager::Attribute.add(
@@ -128,6 +130,8 @@ class UpdateRole < ActiveRecord::Migration
       to_migrate: false,
       to_delete: false,
       position: 1600,
+      created_by_id: 1,
+      updated_by_id: 1,
     )
 
   end
