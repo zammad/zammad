@@ -84,7 +84,7 @@ returns
         local_permissions = [data[:permission]]
       end
       match = false
-      local_permissions.each {|local_permission|
+      local_permissions.each { |local_permission|
         next if !token.preferences[:permission].include?(local_permission)
         match = true
         break
