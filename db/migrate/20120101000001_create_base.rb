@@ -183,7 +183,7 @@ class CreateBase < ActiveRecord::Migration
       t.integer :created_by_id,                    null: false
       t.timestamps                                 null: false
     end
-    add_index :translations, [:source]
+    add_index :translations, [:source], length: 255
     add_index :translations, [:locale]
 
     create_table :object_lookups do |t|
