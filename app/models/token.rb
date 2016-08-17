@@ -79,7 +79,17 @@ returns
     if data[:permission]
       return if !user.permissions?(data[:permission])
       return if !token.preferences[:permission]
-      return if !token.preferences[:permission].include?(data[:permission])
+      local_permissions = data[:permission]
+      if data[:permission].class != Array
+        local_permissions = [data[:permission]]
+      end
+      match = false
+      local_permissions.each {|local_permission|
+        next if !token.preferences[:permission].include?(local_permission)
+        match = true
+        break
+      }
+      return if !match
     end
 
     # return token user

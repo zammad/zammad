@@ -82,7 +82,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result['settings'])
-    assert_equal('No permission!', result['error'])
+    assert_equal('No permission (user)!', result['error'])
   end
 
   test 'settings index with customer' do
@@ -95,7 +95,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result['settings'])
-    assert_equal('No permission!', result['error'])
+    assert_equal('No permission (user)!', result['error'])
   end
 
 end

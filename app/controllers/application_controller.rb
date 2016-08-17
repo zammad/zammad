@@ -274,7 +274,7 @@ class ApplicationController < ActionController::Base
           permission: auth_param[:permission],
           inactive_user: true,
         )
-        raise Exceptions::NotAuthorized, 'No permission!' if !user
+        raise Exceptions::NotAuthorized, 'No permission (token)!' if !user
       end
       @_token_auth = token # remember for permission_check
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
@@ -315,7 +315,7 @@ class ApplicationController < ActionController::Base
 
     # check scopes / permission check
     if auth_param[:permission] && !user.permissions?(auth_param[:permission])
-      raise Exceptions::NotAuthorized, 'No permission!'
+      raise Exceptions::NotAuthorized, 'No permission (user)!'
     end
 
     current_user_set(user)
@@ -360,11 +360,11 @@ class ApplicationController < ActionController::Base
         permission: key,
       )
       return false if user
-      raise Exceptions::NotAuthorized, 'No permission!'
+      raise Exceptions::NotAuthorized, 'No permission (token)!'
     end
 
     return false if current_user && current_user.permissions?(key)
-    raise Exceptions::NotAuthorized, 'No permission!'
+    raise Exceptions::NotAuthorized, 'No permission (user)!'
   end
 
   def valid_session_with_user

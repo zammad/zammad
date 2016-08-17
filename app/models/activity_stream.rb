@@ -133,7 +133,7 @@ cleanup old stream messages
 
   ActivityStream.cleanup
 
-optional you can parse the max oldest stream entries
+optional you can put the max oldest stream entries as argument
 
   ActivityStream.cleanup(3.months)
 

@@ -114,6 +114,16 @@ class TokenTest < ActiveSupport::TestCase
     assert_equal('Agent1', user.lastname)
     assert_equal('token-agent1@example.com', user.email)
 
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: ['ticket.agent', 'not_existing'],
+    )
+    assert(user)
+    assert_equal('Token', user.firstname)
+    assert_equal('Agent1', user.lastname)
+    assert_equal('token-agent1@example.com', user.email)
+
   end
 
 end

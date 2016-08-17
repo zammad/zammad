@@ -220,7 +220,7 @@ cleanup old chat messages
 
   Chat.cleanup
 
-optional you can parse the max oldest chat entries
+optional you can put the max oldest chat entries
 
   Chat.cleanup(3.months)
 
@@ -241,7 +241,7 @@ close chat sessions where participients are offline
 
   Chat.cleanup_close
 
-optional you can parse the max oldest chat sessions
+optional you can put the max oldest chat sessions as argument
 
   Chat.cleanup_close(5.minutes)
 
