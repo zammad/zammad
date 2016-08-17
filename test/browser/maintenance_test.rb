@@ -181,11 +181,6 @@ class MaintenanceTest < TestCase
       url: browser_url,
     )
 
-    browser2 = browser_instance
-    location(
-      browser: browser2,
-      url:     browser_url,
-    )
     click(
       browser: browser1,
       css: 'a[href="#manage"]',
@@ -193,11 +188,6 @@ class MaintenanceTest < TestCase
     click(
       browser: browser1,
       css: 'a[href="#system/maintenance"]',
-    )
-
-    exists_not(
-      browser: browser2,
-      css: '.js-maintenanceLogin',
     )
 
     string  = rand(99_999_999_999_999_999).to_s
@@ -212,7 +202,16 @@ class MaintenanceTest < TestCase
       css: '#global-search',
     )
 
-    sleep 3
+    browser2 = browser_instance
+    location(
+      browser: browser2,
+      url:     browser_url,
+    )
+    exists_not(
+      browser: browser2,
+      css: '.js-maintenanceLogin',
+    )
+
     switch(
       browser: browser1,
       css:  '#content .js-loginSetting',
@@ -235,7 +234,6 @@ class MaintenanceTest < TestCase
       browser: browser2,
       css: '.js-maintenanceLogin',
     )
-
   end
 
   def test_mode
