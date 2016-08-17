@@ -158,7 +158,11 @@ Setting.create_if_not_exists(
     ],
   },
   state: system_id,
-  preferences: { online_service_disable: true, placeholder: true },
+  preferences: {
+    online_service_disable: true,
+    placeholder: true,
+    authentication: true,
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -1001,7 +1005,11 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { render: true, placeholder: true },
+  preferences: {
+    render: true,
+    placeholder: true,
+    authentication: true,
+  },
   state: 'Ticket#',
   frontend: true
 )
@@ -1173,6 +1181,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: {
+    authentication: true,
+  },
   frontend: true
 )
 
@@ -1195,6 +1206,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: '',
+  preferences: {
+    authentication: true,
+  },
   frontend: true
 )
 
@@ -1218,6 +1232,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: {
+    authentication: true,
+  },
   frontend: true
 )
 
@@ -1498,7 +1515,9 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { trigger: ['menu:render', 'chat:rerender'] },
+  preferences: {
+    trigger: ['menu:render', 'chat:rerender']
+  },
   state: false,
   frontend: true
 )
@@ -1518,7 +1537,6 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: {},
   state: '120',
   frontend: true
 )
@@ -1530,6 +1548,9 @@ Setting.create_if_not_exists(
   description: 'Define the models which can be searched for.',
   options: {},
   state: [],
+  preferences: {
+    authentication: true,
+  },
   frontend: true,
 )
 
@@ -1802,6 +1823,9 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    authentication: true,
+  },
   state: true,
   frontend: true
 )
@@ -1825,6 +1849,9 @@ Setting.create_if_not_exists(
       own: true,
       not_assigned: false,
     }
+  },
+  preferences: {
+    authentication: true,
   },
   frontend: true
 )
@@ -2183,8 +2210,12 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1, trigger: ['menu:render', 'cti:reload'] },
-  frontend: false
+  preferences: {
+    prio: 1,
+    trigger: ['menu:render', 'cti:reload'],
+    authentication: true,
+  },
+  frontend: true
 )
 Setting.create_if_not_exists(
   title: 'sipgate.io config',

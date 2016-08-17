@@ -380,8 +380,11 @@ class ApplicationController < ActionController::Base
 
     # config
     config = {}
-    Setting.select('name').where(frontend: true).each { |setting|
-      config[setting.name] = Setting.get(setting.name)
+    Setting.select('name, preferences').where(frontend: true).each { |setting|
+      next if setting.preferences[:authentication] == true && !current_user
+      value = Setting.get(setting.name)
+      next if !current_user && (value == false || value.nil?)
+      config[setting.name] = value
     }
 
     # remember if we can to swich back to user
@@ -390,7 +393,9 @@ class ApplicationController < ActionController::Base
     end
 
     # remember session_id for websocket logon
-    config['session_id'] = session.id
+    if current_user
+      config['session_id'] = session.id
+    end
 
     config
   end
