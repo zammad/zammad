@@ -21,19 +21,22 @@ returns
 
 =end
 
-    def assets (data)
+    def assets(data)
 
-      if !data[ Overview.to_app_model ]
-        data[ Overview.to_app_model ] = {}
+      app_model_overview = Overview.to_app_model
+      app_model_user = User.to_app_model
+
+      if !data[ app_model_overview ]
+        data[ app_model_overview ] = {}
       end
-      if !data[ User.to_app_model ]
-        data[ User.to_app_model ] = {}
+      if !data[ app_model_user ]
+        data[ app_model_user ] = {}
       end
-      if !data[ Overview.to_app_model ][ id ]
-        data[ Overview.to_app_model ][ id ] = attributes_with_associations
+      if !data[ app_model_overview ][ id ]
+        data[ app_model_overview ][ id ] = attributes_with_associations
         if user_ids
           user_ids.each { |local_user_id|
-            next if data[ User.to_app_model ][ local_user_id ]
+            next if data[ app_model_user ][ local_user_id ]
             user = User.lookup(id: local_user_id)
             next if !user
             data = user.assets(data)
@@ -45,7 +48,7 @@ returns
       end
       %w(created_by_id updated_by_id).each { |local_user_id|
         next if !self[ local_user_id ]
-        next if data[ User.to_app_model ][ self[ local_user_id ] ]
+        next if data[ app_model_user ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])
         next if !user
         data = user.assets(data)

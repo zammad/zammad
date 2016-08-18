@@ -21,16 +21,18 @@ returns
 
 =end
 
-    def assets (data)
+    def assets(data)
 
-      if !data[ Job.to_app_model ]
-        data[ Job.to_app_model ] = {}
+      app_model = Job.to_app_model
+
+      if !data[ app_model ]
+        data[ app_model ] = {}
       end
       if !data[ User.to_app_model ]
         data[ User.to_app_model ] = {}
       end
-      if !data[ Job.to_app_model ][ id ]
-        data[ Job.to_app_model ][ id ] = attributes_with_associations
+      if !data[ app_model ][ id ]
+        data[ app_model ][ id ] = attributes_with_associations
         data = assets_of_selector('condition', data)
         data = assets_of_selector('perform', data)
       end

@@ -21,20 +21,23 @@ returns
 
 =end
 
-    def assets (data)
+    def assets(data)
 
-      if !data[ Organization.to_app_model ]
-        data[ Organization.to_app_model ] = {}
+      app_model_organization = Organization.to_app_model
+      app_model_user = User.to_app_model
+
+      if !data[ app_model_organization ]
+        data[ app_model_organization ] = {}
       end
-      if !data[ User.to_app_model ]
-        data[ User.to_app_model ] = {}
+      if !data[ app_model_user ]
+        data[ app_model_user ] = {}
       end
-      if !data[ Organization.to_app_model ][ id ]
+      if !data[ app_model_organization ][ id ]
         local_attributes = attributes
 
         # set temp. current attributes to assets pool to prevent
         # loops, will be updated with lookup attributes later
-        data[ Organization.to_app_model ][ id ] = local_attributes
+        data[ app_model_organization ][ id ] = local_attributes
 
         # get organizations
         key = "Organization::member_ids::#{id}"
@@ -46,18 +49,18 @@ returns
         local_attributes['member_ids'] = local_member_ids
         if local_member_ids
           local_member_ids.each { |local_user_id|
-            next if data[ User.to_app_model ][ local_user_id ]
+            next if data[ app_model_user ][ local_user_id ]
             user = User.lookup(id: local_user_id)
             next if !user
             data = user.assets(data)
           }
         end
 
-        data[ Organization.to_app_model ][ id ] = local_attributes
+        data[ app_model_organization ][ id ] = local_attributes
       end
       %w(created_by_id updated_by_id).each { |local_user_id|
         next if !self[ local_user_id ]
-        next if data[ User.to_app_model ][ self[ local_user_id ] ]
+        next if data[ app_model_user ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])
         next if !user
         data = user.assets(data)

@@ -23,18 +23,20 @@ returns
 
     def assets (data)
 
-      if !data[ User.to_app_model ]
-        data[ User.to_app_model ] = {}
+      app_model = User.to_app_model
+
+      if !data[ app_model ]
+        data[ app_model ] = {}
       end
-      if !data[ User.to_app_model ][ id ]
-        local_attributes = attributes
+      if !data[ app_model ][ id ]
+        local_attributes = attributes_with_associations
 
         # do not transfer crypted pw
         local_attributes['password'] = ''
 
         # set temp. current attributes to assets pool to prevent
         # loops, will be updated with lookup attributes later
-        data[ User.to_app_model ][ id ] = local_attributes
+        data[ app_model ][ id ] = local_attributes
 
         # get linked accounts
         local_attributes['accounts'] = {}
@@ -54,30 +56,16 @@ returns
         local_attributes['accounts'] = local_accounts
 
         # get roles
-        key = "User::role_ids::#{id}"
-        local_role_ids = Cache.get(key)
-        if !local_role_ids
-          local_role_ids = role_ids
-          Cache.write(key, local_role_ids)
-        end
-        local_attributes['role_ids'] = local_role_ids
-        if local_role_ids
-          local_role_ids.each { |role_id|
+        if local_attributes['role_ids']
+          local_attributes['role_ids'].each { |role_id|
             role = Role.lookup(id: role_id)
             data = role.assets(data)
           }
         end
 
         # get groups
-        key = "User::group_ids::#{id}"
-        local_group_ids = Cache.get(key)
-        if !local_group_ids
-          local_group_ids = group_ids
-          Cache.write(key, local_group_ids)
-        end
-        local_attributes['group_ids'] = local_group_ids
-        if local_group_ids
-          local_group_ids.each { |group_id|
+        if local_attributes['group_ids']
+          local_attributes['group_ids'].each { |group_id|
             group = Group.lookup(id: group_id)
             next if !group
             data = group.assets(data)
@@ -85,22 +73,15 @@ returns
         end
 
         # get organizations
-        key = "User::organization_ids::#{id}"
-        local_organization_ids = Cache.get(key)
-        if !local_organization_ids
-          local_organization_ids = organization_ids
-          Cache.write(key, local_organization_ids)
-        end
-        local_attributes['organization_ids'] = local_organization_ids
-        if local_organization_ids
-          local_organization_ids.each { |organization_id|
+        if local_attributes['organization_ids']
+          local_attributes['organization_ids'].each { |organization_id|
             organization = Organization.lookup(id: organization_id)
             next if !organization
             data = organization.assets(data)
           }
         end
 
-        data[ User.to_app_model ][ id ] = local_attributes
+        data[ app_model ][ id ] = local_attributes
       end
 
       # add organization
@@ -114,7 +95,7 @@ returns
       end
       %w(created_by_id updated_by_id).each { |local_user_id|
         next if !self[ local_user_id ]
-        next if data[ User.to_app_model ][ self[ local_user_id ] ]
+        next if data[ app_model ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])
         next if !user
         data = user.assets(data)

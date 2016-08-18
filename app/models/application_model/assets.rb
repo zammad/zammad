@@ -6,7 +6,7 @@ module ApplicationModel::Assets
 get all assets / related models for this user
 
   user = User.find(123)
-  result = user.assets( assets_if_exists )
+  result = user.assets(assets_if_exists)
 
 returns
 
@@ -19,13 +19,15 @@ returns
 
 =end
 
-  def assets (data = {})
+  def assets(data = {})
 
-    if !data[ self.class.to_app_model ]
-      data[ self.class.to_app_model ] = {}
+    app_model = self.class.to_app_model
+
+    if !data[ app_model ]
+      data[ app_model ] = {}
     end
-    if !data[ self.class.to_app_model ][ id ]
-      data[ self.class.to_app_model ][ id ] = attributes_with_associations
+    if !data[ app_model ][ id ]
+      data[ app_model ][ id ] = attributes_with_associations
     end
 
     return data if !self['created_by_id'] && !self['updated_by_id']

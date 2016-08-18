@@ -8,7 +8,7 @@ class History
 get all assets / related models for this history entry
 
   history = History.find(123)
-  result = history.assets( assets_if_exists )
+  result = history.assets(assets_if_exists)
 
 returns
 
@@ -21,9 +21,11 @@ returns
 
 =end
 
-    def assets (data)
+    def assets(data)
 
-      if !data[ User.to_app_model ] || !data[ User.to_app_model ][ self['created_by_id'] ]
+      app_model = User.to_app_model
+
+      if !data[ app_model ] || !data[ app_model ][ self['created_by_id'] ]
         user = User.lookup(id: self['created_by_id'])
         if user
           data = user.assets(data)
