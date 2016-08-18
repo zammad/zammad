@@ -93,6 +93,8 @@ class App.Dashboard extends App.Controller
     @$(".tab-content.#{target}").removeClass('hidden')
 
 class DashboardRouter extends App.ControllerPermanent
+  requiredPermission: ['*']
+
   constructor: (params) ->
     super
 
@@ -108,5 +110,5 @@ class DashboardRouter extends App.ControllerPermanent
     )
 
 App.Config.set('dashboard', DashboardRouter, 'Routes')
+App.Config.set('Dashboard', { controller: 'Dashboard', permission: ['*'] }, 'permanentTask')
 App.Config.set('Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], class: 'dashboard' }, 'NavBar')
-App.Config.set('Dashboard', { controller: 'Dashboard', authentication: true }, 'permanentTask')

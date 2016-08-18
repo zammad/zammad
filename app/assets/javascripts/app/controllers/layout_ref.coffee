@@ -1908,8 +1908,8 @@ class CustomerChatRef extends App.Controller
 #     )
 
 App.Config.set( 'layout_ref/customer_chat', CustomerChatRef, 'Routes' )
-# App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
-# App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', role: ['Agent'], class: 'chat' }, 'NavBar' )
+# App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', permission: ['chat.agent'] }, 'permanentTask' )
+# App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', permission: ['chat.agent'], class: 'chat' }, 'NavBar' )
 
 class ChatWindowRef extends Spine.Controller
   @extend Spine.Events

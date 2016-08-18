@@ -205,5 +205,5 @@ class CTIRouter extends App.ControllerPermanent
     )
 
 App.Config.set('cti', CTIRouter, 'Routes')
-App.Config.set('CTI', { controller: 'CTI', authentication: true }, 'permanentTask')
+App.Config.set('CTI', { controller: 'CTI', permission: ['cti.agent'] }, 'permanentTask')
 App.Config.set('CTI', { prio: 1300, parent: '', name: 'Phone', target: '#cti', key: 'CTI', shown: false, permission: ['cti.agent'], class: 'phone' }, 'NavBar')

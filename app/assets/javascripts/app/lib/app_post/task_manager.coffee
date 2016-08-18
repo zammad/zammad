@@ -533,12 +533,15 @@ class _taskManagerSingleton extends App.Controller
     App.Event.trigger 'taskbar:init'
 
     # initial load of permanent tasks
-    authentication = App.Session.get('id')
+    user_id = App.Session.get('id')
+    user = undefined
+    if user_id
+      user = App.User.find(user_id)
     permanentTask  = App.Config.get('permanentTask')
     taskCount     = 0
     if permanentTask
       for key, config of permanentTask
-        if !config.authentication || (config.authentication && authentication)
+        if !config.permission || (user && user.permission(config.permission))
           taskCount += 1
           do (key, config, taskCount) =>
             App.Delay.set(

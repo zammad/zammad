@@ -183,6 +183,9 @@ class App.User extends App.Model
     if !_.isArray(key)
       keys = [key]
 
+    # if any permission exists
+    return true if _.contains(keys, '*')
+
     # get all permissions of user
     permissions = {}
     for role_id in @role_ids

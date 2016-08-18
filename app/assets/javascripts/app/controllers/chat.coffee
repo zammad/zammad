@@ -770,5 +770,5 @@ class Setting extends App.ControllerModal
     )
 
 App.Config.set('customer_chat', CustomerChatRouter, 'Routes')
-App.Config.set('CustomerChat', { controller: 'CustomerChat', authentication: true }, 'permanentTask')
+App.Config.set('CustomerChat', { controller: 'CustomerChat', permission: ['chat.agent'] }, 'permanentTask')
 App.Config.set('CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, permission: ['chat.agent'], class: 'chat' }, 'NavBar')
