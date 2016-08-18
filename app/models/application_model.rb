@@ -189,6 +189,10 @@ returns
 
   def attributes_with_associations
 
+    key = "#{self.class}::aws::#{id}"
+    cache = Cache.get(key)
+    return cache if cache
+
     # get relations
     attributes = self.attributes
     self.class.reflect_on_all_associations.map { |assoc|
@@ -196,6 +200,7 @@ returns
       next if !respond_to?(real_ids)
       attributes[real_ids] = send(real_ids)
     }
+    Cache.write(key, attributes)
     attributes
   end
 
@@ -472,8 +477,12 @@ returns
 
   def cache_delete
 
-    # delete id caches
+    # delete by id caches
     key = "#{self.class}::#{id}"
+    Cache.delete(key)
+
+    # delete by id with attributes_with_associations caches
+    key = "#{self.class}::aws::#{id}"
     Cache.delete(key)
 
     # delete old name / login caches
@@ -490,13 +499,13 @@ returns
       end
     end
 
-    # delete name caches
+    # delete by name caches
     if self[:name]
       key = "#{self.class}::#{self.name}"
       Cache.delete(key)
     end
 
-    # delete login caches
+    # delete by login caches
     return if !self[:login]
 
     Cache.delete("#{self.class}::#{login}")
