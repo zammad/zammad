@@ -14,8 +14,9 @@ class UserDevicesController < ApplicationController
       attributes.delete('created_at')
       attributes.delete('device_details')
       attributes.delete('location_details')
+      attributes.delete('fingerprint')
 
-      if session[:user_device_id] == device.id
+      if session[:user_device_fingerprint] == device.fingerprint
         attributes['current'] = true
       end
       devices_full.push attributes
