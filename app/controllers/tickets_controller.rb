@@ -73,6 +73,29 @@ class TicketsController < ApplicationController
   def create
     clean_params = Ticket.param_association_lookup(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
+
+    # try to create customer if needed
+    if clean_params[:customer_id] && clean_params[:customer_id] =~ /^guess:(.+?)$/
+      email = $1
+      if email !~ /@/ || email =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
+        render json: { error: 'Invalid email' }, status: :unprocessable_entity
+        return
+      end
+      customer = User.find_by(email: email)
+      if !customer
+        role_ids = Role.signup_role_ids
+        customer = User.create(
+          firstname: '',
+          lastname: '',
+          email: email,
+          password: '',
+          active: true,
+          role_ids: role_ids,
+        )
+      end
+      clean_params[:customer_id] = customer.id
+    end
+
     ticket = Ticket.new(clean_params)
 
     # check if article is given
