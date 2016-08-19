@@ -1877,6 +1877,15 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title: 'Define postmaster filter.',
+  name: '0012_postmaster_filter_sender_is_system_address',
+  area: 'Postmaster::PreFilter',
+  description: 'Define postmaster filter to check if email got created via email as Zammad.',
+  options: {},
+  state: 'Channel::Filter::SenderIsSystemAddress',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define postmaster filter.',
   name: '0015_postmaster_filter_identify_sender',
   area: 'Postmaster::PreFilter',
   description: 'Define postmaster filter to identify sender user.',
