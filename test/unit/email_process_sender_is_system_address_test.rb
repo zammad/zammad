@@ -42,7 +42,7 @@ Some Text"
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     article = Ticket::Article.find(article_p.id)
-    p "ticket: #{ticket.inspect}"
+
     assert_equal(subject, ticket.title)
     assert_equal('open', ticket.state.name)
     assert_equal('Agent', ticket.create_article_sender.name)
