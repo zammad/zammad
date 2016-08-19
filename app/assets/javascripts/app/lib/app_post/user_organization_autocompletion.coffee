@@ -63,6 +63,15 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @userSelect.focus() if not @formControl.hasClass 'focus'
 
   onBlur: =>
+    selectUser = @userSelect.val()
+    if _.isEmpty(selectUser)
+      @userId.val('')
+      return
+    if @attribute.guess is true
+      currentUserId = @userId.val()
+      if _.isEmpty(currentUserId) || currentUserId.match(/^guess:/)
+        if !_.isEmpty(selectUser)
+          @userId.val("guess:#{selectUser}")
     @formControl.removeClass 'focus'
 
   onUserClick: (e) =>

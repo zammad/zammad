@@ -3296,6 +3296,7 @@ ObjectManager::Attribute.add(
     relation: 'User',
     autocapitalize: false,
     multiple: false,
+    guess: true,
     null: false,
     limit: 200,
     placeholder: 'Enter Person or Organization/Company',
