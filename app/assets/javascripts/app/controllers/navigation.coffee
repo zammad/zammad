@@ -72,7 +72,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       @notificationWidget = undefined
 
   renderMenu: =>
-    items = @getItems( navbar: @Config.get('NavBar') )
+    items = @getItems(navbar: @Config.get('NavBar'))
 
     # apply counter and switch info from persistant controllers (if exists)
     activeTab = {}
@@ -124,7 +124,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   renderPersonal: =>
     @recentViewNavbarItemsRebuild()
-    items = @getItems( navbar: @Config.get( 'NavBarRight' ) )
+    items = @getItems(navbar: @Config.get('NavBarRight'))
 
     # get open tabs to repopen on rerender
     open_tab = {}
@@ -305,7 +305,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
     level1 = []
     dropdown = {}
 
-    roles = App.Session.get('roles')
+    user = undefined
+    if App.Session.get('id')
+      user = App.User.find(App.Session.get('id'))
 
     for item in navbar
       if typeof item.callback is 'function'
@@ -313,16 +315,12 @@ class App.Navigation extends App.ControllerWidgetPermanent
         for key, value of data
           item[key] = value
       if !item.parent
-        match = 0
-        if !item.role
-          match = 1
-        if !roles && item.role
-          match = _.include(item.role, 'Anybody')
-        if roles
-          for role in roles
-            if !match
-              match = _.include(item.role, role.name)
-
+        match = true
+        if item.permission
+          match = false
+          for permissionName in item.permission
+            if !match && user && user.permission(permissionName)
+              match = true
         if match
           level1.push item
 
@@ -333,16 +331,12 @@ class App.Navigation extends App.ControllerWidgetPermanent
         # find all childs and order
         for itemSub in navbar
           if itemSub.parent is item.parent
-            match = 0
-            if !itemSub.role
-              match = 1
-            if !roles
-              match = _.include(itemSub.role, 'Anybody')
-            if roles
-              for role in roles
-                if !match
-                  match = _.include(itemSub.role, role.name)
-
+            match = true
+            if itemSub.permission
+              match = false
+              for permissionName in itemSub.permission
+                if !match && user && user.permission(permissionName)
+                  match = true
             if match
               dropdown[ item.parent ].push itemSub
 

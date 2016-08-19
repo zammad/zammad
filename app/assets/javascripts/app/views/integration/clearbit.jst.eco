@@ -1,7 +1,7 @@
 <form>
 
   <div class="settings-entry">
-    <table class="settings-list" style="width: 100%;">
+    <table class="settings-list js-baseSync" style="width: 100%;">
       <thead>
         <tr>
           <th width="15%"><%- @T('Title') %>
@@ -38,7 +38,7 @@
           <td class="settings-list-control-cell"><input name="destination" value="<%= destination %>" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
 <% end %>
-        <tr>
+        <tr class="js-new">
           <td class="settings-list-control-cell"><input name="source" value="" placeholder="person.attribute" class="form-control form-control--small js-summary">
           <td class="settings-list-control-cell"><input name="destination" value="" placeholder="user.attribute" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
@@ -63,13 +63,12 @@
           <td class="settings-list-control-cell"><input name="destination" value="<%= destination %>" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
 <% end %>
-        <tr>
+        <tr class="js-new">
           <td class="settings-list-control-cell"><input name="source" value="" placeholder="company.attribute" class="form-control form-control--small js-summary">
           <td class="settings-list-control-cell"><input name="destination" value="" placeholder="organization.attribute" class="form-control form-control--small js-summary">
           <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
       </tbody>
     </table>
   </div>
-
-  <button type="submit" class="btn btn--primary"><%- @T('Save') %></button>
+  <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
 </form>

@@ -44,7 +44,7 @@ class FirstStepsController < ApplicationController
       macro_active = true
     end
 
-    if current_user.role?('Admin')
+    if current_user.permissions?('admin')
 
       result = [
         {
@@ -225,7 +225,7 @@ class FirstStepsController < ApplicationController
   end
 
   def access?
-    return true if current_user.role?(%w(Agent Admin))
+    return true if current_user.permissions?(['admin', 'ticket.agent'])
     render json: []
     false
   end

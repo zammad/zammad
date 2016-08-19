@@ -106,7 +106,7 @@ class App.TaskbarWidget extends App.CollectionController
 class Remove extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'Discard changes'
+  buttonSubmit: 'Discard Changes'
   buttonClass: 'btn--danger'
   head: 'Confirm'
 

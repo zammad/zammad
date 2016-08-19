@@ -24,6 +24,7 @@ require 'digest/md5'
 # @property active          [Boolean] The flag that shows the active state of the User.
 # @property note            [String]  The note or comment stored to the User.
 class User < ApplicationModel
+  load 'user/permission.rb'
   include User::Permission
   load 'user/assets.rb'
   include User::Assets
@@ -31,8 +32,8 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_create   :check_name, :check_email, :check_login, :check_password, :check_preferences_default
-  before_update   :check_password, :check_email, :check_login, :check_preferences_default
+  before_create   :check_name, :check_email, :check_login, :check_password, :check_preferences_default, :validate_roles
+  before_update   :check_password, :check_email, :check_login, :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
@@ -41,6 +42,7 @@ class User < ApplicationModel
   has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
   has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
+  #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
   has_many                :authorizations,  after_add: :cache_update, after_remove: :cache_update
   belongs_to              :organization,    class_name: 'Organization'
@@ -48,7 +50,7 @@ class User < ApplicationModel
   store                   :preferences
 
   activity_stream_support(
-    role: Z_ROLENAME_ADMIN,
+    permission: 'admin.user',
     ignore_attributes: {
       last_login: true,
       login_failed: true,
@@ -289,7 +291,7 @@ returns
 
   def self.create_from_hash!(hash)
 
-    roles = Role.where(name: 'Customer')
+    role_ids = Role.signup_role_ids
     url = ''
     if hash['info']['urls']
       hash['info']['urls'].each { |_name, local_url|
@@ -307,10 +309,113 @@ returns
       address: hash['info']['location'],
       note: hash['info']['description'],
       source: hash['provider'],
-      roles: roles,
+      role_ids: role_ids,
       updated_by_id: 1,
       created_by_id: 1,
     )
+  end
+
+=begin
+
+get all permissions of user
+
+  user = User.find(123)
+  user.permissions
+
+returns
+
+  {
+    'permission.key' => true,
+    # ...
+  }
+
+=end
+
+  def permissions
+    list = {}
+    Object.const_get('Permission').joins(:roles).where('roles.id IN (?)', role_ids).each { |permission|
+      next if permission.preferences[:selectable] == false
+      list[permission.name] = true
+    }
+    list
+  end
+
+=begin
+
+true or false for permission
+
+  user = User.find(123)
+  user.permissions?('permission.key') # access to certain permission.key
+  user.permissions?(['permission.key1', 'permission.key2']) # access to permission.key1 or permission.key2
+
+  user.permissions?('permission') # access to all sub keys
+
+returns
+
+  true|false
+
+=end
+
+  def permissions?(key)
+    keys = key
+    names = []
+    if key.class == String
+      keys = [key]
+    end
+    keys.each { |local_key|
+      permissions = Object.const_get('Permission').with_parents(local_key)
+      Object.const_get('Permission').joins(:roles).where('roles.id IN (?) AND permissions.name IN (?)', role_ids, permissions).each { |permission|
+        next if permission.preferences[:selectable] == false
+        return true
+      }
+    }
+    false
+  end
+
+=begin
+
+get all users with permission
+
+  users = User.with_permissions('admin.session')
+
+get all users with permission "admin.session" or "ticket.agent"
+
+  users = User.with_permissions(['admin.session', 'ticket.agent'])
+
+returns
+
+  [user1, user2, ...]
+
+=end
+
+  def self.with_permissions(keys)
+    if keys.class != Array
+      keys = [keys]
+    end
+    total_role_ids = []
+    permission_ids = []
+    keys.each { |key|
+      role_ids = []
+      Object.const_get('Permission').with_parents(key).each { |local_key|
+        permission = Object.const_get('Permission').lookup(name: local_key)
+        next if !permission
+        permission_ids.push permission.id
+      }
+      next if permission_ids.empty?
+      Role.select('id').joins(:roles_permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ?', permission_ids, true).uniq().each { |role|
+        role_ids.push role.id
+      }
+      total_role_ids.push role_ids
+    }
+    return [] if total_role_ids.empty?
+    condition = ''
+    total_role_ids.each { |_role_ids|
+      if condition != ''
+        condition += ' OR '
+      end
+      condition += 'roles_users.role_id IN (?)'
+    }
+    User.joins(:users_roles).where("(#{condition}) AND users.active = ?", *total_role_ids, true).order(:id)
   end
 
 =begin
@@ -510,6 +615,8 @@ list of active users in role
 
   result = User.of_role('Agent', group_ids)
 
+  result = User.of_role(['Agent', 'Admin'])
+
 returns
 
   result = [user1, user2]
@@ -577,12 +684,6 @@ returns
 
     # delete asset caches
     key = "User::authorizations::#{id}"
-    Cache.delete(key)
-    key = "User::role_ids::#{id}"
-    Cache.delete(key)
-    key = "User::group_ids::#{id}"
-    Cache.delete(key)
-    key = "User::organization_ids::#{id}"
     Cache.delete(key)
   end
 
@@ -661,6 +762,20 @@ returns
         check = false
       end
     end
+  end
+
+  def validate_roles
+    return if !role_ids
+    role_ids.each { |role_id|
+      role = Role.lookup(id: role_id)
+      raise "Unable to find role for id #{role_id}" if !role
+      next if !role.preferences[:not]
+      role.preferences[:not].each { |local_role_name|
+        local_role = Role.lookup(name: local_role_name)
+        next if !local_role
+        raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
+      }
+    }
   end
 
   def avatar_for_email_check

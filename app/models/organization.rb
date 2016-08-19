@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Organization < ApplicationModel
+  load 'organization/permission.rb'
   include Organization::Permission
   load 'organization/assets.rb'
   include Organization::Assets
@@ -12,7 +13,7 @@ class Organization < ApplicationModel
   has_many                :members,  class_name: 'User'
   validates               :name,     presence: true
 
-  activity_stream_support role: Z_ROLENAME_ADMIN
+  activity_stream_support permission: 'admin.role'
   history_support
   search_index_support
   notify_clients_support

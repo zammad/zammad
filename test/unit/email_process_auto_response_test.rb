@@ -11,7 +11,7 @@ Subject: some new subject
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(true, mail['x-zammad-send-auto-response'.to_sym])
 
     email_raw_string = "From: me@example.com
@@ -21,7 +21,7 @@ X-Loop: yes
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
 
     email_raw_string = "From: me@example.com
@@ -31,7 +31,7 @@ Precedence: Bulk
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
 
     email_raw_string = "From: me@example.com
@@ -41,7 +41,7 @@ Auto-Submitted: auto-generated
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
 
     email_raw_string = "From: me@example.com
@@ -52,7 +52,7 @@ X-Auto-Response-Suppress: All
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(false, mail['x-zammad-send-auto-response'.to_sym])
 
   end

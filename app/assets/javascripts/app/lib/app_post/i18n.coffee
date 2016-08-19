@@ -218,7 +218,7 @@ class _i18nSingleton extends Spine.Module
     if quote
       translated = App.Utils.htmlEscape(translated)
 
-    # apply inline markup
+    # apply inline markup pre
     if markup
       translated = translated
         .replace(/\|\|(.+?)\|\|/gm, '<i>$1</i>')
@@ -240,6 +240,11 @@ class _i18nSingleton extends Spine.Module
           else
             "<a href=\"#{arg}\">🔗</a>"
         )
+
+    # apply inline markup post
+    if markup
+      translated = translated
+        .replace(/\[(.+?)\]\((.+?)\)/gm, '<a href="$2" target="_blank">$1</a>')
 
     @log 'debug', 'translate', string, args, translated
 

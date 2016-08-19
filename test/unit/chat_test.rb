@@ -8,7 +8,7 @@ class ChatTest < ActiveSupport::TestCase
 
     # create base
     groups = Group.all
-    roles  = Role.where( name: %w(Agent Chat) )
+    roles  = Role.where( name: %w(Agent) )
     agent1 = User.create_or_update(
       login: 'ticket-chat-agent1@example.com',
       firstname: 'Notification',

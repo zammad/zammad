@@ -8,5 +8,5 @@ class App.TicketZoomMeta extends App.ObserverController
   render: (ticket) =>
     @html App.view('ticket_zoom/meta')(
       ticket:     ticket
-      isCustomer: @isRole('Customer')
+      isCustomer: @permissionCheck('ticket.customer')
     )

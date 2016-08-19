@@ -704,7 +704,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    p ticket_p.articles.last.inspect
+    #p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -783,7 +783,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('3 high', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    p ticket_p.articles.last.inspect
+    #p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)
@@ -867,7 +867,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('3 high', ticket_p.priority.name, 'ticket_p.priority verify')
     assert_equal(2, ticket_p.articles.count, 'ticket_p.articles verify')
 
-    p ticket_p.articles.last.inspect
+    #p ticket_p.articles.last.inspect
     article_p = ticket_p.articles.last
     assert_match('Owner has changed', article_p.subject)
     assert_match('Zammad <zammad@localhost>', article_p.from)

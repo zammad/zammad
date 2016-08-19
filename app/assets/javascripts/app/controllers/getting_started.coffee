@@ -2,7 +2,7 @@ class Index extends App.WizardFullScreen
   constructor: ->
     super
 
-    if @authenticate(true, 'Admin')
+    if @authenticateCheck() && !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -63,7 +63,7 @@ class AutoWizard extends App.WizardFullScreen
     super
 
     # if already logged in, got to #
-    if @authenticate(true, 'Admin')
+    if @authenticateCheck() && !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -139,7 +139,7 @@ class Admin extends App.WizardFullScreen
   constructor: ->
     super
 
-    if @authenticate(true, 'Admin')
+    if @authenticateCheck() && !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -257,7 +257,7 @@ class Base extends App.WizardFullScreen
     super
 
     # redirect if we are not admin
-    if !@authenticate(true, 'Admin')
+    if !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -389,7 +389,7 @@ class EmailNotification extends App.WizardFullScreen
     super
 
     # redirect if we are not admin
-    if !@authenticate(true, 'Admin')
+    if !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -504,7 +504,7 @@ class Channel extends App.WizardFullScreen
     super
 
     # redirect if we are not admin
-    if !@authenticate(true, 'Admin')
+    if !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -555,7 +555,7 @@ class ChannelEmailPreConfigured extends App.WizardFullScreen
     super
 
     # redirect if we are not admin
-    if !@authenticate(true, 'Admin')
+    if !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -605,7 +605,7 @@ class ChannelEmail extends App.WizardFullScreen
     super
 
     # redirect if we are not admin
-    if !@authenticate(true, 'Admin')
+    if !@permissionCheck('admin.wizard')
       @navigate '#'
       return
 
@@ -890,12 +890,10 @@ class Agent extends App.WizardFullScreen
 
   constructor: ->
     super
-
-    return if !@authenticate()
+    @authenticateCheckRedirect()
 
     # set title
     @title 'Invite Agents'
-
     @fetch()
 
   release: =>
@@ -986,12 +984,10 @@ App.Config.set('getting_started/agents', Agent, 'Routes')
 class Channel extends App.WizardFullScreen
   constructor: ->
     super
-
-    return if !@authenticate()
+    @authenticateCheckRedirect()
 
     # set title
     @title 'Setup Finished'
-
     @render()
 
   release: =>

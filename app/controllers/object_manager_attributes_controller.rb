@@ -1,11 +1,10 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class ObjectManagerAttributesController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'admin.object') }
 
   # GET /object_manager_attributes_list
   def list
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     render json: {
       objects: ObjectManager.list_frontend_objects,
     }
@@ -13,19 +12,16 @@ class ObjectManagerAttributesController < ApplicationController
 
   # GET /object_manager_attributes
   def index
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     render json: ObjectManager::Attribute.list_full
   end
 
   # GET /object_manager_attributes/1
   def show
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(ObjectManager::Attribute, params)
   end
 
   # POST /object_manager_attributes
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     check_params
 
     # check if attribute already exists
@@ -55,7 +51,6 @@ class ObjectManagerAttributesController < ApplicationController
 
   # PUT /object_manager_attributes/1
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     check_params
     begin
       object_manager_attribute = ObjectManager::Attribute.add(
@@ -77,7 +72,6 @@ class ObjectManagerAttributesController < ApplicationController
 
   # DELETE /object_manager_attributes/1
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     object_manager_attribute = ObjectManager::Attribute.find(params[:id])
     ObjectManager::Attribute.remove(
       object_lookup_id: object_manager_attribute.object_lookup_id,
@@ -88,14 +82,12 @@ class ObjectManagerAttributesController < ApplicationController
 
   # POST /object_manager_attributes_discard_changes
   def discard_changes
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     ObjectManager::Attribute.discard_changes
     render json: {}, status: :ok
   end
 
   # POST /object_manager_attributes_execute_migrations
   def execute_migrations
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     ObjectManager::Attribute.migration_execute
     render json: {}, status: :ok
   end

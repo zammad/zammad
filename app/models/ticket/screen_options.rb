@@ -80,7 +80,7 @@ returns
 
     # get group / user relations
     agents = {}
-    User.of_role('Agent').each { |user|
+    User.with_permissions('ticket.agent').each { |user|
       agents[ user.id ] = 1
     }
 

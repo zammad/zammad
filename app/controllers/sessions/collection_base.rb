@@ -17,6 +17,11 @@ module ExtraCollection
     collections[ RecentView.to_app_model ] = RecentView.list(user, 10)
     assets = RecentView.assets_of_object_list(collections[ RecentView.to_app_model ], assets)
 
+    collections[ Permission.to_app_model ] = []
+    Permission.all.each { |item|
+      assets = item.assets(assets)
+    }
+
     collections[ Role.to_app_model ] = []
     Role.all.each { |item|
       assets = item.assets(assets)

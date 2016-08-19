@@ -103,7 +103,7 @@ class App.TicketZoomArticleNew extends App.Controller
         features:   ['attachment']
       }
 
-    if @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       @type = 'note'
       @articleTypes = [
         {
@@ -177,7 +177,7 @@ class App.TicketZoomArticleNew extends App.Controller
       articleTypes: @articleTypes
       article:      @defaults
       form_id:      @form_id
-      isCustomer:   @isRole('Customer')
+      isCustomer:   @permissionCheck('ticket.customer')
     )
     @setArticleType(@type)
 
@@ -254,7 +254,7 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     # show text module UI
-    if !@isRole('Customer')
+    if !@permissionCheck('ticket.customer')
       textModule = new App.WidgetTextModule(
         el: @$('.js-textarea').parent()
         data:
@@ -281,7 +281,7 @@ class App.TicketZoomArticleNew extends App.Controller
       if !params['internal']
         params['internal'] = false
 
-      if @isRole('Customer')
+      if @permissionCheck('ticket.customer')
         sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
         type             = App.TicketArticleType.findByAttribute('name', 'web')
         params.type_id   = type.id

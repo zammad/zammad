@@ -7,7 +7,7 @@ class App.Dashboard extends App.Controller
   constructor: ->
     super
 
-    if @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       @clueAccess = false
       return
 
@@ -16,7 +16,7 @@ class App.Dashboard extends App.Controller
 
     # rerender view, e. g. on language change
     @bind 'ui:rerender', =>
-      return if !@authenticate(true)
+      return if !@authenticateCheck()
       @render()
 
     @mayBeClues()
@@ -25,7 +25,7 @@ class App.Dashboard extends App.Controller
 
     localEl = $( App.view('dashboard')(
       head:    'Dashboard'
-      isAdmin: @isRole('Admin')
+      isAdmin: @permissionCheck('admin')
     ) )
 
     new App.DashboardStats(
@@ -69,7 +69,7 @@ class App.Dashboard extends App.Controller
 
   show: (params) =>
 
-    if @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       @navigate '#', true
       return
 
@@ -93,11 +93,13 @@ class App.Dashboard extends App.Controller
     @$(".tab-content.#{target}").removeClass('hidden')
 
 class DashboardRouter extends App.ControllerPermanent
+  requiredPermission: ['*']
+
   constructor: (params) ->
     super
 
     # check authentication
-    return if !@authenticate()
+    @authenticateCheckRedirect()
 
     App.TaskManager.execute(
       key:        'Dashboard'
@@ -108,5 +110,5 @@ class DashboardRouter extends App.ControllerPermanent
     )
 
 App.Config.set('dashboard', DashboardRouter, 'Routes')
-App.Config.set('Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', key: 'Dashboard', role: ['Agent'], class: 'dashboard' }, 'NavBar')
-App.Config.set('Dashboard', { controller: 'Dashboard', authentication: true }, 'permanentTask')
+App.Config.set('Dashboard', { controller: 'Dashboard', permission: ['*'] }, 'permanentTask')
+App.Config.set('Dashboard', { prio: 100, parent: '', name: 'Dashboard', target: '#dashboard', key: 'Dashboard', permission: ['ticket.agent'], class: 'dashboard' }, 'NavBar')

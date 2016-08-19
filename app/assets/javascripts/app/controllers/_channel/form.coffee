@@ -1,5 +1,6 @@
 # coffeelint: disable=no_unnecessary_double_quotes
-class App.ChannelForm extends App.Controller
+class App.ChannelForm extends App.ControllerContent
+  requiredPermission: 'admin.channel_form'
   events:
     'change form.js-params': 'updateParams'
     'keyup form.js-params': 'updateParams'
@@ -12,11 +13,12 @@ class App.ChannelForm extends App.Controller
   constructor: ->
     super
     @title 'Form'
-    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
+    App.Setting.fetchFull(
+      @render
+      force: false
+    )
 
   render: =>
-    App.Setting.unsubscribe(@subscribeId)
-
     setting = App.Setting.get('form_ticket_create')
     @html App.view('channel/form')(
       baseurl: window.location.origin
@@ -27,9 +29,6 @@ class App.ChannelForm extends App.Controller
       hljs.highlightBlock block
 
     @updateParams()
-
-  release: =>
-    App.Setting.unsubscribe(@subscribeId)
 
   updateParams: ->
     quote = (string) ->
@@ -52,4 +51,4 @@ class App.ChannelForm extends App.Controller
     value = @formSetting.prop('checked')
     App.Setting.set('form_ticket_create', value)
 
-App.Config.set( 'Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Form', { prio: 2000, name: 'Form', parent: '#channels', target: '#channels/form', controller: App.ChannelForm, permission: ['admin.formular'] }, 'NavBarAdmin')

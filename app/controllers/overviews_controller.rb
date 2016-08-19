@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class OverviewsController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'admin.overview') }
 
 =begin
 
@@ -52,7 +52,6 @@ curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password}
 =end
 
   def index
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_index_render(Overview, params)
   end
 
@@ -74,7 +73,6 @@ curl http://localhost/api/v1/overviews/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_show_render(Overview, params)
   end
 
@@ -108,7 +106,6 @@ curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Overview, params)
   end
 
@@ -142,7 +139,6 @@ curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Overview, params)
   end
 
@@ -160,7 +156,6 @@ curl http://localhost/api/v1/overviews/#{id}.json -v -u #{login}:#{password} -H 
 =end
 
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Overview, params)
   end
 end

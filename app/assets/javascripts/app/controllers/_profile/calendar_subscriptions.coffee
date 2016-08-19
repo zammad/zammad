@@ -1,4 +1,5 @@
-class CalendarSubscriptions extends App.Controller
+class CalendarSubscriptions extends App.ControllerContent
+  requiredPermission: 'user_preferences.calendar+ticket.agent'
   elements:
     'input[type=checkbox]': 'options'
     'output': 'output'
@@ -10,7 +11,6 @@ class CalendarSubscriptions extends App.Controller
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Calendar', true
 
     @translationTable =
@@ -91,4 +91,4 @@ class CalendarSubscriptions extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', role: ['Agent'], controller: CalendarSubscriptions }, 'NavBarProfile')
+App.Config.set('CalendarSubscriptions', { prio: 3000, name: 'Calendar', parent: '#profile', target: '#profile/calendar_subscriptions', permission: ['user_preferences.calendar+ticket.agent'], controller: CalendarSubscriptions }, 'NavBarProfile')

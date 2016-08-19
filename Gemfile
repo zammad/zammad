@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
-gem 'rails', '4.2.7'
+gem 'rails', '4.2.7.1'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -24,10 +24,9 @@ group :assets do
   gem 'eco'
 end
 
-gem 'autoprefixer-rails', '>=5.2'
+gem 'autoprefixer-rails'
 
 gem 'oauth2'
-gem 'doorkeeper'
 
 gem 'omniauth'
 gem 'omniauth-oauth2'
@@ -120,7 +119,7 @@ group :development, :test do
   gem 'selenium-webdriver'
 
   # livereload on template changes (html, js, css)
-  gem 'guard', '>= 2.2.2', require: false
+  gem 'guard',             require: false
   gem 'guard-livereload',  require: false
   gem 'rack-livereload'
   gem 'rb-fsevent',        require: false

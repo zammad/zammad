@@ -1,10 +1,10 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.linked_accounts'
   events:
     'click .js-remove': 'remove'
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Linked Accounts', true
     @render()
 
@@ -78,4 +78,4 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index }, 'NavBarProfile')
+App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')

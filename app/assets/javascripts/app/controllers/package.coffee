@@ -1,15 +1,11 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.package'
   events:
     'click .action':  'action'
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
-
     @title 'Packages', true
-
     @load()
 
   load: ->
@@ -58,4 +54,4 @@ class Index extends App.ControllerContent
           @load()
         )
 
-App.Config.set('Packages', { prio: 3600, name: 'Packages', parent: '#system', target: '#system/package', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Packages', { prio: 3600, name: 'Packages', parent: '#system', target: '#system/package', controller: Index, permission: ['admin.package'] }, 'NavBarAdmin')

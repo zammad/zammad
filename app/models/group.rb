@@ -6,7 +6,7 @@ class Group < ApplicationModel
   belongs_to               :signature
   validates                :name, presence: true
 
-  activity_stream_support  role: Z_ROLENAME_ADMIN
+  activity_stream_support  permission: 'admin.group'
   history_support
   notify_clients_support
   latest_change_support

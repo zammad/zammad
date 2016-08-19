@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:username], params[:password])
 
     # check maintenance mode
-    return if check_maintenance(user)
+    check_maintenance(user)
 
     # auth failed
     raise Exceptions::NotAuthorized, 'Wrong Username and Password combination.' if !user
@@ -195,7 +195,8 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    authentication_check
+    permission_check('admin.session')
 
     # check user
     if !params[:id]
@@ -277,7 +278,8 @@ class SessionsController < ApplicationController
   end
 
   def list
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    authentication_check
+    permission_check('admin.session')
     assets = {}
     sessions_clean = []
     SessionHelper.list.each { |session|
@@ -295,7 +297,8 @@ class SessionsController < ApplicationController
   end
 
   def delete
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    authentication_check
+    permission_check('admin.session')
     SessionHelper.destroy(params[:id])
     render json: {}
   end

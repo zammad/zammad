@@ -1,9 +1,7 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.text_module'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
 
     new App.ControllerGenericIndex(
       el: @el
@@ -24,4 +22,4 @@ class Index extends App.ControllerContent
       container: @el.closest('.content')
     )
 
-App.Config.set( 'TextModule', { prio: 2300, name: 'TextModules', parent: '#manage', target: '#manage/text_modules', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('TextModule', { prio: 2300, name: 'TextModules', parent: '#manage', target: '#manage/text_modules', controller: Index, permission: ['admin.text_module'] }, 'NavBarAdmin')

@@ -28,14 +28,10 @@ class Form extends App.Controller
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
-
-    @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
+    @render()
 
   currentConfig: ->
-    config = App.Setting.get('clearbit_config')
+    config = clone(App.Setting.get('clearbit_config'))
     if !config
       config = {}
     if config.organization_autocreate is undefined
@@ -63,8 +59,8 @@ class Form extends App.Controller
     App.Setting.set('clearbit_config', value, {notify: true})
 
   render: =>
-    @config = @currentConfig()
-
+    if !@config
+      @config = @currentConfig()
     settings = [
       { name: 'api_key', display: 'API Key', tag: 'input', type: 'text', limit: 100, null: false, placeholder: '...', note: 'Your api key.' },
       { name: 'organization_autocreate', display: 'Auto create', tag: 'boolean', type: 'boolean', null: false, note: 'Create organizations automatically if record has one.' },
@@ -128,8 +124,8 @@ class Form extends App.Controller
     element = $(e.currentTarget).closest('tr')
     source = @cleanupInput(element.find('input[name="source"]').val())
     destination = @cleanupInput(element.find('input[name="destination"]').val())
+    return if _.isEmpty(source) || _.isEmpty(destination)
     @config.user_sync[source] = destination
-    @setConfig(@config)
     @render()
 
   addOrganizationSync: (e) =>
@@ -138,8 +134,8 @@ class Form extends App.Controller
     element = $(e.currentTarget).closest('tr')
     source = @cleanupInput(element.find('input[name="source"]').val())
     destination = @cleanupInput(element.find('input[name="destination"]').val())
+    return if _.isEmpty(source) || _.isEmpty(destination)
     @config.organization_sync[source] = destination
-    @setConfig(@config)
     @render()
 
   removeRow: (e) =>
@@ -147,6 +143,7 @@ class Form extends App.Controller
     @updateCurrentConfig()
     element = $(e.currentTarget).closest('tr')
     element.remove()
+    @updateCurrentConfig()
 
 class State
   @current: ->

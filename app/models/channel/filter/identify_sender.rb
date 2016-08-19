@@ -27,12 +27,36 @@ module Channel::Filter::IdentifySender
       user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email])
     end
     if !user
-      user = user_create(
-        login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-        firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-        lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
-        email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-      )
+
+      # get correct customer
+      if mail[ 'x-zammad-ticket-create-article-sender'.to_sym ] == 'Agent'
+
+        # get first recipient and set customer
+        begin
+          to = 'raw-to'.to_sym
+          if mail[to] && mail[to].addrs
+            items = mail[to].addrs
+            items.each { |item|
+              user = user_create(
+                login: item.address,
+                firstname: item.display_name,
+                email: item.address,
+              )
+              break
+            }
+          end
+        rescue => e
+          Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
+        end
+      end
+      if !user
+        user = user_create(
+          login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+          firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
+          lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
+          email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+        )
+      end
     end
 
     create_recipients(mail)
@@ -77,7 +101,6 @@ module Channel::Filter::IdentifySender
           )
         }
       end
-
     }
   end
 
@@ -88,7 +111,7 @@ module Channel::Filter::IdentifySender
     return user if user
 
     # create new user
-    roles = Role.where(name: 'Customer')
+    role_ids = Role.signup_role_ids
 
     # fillup
     %w(firstname lastname).each { |item|
@@ -98,7 +121,7 @@ module Channel::Filter::IdentifySender
     }
     data[:password]      = ''
     data[:active]        = true
-    data[:roles]         = roles
+    data[:role_ids]      = role_ids
     data[:updated_by_id] = 1
     data[:created_by_id] = 1
 

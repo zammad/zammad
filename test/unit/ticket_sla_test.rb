@@ -13,10 +13,10 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'some title äöüß',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-03-21 09:30:00 UTC',
       updated_at: '2013-03-21 09:30:00 UTC',
       updated_by_id: 1,
@@ -323,7 +323,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     # set close time over time
     ticket.update_attributes(
-      state: Ticket::State.lookup( name: 'closed')
+      state: Ticket::State.lookup(name: 'closed')
     )
     assert_equal(ticket.escalation_time, nil, 'ticket.escalation_time verify 9')
 
@@ -345,10 +345,10 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'some title äöüß',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
       created_at: '2013-03-28 23:49:00 UTC',
@@ -416,10 +416,10 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'some title äöüß',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
       created_at: '2013-03-28 23:49:00 UTC',
@@ -517,10 +517,10 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'some title äöüß',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-03-21 09:30:00 UTC',
       updated_at: '2013-03-21 09:30:00 UTC',
       updated_by_id: 1,
@@ -612,10 +612,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'ticket destroy')
     ticket = Ticket.create(
       title: 'some title äöüß',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-10-21 09:30:00 UTC',
       updated_at: '2013-10-21 09:30:00 UTC',
       updated_by_id: 1,
@@ -702,10 +702,10 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'some title äöüß',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-10-21 05:30:00 UTC',
       updated_at: '2013-10-21 05:30:00 UTC',
       updated_by_id: 1,
@@ -734,10 +734,10 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     ticket = Ticket.create(
       title: 'some title holiday test',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2015-09-21 14:30:00 UTC',
       updated_at: '2015-09-21 14:30:00 UTC',
       updated_by_id: 1,
@@ -757,13 +757,208 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   end
 
+  test 'ticket escalation suspend close reopen bug' do
+
+    # cleanup
+    delete = Sla.destroy_all
+    assert(delete, 'sla destroy_all')
+    delete = Ticket.destroy_all
+    assert(delete, 'ticket destroy_all')
+
+    ticket1 = Ticket.create(
+      title: 'some title äöüß3',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'open'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2013-06-04 09:00:00 UTC',
+      updated_at: '2013-06-04 09:00:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket1, 'ticket created')
+
+    # set ticket at 09:30 to pending
+    History.add(
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket1.id,
+      id_from: Ticket::State.lookup(name: 'open').id,
+      id_to: Ticket::State.lookup(name: 'pending reminder').id,
+      value_from: 'open',
+      value_to: 'pending reminder',
+      created_by_id: 1,
+      created_at: '2013-06-04 09:30:00 UTC',
+      updated_at: '2013-06-04 09:30:00 UTC',
+    )
+
+    # set ticket at 09:45 to open
+    History.add(
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket1.id,
+      id_from: Ticket::State.lookup(name: 'pending reminder').id,
+      id_to: Ticket::State.lookup(name: 'open').id,
+      value_from: 'pending reminder',
+      value_to: 'open',
+      created_by_id: 1,
+      created_at: '2013-06-04 09:45:00 UTC',
+      updated_at: '2013-06-04 09:45:00 UTC',
+    )
+
+    # set ticket at 10:00 to closed
+    History.add(
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket1.id,
+      id_from: Ticket::State.lookup(name: 'open').id,
+      id_to: Ticket::State.lookup(name: 'closed').id,
+      value_from: 'open',
+      value_to: 'closed',
+      created_by_id: 1,
+      created_at: '2013-06-04 10:00:00 UTC',
+      updated_at: '2013-06-04 10:00:00 UTC',
+    )
+
+    # set ticket at 10:30 to open
+    History.add(
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket1.id,
+      id_from: Ticket::State.lookup(name: 'closed').id,
+      id_to: Ticket::State.lookup(name: 'open').id,
+      value_from: 'closed',
+      value_to: 'open',
+      created_by_id: 1,
+      created_at: '2013-06-04 10:30:00 UTC',
+      updated_at: '2013-06-04 10:30:00 UTC',
+    )
+
+    # set sla's for timezone "Europe/Berlin" summertime (+2), so UTC times are 7:00-16:00
+    calendar = Calendar.create_or_update(
+      name: 'EU 5',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
+      name: 'test sla suspend bug',
+      condition: {},
+      calendar_id: calendar.id,
+      first_response_time: 120,
+      update_time: 180,
+      solution_time: 250,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1.escalation_calculation
+    ticket1 = Ticket.find(ticket1.id)
+    assert_equal(ticket1.escalation_time.gmtime.to_s, '2013-06-04 11:45:00 UTC', 'ticket1.escalation_time verify 1')
+    assert_equal(ticket1.first_response_escal_date.gmtime.to_s, '2013-06-04 11:45:00 UTC', 'ticket1.first_response_escal_date verify 1')
+    assert_equal(ticket1.first_response_in_min, nil, 'ticket1.first_response_in_min verify 3')
+    assert_equal(ticket1.first_response_diff_in_min, nil, 'ticket1.first_response_diff_in_min verify 3')
+
+    ticket2 = Ticket.create!(
+      title: 'some title äöüß4',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'open'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2013-06-04 09:00:00 UTC',
+      updated_at: '2013-06-04 09:00:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket2, 'ticket created')
+
+    # set ticket at 10:00 to pending
+    History.add(
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket2.id,
+      id_from: Ticket::State.lookup(name: 'open').id,
+      id_to: Ticket::State.lookup(name: 'pending reminder').id,
+      value_from: 'open',
+      value_to: 'pending reminder',
+      created_by_id: 1,
+      created_at: '2013-06-04 10:00:00 UTC',
+      updated_at: '2013-06-04 10:00:00 UTC',
+    )
+
+    # set ticket at 15:00 to open
+    History.add(
+      history_type: 'updated',
+      history_object: 'Ticket',
+      history_attribute: 'state',
+      o_id: ticket2.id,
+      id_from: Ticket::State.lookup(name: 'pending reminder').id,
+      id_to: Ticket::State.lookup(name: 'open').id,
+      value_from: 'pending reminder',
+      value_to: 'open',
+      created_by_id: 1,
+      created_at: '2013-06-04 15:00:00 UTC',
+      updated_at: '2013-06-04 15:00:00 UTC',
+    )
+    ticket2.escalation_calculation
+    ticket2 = Ticket.find(ticket2.id)
+    assert_equal(ticket2.escalation_time.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket2.escalation_time verify 1')
+    assert_equal(ticket2.first_response_escal_date.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket2.first_response_escal_date verify 1')
+    assert_equal(ticket2.first_response_in_min, nil, 'ticket2.first_response_in_min verify 3')
+    assert_equal(ticket2.first_response_diff_in_min, nil, 'ticket2.first_response_diff_in_min verify 3')
+
+    delete = sla.destroy
+    assert(delete, 'sla destroy')
+
+    delete = ticket1.destroy
+    assert(delete, 'ticket1 destroy')
+    delete = ticket2.destroy
+    assert(delete, 'ticket2 destroy')
+  end
+
   test 'ticket escalation suspend' do
     ticket = Ticket.create(
       title: 'some title äöüß3',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'new'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-06-04 09:00:00 UTC',
       updated_at: '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
@@ -898,10 +1093,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     # test Ticket created in state pending and closed without reopen or state change
     ticket = Ticket.create(
       title: 'some title äöüß3',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'pending reminder'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'pending reminder'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-06-04 09:00:00 UTC',
       updated_at: '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
@@ -978,7 +1173,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.escalation_time, nil, 'ticket.escalation_time verify 1')
-    assert_equal(ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.first_response_escal_date verify 1')
+    assert_equal(ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.first_response_escal_date verify 1')
     assert_equal(ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3')
     assert_equal(ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3')
     assert_equal(ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 15:00:00 UTC', 'ticket.update_time_escal_date verify 1')
@@ -995,10 +1190,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     # test Ticket created in state pending, changed state to openen, back to pending and closed
     ticket = Ticket.create(
       title: 'some title äöüß3',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'pending reminder'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'pending reminder'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-06-04 09:00:00 UTC',
       updated_at: '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
@@ -1105,7 +1300,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.escalation_time, nil, 'ticket.escalation_time verify 1')
-    assert_equal(ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.first_response_escal_date verify 1')
+    assert_equal(ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:30:00 UTC', 'ticket.first_response_escal_date verify 1')
     assert_equal(ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3')
     assert_equal(ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3')
     assert_equal(ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:30:00 UTC', 'ticket.update_time_escal_date verify 1')
@@ -1123,10 +1318,10 @@ class TicketSlaTest < ActiveSupport::TestCase
     ### close ticket
     ticket = Ticket.create(
       title: 'some title äöüß3',
-      group: Group.lookup( name: 'Users'),
+      group: Group.lookup(name: 'Users'),
       customer_id: 2,
-      state: Ticket::State.lookup( name: 'pending reminder'),
-      priority: Ticket::Priority.lookup( name: '2 normal'),
+      state: Ticket::State.lookup(name: 'pending reminder'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2013-06-04 09:00:00 UTC',
       updated_at: '2013-06-04 09:00:00 UTC',
       updated_by_id: 1,
@@ -1248,7 +1443,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.escalation_time, nil, 'ticket.escalation_time verify 1')
-    assert_equal(ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 12:30:00 UTC', 'ticket.first_response_escal_date verify 1')
+    assert_equal(ticket.first_response_escal_date.gmtime.to_s, '2013-06-04 13:00:00 UTC', 'ticket.first_response_escal_date verify 1')
     assert_equal(ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3')
     assert_equal(ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3')
     assert_equal(ticket.update_time_escal_date.gmtime.to_s, '2013-06-04 14:00:00 UTC', 'ticket.update_time_escal_date verify 1')

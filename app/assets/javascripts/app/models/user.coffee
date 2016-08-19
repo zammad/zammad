@@ -125,25 +125,25 @@ class App.User extends App.Model
     if data['role_ids']
       data['roles'] = []
       for role_id in data['role_ids']
-        if App.Role.exists( role_id )
-          role = App.Role.find( role_id )
+        if App.Role.exists(role_id)
+          role = App.Role.find(role_id)
           data['roles'].push role
 
     if data['group_ids']
       data['groups'] = []
       for group_id in data['group_ids']
-        if App.Group.exists( group_id )
-          group = App.Group.find( group_id )
+        if App.Group.exists(group_id)
+          group = App.Group.find(group_id)
           data['groups'].push group
 
     data
 
   searchResultAttributes: ->
-    display:    "#{@displayName()}"
-    id:         @id
-    class:      'user user-popover'
-    url:        @uiUrl()
-    icon:       'user'
+    display: "#{@displayName()}"
+    id:      @id
+    class:   'user user-popover'
+    url:     @uiUrl()
+    icon:    'user'
 
   activityMessage: (item) ->
     if item.type is 'create'
@@ -163,3 +163,53 @@ class App.User extends App.Model
         to = item.objectNative.displayName()
       return App.i18n.translateContent('%s ended switch to |%s|!', item.created_by.displayName(), to)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+
+  ###
+
+    user = App.User.find(3)
+    result = user.permission('ticket.agent') # access to certain permission key
+    result = user.permission(['ticket.agent', 'ticket.customer']) # access to one of permission keys
+
+    result = user.permission('user_preferences.calendar+ticket.agent') # access must have two permission keys
+
+  returns
+
+    true|false
+
+  ###
+
+  permission: (key) ->
+    keys = key
+    if !_.isArray(key)
+      keys = [key]
+
+    # if any permission exists
+    return true if _.contains(keys, '*')
+
+    # get all permissions of user
+    permissions = {}
+    for role_id in @role_ids
+      role = App.Role.find(role_id)
+      for permission_id in role.permission_ids
+        permission = App.Permission.find(permission_id)
+        permissions[permission.name] = true
+
+    for localKey in keys
+      requiredPermissions = localKey.split('+')
+      access = false
+      for requiredPermission in requiredPermissions
+        localAccess = false
+        partString = ''
+        for part in requiredPermission.split('.')
+          if partString isnt ''
+            partString += '.'
+          partString += part
+          if permissions[partString]
+            localAccess = true
+        if localAccess
+          access = true
+        else
+          access = false
+          break
+      return access if access
+    false

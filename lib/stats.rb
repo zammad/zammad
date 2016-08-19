@@ -27,7 +27,7 @@ returns
     ]
 
     # generate stats per agent
-    users = User.of_role('Agent')
+    users = User.with_permissions('ticket.agent')
     agent_count = 0
     user_result = {}
     users.each { |user|

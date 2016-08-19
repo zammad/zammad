@@ -298,6 +298,15 @@ test( "i18n", function() {
   translated = App.i18n.translateContent('<test&now>//*äöüß');
   equal( translated, '&lt;test&amp;now&gt;//*äöüß', 'de - <test&now>//*äöüß' );
 
+  translated = App.i18n.translateContent('some link [to what ever](http://lalala)');
+  equal( translated, 'some link <a href="http://lalala" target="_blank">to what ever</a>', 'de-de - link' );
+
+  translated = App.i18n.translateContent('some link [to what ever](%s)', 'http://lalala');
+  equal( translated, 'some link <a href="http://lalala" target="_blank">to what ever</a>', 'de-de - link' );
+
+  translated = App.i18n.translateContent('Enables user authentication via %s. Register your app first at [%s](%s).', 'XXX', 'YYY', 'http://lalala');
+  equal( translated, 'Aktivieren der Benutzeranmeldung über XXX. Registriere Deine Anwendung zuerst über <a href="http://lalala" target="_blank">YYY</a>.', 'en-us - link' );
+
   var time_local = new Date();
   var offset = time_local.getTimezoneOffset();
   var timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
@@ -346,6 +355,15 @@ test( "i18n", function() {
 
   translated = App.i18n.translateContent('<test&now>');
   equal( translated, '&lt;test&amp;now&gt;', 'en-us - <test&now>' );
+
+  translated = App.i18n.translateContent('some link [to what ever](http://lalala)');
+  equal( translated, 'some link <a href="http://lalala" target="_blank">to what ever</a>', 'en-us - link' );
+
+  translated = App.i18n.translateContent('some link [to what ever](%s)', 'http://lalala');
+  equal( translated, 'some link <a href="http://lalala" target="_blank">to what ever</a>', 'en-us - link' );
+
+  translated = App.i18n.translateContent('Enables user authentication via %s. Register your app first at [%s](%s).', 'XXX', 'YYY', 'http://lalala');
+  equal( translated, 'Enables user authentication via XXX. Register your app first at <a href="http://lalala" target="_blank">YYY</a>.', 'en-us - link' );
 
   timestamp = App.i18n.translateTimestamp('2012-11-06T21:07:24Z', offset);
   equal( timestamp, '11/06/2012 21:07', 'en - timestamp translated correctly' );

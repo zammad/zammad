@@ -345,4 +345,196 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
+  test 'permission' do
+    test_role_1 = Role.create_or_update(
+      name: 'Test1',
+      note: 'To configure your system.',
+      preferences: {
+        not: ['Test3'],
+      },
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    test_role_2 = Role.create_or_update(
+      name: 'Test2',
+      note: 'To work on Tickets.',
+      preferences: {
+        not: ['Test3'],
+      },
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    test_role_3 = Role.create_or_update(
+      name: 'Test3',
+      note: 'People who create Tickets ask for help.',
+      preferences: {
+        not: %w(Test1 Test2),
+      },
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    test_role_4 = Role.create_or_update(
+      name: 'Test4',
+      note: 'Access the report area.',
+      preferences: {},
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    assert_raises(RuntimeError) {
+      User.create_or_update(
+        login: 'customer-role1@example.com',
+        firstname: 'Role',
+        lastname: 'Customer1',
+        email: 'customer-role1@example.com',
+        password: 'customerpw',
+        active: true,
+        roles: [test_role_1, test_role_3],
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    }
+    assert_raises(RuntimeError) {
+      User.create_or_update(
+        login: 'customer-role1@example.com',
+        firstname: 'Role',
+        lastname: 'Customer1',
+        email: 'customer-role1@example.com',
+        password: 'customerpw',
+        active: true,
+        roles: [test_role_2, test_role_3],
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    }
+    user1 = User.create_or_update(
+      login: 'customer-role1@example.com',
+      firstname: 'Role',
+      lastname: 'Customer1',
+      email: 'customer-role1@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: [test_role_1, test_role_2],
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(user1.role_ids.include?(test_role_1.id))
+    assert(user1.role_ids.include?(test_role_2.id))
+    assert_not(user1.role_ids.include?(test_role_3.id))
+    assert_not(user1.role_ids.include?(test_role_4.id))
+    user1 = User.create_or_update(
+      login: 'customer-role1@example.com',
+      firstname: 'Role',
+      lastname: 'Customer1',
+      email: 'customer-role1@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: [test_role_1, test_role_4],
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(user1.role_ids.include?(test_role_1.id))
+    assert_not(user1.role_ids.include?(test_role_2.id))
+    assert_not(user1.role_ids.include?(test_role_3.id))
+    assert(user1.role_ids.include?(test_role_4.id))
+    assert_raises(RuntimeError) {
+      User.create_or_update(
+        login: 'customer-role1@example.com',
+        firstname: 'Role',
+        lastname: 'Customer1',
+        email: 'customer-role1@example.com',
+        password: 'customerpw',
+        active: true,
+        roles: [test_role_1, test_role_3],
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    }
+    assert_raises(RuntimeError) {
+      User.create_or_update(
+        login: 'customer-role1@example.com',
+        firstname: 'Role',
+        lastname: 'Customer1',
+        email: 'customer-role1@example.com',
+        password: 'customerpw',
+        active: true,
+        roles: [test_role_2, test_role_3],
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    }
+    assert(user1.role_ids.include?(test_role_1.id))
+    assert_not(user1.role_ids.include?(test_role_2.id))
+    assert_not(user1.role_ids.include?(test_role_3.id))
+    assert(user1.role_ids.include?(test_role_4.id))
+
+  end
+
+  test 'permission default' do
+    admin_count = User.of_role('Admin').count
+    admin = User.create_or_update(
+      login: 'admin-role1@example.com',
+      firstname: 'Role',
+      lastname: 'Admin1',
+      email: 'admin-role1@example.com',
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    agent_count = User.of_role('Agent').count
+    agent = User.create_or_update(
+      login: 'agent-role1@example.com',
+      firstname: 'Role',
+      lastname: 'Agent1',
+      email: 'agent-role1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: Role.where(name: 'Agent'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    customer_count = User.of_role('Customer').count
+    customer = User.create_or_update(
+      login: 'customer-role1@example.com',
+      firstname: 'Role',
+      lastname: 'Customer1',
+      email: 'customer-role1@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: Role.where(name: 'Customer'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    users = User.with_permissions('not_existing')
+    assert(users.empty?)
+
+    users = User.with_permissions('admin')
+    assert_equal(admin_count + 1, users.count)
+    assert_equal(admin.login, users.last.login)
+
+    users = User.with_permissions('admin.session')
+    assert_equal(admin_count + 1, users.count)
+    assert_equal(admin.login, users.last.login)
+
+    users = User.with_permissions(['admin.session', 'not_existing'])
+    assert_equal(admin_count + 1, users.count)
+    assert_equal(admin.login, users.last.login)
+
+    users = User.with_permissions('ticket.agent')
+    assert_equal(agent_count + 1, users.count)
+    assert_equal(agent.login, users.last.login)
+    users = User.with_permissions(['ticket.agent', 'not_existing'])
+    assert_equal(agent_count + 1, users.count)
+    assert_equal(agent.login, users.last.login)
+
+    users = User.with_permissions('ticket.customer')
+    assert_equal(customer_count + 1, users.count)
+    assert_equal(customer.login, users.last.login)
+    users = User.with_permissions(['ticket.customer', 'not_existing'])
+    assert_equal(customer_count + 1, users.count)
+    assert_equal(customer.login, users.last.login)
+
+  end
+
 end

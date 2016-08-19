@@ -46,6 +46,7 @@ curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password}
 =end
 
   def index
+    permission_check(['admin.channel_email', 'ticket.agent'])
     model_index_render(EmailAddress, params)
   end
 
@@ -67,6 +68,7 @@ curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{passwor
 =end
 
   def show
+    permission_check(['admin.channel_email', 'ticket.agent'])
     model_show_render(EmailAddress, params)
   end
 
@@ -97,7 +99,7 @@ curl http://localhost/api/v1/email_addresses.json -v -u #{login}:#{password} -H 
 =end
 
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.channel_email')
     model_create_render(EmailAddress, params)
   end
 
@@ -128,7 +130,7 @@ curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{passwor
 =end
 
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.channel_email')
     model_update_render(EmailAddress, params)
   end
 
@@ -146,7 +148,7 @@ curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{passwor
 =end
 
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.channel_email')
     model_destory_render(EmailAddress, params)
   end
 end

@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.sla'
   events:
     'click .js-new':         'new'
     'click .js-edit':        'edit'
@@ -7,10 +8,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
-
     @subscribeCalendarId = App.Calendar.subscribe(@render)
     @subscribeSlaId = App.Sla.subscribe(@render)
 
@@ -114,4 +111,4 @@ class Index extends App.ControllerContent
 
     "#{hours}:#{minutes}"
 
-App.Config.set( 'Sla', { prio: 2900, name: 'SLAs', parent: '#manage', target: '#manage/slas', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Sla', { prio: 2900, name: 'SLAs', parent: '#manage', target: '#manage/slas', controller: Index, permission: ['admin.sla'] }, 'NavBarAdmin')

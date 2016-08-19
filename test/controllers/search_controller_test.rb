@@ -201,20 +201,23 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     post '/api/v1/search/ticket', params.to_json, @headers
     assert_response(401)
     result = JSON.parse(@response.body)
-    assert_equal(result.class, Hash)
+    assert_equal(Hash, result.class)
     assert_not(result.empty?)
+    assert_equal('authentication failed', result['error'])
 
     post '/api/v1/search/user', params.to_json, @headers
     assert_response(401)
     result = JSON.parse(@response.body)
-    assert_equal(result.class, Hash)
+    assert_equal(Hash, result.class)
     assert_not(result.empty?)
+    assert_equal('authentication failed', result['error'])
 
     post '/api/v1/search', params.to_json, @headers
     assert_response(401)
     result = JSON.parse(@response.body)
-    assert_equal(result.class, Hash)
+    assert_equal(Hash, result.class)
     assert_not(result.empty?)
+    assert_equal('authentication failed', result['error'])
 
   end
 

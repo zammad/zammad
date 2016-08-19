@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.maintenance'
   events:
     'change .js-modeSetting input': 'setMode'
     'change .js-loginSetting input': 'setLogin'
@@ -11,9 +12,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     @title 'Maintenance', true
 
@@ -76,4 +74,4 @@ class Index extends App.ControllerContent
       removeAll: true
     @render()
 
-App.Config.set('Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Maintenance', { prio: 3600, name: 'Maintenance', parent: '#system', target: '#system/maintenance', controller: Index, permission: ['admin.maintenance'] }, 'NavBarAdmin')

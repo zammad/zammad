@@ -110,7 +110,10 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { prio: 3 },
+  preferences: {
+    prio: 3,
+    controller: 'SettingsAreaLogo',
+  },
   state: 'logo.svg',
   frontend: true
 )
@@ -155,7 +158,11 @@ Setting.create_if_not_exists(
     ],
   },
   state: system_id,
-  preferences: { online_service_disable: true, placeholder: true },
+  preferences: {
+    online_service_disable: true,
+    placeholder: true,
+    authentication: true,
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -432,10 +439,14 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via LDAP',
+  title: 'Authentication via %s',
   name: 'auth_ldap',
   area: 'Security::Authentication',
-  description: 'Enables user authentication via LDAP.',
+  description: 'Enables user authentication via %s.',
+  preferences: {
+    title_i18n: ['LDAP'],
+    description_i18n: ['LDAP']
+  },
   state: {
     adapter: 'Auth::Ldap',
     host: 'localhost',
@@ -457,10 +468,10 @@ Setting.create_if_not_exists(
   frontend: false
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via Twitter',
+  title: 'Authentication via %s',
   name: 'auth_twitter',
   area: 'Security::ThirdPartyAuthentication',
-  description: "@T('Enables user authentication via twitter. Register your app first at [Twitter Developer Site](https://dev.twitter.com/apps)')",
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -475,13 +486,19 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_twitter_credentials'],
+    title_i18n: ['Twitter'],
+    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps']
+  },
   state: false,
   frontend: true
 )
 Setting.create_if_not_exists(
   title: 'Twitter App Credentials',
   name: 'auth_twitter_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Twitter',
   description: 'App credentials for Twitter.',
   options: {
     form: [
@@ -503,10 +520,10 @@ Setting.create_if_not_exists(
   frontend: false
 )
 Setting.create_if_not_exists(
-  title: 'Authentication via Facebook',
+  title: 'Authentication via %s',
   name: 'auth_facebook',
   area: 'Security::ThirdPartyAuthentication',
-  description: "@T('Enables user authentication via Facebook. Register your app first at [Facebook Developer Site](https://developers.facebook.com/apps/)')",
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -521,6 +538,12 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_facebook_credentials'],
+    title_i18n: ['Facebook'],
+    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/']
+  },
   state: false,
   frontend: true
 )
@@ -528,7 +551,7 @@ Setting.create_if_not_exists(
 Setting.create_if_not_exists(
   title: 'Facebook App Credentials',
   name: 'auth_facebook_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Facebook',
   description: 'App credentials for Facebook.',
   options: {
     form: [
@@ -551,10 +574,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Authentication via Google',
+  title: 'Authentication via %s',
   name: 'auth_google_oauth2',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via Google. Register your app first at [Google API Console Site](https://console.developers.google.com/apis/credentials)',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -569,13 +592,19 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_google_oauth2_credentials'],
+    title_i18n: ['Google'],
+    description_i18n: ['Google', 'Google API Console Site', 'https://console.developers.google.com/apis/credentials']
+  },
   state: false,
   frontend: true
 )
 Setting.create_if_not_exists(
   title: 'Google App Credentials',
   name: 'auth_google_oauth2_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Google',
   description: 'Enables user authentication via Google.',
   options: {
     form: [
@@ -598,10 +627,10 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Authentication via LinkedIn',
+  title: 'Authentication via %s',
   name: 'auth_linkedin',
   area: 'Security::ThirdPartyAuthentication',
-  description: 'Enables user authentication via LinkedIn. Register your app first at [Linkedin Developer Site](https://www.linkedin.com/developer/apps)',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
       {
@@ -616,13 +645,19 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_linkedin_credentials'],
+    title_i18n: ['LinkedIn'],
+    description_i18n: ['LinkedIn', 'Linkedin Developer Site', 'https://www.linkedin.com/developer/apps']
+  },
   state: false,
   frontend: true
 )
 Setting.create_if_not_exists(
   title: 'LinkedIn App Credentials',
   name: 'auth_linkedin_credentials',
-  area: 'Security::ThirdPartyAuthentication',
+  area: 'Security::ThirdPartyAuthentication::Linkedin',
   description: 'Enables user authentication via LinkedIn.',
   options: {
     form: [
@@ -637,6 +672,199 @@ Setting.create_if_not_exists(
         null: true,
         name: 'app_secret',
         tag: 'input',
+      },
+    ],
+  },
+  state: {},
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
+  name: 'auth_github',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_github',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_github_credentials'],
+    title_i18n: ['Github'],
+    description_i18n: ['Github', 'Github OAuth Applications', 'https://github.com/settings/applications']
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Github App Credentials',
+  name: 'auth_github_credentials',
+  area: 'Security::ThirdPartyAuthentication::Github',
+  description: 'Enables user authentication via Github.',
+  options: {
+    form: [
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+    ],
+  },
+  state: {},
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
+  name: 'auth_gitlab',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_gitlab',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_gitlab_credentials'],
+    title_i18n: ['Gitlab'],
+    description_i18n: ['Gitlab', 'Gitlab Applications', 'https://your-gitlab-host/admin/applications']
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Gitlab App Credentials',
+  name: 'auth_gitlab_credentials',
+  area: 'Security::ThirdPartyAuthentication::Gitlab',
+  description: 'Enables user authentication via Gitlab.',
+  options: {
+    form: [
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+      {
+        display: 'Site',
+        null: true,
+        name: 'site',
+        tag: 'input',
+        placeholder: 'https://gitlab.YOURDOMAIN.com',
+      },
+    ],
+  },
+  state: {},
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
+  name: 'auth_oauth2',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via Generic OAuth2. Register your app first,',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_oauth2',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_oauth2_credentials'],
+    title_i18n: ['Generic OAuth2'],
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Generic OAuth2 App Credentials',
+  name: 'auth_oauth2_credentials',
+  area: 'Security::ThirdPartyAuthentication::GenericOAuth',
+  description: 'Enables user authentication via Generic OAuth2.',
+  options: {
+    form: [
+      {
+        display: 'Name',
+        null: true,
+        name: 'name',
+        tag: 'input',
+        placeholder: 'Some Provider Name',
+      },
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+      {
+        display: 'Site',
+        null: true,
+        name: 'site',
+        tag: 'input',
+        placeholder: 'https://gitlab.YOURDOMAIN.com',
+      },
+      {
+        display: 'authorize_url',
+        null: true,
+        name: 'authorize_url',
+        tag: 'input',
+        placeholder: '/oauth/authorize',
+      },
+      {
+        display: 'token_url',
+        null: true,
+        name: 'token_url',
+        tag: 'input',
+        placeholder: '/oauth/token',
       },
     ],
   },
@@ -777,7 +1005,11 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { render: true, placeholder: true },
+  preferences: {
+    render: true,
+    placeholder: true,
+    authentication: true,
+  },
   state: 'Ticket#',
   frontend: true
 )
@@ -949,6 +1181,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: {
+    authentication: true,
+  },
   frontend: true
 )
 
@@ -971,6 +1206,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: '',
+  preferences: {
+    authentication: true,
+  },
   frontend: true
 )
 
@@ -994,6 +1232,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: {
+    authentication: true,
+  },
   frontend: true
 )
 
@@ -1274,7 +1515,9 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { trigger: ['menu:render', 'chat:rerender'] },
+  preferences: {
+    trigger: ['menu:render', 'chat:rerender']
+  },
   state: false,
   frontend: true
 )
@@ -1294,7 +1537,6 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: {},
   state: '120',
   frontend: true
 )
@@ -1306,6 +1548,9 @@ Setting.create_if_not_exists(
   description: 'Define the models which can be searched for.',
   options: {},
   state: [],
+  preferences: {
+    authentication: true,
+  },
   frontend: true,
 )
 
@@ -1578,6 +1823,9 @@ Setting.create_if_not_exists(
       },
     ],
   },
+  preferences: {
+    authentication: true,
+  },
   state: true,
   frontend: true
 )
@@ -1602,6 +1850,9 @@ Setting.create_if_not_exists(
       not_assigned: false,
     }
   },
+  preferences: {
+    authentication: true,
+  },
   frontend: true
 )
 
@@ -1622,6 +1873,15 @@ Setting.create_if_not_exists(
   description: 'Define postmaster filter to remove X-Zammad-Headers from not trusted sources.',
   options: {},
   state: 'Channel::Filter::Trusted',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define postmaster filter.',
+  name: '0012_postmaster_filter_sender_is_system_address',
+  area: 'Postmaster::PreFilter',
+  description: 'Define postmaster filter to check if email got created via email as Zammad.',
+  options: {},
+  state: 'Channel::Filter::SenderIsSystemAddress',
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1959,8 +2219,12 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1, trigger: 'cti:reload' },
-  frontend: false
+  preferences: {
+    prio: 1,
+    trigger: ['menu:render', 'cti:reload'],
+    authentication: true,
+  },
+  frontend: true
 )
 Setting.create_if_not_exists(
   title: 'sipgate.io config',
@@ -2102,6 +2366,10 @@ Role.create_if_not_exists(
   id: 1,
   name: 'Admin',
   note: 'To configure your system.',
+  preferences: {
+    not: ['Customer'],
+  },
+  default_at_signup: false,
   updated_by_id: 1,
   created_by_id: 1
 )
@@ -2109,6 +2377,10 @@ Role.create_if_not_exists(
   id: 2,
   name: 'Agent',
   note: 'To work on Tickets.',
+  default_at_signup: false,
+  preferences: {
+    not: ['Customer'],
+  },
   updated_by_id: 1,
   created_by_id: 1
 )
@@ -2116,6 +2388,10 @@ Role.create_if_not_exists(
   id: 3,
   name: 'Customer',
   note: 'People who create Tickets ask for help.',
+  preferences: {
+    not: %w(Agent Admin),
+  },
+  default_at_signup: true,
   updated_by_id: 1,
   created_by_id: 1
 )
@@ -2123,23 +2399,368 @@ Role.create_if_not_exists(
   id: 4,
   name: 'Report',
   note: 'Access the report area.',
+  preferences: {
+    not: ['Customer'],
+  },
+  default_at_signup: false,
   created_by_id: 1,
   updated_by_id: 1,
 )
-Role.create_if_not_exists(
-  id: 5,
-  name: 'Chat',
-  note: 'Access to chat feature.',
-  updated_by_id: 1,
-  created_by_id: 1
+
+Permission.create_if_not_exists(
+  name: 'admin',
+  note: 'Admin Interface',
+  preferences: {},
 )
-Role.create_if_not_exists(
-  id: 6,
-  name: 'CTI',
-  note: 'Access to CTI feature.',
-  updated_by_id: 1,
-  created_by_id: 1
+Permission.create_if_not_exists(
+  name: 'admin.user',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Users']
+  },
 )
+Permission.create_if_not_exists(
+  name: 'admin.group',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Groups']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.role',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Roles']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.organization',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Organizations']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.overview',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Overviews']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.text_module',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Text Modules']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.macro',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Macros']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.tag',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Tags']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.calendar',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Calendar']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.sla',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['SLA']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.scheduler',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Scheduler']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.report_profile',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Report Profiles']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_web',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Web']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_formular',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Formular']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_web',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Web']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_email',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Email']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_twitter',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Twitter']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_facebook',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Facebook']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.channel_chat',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Chat']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.branding',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Branding']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.setting_system',
+  note: 'Manage %s Settings',
+  preferences: {
+    translations: ['System']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.security',
+  note: 'Manage %s Settings',
+  preferences: {
+    translations: ['Security']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.ticket',
+  note: 'Manage %s Settings',
+  preferences: {
+    translations: ['Ticket']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.package',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Packages']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.integration',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Integrations']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.api',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['API']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.object',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Objects']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.translation',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Translations']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.maintenance',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Maintenance']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.session',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Sessions']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences',
+  note: 'User Preferences',
+  preferences: {},
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.password',
+  note: 'Change %s',
+  preferences: {
+    translations: ['Password']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.notifications',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Notifications'],
+    required: ['ticket.agent'],
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.access_token',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Token Access']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.language',
+  note: 'Change %s',
+  preferences: {
+    translations: ['Language']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.linked_accounts',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Linked Accounts']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.device',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Devices']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.avatar',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Avatar']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'user_preferences.calendar',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['Calendars'],
+    required: ['ticket.agent'],
+  },
+)
+
+Permission.create_if_not_exists(
+  name: 'report',
+  note: 'Report Interface',
+  preferences: {},
+)
+Permission.create_if_not_exists(
+  name: 'ticket',
+  note: 'Ticket Interface',
+  preferences: {
+    disabled: true
+  },
+)
+Permission.create_if_not_exists(
+  name: 'ticket.agent',
+  note: 'Access to Agent Tickets based on Group Access',
+  preferences: {
+    not: ['ticket.customer'],
+    plugin: ['groups']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'ticket.customer',
+  note: 'Access to Customer Tickets based on current_user.id and current_user.organization_id',
+  preferences: {
+    not: ['ticket.agent'],
+  },
+)
+Permission.create_if_not_exists(
+  name: 'chat',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['Chat']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'chat.agent',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['Chat'],
+    not: ['chat.customer'],
+  },
+)
+Permission.create_if_not_exists(
+  name: 'cti',
+  note: 'CTI',
+  preferences: {
+    disabled: true
+  },
+)
+Permission.create_if_not_exists(
+  name: 'cti.agent',
+  note: 'Access to %s',
+  preferences: {
+    translations: ['CTI'],
+    not: ['cti.customer'],
+  },
+)
+
+admin = Role.find_by(name: 'Admin')
+admin.permission_grand('user_preferences')
+admin.permission_grand('admin')
+admin.permission_grand('report')
+
+agent = Role.find_by(name: 'Agent')
+agent.permission_grand('user_preferences')
+agent.permission_grand('ticket.agent')
+agent.permission_grand('chat.agent')
+agent.permission_grand('cti.agent')
+
+customer = Role.find_by(name: 'Customer')
+customer.permission_grand('user_preferences.password')
+customer.permission_grand('user_preferences.language')
+customer.permission_grand('user_preferences.linked_accounts')
+customer.permission_grand('user_preferences.avatar')
+customer.permission_grand('ticket.customer')
 
 Group.create_if_not_exists(
   id: 1,
@@ -3765,10 +4386,7 @@ ObjectManager::Attribute.add(
     invite_agent: {
       '-all-' => {
         null: false,
-        hideMode: {
-          rolesSelected: ['Agent'],
-          rolesNot: ['Customer'],
-        }
+        default: [Role.lookup(name: 'Agent').id],
       },
     },
     invite_customer: {},
@@ -3866,9 +4484,10 @@ ObjectManager::Attribute.add(
     note: 'Customers in the organization can view each other items.',
     item_class: 'formGroup--halfSize',
     options: {
-      true: 'Yes',
-      false: 'No',
-    }
+      true: 'yes',
+      false: 'no',
+    },
+    translate: true,
   },
   editable: false,
   active: true,

@@ -356,7 +356,7 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/tickets/selector
   def selector
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.*')
 
     ticket_count, tickets = Ticket.selectors(params[:condition], 6)
 
@@ -627,7 +627,7 @@ class TicketsController < ApplicationController
     articles.each { |article|
 
       # ignore internal article if customer is requesting
-      next if article.internal == true && role?(Z_ROLENAME_CUSTOMER)
+      next if article.internal == true && current_user.permissions?('ticket.customer')
 
       # load article ids
       article_ids.push article.id

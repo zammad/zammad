@@ -255,7 +255,7 @@ returns
     end
 
     def push_event
-      users = User.of_role('CTI')
+      users = User.with_permissions('cti.agent')
       users.each { |user|
 
         # send notify about event
@@ -272,7 +272,7 @@ returns
     def push_caller_list
       list = Cti::Log.log
 
-      users = User.of_role('CTI')
+      users = User.with_permissions('cti.agent')
       users.each { |user|
 
         # send notify on create/update/delete

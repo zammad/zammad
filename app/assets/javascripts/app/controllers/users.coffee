@@ -1,4 +1,5 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'admin.user'
   elements:
     '.js-search': 'searchInput'
   events:
@@ -6,9 +7,6 @@ class Index extends App.Controller
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
 
     # set title
     @title 'Users', true
@@ -167,7 +165,7 @@ class Index extends App.Controller
     App.Ajax.request(
       id:    'search'
       type:  'GET'
-      url:   @apiPath + '/users/recent'
+      url:   "#{@apiPath}/users/recent"
       data:
         limit: 40
         role_ids: role_ids
@@ -194,4 +192,4 @@ class Index extends App.Controller
       callback: @recent
     )
 
-App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, permission: ['admin.user'] }, 'NavBarAdmin' )

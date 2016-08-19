@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     end
 
     # only allow customer to fetch him self
-    users = if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
+    users = if !current_user.permissions?('admin.user') && !current_user.permissions?('ticket.agent')
               User.where(id: current_user.id).offset(offset).limit(per_page)
             else
               User.all.offset(offset).limit(per_page)
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
   def show
 
     # access deny
-    return if !permission_check
+    permission_check_local
 
     if params[:expand]
       user = User.find(params[:id]).attributes_with_relation_names
@@ -110,7 +110,7 @@ class UsersController < ApplicationController
     user = User.new(clean_params)
     user.param_set_associations(params)
 
-    # check if it's first user, tje admin user
+    # check if it's first user, the admin user
     # inital admin account
     count = User.all.count()
     admin_account_exists = true
@@ -137,7 +137,7 @@ class UsersController < ApplicationController
       group_ids = []
       role_ids  = []
       if count <= 2
-        Role.where(name: [ Z_ROLENAME_ADMIN, 'Agent', 'Chat']).each { |role|
+        Role.where(name: %w(Admin Agent)).each { |role|
           role_ids.push role.id
         }
         Group.all().each { |group|
@@ -146,7 +146,7 @@ class UsersController < ApplicationController
 
         # everybody else will go as customer per default
       else
-        role_ids.push Role.where(name: Z_ROLENAME_CUSTOMER).first.id
+        role_ids = Role.signup_role_ids
       end
       user.role_ids  = role_ids
       user.group_ids = group_ids
@@ -160,8 +160,8 @@ class UsersController < ApplicationController
     # else do assignment as defined
     else
 
-      # permission check by role
-      permission_check_by_role(params)
+      # permission check
+      permission_check_by_permission(params)
 
       if params[:role_ids]
         user.role_ids = params[:role_ids]
@@ -246,30 +246,30 @@ class UsersController < ApplicationController
   def update
 
     # access deny
-    return if !permission_check
+    permission_check_local
 
     user = User.find(params[:id])
     clean_params = User.param_association_lookup(params)
     clean_params = User.param_cleanup(clean_params, true)
 
-    # permission check by role
-    permission_check_by_role(params)
+    # permission check
+    permission_check_by_permission(params)
     user.update_attributes(clean_params)
 
-    # only allow Admin's and Agent's
-    if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:role_ids] || params[:roles])
+    # only allow Admin's
+    if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
       user.role_ids = params[:role_ids]
       user.param_set_associations({ role_ids: params[:role_ids], roles: params[:roles] })
     end
 
     # only allow Admin's
-    if role?(Z_ROLENAME_ADMIN) && (params[:group_ids] || params[:groups])
+    if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
       user.group_ids = params[:group_ids]
       user.param_set_associations({ group_ids: params[:group_ids], groups: params[:groups] })
     end
 
     # only allow Admin's and Agent's
-    if role?(Z_ROLENAME_ADMIN) && role?('Agent') && (params[:organization_ids] || params[:organizations])
+    if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
       user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
     end
 
@@ -295,7 +295,7 @@ class UsersController < ApplicationController
   # @response_message 200 User successfully deleted.
   # @response_message 401 Invalid session.
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.user')
     model_references_check(User, params)
     model_destory_render(User, params)
   end
@@ -321,7 +321,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def search
 
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN) && !role?(Z_ROLENAME_AGENT)
+    if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
       response_access_deny
       return
     end
@@ -407,7 +407,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def recent
 
-    if role?(Z_ROLENAME_CUSTOMER) && !role?(Z_ROLENAME_ADMIN)
+    if !current_user.permissions?('admin.user')
       response_access_deny
       return
     end
@@ -466,7 +466,7 @@ class UsersController < ApplicationController
   def history
 
     # permission check
-    if !role?(Z_ROLENAME_ADMIN) && !role?('Agent')
+    if !current_user.permissions?('admin.user') && !current_user.permissions?('ticket.agent')
       response_access_deny
       return
     end
@@ -957,10 +957,10 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     true
   end
 
-  def permission_check_by_role(params)
-    return true if role?(Z_ROLENAME_ADMIN)
+  def permission_check_by_permission(params)
+    return true if current_user.permissions?('admin.user')
 
-    if !role?('Admin') && params[:role_ids]
+    if !current_user.permissions?('admin.user') && params[:role_ids]
       if params[:role_ids].class != Array
         params[:role_ids] = [params[:role_ids]]
       end
@@ -971,13 +971,14 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
           raise Exceptions::NotAuthorized, 'Invalid role_ids!'
         end
         role_name = role_local.name
+        # TODO: check role permissions
         next if role_name != 'Admin' && role_name != 'Agent'
         logger.info "This role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{role_name}"
         raise Exceptions::NotAuthorized, 'This role assignment is only allowed by admin!'
       }
     end
 
-    if role?('Agent') && params[:group_ids]
+    if !current_user.permissions?('admin.user') && params[:group_ids]
       if params[:group_ids].class != Array
         params[:group_ids] = [params[:group_ids]]
       end
@@ -987,21 +988,21 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       end
     end
 
-    return true if role?('Agent')
+    return true if current_user.permissions?('ticket.agent')
 
     response_access_deny
     false
   end
 
-  def permission_check
-    return true if role?(Z_ROLENAME_ADMIN)
-    return true if role?('Agent')
+  def permission_check_local
+    return true if current_user.permissions?('admin.user')
+    return true if current_user.permissions?('ticket.agent')
 
-    # allow to update customer by him self
-    return true if role?(Z_ROLENAME_CUSTOMER) && params[:id].to_i == current_user.id
+    # allow to update any by him self
+    # TODO check certain attributes like roles_ids and group_ids
+    return true if params[:id].to_i == current_user.id
 
-    response_access_deny
-    false
+    raise Exceptions::NotAuthorized
   end
 
 end

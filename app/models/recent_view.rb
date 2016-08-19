@@ -105,7 +105,7 @@ cleanup old entries
 
   RecentView.cleanup
 
-optional you can parse the max oldest entries
+optional you can put the max oldest entries as argument
 
   RecentView.cleanup(1.month)
 

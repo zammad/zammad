@@ -1,10 +1,10 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.password'
   events:
     'submit form': 'update'
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Password', true
     @render()
 
@@ -78,4 +78,4 @@ class Index extends App.Controller
           removeAll: true
       @formEnable( @$('form') )
 
-App.Config.set( 'Password', { prio: 2000, name: 'Password', parent: '#profile', target: '#profile/password', controller: Index }, 'NavBarProfile' )
+App.Config.set('Password', { prio: 2000, name: 'Password', parent: '#profile', target: '#profile/password', controller: Index, permission: ['user_preferences.password'] }, 'NavBarProfile')

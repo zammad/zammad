@@ -125,7 +125,7 @@ class ArticleViewItem extends App.ObserverController
       @html App.view('ticket_zoom/article_view_delivery_failed')(
         ticket:     @ticket
         article:    article
-        isCustomer: @isRole('Customer')
+        isCustomer: @permissionCheck('ticket.customer')
       )
       return
     if article.sender.name is 'System'
@@ -133,13 +133,13 @@ class ArticleViewItem extends App.ObserverController
       @html App.view('ticket_zoom/article_view_system')(
         ticket:     @ticket
         article:    article
-        isCustomer: @isRole('Customer')
+        isCustomer: @permissionCheck('ticket.customer')
       )
       return
     @html App.view('ticket_zoom/article_view')(
       ticket:     @ticket
       article:    article
-      isCustomer: @isRole('Customer')
+      isCustomer: @permissionCheck('ticket.customer')
     )
 
     new App.WidgetAvatar(

@@ -10,11 +10,6 @@ class App.TicketCreate extends App.Controller
   constructor: (params) ->
     super
 
-    # check authentication
-    if !@authenticate(false, 'Agent')
-      App.TaskManager.remove(@task_key)
-      return
-
     # define default type
     @default_type = 'phone-in'
 
@@ -36,7 +31,7 @@ class App.TicketCreate extends App.Controller
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
-      return if !@authenticate(true)
+      return if !@authenticateCheck()
       @render()
 
   release: =>
@@ -137,7 +132,10 @@ class App.TicketCreate extends App.Controller
 
   autosaveStart: =>
     if !@autosaveLast
-      @autosaveLast = App.TaskManager.get(@task_key).state || {}
+      task = App.TaskManager.get(@task_key)
+      if task && !task.state
+        task.state = {}
+      @autosaveLast = task.state || {}
     update = =>
       data = @formParam(@$('.ticket-create'))
       return if _.isEmpty(data)
@@ -213,8 +211,8 @@ class App.TicketCreate extends App.Controller
 
     @html App.view('agent_ticket_create')(
       head:    'New Ticket'
-      agent:   @isRole('Agent')
-      admin:   @isRole('Admin')
+      agent:   @permissionCheck('ticket.agent')
+      admin:   @permissionCheck('admin')
       form_id: @form_id
     )
 
@@ -593,6 +591,7 @@ class Sidebar extends App.Controller
     )
 
 class Router extends App.ControllerPermanent
+  requiredPermission: 'ticket.agent'
   constructor: (params) ->
     super
 
@@ -631,4 +630,4 @@ App.Config.set('ticket/create/:ticket_id/:article_id', Router, 'Routes')
 App.Config.set('ticket/create/id/:id/:ticket_id/:article_id', Router, 'Routes')
 
 # set new actions
-App.Config.set('TicketCreate', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#ticket/create', role: ['Agent'], divider: true }, 'NavBarRight')
+App.Config.set('TicketCreate', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#ticket/create', permission: ['ticket.agent'], divider: true }, 'NavBarRight')

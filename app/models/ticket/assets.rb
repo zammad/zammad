@@ -20,17 +20,20 @@ returns
 
 =end
 
-  def assets (data)
+  def assets(data)
 
-    if !data[ Ticket.to_app_model ]
-      data[ Ticket.to_app_model ] = {}
+    app_model_ticket = Ticket.to_app_model
+    app_model_user = User.to_app_model
+
+    if !data[ app_model_ticket ]
+      data[ app_model_ticket ] = {}
     end
-    if !data[ Ticket.to_app_model ][ id ]
-      data[ Ticket.to_app_model ][ id ] = attributes_with_associations
+    if !data[ app_model_ticket ][ id ]
+      data[ app_model_ticket ][ id ] = attributes_with_associations
     end
     %w(created_by_id updated_by_id owner_id customer_id).each { |local_user_id|
       next if !self[ local_user_id ]
-      next if data[ User.to_app_model ] && data[ User.to_app_model ][ self[ local_user_id ] ]
+      next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]
       user = User.lookup(id: self[ local_user_id ])
       next if !user
       data = user.assets(data)

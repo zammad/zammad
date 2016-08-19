@@ -120,7 +120,7 @@ cleanup old stats store
 
   StatsStore.cleanup
 
-optional you can parse the max oldest stats store entries
+optional you can put the max oldest stats store entries as argument
 
   StatsStore.cleanup(3.months)
 

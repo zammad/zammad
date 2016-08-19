@@ -3,7 +3,7 @@
 require 'icalendar'
 
 class CalendarSubscriptionsController < ApplicationController
-  before_action { authentication_check( { basic_auth_promt: true, token_action: 'CalendarSubscriptions' } ) }
+  before_action { authentication_check( { basic_auth_promt: true, permission: 'user_preferences.calendar' } ) }
 
   # @path       [GET] /calendar_subscriptions
   #
@@ -12,7 +12,7 @@ class CalendarSubscriptionsController < ApplicationController
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def all
-    calendar_subscriptions = CalendarSubscriptions.new( current_user )
+    calendar_subscriptions = CalendarSubscriptions.new(current_user)
     ical                   = calendar_subscriptions.all
 
     send_data(
@@ -35,8 +35,8 @@ class CalendarSubscriptionsController < ApplicationController
   # @response_message 200 [String] iCal file ready to import in calendar applications.
   # @response_message 401          Permission denied.
   def object
-    calendar_subscriptions = CalendarSubscriptions.new( current_user )
-    ical                   = calendar_subscriptions.generic( params[:object], params[:method] )
+    calendar_subscriptions = CalendarSubscriptions.new(current_user)
+    ical                   = calendar_subscriptions.generic(params[:object], params[:method])
 
     send_data(
       ical,

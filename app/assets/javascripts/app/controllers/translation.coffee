@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.translation'
   events:
     'click .js-pushChanges': 'pushChanges'
     'click .js-resetChanges': 'resetChanges'
@@ -6,9 +7,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     @title 'Translations', true
     @locale = App.i18n.get()
@@ -337,4 +335,4 @@ class TranslationList extends App.Controller
       reset.addClass('hidden')
       reset.closest('tr').removeClass('warning')
 
-App.Config.set('Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Translation', { prio: 1800, parent: '#system', name: 'Translations', target: '#system/translation', controller: Index, permission: ['admin.translation'] }, 'NavBarAdmin' )

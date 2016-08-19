@@ -2,7 +2,7 @@ class Sessions::Event::ChatSessionStart < Sessions::Event::ChatBase
 
   def run
     return super if super
-    return if !role_permission_check('Agent', 'chat')
+    return if !permission_check('chat.agent', 'chat')
 
     # find first in waiting list
     chat_session = Chat::Session.where(state: 'waiting').order('created_at ASC').first

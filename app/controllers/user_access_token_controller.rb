@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class UserAccessTokenController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'user_preferences.access_token') }
 
   def index
     tokens = Token.where(action: 'api', persistent: true, user_id: current_user.id).order('updated_at DESC, label ASC')
@@ -12,7 +12,33 @@ class UserAccessTokenController < ApplicationController
       attributes.delete('name')
       token_list.push attributes
     }
-    model_index_render_result(token_list)
+    local_permissions = current_user.permissions
+    local_permissions_new = {}
+    local_permissions.each { |key, _value|
+      keys = Object.const_get('Permission').with_parents(key)
+      keys.each { |local_key|
+        next if local_permissions_new.key?([local_key])
+        if local_permissions[local_key] == true
+          local_permissions_new[local_key] = true
+          next
+        end
+        local_permissions_new[local_key] = false
+      }
+    }
+    permissions = []
+    Permission.all.order(:name).each { |permission|
+      next if !local_permissions_new.key?(permission.name) && !current_user.permissions?(permission.name)
+      permission_attributes = permission.attributes
+      if local_permissions_new[permission.name] == false
+        permission_attributes['preferences']['disabled'] = true
+      end
+      permissions.push permission_attributes
+    }
+
+    render json: {
+      tokens: token_list,
+      permissions: permissions,
+    }, status: :ok
   end
 
   def create
@@ -23,10 +49,13 @@ class UserAccessTokenController < ApplicationController
       raise Exceptions::UnprocessableEntity, 'Need label!'
     end
     token = Token.create(
-      action:     'api',
-      label:      params[:label],
-      persistent: true,
-      user_id:    current_user.id,
+      action:      'api',
+      label:       params[:label],
+      persistent:  true,
+      user_id:     current_user.id,
+      preferences: {
+        permission: params[:permission]
+      }
     )
     render json: {
       name: token.name,

@@ -1,10 +1,10 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.language'
   events:
     'submit form': 'update'
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Language', true
     @render()
 
@@ -40,7 +40,7 @@ class Index extends App.Controller
     @ajax(
       id:          'preferences'
       type:        'PUT'
-      url:         @apiPath + '/users/preferences'
+      url:         "#{@apiPath}/users/preferences"
       data:        JSON.stringify({user:params})
       processData: true
       success:     @success
@@ -69,4 +69,4 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set( 'Language', { prio: 1000, name: 'Language', parent: '#profile', target: '#profile/language', controller: Index }, 'NavBarProfile' )
+App.Config.set('Language', { prio: 1000, name: 'Language', parent: '#profile', target: '#profile/language', controller: Index, permission: ['user_preferences.language'] }, 'NavBarProfile')

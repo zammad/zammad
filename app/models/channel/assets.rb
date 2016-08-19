@@ -8,7 +8,7 @@ class Channel
 get all assets / related models for this channel
 
   channel = Channel.find(123)
-  result = channel.assets( assets_if_exists )
+  result = channel.assets(assets_if_exists)
 
 returns
 
@@ -21,19 +21,21 @@ returns
 
 =end
 
-    def assets (data = {})
+    def assets(data = {})
 
-      if !data[ self.class.to_app_model ]
-        data[ self.class.to_app_model ] = {}
+      app_model = self.class.to_app_model
+
+      if !data[ app_model ]
+        data[ app_model ] = {}
       end
-      if !data[ self.class.to_app_model ][ id ]
+      if !data[ app_model ][ id ]
         attributes = attributes_with_associations
 
         # remove passwords if use is no admin
         access = false
         if UserInfo.current_user_id
           user = User.lookup(id: UserInfo.current_user_id)
-          if user.role?('Admin')
+          if user.permissions?('admin.channel')
             access = true
           end
         end

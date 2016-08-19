@@ -19,7 +19,7 @@ returns
     def permission (data)
 
       # check customer
-      if data[:current_user].role?('Customer')
+      if data[:current_user].permissions?('ticket.customer')
 
         # access ok if its own organization
         return false if data[:type] != 'ro'
@@ -31,8 +31,8 @@ returns
       end
 
       # check agent
-      return true if data[:current_user].role?(Z_ROLENAME_ADMIN)
-      return true if data[:current_user].role?('Agent')
+      return true if data[:current_user].permissions?('admin')
+      return true if data[:current_user].permissions?('ticket.agent')
       false
     end
   end

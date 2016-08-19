@@ -11,7 +11,7 @@ class TranslationSupport extends App.Controller
       return if !App.i18n.notTranslatedFeatureEnabled(App.i18n.get())
 
       # only show for admins
-      return if !@isRole('Admin')
+      return if !@permissionCheck('admin.translation')
 
       # do not show in setup screens
       return if window.location.hash.toString().match(/getting/)

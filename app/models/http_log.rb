@@ -10,7 +10,7 @@ cleanup old http logs
 
   HttpLog.cleanup
 
-optional you can parse the max oldest chat entries
+optional you can put the max oldest chat entries as argument
 
   HttpLog.cleanup(1.month)
 

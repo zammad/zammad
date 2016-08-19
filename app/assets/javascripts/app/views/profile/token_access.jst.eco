@@ -14,6 +14,33 @@
     </div>
     <div class="controls"><input id="token-label" type="text" name="label" value="" class="form-control js-input" required></div>
   </div>
+
+  <div class="permission form-group checkbox">
+
+    <div class="checkbox">
+    <% for permission in @permissions: %>
+      <% if !permission.name.match(/\./): %>
+      <label class="inline-label checkbox-replacement">
+        <input type="checkbox" value="<%= permission.name %>" name="permission" <% if @params && _.contains(@params.permissions, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
+        <%- @Icon('checkbox', 'icon-unchecked') %>
+        <%- @Icon('checkbox-checked', 'icon-checked') %>
+        <span class="label-text"><%= permission.name %> - <span class="help-text"><%- @T(permission.note) %></span></span>
+      </label>
+      <% else: %>
+        <div style="padding-left: 20px;" class="js-subPermissionList">
+          <label class="inline-label checkbox-replacement">
+            <input type="checkbox" value="<%= permission.name %>" name="permission" <% if @params && _.contains(@params.permissions, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
+            <%- @Icon('checkbox', 'icon-unchecked') %>
+            <%- @Icon('checkbox-checked', 'icon-checked') %>
+            <span class="label-text"><%= permission.name.replace(/^.+?\./, '') %> - <span class="help-text"><%- @T(permission.note) %></span></span>
+          </label>
+        </div>
+      <% end %>
+    <% end %>
+    </div>
+
+  </div>
+
   <button class="btn btn--primary js-submit"><%- @T('Create') %></button>
 </form>
 
@@ -24,6 +51,7 @@
   <thead>
     <tr>
       <th><%- @T('Name') %></th>
+      <th><%- @T('Permission') %></th>
       <th><%- @T('Created') %></th>
 <!--
       <th><%- @T('Expires') %></th>
@@ -40,6 +68,7 @@
     <% for token in @tokens: %>
       <tr>
         <td><%= token.label %></td>
+        <td><% if token.preferences && token.preferences.permission: %><%= token.preferences.permission.join(', ') %><% end %></td>
         <td><%- @humanTime(token.created_at) %></td>
   <!--
         <td><%- @humanTime(token.expired_at) %></td>
@@ -47,7 +76,7 @@
   -->
         <td class="settings-list-controls">
           <div>
-            <a class="settings-list-control" href="#" data-token-id="<%- token.id %>" data-type="delete" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
+            <a class="settings-list-control js-delete" href="#" data-token-id="<%- token.id %>" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>
           </div>
       </tr>
     <% end %>

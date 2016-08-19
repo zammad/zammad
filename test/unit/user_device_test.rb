@@ -3,12 +3,10 @@ require 'test_helper'
 class UserDeviceTest < ActiveSupport::TestCase
   setup do
 
-    # create agent
-    groups = Group.all
-    roles = Role.where(name: 'Agent')
-
     UserInfo.current_user_id = 1
 
+    groups = Group.all
+    roles = Role.where(name: 'Agent')
     @agent = User.create_or_update(
       login: 'user-device-agent@example.com',
       firstname: 'UserDevice',
@@ -18,6 +16,17 @@ class UserDeviceTest < ActiveSupport::TestCase
       active: true,
       roles: roles,
       groups: groups,
+    )
+
+    roles = Role.where(name: 'Customer')
+    @customer = User.create_or_update(
+      login: 'user-device-customer@example.com',
+      firstname: 'UserDevice',
+      lastname: 'Customer',
+      email: 'user-device-customer@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: roles,
     )
   end
 

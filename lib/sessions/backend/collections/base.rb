@@ -1,5 +1,5 @@
 class Sessions::Backend::Collections::Base < Sessions::Backend::Base
-  class << self; attr_accessor :model, :roles, :not_roles end
+  class << self; attr_accessor :model, :permissions end
 
   def initialize(user, asset_lookup, client, client_id, ttl)
     @user         = user
@@ -22,24 +22,9 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
 
   def push
 
-    # check role based access
-    if self.class.roles
-      access = false
-      self.class.roles.each { |role|
-        next if !@user.role?(role)
-        access = true
-        break
-      }
-      return if !access
-    end
-    if self.class.not_roles
-      access = false
-      self.class.not_roles.each { |role|
-        next if @user.role?(role)
-        access = true
-        break
-      }
-      return if !access
+    # check permission based access
+    if self.class.permissions
+      return if !@user.permissions?(self.class.permissions)
     end
 
     # check timeout
@@ -98,18 +83,11 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     @model = model
   end
 
-  def self.add_if_role(role)
-    if !@roles
-      @roles = []
+  def self.add_if_permission(key)
+    if !@permissions
+      @permissions = []
     end
-    @roles.push role
-  end
-
-  def self.add_if_not_role(role)
-    if !@not_roles
-      @not_roles = []
-    end
-    @not_roles.push role
+    @permissions.push key
   end
 
 end

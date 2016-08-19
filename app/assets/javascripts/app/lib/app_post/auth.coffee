@@ -72,7 +72,7 @@ class App.Auth
       # empty session
       App.Session.init()
 
-      # update model definition
+      # update model definition (needed for not authenticated areas like wizard)
       if data.models
         for model, attributes of data.models
           for attribute in attributes

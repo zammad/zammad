@@ -47,7 +47,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password}
 =end
 
   def index
-    deny_if_not_role('Agent')
+    permission_check(['admin.template', 'ticket.agent'])
     model_index_render(Template, params)
   end
 
@@ -69,7 +69,7 @@ curl http://localhost/api/v1/templates/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    deny_if_not_role('Agent')
+    permission_check(['admin.template', 'ticket.agent'])
     model_show_render(Template, params)
   end
 
@@ -97,7 +97,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def create
-    deny_if_not_role('Agent')
+    permission_check(['admin.template', 'ticket.agent'])
     model_create_render(Template, params)
   end
 
@@ -125,7 +125,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def update
-    deny_if_not_role('Agent')
+    permission_check(['admin.template', 'ticket.agent'])
     model_update_render(Template, params)
   end
 
@@ -143,7 +143,7 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 =end
 
   def destroy
-    deny_if_not_role('Agent')
+    permission_check(['admin.template', 'ticket.agent'])
     model_destory_render(Template, params)
   end
 end

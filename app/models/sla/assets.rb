@@ -23,14 +23,17 @@ returns
 
     def assets (data)
 
-      if !data[ Sla.to_app_model ]
-        data[ Sla.to_app_model ] = {}
+      app_model_sla = Sla.to_app_model
+      app_model_user = User.to_app_model
+
+      if !data[ app_model_sla ]
+        data[ app_model_sla ] = {}
       end
-      if !data[ User.to_app_model ]
-        data[ User.to_app_model ] = {}
+      if !data[ app_model_user ]
+        data[ app_model_user ] = {}
       end
-      if !data[ Sla.to_app_model ][ id ]
-        data[ Sla.to_app_model ][ id ] = attributes_with_associations
+      if !data[ app_model_sla ][ id ]
+        data[ app_model_sla ][ id ] = attributes_with_associations
         data = assets_of_selector('condition', data)
         if calendar_id
           calendar = Calendar.lookup(id: calendar_id)
@@ -41,7 +44,7 @@ returns
       end
       %w(created_by_id updated_by_id).each { |local_user_id|
         next if !self[ local_user_id ]
-        next if data[ User.to_app_model ][ self[ local_user_id ] ]
+        next if data[ app_model_user ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])
         next if !user
         data = user.assets(data)

@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.calendar'
   events:
     'click .js-new':         'new'
     'click .js-edit':        'edit'
@@ -8,10 +9,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
-
     @subscribeId = App.Calendar.subscribe(@render)
 
     callback = (data) =>
@@ -127,4 +124,4 @@ class Index extends App.ControllerContent
       container:   @el.closest('.content')
     )
 
-App.Config.set( 'Calendars', { prio: 2400, name: 'Calendars', parent: '#manage', target: '#manage/calendars', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Calendars', { prio: 2400, name: 'Calendars', parent: '#manage', target: '#manage/calendars', controller: Index, permission: ['admin.calendar'] }, 'NavBarAdmin')

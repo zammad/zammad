@@ -1,110 +1,129 @@
 # encoding: utf-8
-# rubocop:disable Next
 require 'test_helper'
 
 class TokenTest < ActiveSupport::TestCase
   test 'token' do
 
-    tests = [
+    groups = Group.all
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create_or_update(
+      login: 'token-agent1@example.com',
+      firstname: 'Token',
+      lastname: 'Agent1',
+      email: 'token-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
-      # test 1
-      {
-        test_name: 'invalid token',
-        action: 'PasswordReset',
-        name: '1NV4L1D',
-        result: nil,
-      },
+    # invalid token
+    user = Token.check(
+      action: 'PasswordReset',
+      name: '1NV4L1D',
+    )
+    assert_not(user)
 
-      # test 2
-      {
-        test_name: 'fresh token',
-        create: {
-          user_id: 2,
-          action: 'PasswordReset',
-        },
-        action: 'PasswordReset',
-        result: true,
-        verify: {
-          firstname: 'Nicole',
-          lastname: 'Braun',
-          email: 'nicole.braun@zammad.org',
-        }
-      },
+    # generate fresh token
+    token = Token.create(
+      action: 'PasswordReset',
+      user_id: agent1.id,
+    )
+    assert(token)
+    assert_equal(nil, token.persistent)
+    user = Token.check(
+      action: 'PasswordReset_NotExisting',
+      name: token.name,
+    )
+    assert_not(user)
+    user = Token.check(
+      action: 'PasswordReset',
+      name: token.name,
+    )
+    assert(user)
+    assert_equal('Token', user.firstname)
+    assert_equal('Agent1', user.lastname)
+    assert_equal('token-agent1@example.com', user.email)
 
-      # test 3
-      {
-        test_name: 'two days but not persistent',
-        create: {
-          user_id: 2,
-          action: 'PasswordReset',
-          created_at: 2.days.ago,
-        },
-        action: 'PasswordReset',
-        result: nil,
-      },
+    # two days but not persistent
+    token = Token.create(
+      action: 'PasswordReset',
+      user_id: agent1.id,
+      created_at: 2.days.ago,
+      persistent: false,
+    )
+    user = Token.check(
+      action: 'PasswordReset',
+      name: token.name,
+    )
+    assert_not(user)
 
-      {
-        test_name: 'two days but persistent',
-        create: {
-          user_id: 2,
-          action: 'iCal',
-          created_at: 2.days.ago,
-          persistent: true,
-        },
-        action: 'iCal',
-        result: true,
-        verify: {
-          firstname: 'Nicole',
-          lastname: 'Braun',
-          email: 'nicole.braun@zammad.org',
-        }
-      },
-    ]
+    # two days but persistent
+    token = Token.create(
+      action: 'iCal',
+      user_id: agent1.id,
+      created_at: 2.days.ago,
+      persistent: true,
+    )
+    user = Token.check(
+      action: 'iCal',
+      name: token.name,
+    )
+    assert(user)
+    assert_equal('Token', user.firstname)
+    assert_equal('Agent1', user.lastname)
+    assert_equal('token-agent1@example.com', user.email)
 
-    tests.each { |test|
+    # api token with permissions
+    token = Token.create(
+      action:      'api',
+      label:       'some label',
+      persistent:  true,
+      user_id:     agent1.id,
+      preferences: {
+        permission: ['admin', 'ticket.agent'], # agent has no access to admin.*
+      }
+    )
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: 'admin.session',
+    )
+    assert_not(user)
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: 'admin',
+    )
+    assert_not(user)
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: 'ticket',
+    )
+    assert_not(user)
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: 'ticket.agent',
+    )
+    assert(user)
+    assert_equal('Token', user.firstname)
+    assert_equal('Agent1', user.lastname)
+    assert_equal('token-agent1@example.com', user.email)
 
-      if test[:create]
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: ['ticket.agent', 'not_existing'],
+    )
+    assert(user)
+    assert_equal('Token', user.firstname)
+    assert_equal('Agent1', user.lastname)
+    assert_equal('token-agent1@example.com', user.email)
 
-        #puts test[:test_name] + ': creating token '+ test[:create].inspect
-
-        token = Token.create(
-          action: test[:create][:action],
-          user_id: test[:create][:user_id],
-          created_at: test[:create][:created_at].to_s,
-          persistent: test[:create][:persistent]
-        )
-
-        #puts test[:test_name] + ': created token ' + token.inspect
-
-        test[:name] = token.name
-      end
-
-      user = Token.check(
-        action: test[:action],
-        name: test[:name]
-      )
-
-      if test[:result] == true
-        if !user
-          assert(false, test[:test_name] + ': token verification failed')
-        else
-          test[:verify].each { |key, value|
-            assert_equal(user[key], value, 'verify')
-          }
-        end
-      else
-        assert_equal(test[:result], user, test[:test_name] + ': failed or not existing')
-      end
-
-      if test[:name]
-        #puts test[:test_name] + ': deleting token '+ test[:name]
-
-        token = Token.find_by(name: test[:name])
-
-        if token
-          token.destroy
-        end
-      end
-    }
   end
+
 end

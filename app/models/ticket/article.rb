@@ -18,21 +18,26 @@ class Ticket::Article < ApplicationModel
 
   notify_clients_support
 
-  activity_stream_support ignore_attributes: {
-    type_id: true,
-    sender_id: true,
-    preferences: true,
-  }
+  activity_stream_support(
+    permission: 'ticket.agent',
+    ignore_attributes: {
+      type_id: true,
+      sender_id: true,
+      preferences: true,
+    }
+  )
 
-  history_support ignore_attributes: {
-    type_id: true,
-    sender_id: true,
-    preferences: true,
-    message_id: true,
-    from: true,
-    to: true,
-    cc: true,
-  }
+  history_support(
+    ignore_attributes: {
+      type_id: true,
+      sender_id: true,
+      preferences: true,
+      message_id: true,
+      from: true,
+      to: true,
+      cc: true,
+    }
+  )
 
   # fillup md5 of message id to search easier on very long message ids
   def check_message_id_md5

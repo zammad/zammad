@@ -45,7 +45,7 @@ x-tm-as-user-blocked-sender: No
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(true, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -59,7 +59,7 @@ X-MS-Exchange-Inbox-Rules-Loop: aaa.bbb@example.com
 
 Some Text 2"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(false, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -81,7 +81,7 @@ x-exclaimer-md-config: 8c10826d-4052-4c5c-a8e8-e09011276827
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(true, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -125,7 +125,7 @@ X-Mailer: Zimbra 7.1.3_GA_3346
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(true, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -139,7 +139,7 @@ X-Mailer: Zimbra 7.1.3_GA_3346
 
 Some Text 2"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(false, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -159,7 +159,7 @@ X-Mailer: Zimbra 7.1.3_GA_3346
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(true, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -201,7 +201,7 @@ Auto-submitted: auto-replied; owner-email=\"me@example.com\"
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(true, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -214,7 +214,7 @@ Subject: #{ticket.subject_build('some new subject - none')}
 
 Some Text 2"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(false, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
@@ -232,7 +232,7 @@ Auto-submitted: auto-replied; owner-email=\"me@example.com\"
 
 Some Text"
 
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process( {}, email_raw_string)
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(true, mail['x-zammad-out-of-office'.to_sym])
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)

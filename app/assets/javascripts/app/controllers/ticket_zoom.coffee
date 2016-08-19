@@ -14,9 +14,7 @@ class App.TicketZoom extends App.Controller
     super
 
     # check authentication
-    if !@authenticate()
-      App.TaskManager.remove(@task_key)
-      return
+    @authenticateCheckRedirect(true)
 
     @formMeta     = undefined
     @ticket_id    = params.ticket_id
@@ -344,7 +342,7 @@ class App.TicketZoom extends App.Controller
       elLocal = $(App.view('ticket_zoom')
         ticket:         @ticket
         nav:            @nav
-        isCustomer:     @isRole('Customer')
+        isCustomer:     @permissionCheck('ticket.customer')
         scrollbarWidth: App.Utils.getScrollBarWidth()
       )
 
@@ -523,7 +521,7 @@ class App.TicketZoom extends App.Controller
         internal:    'true'
         in_reply_to: ''
 
-    if  @isRole('Customer')
+    if @permissionCheck('ticket.customer')
       currentStore.article.internal = ''
 
     currentStore
@@ -653,7 +651,7 @@ class App.TicketZoom extends App.Controller
           ticket[attributes[1]] = content.value
 
     # set defaults
-    if !@isRole('Customer')
+    if !@permissionCheck('ticket.customer')
       if !ticket['owner_id']
         ticket['owner_id'] = 1
 
@@ -811,6 +809,7 @@ class App.TicketZoom extends App.Controller
     App.TaskManager.update(@task_key, { 'state': @localTaskData })
 
 class TicketZoomRouter extends App.ControllerPermanent
+  requiredPermission: ['ticket.agent', 'ticket.customer']
   constructor: (params) ->
     super
 

@@ -1,9 +1,7 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.integration'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     @title 'Integrations', true
 
@@ -38,4 +36,4 @@ class Index extends App.ControllerContent
     if @subscribeId
       App.Setting.unsubscribe(@subscribeId)
 
-App.Config.set('Integration', { prio: 1000, name: 'Integrations', parent: '#system', target: '#system/integration', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Integration', { prio: 1000, name: 'Integrations', parent: '#system', target: '#system/integration', controller: Index, permission: ['admin.integration'] }, 'NavBarAdmin')

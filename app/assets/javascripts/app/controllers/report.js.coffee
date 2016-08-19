@@ -1,17 +1,15 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'report'
+
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
-
     @title 'Reporting'
     @navupdate '#report'
     @startLoading()
     @ajax(
-      type:  'GET',
-      url:   @apiPath + '/reports/config',
-      processData: true,
+      type:  'GET'
+      url:   "#{@apiPath}/reports/config"
+      processData: true
       success: (data) =>
         @stopLoading()
         @config = data.config
@@ -131,7 +129,7 @@ class Graph extends App.ControllerContent
         ui:     @ui
       )
 
-    url = @apiPath + '/reports/generate'
+    url = "#{@apiPath}/reports/generate"
     interval = 5 * 60000
     if @params.timeRange is 'year'
       interval = 5 * 60000
@@ -519,4 +517,4 @@ class Sidebar extends App.Controller
     @ui.storeParams()
 
 App.Config.set('report', Index, 'Routes')
-App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', role: ['Report'] }, 'NavBarRight')
+App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')

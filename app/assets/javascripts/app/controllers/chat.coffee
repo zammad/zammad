@@ -61,7 +61,7 @@ class App.CustomerChat extends App.Controller
 
     # rerender view, e. g. on langauge change
     @bind('ui:rerender chat:rerender', =>
-      return if !@authenticate(true)
+      return if !@authenticateCheck()
       for session_id, chat of @chatWindows
         chat.el.remove()
       @chatWindows = {}
@@ -90,7 +90,7 @@ class App.CustomerChat extends App.Controller
     false
 
   render: ->
-    if !@isRole('Chat')
+    if !@permissionCheck('chat.agent')
       @renderScreenUnauthorized(objectName: 'Chat')
       return
     if !@Config.get('chat')
@@ -319,11 +319,9 @@ class App.CustomerChat extends App.Controller
     @idleTimeoutId = undefined
 
 class CustomerChatRouter extends App.ControllerPermanent
+  requiredPermission: 'chat.agent'
   constructor: (params) ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Chat')
 
     App.TaskManager.execute(
       key:        'CustomerChat'
@@ -771,6 +769,6 @@ class Setting extends App.ControllerModal
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set( 'customer_chat', CustomerChatRouter, 'Routes' )
-App.Config.set( 'CustomerChat', { controller: 'CustomerChat', authentication: true }, 'permanentTask' )
-App.Config.set( 'CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, role: ['Chat'], class: 'chat' }, 'NavBar' )
+App.Config.set('customer_chat', CustomerChatRouter, 'Routes')
+App.Config.set('CustomerChat', { controller: 'CustomerChat', permission: ['chat.agent'] }, 'permanentTask')
+App.Config.set('CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, permission: ['chat.agent'], class: 'chat' }, 'NavBar')

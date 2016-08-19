@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class GroupsController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'admin.group') }
 
 =begin
 
@@ -101,7 +101,6 @@ curl http://localhost/api/v1/groups -v -u #{login}:#{password} -H "Content-Type:
 =end
 
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_create_render(Group, params)
   end
 
@@ -133,7 +132,6 @@ curl http://localhost/api/v1/groups -v -u #{login}:#{password} -H "Content-Type:
 =end
 
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_update_render(Group, params)
   end
 
@@ -151,7 +149,6 @@ curl http://localhost/api/v1/groups/{id} -v -u #{login}:#{password} -H "Content-
 =end
 
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
     model_destory_render(Group, params)
   end
 end

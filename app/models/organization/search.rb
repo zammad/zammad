@@ -23,7 +23,7 @@ returns if user has no permissions to search
 =end
 
     def search_preferences(current_user)
-      return false if !current_user.role?('Agent') && !current_user.role?(Z_ROLENAME_ADMIN)
+      return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.organization')
       {
         prio: 1000,
         direct_search_index: true,

@@ -10,62 +10,62 @@ class TranslationsController < ApplicationController
 
   # PUT /translations/push
   def push
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     start = Time.zone.now
     Translation.push(params[:locale])
-    if start > Time.zone.now - 5.seconds
-      sleep 4
+    if start > Time.zone.now - 4.seconds
+      sleep 3
     end
     render json: { message: 'ok' }, status: :ok
   end
 
   # POST /translations/sync/:locale
   def sync
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     Translation.load(params[:locale])
     render json: { message: 'ok' }, status: :ok
   end
 
   # POST /translations/reset
   def reset
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     Translation.reset(params[:locale])
     render json: { message: 'ok' }, status: :ok
   end
 
   # GET /translations/admin/lang/:locale
   def admin
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     render json: Translation.lang(params[:locale], true)
   end
 
   # GET /translations
   def index
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     model_index_render(Translation, params)
   end
 
   # GET /translations/1
   def show
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     model_show_render(Translation, params)
   end
 
   # POST /translations
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     model_create_render(Translation, params)
   end
 
   # PUT /translations/1
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     model_update_render(Translation, params)
   end
 
   # DELETE /translations/1
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check('admin.translation')
     model_destory_render(Translation, params)
   end
 end

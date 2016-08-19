@@ -14,7 +14,7 @@ class Sessions::Event::Maintenance < Sessions::Event::Base
   def run
 
     # check if sender is admin
-    return if !role_permission_check('Admin', 'maintenance')
+    return if !permission_check('admin.maintenance', 'maintenance')
     Sessions.broadcast(@payload, 'public', @session['id'])
     false
   end

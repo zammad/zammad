@@ -1,11 +1,9 @@
 # coffeelint: disable=duplicate_key
 class Index extends App.ControllerTabs
+  requiredPermission: 'admin.object'
   header: 'Object Manager'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     @title 'Objects', true
 
@@ -44,10 +42,6 @@ class Items extends App.ControllerContent
 
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate()
-
     @subscribeId = App.ObjectManagerAttribute.subscribe(@render)
     App.ObjectManagerAttribute.fetch()
 
@@ -225,4 +219,4 @@ class Edit extends App.ControllerGenericEdit
         ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
     )
 
-App.Config.set( 'SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('SystemObject', { prio: 1700, parent: '#system', name: 'Objects', target: '#system/object_manager', controller: Index, permission: ['admin.object'] }, 'NavBarAdmin')

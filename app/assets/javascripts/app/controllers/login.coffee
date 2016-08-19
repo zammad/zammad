@@ -23,9 +23,8 @@ class Index extends App.ControllerContent
 
     # observe config changes related to login page
     @bind('config_update_local', (data) =>
-      return if data.name != 'maintenance_mode' &&
-        data.name != 'maintenance_login' &&
-        data.name != 'maintenance_login_message' &&
+      return if !data.name.match(/^maintenance/) &&
+        !data.name.match(/^auth/) &&
         data.name != 'user_lost_password' &&
         data.name != 'user_create_account' &&
         data.name != 'product_name' &&
@@ -38,33 +37,45 @@ class Index extends App.ControllerContent
   render: (data = {}) ->
     auth_provider_all = {
       facebook: {
-        url:    '/auth/facebook',
-        name:   'Facebook',
-        config: 'auth_facebook',
-        class:  'facebook',
+        url:    '/auth/facebook'
+        name:   'Facebook'
+        config: 'auth_facebook'
+        class:  'facebook'
       },
       twitter: {
-        url:    '/auth/twitter',
-        name:   'Twitter',
-        config: 'auth_twitter',
-        class:  'twitter',
+        url:    '/auth/twitter'
+        name:   'Twitter'
+        config: 'auth_twitter'
+        class:  'twitter'
       },
       linkedin: {
-        url:    '/auth/linkedin',
-        name:   'LinkedIn',
-        config: 'auth_linkedin',
-        class:  'linkedin',
+        url:    '/auth/linkedin'
+        name:   'LinkedIn'
+        config: 'auth_linkedin'
+        class:  'linkedin'
+      },
+      github: {
+        url:    '/auth/github'
+        name:   'Github'
+        config: 'auth_github'
+        class:  'github'
+      },
+      gitlab: {
+        url:    '/auth/gitlab'
+        name:   'Gitlab'
+        config: 'auth_gitlab'
+        class:  'gitlab'
       },
       google_oauth2: {
-        url:    '/auth/google_oauth2',
-        name:   'Google',
-        config: 'auth_google_oauth2',
-        class:  'google',
+        url:    '/auth/google_oauth2'
+        name:   'Google'
+        config: 'auth_google_oauth2'
+        class:  'google'
       },
     }
     auth_providers = []
     for key, provider of auth_provider_all
-      if @Config.get( provider.config ) is true || @Config.get( provider.config ) is 'true'
+      if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
         auth_providers.push provider
 
     @html App.view('login')(
@@ -102,13 +113,13 @@ class Index extends App.ControllerContent
   success: (data, status, xhr) =>
 
     # redirect to #
-    requested_url = @Config.get( 'requested_url' )
+    requested_url = @Config.get('requested_url')
     if requested_url && requested_url isnt '#login' && requested_url isnt '#logout'
       @log 'notice', "REDIRECT to '#{requested_url}'"
       @navigate requested_url
 
       # reset
-      @Config.set( 'requested_url', '' )
+      @Config.set('requested_url', '')
     else
       @log 'notice', 'REDIRECT to -#/-'
       @navigate '#/'

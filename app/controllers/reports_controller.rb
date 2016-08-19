@@ -3,11 +3,10 @@
 require 'tempfile'
 
 class ReportsController < ApplicationController
-  before_action :authentication_check
+  before_action { authentication_check(permission: 'report') }
 
   # GET /api/reports/config
   def reporting_config
-    deny_if_not_role('Report')
     render json: {
       config: Report.config,
       profiles: Report::Profile.list,
@@ -16,8 +15,6 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/generate
   def generate
-    deny_if_not_role('Report')
-
     get_params = params_all
     return if !get_params
 
@@ -61,8 +58,6 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/sets
   def sets
-    deny_if_not_role('Report')
-
     get_params = params_all
     return if !get_params
 

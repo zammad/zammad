@@ -6,7 +6,7 @@ module Ticket::Permission
 check if user has access to ticket
 
   ticket = Ticket.find(123)
-  result = ticket.permission( :current_user => User.find(123) )
+  result = ticket.permission(current_user: User.find(123))
 
 returns
 
@@ -17,7 +17,7 @@ returns
   def permission (data)
 
     # check customer
-    if data[:current_user].role?('Customer')
+    if data[:current_user].permissions?('ticket.customer')
 
       # access ok if its own ticket
       return true if customer_id == data[:current_user].id

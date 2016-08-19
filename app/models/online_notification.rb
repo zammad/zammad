@@ -281,7 +281,7 @@ with dedicated times
     }
 
     # notify all agents
-    User.of_role('Agent').each { |user|
+    User.with_permissions('ticket.agent').each { |user|
       Sessions.send_to(
         user.id,
         {

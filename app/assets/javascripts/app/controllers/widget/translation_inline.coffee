@@ -9,7 +9,7 @@ class Widget extends App.Controller
     $(document).off('keydown.translation')
 
     # only admins can do this
-    return if !@isRole('Admin')
+    return if !@permissionCheck('admin.translation')
 
     # bind on key down
     # if ctrl+alt+t is pressed, enable translation_inline and fire ui:rerender
@@ -20,6 +20,7 @@ class Widget extends App.Controller
 
   toogle: =>
     if @active
+      $('.translation:focus').trigger('blur')
       @disable()
       @active = false
       return

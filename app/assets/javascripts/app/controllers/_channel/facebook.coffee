@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.channel_facebook'
   events:
     'click .js-new':       'new'
     'click .js-edit':      'edit'
@@ -7,7 +8,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    return if !@authenticate(false, 'Admin')
 
     #@interval(@load, 60000)
     @load()
@@ -193,4 +193,4 @@ class Index extends App.ControllerContent
       container:   @el.closest('.content')
     )
 
-App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: Index, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')

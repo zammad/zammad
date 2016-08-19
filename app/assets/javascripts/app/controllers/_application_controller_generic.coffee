@@ -313,10 +313,15 @@ class App.ControllerDrox extends App.Controller
 
 class App.ControllerTabs extends App.Controller
   events:
-    'click .nav-tabs [data-toggle="tab"]': 'tabRemember',
+    'click .nav-tabs [data-toggle="tab"]': 'tabRemember'
 
   constructor: ->
     super
+
+    # check authentication
+    if @requiredPermission
+      if !@permissionCheckRedirect(@requiredPermission)
+        throw "No permission for #{@requiredPermission}"
 
   render: ->
     @html App.view('generic/tabs')(
@@ -359,27 +364,24 @@ class App.ControllerNavSidbar extends App.ControllerContent
     @navupdate ''
 
     if @authenticateRequired
-      return if !@authenticate()
+      @authenticateCheckRedirect()
 
     @params = params
 
     # get accessable groups
-    roles = App.Session.get('roles')
+    user = App.User.find(App.Session.get('id'))
     groups = App.Config.get(@configKey)
     groupsUnsorted = []
     for key, item of groups
       if !item.controller
-        if !item.role
+        if !item.permission
           groupsUnsorted.push item
         else
-          match = _.include(item.role, 'Anybody')
-          if !match
-            for role in roles
-              if !match
-                match = _.include(item.role, role.name)
-          if match
-            groupsUnsorted.push item
-
+          match = false
+          for permissionName in item.permission
+            if !match && user.permission(permissionName)
+              match = true
+              groupsUnsorted.push item
     @groupsSorted = _.sortBy(groupsUnsorted, (item) -> return item.prio)
 
     # get items of group
@@ -389,16 +391,14 @@ class App.ControllerNavSidbar extends App.ControllerContent
       for key, item of items
         if item.parent is group.target
           if item.controller
-            if !item.role
+            if !item.permission
               itemsUnsorted.push item
             else
-              match = _.include(item.role, 'Anybody')
-              if !match
-                for role in roles
-                  if !match
-                    match = _.include(item.role, role.name)
-              if match
-                itemsUnsorted.push item
+              match = false
+              for permissionName in item.permission
+                if !match && user && user.permission(permissionName)
+                  match = true
+                  itemsUnsorted.push item
 
       group.items = _.sortBy(itemsUnsorted, (item) -> return item.prio)
 

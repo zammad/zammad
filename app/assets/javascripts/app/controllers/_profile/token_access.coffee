@@ -1,18 +1,18 @@
-class Index extends App.Controller
+class Index extends App.ControllerContent
+  requiredPermission: 'user_preferences.access_token'
   events:
-    'click [data-type=delete]': 'delete'
+    'click .js-delete': 'delete'
     'submit form.js-create': 'create'
 
   constructor: ->
     super
-    return if !@authenticate()
     @title 'Token Access', true
 
     @load()
     @interval(
       =>
         @load()
-      12000
+      62000
     )
 
   # fetch data, render view
@@ -22,23 +22,34 @@ class Index extends App.Controller
       type:  'GET'
       url:   "#{@apiPath}/user_access_token"
       success: (data) =>
+        tokens = data.tokens
 
         # verify is rerender is needed
-        if !force && @lastestUpdated && data && data[0] && @lastestUpdated.updated_at is data[0].updated_at
+        if !force && @lastestUpdated && tokens && tokens[0] && @lastestUpdated.updated_at is tokens[0].updated_at
           return
-        @lastestUpdated = data[0]
-        @data = data
+        @lastestUpdated = tokens[0]
+        @tokens = data.tokens
+        @permissions = data.permissions
         @render()
     )
 
   render: =>
     @html App.view('profile/token_access')(
-      tokens: @data
+      tokens: @tokens
+      permissions: @permissions
     )
 
   create: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
+
+    # check if min one permission exists
+    if _.isEmpty(params['permission'])
+      alert('Min. one permission is needed!')
+      return
+
+    if !_.isArray(params['permission'])
+      params['permission'] = [params['permission']]
 
     @ajax(
       id:          'user_access_token_create'
@@ -89,4 +100,4 @@ class Index extends App.Controller
       msg:  App.i18n.translateContent(data.message)
     )
 
-App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: Index, role: [ 'Agent', 'Admin' ]  }, 'NavBarProfile')
+App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: Index, permission: ['user_preferences.access_token']  }, 'NavBarProfile')

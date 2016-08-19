@@ -50,7 +50,7 @@ sync all users against clearbit
 =end
 
   def self.sync
-    users = User.of_role('Customer')
+    users = User.of_role(Role.signup_roles)
     users.each { |user|
       sync_user(user)
     }

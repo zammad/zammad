@@ -47,6 +47,7 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password}
 =end
 
   def index
+    permission_check(['admin.channel_email', 'ticket.agent'])
     model_index_render(Signature, params)
   end
 
@@ -68,6 +69,7 @@ curl http://localhost/api/v1/signatures/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
+    permission_check(['admin.channel_email', 'ticket.agent'])
     model_show_render(Signature, params)
   end
 
@@ -96,7 +98,7 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def create
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check(['admin.channel_email'])
     model_create_render(Signature, params)
   end
 
@@ -125,7 +127,7 @@ curl http://localhost/api/v1/signatures.json -v -u #{login}:#{password} -H "Cont
 =end
 
   def update
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check(['admin.channel_email'])
     model_update_render(Signature, params)
   end
 
@@ -140,7 +142,7 @@ Test:
 =end
 
   def destroy
-    deny_if_not_role(Z_ROLENAME_ADMIN)
+    permission_check(['admin.channel_email'])
     model_destory_render(Signature, params)
   end
 end

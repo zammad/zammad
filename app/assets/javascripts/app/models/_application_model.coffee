@@ -192,16 +192,15 @@ class App.Model extends Spine.Model
 
     # in case if no configure_attributes exist
     return {} if !attributes
-    attributesNew = {}
 
     # check params of screen if screen is requested
+    attributesNew = {}
     if screen
       for attribute in attributes
-        if attribute.screen
-          if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty(attribute.screen[ screen ])
-            for item, value of attribute.screen[ screen ]
-              attribute[item] = value
-            attributesNew[ attribute.name ] = attribute
+        if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty(attribute.screen[ screen ])
+          for item, value of attribute.screen[ screen ]
+            attribute[item] = value
+          attributesNew[ attribute.name ] = attribute
 
     # if no screen is given or no attribute has this screen - use default attributes
     if !screen || _.isEmpty(attributesNew)
@@ -472,7 +471,7 @@ class App.Model extends Spine.Model
 
   unsubscribe from model or collection
 
-  App.Model.unsubscribe( @subscribeId )
+  App.Model.unsubscribe(@subscribeId)
 
   ###
 
@@ -495,6 +494,7 @@ class App.Model extends Spine.Model
   App.Model.fetchFull(
     @callback
     clear: true
+    force: false # only do server call if no record exsits
   )
 
 
@@ -502,6 +502,11 @@ class App.Model extends Spine.Model
   @fetchFull: (callback, params = {}) ->
     url = "#{@url}/?full=true"
     App.Log.debug('Model', "fetchFull collection #{@className}", url)
+    if params.force is false && App[@className].count() isnt 0
+      if callback
+        callback(App[@className].all())
+      return
+
     App.Ajax.request(
       type:  'GET'
       url:   url

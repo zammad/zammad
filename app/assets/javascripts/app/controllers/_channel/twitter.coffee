@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.channel_twitter'
   events:
     'click .js-new':       'new'
     'click .js-edit':      'edit'
@@ -7,7 +8,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    return if !@authenticate(false, 'Admin')
 
     #@interval(@load, 60000)
     @load()
@@ -227,4 +227,4 @@ class Index extends App.ControllerContent
       container:   @el.closest('.content')
     )
 
-App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, role: ['Admin'] }, 'NavBarAdmin')
+App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')

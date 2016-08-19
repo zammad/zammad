@@ -1,0 +1,19 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <div class="zammad-switch zammad-switch--small js-setting" data-name="<%= @setting.name %>">
+       <input name="<%= @setting.name %>" type="checkbox" id="setting-<%= @setting.name %>" <% if @checked: %>checked<% end %>>
+       <label for="setting-<%= @setting.name %>"></label>
+    </div>
+    <h1><%- @T.apply(@, [@setting.title].concat(@setting.preferences.title_i18n)) %></h1>
+  </div>
+</div>
+<div class="page-content">
+  <p class="help-text"><%- @T.apply(@, [@setting.description].concat(@setting.preferences.description_i18n)) %></p>
+  <% for localSetting in @subSetting: %>
+  <form class="settings-entry" data-name="<%= localSetting.name %>">
+    <div class="horizontal end">
+      <div class="form-item flex"></div>
+      <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
+    </div>
+  </form>
+</div>

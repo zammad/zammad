@@ -1,9 +1,7 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'admin.overview'
   constructor: ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Admin')
 
     new App.ControllerGenericIndex(
       el: @el
@@ -38,4 +36,4 @@ class Index extends App.ControllerContent
             overview.save()
     )
 
-App.Config.set( 'Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, permission: ['admin.overview'] }, 'NavBarAdmin')

@@ -1,4 +1,5 @@
 class App.ChannelEmail extends App.ControllerTabs
+  requiredPermission: 'admin.channel_email'
   header: 'Email'
   constructor: ->
     super
@@ -919,4 +920,4 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
         @enable(e)
     )
 
-App.Config.set( 'Email', { prio: 3000, name: 'Email', parent: '#channels', target: '#channels/email', controller: App.ChannelEmail, role: ['Admin'] }, 'NavBarAdmin' )
+App.Config.set('Email', { prio: 3000, name: 'Email', parent: '#channels', target: '#channels/email', controller: App.ChannelEmail, permission: ['admin.channel_email'] }, 'NavBarAdmin')

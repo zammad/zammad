@@ -3,9 +3,7 @@ class App.UserProfile extends App.Controller
     super
 
     # check authentication
-    if !@authenticate()
-      App.TaskManager.remove(@task_key)
-      return
+    @authenticateCheckRedirect(true)
 
     # fetch new data if needed
     App.User.full(@user_id, @render)
@@ -188,6 +186,7 @@ class Organization extends App.ObserverController
     )
 
 class Router extends App.ControllerPermanent
+  requiredPermission: 'ticket.agent'
   constructor: (params) ->
     super
 

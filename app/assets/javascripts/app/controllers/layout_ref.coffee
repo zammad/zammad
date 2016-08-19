@@ -1897,7 +1897,7 @@ class CustomerChatRef extends App.Controller
 #     super
 
 #     # check authentication
-#     return if !@authenticate()
+#     @authenticateCheckRedirect()
 
 #     App.TaskManager.execute(
 #       key:        'CustomerChatRef'
@@ -1908,8 +1908,8 @@ class CustomerChatRef extends App.Controller
 #     )
 
 App.Config.set( 'layout_ref/customer_chat', CustomerChatRef, 'Routes' )
-# App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', authentication: true }, 'permanentTask' )
-# App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', role: ['Agent'], class: 'chat' }, 'NavBar' )
+# App.Config.set( 'CustomerChatRef', { controller: 'CustomerChatRef', permission: ['chat.agent'] }, 'permanentTask' )
+# App.Config.set( 'CustomerChatRef', { prio: 1200, parent: '', name: 'Customer Chat', target: '#layout_ref/customer_chat', key: 'CustomerChatRef', permission: ['chat.agent'], class: 'chat' }, 'NavBar' )
 
 class ChatWindowRef extends Spine.Controller
   @extend Spine.Events
@@ -2226,7 +2226,5 @@ class ChatToTicketRef extends App.ControllerContent
       y1: y1
       y2: y1 + @attachments.outerHeight()
 
-App.Config.set( 'layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes' )
-
-
-App.Config.set( 'LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', role: [ 'Admin' ] }, 'NavBarRight' )
+App.Config.set('layout_ref/chat_to_ticket', ChatToTicketRef, 'Routes')
+App.Config.set('LayoutRef', { prio: 1600, parent: '#current_user', name: 'Layout Reference', translate: true, target: '#layout_ref', permission: [ 'admin' ] }, 'NavBarRight')

@@ -1,4 +1,5 @@
 class Index extends App.ControllerContent
+  requiredPermission: 'ticket.customer'
   events:
     'submit form':         'submit',
     'click .submit':       'submit',
@@ -6,9 +7,6 @@ class Index extends App.ControllerContent
 
   constructor: (params) ->
     super
-
-    # check authentication
-    return if !@authenticate(false, 'Customer')
 
     # set title
     @title 'New Ticket'
@@ -184,5 +182,5 @@ class Index extends App.ControllerContent
           ui.formEnable(e)
       )
 
-App.Config.set( 'customer_ticket_new', Index, 'Routes' )
-App.Config.set( 'CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#customer_ticket_new', role: ['Customer'], divider: true }, 'NavBarRight' )
+App.Config.set('customer_ticket_new', Index, 'Routes')
+App.Config.set('CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#customer_ticket_new', permission: ['ticket.customer'], divider: true }, 'NavBarRight')

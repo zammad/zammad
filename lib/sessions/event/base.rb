@@ -49,7 +49,7 @@ class Sessions::Event::Base
     true
   end
 
-  def role_permission_check(role, event)
+  def permission_check(key, event)
     if !@session
       error = {
         event: "#{event}_error",
@@ -81,7 +81,7 @@ class Sessions::Event::Base
       Sessions.send(@client_id, error)
       return
     end
-    if !user.role?(role)
+    if !user.permissions?(key)
       error = {
         event: "#{event}_error",
         data: {
