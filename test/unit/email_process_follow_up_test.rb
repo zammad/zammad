@@ -257,4 +257,69 @@ Some Text"
     assert_equal('open', ticket.state.name)
   end
 
+  test 'process with follow up check - ticket initiated by customer without T# in subject and other people in Cc reply to all' do
+
+    # check if follow up based on inital system sender address
+    setting_orig = Setting.get('postmaster_follow_up_search_in')
+    Setting.set('postmaster_follow_up_search_in', [])
+
+    subject = "ticket initiated by customer without T# in subject and other people in Cc reply to all #{rand(9999)}"
+
+    email_raw_string = "From: me@example.com
+To: my@system.test, bob@example.com
+Subject: #{subject}
+Message-ID: <123456789-$follow-up-test§-1@linuxhotel.de>
+
+Some Text"
+
+    ticket_p1, article_1, user_1, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket1 = Ticket.find(ticket_p1.id)
+    assert_equal(subject, ticket1.title)
+
+    # follow up possible because same subject
+    email_raw_string = "From: bob@example.com
+To: my@system.test, me@example.com
+Subject: AW: #{subject}
+Message-ID: <123456789-$follow-up-test§-2@linuxhotel.de>
+References: <123456789-$follow-up-test§-1@linuxhotel.de>
+
+Some Text"
+
+    ticket_p2, article_p2, user_p2, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket2 = Ticket.find(ticket_p2.id)
+    assert_equal(ticket1.id, ticket2.id)
+    assert_equal(subject, ticket2.title)
+
+    # follow up possible because same subject
+    email_raw_string = "From: bob@example.com
+To: my@system.test, me@example.com
+Subject: AW: RE: #{subject}
+Message-ID: <123456789-$follow-up-test§-2@linuxhotel.de>
+References: <123456789-$follow-up-test§-1@linuxhotel.de>
+
+Some Text"
+
+    ticket_p3, article_p3, user_p3, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket3 = Ticket.find(ticket_p3.id)
+    assert_equal(ticket1.id, ticket3.id)
+    assert_equal(subject, ticket3.title)
+
+    # follow up not possible because subject has changed
+    subject = "new subject without ticket ref #{rand(9_999_999)}"
+    email_raw_string = "From: bob@example.com
+To: my@system.test
+Subject: #{subject}
+Message-ID: <123456789-$follow-up-test§-3@linuxhotel.de>
+References: <123456789-$follow-up-test§-1@linuxhotel.de>
+
+Some Text"
+
+    ticket_p4, article_p4, user_p4, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket4 = Ticket.find(ticket_p4.id)
+    assert_not_equal(ticket1.id, ticket4.id)
+    assert_equal(subject, ticket4.title)
+
+    Setting.set('postmaster_follow_up_search_in', setting_orig)
+  end
+
 end
