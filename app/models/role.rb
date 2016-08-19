@@ -9,6 +9,7 @@ class Role < ApplicationModel
   before_create  :validate_permissions
   before_update  :validate_permissions
 
+  attributes_with_associations_support ignore: { user_ids: true }
   activity_stream_support permission: 'admin.role'
   notify_clients_support
   latest_change_support

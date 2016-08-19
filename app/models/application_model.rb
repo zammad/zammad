@@ -37,7 +37,7 @@ class ApplicationModel < ActiveRecord::Base
 
   # create instance accessor
   class << self
-    attr_accessor :activity_stream_support_config, :history_support_config, :search_index_support_config
+    attr_accessor :activity_stream_support_config, :history_support_config, :search_index_support_config, :attributes_with_associations_support_config
   end
 
   attr_accessor :history_changes_last_done
@@ -197,6 +197,7 @@ returns
     attributes = self.attributes
     self.class.reflect_on_all_associations.map { |assoc|
       real_ids = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
+      next if self.class.attributes_with_associations_support_config && self.class.attributes_with_associations_support_config[:ignore][real_ids.to_sym] == true
       next if !respond_to?(real_ids)
       attributes[real_ids] = send(real_ids)
     }
@@ -1323,6 +1324,20 @@ delete object history, will be executed automatically
   def history_destroy
     return if !self.class.history_support_config
     History.remove(self.class.to_s, id)
+  end
+
+=begin
+
+serve methode to configure and attributes_with_associations support for this model
+
+class Model < ApplicationModel
+  attributes_with_associations(ignore: { user_ids: => true })
+end
+
+=end
+
+  def self.attributes_with_associations_support(data = {})
+    @attributes_with_associations_support_config = data
   end
 
 =begin
