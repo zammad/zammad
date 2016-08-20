@@ -291,6 +291,22 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
         @close()
     )
 
+class App.ControllerConfirm extends App.ControllerModal
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'yes'
+  buttonClass: 'btn--danger'
+  head: 'Confirm'
+  small: true
+
+  content: ->
+    App.i18n.translateContent(@message)
+
+  onSubmit: =>
+    @close()
+    if @callback
+      @callback()
+
 class App.ControllerDrox extends App.Controller
   constructor: (params) ->
     super
