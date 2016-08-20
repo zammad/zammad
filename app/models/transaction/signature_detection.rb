@@ -8,7 +8,7 @@ class Transaction::SignatureDetection
     object: 'Ticket',
     type: 'update',
     object_id: 123,
-    via_web: true,
+    interface_handle: 'application_server', # application_server|websocket|scheduler
     changes: {
       'attribute1' => [before, now],
       'attribute2' => [before, now],

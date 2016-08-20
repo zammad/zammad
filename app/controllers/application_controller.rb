@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
                 :model_index_render
 
   skip_before_action :verify_authenticity_token
-  before_action :set_user, :session_update, :user_device_check, :cors_preflight_check
+  before_action :set_interface_handle, :set_user, :session_update, :user_device_check, :cors_preflight_check
   after_action  :trigger_events, :http_log, :set_access_control_headers
 
   rescue_from StandardError, with: :server_error
@@ -57,6 +57,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_interface_handle
+    ApplicationHandleInfo.current = 'application_server'
+  end
 
   # execute events
   def trigger_events

@@ -59,7 +59,11 @@ class Observer::Ticket::Article::CommunicateFacebook::BackgroundJob
     article.preferences['delivery_status'] = 'success'
     article.preferences['delivery_status_date'] = Time.zone.now
 
-    article.save
+    article.save!
+
+    Rails.logger.info "Send facebook to: '#{article.to}' (from #{article.from})"
+
+    article
   end
 
   def log_error(local_record, message)

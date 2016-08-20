@@ -59,7 +59,7 @@ create/update/delete index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise "Unable to proccess PUT at #{url}\n#{response.inspect}"
+    raise "Unable to process PUT at #{url}\n#{response.inspect}"
   end
 
 =begin
@@ -91,7 +91,7 @@ add new object to search index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise "Unable to proccess POST at #{url} (size: #{data.to_json.bytesize / 1024 / 1024}M)\n#{response.inspect}"
+    raise "Unable to process POST at #{url} (size: #{data.to_json.bytesize / 1024 / 1024}M)\n#{response.inspect}"
   end
 
 =begin
@@ -321,7 +321,7 @@ get count of tickets and tickets which match on selector
 
     Rails.logger.info "# #{response.code}"
     if !response.success?
-      raise "Unable to proccess POST at #{url}\n#{response.inspect}"
+      raise "Unable to process POST at #{url}\n#{response.inspect}"
     end
     Rails.logger.debug response.data.to_json
 

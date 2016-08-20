@@ -8,7 +8,7 @@ class Transaction::CtiCallerIdDetection
     object: 'Ticket',
     type: 'create',
     object_id: 123,
-    via_web: true,
+    interface_handle: 'application_server', # application_server|websocket|scheduler
     user_id: 123,
     created_at: Time.zone.now,
   },
@@ -16,7 +16,7 @@ class Transaction::CtiCallerIdDetection
     object: 'User',
     type: 'update',
     object_id: 123,
-    via_web: true,
+    interface_handle: 'application_server', # application_server|websocket|scheduler
     changes: {
       'attribute1' => [before, now],
       'attribute2' => [before, now],

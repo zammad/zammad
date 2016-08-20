@@ -42,6 +42,9 @@ class ActiveSupport::TestCase
     # set current user
     UserInfo.current_user_id = nil
 
+    # set interface handle
+    ApplicationHandleInfo.current = 'unknown'
+
     Rails.logger.info '++++NEW++++TEST++++'
   end
 
@@ -59,6 +62,24 @@ class ActiveSupport::TestCase
       break if line =~ /\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/
       next if line !~ /Send notification \(#{type}\)/
       next if line !~ /to:\s#{recipient}/
+      count += 1
+    }
+    count
+  end
+
+  def email_count(recipient)
+
+    # read config file and count & recipients
+    file = "#{Rails.root}/log/#{Rails.env}.log"
+    lines = []
+    IO.foreach(file) do |line|
+      lines.push line
+    end
+    count = 0
+    lines.reverse.each { |line|
+      break if line =~ /\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/
+      next if line !~ /Send email to:/
+      next if line !~ /to:\s'#{recipient}'/
       count += 1
     }
     count

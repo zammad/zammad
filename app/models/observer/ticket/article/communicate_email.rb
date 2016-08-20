@@ -8,7 +8,11 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    # if sender is customer, do not communication
+    # only do send email if article got created via application_server (e. g. not
+    # if article and sender type is set via *.postmaster)
+    return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+
+    # if sender is customer, do not communicate
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return 1 if sender.nil?
     return 1 if sender['name'] == 'Customer'

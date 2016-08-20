@@ -8,7 +8,7 @@ module Channel::Filter::Database
     # process postmaster filter
     filters = PostmasterFilter.where( active: true, channel: 'email' ).order(:name, :created_at)
     filters.each { |filter|
-      Rails.logger.info " proccess filter #{filter.name} ..."
+      Rails.logger.info " process filter #{filter.name} ..."
       all_matches_ok = true
       min_one_rule_exists = false
       filter[:match].each { |key, meta|

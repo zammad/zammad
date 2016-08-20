@@ -42,7 +42,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
   test 'ticket notification' do
 
-    Rails.configuration.webserver_is_active = true
+    ApplicationHandleInfo.current = 'application_server'
 
     # case #1
     ticket1 = Ticket.create(
@@ -381,7 +381,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert( ticket1, 'ticket created' )
+    assert(ticket1, 'ticket created')
     article_inbound = Ticket::Article.create(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',

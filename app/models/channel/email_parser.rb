@@ -390,6 +390,8 @@ retrns
   end
 
   def _process(channel, msg)
+
+    # parse email
     mail = parse(msg)
 
     # run postmaster pre filter
@@ -410,7 +412,14 @@ retrns
     }
 
     # check ignore header
-    return true if mail[ 'x-zammad-ignore'.to_sym ] == 'true' || mail[ 'x-zammad-ignore'.to_sym ] == true
+    if mail[ 'x-zammad-ignore'.to_sym ] == 'true' || mail[ 'x-zammad-ignore'.to_sym ] == true
+      Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
+      return true
+    end
+
+    # set interface handle
+    original_interface_handle = ApplicationHandleInfo.current
+    ApplicationHandleInfo.current = "#{original_interface_handle}.postmaster"
 
     ticket  = nil
     article = nil
@@ -497,10 +506,8 @@ retrns
         set_attributes_by_x_headers(ticket, 'ticket', mail)
 
         # create ticket
-        ticket.save
+        ticket.save!
       end
-
-      # import mail
 
       # set attributes
       article = Ticket::Article.new(
@@ -521,7 +528,7 @@ retrns
       set_attributes_by_x_headers(article, 'article', mail)
 
       # create article
-      article.save
+      article.save!
 
       # store mail plain
       Store.add(
@@ -545,6 +552,8 @@ retrns
         end
       end
     end
+
+    ApplicationHandleInfo.current = original_interface_handle
 
     # execute object transaction
     Observer::Transaction.commit
@@ -617,8 +626,8 @@ retrns
         item_object[key] = mail[ header.to_sym ]
       end
     }
-
   end
+
 end
 
 # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)

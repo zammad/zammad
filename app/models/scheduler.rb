@@ -47,6 +47,7 @@ class Scheduler < ApplicationModel
   def self.start_job(job)
 
     Thread.new {
+      ApplicationHandleInfo.current = 'scheduler'
 
       logger.info "Started job thread for '#{job.name}' (#{job.method})..."
 
@@ -118,8 +119,12 @@ class Scheduler < ApplicationModel
 
     # used for tests
     if foreground
+      original_interface_handle = ApplicationHandleInfo.current
+      ApplicationHandleInfo.current = 'scheduler'
+
       original_user_id = UserInfo.current_user_id
       UserInfo.current_user_id = nil
+
       loop do
         success, failure = Delayed::Worker.new.work_off
         if failure.nonzero?
@@ -128,6 +133,7 @@ class Scheduler < ApplicationModel
         break if success.zero?
       end
       UserInfo.current_user_id = original_user_id
+      ApplicationHandleInfo.current = original_interface_handle
       return
     end
 
@@ -139,6 +145,7 @@ class Scheduler < ApplicationModel
       logger.info "Starting worker thread #{Delayed::Job}"
 
       loop do
+        ApplicationHandleInfo.current = 'scheduler'
         result = nil
 
         realtime = Benchmark.realtime do

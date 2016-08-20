@@ -68,8 +68,11 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     article.preferences['delivery_status_date'] = Time.zone.now
 
     article.message_id = tweet.id.to_s
-    article.save
+    article.save!
 
+    Rails.logger.info "Send twitter (#{tweet.class}) to: '#{article.to}' (from #{article.from})"
+
+    article
   end
 
   def log_error(local_record, message)

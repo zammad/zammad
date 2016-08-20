@@ -5,11 +5,10 @@ class Observer::Transaction < ActiveRecord::Observer
 
   def self.commit(params = {})
 
-    # add attribute if execution is via web
-    params[:via_web] = false
-    if ENV['RACK_ENV'] || Rails.configuration.webserver_is_active
-      params[:via_web] = true
-    end
+    # add attribute of interface handle (e. g. to send (no) notifications if a agent
+    # is creating a ticket via application_server, but send it if it's created via
+    # postmaster)
+    params[:interface_handle] = ApplicationHandleInfo.current
 
     # execute object transactions
     Observer::Transaction.perform(params)
