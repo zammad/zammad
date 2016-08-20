@@ -4,7 +4,7 @@ class App.UiElement.user_permission
     attribute.options = {}
 
     # take defaults users selected, select all groups
-    if _.isEmpty(params) && !_.isEmpty(attribute.value)
+    if _.isEmpty(params.group_ids) && _.isEmpty(params.role_ids) && !_.isEmpty(attribute.value)
       params.role_ids = attribute.value
       selectAllGroups = false
       for localRoleId in params.role_ids
