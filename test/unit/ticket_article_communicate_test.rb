@@ -130,6 +130,7 @@ class TicketArticleCommunicateTest < ActiveSupport::TestCase
 To: customer@example.com
 Subject: some subject
 X-Zammad-Article-Sender: Agent
+X-Loop: yes
 
 Some Text"
 
