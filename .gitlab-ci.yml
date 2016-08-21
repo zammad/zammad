@@ -40,7 +40,7 @@ pre:github:
   script:
     - git checkout $CI_BUILD_REF_NAME
     - git pull --rebase origin $CI_BUILD_REF_NAME
-    - git filter-branch --force --index-filter "git rm --cached --prune-empty --tag-name-filter cat -- $CI_BUILD_REF_NAME
+    - git filter-branch --force --index-filter --prune-empty --tag-name-filter cat -- $CI_BUILD_REF_NAME
     - if git remote | grep github > /dev/null; then git remote rm github; fi
     - git remote add github git@github.com:martini/zammad-test.git
     - git push github $CI_BUILD_REF_NAME
