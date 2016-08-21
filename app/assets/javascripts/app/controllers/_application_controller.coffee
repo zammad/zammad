@@ -684,7 +684,7 @@ class App.ControllerModal extends App.Controller
     'submit form':                        'submit'
     'click .js-submit:not(.is-disabled)': 'submit'
     'click .js-cancel':                   'cancel'
-    'click .js-close':                    'close'
+    'click .js-close':                    'cancel'
 
   className: 'modal fade'
 
@@ -765,6 +765,7 @@ class App.ControllerModal extends App.Controller
       'hidden.bs.modal': =>
         @onClosed()
         $('.modal').remove()
+      'dismiss.bs.modal': @onCancel
 
     if @closeOnAnyClick
       @el.on('click', =>

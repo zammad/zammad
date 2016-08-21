@@ -2,8 +2,8 @@ before_script:
   - ruby -v
   - which ruby
   - env
-  - script/build/test_db_config.sh
-  - bundle install
+  - test -n "$RNAME" && script/build/test_db_config.sh
+  - test -n "$RNAME" && bundle install
 
 stages:
   - pre
@@ -32,6 +32,13 @@ pre:bundle-audit:
     - gem install bundler-audit
     - bundle-audit update
     - bundle-audit
+
+pre:github:
+  stage: pre
+  tags:
+    - deploy
+  script:
+    - script/build/sync_repo.sh git@github.com:martini/zammad.git
 
 test:unit:mysql:
   stage: test

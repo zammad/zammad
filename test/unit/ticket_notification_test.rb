@@ -109,6 +109,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
   test 'ticket notification - to all agents / to explicit agents' do
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket1 = Ticket.create(
       title: 'some notification test 1',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -134,7 +135,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1)
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = nil
     Observer::Transaction.commit
     Scheduler.worker(true)
 
@@ -143,6 +143,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'application_server'
     ticket1 = Ticket.create(
       title: 'some notification test 2',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -168,7 +169,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1)
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = true
     Observer::Transaction.commit
     Scheduler.worker(true)
 
@@ -180,6 +180,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
   test 'ticket notification - simple' do
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'application_server'
     ticket1 = Ticket.create(
       title: 'some notification test 3',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -205,7 +206,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created - ticket notification simple')
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = true
     Observer::Transaction.commit
     Scheduler.worker(true)
 
@@ -474,6 +474,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     agent2.save
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket1 = Ticket.create(
       title: 'some notification test - z preferences tests 1',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -498,7 +499,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
     Scheduler.worker(true)
 
@@ -630,6 +630,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     agent2.save
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket4 = Ticket.create(
       title: 'some notification test - z preferences tests 4',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -654,7 +655,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
     Scheduler.worker(true)
 
@@ -694,6 +694,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     agent2.save
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket5 = Ticket.create(
       title: 'some notification test - z preferences tests 5',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -718,7 +719,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
     Scheduler.worker(true)
 
@@ -758,6 +758,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     agent2.save
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket6 = Ticket.create(
       title: 'some notification test - z preferences tests 6',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -783,7 +784,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
     Scheduler.worker(true)
 
@@ -835,6 +835,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     agent2.save
 
     # create ticket in group
+    ApplicationHandleInfo.current = 'scheduler.postmaster'
     ticket7 = Ticket.create(
       title: 'some notification test - z preferences tests 7',
       group: Group.lookup(name: 'TicketNotificationTest'),
@@ -860,7 +861,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # execute object transaction
-    Rails.configuration.webserver_is_active = false
     Observer::Transaction.commit
     Scheduler.worker(true)
 

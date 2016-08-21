@@ -1,0 +1,30 @@
+<div class="input form-group">
+  <div class="formGroup-label">
+    <label for="token-label"><%- @T('Name') %> *</label>
+  </div>
+  <div class="controls"><input id="token-label" type="text" name="label" value="" class="form-control js-input" required></div>
+</div>
+
+<div class="permission form-group checkbox">
+  <div class="checkbox">
+  <% for permission in @permissions: %>
+    <% if !permission.name.match(/\./): %>
+    <label class="inline-label checkbox-replacement">
+      <input type="checkbox" value="<%= permission.name %>" name="permission" <% if @params && _.contains(@params.permissions, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
+      <%- @Icon('checkbox', 'icon-unchecked') %>
+      <%- @Icon('checkbox-checked', 'icon-checked') %>
+      <span class="label-text"><%= permission.name %> - <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span></span>
+    </label>
+    <% else: %>
+      <div style="padding-left: 20px;" class="js-subPermissionList">
+        <label class="inline-label checkbox-replacement">
+          <input type="checkbox" value="<%= permission.name %>" name="permission" <% if @params && _.contains(@params.permissions, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+          <span class="label-text"><%= permission.name.replace(/^.+?\./, '') %> - <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span></span></span>
+        </label>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+</div>

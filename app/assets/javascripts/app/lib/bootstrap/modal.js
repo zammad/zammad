@@ -149,6 +149,10 @@
     if (this.isShown && this.options.keyboard) {
       $(window).on('keydown.dismiss.bs.modal', $.proxy(function (e) {
         e.which == 27 && this.hide()
+        // 2016-08-21: added event to capture esc for cancel
+        e = $.Event('dismiss.bs.modal')
+        this.$element.trigger(e)
+        // -
       }, this))
     } else if (!this.isShown) {
       $(window).off('keydown.dismiss.bs.modal')

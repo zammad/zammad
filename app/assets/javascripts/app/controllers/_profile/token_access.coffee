@@ -2,7 +2,7 @@ class Index extends App.ControllerContent
   requiredPermission: 'user_preferences.access_token'
   events:
     'click .js-delete': 'delete'
-    'submit form.js-create': 'create'
+    'click .js-create': 'create'
 
   constructor: ->
     super
@@ -36,10 +36,56 @@ class Index extends App.ControllerContent
   render: =>
     @html App.view('profile/token_access')(
       tokens: @tokens
-      permissions: @permissions
     )
 
   create: (e) =>
+    e.preventDefault()
+    new Create(
+      container: @el.closest('.content')
+      permissions: @permissions
+      load: @load
+    )
+
+  delete: (e) =>
+    e.preventDefault()
+
+    callback = =>
+      id = $(e.target).closest('a').data('token-id')
+      @ajax(
+        id:          'user_access_token_delete'
+        type:        'DELETE'
+        url:         "#{@apiPath}/user_access_token/#{id}"
+        processData: true
+        success: =>
+          @load(true)
+        error: @error
+      )
+
+    new App.ControllerConfirm(
+      message: 'Sure?'
+      callback: callback
+      container: @el.closest('.content')
+    )
+
+  error: (xhr, status, error) =>
+    data = JSON.parse(xhr.responseText)
+    @notify(
+      type: 'error'
+      msg:  App.i18n.translateContent(data.message || data.error)
+    )
+
+class Create extends App.ControllerModal
+  head: 'Add a Personal Access Token'
+  buttonSubmit: 'Create'
+  buttonCancel: true
+  shown: true
+
+  content: ->
+    App.view('profile/token_access_create')(
+      permissions: @permissions
+    )
+
+  onSubmit: (e) =>
     e.preventDefault()
     params = @formParam(e.target)
 
@@ -63,41 +109,33 @@ class Index extends App.ControllerContent
 
   show: (data) =>
     @load()
+    @newToken = data
+    @close()
+
+  onClosed: =>
+    return if !@newToken
     ui = @
     new App.ControllerModal(
       head: 'Your New Personal Access Token'
       buttonSubmit: 'OK, I\'ve copied my token'
       content: ->
         App.view('profile/token_access_created')(
-          name: data.name
+          name: ui.newToken.name
         )
       post: ->
-        @el.find('.js-select').on('click', ui.selectAll)
+        @$('.js-select').on('click', ui.selectAll)
       onCancel: ->
         @close()
       onSubmit: ->
         @close()
-    )
-
-  delete: (e) =>
-    e.preventDefault()
-    return if !confirm(App.i18n.translateInline('Sure?'))
-    id = $(e.target).closest('a').data('token-id')
-    @ajax(
-      id:          'user_access_token_delete'
-      type:        'DELETE'
-      url:         "#{@apiPath}/user_access_token/#{id}"
-      processData: true
-      success: =>
-        @load(true)
-      error: @error
+      container: @container
     )
 
   error: (xhr, status, error) =>
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message)
+      msg:  App.i18n.translateContent(data.message || data.error)
     )
 
 App.Config.set('Token Access', { prio: 3200, name: 'Token Access', parent: '#profile', target: '#profile/token_access', controller: Index, permission: ['user_preferences.access_token']  }, 'NavBarProfile')

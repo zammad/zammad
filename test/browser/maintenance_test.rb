@@ -272,9 +272,15 @@ class MaintenanceTest < TestCase
     )
 
     # check warning
-    alert = browser1.switch_to.alert
-    #alert.dismiss()
-    alert.accept()
+    watch_for(
+      browser: browser1,
+      css: '#content .modal .modal-header',
+      value: 'confirm',
+    )
+    click(
+      browser: browser1,
+      css: '#content .modal .js-submit',
+    )
 
     watch_for(
       browser: browser2,
@@ -352,10 +358,17 @@ class MaintenanceTest < TestCase
       type:     'on',
       no_check: true,
     )
+
     # check warning
-    alert = browser1.switch_to.alert
-    #alert.dismiss()
-    alert.accept()
+    watch_for(
+      browser: browser1,
+      css: '#content .modal .modal-header',
+      value: 'confirm',
+    )
+    click(
+      browser: browser1,
+      css: '#content .modal .js-submit',
+    )
 
     watch_for(
       browser: browser2,

@@ -2,6 +2,7 @@
 require 'browser_test_helper'
 
 class PreferencesTest < TestCase
+
   def test_permission_agent
     @browser = browser_instance
     login(
@@ -406,12 +407,18 @@ class PreferencesTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/token_access"]')
 
+    click(css: '#content .js-create')
+    watch_for(
+      css: '.modal .modal-title',
+      value: 'Add a Personal Access Token'
+    )
+
     set(
-      css:   '#content .js-create .js-input',
+      css:   '#content .modal .js-input',
       value: 'Some App#1',
     )
-    click(css: '#content input[value="ticket.agent"] ~ .label-text')
-    click(css: '#content .js-create .js-submit')
+    click(css: '#content .modal input[value="ticket.agent"] ~ .label-text')
+    click(css: '#content .modal .js-submit')
     watch_for(
       css: '.modal .modal-title',
       value: 'Your New Personal Access Token'
@@ -422,12 +429,18 @@ class PreferencesTest < TestCase
       value: 'Some App#1'
     )
 
+    click(css: '#content .js-create')
+    watch_for(
+      css: '.modal .modal-title',
+      value: 'Add a Personal Access Token'
+    )
     set(
-      css:   '#content .js-create .js-input',
+      css:   '#content .modal .js-input',
       value: 'Some App#2',
     )
-    click(css: '#content input[value="ticket.agent"] ~ .label-text')
-    click(css: '#content .js-create .js-submit')
+    click(css: '#content .modal input[value="ticket.agent"] ~ .label-text')
+    click(css: '#content .modal .js-submit')
+
     watch_for(
       css: '.modal .modal-title',
       value: 'Your New Personal Access Token'
@@ -439,9 +452,13 @@ class PreferencesTest < TestCase
     )
 
     click(css: '#content .js-tokenList a')
-    sleep 1
-    alert = @browser.switch_to.alert
-    alert.accept()
+    watch_for(
+      css: '#content .modal .modal-header',
+      value: 'confirm',
+    )
+    click(
+      css: '#content .modal .js-submit',
+    )
     watch_for_disappear(
       css: '#content .js-tokenList',
       value: 'Some App#2'

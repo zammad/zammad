@@ -95,6 +95,7 @@ if ARGV[0] == 'start' && @options[:d]
 end
 
 @clients = {}
+Rails.configuration.interface = 'websocket'
 EventMachine.run {
   EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: tls_options ) do |ws|
 

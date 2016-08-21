@@ -36,16 +36,24 @@ class Index extends App.ControllerContent
 
   setMode: (e) =>
     value = @modeSetting.prop('checked')
-    if value && !confirm('Sure?')
-      @modeSetting.prop('checked', false)
+    callback = ->
+      App.Setting.set('maintenance_mode', value)
+      App.WebSocket.send(
+        event:'maintenance'
+        data:
+          type: 'mode'
+          on: value
+      )
+    if value
+      new App.ControllerConfirm(
+        message: 'Sure?'
+        callback: callback
+        onCancel: =>
+          @modeSetting.prop('checked', false)
+        container: @el.closest('.content')
+      )
       return value
-    App.Setting.set('maintenance_mode', value)
-    App.WebSocket.send(
-      event:'maintenance'
-      data:
-        type: 'mode'
-        on: value
-    )
+    callback()
 
   setLogin: (e) =>
     value = @loginSetting.prop('checked')

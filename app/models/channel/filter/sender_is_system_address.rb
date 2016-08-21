@@ -27,6 +27,19 @@ module Channel::Filter::SenderIsSystemAddress
       Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
     end
 
+    # check if sender is agent
+    return if mail[:from_email].empty?
+    begin
+      user = User.find_by(email: mail[:from_email])
+      return if !user
+      return if !user.permissions?('ticket.agent')
+      mail[ 'x-zammad-ticket-create-article-sender'.to_sym ] = 'Agent'
+      mail[ 'x-zammad-article-sender'.to_sym ] = 'Agent'
+      return true
+    rescue => e
+      Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
+    end
+
     true
   end
 end

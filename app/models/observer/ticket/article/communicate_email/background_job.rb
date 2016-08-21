@@ -66,7 +66,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     record.preferences['delivery_status_message'] = nil
     record.preferences['delivery_status'] = 'success'
     record.preferences['delivery_status_date'] = Time.zone.now
-    record.save
+    record.save!
 
     # store mail plain
     Store.add(
@@ -90,6 +90,8 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
       end
       recipient_list += record[key]
     }
+
+    Rails.logger.info "Send email to: '#{recipient_list}' (from #{record.from})"
 
     return if recipient_list == ''
 

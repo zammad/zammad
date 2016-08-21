@@ -7,7 +7,7 @@ class Transaction::Notification
     object: 'Ticket',
     type: 'update',
     object_id: 123,
-    via_web: true,
+    interface_handle: 'application_server', # application_server|websocket|scheduler
     changes: {
       'attribute1' => [before, now],
       'attribute2' => [before, now],
@@ -95,7 +95,7 @@ class Transaction::Notification
       channels = item[:channels]
 
       # ignore user who changed it by him self via web
-      if @params[:via_web]
+      if @params[:interface_handle] == 'application_server'
         next if article && article.updated_by_id == user.id
         next if !article && @item[:user_id] == user.id
       end

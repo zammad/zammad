@@ -4,15 +4,15 @@ module Channel::Filter::IdentifySender
 
   def self.run(_channel, mail)
 
-    user_id = mail[ 'x-zammad-customer-id'.to_sym ]
-    user = nil
-    if user_id
-      user = User.lookup(id: user_id)
-      if !user
-        Rails.logger.debug "Invalid x-zammad-customer-id header '#{user_id}', no such user."
+    customer_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
+    customer_user = nil
+    if customer_user_id
+      customer_user = User.lookup(id: customer_user_id)
+      if !customer_user
+        Rails.logger.debug "Invalid x-zammad-customer-id header '#{customer_user_id}', no such user."
       else
-        Rails.logger.debug "Took customer form x-zammad-customer-id header '#{user_id}'."
-        if user
+        Rails.logger.debug "Took customer form x-zammad-customer-id header '#{customer_user_id}'."
+        if customer_user
           create_recipients(mail)
           return
         end
@@ -21,12 +21,12 @@ module Channel::Filter::IdentifySender
 
     # check if sender exists in database
     if mail[ 'x-zammad-customer-login'.to_sym ]
-      user = User.find_by(login: mail[ 'x-zammad-customer-login'.to_sym ])
+      customer_user = User.find_by(login: mail[ 'x-zammad-customer-login'.to_sym ])
     end
-    if !user
-      user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email])
+    if !customer_user
+      customer_user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ])
     end
-    if !user
+    if !customer_user
 
       # get correct customer
       if mail[ 'x-zammad-ticket-create-article-sender'.to_sym ] == 'Agent'
@@ -37,7 +37,11 @@ module Channel::Filter::IdentifySender
           if mail[to] && mail[to].addrs
             items = mail[to].addrs
             items.each { |item|
-              user = user_create(
+
+              # skip if recipient is system email
+              next if EmailAddress.find_by(email: item.address)
+
+              customer_user = user_create(
                 login: item.address,
                 firstname: item.display_name,
                 email: item.address,
@@ -49,8 +53,8 @@ module Channel::Filter::IdentifySender
           Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
         end
       end
-      if !user
-        user = user_create(
+      if !customer_user
+        customer_user = user_create(
           login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
           firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
           lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
@@ -61,7 +65,7 @@ module Channel::Filter::IdentifySender
 
     create_recipients(mail)
 
-    mail[ 'x-zammad-customer-id'.to_sym ] = user.id
+    mail[ 'x-zammad-customer-id'.to_sym ] = customer_user.id
   end
 
   # create to and cc user
@@ -108,7 +112,18 @@ module Channel::Filter::IdentifySender
 
     # return existing
     user = User.find_by(login: data[:email].downcase)
-    return user if user
+
+    # check if firstname or lastname need to be updated
+    if user
+      if user.firstname.empty? && user.lastname.empty?
+        if !data[:firstname].empty?
+          user.update_attributes(
+            firstname: data[:firstname]
+          )
+        end
+      end
+      return user
+    end
 
     # create new user
     role_ids = Role.signup_role_ids

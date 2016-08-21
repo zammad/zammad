@@ -1,30 +1,25 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class Transaction::Slack
+
 =begin
 
-backend = Transaction::Slack.new(
-    object: 'Ticket',
-    type: 'create',
-    object_id: 1,
-    user_id: 123,
-    created_at: Time.zone.now,
-)
-backend.perform
-
-  {
+  backend = Transaction::Slack.new(
     object: 'Ticket',
     type: 'update',
     object_id: 123,
-    via_web: true,
+    interface_handle: 'application_server', # application_server|websocket|scheduler
     changes: {
       'attribute1' => [before, now],
       'attribute2' => [before, now],
     },
     created_at: Time.zone.now,
     user_id: 123,
-  },
+  )
+  backend.perform
+
 =end
+
   def initialize(item, params = {})
     @item = item
     @params = params

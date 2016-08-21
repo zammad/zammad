@@ -5,7 +5,7 @@
     <input type="checkbox" value="<%= permission.id %>" name="permission_ids" <% if _.contains(@params.permission_ids, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
     <%- @Icon('checkbox', 'icon-unchecked') %>
     <%- @Icon('checkbox-checked', 'icon-checked') %>
-    <span class="label-text"><%= permission.displayName() %> - <span class="help-text"><%- @T(permission.note) %></span></span>
+    <span class="label-text"><%= permission.displayName() %> - <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span></span>
   </label>
   <% else: %>
     <div style="padding-left: 20px;" class="js-subPermissionList">
@@ -13,7 +13,7 @@
         <input type="checkbox" value="<%= permission.id %>" name="permission_ids" <% if _.contains(@params.permission_ids, permission.id): %>checked<% end %> <% if permission.preferences.disabled: %>disabled<% end %>/>
         <%- @Icon('checkbox', 'icon-unchecked') %>
         <%- @Icon('checkbox-checked', 'icon-checked') %>
-        <span class="label-text"><%= permission.displayName().replace(/^.+?\./, '') %> - <span class="help-text"><%- @T(permission.note) %></span></span>
+        <span class="label-text"><%= permission.displayName().replace(/^.+?\./, '') %> - <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span></span>
       </label>
     </div>
   <% end %>
