@@ -114,7 +114,7 @@ returns
 
     # get response time in min
     if first_response
-      self.first_response_in_min = pending_minutes(created_at, first_response, biz, 'business_minutes', history_data)
+      self.first_response_in_min = pending_minutes(created_at, first_response, biz, history_data, 'business_minutes')
     else
       self.escalation_time = first_response_escal_date
     end
@@ -146,7 +146,7 @@ returns
 
     # get update time in min
     if last_update && last_update != created_at
-      self.update_time_in_min = pending_minutes(created_at, last_update, biz, 'business_minutes', history_data)
+      self.update_time_in_min = pending_minutes(created_at, last_update, biz, history_data, 'business_minutes')
     end
 
     # set sla time
@@ -162,7 +162,7 @@ returns
 
     # get close time in min
     if close_time
-      self.close_time_in_min = pending_minutes(created_at, close_time, biz, 'business_minutes', history_data)
+      self.close_time_in_min = pending_minutes(created_at, close_time, biz, history_data, 'business_minutes')
     elsif close_time_escal_date && ((!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time)
       self.escalation_time = close_time_escal_date
     end
@@ -239,7 +239,7 @@ returns
     500.times.each {
 
       # check if we have pending time in the range to the destination time
-      pending_minutes = pending_minutes(pending_start_time, destination_time, biz, history_data)
+      pending_minutes = pending_minutes(pending_start_time, destination_time, history_data, biz)
 
       # skip if no pending time is given
       break if !pending_minutes || pending_minutes <= 0
@@ -255,7 +255,7 @@ returns
   # get business minutes of pending time
   #  type = business_minutes (pending time in business minutes)
   #  type = non_business_minutes (pending time in non business minutes)
-  def pending_minutes(start_time, end_time, biz, type = 'non_business_minutes', history_data)
+  def pending_minutes(start_time, end_time, biz, history_data, type = 'non_business_minutes')
 
     working_time_in_min      = 0
     total_time_in_min        = 0
