@@ -239,7 +239,7 @@ returns
     500.times.each {
 
       # check if we have pending time in the range to the destination time
-      pending_minutes = pending_minutes(pending_start_time, destination_time, history_data, biz)
+      pending_minutes = pending_minutes(pending_start_time, destination_time, biz, history_data)
 
       # skip if no pending time is given
       break if !pending_minutes || pending_minutes <= 0
