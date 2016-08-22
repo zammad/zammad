@@ -6,7 +6,7 @@ module Channel::Filter::IdentifySender
 
     customer_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
     customer_user = nil
-    if customer_user_id
+    if !customer_user_id.empty?
       customer_user = User.lookup(id: customer_user_id)
       if !customer_user
         Rails.logger.debug "Invalid x-zammad-customer-id header '#{customer_user_id}', no such user."
@@ -20,10 +20,10 @@ module Channel::Filter::IdentifySender
     end
 
     # check if sender exists in database
-    if mail[ 'x-zammad-customer-login'.to_sym ]
+    if !mail[ 'x-zammad-customer-login'.to_sym ].empty?
       customer_user = User.find_by(login: mail[ 'x-zammad-customer-login'.to_sym ])
     end
-    if !customer_user
+    if !customer_user && !mail[ 'x-zammad-customer-email'.to_sym ].empty?
       customer_user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ])
     end
     if !customer_user
