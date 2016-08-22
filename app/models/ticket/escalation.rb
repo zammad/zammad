@@ -84,7 +84,7 @@ returns
       }
       config.hours = hours
       if !hours || hours.empty?
-        raise "No configured hours found in calendar #{calendar.inspect}"
+        raise "No congifure hours found in calendar #{calendar.inspect}"
       end
 
       # get holidays
@@ -103,18 +103,15 @@ returns
       config.time_zone = calendar.timezone
     end
 
-    # get history data
-    history_data = history_get
-
     # fist response
     # calculate first response escalation
     if sla.first_response_time
-      self.first_response_escal_date = destination_time(created_at, sla.first_response_time, biz, history_data)
+      self.first_response_escal_date = destination_time(created_at, sla.first_response_time, biz)
     end
 
     # get response time in min
     if first_response
-      self.first_response_in_min = pending_minutes(created_at, first_response, biz, 'business_minutes', history_data)
+      self.first_response_in_min = pending_minutes(created_at, first_response, biz, 'business_minutes')
     else
       self.escalation_time = first_response_escal_date
     end
@@ -138,7 +135,7 @@ returns
       last_update = last_contact_customer
     end
     if sla.update_time && last_update
-      self.update_time_escal_date = destination_time(last_update, sla.update_time, biz, history_data)
+      self.update_time_escal_date = destination_time(last_update, sla.update_time, biz)
     end
     if update_time_escal_date && ((!escalation_time && update_time_escal_date) || update_time_escal_date < escalation_time)
       self.escalation_time = update_time_escal_date
@@ -146,7 +143,7 @@ returns
 
     # get update time in min
     if last_update && last_update != created_at
-      self.update_time_in_min = pending_minutes(created_at, last_update, biz, 'business_minutes', history_data)
+      self.update_time_in_min = pending_minutes(created_at, last_update, biz, 'business_minutes')
     end
 
     # set sla time
@@ -157,12 +154,12 @@ returns
     # close time
     # calculate close time escalation
     if sla.solution_time
-      self.close_time_escal_date = destination_time(created_at, sla.solution_time, biz, history_data)
+      self.close_time_escal_date = destination_time(created_at, sla.solution_time, biz)
     end
 
     # get close time in min
     if close_time
-      self.close_time_in_min = pending_minutes(created_at, close_time, biz, 'business_minutes', history_data)
+      self.close_time_in_min = pending_minutes(created_at, close_time, biz, 'business_minutes')
     elsif close_time_escal_date && ((!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time)
       self.escalation_time = close_time_escal_date
     end
@@ -223,7 +220,7 @@ returns
 
 return destination_time for time range
 
-  destination_time = destination_time(start_time, move_minutes, biz, history_data)
+  destination_time = destination_time(start_time, move_minutes, biz)
 
 returns
 
@@ -231,7 +228,7 @@ returns
 
 =end
 
-  def destination_time(start_time, move_minutes, biz, history_data)
+  def destination_time(start_time, move_minutes, biz)
     destination_time = biz.time(move_minutes, :minutes).after(start_time)
 
     # go step by step to end of pending_minutes until pending_minutes is 0
@@ -239,7 +236,7 @@ returns
     500.times.each {
 
       # check if we have pending time in the range to the destination time
-      pending_minutes = pending_minutes(pending_start_time, destination_time, biz, history_data)
+      pending_minutes = pending_minutes(pending_start_time, destination_time, biz)
 
       # skip if no pending time is given
       break if !pending_minutes || pending_minutes <= 0
@@ -255,7 +252,7 @@ returns
   # get business minutes of pending time
   #  type = business_minutes (pending time in business minutes)
   #  type = non_business_minutes (pending time in non business minutes)
-  def pending_minutes(start_time, end_time, biz, type = 'non_business_minutes', history_data)
+  def pending_minutes(start_time, end_time, biz, type = 'non_business_minutes')
 
     working_time_in_min      = 0
     total_time_in_min        = 0
@@ -267,23 +264,21 @@ returns
       ignore_escalation: true,
     ).map(&:name)
 
-    history_data.each { |history_item|
+    history_get.each { |history_item|
 
       # ignore if it isn't a state change
       next if !history_item['attribute']
       next if history_item['attribute'] != 'state'
 
-      created_at = history_item['created_at']
-
       # ignore all newer state before start_time
-      next if created_at < start_time
+      next if history_item['created_at'] < start_time
 
       # ignore all older state changes after end_time
       next if last_state_change && last_state_change > end_time
 
       # if created_at is later then end_time, use end_time as last time
-      if created_at > end_time
-        created_at = end_time
+      if history_item['created_at'] > end_time
+        history_item['created_at'] = end_time
       end
 
       # get initial state and time
@@ -298,12 +293,12 @@ returns
         counted = false
       end
 
-      diff = biz.within(last_state_change, created_at).in_minutes
+      diff = biz.within(last_state_change, history_item['created_at']).in_minutes
       if counted
-        # puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{created_at}"
+        # puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
         working_time_in_min = working_time_in_min + diff
         # else
-        # puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{created_at}"
+        # puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{history_item['created_at']}"
       end
       total_time_in_min = total_time_in_min + diff
 
@@ -314,7 +309,7 @@ returns
 
       # remember for next loop last state
       last_state        = history_item['value_to']
-      last_state_change = created_at
+      last_state_change = history_item['created_at']
     }
 
     # if last state isnt pending, count rest
