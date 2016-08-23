@@ -111,7 +111,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result['packages'])
-    assert_equal('No permission (user)!', result['error'])
+    assert_equal('Not authorized (user)!', result['error'])
   end
 
   test '06 packages index with customer' do
@@ -125,7 +125,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result['packages'])
-    assert_equal('No permission (user)!', result['error'])
+    assert_equal('Not authorized (user)!', result['error'])
   end
 
 end

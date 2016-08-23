@@ -74,6 +74,14 @@ class TicketsController < ApplicationController
     clean_params = Ticket.param_association_lookup(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
 
+    # overwrite params
+    if !current_user.permissions?('ticket.agent')
+      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each { |key|
+        clean_params.delete(key)
+      }
+      clean_params[:customer_id] = current_user.id
+    end
+
     # try to create customer if needed
     if clean_params[:customer_id] && clean_params[:customer_id] =~ /^guess:(.+?)$/
       email = $1
@@ -105,10 +113,7 @@ class TicketsController < ApplicationController
     end
 
     # create ticket
-    if !ticket.save
-      render json: ticket.errors, status: :unprocessable_entity
-      return
-    end
+    ticket.save!
 
     # create tags if given
     if params[:tags] && !params[:tags].empty?
@@ -126,12 +131,6 @@ class TicketsController < ApplicationController
     # create article if given
     if params[:article]
       article_create(ticket, params[:article])
-    end
-
-    if params[:expand]
-      result = ticket.attributes_with_relation_names
-      render json: result, status: :created
-      return
     end
 
     # create links (e. g. in case of ticket split)
@@ -161,6 +160,12 @@ class TicketsController < ApplicationController
       }
     end
 
+    if params[:expand]
+      result = ticket.attributes_with_relation_names
+      render json: result, status: :created
+      return
+    end
+
     render json: ticket, status: :created
   end
 
@@ -174,22 +179,26 @@ class TicketsController < ApplicationController
     clean_params = Ticket.param_association_lookup(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
 
-    if ticket.update_attributes(clean_params)
-
-      if params[:article]
-        article_create(ticket, params[:article])
-      end
-
-      if params[:expand]
-        result = ticket.attributes_with_relation_names
-        render json: result, status: :ok
-        return
-      end
-
-      render json: ticket, status: :ok
-    else
-      render json: ticket.errors, status: :unprocessable_entity
+    # overwrite params
+    if !current_user.permissions?('ticket.agent')
+      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each { |key|
+        clean_params.delete(key)
+      }
     end
+
+    ticket.update_attributes!(clean_params)
+
+    if params[:article]
+      article_create(ticket, params[:article])
+    end
+
+    if params[:expand]
+      result = ticket.attributes_with_relation_names
+      render json: result, status: :ok
+      return
+    end
+
+    render json: ticket, status: :ok
   end
 
   # DELETE /api/v1/tickets/1
@@ -199,7 +208,9 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     ticket_permission(ticket)
 
-    ticket.destroy
+    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!' if !current_user.permissions?('admin')
+
+    ticket.destroy!
 
     head :ok
   end
@@ -612,8 +623,36 @@ class TicketsController < ApplicationController
     form_id = params[:form_id]
     params.delete(:form_id)
 
+    # check min. params
+    raise 'Need at least article: { body: "some text" }' if !params[:body]
+
+    # fill default values
+    if params[:type_id].empty?
+      params[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
+    end
+    if params[:sender_id].empty?
+      sender = 'Customer'
+      if current_user.permissions?('ticket.agent')
+        sender = 'Agent'
+      end
+      params[:sender_id] = Ticket::Article::Sender.lookup(name: sender).id
+    end
+
     clean_params = Ticket::Article.param_association_lookup(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
+
+    # overwrite params
+    if !current_user.permissions?('ticket.agent')
+      clean_params[:sender_id] = Ticket::Article::Sender.lookup(name: 'Customer').id
+      clean_params.delete(:sender)
+      type = Ticket::Article::Type.lookup(id: clean_params[:type_id])
+      if type !~ /^(note|web)$/
+        clean_params[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
+      end
+      clean_params.delete(:type)
+      clean_params[:internal] = false
+    end
+
     article = Ticket::Article.new(clean_params)
     article.ticket_id = ticket.id
 
@@ -646,10 +685,7 @@ class TicketsController < ApplicationController
         o_id: form_id,
       )
     end
-    if !article.save
-      render json: article.errors, status: :unprocessable_entity
-      return
-    end
+    article.save!
 
     # remove attachments from upload cache
     return if !form_id

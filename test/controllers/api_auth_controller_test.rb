@@ -140,7 +140,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_equal('No permission (token)!', result['error'])
+    assert_equal('Not authorized (token)!', result['error'])
 
     admin_token.preferences[:permission] = []
     admin_token.save!
@@ -149,7 +149,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_equal('No permission (token)!', result['error'])
+    assert_equal('Not authorized (token)!', result['error'])
 
     @admin.active = false
     @admin.save!
@@ -182,7 +182,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_equal('No permission (token)!', result['error'])
+    assert_equal('Not authorized (token)!', result['error'])
 
     admin_token.preferences[:permission] = ['admin.session_not_existing', 'admin.role']
     admin_token.save!

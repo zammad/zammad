@@ -13,6 +13,7 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
     return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
 
     # if sender is customer, do not change anything
+    return if !record.sender_id
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return if sender.nil?
     return if sender['name'] == 'Customer'
@@ -20,6 +21,7 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
     # set from if not given
     return if record.from
 
+    return if !record.created_by_id
     user        = User.find(record.created_by_id)
     record.from = "#{user.firstname} #{user.lastname}"
   end

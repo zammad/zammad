@@ -278,7 +278,7 @@ class ApplicationController < ActionController::Base
           permission: auth_param[:permission],
           inactive_user: true,
         )
-        raise Exceptions::NotAuthorized, 'No permission (token)!' if !user
+        raise Exceptions::NotAuthorized, 'Not authorized (token)!' if !user
       end
       @_token_auth = token # remember for permission_check
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
@@ -319,7 +319,7 @@ class ApplicationController < ActionController::Base
 
     # check scopes / permission check
     if auth_param[:permission] && !user.permissions?(auth_param[:permission])
-      raise Exceptions::NotAuthorized, 'No permission (user)!'
+      raise Exceptions::NotAuthorized, 'Not authorized (user)!'
     end
 
     current_user_set(user)
@@ -364,11 +364,11 @@ class ApplicationController < ActionController::Base
         permission: key,
       )
       return false if user
-      raise Exceptions::NotAuthorized, 'No permission (token)!'
+      raise Exceptions::NotAuthorized, 'Not authorized (token)!'
     end
 
     return false if current_user && current_user.permissions?(key)
-    raise Exceptions::NotAuthorized, 'No permission (user)!'
+    raise Exceptions::NotAuthorized, 'Not authorized (user)!'
   end
 
   def valid_session_with_user
@@ -543,6 +543,14 @@ class ApplicationController < ActionController::Base
     if error =~ /(already exists|duplicate key|duplicate entry)/i
       data[:error_human] = 'Object already exists!'
     end
+    if error =~ /null value in column "(.+?)" violates not-null constraint/i
+      data[:error_human] = "Attribute '#{$1}' required!"
+    end
+
+    if Rails.env.production? && !data[:error_human].empty?
+      data[:error] = data[:error_human]
+      data.delete('error_human')
+    end
     data
   end
 
@@ -598,7 +606,11 @@ class ApplicationController < ActionController::Base
   end
 
   def unauthorized(e)
-    error = model_match_error(e.message)
+    message = e.message
+    if message == 'Exceptions::NotAuthorized'
+      message = 'Not authorized'
+    end
+    error = model_match_error(message)
     if error && error[:error]
       response.headers['X-Failure'] = error[:error_human] || error[:error]
     end
