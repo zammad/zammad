@@ -138,6 +138,8 @@ Some Text"
     assert_equal('Customer', ticket.create_article_sender.name)
     assert_equal('Customer', article.sender.name)
     assert_equal('ticket-system-sender-customer1@example.com', ticket.customer.email)
+    assert_equal(customer1.id, ticket.created_by_id)
+    assert_equal(customer1.id, article.created_by_id)
 
     # process agent email
     email_raw_string = "From: ticket-system-sender-agent1@example.com
@@ -154,6 +156,8 @@ Some Text"
     assert_equal('Agent', ticket.create_article_sender.name)
     assert_equal('Agent', article.sender.name)
     assert_equal('ticket-system-sender-customer1@example.com', ticket.customer.email)
+    assert_equal(agent1.id, ticket.created_by_id)
+    assert_equal(agent1.id, article.created_by_id)
 
     email_raw_string = "From: ticket-system-sender-agent1@example.com
 To: myzammad@system.test, ticket-system-sender-customer1@example.com
@@ -169,6 +173,8 @@ Some Text"
     assert_equal('Agent', ticket.create_article_sender.name)
     assert_equal('Agent', article.sender.name)
     assert_equal('ticket-system-sender-customer1@example.com', ticket.customer.email)
+    assert_equal(agent1.id, ticket.created_by_id)
+    assert_equal(agent1.id, article.created_by_id)
 
   end
 end
