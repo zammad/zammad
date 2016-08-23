@@ -546,6 +546,9 @@ class ApplicationController < ActionController::Base
     if error =~ /null value in column "(.+?)" violates not-null constraint/i
       data[:error_human] = "Attribute '#{$1}' required!"
     end
+    if error =~ /Field '(.+?)' doesn't have a default value/i
+      data[:error_human] = "Attribute '#{$1}' required!"
+    end
 
     if Rails.env.production? && !data[:error_human].empty?
       data[:error] = data[:error_human]
