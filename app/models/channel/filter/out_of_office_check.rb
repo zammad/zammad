@@ -27,6 +27,11 @@ module Channel::Filter::OutOfOfficeCheck
         mail[ 'x-zammad-out-of-office'.to_sym ] = true
       end
 
+      # gmail check out of office characteristics
+      if mail[ 'auto-submitted'.to_sym ] =~ /auto-replied/i && mail[ 'subject'.to_sym ] =~ /vacation/i
+        mail[ 'x-zammad-out-of-office'.to_sym ] = true
+      end
+
       return
     end
 
