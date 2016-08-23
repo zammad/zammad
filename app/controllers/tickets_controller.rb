@@ -134,6 +134,33 @@ class TicketsController < ApplicationController
       return
     end
 
+    # create links (e. g. in case of ticket split)
+    # links: {
+    #   Ticket: {
+    #     parent: [ticket_id1, ticket_id2, ...]
+    #     normal: [ticket_id1, ticket_id2, ...]
+    #     child: [ticket_id1, ticket_id2, ...]
+    #   },
+    # }
+    if params[:links]
+      raise 'Invalid link structure' if params[:links].to_h.class != Hash
+      params[:links].each { |target_object, link_types_with_object_ids|
+        raise 'Invalid link structure (Object)' if link_types_with_object_ids.to_h.class != Hash
+        link_types_with_object_ids.each { |link_type, object_ids|
+          raise 'Invalid link structure (Object->LinkType)' if object_ids.class != Array
+          object_ids.each { |local_object_id|
+            link = Link.add(
+              link_type: link_type,
+              link_object_target: target_object,
+              link_object_target_value: local_object_id,
+              link_object_source: 'Ticket',
+              link_object_source_value: ticket.id,
+            )
+          }
+        }
+      }
+    end
+
     render json: ticket, status: :created
   end
 
