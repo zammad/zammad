@@ -421,9 +421,9 @@ retrns
     original_interface_handle = ApplicationHandleInfo.current
     ApplicationHandleInfo.current = "#{original_interface_handle}.postmaster"
 
-    ticket  = nil
-    article = nil
-    user    = nil
+    ticket       = nil
+    article      = nil
+    session_user = nil
 
     # use transaction
     ActiveRecord::Base.transaction do
@@ -565,7 +565,7 @@ retrns
     filters.each { |_prio, backend|
       Rails.logger.debug "run postmaster post filter #{backend}"
       begin
-        backend.run(channel, mail, ticket, article, user)
+        backend.run(channel, mail, ticket, article, session_user)
       rescue => e
         Rails.logger.error "can't run postmaster post filter #{backend}"
         Rails.logger.error e.inspect
@@ -573,7 +573,7 @@ retrns
     }
 
     # return new objects
-    [ticket, article, user, mail]
+    [ticket, article, session_user, mail]
   end
 
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
