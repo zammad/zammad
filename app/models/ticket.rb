@@ -697,6 +697,15 @@ perform changes on ticket
             next if user.email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
           end
 
+          # check if notification should be send because of customer emails
+          if item && item[:article_id]
+            article = Ticket::Article.lookup(id: item[:article_id])
+            if article && article.preferences['is-auto-response'] == true && article.from && article.from =~ /#{Regexp.quote(user.email)}/i
+              logger.info "Send not trigger based notification to #{user.email} because of auto response tagged incoming email"
+              next
+            end
+          end
+
           email = user.email.downcase.strip
           next if recipient_already[email]
           recipient_already[email] = true
@@ -711,39 +720,6 @@ perform changes on ticket
         email_address = group.email_address
         next if !email_address
         next if !email_address.channel_id
-
-        # check if notification should be send because of customer emails
-        if item && item[:article_id]
-          article = Ticket::Article.lookup(id: item[:article_id])
-          if article
-            type = Ticket::Article::Type.lookup(id: article.type_id)
-            sender = Ticket::Article::Sender.lookup(id: article.sender_id)
-            if sender && sender.name == 'Customer' && type && type.name == 'email'
-
-              # get attachment
-              list = Store.list(
-                object: 'Ticket::Article::Mail',
-                o_id: article.id,
-              )
-              if list && list[0]
-                file = Store.find(list[0].id)
-                if file
-                  content = file.content
-                  if content
-                    parser = Channel::EmailParser.new
-                    mail = parser.parse(content)
-
-                    # check headers
-                    next if mail['x-loop'.to_sym] =~ /yes/i
-                    next if mail['precedence'.to_sym] =~ /bulk/i
-                    next if mail['auto-submitted'.to_sym] =~ /auto-generated/i
-                    next if mail['x-auto-response-suppress'.to_sym] =~ /yes/i
-                  end
-                end
-              end
-            end
-          end
-        end
 
         objects = {
           ticket: self,

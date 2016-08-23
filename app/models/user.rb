@@ -33,7 +33,7 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_create   :check_name, :check_email, :check_login, :check_password, :check_preferences_default, :validate_roles
-  before_update   :check_password, :check_email, :check_login, :check_preferences_default, :validate_roles
+  before_update   :check_password, :check_name, :check_email, :check_login, :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
@@ -363,12 +363,19 @@ returns
       keys = [key]
     end
     keys.each { |local_key|
+      cache_key = "User::permissions?:local_key:::#{id}"
+      if Rails.env.production?
+        cache = Cache.get(cache_key)
+        return cache if cache
+      end
       permissions = Object.const_get('Permission').with_parents(local_key)
       Object.const_get('Permission').joins(:roles).where('roles.id IN (?) AND permissions.name IN (?)', role_ids, permissions).each { |permission|
         next if permission.preferences[:selectable] == false
+        Cache.write(key, true, expires_in: 20.seconds)
         return true
       }
     }
+    Cache.write(key, false, expires_in: 20.seconds)
     false
   end
 
@@ -685,13 +692,18 @@ returns
     # delete asset caches
     key = "User::authorizations::#{id}"
     Cache.delete(key)
+
+    # delete permission cache
+    key = "User::permissions?:local_key:::#{id}"
+    Cache.delete(key)
   end
 
   def check_name
+    return if !firstname.empty? && !lastname.empty?
 
-    if (firstname && !firstname.empty?) && (!lastname || lastname.empty?)
+    if !firstname.empty? && lastname.empty?
 
-      # Lastname, Firstname
+      # "Lastname, Firstname"
       scan = firstname.scan(/, /)
       if scan[0]
         name = firstname.split(', ', 2)
@@ -704,7 +716,7 @@ returns
         return
       end
 
-      # Firstname Lastname
+      # "Firstname Lastname"
       name = firstname.split(' ', 2)
       if !name[0].nil?
         self.firstname = name[0]
@@ -714,8 +726,8 @@ returns
       end
       return
 
-    # -no name- firstname.lastname@example.com
-    elsif (!firstname || firstname.empty?) && (!lastname || lastname.empty?) && (email && !email.empty?)
+    # -no name- "firstname.lastname@example.com"
+    elsif firstname.empty? && lastname.empty? && !email.empty?
       scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
         if !scan[0][0].nil?
@@ -729,9 +741,7 @@ returns
   end
 
   def check_email
-
     return if !email
-
     self.email = email.downcase
   end
 
@@ -779,7 +789,6 @@ returns
   end
 
   def avatar_for_email_check
-
     return if !email
     return if email.empty?
     return if email !~ /@/

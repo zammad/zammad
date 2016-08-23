@@ -377,6 +377,12 @@ class App.TicketCreate extends App.Controller
     if params.group_id
       group  = App.Group.find(params.group_id)
 
+    # add linked objects if ticket got splited
+    if @ticket_id
+      params['links'] =
+        Ticket:
+          child: [@ticket_id]
+
     # allow cc only on email tickets
     if @currentChannel() isnt 'email-out'
       delete params.cc

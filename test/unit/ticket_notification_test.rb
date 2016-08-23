@@ -1126,4 +1126,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
   end
 
+  test 'zzz - cleanup' do
+    Trigger.destroy_all
+  end
+
 end
