@@ -483,9 +483,14 @@ class App.TicketCreate extends App.Controller
         # if not, show start screen
         ui.navigate '#'
 
-      fail: ->
-        ui.log 'save failed!'
+      fail: (settings, details) ->
+        ui.log 'errors', details
         ui.formEnable(e)
+        ui.notify(
+          type:    'error'
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
+          timeout: 6000
+        )
     )
 
 class Sidebar extends App.Controller
