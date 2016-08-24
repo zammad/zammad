@@ -18,10 +18,7 @@ class TicketArticlesController < ApplicationController
 
     if params[:expand]
       result = article.attributes_with_relation_names
-
-      # add attachments
       result[:attachments] = article.attachments
-
       render json: result, status: :ok
       return
     end
@@ -49,7 +46,6 @@ class TicketArticlesController < ApplicationController
 
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
-
         result = article.attributes_with_relation_names
 
         # add attachments
@@ -83,7 +79,6 @@ class TicketArticlesController < ApplicationController
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
-
       articles.push article.attributes_with_relation_names
     }
     render json: articles
@@ -91,35 +86,24 @@ class TicketArticlesController < ApplicationController
 
   # POST /articles
   def create
-    form_id = params[:form_id]
+    ticket = Ticket.find(params[:ticket_id])
+    ticket_permission(ticket)
+    article = article_create(ticket, params)
 
-    clean_params = Ticket::Article.param_association_lookup(params)
-    clean_params = Ticket::Article.param_cleanup(clean_params, true)
-    article = Ticket::Article.new(clean_params)
-
-    # permission check
-    article_permission(article)
-
-    # find attachments in upload cache
-    if form_id
-      article.attachments = Store.list(
-        object: 'UploadCache',
-        o_id: form_id,
-      )
+    if params[:expand]
+      result = article.attributes_with_relation_names
+      result[:attachments] = article.attachments
+      render json: result, status: :created
+      return
     end
 
-    if article.save
-
-      # remove attachments from upload cache
-      Store.remove(
-        object: 'UploadCache',
-        o_id: form_id,
-      )
-
-      render json: article, status: :created
-    else
-      render json: article.errors, status: :unprocessable_entity
+    if params[:full]
+      full = Ticket::Article.full(params[:id])
+      render json: full, status: :created
+      return
     end
+
+    render json: article.attributes_with_relation_names, status: :created
   end
 
   # PUT /articles/1
@@ -129,23 +113,49 @@ class TicketArticlesController < ApplicationController
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
+    if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin')
+      raise Exceptions::NotAuthorized, 'Not authorized (ticket.agent or admin permission required)!'
+    end
+
     clean_params = Ticket::Article.param_association_lookup(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
 
-    if article.update_attributes(clean_params)
-      render json: article, status: :ok
-    else
-      render json: article.errors, status: :unprocessable_entity
+    article.update_attributes!(clean_params)
+
+    if params[:expand]
+      result = article.attributes_with_relation_names
+      result[:attachments] = article.attachments
+      render json: result, status: :ok
+      return
     end
+
+    if params[:full]
+      full = Ticket::Article.full(params[:id])
+      render json: full, status: :ok
+      return
+    end
+
+    render json: article.attributes_with_relation_names, status: :ok
   end
 
   # DELETE /articles/1
   def destroy
     article = Ticket::Article.find(params[:id])
     article_permission(article)
-    article.destroy
 
-    head :ok
+    if current_user.permissions?('admin')
+      article.destroy!
+      head :ok
+      return
+    end
+
+    if current_user.permissions?('ticket.agent') && article.created_by_id == current_user.id && article.type.name == 'note'
+      article.destroy!
+      head :ok
+      return
+    end
+
+    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!'
   end
 
   # DELETE /ticket_attachment_upload

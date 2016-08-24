@@ -123,6 +123,8 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
     assert_equal('a new ticket #3', result['title'])
     assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
   end
 
   test '02.02 ticket create with agent' do
@@ -149,6 +151,8 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
     assert_equal('a new ticket #1', result['title'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
     links = Link.list(
       link_object: 'Ticket',
       link_object_value: result['id'],
@@ -215,6 +219,8 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(ticket.id, result['id'])
     assert_equal('ticket with corret ticket id', result['title'])
     assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(1, result['updated_by_id'])
+    assert_equal(1, result['created_by_id'])
 
     params = {
       title: 'ticket with corret ticket id - 2',
@@ -227,6 +233,71 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(ticket.id, result['id'])
     assert_equal('ticket with corret ticket id - 2', result['title'])
     assert_equal(@agent.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(1, result['created_by_id'])
+
+    params = {
+      ticket_id: ticket.id,
+      subject: 'some subject',
+      body: 'some body',
+    }
+    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('some subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(false, result['internal'])
+    assert_equal(@agent.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'note').id, result['type_id'])
+
+    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+
+    params = {
+      ticket_id: ticket.id,
+      subject: 'some subject',
+      body: 'some body',
+      type: 'email',
+      internal: true,
+    }
+    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('some subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(true, result['internal'])
+    assert_equal(@agent.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'email').id, result['type_id'])
+
+    params = {
+      subject: 'new subject',
+    }
+    put "/api/v1/ticket_articles/#{result['id']}", params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('new subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(true, result['internal'])
+    assert_equal(@agent.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'email').id, result['type_id'])
+
+    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Not authorized (admin permission required)!', result['error'])
 
     delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
     assert_response(401)
@@ -253,6 +324,8 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(ticket.id, result['id'])
     assert_equal('ticket with corret ticket id', result['title'])
     assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(1, result['updated_by_id'])
+    assert_equal(1, result['created_by_id'])
 
     params = {
       title: 'ticket with corret ticket id - 2',
@@ -265,6 +338,68 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(ticket.id, result['id'])
     assert_equal('ticket with corret ticket id - 2', result['title'])
     assert_equal(@agent.id, result['customer_id'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(1, result['created_by_id'])
+
+    params = {
+      ticket_id: ticket.id,
+      subject: 'some subject',
+      body: 'some body',
+    }
+    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('some subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(false, result['internal'])
+    assert_equal(@admin.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'note').id, result['type_id'])
+
+    params = {
+      subject: 'new subject',
+      internal: true,
+    }
+    put "/api/v1/ticket_articles/#{result['id']}", params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('new subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(true, result['internal'])
+    assert_equal(@admin.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'note').id, result['type_id'])
+
+    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+
+    params = {
+      ticket_id: ticket.id,
+      subject: 'some subject',
+      body: 'some body',
+      type: 'email',
+    }
+    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('some subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(false, result['internal'])
+    assert_equal(@admin.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'email').id, result['type_id'])
+
+    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
 
     delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
     assert_response(200)
@@ -288,6 +423,8 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
     assert_equal('a new ticket #c1', result['title'])
     assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@customer_without_org.id, result['updated_by_id'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
   end
 
   test '03.02 ticket create with customer with wrong customer' do
@@ -311,6 +448,8 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
     assert_equal('a new ticket #c2', result['title'])
     assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@customer_without_org.id, result['updated_by_id'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
   end
 
   test '03.03 ticket with wrong ticket id' do
@@ -364,6 +503,8 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(ticket.id, result['id'])
     assert_equal('ticket with corret ticket id', result['title'])
     assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(1, result['updated_by_id'])
+    assert_equal(1, result['created_by_id'])
 
     params = {
       title: 'ticket with corret ticket id - 2',
@@ -376,6 +517,87 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(ticket.id, result['id'])
     assert_equal('ticket with corret ticket id - 2', result['title'])
     assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(@customer_without_org.id, result['updated_by_id'])
+    assert_equal(1, result['created_by_id'])
+
+    params = {
+      ticket_id: ticket.id,
+      subject: 'some subject',
+      body: 'some body',
+    }
+    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('some subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Customer').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'note').id, result['type_id'])
+
+    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Not authorized (admin permission required)!', result['error'])
+
+    params = {
+      ticket_id: ticket.id,
+      subject: 'some subject',
+      body: 'some body',
+      type: 'email',
+      sender: 'Agent',
+    }
+    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('some subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Customer').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'note').id, result['type_id'])
+
+    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Not authorized (admin permission required)!', result['error'])
+
+    params = {
+      ticket_id: ticket.id,
+      subject: 'some subject',
+      body: 'some body',
+      type: 'web',
+      sender: 'Agent',
+      internal: true,
+    }
+
+    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('some subject', result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(false, result['internal'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
+    assert_equal(Ticket::Article::Sender.lookup(name: 'Customer').id, result['sender_id'])
+    assert_equal(Ticket::Article::Type.lookup(name: 'web').id, result['type_id'])
+
+    params = {
+      subject: 'new subject',
+    }
+    put "/api/v1/ticket_articles/#{result['id']}", params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Not authorized (ticket.agent or admin permission required)!', result['error'])
 
     delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
     assert_response(401)
