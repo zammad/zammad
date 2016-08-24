@@ -626,20 +626,14 @@ class TicketsController < ApplicationController
     assets = attributes_to_change[:assets]
     assets = ticket.assets(assets)
 
-    # get related articles
-    articles = Ticket::Article.where(ticket_id: ticket.id).order('created_at ASC, id ASC')
-
     # get related users
     article_ids = []
-    articles.each { |article|
+    ticket.articles.order('created_at ASC, id ASC').each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
 
-      # load article ids
       article_ids.push article.id
-
-      # load assets
       assets = article.assets(assets)
     }
 
