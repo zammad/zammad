@@ -246,6 +246,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Agent', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -258,6 +259,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_response(200)
 
     params = {
+      from: 'something which should not be changed on server side',
       ticket_id: ticket.id,
       subject: 'some subject',
       body: 'some body',
@@ -269,6 +271,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Agent via Zammad <zammad@localhost>', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -285,6 +288,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Agent via Zammad <zammad@localhost>', result['from'])
     assert_equal('new subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -342,6 +346,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, result['created_by_id'])
 
     params = {
+      from: 'something which should not be changed on server side',
       ticket_id: ticket.id,
       subject: 'some subject',
       body: 'some body',
@@ -351,6 +356,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Admin', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -368,6 +374,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Admin', result['from'])
     assert_equal('new subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -390,6 +397,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Admin via Zammad <zammad@localhost>', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -530,6 +538,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Customer1', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -555,6 +564,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Customer1', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
@@ -569,6 +579,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized (admin permission required)!', result['error'])
 
     params = {
+      from: 'something which should not be changed on server side',
       ticket_id: ticket.id,
       subject: 'some subject',
       body: 'some body',
@@ -582,6 +593,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
+    assert_equal('Tickets Customer1', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])
