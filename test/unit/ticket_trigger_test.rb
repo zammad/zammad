@@ -53,7 +53,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1 = Ticket.create(
       title: "some <b>title</b>\n äöüß",
       group: Group.lookup(name: 'Users'),
-      customer_id: 2,
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
@@ -78,6 +78,8 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
     article1 = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', article1.from)
+    assert_match('nicole.braun@zammad.org', article1.to)
     assert_match('Thanks for your inquiry (some <b>title</b>  äöüß)!', article1.subject)
     assert_match('Braun<br>some &lt;b&gt;title&lt;/b&gt;', article1.body)
     assert_equal('text/html', article1.content_type)
@@ -118,11 +120,17 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    article1 = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', article1.from)
+    assert_match('nicole.braun@zammad.org', article1.to)
+    assert_match('Thanks for your inquiry (some <b>title</b>  äöüß)!', article1.subject)
+    assert_match('Braun<br>some &lt;b&gt;title&lt;/b&gt;', article1.body)
+    assert_equal('text/html', article1.content_type)
 
     ticket2 = Ticket.create(
       title: "some title\n äöüß",
       group: Group.lookup(name: 'Users'),
-      customer_id: 2,
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
       state: Ticket::State.lookup(name: 'open'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
@@ -182,7 +190,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1 = Ticket.create(
       title: "some title\n äöüß",
       group: Group.lookup(name: 'Users'),
-      customer_id: 2,
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
@@ -204,6 +212,12 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    article1 = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', article1.from)
+    assert_match('nicole.braun@zammad.org', article1.to)
+    assert_match('asdasdas', article1.subject)
+    assert_match('dasdasdasd', article1.body)
+    assert_equal('text/html', article1.content_type)
 
     ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
     ticket1.save
@@ -274,7 +288,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     ticket1 = Ticket.create(
       title: "some title\n äöüß",
       group: Group.lookup(name: 'Users'),
-      customer_id: 2,
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,

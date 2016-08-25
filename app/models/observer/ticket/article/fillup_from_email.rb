@@ -13,11 +13,13 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
 
     # if sender is customer, do not change anything
+    return if !record.sender_id
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return if sender.nil?
     return if sender['name'] == 'Customer'
 
     # set email attributes
+    return if !record.type_id
     type = Ticket::Article::Type.lookup(id: record.type_id)
     return if type['name'] != 'email'
 
@@ -33,7 +35,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     # generate message id, force it in prodution, in test allow to set it for testing reasons
     if !record.message_id || Rails.env.production?
       fqdn = Setting.get('fqdn')
-      record.message_id = '<' + DateTime.current.to_s(:number) + '.' + record.ticket_id.to_s + '.' + rand(999_999).to_s() + '@' + fqdn + '>'
+      record.message_id = "<#{DateTime.current.to_s(:number)}.#{record.ticket_id}.#{rand(999_999)}@#{fqdn}>"
     end
 
     # generate message_id_md5

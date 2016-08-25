@@ -22,8 +22,8 @@ class Channel::Filter::MonitoringBase
 
     return if !mail[:from]
     return if !mail[:body]
-    sender_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
-    return if !sender_user_id
+    session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
+    return if !session_user_id
 
     # check if sender is monitoring
     return if !mail[:from].match(/#{sender}/i)
@@ -43,7 +43,7 @@ class Channel::Filter::MonitoringBase
     }
 
     # check if ticket with host is open
-    customer = User.lookup(id: sender_user_id)
+    customer = User.lookup(id: session_user_id)
 
     # follow up detection by meta data
     open_states = Ticket::State.by_category('open')

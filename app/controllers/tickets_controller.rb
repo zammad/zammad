@@ -74,6 +74,14 @@ class TicketsController < ApplicationController
     clean_params = Ticket.param_association_lookup(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
 
+    # overwrite params
+    if !current_user.permissions?('ticket.agent')
+      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each { |key|
+        clean_params.delete(key)
+      }
+      clean_params[:customer_id] = current_user.id
+    end
+
     # try to create customer if needed
     if clean_params[:customer_id] && clean_params[:customer_id] =~ /^guess:(.+?)$/
       email = $1
@@ -105,10 +113,7 @@ class TicketsController < ApplicationController
     end
 
     # create ticket
-    if !ticket.save
-      render json: ticket.errors, status: :unprocessable_entity
-      return
-    end
+    ticket.save!
 
     # create tags if given
     if params[:tags] && !params[:tags].empty?
@@ -126,12 +131,6 @@ class TicketsController < ApplicationController
     # create article if given
     if params[:article]
       article_create(ticket, params[:article])
-    end
-
-    if params[:expand]
-      result = ticket.attributes_with_relation_names
-      render json: result, status: :created
-      return
     end
 
     # create links (e. g. in case of ticket split)
@@ -161,6 +160,12 @@ class TicketsController < ApplicationController
       }
     end
 
+    if params[:expand]
+      result = ticket.attributes_with_relation_names
+      render json: result, status: :created
+      return
+    end
+
     render json: ticket, status: :created
   end
 
@@ -174,22 +179,26 @@ class TicketsController < ApplicationController
     clean_params = Ticket.param_association_lookup(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
 
-    if ticket.update_attributes(clean_params)
-
-      if params[:article]
-        article_create(ticket, params[:article])
-      end
-
-      if params[:expand]
-        result = ticket.attributes_with_relation_names
-        render json: result, status: :ok
-        return
-      end
-
-      render json: ticket, status: :ok
-    else
-      render json: ticket.errors, status: :unprocessable_entity
+    # overwrite params
+    if !current_user.permissions?('ticket.agent')
+      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each { |key|
+        clean_params.delete(key)
+      }
     end
+
+    ticket.update_attributes!(clean_params)
+
+    if params[:article]
+      article_create(ticket, params[:article])
+    end
+
+    if params[:expand]
+      result = ticket.attributes_with_relation_names
+      render json: result, status: :ok
+      return
+    end
+
+    render json: ticket, status: :ok
   end
 
   # DELETE /api/v1/tickets/1
@@ -199,7 +208,9 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     ticket_permission(ticket)
 
-    ticket.destroy
+    raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!' if !current_user.permissions?('admin')
+
+    ticket.destroy!
 
     head :ok
   end
@@ -606,60 +617,6 @@ class TicketsController < ApplicationController
     ticket_ids
   end
 
-  def article_create(ticket, params)
-
-    # create article if given
-    form_id = params[:form_id]
-    params.delete(:form_id)
-
-    clean_params = Ticket::Article.param_association_lookup(params)
-    clean_params = Ticket::Article.param_cleanup(clean_params, true)
-    article = Ticket::Article.new(clean_params)
-    article.ticket_id = ticket.id
-
-    # store dataurl images to store
-    if form_id && article.body && article.content_type =~ %r{text/html}i
-      article.body.gsub!( %r{(<img\s.+?src=")(data:image/(jpeg|png);base64,.+?)">}i ) { |_item|
-        file_attributes = StaticAssets.data_url_attributes($2)
-        cid = "#{ticket.id}.#{form_id}.#{rand(999_999)}@#{Setting.get('fqdn')}"
-        headers_store = {
-          'Content-Type' => file_attributes[:mime_type],
-          'Mime-Type' => file_attributes[:mime_type],
-          'Content-ID' => cid,
-          'Content-Disposition' => 'inline',
-        }
-        store = Store.add(
-          object: 'UploadCache',
-          o_id: form_id,
-          data: file_attributes[:content],
-          filename: cid,
-          preferences: headers_store
-        )
-        "#{$1}cid:#{cid}\">"
-      }
-    end
-
-    # find attachments in upload cache
-    if form_id
-      article.attachments = Store.list(
-        object: 'UploadCache',
-        o_id: form_id,
-      )
-    end
-    if !article.save
-      render json: article.errors, status: :unprocessable_entity
-      return
-    end
-
-    # remove attachments from upload cache
-    return if !form_id
-
-    Store.remove(
-      object: 'UploadCache',
-      o_id: form_id,
-    )
-  end
-
   def ticket_all(ticket)
 
     # get attributes to update
@@ -669,20 +626,14 @@ class TicketsController < ApplicationController
     assets = attributes_to_change[:assets]
     assets = ticket.assets(assets)
 
-    # get related articles
-    articles = Ticket::Article.where(ticket_id: ticket.id).order('created_at ASC, id ASC')
-
     # get related users
     article_ids = []
-    articles.each { |article|
+    ticket.articles.order('created_at ASC, id ASC').each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
 
-      # load article ids
       article_ids.push article.id
-
-      # load assets
       assets = article.assets(assets)
     }
 

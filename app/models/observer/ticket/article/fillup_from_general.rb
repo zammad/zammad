@@ -12,14 +12,12 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
     # if article and sender type is set via *.postmaster)
     return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
 
-    # if sender is customer, do not change anything
-    sender = Ticket::Article::Sender.lookup(id: record.sender_id)
-    return if sender.nil?
-    return if sender['name'] == 'Customer'
+    # set from on all article types excluding email
+    return if !record.type_id
+    type = Ticket::Article::Type.lookup(id: record.type_id)
+    return if type['name'] == 'email'
 
-    # set from if not given
-    return if record.from
-
+    return if !record.created_by_id
     user        = User.find(record.created_by_id)
     record.from = "#{user.firstname} #{user.lastname}"
   end

@@ -1122,10 +1122,15 @@ class App.ObserverController extends App.Controller
         @maybeRender(object)
       )
 
-  subscribe: (object) =>
-    @maybeRender(object)
+  subscribe: (object, typeOfChange) =>
+    @maybeRender(object, typeOfChange)
 
-  maybeRender: (object) =>
+  maybeRender: (object, typeOfChange) =>
+    if typeOfChange is 'remove'
+      @release()
+      @el.remove()
+      return
+
     @log 'debug', 'maybeRender', @object_id, object, @model
 
     if !@subscribeId

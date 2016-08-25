@@ -12,7 +12,7 @@ class App.TicketZoomArticleView extends App.Controller
     all = []
     for ticket_article_id in @ticket_article_ids
       controllerKey = ticket_article_id.toString()
-      if !@articleController[controllerKey]
+      if !@articleController[controllerKey] && App.TicketArticle.exists(ticket_article_id)
         el = $('<div></div>')
         @articleController[controllerKey] = new ArticleViewItem(
           ticket:     @ticket

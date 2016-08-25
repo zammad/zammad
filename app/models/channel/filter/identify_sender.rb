@@ -4,14 +4,14 @@ module Channel::Filter::IdentifySender
 
   def self.run(_channel, mail)
 
-    customer_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
+    customer_user_id = mail[ 'x-zammad-ticket-customer_id'.to_sym ]
     customer_user = nil
     if !customer_user_id.empty?
       customer_user = User.lookup(id: customer_user_id)
       if customer_user
-        Rails.logger.debug "Took customer form x-zammad-customer-id header '#{customer_user_id}'."
+        Rails.logger.debug "Took customer form x-zammad-ticket-customer_id header '#{customer_user_id}'."
       else
-        Rails.logger.debug "Invalid x-zammad-customer-id header '#{customer_user_id}', no such user."
+        Rails.logger.debug "Invalid x-zammad-ticket-customer_id header '#{customer_user_id}', no such user - take user from 'from'-header."
       end
     end
 
@@ -58,10 +58,31 @@ module Channel::Filter::IdentifySender
         )
       end
     end
-
     create_recipients(mail)
+    mail[ 'x-zammad-ticket-customer_id'.to_sym ] = customer_user.id
 
-    mail[ 'x-zammad-customer-id'.to_sym ] = customer_user.id
+    # find session user
+    session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
+    session_user = nil
+    if !session_user_id.empty?
+      session_user = User.lookup(id: session_user_id)
+      if session_user
+        Rails.logger.debug "Took session form x-zammad-session-user-id header '#{session_user_id}'."
+      else
+        Rails.logger.debug "Invalid x-zammad-session-user-id header '#{session_user_id}', no such user - take user from 'from'-header."
+      end
+    end
+    if !session_user
+      session_user = user_create(
+        login: mail[:from_email],
+        firstname: mail[:from_display_name],
+        lastname: '',
+        email: mail[:from_email],
+      )
+    end
+    if session_user
+      mail[ 'x-zammad-session-user-id'.to_sym ] = session_user.id
+    end
   end
 
   # create to and cc user

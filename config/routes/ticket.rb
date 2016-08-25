@@ -40,6 +40,7 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_articles/by_ticket/:id',                 to: 'ticket_articles#index_by_ticket', via: :get
   match api_path + '/ticket_articles',                               to: 'ticket_articles#create',          via: :post
   match api_path + '/ticket_articles/:id',                           to: 'ticket_articles#update',          via: :put
+  match api_path + '/ticket_articles/:id',                           to: 'ticket_articles#destroy',     via: :delete
   match api_path + '/ticket_attachment/:ticket_id/:article_id/:id',  to: 'ticket_articles#attachment',      via: :get
   match api_path + '/ticket_attachment_upload',                      to: 'ticket_articles#ticket_attachment_upload_add', via: :post
   match api_path + '/ticket_attachment_upload',                      to: 'ticket_articles#ticket_attachment_upload_delete', via: :delete

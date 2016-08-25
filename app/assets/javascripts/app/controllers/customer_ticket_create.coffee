@@ -177,9 +177,14 @@ class Index extends App.ControllerContent
           # redirect to zoom
           ui.navigate '#ticket/zoom/' + @id
 
-        fail: ->
-          ui.log 'CustomerTicketCreate', 'error', 'can not create'
+        fail: (settings, details) ->
+          ui.log 'errors', details
           ui.formEnable(e)
+          ui.notify(
+            type:    'error'
+            msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
+            timeout: 6000
+          )
       )
 
 App.Config.set('customer_ticket_new', Index, 'Routes')

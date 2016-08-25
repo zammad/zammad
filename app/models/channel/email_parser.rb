@@ -385,7 +385,7 @@ retrns
     File.open(filename, 'wb') { |file|
       file.write msg
     }
-    raise e.inspect
+    raise e.inspect + e.backtrace.inspect
 
   end
 
@@ -421,25 +421,25 @@ retrns
     original_interface_handle = ApplicationHandleInfo.current
     ApplicationHandleInfo.current = "#{original_interface_handle}.postmaster"
 
-    ticket  = nil
-    article = nil
-    user    = nil
+    ticket       = nil
+    article      = nil
+    session_user = nil
 
     # use transaction
     ActiveRecord::Base.transaction do
 
-      # create sender if needed
-      sender_user_id = mail[ 'x-zammad-customer-id'.to_sym ]
-      if !sender_user_id
-        raise 'No x-zammad-customer-id, no sender set!'
+      # get sender user
+      session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
+      if !session_user_id
+        raise 'No x-zammad-session-user-id, no sender set!'
       end
-      user = User.lookup(id: sender_user_id)
-      if !user
-        raise "No user found for x-zammad-customer-id: #{sender_user_id}!"
+      session_user = User.lookup(id: session_user_id)
+      if !session_user
+        raise "No user found for x-zammad-session-user-id: #{session_user_id}!"
       end
 
       # set current user
-      UserInfo.current_user_id = user.id
+      UserInfo.current_user_id = session_user.id
 
       # get ticket# based on email headers
       if mail[ 'x-zammad-ticket-id'.to_sym ]
@@ -468,7 +468,7 @@ retrns
         if !mail[ 'x-zammad-ticket-followup-state'.to_sym ]
           if state_type.name != 'new' && !mail[ 'x-zammad-out-of-office'.to_sym ]
             ticket.state = Ticket::State.find_by(name: 'open')
-            ticket.save
+            ticket.save!
           end
         end
       end
@@ -496,7 +496,6 @@ retrns
         end
         ticket = Ticket.new(
           group_id: group.id,
-          customer_id: user.id,
           title: mail[:subject] || '',
           state_id: Ticket::State.find_by(name: 'new').id,
           priority_id: Ticket::Priority.find_by(name: '2 normal').id,
@@ -566,7 +565,7 @@ retrns
     filters.each { |_prio, backend|
       Rails.logger.debug "run postmaster post filter #{backend}"
       begin
-        backend.run(channel, mail, ticket, article, user)
+        backend.run(channel, mail, ticket, article, session_user)
       rescue => e
         Rails.logger.error "can't run postmaster post filter #{backend}"
         Rails.logger.error e.inspect
@@ -574,7 +573,7 @@ retrns
     }
 
     # return new objects
-    [ticket, article, user, mail]
+    [ticket, article, session_user, mail]
   end
 
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
