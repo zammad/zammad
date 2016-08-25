@@ -7,6 +7,7 @@ class App.TicketZoomArticleActions extends App.Controller
     'click [data-type=twitterStatusReply]':        'twitterStatusReply'
     'click [data-type=twitterDirectMessageReply]': 'twitterDirectMessageReply'
     'click [data-type=facebookFeedReply]':         'facebookFeedReply'
+    'click [data-type=delete]':                    'delete'
 
   constructor: ->
     super
@@ -150,6 +151,18 @@ class App.TicketZoomArticleActions extends App.Controller
       icon: 'split'
       href: '#ticket/create/' + article.ticket_id + '/' + article.id
     }
+
+    if article.type.name is 'note'
+      user = undefined
+      if App.Session.get('id') == article.created_by_id
+        user = App.User.find(App.Session.get('id'))
+        if user.permission('ticket.agent')
+          actions.push {
+            name: 'delete'
+            type: 'delete'
+            icon: 'trash'
+            href: '#'
+          }
     actions
 
   facebookFeedReply: (e) =>
@@ -355,6 +368,19 @@ class App.TicketZoomArticleActions extends App.Controller
 
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
 
+  delete: (e) =>
+    e.preventDefault()
+
+    callback = ->
+      article_id = $(e.target).parents('[data-id]').data('id')
+      article    = App.TicketArticle.find(article_id)
+      article.destroy()
+
+    new App.ControllerConfirm(
+      message: 'Sure?'
+      callback: callback
+      container: @el.closest('.content')
+    )
+
   scrollToCompose: =>
     @el.closest('.content').find('.article-add').ScrollTo()
-

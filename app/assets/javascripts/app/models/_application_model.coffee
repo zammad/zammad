@@ -440,7 +440,7 @@ class App.Model extends Spine.Model
       )
 
       # subscribe and render data after server change
-      events = "#{@className}:create #{@className}:update #{@className}:touch #{@className}:destroy"
+      events = "#{@className}:create #{@className}:update #{@className}:touch"
       App.Event.bind(
         events
         (item) =>
@@ -454,8 +454,21 @@ class App.Model extends Spine.Model
                 App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
                 @full(item.id, false, true)
             App.Delay.set(callback, 500, item.id, "full-#{@className}-#{item.id}")
-
         "Item::Subscribe::#{@className}"
+      )
+
+      events = "#{@className}:destroy"
+      App.Event.bind(
+        events
+        (item) =>
+          if @SUBSCRIPTION_ITEM && @SUBSCRIPTION_ITEM[ item.id ]
+            return if !App[ @className ].exists(item.id)
+            genericObject = App[ @className ].find(item.id)
+            App.Log.debug('Model', "server delete on #{@className}.find(#{item.id}) #{item.updated_at}")
+            callback = ->
+              genericObject.trigger('remove', genericObject)
+            App.Delay.set(callback, 500, item.id, "delete-#{@className}-#{item.id}")
+        "Item::SubscribeDelete::#{@className}"
       )
 
     # remember item callback
