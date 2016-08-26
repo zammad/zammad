@@ -127,6 +127,29 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
+  test '01.04 ticket create with agent - minimal article with guess customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #4',
+      group: 'Users',
+      priority: '2 normal',
+      state: 'new',
+      customer_id: 'guess:some_new_customer@example.com',
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #4', result['title'])
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+  end
+
   test '02.02 ticket create with agent' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {

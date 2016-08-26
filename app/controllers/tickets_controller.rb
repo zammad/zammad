@@ -86,7 +86,7 @@ class TicketsController < ApplicationController
     if clean_params[:customer_id] && clean_params[:customer_id] =~ /^guess:(.+?)$/
       email = $1
       if email !~ /@/ || email =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
-        render json: { error: 'Invalid email' }, status: :unprocessable_entity
+        render json: { error: 'Invalid email of customer' }, status: :unprocessable_entity
         return
       end
       customer = User.find_by(email: email)
