@@ -96,10 +96,12 @@ class SettingsController < ApplicationController
     [:name, :area, :state_initial, :frontend, :options].each { |key|
       params.delete(key)
     }
-    [:online_service_disable, :permission, :render].each { |key|
-      params[:preferences].delete(key)
-    }
-    params[:preferences].merge!(setting.preferences)
+    if !params[:preferences].empty?
+      [:online_service_disable, :permission, :render].each { |key|
+        params[:preferences].delete(key)
+      }
+      params[:preferences].merge!(setting.preferences)
+    end
     params
   end
 
