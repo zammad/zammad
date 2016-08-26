@@ -12,7 +12,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin_full = User.create_or_update(
       login: 'setting-admin',
       firstname: 'Setting',
       lastname: 'Admin',
@@ -20,6 +20,28 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
       password: 'adminpw',
       active: true,
       roles: roles,
+      groups: groups,
+    )
+
+    role_api = Role.create_or_update(
+      name: 'AdminApi',
+      note: 'To configure your api.',
+      preferences: {
+        not: ['Customer'],
+      },
+      default_at_signup: false,
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    role_api.permission_grand('admin.api')
+    @admin_api = User.create_or_update(
+      login: 'setting-admin-api',
+      firstname: 'Setting',
+      lastname: 'Admin Api',
+      email: 'setting-admin-api@example.com',
+      password: 'adminpw',
+      active: true,
+      roles: [role_api],
       groups: groups,
     )
 
@@ -58,6 +80,13 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result['settings'])
+
+    # show
+    setting = Setting.find_by(name: 'product_name')
+    get "/api/v1/settings/#{setting.id}", {}
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized', result['error'])
   end
 
   test 'settings index with admin' do
@@ -70,6 +99,157 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
+    hit_api = false
+    hit_product_name = false
+    result.each { |setting|
+      if setting['name'] == 'api_token_access'
+        hit_api = true
+      end
+      if setting['name'] == 'product_name'
+        hit_product_name = true
+      end
+    }
+    assert_equal(true, hit_api)
+    assert_equal(true, hit_product_name)
+
+    # show
+    setting = Setting.find_by(name: 'product_name')
+    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('product_name', result['name'])
+
+    setting = Setting.find_by(name: 'api_token_access')
+    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('api_token_access', result['name'])
+
+    # update
+    setting = Setting.find_by(name: 'product_name')
+    params = {
+      id: setting.id,
+      name: 'some_new_name',
+      preferences: {
+        permission: ['admin.branding', 'admin.some_new_permission'],
+        some_new_key: true,
+      }
+    }
+    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('product_name', result['name'])
+    assert_equal(1, result['preferences']['permission'].length)
+    assert_equal('admin.branding', result['preferences']['permission'][0])
+    assert_equal(true, result['preferences']['some_new_key'])
+
+    # update
+    setting = Setting.find_by(name: 'api_token_access')
+    params = {
+      id: setting.id,
+      name: 'some_new_name',
+      preferences: {
+        permission: ['admin.branding', 'admin.some_new_permission'],
+        some_new_key: true,
+      }
+    }
+    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('api_token_access', result['name'])
+    assert_equal(1, result['preferences']['permission'].length)
+    assert_equal('admin.api', result['preferences']['permission'][0])
+    assert_equal(true, result['preferences']['some_new_key'])
+
+    # delete
+    setting = Setting.find_by(name: 'product_name')
+    delete "/api/v1/settings/#{setting.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (feature not possible)', result['error'])
+  end
+
+  test 'settings index with admin-api' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-admin-api@example.com', 'adminpw')
+
+    # index
+    get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+    hit_api = false
+    hit_product_name = false
+    result.each { |setting|
+      if setting['name'] == 'api_token_access'
+        hit_api = true
+      end
+      if setting['name'] == 'product_name'
+        hit_product_name = true
+      end
+    }
+    assert_equal(true, hit_api)
+    assert_equal(false, hit_product_name)
+
+    # show
+    setting = Setting.find_by(name: 'product_name')
+    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (required ["admin.branding"])', result['error'])
+
+    setting = Setting.find_by(name: 'api_token_access')
+    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('api_token_access', result['name'])
+
+    # update
+    setting = Setting.find_by(name: 'product_name')
+    params = {
+      id: setting.id,
+      name: 'some_new_name',
+      preferences: {
+        permission: ['admin.branding', 'admin.some_new_permission'],
+        some_new_key: true,
+      }
+    }
+    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (required ["admin.branding"])', result['error'])
+
+    # update
+    setting = Setting.find_by(name: 'api_token_access')
+    params = {
+      id: setting.id,
+      name: 'some_new_name',
+      preferences: {
+        permission: ['admin.branding', 'admin.some_new_permission'],
+        some_new_key: true,
+      }
+    }
+    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('api_token_access', result['name'])
+    assert_equal(1, result['preferences']['permission'].length)
+    assert_equal('admin.api', result['preferences']['permission'][0])
+    assert_equal(true, result['preferences']['some_new_key'])
+
+    # delete
+    setting = Setting.find_by(name: 'product_name')
+    delete "/api/v1/settings/#{setting.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (feature not possible)', result['error'])
   end
 
   test 'settings index with agent' do
@@ -83,6 +263,13 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert_not(result['settings'])
     assert_equal('Not authorized (user)!', result['error'])
+
+    # show
+    setting = Setting.find_by(name: 'product_name')
+    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (user)', result['error'])
   end
 
   test 'settings index with customer' do
@@ -96,6 +283,20 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert_not(result['settings'])
     assert_equal('Not authorized (user)!', result['error'])
+
+    # show
+    setting = Setting.find_by(name: 'product_name')
+    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (user)', result['error'])
+
+    # delete
+    setting = Setting.find_by(name: 'product_name')
+    delete "/api/v1/settings/#{setting.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (feature not possible)', result['error'])
   end
 
 end

@@ -10,4 +10,41 @@ class PermissionTest < ActiveSupport::TestCase
     assert_equal(2, permissions.count)
   end
 
+  test 'user permission' do
+
+    Permission.create_if_not_exists(
+      name: 'admin.permission1',
+      note: 'Admin Interface',
+      preferences: {},
+    )
+    role_permission1 = Role.create_or_update(
+      name: 'AdminPermission1',
+      note: 'To configure your permission1.',
+      preferences: {
+        not: ['Customer'],
+      },
+      default_at_signup: false,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    role_permission1.permission_grand('admin.permission1')
+    user_with_permission1 = User.create_or_update(
+      login: 'setting-permission1',
+      firstname: 'Setting',
+      lastname: 'Admin Permission1',
+      email: 'setting-admin-permission1@example.com',
+      password: 'some_pw',
+      active: true,
+      roles: [role_permission1],
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(true, user_with_permission1.permissions?('admin.permission1'))
+    assert_equal(true, user_with_permission1.permissions?('admin.*'))
+    assert_equal(false, user_with_permission1.permissions?('admi.*'))
+    assert_equal(false, user_with_permission1.permissions?('admin.permission2'))
+    assert_equal(false, user_with_permission1.permissions?('admin'))
+
+  end
+
 end

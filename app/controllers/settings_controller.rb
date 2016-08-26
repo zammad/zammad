@@ -5,29 +5,38 @@ class SettingsController < ApplicationController
 
   # GET /settings
   def index
-    model_index_render(Setting, params)
+    list = []
+    Setting.all.each { |setting|
+      next if setting.preferences[:permission] && !current_user.permissions?(setting.preferences[:permission])
+      list.push setting
+    }
+    render json: list, status: :ok
   end
 
   # GET /settings/1
   def show
+    check_access('read')
     model_show_render(Setting, params)
   end
 
   # POST /settings
   def create
-    model_create_render(Setting, params)
+    raise Exceptions::NotAuthorized, 'Not authorized (feature not possible)'
   end
 
   # PUT /settings/1
   def update
-    check_access
-    model_update_render(Setting, params)
+    check_access('write')
+    clean_params = keep_certain_attributes
+    model_update_render(Setting, clean_params)
   end
 
   # PUT /settings/image/:id
   def update_image
+    check_access('write')
+    clean_params = keep_certain_attributes
 
-    if !params[:logo]
+    if !clean_params[:logo]
       render json: {
         result: 'invalid',
         message: 'Need logo param',
@@ -36,7 +45,7 @@ class SettingsController < ApplicationController
     end
 
     # validate image
-    if params[:logo] !~ /^data:image/i
+    if clean_params[:logo] !~ /^data:image/i
       render json: {
         result: 'invalid',
         message: 'Invalid payload, need data:image in logo param',
@@ -45,7 +54,7 @@ class SettingsController < ApplicationController
     end
 
     # process image
-    file = StaticAssets.data_url_attributes(params[:logo])
+    file = StaticAssets.data_url_attributes(clean_params[:logo])
     if !file[:content] || !file[:mime_type]
       render json: {
         result: 'invalid',
@@ -58,7 +67,7 @@ class SettingsController < ApplicationController
     StaticAssets.store_raw(file[:content], file[:mime_type])
 
     # store resized image 1:1
-    setting = Setting.find_by(name: 'product_logo')
+    setting = Setting.lookup(name: 'product_logo')
     if params[:logo_resize] && params[:logo_resize] =~ /^data:image/i
 
       # data:image/png;base64
@@ -66,7 +75,7 @@ class SettingsController < ApplicationController
 
       # store image 1:1
       setting.state = StaticAssets.store(file[:content], file[:mime_type])
-      setting.save
+      setting.save!
     end
 
     render json: {
@@ -77,16 +86,36 @@ class SettingsController < ApplicationController
 
   # DELETE /settings/1
   def destroy
-    check_access
-    model_destory_render(Setting, params)
+    raise Exceptions::NotAuthorized, 'Not authorized (feature not possible)'
   end
 
   private
 
-  def check_access
-    return true if !Setting.get('system_online_service')
+  def keep_certain_attributes
     setting = Setting.find(params[:id])
-    return true if setting.preferences && !setting.preferences[:online_service_disable]
-    raise Exceptions::NotAuthorized
+    [:name, :area, :state_initial, :frontend, :options].each { |key|
+      params.delete(key)
+    }
+    [:online_service_disable, :permission, :render].each { |key|
+      params[:preferences].delete(key)
+    }
+    params[:preferences].merge!(setting.preferences)
+    params
+  end
+
+  def check_access(type)
+    setting = Setting.lookup(id: params[:id])
+
+    if setting.preferences[:permission] && !current_user.permissions?(setting.preferences[:permission])
+      raise Exceptions::NotAuthorized, "Not authorized (required #{setting.preferences[:permission].inspect})"
+    end
+
+    if type == 'write'
+      return true if !Setting.get('system_online_service')
+      if setting.preferences && setting.preferences[:online_service_disable]
+        raise Exceptions::NotAuthorized, 'Not authorized (service disabled)'
+      end
+    end
+    true
   end
 end

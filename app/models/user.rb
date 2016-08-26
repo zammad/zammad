@@ -350,6 +350,8 @@ true or false for permission
 
   user.permissions?('permission') # access to all sub keys
 
+  user.permissions?('permission.*') # access if one sub key access exists
+
 returns
 
   true|false
@@ -368,8 +370,16 @@ returns
         cache = Cache.get(cache_key)
         return cache if cache
       end
-      permissions = Object.const_get('Permission').with_parents(local_key)
-      Object.const_get('Permission').joins(:roles).where('roles.id IN (?) AND permissions.name IN (?)', role_ids, permissions).each { |permission|
+      list = []
+      if local_key =~ /\.\*$/
+        local_key.sub!('.*', '.%')
+        permissions = Object.const_get('Permission').with_parents(local_key)
+        list = Object.const_get('Permission').joins(:roles).where('roles.id IN (?) AND (permissions.name IN (?) OR permissions.name LIKE ?)', role_ids, permissions, local_key)
+      else
+        permissions = Object.const_get('Permission').with_parents(local_key)
+        list = Object.const_get('Permission').joins(:roles).where('roles.id IN (?) AND permissions.name IN (?)', role_ids, permissions)
+      end
+      list.each { |permission|
         next if permission.preferences[:selectable] == false
         Cache.write(key, true, expires_in: 20.seconds)
         return true
