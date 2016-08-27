@@ -292,6 +292,11 @@ class App.Model extends Spine.Model
   methodWhichIsCalledAtLocalOrServerSiteChange = (changedItems) ->
     console.log("Collection has changed", changedItems, localOrServer)
 
+  # localOrServer can be:
+  #  change -> has changed local
+  #  destroy -> has beed removed local or remote
+  #  refresh -> has been changed remote
+
   params =
     initFetch: true # fetch initial collection
 
@@ -376,6 +381,11 @@ class App.Model extends Spine.Model
   methodWhichIsCalledAtLocalOrServerSiteChange = (changedItem, localOrServer) ->
     console.log("Item has changed", changedItem, localOrServer)
 
+  # localOrServer can be:
+  #  change -> has changed local
+  #  destroy -> has been removed local or remote
+  #  refresh -> has been changed remote
+
   model = App.Model.find(1)
   @subscribeId = model.subscribe(methodWhichIsCalledAtLocalOrServerSiteChange)
 
@@ -407,17 +417,17 @@ class App.Model extends Spine.Model
               callback(item, 'change')
       )
       @bind(
-        'remove'
+        'destroy'
         (items) =>
 
           # check if result is array or singel item
           if !_.isArray(items)
             items = [items]
-          App.Log.debug('Model', "local remove #{@className}", items)
+          App.Log.debug('Model', "local destroy #{@className}", items)
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
               item = App[ @className ]._fillUp(item)
-              callback(item, 'remove')
+              callback(item, 'destroy')
       )
 
       @changeTable = {}
@@ -466,7 +476,7 @@ class App.Model extends Spine.Model
             genericObject = App[ @className ].find(item.id)
             App.Log.debug('Model', "server delete on #{@className}.find(#{item.id}) #{item.updated_at}")
             callback = ->
-              genericObject.trigger('remove', genericObject)
+              genericObject.trigger('destroy', genericObject)
             App.Delay.set(callback, 500, item.id, "delete-#{@className}-#{item.id}")
         "Item::SubscribeDelete::#{@className}"
       )

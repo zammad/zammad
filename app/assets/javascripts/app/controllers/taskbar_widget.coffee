@@ -42,7 +42,7 @@ class App.TaskbarWidget extends App.CollectionController
       @uIRunner()
     )
     @bind('taskRemove', (tasks) =>
-      @queue.push ['remove', tasks]
+      @queue.push ['destroy', tasks]
       @uIRunner()
     )
     @bind('taskCollectionOrderSet', (task_keys) =>

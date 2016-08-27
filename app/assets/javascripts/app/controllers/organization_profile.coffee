@@ -174,7 +174,7 @@ class Object extends App.ObserverController
       data = {}
       data[name] = value
       org.updateAttributes(data)
-      @log 'notice', 'update', name, value, org
+      @log 'debug', 'update', name, value, org
 
 class Member extends App.ObserverController
   model: 'User'
