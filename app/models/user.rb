@@ -432,7 +432,7 @@ returns
       end
       condition += 'roles_users.role_id IN (?)'
     }
-    User.joins(:users_roles).where("(#{condition}) AND users.active = ?", *total_role_ids, true).order(:id)
+    User.joins(:users_roles).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.order(:id)
   end
 
 =begin
