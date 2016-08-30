@@ -260,27 +260,40 @@ class ApplicationController < ActionController::Base
     end
 
     # check http token based authentication
-    authenticate_with_http_token do |token, _options|
-      logger.debug "http token auth check '#{token}'"
+    authenticate_with_http_token do |token_string, _options|
+      logger.debug "http token auth check '#{token_string}'"
       request.session_options[:skip] = true # do not send a session cookie
       if Setting.get('api_token_access') == false
         raise Exceptions::NotAuthorized, 'API token access disabled!'
       end
       user = Token.check(
         action: 'api',
-        name: token,
+        name: token_string,
         inactive_user: true,
       )
       if user && auth_param[:permission]
         user = Token.check(
           action: 'api',
-          name: token,
+          name: token_string,
           permission: auth_param[:permission],
           inactive_user: true,
         )
         raise Exceptions::NotAuthorized, 'Not authorized (token)!' if !user
       end
-      @_token_auth = token # remember for permission_check
+
+      if user
+        token = Token.find_by(name: token_string)
+
+        token.last_used_at = Time.zone.now
+        token.save!
+
+        if token.expires_at &&
+           Time.zone.today >= token.expires_at
+          raise Exceptions::NotAuthorized, 'Not authorized (token expired)!'
+        end
+      end
+
+      @_token_auth = token_string # remember for permission_check
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
 

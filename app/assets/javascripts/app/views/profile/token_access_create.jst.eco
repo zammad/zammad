@@ -5,6 +5,13 @@
   <div class="controls"><input id="token-label" type="text" name="label" value="" class="form-control js-input" required></div>
 </div>
 
+<div class="input form-group">
+  <div class="formGroup-label">
+    <label for="token-label"><%- @T('Expires') %></label>
+  </div>
+  <div class="controls js-date"></div>
+</div>
+
 <div class="permission form-group checkbox">
   <div class="checkbox">
   <% for permission in @permissions: %>

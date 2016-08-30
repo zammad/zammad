@@ -417,6 +417,11 @@ class PreferencesTest < TestCase
       css:   '#content .modal .js-input',
       value: 'Some App#1',
     )
+    set(
+      css:   '#content .modal .js-datepicker',
+      value: '05/15/2022',
+    )
+    sendkey(value: :tab)
     click(css: '#content .modal input[value="ticket.agent"] ~ .label-text')
     click(css: '#content .modal .js-submit')
     watch_for(
@@ -427,6 +432,10 @@ class PreferencesTest < TestCase
     watch_for(
       css: '#content .js-tokenList',
       value: 'Some App#1'
+    )
+    watch_for(
+      css: '#content .js-tokenList',
+      value: '05/15/2022'
     )
 
     click(css: '#content .js-create')

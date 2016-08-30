@@ -205,6 +205,8 @@ class CreateBase < ActiveRecord::Migration
       t.string  :action,              limit: 40,  null: false
       t.string  :label,               limit: 255, null: true
       t.text    :preferences,         limit: 500.kilobytes + 1, null: true
+      t.timestamp :last_used_at,                  null: true
+      t.date :expires_at,                         null: true
       t.timestamps                                null: false
     end
     add_index :tokens, :user_id

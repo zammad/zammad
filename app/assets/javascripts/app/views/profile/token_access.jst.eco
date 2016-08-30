@@ -16,27 +16,23 @@
       <th><%- @T('Name') %></th>
       <th><%- @T('Permission') %></th>
       <th><%- @T('Created') %></th>
-<!--
       <th><%- @T('Expires') %></th>
       <th><%- @T('Last used') %></th>
--->
       <th><%- @T('Delete') %></th>
     </tr>
   </thead>
   <tbody>
   <% if _.isEmpty(@tokens): %>
     <tr>
-      <td colspan="3"><%- @T('none') %>
+      <td colspan="6"><%- @T('none') %>
   <% else: %>
     <% for token in @tokens: %>
       <tr>
         <td><%= token.label %></td>
         <td><% if token.preferences && token.preferences.permission: %><%= token.preferences.permission.join(', ') %><% end %></td>
         <td><%- @humanTime(token.created_at) %></td>
-  <!--
-        <td><%- @humanTime(token.expired_at) %></td>
+        <td><%- @Tdate(token.expires_at) %></td>
         <td><%- @humanTime(token.last_used_at) %></td>
-  -->
         <td class="settings-list-controls">
           <div>
             <a class="settings-list-control js-delete" href="#" data-token-id="<%- token.id %>" title="<%- @Ti('Delete') %>"><%- @Icon('trash') %></a>

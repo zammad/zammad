@@ -53,6 +53,7 @@ class UserAccessTokenController < ApplicationController
       label:       params[:label],
       persistent:  true,
       user_id:     current_user.id,
+      expires_at:  params[:expires_at],
       preferences: {
         permission: params[:permission]
       }
