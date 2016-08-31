@@ -43,10 +43,13 @@ class App.Run extends App.Controller
       sortedKeys = Object.keys(widgets).sort()
       for key in sortedKeys
         widget = widgets[key]
-        new widget(
-          el:  el
-          key: key
-        )
+        try
+          new widget(
+            el:  el
+            key: key
+          )
+        catch e
+          @log 'error', "widget #{key}:", e
     App.Event.trigger(event + ':ready')
 
 class App.Content extends App.ControllerWidgetPermanent
