@@ -3,7 +3,7 @@ class App.UserProfile extends App.Controller
     super
 
     # check authentication
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     # fetch new data if needed
     App.User.full(@user_id, @render)

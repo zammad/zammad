@@ -2,7 +2,7 @@ class App.OrganizationProfile extends App.Controller
   constructor: (params) ->
     super
 
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     # fetch new data if needed
     App.Organization.full(@organization_id, @render)

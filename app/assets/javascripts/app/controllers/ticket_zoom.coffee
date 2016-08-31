@@ -14,7 +14,7 @@ class App.TicketZoom extends App.Controller
     super
 
     # check authentication
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     @formMeta     = undefined
     @ticket_id    = params.ticket_id
