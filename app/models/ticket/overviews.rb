@@ -19,11 +19,11 @@ returns
 
     # get customer overviews
     if data[:current_user].role?('Customer')
-      role = Role.find_by(name: 'Customer')
+      role_id = Role.lookup(name: 'Customer').id
       overviews = if data[:current_user].organization_id && data[:current_user].organization.shared
-                    Overview.where(role_id: role.id, active: true).order(:prio)
+                    Overview.where(role_id: role_id, active: true).order(:prio)
                   else
-                    Overview.where(role_id: role.id, organization_shared: false, active: true).order(:prio)
+                    Overview.where(role_id: role_id, organization_shared: false, active: true).order(:prio)
                   end
       overviews_list = []
       overviews.each { |overview|
@@ -36,8 +36,8 @@ returns
 
     # get agent overviews
     return if !data[:current_user].role?('Agent')
-    role = Role.find_by(name: 'Agent')
-    overviews = Overview.where(role_id: role.id, active: true).order(:prio)
+    role_id = Role.lookup(name: 'Agent').id
+    overviews = Overview.where(role_id: role_id, active: true).order(:prio)
     overviews_list = []
     overviews.each { |overview|
       user_ids = overview.user_ids
@@ -104,12 +104,13 @@ returns
                             .where(query_condition, *bind_condition)
                             .order(order_by)
                             .limit(500)
+                            .pluck(:id, :updated_at)
 
       tickets = []
       ticket_result.each { |ticket|
         ticket_item = {
-          id: ticket.id,
-          updated_at: ticket.updated_at,
+          id: ticket[0],
+          updated_at: ticket[1],
         }
         tickets.push ticket_item
       }
