@@ -75,12 +75,6 @@ class App.Content extends App.ControllerWidgetPermanent
           @el.unbind()
           @el.undelegate()
 
-          # send current controller
-          params_only = {}
-          for i of params
-            if typeof params[i] isnt 'object'
-              params_only[i] = params[i]
-
           # remember history
           # needed to mute "redirect" url to support browser back
           history = App.Config.get('History')
@@ -91,7 +85,10 @@ class App.Content extends App.ControllerWidgetPermanent
           # execute controller
           controller = (params) =>
             params.el = @el
-            new callback(params)
+            try
+              new callback(params)
+            catch e
+              @log 'error', "route #{route}:", e
           controller(params)
         )
 
