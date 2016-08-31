@@ -640,22 +640,20 @@ class App.Controller extends Spine.Controller
 
 class App.ControllerPermanent extends App.Controller
   constructor: ->
-    super
-
-    # check authentication
     if @requiredPermission
       @permissionCheckRedirect(@requiredPermission, true)
+
+    super
 
     $('.content').addClass('hide')
     @navShow()
 
 class App.ControllerContent extends App.Controller
   constructor: ->
-    super
-
-    # check authentication
     if @requiredPermission
       @permissionCheckRedirect(@requiredPermission)
+
+    super
 
     $('.content').addClass('hide')
     $('#content').removeClass('hide')
