@@ -16,8 +16,8 @@ class Ticket < ApplicationModel
   extend Ticket::Search
 
   store           :preferences
-  before_create   :check_generate, :check_defaults, :check_title
-  before_update   :check_defaults, :check_title, :reset_pending_time
+  before_create   :check_generate, :check_defaults, :check_title, :check_escalation_update
+  before_update   :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
   before_destroy  :destroy_dependencies
 
   notify_clients_support
@@ -874,6 +874,11 @@ result
     return if current_state_type.name =~ /^pending/i
 
     self.pending_time = nil
+  end
+
+  def check_escalation_update
+    escalation_calculation_int
+    true
   end
 
   def destroy_dependencies

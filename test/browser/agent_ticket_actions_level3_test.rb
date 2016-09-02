@@ -145,10 +145,11 @@ class AgentTicketActionsLevel3Test < TestCase
     )
 
     # check content and edit screen in instance 1
-    match(
+    watch_for(
       browser: browser2,
       css: '.active div.ticket-article',
       value: 'some level 3 <b>body</b> in instance 2',
+      timeout: 1,
     )
 
     ticket_verify(

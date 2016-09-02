@@ -26,9 +26,11 @@ class App.TicketCustomer extends App.ControllerModal
       @close()
 
       # update ticket
-      @ticket.updateAttributes(
+      ticket = App.Ticket.find(@ticket_id)
+      ticket.article = undefined
+      ticket.updateAttributes(
         customer_id: @customer_id
       )
 
     # load user if not already exists
-    App.User.full( @customer_id, callback )
+    App.User.full(@customer_id, callback)
