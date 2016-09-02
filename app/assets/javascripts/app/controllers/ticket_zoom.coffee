@@ -14,7 +14,7 @@ class App.TicketZoom extends App.Controller
     super
 
     # check authentication
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     @formMeta     = undefined
     @ticket_id    = params.ticket_id
@@ -44,11 +44,8 @@ class App.TicketZoom extends App.Controller
       return if data.id.toString() isnt @ticket_id.toString()
 
       # check if we already have the request queued
-      #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
-      update = =>
-        @fetch()
-      if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-        @delay(update, 1200, "ticket-zoom-#{@ticket_id}")
+      #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCallRequested)
+      @fetchMayBe(data, true)
     )
 
   fetchStart: =>
@@ -63,6 +60,24 @@ class App.TicketZoom extends App.Controller
     if @fetchIsRunningAgain
       @fetchIsRunningAgain = false
       @fetch()
+
+  fetchMayBe: (data, delay = true) =>
+    if @ticketUpdatedAtLastCallRequested
+      if new Date(data.updated_at).getTime() is new Date(@ticketUpdatedAtLastCallRequested).getTime()
+        @log 'debug', 'no fetch, current ticket already there or requested'
+        return
+      if new Date(data.updated_at).getTime() < new Date(@ticketUpdatedAtLastCallRequested).getTime()
+        @log 'debug', 'no fetch, current ticket already newser or requested'
+        return
+
+    @ticketUpdatedAtLastCallRequested = data.updated_at
+    if delay isnt true
+      @fetch()
+      return
+
+    fetchDelayed = =>
+      @fetch()
+    @delay(fetchDelayed, 1200, "ticket-zoom-#{@ticket_id}")
 
   fetch: =>
     return if !@Session.get()
@@ -79,17 +94,18 @@ class App.TicketZoom extends App.Controller
 
         # check if ticket has changed
         newTicketRaw = data.assets.Ticket[@ticket_id]
-        if @ticketUpdatedAtLastCall
+        if @ticketUpdatedAtLastCallDone
 
           # return if ticket hasnt changed
-          return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at
+          return if @ticketUpdatedAtLastCallDone is newTicketRaw.updated_at
 
           # notify if ticket changed not by my self
           if newTicketRaw.updated_by_id isnt @Session.get('id')
             App.TaskManager.notify(@task_key)
 
         # remember current data
-        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+        @ticketUpdatedAtLastCallRequested = newTicketRaw.updated_at
+        @ticketUpdatedAtLastCallDone = newTicketRaw.updated_at
 
         @load(data)
         App.SessionStorage.set(@key, data)
@@ -111,7 +127,7 @@ class App.TicketZoom extends App.Controller
         @renderDone = false
 
         # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
-        if @ticketUpdatedAtLastCall && status is 0
+        if @ticketUpdatedAtLastCallRequested && status is 0
           console.log('network issues e. g. temp. not connection', status, statusText, detail)
           return
 
@@ -698,27 +714,28 @@ class App.TicketZoom extends App.Controller
       ticket.article = article
 
     # submit changes
+    ui = @
     ticket.save(
-      done: (r) =>
+      done: (r) ->
 
         # reset article - should not be resubmited on next ticket update
         ticket.article = undefined
 
         # reset form after save
-        @reset()
+        ui.reset()
 
         if taskAction is 'closeNextInOverview'
-          if @overview_id
+          if ui.overview_id
             current_position = 0
-            overview = App.Overview.find(@overview_id)
+            overview = App.Overview.find(ui.overview_id)
             list = App.OverviewListCollection.get(overview.link)
             for ticket in list.tickets
               current_position += 1
-              if ticket.id is @ticket_id
+              if ticket.id is ui.ticket_id
                 next = list.tickets[current_position]
                 if next
                   # close task
-                  App.TaskManager.remove(@task_key)
+                  App.TaskManager.remove(ui.task_key)
 
                   # open task via task manager to get overview information
                   App.TaskManager.execute(
@@ -726,33 +743,43 @@ class App.TicketZoom extends App.Controller
                     controller: 'TicketZoom'
                     params:
                       ticket_id:   next.id
-                      overview_id: @overview_id
+                      overview_id: ui.overview_id
                     show:       true
                   )
-                  @navigate "ticket/zoom/#{next.id}"
+                  ui.navigate "ticket/zoom/#{next.id}"
                   return
 
           # fallback, close task
           taskAction = 'closeTab'
 
         if taskAction is 'closeTab'
-          App.TaskManager.remove(@task_key)
+          App.TaskManager.remove(ui.task_key)
           nextTaskUrl = App.TaskManager.nextTaskUrl()
           if nextTaskUrl
-            @navigate nextTaskUrl
+            ui.navigate nextTaskUrl
             return
 
-          @navigate '#'
+          ui.navigate '#'
           return
 
+        ui.autosaveStart()
+        ui.muteTask()
+        ui.fetchMayBe({ id: @id, updated_at: @updated_at }, true)
+
+        # enable form
+        ui.formEnable(e)
+
+        App.Event.trigger('overview:fetch')
+      fail: (settings, details) =>
+        App.Event.trigger 'notify', {
+          type:    'error'
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update!')
+          timeout: 2000
+        }
         @autosaveStart()
         @muteTask()
         @fetch()
-
-        # enable form
         @formEnable(e)
-
-        App.Event.trigger('overview:fetch')
     )
 
   bookmark: (e) ->
