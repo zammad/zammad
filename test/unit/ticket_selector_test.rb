@@ -85,7 +85,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     Ticket.destroy_all
 
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some title1',
       group: group,
       customer_id: customer1.id,
@@ -102,7 +102,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket1.organization.id, organization1.id)
     sleep 1
 
-    ticket2 = Ticket.create(
+    ticket2 = Ticket.create!(
       title: 'some title2',
       group: group,
       customer_id: customer2.id,
@@ -118,18 +118,18 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket2.organization_id, nil)
     sleep 1
 
-    ticket3 = Ticket.create(
+    ticket3 = Ticket.create!(
       title: 'some title3',
       group: group,
       customer_id: customer2.id,
       state: Ticket::State.lookup(name: 'open'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      escalation_time: '2015-02-06 10:00:00',
       created_at: '2015-02-05 16:37:00',
       #updated_at: '2015-02-05 17:37:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
+    ticket3.update_columns(escalation_time: '2015-02-06 10:00:00')
     assert(ticket3, 'ticket created')
     assert_equal(ticket3.customer.id, customer2.id)
     assert_equal(ticket3.organization_id, nil)

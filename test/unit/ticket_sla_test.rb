@@ -11,7 +11,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = Ticket.destroy_all
     assert(delete, 'ticket destroy_all')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -343,7 +343,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -361,7 +361,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.state.name, 'new', 'ticket.state verify')
 
     # create inbound article
-    article_inbound = Ticket::Article.create(
+    article_inbound = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -385,7 +385,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_time, nil, 'ticket.close_time verify - inbound')
 
     # create outbound article
-    article_outbound = Ticket::Article.create(
+    article_outbound = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_recipient@example.com',
       to: 'some_sender@example.com',
@@ -414,7 +414,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -432,7 +432,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.state.name, 'new', 'ticket.state verify')
 
     # create inbound article
-    article_inbound = Ticket::Article.create(
+    article_inbound = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       subject: 'some subject',
@@ -455,7 +455,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_time, nil, 'ticket.close_time verify - inbound')
 
     # create note article
-    article_note = Ticket::Article.create(
+    article_note = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       subject: 'some subject',
@@ -478,7 +478,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_time, nil, 'ticket.close_time verify - inbound')
 
     # create outbound article
-    article_outbound = Ticket::Article.create(
+    article_outbound = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       subject: 'some subject',
@@ -515,7 +515,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = Ticket.destroy_all
     assert(delete, 'ticket destroy_all')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -610,7 +610,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -700,7 +700,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = sla.destroy
     assert(delete, 'sla destroy')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -732,7 +732,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.update_time_escal_date.gmtime.to_s, '2013-10-21 09:00:00 UTC', 'ticket.update_time_escal_date verify 1')
     assert_equal(ticket.close_time_escal_date.gmtime.to_s, '2013-10-21 10:00:00 UTC', 'ticket.close_time_escal_date verify 1')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title holiday test',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -765,7 +765,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     delete = Ticket.destroy_all
     assert(delete, 'ticket destroy_all')
 
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some title äöüß3',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -936,7 +936,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_at: '2013-06-04 15:00:00 UTC',
       updated_at: '2013-06-04 15:00:00 UTC',
     )
-    ticket2.escalation_calculation
+    ticket2.escalation_calculation(true)
     ticket2 = Ticket.find(ticket2.id)
     assert_equal(ticket2.escalation_time.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket2.escalation_time verify 1')
     assert_equal(ticket2.first_response_escal_date.gmtime.to_s, '2013-06-04 16:00:00 UTC', 'ticket2.first_response_escal_date verify 1')
@@ -953,7 +953,7 @@ class TicketSlaTest < ActiveSupport::TestCase
   end
 
   test 'ticket escalation suspend' do
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß3',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -1091,7 +1091,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'ticket destroy')
 
     # test Ticket created in state pending and closed without reopen or state change
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß3',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -1121,6 +1121,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     ticket.update_attributes(
       close_time: '2013-06-04 12:00:00 UTC',
     )
+    ticket.escalation_calculation(true)
 
     calendar = Calendar.create_or_update(
       name: 'EU 5',
@@ -1188,7 +1189,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'ticket destroy')
 
     # test Ticket created in state pending, changed state to openen, back to pending and closed
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß3',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -1316,7 +1317,7 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     ### Test Ticket created in state pending, changed state to openen, back to pending and back to open then
     ### close ticket
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'some title äöüß3',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,

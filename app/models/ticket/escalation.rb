@@ -16,8 +16,10 @@ returns
   def self.rebuild_all
     state_list_open = Ticket::State.by_category('open')
 
-    tickets = Ticket.where(state_id: state_list_open)
-    tickets.each(&:escalation_calculation)
+    ticket_ids = Ticket.where(state_id: state_list_open).pluck(:id)
+    ticket_ids.each { |ticket_id|
+      Ticket.find(ticket_id).escalation_calculation(true)
+    }
   end
 
 =begin
@@ -29,17 +31,37 @@ rebuild escalation for ticket
 
 returns
 
-  result = true
+  result = true # true = ticket has been updated | false = no changes on ticket
 
 =end
 
-  def escalation_calculation
+  def escalation_calculation(force = false)
+    return if !escalation_calculation_int(force)
+    self.callback_loop = true
+    save!
+    self.callback_loop = false
+    true
+  end
 
-    # set escalation off if ticket is already closed
+  def escalation_calculation_int(force = false)
+    return if callback_loop == true
+
+    # return if we run import mode
+    return if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
+
+    # set escalation off if current state is not escalation relativ (e. g. ticket is closed)
+    return if !state_id
     state = Ticket::State.lookup(id: state_id)
     escalation_disabled = false
     if state.ignore_escalation?
       escalation_disabled = true
+
+      # early exit if nothing current state is not escalation relativ
+      if !force
+        return false if escalation_time.nil?
+        self.escalation_time = nil
+        return true
+      end
     end
 
     # get sla for ticket
@@ -51,23 +73,71 @@ returns
 
     # if no escalation is enabled
     if !sla || !calendar
+      preferences[:escalation_calculation] = {}
 
       # nothing to change
-      return true if !escalation_time
-
+      return false if !escalation_time
       self.escalation_time = nil
-      self.updated_by_id   = 1
-      self.callback_loop   = true
-      save
       return true
     end
 
-    # reset escalation attributes
-    self.escalation_time           = nil
-    self.first_response_escal_date = nil
-    self.update_time_escal_date    = nil
-    self.close_time_escal_date     = nil
+    # get last_update
+    if !last_contact_customer && !last_contact_agent
+      last_update = created_at
+    elsif !last_contact_customer && last_contact_agent
+      last_update = last_contact_agent
+    elsif last_contact_customer && !last_contact_agent
+      last_update = last_contact_customer
+    elsif last_contact_agent > last_contact_customer
+      last_update = last_contact_agent
+    elsif last_contact_agent < last_contact_customer
+      last_update = last_contact_customer
+    end
 
+    # check if calculation need be done
+    escalation_calculation = preferences[:escalation_calculation] || {}
+    sla_changed = true
+    if escalation_calculation['sla_id'] == sla.id && escalation_calculation['sla_updated_at'] == sla.updated_at
+      sla_changed = false
+    end
+    calendar_changed = true
+    if escalation_calculation['calendar_id'] == calendar.id && escalation_calculation['calendar_updated_at'] == calendar.updated_at
+      calendar_changed = false
+    end
+    if sla_changed == true || calendar_changed == true
+      force = true
+    end
+    first_response_changed = true
+    if escalation_calculation['first_response'] == first_response
+      first_response_changed = false
+    end
+    last_update_changed = true
+    if escalation_calculation['last_update'] == last_update
+      last_update_changed = false
+    end
+    close_time_changed = true
+    if escalation_calculation['close_time'] == close_time
+      close_time_changed = false
+    end
+
+    if !force && preferences[:escalation_calculation]
+      if first_response_changed == false &&
+         last_update_changed == false &&
+         close_time_changed == false &&
+         sla_changed == false &&
+         calendar_changed == false &&
+         escalation_calculation['escalation_disabled'] == escalation_disabled
+        return false
+      end
+    end
+
+    # reset escalation attributes
+    self.escalation_time = nil
+    if force == true
+      self.first_response_escal_date = nil
+      self.update_time_escal_date    = nil
+      self.close_time_escal_date     = nil
+    end
     biz = Biz::Schedule.new do |config|
 
       # get business hours
@@ -98,89 +168,99 @@ returns
         }
       end
       config.holidays = holidays
-
-      # get timezone
       config.time_zone = calendar.timezone
     end
 
     # get history data
-    history_data = history_get
+    history_data = nil
 
-    # fist response
     # calculate first response escalation
-    if sla.first_response_time
-      self.first_response_escal_date = destination_time(created_at, sla.first_response_time, biz, history_data)
+    if force == true || first_response_changed == true
+      if !history_data
+        history_data = history_get
+      end
+      if sla.first_response_time
+        self.first_response_escal_date = destination_time(created_at, sla.first_response_time, biz, history_data)
+      end
+
+      # get response time in min
+      if first_response
+        self.first_response_in_min = pending_minutes(created_at, first_response, biz, history_data, 'business_minutes')
+      end
+
+      # set time to show if sla is raised or not
+      if sla.first_response_time && first_response_in_min
+        self.first_response_diff_in_min = sla.first_response_time - first_response_in_min
+      end
     end
 
-    # get response time in min
-    if first_response
-      self.first_response_in_min = pending_minutes(created_at, first_response, biz, history_data, 'business_minutes')
-    else
-      self.escalation_time = first_response_escal_date
+    # calculate update time escalation
+    if force == true || last_update_changed == true
+      if !history_data
+        history_data = history_get
+      end
+      if sla.update_time && last_update
+        self.update_time_escal_date = destination_time(last_update, sla.update_time, biz, history_data)
+      end
+
+      # get update time in min
+      if last_update && last_update != created_at
+        self.update_time_in_min = pending_minutes(created_at, last_update, biz, history_data, 'business_minutes')
+      end
+
+      # set sla time
+      if sla.update_time && update_time_in_min
+        self.update_time_diff_in_min = sla.update_time - update_time_in_min
+      end
     end
 
-    # set time to show if sla is raised or not
-    if sla.first_response_time && first_response_in_min
-      self.first_response_diff_in_min = sla.first_response_time - first_response_in_min
-    end
-
-    # update time
-    # calculate escalation
-    if !last_contact_customer && !last_contact_agent
-      last_update = created_at
-    elsif !last_contact_customer && last_contact_agent
-      last_update = last_contact_agent
-    elsif last_contact_customer && !last_contact_agent
-      last_update = last_contact_customer
-    elsif last_contact_agent > last_contact_customer
-      last_update = last_contact_agent
-    elsif last_contact_agent < last_contact_customer
-      last_update = last_contact_customer
-    end
-    if sla.update_time && last_update
-      self.update_time_escal_date = destination_time(last_update, sla.update_time, biz, history_data)
-    end
-    if update_time_escal_date && ((!escalation_time && update_time_escal_date) || update_time_escal_date < escalation_time)
-      self.escalation_time = update_time_escal_date
-    end
-
-    # get update time in min
-    if last_update && last_update != created_at
-      self.update_time_in_min = pending_minutes(created_at, last_update, biz, history_data, 'business_minutes')
-    end
-
-    # set sla time
-    if sla.update_time && update_time_in_min
-      self.update_time_diff_in_min = sla.update_time - update_time_in_min
-    end
-
-    # close time
     # calculate close time escalation
-    if sla.solution_time
-      self.close_time_escal_date = destination_time(created_at, sla.solution_time, biz, history_data)
+    if force == true || close_time_changed == true
+      if !history_data
+        history_data = history_get
+      end
+      if sla.solution_time
+        self.close_time_escal_date = destination_time(created_at, sla.solution_time, biz, history_data)
+      end
+
+      # get close time in min
+      if close_time
+        self.close_time_in_min = pending_minutes(created_at, close_time, biz, history_data, 'business_minutes')
+      end
+
+      # set time to show if sla is raised or not
+      if sla.solution_time && close_time_in_min
+        self.close_time_diff_in_min = sla.solution_time - close_time_in_min
+      end
     end
 
-    # get close time in min
-    if close_time
-      self.close_time_in_min = pending_minutes(created_at, close_time, biz, history_data, 'business_minutes')
-    elsif close_time_escal_date && ((!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time)
-      self.escalation_time = close_time_escal_date
-    end
-
-    # set time to show if sla is raised or not
-    if sla.solution_time && close_time_in_min
-      self.close_time_diff_in_min = sla.solution_time - close_time_in_min
-    end
-
+    # set closest escalation time
     if escalation_disabled
       self.escalation_time = nil
+    else
+      if !first_response && first_response_escal_date
+        self.escalation_time = first_response_escal_date
+      end
+      if update_time_escal_date && ((!escalation_time && update_time_escal_date) || update_time_escal_date < escalation_time)
+        self.escalation_time = update_time_escal_date
+      end
+      if !close_time && close_time_escal_date && ((!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time)
+        self.escalation_time = close_time_escal_date
+      end
     end
 
-    return if !changed?
-
-    self.callback_loop = true
-    self.updated_by_id = 1
-    save
+    # remember already counted time to do on next update only the diff
+    preferences[:escalation_calculation] = {
+      first_response: first_response,
+      last_update: last_update,
+      close_time: close_time,
+      sla_id: sla.id,
+      sla_updated_at: sla.updated_at,
+      calendar_id: calendar.id,
+      calendar_updated_at: calendar.updated_at,
+      escalation_disabled: escalation_disabled,
+    }
+    true
   end
 
 =begin
