@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
                 :model_index_render
 
   skip_before_action :verify_authenticity_token
-  before_action :set_interface_handle, :set_user, :session_update, :user_device_check, :cors_preflight_check
-  after_action  :trigger_events, :http_log, :set_access_control_headers
+  before_action :transaction_begin, :set_user, :session_update, :user_device_check, :cors_preflight_check
+  after_action  :transaction_end, :http_log, :set_access_control_headers
 
   rescue_from StandardError, with: :server_error
   rescue_from ExecJS::RuntimeError, with: :server_error
@@ -58,13 +58,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_interface_handle
+  def transaction_begin
     ApplicationHandleInfo.current = 'application_server'
+    PushMessages.init
   end
 
-  # execute events
-  def trigger_events
+  def transaction_end
     Observer::Transaction.commit
+    PushMessages.finish
+    ActiveSupport::Dependencies::Reference.clear!
   end
 
   # Finds the User with the ID stored in the session with the key

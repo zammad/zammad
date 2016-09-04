@@ -161,12 +161,17 @@ class TicketsController < ApplicationController
     end
 
     if params[:expand]
-      result = ticket.attributes_with_relation_names
+      result = ticket.reload.attributes_with_relation_names
       render json: result, status: :created
       return
     end
 
-    render json: ticket, status: :created
+    if params[:all]
+      render json: ticket_all(ticket.reload)
+      return
+    end
+
+    render json: ticket.reload, status: :created
   end
 
   # PUT /api/v1/tickets/1
@@ -193,12 +198,17 @@ class TicketsController < ApplicationController
     end
 
     if params[:expand]
-      result = ticket.attributes_with_relation_names
+      result = ticket.reload.attributes_with_relation_names
       render json: result, status: :ok
       return
     end
 
-    render json: ticket, status: :ok
+    if params[:all]
+      render json: ticket_all(ticket.reload)
+      return
+    end
+
+    render json: ticket.reload, status: :ok
   end
 
   # DELETE /api/v1/tickets/1
