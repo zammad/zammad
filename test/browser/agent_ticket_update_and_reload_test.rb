@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel4Test < TestCase
+class AgentTicketUpdateAndReloadTest < TestCase
   def test_agent_ticket_create_with_reload
 
     @browser = browser_instance

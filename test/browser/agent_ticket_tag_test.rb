@@ -1,9 +1,8 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel8Test < TestCase
+class AgentTicketTagTest < TestCase
   def test_a_tags
-
     @browser = browser_instance
     login(
       username: 'agent1@example.com',
@@ -344,7 +343,6 @@ class AgentTicketActionLevel8Test < TestCase
         'TAGXX' => true,
       }
     )
-
   end
 
   def test_b_tags
@@ -511,140 +509,5 @@ class AgentTicketActionLevel8Test < TestCase
       css:  '#content .js-newTagSetting',
       type: 'on',
     )
-
   end
-
-  def test_c_link
-
-    @browser = browser_instance
-    login(
-      username: 'agent1@example.com',
-      password: 'test',
-      url: browser_url,
-    )
-    tasks_close_all()
-
-    ticket1 = ticket_create(
-      data: {
-        customer: 'nico',
-        group: 'Users',
-        title: 'some subject - link#1',
-        body: 'some body - link#1',
-      },
-    )
-
-    ticket2 = ticket_create(
-      data: {
-        customer: 'nico',
-        group: 'Users',
-        title: 'some subject - link#2',
-        body: 'some body - link#2',
-      },
-    )
-
-    # verify changes in second browser
-    browser2 = browser_instance
-    login(
-      browser: browser2,
-      username: 'master@example.com',
-      password: 'test',
-      url: browser_url,
-    )
-    ticket_open_by_search(
-      browser: browser2,
-      number:  ticket1[:number],
-    )
-
-    click(
-      css: '.content.active .links .js-add',
-    )
-    sleep 2
-
-    set(
-      css: '.content.active .modal-body [name="ticket_number"]',
-      value: ticket1[:number],
-    )
-    select(
-      css: '.content.active .modal-body [name="link_type"]',
-      value: 'Normal',
-    )
-    click(
-      css: '.content.active .modal-footer .js-submit',
-    )
-
-    watch_for(
-      css: '.content.active .ticketLinks',
-      value: ticket1[:title],
-    )
-
-    watch_for(
-      browser: browser2,
-      css: '.content.active .ticketLinks',
-      value: ticket2[:title],
-    )
-
-    reload()
-
-    watch_for(
-      css: '.content.active .ticketLinks',
-      value: ticket1[:title],
-    )
-    click(
-      css: '.content.active .ticketLinks .js-delete'
-    )
-    watch_for_disappear(
-      css: '.content.active .ticketLinks',
-      value: ticket1[:title],
-    )
-    watch_for_disappear(
-      browser: browser2,
-      css: '.content.active .ticketLinks',
-      value: ticket2[:title],
-    )
-
-    reload()
-
-    watch_for_disappear(
-      css: '.content.active .ticketLinks',
-      value: ticket1[:title],
-    )
-    watch_for_disappear(
-      browser: browser2,
-      css: '.content.active .ticketLinks',
-      value: ticket2[:title],
-    )
-  end
-
-  def test_d_macro
-
-    @browser = browser_instance
-    login(
-      username: 'agent1@example.com',
-      password: 'test',
-      url: browser_url,
-    )
-    tasks_close_all()
-
-    ticket1 = ticket_create(
-      data: {
-        customer: 'nico',
-        group: 'Users',
-        title: 'some subject - macro#1',
-        body: 'some body - macro#1',
-      },
-    )
-
-    click(css: '.active.content .js-submitDropdown .js-openDropdownMacro')
-    click(css: '.active.content .js-submitDropdown .js-dropdownActionMacro')
-
-    # verify tags
-    tags_verify(
-      tags: {
-        'spam' => true,
-        'tag1' => false,
-      }
-    )
-
-  end
-
 end

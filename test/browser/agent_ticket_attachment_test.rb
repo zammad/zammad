@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel6Test < TestCase
+class AgentTicketAttachmentTest < TestCase
   def test_ticket
 
     @browser = browser_instance

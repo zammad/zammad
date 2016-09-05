@@ -1,60 +1,8 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionsLevel3Test < TestCase
-  def test_check_changes
-    @browser = browser_instance
-    login(
-      username: 'agent1@example.com',
-      password: 'test',
-      url: browser_url,
-    )
-    tasks_close_all()
-
-    # confirm on create
-    ticket_create(
-      data: {
-        customer: 'nico',
-        group: 'Users',
-        title: 'some changes',
-        body: 'some body 123äöü - changes',
-      },
-      do_not_submit: true,
-    )
-    close_task(
-      data: {
-        title: 'some changes',
-      },
-      discard_changes: true,
-    )
-    sleep 1
-
-    # confirm on zoom
-    ticket1 = ticket_create(
-      data: {
-        customer: 'nico',
-        group: 'Users',
-        title: 'some changes',
-        body: 'some body 123äöü - changes',
-      },
-    )
-    ticket_update(
-      data: {
-        body: 'some note',
-      },
-      do_not_submit: true,
-    )
-    close_task(
-      data: {
-        title: 'some changes',
-      },
-      discard_changes: true,
-    )
-
-  end
-
+class AgentTicketUpdate2Test < TestCase
   def test_work_with_two_browser_on_same_ticket_edit
-
     browser1 = browser_instance
     login(
       browser: browser1,

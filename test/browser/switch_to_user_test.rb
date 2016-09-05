@@ -11,8 +11,8 @@ class SwitchToUserTest < TestCase
     )
     tasks_close_all()
 
-    click( css: 'a[href="#manage"]' )
-    click( css: 'a[href="#manage/users"]' )
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#manage/users"]')
 
     set(
       css:   '#content .js-search',
@@ -20,7 +20,7 @@ class SwitchToUserTest < TestCase
     )
     sleep 3
 
-    @browser.mouse.move_to( @browser.find_elements( { css: '#content .table-overview tbody tr:first-child' } )[0] )
+    @browser.mouse.move_to(@browser.find_elements({ css: '#content .table-overview tbody tr:first-child' } )[0])
     sleep 0.5
     click(
       css: '#content .icon-switchView',
@@ -35,12 +35,12 @@ class SwitchToUserTest < TestCase
       css: '.switchBackToUser',
       value: 'Nicole',
     )
-    login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
+    login = @browser.find_elements({ css: '.user-menu .user a' })[0].attribute('title')
     assert_equal(login, 'nicole.braun@zammad.org')
-    click( css: '.switchBackToUser .js-close' )
+    click(css: '.switchBackToUser .js-close')
 
     sleep 5
-    login = @browser.find_elements( { css: '.user-menu .user a' } )[0].attribute('title')
+    login = @browser.find_elements({ css: '.user-menu .user a' })[0].attribute('title')
     assert_equal(login, 'master@example.com')
 
   end

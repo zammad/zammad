@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel5Test < TestCase
+class AgentTicketEmailSignatureTest < TestCase
   def test_agent_signature_check
 
     suffix          = rand(99_999_999_999_999_999).to_s

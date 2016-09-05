@@ -1,11 +1,10 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionsLevel2Test < TestCase
+class AgentTicketUpdate3Test < TestCase
   def test_work_with_two_browser_on_same_ticket
 
     # work on one ticket with two browsers
-
     browser1 = browser_instance
     login(
       browser: browser1,

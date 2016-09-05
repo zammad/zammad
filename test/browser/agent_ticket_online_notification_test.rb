@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel9Test < TestCase
+class AgentTicketOnlineNotificationTest < TestCase
 
   def test_online_notifications
 
