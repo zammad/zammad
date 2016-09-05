@@ -455,15 +455,15 @@ class App.Model extends Spine.Model
         events
         (item) =>
           if @SUBSCRIPTION_ITEM && @SUBSCRIPTION_ITEM[ item.id ]
-            genericObject = undefined
-            if App[ @className ].exists(item.id)
-              genericObject = App[ @className ].find(item.id)
             App.Log.debug('Model', "server change on #{@className}.find(#{item.id}) #{item.updated_at}")
             callback = =>
-              if !genericObject || new Date(item.updated_at) >= new Date(genericObject.updated_at)
+              genericObject = undefined
+              if App[ @className ].exists(item.id)
+                genericObject = App[ @className ].find(item.id)
+              if !genericObject || new Date(item.updated_at) > new Date(genericObject.updated_at)
                 App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
                 @full(item.id, false, true)
-            App.Delay.set(callback, 500, item.id, "full-#{@className}-#{item.id}")
+            App.Delay.set(callback, 600, item.id, "full-#{@className}-#{item.id}")
         "Item::Subscribe::#{@className}"
       )
 
