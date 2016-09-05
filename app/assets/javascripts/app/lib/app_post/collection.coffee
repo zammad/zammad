@@ -64,13 +64,13 @@ class _collectionSingleton extends Spine.Module
     appObject.refresh(params.data, clear: true)
 
   loadAssets: (assets) ->
-    @log 'debug', 'loadAssets', assets
+    return if _.isEmpty(assets)
 
     # process not existing assets first / to avoid not exising ref errors
-    loadAssetsLater = []
+    loadAssetsLater = {}
     for type, collections of assets
       later = @load(type: type, data: collections, later: true)
-      if later
+      if !_.isEmpty(later)
         loadAssetsLater[type] = later
 
     # process existing assets
