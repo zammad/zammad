@@ -7,7 +7,7 @@ class Observer::Ticket::OnlineNotificationSeen::BackgroundJob
   def perform
 
     # set all online notifications to seen
-    ActiveRecord::Base.transaction do
+    Transaction.execute do
       ticket = Ticket.lookup(id: @ticket_id)
       OnlineNotification.list_by_object('Ticket', @ticket_id).each { |notification|
         next if notification.seen

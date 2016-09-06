@@ -6,6 +6,7 @@ module PushMessages
   end
 
   def self.init
+    return true if enabled?
     Thread.current[:push_messages] = []
   end
 
@@ -22,6 +23,7 @@ module PushMessages
   end
 
   def self.finish
+    return false if !enabled?
     Thread.current[:push_messages].each { |data|
       Sessions.broadcast(
         data[:message],
@@ -30,6 +32,7 @@ module PushMessages
       )
     }
     Thread.current[:push_messages] = nil
+    true
   end
 
 end

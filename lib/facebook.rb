@@ -285,9 +285,7 @@ result
     ticket = nil
 
     # use transaction
-    ActiveRecord::Base.transaction do
-
-      UserInfo.current_user_id = 1
+    Transaction.execute(reset_user_id: true) do
       existing_article = Ticket::Article.find_by(message_id: post['id'])
       ticket = if existing_article
                  existing_article.ticket
@@ -295,9 +293,6 @@ result
                  to_ticket(post, group_id, channel, page)
                end
       to_article(post, ticket, page)
-
-      # execute object transaction
-      Observer::Transaction.commit
     end
 
     ticket
