@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel7Test < TestCase
+class AgentTicketEmailReplyKeepBodyTest < TestCase
   def test_reply_message_keep_body
 
     # merge ticket with closed tab

@@ -270,4 +270,48 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('User is inactive!', result['error'])
   end
 
+  test 'token auth - expired' do
+
+    Setting.set('api_token_access', true)
+
+    admin_token = Token.create(
+      action:     'api',
+      persistent: true,
+      user_id:    @admin.id,
+      expires_at: Time.zone.today
+    )
+    admin_credentials = "Token token=#{admin_token.name}"
+
+    get '/api/v1/tickets', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Not authorized (token expired)!', result['error'])
+
+    admin_token.reload
+    assert_in_delta(admin_token.last_used_at, Time.zone.now, 1.second)
+  end
+
+  test 'token auth - not expired' do
+
+    Setting.set('api_token_access', true)
+
+    admin_token = Token.create(
+      action:     'api',
+      persistent: true,
+      user_id:    @admin.id,
+      expires_at: Time.zone.tomorrow
+    )
+    admin_credentials = "Token token=#{admin_token.name}"
+
+    get '/api/v1/tickets', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+
+    admin_token.reload
+    assert_in_delta(admin_token.last_used_at, Time.zone.now, 1.second)
+  end
+
 end

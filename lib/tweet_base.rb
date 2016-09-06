@@ -220,9 +220,8 @@ class TweetBase
         end
       }
     end
-    ActiveRecord::Base.transaction do
 
-      UserInfo.current_user_id = 1
+    Transaction.execute(reset_user_id: true) do
 
       # check if parent exists
       user = to_user(tweet)
@@ -251,9 +250,6 @@ class TweetBase
       else
         raise "Unknown tweet type '#{tweet.class}'"
       end
-
-      # execute object transaction
-      Observer::Transaction.commit
     end
 
     if @connection_type == 'stream'

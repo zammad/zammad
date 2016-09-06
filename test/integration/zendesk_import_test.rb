@@ -46,7 +46,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
   test 'check counts' do
     assert_equal(143, User.count, 'users')
     assert_equal(3, Group.count, 'groups')
-    assert_equal(4, Role.count, 'roles')
+    assert_equal(3, Role.count, 'roles')
     assert_equal(2, Organization.count, 'organizations')
     assert_equal(143, Ticket.count, 'tickets')
     assert_equal(151, Ticket::Article.count, 'ticket articles')
@@ -78,7 +78,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           phone:         '00114124',
           lieblingstier: 'Hundä',
         },
-        roles:  [role_agent, role_admin],
+        roles:  [role_admin, role_agent],
         groups: [group_support],
       },
       {
@@ -91,7 +91,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           active:        true,
           lieblingstier: nil,
         },
-        roles:  [role_agent, role_admin],
+        roles:  [role_admin, role_agent],
         groups: [group_additional_group, group_support],
       },
       {
@@ -137,8 +137,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
       check[:data].each { |key, value|
         assert_equal(value, user[key], "user.#{key} for user_id #{check[:id]}")
       }
-      assert_equal(check[:roles], user.roles.to_a, "#{user.login} roles")
-      assert_equal(check[:groups], user.groups.to_a, "#{user.login} groups")
+      assert_equal(check[:roles], user.roles.sort.to_a, "#{user.login} roles")
+      assert_equal(check[:groups], user.groups.sort.to_a, "#{user.login} groups")
     }
   end
 

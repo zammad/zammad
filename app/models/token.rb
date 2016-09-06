@@ -40,11 +40,11 @@ returns
 
 check token
 
-  user = Token.check(action: 'PasswordReset', name: 'TheTokenItSelf')
+  user = Token.check(action: 'PasswordReset', name: '123abc12qweads')
 
 check api token with permissions
 
-  user = Token.check(action: 'api', name: 'TheTokenItSelf', permission: 'admin.session')
+  user = Token.check(action: 'api', name: '123abc12qweads', permission: 'admin.session')
 
 returns
 
@@ -70,7 +70,7 @@ returns
 
     user = token.user
 
-    # persistent token not valid if user is inative
+    # persistent token not valid if user is inactive
     if !data[:inactive_user]
       return if token.persistent && user.active == false
     end

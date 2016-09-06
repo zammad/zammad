@@ -477,21 +477,34 @@ returns
   end
 
   def cache_delete
+    keys = []
 
     # delete by id caches
-    key = "#{self.class}::#{id}"
-    Cache.delete(key)
+    keys.push "#{self.class}::#{id}"
 
     # delete by id with attributes_with_associations caches
-    key = "#{self.class}::aws::#{id}"
-    Cache.delete(key)
+    keys.push "#{self.class}::aws::#{id}"
+
+    # delete by name caches
+    if self[:name]
+      keys.push "#{self.class}::#{name}"
+    end
+
+    # delete by login caches
+    if self[:login]
+      keys.push "#{self.class}::#{login}"
+    end
+
+    keys.each { |key|
+      Cache.delete(key)
+    }
 
     # delete old name / login caches
     if changed?
       if changes.key?('name')
         name = changes['name'][0]
         key = "#{self.class}::#{name}"
-        Cache.delete(key.to_s)
+        Cache.delete(key)
       end
       if changes.key?('login')
         name = changes['login'][0]
@@ -500,16 +513,6 @@ returns
       end
     end
 
-    # delete by name caches
-    if self[:name]
-      key = "#{self.class}::#{self.name}"
-      Cache.delete(key)
-    end
-
-    # delete by login caches
-    return if !self[:login]
-
-    Cache.delete("#{self.class}::#{login}")
   end
 
   def self.cache_set(data_id, data)
@@ -922,9 +925,12 @@ class OwnModel < ApplicationModel
     logger.debug "#{self.class.name}.find(#{id}) notify created " + created_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
-    Sessions.broadcast(
-      event: class_name + ':create',
-      data: { id: id, updated_at: updated_at }
+    PushMessages.send(
+      message: {
+        event: class_name + ':create',
+        data: { id: id, updated_at: updated_at }
+      },
+      type: 'authenticated',
     )
   end
 
@@ -951,9 +957,12 @@ class OwnModel < ApplicationModel
     logger.debug "#{self.class.name}.find(#{id}) notify UPDATED " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
-    Sessions.broadcast(
-      event: class_name + ':update',
-      data: { id: id, updated_at: updated_at }
+    PushMessages.send(
+      message: {
+        event: class_name + ':update',
+        data: { id: id, updated_at: updated_at }
+      },
+      type: 'authenticated',
     )
   end
 
@@ -980,9 +989,12 @@ class OwnModel < ApplicationModel
     logger.debug "#{self.class.name}.find(#{id}) notify TOUCH " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
-    Sessions.broadcast(
-      event: class_name + ':touch',
-      data: { id: id, updated_at: updated_at }
+    PushMessages.send(
+      message: {
+        event: class_name + ':touch',
+        data: { id: id, updated_at: updated_at }
+      },
+      type: 'authenticated',
     )
   end
 
@@ -1008,9 +1020,12 @@ class OwnModel < ApplicationModel
     logger.debug "#{self.class.name}.find(#{id}) notify DESTOY " + updated_at.to_s
     class_name = self.class.name
     class_name.gsub!(/::/, '')
-    Sessions.broadcast(
-      event: class_name + ':destroy',
-      data: { id: id, updated_at: updated_at }
+    PushMessages.send(
+      message: {
+        event: class_name + ':destroy',
+        data: { id: id, updated_at: updated_at }
+      },
+      type: 'authenticated',
     )
   end
 

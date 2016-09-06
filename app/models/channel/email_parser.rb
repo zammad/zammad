@@ -419,14 +419,13 @@ retrns
 
     # set interface handle
     original_interface_handle = ApplicationHandleInfo.current
-    ApplicationHandleInfo.current = "#{original_interface_handle}.postmaster"
 
     ticket       = nil
     article      = nil
     session_user = nil
 
     # use transaction
-    ActiveRecord::Base.transaction do
+    Transaction.execute(interface_handle: "#{original_interface_handle}.postmaster") do
 
       # get sender user
       session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
@@ -551,11 +550,6 @@ retrns
         end
       end
     end
-
-    ApplicationHandleInfo.current = original_interface_handle
-
-    # execute object transaction
-    Observer::Transaction.commit
 
     # run postmaster post filter
     filters = {}

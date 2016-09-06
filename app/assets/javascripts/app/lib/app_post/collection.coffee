@@ -64,16 +64,16 @@ class _collectionSingleton extends Spine.Module
     appObject.refresh(params.data, clear: true)
 
   loadAssets: (assets) ->
-    @log 'debug', 'loadAssets', assets
+    return if _.isEmpty(assets)
 
-    # proess not existing assets / to avoid not exising ref errors
-    loadAssetsLater = []
+    # process not existing assets first / to avoid not exising ref errors
+    loadAssetsLater = {}
     for type, collections of assets
       later = @load(type: type, data: collections, later: true)
-      if later
+      if !_.isEmpty(later)
         loadAssetsLater[type] = later
 
-    # proess existing assets
+    # process existing assets
     for type, collections of loadAssetsLater
       App[type].refresh(collections)
 
@@ -99,7 +99,7 @@ class _collectionSingleton extends Spine.Module
     listToRefreshLater = []
     for key, object of params.data
       if !params.refresh && appObject
-        @log 'debug', 'refrest try', params.type, key
+        @log 'debug', 'refresh try', params.type, key
 
         # check if new object is newer, just load newer objects
         if object.updated_at && appObject.exists(key)
@@ -108,10 +108,10 @@ class _collectionSingleton extends Spine.Module
           if exists.updated_at
             if exists.updated_at < object.updated_at
               objectToLoad = object
-              @log 'debug', 'refrest newser', params.type, key
+              @log 'debug', 'refresh newser', params.type, key
           else
             objectToLoad = object
-            @log 'debug', 'refrest try no updated_at', params.type, key
+            @log 'debug', 'refresh try no updated_at', params.type, key
           if objectToLoad
             if params.later
               listToRefreshLater.push objectToLoad
@@ -119,7 +119,7 @@ class _collectionSingleton extends Spine.Module
               listToRefresh.push object
         else
           listToRefresh.push object
-          @log 'debug', 'refrest new', params.type, key
+          @log 'debug', 'refresh new', params.type, key
     return listToRefreshLater if _.isEmpty(listToRefresh)
     appObject.refresh(listToRefresh)
     listToRefreshLater

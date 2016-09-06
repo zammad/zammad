@@ -16,8 +16,8 @@ class Ticket < ApplicationModel
   extend Ticket::Search
 
   store           :preferences
-  before_create   :check_generate, :check_defaults, :check_title
-  before_update   :check_defaults, :check_title, :reset_pending_time
+  before_create   :check_generate, :check_defaults, :check_title, :check_escalation_update
+  before_update   :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
   before_destroy  :destroy_dependencies
 
   notify_clients_support
@@ -160,15 +160,12 @@ returns
                 .where('pending_time <= ?', Time.zone.now)
 
       tickets.each { |ticket|
-        ticket.state_id      = next_state_map[ticket.state_id]
-        ticket.updated_at    = Time.zone.now
-        ticket.updated_by_id = 1
-        ticket.save!
-
-        # we do not have an destructor at this point, so we need to
-        # execute object transaction manually
-        Observer::Transaction.commit
-
+        Transaction.execute do
+          ticket.state_id      = next_state_map[ticket.state_id]
+          ticket.updated_at    = Time.zone.now
+          ticket.updated_by_id = 1
+          ticket.save!
+        end
         result.push ticket
       }
     end
@@ -285,46 +282,50 @@ returns
   def merge_to(data)
 
     # update articles
-    Ticket::Article.where(ticket_id: id).each(&:touch)
+    Transaction.execute do
 
-    # quiet update of reassign of articles
-    Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id] ])
+      Ticket::Article.where(ticket_id: id).each(&:touch)
 
-    # touch new ticket (to broadcast change)
-    Ticket.find(data[:ticket_id]).touch
+      # quiet update of reassign of articles
+      Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id]])
 
-    # update history
+      # update history
 
-    # create new merge article
-    Ticket::Article.create(
-      ticket_id: id,
-      type_id: Ticket::Article::Type.lookup(name: 'note').id,
-      sender_id: Ticket::Article::Sender.lookup(name: 'Agent').id,
-      body: 'merged',
-      internal: false,
-      created_by_id: data[:user_id],
-      updated_by_id: data[:user_id],
-    )
+      # create new merge article
+      Ticket::Article.create(
+        ticket_id: id,
+        type_id: Ticket::Article::Type.lookup(name: 'note').id,
+        sender_id: Ticket::Article::Sender.lookup(name: 'Agent').id,
+        body: 'merged',
+        internal: false,
+        created_by_id: data[:user_id],
+        updated_by_id: data[:user_id],
+      )
 
-    # add history to both
+      # add history to both
 
-    # link tickets
-    Link.add(
-      link_type: 'parent',
-      link_object_source: 'Ticket',
-      link_object_source_value: data[:ticket_id],
-      link_object_target: 'Ticket',
-      link_object_target_value: id
-    )
+      # link tickets
+      Link.add(
+        link_type: 'parent',
+        link_object_source: 'Ticket',
+        link_object_source_value: data[:ticket_id],
+        link_object_target: 'Ticket',
+        link_object_target_value: id
+      )
 
-    # set state to 'merged'
-    self.state_id = Ticket::State.lookup(name: 'merged').id
+      # set state to 'merged'
+      self.state_id = Ticket::State.lookup(name: 'merged').id
 
-    # rest owner
-    self.owner_id = User.find_by(login: '-').id
+      # rest owner
+      self.owner_id = User.find_by(login: '-').id
 
-    # save ticket
-    save
+      # save ticket
+      save!
+
+      # touch new ticket (to broadcast change)
+      Ticket.find(data[:ticket_id]).touch
+    end
+    true
   end
 
 =begin
@@ -874,6 +875,11 @@ result
     return if current_state_type.name =~ /^pending/i
 
     self.pending_time = nil
+  end
+
+  def check_escalation_update
+    escalation_calculation_int
+    true
   end
 
   def destroy_dependencies

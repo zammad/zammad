@@ -40,16 +40,8 @@ class Job < ApplicationModel
 
       if tickets
         tickets.each do |ticket|
-
-          # use transaction
-          ActiveRecord::Base.transaction do
-            UserInfo.current_user_id = 1
+          Transaction.execute(disable_notification: job.disable_notification, reset_user_id: true) do
             ticket.perform_changes(job.perform, 'job')
-
-            # execute object transaction
-            Observer::Transaction.commit(
-              disable_notification: job.disable_notification
-            )
           end
         end
       end

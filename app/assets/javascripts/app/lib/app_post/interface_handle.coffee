@@ -43,10 +43,13 @@ class App.Run extends App.Controller
       sortedKeys = Object.keys(widgets).sort()
       for key in sortedKeys
         widget = widgets[key]
-        new widget(
-          el:  el
-          key: key
-        )
+        try
+          new widget(
+            el:  el
+            key: key
+          )
+        catch e
+          @log 'error', "widget #{key}:", e
     App.Event.trigger(event + ':ready')
 
 class App.Content extends App.ControllerWidgetPermanent
@@ -75,12 +78,6 @@ class App.Content extends App.ControllerWidgetPermanent
           @el.unbind()
           @el.undelegate()
 
-          # send current controller
-          params_only = {}
-          for i of params
-            if typeof params[i] isnt 'object'
-              params_only[i] = params[i]
-
           # remember history
           # needed to mute "redirect" url to support browser back
           history = App.Config.get('History')
@@ -91,7 +88,10 @@ class App.Content extends App.ControllerWidgetPermanent
           # execute controller
           controller = (params) =>
             params.el = @el
-            new callback(params)
+            try
+              new callback(params)
+            catch e
+              @log 'error', "route #{route}:", e
           controller(params)
         )
 

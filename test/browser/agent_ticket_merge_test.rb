@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel1Test < TestCase
+class AgentTicketMergeTest < TestCase
   def test_agent_ticket_merge_closed_tab
 
     # merge ticket with closed tab

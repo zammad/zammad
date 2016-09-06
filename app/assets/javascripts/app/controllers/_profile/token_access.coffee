@@ -81,9 +81,14 @@ class Create extends App.ControllerModal
   shown: true
 
   content: ->
-    App.view('profile/token_access_create')(
+    content = $(App.view('profile/token_access_create')(
       permissions: @permissions
+    ))
+    datepicker = App.UiElement.date.render(
+      name: 'expires_at',
     )
+    content.find('.js-date').html(datepicker)
+    content
 
   onSubmit: (e) =>
     e.preventDefault()

@@ -2,7 +2,7 @@ class App.OrganizationProfile extends App.Controller
   constructor: (params) ->
     super
 
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     # fetch new data if needed
     App.Organization.full(@organization_id, @render)
@@ -174,7 +174,7 @@ class Object extends App.ObserverController
       data = {}
       data[name] = value
       org.updateAttributes(data)
-      @log 'notice', 'update', name, value, org
+      @log 'debug', 'update', name, value, org
 
 class Member extends App.ObserverController
   model: 'User'

@@ -843,7 +843,7 @@ class App.CollectionController extends App.Controller
         @domRemove(param[1])
       else if param[0] is 'change'
         @collectionSync(param[1])
-      else if param[0] is 'remove'
+      else if param[0] is 'destroy'
         @collectionSync(param[1], 'destroy')
       else if param[0] is 'renderAll'
         @renderAll()

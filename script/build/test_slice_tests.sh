@@ -18,18 +18,21 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/admin_object_manager_test.rb
   rm test/browser/admin_overview_test.rb
   # test/browser/agent_navigation_and_title_test.rb
-  rm test/browser/agent_ticket_actions_level0_test.rb
-  rm test/browser/agent_ticket_actions_level1_test.rb
-  rm test/browser/agent_ticket_actions_level2_test.rb
-  rm test/browser/agent_ticket_actions_level3_test.rb
-  rm test/browser/agent_ticket_actions_level4_test.rb
-  rm test/browser/agent_ticket_actions_level5_test.rb
-  rm test/browser/agent_ticket_actions_level6_test.rb
-  rm test/browser/agent_ticket_actions_level7_test.rb
-  rm test/browser/agent_ticket_actions_level8_test.rb
-  rm test/browser/agent_ticket_actions_level9_test.rb
+  rm test/browser/agent_ticket_attachment_test.rb
+  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
+  rm test/browser/agent_ticket_email_signature_test.rb
+  rm test/browser/agent_ticket_link_test.rb
+  rm test/browser/agent_ticket_macro_test.rb
+  rm test/browser/agent_ticket_merge_test.rb
+  rm test/browser/agent_ticket_online_notification_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_tag_test.rb
+  rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_update1_test.rb
+  rm test/browser/agent_ticket_update2_test.rb
+  rm test/browser/agent_ticket_update3_test.rb
+  rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
   # test/browser/auth_test.rb
@@ -39,8 +42,13 @@ if [ "$LEVEL" == '1' ]; then
   # test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  # test/browser/maintenance_test.rb
-  rm test/browser/preferences_test.rb
+  # test/browser/maintenance_app_version_test.rb
+  # test/browser/maintenance_login_message_test.rb
+  # test/browser/maintenance_mode_test.rb
+  # test/browser/maintenance_session_message_test.rb
+  rm test/browser/preferences_language_test.rb
+  rm test/browser/preferences_permission_check_test.rb
+  rm test/browser/preferences_token_access_test.rb
   rm test/browser/setting_test.rb
   # test/browser/signup_password_change_and_reset_test.rb
   # test/browser/swich_to_user_test.rb
@@ -62,18 +70,21 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/admin_overview_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_organization_profile_test.rb
-  # test/browser/agent_ticket_actions_level0_test.rb
-  # test/browser/agent_ticket_actions_level1_test.rb
-  # test/browser/agent_ticket_actions_level2_test.rb
-  # test/browser/agent_ticket_actions_level3_test.rb
-  # test/browser/agent_ticket_actions_level4_test.rb
-  rm test/browser/agent_ticket_actions_level5_test.rb
-  rm test/browser/agent_ticket_actions_level6_test.rb
-  rm test/browser/agent_ticket_actions_level7_test.rb
-  rm test/browser/agent_ticket_actions_level8_test.rb
-  rm test/browser/agent_ticket_actions_level9_test.rb
+  rm test/browser/agent_ticket_attachment_test.rb
+  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
+  rm test/browser/agent_ticket_email_signature_test.rb
+  rm test/browser/agent_ticket_link_test.rb
+  rm test/browser/agent_ticket_macro_test.rb
+  # test/browser/agent_ticket_merge_test.rb
+  rm test/browser/agent_ticket_online_notification_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_tag_test.rb
+  # test/browser/agent_ticket_text_module_test.rb
+  # test/browser/agent_ticket_update1_test.rb
+  # test/browser/agent_ticket_update2_test.rb
+  # test/browser/agent_ticket_update3_test.rb
+  # test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/auth_test.rb
@@ -83,9 +94,14 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_test.rb
+  rm test/browser/maintenance_app_version_test.rb
+  rm test/browser/maintenance_login_message_test.rb
+  rm test/browser/maintenance_mode_test.rb
+  rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
-  rm test/browser/preferences_test.rb
+  rm test/browser/preferences_language_test.rb
+  rm test/browser/preferences_permission_check_test.rb
+  rm test/browser/preferences_token_access_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
@@ -107,18 +123,21 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/admin_overview_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_organization_profile_test.rb
-  rm test/browser/agent_ticket_actions_level0_test.rb
-  rm test/browser/agent_ticket_actions_level1_test.rb
-  rm test/browser/agent_ticket_actions_level2_test.rb
-  rm test/browser/agent_ticket_actions_level3_test.rb
-  rm test/browser/agent_ticket_actions_level4_test.rb
-  # test/browser/agent_ticket_actions_level5_test.rb
-  # test/browser/agent_ticket_actions_level6_test.rb
-  # test/browser/agent_ticket_actions_level7_test.rb
-  # test/browser/agent_ticket_actions_level8_test.rb
-  rm test/browser/agent_ticket_actions_level9_test.rb
+  # test/browser/agent_ticket_attachment_test.rb
+  # test/browser/agent_ticket_email_reply_keep_body_test.rb
+  # test/browser/agent_ticket_email_signature_test.rb
+  # test/browser/agent_ticket_link_test.rb
+  # test/browser/agent_ticket_macro_test.rb
+  rm test/browser/agent_ticket_merge_test.rb
+  rm test/browser/agent_ticket_online_notification_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  # test/browser/agent_ticket_tag_test.rb
+  rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_update1_test.rb
+  rm test/browser/agent_ticket_update2_test.rb
+  rm test/browser/agent_ticket_update3_test.rb
+  rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/auth_test.rb
@@ -128,9 +147,14 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_test.rb
+  rm test/browser/maintenance_app_version_test.rb
+  rm test/browser/maintenance_login_message_test.rb
+  rm test/browser/maintenance_mode_test.rb
+  rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
-  rm test/browser/preferences_test.rb
+  rm test/browser/preferences_language_test.rb
+  rm test/browser/preferences_permission_check_test.rb
+  rm test/browser/preferences_token_access_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
@@ -152,18 +176,21 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/admin_overview_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_organization_profile_test.rb
-  rm test/browser/agent_ticket_actions_level0_test.rb
-  rm test/browser/agent_ticket_actions_level1_test.rb
-  rm test/browser/agent_ticket_actions_level2_test.rb
-  rm test/browser/agent_ticket_actions_level3_test.rb
-  rm test/browser/agent_ticket_actions_level4_test.rb
-  rm test/browser/agent_ticket_actions_level5_test.rb
-  rm test/browser/agent_ticket_actions_level6_test.rb
-  rm test/browser/agent_ticket_actions_level7_test.rb
-  rm test/browser/agent_ticket_actions_level8_test.rb
-  # test/browser/agent_ticket_actions_level9_test.rb
+  rm test/browser/agent_ticket_attachment_test.rb
+  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
+  rm test/browser/agent_ticket_email_signature_test.rb
+  rm test/browser/agent_ticket_link_test.rb
+  rm test/browser/agent_ticket_macro_test.rb
+  rm test/browser/agent_ticket_merge_test.rb
+  # test/browser/agent_ticket_online_notification_test.rb
   # test/browser/agent_ticket_overview_level0_test.rb
   # test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_tag_test.rb
+  rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_update1_test.rb
+  rm test/browser/agent_ticket_update2_test.rb
+  rm test/browser/agent_ticket_update3_test.rb
+  rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/auth_test.rb
@@ -173,9 +200,14 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_test.rb
+  rm test/browser/maintenance_app_version_test.rb
+  rm test/browser/maintenance_login_message_test.rb
+  rm test/browser/maintenance_mode_test.rb
+  rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
-  rm test/browser/preferences_test.rb
+  rm test/browser/preferences_language_test.rb
+  rm test/browser/preferences_permission_check_test.rb
+  rm test/browser/preferences_token_access_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
@@ -196,18 +228,21 @@ elif [ "$LEVEL" == '5' ]; then
   # test/browser/admin_overview_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
   # test/browser/agent_organization_profile_test.rb
-  rm test/browser/agent_ticket_actions_level0_test.rb
-  rm test/browser/agent_ticket_actions_level1_test.rb
-  rm test/browser/agent_ticket_actions_level2_test.rb
-  rm test/browser/agent_ticket_actions_level3_test.rb
-  rm test/browser/agent_ticket_actions_level4_test.rb
-  rm test/browser/agent_ticket_actions_level5_test.rb
-  rm test/browser/agent_ticket_actions_level6_test.rb
-  rm test/browser/agent_ticket_actions_level7_test.rb
-  rm test/browser/agent_ticket_actions_level8_test.rb
-  rm test/browser/agent_ticket_actions_level9_test.rb
+  rm test/browser/agent_ticket_attachment_test.rb
+  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
+  rm test/browser/agent_ticket_email_signature_test.rb
+  rm test/browser/agent_ticket_link_test.rb
+  rm test/browser/agent_ticket_macro_test.rb
+  rm test/browser/agent_ticket_merge_test.rb
+  rm test/browser/agent_ticket_online_notification_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_tag_test.rb
+  rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_update1_test.rb
+  rm test/browser/agent_ticket_update2_test.rb
+  rm test/browser/agent_ticket_update3_test.rb
+  rm test/browser/agent_ticket_update_and_reload_test.rb
   # test/browser/agent_user_manage_test.rb
   # test/browser/agent_user_profile_test.rb
   rm test/browser/auth_test.rb
@@ -217,9 +252,14 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/form_test.rb
   rm test/browser/integration_test.rb
   rm test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_*.rb
+  rm test/browser/maintenance_app_version_test.rb
+  rm test/browser/maintenance_login_message_test.rb
+  rm test/browser/maintenance_mode_test.rb
+  rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
-  rm test/browser/preferences_test.rb
+  rm test/browser/preferences_language_test.rb
+  rm test/browser/preferences_permission_check_test.rb
+  rm test/browser/preferences_token_access_test.rb
   rm test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb
@@ -243,18 +283,21 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/admin_overview_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
   rm test/browser/agent_organization_profile_test.rb
-  rm test/browser/agent_ticket_actions_level0_test.rb
-  rm test/browser/agent_ticket_actions_level1_test.rb
-  rm test/browser/agent_ticket_actions_level2_test.rb
-  rm test/browser/agent_ticket_actions_level3_test.rb
-  rm test/browser/agent_ticket_actions_level4_test.rb
-  rm test/browser/agent_ticket_actions_level5_test.rb
-  rm test/browser/agent_ticket_actions_level6_test.rb
-  rm test/browser/agent_ticket_actions_level7_test.rb
-  rm test/browser/agent_ticket_actions_level8_test.rb
-  rm test/browser/agent_ticket_actions_level9_test.rb
+  rm test/browser/agent_ticket_attachment_test.rb
+  rm test/browser/agent_ticket_email_reply_keep_body_test.rb
+  rm test/browser/agent_ticket_email_signature_test.rb
+  rm test/browser/agent_ticket_link_test.rb
+  rm test/browser/agent_ticket_macro_test.rb
+  rm test/browser/agent_ticket_merge_test.rb
+  rm test/browser/agent_ticket_online_notification_test.rb
   rm test/browser/agent_ticket_overview_level0_test.rb
   rm test/browser/agent_ticket_overview_level1_test.rb
+  rm test/browser/agent_ticket_tag_test.rb
+  rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_update1_test.rb
+  rm test/browser/agent_ticket_update2_test.rb
+  rm test/browser/agent_ticket_update3_test.rb
+  rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
   rm test/browser/auth_test.rb
@@ -264,9 +307,14 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/form_test.rb
   # test/browser/integration_test.rb
   # test/browser/keyboard_shortcuts_test.rb
-  rm test/browser/maintenance_*.rb
+  rm test/browser/maintenance_app_version_test.rb
+  rm test/browser/maintenance_login_message_test.rb
+  rm test/browser/maintenance_mode_test.rb
+  rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
-  # test/browser/preferences_test.rb
+  # test/browser/preferences_language_test.rb
+  # test/browser/preferences_permission_check_test.rb
+  # test/browser/preferences_token_access_test.rb
   # test/browser/setting_test.rb
   rm test/browser/signup_password_change_and_reset_test.rb
   rm test/browser/switch_to_user_test.rb

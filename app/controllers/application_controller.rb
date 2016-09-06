@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
                 :model_index_render
 
   skip_before_action :verify_authenticity_token
-  before_action :set_interface_handle, :set_user, :session_update, :user_device_check, :cors_preflight_check
-  after_action  :trigger_events, :http_log, :set_access_control_headers
+  before_action :transaction_begin, :set_user, :session_update, :user_device_check, :cors_preflight_check
+  after_action  :transaction_end, :http_log, :set_access_control_headers
 
   rescue_from StandardError, with: :server_error
   rescue_from ExecJS::RuntimeError, with: :server_error
@@ -58,13 +58,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_interface_handle
+  def transaction_begin
     ApplicationHandleInfo.current = 'application_server'
+    PushMessages.init
   end
 
-  # execute events
-  def trigger_events
+  def transaction_end
     Observer::Transaction.commit
+    PushMessages.finish
+    ActiveSupport::Dependencies::Reference.clear!
   end
 
   # Finds the User with the ID stored in the session with the key
@@ -260,27 +262,40 @@ class ApplicationController < ActionController::Base
     end
 
     # check http token based authentication
-    authenticate_with_http_token do |token, _options|
-      logger.debug "http token auth check '#{token}'"
+    authenticate_with_http_token do |token_string, _options|
+      logger.debug "http token auth check '#{token_string}'"
       request.session_options[:skip] = true # do not send a session cookie
       if Setting.get('api_token_access') == false
         raise Exceptions::NotAuthorized, 'API token access disabled!'
       end
       user = Token.check(
         action: 'api',
-        name: token,
+        name: token_string,
         inactive_user: true,
       )
       if user && auth_param[:permission]
         user = Token.check(
           action: 'api',
-          name: token,
+          name: token_string,
           permission: auth_param[:permission],
           inactive_user: true,
         )
         raise Exceptions::NotAuthorized, 'Not authorized (token)!' if !user
       end
-      @_token_auth = token # remember for permission_check
+
+      if user
+        token = Token.find_by(name: token_string)
+
+        token.last_used_at = Time.zone.now
+        token.save!
+
+        if token.expires_at &&
+           Time.zone.today >= token.expires_at
+          raise Exceptions::NotAuthorized, 'Not authorized (token expired)!'
+        end
+      end
+
+      @_token_auth = token_string # remember for permission_check
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
 

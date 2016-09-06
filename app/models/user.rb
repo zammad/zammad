@@ -333,9 +333,9 @@ returns
 
   def permissions
     list = {}
-    Object.const_get('Permission').joins(:roles).where('roles.id IN (?)', role_ids).each { |permission|
-      next if permission.preferences[:selectable] == false
-      list[permission.name] = true
+    Object.const_get('Permission').select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?)', role_ids).pluck(:name, :preferences).each { |permission|
+      next if permission[1]['selectable'] == false
+      list[permission[0]] = true
     }
     list
   end
@@ -349,6 +349,8 @@ true or false for permission
   user.permissions?(['permission.key1', 'permission.key2']) # access to permission.key1 or permission.key2
 
   user.permissions?('permission') # access to all sub keys
+
+  user.permissions?('permission.*') # access if one sub key access exists
 
 returns
 
@@ -368,9 +370,17 @@ returns
         cache = Cache.get(cache_key)
         return cache if cache
       end
-      permissions = Object.const_get('Permission').with_parents(local_key)
-      Object.const_get('Permission').joins(:roles).where('roles.id IN (?) AND permissions.name IN (?)', role_ids, permissions).each { |permission|
-        next if permission.preferences[:selectable] == false
+      list = []
+      if local_key =~ /\.\*$/
+        local_key.sub!('.*', '.%')
+        permissions = Object.const_get('Permission').with_parents(local_key)
+        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND (permissions.name IN (?) OR permissions.name LIKE ?)', role_ids, permissions, local_key).pluck(:preferences)
+      else
+        permissions = Object.const_get('Permission').with_parents(local_key)
+        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND permissions.name IN (?)', role_ids, permissions).pluck(:preferences)
+      end
+      list.each { |preferences|
+        next if preferences[:selectable] == false
         Cache.write(key, true, expires_in: 20.seconds)
         return true
       }
@@ -409,8 +419,8 @@ returns
         permission_ids.push permission.id
       }
       next if permission_ids.empty?
-      Role.select('id').joins(:roles_permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ?', permission_ids, true).uniq().each { |role|
-        role_ids.push role.id
+      Role.joins(:roles_permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ?', permission_ids, true).uniq().pluck(:id).each { |role_id|
+        role_ids.push role_id
       }
       total_role_ids.push role_ids
     }
@@ -422,7 +432,7 @@ returns
       end
       condition += 'roles_users.role_id IN (?)'
     }
-    User.joins(:users_roles).where("(#{condition}) AND users.active = ?", *total_role_ids, true).order(:id)
+    User.joins(:users_roles).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.order(:id)
   end
 
 =begin

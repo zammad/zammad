@@ -29,7 +29,11 @@ class App.TicketStats extends App.Controller
     if @subscribeIdOrganization
       App.Organization.unsubscribe(@subscribeIdOrganization)
 
-  load: (object) =>
+  load: (object, type) =>
+
+    # ignore rerender on local record changes
+    return if type is 'change'
+
     if @organization
       ajaxKey = "org_#{@organization.id}"
       data =

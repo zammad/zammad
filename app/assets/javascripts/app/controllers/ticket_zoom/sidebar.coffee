@@ -80,7 +80,7 @@ class App.TicketZoomSidebar extends App.ObserverController
       )
     changeCustomer = (e, el) =>
       new App.TicketCustomer(
-        ticket:    ticket
+        ticket_id: ticket.id
         container: @el.closest('.content')
       )
     @sidebarItems = [

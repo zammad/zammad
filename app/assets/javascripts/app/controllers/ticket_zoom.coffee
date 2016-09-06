@@ -14,7 +14,7 @@ class App.TicketZoom extends App.Controller
     super
 
     # check authentication
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     @formMeta     = undefined
     @ticket_id    = params.ticket_id
@@ -45,28 +45,24 @@ class App.TicketZoom extends App.Controller
 
       # check if we already have the request queued
       #@log 'notice', 'TRY', @ticket_id, new Date(data.updated_at), new Date(@ticketUpdatedAtLastCall)
-      update = =>
-        @fetch()
-      if !@ticketUpdatedAtLastCall || ( new Date(data.updated_at).toString() isnt new Date(@ticketUpdatedAtLastCall).toString() )
-        @delay(update, 1200, "ticket-zoom-#{@ticket_id}")
+      @fetchMayBe(data)
     )
 
-  fetchStart: =>
-    if @fetchIsRunning
-      @fetchIsRunningAgain = true
-      return false
-    @fetchIsRunning = true
-    true
+  fetchMayBe: (data) =>
+    if @ticketUpdatedAtLastCall
+      if new Date(data.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
+        @log('debug', 'no fetch, current ticket already there or requested')
+        return
+      if new Date(data.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
+        @log('debug', 'no fetch, current ticket already newser or requested')
+        return
 
-  fetchDone: =>
-    @fetchIsRunning = false
-    if @fetchIsRunningAgain
-      @fetchIsRunningAgain = false
+    fetchDelayed = =>
       @fetch()
+    @delay(fetchDelayed, 1200, "ticket-zoom-#{@ticket_id}")
 
   fetch: =>
     return if !@Session.get()
-    return if !@fetchStart()
 
     # get data
     @ajax(
@@ -75,7 +71,6 @@ class App.TicketZoom extends App.Controller
       url:   "#{@apiPath}/tickets/#{@ticket_id}?all=true"
       processData: true
       success: (data, status, xhr) =>
-        @fetchDone()
 
         # check if ticket has changed
         newTicketRaw = data.assets.Ticket[@ticket_id]
@@ -99,7 +94,6 @@ class App.TicketZoom extends App.Controller
           @recentView('Ticket', @ticket_id)
 
       error: (xhr) =>
-        @fetchDone()
 
         statusText = xhr.statusText
         status     = xhr.status
@@ -157,6 +151,9 @@ class App.TicketZoom extends App.Controller
     # get data
     @ticket = App.Ticket.fullLocal(@ticket_id)
     @ticket.article = undefined
+
+    # remember current data
+    @ticketUpdatedAtLastCall = @ticket.updated_at
 
     # render page
     @render()
@@ -698,8 +695,15 @@ class App.TicketZoom extends App.Controller
       ticket.article = article
 
     # submit changes
-    ticket.save(
-      done: (r) =>
+    @ajax(
+      id: "ticket_update_#{ticket.id}"
+      type: 'PUT'
+      url: "#{App.Ticket.url}/#{ticket.id}?all=true"
+      data: JSON.stringify(ticket.attributes())
+      processData: true
+      success: (data) =>
+        App.SessionStorage.set(@key, data)
+        @load(data)
 
         # reset article - should not be resubmited on next ticket update
         ticket.article = undefined
@@ -747,12 +751,19 @@ class App.TicketZoom extends App.Controller
 
         @autosaveStart()
         @muteTask()
-        @fetch()
-
-        # enable form
         @formEnable(e)
-
         App.Event.trigger('overview:fetch')
+
+      error: (settings, details) =>
+        App.Event.trigger 'notify', {
+          type:    'error'
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update!')
+          timeout: 2000
+        }
+        @autosaveStart()
+        @muteTask()
+        @fetch()
+        @formEnable(e)
     )
 
   bookmark: (e) ->

@@ -14,7 +14,7 @@ returns
 
 =end
 
-  def permission (data)
+  def permission(data)
 
     # check customer
     if data[:current_user].permissions?('ticket.customer')

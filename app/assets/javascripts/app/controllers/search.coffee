@@ -14,7 +14,7 @@ class App.Search extends App.Controller
     super
 
     # check authentication
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     current = App.TaskManager.get(@task_key).state
     if current && current.query

@@ -244,7 +244,7 @@ class Singleton extends Base
       if !_.isEmpty(detailsRaw)
         details = JSON.parse(detailsRaw)
       options.fail?.call(@record, settings, details)
-      @record.trigger('remove', @record)
+      @record.trigger('destroy', @record)
       # /add errors to calllback
 
   createFailed: ->

@@ -33,7 +33,9 @@ Setting.create_if_not_exists(
   description: 'Enable or disable the maintenance mode of Zammad. If enabled, all non-administrators get logged out and only administrators can start a new session.',
   options: {},
   state: false,
-  preferences: {},
+  preferences: {
+    permission: ['admin.maintenance'],
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -43,7 +45,9 @@ Setting.create_if_not_exists(
   description: 'Put a message on the login page. To change it, click on the text area below and change it inline.',
   options: {},
   state: false,
-  preferences: {},
+  preferences: {
+    permission: ['admin.maintenance'],
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -53,7 +57,9 @@ Setting.create_if_not_exists(
   description: 'Message for login page.',
   options: {},
   state: 'Something about to share. Click here to change.',
-  preferences: {},
+  preferences: {
+    permission: ['admin.maintenance'],
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -91,7 +97,13 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  preferences: { render: true, session_check: true, prio: 1, placeholder: true },
+  preferences: {
+    render: true,
+    session_check: true,
+    prio: 1,
+    placeholder: true,
+    permission: ['admin.branding'],
+  },
   state: 'Zammad Helpdesk',
   frontend: true
 )
@@ -113,6 +125,7 @@ Setting.create_if_not_exists(
   preferences: {
     prio: 3,
     controller: 'SettingsAreaLogo',
+    permission: ['admin.branding'],
   },
   state: 'logo.svg',
   frontend: true
@@ -133,7 +146,11 @@ Setting.create_if_not_exists(
     ],
   },
   state: '',
-  preferences: { prio: 2, placeholder: true },
+  preferences: {
+    prio: 2,
+    placeholder: true,
+    permission: ['admin.branding'],
+  },
   frontend: true
 )
 options = {}
@@ -162,6 +179,7 @@ Setting.create_if_not_exists(
     online_service_disable: true,
     placeholder: true,
     authentication: true,
+    permission: ['admin.system'],
   },
   frontend: true
 )
@@ -181,7 +199,11 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'zammad.example.com',
-  preferences: { online_service_disable: true, placeholder: true },
+  preferences: {
+    online_service_disable: true,
+    placeholder: true,
+    permission: ['admin.system'],
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -223,7 +245,11 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'http',
-  preferences: { online_service_disable: true, placeholder: true },
+  preferences: {
+    online_service_disable: true,
+    placeholder: true,
+    permission: ['admin.system'],
+  },
   frontend: true
 )
 
@@ -247,7 +273,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'DB',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission: ['admin.system'],
+  },
   frontend: false
 )
 
@@ -271,7 +300,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Service::Image::Zammad',
-  preferences: { prio: 1 },
+  preferences: {
+    prio: 1,
+    permission: ['admin.system'],
+  },
   frontend: false
 )
 
@@ -295,7 +327,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Service::GeoIp::Zammad',
-  preferences: { prio: 2 },
+  preferences: {
+    prio: 2,
+    permission: ['admin.system'],
+  },
   frontend: false
 )
 
@@ -319,7 +354,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Service::GeoLocation::Gmaps',
-  preferences: { prio: 3 },
+  preferences: {
+    prio: 3,
+    permission: ['admin.system'],
+  },
   frontend: false
 )
 
@@ -343,7 +381,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Service::GeoCalendar::Zammad',
-  preferences: { prio: 2 },
+  preferences: {
+    prio: 2,
+    permission: ['admin.system'],
+  },
   frontend: false
 )
 
@@ -367,7 +408,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
-  preferences: { prio: 1 },
+  preferences: {
+    prio: 1,
+    permission: ['admin.system'],
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -390,7 +434,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 2 },
+  preferences: {
+    prio: 2,
+    permission: ['admin.system'],
+  },
   frontend: true
 )
 
@@ -414,6 +461,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -436,6 +486,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: true
 )
 Setting.create_if_not_exists(
@@ -445,7 +498,8 @@ Setting.create_if_not_exists(
   description: 'Enables user authentication via %s.',
   preferences: {
     title_i18n: ['LDAP'],
-    description_i18n: ['LDAP']
+    description_i18n: ['LDAP'],
+    permission: ['admin.security'],
   },
   state: {
     adapter: 'Auth::Ldap',
@@ -490,7 +544,8 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_twitter_credentials'],
     title_i18n: ['Twitter'],
-    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps']
+    description_i18n: ['Twitter', 'Twitter Developer Site', 'https://dev.twitter.com/apps'],
+    permission: ['admin.security'],
   },
   state: false,
   frontend: true
@@ -517,6 +572,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -542,7 +600,8 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_facebook_credentials'],
     title_i18n: ['Facebook'],
-    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/']
+    description_i18n: ['Facebook', 'Facebook Developer Site', 'https://developers.facebook.com/apps/'],
+    permission: ['admin.security'],
   },
   state: false,
   frontend: true
@@ -570,6 +629,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 
@@ -596,7 +658,8 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_google_oauth2_credentials'],
     title_i18n: ['Google'],
-    description_i18n: ['Google', 'Google API Console Site', 'https://console.developers.google.com/apis/credentials']
+    description_i18n: ['Google', 'Google API Console Site', 'https://console.developers.google.com/apis/credentials'],
+    permission: ['admin.security'],
   },
   state: false,
   frontend: true
@@ -623,6 +686,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 
@@ -649,7 +715,8 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_linkedin_credentials'],
     title_i18n: ['LinkedIn'],
-    description_i18n: ['LinkedIn', 'Linkedin Developer Site', 'https://www.linkedin.com/developer/apps']
+    description_i18n: ['LinkedIn', 'Linkedin Developer Site', 'https://www.linkedin.com/developer/apps'],
+    permission: ['admin.security'],
   },
   state: false,
   frontend: true
@@ -676,6 +743,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 
@@ -702,7 +772,8 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_github_credentials'],
     title_i18n: ['Github'],
-    description_i18n: ['Github', 'Github OAuth Applications', 'https://github.com/settings/applications']
+    description_i18n: ['Github', 'Github OAuth Applications', 'https://github.com/settings/applications'],
+    permission: ['admin.security'],
   },
   state: false,
   frontend: true
@@ -729,6 +800,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 
@@ -755,7 +829,8 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_gitlab_credentials'],
     title_i18n: ['Gitlab'],
-    description_i18n: ['Gitlab', 'Gitlab Applications', 'https://your-gitlab-host/admin/applications']
+    description_i18n: ['Gitlab', 'Gitlab Applications', 'https://your-gitlab-host/admin/applications'],
+    permission: ['admin.security'],
   },
   state: false,
   frontend: true
@@ -789,6 +864,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 
@@ -815,6 +893,7 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_oauth2_credentials'],
     title_i18n: ['Generic OAuth2'],
+    permission: ['admin.security'],
   },
   state: false,
   frontend: true
@@ -869,6 +948,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 
@@ -907,6 +989,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 6,
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -929,6 +1014,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 0,
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -951,6 +1039,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 1,
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -987,6 +1078,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 10,
+  preferences: {
+    permission: ['admin.security'],
+  },
   frontend: false
 )
 
@@ -1009,6 +1103,7 @@ Setting.create_if_not_exists(
     render: true,
     placeholder: true,
     authentication: true,
+    permission: ['admin.ticket'],
   },
   state: 'Ticket#',
   frontend: true
@@ -1029,6 +1124,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: '',
+  preferences: {
+    permission: ['admin.ticket'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1055,6 +1153,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'right',
+  preferences: {
+    permission: ['admin.ticket'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1081,6 +1182,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Ticket::Number::Increment',
+  preferences: {
+    permission: ['admin.ticket'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1134,6 +1238,9 @@ Setting.create_if_not_exists(
     checksum: false,
     min_size: 5,
   },
+  preferences: {
+    permission: ['admin.ticket'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1157,6 +1264,9 @@ Setting.create_if_not_exists(
   },
   state: {
     checksum: false,
+  },
+  preferences: {
+    permission: ['admin.ticket'],
   },
   frontend: false
 )
@@ -1183,6 +1293,7 @@ Setting.create_if_not_exists(
   state: true,
   preferences: {
     authentication: true,
+    permission: ['admin.channel_web'],
   },
   frontend: true
 )
@@ -1208,6 +1319,7 @@ Setting.create_if_not_exists(
   state: '',
   preferences: {
     authentication: true,
+    permission: ['admin.channel_web'],
   },
   frontend: true
 )
@@ -1234,6 +1346,7 @@ Setting.create_if_not_exists(
   state: true,
   preferences: {
     authentication: true,
+    permission: ['admin.channel_web'],
   },
   frontend: true
 )
@@ -1258,6 +1371,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
   frontend: false,
 )
 
@@ -1277,6 +1393,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: '110',
+  preferences: {
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1295,6 +1414,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'RE',
+  preferences: {
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 
@@ -1318,6 +1440,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'AgentNameSystemAddressName',
+  preferences: {
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 
@@ -1337,6 +1462,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'via',
+  preferences: {
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 
@@ -1383,7 +1511,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 10,
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 
@@ -1408,6 +1539,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: [],
+  preferences: {
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 
@@ -1427,7 +1561,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'Notification Master <noreply@#{config.fqdn}>',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 
@@ -1447,7 +1584,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?\..+?',
-  preferences: { online_service_disable: true },
+  preferences: {
+    online_service_disable: true,
+    permission: ['admin.channel_email'],
+  },
   frontend: false
 )
 
@@ -1471,6 +1611,9 @@ Setting.create_or_update(
     ],
   },
   state: true,
+  preferences: {
+    permission: ['admin.api'],
+  },
   frontend: false
 )
 Setting.create_or_update(
@@ -1493,6 +1636,9 @@ Setting.create_or_update(
     ],
   },
   state: true,
+  preferences: {
+    permission: ['admin.api'],
+  },
   frontend: false
 )
 
@@ -1516,7 +1662,8 @@ Setting.create_if_not_exists(
     ],
   },
   preferences: {
-    trigger: ['menu:render', 'chat:rerender']
+    trigger: ['menu:render', 'chat:rerender'],
+    permission: ['admin.channel_chat'],
   },
   state: false,
   frontend: true
@@ -1538,6 +1685,9 @@ Setting.create_if_not_exists(
     ],
   },
   state: '120',
+  preferences: {
+    permission: ['admin.channel_chat'],
+  },
   frontend: true
 )
 
@@ -1825,6 +1975,7 @@ Setting.create_if_not_exists(
   },
   preferences: {
     authentication: true,
+    permission: ['admin.tag'],
   },
   state: true,
   frontend: true
@@ -1976,7 +2127,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1 },
+  preferences: {
+    prio: 1,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -1996,8 +2150,11 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'icinga@monitoring.example.com',
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
   frontend: false,
-  preferences: { prio: 2 },
 )
 Setting.create_if_not_exists(
   title: 'Auto close',
@@ -2019,7 +2176,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
-  preferences: { prio: 3 },
+  preferences: {
+    prio: 3,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2039,7 +2199,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 4,
-  preferences: { prio: 4 },
+  preferences: {
+    prio: 4,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2062,7 +2225,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1 },
+  preferences: {
+    prio: 1,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2082,8 +2248,11 @@ Setting.create_if_not_exists(
     ],
   },
   state: 'nagios@monitoring.example.com',
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
   frontend: false,
-  preferences: { prio: 2 },
 )
 Setting.create_if_not_exists(
   title: 'Auto close',
@@ -2105,7 +2274,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: true,
-  preferences: { prio: 3 },
+  preferences: {
+    prio: 3,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2125,7 +2297,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: 4,
-  preferences: { prio: 4 },
+  preferences: {
+    prio: 4,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2184,7 +2359,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1 },
+  preferences: {
+    prio: 1,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2196,8 +2374,11 @@ Setting.create_if_not_exists(
   state: {
     items: []
   },
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
   frontend: false,
-  preferences: { prio: 2 },
 )
 Setting.create_if_not_exists(
   title: 'sipgate.io integration',
@@ -2223,6 +2404,7 @@ Setting.create_if_not_exists(
     prio: 1,
     trigger: ['menu:render', 'cti:reload'],
     authentication: true,
+    permission: ['admin.integration'],
   },
   frontend: true
 )
@@ -2233,8 +2415,11 @@ Setting.create_if_not_exists(
   description: 'Define the sipgate.io config.',
   options: {},
   state: {},
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
   frontend: false,
-  preferences: { prio: 2 },
 )
 Setting.create_if_not_exists(
   title: 'Clearbit integration',
@@ -2256,7 +2441,10 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
-  preferences: { prio: 1 },
+  preferences: {
+    prio: 1,
+    permission: ['admin.integration'],
+  },
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -2267,7 +2455,10 @@ Setting.create_if_not_exists(
   options: {},
   state: {},
   frontend: false,
-  preferences: { prio: 2 },
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
 )
 Setting.create_if_not_exists(
   title: 'Define transaction backend.',
@@ -2394,17 +2585,6 @@ Role.create_if_not_exists(
   default_at_signup: true,
   updated_by_id: 1,
   created_by_id: 1
-)
-Role.create_if_not_exists(
-  id: 4,
-  name: 'Report',
-  note: 'Access the report area.',
-  preferences: {
-    not: ['Customer'],
-  },
-  default_at_signup: false,
-  created_by_id: 1,
-  updated_by_id: 1,
 )
 
 Permission.create_if_not_exists(

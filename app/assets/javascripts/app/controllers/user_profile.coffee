@@ -3,7 +3,7 @@ class App.UserProfile extends App.Controller
     super
 
     # check authentication
-    @authenticateCheckRedirect(true)
+    @authenticateCheckRedirect()
 
     # fetch new data if needed
     App.User.full(@user_id, @render)
@@ -173,7 +173,7 @@ class Object extends App.ObserverController
       data = {}
       data[name] = value
       user.updateAttributes(data)
-      @log 'notice', 'update', name, value, user
+      @log 'debug', 'update', name, value, user
 
 class Organization extends App.ObserverController
   model: 'Organization'
@@ -195,7 +195,7 @@ class Router extends App.ControllerPermanent
       user_id:  params.user_id
 
     App.TaskManager.execute(
-      key:        'User-' + @user_id
+      key:        "User-#{@user_id}"
       controller: 'UserProfile'
       params:     clean_params
       show:       true

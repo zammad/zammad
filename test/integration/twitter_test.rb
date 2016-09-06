@@ -60,7 +60,7 @@ class TwitterTest < ActiveSupport::TestCase
   # add channel
   current = Channel.where(area: 'Twitter::Account')
   current.each(&:destroy)
-  channel = Channel.create(
+  channel = Channel.create!(
     area: 'Twitter::Account',
     options: {
       adapter: 'twitter',
@@ -103,7 +103,7 @@ class TwitterTest < ActiveSupport::TestCase
     hash   = '#citheo42' + rand(999_999).to_s
     user   = User.find(2)
     text   = "Today the weather is really #{rand_word}... #{hash}"
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title:         text[0, 40],
       customer_id:   user.id,
       group_id:      group.id,
@@ -116,7 +116,7 @@ class TwitterTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert(ticket, "outbound ticket created, text: #{text}")
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id:     ticket.id,
       body:          text,
       type:          Ticket::Article::Type.find_by(name: 'twitter status'),
@@ -218,7 +218,7 @@ class TwitterTest < ActiveSupport::TestCase
 
     # send reply
     reply_text = "#{customer_login} on my side #weather#{hash_gen}"
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id:     ticket.id,
       body:          reply_text,
       type:          Ticket::Article::Type.find_by(name: 'twitter status'),
@@ -304,7 +304,7 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal(ticket.state.name, 'new')
 
     # reply via ticket
-    outbound_article = Ticket::Article.create(
+    outbound_article = Ticket::Article.create!(
       ticket_id:     ticket.id,
       to:            customer_login,
       body:          "Will call you later #{rand_word}!",
@@ -448,7 +448,7 @@ class TwitterTest < ActiveSupport::TestCase
 
     # send reply
     reply_text = "RE #{text}"
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id:     article.ticket_id,
       body:          reply_text,
       type:          Ticket::Article::Type.find_by(name: 'twitter status'),

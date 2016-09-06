@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'browser_test_helper'
 
-class AgentTicketActionLevel0Test < TestCase
+class AgentTicketTextModuleTest < TestCase
   def test_text_modules
     random  = 'text_module_test_' + rand(99_999_999).to_s
     random2 = 'text_module_test_' + rand(99_999_999).to_s

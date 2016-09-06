@@ -77,7 +77,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
 
     Ticket.destroy_all
 
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some title1 - new - group_calendar',
       group: group_calendar,
       customer_id: customer1.id,
@@ -88,7 +88,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket2 = Ticket.create(
+    ticket2 = Ticket.create!(
       title: 'some title1 - new - group_default',
       group: group_default,
       customer_id: customer1.id,
@@ -99,7 +99,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket3 = Ticket.create(
+    ticket3 = Ticket.create!(
       title: 'some title1 - pending - group_calendar',
       group: group_calendar,
       customer_id: customer1.id,
@@ -111,7 +111,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket4 = Ticket.create(
+    ticket4 = Ticket.create!(
       title: 'some title1 - pending - group_default',
       group: group_default,
       customer_id: customer1.id,
@@ -123,32 +123,33 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket5 = Ticket.create(
+    ticket5 = Ticket.create!(
       title: 'some title1 - escalation - group_calendar',
       group: group_calendar,
       customer_id: customer1.id,
       owner_id: agent1.id,
       state: Ticket::State.lookup(name: 'new'),
-      escalation_time: '2016-02-07 17:39:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:41:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket6 = Ticket.create(
+    ticket5.update_columns(escalation_time: '2016-02-07 17:39:00')
+
+    ticket6 = Ticket.create!(
       title: 'some title1 - escalation - group_default',
       group: group_default,
       customer_id: customer1.id,
       owner_id: agent2.id,
       state: Ticket::State.lookup(name: 'new'),
-      escalation_time: '2016-02-07 16:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 16:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
+    ticket6.update_columns(escalation_time: '2016-02-07 16:37:00')
 
-    ticket7 = Ticket.create(
+    ticket7 = Ticket.create!(
       title: 'some title2 - new - group_calendar',
       group: group_calendar,
       customer_id: customer1.id,
@@ -159,7 +160,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket8 = Ticket.create(
+    ticket8 = Ticket.create!(
       title: 'some title2 - new - group_default',
       group: group_default,
       customer_id: customer1.id,
@@ -170,7 +171,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket9 = Ticket.create(
+    ticket9 = Ticket.create!(
       title: 'some title2 - pending - group_calendar',
       group: group_calendar,
       customer_id: customer1.id,
@@ -182,7 +183,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket10 = Ticket.create(
+    ticket10 = Ticket.create!(
       title: 'some title2 - pending - group_default',
       group: group_default,
       customer_id: customer1.id,
@@ -194,30 +195,32 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket11 = Ticket.create(
+    ticket11 = Ticket.create!(
       title: 'some title2 - escalation - group_calendar',
       group: group_calendar,
       customer_id: customer1.id,
       owner_id: 1,
       state: Ticket::State.lookup(name: 'new'),
-      escalation_time: '2016-02-08 18:37:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:41:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket12 = Ticket.create(
+    ticket11.update_columns(escalation_time: '2016-02-08 18:37:00')
+
+    ticket12 = Ticket.create!(
       title: 'some title2 - escalation - group_default',
       group: group_default,
       customer_id: customer1.id,
       owner_id: 1,
       state: Ticket::State.lookup(name: 'new'),
-      escalation_time: '2016-02-08 18:38:00',
       priority: Ticket::Priority.lookup(name: '2 normal'),
       created_at: '2016-02-05 17:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
+    ticket12.update_columns(escalation_time: '2016-02-08 18:38:00')
+    Cache.clear # set escalation_time manually, to clear cache to have correct content later
 
     # check agent 1
     calendar_subscriptions = CalendarSubscriptions.new(agent1)
