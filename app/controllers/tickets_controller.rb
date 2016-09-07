@@ -396,7 +396,7 @@ class TicketsController < ApplicationController
     # build result list
     tickets = Ticket.search(
       limit: params[:limit],
-      query: params[:term],
+      query: params[:query],
       condition: params[:condition],
       current_user: current_user,
     )

@@ -4,7 +4,7 @@
     type:  'GET'
     url:   url
     data:
-      term: term
+      qeury: query
     processData: true,
     success: (data, status, xhr) =>
       console.log(data, status)
