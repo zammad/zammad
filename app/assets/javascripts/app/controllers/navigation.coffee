@@ -406,7 +406,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
   recentViewNavbarItemsRebuild: =>
 
     # remove old views
-    NavBarRight = @Config.get( 'NavBarRight' ) || {}
+    NavBarRight = @Config.get('NavBarRight') || {}
     for key of NavBarRight
       if NavBarRight[key].parent is '#current_user'
         part = key.split '::'

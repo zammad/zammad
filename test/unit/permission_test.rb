@@ -47,4 +47,51 @@ class PermissionTest < ActiveSupport::TestCase
 
   end
 
+  test 'user permission with invalid role' do
+
+    Permission.create_if_not_exists(
+      name: 'admin.permission2',
+      note: 'Admin Interface',
+      preferences: {},
+    )
+    role_permission2 = Role.create_or_update(
+      name: 'AdminPermission2',
+      note: 'To configure your permission2.',
+      preferences: {
+        not: ['Customer'],
+      },
+      default_at_signup: false,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    role_permission2.permission_grand('admin.permission2')
+    user_with_permission2 = User.create_or_update(
+      login: 'setting-permission2',
+      firstname: 'Setting',
+      lastname: 'Admin Permission2',
+      email: 'setting-admin-permission2@example.com',
+      password: 'some_pw',
+      active: true,
+      roles: [role_permission2],
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(true, user_with_permission2.permissions?('admin.permission2'))
+    assert_equal(true, user_with_permission2.permissions?('admin.*'))
+    assert_equal(false, user_with_permission2.permissions?('admi.*'))
+    assert_equal(false, user_with_permission2.permissions?('admin.permission3'))
+    assert_equal(false, user_with_permission2.permissions?('admin'))
+
+    role_permission2.active = false
+    role_permission2.save
+    user_with_permission2.reload
+    assert_equal(false, user_with_permission2.permissions?('admin.permission2'))
+    assert_equal(false, user_with_permission2.permissions?('admin.*'))
+    assert_equal(false, user_with_permission2.permissions?('admi.*'))
+    assert_equal(false, user_with_permission2.permissions?('admin.permission3'))
+    assert_equal(false, user_with_permission2.permissions?('admin'))
+
+  end
+
 end

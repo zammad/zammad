@@ -374,10 +374,10 @@ returns
       if local_key =~ /\.\*$/
         local_key.sub!('.*', '.%')
         permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND (permissions.name IN (?) OR permissions.name LIKE ?)', role_ids, permissions, local_key).pluck(:preferences)
+        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?)', role_ids, true, permissions, local_key).pluck(:preferences)
       else
         permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND permissions.name IN (?)', role_ids, permissions).pluck(:preferences)
+        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?)', role_ids, true, permissions).pluck(:preferences)
       end
       list.each { |preferences|
         next if preferences[:selectable] == false

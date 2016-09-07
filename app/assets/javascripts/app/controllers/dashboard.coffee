@@ -7,7 +7,7 @@ class App.Dashboard extends App.Controller
   constructor: ->
     super
 
-    if @permissionCheck('ticket.customer')
+    if !@permissionCheck('ticket.agent')
       @clueAccess = false
       return
 

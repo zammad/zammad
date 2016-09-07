@@ -2822,6 +2822,217 @@ wait untill text in selector disabppears
 
 =begin
 
+  role_create(
+    browser: browser2,
+    data: {
+      name: 'some role' + random,
+      default_at_signup: false,
+      permission: [
+        'admin.group',
+        'preferences.password',
+      ],
+      member:    [
+        'some_user_login',
+      ],
+    },
+  )
+
+=end
+
+  def role_create(params = {})
+    switch_window_focus(params)
+    log('role_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/roles"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[data-type="new"]',
+      mute_log: true,
+    )
+    modal_ready(browser: instance)
+    element = instance.find_elements(css: '.modal input[name=name]')[0]
+    element.clear
+    element.send_keys(data[:name])
+
+    if data.key?(:default_at_signup)
+      element = instance.find_elements(css: '.modal select[name="default_at_signup"]')[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      if data[:default_at_signup] == true
+        dropdown.select_by(:text, 'yes')
+      else
+        dropdown.select_by(:text, 'no')
+      end
+    end
+
+    if data.key?(:permission)
+      data[:permission].each { |permission_name|
+        check(
+          browser: instance,
+          css:     ".modal [data-permission-name=\"#{permission_name}\"]",
+        )
+      }
+    end
+
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
+    11.times {
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert(true, 'role created')
+        modal_disappear(browser: instance) # wait until modal has gone
+
+        # add member
+        if data[:member]
+          data[:member].each { |login|
+            instance.find_elements(css: 'a[href="#manage"]')[0].click
+            sleep 1
+            instance.find_elements(css: 'a[href="#manage/users"]')[0].click
+            sleep 3
+            element = instance.find_elements(css: '#content [name="search"]')[0]
+            element.clear
+            element.send_keys(login)
+            sleep 3
+            #instance.find_elements(:css => '#content table [data-id]')[0].click
+            instance.execute_script('$("#content table [data-id] td").first().click()')
+            sleep 3
+            #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+            instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
+            instance.find_elements(css: '.modal button.js-submit')[0].click
+            modal_disappear(browser: instance)
+          }
+        end
+      end
+      sleep 1
+      return true
+    }
+    screenshot(browser: instance, comment: 'role_create_failed')
+    raise 'role creation failed'
+  end
+
+=begin
+
+  role_create(
+    browser: browser2,
+    data: {
+      name: 'some role' + random,
+      default_at_signup: false,
+      permission: [
+        'admin.group',
+        'preferences.password',
+      ],
+      member:    [
+        'some_user_login',
+      ],
+    },
+  )
+
+=end
+
+  def role_edit(params = {})
+    switch_window_focus(params)
+    log('role_edit', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage/roles"]',
+      mute_log: true,
+    )
+    instance.execute_script('$(\'#content table tr td:contains(" ' + data[:name] + '")\').first().click()')
+
+    modal_ready(browser: instance)
+    element = instance.find_elements(css: '.modal input[name=name]')[0]
+    element.clear
+    element.send_keys(data[:name])
+
+    if data.key?(:default_at_signup)
+      element = instance.find_elements(css: '.modal select[name="default_at_signup"]')[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      if data[:default_at_signup] == true
+        dropdown.select_by(:text, 'yes')
+      else
+        dropdown.select_by(:text, 'no')
+      end
+    end
+
+    if data.key?(:permission)
+      data[:permission].each { |permission_name|
+        check(
+          browser: instance,
+          css:     ".modal [data-permission-name=\"#{permission_name}\"]",
+        )
+      }
+    end
+
+    if data.key?(:active)
+      element = instance.find_elements(css: '.modal select[name="active"]')[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      if data[:active] == true
+        dropdown.select_by(:text, 'active')
+      else
+        dropdown.select_by(:text, 'inactive')
+      end
+    end
+
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
+    11.times {
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert(true, 'role created')
+        modal_disappear(browser: instance) # wait until modal has gone
+
+        # add member
+        if data[:member]
+          data[:member].each { |login|
+            instance.find_elements(css: 'a[href="#manage"]')[0].click
+            sleep 1
+            instance.find_elements(css: 'a[href="#manage/users"]')[0].click
+            sleep 3
+            element = instance.find_elements(css: '#content [name="search"]')[0]
+            element.clear
+            element.send_keys(login)
+            sleep 3
+            #instance.find_elements(:css => '#content table [data-id]')[0].click
+            instance.execute_script('$("#content table [data-id] td").first().click()')
+            sleep 3
+            #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+            instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
+            instance.find_elements(css: '.modal button.js-submit')[0].click
+            modal_disappear(browser: instance)
+          }
+        end
+      end
+      sleep 1
+      return true
+    }
+    screenshot(browser: instance, comment: 'role_edit_failed')
+    raise 'role edit failed'
+  end
+
+=begin
+
   object_manager_attribute_create(
     browser: browser2,
     data: {

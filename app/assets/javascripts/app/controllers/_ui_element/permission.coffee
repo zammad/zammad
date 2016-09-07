@@ -1,6 +1,6 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.permission extends App.UiElement.ApplicationUiElement
-  @render: (attribute, params) ->
+  @render: (attribute, params = {}) ->
 
     permissions = App.Permission.search(sortBy: 'name')
 
