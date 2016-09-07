@@ -310,7 +310,7 @@ class UsersController < ApplicationController
   #                   The requester has to be in the role 'Admin' or 'Agent' to
   #                   be able to search for User records.
   #
-  # @parameter        term            [String]        The search term.
+  # @parameter        query           [String]        The search query.
   # @parameter        limit           [Integer]       The limit of search results.
   # @parameter        role_ids(multi) [Array<String>] A list of Role identifiers to which the Users have to be allocated to.
   # @parameter        full            [Boolean]       Defines if the result should be
@@ -332,7 +332,7 @@ class UsersController < ApplicationController
     end
 
     query_params = {
-      query: params[:term],
+      query: params[:query],
       limit: params[:limit],
       current_user: current_user,
     }

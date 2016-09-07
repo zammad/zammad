@@ -228,7 +228,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     end
 
     query_params = {
-      query: params[:term],
+      query: params[:query],
       limit: params[:limit],
       current_user: current_user,
     }

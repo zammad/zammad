@@ -290,30 +290,30 @@ class App.UserOrganizationAutocompletion extends App.Controller
     @userSelect.on 'keyup', @onKeyUp
 
   onKeyUp: (e) =>
-    term = $(e.target).val().trim()
-    return if @searchTerm is term
-    @searchTerm = term
+    query = $(e.target).val().trim()
+    return if @searchTerm is query
+    @searchTerm = query
 
     @hideOrganizationMembers()
 
     # hide dropdown
-    if !term
+    if !query
       @emptyResultList()
 
       if !@attribute.disableCreateUser
         @recipientList.append(@buildUserNew())
 
     # show dropdown
-    if term && ( !@attribute.minLengt || @attribute.minLengt <= term.length )
-      @lazySearch(term)
+    if query && ( !@attribute.minLengt || @attribute.minLengt <= query.length )
+      @lazySearch(query)
 
-  searchUser: (term) =>
+  searchUser: (query) =>
     @ajax(
       id:    "searchUser#{@key}"
       type:  'GET'
       url:   @attribute.source
       data:
-        query: term
+        query: query
       processData: true
       success: (data, status, xhr) =>
         @emptyResultList()

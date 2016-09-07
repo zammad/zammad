@@ -27,8 +27,8 @@ class Index extends App.ControllerContent
       (e) =>
         e.preventDefault()
         $(e.target).toggleClass('active')
-        term = @searchInput.val().trim()
-        if term
+        query = @searchInput.val().trim()
+        if query
           @delay( @search, 220, 'search' )
           return
         @recent()
@@ -36,10 +36,10 @@ class Index extends App.ControllerContent
 
     # start search
     @searchInput.bind( 'keyup', (e) =>
-      term = @searchInput.val().trim()
-      return if !term
-      return if term is @term
-      @term = term
+      query = @searchInput.val().trim()
+      return if !query
+      return if query is @query
+      @query = query
       @delay( @search, 220, 'search' )
     )
 
@@ -140,11 +140,11 @@ class Index extends App.ControllerContent
     )
     @startLoading(@$('.table-overview'))
     App.Ajax.request(
-      id:    'search'
-      type:  'GET'
-      url:   @apiPath + '/users/search'
+      id: 'search'
+      type: 'GET'
+      url: @apiPath + '/users/search'
       data:
-        term:  @term
+        query: @query
         limit: 140
         role_ids: role_ids
         full:  1
@@ -163,9 +163,9 @@ class Index extends App.ControllerContent
     )
     @startLoading(@$('.table-overview'))
     App.Ajax.request(
-      id:    'search'
-      type:  'GET'
-      url:   "#{@apiPath}/users/recent"
+      id: 'search'
+      type: 'GET'
+      url: "#{@apiPath}/users/recent"
       data:
         limit: 40
         role_ids: role_ids
