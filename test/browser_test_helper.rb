@@ -125,7 +125,7 @@ class TestCase < Test::Unit::TestCase
   def screenshot(params)
     instance = params[:browser] || @browser
     comment = params[:comment] || ''
-    filename = "tmp/#{Time.zone.now.strftime('screenshot_%Y_%m_%d__%H_%M_%S')}_#{comment}_#{instance.hash}.png"
+    filename = "tmp/#{Time.zone.now.strftime('screenshot_%Y_%m_%d__%H_%M_%S_%L')}_#{comment}#{instance.hash}.png"
     log('screenshot', { filename: filename })
     instance.save_screenshot(filename)
   end
@@ -415,6 +415,7 @@ class TestCase < Test::Unit::TestCase
     log('click', params)
 
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'click_before')
     if params[:css]
 
       begin
@@ -501,6 +502,7 @@ class TestCase < Test::Unit::TestCase
 
   modal_disappear(
     browser: browser1,
+    timeout: 12, # default 6
   )
 
 =end
@@ -514,7 +516,7 @@ class TestCase < Test::Unit::TestCase
     watch_for_disappear(
       browser: instance,
       css:     '.modal',
-      timeout: 6,
+      timeout: params[:timeout] || 6,
     )
   end
 
@@ -599,6 +601,7 @@ class TestCase < Test::Unit::TestCase
     log('set', params)
 
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'set_before')
 
     element = instance.find_elements(css: params[:css])[0]
     if !params[:no_click]
@@ -616,11 +619,24 @@ class TestCase < Test::Unit::TestCase
       }
     end
 
+    # it's not working stable with ff via selenium, use js
+    if browser =~ /firefox/i && params[:css] =~ /\[data-name=/
+      log('set_ff_check', params)
+      value = instance.find_elements(css: params[:css])[0].text
+      if value != params[:value]
+        log('set_ff_check_failed_use_js', params)
+        value_quoted = quote(params[:value])
+        puts "DEBUG $('#{params[:css]}').html('#{value_quoted}').trigger('focusout')"
+        instance.execute_script("$('#{params[:css]}').html('#{value_quoted}').trigger('focusout')")
+      end
+    end
+
     if params[:blur]
       instance.execute_script("$('#{params[:css]}').blur()")
     end
 
     sleep 0.2
+    screenshot(browser: instance, comment: 'set_after')
   end
 
 =begin
@@ -639,6 +655,7 @@ class TestCase < Test::Unit::TestCase
     log('select', params)
 
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'select_before')
 
     # searchable select
     element = instance.find_elements(css: "#{params[:css]}.js-shadow")[0]
@@ -677,6 +694,7 @@ class TestCase < Test::Unit::TestCase
       #puts "select2 - #{params.inspect}"
     end
     sleep 0.4
+    screenshot(browser: instance, comment: 'select_after')
   end
 
 =begin
@@ -695,6 +713,7 @@ class TestCase < Test::Unit::TestCase
     log('switch', params)
 
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'switch_before')
 
     element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
     checked = element.attribute('checked')
@@ -720,6 +739,7 @@ class TestCase < Test::Unit::TestCase
         raise 'Switch not off!' if checked
       end
     end
+    screenshot(browser: instance, comment: 'switch_after')
   end
 
 =begin
@@ -736,11 +756,13 @@ class TestCase < Test::Unit::TestCase
     log('check', params)
 
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'check_before')
 
     instance.execute_script("if (!$('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
     #element = instance.find_elements(css: params[:css])[0]
     #checked = element.attribute('checked')
     #element.click if !checked
+    screenshot(browser: instance, comment: 'check_after')
   end
 
 =begin
@@ -757,11 +779,13 @@ class TestCase < Test::Unit::TestCase
     log('uncheck', params)
 
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'uncheck_before')
 
     instance.execute_script("if ($('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
     #element = instance.find_elements(css: params[:css])[0]
     #checked = element.attribute('checked')
     #element.click if checked
+    screenshot(browser: instance, comment: 'uncheck_after')
   end
 
 =begin
@@ -779,10 +803,12 @@ class TestCase < Test::Unit::TestCase
     log('sendkey', params)
 
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'sendkey_before')
     if params[:value].class == Array
       params[:value].each { |key|
         instance.action.send_keys(key).perform
       }
+      screenshot(browser: instance, comment: 'sendkey_after')
       return
     end
     instance.action.send_keys(params[:value]).perform
@@ -791,6 +817,7 @@ class TestCase < Test::Unit::TestCase
     else
       sleep 0.2
     end
+    screenshot(browser: instance, comment: 'sendkey_after')
   end
 
 =begin
@@ -825,9 +852,11 @@ class TestCase < Test::Unit::TestCase
       end
       if params[:should_not_match]
         if success
+          screenshot(browser: instance, comment: 'match_failed')
           raise "should not match '#{params[:value]}' in select list, but is matching"
         end
       elsif !success
+        screenshot(browser: instance, comment: 'match_failed')
         raise "not matching '#{params[:value]}' in select list"
       end
 
@@ -871,9 +900,11 @@ class TestCase < Test::Unit::TestCase
 
     if match
       if params[:should_not_match]
+        screenshot(browser: instance, comment: 'match_failed')
         raise "matching '#{params[:value]}' in content '#{text}' but should not!"
       end
     elsif !params[:should_not_match]
+      screenshot(browser: instance, comment: 'match_failed')
       raise "not matching '#{params[:value]}' in content '#{text}' but should!"
     end
     sleep 0.2
@@ -1032,10 +1063,11 @@ class TestCase < Test::Unit::TestCase
         if title =~ /#{data[:title]}/i
           assert(true, "matching '#{data[:title]}' in title '#{title}'")
         else
+          screenshot(browser: instance, comment: 'verify_task_failed')
           raise "not matching '#{data[:title]}' in title '#{title}'"
         end
       end
-      puts "tv #{params.inspect}"
+
       # verify modified
       if data.key?(:modified)
         exists      = instance.find_elements(css: '.tasks .is-active')[0]
@@ -1051,15 +1083,19 @@ class TestCase < Test::Unit::TestCase
           if is_modified
             assert(true, "task '#{data[:title]}' is modifed")
           elsif !exists
+            screenshot(browser: instance, comment: 'verify_task_failed')
             raise "task '#{data[:title]}' not exists, should not modified"
           else
+            screenshot(browser: instance, comment: 'verify_task_failed')
             raise "task '#{data[:title]}' is not modifed"
           end
         elsif !is_modified
           assert(true, "task '#{data[:title]}' is modifed")
         elsif !exists
+          screenshot(browser: instance, comment: 'verify_task_failed')
           raise "task '#{data[:title]}' not exists, should be not modified"
         else
+          screenshot(browser: instance, comment: 'verify_task_failed')
           raise "task '#{data[:title]}' is modifed, but should not"
         end
       end
@@ -1285,12 +1321,14 @@ wait untill text in selector disabppears
     switch_window_focus(params)
     log('shortcut', params)
     instance = params[:browser] || @browser
+    screenshot(browser: instance, comment: 'shortcut_before')
     instance.action.key_down(:control)
             .key_down(:alt)
             .send_keys(params[:key])
             .key_up(:alt)
             .key_up(:control)
             .perform
+    screenshot(browser: instance, comment: 'shortcut_after')
   end
 
 =begin
@@ -1829,14 +1867,6 @@ wait untill text in selector disabppears
         clear:    true,
         mute_log: true,
       )
-
-      # it's not working stable via selenium, use js
-      value = instance.find_elements(css: '.content .newTicket div[data-name=body]')[0].text
-      #puts "V #{value.inspect}"
-      if value != data[:body]
-        body_quoted = quote(data[:body])
-        instance.execute_script("$('.content.active div[data-name=body]').html('#{body_quoted}').trigger('focusout')")
-      end
     end
     if data[:customer]
       element = instance.find_elements(css: '.active .newTicket input[name="customer_id_completion"]')[0]
@@ -2260,12 +2290,14 @@ wait untill text in selector disabppears
       browser: instance,
       js: '$(".content.active .sidebar").css("display", "block")',
     )
+    screenshot(browser: instance, comment: 'ticket_open_by_overview')
     instance.find_elements(css: ".content.active .sidebar a[href=\"#{params[:link]}\"]")[0].click
     sleep 1
     execute(
       browser: instance,
       js: '$(".content.active .sidebar").css("display", "none")',
     )
+    screenshot(browser: instance, comment: 'ticket_open_by_overview_search')
     instance.find_elements(partial_link_text: params[:number])[0].click
     sleep 1
     number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
@@ -2310,8 +2342,9 @@ wait untill text in selector disabppears
     sleep 1
 
     # open ticket
+    screenshot(browser: instance, comment: 'ticket_open_by_search')
     #instance.find_element(partial_link_text: params[:number] } ).click
-    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
+    instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-icon\").first().click()")
     sleep 1
     number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
@@ -2345,6 +2378,7 @@ wait untill text in selector disabppears
     sleep 3
 
     # open ticket
+    screenshot(browser: instance, comment: 'ticket_open_by_title_search')
     #instance.find_element(partial_link_text: params[:title] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
@@ -2466,6 +2500,8 @@ wait untill text in selector disabppears
     element.clear
     element.send_keys(params[:value])
     sleep 3
+
+    screenshot(browser: instance, comment: 'user_open_by_search')
     #instance.find_element(partial_link_text: params[:value]).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1

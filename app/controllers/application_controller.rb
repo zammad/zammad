@@ -535,11 +535,14 @@ class ApplicationController < ActionController::Base
     clean_params = object.param_association_lookup(params)
     clean_params = object.param_cleanup(clean_params, true)
 
-    # save object
-    generic_object.update_attributes!(clean_params)
+    generic_object.with_lock do
 
-    # set relations
-    generic_object.param_set_associations(params)
+      # set attributes
+      generic_object.update_attributes!(clean_params)
+
+      # set relations
+      generic_object.param_set_associations(params)
+    end
 
     if params[:expand]
       render json: generic_object.attributes_with_relation_names, status: :ok

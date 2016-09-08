@@ -442,10 +442,10 @@ retrns
 
       # get ticket# based on email headers
       if mail[ 'x-zammad-ticket-id'.to_sym ]
-        ticket = Ticket.find_by( id: mail[ 'x-zammad-ticket-id'.to_sym ] )
+        ticket = Ticket.find_by(id: mail[ 'x-zammad-ticket-id'.to_sym ])
       end
       if mail[ 'x-zammad-ticket-number'.to_sym ]
-        ticket = Ticket.find_by( number: mail[ 'x-zammad-ticket-number'.to_sym ] )
+        ticket = Ticket.find_by(number: mail[ 'x-zammad-ticket-number'.to_sym ])
       end
 
       # set ticket state to open if not new
@@ -500,7 +500,6 @@ retrns
           priority_id: Ticket::Priority.find_by(name: '2 normal').id,
           preferences: preferences,
         )
-
         set_attributes_by_x_headers(ticket, 'ticket', mail)
 
         # create ticket
@@ -508,45 +507,47 @@ retrns
       end
 
       # set attributes
-      article = Ticket::Article.new(
-        ticket_id: ticket.id,
-        type_id: Ticket::Article::Type.find_by(name: 'email').id,
-        sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-        content_type: mail[:content_type],
-        body: mail[:body],
-        from: mail[:from],
-        to: mail[:to],
-        cc: mail[:cc],
-        subject: mail[:subject],
-        message_id: mail[:message_id],
-        internal: false,
-      )
+      ticket.with_lock do
+        article = Ticket::Article.new(
+          ticket_id: ticket.id,
+          type_id: Ticket::Article::Type.find_by(name: 'email').id,
+          sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+          content_type: mail[:content_type],
+          body: mail[:body],
+          from: mail[:from],
+          to: mail[:to],
+          cc: mail[:cc],
+          subject: mail[:subject],
+          message_id: mail[:message_id],
+          internal: false,
+        )
 
-      # x-headers lookup
-      set_attributes_by_x_headers(article, 'article', mail)
+        # x-headers lookup
+        set_attributes_by_x_headers(article, 'article', mail)
 
-      # create article
-      article.save!
+        # create article
+        article.save!
 
-      # store mail plain
-      Store.add(
-        object: 'Ticket::Article::Mail',
-        o_id: article.id,
-        data: msg,
-        filename: "ticket-#{ticket.number}-#{article.id}.eml",
-        preferences: {}
-      )
+        # store mail plain
+        Store.add(
+          object: 'Ticket::Article::Mail',
+          o_id: article.id,
+          data: msg,
+          filename: "ticket-#{ticket.number}-#{article.id}.eml",
+          preferences: {}
+        )
 
-      # store attachments
-      if mail[:attachments]
-        mail[:attachments].each do |attachment|
-          Store.add(
-            object: 'Ticket::Article',
-            o_id: article.id,
-            data: attachment[:data],
-            filename: attachment[:filename],
-            preferences: attachment[:preferences]
-          )
+        # store attachments
+        if mail[:attachments]
+          mail[:attachments].each do |attachment|
+            Store.add(
+              object: 'Ticket::Article',
+              o_id: article.id,
+              data: attachment[:data],
+              filename: attachment[:filename],
+              preferences: attachment[:preferences]
+            )
+          end
         end
       end
     end
