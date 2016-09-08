@@ -802,6 +802,7 @@ returns
     return if !email
     return if email.empty?
     return if email !~ /@/
+    return if !changes['email'] && updated_at > Time.zone.now - 10.days
 
     # save/update avatar
     avatar = Avatar.auto_detection(
