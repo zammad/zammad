@@ -268,7 +268,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     group = Group.first
     group.touch
 
-    sleep 8
+    sleep 10
 
     # check collections
     collections = {
