@@ -21,6 +21,8 @@ class ApplicationController < ActionController::Base
   rescue_from StandardError, with: :server_error
   rescue_from ExecJS::RuntimeError, with: :server_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActiveRecord::StatementInvalid, with: :unprocessable_entity
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
   rescue_from ArgumentError, with: :unprocessable_entity
   rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
   rescue_from Exceptions::NotAuthorized, with: :unauthorized
@@ -378,7 +380,7 @@ class ApplicationController < ActionController::Base
     params.delete(:form_id)
 
     # check min. params
-    raise 'Need at least article: { body: "some text" }' if !params[:body]
+    raise Exceptions::UnprocessableEntity, 'Need at least article: { body: "some text" }' if !params[:body]
 
     # fill default values
     if params[:type_id].empty? && params[:type].empty?
@@ -639,6 +641,9 @@ class ApplicationController < ActionController::Base
     data = {
       error: error
     }
+    if error =~ /Validation failed: (.+?)(,|$)/i
+      data[:error_human] = $1
+    end
     if error =~ /(already exists|duplicate key|duplicate entry)/i
       data[:error_human] = 'Object already exists!'
     end
