@@ -172,6 +172,8 @@ class App.User extends App.Model
 
     result = user.permission('user_preferences.calendar+ticket.agent') # access must have two permission keys
 
+    result = user.permission('admin.*') # access if one sub key access exists
+
   returns
 
     true|false
@@ -190,9 +192,10 @@ class App.User extends App.Model
     permissions = {}
     for role_id in @role_ids
       role = App.Role.find(role_id)
-      for permission_id in role.permission_ids
-        permission = App.Permission.find(permission_id)
-        permissions[permission.name] = true
+      if role.active is true
+        for permission_id in role.permission_ids
+          permission = App.Permission.find(permission_id)
+          permissions[permission.name] = true
 
     for localKey in keys
       requiredPermissions = localKey.split('+')
@@ -200,12 +203,25 @@ class App.User extends App.Model
       for requiredPermission in requiredPermissions
         localAccess = false
         partString = ''
-        for part in requiredPermission.split('.')
-          if partString isnt ''
-            partString += '.'
-          partString += part
-          if permissions[partString]
-            localAccess = true
+        parts = requiredPermission.split('.')
+
+        # verify name.* permissions
+        if parts[parts.length - 1] is '*'
+          for permission_key, permission_value of permissions
+            if permission_value is true
+              length = requiredPermission.length - 1
+              if permission_key.substr(0, length) is requiredPermission.substr(0, length)
+                localAccess = true
+
+        # verify name.explicite permissions
+        if !localAccess
+          for part in parts
+            if partString isnt ''
+              partString += '.'
+            partString += part
+            if permissions[partString]
+              localAccess = true
+
         if localAccess
           access = true
         else

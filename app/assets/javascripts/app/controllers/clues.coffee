@@ -11,11 +11,11 @@ class Index extends App.Controller
         App.Ajax.request(
           id:          'preferences'
           type:        'PUT'
-          url:         @apiPath + '/users/preferences'
+          url:         "#{@apiPath}/users/preferences"
           data:        JSON.stringify({user:{intro:true}})
           processData: true
         )
         @navigate '#'
     )
 
-App.Config.set( 'clues', Index, 'Routes' )
+App.Config.set('clues', Index, 'Routes')

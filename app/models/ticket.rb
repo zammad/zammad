@@ -20,6 +20,10 @@ class Ticket < ApplicationModel
   before_update   :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
   before_destroy  :destroy_dependencies
 
+  validates :group_id, presence: true
+  validates :priority_id, presence: true
+  validates :state_id, presence: true
+
   notify_clients_support
 
   latest_change_support

@@ -62,10 +62,10 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
       },
     }
     post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
-    assert_response(500)
+    assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_equal('Attribute \'group_id\' required!', result['error_human'])
+    assert_equal('Group can\'t be blank', result['error_human'])
   end
 
   test '01.02 ticket create with agent - wrong group' do
@@ -81,7 +81,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
       },
     }
     post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
-    assert_response(500)
+    assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('No lookup value found for \'group\': "not_existing"', result['error'])
@@ -98,7 +98,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
       article: {},
     }
     post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
-    assert_response(500)
+    assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Need at least article: { body: "some text" }', result['error'])

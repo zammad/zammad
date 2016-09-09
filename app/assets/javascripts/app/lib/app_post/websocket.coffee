@@ -106,7 +106,8 @@ class _webSocketSingleton extends App.Controller
     )
 
   channel: ->
-    @backend
+    return @backend if @connectionEstablished
+    undefined
 
   support: ->
     @supported

@@ -1,12 +1,14 @@
 <% if @groups: %>
   <% for group in @groups: %>
-    <h2><%- @T(group.name) %></h2>
-    <ul class="nav nav-pills nav-stacked">
-<% if group.items: %>
-  <% for item in group.items: %>
-    <li <% if item.active: %>class="active"<% end %>><a href="<%= item.target %>"><%- @T(item.name) %></a></li>
-  <% end %>
-<% end %>
-    </ul>
+    <% if !_.isEmpty(group.items): %>
+      <h2><%- @T(group.name) %></h2>
+      <ul class="nav nav-pills nav-stacked">
+      <% if group.items: %>
+        <% for item in group.items: %>
+          <li <% if item.active: %>class="active"<% end %>><a href="<%= item.target %>"><%- @T(item.name) %></a></li>
+        <% end %>
+      <% end %>
+      </ul>
+    <% end %>
   <% end %>
 <% end %>

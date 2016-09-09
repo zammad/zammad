@@ -48,6 +48,11 @@ class App.TicketZoom extends App.Controller
       @fetchMayBe(data)
     )
 
+    # after a new websocket connection, check if ticket has changed
+    @bind('spool:sent', =>
+      @fetch()
+    )
+
   fetchMayBe: (data) =>
     if @ticketUpdatedAtLastCall
       if new Date(data.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
@@ -59,7 +64,7 @@ class App.TicketZoom extends App.Controller
 
     fetchDelayed = =>
       @fetch()
-    @delay(fetchDelayed, 1200, "ticket-zoom-#{@ticket_id}")
+    @delay(fetchDelayed, 1000, "ticket-zoom-#{@ticket_id}")
 
   fetch: =>
     return if !@Session.get()
@@ -70,6 +75,7 @@ class App.TicketZoom extends App.Controller
       type:  'GET'
       url:   "#{@apiPath}/tickets/#{@ticket_id}?all=true"
       processData: true
+      queue: true
       success: (data, status, xhr) =>
 
         # check if ticket has changed
@@ -151,9 +157,6 @@ class App.TicketZoom extends App.Controller
     # get data
     @ticket = App.Ticket.fullLocal(@ticket_id)
     @ticket.article = undefined
-
-    # remember current data
-    @ticketUpdatedAtLastCall = @ticket.updated_at
 
     # render page
     @render()
@@ -702,6 +705,11 @@ class App.TicketZoom extends App.Controller
       data: JSON.stringify(ticket.attributes())
       processData: true
       success: (data) =>
+
+        # remember current data
+        newTicketRaw = data.assets.Ticket[ticket.id]
+        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+
         App.SessionStorage.set(@key, data)
         @load(data)
 

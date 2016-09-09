@@ -114,25 +114,26 @@ class TicketsController < ApplicationController
 
     # create ticket
     ticket.save!
+    ticket.with_lock do
 
-    # create tags if given
-    if params[:tags] && !params[:tags].empty?
-      tags = params[:tags].split(/,/)
-      tags.each { |tag|
-        Tag.tag_add(
-          object: 'Ticket',
-          o_id: ticket.id,
-          item: tag,
-          created_by_id: current_user.id,
-        )
-      }
+      # create tags if given
+      if params[:tags] && !params[:tags].empty?
+        tags = params[:tags].split(/,/)
+        tags.each { |tag|
+          Tag.tag_add(
+            object: 'Ticket',
+            o_id: ticket.id,
+            item: tag,
+            created_by_id: current_user.id,
+          )
+        }
+      end
+
+      # create article if given
+      if params[:article]
+        article_create(ticket, params[:article])
+      end
     end
-
-    # create article if given
-    if params[:article]
-      article_create(ticket, params[:article])
-    end
-
     # create links (e. g. in case of ticket split)
     # links: {
     #   Ticket: {
@@ -191,10 +192,11 @@ class TicketsController < ApplicationController
       }
     end
 
-    ticket.update_attributes!(clean_params)
-
-    if params[:article]
-      article_create(ticket, params[:article])
+    ticket.with_lock do
+      ticket.update_attributes!(clean_params)
+      if params[:article]
+        article_create(ticket, params[:article])
+      end
     end
 
     if params[:expand]
@@ -396,7 +398,7 @@ class TicketsController < ApplicationController
     # build result list
     tickets = Ticket.search(
       limit: params[:limit],
-      query: params[:term],
+      query: params[:query],
       condition: params[:condition],
       current_user: current_user,
     )

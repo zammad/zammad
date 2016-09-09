@@ -294,25 +294,30 @@ returns
   def self.send(client_id, data)
     path     = "#{@path}/#{client_id}/"
     filename = "send-#{Time.now.utc.to_f}"
+    location = "#{path}#{filename}"
     check    = true
     count    = 0
     while check
-      if File.exist?(path + filename)
+      if File.exist?(location)
         count += 1
-        filename = "#{filename}-#{count}"
+        location = "#{path}#{filename}-#{count}"
       else
         check = false
       end
     end
     return false if !File.directory? path
-    File.open(path + 'a-' + filename, 'wb') { |file|
-      file.flock(File::LOCK_EX)
-      file.write data.to_json
-      file.flock(File::LOCK_UN)
-      file.close
-    }
-    return false if !File.exist?(path + 'a-' + filename)
-    FileUtils.mv(path + 'a-' + filename, path + filename)
+    begin
+      File.open(location, 'wb') { |file|
+        file.flock(File::LOCK_EX)
+        file.write data.to_json
+        file.flock(File::LOCK_UN)
+        file.close
+      }
+    rescue => e
+      log('error', e.inspect)
+      log('error', "error in writing message file '#{location}'")
+      return false
+    end
     true
   end
 

@@ -111,18 +111,18 @@ returns
           group_condition.push group.id
         }
         access_condition = {
-          'query_string' => { 'default_field' => 'Ticket.group_id', 'query' => "\"#{group_condition.join('" OR "')}\"" }
+          'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_condition.join('" OR "')}\"" }
         }
       else
         access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
                              {
-                               'query_string' => { 'default_field' => 'Ticket.customer_id', 'query' => current_user.id }
+                               'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
                              }
                            #  customer_id: XXX
                            #          conditions = [ 'customer_id = ?', current_user.id ]
                            else
                              {
-                               'query_string' => { 'query' => "Ticket.customer_id:#{current_user.id} OR Ticket.organization_id:#{current_user.organization.id}" }
+                               'query_string' => { 'query' => "customer_id:#{current_user.id} OR organization_id:#{current_user.organization.id}" }
                              }
                              # customer_id: XXX OR organization_id: XXX
                              #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]

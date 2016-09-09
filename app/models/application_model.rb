@@ -76,7 +76,7 @@ returns
     end
 
     if params.nil?
-      raise "No params for #{self}!"
+      raise ArgumentError, "No params for #{self}!"
     end
 
     data = {}
@@ -131,7 +131,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise "No value found for '#{assoc.name}' with id #{item_id.inspect}"
+          raise ArgumentError, "No value found for '#{assoc.name}' with id #{item_id.inspect}"
         end
         list.push item_id
       }
@@ -165,7 +165,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise "No lookup value found for '#{assoc.name}': #{value.inspect}"
+          raise ArgumentError, "No lookup value found for '#{assoc.name}': #{value.inspect}"
         end
         list.push lookup.id
       }
@@ -350,7 +350,7 @@ returns
               lookup = class_object.lookup(email: value)
             end
           else
-            raise "String is needed as ref value #{value.inspect} for '#{assoc.name}'"
+            raise ArgumentError, "String is needed as ref value #{value.inspect} for '#{assoc.name}'"
           end
         else
           lookup = class_object.lookup(name: value)
@@ -358,7 +358,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise "No lookup value found for '#{assoc.name}': #{value.inspect}"
+          raise ArgumentError, "No lookup value found for '#{assoc.name}': #{value.inspect}"
         end
 
         # release data value
@@ -393,7 +393,7 @@ returns
               lookup = class_object.lookup(email: item)
             end
           else
-            raise "String is needed in array ref as ref value #{value.inspect} for '#{assoc.name}'"
+            raise ArgumentError, "String is needed in array ref as ref value #{value.inspect} for '#{assoc.name}'"
           end
         else
           lookup = class_object.lookup(name: item)
@@ -401,7 +401,7 @@ returns
 
         # complain if we found no reference
         if !lookup
-          raise "No lookup value found for '#{assoc.name}': #{item.inspect}"
+          raise ArgumentError, "No lookup value found for '#{assoc.name}': #{item.inspect}"
         end
         lookup_ids.push lookup.id
       }
@@ -626,7 +626,7 @@ returns
       return
     end
 
-    raise 'Need name, id, login or email for lookup()'
+    raise ArgumentError, 'Need name, id, login or email for lookup()'
   end
 
 =begin
@@ -801,7 +801,7 @@ returns
       record.save
       return record
     else
-      raise 'Need name, login, email or locale for create_or_update()'
+      raise ArgumentError, 'Need name, login, email or locale for create_or_update()'
     end
   end
 

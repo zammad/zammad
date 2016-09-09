@@ -115,8 +115,9 @@ class Transaction::Trigger
         end
         next if !match
       end
-
-      ticket.perform_changes(trigger.perform, 'trigger', @item)
+      Transaction.execute do
+        ticket.perform_changes(trigger.perform, 'trigger', @item)
+      end
     }
     UserInfo.current_user_id = original_user_id
   end

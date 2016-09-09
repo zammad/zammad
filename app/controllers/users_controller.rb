@@ -254,29 +254,31 @@ class UsersController < ApplicationController
 
     # permission check
     permission_check_by_permission(params)
-    user.update_attributes(clean_params)
+    user.with_lock do
+      user.update_attributes(clean_params)
 
-    # only allow Admin's
-    if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
-      user.role_ids = params[:role_ids]
-      user.param_set_associations({ role_ids: params[:role_ids], roles: params[:roles] })
-    end
+      # only allow Admin's
+      if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
+        user.role_ids = params[:role_ids]
+        user.param_set_associations({ role_ids: params[:role_ids], roles: params[:roles] })
+      end
 
-    # only allow Admin's
-    if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
-      user.group_ids = params[:group_ids]
-      user.param_set_associations({ group_ids: params[:group_ids], groups: params[:groups] })
-    end
+      # only allow Admin's
+      if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
+        user.group_ids = params[:group_ids]
+        user.param_set_associations({ group_ids: params[:group_ids], groups: params[:groups] })
+      end
 
-    # only allow Admin's and Agent's
-    if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
-      user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
-    end
+      # only allow Admin's and Agent's
+      if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
+        user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
+      end
 
-    if params[:expand]
-      user = User.find(user.id).attributes_with_relation_names
-      render json: user, status: :ok
-      return
+      if params[:expand]
+        user = User.find(user.id).attributes_with_relation_names
+        render json: user, status: :ok
+        return
+      end
     end
 
     # get new data
@@ -310,7 +312,7 @@ class UsersController < ApplicationController
   #                   The requester has to be in the role 'Admin' or 'Agent' to
   #                   be able to search for User records.
   #
-  # @parameter        term            [String]        The search term.
+  # @parameter        query           [String]        The search query.
   # @parameter        limit           [Integer]       The limit of search results.
   # @parameter        role_ids(multi) [Array<String>] A list of Role identifiers to which the Users have to be allocated to.
   # @parameter        full            [Boolean]       Defines if the result should be
@@ -332,7 +334,7 @@ class UsersController < ApplicationController
     end
 
     query_params = {
-      query: params[:term],
+      query: params[:query],
       limit: params[:limit],
       current_user: current_user,
     }
@@ -704,7 +706,7 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
       render json: { message: 'failed', notice: ['Current password needed!'] }, status: :ok
       return
     end
-    user = User.authenticate( current_user.login, params[:password_old] )
+    user = User.authenticate(current_user.login, params[:password_old])
     if !user
       render json: { message: 'failed', notice: ['Current password is wrong!'] }, status: :ok
       return
@@ -763,10 +765,12 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
 
     if params[:user]
       user = User.find(current_user.id)
-      params[:user].each { |key, value|
-        user.preferences[key.to_sym] = value
-      }
-      user.save
+      user.with_lock do
+        params[:user].each { |key, value|
+          user.preferences[key.to_sym] = value
+        }
+        user.save
+      end
     end
     render json: { message: 'ok' }, status: :ok
   end
