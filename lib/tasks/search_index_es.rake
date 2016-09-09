@@ -21,12 +21,13 @@ namespace :searchindex do
       data: {
         mappings: {
           Ticket: {
-            _source: { excludes: [ 'articles.attachments' ] },
+            _source: { excludes: [ 'article.attachment' ] },
             properties: {
-              articles: {
+              article: {
                 type: 'nested',
+                include_in_parent: true,
                 properties: {
-                  attachments: {
+                  attachment: {
                     type: 'attachment',
                   }
                 }

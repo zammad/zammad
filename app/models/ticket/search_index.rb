@@ -33,7 +33,7 @@ returns
 
     # collect article data
     articles = Ticket::Article.where(ticket_id: id)
-    attributes['articles'] = []
+    attributes['article'] = []
     articles.each { |article|
       article_attributes = article.attributes
 
@@ -53,8 +53,8 @@ returns
 
       # lookup attachments
       article.attachments.each { |attachment|
-        if !article_attributes['attachments']
-          article_attributes['attachments'] = []
+        if !article_attributes['attachment']
+          article_attributes['attachment'] = []
         end
 
         # check file size
@@ -73,9 +73,9 @@ returns
           '_name'    => attachment.filename,
           '_content' => Base64.encode64(attachment.content)
         }
-        article_attributes['attachments'].push data
+        article_attributes['attachment'].push data
       }
-      attributes['articles'].push article_attributes
+      attributes['article'].push article_attributes
     }
 
     attributes

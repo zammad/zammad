@@ -148,7 +148,6 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     attributes = ticket1.search_index_attribute_lookup
-
     assert_equal('Users', attributes['group'])
     assert_equal('new', attributes['state'])
     assert_equal('2 normal', attributes['priority'])
@@ -472,7 +471,34 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
     assert(result[0], 'record 1')
-    assert(!result[1], 'record 1')
+    assert(!result[1], 'record 2')
+    assert_equal(result[0].id, ticket1.id)
+
+    result = Ticket.search(
+      current_user: agent,
+      query: 'state:open',
+      limit: 15,
+    )
+    assert(result[0], 'record 1')
+    assert(!result[1], 'record 2')
+    assert_equal(result[0].id, ticket2.id)
+
+    result = Ticket.search(
+      current_user: agent,
+      query: '"some_sender@example.com"',
+      limit: 15,
+    )
+    assert(result[0], 'record 1')
+    assert(!result[1], 'record 2')
+    assert_equal(result[0].id, ticket1.id)
+
+    result = Ticket.search(
+      current_user: agent,
+      query: 'article.from:"some_sender@example.com"',
+      limit: 15,
+    )
+    assert(result[0], 'record 1')
+    assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket1.id)
 
   end
