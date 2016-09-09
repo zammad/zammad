@@ -33,20 +33,20 @@ class _Singleton
     delete @callbacks[counter]
 
   fetch: (view) =>
-    if App.WebSocket.support()
-      App.WebSocket.send(
-        event: 'ticket_overview_list'
-        view: view
-      )
-      return
+    #if App.WebSocket.support() && App.WebSocket.channel()
+    #  App.WebSocket.send(
+    #    event: 'ticket_overview_list'
+    #    view: view
+    #  )
+    #  return
 
     App.OverviewIndexCollection.fetch()
     return if @fetchActive[view]
     @fetchActive[view] = true
     App.Ajax.request(
-      id:   'ticket_overview_' + view
-      type:  'GET',
-      url:   App.Config.get('api_path') + '/ticket_overviews',
+      id:   "ticket_overview_#{view}"
+      type: 'GET'
+      url:  "#{App.Config.get('api_path')}/ticket_overviews"
       data:
         view: view
       processData: true,
