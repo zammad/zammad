@@ -1,5 +1,3 @@
-[![build status](https://git.znuny.com/zammad/zammad/badges/master/build.svg)](https://git.znuny.com/zammad/zammad/builds)
-
 Welcome to Zammad
 =================
 
