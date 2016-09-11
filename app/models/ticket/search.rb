@@ -58,6 +58,7 @@ search tickets via database
 
   result = Ticket.search(
     current_user: User.find(123),
+    query: 'some query', # query or condition is required
     condition: {
       'tickets.owner_id' => {
         operator: 'is',
@@ -89,6 +90,7 @@ returns
 
     # get params
     query        = params[:query]
+    condition    = params[:condition]
     limit        = params[:limit] || 12
     current_user = params[:current_user]
     full         = false
@@ -97,7 +99,7 @@ returns
     end
 
     # try search index backend
-    if !params[:condition] && SearchIndexBackend.enabled?
+    if !condition && SearchIndexBackend.enabled?
       query_extention = {}
       query_extention['bool'] = {}
       query_extention['bool']['must'] = []
@@ -160,7 +162,7 @@ returns
                           .order('tickets.created_at DESC')
                           .limit(limit)
     else
-      query_condition, bind_condition = selector2sql(params[:condition])
+      query_condition, bind_condition = selector2sql(condition)
       tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
                           .where(access_condition)
                           .where(query_condition, *bind_condition)

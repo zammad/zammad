@@ -421,6 +421,10 @@ generate condition query to search for tickets based on condition
 condition example
 
   {
+    'ticket.title' => {
+      operator: 'contains', # contains not
+      value: 'some value',
+    },
     'ticket.state_id' => {
       operator: 'is',
       value: [1,2,5]
