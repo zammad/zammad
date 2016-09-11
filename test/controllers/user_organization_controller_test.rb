@@ -290,16 +290,47 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create user with customer role
     role = Role.lookup(name: 'Customer')
-    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
+    params = { firstname: 'Customer First', lastname: 'Customer Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(201)
-    result = JSON.parse(@response.body)
-    assert(result)
-    user = User.find(result['id'])
+    result_user1 = JSON.parse(@response.body)
+    assert(result_user1)
+    user = User.find(result_user1['id'])
     assert_not(user.role?('Admin'))
     assert_not(user.role?('Agent'))
     assert(user.role?('Customer'))
 
+    # search as agent
+    Scheduler.worker(true)
+    get "/api/v1/users/search?query=#{CGI.escape('First')}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(result_user1['id'], result[0]['id'])
+    assert_equal('Customer First', result[0]['firstname'])
+    assert_equal('Customer Last', result[0]['lastname'])
+    assert_not(result[0]['role_ids'])
+    assert_not(result[0]['roles'])
+
+    get "/api/v1/users/search?query=#{CGI.escape('First')}&expand=true", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(result_user1['id'], result[0]['id'])
+    assert_equal('Customer First', result[0]['firstname'])
+    assert_equal('Customer Last', result[0]['lastname'])
+    assert(result[0]['role_ids'])
+    assert(result[0]['roles'])
+
+    get "/api/v1/users/search?query=#{CGI.escape('First')}&label=true", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(result_user1['id'], result[0]['id'])
+    assert_equal('Customer First Customer Last <new_agent_by_agent@example.com>', result[0]['label'])
+    assert_equal('Customer First Customer Last <new_agent_by_agent@example.com>', result[0]['value'])
+    assert_not(result[0]['role_ids'])
+    assert_not(result[0]['roles'])
   end
 
   test 'user index and create with customer1' do
@@ -338,6 +369,10 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(401)
 
+    # search
+    Scheduler.worker(true)
+    get "/api/v1/users/search?query=#{CGI.escape('First')}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
   end
 
   test 'user index with customer2' do
@@ -364,6 +399,10 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result.class, Hash)
     assert(result['error'])
 
+    # search
+    Scheduler.worker(true)
+    get "/api/v1/users/search?query=#{CGI.escape('First')}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
   end
 
   test 'organization index with agent' do
@@ -381,15 +420,41 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     get "/api/v1/organizations/#{@organization.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
-    assert_equal( result.class, Hash)
-    assert_equal( result['name'], 'Rest Org')
+    assert_equal(result.class, Hash)
+    assert_equal(result['name'], 'Rest Org')
 
     get "/api/v1/organizations/#{@organization2.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
-    assert_equal( result.class, Hash)
-    assert_equal( result['name'], 'Rest Org #2')
+    assert_equal(result.class, Hash)
+    assert_equal(result['name'], 'Rest Org #2')
 
+    # search as agent
+    Scheduler.worker(true)
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal('Zammad Foundation', result[0]['name'])
+    assert_not(result[0]['member_ids'])
+    assert_not(result[0]['members'])
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&expand=true", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal('Zammad Foundation', result[0]['name'])
+    assert(result[0]['member_ids'])
+    assert(result[0]['members'])
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&label=true", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal('Zammad Foundation', result[0]['label'])
+    assert_equal('Zammad Foundation', result[0]['value'])
+    assert_not(result[0]['member_ids'])
+    assert_not(result[0]['members'])
   end
 
   test 'organization index with customer1' do
@@ -407,15 +472,19 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     get "/api/v1/organizations/#{@organization.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
-    assert_equal( result.class, Hash)
-    assert_equal( result['name'], nil)
+    assert_equal(result.class, Hash)
+    assert_equal(result['name'], nil)
 
     get "/api/v1/organizations/#{@organization2.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
-    assert_equal( result.class, Hash)
-    assert_equal( result['name'], nil)
+    assert_equal(result.class, Hash)
+    assert_equal(result['name'], nil)
 
+    # search
+    Scheduler.worker(true)
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
   end
 
   test 'organization index with customer2' do
@@ -433,15 +502,19 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     get "/api/v1/organizations/#{@organization.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
-    assert_equal( result.class, Hash)
-    assert_equal( result['name'], 'Rest Org')
+    assert_equal(result.class, Hash)
+    assert_equal(result['name'], 'Rest Org')
 
     get "/api/v1/organizations/#{@organization2.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
-    assert_equal( result.class, Hash)
-    assert_equal( result['name'], nil)
+    assert_equal(result.class, Hash)
+    assert_equal(result['name'], nil)
 
+    # search
+    Scheduler.worker(true)
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
   end
 
 end

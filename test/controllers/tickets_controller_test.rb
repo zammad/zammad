@@ -280,7 +280,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Ticket::Article::Type.lookup(name: 'note').id, article_result['type_id'])
 
     Scheduler.worker(true)
-    get "/api/v1/tickets/search?query=\"#{CGI.escape(title)}\"", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -595,7 +595,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Ticket::Article::Type.lookup(name: 'note').id, article_result['type_id'])
 
     Scheduler.worker(true)
-    get "/api/v1/tickets/search?query=\"#{CGI.escape(title)}\"", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)

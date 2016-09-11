@@ -255,10 +255,10 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     end
 
     # build result list
-    if !params[:full]
+    if params[:label]
       organizations = []
       organization_all.each { |organization|
-        a = { id: organization.id, label: organization.name }
+        a = { id: organization.id, label: organization.name, value: organization.name }
         organizations.push a
       }
 
@@ -267,18 +267,26 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       return
     end
 
-    organization_ids = []
-    assets = {}
-    organization_all.each { |organization|
-      assets = organization.assets(assets)
-      organization_ids.push organization.id
-    }
+    if params[:full]
+      organization_ids = []
+      assets = {}
+      organization_all.each { |organization|
+        assets = organization.assets(assets)
+        organization_ids.push organization.id
+      }
 
-    # return result
-    render json: {
-      assets: assets,
-      organization_ids: organization_ids.uniq,
+      # return result
+      render json: {
+        assets: assets,
+        organization_ids: organization_ids.uniq,
+      }
+    end
+
+    list = []
+    organization_all.each { |organization|
+      list.push organization.attributes
     }
+    render json: list, status: :ok
   end
 
   # GET /api/v1/organizations/history/1
