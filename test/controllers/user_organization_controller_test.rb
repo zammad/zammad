@@ -273,8 +273,9 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert(result.length >= 3)
 
     # create user with admin role
+    firstname = "First test#{rand(999_999_999)}"
     role = Role.lookup(name: 'Admin')
-    params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
+    params = { firstname: "Admin#{firstname}", lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
@@ -282,7 +283,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create user with agent role
     role = Role.lookup(name: 'Agent')
-    params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
+    params = { firstname: "Agent#{firstname}", lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
@@ -290,7 +291,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create user with customer role
     role = Role.lookup(name: 'Customer')
-    params = { firstname: 'Customer First', lastname: 'Customer Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
+    params = { firstname: "Customer#{firstname}", lastname: 'Customer Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(201)
     result_user1 = JSON.parse(@response.body)
@@ -302,33 +303,33 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # search as agent
     Scheduler.worker(true)
-    get "/api/v1/users/search?query=#{CGI.escape('First')}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert_equal(result_user1['id'], result[0]['id'])
-    assert_equal('Customer First', result[0]['firstname'])
+    assert_equal("Customer#{firstname}", result[0]['firstname'])
     assert_equal('Customer Last', result[0]['lastname'])
     assert_not(result[0]['role_ids'])
     assert_not(result[0]['roles'])
 
-    get "/api/v1/users/search?query=#{CGI.escape('First')}&expand=true", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&expand=true", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert_equal(result_user1['id'], result[0]['id'])
-    assert_equal('Customer First', result[0]['firstname'])
+    assert_equal("Customer#{firstname}", result[0]['firstname'])
     assert_equal('Customer Last', result[0]['lastname'])
     assert(result[0]['role_ids'])
     assert(result[0]['roles'])
 
-    get "/api/v1/users/search?query=#{CGI.escape('First')}&label=true", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&label=true", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert_equal(result_user1['id'], result[0]['id'])
-    assert_equal('Customer First Customer Last <new_agent_by_agent@example.com>', result[0]['label'])
-    assert_equal('Customer First Customer Last <new_agent_by_agent@example.com>', result[0]['value'])
+    assert_equal("Customer#{firstname} Customer Last <new_agent_by_agent@example.com>", result[0]['label'])
+    assert_equal("Customer#{firstname} Customer Last <new_agent_by_agent@example.com>", result[0]['value'])
     assert_not(result[0]['role_ids'])
     assert_not(result[0]['roles'])
   end
