@@ -390,6 +390,7 @@ class UsersController < ApplicationController
         assets: assets,
         user_ids: user_ids.uniq,
       }
+      return
     end
 
     list = []

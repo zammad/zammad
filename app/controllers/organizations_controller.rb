@@ -280,6 +280,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
         assets: assets,
         organization_ids: organization_ids.uniq,
       }
+      return
     end
 
     list = []
