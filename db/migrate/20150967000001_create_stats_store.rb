@@ -8,7 +8,7 @@ class CreateStatsStore < ActiveRecord::Migration
       t.integer :related_stats_store_object_id,     null: true
       t.string  :data,                 limit: 2500, null: true
       t.integer :created_by_id,                     null: false
-      t.timestamps                                  null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :stats_stores, [:o_id]
     add_index :stats_stores, [:key]
