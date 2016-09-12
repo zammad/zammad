@@ -45,7 +45,7 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     ast (2.3.0)
-    autoprefixer-rails (6.4.0.2)
+    autoprefixer-rails (6.4.1.1)
       execjs
     biz (1.6.0)
       clavius (~> 1.0)
@@ -80,7 +80,7 @@ GEM
     diffy (3.1.0)
     dnsruby (1.59.3)
     docile (1.1.5)
-    domain_name (0.5.20160615)
+    domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     eco (1.0.0)
       coffee-script
@@ -129,7 +129,7 @@ GEM
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
-    icalendar (2.4.0)
+    icalendar (2.4.1)
     inflection (1.0.0)
     json (1.8.3)
     jwt (1.5.4)
@@ -158,7 +158,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.21)
+    mysql2 (0.4.4)
     naught (1.1.0)
     nenv (0.3.0)
     nestful (1.1.1)
@@ -207,10 +207,10 @@ GEM
     parser (2.3.1.2)
       ast (~> 2.2)
     pg (0.18.4)
-    phony (2.15.28)
+    phony (2.15.29)
     pkg-config (1.1.7)
     pluginator (1.3.0)
-    power_assert (0.3.0)
+    power_assert (0.3.1)
     powerpack (0.1.1)
     pre-commit (0.28.0)
       pluginator (~> 1.1)
@@ -293,7 +293,7 @@ GEM
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.1.1)
+    sprockets-rails (3.2.0)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
@@ -319,12 +319,12 @@ GEM
       simple_oauth (~> 0.3.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.1)
+    uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
-    unicode-display_width (1.1.0)
+    unicode-display_width (1.1.1)
     websocket (1.2.3)
     writeexcel (1.0.5)
     zendesk_api (1.14.0)
@@ -364,7 +364,7 @@ DEPENDENCIES
   libv8
   mail
   mime-types
-  mysql2 (~> 0.3.20)
+  mysql2
   net-ldap
   oauth2
   omniauth
