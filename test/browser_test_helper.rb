@@ -589,7 +589,7 @@ class TestCase < Test::Unit::TestCase
     css:      '.some_class',
     value:    true,
     slow:     false,
-    blur:     true,
+    blur:     true, # default false
     clear:    true, # todo | default: true
     no_click: true,
   )
@@ -793,7 +793,7 @@ class TestCase < Test::Unit::TestCase
   sendkey(
     browser: browser1,
     value:   :enter,
-    slow:    false,
+    slow:    false, # default false
   )
 
 =end
@@ -803,15 +803,28 @@ class TestCase < Test::Unit::TestCase
     log('sendkey', params)
 
     instance = params[:browser] || @browser
+    element = nil
+    if params[:css]
+      element = instance.find_elements(css: params[:css])[0]
+    end
     screenshot(browser: instance, comment: 'sendkey_before')
     if params[:value].class == Array
       params[:value].each { |key|
-        instance.action.send_keys(key).perform
+        if element
+          element.send_keys(key)
+        else
+          instance.action.send_keys(key).perform
+        end
       }
       screenshot(browser: instance, comment: 'sendkey_after')
       return
     end
-    instance.action.send_keys(params[:value]).perform
+
+    if element
+      element.send_keys(params[:value])
+    else
+      instance.action.send_keys(params[:value]).perform
+    end
     if params[:slow]
       sleep 1.5
     else

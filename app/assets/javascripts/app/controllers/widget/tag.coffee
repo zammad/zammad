@@ -8,8 +8,8 @@ class App.WidgetTag extends App.Controller
 
   events:
     'click .js-newTagLabel': 'showInput'
-    'blur .js-newTagInput':  'hideOrAddInput'
-    'click .js-newTagInput': 'onAddTag'
+    'blur .js-newTagInput':  'hideAndAddInput'
+    'keyup .js-newTagInput': 'addInput'
     'submit form':           'onAddTag'
     'click .js-delete':      'onRemoveTag'
     'click .js-tag':         'searchTag'
@@ -25,6 +25,10 @@ class App.WidgetTag extends App.Controller
       return
 
     @fetch()
+
+  addInput: (e) =>
+    return if e.keyCode isnt 9 # tab
+    @hideAndAddInput()
 
   fetch: =>
     @pendingRefresh = false
@@ -72,15 +76,15 @@ class App.WidgetTag extends App.Controller
     @newTagInput.removeClass('hide').focus()
     @editMode = true
 
-  hideOrAddInput: (e) =>
-    e.preventDefault()
+  hideAndAddInput: =>
     @newTagLabel.removeClass('hide')
     @newTagInput.addClass('hide')
-    @onAddTag(e)
+    @onAddTag()
     @editMode = false
 
   onAddTag: (e) =>
-    e.preventDefault()
+    if e
+      e.preventDefault()
     item = @$('[name="new_tag"]').val().trim()
     if !item
       if @pendingRefresh
@@ -118,7 +122,6 @@ class App.WidgetTag extends App.Controller
     @remove(item)
 
   remove: (item) =>
-
     @localTags = _.filter(@localTags, (tagItem) -> return tagItem if tagItem isnt item)
     @render()
 
