@@ -502,7 +502,7 @@ class TestCase < Test::Unit::TestCase
 
   modal_disappear(
     browser: browser1,
-    timeout: 12, # default 6
+    timeout: 12, # default 8
   )
 
 =end
@@ -516,7 +516,7 @@ class TestCase < Test::Unit::TestCase
     watch_for_disappear(
       browser: instance,
       css:     '.modal',
-      timeout: params[:timeout] || 6,
+      timeout: params[:timeout] || 8,
     )
   end
 
@@ -2573,7 +2573,10 @@ wait untill text in selector disabppears
       css:     '.modal input[name=role_ids][value=3]',
     )
     instance.find_elements(css: '.modal button.js-submit')[0].click
-    modal_disappear(browser: instance)
+    modal_disappear(
+      browser: instance,
+      timeout: 10,
+    )
     set(
       browser: instance,
       css: '.content .js-search',
@@ -2681,15 +2684,21 @@ wait untill text in selector disabppears
       mute_log: true,
     )
     modal_ready(browser: instance)
-    element = instance.find_elements(css: '.modal input[name=name]')[0]
-    element.clear
-    element.send_keys(data[:name])
-    element = instance.find_elements(css: '.modal input[name=keywords]')[0]
-    element.clear
-    element.send_keys(data[:keywords])
-    element = instance.find_elements(css: '.modal [data-name=content]')[0]
-    element.clear
-    element.send_keys(data[:content])
+    set(
+      browser:  instance,
+      css:      '.modal input[name=name]',
+      value:    data[:name],
+    )
+    set(
+      browser:  instance,
+      css:      '.modal input[name=keywords]',
+      value:    data[:keywords],
+    )
+    set(
+      browser:  instance,
+      css:      '.modal [data-name=content]',
+      value:    data[:content],
+    )
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
     7.times {
@@ -2747,12 +2756,16 @@ wait untill text in selector disabppears
       mute_log: true,
     )
     modal_ready(browser: instance)
-    element = instance.find_elements(css: '.modal input[name=name]')[0]
-    element.clear
-    element.send_keys(data[:name])
-    element = instance.find_elements(css: '.modal [data-name=body]')[0]
-    element.clear
-    element.send_keys(data[:body])
+    set(
+      browser:  instance,
+      css:      '.modal input[name=name]',
+      value:    data[:name],
+    )
+    set(
+      browser:  instance,
+      css:      '.modal [data-name=body]',
+      value:    data[:body],
+    )
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
     11.times {
